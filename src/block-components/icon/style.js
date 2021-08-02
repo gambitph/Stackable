@@ -10,12 +10,11 @@ import { Style as StyleComponent } from '~stackable/components'
 const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
-		uniqueId = '',
 		hoverSelector = '',
 	} = options
 
 	const getSvgSelector = ( getAttribute, _selector = selector, suffixes = [] ) => {
-		const svgSelector = `${ _selector } .stk--inner-svg svg${ getAttribute( 'iconColorType' ) === 'gradient' ? ':last-child' : '' }`
+		const svgSelector = `${ _selector } .stk--inner-svg svg:last-child`
 		if ( suffixes.length ) {
 			return suffixes.map( suffix => svgSelector + suffix )
 		}
@@ -23,10 +22,10 @@ const getStyleParams = ( options = {} ) => {
 	}
 
 	const shapeSelector = `${ selector } .stk--inner-svg`
-	const shapeHoverSelector = `${ selector }:hover .stk--inner-svg`
+	const shapeHoverSelector = `${ hoverSelector } .stk--inner-svg`
 
 	const backgroundShapeSelector = `${ selector } .stk--shape-icon`
-	const backgroundShapeHoverSelector = `${ selector }:hover .stk--shape-icon`
+	const backgroundShapeHoverSelector = `${ hoverSelector } .stk--shape-icon`
 
 	return [
 		// Icon Styles
@@ -38,7 +37,6 @@ const getStyleParams = ( options = {} ) => {
 				width: 'iconSize',
 			},
 			responsive: 'all',
-			hover: 'all',
 			format: '%spx',
 		},
 		{
@@ -60,7 +58,7 @@ const getStyleParams = ( options = {} ) => {
 			selector,
 			styleRule: 'flexDirection',
 			attrName: 'iconPosition',
-			valuePreCallback: value => value !== '' ? 'row-reverse' : undefined,
+			valuePreCallback: value => value ? 'row-reverse' : undefined,
 		},
 		{
 			selector,
@@ -76,19 +74,24 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'iconColor1',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if ( getAttribute( 'iconColorType' ) === 'gradient' && getAttribute( 'iconColor1', 'desktop', state ) && getAttribute( 'iconColor2', 'desktop', state ) ) {
-					return `url(#${ uniqueId })`
+					return `url(#linear-gradient-${ getAttribute( 'uniqueId' ) })`
 				}
 				return value
 			},
-			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
+			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2', 'uniqueId' ],
 			hover: 'all',
 		},
 		{
-			selector: `${ selector } #${ uniqueId }`,
-			styles: {
-				[ `--${ uniqueId }-color-1` ]: 'iconColor1',
-				[ `--${ uniqueId }-color-2` ]: 'iconColor2',
-			},
+			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
+			styleRule: 'transform',
+			format: 'rotate(%sdeg)',
+			attrName: 'iconColorGradientDirection',
+			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
+		},
+		{
+			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
+			styleRuleCallback: getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-1`,
+			attrName: 'iconColor1',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
 					! getAttribute( 'iconColor1', 'desktop', state ) ||
@@ -98,8 +101,23 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return value
 			},
-			hover: 'all',
-			hoverSelector: `${ selector }:hover #${ uniqueId }`,
+			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
+			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
+		},
+		{
+			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
+			styleRuleCallback: getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-2`,
+			attrName: 'iconColor2',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
+					! getAttribute( 'iconColor1', 'desktop', state ) ||
+					! getAttribute( 'iconColor2', 'desktop', state )
+				) {
+					return undefined
+				}
+				return value
+			},
+			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 		},
 
@@ -109,9 +127,7 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'backgroundColor',
 			attrName: 'shapeColor',
-			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			dependencies: [ 'shaped' ],
 		},
 		{
 			selector: shapeSelector,
@@ -119,9 +135,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'borderRadius',
 			attrName: 'shapeBorderRadius',
 			format: `%s%`,
-			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			dependencies: [ 'shaped' ],
 		},
 		{
 			selector: shapeSelector,
@@ -129,19 +143,13 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'padding',
 			attrName: 'shapePadding',
 			format: `%spx`,
-			enabledCallback: attributes => attributes.shaped,
-			hover: 'all',
-			dependencies: [ 'shaped' ],
 		},
 		{
 			selector: shapeSelector,
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderColor',
 			attrName: 'shapeOutlineColor',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value : undefined,
-			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
 			selector: shapeSelector,
@@ -153,61 +161,51 @@ const getStyleParams = ( options = {} ) => {
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.top ||
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.right ||
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.bottom ||
-					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.left ||
-					! getAttribute( 'shapeOutline' )
+					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.left
 				) {
 					return undefined
 				}
 
 				return 'solid'
 			},
-			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			dependencies: [ 'shaped', 'shapeOutline', 'shapeOutlineWidth' ],
+			dependencies: [ 'shapeOutlineWidth' ],
 		},
 		{
 			selector: shapeSelector,
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderTopWidth',
 			attrName: 'shapeOutlineWidth',
-			hover: 'all',
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.top : undefined,
-			dependencies: [ 'shapeOutline', 'shaped' ],
+			valuePreCallback: value => value?.top,
 		},
 		{
 			selector: shapeSelector,
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderRightWidth',
 			attrName: 'shapeOutlineWidth',
-			hover: 'all',
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.right : undefined,
-			dependencies: [ 'shapeOutline', 'shaped' ],
+			valuePreCallback: value => value?.right,
 		},
 		{
 			selector: shapeSelector,
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderBottomWidth',
 			attrName: 'shapeOutlineWidth',
-			hover: 'all',
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.bottom : undefined,
-			dependencies: [ 'shapeOutline', 'shaped' ],
+			valuePreCallback: value => value?.bottom,
 		},
 		{
 			selector: shapeSelector,
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderLeftWidth',
 			attrName: 'shapeOutlineWidth',
-			hover: 'all',
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.left : undefined,
-			dependencies: [ 'shapeOutline', 'shaped' ],
+			valuePreCallback: value => value?.left,
 		},
 
 		// Background Shape Styles
@@ -217,7 +215,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'fill',
 			attrName: 'backgroundShapeColor',
 			hover: 'all',
-			enabledCallback: attributes => attributes.showBackgroundShape,
+			enabledCallback: getAttribute => getAttribute( 'showBackgroundShape' ),
 			dependencies: [ 'showBackgroundShape' ],
 		},
 		{
@@ -226,14 +224,13 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'opacity',
 			attrName: 'backgroundShapeOpacity',
 			hover: 'all',
-			enabledCallback: attributes => attributes.showBackgroundShape,
+			enabledCallback: getAttribute => getAttribute( 'showBackgroundShape' ),
 			dependencies: [ 'showBackgroundShape' ],
 		},
 		{
 			selector: backgroundShapeSelector,
 			hoverSelector: backgroundShapeHoverSelector,
 			styleRule: 'transform',
-			hover: 'all',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				const backgroundShapeSize = getAttribute( 'backgroundShapeSize', 'desktop', state )
 				const backgroundShapeOffsetHorizontal = getAttribute( 'backgroundShapeOffsetHorizontal', 'desktop', state )
@@ -243,12 +240,16 @@ const getStyleParams = ( options = {} ) => {
 					backgroundShapeSize !== '' ? `scale(${ backgroundShapeSize })` : undefined,
 					backgroundShapeOffsetHorizontal !== '' ? `translateX(${ backgroundShapeOffsetHorizontal }px)` : undefined,
 					backgroundShapeOffsetVertical !== '' ? `translateY(${ backgroundShapeOffsetVertical }px)` : undefined,
-				] ).join( ' ' )
+				] )
 
-				return transform
+				return transform.length ? [
+					'translateX(-50%)',
+					'translateY(-50%)',
+					...transform,
+				].join( ' ' ) : ''
 			},
 			dependencies: [ 'showBackgroundShape', 'backgroundShapeSize', 'backgroundShapeOffsetVertical', 'backgroundShapeOffsetHorizontal' ],
-			enabledCallback: attributes => attributes.showBackgroundShape,
+			enabledCallback: getAttribute => getAttribute( 'showBackgroundShape' ),
 		},
 	]
 }
@@ -260,9 +261,7 @@ export const Style = props => {
 		...propsToPass
 	} = props
 
-	const uniqueId = 'linear-gradient-' + attributes.uniqueId
-
-	const styles = useStyles( attributes, getStyleParams( { ...options, uniqueId } ) )
+	const styles = useStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent
@@ -281,9 +280,7 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const uniqueId = 'linear-gradient-' + attributes.uniqueId
-
-	const styles = getStyles( attributes, getStyleParams( { ...options, uniqueId } ) )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent.Content

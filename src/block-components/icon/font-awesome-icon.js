@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	faAPILoaded, faIsAPILoaded, faGetSVGIcon, faIconLoaded,
+	faAPILoaded, faIsAPILoaded, faGetSVGIcon, faIconLoaded, createElementFromHTMLString,
 } from '~stackable/util'
 import { pick } from 'lodash'
 
@@ -13,6 +13,32 @@ import {
 	useState, useEffect, RawHTML, useMemo, renderToString,
 } from '@wordpress/element'
 import { Spinner } from '@wordpress/components'
+
+/**
+ * Sets an aria-label to an SVG string and returning
+ * the modified SVG string.
+ *
+ * @param {string} svgHTML
+ * @param {string} ariaLabel
+ *
+ * @return {string} modified SVG HTML
+ */
+const addSVGAriaLabel = ( svgHTML, ariaLabel = '' ) => {
+	const svgNode = createElementFromHTMLString( svgHTML )
+	if ( ! svgNode ) {
+		return ''
+	}
+
+	svgNode.removeAttribute( 'role' )
+	if ( ariaLabel ) {
+		svgNode.setAttribute( 'aria-label', ariaLabel )
+		svgNode.setAttribute( 'role', 'img' )
+	} else {
+		svgNode.setAttribute( 'aria-hidden', 'true' )
+	}
+
+	return svgNode.outerHTML
+}
 
 const FontAwesomeIcon = props => {
 	const [ forceUpdateCount, setForceUpdateCount ] = useState( 0 )
@@ -31,7 +57,8 @@ const FontAwesomeIcon = props => {
 
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' && props.value.match( /^<svg/ ) ) {
-		return <RawHTML { ...propsToPass }>{ prependRender + props.value }</RawHTML>
+		const svg = addSVGAriaLabel( props.value, props.ariaLabel )
+		return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
 	}
 
 	// There's a chance that the Font Awesome library hasn't loaded yet, wait for it.
@@ -51,12 +78,12 @@ const FontAwesomeIcon = props => {
 			return <Spinner />
 		}
 
-		return <RawHTML { ...propsToPass }>{ prependRender + iconHTML }</RawHTML>
+		return <RawHTML { ...propsToPass }>{ prependRender + addSVGAriaLabel( iconHTML, props.ariaLabel ) }</RawHTML>
 	}
 
 	// If no value, just display a smiley placeholder.
 	const iconHTML = faGetSVGIcon( 'far', 'smile' )
-	return <RawHTML { ...propsToPass }>{ prependRender + iconHTML }</RawHTML>
+	return <RawHTML { ...propsToPass }>{ prependRender + addSVGAriaLabel( iconHTML, props.ariaLabel ) }</RawHTML>
 }
 
 FontAwesomeIcon.Content = props => {
@@ -67,7 +94,8 @@ FontAwesomeIcon.Content = props => {
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {
 		if ( props.value.match( /^<svg/ ) ) {
-			return <RawHTML { ...propsToPass }>{ prependRender + props.value }</RawHTML>
+			const svg = addSVGAriaLabel( props.value, props.ariaLabel )
+			return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
 		}
 	}
 
@@ -75,10 +103,11 @@ FontAwesomeIcon.Content = props => {
 	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
 
 	const iconHTML = faGetSVGIcon( prefix, iconName )
-	return <RawHTML { ...propsToPass }>{ prependRender + iconHTML }</RawHTML>
+	return <RawHTML { ...propsToPass }>{ prependRender + addSVGAriaLabel( iconHTML, props.ariaLabel ) }</RawHTML>
 }
 
 FontAwesomeIcon.defaultProps = {
+	ariaLabel: '',
 	prefix: '',
 	iconName: '',
 	value: '', // This is the old-style of prefix + iconName e.g. 'fab-apple'

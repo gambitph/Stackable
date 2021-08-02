@@ -1,7 +1,7 @@
 .ugb-container-link {
 	position: relative;
 
-	& > a {
+	> a {
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -9,11 +9,11 @@
 		right: 0;
 	}
 
-	& > a:focus {
+	> a:focus {
 		background: transparent !important;
 	}
 
-	& > a::after {
+	> a::after {
 		position: absolute;
 		top: 0;
 		bottom: 0;

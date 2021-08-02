@@ -59,6 +59,12 @@
 	),
 	button-text-color: #fff,
 
+	/**
+	 * Icons
+	 */
+	icon-size: 56px,
+	icon-shape-color: #ddd,
+
 	/***
 	 * Typography
 	 */
@@ -86,7 +92,7 @@
 		}
 
 
-		& > .stk-block-button__inner-text {
+		> .stk-block-button__inner-text {
 			color: cssvar(button-text-color);
 
 			&:hover {
@@ -131,4 +137,13 @@
 // Block background when the block is full width
 .stk-block-background.alignfull {
 	padding: cssvar(block-background-full-padding);
+}
+
+// Icons
+.stk--inner-svg {
+	border-color: #000;
+	svg:last-child {
+		width: cssvar(icon-size);
+		height: cssvar(icon-size);
+	}
 }

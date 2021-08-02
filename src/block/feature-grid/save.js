@@ -1,20 +1,14 @@
 /**
  * Internal dependencies
  */
-import { CardGroupStyles } from './style'
+import BlockStyles from './style'
 
 /**
  * External dependencies
  */
+import classnames from 'classnames'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
-import classnames from 'classnames'
-
-/**
- * WordPress dependencies
- */
-import { InnerBlocks } from '@wordpress/block-editor'
-import { compose } from '@wordpress/compose'
 import {
 	BlockDiv,
 	CustomCSS,
@@ -22,6 +16,12 @@ import {
 	getResponsiveClasses,
 	getRowClasses,
 } from '~stackable/block-components'
+
+/**
+ * WordPress dependencies
+ */
+import { InnerBlocks } from '@wordpress/block-editor'
+import { compose } from '@wordpress/compose'
 
 export const Save = props => {
 	const {
@@ -32,9 +32,9 @@ export const Save = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
-	const blockClassName = classnames( [
+	const blockClassNames = classnames( [
 		props.className,
-		'stk-card-group',
+		'stk-block-feature-grid',
 		responsiveClass,
 	] )
 
@@ -47,10 +47,10 @@ export const Save = props => {
 
 	return (
 		<BlockDiv.Content
-			className={ blockClassName }
+			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<CardGroupStyles.Content version={ props.version } attributes={ attributes } />
+			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />

@@ -25,7 +25,7 @@ import { getAttributeName } from '~stackable/util'
  * WordPress dependencies
  */
 import {
-	Fragment,
+	Fragment, useEffect, useState,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
@@ -46,10 +46,28 @@ export const Edit = props => {
 		getAttribute,
 		updateAttributeHandler,
 		updateAttributes,
+		updateAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
 
+	const text = getAttribute( 'text' )
+
 	const [ state ] = useBlockHoverState()
+	const [ debouncedText, setDebouncedText ] = useState( text )
 	useFontLoader( getAttribute( 'fontFamily' ) )
+
+	useEffect( () => {
+		if ( text !== escapeHTML( debouncedText ) ) {
+			setDebouncedText( unescape( text ) )
+		}
+	}, [ text ] )
+
+	useEffect( () => {
+		const timeout = setTimeout( () => {
+			updateAttribute( 'text', escapeHTML( debouncedText ) )
+		}, 300 )
+
+		return () => clearTimeout( timeout )
+	}, [ debouncedText ] )
 
 	return (
 		<InspectorStyleControls>
@@ -62,10 +80,9 @@ export const Edit = props => {
 					{ hasTextContent && (
 						<AdvancedTextControl
 							label={ __( 'Content', i18n ) }
-							attribute="text"
 							isMultiline={ isMultiline }
-							valueCallback={ unescape }
-							onChangeCallback={ escapeHTML }
+							value={ debouncedText }
+							onChange={ setDebouncedText }
 							isDynamic={ true }
 						/>
 					) }
