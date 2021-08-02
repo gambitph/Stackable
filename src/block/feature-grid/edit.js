@@ -30,13 +30,14 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { useBlockHoverClass } from '~stackable/hooks'
 
+const ALLOWED_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
 	[ 'stackable/column', { templateLock: true }, [
 		[ 'stackable/container', { hasContainer: true }, [
 			[ 'stackable/image' ],
 			[ 'stackable/heading', { text: __( 'Title', i18n ), textRemoveTextMargins: true } ],
 			[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
-			[ 'stackable/button-group', { contentAlign: 'center' }, [
+			[ 'stackable/button-group', {}, [
 				[ 'stackable/button', {
 					text: 'Button',
 					buttonBackgroundColor: 'transparent',
@@ -50,7 +51,7 @@ const TEMPLATE = [
 			[ 'stackable/image' ],
 			[ 'stackable/heading', { text: __( 'Title', i18n ), textRemoveTextMargins: true } ],
 			[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
-			[ 'stackable/button-group', { contentAlign: 'center' }, [
+			[ 'stackable/button-group', {}, [
 				[ 'stackable/button', {
 					text: 'Button',
 					buttonBackgroundColor: 'transparent',
@@ -106,7 +107,8 @@ const Edit = props => {
 				<div className={ contentClassNames }>
 					<InnerBlocks
 						template={ TEMPLATE }
-						templateLock="insert"
+						// templateLock="insert"
+						allowedBlocks={ ALLOWED_BLOCKS }
 						orientation="horizontal"
 					/>
 				</div>

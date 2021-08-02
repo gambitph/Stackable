@@ -31,7 +31,6 @@ const BlockStyles = props => {
 	propsToPass.attributes = { ...attributes, clientId }
 	propsToPass.options = {
 		...propsToPass.options,
-		hasJustifyContentAlign: true,
 	}
 
 	return (
@@ -57,7 +56,6 @@ BlockStyles.Content = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	propsToPass.options = {
 		...propsToPass.options,
-		hasJustifyContentAlign: true,
 	}
 
 	const styles = (
