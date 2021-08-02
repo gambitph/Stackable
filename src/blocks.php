@@ -42,6 +42,35 @@ $stk_wrapper_block_folders = array(
 	'header',
 );
 
+if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
+	/**
+	 * Function for getting the block.json metadata
+	 * based on folder names array.
+	 *
+	 * @array array folders
+	 * @return array metadata
+	 */
+	function stackable_get_metadata_by_folders( $block_folders ) {
+		$blocks = array();
+		$blocks_dir = dirname( __FILE__ ) . '/block';
+		if ( ! file_exists( $blocks_dir ) ) {
+			return $blocks;
+		}
+
+		foreach ( $block_folders as $folder_name ) {
+			$block_json_file = $blocks_dir . '/' . $folder_name . '/block.json';
+			if ( ! file_exists( $block_json_file ) ) {
+				continue;
+			}
+
+			$metadata = json_decode( file_get_contents( $block_json_file ), true );
+			array_push( $blocks, array_merge( $metadata, array( 'block_json_file' => $block_json_file ) ) );
+		}
+
+		return $blocks;
+	}
+}
+
 if ( ! function_exists( 'stackable_register_blocks' ) ) {
 	function stackable_register_blocks() {
 		global $stk_block_folders, $stk_wrapper_block_folders;
@@ -51,16 +80,12 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 			return;
 		}
 
-		$block_folders = array_merge( $stk_block_folders, $stk_wrapper_block_folders );
+		$blocks_metadata = stackable_get_metadata_by_folders( array_merge(
+			$stk_block_folders,
+			$stk_wrapper_block_folders
+		) );
 
-		foreach ( $block_folders as $folder_name ) {
-			$block_json_file = $blocks_dir . '/' . $folder_name . '/block.json';
-			if ( ! file_exists( $block_json_file ) ) {
-				continue;
-			}
-
-			$metadata = json_decode( file_get_contents( $block_json_file ), true );
-
+		foreach ( $blocks_metadata as $metadata ) {
 			$registry = WP_Block_Type_Registry::get_instance();
 			if ( $registry->is_registered( $metadata['name'] ) ) {
 				$registry->unregister( $metadata['name'] );
@@ -78,7 +103,7 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 				$metadata
 			);
 
-			register_block_type_from_metadata( $block_json_file, $register_options );
+			register_block_type_from_metadata( $metadata['block_json_file'], $register_options );
 		}
 	}
 	add_action( 'init', 'stackable_register_blocks' );
@@ -102,15 +127,9 @@ if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks' ) ) {
 
 		global $stk_wrapper_block_folders;
 		$allowed_stackable_wrapper_blocks = array();
+		$blocks_metadata = stackable_get_metadata_by_folders( $stk_wrapper_block_folders );
 
-		foreach ( $stk_wrapper_block_folders as $stk_wrapper_block ) {
-			$block_json_file = $blocks_dir . '/' . $stk_wrapper_block . '/block.json';
-			if ( ! file_exists( $block_json_file ) ) {
-				continue;
-			}
-
-			$metadata = json_decode( file_get_contents( $block_json_file ), true );
-
+		foreach ( $blocks_metadata as $metadata ) {
 			array_push( $allowed_stackable_wrapper_blocks, $metadata['name'] );
 		}
 
@@ -132,15 +151,9 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks' ) ) {
 
 		global $stk_block_folders;
 		$allowed_stackable_blocks = array();
+		$blocks_metadata = stackable_get_metadata_by_folders( $stk_block_folders );
 
-		foreach ( $stk_block_folders as $stk_block ) {
-			$block_json_file = $blocks_dir . '/' . $stk_block . '/block.json';
-			if ( ! file_exists( $block_json_file ) ) {
-				continue;
-			}
-
-			$metadata = json_decode( file_get_contents( $block_json_file ), true );
-
+		foreach ( $blocks_metadata as $metadata ) {
 			array_push( $allowed_stackable_blocks, $metadata['name'] );
 		}
 
