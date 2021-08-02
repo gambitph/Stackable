@@ -52,22 +52,27 @@ export const Edit = props => {
 	const text = getAttribute( 'text' )
 
 	const [ state ] = useBlockHoverState()
-	const [ debouncedText, setDebouncedText ] = useState( text )
+	const [ _debouncedText, _setDebouncedText ] = useState( text )
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
+	const setDebouncedText = text => _setDebouncedText( escapeHTML( text ) )
+	const debouncedText = unescape( text )
+
 	useEffect( () => {
-		if ( text !== escapeHTML( debouncedText ) ) {
-			setDebouncedText( unescape( text ) )
+		if ( text !== _debouncedText ) {
+			_setDebouncedText( text )
 		}
 	}, [ text ] )
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
-			updateAttribute( 'text', escapeHTML( debouncedText ) )
+			if ( _debouncedText !== text ) {
+				updateAttribute( 'text', _debouncedText )
+			}
 		}, 300 )
 
 		return () => clearTimeout( timeout )
-	}, [ debouncedText ] )
+	}, [ _debouncedText ] )
 
 	return (
 		<InspectorStyleControls>
