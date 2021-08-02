@@ -55,8 +55,9 @@ export const Edit = props => {
 	const [ _debouncedText, _setDebouncedText ] = useState( text )
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
+	// debounced escaped setter.
 	const setDebouncedText = text => _setDebouncedText( escapeHTML( text ) )
-	const debouncedText = unescape( text )
+	const debouncedText = unescape( _debouncedText )
 
 	useEffect( () => {
 		if ( text !== _debouncedText ) {
@@ -88,6 +89,10 @@ export const Edit = props => {
 							isMultiline={ isMultiline }
 							value={ debouncedText }
 							onChange={ setDebouncedText }
+							/**
+							 * Pass the unescaped Dynamic Content onChange function.
+							 */
+							onChangeDynamicContent={ _setDebouncedText }
 							isDynamic={ true }
 						/>
 					) }
