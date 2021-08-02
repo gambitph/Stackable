@@ -134,7 +134,6 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks' ) ) {
 			'ugb/team-member',
 			'ugb/testimonial',
 			'ugb/text',
-			'ugb/video-popup'
 		];
 
 		return array_merge( $allowed_stackable_blocks, $allowed_blocks );
