@@ -24,7 +24,7 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Button.addAttributes( attrObject, {
-		selector: '.stk-block-button__button',
+		selector: '.stk-button',
 	} )
 
 	attrObject.addDefaultValues( {
