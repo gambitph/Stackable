@@ -46,23 +46,35 @@ SVGIcon.Content = props => {
 }
 
 const LinearGradient = ( {
-	id,
-} ) => (
-	<svg style={ { height: 0, width: 0 } }>
-		<defs>
-			<linearGradient
-				id={ id }
-				x1="0"
-				x2="100%"
-				y1="0"
-				y2="0"
-			>
-				<stop offset="0%" style={ { stopOpacity: 1, stopColor: `var(--${ kebabCase( id ) }-color-1)` } }></stop>
-				<stop offset="100%" style={ { stopOpacity: 1, stopColor: `var(--${ kebabCase( id ) }-color-2)` } }></stop>
-			</linearGradient>
-		</defs>
-	</svg>
-)
+	id: _id,
+} ) => {
+	const id = kebabCase( _id )
+	return (
+		<svg style={ {
+			height: 0,
+			width: 0,
+		} }>
+			<defs>
+				<linearGradient
+					id={ id }
+					x1="0"
+					x2="100%"
+					y1="0"
+					y2="0"
+				>
+					<stop offset="0%" style={ {
+						stopOpacity: 1,
+						stopColor: `var(--${ id }-color-1)`,
+					} }></stop>
+					<stop offset="100%" style={ {
+						stopOpacity: 1,
+						stopColor: `var(--${ id }-color-2)`,
+					} }></stop>
+				</linearGradient>
+			</defs>
+		</svg>
+	)
+}
 
 export const Icon = props => {
 	const {
