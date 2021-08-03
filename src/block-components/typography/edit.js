@@ -52,7 +52,7 @@ export const Edit = props => {
 	const text = getAttribute( 'text' )
 
 	const [ state ] = useBlockHoverState()
-	const [ _debouncedText, _setDebouncedText ] = useState( text )
+	const [ debouncedText, setDebouncedText ] = useState( text )
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
 	/**
@@ -62,24 +62,24 @@ export const Edit = props => {
 	 * `TextControl`. We do this to avoid unnecessary escaping/unescaping of characters
 	 * in side effects.
 	 */
-	const debouncedText = unescape( _debouncedText )
-	const setDebouncedText = text => _setDebouncedText( escapeHTML( text ) )
+	const escapedDebouncedText = unescape( debouncedText )
+	const escapedSetDebouncedText = text => setDebouncedText( escapeHTML( text ) )
 
 	useEffect( () => {
-		if ( text !== _debouncedText ) {
-			_setDebouncedText( text )
+		if ( text !== debouncedText ) {
+			setDebouncedText( text )
 		}
 	}, [ text ] )
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
-			if ( _debouncedText !== text ) {
-				updateAttribute( 'text', _debouncedText )
+			if ( debouncedText !== text ) {
+				updateAttribute( 'text', debouncedText )
 			}
 		}, 300 )
 
 		return () => clearTimeout( timeout )
-	}, [ _debouncedText ] )
+	}, [ debouncedText ] )
 
 	return (
 		<InspectorStyleControls>
@@ -93,12 +93,12 @@ export const Edit = props => {
 						<AdvancedTextControl
 							label={ __( 'Content', i18n ) }
 							isMultiline={ isMultiline }
-							value={ debouncedText }
-							onChange={ setDebouncedText }
+							value={ escapedDebouncedText }
+							onChange={ escapedSetDebouncedText }
 							/**
 							 * Pass the unescaped Dynamic Content `onChange` function.
 							 */
-							onChangeDynamicContent={ _setDebouncedText }
+							onChangeDynamicContent={ setDebouncedText }
 							isDynamic={ true }
 						/>
 					) }
