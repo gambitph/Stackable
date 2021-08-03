@@ -27,6 +27,18 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 
+	attrObject.add( {
+		attributes: {
+			buttonGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 

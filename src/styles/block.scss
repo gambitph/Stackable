@@ -198,3 +198,41 @@
 		-o-text-fill-color: transparent;
 	}
 }
+
+// Buttons.
+.stk-block {
+	.stk--button {
+		position: relative;
+		display: flex;
+		align-items: center;
+		column-gap: 4px;
+		text-decoration: none;
+		// make sure that the anchor tag's width matches the parent's width.
+		width: 100%;
+
+		.stk--inner-svg {
+			display: flex;
+			svg {
+				height: 1em;
+				width: 1em;
+			}
+		}
+
+		&::after {
+			pointer-events: none;
+			content: "";
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			border-radius: inherit;
+		}
+
+		> * {
+			z-index: 2;
+		}
+	}
+}

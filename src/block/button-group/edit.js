@@ -12,6 +12,9 @@ import {
 	ColumnInserter,
 	GroupPlaceholder,
 	InspectorTabs,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	AdvancedRangeControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -37,7 +40,7 @@ import { Fragment, useCallback } from '@wordpress/element'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
-const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
+const ALLOWED_INNER_BLOCKS = [ 'stackable/button', 'stackable/icon-button' ]
 
 const TEMPLATE = [
 	[ 'stackable/button' ],
@@ -77,6 +80,22 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Button Gap', i18n ) }
+						attribute="buttonGap"
+						responsive="all"
+						sliderMin="0"
+						sliderMax="50"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />

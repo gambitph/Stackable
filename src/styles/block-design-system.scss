@@ -82,25 +82,22 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-.stk-block-button {
-	a.stk-block-button__button {
-		background: cssvar(button-background-color);
-		padding: cssvar(button-padding);
+a.stk--button {
+	background: cssvar(button-background-color);
+	padding: cssvar(button-padding);
 
-		.stk--inner-svg {
-			color: cssvar(button-text-color);
-		}
-
-
-		> .stk-block-button__inner-text {
-			color: cssvar(button-text-color);
-
-			&:hover {
-				color: cssvar(button-text-color); // Override theme's hover text color.
-			}
-		}
-
+	.stk--inner-svg {
+		color: cssvar(button-text-color);
 	}
+
+	> .stk--button__inner-text {
+		color: cssvar(button-text-color);
+
+		&:hover {
+			color: cssvar(button-text-color); // Override theme's hover text color.
+		}
+	}
+
 }
 
 // Block spacing when horizontally oriented.

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION, i18n } from 'stackable'
+import { version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
 } from '~stackable/components'
@@ -10,14 +10,11 @@ import {
 	withIsHovered,
 } from '~stackable/higher-order'
 import {
-	getTypographyClasses,
 	BlockDiv,
 	Advanced, CustomCSS,
 	Responsive,
 	Linking,
 	Button,
-	Typography,
-	BlockStyle,
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
@@ -32,34 +29,24 @@ import {
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { createBlock } from '@wordpress/blocks'
 
 /**
  * Internal dependencies
  */
-import { ButtonStyles } from './style'
-import { blockStyles } from './block-styles'
+import { IconButtonStyles } from './style'
 
 const Edit = props => {
 	const {
 		className,
 		isHovered,
-		onReplace,
 	} = props
-
-	const typographyInnerClasses = getTypographyClasses( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-button',
+		'stk-block-icon-button',
 		blockHoverClass,
-	] )
-
-	const typographyInnerClassNames = classnames( [
-		typographyInnerClasses,
-		'stk--button__inner-text',
 	] )
 
 	return (
@@ -68,39 +55,25 @@ const Edit = props => {
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />
 
-			<BlockStyle.InspectorControls styles={ blockStyles } />
-			<Button.InspectorControls />
-			<Typography.InspectorControls
-				hasTextTag={ false }
-				initialOpen={ false }
-				hasColor={ false }
+			<Button.InspectorControls
+				hasTextColor={ false }
+				hasIconGap={ false }
+				hasIconPosition={ false }
 			/>
 
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-button" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ButtonStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-block-button" />
+			<IconButtonStyles version={ VERSION } />
+			<CustomCSS mainBlockClass="stk-block-icon-button" />
 
 			<Linking show={ isHovered } />
 			<BlockDiv className={ blockClassNames }>
-				<Button>
-					<Typography
-						tagName="span"
-						className={ typographyInnerClassNames }
-						placeholder={ __( 'Button text', i18n ) }
-						withoutInteractiveFormatting={ true }
-						onReplace={ onReplace }
-						onSplit={ value => createBlock(
-							'stackable/button',
-							{ ...props.attributes, text: value }
-						) }
-					/>
-				</Button>
+				<Button />
 			</BlockDiv>
 		</Fragment>
 	)

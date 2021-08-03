@@ -3,61 +3,11 @@
 .stk-block.stk-block-button {
 	width: auto;
 	margin: 0;
-	margin-inline-end: 12px;
 	text-align: center;
-}
-.stk-block-button {
-	.stk--inner-svg {
-		display: flex;
-		svg {
-			height: 1em;
-			width: 1em;
-		}
-	}
-}
-.stk-block-button__button {
-	position: relative;
-	display: flex;
-	align-items: center;
-	column-gap: 4px;
-	// make sure that the anchor tag's width matches the parent's ( stk-block-button ) width.
-	width: 100%;
-	text-decoration: none;
-
-	&::after {
-		pointer-events: none;
-		content: "";
-		position: absolute;
-		z-index: 1;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		opacity: 0;
-		border-radius: inherit;
-	}
-
-	> * {
-		z-index: 2;
-	}
-}
-
-// Button alignment.
-.has-text-align-center .stk-block-button-group .stk-inner-blocks,
-.stk-block-button-group .has-text-align-center {
-	justify-content: center;
-}
-.has-text-align-right .stk-block-button-group .stk-inner-blocks,
-.stk-block-button-group .has-text-align-right {
-	justify-content: flex-end;
-}
-.has-text-align-left .stk-block-button-group .stk-inner-blocks,
-.stk-block-button-group .has-text-align-left {
-	justify-content: flex-start;
 }
 
 .stk-block-button.is-style-ghost {
-	.stk-block-button__button {
+	.stk--button {
 		border-width: 2px;
 		border-color: cssvar(button-background-color);
 		.stk--inner-svg {
@@ -65,7 +15,7 @@
 		}
 
 		&:hover {
-			.stk-block-button__inner-text {
+			.stk--button__inner-text {
 				color: cssvar(button-background-color);
 			}
 		}
@@ -77,17 +27,17 @@
 }
 
 .stk-block-button.is-style-plain {
-	.stk-block-button__button {
+	.stk--button {
 		.stk--inner-svg {
 			color: cssvar(button-background-color);
 		}
 		&:hover {
-			.stk-block-button__inner-text {
+			.stk--button__inner-text {
 				color: cssvar(button-background-color);
 			}
 		}
 
-		> .stk-block-button__inner-text {
+		> .stk--button__inner-text {
 			color: cssvar(button-background-color);
 		}
 	}

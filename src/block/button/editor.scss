@@ -6,17 +6,3 @@
 		width: unset;
 	}
 }
-
-// Button alignment.
-.has-text-align-center .stk-block-button-group .block-editor-block-list__layout,
-.stk-block-button-group .has-text-align-center .block-editor-block-list__layout {
-	justify-content: center;
-}
-.has-text-align-right .stk-block-button-group .block-editor-block-list__layout,
-.stk-block-button-group .has-text-align-right .block-editor-block-list__layout {
-	justify-content: flex-end;
-}
-.has-text-align-left .stk-block-button-group .block-editor-block-list__layout,
-.stk-block-button-group .has-text-align-left .block-editor-block-list__layout {
-	justify-content: flex-start;
-}

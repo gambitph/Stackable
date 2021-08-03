@@ -6,7 +6,6 @@ import {
 	Advanced,
 	Button,
 	BlockDiv,
-	Typography,
 	EffectsAnimations,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
@@ -18,7 +17,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
  */
 import { Fragment, renderToString } from '@wordpress/element'
 
-export const ButtonStyles = props => {
+export const IconButtonStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -43,19 +42,18 @@ export const ButtonStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } />
-			<Typography.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
 
-ButtonStyles.defaultProps = {
+IconButtonStyles.defaultProps = {
 	isEditor: false,
 	attributes: {},
 	options: {},
 }
 
-ButtonStyles.Content = props => {
+IconButtonStyles.Content = props => {
 	const {
 		options = {},
 		...propsToPass
@@ -75,7 +73,6 @@ ButtonStyles.Content = props => {
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } />
-			<Typography.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
@@ -83,7 +80,7 @@ ButtonStyles.Content = props => {
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
-ButtonStyles.Content.defaultProps = {
+IconButtonStyles.Content.defaultProps = {
 	attributes: {},
 	options: {},
 }

@@ -7,7 +7,6 @@ import {
 	CustomCSS,
 	Responsive,
 	Button,
-	Typography,
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
@@ -25,12 +24,15 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Button.addAttributes( attrObject, {
-		selector: '.stk--button',
+		selector: '.stk-block-button__button',
 	} )
 
-	Typography.addAttributes( attrObject, '.stk--button__inner-text', {
-		hasTextTag: false,
-		hasColor: false,
+	attrObject.addDefaultValues( {
+		attributes: {
+			icon: 'fa-star',
+		},
+		versionAdded: '3.0.0',
+		versionDeprecarted: '',
 	} )
 
 	return attrObject.getMerged( version )

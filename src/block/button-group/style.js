@@ -12,10 +12,36 @@ import {
 	useBlockAttributes, useDeviceType,
 } from '~stackable/hooks'
 import {
-	getUniqueBlockClass,
+	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import { Fragment, renderToString } from '@wordpress/element'
+import { Style as StyleComponent } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
+import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+
+const getStyleParams = () => {
+	return [
+		{
+			renderIn: 'edit',
+			selector: '.block-editor-block-list__layout',
+			styleRule: 'columnGap',
+			attrName: 'buttonGap',
+			format: '%spx',
+			responsive: 'all',
+		},
+		{
+			renderIn: 'save',
+			selector: '.stk-inner-blocks',
+			styleRule: 'columnGap',
+			attrName: 'buttonGap',
+			format: '%spx',
+			responsive: 'all',
+		},
+	]
+}
 
 export const ButtonGroupStyles = props => {
 	const {
@@ -33,14 +59,21 @@ export const ButtonGroupStyles = props => {
 		...propsToPass.options,
 	}
 
+	const buttonGroupStyles = useStyles( propsToPass.attributes, getStyleParams() )
+
 	return (
-		<Fragment>
+		<>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
-		</Fragment>
+			<StyleComponent
+				styles={ buttonGroupStyles }
+				versionAdded="3.0.0" versionDeprecated=""
+				{ ...propsToPass }
+			/>
+		</>
 	)
 }
 
@@ -58,14 +91,22 @@ ButtonGroupStyles.Content = props => {
 		...propsToPass.options,
 	}
 
+	const buttonGroupStyles = getStyles( propsToPass.attributes, getStyleParams() )
+
 	const styles = (
-		<Fragment>
+		<>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
-		</Fragment>
+			<StyleComponent.Content
+				styles={ buttonGroupStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+		</>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null
