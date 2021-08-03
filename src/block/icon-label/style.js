@@ -27,18 +27,10 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const getStyleParams = () => {
 	return [
 		{
-			renderIn: 'edit',
-			selector: '.block-editor-block-list__layout > *:nth-child(1)',
+			selector: '.stk-block-icon',
 			attrName: 'iconGap',
-			styleRule: 'flex',
-			format: '0 0 %spx',
-		},
-		{
-			renderIn: 'save',
-			selector: '.stk-inner-blocks > *:nth-child(1)',
-			attrName: 'iconGap',
-			styleRule: 'flex',
-			format: '0 0 %spx',
+			styleRule: 'flexBasis',
+			format: '%spx',
 		},
 	]
 }

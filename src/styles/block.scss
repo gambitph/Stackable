@@ -169,7 +169,7 @@
 	margin-top: 0;
 }
 // Headings have a large margin top except when they're the first entry.
-.stk-block-heading:not(:first-child) .stk-block-heading__text {
+:where(.stk-block-heading:not(:first-child)) .stk-block-heading__text {
 	margin-top: 1.5em;
 }
 // No margin top when the first child but only in the frontend.

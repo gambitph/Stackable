@@ -40,9 +40,9 @@ import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/icon', { contentAlign: 'left', iconSize: 32 } ],
+	[ 'stackable/icon', { contentAlign: 'left' } ],
 	[ 'stackable/heading', {
-		text: __( 'Icon Label' ), hasP: true, textTag: 'h3', textRemoveTextMargins: true,
+		text: __( 'Icon Label' ), hasP: true, textTag: 'h4',
 	} ],
 ]
 
@@ -85,6 +85,7 @@ const Edit = props => {
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 300 }
+						placeholder="64"
 					/>
 				</PanelAdvancedSettings>
 
@@ -110,9 +111,9 @@ const Edit = props => {
 							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
-					{ hasInnerBlocks && <MarginBottom /> }
 				</Fragment>
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }

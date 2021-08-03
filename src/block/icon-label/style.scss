@@ -1,0 +1,14 @@
+.stk-block-icon-label {
+	.stk-block-icon {
+		flex: 0 0 64px;
+	}
+	.stk-block-icon,
+	.stk-block-heading {
+		--stk-block-margin-bottom: 0;
+		display: flex;
+		align-items: center;
+	}
+	.stk-block-heading__text {
+		margin-block: 0;
+	}
+}
