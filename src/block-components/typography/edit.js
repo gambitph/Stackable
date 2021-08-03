@@ -62,8 +62,8 @@ export const Edit = props => {
 	 * `TextControl`. We do this to avoid unnecessary escaping/unescaping of characters
 	 * in side effects.
 	 */
-	const escapedDebouncedText = unescape( debouncedText )
-	const escapedSetDebouncedText = text => setDebouncedText( escapeHTML( text ) )
+	const unescapedDebouncedText = unescape( debouncedText )
+	const setDebouncedTextWithEscape = text => setDebouncedText( escapeHTML( text ) )
 
 	useEffect( () => {
 		if ( text !== debouncedText ) {
@@ -93,8 +93,8 @@ export const Edit = props => {
 						<AdvancedTextControl
 							label={ __( 'Content', i18n ) }
 							isMultiline={ isMultiline }
-							value={ escapedDebouncedText }
-							onChange={ escapedSetDebouncedText }
+							value={ unescapedDebouncedText }
+							onChange={ setDebouncedTextWithEscape }
 							/**
 							 * Pass the unescaped Dynamic Content `onChange` function.
 							 */
