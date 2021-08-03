@@ -40,7 +40,7 @@ export const Save = props => {
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
-		'stk--button__inner-text',
+		'stk-button__inner-text',
 	] )
 
 	return (

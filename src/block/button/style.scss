@@ -7,7 +7,7 @@
 }
 
 .stk-block-button.is-style-ghost {
-	.stk--button {
+	.stk-button {
 		border-width: 2px;
 		border-color: cssvar(button-background-color);
 		.stk--inner-svg {
@@ -15,7 +15,7 @@
 		}
 
 		&:hover {
-			.stk--button__inner-text {
+			.stk-button__inner-text {
 				color: cssvar(button-background-color);
 			}
 		}
@@ -27,17 +27,17 @@
 }
 
 .stk-block-button.is-style-plain {
-	.stk--button {
+	.stk-button {
 		.stk--inner-svg {
 			color: cssvar(button-background-color);
 		}
 		&:hover {
-			.stk--button__inner-text {
+			.stk-button__inner-text {
 				color: cssvar(button-background-color);
 			}
 		}
 
-		> .stk--button__inner-text {
+		> .stk-button__inner-text {
 			color: cssvar(button-background-color);
 		}
 	}

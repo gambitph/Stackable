@@ -32,10 +32,10 @@ export const ButtonStyles = props => {
 	propsToPass.attributes = { ...attributes, clientId }
 	propsToPass.options = {
 		...propsToPass.options,
-		selector: '.stk--button',
-		hoverSelector: '.stk--button:hover',
-		textSelector: '.stk--button > .stk--button__inner-text',
-		textHoverSelector: '.stk--button:hover > .stk--button__inner-text',
+		selector: '.stk-button',
+		hoverSelector: '.stk-button:hover',
+		textSelector: '.stk-button > .stk-button__inner-text',
+		textHoverSelector: '.stk-button:hover > .stk-button__inner-text',
 	}
 
 	return (
@@ -64,10 +64,10 @@ ButtonStyles.Content = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( propsToPass.attributes.uniqueId )
 	propsToPass.options = {
 		...options,
-		selector: '.stk--button',
-		hoverSelector: '.stk--button:hover',
-		textSelector: '.stk--button > .stk--button__inner-text',
-		textHoverSelector: '.stk--button:hover > .stk--button__inner-text',
+		selector: '.stk-button',
+		hoverSelector: '.stk-button:hover',
+		textSelector: '.stk-button > .stk-button__inner-text',
+		textHoverSelector: '.stk-button:hover > .stk-button__inner-text',
 	}
 
 	const styles = (

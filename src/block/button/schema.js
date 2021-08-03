@@ -25,10 +25,10 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Button.addAttributes( attrObject, {
-		selector: '.stk--button',
+		selector: '.stk-button',
 	} )
 
-	Typography.addAttributes( attrObject, '.stk--button__inner-text', {
+	Typography.addAttributes( attrObject, '.stk-button__inner-text', {
 		hasTextTag: false,
 		hasColor: false,
 	} )

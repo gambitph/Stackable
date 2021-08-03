@@ -82,7 +82,7 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-a.stk--button {
+a.stk-button {
 	background: cssvar(button-background-color);
 	padding: cssvar(button-padding);
 
@@ -90,7 +90,7 @@ a.stk--button {
 		color: cssvar(button-text-color);
 	}
 
-	> .stk--button__inner-text {
+	> .stk-button__inner-text {
 		color: cssvar(button-text-color);
 
 		&:hover {
