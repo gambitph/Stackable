@@ -111,11 +111,12 @@ export const useDynamicContentControlProps = props => {
 
 	const onChange = useCallback( ( newValue, editorQueryString, frontendQueryString ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
-		props.onChange(
-			props.isFormatType
-				? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
-				: `!#stk_dynamic:${ frontendQueryString }!#`
-		)
+		const willChangeValue = props.isFormatType
+			? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
+			: `!#stk_dynamic:${ frontendQueryString }!#`
+
+		props.onChange( willChangeValue )
+		setDebouncedValue( willChangeValue )
 
 		setIsPopoverOpen( false )
 	}, [ props.isFormatType, props.onChange ] )
