@@ -9,7 +9,6 @@ import { IconLabelStyles } from './style'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
-	GroupPlaceholder,
 	InspectorTabs,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
@@ -36,7 +35,6 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
-import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
@@ -53,7 +51,6 @@ const Edit = props => {
 
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
@@ -101,7 +98,6 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-icon-label" />
 
 			<BlockDiv className={ blockClassNames }>
-				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Fragment>
 					<div className={ contentClassNames }>
 						<InnerBlocks
