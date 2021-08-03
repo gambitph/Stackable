@@ -1,14 +1,21 @@
 .stk-block-icon-label {
+	// Default width of the icon width.
 	.stk-block-icon {
 		flex: 0 0 64px;
 	}
+	// Remove margins and make sure the icon and text are both centered.
 	.stk-block-icon,
 	.stk-block-heading {
 		--stk-block-margin-bottom: 0;
 		display: flex;
 		align-items: center;
 	}
+	// Remove default text margins.
 	.stk-block-heading__text {
 		margin-block: 0;
+	}
+	// Don't allow the icon and text to stack.
+	.stk-row {
+		flex-wrap: nowrap;
 	}
 }

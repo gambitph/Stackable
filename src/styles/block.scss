@@ -198,3 +198,14 @@
 		-o-text-fill-color: transparent;
 	}
 }
+
+// Text alignment should also work for flex blocks like the icon block.
+.stk-block.has-text-align-right {
+	justify-content: flex-end;
+}
+.stk-block.has-text-align-center {
+	justify-content: center;
+}
+.stk-block.has-text-align-left {
+	justify-content: flex-start;
+}
