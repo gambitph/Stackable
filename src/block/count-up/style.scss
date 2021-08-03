@@ -1,0 +1,6 @@
+.stk-block-count-up__text {
+	font-size: 48px;
+	&:not(.stk--count-up-active) {
+		opacity: 0 !important;
+	}
+}
