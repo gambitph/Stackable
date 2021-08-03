@@ -55,9 +55,15 @@ export const Edit = props => {
 	const [ _debouncedText, _setDebouncedText ] = useState( text )
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
-	// debounced escaped setter.
-	const setDebouncedText = text => _setDebouncedText( escapeHTML( text ) )
+	/**
+	 * Setter and getter for escaped/unscaped strings.
+	 *
+	 * Only allow escaping of characters when the user inputs inside the
+	 * `TextControl`. We do this to avoid unnecessary escaping/unescaping of characters
+	 * in side effects.
+	 */
 	const debouncedText = unescape( _debouncedText )
+	const setDebouncedText = text => _setDebouncedText( escapeHTML( text ) )
 
 	useEffect( () => {
 		if ( text !== _debouncedText ) {
@@ -90,7 +96,7 @@ export const Edit = props => {
 							value={ debouncedText }
 							onChange={ setDebouncedText }
 							/**
-							 * Pass the unescaped Dynamic Content onChange function.
+							 * Pass the unescaped Dynamic Content `onChange` function.
 							 */
 							onChangeDynamicContent={ _setDebouncedText }
 							isDynamic={ true }
