@@ -43,6 +43,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'borderColor',
 			attrName: 'borderColor',
 			attrNameTemplate,
+			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			hover: 'all',
 		},
 		{
@@ -53,6 +54,7 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			format: '%spx',
+			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.top,
 		},
 		{
@@ -63,6 +65,7 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			format: '%spx',
+			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.right,
 		},
 		{
@@ -73,6 +76,7 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			format: '%spx',
+			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.bottom,
 		},
 		{
@@ -83,6 +87,7 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			format: '%spx',
+			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.left,
 		},
 	]
