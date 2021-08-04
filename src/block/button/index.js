@@ -8,6 +8,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import transforms from './transforms'
 
 /**
  * External dependencies
@@ -27,6 +28,7 @@ export const settings = {
 		anchor: true,
 		stkBlockLinking: true,
 	},
+	transforms,
 
 	edit,
 	save,
