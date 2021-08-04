@@ -24,6 +24,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/icon-list': { filterAttributes: [ 'text' ] },
 		'stackable/image': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt' ] },
 		'stackable/text': { filterAttributes: [ 'text' ] },
+		'stackable/subtitle': { filterAttributes: [ 'text' ] },
 	}
 } )
 

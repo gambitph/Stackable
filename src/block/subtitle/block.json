@@ -1,0 +1,9 @@
+{
+	"name": "stackable/subtitle",
+	"title": "Subtitle",
+	"category": "common",
+	"keywords": [
+		"Subtitle"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}
