@@ -169,6 +169,9 @@ export const Style = props => {
 					...propsToPass,
 					options: {
 						...propsToPass.options,
+						selector: propsToPass.options.selector + ':before',
+						hoverSelector: propsToPass.options.selector + ':hover:before',
+						borderRadiusSelector: propsToPass.options.selector,
 						attrNameTemplate: sprintf( 'button%s', propsToPass.options?.attrNameTemplate || '%s' ),
 					},
 				} }
@@ -204,6 +207,9 @@ Style.Content = props => {
 					...propsToPass,
 					options: {
 						...propsToPass.options,
+						selector: propsToPass.options.selector + ':before',
+						hoverSelector: propsToPass.options.selector + ':hover:before',
+						borderRadiusSelector: propsToPass.options.selector,
 						attrNameTemplate: sprintf( 'button%s', propsToPass.options?.attrNameTemplate || '%s' ),
 					},
 				} }

@@ -24,17 +24,28 @@
 	width: 100%;
 	text-decoration: none;
 
+	&::before,
 	&::after {
-		pointer-events: none;
 		content: "";
 		position: absolute;
-		z-index: 1;
 		top: 0;
 		left: 0;
+		pointer-events: none;
+		border-radius: inherit;
+	}
+
+	&::before {
+		bottom: 0;
+		right: 0;
+		// Borders should be on top of the ::after pseudoelement.
+		z-index: 2;
+	}
+
+	&::after {
 		width: 100%;
 		height: 100%;
 		opacity: 0;
-		border-radius: inherit;
+		z-index: 1;
 	}
 
 	> * {
@@ -58,8 +69,11 @@
 
 .stk-block-button.is-style-ghost {
 	.stk-block-button__button {
-		border-width: 2px;
-		border-color: cssvar(button-background-color);
+		&::before {
+			border-width: cssvar(button-ghost-border-width);
+			border-color: cssvar(button-background-color);
+		}
+
 		.stk--inner-svg {
 			color: cssvar(button-background-color);
 		}
