@@ -70,14 +70,14 @@ const ButtonControls = props => {
 			{ props.onChangeUrl && props.onChangeSponsored && (
 				<AdvancedToggleControl
 					label={ __( 'Sponsored', i18n ) }
-					checked={ props.noFollow }
+					checked={ props.sponsored }
 					onChange={ props.onChangeSponsored }
 				/>
 			) }
 			{ props.onChangeUrl && props.onChangeUgc && (
 				<AdvancedToggleControl
 					label={ __( 'UGC', i18n ) }
-					checked={ props.noFollow }
+					checked={ props.ugc }
 					onChange={ props.onChangeUgc }
 				/>
 			) }
