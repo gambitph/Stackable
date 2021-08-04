@@ -27,16 +27,20 @@ const getStyleParams = () => {
 		{
 			renderIn: 'edit',
 			selector: '.block-editor-block-list__layout',
-			styleRule: 'columnGap',
-			attrName: 'buttonGap',
+			styles: {
+				columnGap: 'columnGap',
+				rowGap: 'rowGap',
+			},
 			format: '%spx',
 			responsive: 'all',
 		},
 		{
 			renderIn: 'save',
 			selector: '.stk-inner-blocks',
-			styleRule: 'columnGap',
-			attrName: 'buttonGap',
+			styles: {
+				columnGap: 'columnGap',
+				rowGap: 'rowGap',
+			},
 			format: '%spx',
 			responsive: 'all',
 		},

@@ -1,17 +1,17 @@
+.stk-block-button-group > .stk-inner-blocks {
+	column-gap: 12px;
+}
+
 // Button alignment.
-.has-text-align-center .stk-block-button-group .stk-inner-blocks,
+:where(.has-text-align-center .stk-block-button-group) .stk-inner-blocks,
 .stk-block-button-group .has-text-align-center {
 	justify-content: center;
 }
-.has-text-align-right .stk-block-button-group .stk-inner-blocks,
+:where(.has-text-align-right .stk-block-button-group) .stk-inner-blocks,
 .stk-block-button-group .has-text-align-right {
 	justify-content: flex-end;
 }
-.has-text-align-left .stk-block-button-group .stk-inner-blocks,
+:where(.has-text-align-left .stk-block-button-group) .stk-inner-blocks,
 .stk-block-button-group .has-text-align-left {
 	justify-content: flex-start;
-}
-
-.stk-block-button-group > .stk-inner-blocks {
-	column-gap: 12px;
 }

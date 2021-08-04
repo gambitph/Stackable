@@ -88,8 +88,15 @@ const Edit = props => {
 					initialOpen={ true }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Button Gap', i18n ) }
-						attribute="buttonGap"
+						label={ __( 'Column Gap', i18n ) }
+						attribute="columnGap"
+						responsive="all"
+						sliderMin="0"
+						sliderMax="50"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Row Gap', i18n ) }
+						attribute="rowGap"
 						responsive="all"
 						sliderMin="0"
 						sliderMax="50"

@@ -29,7 +29,12 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
-			buttonGap: {
+			columnGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			rowGap: {
 				stkResponsive: true,
 				type: 'number',
 				default: '',
