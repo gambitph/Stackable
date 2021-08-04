@@ -90,7 +90,7 @@ export const BorderControls = props => {
 				label={ __( 'Border Radius', i18n ) }
 				attribute={ getAttrName( 'borderRadius' ) }
 				responsive="all"
-				hover="all"
+				hover={ props.hasBorderRadiusHover }
 				className="ugb--help-tip-general-border-radius"
 				min={ 0 }
 				sliderMax={ 50 }
@@ -110,4 +110,5 @@ BorderControls.defaultProps = {
 	blockEl: null,
 	hasBorderType: true,
 	hasBorderControls: true,
+	hasBorderRadiusHover: true,
 }
