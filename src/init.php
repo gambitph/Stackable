@@ -52,18 +52,41 @@ if ( ! function_exists( 'stackable_block_frontend_assets' ) ) {
 }
 
 // TODO: make this look better -> Turn into a class
-global $stk_test;
-$stk_test = false;
+global $stk_scripts_loaded, $stk_main_script_loaded;
+global $stk_scripts_loaded;
+$stk_scripts_loaded = array();
+$stk_main_script_loaded = false;
+
 function load_frontend_scripts_conditionally( $block_content, $block ) {
-	global $stk_test;
-	if ( ! $stk_test && ! is_admin() ) {
+	global $stk_main_script_loaded, $stk_scripts_loaded;
+
+	// Load our main frontend scripts if there's a Stackable block loaded in the
+	// frontend.
+	if ( ! $stk_main_script_loaded && ! is_admin() ) {
 		if (
 			stripos( $block['blockName'], 'stackable/' ) === 0 ||
 			stripos( $block_content, '<!-- wp:stackable/' ) !==  false
 		) {
 			stackable_block_enqueue_frontend_assets();
-			$stk_test = true;
+			$stk_main_script_loaded = true;
 		}
+	}
+
+	// Load our individual block script if they're used in the page.
+	$stackable_block = '';
+	if ( stripos( $block['blockName'], 'stackable/' ) === 0 ) {
+		if ( preg_match( '#stackable/([\w\d-]+)#', $block['blockName'], $matches ) ) {
+			$stackable_block = $matches[1];
+		}
+	} else if ( stripos( $block_content, '<!-- wp:stackable/' ) !==  false ) {
+		if ( preg_match( '#stackable/([\w\d-]+)#', $block_content, $matches ) ) {
+			$stackable_block = $matches[1];
+		}
+	}
+	// Enqueue the block script once.
+	if ( ! empty( $stackable_block ) && ! array_key_exists( $stackable_block, $stk_scripts_loaded ) ) {
+		do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
+		$stk_scripts_loaded[] = $stackable_block;
 	}
 
 	return $block_content;

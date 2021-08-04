@@ -6,6 +6,7 @@ import {
 	getAttrNameFunction, __getValue, getShapeSVG,
 } from '~stackable/util'
 import { kebabCase } from 'lodash'
+import classnames from 'classnames'
 
 /**
  * Internal dependencies
@@ -47,22 +48,34 @@ SVGIcon.Content = props => {
 
 const LinearGradient = ( {
 	id,
-} ) => (
-	<svg style={ { height: 0, width: 0 } }>
-		<defs>
-			<linearGradient
-				id={ id }
-				x1="0"
-				x2="100%"
-				y1="0"
-				y2="0"
-			>
-				<stop offset="0%" style={ { stopOpacity: 1, stopColor: `var(--${ kebabCase( id ) }-color-1)` } }></stop>
-				<stop offset="100%" style={ { stopOpacity: 1, stopColor: `var(--${ kebabCase( id ) }-color-2)` } }></stop>
-			</linearGradient>
-		</defs>
-	</svg>
-)
+} ) => {
+	const kebabId = kebabCase( id )
+	return (
+		<svg style={ {
+			height: 0,
+			width: 0,
+		} }>
+			<defs>
+				<linearGradient
+					id={ id }
+					x1="0"
+					x2="100%"
+					y1="0"
+					y2="0"
+				>
+					<stop offset="0%" style={ {
+						stopOpacity: 1,
+						stopColor: `var(--${ kebabId }-color-1)`,
+					} }></stop>
+					<stop offset="100%" style={ {
+						stopOpacity: 1,
+						stopColor: `var(--${ kebabId }-color-2)`,
+					} }></stop>
+				</linearGradient>
+			</defs>
+		</svg>
+	)
+}
 
 export const Icon = props => {
 	const {
@@ -87,7 +100,25 @@ export const Icon = props => {
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
 	}, [ clickOutsideListener ] )
 
-	const { clientId } = useBlockEditContext()
+	const { clientId, isSelected } = useBlockEditContext()
+
+	// Enable editing of the icon only when the current block that implements
+	// it is selected. We need to use setTimeout since the isSelected is
+	// changed earlier.
+	const [ debouncedIsSelected, setDebouncedIsSelected ] = useState( false )
+	useEffect( () => {
+		if ( ! isSelected ) {
+			setDebouncedIsSelected( false )
+			return
+		}
+		const t = setTimeout( () => {
+			if ( isSelected ) {
+				setDebouncedIsSelected( isSelected )
+			}
+		}, 1 )
+		return () => clearTimeout( t )
+	}, [ isSelected ] )
+
 	const attributes = useBlockAttributes( clientId )
 
 	const {
@@ -118,13 +149,20 @@ export const Icon = props => {
 		return null
 	}
 
+	const classNames = classnames(
+		[ 'stk--svg-wrapper' ],
+		{ 'stk--show-cursor': debouncedIsSelected },
+	)
+
 	return (
 		<span // eslint-disable-line
-			className="stk--svg-wrapper"
+			className={ classNames }
 			onClick={ event => {
-				// Only register a click to .stk--inner-svg.
-				if ( event.target.closest( '.stk--inner-svg' ) ) {
-					setIsOpen( ! isOpen )
+				if ( debouncedIsSelected ) {
+					// Only register a click to .stk--inner-svg.
+					if ( event.target.closest( '.stk--inner-svg' ) ) {
+						setIsOpen( ! isOpen )
+					}
 				}
 			} }
 

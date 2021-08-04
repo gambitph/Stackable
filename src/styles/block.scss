@@ -169,7 +169,7 @@
 	margin-top: 0;
 }
 // Headings have a large margin top except when they're the first entry.
-.stk-block-heading:not(:first-child) .stk-block-heading__text {
+:where(.stk-block-heading:not(:first-child)) .stk-block-heading__text {
 	margin-top: 1.5em;
 }
 // No margin top when the first child but only in the frontend.
@@ -235,4 +235,15 @@
 			z-index: 2;
 		}
 	}
+}
+
+// Text alignment should also work for flex blocks like the icon block.
+.stk-block.has-text-align-right {
+	justify-content: flex-end;
+}
+.stk-block.has-text-align-center {
+	justify-content: center;
+}
+.stk-block.has-text-align-left {
+	justify-content: flex-start;
 }

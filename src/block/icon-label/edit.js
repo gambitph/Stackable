@@ -9,7 +9,6 @@ import { IconLabelStyles } from './style'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
-	GroupPlaceholder,
 	InspectorTabs,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
@@ -36,13 +35,12 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
-import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/icon', { contentAlign: 'left', iconSize: 32 } ],
+	[ 'stackable/icon', { contentAlign: 'left' } ],
 	[ 'stackable/heading', {
-		text: __( 'Icon Label' ), hasP: true, textTag: 'h3', textRemoveTextMargins: true,
+		text: __( 'Icon Label' ), hasP: true, textTag: 'h4',
 	} ],
 ]
 
@@ -53,7 +51,6 @@ const Edit = props => {
 
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
@@ -85,6 +82,7 @@ const Edit = props => {
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 300 }
+						placeholder="64"
 					/>
 				</PanelAdvancedSettings>
 
@@ -100,7 +98,6 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-icon-label" />
 
 			<BlockDiv className={ blockClassNames }>
-				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Fragment>
 					<div className={ contentClassNames }>
 						<InnerBlocks
@@ -110,9 +107,9 @@ const Edit = props => {
 							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
-					{ hasInnerBlocks && <MarginBottom /> }
 				</Fragment>
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }

@@ -111,6 +111,7 @@ export const Edit = props => {
 					sliderMax={ 100 }
 					step={ 1 }
 					allowReset={ true }
+					placeholder=""
 				/>
 
 				<AdvancedRangeControl
