@@ -20,6 +20,7 @@ const getStyleParams = () => {
 			styleRule: 'height',
 			attrName: 'height',
 			format: '%spx',
+			responsive: 'all',			
 		},
 	]
 }
@@ -90,4 +91,3 @@ SpacerStyles.Content = props => {
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
-
