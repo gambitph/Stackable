@@ -99,9 +99,13 @@ class ButtonEdit extends Component {
 			url = '',
 			newTab = '',
 			noFollow = '',
+			sponsored = '',
+			ugc = '',
 			onChangeUrl = null,
 			onChangeNewTab = null,
 			onChangeNoFollow = null,
+			onChangeSponsored = null,
+			onChangeUgc = null,
 
 			onChangeIcon = null,
 			icon = null,
@@ -174,8 +178,12 @@ class ButtonEdit extends Component {
 							onChangeUrl={ onChangeUrl }
 							newTab={ newTab }
 							noFollow={ noFollow }
+							sponsored={ sponsored }
+							ugc={ ugc }
 							onChangeNewTab={ onChangeNewTab }
 							onChangeNoFollow={ onChangeNoFollow }
+							onChangeSponsored={ onChangeSponsored }
+							onChangeUgc={ onChangeUgc }
 							disableSuggestions={ this.props.disableSuggestions }
 						/>
 					}
@@ -226,6 +234,8 @@ ButtonEdit.Content = props => {
 		iconPosition = false,
 		hoverEffect = '',
 		noFollow = false,
+		sponsored = false,
+		ugc = false,
 		ghostToNormalEffect = false,
 		target = '',
 		role = '',
@@ -259,6 +269,12 @@ ButtonEdit.Content = props => {
 	}
 	if ( noFollow ) {
 		rel.push( 'nofollow' )
+	}
+	if ( sponsored ) {
+		rel.push( 'sponsored' )
+	}
+	if ( ugc ) {
+		rel.push( 'ugc' )
 	}
 
 	const propsToPass = {}

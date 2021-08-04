@@ -53,6 +53,8 @@ const createSocialButtonAttributes = ( attrNameTemplate, options = {} ) => {
 				'Text',
 				'Url',
 				'NoFollow',
+				'Sponsored',
+				'Ugc',
 				'Icon',
 				'IconPosition',
 				'NewTab',
