@@ -204,6 +204,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.17.5 =
+* New: Added Sponsored and UGC rel options for all links
+* New: Stackable blocks now appear properly in excerpts
+* Fixed: Custom Attributes input control backward compatibility with WordPress 5.5
+
 = 2.17.4 =
 * Fixed: Loading order of styles caused some styling issues in some blocks
 
