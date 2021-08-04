@@ -65,6 +65,7 @@ const Edit = props => {
 						attribute="height"
 						sliderMin="0"
 						sliderMax="500"
+						placeholder=""
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
@@ -80,7 +81,7 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				<ResizableBox
 					size={ {
-						height: attributes[ heightAttrName ] === '' ? undefined : attributes[ heightAttrName ],
+						height: attributes[ heightAttrName ] === '' ? 50 : attributes[ heightAttrName ],
 					} }
 					enable={ { bottom: true } }
 					onResizeStop={ ( event, direction, elt, delta ) => {
