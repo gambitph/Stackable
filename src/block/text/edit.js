@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { TextStyles } from './style'
+import { createBlockCompleter } from './util'
 
 /**
  * External dependencies
@@ -30,9 +31,16 @@ import { useBlockHoverClass } from '~stackable/hooks'
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
 import { createBlock } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
+import { addFilter } from '@wordpress/hooks'
+
+addFilter( 'editor.Autocomplete.completers', 'stackable/text', ( filteredCompleters, name ) => {
+	if ( name === 'stackable/text' ) {
+		return [ ...filteredCompleters, createBlockCompleter() ]
+	}
+	return filteredCompleters
+} )
 
 const Edit = props => {
 	const {
@@ -57,7 +65,7 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
+		<>
 
 			<InspectorTabs />
 
@@ -134,7 +142,7 @@ const Edit = props => {
 				/>
 			</BlockDiv>
 			<MarginBottom />
-		</Fragment>
+		</>
 	)
 }
 
