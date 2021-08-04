@@ -9,7 +9,7 @@
 .stk-block-button.is-style-ghost {
 	.stk-button {
 		&::before {
-			border-width: 2px;
+			border-width: cssvar(button-ghost-border-width);
 			border-color: cssvar(button-background-color);
 		}
 		.stk--inner-svg {
