@@ -55,15 +55,27 @@ export const Edit = props => {
 	const [ debouncedText, setDebouncedText ] = useState( text )
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
+	/**
+	 * Setter and getter for escaped/unscaped strings.
+	 *
+	 * Only allow escaping of characters when the user inputs inside the
+	 * `TextControl`. We do this to avoid unnecessary escaping/unescaping of characters
+	 * in side effects.
+	 */
+	const unescapedDebouncedText = unescape( debouncedText )
+	const setDebouncedTextWithEscape = text => setDebouncedText( escapeHTML( text ) )
+
 	useEffect( () => {
-		if ( text !== escapeHTML( debouncedText ) ) {
-			setDebouncedText( unescape( text ) )
+		if ( text !== debouncedText ) {
+			setDebouncedText( text )
 		}
 	}, [ text ] )
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
-			updateAttribute( 'text', escapeHTML( debouncedText ) )
+			if ( debouncedText !== text ) {
+				updateAttribute( 'text', debouncedText )
+			}
 		}, 300 )
 
 		return () => clearTimeout( timeout )
@@ -81,8 +93,12 @@ export const Edit = props => {
 						<AdvancedTextControl
 							label={ __( 'Content', i18n ) }
 							isMultiline={ isMultiline }
-							value={ debouncedText }
-							onChange={ setDebouncedText }
+							value={ unescapedDebouncedText }
+							onChange={ setDebouncedTextWithEscape }
+							/**
+							 * Pass the unescaped Dynamic Content `onChange` function.
+							 */
+							onChangeDynamicContent={ setDebouncedText }
 							isDynamic={ true }
 						/>
 					) }
