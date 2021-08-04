@@ -9,7 +9,6 @@ import { ButtonGroupStyles } from './style'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
-	ColumnInserter,
 	GroupPlaceholder,
 	InspectorTabs,
 	InspectorStyleControls,
@@ -36,7 +35,7 @@ import {
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment, useCallback } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
@@ -69,11 +68,6 @@ const Edit = props => {
 		'stk-block-content',
 	] )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? <ColumnInserter label={ __( 'Add Button', i18n ) } /> : null,
-		[ hasInnerBlocks ]
-	)
-
 	return (
 		<Fragment>
 			<InspectorTabs />
@@ -91,14 +85,15 @@ const Edit = props => {
 						label={ __( 'Column Gap', i18n ) }
 						attribute="columnGap"
 						responsive="all"
-						sliderMin="0"
+						min="0"
+						placeholder=""
 						sliderMax="50"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
 						attribute="rowGap"
 						responsive="all"
-						sliderMin="0"
+						min="0"
 						sliderMax="50"
 					/>
 				</PanelAdvancedSettings>
@@ -120,7 +115,6 @@ const Edit = props => {
 						<InnerBlocks
 							orientation="horizontal"
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
-							renderAppender={ renderAppender }
 							template={ TEMPLATE }
 							templateInsertUpdatesSelection={ true }
 						/>

@@ -2,4 +2,9 @@
 	width: auto;
 	margin: 0;
 	text-align: center;
+
+	a.stk-button {
+		// Make the buttons equal in height and width by default.
+		padding: 12px;
+	}
 }

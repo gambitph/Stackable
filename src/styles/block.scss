@@ -202,6 +202,7 @@
 // Buttons.
 .stk-block {
 	.stk-button {
+		justify-content: center;
 		position: relative;
 		display: flex;
 		align-items: center;
@@ -212,9 +213,17 @@
 
 		.stk--inner-svg {
 			display: flex;
-			svg {
+			svg:last-child {
 				height: 1em;
 				width: 1em;
+				&,
+				g,
+				path,
+				rect,
+				polygon,
+				ellipse {
+					fill: #fff;
+				}
 			}
 		}
 
