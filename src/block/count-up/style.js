@@ -2,22 +2,22 @@
  * External dependencies
  */
 import {
-	Advanced,
-	Alignment,
 	BlockDiv,
-	EffectsAnimations,
+	Advanced,
+	Typography,
+	Alignment,
 	MarginBottom,
+	EffectsAnimations,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
+import { getUniqueBlockClass } from '~stackable/util'
+import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+
+/**
+ * WordPress dependencies
+ */
 import { Fragment, renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
-
-export const ButtonGroupStyles = props => {
+export const HeadingStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -29,49 +29,58 @@ export const ButtonGroupStyles = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
-	propsToPass.options = {
-		...propsToPass.options,
-	}
 
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
-			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Typography.Style { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					selector: '.stk-block-count-up__text',
+				},
+			} } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
 
-ButtonGroupStyles.defaultProps = {
+HeadingStyles.defaultProps = {
 	isEditor: false,
+	attributes: {},
+	options: {},
 }
 
-ButtonGroupStyles.Content = props => {
+HeadingStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	propsToPass.options = {
-		...propsToPass.options,
-	}
 
 	const styles = (
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Typography.Style.Content { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					selector: '.stk-block-count-up__text',
+				},
+			} } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<MarginBottom.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
-ButtonGroupStyles.Content.defaultProps = {
+HeadingStyles.Content.defaultProps = {
 	attributes: {},
+	options: {},
 }
-

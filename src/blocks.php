@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * folders containing stackable blocks without inner blocks.
  */
 $stk_block_folders = array(
-	// TODO: Include all blocks.
 	'button',
+	'count-up',
 	'heading',
 	'icon',
 	'icon-list',
@@ -30,7 +30,6 @@ $stk_block_folders = array(
  * folders containing stackable blocks with inner blocks.
  */
 $stk_wrapper_block_folders = array(
-	// TODO: Include all blocks.
 	'button-group',
 	'card',
 	'call-to-action',
@@ -40,6 +39,7 @@ $stk_wrapper_block_folders = array(
 	'feature',
 	'feature-grid',
 	'header',
+	'icon-label',
 );
 
 if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {

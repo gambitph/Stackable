@@ -113,6 +113,7 @@ module.exports = [ {
 
 	entry: {
 		'frontend_blocks': path.resolve( __dirname, '../src/block-frontend.js' ),
+		'frontend_block_count_up': path.resolve( __dirname, '../src/block/count-up/frontend-count-up.js' ),
 	},
 
 	output: {

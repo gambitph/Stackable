@@ -7,6 +7,7 @@ import {
 import {
 	isString, first,
 } from 'lodash'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -110,11 +111,12 @@ export const useDynamicContentControlProps = props => {
 
 	const onChange = useCallback( ( newValue, editorQueryString, frontendQueryString ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
-		props.onChange(
-			props.isFormatType
-				? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
-				: `!#stk_dynamic:${ frontendQueryString }!#`
-		)
+		const willChangeValue = props.isFormatType
+			? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
+			: `!#stk_dynamic:${ frontendQueryString }!#`
+
+		props.onChange( willChangeValue )
+		setDebouncedValue( willChangeValue )
 
 		setIsPopoverOpen( false )
 	}, [ props.isFormatType, props.onChange ] )
@@ -157,8 +159,13 @@ export const useDynamicContent = ( value = '' ) => {
 			return value
 		}
 
+		/**
+		 * A simple trick for subscribing to post changes.
+		 */
+		select( 'core/editor' ).getPostEdits()
+
 		return select( 'stackable/dynamic-content' ).parseDynamicContents( value )
-	} )
+	}, [ value ] )
 }
 
 /**
@@ -276,9 +283,15 @@ const DynamicContentControl = ( {
 
 	const hasDynamicContent = otherProps.activeAttribute !== ''
 
+	const classNames = classnames( [
+		'stk-dynamic-content-control',
+	], {
+		'stk--has-dynamic-content': hasDynamicContent,
+	} )
+
 	return (
 		<Fragment>
-			<div className="stk-dynamic-content-control">
+			<div className={ classNames }>
 				{ ! hasDynamicContent ? children : (
 					<TextControl
 						value={ otherProps.placeholder }

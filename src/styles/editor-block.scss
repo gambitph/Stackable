@@ -37,15 +37,17 @@
 	flex-wrap: wrap;
 }
 .stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > div {
-	flex: 1 1 0;
 	box-sizing: border-box;
 	margin-left: 0;
 	margin-right: 0;
 	width: 100%; // Some native blocks have auto widths so they won't follow left/center/right text alignment e.g. buttons
 }
+:where(.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout) > div {
+	flex: 1 1 0;
+}
 // Mobile auto-collapses all columns.
 @include mobile {
-	.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > div {
+	:where(.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout) > div {
 		flex: 1 1 100%;
 	}
 }
