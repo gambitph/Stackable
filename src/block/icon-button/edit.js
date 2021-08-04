@@ -27,7 +27,6 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -50,8 +49,7 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
-
+		<>
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />
 
@@ -75,7 +73,7 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				<Button />
 			</BlockDiv>
-		</Fragment>
+		</>
 	)
 }
 

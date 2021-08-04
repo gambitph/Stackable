@@ -36,7 +36,7 @@ import {
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment, useCallback } from '@wordpress/element'
+import { useCallback } from '@wordpress/element'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
@@ -75,7 +75,7 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
+		<>
 			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
@@ -116,7 +116,7 @@ const Edit = props => {
 				<CustomCSS mainBlockClass="stk-block-button-group" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
-				<Fragment>
+				<>
 					<div className={ contentClassNames }>
 						<InnerBlocks
 							orientation="horizontal"
@@ -126,10 +126,10 @@ const Edit = props => {
 							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
-				</Fragment>
+				</>
 			</BlockDiv>
 			{ hasInnerBlocks && <MarginBottom /> }
-		</Fragment>
+		</>
 	)
 }
 

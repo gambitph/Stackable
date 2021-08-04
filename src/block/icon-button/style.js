@@ -15,7 +15,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 /**
  * WordPress dependencies
  */
-import { Fragment, renderToString } from '@wordpress/element'
+import { renderToString } from '@wordpress/element'
 
 export const IconButtonStyles = props => {
 	const {
@@ -38,12 +38,12 @@ export const IconButtonStyles = props => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
-		</Fragment>
+		</>
 	)
 }
 
@@ -69,12 +69,12 @@ IconButtonStyles.Content = props => {
 	}
 
 	const styles = (
-		<Fragment>
+		<>
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
-		</Fragment>
+		</>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null
