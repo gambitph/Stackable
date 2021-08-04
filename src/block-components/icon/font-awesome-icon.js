@@ -29,12 +29,14 @@ const addSVGAriaLabel = ( svgHTML, ariaLabel = '' ) => {
 		return ''
 	}
 
-	svgNode.removeAttribute( 'role' )
 	if ( ariaLabel ) {
 		svgNode.setAttribute( 'aria-label', ariaLabel )
 		svgNode.setAttribute( 'role', 'img' )
+		svgNode.removeAttribute( 'aria-hidden' )
 	} else {
 		svgNode.setAttribute( 'aria-hidden', 'true' )
+		svgNode.removeAttribute( 'aria-label' )
+		svgNode.removeAttribute( 'role' )
 	}
 
 	return svgNode.outerHTML
