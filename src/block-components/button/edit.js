@@ -144,6 +144,7 @@ export const Edit = props => {
 				>
 					<BorderControls
 						attrNameTemplate="button%s"
+						hasBorderRadiusHover={ false }
 					/>
 				</PanelAdvancedSettings>
 
