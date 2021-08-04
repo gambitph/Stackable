@@ -92,7 +92,7 @@ const Edit = props => {
 							}
 						}
 
-						const block = createBlock( 'stackable/text', newAttributes )
+						const block = createBlock( 'stackable/subtitle', newAttributes )
 
 						if ( isOriginal ) {
 							block.clientId = props.clientId

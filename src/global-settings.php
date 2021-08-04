@@ -220,6 +220,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 									'h5' => $stackable_global_typography_schema,
 									'h6' => $stackable_global_typography_schema,
 									'p' => $stackable_global_typography_schema,
+									'.stk-block-subtitle' => $stackable_global_typography_schema,
 								)
 							)
 						)
@@ -454,7 +455,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					$this->generated_heading_typography_css = true;
 				} else if ( $tag === 'p' ) {
 					$this->generated_body_typography_css = true;
-				}
+				} 
 			}
 
 			if ( count( $css ) ) {
@@ -483,8 +484,15 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public function form_selectors( $tag ) {
 			if ( in_array( $tag, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
 				return $this->form_tag_selector( $tag );
+			} else if ( $tag === 'p' ) {
+				return $this->form_paragraph_selector();
+			} else if ( stripos( $tag, '.' ) === 0 ) {
+				return $this->form_class_selector( $tag );
 			}
-			return $this->form_paragraph_selector();
+		}
+
+		public function form_class_selector( $selector ) {
+			return apply_filters( 'stackable_global_typography_selectors', array( $selector ), $selector );
 		}
 
 		public function form_tag_selector( $tag ) {

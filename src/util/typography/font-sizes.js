@@ -8,13 +8,18 @@ import createTypographyStyles from './styles'
 /**
  * Gets all the font sizes via getComputedStyle
  *
- * @param {Array} tags An array of tags.
+ * @param {Array} selectors An array of tags or selector.
  */
-export const getFontSizes = tags => {
+export const getFontSizes = selectors => {
 	const dummyElement = document.createElement( 'div' )
 	dummyElement.classList.add( 'editor-styles-wrapper' )
 	dummyElement.classList.add( 'ugb-default-font-size' )
-	dummyElement.innerHTML = `<div class="wp-block">${ tags.map( t => `<${ t }></${ t }>` ).join() }</div>`
+	dummyElement.innerHTML = `<div class="wp-block">${ selectors.map( s => {
+		if ( s.startsWith( '.' ) ) {
+			return `<p class="${ s.substring( 1 ) }"></p>`
+		}
+		return `<${ s }></${ s }>`
+	} ).join() }</div>`
 	if ( ! document || ! document.body ) {
 		return {}
 	}
@@ -22,9 +27,9 @@ export const getFontSizes = tags => {
 
 	const fontSizes = {}
 
-	tags.forEach( tag => {
-		const style = window.getComputedStyle( dummyElement.querySelector( tag ) ).getPropertyValue( 'font-size' )
-		fontSizes[ tag ] = Math.round( parseFloat( style ) )
+	selectors.forEach( selector => {
+		const style = window.getComputedStyle( dummyElement.querySelector( selector ) ).getPropertyValue( 'font-size' )
+		fontSizes[ selector ] = Math.round( parseFloat( style ) )
 	} )
 
 	document.body.removeChild( dummyElement )
@@ -38,9 +43,9 @@ let fontSizes = {}
  * Fills up the fontSizes with font sizes.
  */
 const initFontSizes = () => {
-	const TAGS = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p' ]
+	const SELECTORS = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', '.stk-block-subtitle' ]
 	fontSizes = {
-		...getFontSizes( TAGS ),
+		...getFontSizes( SELECTORS ),
 	}
 }
 

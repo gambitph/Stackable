@@ -30,31 +30,35 @@ export { GlobalTypographyStyles }
 const TYPOGRAPHY_TAGS = [
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 1 ),
-		tag: 'h1',
+		selector: 'h1',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 2 ),
-		tag: 'h2',
+		selector: 'h2',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 3 ),
-		tag: 'h3',
+		selector: 'h3',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 4 ),
-		tag: 'h4',
+		selector: 'h4',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 5 ),
-		tag: 'h5',
+		selector: 'h5',
 	},
 	{
 		label: sprintf( __( 'Heading %d', i18n ), 6 ),
-		tag: 'h6',
+		selector: 'h6',
 	},
 	{
 		label: __( 'Body Text', i18n ),
-		tag: 'p',
+		selector: 'p',
+	},
+	{
+		label: __( 'Subtitle', i18n ),
+		selector: '.stk-block-subtitle',
 	},
 ]
 
@@ -80,10 +84,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo )
 	}, [ JSON.stringify( typographySettings ), applySettingsTo ] )
 
-	const changeStyles = ( tag, styles ) => {
+	const changeStyles = ( selector, styles ) => {
 		const newSettings = {
 			...typographySettings,
-			[ tag ]: styles,
+			[ selector ]: styles,
 		}
 		setTypographySettings( newSettings )
 
@@ -101,8 +105,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}, 500 )
 	}
 
-	const resetStyles = tag => {
-		const newSettings = omit( typographySettings, [ tag ] )
+	const resetStyles = selector => {
+		const newSettings = omit( typographySettings, [ selector ] )
 		setTypographySettings( newSettings )
 		doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 
@@ -148,15 +152,15 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					onChange={ changeApplySettingsTo }
 				/>
 				<ControlSeparator />
-				{ TYPOGRAPHY_TAGS.map( ( { label, tag }, index ) => {
+				{ TYPOGRAPHY_TAGS.map( ( { label, selector }, index ) => {
 					return (
 						<TypographyPicker
 							key={ index }
 							label={ label }
-							tag={ tag }
-							value={ ( typographySettings[ tag ] ) || {} }
-							onChange={ value => changeStyles( tag, value ) }
-							onReset={ () => resetStyles( tag ) }
+							selector={ selector }
+							value={ ( typographySettings[ selector ] ) || {} }
+							onChange={ value => changeStyles( selector, value ) }
+							onReset={ () => resetStyles( selector ) }
 						/>
 					)
 				} ) }

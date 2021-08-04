@@ -7,6 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'stackable_global_typography_selectors_v2' ) ) {
 	function stackable_global_typography_selectors_v2( $selectors, $tag ) {
+		// Let's not add class selectors.
+		if ( stripos( $tag, '.' ) === 0 ) {
+			return $selectors;
+		}
 		$selectors[] = '.ugb-main-block ' . $tag;
 		return $selectors;
 	}

@@ -118,11 +118,17 @@ export const GlobalTypographyStyles = () => {
 	return styles
 }
 
-export const formSelectors = ( tag, applyTo ) => {
-	if ( [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ].includes( tag ) ) {
-		return formTagSelectors( tag, applyTo )
+export const formSelectors = ( selector, applyTo ) => {
+	if ( [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ].includes( selector ) ) {
+		return formTagSelectors( selector, applyTo )
+	} else if ( selector.startsWith( '.' ) ) {
+		return formClassSelectors( selector )
 	}
 	return formParagraphSelectors( applyTo )
+}
+
+export const formClassSelectors = selector => {
+	return applyFilters( 'stackable.global-settings.typography-selectors', [ selector ], selector )
 }
 
 export const formTagSelectors = ( tag, applyTo ) => {
