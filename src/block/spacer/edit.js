@@ -89,7 +89,7 @@ const Edit = props => {
 						if ( height === '' && height === undefined ) {
 							height = 0
 						}
-						setAttributes( { [ heightAttrName ]: height + delta.height } )
+						setAttributes( { [ heightAttrName ]: parseInt( height ) + delta.height } )
 					} }
 				/>
 			</BlockDiv>
