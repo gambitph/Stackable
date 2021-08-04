@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import { TextStyles } from './style'
-import { createBlockCompleter } from './util'
 
 /**
  * External dependencies
@@ -27,6 +26,7 @@ import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
+import { createBlockCompleter } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -35,6 +35,11 @@ import { createBlock } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
+/**
+ * Add `autocompleters` support for stackable/text
+ *
+ * @see ~stackable/util/blocks#createBlockCompleter
+ */
 addFilter( 'editor.Autocomplete.completers', 'stackable/text', ( filteredCompleters, name ) => {
 	if ( name === 'stackable/text' ) {
 		return [ ...filteredCompleters, createBlockCompleter() ]
