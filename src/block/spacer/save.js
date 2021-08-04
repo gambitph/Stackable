@@ -36,7 +36,7 @@ export const Save = props => {
 	return (
 		<BlockDiv.Content className={ blockClassNames } attributes={ props.attributes }>
 			<SpacerStyles.Content { ...propsToPass } />
-			<CustomCSS.COntent attributes={ props.attributes } />
+			<CustomCSS.Content attributes={ props.attributes } />
 		</BlockDiv.Content>
 	)
 }

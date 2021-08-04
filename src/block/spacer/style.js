@@ -20,7 +20,7 @@ const getStyleParams = () => {
 			styleRule: 'height',
 			attrName: 'height',
 			format: '%spx',
-			responsive: 'all',			
+			responsive: 'all',
 		},
 	]
 }

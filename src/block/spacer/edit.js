@@ -18,24 +18,29 @@ import {
 	ConditionalDisplay,
 } from '~stackable/block-components'
 import {
-	useBlockHoverClass, useDeviceType,
+	useBlockHoverClass, useDeviceType, useBlockEl,
 } from '~stackable/hooks'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
+import { withIsHovered } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import { ResizableBox } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { useMemo } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
 
 const Edit = props => {
 	const {
 		className,
 		attributes,
 		setAttributes,
+		isHovered,
+		isSelected,
 	} = props
 
 	const deviceType = useDeviceType()
@@ -47,6 +52,14 @@ const Edit = props => {
 	] )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
+	const resizableEl = useBlockEl( '.components-resizable-box__container' )
+	const defaultMinHeight = useMemo( () => {
+		if ( ! resizableEl.el() ) {
+			return 0
+		}
+
+		return window.getComputedStyle( resizableEl.el() ).minHeight || 0
+	}, [ resizableEl.el() ] )
 
 	return (
 		<>
@@ -65,7 +78,7 @@ const Edit = props => {
 						attribute="height"
 						sliderMin="0"
 						sliderMax="500"
-						placeholder=""
+						placeholder={ defaultMinHeight }
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
@@ -80,14 +93,15 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-spacer" />
 			<BlockDiv className={ blockClassNames }>
 				<ResizableBox
+					showHandle={ isHovered || isSelected }
 					size={ {
-						height: attributes[ heightAttrName ] === '' ? undefined : attributes[ heightAttrName ],
+						height: attributes[ heightAttrName ] === '' ? defaultMinHeight : attributes[ heightAttrName ],
 					} }
 					enable={ { bottom: true } }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						let height = attributes[ heightAttrName ]
-						if ( height === '' && height === undefined ) {
-							height = 0
+						if ( height === '' || height === undefined ) {
+							height = defaultMinHeight
 						}
 						setAttributes( { [ heightAttrName ]: parseInt( height ) + delta.height } )
 					} }
@@ -97,4 +111,7 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default compose(
+	withIsHovered
+)( Edit )
+
