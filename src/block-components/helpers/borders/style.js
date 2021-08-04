@@ -13,17 +13,20 @@ const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
+		hoverSelector,
+		borderRadiusSelector,
 	} = options
 
 	return [
 		{
-			selector,
+			selector: borderRadiusSelector || selector,
 			styleRule: 'borderRadius',
 			attrName: 'borderRadius',
 			attrNameTemplate,
 			format: '%spx',
 			responsive: 'all',
 			hover: 'all',
+			hoverSelector: borderRadiusSelector ? undefined : hoverSelector,
 		},
 		{
 			selector,
@@ -31,6 +34,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'shadow',
 			attrNameTemplate,
 			hover: 'all',
+			hoverSelector,
 		},
 		{
 			selector,
@@ -44,6 +48,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'borderColor',
 			attrNameTemplate,
 			hover: 'all',
+			hoverSelector,
 		},
 		{
 			selector,
@@ -52,6 +57,7 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hover: 'all',
+			hoverSelector,
 			format: '%spx',
 			valuePreCallback: value => value?.top,
 		},
@@ -62,6 +68,7 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hover: 'all',
+			hoverSelector,
 			format: '%spx',
 			valuePreCallback: value => value?.right,
 		},
@@ -72,6 +79,7 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hover: 'all',
+			hoverSelector,
 			format: '%spx',
 			valuePreCallback: value => value?.bottom,
 		},
@@ -82,6 +90,7 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hover: 'all',
+			hoverSelector,
 			format: '%spx',
 			valuePreCallback: value => value?.left,
 		},
