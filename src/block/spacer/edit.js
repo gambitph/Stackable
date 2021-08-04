@@ -81,12 +81,12 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				<ResizableBox
 					size={ {
-						height: attributes[ heightAttrName ] === '' ? 50 : attributes[ heightAttrName ],
+						height: attributes[ heightAttrName ] === '' ? undefined : attributes[ heightAttrName ],
 					} }
 					enable={ { bottom: true } }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						let height = attributes[ heightAttrName ]
-						if ( height === '' ) {
+						if ( height === '' && height === undefined ) {
 							height = 0
 						}
 						setAttributes( { [ heightAttrName ]: height + delta.height } )
