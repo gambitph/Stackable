@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import { IconLabelStyles } from './style'
 
 /**
  * External dependencies
@@ -9,9 +9,10 @@ import BlockStyles from './style'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
-	ColumnInserter,
-	GroupPlaceholder,
 	InspectorTabs,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	AdvancedRangeControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -33,33 +34,28 @@ import {
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment, useCallback } from '@wordpress/element'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
+import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
-
 const TEMPLATE = [
-	[ 'stackable/column' ],
-	[ 'stackable/column' ],
+	[ 'stackable/icon', { contentAlign: 'left' } ],
+	[ 'stackable/heading', {
+		text: __( 'Icon Label' ), hasP: true, textTag: 'h4',
+	} ],
 ]
-const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
-		className,
+		className, attributes,
 	} = props
 
-	const rowClass = getRowClasses( props.attributes )
-	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
-	const blockHoverClass = useBlockHoverClass()
+	const rowClass = getRowClasses( attributes )
+	const blockAlignmentClass = getAlignmentClasses( attributes )
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-columns',
+		'stk-block-icon-label',
 		rowClass,
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -68,45 +64,53 @@ const Edit = props => {
 		'stk-block-content',
 	] )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? <ColumnInserter label={ __( 'Add Column', i18n ) } /> : null,
-		[ hasInnerBlocks ]
-	)
-
 	return (
 		<Fragment>
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Icon Gap' ) }
+						attribute="iconGap"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 300 }
+						placeholder="64"
+					/>
+				</PanelAdvancedSettings>
+
+			</InspectorStyleControls>
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<BlockDiv className={ blockClassNames }>
-				<BlockStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-block-columns" />
+			<IconLabelStyles version={ VERSION } />
+			<CustomCSS mainBlockClass="stk-block-icon-label" />
 
-				{ ! hasInnerBlocks && <GroupPlaceholder /> }
+			<BlockDiv className={ blockClassNames }>
 				<Fragment>
 					<div className={ contentClassNames }>
 						<InnerBlocks
 							orientation="horizontal"
-							allowedBlocks={ ALLOWED_INNER_BLOCKS }
-							renderAppender={ renderAppender }
 							template={ TEMPLATE }
-							templateLock={ props.attributes.templateLock || false }
+							templateLock={ true }
 							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
 				</Fragment>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
+			<MarginBottom />
 		</Fragment>
 	)
 }
-
 export default Edit

@@ -62,7 +62,8 @@
 	/**
 	 * Icons
 	 */
-	icon-size: 56px,
+	icon-size: 36px,
+	icon-color: #A6A6A6,
 	icon-shape-color: #ddd,
 
 	/***
@@ -141,9 +142,17 @@
 
 // Icons
 .stk--inner-svg {
-	border-color: #000;
+	border-color: cssvar(icon-color);
 	svg:last-child {
 		width: cssvar(icon-size);
 		height: cssvar(icon-size);
+		&,
+		g,
+		path,
+		rect,
+		polygon,
+		ellipse {
+			fill: cssvar(icon-color);
+		}
 	}
 }

@@ -22,20 +22,20 @@ import {
 	getRowClasses,
 	MarginBottom,
 } from '~stackable/block-components'
+import { useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-import { useBlockHoverClass } from '~stackable/hooks'
 
 const TEMPLATE = [
 	[ 'stackable/column', {}, [
 		[ 'stackable/heading', { text: __( 'Feature' ) } ],
-		[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
+		[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
 		[ 'stackable/button-group', {}, [
-			[ 'stackable/button', { text: 'Button' } ],
+			[ 'stackable/button', { text: __( 'Button' ) } ],
 		] ],
 	] ],
 	[ 'stackable/column', { templateLock: true }, [

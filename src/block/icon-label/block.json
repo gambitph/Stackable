@@ -1,0 +1,9 @@
+{
+	"name": "stackable/icon-label",
+	"title": "Icon Label",
+	"category": "layout",
+	"keywords": [
+		"SVG"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

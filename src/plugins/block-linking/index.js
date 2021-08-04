@@ -114,7 +114,7 @@ export const useClosestLinkableBlock = clientId => {
 		} = select( 'core/block-editor' )
 
 		// Check if the current block is linkable.
-		const blockType = getBlock( clientId ).name
+		const blockType = getBlock( clientId )?.name || ''
 		if ( linkableBlockTypes.includes( blockType ) ) {
 			linkableClientId = clientId
 		}
