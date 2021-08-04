@@ -51,6 +51,12 @@ if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
 	 * @return array metadata
 	 */
 	function stackable_get_metadata_by_folders( $block_folders ) {
+		// Check if the metadata have been parsed already.
+		global $stk_block_meta_data_cache;
+		if ( ! empty( $stk_block_meta_data_cache ) ) {
+			return $stk_block_meta_data_cache;
+		}
+
 		$blocks = array();
 		$blocks_dir = dirname( __FILE__ ) . '/block';
 		if ( ! file_exists( $blocks_dir ) ) {
@@ -67,6 +73,7 @@ if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
 			array_push( $blocks, array_merge( $metadata, array( 'block_json_file' => $block_json_file ) ) );
 		}
 
+		$stk_block_meta_data_cache = $blocks; // Cache.
 		return $blocks;
 	}
 }
