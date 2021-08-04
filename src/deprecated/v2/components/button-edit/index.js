@@ -234,6 +234,8 @@ ButtonEdit.Content = props => {
 		iconPosition = false,
 		hoverEffect = '',
 		noFollow = false,
+		sponsored = false,
+		ugc = false,
 		ghostToNormalEffect = false,
 		target = '',
 		role = '',
@@ -267,6 +269,12 @@ ButtonEdit.Content = props => {
 	}
 	if ( noFollow ) {
 		rel.push( 'nofollow' )
+	}
+	if ( sponsored ) {
+		rel.push( 'sponsored' )
+	}
+	if ( ugc ) {
+		rel.push( 'ugc' )
 	}
 
 	const propsToPass = {}
