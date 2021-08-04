@@ -80,6 +80,8 @@ const createContainerLinkAttributes = ( attrNameTemplate, options = {} ) => {
 			},
 			[
 				'NoFollow',
+				'Sponsored',
+				'Ugc',
 			]
 		),
 	}
@@ -158,6 +160,20 @@ const addInspectorPanel = ( output, props ) => {
 								checked={ getAttrValue( 'NoFollow' ) }
 								onChange={ noFollow => setAttributes( {
 									[ getAttrName( 'NoFollow' ) ]: noFollow,
+								} ) }
+							/>
+							<ToggleControl
+								label={ __( 'Sponsored', i18n ) }
+								checked={ getAttrValue( 'Sponsored' ) }
+								onChange={ sponsored => setAttributes( {
+									[ getAttrName( 'Sponsored' ) ]: sponsored,
+								} ) }
+							/>
+							<ToggleControl
+								label={ __( 'UGC', i18n ) }
+								checked={ getAttrValue( 'Ugc' ) }
+								onChange={ ugc => setAttributes( {
+									[ getAttrName( 'Ugc' ) ]: ugc,
 								} ) }
 							/>
 							{ column !== columns && <ControlSeparator /> }

@@ -217,6 +217,8 @@ export default {
 			'Url',
 			'NewTab',
 			'NoFollow',
+			'Sponsored',
+			'Ugc',
 		],
 	} ),
 	...createButtonAttributes( 'button1%s', {

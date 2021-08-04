@@ -67,6 +67,20 @@ const ButtonControls = props => {
 					onChange={ props.onChangeNoFollow }
 				/>
 			) }
+			{ props.onChangeUrl && props.onChangeSponsored && (
+				<ToggleControl
+					label={ __( 'Sponsored', i18n ) }
+					checked={ props.sponsored }
+					onChange={ props.onChangeSponsored }
+				/>
+			) }
+			{ props.onChangeUrl && props.onChangeUgc && (
+				<ToggleControl
+					label={ __( 'UGC', i18n ) }
+					checked={ props.ugc }
+					onChange={ props.onChangeUgc }
+				/>
+			) }
 
 			{ props.onChangeUrl && <ControlSeparator /> }
 
