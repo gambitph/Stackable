@@ -99,9 +99,13 @@ class ButtonEdit extends Component {
 			url = '',
 			newTab = '',
 			noFollow = '',
+			sponsored = '',
+			ugc = '',
 			onChangeUrl = null,
 			onChangeNewTab = null,
 			onChangeNoFollow = null,
+			onChangeSponsored = null,
+			onChangeUgc = null,
 
 			onChangeIcon = null,
 			icon = null,
@@ -174,8 +178,12 @@ class ButtonEdit extends Component {
 							onChangeUrl={ onChangeUrl }
 							newTab={ newTab }
 							noFollow={ noFollow }
+							sponsored={ sponsored }
+							ugc={ ugc }
 							onChangeNewTab={ onChangeNewTab }
 							onChangeNoFollow={ onChangeNoFollow }
+							onChangeSponsored={ onChangeSponsored }
+							onChangeUgc={ onChangeUgc }
 							disableSuggestions={ this.props.disableSuggestions }
 						/>
 					}

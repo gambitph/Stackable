@@ -84,6 +84,12 @@ const save = props => {
 					if ( attributes[ `link${ i }NoFollow` ] ) {
 						rel.push( 'nofollow' )
 					}
+					if ( attributes[ `link${ i }Sponsored` ] ) {
+						rel.push( 'sponsored' )
+					}
+					if ( attributes[ `link${ i }Ugc` ] ) {
+						rel.push( 'ugc' )
+					}
 
 					return (
 						<div

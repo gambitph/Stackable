@@ -350,8 +350,12 @@ const Edit = props => {
 										onChange={ value => setAttributes( { [ `url${ i }` ]: value } ) }
 										newTab={ attributes[ `newTab${ i }` ] }
 										noFollow={ attributes[ `noFollow${ i }` ] }
+										sponsored={ attributes[ `sponsored${ i }` ] }
+										ugc={ attributes[ `ugc${ i }` ] }
 										onChangeNewTab={ value => setAttributes( { [ `newTab${ i }` ]: value } ) }
 										onChangeNoFollow={ value => setAttributes( { [ `noFollow${ i }` ]: value } ) }
+										onChangeSponsored={ value => setAttributes( { [ `sponsored${ i }` ]: value } ) }
+										onChangeUgc={ value => setAttributes( { [ `ugc${ i }` ]: value } ) }
 										position={ urlPopupPosition }
 									/>
 								}

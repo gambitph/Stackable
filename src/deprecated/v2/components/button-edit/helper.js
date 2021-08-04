@@ -36,9 +36,13 @@ const ButtonEditHelper = props => {
 			url={ getAttrValue( 'Url' ) }
 			newTab={ getAttrValue( 'NewTab' ) }
 			noFollow={ getAttrValue( 'NoFollow' ) }
+			sponsored={ getAttrValue( 'Sponsored' ) }
+			ugc={ getAttrValue( 'Ugc' ) }
 			onChangeUrl={ value => setAttributes( { [ getAttrName( 'Url' ) ]: value } ) }
 			onChangeNewTab={ value => setAttributes( { [ getAttrName( 'NewTab' ) ]: value } ) }
 			onChangeNoFollow={ value => setAttributes( { [ getAttrName( 'NoFollow' ) ]: value } ) }
+			onChangeSponsored={ value => setAttributes( { [ getAttrName( 'Sponsored' ) ]: value } ) }
+			onChangeUgc={ value => setAttributes( { [ getAttrName( 'Ugc' ) ]: value } ) }
 
 			onChangeIcon={ value => setAttributes( { [ getAttrName( 'Icon' ) ]: value } ) }
 
@@ -71,6 +75,8 @@ ButtonEditHelper.Content = props => {
 			newTab={ getAttrValue( 'NewTab' ) }
 			url={ getAttrValue( 'Url' ) }
 			noFollow={ getAttrValue( 'NoFollow' ) }
+			sponsored={ getAttrValue( 'Sponsored' ) }
+			ugc={ getAttrValue( 'Ugc' ) }
 			hoverEffect={ getAttrValue( 'HoverEffect' ) }
 			ghostToNormalEffect={ getAttrValue( 'HoverGhostToNormal' ) }
 			shadow={ getAttrValue( 'Shadow' ) }
