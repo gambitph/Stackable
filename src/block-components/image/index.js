@@ -95,19 +95,8 @@ Image.Content = props => {
 		size={ attributes.imageSize }
 		src={ attributes.imageUrl }
 
-		width={ attributes.imageWidth || defaultWidth }
-		widthTablet={ attributes.imageWidthTablet }
-		widthMobile={ attributes.imageWidthMobile }
-		widthUnit={ attributes.imageWidthUnit || '%' }
-		widthUnitTablet={ attributes.imageWidthUnitTablet }
-		widthUnitMobile={ attributes.imageWidthUnitMobile }
-
-		height={ attributes.imageHeight || defaultHeight }
-		heightTablet={ attributes.imageHeightTablet }
-		heightMobile={ attributes.imageHeightMobile }
-		heightUnit={ attributes.imageHeightUnit || 'px' }
-		heightUnitTablet={ attributes.imageHeightUnitTablet }
-		heightUnitMobile={ attributes.imageHeightUnitMobile }
+		width={ attributes.imageWidthAttribute || attributes.imageWidth || defaultWidth }
+		height={ attributes.imageHeightAttribute || attributes.imageHeight || defaultHeight }
 
 		shape={ attributes.imageShape }
 		shapeStretch={ attributes.imageShapeStretch }
