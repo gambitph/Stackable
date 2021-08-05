@@ -1,3 +1,8 @@
+// We have a block group, and that has the bottom margin.
+.stk-block-icon-button {
+	--stk-block-margin-bottom: 0;
+}
+
 .stk-block.stk-block-icon-button {
 	width: auto;
 	margin: 0;

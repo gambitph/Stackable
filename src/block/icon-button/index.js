@@ -21,7 +21,6 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
-		stkBlockLinking: true,
 	},
 	transforms,
 

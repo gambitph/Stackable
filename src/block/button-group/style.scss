@@ -1,5 +1,8 @@
+@import "common";
+
 .stk-block-button-group > .stk-inner-blocks {
-	column-gap: 12px;
+	column-gap: cssvar(button-column-gap);
+	row-gap: cssvar(button-row-gap);
 	align-items: center; // Vertically align the buttons.
 }
 
