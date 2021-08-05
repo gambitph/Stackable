@@ -15,6 +15,7 @@ import {
 	Responsive,
 	Linking,
 	Button,
+	BlockStyle,
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
@@ -33,6 +34,7 @@ import { __ } from '@wordpress/i18n'
  * Internal dependencies
  */
 import { IconButtonStyles } from './style'
+import { blockStyles } from './block-styles'
 
 const Edit = props => {
 	const {
@@ -53,6 +55,7 @@ const Edit = props => {
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />
 
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Button.InspectorControls.Link />
 			<Button.InspectorControls.Colors
 				hasTextColor={ false }
@@ -60,7 +63,9 @@ const Edit = props => {
 			/>
 			<Button.InspectorControls.Icon hasColor={ false } />
 			<Button.InspectorControls.Size hasWidth={ true } />
-			<Button.InspectorControls.Borders />
+			<Button.InspectorControls.Borders
+				borderSelector=".stk-button"
+			/>
 
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />

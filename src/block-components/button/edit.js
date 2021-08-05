@@ -183,7 +183,7 @@ Size.defaultProps = {
 	hasWidth: false,
 }
 
-export const Borders = () => {
+export const Borders = props => {
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
@@ -193,14 +193,20 @@ export const Borders = () => {
 				<BorderControls
 					attrNameTemplate="button%s"
 					hasBorderRadiusHover={ false }
+					borderSelector={ props.borderSelector }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)
 }
 
+Borders.defaultProps = {
+	borderSelector: '',
+}
+
 export const Edit = props => {
 	const {
+		borderSelector,
 		hasTextColor,
 		hasIconGap,
 		hasIconPosition,
@@ -211,7 +217,7 @@ export const Edit = props => {
 			<Link />
 			<Colors hasTextColor={ hasTextColor } />
 			<Size />
-			<Borders />
+			<Borders borderSelector={ borderSelector } />
 			<Icon
 				hasIconGap={ hasIconGap }
 				hasIconPosition={ hasIconPosition }
@@ -221,6 +227,7 @@ export const Edit = props => {
 }
 
 Edit.defaultProps = {
+	borderSelector: '',
 	hasTextColor: true,
 	hasIconGap: true,
 	hasIconPosition: true,
