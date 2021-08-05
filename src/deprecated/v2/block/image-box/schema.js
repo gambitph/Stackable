@@ -57,7 +57,12 @@ export default {
 			default: '',
 		},
 		[ '1', '2', '3', '4' ],
-		[ 'NewTab', 'NoFollow' ]
+		[
+			'NewTab',
+			'NoFollow',
+			'Sponsored',
+			'Ugc',
+		]
 	),
 
 	// Image.

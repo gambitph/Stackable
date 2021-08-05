@@ -261,6 +261,8 @@ export default {
 			'Url',
 			'NewTab',
 			'NoFollow',
+			'Sponsored',
+			'Ugc',
 			'Icon',
 			'IconPosition',
 		],
@@ -284,6 +286,8 @@ export default {
 			'Url',
 			'NewTab',
 			'NoFollow',
+			'Sponsored',
+			'Ugc',
 		],
 	} ),
 	loadMoreButtonText: {

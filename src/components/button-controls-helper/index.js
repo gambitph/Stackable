@@ -24,9 +24,13 @@ const ButtonControlsHelper = props => {
 			url={ props.blockAttributes[ getAttrName( 'Url' ) ] || '' }
 			newTab={ props.blockAttributes[ getAttrName( 'NewTab' ) ] || '' }
 			noFollow={ props.blockAttributes[ getAttrName( 'NoFollow' ) ] || '' }
+			sponsored={ props.blockAttributes[ getAttrName( 'Sponsored' ) ] || '' }
+			ugc={ props.blockAttributes[ getAttrName( 'Ugc' ) ] || '' }
 			onChangeUrl={ value => setAttributes( { [ getAttrName( 'Url' ) ]: value } ) }
 			onChangeNewTab={ value => setAttributes( { [ getAttrName( 'NewTab' ) ]: value } ) }
 			onChangeNoFollow={ value => setAttributes( { [ getAttrName( 'NoFollow' ) ]: value } ) }
+			onChangeSponsored={ value => setAttributes( { [ getAttrName( 'Sponsored' ) ]: value } ) }
+			onChangeUgc={ value => setAttributes( { [ getAttrName( 'Ugc' ) ]: value } ) }
 
 			size={ props.blockAttributes[ getAttrName( 'Size' ) ] || '' }
 			onChangeSize={ value => setAttributes( { [ getAttrName( 'Size' ) ]: value } ) }
