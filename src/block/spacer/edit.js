@@ -18,7 +18,7 @@ import {
 	ConditionalDisplay,
 } from '~stackable/block-components'
 import {
-	useBlockHoverClass, useDeviceType, useBlockEl,
+	useBlockHoverClass, useDeviceType,
 } from '~stackable/hooks'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
@@ -31,7 +31,6 @@ import { withIsHovered } from '~stackable/higher-order'
  */
 import { ResizableBox } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { useMemo } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 
 const Edit = props => {
@@ -52,14 +51,7 @@ const Edit = props => {
 	] )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
-	const resizableEl = useBlockEl( '.components-resizable-box__container' )
-	const defaultMinHeight = useMemo( () => {
-		if ( ! resizableEl.el() ) {
-			return 0
-		}
-
-		return window.getComputedStyle( resizableEl.el() ).minHeight || 0
-	}, [ resizableEl.el() ] )
+	const defaultMinHeight = 50
 
 	return (
 		<>
