@@ -56,9 +56,12 @@ export const blockStyles = [
 						? getAttribute( 'textColor1', state )
 						: getAttribute( 'buttonBackgroundColor', state ),
 					[ getAttributeName( 'buttonBackgroundColor', state ) ]: 'transparent',
-					[ getAttributeName( 'textColor1' ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
+					[ getAttributeName( 'textColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
 						? getAttribute( 'buttonBorderColor', state ) || getAttribute( 'textColor1', state )
-						: getAttribute( 'buttonBackgroundColor' ),
+						: getAttribute( 'buttonBackgroundColor', state ),
+					[ getAttributeName( 'iconColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
+						? getAttribute( 'buttonBorderType', state ) ? getAttribute( 'buttonBorderColor', state ) : getAttribute( 'iconColor1', state )
+						: getAttribute( 'buttonBackgroundColor', state ),
 				}
 			} )
 
@@ -79,6 +82,9 @@ export const blockStyles = [
 			states.forEach( state => {
 				willSetAttributes = {
 					...willSetAttributes,
+					[ getAttributeName( 'iconColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
+						? getAttribute( 'iconColor1', state )
+						: getAttribute( 'buttonBackgroundColor', state ),
 					[ getAttributeName( 'textColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
 						? getAttribute( 'textColor1', state )
 						: getAttribute( 'buttonBackgroundColor', state ),

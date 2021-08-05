@@ -33,6 +33,23 @@
 	}
 }
 
+.stk-block-button.is-style-ghost,
+.stk-block-button.is-style-plain {
+	a.stk-button > .stk--svg-wrapper {
+		.stk--inner-svg {
+			color: cssvar(button-background-color);
+			&,
+			g,
+			path,
+			rect,
+			polygon,
+			ellipse {
+				fill: cssvar(button-background-color);
+			}
+		}
+	}
+}
+
 .stk-block-button.is-style-plain {
 	.stk-button {
 		.stk--inner-svg {

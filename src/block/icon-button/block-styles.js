@@ -58,9 +58,9 @@ export const blockStyles = [
 						? getAttribute( 'iconColor1', state )
 						: getAttribute( 'buttonBackgroundColor', state ),
 					[ getAttributeName( 'buttonBackgroundColor', state ) ]: 'transparent',
-					[ getAttributeName( 'iconColor1' ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
-						? getAttribute( 'buttonBorderColor', state ) || getAttribute( 'iconColor1', state )
-						: getAttribute( 'buttonBackgroundColor' ),
+					[ getAttributeName( 'iconColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
+						? getAttribute( 'buttonBorderType', state ) ? getAttribute( 'buttonBorderColor', state ) : getAttribute( 'iconColor1', state )
+						: getAttribute( 'buttonBackgroundColor', state ),
 				}
 			} )
 
