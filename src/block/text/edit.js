@@ -124,6 +124,7 @@ const Edit = props => {
 				<Typography
 					tagName="p"
 					className={ textClassNames }
+					placeholder={ __( 'Type / to choose a block', i18n ) }
 					onReplace={ onReplace }
 					onSplit={ ( value, isOriginal ) => {
 						// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
