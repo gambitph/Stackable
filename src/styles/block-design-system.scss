@@ -70,7 +70,8 @@
 	/***
 	 * Typography
 	 */
-	// TODO: Add typography colors
+	subtitle-size: 16px,
+	subtitle-color: #39414d,
 ) );
 
 /**
@@ -155,5 +156,21 @@
 		ellipse {
 			fill: cssvar(icon-color);
 		}
+	}
+}
+
+// Typography
+.wp-block .stk-subtitle,
+.stk-subtitle {
+	&,
+	&h1,
+	&h2,
+	&h3,
+	&h4,
+	&h5,
+	&h6,
+	&p {
+		font-size: cssvar(subtitle-size);
+		color: cssvar(subtitle-color);
 	}
 }
