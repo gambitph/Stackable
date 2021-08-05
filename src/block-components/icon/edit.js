@@ -25,6 +25,7 @@ import { Fragment } from '@wordpress/element'
 
 export const Edit = props => {
 	const {
+		hasColor,
 		hasGradient,
 		hasShape,
 		hasIconGap,
@@ -52,7 +53,7 @@ export const Edit = props => {
 					onChange={ updateAttributeHandler( 'icon' ) }
 				/>
 
-				{ hasGradient && (
+				{ hasColor && hasGradient && (
 					<Fragment>
 						<AdvancedToolbarControl
 							controls={ [
@@ -96,7 +97,7 @@ export const Edit = props => {
 					</Fragment>
 				) }
 
-				{ ! hasGradient && (
+				{ hasColor && ! hasGradient && (
 					<ColorPaletteControl
 						label={ __( 'Icon Color', i18n ) }
 						attribute="iconColor1"
@@ -282,6 +283,7 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	label: __( 'Icon', i18n ),
+	hasColor: true,
 	hasGradient: true,
 	hasShape: true,
 	hasBackgroundShape: true,

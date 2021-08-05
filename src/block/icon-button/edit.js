@@ -53,11 +53,14 @@ const Edit = props => {
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />
 
-			<Button.InspectorControls
+			<Button.InspectorControls.Link />
+			<Button.InspectorControls.Colors
 				hasTextColor={ false }
-				hasIconGap={ false }
-				hasIconPosition={ false }
+				hasIconColor={ true }
 			/>
+			<Button.InspectorControls.Icon hasColor={ false } />
+			<Button.InspectorControls.Size hasWidth={ true } />
+			<Button.InspectorControls.Borders />
 
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />

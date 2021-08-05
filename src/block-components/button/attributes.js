@@ -4,7 +4,6 @@
 import {
 	addBorderAttributes,
 } from '~stackable/block-components'
-import { omit } from 'lodash'
 import { Link, Icon } from '../'
 
 const buttonAttributes = {
@@ -32,12 +31,12 @@ const buttonAttributes = {
 		type: 'number',
 		default: '',
 	},
-	buttonTextColor: {
-		type: 'string',
-		stkHover: true,
+	buttonMinHeight: {
+		stkResponsive: true,
+		type: 'number',
 		default: '',
 	},
-	buttonMinHeight: {
+	buttonWidth: {
 		stkResponsive: true,
 		type: 'number',
 		default: '',
@@ -46,24 +45,11 @@ const buttonAttributes = {
 
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
-		hasTextColor = true,
 		selector,
 	} = options
-	const attributesToExclude = []
-
-	if ( ! hasTextColor ) {
-		attributesToExclude.push(
-			'buttonTextColorType',
-			'buttonTextColor1',
-			'buttonTextColor2',
-			'buttonTextGradientDirection',
-		)
-	}
 
 	attrObject.add( {
-		attributes: attributesToExclude.length
-			? omit( buttonAttributes, attributesToExclude )
-			: buttonAttributes,
+		attributes: buttonAttributes,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )

@@ -2,14 +2,15 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { getAttrNameFunction } from '~stackable/util'
+import { getAttributeName as _getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 
-const _getAttributeName = getAttrNameFunction( 'button%s' )
+const states = [ 'normal', 'hover', 'parent-hover' ]
+const getAttributeName = ( attrName, state = 'normal' ) => _getAttributeName( attrName, 'Desktop', state )
 
 export const blockStyles = [
 	{
@@ -17,10 +18,7 @@ export const blockStyles = [
 		label: __( 'Default', i18n ),
 		isDefault: true,
 		onSelect: attributes => {
-			const states = [ 'normal', 'hover', 'parent-hover' ]
-			const getAttributeName = ( attrName, state = 'normal' ) => _getAttributeName( attrName, 'Desktop', state )
 			const getAttribute = ( attrName, state = 'normal' ) => attributes[ getAttributeName( attrName, state ) ]
-
 			let willSetAttributes = {}
 
 			willSetAttributes.buttonBorderType = ''
@@ -28,13 +26,12 @@ export const blockStyles = [
 			states.forEach( state => {
 				willSetAttributes = {
 					...willSetAttributes,
-					[ getAttributeName( 'BackgroundColor', state ) ]: getAttribute( 'BackgroundColor', state ) !== 'transparent'
-						? getAttribute( 'BackgroundColor', state )
-						: getAttribute( 'TextColor', state ),
-					[ getAttributeName( 'TextColor', state ) ]: getAttribute( 'BackgroundColor', state ) === 'transparent'
+					[ getAttributeName( 'buttonBackgroundColor', state ) ]: getAttribute( 'buttonBackgroundColor', state ) !== 'transparent'
+						? getAttribute( 'buttonBackgroundColor', state )
+						: getAttribute( 'textColor1', state ),
+					[ getAttributeName( 'textColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
 						? undefined
-						: getAttribute( 'BackgroundColor', state ),
-
+						: getAttribute( 'buttonBackgroundColor', state ),
 				}
 			} )
 
@@ -45,8 +42,6 @@ export const blockStyles = [
 		name: 'ghost',
 		label: __( 'Ghost', i18n ),
 		onSelect: attributes => {
-			const states = [ 'normal', 'hover', 'parent-hover' ]
-			const getAttributeName = ( attrName, state = 'normal' ) => _getAttributeName( attrName, 'Desktop', state )
 			const getAttribute = ( attrName, state = 'normal' ) => attributes[ getAttributeName( attrName, state ) ]
 
 			let willSetAttributes = {}
@@ -57,13 +52,13 @@ export const blockStyles = [
 			states.forEach( state => {
 				willSetAttributes = {
 					...willSetAttributes,
-					[ getAttributeName( 'BorderColor', state ) ]: getAttribute( 'BackgroundColor', state ) === 'transparent'
-						? getAttribute( 'TextColor', state )
-						: getAttribute( 'BackgroundColor', state ),
-					[ getAttributeName( 'BackgroundColor', state ) ]: 'transparent',
-					[ getAttributeName( 'TextColor' ) ]: getAttribute( 'BackgroundColor', state ) === 'transparent'
-						? getAttribute( 'BorderColor', state ) || getAttribute( 'TextColor', state )
-						: getAttribute( 'BackgroundColor' ),
+					[ getAttributeName( 'buttonBorderColor', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
+						? getAttribute( 'textColor1', state )
+						: getAttribute( 'buttonBackgroundColor', state ),
+					[ getAttributeName( 'buttonBackgroundColor', state ) ]: 'transparent',
+					[ getAttributeName( 'textColor1' ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
+						? getAttribute( 'buttonBorderColor', state ) || getAttribute( 'textColor1', state )
+						: getAttribute( 'buttonBackgroundColor' ),
 				}
 			} )
 
@@ -74,8 +69,6 @@ export const blockStyles = [
 		name: 'plain',
 		label: __( 'Plain', i18n ),
 		onSelect: attributes => {
-			const states = [ 'normal', 'hover', 'parent-hover' ]
-			const getAttributeName = ( attrName, state = 'normal' ) => _getAttributeName( attrName, 'Desktop', state )
 			const getAttribute = ( attrName, state = 'normal' ) => attributes[ getAttributeName( attrName, state ) ]
 
 			let willSetAttributes = {}
@@ -86,10 +79,10 @@ export const blockStyles = [
 			states.forEach( state => {
 				willSetAttributes = {
 					...willSetAttributes,
-					[ getAttributeName( 'TextColor', state ) ]: getAttribute( 'BackgroundColor', state ) === 'transparent'
-						? getAttribute( 'TextColor', state )
-						: getAttribute( 'BackgroundColor', state ),
-					[ getAttributeName( 'BackgroundColor', state ) ]: 'transparent',
+					[ getAttributeName( 'textColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
+						? getAttribute( 'textColor1', state )
+						: getAttribute( 'buttonBackgroundColor', state ),
+					[ getAttributeName( 'buttonBackgroundColor', state ) ]: 'transparent',
 				}
 			} )
 
