@@ -19,7 +19,7 @@ import { useSelect } from '@wordpress/data'
 import { generateStyles } from '~stackable/block-components'
 
 const TypographyPicker = props => {
-	const { value } = props
+	const { value, help } = props
 
 	// On style change, gather all the styles then trigger the onChange.
 	const onChange = ( style, value ) => {
@@ -48,6 +48,7 @@ const TypographyPicker = props => {
 
 	return (
 		<TypographyControl
+			help={ help }
 			className={ mainClasses }
 			label={ label }
 			popoverLabel={ null }

@@ -453,15 +453,16 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				// Note whether we have global typography.
 				if ( in_array( $tag, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
 					$this->generated_heading_typography_css = true;
-				} else if ( $tag === 'p' ) {
+				} else if ( $tag === 'p' || stripos( $tag, '.' ) === 0 ) {
+					// When the $tag passed is a class selector, set the generated_body_typography_css also to true so
+					// that we can also generate `data-block-type` attributes to core blocks.
 					$this->generated_body_typography_css = true;
-				} 
+				}
 			}
 
 			if ( count( $css ) ) {
 				$inline_css = "/* Global typography */\n";
 				$inline_css .= implode( "\n", $css );
-				var_dump( $inline_css );
 				$this->generated_typography_css = $inline_css;
 			}
 		}
@@ -473,27 +474,45 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		*
 		* @since 2.17.2
 		*/
-	   public function typography_add_global_styles() {
-		   if ( ! empty( $this->generated_typography_css ) ) {
-			   // Register our dummy style so that the inline styles would get added.
-			   wp_register_style( 'ugb-style-global-typography', false );
-			   wp_enqueue_style( 'ugb-style-global-typography' );
-			   wp_add_inline_style( 'ugb-style-global-typography', $this->generated_typography_css );
-		   }
+		public function typography_add_global_styles() {
+			if ( ! empty( $this->generated_typography_css ) ) {
+				// Register our dummy style so that the inline styles would get added.
+				wp_register_style( 'ugb-style-global-typography', false );
+				wp_enqueue_style( 'ugb-style-global-typography' );
+				wp_add_inline_style( 'ugb-style-global-typography', $this->generated_typography_css );
+			}
 		}
 
-		public function form_selectors( $tag ) {
-			if ( in_array( $tag, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
-				return $this->form_tag_selector( $tag );
-			} else if ( $tag === 'p' ) {
+		public function form_selectors( $selector ) {
+			if ( in_array( $selector, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
+				return $this->form_tag_selector( $selector );
+			} else if ( $selector === 'p' ) {
 				return $this->form_paragraph_selector();
-			} else if ( stripos( $tag, '.' ) === 0 ) {
-				return $this->form_class_selector( $tag );
+			} else if ( stripos( $selector, '.' ) === 0 ) {
+				return $this->form_class_selector( $selector );
 			}
 		}
 
 		public function form_class_selector( $selector ) {
-			return apply_filters( 'stackable_global_typography_selectors', array( $selector ), $selector );
+			// Content area of the theme.
+			$selectors = array( $selector );
+			// Include Stackable blocks.
+			$selectors[] = '.stk-block ' . $selector;
+			$selectors[] = '.stk-block' . $selector;
+
+			// Include native blocks.
+			$selectors[] = '[data-block-type="core"] ' . $selector;
+			$selectors[] = '[data-block-type="core"]' . $selector;
+			$selectors[] = $selector . '[data-block-type="core"]';
+			$selectors[] = $selector . '[data-block-type="core"] ';
+
+			// Include all other blocks.
+			$selectors[] = '[class*="wp-block-"] ' . $selector;
+			$selectors[] = '[class*="wp-block-"]' . $selector;
+			$selectors[] = $selector . '[class*="wp-block-"]';
+			$selectors[] = $selector . '[class*="wp-block-"] ';
+
+			return apply_filters( 'stackable_global_typography_selectors', $selectors, $selector );
 		}
 
 		public function form_tag_selector( $tag ) {

@@ -55,6 +55,10 @@ const TYPOGRAPHY_TAGS = [
 	{
 		label: __( 'Subtitle', i18n ),
 		selector: '.stk-subtitle',
+		help: (
+			<>
+				{ sprintf( __( "This works with Stackable\'s subtitle block. To apply the above\'s typography style, just add `%s` in your block\'s Additional CSS classes. Also make sure that `%s` tag is set to avoid conflict with other typography styles", i18n ), 'stk-subtitle', 'p' ) }
+			</> ),
 	},
 	{
 		label: __( 'Body Text', i18n ),
@@ -152,9 +156,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					onChange={ changeApplySettingsTo }
 				/>
 				<ControlSeparator />
-				{ TYPOGRAPHY_TAGS.map( ( { label, selector }, index ) => {
+				{ TYPOGRAPHY_TAGS.map( ( {
+					label, selector, help,
+				}, index ) => {
 					return (
 						<TypographyPicker
+							help={ help }
 							key={ index }
 							label={ label }
 							selector={ selector }

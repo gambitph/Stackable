@@ -1,7 +1,17 @@
 // Fix the alignment of the preview.
 .ugb-global-settings-typography-control {
+	.ugb-base-control-multi-label {
+		padding-right: 8px;
+
+		&__label {
+			overflow: hidden;
+		}
+	}
 	> .components-base-control__field {
 		margin-bottom: 16px;
+		> .stk-inspector-control__reset-button {
+			bottom: unset;
+		}
 		> .components-base-control__label {
 			min-height: 25px;
 			width: calc(100% - 88px);

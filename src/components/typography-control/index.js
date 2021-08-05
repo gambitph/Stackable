@@ -48,6 +48,7 @@ const TypographyControl = props => {
 				resetPopoverTitle={ props.resetPopoverTitle }
 				resetPopoverDescription={ props.resetPopoverDescription }
 				className={ props.className }
+				help={ props.help }
 			>
 				{ props.onChangeFontFamily && (
 					<FontFamilyControl
