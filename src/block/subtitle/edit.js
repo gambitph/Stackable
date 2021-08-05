@@ -50,6 +50,7 @@ const Edit = props => {
 
 	const textClassNames = classnames( [
 		'stk-block-subtitle__text',
+		'stk-subtitle',
 		textClasses,
 		blockAlignmentClass,
 	] )
@@ -64,7 +65,7 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<Typography.InspectorControls
 				hasTextTag={ false }
-				isMultiline={ true }
+				isMultiline={ false }
 				initialOpen={ true }
 			/>
 			<EffectsAnimations.InspectorControls />

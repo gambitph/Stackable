@@ -53,12 +53,12 @@ const TYPOGRAPHY_TAGS = [
 		selector: 'h6',
 	},
 	{
-		label: __( 'Body Text', i18n ),
-		selector: 'p',
+		label: __( 'Subtitle', i18n ),
+		selector: '.stk-subtitle',
 	},
 	{
-		label: __( 'Subtitle', i18n ),
-		selector: '.stk-block-subtitle',
+		label: __( 'Body Text', i18n ),
+		selector: 'p',
 	},
 ]
 

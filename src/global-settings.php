@@ -220,7 +220,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 									'h5' => $stackable_global_typography_schema,
 									'h6' => $stackable_global_typography_schema,
 									'p' => $stackable_global_typography_schema,
-									'.stk-block-subtitle' => $stackable_global_typography_schema,
+									'.stk-subtitle' => $stackable_global_typography_schema,
 								)
 							)
 						)
@@ -461,6 +461,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( count( $css ) ) {
 				$inline_css = "/* Global typography */\n";
 				$inline_css .= implode( "\n", $css );
+				var_dump( $inline_css );
 				$this->generated_typography_css = $inline_css;
 			}
 		}

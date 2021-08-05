@@ -38,6 +38,7 @@ const Save = props => {
 
 	const textClassNames = classnames( [
 		'stk-block-subtitle__text',
+		'stk-subtitle',
 		textClasses,
 		blockAlignmentClass,
 	] )

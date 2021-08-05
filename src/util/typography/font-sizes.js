@@ -43,7 +43,7 @@ let fontSizes = {}
  * Fills up the fontSizes with font sizes.
  */
 const initFontSizes = () => {
-	const SELECTORS = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', '.stk-block-subtitle' ]
+	const SELECTORS = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', '.stk-subtitle' ]
 	fontSizes = {
 		...getFontSizes( SELECTORS ),
 	}
