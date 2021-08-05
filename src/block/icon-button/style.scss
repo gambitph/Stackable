@@ -1,3 +1,5 @@
+@import "common";
+
 // We have a block group, and that has the bottom margin.
 .stk-block-icon-button {
 	--stk-block-margin-bottom: 0;
@@ -11,5 +13,28 @@
 	a.stk-button {
 		// Make the buttons equal in height and width by default.
 		padding: 12px;
+		border-radius: 24px;
+	}
+
+	&.is-style-pill a.stk-button {
+		width: 64px;
+	}
+
+	&.is-style-ghost a.stk-button {
+		&::before {
+			border-width: cssvar(button-ghost-border-width);
+			border-color: cssvar(button-background-color);
+		}
+		.stk--inner-svg {
+			color: cssvar(button-background-color);
+			&,
+			g,
+			path,
+			rect,
+			polygon,
+			ellipse {
+				fill: cssvar(button-background-color);
+			}
+		}
 	}
 }

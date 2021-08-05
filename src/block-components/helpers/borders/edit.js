@@ -17,7 +17,7 @@ import {
 	Fragment, useMemo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, useBlockEl } from '~stackable/hooks'
 
 const BORDER_CONTROLS = [
 	{
@@ -44,11 +44,13 @@ export const BorderControls = props => {
 		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const blockEl = useBlockEl()
+
 	const borderRadiusPlaceholder = useMemo( () => {
-		return props.blockEl
-			? () => props.blockEl.el() && parseFloat( window.getComputedStyle( props.blockEl.el() ).borderRadius )
+		return blockEl
+			? () => blockEl.el() && parseFloat( window.getComputedStyle( props.borderSelector ? blockEl.el().querySelector( props.borderSelector ) : blockEl.el() ).borderRadius )
 			: null
-	}, [ props.blockEl ] )
+	}, [ blockEl, props.borderSelector ] )
 
 	return (
 		<Fragment>
@@ -111,4 +113,5 @@ BorderControls.defaultProps = {
 	hasBorderType: true,
 	hasBorderControls: true,
 	hasBorderRadiusHover: true,
+	borderSelector: null,
 }

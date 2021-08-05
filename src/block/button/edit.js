@@ -12,7 +12,8 @@ import {
 import {
 	getTypographyClasses,
 	BlockDiv,
-	Advanced, CustomCSS,
+	Advanced,
+	CustomCSS,
 	Responsive,
 	Linking,
 	Button,
@@ -68,7 +69,9 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 
 			<BlockStyle.InspectorControls styles={ blockStyles } />
-			<Button.InspectorControls />
+			<Button.InspectorControls
+				borderSelector=".stk-button"
+			/>
 			<Typography.InspectorControls
 				hasTextTag={ false }
 				initialOpen={ false }
