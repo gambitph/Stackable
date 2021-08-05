@@ -42,12 +42,6 @@ export const blockStyles = [
 		onSelect: defaultOnSelect,
 	},
 	{
-		name: 'pill',
-		label: __( 'Pill', i18n ),
-		// Same implementation with default style, except we add additional styles in style.scss
-		onSelect: defaultOnSelect,
-	},
-	{
 		name: 'ghost',
 		label: __( 'Ghost', i18n ),
 		onSelect: attributes => {
@@ -67,6 +61,36 @@ export const blockStyles = [
 					[ getAttributeName( 'iconColor1' ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
 						? getAttribute( 'buttonBorderColor', state ) || getAttribute( 'iconColor1', state )
 						: getAttribute( 'buttonBackgroundColor' ),
+				}
+			} )
+
+			return willSetAttributes
+		},
+	},
+	{
+		name: 'pill',
+		label: __( 'Pill', i18n ),
+		// Same implementation with default style, except we add additional styles in style.scss
+		onSelect: defaultOnSelect,
+	},
+	{
+		name: 'plain',
+		label: __( 'Plain', i18n ),
+		onSelect: attributes => {
+			const getAttribute = ( attrName, state = 'normal' ) => attributes[ getAttributeName( attrName, state ) ]
+
+			let willSetAttributes = {}
+
+			willSetAttributes.buttonBackgroundColorType = ''
+			willSetAttributes.buttonBorderType = ''
+
+			states.forEach( state => {
+				willSetAttributes = {
+					...willSetAttributes,
+					[ getAttributeName( 'iconColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
+						? getAttribute( 'iconColor1', state )
+						: getAttribute( 'buttonBackgroundColor', state ),
+					[ getAttributeName( 'buttonBackgroundColor', state ) ]: 'transparent',
 				}
 			} )
 

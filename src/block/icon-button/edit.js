@@ -65,6 +65,7 @@ const Edit = props => {
 			<Button.InspectorControls.Size hasWidth={ true } />
 			<Button.InspectorControls.Borders
 				borderSelector=".stk-button"
+				placeholder="24"
 			/>
 
 			<Advanced.InspectorControls />

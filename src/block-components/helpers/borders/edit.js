@@ -14,10 +14,10 @@ import {
  * WordPress dependencies
  */
 import {
-	Fragment, useMemo,
+	Fragment,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { useAttributeEditHandlers, useBlockEl } from '~stackable/hooks'
+import { useAttributeEditHandlers } from '~stackable/hooks'
 
 const BORDER_CONTROLS = [
 	{
@@ -43,14 +43,6 @@ export const BorderControls = props => {
 		getAttribute,
 		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
-
-	const blockEl = useBlockEl()
-
-	const borderRadiusPlaceholder = useMemo( () => {
-		return blockEl
-			? () => blockEl.el() && parseFloat( window.getComputedStyle( props.borderSelector ? blockEl.el().querySelector( props.borderSelector ) : blockEl.el() ).borderRadius )
-			: null
-	}, [ blockEl, props.borderSelector ] )
 
 	return (
 		<Fragment>
@@ -96,7 +88,7 @@ export const BorderControls = props => {
 				className="ugb--help-tip-general-border-radius"
 				min={ 0 }
 				sliderMax={ 50 }
-				placeholderRender={ borderRadiusPlaceholder }
+				placeholderRender={ props.borderRadiusPlaceholder }
 			/>
 			<ShadowControl
 				label={ __( 'Shadow / Outline', i18n ) }

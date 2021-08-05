@@ -194,6 +194,7 @@ export const Borders = props => {
 					attrNameTemplate="button%s"
 					hasBorderRadiusHover={ false }
 					borderSelector={ props.borderSelector }
+					borderRadiusPlaceholder={ props.placeholder }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
@@ -210,6 +211,7 @@ export const Edit = props => {
 		hasTextColor,
 		hasIconGap,
 		hasIconPosition,
+		borderRadiusPlaceholder,
 	} = props
 
 	return (
@@ -217,7 +219,10 @@ export const Edit = props => {
 			<Link />
 			<Colors hasTextColor={ hasTextColor } />
 			<Size />
-			<Borders borderSelector={ borderSelector } />
+			<Borders
+				borderSelector={ borderSelector }
+				placeholder={ borderRadiusPlaceholder }
+			/>
 			<Icon
 				hasIconGap={ hasIconGap }
 				hasIconPosition={ hasIconPosition }
