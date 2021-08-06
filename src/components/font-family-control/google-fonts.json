@@ -550,6 +550,26 @@
     ]
   },
   {
+    "family": "Andada Pro",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Andika",
     "variants": [
       "regular"
@@ -989,6 +1009,19 @@
       "latin-ext",
       "thai",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Atkinson Hyperlegible",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -4787,6 +4820,34 @@
     ]
   },
   {
+    "family": "Georama",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Geostar",
     "variants": [
       "regular"
@@ -4960,6 +5021,31 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Gowun Batang",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "korean",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Gowun Dodum",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "korean",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -5158,6 +5244,26 @@
       "japanese",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Hahmlet",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "korean",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -7326,7 +7432,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -8142,6 +8249,17 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "MonteCarlo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9497,6 +9615,16 @@
     ]
   },
   {
+    "family": "Palette Mosaic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin"
+    ]
+  },
+  {
     "family": "Pangolin",
     "variants": [
       "regular"
@@ -9801,7 +9929,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -10439,12 +10568,18 @@
       "regular",
       "500",
       "600",
-      "700"
+      "700",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
     ],
     "subsets": [
       "gujarati",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -11006,6 +11141,27 @@
     "family": "STIX Two Math",
     "variants": [
       "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "STIX Two Text",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
     ],
     "subsets": [
       "cyrillic",
@@ -12161,6 +12317,17 @@
     ]
   },
   {
+    "family": "Style Script",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Stylish",
     "variants": [
       "regular"
@@ -13215,6 +13382,18 @@
     ]
   },
   {
+    "family": "WindSong",
+    "variants": [
+      "regular",
+      "500"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Wire One",
     "variants": [
       "regular"
@@ -13368,11 +13547,17 @@
       "regular",
       "500",
       "600",
-      "700"
+      "700",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {

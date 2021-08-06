@@ -447,7 +447,7 @@ ImageContent.defaultProps = {
 
 	width: '',
 	height: '',
-	widthUnit: '%',
+	widthUnit: 'px',
 	heightUnit: 'px',
 
 	shape: '',
