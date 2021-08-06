@@ -1,5 +1,6 @@
 @import "block-design-system";
 
+// TODO: revisit this since we're aiming for block max-width instead
 // Block background when the block is full width
 [data-align="full"] > .stk-block-background {
 	padding: cssvar(block-background-full-padding);

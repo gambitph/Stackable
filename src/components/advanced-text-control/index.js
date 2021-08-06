@@ -32,7 +32,7 @@ const AdvancedTextControl = props => {
 	const dynamicContentProps = useDynamicContentControlProps( {
 		value: typeof props.value === 'undefined' ? value : props.value,
 		onChange: onChangeDynamicContent,
-		isFormatType: true,
+		isFormatType: props.isFormatType,
 	} )
 
 	const TextInput = isMultiline ? TextareaControl : TextControl
@@ -70,6 +70,7 @@ AdvancedTextControl.defaultProps = {
 	responsive: false,
 	hover: false,
 	isDynamic: false,
+	isFormatType: true,
 
 	value: undefined,
 	onChange: undefined,

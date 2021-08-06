@@ -11,17 +11,15 @@ import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
-
-const parentBlocksWithoutMargin = [
-	'stackable/icon-label',
-]
+import { applyFilters } from '@wordpress/hooks'
 
 export const MarginBottom = () => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 	const { isLastBlock, parentBlock } = useBlockContext()
 
-	if ( isLastBlock || parentBlocksWithoutMargin.includes( parentBlock?.name ) ) {
+	const enable = applyFilters( 'stackable.edit.margin-bottom.enable-handlers', true, parentBlock )
+	if ( isLastBlock || ! enable ) {
 		return null
 	}
 

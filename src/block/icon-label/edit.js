@@ -36,6 +36,7 @@ import {
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { addFilter } from '@wordpress/hooks'
 
 const TEMPLATE = [
 	[ 'stackable/icon', { contentAlign: 'left' } ],
@@ -114,3 +115,8 @@ const Edit = props => {
 	)
 }
 export default Edit
+
+// Disable bottom margins for child blocks.
+addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/icon-label', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/icon-label' ? false : enabled
+} )
