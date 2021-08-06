@@ -90,6 +90,7 @@
 a.stk-button {
 	background: cssvar(button-background-color);
 	padding: cssvar(button-padding);
+	color: cssvar(button-text-color);
 
 	.stk--inner-svg {
 		color: cssvar(button-text-color);
