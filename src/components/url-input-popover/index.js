@@ -126,6 +126,8 @@ UrlInputPopover.defaultProps = {
 	position: 'bottom center',
 	newTab: false,
 	noFollow: false,
+	ugc: false,
+	sponsored: false,
 	onChangeNewTab: null,
 	onChangeNoFollow: null,
 }

@@ -212,6 +212,8 @@ ButtonEdit.defaultProps = {
 	url: '',
 	newTab: '',
 	noFollow: '',
+	sponsored: '',
+	ugc: '',
 	onChangeUrl: null,
 	onChangeNewTab: null,
 	onChangeNoFollow: null,
