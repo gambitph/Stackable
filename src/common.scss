@@ -27,3 +27,14 @@
 .stk-block::after {
 	content: none !important;
 }
+
+// Utility class to easily add an overlay button on an element
+.stk--transparent-overlay {
+	all: unset !important; // We need to unset since we want to ensure that this is invisible.
+	position: absolute !important;
+	inset: 0 !important;
+	width: 100% !important;
+	background: transparent !important;
+	cursor: pointer;
+	z-index: 3;
+}

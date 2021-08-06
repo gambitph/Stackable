@@ -64,6 +64,8 @@ const save = props => {
 		buttonDesign = 'basic',
 		buttonHoverGhostToNormal = false,
 		buttonNoFollow = false,
+		buttonSponsored = false,
+		buttonUgc = false,
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -132,6 +134,8 @@ const save = props => {
 								newTab={ buttonNewTab !== '' && buttonNewTab }
 								url={ buttonUrl }
 								noFollow={ buttonNoFollow }
+								sponsored={ buttonSponsored }
+								ugc={ buttonUgc }
 								hoverEffect={ buttonHoverEffect }
 								ghostToNormalEffect={ buttonHoverGhostToNormal }
 								shadow={ buttonShadow }

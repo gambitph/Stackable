@@ -37,6 +37,8 @@ const save = props => {
 		button1IconPosition = '',
 		button1NewTab = false,
 		button1NoFollow = false,
+		button1Sponsored = false,
+		button1Ugc = false,
 		button1Url = '',
 		button1Design = 'basic',
 		button1HoverGhostToNormal = false,
@@ -48,6 +50,8 @@ const save = props => {
 		button2IconPosition = '',
 		button2NewTab = false,
 		button2NoFollow = false,
+		button2Sponsored = false,
+		button2Ugc = false,
 		button2Url = '',
 		button2Design = 'basic',
 		button2HoverGhostToNormal = false,
@@ -59,6 +63,8 @@ const save = props => {
 		button3IconPosition = '',
 		button3NewTab = false,
 		button3NoFollow = false,
+		button3Sponsored = false,
+		button3Ugc = false,
 		button3Url = '',
 		button3Design = 'basic',
 		button3HoverGhostToNormal = false,
@@ -84,6 +90,8 @@ const save = props => {
 					newTab={ button1NewTab !== '' && button1NewTab }
 					url={ button1Url }
 					noFollow={ button1NoFollow }
+					sponsored={ button1Sponsored }
+					ugc={ button1Ugc }
 					hoverEffect={ button1HoverEffect }
 					ghostToNormalEffect={ button1HoverGhostToNormal }
 					shadow={ button1Shadow }
@@ -99,6 +107,8 @@ const save = props => {
 						newTab={ button2NewTab !== '' && button2NewTab }
 						url={ button2Url }
 						noFollow={ button2NoFollow }
+						sponsored={ button2Sponsored }
+						ugc={ button2Ugc }
 						hoverEffect={ button2HoverEffect }
 						ghostToNormalEffect={ button2HoverGhostToNormal }
 						shadow={ button2Shadow }
@@ -115,6 +125,8 @@ const save = props => {
 						newTab={ button3NewTab !== '' && button3NewTab }
 						url={ button3Url }
 						noFollow={ button3NoFollow }
+						sponsored={ button3Sponsored }
+						ugc={ button3Ugc }
 						hoverEffect={ button3HoverEffect }
 						ghostToNormalEffect={ button3HoverGhostToNormal }
 						shadow={ button3Shadow }

@@ -117,6 +117,8 @@ const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 			[
 				'HoverGhostToNormal',
 				'NoFollow',
+				'Sponsored',
+				'Ugc',
 			]
 		),
 	}, exclude, attrNameTemplate ), include, attrNameTemplate )

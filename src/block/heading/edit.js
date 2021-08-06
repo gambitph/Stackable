@@ -26,6 +26,7 @@ import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, ColorPaletteControl, AdvancedRangeControl, AlignButtonsControl,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
+import { createBlockCompleter } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -33,6 +34,19 @@ import { useBlockHoverClass } from '~stackable/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
+import { addFilter } from '@wordpress/hooks'
+
+/**
+ * Add `autocompleters` support for stackable/heading
+ *
+ * @see ~stackable/util/blocks#createBlockCompleter
+ */
+addFilter( 'editor.Autocomplete.completers', 'stackable/heading', ( filteredCompleters, name ) => {
+	if ( name === 'stackable/heading' ) {
+		return [ ...filteredCompleters, createBlockCompleter() ]
+	}
+	return filteredCompleters
+} )
 
 const Edit = props => {
 	const {
