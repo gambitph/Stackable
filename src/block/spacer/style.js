@@ -12,10 +12,15 @@ import {
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
 import { Style as StyleComponent } from '~stackable/components'
 
+/**
+ * WordPress dependencies
+ */
+import { renderToString } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
+
 const getStyleParams = () => {
 	return [
 		{
-			renderIn: 'save',
 			selector: '',
 			styleRule: 'height',
 			attrName: 'height',
@@ -24,12 +29,6 @@ const getStyleParams = () => {
 		},
 	]
 }
-
-/**
- * WordPress dependencies
- */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const SpacerStyles = props => {
 	const {
