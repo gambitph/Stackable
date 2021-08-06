@@ -12,6 +12,9 @@ class Stackable_Context {
 	 * $this->stk_context_parser( '<div>!#STK_CONTEXT_postTitle!#</div>' )
 	 * returns array( 'postTitle' )
 	 * ```
+	 *
+	 * @param string $content
+	 * @return array content matches
 	 */
 	public static function stk_context_parser( $content ) {
 		preg_match_all( '/!#STK_CONTEXT_(.*?)!#/', $content, $matches );
@@ -23,7 +26,7 @@ class Stackable_Context {
 	 * whether the block has !#STK_CONTEXT_.
 	 *
 	 * @param string $content
-	 * $param array $block
+	 * @param array $block
 	 *
 	 * @return bool true if exists, otherwise, false.
 	 */
@@ -31,6 +34,18 @@ class Stackable_Context {
 		return ! ( count( $block->context ) === 0 || stripos( $content, '!#STK_CONTEXT_' ) === false );
 	}
 
+	/**
+	 * Block's render_callback function.
+	 * Use this render callback to parse
+	 * all `!#STK_CONTEXT_(.*?)!#` instances
+	 * of the block and return its actual value.
+	 *
+	 * @param array $attributes
+	 * @param string $content
+	 * @param array $block
+	 *
+	 * @return string new block content.
+	 */
 	public static function render_callback( $attributes, $content, $block ) {
 		if ( ! self::has_stk_context( $content, $block ) ) {
 			return $content;
