@@ -130,6 +130,8 @@ UrlInputPopover.defaultProps = {
 	sponsored: false,
 	onChangeNewTab: null,
 	onChangeNoFollow: null,
+	onChangeSponsored: null,
+	onChangeUgc: null,
 }
 
 export default UrlInputPopover

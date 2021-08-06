@@ -217,6 +217,8 @@ ButtonEdit.defaultProps = {
 	onChangeUrl: null,
 	onChangeNewTab: null,
 	onChangeNoFollow: null,
+	onChangeSponsored: null,
+	onChangeUgc: null,
 
 	onChangeIcon: null,
 	icon: null,
