@@ -19,12 +19,12 @@ if ( ! hasFilter( 'stackable.block-components.context', 'stackable/default-conte
 	const addAvailableContextValues = ( availableContext = [], context ) => {
 		const newAvailableContext = []
 
-		if ( context.postId ) {
+		if ( context.postId && context.postType ) {
 			newAvailableContext.push( {
 				label: __( 'Post Title', i18n ),
 				value: 'postTitle',
 				callback( select ) {
-					return select( 'core' ).getEntityRecord( 'postType', 'post', context.postId )?.title?.rendered
+					return select( 'core' ).getEntityRecord( 'postType', context.postType, context.postId )?.title?.rendered
 				},
 			} )
 		}

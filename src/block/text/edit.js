@@ -19,6 +19,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Context,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -51,6 +52,7 @@ const Edit = props => {
 	const {
 		className,
 		onReplace,
+		context,
 	} = props
 
 	const blockHoverClass = useBlockHoverClass()
@@ -106,6 +108,7 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
+			<Context.InspectorControls context={ context } />
 			<Typography.InspectorControls
 				hasTextTag={ false }
 				isMultiline={ true }
@@ -122,6 +125,7 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<Typography
+					context={ context }
 					tagName="p"
 					className={ textClassNames }
 					placeholder={ __( 'Type / to choose a block', i18n ) }

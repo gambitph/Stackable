@@ -50,6 +50,9 @@ export const Edit = props => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 
 	const text = getAttribute( 'text' )
+	const usesContext = getAttribute( 'usesContext' )
+	const contextType = getAttribute( 'contextType' )
+	const hasContext = usesContext && contextType
 
 	const [ state ] = useBlockHoverState()
 	const [ debouncedText, setDebouncedText ] = useState( text )
@@ -89,7 +92,7 @@ export const Edit = props => {
 				id="text"
 			>
 				<Fragment>
-					{ hasTextContent && (
+					{ ! hasContext && hasTextContent && (
 						<AdvancedTextControl
 							label={ __( 'Content', i18n ) }
 							isMultiline={ isMultiline }

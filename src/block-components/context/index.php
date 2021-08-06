@@ -19,41 +19,6 @@ class Stackable_Context {
 	}
 
 	/**
-	 * Helper function for handling context values from the !#STK_CONTEXT_ string.
-	 *
-	 * @example
-	 * ```
-	 * $this->context_handler( 'postTitle', array( 'postId' => 1234 ) );
-	 * returns the Post Title by the given post ID
-	 * ```
-	 *
-	 * @param string $context_string
-	 * @param array $context
-	 *
-	 * @return string|null content
-	 */
-	public static function context_handler( $context_string, $context ) {
-		switch ( $context_string ) {
-			case 'postTitle': return self::get_post_title( $context );
-			default: return null;
-		}
-	}
-
-	/**
-	 * Get the post title.
-	 *
-	 * @param array $context
-	 * @return string post title or null.
-	 */
-	public static function get_post_title( $context ) {
-		if ( ! array_key_exists( 'postId', $context ) ) {
-			return null;
-		}
-
-		return get_the_title( $context[ 'postId' ] );
-	}
-
-	/**
 	 * Utility function to check
 	 * whether the block has !#STK_CONTEXT_.
 	 *
@@ -78,7 +43,7 @@ class Stackable_Context {
 		}
 
 		foreach ( $parsed_fields as $parsed_field ) {
-			$output = self::context_handler( $parsed_field, $block->context );
+			$output = apply_filters( 'stackable.block-components.context.render-content', null, $parsed_field, $block->context );
 			if ( $output !== null ) {
 				$content = preg_replace( '/!#STK_CONTEXT_' . $parsed_field . '!#/', $output, $content );
 			}
@@ -87,4 +52,3 @@ class Stackable_Context {
 		return $content;
 	}
 }
-

@@ -4,7 +4,8 @@
 	"description": "Introduce new sections of your content in style.",
 	"category": "common",
 	"usesContext": [
-		"postId"
+		"postId",
+		"postType"
 	],
 	"keywords": [
 		"Title"

@@ -9,7 +9,7 @@ import { i18n } from 'stackable'
  */
 import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useSelect } from '@wordpress/data'
 
@@ -61,7 +61,11 @@ export const useContextValue = ( value, context ) => {
 
 		const foundContextObject = availableContext.find( ( { value } ) => value === contextType )
 		if ( foundContextObject ) {
-			const contextValue = foundContextObject.callback ? foundContextObject.callback( select ) : value
+			const { label, callback } = foundContextObject
+			const contextValue = callback ? callback( select ) : sprintf( `${ label } %s`, 'Placeholder' )
+			if ( ! callback ) {
+				console.warn( `Stackable: Context callback function in '${ label }' was not included in provided object. Add 'callback' property to your context handler object.` ) // eslint-disable-line no-console
+			}
 			return { usesContext, contextValue }
 		}
 

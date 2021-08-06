@@ -14,6 +14,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Context,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
@@ -25,6 +26,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
+	Context.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )

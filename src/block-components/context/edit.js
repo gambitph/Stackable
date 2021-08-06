@@ -28,7 +28,7 @@ export const Edit = props => {
 
 	const {
 		getAttribute,
-		updateAttributeHandler,
+		updateAttributes,
 	} = useAttributeEditHandlers()
 
 	const availableContext = useAvailableContext( context )
@@ -41,10 +41,15 @@ export const Edit = props => {
 		<>
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
-					title={ __( 'Context', i18n ) }
+					title={ __( 'Dynamic Context', i18n ) }
 					id="context"
 					checked={ getAttribute( 'usesContext' ) }
-					onChange={ updateAttributeHandler( 'usesContext' ) }
+					onChange={ value => {
+						updateAttributes( {
+							usesContext: value,
+							...( ! value ? { text: '' } : {} ),
+						} )
+					} }
 				>
 					<AdvancedSelectControl
 						label={ __( 'Context Type' ) }
