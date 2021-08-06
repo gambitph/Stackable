@@ -44,6 +44,7 @@
 		desktop: 24px 24px,
 		mobile: 16px 16px,
 	),
+	// TODO: revisit this since we're aiming for block max-width instead
 	block-background-full-padding: (
 		desktop: 24px 104px,
 		tablet: 24px 32px,
@@ -135,6 +136,7 @@ a.stk-button {
 	background-color: cssvar(block-background-color);
 	padding: cssvar(block-background-padding);
 }
+// TODO: revisit this since we're aiming for block max-width instead
 // Block background when the block is full width
 .stk-block-background.alignfull {
 	padding: cssvar(block-background-full-padding);
