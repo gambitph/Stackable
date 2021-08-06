@@ -70,7 +70,7 @@ export const blockStyles = [
 	{
 		name: 'pill',
 		label: __( 'Pill', i18n ),
-		// Same implementation with default style, except we add additional styles in style.scss
+		// Same implementation as the default style, except we add additional styles in style.scss
 		onSelect: defaultOnSelect,
 	},
 	{
