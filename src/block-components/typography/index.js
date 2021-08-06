@@ -5,6 +5,7 @@ import { Edit } from './edit'
 import { addAttributes } from './attributes'
 import { Style } from './style'
 export { getTypographyClasses } from './get-typography-classes'
+import { useContextValue, getContextValue } from '../context/hooks'
 
 /**
  * External dependencies
@@ -28,6 +29,7 @@ export const Typography = props => {
 		onChange: _onChange,
 		children,
 		ref,
+		context,
 		...rest
 	} = props
 
@@ -38,6 +40,7 @@ export const Typography = props => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
 	const value = _value === null ? getAttribute( 'text' ) : _value
+	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag
 
 	useEffect( () => {
 		if ( value !== debouncedText ) {
@@ -53,10 +56,15 @@ export const Typography = props => {
 		return () => clearTimeout( timeout )
 	}, [ debouncedText ] )
 
+	const { contextValue, usesContext } = useContextValue( value, context )
+	if ( usesContext ) {
+		return <TagName className={ className }>{ contextValue }</TagName>
+	}
+
 	return (
 		<RichText
 			className={ className }
-			tagName={ ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag }
+			tagName={ TagName }
 			value={ debouncedText }
 			onChange={ setDebouncedText }
 			ref={ ref }
@@ -82,7 +90,7 @@ Typography.Content = props => {
 		attributes,
 		tagName,
 		defaultTag,
-		value,
+		value: _value,
 		children,
 		...rest
 	} = props
@@ -92,11 +100,13 @@ Typography.Content = props => {
 		return attributes[ getAttributeName( attrName ) ]
 	}
 
+	const value = getContextValue( attributes, _value === null ? getAttribute( 'text' ) : _value )
+
 	return (
 		<RichText.Content
 			className={ className }
 			tagName={ ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag }
-			value={ value === null ? getAttribute( 'text' ) : value }
+			value={ value }
 			{ ...rest }
 		>
 			{ children }

@@ -3,6 +3,9 @@
 	"title": "Heading",
 	"description": "Introduce new sections of your content in style.",
 	"category": "common",
+	"usesContext": [
+		"postId"
+	],
 	"keywords": [
 		"Title"
 	],

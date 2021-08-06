@@ -156,6 +156,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
 // TODO: v3 block
 // require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/context/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/help-tooltip.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
@@ -164,6 +165,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/premium-notice/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block/heading/index.php' );
 
 /**
  * Welcome screen.

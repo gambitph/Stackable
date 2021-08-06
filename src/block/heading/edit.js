@@ -19,6 +19,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Context,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -54,6 +55,7 @@ const Edit = props => {
 		onReplace,
 		clientId,
 		setAttributes,
+		context,
 	} = props
 
 	const blockHoverClass = useBlockHoverClass()
@@ -80,6 +82,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 
+			<Context.InspectorControls context={ context } />
 			<Typography.InspectorControls hasRemoveMargins={ true } initialOpen={ true } />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
@@ -187,6 +190,7 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				{ props.attributes.showTopLine && <div className="stk-block-heading__top-line" /> }
 				<Typography
+					context={ context }
 					defaultTag="h2"
 					placeholder={ __( 'Title for This Block', i18n ) }
 					className={ textClassNames }
