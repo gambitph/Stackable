@@ -150,11 +150,7 @@
 		width: cssvar(icon-size);
 		height: cssvar(icon-size);
 		&,
-		g,
-		path,
-		rect,
-		polygon,
-		ellipse {
+		:is(g, path, rect, polygon, ellipse) {
 			fill: cssvar(icon-color);
 		}
 	}
