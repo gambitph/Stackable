@@ -4,7 +4,7 @@
 /**
  * External dependencies
  */
-import { VideoPopupIcon } from '~stackable/icons'
+import { PricingBoxIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -16,11 +16,10 @@ import metadata from './block.json'
 
 export const settings = {
 	...metadata,
-	icon: VideoPopupIcon,
+	icon: PricingBoxIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
-		align: true,
 	},
 
 	edit,
