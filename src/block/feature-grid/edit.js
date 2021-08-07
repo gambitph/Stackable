@@ -35,13 +35,14 @@ const TEMPLATE = [
 	[ 'stackable/column', { templateLock: true }, [
 		[ 'stackable/container', { hasContainer: true }, [
 			[ 'stackable/image' ],
-			[ 'stackable/heading', { text: __( 'Title', i18n ), textRemoveTextMargins: true } ],
+			[ 'stackable/heading', {
+				text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+			} ],
 			[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
 			[ 'stackable/button-group', {}, [
 				[ 'stackable/button', {
 					text: 'Button',
 					buttonBackgroundColor: 'transparent',
-					buttonBorderType: 'solid',
 					className: 'is-style-plain',
 				} ],
 			] ],
@@ -50,13 +51,14 @@ const TEMPLATE = [
 	[ 'stackable/column', { templateLock: true }, [
 		[ 'stackable/container', { hasContainer: true }, [
 			[ 'stackable/image' ],
-			[ 'stackable/heading', { text: __( 'Title', i18n ), textRemoveTextMargins: true } ],
+			[ 'stackable/heading', {
+				text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+			} ],
 			[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
 			[ 'stackable/button-group', {}, [
 				[ 'stackable/button', {
 					text: 'Button',
 					buttonBackgroundColor: 'transparent',
-					buttonBorderType: 'solid',
 					className: 'is-style-plain',
 				} ],
 			] ],
