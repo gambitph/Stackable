@@ -1,4 +1,8 @@
 .stk-block-icon-list {
+	:is(ul, ol) {
+		width: fit-content;
+		text-align: start;
+	}
 	ol {
 		list-style-image: none;
 	}
@@ -10,21 +14,16 @@
 }
 
 // Alignments when the icon list is aligned.
-.has-text-align-center,
-.has-text-align-right {
-	.stk-block-icon-list {
-		width: min-content;
-		text-align: start;
-		margin-left: auto;
-		margin-right: auto;
-		ul,
-		ol {
-			padding-left: 24px;
-		}
-	}
+:is(.has-text-align-center.stk-block-icon-list, .has-text-align-center .stk-block-icon-list) :is(ul, ol) {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 0;
 }
-.has-text-align-right {
-	.stk-block-icon-list {
-		margin-right: 0;
-	}
+:is(.has-text-align-left.stk-block-icon-list, .has-text-align-left .stk-block-icon-list) :is(ul, ol) {
+	margin-left: 0;
+	margin-right: auto;
+}
+:is(.has-text-align-right.stk-block-icon-list, .has-text-align-right .stk-block-icon-list) :is(ul, ol) {
+	margin-left: auto;
+	margin-right: 0;
 }
