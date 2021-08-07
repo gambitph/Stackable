@@ -1,5 +1,5 @@
 /**
- * BLOCK: Icon Label Block
+ * BLOCK: Pricing Block
  */
 /**
  * External dependencies

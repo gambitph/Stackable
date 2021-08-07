@@ -3,11 +3,11 @@
 	.stk-block-text {
 		--stk-block-margin-bottom: 0;
 	}
-	.stk-block-price__price {
-		font-size: 56px;
-		line-height: 0.7;
-	}
 	.stk-block-text:first-child {
 		vertical-align: top;
 	}
+}
+.stk-block-price__price {
+	font-size: 56px;
+	line-height: 0.7;
 }
