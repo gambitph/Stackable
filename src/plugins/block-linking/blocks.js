@@ -23,6 +23,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/icon-label': {},
 		'stackable/icon-list': { filterAttributes: [ 'text' ] },
 		'stackable/image': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt' ] },
+		'stackable/price': {},
 		'stackable/text': { filterAttributes: [ 'text' ] },
 	}
 } )
