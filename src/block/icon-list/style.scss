@@ -8,3 +8,23 @@
 		line-height: 0;
 	}
 }
+
+// Alignments when the icon list is aligned.
+.has-text-align-center,
+.has-text-align-right {
+	.stk-block-icon-list {
+		width: min-content;
+		text-align: start;
+		margin-left: auto;
+		margin-right: auto;
+		ul,
+		ol {
+			padding-left: 24px;
+		}
+	}
+}
+.has-text-align-right {
+	.stk-block-icon-list {
+		margin-right: 0;
+	}
+}
