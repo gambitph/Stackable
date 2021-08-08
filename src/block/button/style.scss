@@ -3,8 +3,10 @@
 .stk-block.stk-block-button {
 	width: auto;
 	margin: 0;
-	margin-inline-end: 12px;
 	text-align: center;
+	&:not(:last-child) {
+		margin-inline-end: 12px;
+	}
 }
 .stk-block-button {
 	.stk--inner-svg {

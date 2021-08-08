@@ -18,6 +18,7 @@
 	container-background-color: #fff,
 	container-border-radius: 0px,
 	container-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04),
+	container-color: #1E1E1E,
 
 	container-padding: (
 		desktop: 32px 32px,
@@ -119,6 +120,7 @@
 	background-color: cssvar(container-background-color);
 	border-radius: cssvar(container-border-radius);
 	box-shadow: cssvar(container-box-shadow);
+	color: cssvar(container-color);
 }
 .stk-container-padding {
 	padding: cssvar(container-padding);

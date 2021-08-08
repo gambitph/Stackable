@@ -1,0 +1,30 @@
+@import "common";
+
+.stk-block-notification {
+	--stk-container-background-color: #40ba7b;
+	--stk-container-color: #fff;
+	&.stk--is-dismissible .stk-container {
+		padding-inline-end: var(--stk-notification-padding-end, 60px);
+	}
+}
+
+.stk-block-notification__close-button {
+	all: unset;
+	background: unset !important;
+	cursor: pointer;
+	svg {
+		fill: cssvar(container-color);
+		display: block;
+	}
+
+	position: absolute;
+	z-index: 2;
+	top: 32px;
+	padding: 4px;
+	margin-top: -4px;
+	margin-inline-end: -4px;
+	inset-inline-end: 32px;
+	&:focus {
+		outline-offset: 0;
+	}
+}
