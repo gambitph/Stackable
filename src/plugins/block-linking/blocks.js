@@ -21,10 +21,13 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/header': {},
 		'stackable/heading': { filterAttributes: [ 'text' ] },
 		'stackable/icon': { filterAttributes: [ 'icon', 'ariaLabel' ] },
+		'stackable/icon-box': {},
 		'stackable/icon-label': {},
 		'stackable/icon-list': { filterAttributes: [ 'text' ] },
 		'stackable/image': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt' ] },
+		'stackable/notification': {},
 		'stackable/price': {},
+		'stackable/pricing-box': {},
 		'stackable/text': { filterAttributes: [ 'text' ] },
 	}
 } )
