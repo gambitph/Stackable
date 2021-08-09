@@ -13,11 +13,11 @@ import transforms from './transforms'
 /**
  * External dependencies
  */
-import { ButtonIcon } from '~stackable/icons'
+import { IconButtonIcon } from '~stackable/icons'
 
 export const settings = {
 	...metadata,
-	icon: ButtonIcon,
+	icon: IconButtonIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
