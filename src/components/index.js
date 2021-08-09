@@ -74,7 +74,6 @@ export { default as ConvertToContainerButton } from './convert-to-container-butt
 export { default as GetBlockAttributesButton } from './block-attributes-get-button'
 export { default as ModalWelcomeTutorial } from './modal-welcome-tutorial'
 export { default as ModalDesignLibrary } from './modal-design-library'
-export { default as FontAwesomeIcon } from './font-awesome-icon'
 export { default as AdminBaseSetting } from './admin-base-setting'
 export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
@@ -83,6 +82,7 @@ export { default as TaxonomyControl } from './taxonomy-control'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'
+export { default as FontAwesomeIcon } from './font-awesome-icon'
 export { default as SvgIcon } from './svg-icon'
 
 // V3 only Components

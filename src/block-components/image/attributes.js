@@ -21,6 +21,19 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				type: 'string',
 				default: 'full',
 			},
+
+			// Used internally to set the width & height attributes of the img
+			// tag, this is so that our image would not produce a layout shift
+			// when loading.
+			imageWidthAttribute: {
+				type: 'number',
+				default: '',
+			},
+
+			imageHeightAttribute: {
+				type: 'number',
+				default: '',
+			},
 			imageBorderRadius: {
 				type: 'number',
 				default: '',
