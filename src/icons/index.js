@@ -19,6 +19,7 @@ import SVGFeatureIcon from './images/feature-icon.svg'
 import SVGHeaderIcon from './images/header-icon.svg'
 import SVGHeadingIcon from './images/heading-icon.svg'
 import SVGIconIcon from './images/icon-icon.svg'
+import SVGIconBoxIcon from './images/icon-box-icon.svg'
 import SVGIconListIcon from './images/icon-list-icon.svg'
 import SVGIconLabelIcon from './images/icon-label-icon.svg'
 import SVGImageBoxIcon from './images/image-box-icon.svg'
@@ -156,6 +157,10 @@ export const GroupContainerIcon = () => {
 
 export const IconIcon = () => {
 	return colorizeIcon( <SVGIconIcon width="20" height="20" /> )
+}
+
+export const IconBoxIcon = () => {
+	return colorizeIcon( <SVGIconBoxIcon width="16" height="16" /> )
 }
 
 export const IconListIcon = () => {
