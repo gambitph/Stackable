@@ -27,6 +27,7 @@
 }
 .ugb-global-typography-preview {
 	position: relative;
+	padding-right: 32px;
 	.block-editor-block-list__layout,
 	.block-editor-block-list__block,
 	.editor-styles-wrapper {
@@ -39,6 +40,11 @@
 		&::after {
 			display: none !important;
 		}
+	}
+	.dashicons-editor-help {
+		position: absolute;
+		top: 0;
+		right: 0;
 	}
 }
 .ugb-global-typography-preview__label {
@@ -56,4 +62,12 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+}
+
+.stk-typography-preview__text {
+	display: block;
+	width: 200px;
+	white-space: normal;
+	text-align: left;
+	padding: 8px;
 }

@@ -20,17 +20,32 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 } from '~stackable/block-components'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
+import { createBlockCompleter } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { createBlock } from '@wordpress/blocks'
+import { addFilter } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
+
+/**
+ * Add `autocompleters` support for stackable/subtitle
+ *
+ * @see ~stackable/util/blocks#createBlockCompleter
+ */
+addFilter( 'editor.Autocomplete.completers', 'stackable/subtitle', ( filteredCompleters, name ) => {
+	if ( name === 'stackable/subtitle' ) {
+		return [ ...filteredCompleters, createBlockCompleter() ]
+	}
+	return filteredCompleters
+} )
 
 const Edit = props => {
 	const {
@@ -81,6 +96,7 @@ const Edit = props => {
 				<Typography
 					tagName="p"
 					className={ textClassNames }
+					placeholder={ __( 'Type / to choose a block', i18n ) }
 					onReplace={ onReplace }
 					onSplit={ ( value, isOriginal ) => {
 						// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js

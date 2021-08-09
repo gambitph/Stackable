@@ -57,7 +57,7 @@ const TYPOGRAPHY_TAGS = [
 		selector: '.stk-subtitle',
 		help: (
 			<>
-				{ sprintf( __( "This works with Stackable\'s subtitle block. To apply the above\'s typography style, just add `%s` in your block\'s Additional CSS classes. Also make sure that `%s` tag is set to avoid conflict with other typography styles", i18n ), 'stk-subtitle', 'p' ) }
+				{ sprintf( __( "To apply this typography style, just add `%s` in your block\'s Additional CSS classes. Also make sure that `%s` tag is set to avoid conflict with other typography styles", i18n ), 'stk-subtitle', 'p' ) }
 			</> ),
 	},
 	{

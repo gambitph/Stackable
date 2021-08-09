@@ -10,13 +10,14 @@ import {
 	upperFirst, omit,
 } from 'lodash'
 import classnames from 'classnames'
+import { generateStyles } from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
-import { generateStyles } from '~stackable/block-components'
+import { Tooltip, Dashicon } from '@wordpress/components'
 
 const TypographyPicker = props => {
 	const { value, help } = props
@@ -35,6 +36,7 @@ const TypographyPicker = props => {
 		<TypographyPreview
 			selector={ props.selector }
 			styles={ value }
+			help={ help }
 		>
 			{ props.label }
 		</TypographyPreview>
@@ -48,7 +50,6 @@ const TypographyPicker = props => {
 
 	return (
 		<TypographyControl
-			help={ help }
 			className={ mainClasses }
 			label={ label }
 			popoverLabel={ null }
@@ -183,6 +184,19 @@ const TypographyPreview = props => {
 
 	return (
 		<div className="ugb-global-typography-preview">
+			{ props.help && (
+				<Tooltip
+					position="bottom"
+					className="stk-typography-preview__tooltip"
+					text={
+						<span className="stk-typography-preview__text">
+							{ props.help }
+						</span>
+					}
+				>
+					<Dashicon icon="editor-help" />
+				</Tooltip>
+			) }
 			<div className="editor-styles-wrapper">
 				<div className="block-editor-block-list__layout">
 					<div className="wp-block block-editor-block-list__block">
