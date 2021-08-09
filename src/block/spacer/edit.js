@@ -32,6 +32,14 @@ import { withIsHovered } from '~stackable/higher-order'
 import { ResizableBox } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
+import { useState } from '@wordpress/element'
+
+const getSnapYBetween = ( value, snapDiff = 50 ) => {
+	return [
+		Math.floor( value / snapDiff ) * snapDiff,
+		Math.ceil( value / snapDiff ) * snapDiff,
+	]
+}
 
 const Edit = props => {
 	const {
@@ -52,6 +60,7 @@ const Edit = props => {
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const defaultMinHeight = 50
+	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( attributes[ heightAttrName ] === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 
 	return (
 		<>
@@ -90,6 +99,13 @@ const Edit = props => {
 						height: attributes[ heightAttrName ] === '' ? defaultMinHeight : attributes[ heightAttrName ],
 					} }
 					enable={ { bottom: true } }
+					onResize={ ( event, direction, elt, delta ) => {
+						let height = attributes[ heightAttrName ]
+						if ( height === '' || height === undefined ) {
+							height = defaultMinHeight
+						}
+						setSnapY( getSnapYBetween( parseInt( height ) + delta.height ) )
+					} }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						let height = attributes[ heightAttrName ]
 						if ( height === '' || height === undefined ) {
@@ -97,6 +113,10 @@ const Edit = props => {
 						}
 						setAttributes( { [ heightAttrName ]: parseInt( height ) + delta.height } )
 					} }
+					snap={ {
+						y: snapY,
+					} }
+					snapGap={ 10 }
 				/>
 			</BlockDiv>
 		</>
