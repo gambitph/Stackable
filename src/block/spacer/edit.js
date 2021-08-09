@@ -21,7 +21,7 @@ import {
 	useBlockHoverClass, useDeviceType,
 } from '~stackable/hooks'
 import {
-	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
+	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, ResizerTooltip,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
 import { withIsHovered } from '~stackable/higher-order'
@@ -59,8 +59,9 @@ const Edit = props => {
 	] )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
+	const height = attributes[ heightAttrName ]
 	const defaultMinHeight = 50
-	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( attributes[ heightAttrName ] === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
+	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 
 	return (
 		<>
@@ -96,28 +97,40 @@ const Edit = props => {
 				<ResizableBox
 					showHandle={ isHovered || isSelected }
 					size={ {
-						height: attributes[ heightAttrName ] === '' ? defaultMinHeight : attributes[ heightAttrName ],
+						height: height === '' ? defaultMinHeight : height,
 					} }
 					enable={ { bottom: true } }
 					onResize={ ( event, direction, elt, delta ) => {
-						let height = attributes[ heightAttrName ]
-						if ( height === '' || height === undefined ) {
-							height = defaultMinHeight
+						let _height = height
+						if ( _height === '' || _height === undefined ) {
+							_height = defaultMinHeight
 						}
-						setSnapY( getSnapYBetween( parseInt( height ) + delta.height ) )
+						setSnapY( getSnapYBetween( parseInt( _height ) + delta.height ) )
 					} }
 					onResizeStop={ ( event, direction, elt, delta ) => {
-						let height = attributes[ heightAttrName ]
-						if ( height === '' || height === undefined ) {
-							height = defaultMinHeight
+						let _height = height
+						if ( _height === '' || _height === undefined ) {
+							_height = defaultMinHeight
 						}
-						setAttributes( { [ heightAttrName ]: parseInt( height ) + delta.height } )
+						setAttributes( { [ heightAttrName ]: parseInt( _height ) + delta.height } )
 					} }
 					snap={ {
 						y: snapY,
 					} }
 					snapGap={ 10 }
-				/>
+				>
+					{ isHovered && (
+						<ResizerTooltip
+							label={ __( 'Spacer', i18n ) }
+							enableWidth={ false }
+							height={ height === '' ? defaultMinHeight : height }
+							heightUnits={ [ 'px' ] }
+							onChangeHeight={ ( { value } ) => {
+								setAttributes( { [ heightAttrName ]: value } )
+							} }
+						/>
+					) }
+				</ResizableBox>
 			</BlockDiv>
 		</>
 	)

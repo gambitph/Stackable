@@ -100,6 +100,7 @@ export { default as ColumnInserter } from './column-inserter'
 export { default as Style } from './style'
 export { default as Link } from './link'
 export { default as ResizableColumn } from './resizable-column'
+export { default as ResizerTooltip } from './resizer-tooltip'
 export { default as ResponsiveControl2 } from './responsive-control2'
 export { default as ResizableBottomMargin } from './resizable-bottom-margin'
 export {

@@ -2,5 +2,8 @@
 	height: unset;
 	.components-resizable-box__container {
 		min-height: 50px;
+		&:hover {
+			background: rgba(220, 158, 93, 0.3);
+		}
 	}
 }
