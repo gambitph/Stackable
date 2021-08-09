@@ -25,7 +25,7 @@ import classnames from 'classnames'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { createBlockCompleter } from '~stackable/util'
 
 /**
@@ -33,7 +33,7 @@ import { createBlockCompleter } from '~stackable/util'
  */
 import { createBlock } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 
 /**
  * Add `autocompleters` support for stackable/text
@@ -56,6 +56,9 @@ const Edit = props => {
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const { parentBlock } = useBlockContext()
+
+	const enableColumns = applyFilters( 'stackable.edit.text.enable-column', true, parentBlock )
 
 	const blockClassNames = classnames( [
 		className,
@@ -78,38 +81,40 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					initialOpen={ true }
-					id="general"
-				>
-					<AdvancedRangeControl
-						label={ __( 'Columns', i18n ) }
-						allowReset={ true }
-						attribute="columns"
-						min="1"
-						sliderMax="3"
-						step="1"
-						placeholder="1"
-						responsive="all"
-					/>
+			{ enableColumns &&
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'General', i18n ) }
+						initialOpen={ true }
+						id="general"
+					>
+						<AdvancedRangeControl
+							label={ __( 'Columns', i18n ) }
+							allowReset={ true }
+							attribute="columns"
+							min="1"
+							sliderMax="3"
+							step="1"
+							placeholder="1"
+							responsive="all"
+						/>
 
-					<AdvancedRangeControl
-						label={ __( 'Column Gap', i18n ) }
-						allowRest={ true }
-						attribute="columnGap"
-						min="0"
-						sliderMax="50"
-						responsive="all"
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
+						<AdvancedRangeControl
+							label={ __( 'Column Gap', i18n ) }
+							allowRest={ true }
+							attribute="columnGap"
+							min="0"
+							sliderMax="50"
+							responsive="all"
+						/>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
+			}
 
 			<Typography.InspectorControls
 				hasTextTag={ false }
 				isMultiline={ true }
-				initialOpen={ false }
+				initialOpen={ ! enableColumns }
 			/>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
@@ -122,7 +127,7 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<Typography
-					tagName="p"
+					tagName={ props.attributes.innerTextTag || 'p' }
 					className={ textClassNames }
 					placeholder={ __( 'Type / to choose a block', i18n ) }
 					onReplace={ onReplace }

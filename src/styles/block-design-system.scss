@@ -18,6 +18,7 @@
 	container-background-color: #fff,
 	container-border-radius: 0px,
 	container-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04),
+	container-color: #1E1E1E,
 
 	container-padding: (
 		desktop: 32px 32px,
@@ -44,6 +45,7 @@
 		desktop: 24px 24px,
 		mobile: 16px 16px,
 	),
+	// TODO: revisit this since we're aiming for block max-width instead
 	block-background-full-padding: (
 		desktop: 24px 104px,
 		tablet: 24px 32px,
@@ -58,6 +60,7 @@
 		desktop: 12px 16px,
 	),
 	button-text-color: #fff,
+	button-gap: 12px,
 	button-ghost-border-width: 2px,
 	button-column-gap: 12px,
 	button-row-gap: 12px,
@@ -117,6 +120,7 @@ a.stk-button {
 	background-color: cssvar(container-background-color);
 	border-radius: cssvar(container-border-radius);
 	box-shadow: cssvar(container-box-shadow);
+	color: cssvar(container-color);
 }
 .stk-container-padding {
 	padding: cssvar(container-padding);
@@ -135,6 +139,7 @@ a.stk-button {
 	background-color: cssvar(block-background-color);
 	padding: cssvar(block-background-padding);
 }
+// TODO: revisit this since we're aiming for block max-width instead
 // Block background when the block is full width
 .stk-block-background.alignfull {
 	padding: cssvar(block-background-full-padding);
@@ -147,11 +152,7 @@ a.stk-button {
 		width: cssvar(icon-size);
 		height: cssvar(icon-size);
 		&,
-		g,
-		path,
-		rect,
-		polygon,
-		ellipse {
+		:is(g, path, rect, polygon, ellipse) {
 			fill: cssvar(icon-color);
 		}
 	}

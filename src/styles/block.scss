@@ -130,8 +130,7 @@
 }
 
 // Block float alignment.
-.stk-block.alignleft,
-.stk-block.alignright {
+:is(.stk-block.alignleft, .stk-block.alignright) {
 	.stk-inner-blocks:first-of-type > .stk-block {
 		max-width: 350px; // Give a default width for a floated block.
 		width: auto;
@@ -257,13 +256,90 @@
 	}
 }
 
+.stk-block {
+	&.is-style-pill {
+		a.stk-button {
+			width: 64px;
+		}
+	}
+	&.is-style-plain {
+		a.stk-button {
+			.stk--inner-svg {
+				color: cssvar(button-background-color);
+			}
+			&:hover {
+				.stk-button__inner-text {
+					color: cssvar(button-background-color);
+				}
+			}
+
+			> .stk-button__inner-text {
+				color: cssvar(button-background-color);
+			}
+		}
+	}
+	&.is-style-ghost {
+		a.stk-button {
+			&::before {
+				border-width: cssvar(button-ghost-border-width);
+				border-color: cssvar(button-background-color);
+			}
+			.stk--inner-svg {
+				color: cssvar(button-background-color);
+			}
+
+			&:hover {
+				.stk-button__inner-text {
+					color: cssvar(button-background-color);
+				}
+			}
+
+			> .stk-button__inner-text {
+				color: cssvar(button-background-color);
+			}
+		}
+	}
+	&.is-style-ghost,
+	&.is-style-plain {
+		a.stk-button > .stk--svg-wrapper {
+			.stk--inner-svg {
+				color: cssvar(button-background-color);
+				&,
+				g,
+				path,
+				rect,
+				polygon,
+				ellipse {
+					fill: cssvar(button-background-color);
+				}
+			}
+		}
+	}
+}
+
 // Text alignment should also work for flex blocks like the icon block.
 .stk-block.has-text-align-right {
 	justify-content: flex-end;
 }
-.stk-block.has-text-align-center {
-	justify-content: center;
+
+// Default text direction, we need to add this for RTL support.
+:where(.stk-block) {
+	text-align: start;
 }
-.stk-block.has-text-align-left {
+
+// Text alignment should also work for flex blocks like the icon block.
+.has-text-align-center .stk-block,
+.has-text-align-center:where(.stk-block) {
+	justify-content: center;
+	text-align: center;
+}
+.has-text-align-right .stk-block,
+.has-text-align-right:where(.stk-block) {
+	justify-content: flex-end;
+	text-align: end;
+}
+.has-text-align-left .stk-block,
+.has-text-align-left:where(.stk-block) {
 	justify-content: flex-start;
+	text-align: start;
 }

@@ -1,0 +1,12 @@
+{
+	"name": "stackable/pricing-box",
+	"title": "Pricing Box",
+	"description": "Display the different pricing tiers of your business.",
+	"category": "layout",
+	"keywords": [
+		"Currency",
+		"Price",
+		"Pricing Table"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

@@ -22,7 +22,7 @@ BlockLink.Content = props => {
 
 	return (
 		<Link.Content
-			className="stk-block-link"
+			className="stk-block-link stk--transparent-overlay"
 			href={ attributes.blockLinkUrl }
 			target={ attributes.blockLinkNewTab ? '_blank' : '' }
 			rel={ attributes.blockLinkRel }

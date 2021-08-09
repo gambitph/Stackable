@@ -32,6 +32,10 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			innerTextTag: { // The inner text `p` tag can be overridden.
+				type: 'string',
+				default: '',
+			},
 			columns: {
 				stkResponsive: true,
 				type: 'number',
