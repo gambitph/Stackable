@@ -32,7 +32,7 @@ import { withIsHovered } from '~stackable/higher-order'
 import { ResizableBox } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { useState } from '@wordpress/element'
+import { useState, useRef } from '@wordpress/element'
 
 const getSnapYBetween = ( value, snapDiff = 50 ) => {
 	return [
@@ -62,6 +62,7 @@ const Edit = props => {
 	const height = attributes[ heightAttrName ]
 	const defaultMinHeight = 50
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
+	const resizableRef = useRef()
 
 	return (
 		<>
@@ -95,6 +96,7 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-spacer" />
 			<BlockDiv className={ blockClassNames }>
 				<ResizableBox
+					ref={ resizableRef }
 					showHandle={ isHovered || isSelected }
 					size={ {
 						height: height === '' ? defaultMinHeight : height,
@@ -123,7 +125,12 @@ const Edit = props => {
 						<ResizerTooltip
 							label={ __( 'Spacer', i18n ) }
 							enableWidth={ false }
-							height={ height === '' ? defaultMinHeight : height }
+							height={ resizableRef.current?.state?.isResizing
+								? resizableRef.current?.state?.height
+								: height === ''
+									? defaultMinHeight
+									: height
+							}
 							heightUnits={ [ 'px' ] }
 							onChangeHeight={ ( { value } ) => {
 								setAttributes( { [ heightAttrName ]: value } )
