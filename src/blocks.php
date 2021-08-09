@@ -23,7 +23,8 @@ $stk_block_folders = array(
 	'icon',
 	'icon-list',
 	'image',
-	'text'
+	'price',
+	'text',
 );
 
 /**

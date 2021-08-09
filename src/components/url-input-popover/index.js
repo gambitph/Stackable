@@ -29,6 +29,14 @@ const urlLabels = [
 		id: 'noFollowLink',
 		title: __( 'Nofollow link', i18n ),
 	},
+	{
+		id: 'sponsored',
+		title: __( 'Sponsored', i18n ),
+	},
+	{
+		id: 'ugc',
+		title: __( 'UGC', i18n ),
+	},
 ]
 
 const UrlInputPopover = props => {
@@ -36,15 +44,19 @@ const UrlInputPopover = props => {
 		value,
 		newTab,
 		noFollow,
+		sponsored,
+		ugc,
 	} = props
 
 	const urlOptions = {
 		url: value,
 		opensInNewTab: newTab,
 		noFollowLink: noFollow,
+		sponsored,
+		ugc,
 	}
 
-	if ( ! props.onChange && ! props.onChangeNewTab && ! props.onChangeNoFollow ) {
+	if ( ! props.onChange && ! props.onChangeNewTab && ! props.onChangeNoFollow && ! props.onChangeSponsored && ! props.onChangeUgc ) {
 		return null
 	}
 
@@ -57,6 +69,8 @@ const UrlInputPopover = props => {
 		switch ( id ) {
 			case 'opensInNewTab': return props.onChangeNewTab
 			case 'noFollowLink': return props.onChangeNoFollow
+			case 'sponsored': return props.onChangeSponsored
+			case 'ugc': return props.onChangeUgc
 			default: return true
 		}
 	} )
@@ -77,6 +91,8 @@ const UrlInputPopover = props => {
 							url: props.onChange,
 							opensInNewTab: props.onChangeNewTab,
 							noFollowLink: props.onChangeNoFollow,
+							sponsored: props.onChangeSponsored,
+							ugc: props.onChangeUgc,
 						}
 
 						// Gets only the changed values to update
@@ -86,7 +102,7 @@ const UrlInputPopover = props => {
 
 						// Trigger onChange only to changed values
 						keys( changedValues ).map( value => (
-							onChangeKeys[ value ]( changedValues[ value ] )
+							onChangeKeys[ value ]?.( changedValues[ value ] )
 						) )
 					}
 				}
@@ -110,8 +126,12 @@ UrlInputPopover.defaultProps = {
 	position: 'bottom center',
 	newTab: false,
 	noFollow: false,
+	sponsored: false,
+	ugc: false,
 	onChangeNewTab: null,
 	onChangeNoFollow: null,
+	onChangeSponsored: null,
+	onChangeUgc: null,
 }
 
 export default UrlInputPopover

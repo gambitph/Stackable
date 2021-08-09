@@ -14,6 +14,9 @@ export const useImage = () => {
 			updateBlockAttributes( clientId, {
 				imageUrl: image.url,
 				imageId: image.id,
+				imageHeightAttribute: image.height,
+				imageWidthAttribute: image.width,
+				imageAlt: image.alt,
 			} )
 		}
 	)
@@ -89,6 +92,9 @@ export const useImage = () => {
 			updateBlockAttributes( clientId, {
 				imageUrl: '',
 				imageId: '',
+				imageHeightAttribute: '',
+				imageWidthAttribute: '',
+				imageAlt: '',
 			} )
 		},
 		[ clientId, updateBlockAttributes ]

@@ -17,13 +17,13 @@ const getStyleParams = () => {
 			hover: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute, device ) => {
-				if ( value.top === '' ) {
+				if ( value && value.top === '' ) {
 					const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
 					if ( isSticky ) {
 						return 0
 					}
 				}
-				return value.top
+				return value?.top
 			},
 		},
 		{
@@ -33,7 +33,7 @@ const getStyleParams = () => {
 			responsive: 'all',
 			hover: 'all',
 			format: '%spx',
-			valuePreCallback: value => value.right,
+			valuePreCallback: value => value?.right,
 		},
 		{
 			selector: '',
@@ -42,7 +42,7 @@ const getStyleParams = () => {
 			responsive: 'all',
 			hover: 'all',
 			format: '%spx',
-			valuePreCallback: value => value.bottom,
+			valuePreCallback: value => value?.bottom,
 		},
 		{
 			selector: '',
@@ -51,7 +51,7 @@ const getStyleParams = () => {
 			responsive: 'all',
 			hover: 'all',
 			format: '%spx',
-			valuePreCallback: value => value.left,
+			valuePreCallback: value => value?.left,
 		},
 		{
 			renderIn: 'edit',

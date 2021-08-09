@@ -54,6 +54,8 @@ const save = props => {
 						const url = attributes[ `url${ i }` ]
 						const newTab = attributes[ `newTab${ i }` ]
 						const noFollow = attributes[ `noFollow${ i }` ]
+						const sponsored = attributes[ `sponsored${ i }` ]
+						const ugc = attributes[ `ugc${ i }` ]
 
 						const boxClasses = classnames( [
 							'ugb-icon__item',
@@ -62,18 +64,28 @@ const save = props => {
 
 						const IconTag = url ? 'a' : 'div'
 						const linkProps = {}
+						linkProps.rel = []
 						if ( url ) {
 							linkProps.href = url
 						}
 						if ( newTab ) {
 							linkProps.target = '_blank'
-							linkProps.rel = 'noopener noreferrer'
-							if ( noFollow ) {
-								linkProps.rel += ' nofollow'
-							}
-						} else if ( noFollow ) {
-							linkProps.rel = 'nofollow'
+							linkProps.rel.push( 'noopener', 'noreferrer' )
 						}
+
+						if ( noFollow ) {
+							linkProps.rel.push( 'nofollow' )
+						}
+
+						if ( sponsored ) {
+							linkProps.rel.push( 'sponsored' )
+						}
+
+						if ( ugc ) {
+							linkProps.rel.push( 'ugc' )
+						}
+
+						linkProps.rel = linkProps.rel.join( ' ' )
 
 						const iconComp = (
 							<IconTag key="icon" className="ugb-icon__icon" { ...linkProps }>

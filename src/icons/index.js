@@ -20,6 +20,7 @@ import SVGHeaderIcon from './images/header-icon.svg'
 import SVGHeadingIcon from './images/heading-icon.svg'
 import SVGIconIcon from './images/icon-icon.svg'
 import SVGIconListIcon from './images/icon-list-icon.svg'
+import SVGIconLabelIcon from './images/icon-label-icon.svg'
 import SVGImageBoxIcon from './images/image-box-icon.svg'
 import SVGNotificationIcon from './images/notification-icon.svg'
 import SVGNumberBoxIcon from './images/number-box-icon.svg'
@@ -159,6 +160,10 @@ export const IconIcon = () => {
 
 export const IconListIcon = () => {
 	return colorizeIcon( <SVGIconListIcon width="20" height="20" /> )
+}
+
+export const IconLabelIcon = () => {
+	return colorizeIcon( <SVGIconLabelIcon width="16" height="16" /> )
 }
 
 export const ImageBoxIcon = () => {

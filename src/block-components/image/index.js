@@ -4,11 +4,12 @@ import { useImage } from './use-image'
 import { Edit } from './edit'
 import Image_ from './image'
 
-import { useBlockAttributes } from '~stackable/hooks'
+import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
 import { pickBy } from 'lodash'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useState, useEffect } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Image = props => {
 	const {
@@ -19,10 +20,13 @@ export const Image = props => {
 
 	const { clientId, isSelected } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
+	const { parentBlock } = useBlockContext()
 
 	const { setImage } = useImage()
 
 	const defaultHeight = _defaultHeight === 'auto' && attributes.imageUrl ? 'auto' : 300
+
+	const enableHandlers = applyFilters( 'stackable.image.enable-handlers', true, parentBlock )
 
 	// Enable editing of the image only when the current block that implements
 	// it is selected. We need to use setTimeout since the isSelected is
@@ -44,7 +48,7 @@ export const Image = props => {
 	return <Image_
 		{ ...setImage }
 		enableClickToEdit={ debouncedIsSelected }
-		showHandles={ isSelected }
+		showHandles={ enableHandlers && isSelected }
 
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
@@ -76,6 +80,7 @@ export const Image = props => {
 Image.defaultProps = {
 	defaultWidth: 150,
 	defaultHeight: 300,
+	enableHandles: true,
 }
 
 Image.Content = props => {
@@ -95,19 +100,8 @@ Image.Content = props => {
 		size={ attributes.imageSize }
 		src={ attributes.imageUrl }
 
-		width={ attributes.imageWidth || defaultWidth }
-		widthTablet={ attributes.imageWidthTablet }
-		widthMobile={ attributes.imageWidthMobile }
-		widthUnit={ attributes.imageWidthUnit || '%' }
-		widthUnitTablet={ attributes.imageWidthUnitTablet }
-		widthUnitMobile={ attributes.imageWidthUnitMobile }
-
-		height={ attributes.imageHeight || defaultHeight }
-		heightTablet={ attributes.imageHeightTablet }
-		heightMobile={ attributes.imageHeightMobile }
-		heightUnit={ attributes.imageHeightUnit || 'px' }
-		heightUnitTablet={ attributes.imageHeightUnitTablet }
-		heightUnitMobile={ attributes.imageHeightUnitMobile }
+		width={ attributes.imageWidthAttribute || attributes.imageWidth || defaultWidth }
+		height={ attributes.imageHeightAttribute || attributes.imageHeight || defaultHeight }
 
 		shape={ attributes.imageShape }
 		shapeStretch={ attributes.imageShapeStretch }

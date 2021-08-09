@@ -51,17 +51,33 @@ export const Edit = props => {
 					label={ __( 'Select Image', i18n ) }
 					allowedTypes={ [ 'image' ] }
 					attribute="image"
-					onRemove={ () => updateBlockAttributes( clientId, { imageId: '', imageUrl: '' } ) }
+					onRemove={ () => updateBlockAttributes( clientId, {
+						imageId: '',
+						imageUrl: '',
+						imageWidthAttribute: '',
+						imageHeightAttribute: '',
+						imageAlt: '',
+					} ) }
 					onChange={ image => {
 						// Get the URL of the currently selected image size.
 						let {
 							url,
+							width,
+							height,
 						} = image
 						const currentSelectedSize = attributes.imageSize || 'full'
 						if ( image.sizes?.[ currentSelectedSize ] ) {
 							url = image.sizes?.[ currentSelectedSize ]?.url || url
+							height = image.sizes?.[ currentSelectedSize ]?.height || height || ''
+							width = image.sizes?.[ currentSelectedSize ]?.width || width || ''
 						}
-						updateBlockAttributes( clientId, { imageId: image.id, imageUrl: url } )
+						updateBlockAttributes( clientId, {
+							imageId: image.id,
+							imageUrl: url,
+							imageWidthAttribute: width,
+							imageHeightAttribute: height,
+							imageAlt: image.alt || '',
+						} )
 					} }
 				/>
 
@@ -122,7 +138,14 @@ export const Edit = props => {
 						value={ attributes.imageSize }
 						onChange={ imageSize => {
 							const imageUrl = imageData.media_details?.sizes[ imageSize ]?.source_url || imageData.source_url
-							updateBlockAttributes( clientId, { imageSize, imageUrl } )
+							const width = imageData.media_details?.sizes[ imageSize ]?.width || imageData.media_details?.width || ''
+							const height = imageData.media_details?.sizes[ imageSize ]?.height || imageData.media_details?.height || ''
+							updateBlockAttributes( clientId, {
+								imageSize,
+								imageUrl,
+								imageWidthAttribute: width,
+								imageHeightAttribute: height,
+							} )
 						} }
 						defaultValue="full"
 						className="ugb--help-tip-image-size"

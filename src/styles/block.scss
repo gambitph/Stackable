@@ -130,8 +130,7 @@
 }
 
 // Block float alignment.
-.stk-block.alignleft,
-.stk-block.alignright {
+:is(.stk-block.alignleft, .stk-block.alignright) {
 	.stk-inner-blocks:first-of-type > .stk-block {
 		max-width: 350px; // Give a default width for a floated block.
 		width: auto;
@@ -203,13 +202,24 @@
 	}
 }
 
+// Default text direction, we need to add this for RTL support.
+:where(.stk-block) {
+	text-align: start;
+}
+
 // Text alignment should also work for flex blocks like the icon block.
-.stk-block.has-text-align-right {
-	justify-content: flex-end;
-}
-.stk-block.has-text-align-center {
+.has-text-align-center .stk-block,
+.has-text-align-center:where(.stk-block) {
 	justify-content: center;
+	text-align: center;
 }
-.stk-block.has-text-align-left {
+.has-text-align-right .stk-block,
+.has-text-align-right:where(.stk-block) {
+	justify-content: flex-end;
+	text-align: end;
+}
+.has-text-align-left .stk-block,
+.has-text-align-left:where(.stk-block) {
 	justify-content: flex-start;
+	text-align: start;
 }

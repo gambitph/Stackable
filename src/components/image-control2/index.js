@@ -29,19 +29,36 @@ const ImageControl = props => {
 	const attributes = useBlockAttributes( clientId )
 	const attrNameId = useAttributeName( `${ props.attribute }Id`, props.responsive, props.hover )
 	const attrNameUrl = useAttributeName( `${ props.attribute }Url`, props.responsive, props.hover )
+	const attrWidthAttribute = useAttributeName( `${ props.attribute }HeightAttribute`, props.responsive, props.hover )
+	const attrHeightAttribute = useAttributeName( `${ props.attribute }WidthAttribute`, props.responsive, props.hover )
+	const attrAlt = useAttributeName( `${ props.attribute }Alt`, props.responsive, props.hover )
 
-	const _onChange = useCallback( ( { url, id } ) => {
+	const _onChange = useCallback( image => {
 		dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
-			[ attrNameId ]: id,
-			[ attrNameUrl ]: url,
+			[ attrNameId ]: image.id,
+			[ attrNameUrl ]: image.url,
+			[ attrWidthAttribute ]: image.width || '',
+			[ attrHeightAttribute ]: image.height || '',
+			[ attrAlt ]: image.alt || '',
 		} )
-	}, [ clientId, attrNameId, attrNameUrl ] )
+	}, [ clientId, attrNameId, attrNameUrl, attrWidthAttribute, attrHeightAttribute ] )
 
 	const onChange = typeof props.onChange !== 'undefined' ? props.onChange : _onChange
 
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const dynamicContentProps = useDynamicContentControlProps( { onChange: url => onChange( { url, id: '' } ), value: attributes[ attrNameUrl ] } )
+	const dynamicContentProps = useDynamicContentControlProps( {
+		onChange: url => {
+			return onChange( {
+				url,
+				id: '',
+				width: '',
+				height: '',
+				alt: '',
+			} )
+		},
+		value: attributes[ attrNameUrl ],
+	} )
 
 	const imageId = typeof props.imageId !== 'undefined' ? props.imageId : attributes[ attrNameId ]
 	const imageUrl = typeof props.imageURL !== 'undefined' ? props.imageURL : dynamicContentProps.value || attributes[ attrNameUrl ]
@@ -52,6 +69,9 @@ const ImageControl = props => {
 		onChange( {
 			url: '',
 			id: '',
+			height: '',
+			width: '',
+			alt: '',
 		} )
 	}, [ onChange ] )
 
@@ -61,7 +81,7 @@ const ImageControl = props => {
 			className={ classnames( 'ugb-image-control', props.className ) }
 		>
 			<DynamicContentControl
-				enable={ true }
+				enable={ props.isDynamic }
 				type="image-url"
 				{ ...dynamicContentProps }
 			>
@@ -143,6 +163,7 @@ ImageControl.defaultProps = {
 	allowedTypes: [ 'image' ],
 	responsive: false,
 	hover: false,
+	isDynamic: false,
 
 	value: undefined,
 	onChange: undefined,

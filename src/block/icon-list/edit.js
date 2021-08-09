@@ -31,6 +31,8 @@ import {
 	EffectsAnimations,
 	getTypographyClasses,
 	MarginBottom,
+	Alignment,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -172,10 +174,12 @@ const Edit = props => {
 
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( attributes )
+	const blockAlignmentClass = getAlignmentClasses( attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-list',
+		blockAlignmentClass,
 		blockHoverClass,
 		textClasses,
 	] )
@@ -188,6 +192,7 @@ const Edit = props => {
 		<Fragment>
 			<InspectorTabs />
 
+			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 
 			<InspectorStyleControls>

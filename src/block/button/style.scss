@@ -2,11 +2,13 @@
 
 .stk-block.stk-block-button {
 	width: auto;
-	margin: 0;
-	margin-inline-end: 12px;
-	text-align: center;
 }
 .stk-block-button {
+	margin: 0;
+	text-align: center;
+	&:not(:last-child) {
+		margin-inline-end: cssvar(button-gap);
+	}
 	.stk--inner-svg {
 		display: flex;
 		svg {
