@@ -240,11 +240,7 @@
 				height: 1em;
 				width: 1em;
 				&,
-				g,
-				path,
-				rect,
-				polygon,
-				ellipse {
+				is(g, path, rect, polygon, ellipse) {
 					fill: #fff;
 				}
 			}
@@ -305,11 +301,7 @@
 			.stk--inner-svg {
 				color: cssvar(button-background-color);
 				&,
-				g,
-				path,
-				rect,
-				polygon,
-				ellipse {
+				:is(g, path, rect, polygon, ellipse) {
 					fill: cssvar(button-background-color);
 				}
 			}
