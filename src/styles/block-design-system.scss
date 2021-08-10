@@ -104,60 +104,26 @@
 
 		> .stk-button__inner-text {
 			color: cssvar(button-text-color);
-
 			&:hover {
 				color: cssvar(button-text-color); // Override theme's hover text color.
 			}
 		}
 	}
-	&.is-style-plain {
-		.stk-button {
-			.stk--inner-svg {
-				color: cssvar(button-background-color);
-			}
-			&:hover {
-				.stk-button__inner-text {
-					color: cssvar(button-background-color);
-				}
-			}
 
-			> .stk-button__inner-text {
-				color: cssvar(button-background-color);
-			}
-		}
-	}
+	// Ghost button color.
 	&.is-style-ghost {
+		#{ '--stk-button-text-color' }: cssvar(button-background-color);
 		.stk-button {
 			&::before {
 				border-width: cssvar(button-ghost-border-width);
 				border-color: cssvar(button-background-color);
 			}
-			.stk--inner-svg {
-				color: cssvar(button-background-color);
-			}
-
-			&:hover {
-				.stk-button__inner-text {
-					color: cssvar(button-background-color);
-				}
-			}
-
-			> .stk-button__inner-text {
-				color: cssvar(button-background-color);
-			}
 		}
 	}
-	&.is-style-ghost,
+
+	// Plain button color.
 	&.is-style-plain {
-		.stk-button > .stk--svg-wrapper {
-			.stk--inner-svg {
-				color: cssvar(button-background-color);
-				&,
-				:is(g, path, rect, polygon, ellipse) {
-					fill: cssvar(button-background-color);
-				}
-			}
-		}
+		#{ '--stk-button-text-color' }: cssvar(button-background-color);
 	}
 }
 
