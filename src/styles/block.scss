@@ -240,8 +240,8 @@
 				height: 1em;
 				width: 1em;
 				&,
-				is(g, path, rect, polygon, ellipse) {
-					fill: #fff;
+				:is(g, path, rect, polygon, ellipse) {
+					fill: cssvar(button-text-color);
 				}
 			}
 		}

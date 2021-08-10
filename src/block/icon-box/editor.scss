@@ -1,0 +1,19 @@
+.stk-block-icon-box__content {
+	// Revert our frontend style for padding left.
+	> .block-editor-inner-blocks {
+		padding-left: 0;
+	}
+
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		// Apply padding left on Stackable block children.
+		> [data-block]:not([data-type="stackable/icon-label"]) {
+			> .stk-block {
+				padding-left: 64px;
+			}
+		}
+		// Also apply the padding left on non-Stackable blocks.
+		> [data-block]:not([data-type^="stackable/"]) {
+			padding-left: 64px;
+		}
+	}
+}

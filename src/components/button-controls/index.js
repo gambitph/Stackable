@@ -462,9 +462,13 @@ ButtonControls.defaultProps = {
 	url: '',
 	newTab: '',
 	noFollow: '',
+	sponsored: '',
+	ugc: '',
 	onChangeUrl: () => {},
 	onChangeNewTab: () => {},
 	onChangeNoFollow: () => {},
+	onChangeSponsored: () => {},
+	onChangeUgc: () => {},
 
 	size: '',
 	onChangeSize: () => {},
