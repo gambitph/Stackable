@@ -202,6 +202,54 @@
 	}
 }
 
+// Buttons.
+.stk-block {
+	.stk-button {
+		justify-content: center;
+		display: flex;
+		align-items: center;
+		column-gap: 8px;
+		text-decoration: none;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			height: 100%;
+			width: 100%;
+			pointer-events: none;
+			border-radius: inherit;
+		}
+
+		&::before {
+			// Borders should be on top of the ::after pseudoelement.
+			z-index: 2;
+		}
+
+		&::after {
+			opacity: 0;
+			z-index: 1;
+		}
+
+		> * {
+			z-index: 2;
+		}
+	}
+
+	&.is-style-pill {
+		.stk-button {
+			width: 4em;
+			border-radius: 100px; // A large number to ensure it's a pill shape.
+		}
+	}
+}
+
+// Text alignment should also work for flex blocks like the icon block.
+.stk-block.has-text-align-right {
+	justify-content: flex-end;
+}
+
 // Default text direction, we need to add this for RTL support.
 :where(.stk-block) {
 	text-align: start;

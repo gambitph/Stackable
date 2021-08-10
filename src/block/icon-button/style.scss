@@ -1,0 +1,16 @@
+@import "common";
+
+// We have a block group, and that has the bottom margin.
+.stk-block-icon-button {
+	--stk-block-margin-bottom: 0;
+}
+
+.stk-block.stk-block-icon-button {
+	width: auto;
+
+	.stk-button {
+		// Make the buttons equal in height and width by default.
+		padding: 12px;
+		border-radius: 100%;
+	}
+}

@@ -32,6 +32,7 @@ $stk_block_folders = array(
  */
 $stk_wrapper_block_folders = array(
 	'button-group',
+	'blockquote',
 	'card',
 	'call-to-action',
 	'column',
@@ -40,7 +41,10 @@ $stk_wrapper_block_folders = array(
 	'feature',
 	'feature-grid',
 	'header',
+	'icon-box',
 	'icon-label',
+	'notification',
+	'pricing-box',
 );
 
 if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
