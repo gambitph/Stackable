@@ -90,9 +90,13 @@
 }
 
 .stk-block {
-	a.stk-button {
+	.stk-button {
 		background: cssvar(button-background-color);
 		padding: cssvar(button-padding);
+
+		// Adjust icon color and icon size.
+		#{ '--stk-icon-color' }: cssvar(button-text-color);
+		--stk-icon-size: 1em;
 
 		.stk--inner-svg {
 			color: cssvar(button-text-color);
@@ -107,7 +111,7 @@
 		}
 	}
 	&.is-style-plain {
-		a.stk-button {
+		.stk-button {
 			.stk--inner-svg {
 				color: cssvar(button-background-color);
 			}
@@ -123,7 +127,7 @@
 		}
 	}
 	&.is-style-ghost {
-		a.stk-button {
+		.stk-button {
 			&::before {
 				border-width: cssvar(button-ghost-border-width);
 				border-color: cssvar(button-background-color);
@@ -145,7 +149,7 @@
 	}
 	&.is-style-ghost,
 	&.is-style-plain {
-		a.stk-button > .stk--svg-wrapper {
+		.stk-button > .stk--svg-wrapper {
 			.stk--inner-svg {
 				color: cssvar(button-background-color);
 				&,
