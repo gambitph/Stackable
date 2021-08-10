@@ -104,6 +104,13 @@ const getStyleParams = () => {
 			responsive: 'all',
 		},
 		{
+			selector: '.stk-container',
+			styleRule: 'overflow',
+			attrName: 'overflow',
+			enabledCallback: getAttribute => getAttribute( 'overflow' ) === 'visible',
+			responsive: 'all',
+		},
+		{
 			selector: '',
 			styleRule: 'clear',
 			attrName: 'clear',

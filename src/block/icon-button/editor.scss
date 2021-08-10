@@ -1,0 +1,8 @@
+.stk-block-button-group.stk-row > .stk-block-content .block-editor-block-list__layout > div.wp-block[data-type="stackable/icon-button"] {
+	flex: unset;
+	width: unset;
+
+	> div {
+		width: unset;
+	}
+}

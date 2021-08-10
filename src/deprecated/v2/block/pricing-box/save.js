@@ -142,6 +142,8 @@ const save = props => {
 								url={ attributes[ `button${ i }Url` ] }
 								newTab={ attributes[ `button${ i }NewTab` ] }
 								noFollow={ attributes[ `button${ i }NoFollow` ] }
+								sponsored={ attributes[ `button${ i }Sponsored` ] }
+								ugc={ attributes[ `button${ i }Ugc` ] }
 							/>
 						</div>
 					)

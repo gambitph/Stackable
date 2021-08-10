@@ -16,7 +16,16 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 /**
  * WordPress dependencies
  */
-import { Fragment, renderToString } from '@wordpress/element'
+import { renderToString } from '@wordpress/element'
+
+const buttonOptions = {
+	selector: '.stk-button',
+}
+
+const typographyOptions = {
+	selector: '.stk-button > .stk-button__inner-text',
+	hoverSelector: '.stk-button:hover > .stk-button__inner-text',
+}
 
 export const ButtonStyles = props => {
 	const {
@@ -30,22 +39,15 @@ export const ButtonStyles = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
-	propsToPass.options = {
-		...propsToPass.options,
-		selector: '.stk-block-button__button',
-		hoverSelector: '.stk-block-button__button:hover',
-		textSelector: '.stk-block-button__button > .stk-block-button__inner-text',
-		textHoverSelector: '.stk-block-button__button:hover > .stk-block-button__inner-text',
-	}
 
 	return (
-		<Fragment>
+		<>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
-			<Button.Style { ...propsToPass } />
-			<Typography.Style { ...propsToPass } />
+			<Button.Style { ...propsToPass } options={ buttonOptions } />
+			<Typography.Style { ...propsToPass } options={ typographyOptions } />
 			<EffectsAnimations.Style { ...propsToPass } />
-		</Fragment>
+		</>
 	)
 }
 
@@ -57,27 +59,19 @@ ButtonStyles.defaultProps = {
 
 ButtonStyles.Content = props => {
 	const {
-		options = {},
 		...propsToPass
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( propsToPass.attributes.uniqueId )
-	propsToPass.options = {
-		...options,
-		selector: '.stk-block-button__button',
-		hoverSelector: '.stk-block-button__button:hover',
-		textSelector: '.stk-block-button__button > .stk-block-button__inner-text',
-		textHoverSelector: '.stk-block-button__button:hover > .stk-block-button__inner-text',
-	}
 
 	const styles = (
-		<Fragment>
+		<>
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
-			<Button.Style.Content { ...propsToPass } />
-			<Typography.Style.Content { ...propsToPass } />
+			<Button.Style.Content { ...propsToPass } options={ buttonOptions } />
+			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
-		</Fragment>
+		</>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null

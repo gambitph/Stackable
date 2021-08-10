@@ -22,9 +22,11 @@ import {
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Edit = props => {
 	const {
+		hasColor,
 		hasGradient,
 		hasShape,
 		hasIconGap,
@@ -45,14 +47,15 @@ export const Edit = props => {
 				id="icon"
 				initialOpen={ initialOpen }
 			>
+				{ applyFilters( 'stackable.block-component.icon.before', null ) }
 
 				<IconControl
-					label={ __( 'Icon', i18n ) }
+					label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
 					value={ getAttribute( 'icon' ) }
 					onChange={ updateAttributeHandler( 'icon' ) }
 				/>
 
-				{ hasGradient && (
+				{ hasColor && hasGradient && (
 					<Fragment>
 						<AdvancedToolbarControl
 							controls={ [
@@ -96,7 +99,7 @@ export const Edit = props => {
 					</Fragment>
 				) }
 
-				{ ! hasGradient && (
+				{ hasColor && ! hasGradient && (
 					<ColorPaletteControl
 						label={ __( 'Icon Color', i18n ) }
 						attribute="iconColor1"
@@ -282,6 +285,7 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	label: __( 'Icon', i18n ),
+	hasColor: true,
 	hasGradient: true,
 	hasShape: true,
 	hasBackgroundShape: true,

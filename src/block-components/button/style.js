@@ -21,8 +21,6 @@ import { Icon } from '../icon'
 const getStyleParams = options => {
 	const {
 		selector,
-		textSelector,
-		textHoverSelector,
 	} = options
 
 	return [
@@ -31,6 +29,13 @@ const getStyleParams = options => {
 			responsive: 'all',
 			styleRule: 'minHeight',
 			attrName: 'buttonMinHeight',
+			format: '%spx',
+		},
+		{
+			selector,
+			responsive: 'all',
+			styleRule: 'width',
+			attrName: 'buttonWidth',
 			format: '%spx',
 		},
 		{
@@ -136,13 +141,6 @@ const getStyleParams = options => {
 
 				return undefined
 			},
-		},
-		{
-			selector: textSelector,
-			hoverSelector: textHoverSelector,
-			styleRule: 'color',
-			hover: 'all',
-			attrName: 'buttonTextColor',
 		},
 	]
 }

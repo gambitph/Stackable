@@ -1,0 +1,12 @@
+.stk-block-price {
+	[data-type="stackable/text"] {
+		display: inline-block;
+		width: auto !important;
+		&:first-child {
+			vertical-align: top;
+		}
+		&:last-child {
+			vertical-align: bottom;
+		}
+	}
+}

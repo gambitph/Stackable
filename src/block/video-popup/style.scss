@@ -16,8 +16,7 @@
 	.stk-img-wrapper {
 		height: 100%;
 	}
-	.stk-block-icon,
-	.stk-block-image {
+	:is(.stk-block-icon, .stk-block-image) {
 		--stk-block-margin-bottom: 0;
 	}
 }

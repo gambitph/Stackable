@@ -129,7 +129,7 @@ const Edit = props => {
 					<div className={ contentClassNames }>
 						<InnerBlocks
 							template={ TEMPLATE }
-							templateLock={ true }
+							templateLock="all"
 						/>
 					</div>
 				</Fragment>

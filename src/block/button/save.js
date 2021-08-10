@@ -32,10 +32,6 @@ export const Save = props => {
 
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 
-	const buttonClassNames = classnames( [
-		'stk-block-button__button',
-	] )
-
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-block-button',
@@ -44,7 +40,7 @@ export const Save = props => {
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
-		'stk-block-button__inner-text',
+		'stk-button__inner-text',
 	] )
 
 	return (
@@ -53,7 +49,6 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ props.attributes } />
 			<Button.Content
 				{ ...propsToPass }
-				className={ buttonClassNames }
 				attributes={ props.attributes }
 			>
 				<Typography.Content

@@ -7,6 +7,7 @@ import {
 	Responsive,
 	Typography,
 	MarginBottom,
+	Alignment,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -82,6 +83,7 @@ export const iconListAttributes = {
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
+	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	BlockDiv.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
