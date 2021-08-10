@@ -185,17 +185,14 @@
 }
 
 // Typography Classes.
-.stk--is-gradient {
-	&,
-	li {
-		background-clip: text;
-		-webkit-background-clip: text;
-		-moz-background-clip: text;
-		-o-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		-moz-text-fill-color: transparent;
-		-o-text-fill-color: transparent;
-	}
+:is(.stk--is-gradient, .stk--is-gradient li, .stk--is-gradient span) {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-o-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	-o-text-fill-color: transparent;
 }
 
 // Default text direction, we need to add this for RTL support.

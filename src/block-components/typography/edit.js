@@ -19,7 +19,7 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { getAttributeName } from '~stackable/util'
+import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -40,6 +40,8 @@ export const Edit = props => {
 		isMultiline,
 		initialOpen,
 		hasGradient,
+		hasToggle,
+		label,
 	} = props
 
 	const {
@@ -48,6 +50,7 @@ export const Edit = props => {
 		updateAttributes,
 		updateAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
+	const attributeName = getAttrNameFunction( attrNameTemplate )
 
 	const text = getAttribute( 'text' )
 
@@ -84,8 +87,12 @@ export const Edit = props => {
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
-				title={ __( 'Typography', i18n ) }
+				title={ label }
 				initialOpen={ initialOpen }
+				{ ...( hasToggle ? {
+					checked: getAttribute( 'show' ),
+					onChange: updateAttributeHandler( 'show' ),
+				} : {} ) }
 				id="text"
 			>
 				<Fragment>
@@ -106,7 +113,7 @@ export const Edit = props => {
 					{ hasRemoveMargins && (
 						<AdvancedToggleControl
 							label={ __( 'Remove extra text margins', i18n ) }
-							attribute="textRemoveTextMargins"
+							attribute={ attributeName( 'textRemoveTextMargins' ) }
 						/>
 					) }
 
@@ -169,7 +176,7 @@ export const Edit = props => {
 								{ label: __( 'Normal', i18n ), value: 'normal' },
 								{ label: __( 'Bold', i18n ), value: 'bold' },
 							] }
-							attribute="fontWeight"
+							attribute={ attributeName( 'fontWeight' ) }
 						/>
 						<AdvancedSelectControl
 							label={ __( 'Transform', i18n ) }
@@ -180,11 +187,11 @@ export const Edit = props => {
 								{ label: __( 'Capitalize', i18n ), value: 'capitalize' },
 								{ label: __( 'None', i18n ), value: 'none' },
 							] }
-							attribute="textTransform"
+							attribute={ attributeName( 'textTransform' ) }
 						/>
 						<AdvancedRangeControl
 							label={ __( 'Line-Height', i18n ) }
-							attribute="lineHeight"
+							attribute={ attributeName( 'lineHeight' ) }
 							units={ [ 'px', 'em' ] }
 							min={ [ 1, 0.1 ] }
 							max={ [ 100, 10 ] }
@@ -196,7 +203,7 @@ export const Edit = props => {
 						/>
 						<AdvancedRangeControl
 							label={ __( 'Letter Spacing', i18n ) }
-							attribute="letterSpacing"
+							attribute={ attributeName( 'letterSpacing' ) }
 							min={ -5 }
 							max={ 10 }
 							step={ 0.1 }
@@ -208,7 +215,7 @@ export const Edit = props => {
 					<AdvancedRangeControl
 						label={ __( 'Size', i18n ) }
 						allowReset={ true }
-						attribute="fontSize"
+						attribute={ attributeName( 'fontSize' ) }
 						units={ [ 'px', 'em' ] }
 						min={ [ 0, 0 ] }
 						max={ [ 150, 7 ] }
@@ -233,7 +240,7 @@ export const Edit = props => {
 									] }
 									isSmall={ true }
 									fullwidth={ false }
-									attribute="textColorType"
+									attribute={ attributeName( 'textColorType' ) }
 									onReset={ () => {
 										updateAttributes( {
 											[ getAttributeName( 'textColor1' ) ]: '',
@@ -245,19 +252,19 @@ export const Edit = props => {
 							<ColorPaletteControl
 								label={ getAttribute( 'textColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
 									: __( 'Text Color', i18n ) }
-								attribute="textColor1"
+								attribute={ attributeName( 'textColor1' ) }
 								hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
 							/>
 							{ getAttribute( 'textColorType' ) === 'gradient' && hasGradient && (
 								<Fragment>
 									<ColorPaletteControl
 										label={ sprintf( __( 'Text Color #%s', i18n ), 2 ) }
-										attribute="textColor2"
+										attribute={ attributeName( 'textColor2' ) }
 									/>
 
 									<AdvancedRangeControl
 										label={ __( 'Gradient Direction (degrees)', i18n ) }
-										attribute="textGradientDirection"
+										attribute={ attributeName( 'textGradientDirection' ) }
 										min={ 0 }
 										max={ 360 }
 										step={ 10 }
@@ -283,4 +290,5 @@ Edit.defaultProps = {
 	initialOpen: true,
 	hasGradient: true,
 	hasRemoveMargins: false,
+	label: __( 'Typography', i18n ),
 }

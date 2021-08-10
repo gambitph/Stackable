@@ -9,6 +9,7 @@ import { Style as StyleComponent } from '~stackable/components'
 const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
+		attrNameTemplate = '%s',
 		inherit = true,
 		inheritMin,
 		inheritMax = 50,
@@ -18,6 +19,7 @@ const getStyleParams = ( options = {} ) => {
 	return [
 		{
 			selector,
+			attrNameTemplate,
 			styleRule: 'fontSize',
 			attrName: 'fontSize',
 			hasUnits: 'px',
@@ -59,6 +61,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			attrNameTemplate,
 			styleRule: 'margin',
 			attrName: 'textRemoveTextMargins',
 			valueCallback: value => {
@@ -67,6 +70,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			attrNameTemplate,
 			styleRule: 'color',
 			hover: 'all',
 			hoverSelector,
@@ -81,6 +85,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			attrNameTemplate,
 			styleRule: 'backgroundImage',
 			hoverSelector,
 			attrName: 'textColor1',
@@ -105,6 +110,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			attrNameTemplate,
 			styleRule: 'lineHeight',
 			attrName: 'lineHeight',
 			responsive: 'all',
@@ -112,6 +118,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			attrNameTemplate,
 			styles: {
 				fontWeight: 'fontWeight',
 				textTransform: 'textTransform',
@@ -119,12 +126,14 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			attrNameTemplate,
 			styleRule: 'fontFamily',
 			attrName: 'fontFamily',
 			valueCallback: value => getFontFamily( value ),
 		},
 		{
 			selector,
+			attrNameTemplate,
 			styleRule: 'letterSpacing',
 			attrName: 'letterSpacing',
 			format: '%spx',

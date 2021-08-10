@@ -1,0 +1,21 @@
+.stk-block-posts {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: var(--stk-column-gap, 16px);
+	row-gap: 16px;
+
+	&__title,
+	&__meta,
+	&__category,
+	&__excerpt {
+		display: block;
+	}
+
+	&__item {
+		flex-basis: calc((100%/var(--stk-columns, 3)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 3)));
+	}
+}
+
+.stk-block.stk-block-posts .stk-block-posts__title {
+	margin: 0;
+}
