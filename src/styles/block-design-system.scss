@@ -89,23 +89,74 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-a.stk-button {
-	background: cssvar(button-background-color);
-	padding: cssvar(button-padding);
+.stk-block {
+	a.stk-button {
+		background: cssvar(button-background-color);
+		padding: cssvar(button-padding);
 
-	.stk--inner-svg {
-		color: cssvar(button-text-color);
-	}
+		.stk--inner-svg {
+			color: cssvar(button-text-color);
+		}
 
-	> .stk-button__inner-text {
-		color: cssvar(button-text-color);
+		> .stk-button__inner-text {
+			color: cssvar(button-text-color);
 
-		&:hover {
-			color: cssvar(button-text-color); // Override theme's hover text color.
+			&:hover {
+				color: cssvar(button-text-color); // Override theme's hover text color.
+			}
 		}
 	}
+	&.is-style-plain {
+		a.stk-button {
+			.stk--inner-svg {
+				color: cssvar(button-background-color);
+			}
+			&:hover {
+				.stk-button__inner-text {
+					color: cssvar(button-background-color);
+				}
+			}
 
+			> .stk-button__inner-text {
+				color: cssvar(button-background-color);
+			}
+		}
+	}
+	&.is-style-ghost {
+		a.stk-button {
+			&::before {
+				border-width: cssvar(button-ghost-border-width);
+				border-color: cssvar(button-background-color);
+			}
+			.stk--inner-svg {
+				color: cssvar(button-background-color);
+			}
+
+			&:hover {
+				.stk-button__inner-text {
+					color: cssvar(button-background-color);
+				}
+			}
+
+			> .stk-button__inner-text {
+				color: cssvar(button-background-color);
+			}
+		}
+	}
+	&.is-style-ghost,
+	&.is-style-plain {
+		a.stk-button > .stk--svg-wrapper {
+			.stk--inner-svg {
+				color: cssvar(button-background-color);
+				&,
+				:is(g, path, rect, polygon, ellipse) {
+					fill: cssvar(button-background-color);
+				}
+			}
+		}
+	}
 }
+
 
 // Block spacing when horizontally oriented.
 .stk--block-orientation-horizontal > * + * {
