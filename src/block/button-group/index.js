@@ -4,7 +4,7 @@
 /**
  * External dependencies
  */
-import { ButtonIcon } from '~stackable/icons'
+import { ButtonGroupIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -21,7 +21,7 @@ import { __ } from '@wordpress/i18n'
 
 export const settings = {
 	...metadata,
-	icon: ButtonIcon,
+	icon: ButtonGroupIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,

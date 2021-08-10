@@ -5,6 +5,7 @@ import SVGStackableIconTextured from './images/stackable-icon-textured.svg'
 import SVGAccordionIcon from './images/accordion-icon.svg'
 import SVGBlockquoteIcon from './images/blockquote-icon.svg'
 import SVGBlogPostsIcon from './images/blog-posts-icon.svg'
+import SVGButtonGroupIcon from './images/button-group-icon.svg'
 import SVGButtonIcon from './images/button-icon.svg'
 import SVGCardIcon from './images/card-icon.svg'
 import SVGColumnsIcon from './images/columns-icon.svg'
@@ -100,8 +101,13 @@ export const BlockquoteIcon = () => {
 export const BlogPostsIcon = () => {
 	return colorizeIcon( <SVGBlogPostsIcon width="20" height="20" /> )
 }
+
 export const ButtonIcon = () => {
-	return colorizeIcon( <SVGButtonIcon width="20" height="20" /> )
+	return colorizeIcon( <SVGButtonIcon width="16" height="16" /> )
+}
+
+export const ButtonGroupIcon = () => {
+	return colorizeIcon( <SVGButtonGroupIcon width="16" height="16" /> )
 }
 
 export const CardIcon = () => {
