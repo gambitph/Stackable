@@ -6,7 +6,6 @@ import {
 	Advanced,
 	Button,
 	BlockDiv,
-	Typography,
 	EffectsAnimations,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
@@ -18,16 +17,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
  */
 import { renderToString } from '@wordpress/element'
 
-const buttonOptions = {
-	selector: '.stk-button',
-}
-
-const typographyOptions = {
-	selector: '.stk-button > .stk-button__inner-text',
-	hoverSelector: '.stk-button:hover > .stk-button__inner-text',
-}
-
-export const ButtonStyles = props => {
+export const IconButtonStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -39,37 +29,50 @@ export const ButtonStyles = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
+	propsToPass.options = {
+		...propsToPass.options,
+		selector: '.stk-button',
+		hoverSelector: '.stk-button:hover',
+		textSelector: '.stk-button > .stk-button__inner-text',
+		textHoverSelector: '.stk-button:hover > .stk-button__inner-text',
+	}
 
 	return (
 		<>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
-			<Button.Style { ...propsToPass } options={ buttonOptions } />
-			<Typography.Style { ...propsToPass } options={ typographyOptions } />
+			<Button.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</>
 	)
 }
 
-ButtonStyles.defaultProps = {
+IconButtonStyles.defaultProps = {
 	isEditor: false,
 	attributes: {},
 	options: {},
 }
 
-ButtonStyles.Content = props => {
+IconButtonStyles.Content = props => {
 	const {
+		options = {},
 		...propsToPass
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( propsToPass.attributes.uniqueId )
+	propsToPass.options = {
+		...options,
+		selector: '.stk-button',
+		hoverSelector: '.stk-button:hover',
+		textSelector: '.stk-button > .stk-button__inner-text',
+		textHoverSelector: '.stk-button:hover > .stk-button__inner-text',
+	}
 
 	const styles = (
 		<>
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
-			<Button.Style.Content { ...propsToPass } options={ buttonOptions } />
-			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
+			<Button.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 		</>
 	)
@@ -77,7 +80,7 @@ ButtonStyles.Content = props => {
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
-ButtonStyles.Content.defaultProps = {
+IconButtonStyles.Content.defaultProps = {
 	attributes: {},
 	options: {},
 }

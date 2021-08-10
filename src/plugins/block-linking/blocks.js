@@ -7,7 +7,8 @@ import { addFilter } from '@wordpress/hooks'
 addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 	return {
 		...blocks,
-		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab' ] },
+		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab', 'icon' ] },
+		'stackable/icon-button': { filterAttributes: [ 'linkUrl', 'linkRel', 'linkNewTab', 'icon' ] },
 		'stackable/button-group': {},
 		'stackable/blockquote': {},
 		'stackable/call-to-action': {},

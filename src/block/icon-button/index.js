@@ -1,11 +1,6 @@
 /**
- * BLOCK: Button Block
+ * BLOCK: Icon Button Block
  */
-/**
- * External dependencies
- */
-import { ButtonGroupIcon } from '~stackable/icons'
-
 /**
  * Internal dependencies
  */
@@ -13,22 +8,22 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import transforms from './transforms'
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { IconButtonIcon } from '~stackable/icons'
 
 export const settings = {
 	...metadata,
-	icon: ButtonGroupIcon,
+	icon: IconButtonIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
-		align: true,
 	},
+	transforms,
 
 	edit,
 	save,
 }
-
