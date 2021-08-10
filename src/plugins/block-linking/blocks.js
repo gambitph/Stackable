@@ -9,6 +9,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		...blocks,
 		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab' ] },
 		'stackable/button-group': {},
+		'stackable/blockquote': {},
 		'stackable/call-to-action': {},
 		'stackable/card': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt', 'imageTitle' ] },
 		'stackable/card-group': {},

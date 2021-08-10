@@ -22,6 +22,7 @@ import {
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Edit = props => {
 	const {
@@ -45,9 +46,10 @@ export const Edit = props => {
 				id="icon"
 				initialOpen={ initialOpen }
 			>
+				{ applyFilters( 'stackable.block-component.icon.before', null ) }
 
 				<IconControl
-					label={ __( 'Icon', i18n ) }
+					label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
 					value={ getAttribute( 'icon' ) }
 					onChange={ updateAttributeHandler( 'icon' ) }
 				/>

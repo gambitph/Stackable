@@ -32,6 +32,7 @@ $stk_block_folders = array(
  */
 $stk_wrapper_block_folders = array(
 	'button-group',
+	'blockquote',
 	'card',
 	'call-to-action',
 	'column',
