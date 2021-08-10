@@ -75,7 +75,8 @@
 	/***
 	 * Typography
 	 */
-	// TODO: Add typography colors
+	subtitle-size: 16px,
+	subtitle-color: #39414d,
 ) );
 
 /**
@@ -177,4 +178,10 @@
 			fill: cssvar(icon-color);
 		}
 	}
+}
+
+// Typography
+.stk-subtitle {
+	font-size: cssvar(subtitle-size);
+	color: cssvar(subtitle-color);
 }

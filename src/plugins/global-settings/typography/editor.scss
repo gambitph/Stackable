@@ -1,7 +1,17 @@
 // Fix the alignment of the preview.
 .ugb-global-settings-typography-control {
+	.ugb-base-control-multi-label {
+		padding-right: 8px;
+
+		&__label {
+			overflow: hidden;
+		}
+	}
 	> .components-base-control__field {
 		margin-bottom: 16px;
+		> .stk-inspector-control__reset-button {
+			bottom: unset;
+		}
 		> .components-base-control__label {
 			min-height: 25px;
 			width: calc(100% - 88px);
@@ -17,6 +27,7 @@
 }
 .ugb-global-typography-preview {
 	position: relative;
+	padding-right: 32px;
 	.block-editor-block-list__layout,
 	.block-editor-block-list__block,
 	.editor-styles-wrapper {
@@ -29,6 +40,11 @@
 		&::after {
 			display: none !important;
 		}
+	}
+	.dashicons-editor-help {
+		position: absolute;
+		top: 0;
+		right: 0;
 	}
 }
 .ugb-global-typography-preview__label {
@@ -46,4 +62,12 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+}
+
+.stk-typography-preview__text {
+	display: block;
+	width: 200px;
+	white-space: normal;
+	text-align: left;
+	padding: 8px;
 }

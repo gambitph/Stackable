@@ -30,6 +30,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/price': {},
 		'stackable/pricing-box': {},
 		'stackable/text': { filterAttributes: [ 'text' ] },
+		'stackable/subtitle': { filterAttributes: [ 'text' ] },
 	}
 } )
 

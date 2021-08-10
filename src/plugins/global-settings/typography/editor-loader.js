@@ -118,38 +118,40 @@ export const GlobalTypographyStyles = () => {
 	return styles
 }
 
-export const formSelectors = ( tag, applyTo ) => {
-	if ( [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ].includes( tag ) ) {
-		return formTagSelectors( tag, applyTo )
+export const formSelectors = ( selector, applyTo ) => {
+	if ( [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ].includes( selector ) || selector.startsWith( '.' ) ) {
+		return formClassOrTagSelectors( selector, applyTo )
 	}
 	return formParagraphSelectors( applyTo )
 }
 
-export const formTagSelectors = ( tag, applyTo ) => {
+export const formClassOrTagSelectors = ( _selector, applyTo ) => {
 	const selectors = []
+	const isClassSelector = _selector.startsWith( '.' )
+	const selector = isClassSelector ? 'p' + _selector : _selector
 
 	// Include Stackable blocks.
-	selectors.push( `[data-type^="stackable/"] ${ tag }` )
+	selectors.push( `[data-type^="stackable/"] ${ selector }` )
 
 	// Include native blocks.
-	if ( applyTo !== 'blocks-stackable' ) {
-		selectors.push( `.editor-styles-wrapper [data-type^="core/"] ${ tag }` )
-		selectors.push( `.editor-styles-wrapper ${ tag }[data-type^="core/"]` )
+	if ( isClassSelector || applyTo !== 'blocks-stackable' ) {
+		selectors.push( `.editor-styles-wrapper [data-type^="core/"] ${ selector }` )
+		selectors.push( `.editor-styles-wrapper ${ selector }[data-type^="core/"]` )
 	}
 
 	// Include all other blocks.
-	if ( applyTo === 'blocks-all' ) {
-		selectors.push( `.editor-styles-wrapper [data-type] ${ tag }` )
-		selectors.push( `.editor-styles-wrapper ${ tag }[data-type]` )
+	if ( isClassSelector || applyTo === 'blocks-all' ) {
+		selectors.push( `.editor-styles-wrapper [data-type] ${ selector }` )
+		selectors.push( `.editor-styles-wrapper ${ selector }[data-type]` )
 	}
 
-	return applyFilters( 'stackable.global-settings.typography-selectors', selectors, tag )
+	return applyFilters( 'stackable.global-settings.typography-selectors', selectors, _selector )
 }
 
 export const formParagraphSelectors = applyTo => {
 	return [
-		...formTagSelectors( 'p', applyTo ),
-		...formTagSelectors( 'li', applyTo ),
+		...formClassOrTagSelectors( 'p', applyTo ),
+		...formClassOrTagSelectors( 'li', applyTo ),
 		`.editor-styles-wrapper p.block-editor-block-list__block[data-type^="core/"]`,
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] p`,
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] li`,
