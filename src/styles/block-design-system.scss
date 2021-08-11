@@ -62,6 +62,8 @@
 	button-text-color: #fff,
 	button-gap: 12px,
 	button-ghost-border-width: 2px,
+	button-column-gap: 12px,
+	button-row-gap: 12px,
 
 	/**
 	 * Icons
@@ -73,7 +75,8 @@
 	/***
 	 * Typography
 	 */
-	// TODO: Add typography colors
+	subtitle-size: 16px,
+	subtitle-color: #39414d,
 ) );
 
 /**
@@ -87,26 +90,44 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-.stk-block-button {
-	a.stk-block-button__button {
+.stk-block {
+	.stk-button {
 		background: cssvar(button-background-color);
 		padding: cssvar(button-padding);
+
+		// Adjust icon color and icon size.
+		#{ '--stk-icon-color' }: cssvar(button-text-color);
+		--stk-icon-size: 1em;
 
 		.stk--inner-svg {
 			color: cssvar(button-text-color);
 		}
 
-
-		> .stk-block-button__inner-text {
+		> .stk-button__inner-text {
 			color: cssvar(button-text-color);
-
 			&:hover {
 				color: cssvar(button-text-color); // Override theme's hover text color.
 			}
 		}
+	}
 
+	// Ghost button color.
+	&.is-style-ghost {
+		#{ '--stk-button-text-color' }: cssvar(button-background-color);
+		.stk-button {
+			&::before {
+				border-width: cssvar(button-ghost-border-width);
+				border-color: cssvar(button-background-color);
+			}
+		}
+	}
+
+	// Plain button color.
+	&.is-style-plain {
+		#{ '--stk-button-text-color' }: cssvar(button-background-color);
 	}
 }
+
 
 // Block spacing when horizontally oriented.
 .stk--block-orientation-horizontal > * + * {
@@ -157,4 +178,10 @@
 			fill: cssvar(icon-color);
 		}
 	}
+}
+
+// Typography
+.stk-subtitle {
+	font-size: cssvar(subtitle-size);
+	color: cssvar(subtitle-color);
 }

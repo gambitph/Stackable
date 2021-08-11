@@ -7,8 +7,10 @@ import { addFilter } from '@wordpress/hooks'
 addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 	return {
 		...blocks,
-		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab' ] },
+		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab', 'icon' ] },
+		'stackable/icon-button': { filterAttributes: [ 'linkUrl', 'linkRel', 'linkNewTab', 'icon' ] },
 		'stackable/button-group': {},
+		'stackable/blockquote': {},
 		'stackable/call-to-action': {},
 		'stackable/card': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt', 'imageTitle' ] },
 		'stackable/card-group': {},
@@ -28,6 +30,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/price': {},
 		'stackable/pricing-box': {},
 		'stackable/text': { filterAttributes: [ 'text' ] },
+		'stackable/subtitle': { filterAttributes: [ 'text' ] },
 	}
 } )
 

@@ -10,16 +10,17 @@ import {
 	upperFirst, omit,
 } from 'lodash'
 import classnames from 'classnames'
+import { generateStyles } from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
-import { generateStyles } from '~stackable/block-components'
+import { Tooltip, Dashicon } from '@wordpress/components'
 
 const TypographyPicker = props => {
-	const { value } = props
+	const { value, help } = props
 
 	// On style change, gather all the styles then trigger the onChange.
 	const onChange = ( style, value ) => {
@@ -33,8 +34,9 @@ const TypographyPicker = props => {
 	// Typography preview label.
 	const label = (
 		<TypographyPreview
-			tag={ props.tag }
+			selector={ props.selector }
 			styles={ value }
+			help={ help }
 		>
 			{ props.label }
 		</TypographyPreview>
@@ -56,7 +58,7 @@ const TypographyPicker = props => {
 			allowReset={ true }
 			fontFamily={ value.fontFamily }
 			fontSize={ value.fontSize }
-			htmlTag={ props.tag }
+			htmlTag={ props.selector }
 			tabletFontSize={ value.tabletFontSize }
 			mobileFontSize={ value.mobileFontSize }
 			fontSizeUnit={ value.fontSizeUnit }
@@ -87,15 +89,15 @@ const TypographyPicker = props => {
 			onChangeTabletLineHeightUnit={ value => onChange( 'tabletLineHeightUnit', value ) }
 			onChangeMobileLineHeightUnit={ value => onChange( 'mobileLineHeightUnit', value ) }
 			onChangeLetterSpacing={ value => onChange( 'letterSpacing', value ) }
-			onReset={ () => props.onReset( props.tag ) }
-			resetPopoverTitle={ sprintf( __( 'Reset %s Global Typography Style', i18n ), props.tag === 'p' ? __( 'Body Text', i18n ) : props.tag.toUpperCase() ) }
+			onReset={ () => props.onReset( props.selector ) }
+			resetPopoverTitle={ sprintf( __( 'Reset %s Global Typography Style', i18n ), props.selector === 'p' ? __( 'Body Text', i18n ) : props.selector.toUpperCase() ) }
 			resetPopoverDescription={ __( 'Resetting this typography style will revert all typography to its original style. Proceed?', i18n ) }
 		/>
 	)
 }
 
 TypographyPicker.defaultProps = {
-	tag: 'h1',
+	selector: 'h1',
 	label: sprintf( __( 'Heading %d', i18n ), 1 ),
 	onChange: () => {},
 	onReset: () => {},
@@ -148,7 +150,13 @@ const createDescription = ( styleObject, device = 'desktop' ) => {
 }
 
 const TypographyPreview = props => {
-	const Tag = props.tag
+	const isSelectorTag = props.selector?.startsWith( '.' )
+	const Tag = isSelectorTag ? 'p' : props.selector
+	const tagClassName = classnames( [
+		'ugb-global-typography-preview__label',
+	], {
+		[ props.selector?.substring( 1 ) ]: isSelectorTag,
+	} )
 	const { device } = useSelect(
 		select => ( {
 			device: select(
@@ -164,9 +172,9 @@ const TypographyPreview = props => {
 
 	// Generate our preview styles.
 	const styles = {
-		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]` ]: createTypographyStyles( '%s', 'desktop', stylesToRender, { important: true } ),
-		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]:not([data-device="desktop"])` ]: createTypographyStyles( '%s', 'tablet', stylesToRender, { important: true } ),
-		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"][data-device="mobile"]` ]: createTypographyStyles( '%s', 'mobile', stylesToRender, { important: true } ),
+		[ `.ugb-global-typography-preview__label[data-selector="${ props.selector }"]` ]: createTypographyStyles( '%s', 'desktop', stylesToRender, { important: true } ),
+		[ `.ugb-global-typography-preview__label[data-selector="${ props.selector }"]:not([data-device="desktop"])` ]: createTypographyStyles( '%s', 'tablet', stylesToRender, { important: true } ),
+		[ `.ugb-global-typography-preview__label[data-selector="${ props.selector }"][data-device="mobile"]` ]: createTypographyStyles( '%s', 'mobile', stylesToRender, { important: true } ),
 	}
 
 	// Load our Google Font is necessary.
@@ -176,11 +184,24 @@ const TypographyPreview = props => {
 
 	return (
 		<div className="ugb-global-typography-preview">
+			{ props.help && (
+				<Tooltip
+					position="bottom"
+					className="stk-typography-preview__tooltip"
+					text={
+						<span className="stk-typography-preview__text">
+							{ props.help }
+						</span>
+					}
+				>
+					<Dashicon icon="editor-help" />
+				</Tooltip>
+			) }
 			<div className="editor-styles-wrapper">
 				<div className="block-editor-block-list__layout">
 					<div className="wp-block block-editor-block-list__block">
 						<style>{ generateStyles( styles ).join( '' ) }</style>
-						<Tag className="ugb-global-typography-preview__label" data-tag={ props.tag } data-device={ device }>{ props.children }</Tag>
+						<Tag className={ tagClassName } data-selector={ props.selector } data-device={ device }>{ props.children }</Tag>
 					</div>
 				</div>
 			</div>

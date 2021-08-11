@@ -1,7 +1,10 @@
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.global-settings.typography-selectors', 'stackable/v2', ( selectors, tag ) => {
-	selectors.push( `[data-type^="ugb/"] ${ tag }` )
+addFilter( 'stackable.global-settings.typography-selectors', 'stackable/v2', ( selectors, selector ) => {
+	selectors.push( `[data-type^="ugb/"] ${ selector }` )
+	if ( selector.startsWith( '.' ) ) {
+		selectors.push( `[data-type^="ugb/"] ${ selector } p` )
+	}
 	return selectors
 } )
 

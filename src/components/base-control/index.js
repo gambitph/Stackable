@@ -27,7 +27,7 @@ const BaseControl = props => {
 		'stk-inspector-control',
 		props.className,
 	], {
-		'stk-insector-control--allow-reset': props.allowReset,
+		'stk-inspector-control--allow-reset': props.allowReset,
 		'stk--is-small': props.isSmall,
 	} )
 

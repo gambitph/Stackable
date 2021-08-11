@@ -1,8 +1,3 @@
-/**
- * External dependencies
- */
-import { omit } from 'lodash'
-
 const typographyAttributes = {
 	fontSize: {
 		stkResponsive: true,
@@ -71,7 +66,6 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 	const {
 		hasTextTag = true,
 		hasTextContent = true,
-		hasColor = true,
 		defaultTextTag = 'p',
 		attrNameTemplate = '%s',
 		multiline,
@@ -79,21 +73,9 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 		multilineWrapperTags: __unstableMultilineWrapperTags,
 	} = options
 
-	const attributesToExclude = []
-	if ( ! hasColor ) {
-		attributesToExclude.push(
-			'textColorType',
-			'textColor1',
-			'textColor2',
-			'textGradientDirection',
-		)
-	}
-
 	attrObject.add( {
 		attributes: {
-			...( attributesToExclude.length
-				? omit( typographyAttributes, attributesToExclude )
-				: typographyAttributes ),
+			...typographyAttributes,
 			...( hasTextContent ? {
 				showText: {
 					type: 'boolean',
