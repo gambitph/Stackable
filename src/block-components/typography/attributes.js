@@ -49,6 +49,10 @@ const typographyAttributes = {
 		type: 'string',
 		default: '',
 	},
+	textAlign: {
+		type: 'string',
+		default: '',
+	},
 	textGradientDirection: {
 		type: 'number',
 		default: '',

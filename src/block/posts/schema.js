@@ -32,12 +32,7 @@ const postsAttributes = {
 	},
 	contentOrder: {
 		type: 'array',
-		default: [
-			'title',
-			'meta',
-			'category',
-			'excerpt',
-		],
+		default: '',
 	},
 	rowGap: {
 		type: 'number',
@@ -85,6 +80,10 @@ const postsAttributes = {
 		type: 'string',
 		default: '',
 	},
+	readmoreText: {
+		type: 'string',
+		default: '',
+	},
 
 	// Misc.
 	showTitle: {
@@ -128,6 +127,7 @@ export const attributes = ( version = VERSION ) => {
 	} )
 	Typography.addAttributes( attrObject, 'stk-block-posts__readmore', {
 		hasTextTag: false,
+		hasTextContent: false,
 		attrNameTemplate: 'readmore%s',
 	} )
 
@@ -139,9 +139,22 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.addDefaultValues( {
 		attributes: {
-			hasContainer: true,
 			showTitle: true,
 			titleTextTag: 'h3',
+			postType: 'post',
+			numberOfItems: 6,
+			orderBy: 'date',
+			order: 'desc',
+			taxonomyType: 'category',
+			taxonomy: '',
+			taxonomyFilterType: '__in',
+			contentOrder: [
+				'category',
+				'featured-image',
+				'title',
+				'meta',
+				'excerpt',
+			],
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

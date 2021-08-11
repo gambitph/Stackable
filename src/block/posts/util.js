@@ -29,6 +29,10 @@ export const META_SEPARATORS = {
 
 export const CONTENTS = [
 	{
+		label: __( 'Featured Image', i18n ),
+		value: 'featured-image',
+	},
+	{
 		label: __( 'Title', i18n ),
 		value: 'title',
 	},
@@ -92,7 +96,7 @@ export const generateRenderPostItem = attributes => {
 		getTypographyClasses( attributes, 'readmore%s' )
 	)
 
-	return post => {
+	return ( post, idx ) => {
 		const {
 			featured_image_urls: featuredImageUrls,
 			title: _title,
@@ -181,6 +185,7 @@ export const generateRenderPostItem = attributes => {
 		)
 
 		const contentFactory = {
+			'featured-image': imageShow && featuredImage,
 			title: titleShow && title,
 			category: categoryShow && category,
 			meta: metaShow && meta,
@@ -194,9 +199,8 @@ export const generateRenderPostItem = attributes => {
 		} )
 
 		return (
-			<ContainerDiv className={ itemClassNames }>
+			<ContainerDiv className={ itemClassNames } key={ idx }>
 				<article>
-					{ imageShow && featuredImage }
 					{ compact( contents ).map( content => content ) }
 					{ Object.values( contentFactory ).map( content => content ) }
 					{ readmoreShow && readmore }
@@ -308,6 +312,7 @@ generateRenderPostItem.save = attributes => {
 	)
 
 	const contentFactory = {
+		'featured-image': imageShow && featuredImage,
 		title: titleShow && title,
 		category: categoryShow && category,
 		meta: metaShow && meta,
@@ -325,7 +330,6 @@ generateRenderPostItem.save = attributes => {
 			{ '<!–- wp:stk/start –->' }
 			<ContainerDiv.Content className={ itemClassNames } attributes={ attributes }>
 				<article>
-					{ imageShow && featuredImage }
 					{ compact( contents ).map( content => content ) }
 					{ Object.values( contentFactory ).map( content => content ) }
 					{ readmoreShow && readmore }

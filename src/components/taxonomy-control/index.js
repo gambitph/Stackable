@@ -4,14 +4,14 @@
 import {
 	i18n, isPro,
 } from 'stackable'
-import { AdvancedSelectControl } from '~stackable/components'
+import { AdvancedSelectControl, AdvancedTokenField } from '~stackable/components'
 import { find, compact } from 'lodash'
 
 /**
  * WordPress dependencies
  */
 import { Component, Fragment } from '@wordpress/element'
-import { Spinner, FormTokenField } from '@wordpress/components'
+import { Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from '@wordpress/url'
 import apiFetch from '@wordpress/api-fetch'
@@ -66,7 +66,7 @@ class TaxonomyControl extends Component {
 		const taxonomyTypeOptions = []
 		const taxonomyOptions = []
 		let taxonomyLabel = ''
-		const { taxonomy } = this.props
+		const { taxonomy, allowReset } = this.props
 
 		Object.keys( this.state.termList ).forEach( postType => {
 			const {
@@ -139,13 +139,14 @@ class TaxonomyControl extends Component {
 						label={ __( 'Post Type', i18n ) }
 						options={ postTypeOptions }
 						value={ this.props.postType }
-						allowReset={ false }
+						allowReset={ allowReset }
 						onChange={ value => {
 							const taxonomyTypesAvailable = Object.keys( this.state.termList[ value ].taxonomies )
 							this.props.onChangePostType( value )
 							this.props.onChangeTaxonomyType( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
 							this.props.onChangeTaxonomy( '' )
 						} }
+						default="post"
 					/>
 				}
 				{ taxonomyTypeOptions.length > 0 &&
@@ -153,36 +154,38 @@ class TaxonomyControl extends Component {
 						label={ __( 'Filter by Taxonomy', i18n ) }
 						options={ taxonomyTypeOptions }
 						value={ this.props.taxonomyType }
-						allowReset={ false }
+						allowReset={ allowReset }
 						onChange={ value => {
 							this.props.onChangeTaxonomyType( value )
 							this.props.onChangeTaxonomy( '' )
 						} }
+						default="category"
 					/>
 				}
 				{ taxonomyTypeOptions.length > 0 &&
 				<Fragment>
 					<AdvancedSelectControl
 						label={ __( 'Taxonomy Filter Type', i18n ) }
-						allowReset={ false }
+						allowReset={ allowReset }
 						options={ [
 							{ label: __( 'Included In', i18n ), value: '__in' },
 							{ label: __( 'Not In', i18n ), value: '__not_in' },
 						] }
 						value={ this.props.taxonomyFilterType }
 						onChange={ this.props.onChangeTaxonomyFilterType }
+						default="__in"
 					/>
-					<FormTokenField
+					<AdvancedTokenField
 						label={ taxonomyLabel }
 						suggestions={ taxonomySuggestionOptions }
 						value={ taxonomyValue }
 						onChange={ value => {
-							const passedTaxonomyValues = value.map( selectedTaxonomy => {
+							const passedTaxonomyValues = value?.map?.( selectedTaxonomy => {
 								const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy ) || {}
 								return entry
 							} )
 
-							this.props.onChangeTaxonomy( compact( passedTaxonomyValues ).join( ',' ) )
+							this.props.onChangeTaxonomy( compact( passedTaxonomyValues || [] ).join( ',' ) )
 						} }
 					/>
 				</Fragment>
@@ -199,6 +202,7 @@ TaxonomyControl.defaultProps = {
 	onChangeTaxonomyType: () => {},
 	taxonomy: '',
 	onChangeTaxonomy: () => {},
+	allowReset: false,
 }
 
 export default TaxonomyControl

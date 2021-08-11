@@ -14,8 +14,95 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			'pipe' => '|',
 		);
 
+		/**
+		 * List of default attribute values.
+		 * Ideally, we only need attributes
+		 * related to post render function
+		 * since block styles are already
+		 * handled by the JS save function.
+		 */
+		public $default_attributes = array(
+			'postType' => 'post',
+			'numberOfItems' => 6,
+			'orderBy' => 'date',
+			'order' => 'desc',
+			'taxonomyType' => 'category',
+			'taxonomy' => '',
+			'taxonomyFilterType' => '__in',
+			'postOffset' => 0,
+			'postExclude' => '',
+			'postInclude' => '',
+		);
+
 		function __construct() {
 			add_filter( 'stackable.register-blocks.options', array( $this, 'register_block_type' ), 1, 3 );
+		}
+
+		/**
+		 * Some of the attribute keys are not defined,
+		 * especially when those attributes are not modified.
+		 * Give them default values.
+		 *
+		 * @param array $attributes
+		 * @return array $attributes with default values
+		 */
+		public function generate_defaults( $attributes ) {
+			$out = array();
+			foreach ( $attributes as $name => $value ) {
+				$out[ $name ] = $value;
+			}
+			foreach ( $this->default_attributes as $name => $default ) {
+				if ( array_key_exists( $name, $out ) ) {
+					if ( $out[ $name ] === '' ) {
+						$out[ $name ] = $default;
+					}
+				} else {
+					$out[ $name ] = $default;
+				}
+			}
+			return $out;
+		}
+
+		/***
+		 * Query generator. Given an object of
+		 * attributes, create a post query.
+		 *
+		 * @param array $attributes
+		 * @return array post query
+		 */
+		public function generate_query( $attributes ) {
+			$attributes = $this->generate_defaults( $attributes );
+			$post_query = array(
+					'post_type' => $attributes['postType'],
+					'post_status' => 'publish',
+					'order' => $attributes['order'],
+					'orderby' => $attributes['orderBy'],
+					'numberposts' => $attributes['numberOfItems'],
+					'suppress_filters' => false,
+			);
+
+			if ( ! empty( $attributes['taxonomy'] ) && ! empty( $attributes['taxonomyType'] ) ) {
+				// Categories.
+				if ( $attributes['taxonomyType'] === 'category' ) {
+					$post_query[ 'category' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
+				// Tags.
+				} else if ( $attributes['taxonomyType'] === 'post_tag' ) {
+					$post_query[ 'tag' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
+				// Custom taxonomies.
+				} else {
+					$post_query['tax_query'] = array(
+						array(
+							'taxonomy' => $attributes['taxonomyType'],
+							'field' => 'term_id',
+							'terms' => explode( ',', $attributes['taxonomy'] ),
+							'operator' => $attributes['taxonomyFilterType'] === '__in' ? 'IN' : 'NOT IN',
+						),
+					);
+				}
+			}
+
+			// TODO: Add filters.
+			return $post_query;
 		}
 
 		/**
@@ -73,7 +160,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			$meta_separator = isset( $attributes[ 'metaSeparator' ] ) ? $attributes[ 'metaSeparator' ] : 'dot';
 
 			$posts = '';
-			$recent_posts = wp_get_recent_posts( array() );
+			$recent_posts = wp_get_recent_posts( $this->generate_query( $attributes ) );
 
 			foreach ( $recent_posts as $post ) {
 				$new_template = $template;

@@ -43,43 +43,49 @@ export const Edit = props => {
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
-				title={ __( 'Image', i18n ) }
+				title={ props.label }
 				id="image"
 				initialOpen={ props.initialOpen }
+				{ ...( props.hasToggle ? {
+					checked: attributes.imageShow,
+					onChange: imageShow => updateBlockAttributes( clientId, { imageShow } ),
+				} : {} ) }
 			>
-				<ImageControl2 // TODO: add selected image size as a prop.
-					label={ __( 'Select Image', i18n ) }
-					allowedTypes={ [ 'image' ] }
-					attribute="image"
-					onRemove={ () => updateBlockAttributes( clientId, {
-						imageId: '',
-						imageUrl: '',
-						imageWidthAttribute: '',
-						imageHeightAttribute: '',
-						imageAlt: '',
-					} ) }
-					onChange={ image => {
+				{ props.hasSelector && (
+					<ImageControl2 // TODO: add selected image size as a prop.
+						label={ __( 'Select Image', i18n ) }
+						allowedTypes={ [ 'image' ] }
+						attribute="image"
+						onRemove={ () => updateBlockAttributes( clientId, {
+							imageId: '',
+							imageUrl: '',
+							imageWidthAttribute: '',
+							imageHeightAttribute: '',
+							imageAlt: '',
+						} ) }
+						onChange={ image => {
 						// Get the URL of the currently selected image size.
-						let {
-							url,
-							width,
-							height,
-						} = image
-						const currentSelectedSize = attributes.imageSize || 'full'
-						if ( image.sizes?.[ currentSelectedSize ] ) {
-							url = image.sizes?.[ currentSelectedSize ]?.url || url
-							height = image.sizes?.[ currentSelectedSize ]?.height || height || ''
-							width = image.sizes?.[ currentSelectedSize ]?.width || width || ''
-						}
-						updateBlockAttributes( clientId, {
-							imageId: image.id,
-							imageUrl: url,
-							imageWidthAttribute: width,
-							imageHeightAttribute: height,
-							imageAlt: image.alt || '',
-						} )
-					} }
-				/>
+							let {
+								url,
+								width,
+								height,
+							} = image
+							const currentSelectedSize = attributes.imageSize || 'full'
+							if ( image.sizes?.[ currentSelectedSize ] ) {
+								url = image.sizes?.[ currentSelectedSize ]?.url || url
+								height = image.sizes?.[ currentSelectedSize ]?.height || height || ''
+								width = image.sizes?.[ currentSelectedSize ]?.width || width || ''
+							}
+							updateBlockAttributes( clientId, {
+								imageId: image.id,
+								imageUrl: url,
+								imageWidthAttribute: width,
+								imageHeightAttribute: height,
+								imageAlt: image.alt || '',
+							} )
+						} }
+					/>
+				) }
 
 				{ props.hasWidth &&
 					<AdvancedRangeControl
@@ -110,11 +116,13 @@ export const Edit = props => {
 					/>
 				}
 
-				<ImageAltControl
-					label={ __( 'Image Alt', i18n ) }
-					value={ attributes.imageAlt }
-					onChange={ imageAlt => updateBlockAttributes( clientId, { imageAlt } ) }
-				/>
+				{ props.hasAlt && (
+					<ImageAltControl
+						label={ __( 'Image Alt', i18n ) }
+						value={ attributes.imageAlt }
+						onChange={ imageAlt => updateBlockAttributes( clientId, { imageAlt } ) }
+					/>
+				) }
 
 				<AdvancedRangeControl
 					label={ __( 'Zoom', i18n ) }
@@ -248,7 +256,11 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	initialOpen: false,
+	hasSelector: true,
+	hasAlt: true,
 	hasWidth: true,
+	hasToggle: false,
+	label: __( 'Image', i18n ),
 	widthUnits: [ 'px', '%', 'vw' ],
 	widthMin: [ 0, 0, 0 ],
 	widthMax: [ 1000, 100, 100 ],

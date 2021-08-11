@@ -7,6 +7,7 @@ import {
 	useAttributeEditHandlers, useBlockHoverState, useFontLoader,
 } from '~stackable/hooks'
 import {
+	AlignButtonsControl,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	AdvancedTextControl,
@@ -25,13 +26,14 @@ import { getAttributeName, getAttrNameFunction } from '~stackable/util'
  * WordPress dependencies
  */
 import {
-	Fragment, useEffect, useState,
+	useEffect, useState,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
 
 export const Edit = props => {
 	const {
+		hasAlign,
 		hasColor,
 		hasTextTag,
 		hasTextContent,
@@ -95,7 +97,7 @@ export const Edit = props => {
 				} : {} ) }
 				id="text"
 			>
-				<Fragment>
+				<>
 					{ hasTextContent && (
 						<AdvancedTextControl
 							label={ __( 'Content', i18n ) }
@@ -225,7 +227,7 @@ export const Edit = props => {
 					/>
 
 					{ hasColor && (
-						<Fragment>
+						<>
 							{ hasGradient && (
 								<AdvancedToolbarControl
 									controls={ [
@@ -256,7 +258,7 @@ export const Edit = props => {
 								hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
 							/>
 							{ getAttribute( 'textColorType' ) === 'gradient' && hasGradient && (
-								<Fragment>
+								<>
 									<ColorPaletteControl
 										label={ sprintf( __( 'Text Color #%s', i18n ), 2 ) }
 										attribute={ attributeName( 'textColor2' ) }
@@ -270,11 +272,19 @@ export const Edit = props => {
 										step={ 10 }
 										allowReset={ true }
 									/>
-								</Fragment>
+								</>
 							) }
-						</Fragment>
+						</>
 					) }
-				</Fragment>
+				</>
+
+				{ hasAlign && (
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						attribute={ attributeName( 'textAlign' ) }
+						responsive="all"
+					/>
+				) }
 
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
@@ -282,6 +292,7 @@ export const Edit = props => {
 }
 
 Edit.defaultProps = {
+	hasAlign: false,
 	hasColor: true,
 	hasTextTag: true,
 	hasTextContent: true,

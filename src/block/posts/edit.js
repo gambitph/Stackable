@@ -19,12 +19,15 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
+	AdvancedSelectControl,
 	SortControl,
+	TaxonomyControl,
 } from '~stackable/components'
 import {
 	useBlockHoverClass,
 } from '~stackable/hooks'
 import {
+	getAlignmentClasses,
 	BlockDiv,
 	Image,
 	Alignment,
@@ -60,7 +63,7 @@ const Edit = props => {
 		numberOfItems = 6,
 		orderBy = 'date',
 		order = 'desc',
-		taxonomyType = '',
+		taxonomyType = 'category',
 		taxonomy = '',
 		taxonomyFilterType = '__in',
 		contentOrder = [
@@ -72,6 +75,7 @@ const Edit = props => {
 	} = attributes
 
 	const blockHoverClass = useBlockHoverClass()
+	const blockAlignmentClass = getAlignmentClasses( attributes )
 
 	const {
 		posts, isRequesting, hasPosts,
@@ -134,6 +138,7 @@ const Edit = props => {
 		className,
 		'stk-block-posts',
 		blockHoverClass,
+		blockAlignmentClass,
 	] )
 
 	const contentOrderOptions = contentOrder.map( value => CONTENTS.find( content => content.value === value )?.label )
@@ -157,7 +162,6 @@ const Edit = props => {
 						responsive="all"
 						min={ 1 }
 						sliderMax={ 4 }
-						default={ 2 }
 						placeholder="2"
 					/>
 					<AdvancedRangeControl
@@ -188,10 +192,61 @@ const Edit = props => {
 						} }
 					/>
 				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Query', i18n ) }
+					id="query"
+				>
+					<AdvancedRangeControl
+						label={ __( 'Number of items', i18n ) }
+						min={ 1 }
+						max={ 100 }
+						allowReset={ true }
+						attribute="numberOfItems"
+						placeholder="6"
+						default={ 6 }
+					/>
+					<AdvancedSelectControl
+						label={ __( 'Order by', i18n ) }
+						options={ [
+							{ label: __( 'Newest to Oldest', i18n ), value: 'date,desc' },
+							{ label: __( 'Oldest to Newest', i18n ), value: 'date,asc' },
+							{ label: __( 'A → Z', i18n ), value: 'title,asc' },
+							{ label: __( 'Z → A', i18n ), value: 'title,desc' },
+							{ label: __( 'Last Modified to Oldest', i18n ), value: 'modified,desc' },
+							{ label: __( 'Oldest Modified to Last', i18n ), value: 'modified,asc' },
+							{ label: __( 'Menu Order', i18n ), value: 'menu_order,asc' },
+							{ label: __( 'Random', i18n ), value: 'rand,desc' },
+						] }
+						value={ `${ orderBy },${ order }` }
+						onChange={ value => {
+							const [ orderBy, order ] = value.split( ',' )
+							setAttributes( {
+								orderBy,
+								order,
+							} )
+						} }
+						default="date,desc"
+					/>
+					<TaxonomyControl
+						allowReset={ true }
+						postType={ postType }
+						onChangePostType={ postType => setAttributes( { postType } ) }
+						taxonomyType={ taxonomyType }
+						onChangeTaxonomyType={ taxonomyType => setAttributes( { taxonomyType } ) }
+						taxonomy={ taxonomy }
+						onChangeTaxonomy={ taxonomy => setAttributes( { taxonomy } ) }
+						taxonomyFilterType={ taxonomyFilterType }
+						onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
+					/>
+				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<Image.InspectorControls
+				label={ __( 'Featured Image', i18n ) }
 				hasShape={ false }
 				hasWidth={ false }
+				hasSelector={ false }
+				hasAlt={ false }
+				hasToggle={ true }
 			/>
 			<Typography.InspectorControls
 				label={ __( 'Title', i18n ) }
@@ -199,6 +254,7 @@ const Edit = props => {
 				hasTextContent={ false }
 				initialOpen={ false }
 				hasToggle={ true }
+				hasAlign={ true }
 			/>
 			<Typography.InspectorControls
 				label={ __( 'Category', i18n ) }
@@ -207,6 +263,7 @@ const Edit = props => {
 				hasTextContent={ false }
 				initialOpen={ false }
 				hasToggle={ true }
+				hasAlign={ true }
 			/>
 			<Typography.InspectorControls
 				label={ __( 'Excerpt', i18n ) }
@@ -215,6 +272,7 @@ const Edit = props => {
 				hasTextContent={ false }
 				initialOpen={ false }
 				hasToggle={ true }
+				hasAlign={ true }
 			/>
 			<Typography.InspectorControls
 				label={ __( 'Meta', i18n ) }
@@ -223,6 +281,7 @@ const Edit = props => {
 				hasTextContent={ false }
 				initialOpen={ false }
 				hasToggle={ true }
+				hasAlign={ true }
 			/>
 			<Typography.InspectorControls
 				label={ __( 'Read More Link', i18n ) }
@@ -230,6 +289,7 @@ const Edit = props => {
 				hasTextTag={ false }
 				initialOpen={ false }
 				hasToggle={ true }
+				hasAlign={ true }
 			/>
 			<ContainerDiv.InspectorControls />
 			<EffectsAnimations.InspectorControls />
