@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -16,7 +17,7 @@ import {
 	Typography,
 } from '~stackable/block-components'
 import {
-	useBlockAttributes, useDeviceType,
+	useBlockAttributes, useDeviceType, useBlockStyle, getBlockStyle,
 } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
@@ -29,7 +30,7 @@ import {
  * WordPress dependencies
  */
 import {
-	renderToString,
+	renderToString, useMemo,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
@@ -48,8 +49,8 @@ const titleTypographyOptions = {
 }
 
 const categoryTypographyOptions = {
-	selector: '.stk-block-posts__category',
-	hoverSelector: `${ itemSelector }:hover .stk-block-posts__category`,
+	selector: '.stk-block-posts__category > a',
+	hoverSelector: `${ itemSelector }:hover .stk-block-posts__category > a`,
 	attrNameTemplate: 'category%s',
 }
 
@@ -71,23 +72,38 @@ const readmoreTypographyOptions = {
 	attrNameTemplate: 'readmore%s',
 }
 
+const _imageOptions = {
+	selector: '.stk-block-posts__item .stk-img-wrapper',
+	hoverSelector: '.stk-block-posts__item:hover .stk-img-wrapper',
+}
+
 const getStyleParams = () => {
 	return [
 		{
-			selector: '',
+			selector: '.stk-block-posts__items',
 			styles: {
 				'--stk-columns': 'columns',
 			},
 			responsive: 'all',
 		},
 		{
-			selector: '',
+			selector: '.stk-block-posts__items',
 			styles: {
 				'--stk-column-gap': 'columnGap',
 				rowGap: 'rowGap',
 			},
 			format: '%spx',
 			responsive: 'all',
+		},
+		{
+			selector: '.stk-block-posts__items',
+			styles: {
+				'--stk-img-height': 'imageHeight',
+			},
+			hasUnits: 'px',
+			responsive: 'all',
+			enabledCallback: getAttribute => [ 'vertical-card', 'vertical-card-2' ].includes( getBlockStyle( blockStyles, getAttribute( 'className' ) )?.name ),
+			dependencies: [ 'className' ],
 		},
 	]
 }
@@ -105,7 +121,12 @@ export const PostsStyles = props => {
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
+	const blockStyle = useBlockStyle( blockStyles )
 	const postsStyles = useStyles( attributes, getStyleParams() )
+	const imageOptions = useMemo( () => ( {
+		..._imageOptions,
+		enableHeight: ! [ 'portfolio' ].includes( blockStyle ),
+	} ), [ blockStyle ] )
 
 	return (
 		<>
@@ -115,7 +136,7 @@ export const PostsStyles = props => {
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
-			<Image.Style { ...propsToPass } />
+			<Image.Style { ...propsToPass } options={ imageOptions } />
 			<Typography.Style { ...propsToPass } options={ titleTypographyOptions } />
 			<Typography.Style { ...propsToPass } options={ categoryTypographyOptions } />
 			<Typography.Style { ...propsToPass } options={ excerptTypographyOptions } />
@@ -141,7 +162,12 @@ PostsStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	const blockStyle = getBlockStyle( blockStyles, propsToPass.attributes.className )
 	const postsStyles = getStyles( propsToPass.attributes, getStyleParams() )
+	const imageOptions = {
+		..._imageOptions,
+		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
+	}
 
 	const styles = (
 		<>
@@ -151,7 +177,7 @@ PostsStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
-			<Image.Style.Content { ...propsToPass } />
+			<Image.Style.Content { ...propsToPass } options={ imageOptions } />
 			<Typography.Style.Content { ...propsToPass } options={ titleTypographyOptions } />
 			<Typography.Style.Content { ...propsToPass } options={ categoryTypographyOptions } />
 			<Typography.Style.Content { ...propsToPass } options={ excerptTypographyOptions } />

@@ -32,6 +32,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			'postOffset' => 0,
 			'postExclude' => '',
 			'postInclude' => '',
+			'showPagination' => false,
 		);
 
 		function __construct() {
@@ -101,8 +102,10 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				}
 			}
 
-			// TODO: Add filters.
-			return $post_query;
+			return apply_filters( 'stackable/posts/post_query',
+				$post_query,
+				$attributes,
+			);
 		}
 
 		/**
@@ -141,6 +144,10 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			}
 
 			$content = $this->render_post_items( $match, $content, $attributes );
+			$content = apply_filters( 'stackable/posts/output', 
+				$content, 
+				$this->generate_defaults( $attributes ),
+				$block );
 			return $content;
 		}
 

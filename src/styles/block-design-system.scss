@@ -76,7 +76,7 @@
 	 * Typography
 	 */
 	subtitle-size: 16px,
-	subtitle-color: #39414d,
+	subtitle-color: #656565,
 ) );
 
 /**
@@ -184,4 +184,10 @@
 .stk-subtitle {
 	font-size: cssvar(subtitle-size);
 	color: cssvar(subtitle-color);
+}
+
+.stk-block-posts {
+	&__meta {
+		color: cssvar(subtitle-color);
+	}
 }

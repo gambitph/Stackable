@@ -19,6 +19,11 @@ import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 
 const postsAttributes = {
+	// Design
+	design: {
+		type: 'string',
+		default: '',
+	},
 	// General.
 	columns: {
 		type: 'number',
@@ -86,8 +91,24 @@ const postsAttributes = {
 	},
 
 	// Misc.
-	showTitle: {
+	authorShow: {
 		type: 'boolean',
+		default: '',
+	},
+	dateShow: {
+		type: 'boolean',
+		default: '',
+	},
+	commentsShow: {
+		type: 'boolean',
+		default: '',
+	},
+	excerptLength: {
+		type: 'number',
+		default: '',
+	},
+	metaSeparator: {
+		type: 'string',
 		default: '',
 	},
 }
@@ -139,7 +160,10 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.addDefaultValues( {
 		attributes: {
-			showTitle: true,
+			commentsShow: true,
+			authorShow: true,
+			dateShow: true,
+			titleShow: true,
 			titleTextTag: 'h3',
 			postType: 'post',
 			numberOfItems: 6,

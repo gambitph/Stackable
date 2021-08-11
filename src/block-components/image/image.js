@@ -246,37 +246,39 @@ const Image = memo( props => {
 								<Dashicon icon="no" />
 							</button>
 						) }
-						<Tooltip
-							enableHeight={ props.enableHeight || props.enableDiagonal }
-							enableWidth={ props.enableWidth || props.enableDiagonal }
-							height={ formSize( currentHeight || props.height, props.heightUnit, false, false ) }
-							width={ formSize( currentWidth || props.width, props.widthUnit, false, false ) }
-							widthUnits={ props.widthUnits }
-							heightUnits={ props.heightUnits }
-							heightUnit={ props.heightUnit }
-							widthUnit={ props.widthUnit }
-							allowReset={ props.allowReset }
-							onChangeHeight={ ( { value, unit } ) => {
-								const size = {}
-								if ( typeof value !== 'undefined' ) {
-									size.height = value
-								}
-								if ( typeof unit !== 'undefined' ) {
-									size.heightUnit = unit
-								}
-								props.onChangeSize( size )
-							} }
-							onChangeWidth={ ( { value, unit } ) => {
-								const size = {}
-								if ( typeof value !== 'undefined' ) {
-									size.width = value
-								}
-								if ( typeof unit !== 'undefined' ) {
-									size.widthUnit = unit
-								}
-								props.onChangeSize( size )
-							} }
-						/>
+						{ props.hasTooltip && (
+							<Tooltip
+								enableHeight={ props.enableHeight || props.enableDiagonal }
+								enableWidth={ props.enableWidth || props.enableDiagonal }
+								height={ formSize( currentHeight || props.height, props.heightUnit, false, false ) }
+								width={ formSize( currentWidth || props.width, props.widthUnit, false, false ) }
+								widthUnits={ props.widthUnits }
+								heightUnits={ props.heightUnits }
+								heightUnit={ props.heightUnit }
+								widthUnit={ props.widthUnit }
+								allowReset={ props.allowReset }
+								onChangeHeight={ ( { value, unit } ) => {
+									const size = {}
+									if ( typeof value !== 'undefined' ) {
+										size.height = value
+									}
+									if ( typeof unit !== 'undefined' ) {
+										size.heightUnit = unit
+									}
+									props.onChangeSize( size )
+								} }
+								onChangeWidth={ ( { value, unit } ) => {
+									const size = {}
+									if ( typeof value !== 'undefined' ) {
+										size.width = value
+									}
+									if ( typeof unit !== 'undefined' ) {
+										size.widthUnit = unit
+									}
+									props.onChangeSize( size )
+								} }
+							/>
+						) }
 						<div className="stk-img-resizer-wrapper">
 							<img
 								onLoad={ () => setHasImageError( false ) }
@@ -332,6 +334,7 @@ Image.defaultProps = {
 	allowReset: true,
 
 	hasRemove: true,
+	hasTooltip: true,
 	onChange: () => {},
 	onRemove: () => {},
 	onChangeSize: () => {},

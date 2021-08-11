@@ -11,6 +11,7 @@ import {
 	Typography,
 	getTypographyClasses,
 } from '~stackable/block-components'
+import { getBlockStyle } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -18,6 +19,11 @@ import {
 import { dateI18n, format } from '@wordpress/date'
 import { decodeEntities } from '@wordpress/html-entities'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * Internal dependencies
+ */
+import { blockStyles } from './block-styles'
 
 export const META_SEPARATORS = {
 	dot: '·',
@@ -52,6 +58,7 @@ export const CONTENTS = [
 
 export const generateRenderPostItem = attributes => {
 	const {
+		className = '',
 		imageSize,
 		metaSeparator,
 		excerptLength,
@@ -66,6 +73,8 @@ export const generateRenderPostItem = attributes => {
 		readmoreShow = true,
 		contentOrder = [],
 	} = attributes
+
+	const style = getBlockStyle( blockStyles, className )
 
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',
@@ -108,6 +117,8 @@ export const generateRenderPostItem = attributes => {
 		} = post
 		const featuredImgSrc = featuredImageUrls?.[ imageSize || 'large' ]?.[ 0 ]
 
+		const enableHeight = ! [ 'portfolio' ].includes( style?.name )
+
 		const featuredImage = !! featuredImgSrc && (
 			<Image
 				src={ featuredImgSrc }
@@ -118,6 +129,12 @@ export const generateRenderPostItem = attributes => {
 				widthUnit={ '%' }
 				enableWidth={ false }
 				enableDiagonal={ false }
+				enableHeight={ enableHeight }
+				hasTooltip={ enableHeight }
+				heightResizePosition={ style?.name === 'vertical-card-2'
+					? 'top'
+					: 'bottom'
+				}
 			/>
 		)
 

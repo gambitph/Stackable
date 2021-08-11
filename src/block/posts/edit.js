@@ -5,6 +5,7 @@ import { PostsStyles } from './style'
 import {
 	generateRenderPostItem, CONTENTS,
 } from './util'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -22,9 +23,10 @@ import {
 	AdvancedSelectControl,
 	SortControl,
 	TaxonomyControl,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass,
+	useBlockHoverClass, useBlockStyle,
 } from '~stackable/hooks'
 import {
 	getAlignmentClasses,
@@ -38,6 +40,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	BlockStyle,
 	Typography,
 } from '~stackable/block-components'
 
@@ -47,6 +50,8 @@ import {
 import { useSelect } from '@wordpress/data'
 import { Placeholder, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
+import { InnerBlocks } from '@wordpress/block-editor'
 
 const Edit = props => {
 	const {
@@ -56,6 +61,9 @@ const Edit = props => {
 	} = props
 
 	const {
+		metaShow = true,
+		excerptShow = true,
+		showPagination,
 		postOffset,
 		postExclude,
 		postInclude,
@@ -76,6 +84,7 @@ const Edit = props => {
 
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
+	const blockStyle = useBlockStyle( blockStyles )
 
 	const {
 		posts, isRequesting, hasPosts,
@@ -84,9 +93,11 @@ const Edit = props => {
 		const { isResolving } = select( 'core/data' )
 
 		const postQuery = pickBy( {
-			order,
-			orderby: orderBy,
-			per_page: numberOfItems, // eslint-disable-line camelcase
+			...applyFilters( 'stackable.posts.postQuery', {
+				order,
+				orderby: orderBy,
+				per_page: numberOfItems, // eslint-disable-line camelcase
+			}, attributes ),
 		}, value => {
 			// Exludes and includes can be empty.
 			if ( Array.isArray( value ) ) {
@@ -132,6 +143,7 @@ const Edit = props => {
 		postExclude,
 		postInclude,
 		numberOfItems,
+		showPagination,
 	] )
 
 	const blockClassNames = classnames( [
@@ -139,6 +151,14 @@ const Edit = props => {
 		'stk-block-posts',
 		blockHoverClass,
 		blockAlignmentClass,
+	] )
+
+	const contentClassNames = classnames( [
+		'stk-block-posts__items',
+	] )
+
+	const innerClassNames = classnames( [
+		'stk-inner-blocks',
 	] )
 
 	const contentOrderOptions = contentOrder.map( value => CONTENTS.find( content => content.value === value )?.label )
@@ -150,11 +170,11 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General' ) }
 					id="general"
-					initialOpen={ true }
 				>
 					<AdvancedRangeControl
 						label={ __( 'Columns', i18n ) }
@@ -238,9 +258,11 @@ const Edit = props => {
 						taxonomyFilterType={ taxonomyFilterType }
 						onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
 					/>
+					{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<Image.InspectorControls
+				hasHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
 				label={ __( 'Featured Image', i18n ) }
 				hasShape={ false }
 				hasWidth={ false }
@@ -250,39 +272,79 @@ const Edit = props => {
 			/>
 			<Typography.InspectorControls
 				label={ __( 'Title', i18n ) }
+				hasToggle={ true }
 				attrNameTemplate="title%s"
 				hasTextContent={ false }
-				initialOpen={ false }
-				hasToggle={ true }
 				hasAlign={ true }
+				initialOpen={ false }
 			/>
 			<Typography.InspectorControls
 				label={ __( 'Category', i18n ) }
+				hasToggle={ true }
 				attrNameTemplate="category%s"
-				hasTextTag={ false }
 				hasTextContent={ false }
-				initialOpen={ false }
-				hasToggle={ true }
 				hasAlign={ true }
-			/>
-			<Typography.InspectorControls
-				label={ __( 'Excerpt', i18n ) }
-				attrNameTemplate="excerpt%s"
 				hasTextTag={ false }
-				hasTextContent={ false }
 				initialOpen={ false }
-				hasToggle={ true }
-				hasAlign={ true }
 			/>
-			<Typography.InspectorControls
-				label={ __( 'Meta', i18n ) }
-				attrNameTemplate="meta%s"
-				hasTextTag={ false }
-				hasTextContent={ false }
-				initialOpen={ false }
-				hasToggle={ true }
-				hasAlign={ true }
-			/>
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Excerpt', i18n ) }
+					id="excerpt"
+					checked={ excerptShow }
+					onChange={ excerptShow => setAttributes( { excerptShow } ) }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Excerpt Length', i18n ) }
+						attribute="excerptLength"
+						placeholder="55"
+						min={ 1 }
+						sliderMax={ 100 }
+					/>
+					<Typography.InspectorControls.Controls
+						attrNameTemplate="excerpt%s"
+						hasTextTag={ false }
+						hasTextContent={ false }
+						hasAlign={ true }
+					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Meta', i18n ) }
+					checked={ metaShow }
+					onChange={ metaShow => setAttributes( { metaShow } ) }
+					id="meta"
+				>
+					<AdvancedToggleControl
+						label={ __( 'Show Author', i18n ) }
+						attribute="authorShow"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Show Date', i18n ) }
+						attribute="dateShow"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Show Comments', i18n ) }
+						attribute="commentsShow"
+					/>
+					<AdvancedSelectControl
+						label={ __( 'Separator', i18n ) }
+						options={ [
+							{ label: __( 'Default (Dot)', i18n ), value: '' },
+							{ label: __( 'Space', i18n ), value: 'space' },
+							{ label: __( 'Comma', i18n ), value: 'comma' },
+							{ label: __( 'Dash', i18n ), value: 'dash' },
+							{ label: __( 'Pipe', i18n ), value: 'pipe' },
+						] }
+						attribute="metaSeparator"
+					/>
+					<Typography.InspectorControls.Controls
+						attrNameTemplate="meta%s"
+						hasTextTag={ false }
+						hasTextContent={ false }
+						hasAlign={ true }
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
 			<Typography.InspectorControls
 				label={ __( 'Read More Link', i18n ) }
 				attrNameTemplate="readmore%s"
@@ -314,7 +376,12 @@ const Edit = props => {
 				</Placeholder>
 			) : (
 				<BlockDiv className={ blockClassNames }>
-					{ ( posts || [] ).map( generateRenderPostItem( attributes ) ) }
+					<div className={ contentClassNames }>
+						{ ( posts || [] ).map( generateRenderPostItem( attributes ) ) }
+					</div>
+					<div className={ innerClassNames }>
+						<InnerBlocks />
+					</div>
 				</BlockDiv>
 			) }
 		</>

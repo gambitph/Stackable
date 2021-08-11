@@ -1,0 +1,8 @@
+[data-type^="stackable/posts"] .stk-block.stk-block-posts:is(.is-style-portfolio, .is-style-vertical-card, .is-style-vertical-card-2) .stk-img-wrapper {
+	position: absolute !important;
+	width: 100% !important;
+}
+
+[data-type^="stackable/posts"] .stk-block.stk-block-posts.is-style-portfolio .stk-img-wrapper {
+	height: 100% !important;
+}

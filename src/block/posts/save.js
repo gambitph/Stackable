@@ -21,6 +21,7 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { InnerBlocks } from '@wordpress/block-editor'
 
 export const Save = props => {
 	const {
@@ -39,6 +40,14 @@ export const Save = props => {
 		blockAlignmentClasses,
 	] )
 
+	const contentClassNames = classnames( [
+		'stk-block-posts__items',
+	] )
+
+	const innerClassNames = classnames( [
+		'stk-inner-blocks',
+	] )
+
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
@@ -46,7 +55,12 @@ export const Save = props => {
 		>
 			<PostsStyles.Content version={ version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ generateRenderPostItem.save( attributes ) }
+			<div className={ contentClassNames }>
+				{ generateRenderPostItem.save( attributes ) }
+			</div>
+			<div className={ innerClassNames }>
+				<InnerBlocks.Content />
+			</div>
 		</BlockDiv.Content>
 	)
 }
