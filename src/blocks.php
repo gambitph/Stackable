@@ -40,7 +40,7 @@ $stk_wrapper_block_folders = array(
 	'container',
 	'feature',
 	'feature-grid',
-	'header',
+	'hero',
 	'icon-box',
 	'icon-label',
 	'notification',

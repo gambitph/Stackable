@@ -19,7 +19,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/container': {},
 		'stackable/feature': {},
 		'stackable/feature-grid': {},
-		'stackable/header': {},
+		'stackable/hero': {},
 		'stackable/heading': { filterAttributes: [ 'text' ] },
 		'stackable/icon': { filterAttributes: [ 'icon', 'ariaLabel' ] },
 		'stackable/icon-box': {},

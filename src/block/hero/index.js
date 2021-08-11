@@ -12,7 +12,7 @@ import schema from './schema'
 /**
  * External dependencies
  */
-import { HeaderIcon } from '~stackable/icons'
+import { HeroIcon } from '~stackable/icons'
 
 /**
  * WordPress dependencies
@@ -21,7 +21,7 @@ import { __ } from '@wordpress/i18n'
 
 export const settings = {
 	...metadata,
-	icon: HeaderIcon,
+	icon: HeroIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
