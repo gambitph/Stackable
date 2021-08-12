@@ -34,7 +34,7 @@ import {
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const itemSelector = '.stk-block-posts__item'
+const itemSelector = ' > .stk-block-posts__items .stk-block-posts__item'
 
 const containerDivOptions = {
 	backgroundSelector: itemSelector,
@@ -43,57 +43,57 @@ const containerDivOptions = {
 }
 
 const titleTypographyOptionsEditor = {
-	selector: '.stk-block-posts__title',
+	selector: ' > .stk-block-posts__items .stk-block-posts__title',
 	hoverSelector: `${ itemSelector }:hover .stk-block-posts__title`,
 	attrNameTemplate: 'title%s',
 }
 
 const titleTypographyOptions = {
-	selector: '.stk-block-posts__title > a',
+	selector: ' > .stk-block-posts__items .stk-block-posts__title > a',
 	hoverSelector: `${ itemSelector }:hover .stk-block-posts__title > a`,
 	attrNameTemplate: 'title%s',
 }
 
 const categoryTypographyOptions = {
-	selector: '.stk-block-posts__category > a',
+	selector: ' > .stk-block-posts__items .stk-block-posts__category > a',
 	hoverSelector: `${ itemSelector }:hover .stk-block-posts__category > a`,
 	attrNameTemplate: 'category%s',
 }
 
 const excerptTypographyOptions = {
-	selector: '.stk-block-posts__excerpt',
+	selector: ' > .stk-block-posts__items .stk-block-posts__excerpt',
 	hoverSelector: `${ itemSelector }:hover .stk-block-posts__excerpt`,
 	attrNameTemplate: 'excerpt%s',
 }
 
 const metaTypographyOptions = {
-	selector: '.stk-block-posts__meta',
+	selector: ' > .stk-block-posts__items .stk-block-posts__meta',
 	hoverSelector: `${ itemSelector }:hover .stk-block-posts__meta`,
 	attrNameTemplate: 'meta%s',
 }
 
 const readmoreTypographyOptions = {
-	selector: '.stk-block-posts__readmore',
+	selector: ' > .stk-block-posts__items .stk-block-posts__readmore',
 	hoverSelector: `${ itemSelector }:hover .stk-block-posts__readmore`,
 	attrNameTemplate: 'readmore%s',
 }
 
 const _imageOptions = {
-	selector: '.stk-block-posts__item .stk-img-wrapper',
-	hoverSelector: '.stk-block-posts__item:hover .stk-img-wrapper',
+	selector: ' > .stk-block-posts__items .stk-img-wrapper',
+	hoverSelector: ' > .stk-block-posts__items .stk-block-posts__item:hover .stk-img-wrapper',
 }
 
 const getStyleParams = () => {
 	return [
 		{
-			selector: '.stk-block-posts__items',
+			selector: '> .stk-block-posts__items',
 			styles: {
 				'--stk-columns': 'columns',
 			},
 			responsive: 'all',
 		},
 		{
-			selector: '.stk-block-posts__items',
+			selector: '> .stk-block-posts__items',
 			styles: {
 				'--stk-column-gap': 'columnGap',
 				rowGap: 'rowGap',

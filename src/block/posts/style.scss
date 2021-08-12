@@ -1,22 +1,20 @@
+@import "common";
+
 .stk-block-posts {
-	&__items {
+	$parent: &;
+	& > &__items {
 		display: flex;
 		flex-wrap: wrap;
 		column-gap: var(--stk-column-gap, 16px);
 		row-gap: 16px;
-	}
-
-	&__title,
-	&__meta,
-	&__category,
-	&__excerpt,
-	&__readmore,
-	.stk-img-wrapper {
-		margin-bottom: 24px;
-	}
-
-	.stk-inner-blocks {
-		margin-top: 24px;
+		#{ $parent }__title,
+		#{ $parent }__meta,
+		#{ $parent }__category,
+		#{ $parent }__excerpt,
+		#{ $parent }__readmore,
+		.stk-img-wrapper {
+			margin-bottom: cssvar(block-margin-bottom);
+		}
 	}
 
 	&__title > a {

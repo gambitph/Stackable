@@ -117,7 +117,7 @@ export const generateRenderPostItem = attributes => {
 			comments_num: commentsNum,
 			post_excerpt_stackable: postExcerptStackable,
 		} = post
-		const featuredImgSrc = featuredImageUrls?.[ imageSize || 'large' ]?.[ 0 ]
+		const featuredImgSrc = featuredImageUrls?.[ imageSize || 'full' ]?.[ 0 ]
 
 		const enableHeight = ! [ 'portfolio' ].includes( style?.name )
 
@@ -218,7 +218,7 @@ export const generateRenderPostItem = attributes => {
 		} )
 
 		let output = (
-			<article>
+			<article className="stk-container-padding">
 				{ compact( contents ).map( content => content ) }
 				{ readmoreShow && readmore }
 			</article>
@@ -363,7 +363,7 @@ generateRenderPostItem.save = attributes => {
 	} )
 
 	let output = (
-		<article>
+		<article className="stk-container-padding">
 			{ compact( contents ).map( content => content ) }
 			{ readmoreShow && readmore }
 		</article>

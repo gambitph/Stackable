@@ -12,6 +12,7 @@ import { blockStyles } from './block-styles'
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
+import { first } from 'lodash'
 import {
 	InspectorTabs,
 	InspectorStyleControls,
@@ -21,6 +22,7 @@ import {
 	SortControl,
 	TaxonomyControl,
 	AdvancedToggleControl,
+	ImageSizeControl,
 } from '~stackable/components'
 import {
 	useBlockHoverClass, useBlockStyle, usePostsQuery,
@@ -48,6 +50,7 @@ import { Placeholder, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { InnerBlocks } from '@wordpress/block-editor'
+import { useMemo } from '@wordpress/element'
 
 const Edit = props => {
 	const {
@@ -57,6 +60,8 @@ const Edit = props => {
 	} = props
 
 	const {
+		imageSize,
+		imageShow,
 		metaShow = true,
 		excerptShow = true,
 		type = 'post',
@@ -97,6 +102,10 @@ const Edit = props => {
 	] )
 
 	const contentOrderOptions = contentOrder.map( value => CONTENTS.find( content => content.value === value )?.label )
+
+	const focalPointPlaceholder = useMemo( () => first( posts )?.featured_image_urls?.[ imageSize || 'full' ]?.[ 0 ],
+		[ posts?.length ]
+	)
 
 	return (
 		<>
@@ -195,16 +204,32 @@ const Edit = props => {
 					/>
 					{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
 				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Featured Image', i18n ) }
+					id="featured-image"
+					initialOpen={ false }
+					checked={ imageShow }
+					onChange={ imageShow => setAttributes( { imageShow } ) }
+				>
+					<ImageSizeControl
+						label={ __( 'Image Size', i18n ) }
+						value={ imageSize }
+						onChange={ imageSize => setAttributes( { imageSize } ) }
+						default="full"
+						className="ugb--help-tip-image-size"
+					/>
+					<Image.InspectorControls.Controls
+						hasHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
+						hasBorderRadius={ ! [ 'portfolio' ].includes( blockStyle ) }
+						hasShape={ false }
+						hasWidth={ false }
+						hasAlt={ false }
+						hasSelector={ false }
+						src={ focalPointPlaceholder }
+					/>
+				</PanelAdvancedSettings>
+
 			</InspectorStyleControls>
-			<Image.InspectorControls
-				hasHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
-				label={ __( 'Featured Image', i18n ) }
-				hasShape={ false }
-				hasWidth={ false }
-				hasSelector={ false }
-				hasAlt={ false }
-				hasToggle={ true }
-			/>
 			<Typography.InspectorControls
 				label={ __( 'Title', i18n ) }
 				hasToggle={ true }
