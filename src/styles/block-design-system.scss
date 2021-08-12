@@ -91,6 +91,10 @@
 }
 
 .stk-block {
+	.stk-button-group {
+		column-gap: cssvar(button-column-gap);
+		row-gap: cssvar(button-row-gap);
+	}
 	.stk-button {
 		background: cssvar(button-background-color);
 		padding: cssvar(button-padding);

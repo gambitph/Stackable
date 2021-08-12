@@ -8,5 +8,17 @@
 		"Lastest Posts",
 		"Query Loop"
 	],
+	"providesContext": {
+		"type": "type",
+		"orderBy": "orderBy",
+		"order": "order",
+		"taxonomyType": "taxonomyType",
+		"taxonomy": "taxonomy",
+		"taxonomyFilterType": "taxonomyFilterType",
+		"postOffset": "postOffset",
+		"postExclude": "postExclude",
+		"postInclude": "postInclude",
+		"numberOfItems": "numberOfItems"
+	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks"
 }

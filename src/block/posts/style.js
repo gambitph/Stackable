@@ -39,12 +39,18 @@ const itemSelector = '.stk-block-posts__item'
 const containerDivOptions = {
 	backgroundSelector: itemSelector,
 	borderSelector: itemSelector,
-	sizeSelector: itemSelector,
+	sizeSelector: itemSelector + ' > article',
+}
+
+const titleTypographyOptionsEditor = {
+	selector: '.stk-block-posts__title',
+	hoverSelector: `${ itemSelector }:hover .stk-block-posts__title`,
+	attrNameTemplate: 'title%s',
 }
 
 const titleTypographyOptions = {
-	selector: '.stk-block-posts__title',
-	hoverSelector: `${ itemSelector }:hover .stk-block-posts__title`,
+	selector: '.stk-block-posts__title > a',
+	hoverSelector: `${ itemSelector }:hover .stk-block-posts__title > a`,
 	attrNameTemplate: 'title%s',
 }
 
@@ -95,16 +101,6 @@ const getStyleParams = () => {
 			format: '%spx',
 			responsive: 'all',
 		},
-		{
-			selector: '.stk-block-posts__items',
-			styles: {
-				'--stk-img-height': 'imageHeight',
-			},
-			hasUnits: 'px',
-			responsive: 'all',
-			enabledCallback: getAttribute => [ 'vertical-card', 'vertical-card-2' ].includes( getBlockStyle( blockStyles, getAttribute( 'className' ) )?.name ),
-			dependencies: [ 'className' ],
-		},
 	]
 }
 
@@ -137,7 +133,7 @@ export const PostsStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
 			<Image.Style { ...propsToPass } options={ imageOptions } />
-			<Typography.Style { ...propsToPass } options={ titleTypographyOptions } />
+			<Typography.Style { ...propsToPass } options={ titleTypographyOptionsEditor } />
 			<Typography.Style { ...propsToPass } options={ categoryTypographyOptions } />
 			<Typography.Style { ...propsToPass } options={ excerptTypographyOptions } />
 			<Typography.Style { ...propsToPass } options={ metaTypographyOptions } />

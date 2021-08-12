@@ -59,9 +59,6 @@ export const ButtonGroupStyles = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
-	propsToPass.options = {
-		...propsToPass.options,
-	}
 
 	const buttonGroupStyles = useStyles( propsToPass.attributes, getStyleParams() )
 
@@ -74,7 +71,8 @@ export const ButtonGroupStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<StyleComponent
 				styles={ buttonGroupStyles }
-				versionAdded="3.0.0" versionDeprecated=""
+				versionAdded="3.0.0"
+				versionDeprecated=""
 				{ ...propsToPass }
 			/>
 		</>
@@ -91,9 +89,6 @@ ButtonGroupStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	propsToPass.options = {
-		...propsToPass.options,
-	}
 
 	const buttonGroupStyles = getStyles( propsToPass.attributes, getStyleParams() )
 

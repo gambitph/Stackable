@@ -19,6 +19,7 @@ import { getBlockStyle } from '~stackable/hooks'
 import { dateI18n, format } from '@wordpress/date'
 import { decodeEntities } from '@wordpress/html-entities'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * Internal dependencies
@@ -78,6 +79,7 @@ export const generateRenderPostItem = attributes => {
 
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',
+		'stk--no-padding',
 	] )
 
 	const titleClassNames = classnames(
@@ -191,6 +193,7 @@ export const generateRenderPostItem = attributes => {
 				defaultValue={ __( 'Continue Reading', i18n ) }
 			/>
 		)
+
 		const meta = ( authorShow || dateShow || commentsShow ) && (
 			<aside className={ metaClassNames }>
 				{ authorShow && author }
@@ -211,17 +214,30 @@ export const generateRenderPostItem = attributes => {
 
 		const contents = contentOrder.map( key => {
 			const comp = contentFactory[ key ]
-			delete contentFactory[ key ]
 			return comp
 		} )
 
+		let output = (
+			<article>
+				{ compact( contents ).map( content => content ) }
+				{ readmoreShow && readmore }
+			</article>
+		)
+
+		output = applyFilters(
+			'stackable.posts.edit.item.output',
+			output,
+			style?.name,
+			attributes,
+			{
+				...contentFactory,
+				readmore: readmoreShow && readmore,
+			}
+		)
+
 		return (
 			<ContainerDiv className={ itemClassNames } key={ idx }>
-				<article>
-					{ compact( contents ).map( content => content ) }
-					{ Object.values( contentFactory ).map( content => content ) }
-					{ readmoreShow && readmore }
-				</article>
+				{ output }
 			</ContainerDiv>
 		)
 	}
@@ -229,6 +245,7 @@ export const generateRenderPostItem = attributes => {
 
 generateRenderPostItem.save = attributes => {
 	const {
+		className = '',
 		authorShow = true,
 		dateShow = true,
 		commentsShow = true,
@@ -241,8 +258,11 @@ generateRenderPostItem.save = attributes => {
 		contentOrder = [],
 	} = attributes
 
+	const style = getBlockStyle( blockStyles, className )
+
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',
+		'stk--no-padding',
 	] )
 
 	const titleClassNames = classnames(
@@ -279,7 +299,7 @@ generateRenderPostItem.save = attributes => {
 			defaultTag="h3"
 			attrNameTemplate="title%s"
 			className={ titleClassNames }
-			value="!#title!#"
+			value="<a href='!#postLink!#'>!#title!#</a>"
 		/>
 	)
 
@@ -312,12 +332,13 @@ generateRenderPostItem.save = attributes => {
 	const readmore = (
 		<Typography.Content
 			tagName="a"
-			href="!#readmoreLink!#"
+			href="!#postLink!#"
 			attrNameTemplate="readmore%s"
 			className={ readmoreClassNames }
 			value="!#readmoreText!#"
 		/>
 	)
+
 	const meta = ( authorShow || dateShow || commentsShow ) && (
 		<aside className={ metaClassNames }>
 			{ authorShow && author }
@@ -338,19 +359,32 @@ generateRenderPostItem.save = attributes => {
 
 	const contents = contentOrder.map( key => {
 		const comp = contentFactory[ key ]
-		delete contentFactory[ key ]
 		return comp
 	} )
+
+	let output = (
+		<article>
+			{ compact( contents ).map( content => content ) }
+			{ readmoreShow && readmore }
+		</article>
+	)
+
+	output = applyFilters(
+		'stackable.posts.save.item.output',
+		output,
+		style?.name,
+		attributes,
+		{
+			...contentFactory,
+			readmore: readmoreShow && readmore,
+		}
+	)
 
 	return (
 		<>
 			{ '<!–- wp:stk/start –->' }
 			<ContainerDiv.Content className={ itemClassNames } attributes={ attributes }>
-				<article>
-					{ compact( contents ).map( content => content ) }
-					{ Object.values( contentFactory ).map( content => content ) }
-					{ readmoreShow && readmore }
-				</article>
+				{ output }
 			</ContainerDiv.Content>
 			{ '<!–- /wp:stk/end –->' }
 		</>

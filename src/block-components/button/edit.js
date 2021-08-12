@@ -209,6 +209,8 @@ export const Edit = props => {
 	const {
 		borderSelector,
 		hasTextColor,
+		hasIcon,
+		hasLink,
 		hasIconGap,
 		hasIconPosition,
 		borderRadiusPlaceholder,
@@ -216,22 +218,28 @@ export const Edit = props => {
 
 	return (
 		<>
-			<Link />
+			{ hasLink && (
+				<Link />
+			) }
 			<Colors hasTextColor={ hasTextColor } />
 			<Size />
 			<Borders
 				borderSelector={ borderSelector }
 				placeholder={ borderRadiusPlaceholder }
 			/>
-			<Icon
-				hasIconGap={ hasIconGap }
-				hasIconPosition={ hasIconPosition }
-			/>
+			{ hasIcon && (
+				<Icon
+					hasIconGap={ hasIconGap }
+					hasIconPosition={ hasIconPosition }
+				/>
+			) }
 		</>
 	)
 }
 
 Edit.defaultProps = {
+	hasIcon: true,
+	hasLink: true,
 	borderSelector: '',
 	hasTextColor: true,
 	hasIconGap: true,

@@ -21,8 +21,8 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * since block styles are already
 		 * handled by the JS save function.
 		 */
-		public $default_attributes = array(
-			'postType' => 'post',
+		const default_attributes = array(
+			'type' => 'post',
 			'numberOfItems' => 6,
 			'orderBy' => 'date',
 			'order' => 'desc',
@@ -32,7 +32,6 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			'postOffset' => 0,
 			'postExclude' => '',
 			'postInclude' => '',
-			'showPagination' => false,
 		);
 
 		function __construct() {
@@ -47,12 +46,12 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @param array $attributes
 		 * @return array $attributes with default values
 		 */
-		public function generate_defaults( $attributes ) {
+		public static function generate_defaults( $attributes ) {
 			$out = array();
 			foreach ( $attributes as $name => $value ) {
 				$out[ $name ] = $value;
 			}
-			foreach ( $this->default_attributes as $name => $default ) {
+			foreach ( self::default_attributes as $name => $default ) {
 				if ( array_key_exists( $name, $out ) ) {
 					if ( $out[ $name ] === '' ) {
 						$out[ $name ] = $default;
@@ -71,10 +70,10 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @param array $attributes
 		 * @return array post query
 		 */
-		public function generate_query( $attributes ) {
-			$attributes = $this->generate_defaults( $attributes );
+		public static function generate_query( $attributes ) {
+			$attributes = self::generate_defaults( $attributes );
 			$post_query = array(
-					'post_type' => $attributes['postType'],
+					'post_type' => $attributes['type'],
 					'post_status' => 'publish',
 					'order' => $attributes['order'],
 					'orderby' => $attributes['orderBy'],
@@ -87,8 +86,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				if ( $attributes['taxonomyType'] === 'category' ) {
 					$post_query[ 'category' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
 				// Tags.
-				} else if ( $attributes['taxonomyType'] === 'post_tag' ) {
-					$post_query[ 'tag' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
+				} else if ( $attributes['taxonomyType'] === 'post_tag' ) { $post_query[ 'tag' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
 				// Custom taxonomies.
 				} else {
 					$post_query['tax_query'] = array(
@@ -167,7 +165,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			$meta_separator = isset( $attributes[ 'metaSeparator' ] ) ? $attributes[ 'metaSeparator' ] : 'dot';
 
 			$posts = '';
-			$recent_posts = wp_get_recent_posts( $this->generate_query( $attributes ) );
+			$recent_posts = wp_get_recent_posts( self::generate_query( $attributes ) );
 
 			foreach ( $recent_posts as $post ) {
 				$new_template = $template;
@@ -259,9 +257,11 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 					$new_template = preg_replace( '/<div class="stk-block-posts__excerpt">!#excerpt!#<\/div>/', '', $new_template );
 				}
 
+				// Post Link.
+				$new_template = str_replace( '!#postLink!#', esc_url( get_permalink( $post_id ) ), $new_template );
+
 				// Read More Link.
 				$new_template = str_replace( '!#readmoreText!#', esc_html( $readmore_text ), $new_template );
-				$new_template = str_replace( '!#readmoreLink!#', esc_url( get_permalink( $post_id ) ), $new_template );
 
 				$posts .= $new_template;
 			}
@@ -271,7 +271,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		}
 
 		/**
-		 * Get the featured image URLS
+		 * Get the featured image URLs
 		 *
 		 * @param string $attachment_id
 		 *

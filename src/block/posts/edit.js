@@ -10,9 +10,6 @@ import { blockStyles } from './block-styles'
 /**
  * External dependencies
  */
-import {
-	pickBy, isEmpty, isUndefined, uniqBy,
-} from 'lodash'
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
 import {
@@ -26,7 +23,7 @@ import {
 	AdvancedToggleControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass, useBlockStyle,
+	useBlockHoverClass, useBlockStyle, usePostsQuery,
 } from '~stackable/hooks'
 import {
 	getAlignmentClasses,
@@ -47,7 +44,6 @@ import {
 /**
  * WordPress dependencies
  */
-import { useSelect } from '@wordpress/data'
 import { Placeholder, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -63,12 +59,7 @@ const Edit = props => {
 	const {
 		metaShow = true,
 		excerptShow = true,
-		showPagination,
-		postOffset,
-		postExclude,
-		postInclude,
-		postType = 'post',
-		numberOfItems = 6,
+		type = 'post',
 		orderBy = 'date',
 		order = 'desc',
 		taxonomyType = 'category',
@@ -88,63 +79,7 @@ const Edit = props => {
 
 	const {
 		posts, isRequesting, hasPosts,
-	} = useSelect( select => {
-		const { getEntityRecords } = select( 'core' )
-		const { isResolving } = select( 'core/data' )
-
-		const postQuery = pickBy( {
-			...applyFilters( 'stackable.posts.postQuery', {
-				order,
-				orderby: orderBy,
-				per_page: numberOfItems, // eslint-disable-line camelcase
-			}, attributes ),
-		}, value => {
-			// Exludes and includes can be empty.
-			if ( Array.isArray( value ) ) {
-				return ! isEmpty( value )
-			}
-			// Don't include empty values.
-			return ! isUndefined( value ) && value !== ''
-		} )
-
-		if ( taxonomy && taxonomyType ) {
-			// Categories.
-			if ( taxonomyType === 'category' ) {
-				postQuery[ taxonomyFilterType === '__in' ? 'categories' : 'categories_exclude' ] = taxonomy
-				// Tags.
-			} else if ( taxonomyType === 'post_tag' ) {
-				postQuery[ taxonomyFilterType === '__in' ? 'tags' : 'tags_exclude' ] = taxonomy
-				// Custom taxonomies.
-			} else {
-				postQuery[ taxonomyFilterType === '__in' ? taxonomyType : `${ taxonomyType }_exclude` ] = taxonomy
-			}
-		}
-
-		let posts = getEntityRecords( 'postType', postType, postQuery )
-		posts = ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' )
-
-		return {
-			posts,
-			hasPosts: Array.isArray( posts ) && posts.length,
-			isRequesting: isResolving( 'core', 'getEntityRecords', [
-				'postType',
-				postType,
-				postQuery,
-			] ),
-		}
-	}, [
-		postType,
-		orderBy,
-		order,
-		taxonomyType,
-		taxonomy,
-		taxonomyFilterType,
-		postOffset,
-		postExclude,
-		postInclude,
-		numberOfItems,
-		showPagination,
-	] )
+	} = usePostsQuery( attributes )
 
 	const blockClassNames = classnames( [
 		className,
@@ -249,8 +184,8 @@ const Edit = props => {
 					/>
 					<TaxonomyControl
 						allowReset={ true }
-						postType={ postType }
-						onChangePostType={ postType => setAttributes( { postType } ) }
+						postType={ type }
+						onChangePostType={ type => setAttributes( { type } ) }
 						taxonomyType={ taxonomyType }
 						onChangeTaxonomyType={ taxonomyType => setAttributes( { taxonomyType } ) }
 						taxonomy={ taxonomy }

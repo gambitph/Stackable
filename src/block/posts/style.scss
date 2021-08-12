@@ -10,61 +10,22 @@
 	&__meta,
 	&__category,
 	&__excerpt,
+	&__readmore,
 	.stk-img-wrapper {
 		margin-bottom: 24px;
+	}
+
+	.stk-inner-blocks {
+		margin-top: 24px;
+	}
+
+	&__title > a {
+		text-decoration: none;
 	}
 
 	&__item {
 		// Generate a flex basis value based on the number of columns.
 		flex-basis: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
-	}
-
-	&.is-style-portfolio {
-		.stk-img-wrapper {
-			height: 100%;
-			inset: 0;
-		}
-	}
-
-	&.is-style-vertical-card {
-		.stk-img-wrapper {
-			inset: 0 0 auto 0;
-		}
-		.stk-block-posts__item > article {
-			margin-top: var(--stk-img-height, 300px);
-		}
-
-		&-2 {
-			.stk-img-wrapper {
-				inset: auto 0 0 0;
-				margin-bottom: 0;
-			}
-			.stk-block-posts__item > article {
-				margin-bottom: var(--stk-img-height, 300px);
-			}
-		}
-	}
-
-	&:is(.is-style-portfolio, .is-style-vertical-card, .is-style-vertical-card-2) {
-		.stk-block-posts {
-			&__item {
-				position: relative;
-			}
-
-			&__title,
-			&__meta,
-			&__category,
-			&__excerpt,
-			&__readmore {
-				z-index: 1;
-				position: relative;
-			}
-		}
-
-		.stk-img-wrapper {
-			position: absolute;
-			width: 100%;
-		}
 	}
 }
 

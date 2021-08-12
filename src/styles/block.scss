@@ -199,6 +199,25 @@
 	-o-text-fill-color: transparent;
 }
 
+// Button alignment.
+:where(.has-text-align-center) .stk-button-group,
+.stk-button-group.has-text-align-center {
+	justify-content: center;
+}
+:where(.has-text-align-right) .stk-button-group,
+.stk-button-group.has-text-align-right {
+	justify-content: flex-end;
+}
+:where(.has-text-align-left) .stk-button-group,
+.stk-button-group.has-text-align-left {
+	justify-content: flex-start;
+}
+
+.stk-block .stk-button-group {
+	flex-direction: row;
+	align-items: center; // Vertically align the buttons.
+}
+
 // Buttons.
 .stk-block {
 	.stk-button {
@@ -207,6 +226,7 @@
 		align-items: center;
 		column-gap: 8px;
 		text-decoration: none;
+		position: relative;
 
 		&::before,
 		&::after {

@@ -57,7 +57,7 @@ const postsAttributes = {
 		type: 'string',
 		default: 'date',
 	},
-	postType: {
+	type: {
 		type: 'string',
 		default: 'post',
 	},

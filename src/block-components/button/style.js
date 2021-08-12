@@ -21,6 +21,7 @@ import { Icon } from '../icon'
 const getStyleParams = options => {
 	const {
 		selector,
+		hoverSelector,
 	} = options
 
 	return [
@@ -92,7 +93,7 @@ const getStyleParams = options => {
 			styleRule: 'background',
 			attrName: 'buttonBackgroundColor',
 			hover: 'all',
-			hoverSelector: `${ selector }:hover:after`,
+			hoverSelector: hoverSelector ? hoverSelector : `${ selector }:hover:after`,
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if ( state === 'normal' ) {
 					return undefined
@@ -124,7 +125,7 @@ const getStyleParams = options => {
 			styleRule: 'opacity',
 			attrName: 'buttonBackgroundColor',
 			hover: 'all',
-			hoverSelector: `${ selector }:hover:after`,
+			hoverSelector: hoverSelector ? hoverSelector : `${ selector }:hover:after`,
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if ( state === 'normal' ) {
 					return undefined

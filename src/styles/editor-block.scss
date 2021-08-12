@@ -162,3 +162,28 @@
 .editor-styles-wrapper [data-type^="stackable/heading"]:first-child .stk-block-heading__text {
 	margin-top: 0;
 }
+
+// Button alignment.
+:where(.has-text-align-center) .stk-button-group .block-editor-block-list__layout,
+.stk-button-group.has-text-align-center .block-editor-block-list__layout {
+	justify-content: center;
+}
+:where(.has-text-align-right) .stk-button-group .block-editor-block-list__layout,
+.stk-button-group.has-text-align-right .block-editor-block-list__layout {
+	justify-content: flex-end;
+}
+:where(.has-text-align-left) .stk-button-group .block-editor-block-list__layout,
+.stk-button-group.has-text-align-left .block-editor-block-list__layout {
+	justify-content: flex-start;
+}
+
+.stk-button-group .block-editor-block-list__layout {
+	column-gap: 12px;
+	align-items: center;
+}
+
+// We vertically center the buttons, but this doesn't work properly in the editor.
+[data-type="stackable/button-group"] .stk-button-group.stk-inner-blocks {
+	align-items: normal;
+}
+
