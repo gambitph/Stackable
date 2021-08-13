@@ -27,6 +27,7 @@ import {
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch, useSelect } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 const Controls = props => {
 	const { clientId } = useBlockEditContext()
@@ -42,6 +43,7 @@ const Controls = props => {
 
 	return (
 		<>
+			{ applyFilters( 'stackable.block-component.image.before', null, props ) }
 			{ props.hasSelector && (
 				<ImageControl2 // TODO: add selected image size as a prop.
 					label={ __( 'Select Image', i18n ) }

@@ -6,32 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 	class Stackable_Posts_Block {
+
 		public $meta_separators = array(
 			'dot' => '·',
 			'space' => ' ',
 			'comma' => ',',
 			'dash' => '—',
 			'pipe' => '|',
-		);
-
-		/**
-		 * List of default attribute values.
-		 * Ideally, we only need attributes
-		 * related to post render function
-		 * since block styles are already
-		 * handled by the JS save function.
-		 */
-		const default_attributes = array(
-			'type' => 'post',
-			'numberOfItems' => 6,
-			'orderBy' => 'date',
-			'order' => 'desc',
-			'taxonomyType' => 'category',
-			'taxonomy' => '',
-			'taxonomyFilterType' => '__in',
-			'postOffset' => 0,
-			'postExclude' => '',
-			'postInclude' => '',
 		);
 
 		function __construct() {
@@ -47,11 +28,36 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @return array $attributes with default values
 		 */
 		public static function generate_defaults( $attributes ) {
+			/**
+			 * List of default attribute values.
+			 * Ideally, we only need attributes
+			 * related to post render function
+			 * since block styles are already
+			 * handled by the JS save function.
+			 */
+			$default_attributes = array(
+				'type' => 'post',
+				'numberOfItems' => 6,
+				'orderBy' => 'date',
+				'order' => 'desc',
+				'taxonomyType' => 'category',
+				'taxonomy' => '',
+				'taxonomyFilterType' => '__in',
+				'postOffset' => 0,
+				'postExclude' => '',
+				'postInclude' => '',
+				'imageSize' => 'full',
+				'excerptLength' => 55,
+				'readmoreText' => __( 'Continue Reading', STACKABLE_I18N ),
+				'metaSeparator' => 'dot',
+				'categoryHighlighted' => false,
+			);
+
 			$out = array();
 			foreach ( $attributes as $name => $value ) {
 				$out[ $name ] = $value;
 			}
-			foreach ( self::default_attributes as $name => $default ) {
+			foreach ( $default_attributes as $name => $default ) {
 				if ( array_key_exists( $name, $out ) ) {
 					if ( $out[ $name ] === '' ) {
 						$out[ $name ] = $default;
@@ -71,7 +77,6 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @return array post query
 		 */
 		public static function generate_query( $attributes ) {
-			$attributes = self::generate_defaults( $attributes );
 			$post_query = array(
 					'post_type' => $attributes['type'],
 					'post_status' => 'publish',
@@ -136,15 +141,16 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @param string new content.
 		 */
 		public function render_callback( $attributes, $content, $block ) {
-			preg_match( '/\&lt;[^w]*wp:stk\/start [^>]*>(.*)\&lt;[^w]*wp:stk\/end [^>]*>/', $content, $match );
+			preg_match( '/\&lt;.*?stk-start:posts\/template [^>]*>(.*)\&lt;.*?stk-end:post\/template[^>]*>/', $content, $match );
 			if ( ! isset( $match[ 1 ] ) ) {
 				return $content;
 			}
 
+			$attributes = $this->generate_defaults( $attributes );
 			$content = $this->render_post_items( $match, $content, $attributes );
 			$content = apply_filters( 'stackable/posts/output', 
 				$content, 
-				$this->generate_defaults( $attributes ),
+				$attributes,
 				$block );
 			return $content;
 		}
@@ -156,13 +162,11 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			$to_replace = $match[ 0 ];
 			$template = $match[ 1 ];
 
-			/**
-			 * Default attributes
-			 */
-			$image_size = isset( $attributes[ 'imageSize' ] ) ? $attributes[ 'imageSize' ] : 'full';
-			$excerpt_length = isset( $attributes[ 'excerptLength' ] ) ? $attributes[ 'excerptLength' ] : 55;
-			$readmore_text = isset( $attributes[ 'readmoreText' ] ) ? $attributes[ 'readmoreText' ] : __( 'Continue Reading', STACKABLE_I18N );
-			$meta_separator = isset( $attributes[ 'metaSeparator' ] ) ? $attributes[ 'metaSeparator' ] : 'dot';
+			$image_size = $attributes[ 'imageSize' ];
+			$excerpt_length = $attributes[ 'excerptLength' ];
+			$readmore_text = $attributes[ 'readmoreText' ];
+			$meta_separator = $attributes[ 'metaSeparator' ];
+			$category_highlighted = $attributes[ 'categoryHighlighted' ];
 
 			$posts = '';
 			$recent_posts = wp_get_recent_posts( self::generate_query( $attributes ) );
@@ -217,6 +221,16 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 
 				// Category.
 				$category = get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id );
+				if ( $category_highlighted ) {
+					preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
+					foreach ( $matches[0] as $i=>$match ) {
+						$href = $matches[1][$i];
+						$category_title = $matches[2][$i];
+						$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
+						$category = str_replace( $category_title, "<span class=\"stk-button__inner-text\">$category_title</span>", $category );
+					}
+				}
+
 				$new_template = str_replace( '!#category!#', $category, $new_template );
 
 				// Separator.

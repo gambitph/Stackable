@@ -1,27 +1,30 @@
 @import "common";
 
 .stk-block-posts {
-	$parent: &;
+	$p: &;
 	& > &__items {
 		display: flex;
 		flex-wrap: wrap;
 		column-gap: var(--stk-column-gap, 16px);
 		row-gap: 16px;
-		#{ $parent }__title,
-		#{ $parent }__meta,
-		#{ $parent }__category,
-		#{ $parent }__excerpt,
-		#{ $parent }__readmore,
-		.stk-img-wrapper {
+		:is(#{ $p }__title,#{ $p }__meta,#{ $p }__category,#{ $p }__excerpt,#{ $p }__readmore,.stk-img-wrapper) {
 			margin-bottom: cssvar(block-margin-bottom);
 		}
 	}
 
-	&__title > a {
+	:is(#{ $p }__title, #{ $p }__category) > a {
 		text-decoration: none;
 	}
 
+	&__category > a.stk-button {
+		padding: 4px 8px 4px 8px;
+		display: inline-flex;
+		border-radius: 4px;
+	}
+
 	&__item {
+		// We need this to make advanced position works.
+		position: relative;
 		// Generate a flex basis value based on the number of columns.
 		flex-basis: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
 	}

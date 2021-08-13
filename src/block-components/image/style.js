@@ -27,6 +27,7 @@ const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '.stk-img-wrapper',
 		hoverSelector,
+		hoverSelectorCallback = null,
 		enableWidth = true,
 		enableHeight = true,
 	} = options
@@ -34,7 +35,6 @@ const getStyleParams = ( options = {} ) => {
 	return [
 		{
 			selector: `${ selector }:not(.stk--is-resizing)`,
-			hoverSelector: hoverSelector ? `${ hoverSelector }:not(.stk--is-resizing)` : undefined,
 			renderIn: 'edit',
 			styleRule: 'width',
 			attrName: 'imageWidth',
@@ -44,7 +44,6 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
-			hoverSelector,
 			renderIn: 'save',
 			styleRule: 'width',
 			attrName: 'imageWidth',
@@ -54,7 +53,6 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector }:not(.stk--is-resizing)`,
-			hoverSelector: hoverSelector ? `${ hoverSelector }:not(.stk--is-resizing)` : undefined,
 			renderIn: 'edit',
 			styleRule: 'height',
 			attrName: 'imageHeight',
@@ -64,7 +62,6 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
-			hoverSelector,
 			renderIn: 'save',
 			styleRule: 'height',
 			attrName: 'imageHeight',
@@ -75,6 +72,7 @@ const getStyleParams = ( options = {} ) => {
 		{
 			selector: `${ selector } .stk-img-resizer-wrapper`,
 			hoverSelector: hoverSelector ? `${ hoverSelector } .stk-img-resizer-wrapper` : undefined,
+			hoverSelectorCallback,
 			renderIn: 'edit',
 			styleRule: 'boxShadow',
 			attrName: 'imageShadow',
@@ -83,6 +81,7 @@ const getStyleParams = ( options = {} ) => {
 		{
 			selector,
 			hoverSelector,
+			hoverSelectorCallback,
 			renderIn: 'save',
 			styleRule: 'boxShadow',
 			attrName: 'imageShadow',
@@ -91,6 +90,7 @@ const getStyleParams = ( options = {} ) => {
 		{
 			selector: `${ selector } img`,
 			hoverSelector: `${ hoverSelector } img`,
+			hoverSelectorCallback,
 			styleRule: 'filter',
 			attrName: 'imageFilter',
 			hover: 'all',
@@ -98,6 +98,7 @@ const getStyleParams = ( options = {} ) => {
 		{
 			selector: `${ selector } img`,
 			hoverSelector: `${ hoverSelector } img`,
+			hoverSelectorCallback,
 			styleRule: 'transform',
 			attrName: 'imageZoom',
 			format: 'scale(%s)',
@@ -105,7 +106,6 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector } .stk-img-resizer-wrapper`,
-			hoverSelector: hoverSelector ? `${ hoverSelector } .stk-img-resizer-wrapper` : undefined,
 			renderIn: 'edit',
 			styleRule: 'borderRadius',
 			attrName: 'imageBorderRadius',
@@ -113,7 +113,6 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
-			hoverSelector,
 			renderIn: 'save',
 			styleRule: 'borderRadius',
 			attrName: 'imageBorderRadius',
@@ -122,6 +121,7 @@ const getStyleParams = ( options = {} ) => {
 		{
 			selector: `${ selector } img`,
 			hoverSelector: `${ hoverSelector } img`,
+			hoverSelectorCallback,
 			styleRule: 'objectPosition',
 			attrName: 'imageFocalPoint',
 			valueCallback: focalPointToPosition,
@@ -130,7 +130,6 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector } img`,
-			hoverSelector: `${ hoverSelector } img`,
 			styleRule: 'objectFit',
 			attrName: 'imageFit',
 			responsive: 'all',
@@ -141,7 +140,6 @@ const getStyleParams = ( options = {} ) => {
 			renderIn: 'edit',
 			// This is so that the resizer won't get clipped.
 			selector: `${ selector } .stk-img-resizer-wrapper`,
-			hoverSelector: hoverSelector ? `${ hoverSelector } .stk-img-resizer-wrapper` : undefined,
 			styleRule: 'mask-image',
 			vendorPrefixes: [ '-webkit-' ],
 			attrName: 'imageShape',
@@ -155,7 +153,6 @@ const getStyleParams = ( options = {} ) => {
 		{
 			renderIn: 'save',
 			selector,
-			hoverSelector,
 			styleRule: 'mask-image',
 			vendorPrefixes: [ '-webkit-' ],
 			attrName: 'imageShape',

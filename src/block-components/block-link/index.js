@@ -14,7 +14,7 @@ export const BlockLink = () => {
 }
 
 BlockLink.Content = props => {
-	const { attributes } = props
+	const { href, attributes } = props
 
 	if ( ! attributes.hasBlockLink ) {
 		return null
@@ -23,7 +23,7 @@ BlockLink.Content = props => {
 	return (
 		<Link.Content
 			className="stk-block-link stk--transparent-overlay"
-			href={ attributes.blockLinkUrl }
+			href={ href || attributes.blockLinkUrl }
 			target={ attributes.blockLinkNewTab ? '_blank' : '' }
 			rel={ attributes.blockLinkRel }
 			aria-hidden="true"

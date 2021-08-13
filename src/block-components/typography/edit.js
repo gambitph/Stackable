@@ -30,6 +30,7 @@ import {
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Controls = props => {
 	const {
@@ -84,6 +85,7 @@ export const Controls = props => {
 	}, [ debouncedText ] )
 	return (
 		<>
+			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
 			{ hasTextContent && (
 				<AdvancedTextControl
 					label={ __( 'Content', i18n ) }
@@ -260,6 +262,7 @@ export const Controls = props => {
 							/>
 						</>
 					) }
+					{ applyFilters( 'stackable.block-component.typography.color.after', null, props ) }
 				</>
 			) }
 

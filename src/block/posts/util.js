@@ -1,5 +1,4 @@
-/**
- * External dependencies
+/** External dependencies
  */
 import striptags from 'striptags'
 import { compact } from 'lodash'
@@ -10,6 +9,7 @@ import {
 	ContainerDiv,
 	Typography,
 	getTypographyClasses,
+	BlockLink,
 } from '~stackable/block-components'
 import { getBlockStyle } from '~stackable/hooks'
 
@@ -60,6 +60,7 @@ export const CONTENTS = [
 export const generateRenderPostItem = attributes => {
 	const {
 		className = '',
+		categoryHighlighted = false,
 		imageSize,
 		metaSeparator,
 		excerptLength,
@@ -152,12 +153,27 @@ export const generateRenderPostItem = attributes => {
 
 		const category = categoryList && (
 			<div className={ categoryClassNames }>
-				<Typography
-					tagName="a"
-					attrNameTemplate="category%s"
-					value={ striptags( categoryList ) }
-					editable={ false }
-				/>
+				{ categoryHighlighted ? (
+					<a // eslint-disable-line jsx-a11y/anchor-is-valid
+						href="#"
+						className="stk-button"
+					>
+						<Typography
+							tagName="span"
+							className="stk-button__inner-text"
+							attrNameTemplate="category%s"
+							value={ striptags( categoryList ) }
+							editable={ false }
+						/>
+					</a>
+				) : (
+					<Typography
+						tagName="a"
+						attrNameTemplate="category%s"
+						value={ striptags( categoryList ) }
+						editable={ false }
+					/>
+				) }
 			</div>
 		)
 
@@ -245,6 +261,8 @@ export const generateRenderPostItem = attributes => {
 
 generateRenderPostItem.save = attributes => {
 	const {
+		imageHasLink = true,
+		hasBlockLink = false,
 		className = '',
 		authorShow = true,
 		dateShow = true,
@@ -290,9 +308,10 @@ generateRenderPostItem.save = attributes => {
 		getTypographyClasses( attributes, 'readmore%s' )
 	)
 
-	const featuredImage = (
-		<Image.Content />
-	)
+	let featuredImage = <Image.Content />
+	if ( ! hasBlockLink && imageHasLink ) {
+		featuredImage = <a href="!#postLink!#">{ featuredImage }</a>
+	}
 
 	const title = (
 		<Typography.Content
@@ -382,11 +401,12 @@ generateRenderPostItem.save = attributes => {
 
 	return (
 		<>
-			{ '<!–- wp:stk/start –->' }
+			{ '<!–- /stk-start:posts/template –->' }
 			<ContainerDiv.Content className={ itemClassNames } attributes={ attributes }>
 				{ output }
+				<BlockLink.Content href="!#postLink!#" attributes={ attributes } />
 			</ContainerDiv.Content>
-			{ '<!–- /wp:stk/end –->' }
+			{ '<!–- /stk-end:post/template –->' }
 		</>
 	)
 }

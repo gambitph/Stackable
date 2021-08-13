@@ -7,10 +7,15 @@ import {
 	__getValue, getStyles, useStyles,
 } from '~stackable/util'
 
-const getStyleParams = () => {
+const getStyleParams = ( options = {} ) => {
+	const {
+		positionSelector,
+	} = options
+
 	return [
 		{
-			selector: '',
+			selector: positionSelector || '',
+			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'top',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -27,7 +32,8 @@ const getStyleParams = () => {
 			},
 		},
 		{
-			selector: '',
+			selector: positionSelector || '',
+			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'right',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -36,7 +42,8 @@ const getStyleParams = () => {
 			valuePreCallback: value => value?.right,
 		},
 		{
-			selector: '',
+			selector: positionSelector || '',
+			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'bottom',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -45,7 +52,8 @@ const getStyleParams = () => {
 			valuePreCallback: value => value?.bottom,
 		},
 		{
-			selector: '',
+			selector: positionSelector || '',
+			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'left',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -55,7 +63,8 @@ const getStyleParams = () => {
 		},
 		{
 			renderIn: 'edit',
-			selector: '',
+			selector: positionSelector || '',
+			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'position',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -122,10 +131,14 @@ const getStyleParams = () => {
 // animate since there is no initial value for the position (e.g. top: 0). This
 // function adds a `top: 0` for the normal state of the CSS if there's a hover
 // state position e.g. hover `top: 20px` given but no initial state.
-const getStyleParams2 = () => {
+const getStyleParams2 = ( options = {} ) => {
+	const {
+		positionSelector,
+	} = options
+
 	return [
 		{
-			selector: '',
+			selector: positionSelector || '',
 			styleRule: 'top',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -141,7 +154,7 @@ const getStyleParams2 = () => {
 			},
 		},
 		{
-			selector: '',
+			selector: positionSelector || '',
 			styleRule: 'right',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -157,7 +170,7 @@ const getStyleParams2 = () => {
 			},
 		},
 		{
-			selector: '',
+			selector: positionSelector || '',
 			styleRule: 'bottom',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -173,7 +186,7 @@ const getStyleParams2 = () => {
 			},
 		},
 		{
-			selector: '',
+			selector: positionSelector || '',
 			styleRule: 'left',
 			attrName: 'positionNum',
 			responsive: 'all',

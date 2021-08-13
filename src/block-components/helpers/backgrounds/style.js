@@ -112,7 +112,7 @@ const getStyleParams = ( options = {} ) => {
 
 		{
 			selector: `${ selector }:before`,
-			hoverSelector: `${ selector }:hover:hover`,
+			hoverSelector: `${ selector }:hover`,
 			styleRule: 'backgroundColor',
 			attrName: 'backgroundColor',
 			attrNameTemplate,
@@ -133,7 +133,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector }:before`,
-			hoverSelector: `${ selector }:hover:hover`,
+			hoverSelector: `${ selector }:hover`,
 			styleRule: 'opacity',
 			attrName: 'backgroundTintStrength',
 			attrNameTemplate,

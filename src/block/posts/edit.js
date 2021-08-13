@@ -22,10 +22,11 @@ import {
 	SortControl,
 	TaxonomyControl,
 	AdvancedToggleControl,
+	ColorPaletteControl,
 	ImageSizeControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass, useBlockStyle, usePostsQuery,
+	useBlockHoverClass, useBlockStyle, usePostsQuery, useAttributeEditHandlers,
 } from '~stackable/hooks'
 import {
 	getAlignmentClasses,
@@ -41,15 +42,17 @@ import {
 	ConditionalDisplay,
 	BlockStyle,
 	Typography,
+	BlockLink,
 } from '~stackable/block-components'
+import { getAttrName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { Placeholder, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import { InnerBlocks } from '@wordpress/block-editor'
+import { applyFilters, addFilter } from '@wordpress/hooks'
+import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 
 const Edit = props => {
@@ -61,9 +64,6 @@ const Edit = props => {
 
 	const {
 		imageSize,
-		imageShow,
-		metaShow = true,
-		excerptShow = true,
 		type = 'post',
 		orderBy = 'date',
 		order = 'desc',
@@ -107,6 +107,8 @@ const Edit = props => {
 		[ posts?.length ]
 	)
 
+	const editorPostItems = useMemo( () => generateRenderPostItem( attributes ), [ attributes ] )
+
 	return (
 		<>
 			<InspectorTabs />
@@ -114,6 +116,7 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<BlockLink.InspectorControls hasLink={ false } />
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
@@ -205,31 +208,70 @@ const Edit = props => {
 					{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
-					title={ __( 'Featured Image', i18n ) }
-					id="featured-image"
-					initialOpen={ false }
-					checked={ imageShow }
-					onChange={ imageShow => setAttributes( { imageShow } ) }
+					title={ __( 'Spacing', i18n ) }
+					id="spacing"
 				>
-					<ImageSizeControl
-						label={ __( 'Image Size', i18n ) }
-						value={ imageSize }
-						onChange={ imageSize => setAttributes( { imageSize } ) }
-						default="full"
-						className="ugb--help-tip-image-size"
+					<AdvancedRangeControl
+						label={ __( 'Featured Image', i18n ) }
+						attribute="imageSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
 					/>
-					<Image.InspectorControls.Controls
-						hasHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
-						hasBorderRadius={ ! [ 'portfolio' ].includes( blockStyle ) }
-						hasShape={ false }
-						hasWidth={ false }
-						hasAlt={ false }
-						hasSelector={ false }
-						src={ focalPointPlaceholder }
+					<AdvancedRangeControl
+						label={ __( 'Title', i18n ) }
+						attribute="titleSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Category', i18n ) }
+						attribute="categorySpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Excerpt', i18n ) }
+						attribute="excerptSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Meta', i18n ) }
+						attribute="metaSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Read More Link', i18n ) }
+						attribute="readmoreSpacing"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder=""
 					/>
 				</PanelAdvancedSettings>
-
 			</InspectorStyleControls>
+			<Image.InspectorControls
+				label={ __( 'Featured Image', i18n ) }
+				hasHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
+				hasBorderRadius={ ! [ 'portfolio' ].includes( blockStyle ) }
+				hasShape={ false }
+				hasWidth={ false }
+				hasAlt={ false }
+				hasSelector={ false }
+				src={ focalPointPlaceholder }
+				hasToggle={ true }
+			/>
 			<Typography.InspectorControls
 				label={ __( 'Title', i18n ) }
 				hasToggle={ true }
@@ -247,71 +289,31 @@ const Edit = props => {
 				hasTextTag={ false }
 				initialOpen={ false }
 			/>
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'Excerpt', i18n ) }
-					id="excerpt"
-					checked={ excerptShow }
-					onChange={ excerptShow => setAttributes( { excerptShow } ) }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Excerpt Length', i18n ) }
-						attribute="excerptLength"
-						placeholder="55"
-						min={ 1 }
-						sliderMax={ 100 }
-					/>
-					<Typography.InspectorControls.Controls
-						attrNameTemplate="excerpt%s"
-						hasTextTag={ false }
-						hasTextContent={ false }
-						hasAlign={ true }
-					/>
-				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					title={ __( 'Meta', i18n ) }
-					checked={ metaShow }
-					onChange={ metaShow => setAttributes( { metaShow } ) }
-					id="meta"
-				>
-					<AdvancedToggleControl
-						label={ __( 'Show Author', i18n ) }
-						attribute="authorShow"
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Show Date', i18n ) }
-						attribute="dateShow"
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Show Comments', i18n ) }
-						attribute="commentsShow"
-					/>
-					<AdvancedSelectControl
-						label={ __( 'Separator', i18n ) }
-						options={ [
-							{ label: __( 'Default (Dot)', i18n ), value: '' },
-							{ label: __( 'Space', i18n ), value: 'space' },
-							{ label: __( 'Comma', i18n ), value: 'comma' },
-							{ label: __( 'Dash', i18n ), value: 'dash' },
-							{ label: __( 'Pipe', i18n ), value: 'pipe' },
-						] }
-						attribute="metaSeparator"
-					/>
-					<Typography.InspectorControls.Controls
-						attrNameTemplate="meta%s"
-						hasTextTag={ false }
-						hasTextContent={ false }
-						hasAlign={ true }
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
+			<Typography.InspectorControls
+				label={ __( 'Excerpt', i18n ) }
+				hasToggle={ true }
+				attrNameTemplate="excerpt%s"
+				hasTextTag={ false }
+				hasTextContent={ false }
+				hasAlign={ true }
+				initialOpen={ false }
+			/>
+			<Typography.InspectorControls
+				label={ __( 'Meta', i18n ) }
+				hasToggle={ true }
+				attrNameTemplate="meta%s"
+				hasTextTag={ false }
+				hasTextContent={ false }
+				hasAlign={ true }
+				initialOpen={ false }
+			/>
 			<Typography.InspectorControls
 				label={ __( 'Read More Link', i18n ) }
 				attrNameTemplate="readmore%s"
 				hasTextTag={ false }
-				initialOpen={ false }
 				hasToggle={ true }
 				hasAlign={ true }
+				initialOpen={ false }
 			/>
 			<ContainerDiv.InspectorControls />
 			<EffectsAnimations.InspectorControls />
@@ -337,7 +339,7 @@ const Edit = props => {
 			) : (
 				<BlockDiv className={ blockClassNames }>
 					<div className={ contentClassNames }>
-						{ ( posts || [] ).map( generateRenderPostItem( attributes ) ) }
+						{ ( posts || [] ).map( editorPostItems ) }
 					</div>
 					<div className={ innerClassNames }>
 						<InnerBlocks />
@@ -349,3 +351,149 @@ const Edit = props => {
 }
 
 export default Edit
+
+// Add hover selector control
+addFilter( 'stackable.block-component.typography.color.after', 'stackable/posts', ( output, props ) => {
+	const { name } = useBlockEditContext()
+
+	if ( name !== 'stackable/posts' ) {
+		return output
+	}
+
+	return (
+		<>
+			{ output }
+			<AdvancedToggleControl
+				label={ __( 'Apply hover effect when container is hovered', i18n ) }
+				attribute={ getAttrName( props.attrNameTemplate, 'hoverStateInContainer' ) }
+			/>
+		</>
+	)
+} )
+
+addFilter( 'stackable.block-component.typography.color.after', 'stackable/posts', ( output, props ) => {
+	const { name } = useBlockEditContext()
+	const {
+		getAttribute,
+	} = useAttributeEditHandlers()
+
+	if ( name !== 'stackable/posts' ) {
+		return output
+	}
+
+	if ( props.attrNameTemplate !== 'category%s' ) {
+		return output
+	}
+
+	return (
+		<>
+			<AdvancedToggleControl
+				label={ __( 'Highlighted', i18n ) }
+				attribute="categoryHighlighted"
+			/>
+			{ getAttribute( 'categoryHighlighted' ) && (
+				<ColorPaletteControl
+					label={ __( 'Highlight Color', i18n ) }
+					hover="all"
+					attribute="categoryHighlightColor"
+				/>
+			) }
+			{ output }
+		</>
+	)
+} )
+
+// Add excerpt controls.
+addFilter( 'stackable.block-component.typography.before', 'stackable/posts', ( output, props ) => {
+	const { name } = useBlockEditContext()
+	if ( name !== 'stackable/posts' ) {
+		return output
+	}
+
+	if ( props.attrNameTemplate !== 'excerpt%s' ) {
+		return output
+	}
+
+	return (
+		<AdvancedRangeControl
+			label={ __( 'Excerpt Length', i18n ) }
+			attribute="excerptLength"
+			placeholder="55"
+			min={ 1 }
+			sliderMax={ 100 }
+		/>
+	)
+} )
+
+// Add meta controls.
+addFilter( 'stackable.block-component.typography.before', 'stackable/posts', ( output, props ) => {
+	const { name } = useBlockEditContext()
+	if ( name !== 'stackable/posts' ) {
+		return output
+	}
+
+	if ( props.attrNameTemplate !== 'meta%s' ) {
+		return output
+	}
+
+	return (
+		<>
+			<AdvancedToggleControl
+				label={ __( 'Show Author', i18n ) }
+				attribute="authorShow"
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Show Date', i18n ) }
+				attribute="dateShow"
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Show Comments', i18n ) }
+				attribute="commentsShow"
+			/>
+			<AdvancedSelectControl
+				label={ __( 'Separator', i18n ) }
+				options={ [
+					{ label: __( 'Default (Dot)', i18n ), value: '' },
+					{ label: __( 'Space', i18n ), value: 'space' },
+					{ label: __( 'Comma', i18n ), value: 'comma' },
+					{ label: __( 'Dash', i18n ), value: 'dash' },
+					{ label: __( 'Pipe', i18n ), value: 'pipe' },
+				] }
+				attribute="metaSeparator"
+			/>
+		</>
+	)
+} )
+
+// Add additional image options.
+addFilter( 'stackable.block-component.image.before', 'stackable/posts', output => {
+	const { name } = useBlockEditContext()
+	const {
+		getAttribute,
+		updateAttributeHandler,
+	} = useAttributeEditHandlers()
+
+	if ( name !== 'stackable/posts' ) {
+		return output
+	}
+
+	return (
+		<>
+			<AdvancedToggleControl
+				label={ __( 'Add post links to images', i18n ) }
+				attribute="imageHasLink"
+			/>
+			<ImageSizeControl
+				label={ __( 'Image Size', i18n ) }
+				value={ getAttribute( 'imageSize' ) }
+				onChange={ updateAttributeHandler( 'imageSize' ) }
+				default="full"
+				className="ugb--help-tip-image-size"
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Apply hover effect when container is hovered', i18n ) }
+				attribute="imageHoverStateInContainer"
+			/>
+		</>
+	)
+} )

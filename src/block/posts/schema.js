@@ -19,11 +19,6 @@ import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 
 const postsAttributes = {
-	// Design
-	design: {
-		type: 'string',
-		default: '',
-	},
 	// General.
 	columns: {
 		type: 'number',
@@ -90,6 +85,38 @@ const postsAttributes = {
 		default: '',
 	},
 
+	// Spacing.
+	imageSpacing: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	titleSpacing: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	categorySpacing: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	excerptSpacing: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	metaSpacing: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	readmoreSpacing: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+
 	// Misc.
 	authorShow: {
 		type: 'boolean',
@@ -110,6 +137,45 @@ const postsAttributes = {
 	metaSeparator: {
 		type: 'string',
 		default: '',
+	},
+
+	// Addition Typography Options.
+	titleHoverStateInContainer: {
+		type: 'boolean',
+		default: '',
+	},
+	categoryHoverStateInContainer: {
+		type: 'boolean',
+		default: '',
+	},
+	categoryHighlighted: {
+		type: 'boolean',
+		default: '',
+	},
+	categoryHighlightColor: {
+		stkHover: true,
+		type: 'string',
+		default: '',
+	},
+	excerptHoverStateInContainer: {
+		type: 'boolean',
+		default: '',
+	},
+	metaHoverStateInContainer: {
+		type: 'boolean',
+		default: '',
+	},
+	readmoreHoverStateInContainer: {
+		type: 'boolean',
+		default: '',
+	},
+	imageHoverStateInContainer: {
+		type: 'boolean',
+		default: '',
+	},
+	imageHasLink: {
+		type: 'boolean',
+		default: true,
 	},
 }
 
