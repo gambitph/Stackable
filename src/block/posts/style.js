@@ -15,6 +15,7 @@ import {
 	EffectsAnimations,
 	Image,
 	Typography,
+	FlexGapStyles,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType, useBlockStyle, getBlockStyle,
@@ -41,6 +42,11 @@ const hoverSelectorCallback = append => getAttribute =>
 		? `${ itemSelector }:hover ${ append }`
 		: `${ itemSelector } ${ append }:hover`
 const dependencies = [ 'hoverStateInContainer' ]
+
+const flexGapOptions = {
+	selector: '> .stk-block-posts__items',
+	enableColumnGap: false,
+}
 
 const containerDivOptions = {
 	backgroundSelector: itemSelector,
@@ -122,7 +128,6 @@ const getStyleParams = () => {
 			selector: '> .stk-block-posts__items',
 			styles: {
 				'--stk-column-gap': 'columnGap',
-				rowGap: 'rowGap',
 			},
 			format: '%spx',
 			responsive: 'all',
@@ -253,6 +258,7 @@ export const PostsStyles = props => {
 			<Typography.Style { ...propsToPass } options={ excerptTypographyOptions } />
 			<Typography.Style { ...propsToPass } options={ metaTypographyOptions } />
 			<Typography.Style { ...propsToPass } options={ readmoreTypographyOptions } />
+			<FlexGapStyles { ...propsToPass } options={ flexGapOptions } />
 			<StyleComponent
 				styles={ postsStyles }
 				versionAdded="3.0.0"
@@ -294,6 +300,7 @@ PostsStyles.Content = props => {
 			<Typography.Style.Content { ...propsToPass } options={ excerptTypographyOptions } />
 			<Typography.Style.Content { ...propsToPass } options={ metaTypographyOptions } />
 			<Typography.Style.Content { ...propsToPass } options={ readmoreTypographyOptions } />
+			<FlexGapStyles.Content { ...propsToPass } options={ flexGapOptions } />
 			<StyleComponent.Content
 				styles={ postsStyles }
 				versionAdded="3.0.0"

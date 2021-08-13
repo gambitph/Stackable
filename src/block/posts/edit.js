@@ -43,6 +43,7 @@ import {
 	BlockStyle,
 	Typography,
 	BlockLink,
+	FlexGapControls,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -131,24 +132,7 @@ const Edit = props => {
 						sliderMax={ 4 }
 						placeholder="2"
 					/>
-					<AdvancedRangeControl
-						label={ __( 'Column Gap', i18n ) }
-						allowRest={ true }
-						attribute="columnGap"
-						min="0"
-						placeholder=""
-						sliderMax="50"
-						responsive="all"
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Row Gap', i18n ) }
-						allowRest={ true }
-						attribute="rowGap"
-						min="0"
-						sliderMax="50"
-						responsive="all"
-						placeholder=""
-					/>
+					<FlexGapControls />
 					<SortControl
 						label={ __( 'Content Arrangement', i18n ) }
 						axis="y"

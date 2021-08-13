@@ -14,6 +14,7 @@ import {
 	Image,
 	Responsive,
 	Typography,
+	addFlexGapAttributes,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -25,19 +26,9 @@ const postsAttributes = {
 		default: '',
 		stkResponsive: true,
 	},
-	columnGap: {
-		type: 'number',
-		default: '',
-		stkResponsive: true,
-	},
 	contentOrder: {
 		type: 'array',
 		default: '',
-	},
-	rowGap: {
-		type: 'number',
-		default: '',
-		stkResponsive: true,
 	},
 	// Query.
 	numberOfItems: {
@@ -223,6 +214,8 @@ export const attributes = ( version = VERSION ) => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
+
+	addFlexGapAttributes( attrObject )
 
 	attrObject.addDefaultValues( {
 		attributes: {
