@@ -54,7 +54,8 @@ import { Placeholder, Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
-import { useMemo } from '@wordpress/element'
+import { useMemo, useEffect } from '@wordpress/element'
+import { useInstanceId } from '@wordpress/compose'
 
 const Edit = props => {
 	const {
@@ -64,6 +65,7 @@ const Edit = props => {
 	} = props
 
 	const {
+		stkQueryId,
 		imageSize,
 		type = 'post',
 		orderBy = 'date',
@@ -87,6 +89,8 @@ const Edit = props => {
 		posts, isRequesting, hasPosts,
 	} = usePostsQuery( attributes )
 
+	const instanceId = useInstanceId( Edit )
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-posts',
@@ -109,6 +113,15 @@ const Edit = props => {
 	)
 
 	const editorPostItems = useMemo( () => generateRenderPostItem( attributes ), [ attributes ] )
+
+	useEffect( () => {
+		// Set a unique instance ID for the posts block.
+		// This is used to give unique identifier to our
+		// queries.
+		if ( ! stkQueryId ) {
+			setAttributes( { stkQueryId: instanceId } )
+		}
+	}, [ stkQueryId, instanceId ] )
 
 	return (
 		<>

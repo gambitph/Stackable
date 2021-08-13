@@ -4,6 +4,63 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
+	/**
+	 * Query generator for 'stackable/posts' block.
+	 *
+	 * @since 3.0.0
+	 * @param WP_Query | array $blockOrAttribute
+	 * @param string | number $page
+	 *
+	 * @return array post query which will be used for WP_Query.
+	 */
+	function generate_post_query_from_stackable_posts_block( $blockOrAttribute ) {
+		$is_wp_block = ! is_array( $blockOrAttribute ) && get_class( $blockOrAttribute ) === 'WP_Block';
+		/**
+		 * If the passed object is an instance of 
+		 * WP_Block, it is assumed that the block
+		 * uses the provided context of the posts block.
+		 *
+		 * Otherwise, the block using this function
+		 * is a posts block, and the passed object is
+		 * an attribute object.
+		 */
+		$context = Stackable_Posts_Block::generate_defaults( $is_wp_block ? $blockOrAttribute->context : $blockOrAttribute );
+		$post_query = array(
+				'post_type' => $context['type'],
+				'post_status' => 'publish',
+				'order' => $context['order'],
+				'orderby' => $context['orderBy'],
+				'numberposts' => $context['numberOfItems'],
+				'suppress_filters' => false,
+		);
+
+		if ( ! empty( $context['taxonomy'] ) && ! empty( $context['taxonomyType'] ) ) {
+			// Categories.
+			if ( $context['taxonomyType'] === 'category' ) {
+				$post_query[ 'category' . $context['taxonomyFilterType'] ] = explode( ',', $context['taxonomy'] );
+			// Tags.
+			} else if ( $context['taxonomyType'] === 'post_tag' ) { $post_query[ 'tag' . $context['taxonomyFilterType'] ] = explode( ',', $context['taxonomy'] );
+			// Custom taxonomies.
+			} else {
+				$post_query['tax_query'] = array(
+					array(
+						'taxonomy' => $context['taxonomyType'],
+						'field' => 'term_id',
+						'terms' => explode( ',', $context['taxonomy'] ),
+						'operator' => $context['taxonomyFilterType'] === '__in' ? 'IN' : 'NOT IN',
+					),
+				);
+			}
+		}
+
+		return apply_filters( 'stackable/posts/post_query',
+			$post_query,
+			$context,
+		);
+	}
+}
+
 if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 	class Stackable_Posts_Block {
 
@@ -69,48 +126,6 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			return $out;
 		}
 
-		/***
-		 * Query generator. Given an object of
-		 * attributes, create a post query.
-		 *
-		 * @param array $attributes
-		 * @return array post query
-		 */
-		public static function generate_query( $attributes ) {
-			$post_query = array(
-					'post_type' => $attributes['type'],
-					'post_status' => 'publish',
-					'order' => $attributes['order'],
-					'orderby' => $attributes['orderBy'],
-					'numberposts' => $attributes['numberOfItems'],
-					'suppress_filters' => false,
-			);
-
-			if ( ! empty( $attributes['taxonomy'] ) && ! empty( $attributes['taxonomyType'] ) ) {
-				// Categories.
-				if ( $attributes['taxonomyType'] === 'category' ) {
-					$post_query[ 'category' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
-				// Tags.
-				} else if ( $attributes['taxonomyType'] === 'post_tag' ) { $post_query[ 'tag' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
-				// Custom taxonomies.
-				} else {
-					$post_query['tax_query'] = array(
-						array(
-							'taxonomy' => $attributes['taxonomyType'],
-							'field' => 'term_id',
-							'terms' => explode( ',', $attributes['taxonomy'] ),
-							'operator' => $attributes['taxonomyFilterType'] === '__in' ? 'IN' : 'NOT IN',
-						),
-					);
-				}
-			}
-
-			return apply_filters( 'stackable/posts/post_query',
-				$post_query,
-				$attributes,
-			);
-		}
-
 		/**
 		 * Modify the register_options of the 
 		 * posts block.
@@ -169,7 +184,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			$category_highlighted = $attributes[ 'categoryHighlighted' ];
 
 			$posts = '';
-			$recent_posts = wp_get_recent_posts( self::generate_query( $attributes ) );
+			$recent_posts = wp_get_recent_posts( generate_post_query_from_stackable_posts_block( $attributes ) );
 
 			foreach ( $recent_posts as $post ) {
 				$new_template = $template;

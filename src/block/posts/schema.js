@@ -21,6 +21,9 @@ import { version as VERSION } from 'stackable'
 
 const postsAttributes = {
 	// General.
+	stkQueryId: {
+		type: 'number',
+	},
 	columns: {
 		type: 'number',
 		default: '',
