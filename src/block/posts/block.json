@@ -18,8 +18,7 @@
 		"postOffset": "postOffset",
 		"postExclude": "postExclude",
 		"postInclude": "postInclude",
-		"numberOfItems": "numberOfItems",
-		"queryId": "uniqueId"
+		"numberOfItems": "numberOfItems"
 	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks"
 }
