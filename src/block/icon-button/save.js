@@ -9,6 +9,7 @@ import {
 	CustomCSS,
 	Button,
 	getResponsiveClasses,
+	CustomAttributes,
 } from '~stackable/block-components'
 
 /**
@@ -23,24 +24,35 @@ import { IconButtonStyles } from './style'
 
 export const Save = props => {
 	const {
+		className,
 		...propsToPass
 	} = props
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
+	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockClassNames = classnames( [
-		props.className,
+		className,
 		'stk-block-icon-button',
 		responsiveClass,
 	] )
 
 	return (
-		<BlockDiv.Content className={ blockClassNames } attributes={ props.attributes }>
+		<BlockDiv.Content
+			className={ blockClassNames }
+			attributes={ props.attributes }
+			applyAdvancedAttributes={ false }
+			applyCustomAttributes={ false }
+		>
 			<IconButtonStyles.Content { ...propsToPass } />
 			<CustomCSS.Content attributes={ props.attributes } />
 			<Button.Content
 				{ ...propsToPass }
 				attributes={ props.attributes }
+				buttonProps={ {
+					id: props.attributes.anchor || undefined,
+					...customAttributes,
+				} }
 			>
 			</Button.Content>
 		</BlockDiv.Content>

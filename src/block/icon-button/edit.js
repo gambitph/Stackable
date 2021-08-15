@@ -43,6 +43,7 @@ const Edit = props => {
 	} = props
 
 	const blockHoverClass = useBlockHoverClass()
+	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
@@ -79,8 +80,17 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-icon-button" />
 
 			<Linking show={ isHovered } />
-			<BlockDiv className={ blockClassNames }>
-				<Button />
+			<BlockDiv
+				className={ blockClassNames }
+				applyAdvancedAttributes={ false }
+				applyCustomAttributes={ false }
+			>
+				<Button
+					buttonProps={ {
+						id: props.attributes.anchor || undefined,
+						...customAttributes,
+					} }
+				/>
 			</BlockDiv>
 		</>
 	)

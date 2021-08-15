@@ -95,4 +95,27 @@ export const blockStyles = [
 			return willSetAttributes
 		},
 	},
+	{
+		name: 'link',
+		label: __( 'Link', i18n ),
+		onSelect: () => {
+			let willSetAttributes = {}
+
+			willSetAttributes.buttonBackgroundColorType = ''
+			willSetAttributes.buttonBorderType = ''
+
+			states.forEach( state => {
+				willSetAttributes = {
+					...willSetAttributes,
+					[ getAttributeName( 'buttonBackgroundColor', state ) ]: '',
+					[ getAttributeName( 'buttonBorderType', state ) ]: '',
+					[ getAttributeName( 'iconColor1', state ) ]: '',
+					[ getAttributeName( 'textColor1', state ) ]: '',
+					[ getAttributeName( 'buttonBackgroundColor', state ) ]: '',
+				}
+			} )
+
+			return willSetAttributes
+		},
+	},
 ]

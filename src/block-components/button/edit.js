@@ -11,7 +11,7 @@ import {
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	useAttributeEditHandlers, useBlockHoverState,
+	useAttributeEditHandlers, useBlockContext, useBlockHoverState,
 } from '~stackable/hooks'
 
 /**
@@ -25,6 +25,7 @@ import { __, sprintf } from '@wordpress/i18n'
 import { BorderControls } from '../helpers/borders'
 import { Link as _Link } from '../link'
 import { Icon as _Icon } from '../icon'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Icon = props => (
 	<_Icon.InspectorControls
@@ -214,9 +215,13 @@ export const Edit = props => {
 		borderRadiusPlaceholder,
 	} = props
 
+	const { parentBlock } = useBlockContext()
+
+	const enableLink = applyFilters( 'stackable.edit.button.enable-link', true, parentBlock )
+
 	return (
 		<>
-			<Link />
+			{ enableLink && <Link /> }
 			<Colors hasTextColor={ hasTextColor } />
 			<Size />
 			<Borders

@@ -90,25 +90,31 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-.stk-block {
-	.stk-button {
-		background: cssvar(button-background-color);
-		padding: cssvar(button-padding);
+:is(.stk-block-button, .stk-block-icon-button) {
+	&:not(.is-style-link) {
+		.stk-button {
+			background: cssvar(button-background-color);
+			padding: cssvar(button-padding);
 
-		// Adjust icon color and icon size.
-		#{ '--stk-icon-color' }: cssvar(button-text-color);
-		--stk-icon-size: 1em;
+			// Adjust icon color and icon size.
+			#{ '--stk-icon-color' }: cssvar(button-text-color);
 
-		.stk--inner-svg {
-			color: cssvar(button-text-color);
-		}
+			.stk--inner-svg {
+				color: cssvar(button-text-color);
+			}
 
-		> .stk-button__inner-text {
-			color: cssvar(button-text-color);
-			&:hover {
-				color: cssvar(button-text-color); // Override theme's hover text color.
+			> .stk-button__inner-text {
+				color: cssvar(button-text-color);
+				&:hover {
+					color: cssvar(button-text-color); // Override theme's hover text color.
+				}
 			}
 		}
+	}
+
+	.stk-button {
+		// Adjust icon color and icon size.
+		--stk-icon-size: 1em;
 	}
 
 	// Ghost button color.

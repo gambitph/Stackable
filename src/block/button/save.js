@@ -11,6 +11,7 @@ import {
 	Button,
 	Typography,
 	getResponsiveClasses,
+	CustomAttributes,
 } from '~stackable/block-components'
 
 /**
@@ -25,15 +26,17 @@ import { ButtonStyles } from './style'
 
 export const Save = props => {
 	const {
+		className,
 		...propsToPass
 	} = props
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
+	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 
 	const blockClassNames = classnames( [
-		props.className,
+		className,
 		'stk-block-button',
 		responsiveClass,
 	] )
@@ -44,12 +47,21 @@ export const Save = props => {
 	] )
 
 	return (
-		<BlockDiv.Content className={ blockClassNames } attributes={ props.attributes }>
+		<BlockDiv.Content
+			className={ blockClassNames }
+			attributes={ props.attributes }
+			applyAdvancedAttributes={ false }
+			applyCustomAttributes={ false }
+		>
 			<ButtonStyles.Content { ...propsToPass } />
 			<CustomCSS.Content attributes={ props.attributes } />
 			<Button.Content
 				{ ...propsToPass }
 				attributes={ props.attributes }
+				buttonProps={ {
+					id: props.attributes.anchor || undefined,
+					...customAttributes,
+				} }
 			>
 				<Typography.Content
 					attributes={ props.attributes }
