@@ -32,32 +32,28 @@ import { useBlockHoverClass } from '~stackable/hooks'
 
 const ALLOWED_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
-	[ 'stackable/column', { templateLock: true }, [
-		[ 'stackable/container', { hasContainer: true }, [
-			[ 'stackable/heading', {
-				text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+	[ 'stackable/column', { templateLock: true, hasContainer: true }, [
+		[ 'stackable/heading', {
+			text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+		} ],
+		[ 'stackable/price', {} ],
+		[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
+		[ 'stackable/button-group', {}, [
+			[ 'stackable/button', {
+				text: 'Button',
 			} ],
-			[ 'stackable/price', {} ],
-			[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
-			[ 'stackable/button-group', {}, [
-				[ 'stackable/button', {
-					text: 'Button',
-				} ],
-			] ],
 		] ],
 	] ],
-	[ 'stackable/column', { templateLock: true }, [
-		[ 'stackable/container', { hasContainer: true }, [
-			[ 'stackable/heading', {
-				text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+	[ 'stackable/column', { templateLock: true, hasContainer: true }, [
+		[ 'stackable/heading', {
+			text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+		} ],
+		[ 'stackable/price', {} ],
+		[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
+		[ 'stackable/button-group', {}, [
+			[ 'stackable/button', {
+				text: 'Button',
 			} ],
-			[ 'stackable/price', {} ],
-			[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
-			[ 'stackable/button-group', {}, [
-				[ 'stackable/button', {
-					text: 'Button',
-				} ],
-			] ],
 		] ],
 	] ],
 ]

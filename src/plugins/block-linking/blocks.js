@@ -16,7 +16,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/card-group': {},
 		'stackable/column': {},
 		'stackable/columns': {},
-		'stackable/container': {},
+		'stackable/expand': {},
 		'stackable/feature': {},
 		'stackable/feature-grid': {},
 		'stackable/hero': {},

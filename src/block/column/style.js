@@ -10,6 +10,7 @@ import {
 	Alignment,
 	BlockDiv,
 	Column,
+	ContainerDiv,
 	EffectsAnimations,
 } from '~stackable/block-components'
 import {
@@ -25,6 +26,12 @@ import {
 	Fragment, renderToString,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+
+const containerDivOptions = {
+	sizeSelector: '.stk-column__content',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeHorizontalAlignRule: 'alignSelf',
+}
 
 const getStyleParams = () => {
 	return [
@@ -83,6 +90,7 @@ const BlockStyles = props => {
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
+			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<StyleComponent
@@ -112,6 +120,7 @@ BlockStyles.Content = props => {
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Column.Style.Content { ...propsToPass } />
+			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
