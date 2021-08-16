@@ -219,7 +219,7 @@
 }
 
 // Buttons.
-:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination, .stk-block-load-more, .stk-block-posts) {
 	&:not(.is-style-link) {
 		.stk-button {
 			justify-content: center;
