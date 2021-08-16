@@ -23,7 +23,7 @@
 	}
 
 	&__item {
-		// We need this to make advanced position works.
+		// We need this to make advanced position work.
 		position: relative;
 		// Generate a flex basis value based on the number of columns.
 		flex-basis: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
