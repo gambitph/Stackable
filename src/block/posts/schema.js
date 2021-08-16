@@ -70,6 +70,10 @@ const postsAttributes = {
 		type: 'string',
 		default: '',
 	},
+	excludeCurrentPost: {
+		type: 'boolean',
+		default: '',
+	},
 	postInclude: {
 		type: 'string',
 		default: '',

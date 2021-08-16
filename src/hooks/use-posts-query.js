@@ -28,6 +28,7 @@ export const usePostsQuery = attributes => {
 		postExclude,
 		postInclude,
 		numberOfItems = 6,
+		excludeCurrentPost,
 	} = attributes
 
 	return useSelect( select => {
@@ -85,5 +86,6 @@ export const usePostsQuery = attributes => {
 		postExclude,
 		postInclude,
 		numberOfItems,
+		excludeCurrentPost,
 	] )
 }

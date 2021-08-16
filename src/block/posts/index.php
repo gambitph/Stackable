@@ -108,6 +108,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				'readmoreText' => __( 'Continue Reading', STACKABLE_I18N ),
 				'metaSeparator' => 'dot',
 				'categoryHighlighted' => false,
+				'excludeCurrentPost' => false,
 			);
 
 			$out = array();
