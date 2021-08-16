@@ -219,38 +219,39 @@
 }
 
 // Buttons.
-.stk-block {
-	.stk-button {
-		justify-content: center;
-		display: flex;
-		align-items: center;
-		column-gap: 8px;
-		text-decoration: none;
-		position: relative;
+:is(.stk-block-button, .stk-block-icon-button) {
+	&:not(.is-style-link) {
+		.stk-button {
+			justify-content: center;
+			display: flex;
+			align-items: center;
+			column-gap: 8px;
+			text-decoration: none;
 
-		&::before,
-		&::after {
-			content: "";
-			position: absolute;
-			inset: 0;
-			height: 100%;
-			width: 100%;
-			pointer-events: none;
-			border-radius: inherit;
-		}
+			&::before,
+			&::after {
+				content: "";
+				position: absolute;
+				inset: 0;
+				height: 100%;
+				width: 100%;
+				pointer-events: none;
+				border-radius: inherit;
+			}
 
-		&::before {
-			// Borders should be on top of the ::after pseudoelement.
-			z-index: 2;
-		}
+			&::before {
+				// Borders should be on top of the ::after pseudoelement.
+				z-index: 2;
+			}
 
-		&::after {
-			opacity: 0;
-			z-index: 1;
-		}
+			&::after {
+				opacity: 0;
+				z-index: 1;
+			}
 
-		> * {
-			z-index: 2;
+			> * {
+				z-index: 2;
+			}
 		}
 	}
 

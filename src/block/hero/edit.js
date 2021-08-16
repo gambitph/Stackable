@@ -38,7 +38,7 @@ import { useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/heading', { text: __( 'Header' ) } ],
+	[ 'stackable/heading', { text: __( 'Hero Section' ) } ],
 	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
 	[ 'stackable/button-group', {}, [
 		[ 'stackable/button', { text: 'Button' } ],
@@ -56,7 +56,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-header',
+		'stk-block-hero',
 		blockHoverClass,
 	] )
 
@@ -64,7 +64,7 @@ const Edit = props => {
 		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-header__content',
+		'stk-block-hero__content',
 	] )
 
 	const renderAppender = useCallback(
@@ -83,7 +83,7 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-header" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-hero" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
@@ -91,7 +91,7 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-block-header" />
+				<CustomCSS mainBlockClass="stk-block-hero" />
 
 				<ContainerDiv className={ contentClassNames }>
 					<InnerBlocks

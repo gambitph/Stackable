@@ -39,9 +39,10 @@ $stk_wrapper_block_folders = array(
 	'column',
 	'columns',
 	'container',
+	'expand',
 	'feature',
 	'feature-grid',
-	'header',
+	'hero',
 	'icon-box',
 	'icon-label',
 	'notification',
@@ -108,7 +109,7 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 				// This automatically enqueues all our styles and scripts.
 				array(
 					'style' => 'ugb-style-css', // Frontend styles.
-					'script' => 'ugb-block-frontend-js', // Frontend scripts.
+					// 'script' => 'ugb-block-frontend-js', // Frontend scripts.
 					'editor_script' => 'ugb-block-js', // Editor scripts.
 					'editor_style' => 'ugb-block-editor-css', // Editor styles.
 				),

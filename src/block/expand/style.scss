@@ -1,0 +1,16 @@
+@import "common";
+
+.stk-block-expand {
+	> .stk-inner-blocks.stk-block-content {
+		display: block;
+	}
+	.stk-block-button {
+		display: inline-block;
+	}
+	[aria-hidden="true"] {
+		display: none !important;
+		+ .stk-block-button {
+			display: none;
+		}
+	}
+}

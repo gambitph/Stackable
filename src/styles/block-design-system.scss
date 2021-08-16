@@ -95,24 +95,33 @@
 		column-gap: cssvar(button-column-gap);
 		row-gap: cssvar(button-row-gap);
 	}
-	.stk-button {
-		background: cssvar(button-background-color);
-		padding: cssvar(button-padding);
+}
 
-		// Adjust icon color and icon size.
-		#{ '--stk-icon-color' }: cssvar(button-text-color);
-		--stk-icon-size: 1em;
+:is(.stk-block-button, .stk-block-icon-button) {
+	&:not(.is-style-link) {
+		.stk-button {
+			background: cssvar(button-background-color);
+			padding: cssvar(button-padding);
 
-		.stk--inner-svg {
-			color: cssvar(button-text-color);
-		}
+			// Adjust icon color and icon size.
+			#{ '--stk-icon-color' }: cssvar(button-text-color);
 
-		> .stk-button__inner-text {
-			color: cssvar(button-text-color);
-			&:hover {
-				color: cssvar(button-text-color); // Override theme's hover text color.
+			.stk--inner-svg {
+				color: cssvar(button-text-color);
+			}
+
+			> .stk-button__inner-text {
+				color: cssvar(button-text-color);
+				&:hover {
+					color: cssvar(button-text-color); // Override theme's hover text color.
+				}
 			}
 		}
+	}
+
+	.stk-button {
+		// Adjust icon color and icon size.
+		--stk-icon-size: 1em;
 	}
 
 	// Ghost button color.

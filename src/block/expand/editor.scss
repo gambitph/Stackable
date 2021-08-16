@@ -1,0 +1,53 @@
+@import "common";
+
+.stk-block-expand__short-text,
+.stk-block-expand__more-text {
+	margin-bottom: cssvar(block-margin-bottom) !important;
+}
+
+[data-type="stackable/expand"] {
+	.stk-block-expand__short-text,
+	.stk-block-expand__more-text {
+		&::before {
+			display: none;
+			font-size: 12px;
+			text-transform: uppercase;
+			font-weight: 600;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+			color: #8e979e;
+			border: none;
+			box-shadow: none;
+			white-space: nowrap;
+			position: absolute;
+			bottom: 100%;
+		}
+	}
+	[data-type="stackable/text"]:nth-child(3) {
+		margin-top: 50px;
+	}
+	[data-type="stackable/button"] {
+		width: auto;
+		display: inline-block;
+	}
+	[data-type="stackable/text"]:nth-child(3),
+	[data-type="stackable/button"]:nth-child(4) {
+		display: none;
+	}
+}
+[data-type="stackable/expand"]:is(.has-child-selected, .is-selected) {
+	.stk-block-expand__short-text,
+	.stk-block-expand__more-text {
+		&::before {
+			display: block;
+		}
+	}
+	[aria-hidden="true"] {
+		display: block !important;
+	}
+	[data-type="stackable/text"]:nth-child(3) {
+		display: block !important;
+	}
+	[data-type="stackable/button"]:nth-child(4) {
+		display: inline-block !important;
+	}
+}

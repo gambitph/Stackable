@@ -56,7 +56,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-header',
+		'stk-block-call-to-action',
 		blockHoverClass,
 	] )
 
@@ -64,7 +64,7 @@ const Edit = props => {
 		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-header__content',
+		'stk-block-call-to-action__content',
 	] )
 
 	const renderAppender = useCallback(
@@ -83,7 +83,7 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-header" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-call-to-action" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
@@ -91,7 +91,7 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-block-header" />
+				<CustomCSS mainBlockClass="stk-block-call-to-action" />
 
 				<ContainerDiv className={ contentClassNames }>
 					<InnerBlocks

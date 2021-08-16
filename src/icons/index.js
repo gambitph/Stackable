@@ -17,7 +17,7 @@ import SVGDividerIcon from './images/divider-icon.svg'
 import SVGExpandIcon from './images/expand-icon.svg'
 import SVGFeatureGridIcon from './images/feature-grid-icon.svg'
 import SVGFeatureIcon from './images/feature-icon.svg'
-import SVGHeaderIcon from './images/header-icon.svg'
+import SVGHeroIcon from './images/hero-icon.svg'
 import SVGHeadingIcon from './images/heading-icon.svg'
 import SVGIconIcon from './images/icon-icon.svg'
 import SVGIconButtonIcon from './images/icon-button-icon.svg'
@@ -150,8 +150,8 @@ export const FeatureIcon = () => {
 	return colorizeIcon( <SVGFeatureIcon width="20" height="20" /> )
 }
 
-export const HeaderIcon = () => {
-	return colorizeIcon( <SVGHeaderIcon width="20" height="20" /> )
+export const HeroIcon = () => {
+	return colorizeIcon( <SVGHeroIcon width="20" height="20" /> )
 }
 
 export const HeadingIcon = () => {

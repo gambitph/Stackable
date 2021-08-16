@@ -1,0 +1,10 @@
+{
+	"name": "stackable/hero",
+	"title": "Hero",
+	"description": "A large hero area. Typically used at the very top of a page.",
+	"category": "layout",
+	"keywords": [
+		"Header"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

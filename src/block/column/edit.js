@@ -35,6 +35,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	BlockLink,
+	ContainerDiv,
 } from '~stackable/block-components'
 
 /**
@@ -50,7 +51,7 @@ import { __ } from '@wordpress/i18n'
 const TEMPLATE = []
 
 const Edit = props => {
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, isOnlyBlock } = useBlockContext()
 
 	const {
 		className,
@@ -115,16 +116,17 @@ const Edit = props => {
 						defaultLocked={ true }
 						min={ [ 0, 0 ] }
 						sliderMax={ [ 200, 30 ] }
-						placeholder="12"
+						placeholder={ isOnlyBlock ? '0' : '12' }
 						className="ugb--help-tip-advanced-block-paddings"
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<Column showHandle={ isHovered }>
 				<Linking show={ isHovered } />
 				<BlockDiv className={ blockClassNames }>
-					<div className={ contentClassNames }>
+					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks
 							template={ TEMPLATE }
 							templateLock={ props.attributes.templateLock || false }
@@ -132,7 +134,7 @@ const Edit = props => {
 							renderAppender={ renderAppender }
 							templateInsertUpdatesSelection={ true }
 						/>
-					</div>
+					</ContainerDiv>
 				</BlockDiv>
 			</Column>
 		</Fragment>

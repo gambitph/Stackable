@@ -21,7 +21,7 @@ export const BlockDiv = props => {
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
-	const customAttributes = CustomAttributes.getCustomAttributes( attributes )
+	const customAttributes = props.applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
 
 	const classNames = classnames( [
 		props.className,
@@ -37,6 +37,7 @@ export const BlockDiv = props => {
 		{ ...props }
 		{ ...customAttributes }
 		className={ classNames }
+		id={ props.applyAdvancedAttributes && ( attributes.anchor || undefined ) }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
@@ -50,6 +51,8 @@ export const BlockDiv = props => {
 
 BlockDiv.defaultProps = {
 	className: '',
+	applyCustomAttributes: true,
+	applyAdvancedAttributes: true,
 }
 
 BlockDiv.Content = props => {
@@ -60,7 +63,7 @@ BlockDiv.Content = props => {
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
-	const customAttributes = CustomAttributes.getCustomAttributes( attributes )
+	const customAttributes = props.applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
 
 	const classNames = classnames( [
 		props.className,
@@ -76,6 +79,7 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
+		id={ props.applyAdvancedAttributes && ( attributes.anchor || undefined ) }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
@@ -90,6 +94,8 @@ BlockDiv.Content = props => {
 BlockDiv.Content.defaultProps = {
 	className: '',
 	attributes: {},
+	applyCustomAttributes: true,
+	applyAdvancedAttributes: true,
 }
 
 BlockDiv.InspectorControls = Edit

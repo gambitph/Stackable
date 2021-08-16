@@ -48,6 +48,7 @@ const Edit = props => {
 	} = props
 
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
+	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 
@@ -89,8 +90,17 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-button" />
 
 			<Linking show={ isHovered } />
-			<BlockDiv className={ blockClassNames }>
-				<Button>
+			<BlockDiv
+				className={ blockClassNames }
+				applyAdvancedAttributes={ false }
+				applyCustomAttributes={ false }
+			>
+				<Button
+					buttonProps={ {
+						id: props.attributes.anchor || undefined,
+						...customAttributes,
+					} }
+				>
 					<Typography
 						tagName="span"
 						className={ typographyInnerClassNames }

@@ -11,6 +11,7 @@ import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
+	ContainerDiv,
 	CustomCSS,
 	getAlignmentClasses,
 	getColumnClasses,
@@ -57,10 +58,13 @@ export const Save = props => {
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<div className={ contentClassNames }>
+			<ContainerDiv.Content
+				className={ contentClassNames }
+				attributes={ attributes }
+			>
 				<InnerBlocks.Content />
 				<BlockLink.Content attributes={ attributes } />
-			</div>
+			</ContainerDiv.Content>
 		</BlockDiv.Content>
 	)
 }

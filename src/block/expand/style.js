@@ -1,36 +1,27 @@
 /**
+ * Internal dependencies
+ */
+
+/**
  * External dependencies
  */
 import {
-	BlockDiv,
-	Alignment,
 	Advanced,
+	Alignment,
+	BlockDiv,
+	Column,
 	EffectsAnimations,
-	ContainerDiv,
-	MarginBottom,
 } from '~stackable/block-components'
 import {
-	useDeviceType, useBlockAttributes,
+	useBlockAttributes, useDeviceType,
 } from '~stackable/hooks'
 import {
 	getUniqueBlockClass,
 } from '~stackable/util'
-
-/**
- * WordPress dependencies
- */
-import {
-	Fragment, renderToString,
-} from '@wordpress/element'
+import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const containerDivOptions = {
-	sizeSelector: '.stk-block-header__content',
-	sizeVerticalAlignRule: 'justifyContent',
-	sizeHorizontalAlignRule: 'alignSelf',
-}
-
-export const ContainerStyles = props => {
+const BlockStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -44,42 +35,42 @@ export const ContainerStyles = props => {
 	propsToPass.attributes = { ...attributes, clientId }
 
 	return (
-		<Fragment>
+		<>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
+			<Column.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
-			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
-			<MarginBottom.Style { ...propsToPass } />
-		</Fragment>
+		</>
 	)
 }
 
-ContainerStyles.defaultProps = {
+BlockStyles.defaultProps = {
 	isEditor: false,
 }
 
-ContainerStyles.Content = props => {
+BlockStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 
-	const styles = (
-		<Fragment>
+	const stylesToRender = (
+		<>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
+			<Column.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
-			<MarginBottom.Style.Content { ...propsToPass } />
-		</Fragment>
+			<Advanced.Style.Content { ...propsToPass } />
+		</>
 	)
 
-	return renderToString( styles ) ? <style>{ styles }</style> : null
+	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
-ContainerStyles.Content.defaultProps = {
+BlockStyles.Content.defaultProps = {
 	attributes: {},
 }
+
+export default BlockStyles

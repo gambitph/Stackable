@@ -1,20 +1,18 @@
 /**
  * Internal dependencies
  */
-import { ContainerStyles } from './style'
+import BlockStyles from './style'
 
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
-import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { withVersion } from '~stackable/higher-order'
+import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
-	ContainerDiv,
-	BlockLink,
-	getAlignmentClasses,
 	CustomCSS,
+	getAlignmentClasses,
 	getResponsiveClasses,
 } from '~stackable/block-components'
 
@@ -27,23 +25,22 @@ import { compose } from '@wordpress/compose'
 export const Save = props => {
 	const {
 		attributes,
-		className,
 	} = props
 
-	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const responsiveClass = getResponsiveClasses( attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const responsiveClass = getResponsiveClasses( props.attributes )
 
 	const blockClassNames = classnames( [
-		className,
-		'stk-block-call-to-action',
+		props.className,
+		'stk-block-expand',
 		responsiveClass,
 	] )
 
 	const contentClassNames = classnames( [
-		'stk-block-content',
+		// rowClass,
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-call-to-action__content',
+		'stk-block-content',
 	] )
 
 	return (
@@ -51,15 +48,11 @@ export const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<ContainerStyles.Content version={ props.version } attributes={ attributes } />
+			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<ContainerDiv.Content
-				className={ contentClassNames }
-				attributes={ attributes }
-			>
+			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
-				<BlockLink.Content attributes={ attributes } />
-			</ContainerDiv.Content>
+			</div>
 		</BlockDiv.Content>
 	)
 }
