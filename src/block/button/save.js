@@ -59,6 +59,7 @@ export const Save = props => {
 				{ ...propsToPass }
 				attributes={ props.attributes }
 				buttonProps={ {
+					tagName: props.attributes.linkTag,
 					id: props.attributes.anchor || undefined,
 					...customAttributes,
 				} }

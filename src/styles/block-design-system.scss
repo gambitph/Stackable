@@ -97,7 +97,7 @@
 	}
 }
 
-:is(.stk-block-button, .stk-block-icon-button) {
+:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 	&:not(.is-style-link) {
 		.stk-button {
 			background: cssvar(button-background-color);

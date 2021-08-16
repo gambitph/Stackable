@@ -4,6 +4,135 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
+	/**
+	 * Given a post array, attributes,
+	 * and a template, generate a post
+	 * item markup
+	 *
+	 * @param array $post
+	 * @param array $attribute
+	 * @param string $template
+	 *
+	 * @return string the generated markup
+	 */
+
+	function generate_render_item_from_stackable_posts_block( $post, $attributes, $template ) {
+		$image_size = $attributes['imageSize'];
+		$excerpt_length = $attributes['excerptLength'];
+		$readmore_text = $attributes['readmoreText'];
+		$meta_separator = $attributes['metaSeparator'];
+		$category_highlighted = $attributes['categoryHighlighted'];
+
+		$new_template = $template;
+		// Featured Image.
+		$featured_image = '';
+		$post_id = $post['ID'];
+		$featured_image_id = get_post_thumbnail_id( $post_id );
+
+		if ( ! empty( $featured_image_id ) ) {
+			$featured_image_urls = Stackable_Posts_Block::get_featured_image_urls( $featured_image_id );
+			$featured_image_src = $featured_image_urls[ $image_size ];
+			if ( ! empty( $featured_image_src ) ) {
+				$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
+				$thumbnail = get_the_post_thumbnail(
+					$post_id,
+					$image_size,
+					array(
+						'alt' => esc_attr( ! empty( $image_alt ) ? $image_alt : '' ),
+						'width' => esc_attr( $featured_image_src[1] ),
+						'height' => esc_attr( $featured_image_src[2] ),
+					)
+				);
+
+				// Get the image tag in the thumbnail markup.
+				preg_match( "/<img[^\>]*>/", $thumbnail, $match );
+
+				// Remove the built in style attribute in the image.
+				if ( is_array( $match ) && count( $match ) > 0 ) {
+					// Only remove the style tag inside the image tag.
+					$new_img = preg_replace( '/style=\"[^\"]*\"\s?/', "", $match[ 0 ] );
+					$featured_image = preg_replace( "/<img[^\>]*>/", $new_img, $thumbnail );
+				}
+			}
+		}
+
+		// If the featured_image is empty, remove the markup.
+		if ( empty( $featured_image ) ) {
+			$new_template = preg_replace( '/<figure[^>]*>(.*)<\/figure>/', '', $new_template );
+		} else {
+			$new_template = preg_replace( '/<img[^>]*>/', $featured_image, $new_template );
+		}
+
+		// Title.
+		$title = get_the_title( $post_id );
+		if ( ! $title ) {
+			$title = __( '(Untitled)', STACKABLE_I18N );
+		}
+		$new_template = str_replace( '!#title!#', $title, $new_template );
+
+		// Category.
+		$category = get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id );
+		if ( $category_highlighted ) {
+			preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
+			foreach ( $matches[0] as $i=>$match ) {
+				$href = $matches[1][$i];
+				$category_title = $matches[2][$i];
+				$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
+				$category = str_replace( $category_title, "<span class=\"stk-button__inner-text\">$category_title</span>", $category );
+			}
+		}
+
+		$new_template = str_replace( '!#category!#', $category, $new_template );
+
+		// Separator.
+		$separator = Stackable_Posts_Block::meta_separators[ $meta_separator ];
+		$new_template = str_replace( '!#metaSeparator!#', $separator, $new_template );
+		// Author.
+		$author = esc_html( get_the_author_meta( 'display_name', $post['post_author'] ) );
+		$new_template = str_replace( '!#authorName!#', $author, $new_template );
+
+		// Date.
+		$datetime = get_the_date( 'c', $post_id );
+		$date = get_the_date( '', $post_id );
+		$new_template = str_replace( '!#dateTime!#', $datetime, $new_template );
+		$new_template = str_replace( '!#date!#', $date, $new_template );
+
+		// Comments.
+		$num = get_comments_number( $post_id );
+		$num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
+		$new_template = str_replace( '!#commentsNum!#', $num, $new_template );
+
+		// Excerpt.
+		$excerpt = Stackable_Posts_Block::get_excerpt( $post_id, $post );
+
+		// Trim the excerpt.
+		if ( ! empty( $excerpt ) ) {
+			$excerpt = explode( ' ', $excerpt );
+			$trim_to_length = (int) $excerpt_length;
+			if ( count( $excerpt ) > $trim_to_length ) {
+				$excerpt = implode( ' ', array_slice( $excerpt, 0, $trim_to_length ) ) . '...';
+			} else {
+				$excerpt = implode( ' ', $excerpt );
+			}
+
+			$excerpt = wp_kses_post( $excerpt );
+			$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
+		} else {
+			// If the excerpt is empty, remove the markup.
+			$new_template = preg_replace( '/<div class="stk-block-posts__excerpt">!#excerpt!#<\/div>/', '', $new_template );
+		}
+
+		// Post Link.
+		$new_template = str_replace( '!#postLink!#', esc_url( get_permalink( $post_id ) ), $new_template );
+
+		// Read More Link.
+		$new_template = str_replace( '!#readmoreText!#', esc_html( $readmore_text ), $new_template );
+
+		return $new_template;
+	}
+}
+
 if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 	/**
 	 * Query generator for 'stackable/posts' block.
@@ -64,7 +193,7 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 	class Stackable_Posts_Block {
 
-		public $meta_separators = array(
+		const meta_separators = array(
 			'dot' => '·',
 			'space' => ' ',
 			'comma' => ',',
@@ -164,10 +293,12 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 
 			$attributes = $this->generate_defaults( $attributes );
 			$content = $this->render_post_items( $match, $content, $attributes );
-			$content = apply_filters( 'stackable/posts/output', 
+			$content = apply_filters( 'stackable.posts.output', 
 				$content, 
 				$attributes,
-				$block );
+				$block,
+				$match
+			);
 			return $content;
 		}
 
@@ -178,122 +309,16 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			$to_replace = $match[ 0 ];
 			$template = $match[ 1 ];
 
-			$image_size = $attributes[ 'imageSize' ];
-			$excerpt_length = $attributes[ 'excerptLength' ];
-			$readmore_text = $attributes[ 'readmoreText' ];
-			$meta_separator = $attributes[ 'metaSeparator' ];
-			$category_highlighted = $attributes[ 'categoryHighlighted' ];
-
 			$posts = '';
-			$recent_posts = wp_get_recent_posts( generate_post_query_from_stackable_posts_block( $attributes ) );
+			$post_query = generate_post_query_from_stackable_posts_block( $attributes );
+			$recent_posts = wp_get_recent_posts( $post_query );
+			// Manually slice the array based on the number of posts per page.
+			if ( is_array( $recent_posts ) && count( $recent_posts ) > (int) $post_query['numberposts'] ) {
+				$recent_posts = array_slice( $recent_posts, 0, (int) $post_query['numberposts'] );
+			}
 
 			foreach ( $recent_posts as $post ) {
-				$new_template = $template;
-				// Featured Image.
-				$featured_image = '';
-				$post_id = $post['ID'];
-				$featured_image_id = get_post_thumbnail_id( $post_id );
-
-				if ( ! empty( $featured_image_id ) ) {
-					$featured_image_urls = self::get_featured_image_urls( $featured_image_id );
-					$featured_image_src = $featured_image_urls[ $image_size ];
-					if ( ! empty( $featured_image_src ) ) {
-						$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
-						$thumbnail = get_the_post_thumbnail(
-							$post_id,
-							$image_size,
-							array(
-								'alt' => esc_attr( ! empty( $image_alt ) ? $image_alt : '' ),
-								'width' => esc_attr( $featured_image_src[1] ),
-								'height' => esc_attr( $featured_image_src[2] ),
-							)
-						);
-
-						// Get the image tag in the thumbnail markup.
-						preg_match( "/<img[^\>]*>/", $thumbnail, $match );
-
-						// Remove the built in style attribute in the image.
-						if ( is_array( $match ) && count( $match ) > 0 ) {
-							// Only remove the style tag inside the image tag.
-							$new_img = preg_replace( '/style=\"[^\"]*\"\s?/', "", $match[ 0 ] );
-							$featured_image = preg_replace( "/<img[^\>]*>/", $new_img, $thumbnail );
-						}
-					}
-				}
-
-				// If the featured_image is empty, remove the markup.
-				if ( empty( $featured_image ) ) {
-					$new_template = preg_replace( '/<figure[^>]*>(.*)<\/figure>/', '', $new_template );
-				} else {
-					$new_template = preg_replace( '/<img[^>]*>/', $featured_image, $new_template );
-				}
-
-				// Title.
-				$title = get_the_title( $post_id );
-				if ( ! $title ) {
-					$title = __( '(Untitled)', STACKABLE_I18N );
-				}
-				$new_template = str_replace( '!#title!#', $title, $new_template );
-
-				// Category.
-				$category = get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id );
-				if ( $category_highlighted ) {
-					preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
-					foreach ( $matches[0] as $i=>$match ) {
-						$href = $matches[1][$i];
-						$category_title = $matches[2][$i];
-						$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
-						$category = str_replace( $category_title, "<span class=\"stk-button__inner-text\">$category_title</span>", $category );
-					}
-				}
-
-				$new_template = str_replace( '!#category!#', $category, $new_template );
-
-				// Separator.
-				$separator = $this->meta_separators[ $meta_separator ];
-				$new_template = str_replace( '!#metaSeparator!#', $separator, $new_template );
-				// Author.
-				$author = esc_html( get_the_author_meta( 'display_name', $post['post_author'] ) );
-				$new_template = str_replace( '!#authorName!#', $author, $new_template );
-
-				// Date.
-				$datetime = get_the_date( 'c', $post_id );
-				$date = get_the_date( '', $post_id );
-				$new_template = str_replace( '!#dateTime!#', $datetime, $new_template );
-				$new_template = str_replace( '!#date!#', $date, $new_template );
-
-				// Comments.
-				$num = get_comments_number( $post_id );
-				$num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
-				$new_template = str_replace( '!#commentsNum!#', $num, $new_template );
-
-				// Excerpt.
-				$excerpt = self::get_excerpt( $post_id, $post );
-
-				// Trim the excerpt.
-				if ( ! empty( $excerpt ) ) {
-					$excerpt = explode( ' ', $excerpt );
-					$trim_to_length = (int) $excerpt_length;
-					if ( count( $excerpt ) > $trim_to_length ) {
-						$excerpt = implode( ' ', array_slice( $excerpt, 0, $trim_to_length ) ) . '...';
-					} else {
-						$excerpt = implode( ' ', $excerpt );
-					}
-
-					$excerpt = wp_kses_post( $excerpt );
-					$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
-				} else {
-					// If the excerpt is empty, remove the markup.
-					$new_template = preg_replace( '/<div class="stk-block-posts__excerpt">!#excerpt!#<\/div>/', '', $new_template );
-				}
-
-				// Post Link.
-				$new_template = str_replace( '!#postLink!#', esc_url( get_permalink( $post_id ) ), $new_template );
-
-				// Read More Link.
-				$new_template = str_replace( '!#readmoreText!#', esc_html( $readmore_text ), $new_template );
-
-				$posts .= $new_template;
+				$posts .= generate_render_item_from_stackable_posts_block( $post, $attributes, $template );
 			}
 			
 			$new_content = str_replace( $to_replace, $posts, $content );

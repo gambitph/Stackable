@@ -219,7 +219,7 @@
 }
 
 // Buttons.
-:is(.stk-block-button, .stk-block-icon-button) {
+:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 	&:not(.is-style-link) {
 		.stk-button {
 			justify-content: center;
@@ -227,6 +227,7 @@
 			align-items: center;
 			column-gap: 8px;
 			text-decoration: none;
+			position: relative;
 
 			&::before,
 			&::after {

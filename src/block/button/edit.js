@@ -97,6 +97,7 @@ const Edit = props => {
 			>
 				<Button
 					buttonProps={ {
+						tagName: props.attributes.linkTag,
 						id: props.attributes.anchor || undefined,
 						...customAttributes,
 					} }
