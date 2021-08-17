@@ -1,0 +1,86 @@
+@import "common";
+
+.stk-block-accordion {
+	box-sizing: border-box;
+
+	summary {
+		cursor: pointer;
+
+		// Remove the default arrow.
+		list-style: none;
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		--stk-block-margin-bottom: 0;
+		--stk-icon-size: 16px;
+
+		// Alignment of icons when the icons are left or on the right.
+		.stk-block-icon:first-child {
+			justify-content: flex-start;
+		}
+		.stk-block-icon:last-child {
+			justify-content: flex-end;
+		}
+	}
+	.stk-block-accordion__content > .stk-container {
+		padding: cssvar(container-padding);
+	}
+
+	// Rotate the icon when the accordion opens.
+	summary {
+		.stk--svg-wrapper {
+			@include transition();
+		}
+	}
+	&[open] {
+		summary {
+			.stk--svg-wrapper {
+				transform: rotate(180deg);
+			}
+		}
+	}
+
+	// Make sure the contents of the accordion
+	.stk-block-accordion__content {
+		height: 100%;
+		> * > * { // Prevent blocks inside from overlapping because of the small height when transitioning.
+			flex-shrink: 0;
+		}
+	}
+
+	// Animate the height of the content when the accordion opens.
+	// @media (prefers-reduced-motion: no-preference) {
+	// 	// Animate the sliding up/down of the accordion. This is a work-around
+	// 	// since the details tag doesn't animate it.
+	// 	height: var(--stk-collapsed);
+	// 	// max-height: ;
+	// 	transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95), height 0.4s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+	// 	.stk-block-accordion__content {
+	// 		overflow-y: hidden;
+	// 		transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95), max-height 0.4s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+	// 	}
+	// 	&[open] {
+	// 		height: var(--stk-expanded);
+
+	// 	}
+
+	// 	// Animate the clipping of the content when opening/closing.  We need to
+	// 	// do this since the details tag immediately makes the content visible
+	// 	// and it can't be animated using normal means.
+	// 	&.stk--init {
+	// 		&[open] {
+	// 			&:not(.stk--is-expanded) {
+	// 				.stk-block-accordion__content {
+	// 					max-height: 0;
+	// 				}
+	// 			}
+	// 		}
+	// 		&.stk--is-expanded {
+	// 			.stk-block-accordion__content {
+	// 				max-height: calc(var(--stk-expanded) - var(--stk-collapsed));
+	// 			}
+	// 		}
+	// 	}
+	// }
+}

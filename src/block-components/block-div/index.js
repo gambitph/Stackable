@@ -39,7 +39,7 @@ export const BlockDiv = props => {
 		className={ classNames }
 		id={ props.applyAdvancedAttributes && ( attributes.anchor || undefined ) }
 		data-block-id={ attributes.uniqueId }
-		blockTag={ htmlTag }
+		blockTag={ props.renderHtmlTag ? htmlTag : 'div' }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
@@ -53,6 +53,7 @@ BlockDiv.defaultProps = {
 	className: '',
 	applyCustomAttributes: true,
 	applyAdvancedAttributes: true,
+	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
 }
 
 BlockDiv.Content = props => {

@@ -23,8 +23,10 @@ class StackableCountUp {
 	init = () => {
 		const els = document.querySelectorAll( '.stk-block-count-up__text' )
 
+		// If reduce motion is on, don't animate.
+		const reduceMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
 		// If IntersectionObserver is not supported, just show the blocks.
-		if ( ! ( 'IntersectionObserver' in window ) ) {
+		if ( ! ( 'IntersectionObserver' in window ) || reduceMotion ) {
 			els.forEach( el => {
 				el.classList.add( ACTIVE )
 			} )
