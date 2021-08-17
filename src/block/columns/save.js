@@ -20,6 +20,7 @@ import {
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
+	Separator,
 } from '~stackable/block-components'
 
 export const Save = props => {
@@ -51,9 +52,11 @@ export const Save = props => {
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<div className={ contentClassNames }>
-				<InnerBlocks.Content />
-			</div>
+			<Separator.Content attributes={ attributes }>
+				<div className={ contentClassNames }>
+					<InnerBlocks.Content />
+				</div>
+			</Separator.Content>
 		</BlockDiv.Content>
 	)
 }

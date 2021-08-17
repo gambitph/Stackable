@@ -25,6 +25,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Separator,
 } from '~stackable/block-components'
 
 /**
@@ -79,6 +80,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
@@ -91,7 +93,7 @@ const Edit = props => {
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
-				<Fragment>
+				<Separator>
 					<div className={ contentClassNames }>
 						<InnerBlocks
 							orientation="horizontal"
@@ -102,7 +104,7 @@ const Edit = props => {
 							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
-				</Fragment>
+				</Separator>
 			</BlockDiv>
 			{ hasInnerBlocks && <MarginBottom /> }
 		</Fragment>
