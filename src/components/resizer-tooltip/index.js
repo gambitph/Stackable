@@ -90,6 +90,8 @@ const ResizerTooltip = props => {
 	} )
 
 	const widthControl = <AdvancedTextControl
+		placeholder={ props.widthPlaceholder }
+		default={ props.defaultWidth }
 		type="number"
 		label={ props.enableWidth && props.enableHeight ? __( 'Width', i18n ) : sprintf( __( '%s Width', i18n ), props.label ) }
 		className="stk-resizer-popup__size"
@@ -140,6 +142,8 @@ const ResizerTooltip = props => {
 	/>
 
 	const heightControl = <AdvancedTextControl
+		placeholder={ props.heightPlaceholder }
+		default={ props.defaultHeight }
 		type="number"
 		label={ props.enableWidth && props.enableHeight ? __( 'Height', i18n ) : sprintf( __( '%s Height', i18n ), props.label ) }
 		className="stk-resizer-popup__size"
@@ -190,8 +194,8 @@ const ResizerTooltip = props => {
 		} }
 	/>
 
-	const labelWidth = ( currentWidth || props.width ) === 'auto' ? 'auto' : `${ currentWidth || props.width }${ props.widthUnit }`
-	const labelHeight = ( currentHeight || props.height ) === 'auto' ? 'auto' : `${ currentHeight || props.height }${ props.heightUnit }`
+	const labelWidth = ( currentWidth || props.width || props.widthPlaceholder ) === 'auto' ? 'auto' : `${ currentWidth || props.width || props.widthPlaceholder }${ props.widthUnit }`
+	const labelHeight = ( currentHeight || props.height || props.heightPlaceholder ) === 'auto' ? 'auto' : `${ currentHeight || props.height || props.heightPlaceholder }${ props.heightUnit }`
 
 	return (
 		<Fragment>

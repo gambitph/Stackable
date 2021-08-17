@@ -32,13 +32,19 @@ import { withIsHovered } from '~stackable/higher-order'
 import { ResizableBox } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { useState, useRef } from '@wordpress/element'
+import {
+	useState, useRef, useMemo,
+} from '@wordpress/element'
 
 const getSnapYBetween = ( value, snapDiff = 50 ) => {
 	return [
 		Math.floor( value / snapDiff ) * snapDiff,
 		Math.ceil( value / snapDiff ) * snapDiff,
 	]
+}
+
+const isDefined = ( value = '' ) => {
+	return value !== '' && value !== undefined
 }
 
 const Edit = props => {
@@ -60,7 +66,20 @@ const Edit = props => {
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
-	const defaultMinHeight = 50
+	// Set default min height based on device type
+	const defaultMinHeight = useMemo( () =>
+		deviceType === 'Tablet'
+			? isDefined( attributes[ getAttributeName( 'height' ) ] )
+				? attributes[ getAttributeName( 'height' ) ]
+				: 50
+			: deviceType === 'Mobile'
+				? isDefined( attributes[ getAttributeName( 'height', 'tablet' ) ] )
+					? attributes[ getAttributeName( 'height', 'tablet' ) ]
+					: isDefined( attributes[ getAttributeName( 'height' ) ] )
+						? attributes[ getAttributeName( 'height' ) ] : 50
+				: 50
+	, [ deviceType ] )
+
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 	const resizableRef = useRef()
 
@@ -127,14 +146,16 @@ const Edit = props => {
 							enableWidth={ false }
 							height={ resizableRef.current?.state?.isResizing
 								? resizableRef.current?.state?.height
-								: height === ''
-									? defaultMinHeight
+								: ( height === '' || height === undefined )
+									? ''
 									: height
 							}
 							heightUnits={ [ 'px' ] }
 							onChangeHeight={ ( { value } ) => {
 								setAttributes( { [ heightAttrName ]: value } )
 							} }
+							defaultHeight=""
+							heightPlaceholder={ defaultMinHeight }
 						/>
 					) }
 				</ResizableBox>
