@@ -12,6 +12,13 @@
 			"name": "custom",
 			"title": "Button",
 			"isDefault": true
+		},
+		{
+			"name": "icon-button",
+			"title": "Icon Button",
+			"innerBlocks": [ 
+				[ "stackable/icon-button", {} ]
+			]
 		}
 	]
 }

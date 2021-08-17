@@ -163,7 +163,7 @@ ImageControl.defaultProps = {
 	allowedTypes: [ 'image' ],
 	responsive: false,
 	hover: false,
-	isDynamic: false,
+	isDynamic: true,
 
 	value: undefined,
 	onChange: undefined,

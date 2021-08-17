@@ -130,8 +130,7 @@
 }
 
 // Block float alignment.
-.stk-block.alignleft,
-.stk-block.alignright {
+:is(.stk-block.alignleft, .stk-block.alignright) {
 	.stk-inner-blocks:first-of-type > .stk-block {
 		max-width: 350px; // Give a default width for a floated block.
 		width: auto;
@@ -155,16 +154,19 @@
 	}
 }
 
-// Headings and Text.
+// Headings, Subtitle, and Text.
 // This removes the normal margins of headings and paragraphs, so we can add our own.
 .stk-block {
 	.stk-block-heading__text,
-	.stk-block-text__text {
+	.stk-block-text__text,
+	.stk-block-subtitle__text {
 		margin-bottom: 0;
 	}
 }
 .stk-block-heading,
 .stk-block-text,
+.stk-block-subtitle,
+.stk-block .stk-block-subtitle__text,
 .stk-block .stk-block-text__text {
 	margin-top: 0;
 }
@@ -178,6 +180,7 @@
 }
 // Remove any decorative things added by themes.
 .stk-block-text__text,
+.stk-block-subtitle__text,
 .stk-block-heading__text {
 	&::after,
 	&::before {
@@ -199,13 +202,74 @@
 	}
 }
 
+// Buttons.
+:is(.stk-block-button, .stk-block-icon-button) {
+	&:not(.is-style-link) {
+		.stk-button {
+			justify-content: center;
+			display: flex;
+			align-items: center;
+			column-gap: 8px;
+			text-decoration: none;
+
+			&::before,
+			&::after {
+				content: "";
+				position: absolute;
+				inset: 0;
+				height: 100%;
+				width: 100%;
+				pointer-events: none;
+				border-radius: inherit;
+			}
+
+			&::before {
+				// Borders should be on top of the ::after pseudoelement.
+				z-index: 2;
+			}
+
+			&::after {
+				opacity: 0;
+				z-index: 1;
+			}
+
+			> * {
+				z-index: 2;
+			}
+		}
+	}
+
+	&.is-style-pill {
+		.stk-button {
+			width: 4em;
+			border-radius: 100px; // A large number to ensure it's a pill shape.
+		}
+	}
+}
+
 // Text alignment should also work for flex blocks like the icon block.
 .stk-block.has-text-align-right {
 	justify-content: flex-end;
 }
-.stk-block.has-text-align-center {
-	justify-content: center;
+
+// Default text direction, we need to add this for RTL support.
+:where(.stk-block) {
+	text-align: start;
 }
-.stk-block.has-text-align-left {
+
+// Text alignment should also work for flex blocks like the icon block.
+.has-text-align-center .stk-block,
+.has-text-align-center:where(.stk-block) {
+	justify-content: center;
+	text-align: center;
+}
+.has-text-align-right .stk-block,
+.has-text-align-right:where(.stk-block) {
+	justify-content: flex-end;
+	text-align: end;
+}
+.has-text-align-left .stk-block,
+.has-text-align-left:where(.stk-block) {
 	justify-content: flex-start;
+	text-align: start;
 }

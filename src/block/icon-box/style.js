@@ -25,7 +25,7 @@ import {
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
-	sizeSelector: '.stk-block-header__content',
+	sizeSelector: '.stk-block-icon-box__content',
 	sizeVerticalAlignRule: 'justifyContent',
 	sizeHorizontalAlignRule: 'alignSelf',
 }

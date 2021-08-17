@@ -1,0 +1,13 @@
+.stk-block.stk-block-blockquote {
+	margin-inline: 0;
+}
+.stk-block-blockquote {
+	.block-editor-block-list__layout {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+	}
+	[data-type="stackable/icon"] {
+		flex: 0;
+	}
+}

@@ -104,7 +104,7 @@ const Edit = props => {
 						<InnerBlocks
 							orientation="horizontal"
 							template={ TEMPLATE }
-							templateLock={ true }
+							templateLock="insert"
 							templateInsertUpdatesSelection={ true }
 						/>
 					</div>

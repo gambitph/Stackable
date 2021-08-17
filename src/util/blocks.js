@@ -171,7 +171,7 @@ export const createBlockCompleter = () => {
 
 				// Filter based on keyword.
 				initialFilteredItems = initialFilteredItems
-					.filter( item => item.name.includes( filterValue ) || item.title.includes( filterValue ) )
+					.filter( item => item.name.toLowerCase().includes( filterValue?.toLowerCase() ) || item.title.toLowerCase().includes( filterValue?.toLowerCase() ) )
 
 				// Only show certain number of items.
 				return initialFilteredItems

@@ -2,14 +2,19 @@
  * Internal dependencies
  */
 import { ContainerStyles } from './style'
+import SVGCloseIcon from './images/close-icon.svg'
 
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
+	AdvancedRangeControl,
+	ColorPaletteControl,
+	InspectorStyleControls,
 	InspectorTabs,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -38,7 +43,7 @@ import { useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/heading', { text: __( 'Header' ) } ],
+	[ 'stackable/heading', { text: __( 'Notification', i18n ), textTag: 'h3' } ],
 	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
 	[ 'stackable/button-group', {}, [
 		[ 'stackable/button', { text: 'Button' } ],
@@ -48,6 +53,8 @@ const TEMPLATE = [
 const Edit = props => {
 	const {
 		className,
+		attributes,
+		setAttributes,
 	} = props
 
 	const { hasInnerBlocks } = useBlockContext()
@@ -56,15 +63,17 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-header',
+		'stk-block-notification',
 		blockHoverClass,
-	] )
+	], {
+		'stk--is-dismissible': attributes.isDismissible,
+	} )
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-header__content',
+		'stk-block-notification__content',
 	] )
 
 	const renderAppender = useCallback(
@@ -83,15 +92,38 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-header" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Dismissible', i18n ) }
+					initialOpen={ props.attributes.isDismissible }
+					id="dismissible"
+					hasToggle={ true }
+					checked={ props.attributes.isDismissible }
+					onChange={ value => setAttributes( { isDismissible: value } ) }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Icon Size', i18n ) }
+						attribute="dismissibleSize"
+						min="0"
+						sliderMax="50"
+						step="1"
+						placeholder="16"
+					/>
+					<ColorPaletteControl
+						label={ __( 'Icon Color', i18n ) }
+						attribute="dismissibleColor"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-block-header" />
+				<CustomCSS mainBlockClass="stk-block-notification" />
 
 				<ContainerDiv className={ contentClassNames }>
 					<InnerBlocks
@@ -101,6 +133,18 @@ const Edit = props => {
 						renderAppender={ renderAppender }
 					/>
 				</ContainerDiv>
+				{ attributes.isDismissible &&
+					<span
+						className="stk-block-notification__close-button"
+						role="button"
+						tabIndex="0"
+					>
+						<SVGCloseIcon
+							width={ attributes.dismissibleSize || 16 }
+							height={ attributes.dismissibleSize || 16 }
+						/>
+					</span>
+				}
 			</BlockDiv>
 			<MarginBottom />
 		</>

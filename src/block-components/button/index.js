@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames'
+
+/**
  * Internal dependencies
  */
 import { addAttributes } from './attributes'
@@ -10,10 +15,14 @@ import { Icon } from '../icon'
 export const Button = props => {
 	const {
 		className,
+		buttonProps,
 	} = props
 
 	return (
-		<Link className={ className }>
+		<Link
+			className={ classnames( [ className, 'stk-button' ] ) }
+			linkProps={ buttonProps }
+		>
 			<Icon hasLinearGradient={ false } />
 			{ props.children }
 		</Link>
@@ -22,17 +31,22 @@ export const Button = props => {
 
 Button.defaultProps = {
 	className: '',
+	buttonProps: {},
 }
 
 Button.Content = props => {
 	const {
 		className,
 		attributes,
-		...propsToPass
+		buttonProps,
 	} = props
 
 	return (
-		<Link.Content { ...propsToPass } attributes={ attributes } className={ className }>
+		<Link.Content
+			linkProps={ buttonProps }
+			attributes={ attributes }
+			className={ classnames( [ className, 'stk-button' ] ) }
+		>
 			<Icon.Content
 				attributes={ attributes }
 				hasLinearGradient={ false }
@@ -44,7 +58,7 @@ Button.Content = props => {
 
 Button.Content.defaultProps = {
 	className: '',
-	attributes: {},
+	buttonProps: {},
 }
 
 Button.InspectorControls = Edit

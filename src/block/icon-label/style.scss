@@ -4,8 +4,7 @@
 		flex: 0 0 64px;
 	}
 	// Remove margins and make sure the icon and text are both centered.
-	.stk-block-icon,
-	.stk-block-heading {
+	:is(.stk-block-icon, .stk-block-heading) {
 		--stk-block-margin-bottom: 0;
 		display: flex;
 		align-items: center;

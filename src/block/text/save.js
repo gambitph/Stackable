@@ -52,7 +52,7 @@ const Save = props => {
 			<Typography.Content
 				attributes={ attributes }
 				className={ textClassNames }
-				tagName="p"
+				tagName={ attributes.innerTextTag || 'p' }
 			/>
 
 		</BlockDiv.Content>

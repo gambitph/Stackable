@@ -7,23 +7,30 @@ import { addFilter } from '@wordpress/hooks'
 addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 	return {
 		...blocks,
-		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab' ] },
+		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab', 'icon' ] },
+		'stackable/icon-button': { filterAttributes: [ 'linkUrl', 'linkRel', 'linkNewTab', 'icon' ] },
 		'stackable/button-group': {},
+		'stackable/blockquote': {},
 		'stackable/call-to-action': {},
 		'stackable/card': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt', 'imageTitle' ] },
 		'stackable/card-group': {},
 		'stackable/column': {},
 		'stackable/columns': {},
-		'stackable/container': {},
+		'stackable/expand': {},
 		'stackable/feature': {},
 		'stackable/feature-grid': {},
-		'stackable/header': {},
+		'stackable/hero': {},
 		'stackable/heading': { filterAttributes: [ 'text' ] },
 		'stackable/icon': { filterAttributes: [ 'icon', 'ariaLabel' ] },
+		'stackable/icon-box': {},
 		'stackable/icon-label': {},
 		'stackable/icon-list': { filterAttributes: [ 'text' ] },
 		'stackable/image': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt' ] },
+		'stackable/notification': {},
+		'stackable/price': {},
+		'stackable/pricing-box': {},
 		'stackable/text': { filterAttributes: [ 'text' ] },
+		'stackable/subtitle': { filterAttributes: [ 'text' ] },
 	}
 } )
 

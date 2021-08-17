@@ -23,7 +23,8 @@ $stk_block_folders = array(
 	'icon',
 	'icon-list',
 	'image',
-	'text'
+	'price',
+	'text',
 );
 
 /**
@@ -31,15 +32,20 @@ $stk_block_folders = array(
  */
 $stk_wrapper_block_folders = array(
 	'button-group',
+	'blockquote',
 	'card',
 	'call-to-action',
 	'column',
 	'columns',
 	'container',
+	'expand',
 	'feature',
 	'feature-grid',
-	'header',
+	'hero',
+	'icon-box',
 	'icon-label',
+	'notification',
+	'pricing-box',
 );
 
 if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
@@ -102,7 +108,7 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 				// This automatically enqueues all our styles and scripts.
 				array(
 					'style' => 'ugb-style-css', // Frontend styles.
-					'script' => 'ugb-block-frontend-js', // Frontend scripts.
+					// 'script' => 'ugb-block-frontend-js', // Frontend scripts.
 					'editor_script' => 'ugb-block-js', // Editor scripts.
 					'editor_style' => 'ugb-block-editor-css', // Editor styles.
 				),

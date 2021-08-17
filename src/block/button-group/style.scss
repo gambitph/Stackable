@@ -1,0 +1,21 @@
+@import "common";
+
+.stk-block-button-group > .stk-inner-blocks {
+	column-gap: cssvar(button-column-gap);
+	row-gap: cssvar(button-row-gap);
+	align-items: center; // Vertically align the buttons.
+}
+
+// Button alignment.
+:where(.has-text-align-center .stk-block-button-group) .stk-inner-blocks,
+.stk-block-button-group .has-text-align-center {
+	justify-content: center;
+}
+:where(.has-text-align-right .stk-block-button-group) .stk-inner-blocks,
+.stk-block-button-group .has-text-align-right {
+	justify-content: flex-end;
+}
+:where(.has-text-align-left .stk-block-button-group) .stk-inner-blocks,
+.stk-block-button-group .has-text-align-left {
+	justify-content: flex-start;
+}

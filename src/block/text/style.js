@@ -18,8 +18,13 @@ import { Style as StyleComponent } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { Fragment, renderToString } from '@wordpress/element'
+import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+
+const typographyOptions = {
+	selector: '.stk-block-text__text',
+	hoverSelector: '.stk-block-text__text:hover',
+}
 
 const getStyleParams = () => {
 	return [
@@ -55,18 +60,11 @@ export const TextStyles = props => {
 	const columnStyles = useStyles( attributes, getStyleParams() )
 
 	return (
-		<Fragment>
+		<>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
-			<Typography.Style { ...{
-				...propsToPass,
-				options: {
-					...propsToPass.options,
-					selector: '.stk-block-text__text',
-					hoverSelector: '.stk-block-text__text:hover',
-				},
-			} } />
+			<Typography.Style { ...propsToPass } options={ typographyOptions } />
 			<StyleComponent
 				styles={ columnStyles }
 				versionAdded="3.0.0"
@@ -74,7 +72,7 @@ export const TextStyles = props => {
 				{ ...propsToPass }
 			/>
 			<EffectsAnimations.Style { ...propsToPass } />
-		</Fragment>
+		</>
 	)
 }
 
@@ -93,18 +91,11 @@ TextStyles.Content = props => {
 	const columnStyles = getStyles( props.attributes, getStyleParams() )
 
 	const styles = (
-		<Fragment>
+		<>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
-			<Typography.Style.Content { ...{
-				...propsToPass,
-				options: {
-					...propsToPass.options,
-					selector: '.stk-block-text__text',
-					hoverSelector: '.stk-block-text__text:hover',
-				},
-			} } />
+			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
@@ -113,7 +104,7 @@ TextStyles.Content = props => {
 				versionDeprecated=""
 				{ ...propsToPass }
 			/>
-		</Fragment>
+		</>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null

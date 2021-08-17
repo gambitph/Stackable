@@ -10,14 +10,13 @@ import { GlobalTypographyStyles } from './typography'
 import { SVGStackableIcon } from '~stackable/icons'
 import { i18n, isContentOnlyMode } from 'stackable'
 
-/**
- * WordPress dependencies
+/** WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins'
 import {
 	Fragment, render, unmountComponentAtNode, useEffect,
 } from '@wordpress/element'
-import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/edit-post'
+import { PluginSidebar } from '@wordpress/edit-post'
 import { __ } from '@wordpress/i18n'
 import {
 	applyFilters, addAction,
@@ -79,12 +78,6 @@ const GlobalSettings = () => {
 
 	return (
 		<Fragment>
-			<PluginSidebarMoreMenuItem
-				name="sidebar"
-				className="ugb-global-settings__button"
-				icon={ <SVGStackableIcon /> }>
-				{ __( 'Stackable Settings', i18n ) }
-			</PluginSidebarMoreMenuItem>
 			<PluginSidebar
 				name="sidebar"
 				title={ __( 'Stackable Settings', i18n ) }

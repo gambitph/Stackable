@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { HeaderIcon } from '~stackable/icons'
+import { HeroIcon } from '~stackable/icons'
 import { disabledBlocks } from 'stackable'
 
 /**
@@ -33,7 +33,7 @@ export { name }
 
 export const settings = {
 	...metadata,
-	icon: HeaderIcon,
+	icon: HeroIcon,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 		anchor: true,

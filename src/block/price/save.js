@@ -1,20 +1,18 @@
 /**
  * Internal dependencies
  */
-import { ContainerStyles } from './style'
+import { PriceStyles } from './style'
 
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
-import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { withVersion } from '~stackable/higher-order'
+import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
-	ContainerDiv,
-	BlockLink,
-	getAlignmentClasses,
 	CustomCSS,
+	getAlignmentClasses,
 	getResponsiveClasses,
 } from '~stackable/block-components'
 
@@ -26,8 +24,7 @@ import { compose } from '@wordpress/compose'
 
 export const Save = props => {
 	const {
-		attributes,
-		className,
+		attributes, className,
 	} = props
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -35,31 +32,20 @@ export const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-header',
+		'stk-block-price',
 		responsiveClass,
-	] )
-
-	const contentClassNames = classnames( [
-		'stk-block-content',
-		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-header__content',
 	] )
 
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			data-video={ attributes.videoLink }
 		>
-			<ContainerStyles.Content version={ props.version } attributes={ attributes } />
+			<PriceStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<ContainerDiv.Content
-				className={ contentClassNames }
-				attributes={ attributes }
-			>
-				<InnerBlocks.Content />
-				<BlockLink.Content attributes={ attributes } />
-			</ContainerDiv.Content>
+			<InnerBlocks.Content />
 		</BlockDiv.Content>
 	)
 }
@@ -67,3 +53,5 @@ export const Save = props => {
 export default compose(
 	withVersion( VERSION )
 )( Save )
+
+// TODO: add "play video" accessibility label

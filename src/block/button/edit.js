@@ -12,7 +12,8 @@ import {
 import {
 	getTypographyClasses,
 	BlockDiv,
-	Advanced, CustomCSS,
+	Advanced,
+	CustomCSS,
 	Responsive,
 	Linking,
 	Button,
@@ -30,7 +31,6 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
 
@@ -48,11 +48,9 @@ const Edit = props => {
 	} = props
 
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
+	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
-	const buttonClassNames = classnames( [
-		'stk-block-button__button',
-	] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -62,20 +60,18 @@ const Edit = props => {
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
-		'stk-block-button__inner-text',
+		'stk-button__inner-text',
 	] )
 
 	return (
-		<Fragment>
+		<>
 
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />
 
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Button.InspectorControls
-				hasIconGradient={ false }
-				hasIconShape={ false }
-				hasIconBackgroundShape={ false }
+				borderSelector=".stk-button"
 			/>
 			<Typography.InspectorControls
 				hasTextTag={ false }
@@ -94,8 +90,17 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-button" />
 
 			<Linking show={ isHovered } />
-			<BlockDiv className={ blockClassNames }>
-				<Button className={ buttonClassNames }>
+			<BlockDiv
+				className={ blockClassNames }
+				applyAdvancedAttributes={ false }
+				applyCustomAttributes={ false }
+			>
+				<Button
+					buttonProps={ {
+						id: props.attributes.anchor || undefined,
+						...customAttributes,
+					} }
+				>
 					<Typography
 						tagName="span"
 						className={ typographyInnerClassNames }
@@ -109,7 +114,7 @@ const Edit = props => {
 					/>
 				</Button>
 			</BlockDiv>
-		</Fragment>
+		</>
 	)
 }
 

@@ -8,7 +8,7 @@ import { IconListStyles } from './style'
  */
 import classnames from 'classnames'
 import {
-	getResponsiveClasses, BlockDiv, CustomCSS, Typography, getTypographyClasses,
+	getResponsiveClasses, BlockDiv, CustomCSS, Typography, getTypographyClasses, getAlignmentClasses,
 } from '~stackable/block-components'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
@@ -26,12 +26,14 @@ export const Save = props => {
 
 	const responsiveClass = getResponsiveClasses( attributes )
 	const textClasses = getTypographyClasses( attributes )
+	const blockAlignmentClass = getAlignmentClasses( attributes )
 
 	const tagName = attributes.ordered ? 'ol' : 'ul'
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-list',
+		blockAlignmentClass,
 		responsiveClass,
 		textClasses,
 	] )

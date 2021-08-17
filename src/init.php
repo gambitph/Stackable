@@ -30,18 +30,18 @@ if ( ! function_exists( 'stackable_block_frontend_assets' ) ) {
 		);
 
 		// Frontend only scripts.
-		if ( ! is_admin() ) {
-			wp_register_script(
-				'ugb-block-frontend-js',
-				plugins_url( 'dist/frontend_blocks.js', STACKABLE_FILE ),
-				apply_filters( 'stackable_frontend_js_dependencies', array() ),
-				STACKABLE_VERSION
-			);
+		// if ( ! is_admin() ) {
+		// 	wp_register_script(
+		// 		'ugb-block-frontend-js',
+		// 		plugins_url( 'dist/frontend_blocks.js', STACKABLE_FILE ),
+		// 		apply_filters( 'stackable_frontend_js_dependencies', array() ),
+		// 		STACKABLE_VERSION
+		// 	);
 
-			wp_localize_script( 'ugb-block-frontend-js', 'stackable', array(
-				'restUrl' => get_rest_url(),
-			) );
-		}
+		// 	wp_localize_script( 'ugb-block-frontend-js', 'stackable', array(
+		// 		'restUrl' => get_rest_url(),
+		// 	) );
+		// }
 	}
 
 	// Only load the frontend scripts for now in the backend.  In the frontend,

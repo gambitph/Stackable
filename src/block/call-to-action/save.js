@@ -35,7 +35,7 @@ export const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-header',
+		'stk-block-call-to-action',
 		responsiveClass,
 	] )
 
@@ -43,7 +43,7 @@ export const Save = props => {
 		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-header__content',
+		'stk-block-call-to-action__content',
 	] )
 
 	return (

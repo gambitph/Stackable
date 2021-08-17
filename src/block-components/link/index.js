@@ -9,6 +9,7 @@ import { Edit } from './edit'
  * External dependencies
  */
 import { Link as LinkComponent } from '~stackable/components'
+import { useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -18,10 +19,12 @@ import { __ } from '@wordpress/i18n'
 import {
 	Fragment, useRef, useState, useEffect, useCallback,
 } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Link = props => {
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
+	const { parentBlock } = useBlockContext()
 
 	const clickOutsideListener = useCallback( event => {
 		if ( isOpen ) {
@@ -37,9 +40,13 @@ export const Link = props => {
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
 	}, [ clickOutsideListener ] )
 
+	// Allow parent blocks to prevent the link popup to open.
+	const enable = applyFilters( 'stackable.edit.link.enable-link-popup', true, parentBlock )
+
 	return (
 		<Fragment>
 			<LinkComponent
+				{ ...props.linkProps }
 				className={ props.className }
 				onClick={ e => {
 					if ( e.target.closest( '.rich-text' ) ) {
@@ -50,7 +57,7 @@ export const Link = props => {
 			>
 				{ props.children }
 			</LinkComponent>
-			{ isOpen && (
+			{ isOpen && enable && (
 				<Popover
 					useRef={ popoverEl }
 					position="bottom center"
@@ -66,13 +73,20 @@ export const Link = props => {
 	)
 }
 
+Link.defaultProps = {
+	className: '',
+	linkProps: {},
+}
+
 Link.Content = props => {
 	const {
+		linkProps = {},
 		attributes,
 	} = props
 
 	return (
 		<LinkComponent.Content
+			{ ...linkProps }
 			className={ props.className }
 			href={ attributes.linkUrl || undefined }
 			target={ attributes.linkNewTab ? '_blank' : undefined }

@@ -829,9 +829,13 @@ const edit = props => {
 								url={ attributes[ `button${ i }Url` ] }
 								newTab={ attributes[ `button${ i }NewTab` ] }
 								noFollow={ attributes[ `button${ i }NoFollow` ] }
+								sponsored={ attributes[ `button${ i }Sponsored` ] }
+								ugc={ attributes[ `button${ i }Ugc` ] }
 								onChangeUrl={ value => setAttributes( { [ `button${ i }Url` ]: value } ) }
 								onChangeNewTab={ value => setAttributes( { [ `button${ i }NewTab` ]: value } ) }
 								onChangeNoFollow={ value => setAttributes( { [ `button${ i }NoFollow` ]: value } ) }
+								onChangeSponsored={ value => setAttributes( { [ `button${ i }Sponsored` ]: value } ) }
+								onChangeUgc={ value => setAttributes( { [ `button${ i }Ugc` ]: value } ) }
 							/>
 						</div>
 					)
