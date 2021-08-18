@@ -1,0 +1,65 @@
+
+// NOTE: The animation of the opening/closing of the accordion is implemented in
+// JavaScript.
+@import "common";
+
+.stk-block-accordion {
+	box-sizing: border-box;
+
+	summary {
+		cursor: pointer;
+
+		// Remove the default arrow.
+		list-style: none;
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		--stk-block-margin-bottom: 0;
+		--stk-icon-size: 16px;
+
+		// Alignment of icons when the icons are left or on the right.
+		.stk-block-icon:first-child {
+			justify-content: flex-start;
+		}
+		.stk-block-icon:last-child {
+			justify-content: flex-end;
+		}
+	}
+	.stk-block-accordion__content > .stk-container {
+		padding: cssvar(container-padding);
+	}
+
+	// Rotate the icon when the accordion opens.
+	summary {
+		.stk--svg-wrapper {
+			@include transition();
+		}
+	}
+	&[open] summary {
+		.stk--svg-wrapper:not(.stk--has-icon2) {
+			transform: rotate(180deg);
+		}
+	}
+
+	// If another icon was used, don't rotate the icon, show the other icon when
+	// the accordion opens.
+	&[open] summary {
+		.stk--svg-wrapper.stk--has-icon2 {
+			.stk--inner-svg {
+				display: none;
+			}
+		}
+		.stk--icon-2 {
+			display: block !important;
+		}
+	}
+
+	// Make sure the contents of the accordion
+	.stk-block-accordion__content {
+		height: 100%;
+		> * > * { // Prevent blocks inside from overlapping because of the small height when transitioning.
+			flex-shrink: 0;
+		}
+	}
+}

@@ -24,12 +24,12 @@ export const useLinking = () => {
 	}, [] )
 
 	const isLinked = useMemo( () => {
-		return ! linkedData.includes( uniqueId )
+		return linkedData.includes( uniqueId )
 	}, [ linkedData, uniqueId ] )
 
 	const setIsLinked = isLinked => {
 		const latestLinkedData = getLinkedData()
-		const newUnlinkedUniqueIds = isLinked
+		const newUnlinkedUniqueIds = ! isLinked
 			? latestLinkedData.filter( unlinkedUniqueId => unlinkedUniqueId !== uniqueId )
 			: [ ...latestLinkedData, uniqueId ]
 
@@ -52,7 +52,7 @@ export const useLinking = () => {
 
 export const useIsLinked = clientId => {
 	const attributes = useBlockAttributes( clientId )
-	return attributes?.uniqueId ? ! getLinkedData().includes( attributes.uniqueId ) : null
+	return attributes?.uniqueId ? getLinkedData().includes( attributes.uniqueId ) : null
 }
 
 export const isBlockLinked = clientId => {
@@ -60,5 +60,5 @@ export const isBlockLinked = clientId => {
 		return null
 	}
 	const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
-	return attributes?.uniqueId ? ! getLinkedData().includes( attributes.uniqueId ) : null
+	return attributes?.uniqueId ? getLinkedData().includes( attributes.uniqueId ) : null
 }

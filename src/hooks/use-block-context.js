@@ -26,6 +26,26 @@ const useBlockContext = ( blockClientId = null ) => {
 			const parent = hasParent ? getBlock( parentClientId ) : null
 			const index = hasParent ? indexOf( parent?.innerBlocks, getBlock( clientId ) ) : -1
 			const isLastBlock = hasParent ? last( parent?.innerBlocks )?.clientId === clientId : false
+
+			// Check if the block isn't used as a row. If not, then don't use row-like properties.
+			if ( hasParent ) {
+				const isRow = document.querySelector( `[data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
+				if ( ! isRow ) {
+					return {
+						blockIndex: index,
+						parentBlock: parent,
+						isFirstBlock: true,
+						isLastBlock: true,
+						isOnlyBlock: true,
+						adjacentBlock: null,
+						adjacentBlockIndex: -1,
+						adjacentBlocks: [],
+						numInnerBlocks: block?.innerBlocks?.length,
+						hasInnerBlocks: !! block?.innerBlocks?.length,
+					}
+				}
+			}
+
 			return {
 				blockIndex: index,
 				parentBlock: parent,

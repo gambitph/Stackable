@@ -47,13 +47,14 @@ export const Edit = props => {
 				id="icon"
 				initialOpen={ initialOpen }
 			>
-				{ applyFilters( 'stackable.block-component.icon.before', null ) }
 
 				<IconControl
 					label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
 					value={ getAttribute( 'icon' ) }
 					onChange={ updateAttributeHandler( 'icon' ) }
 				/>
+
+				{ applyFilters( 'stackable.block-component.icon.after', null ) }
 
 				{ hasColor && hasGradient && (
 					<Fragment>

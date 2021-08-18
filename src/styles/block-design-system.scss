@@ -28,6 +28,10 @@
 		desktop: 64px 80px,
 		mobile: 32px 24px,
 	),
+	container-padding-small: (
+		desktop: 16px 32px,
+		mobile: 8px 24px,
+	),
 
 	/**
 	 * Columns
@@ -143,6 +147,9 @@
 // Containers
 .stk-container:not(.stk--no-padding) {
 	padding: cssvar(container-padding);
+}
+.stk--container-small .stk-container:not(.stk--no-padding) {
+	#{ '--stk-container-padding' }: cssvar(container-padding-small);
 }
 .stk-container:not(.stk--no-background) {
 	background-color: cssvar(container-background-color);

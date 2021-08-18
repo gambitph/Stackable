@@ -40,7 +40,7 @@ const TEMPLATE = [
 			[ 'stackable/button', { text: __( 'Button' ) } ],
 		] ],
 	] ],
-	[ 'stackable/column', { templateLock: true }, [
+	[ 'stackable/column', { templateLock: 'insert' }, [
 		[ 'stackable/image', {} ],
 	] ],
 ]

@@ -1,0 +1,19 @@
+@import "common";
+
+// .stk-block-accordion > .block-editor-inner-blocks > .block-editor-block-list__layout > :first-child { // First column, the accordion heading
+.stk-block-accordion .stk-block-accordion__heading {
+	.stk-block-icon-label { // Icon label
+		[data-type="stackable/icon"]:first-child .stk-block-icon {
+			justify-content: flex-start;
+		}
+		[data-type="stackable/icon"]:last-child .stk-block-icon {
+			justify-content: flex-end;
+		}
+	}
+}
+
+.stk-block-accordion .stk-block-accordion__content {
+	> .stk-container {
+		padding: cssvar(container-padding);
+	}
+}

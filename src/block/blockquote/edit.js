@@ -120,7 +120,7 @@ addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/blockquote
 } )
 
 // Add more quotation mark icons in the Icon Block if it's inside the blockquote block.
-addFilter( 'stackable.block-component.icon.before', 'stackable/blockquote', output => {
+addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {
 	const { parentBlock } = useBlockContext()
 	if ( parentBlock?.name === 'stackable/blockquote' ) {
 		return (

@@ -23,17 +23,19 @@ import {
 
 const HTML_TAG_OPTIONS = [
 	{ value: '', label: __( 'Default', i18n ) },
-	{ value: 'div', label: _x( 'Div', 'HTML Tag', i18n ) },
-	{ value: 'blockquote', label: _x( 'Blockquote', 'HTML Tag', i18n ) },
-	{ value: 'section', label: _x( 'Section', 'HTML Tag', i18n ) },
+	{ value: 'address', label: _x( 'Address', 'HTML Tag', i18n ) },
 	{ value: 'article', label: _x( 'Article', 'HTML Tag', i18n ) },
 	{ value: 'aside', label: _x( 'Aside', 'HTML Tag', i18n ) },
-	{ value: 'main', label: _x( 'Main', 'HTML Tag', i18n ) },
-	{ value: 'header', label: _x( 'Header', 'HTML Tag', i18n ) },
+	{ value: 'blockquote', label: _x( 'Blockquote', 'HTML Tag', i18n ) },
+	{ value: 'div', label: _x( 'Div', 'HTML Tag', i18n ) },
+	{ value: 'details', label: _x( 'Details', 'HTML Tag', i18n ) },
 	{ value: 'footer', label: _x( 'Footer', 'HTML Tag', i18n ) },
-	{ value: 'nav', label: _x( 'Nav', 'HTML Tag', i18n ) },
-	{ value: 'address', label: _x( 'Address', 'HTML Tag', i18n ) },
+	{ value: 'header', label: _x( 'Header', 'HTML Tag', i18n ) },
 	{ value: 'hgroup', label: _x( 'Hgroup', 'HTML Tag', i18n ) },
+	{ value: 'main', label: _x( 'Main', 'HTML Tag', i18n ) },
+	{ value: 'nav', label: _x( 'Nav', 'HTML Tag', i18n ) },
+	{ value: 'section', label: _x( 'Section', 'HTML Tag', i18n ) },
+	{ value: 'summary', label: _x( 'Summary', 'HTML Tag', i18n ) },
 ]
 
 export const Edit = () => {
