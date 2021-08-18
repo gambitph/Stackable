@@ -208,8 +208,13 @@ Icon.Content = props => {
 		/>
 	) : <Fragment />
 
+	const className = classnames(
+		[ 'stk--svg-wrapper' ],
+		{ 'stk--has-icon2': getValue( 'icon2' ) }
+	)
+
 	return (
-		<span className="stk--svg-wrapper">
+		<span className={ className }>
 			<SVGIcon.Content
 				className="stk--inner-svg"
 				prependRender={ linearGradient }
@@ -218,6 +223,15 @@ Icon.Content = props => {
 			/>
 			{ getValue( 'showBackgroundShape' ) && (
 				<ShapeComp className="stk--shape-icon" />
+			) }
+			{ getValue( 'icon2' ) && ( // This is a second icon that's only outputted for reference. It's up to the parent block to decide what to do with it.
+				<SVGIcon.Content
+					className="stk--inner-svg stk--icon-2"
+					prependRender={ linearGradient }
+					value={ getValue( 'icon2' ) }
+					ariaLabel={ getValue( 'ariaLabel' ) }
+					style={ { display: 'none' } }
+				/>
 			) }
 		</span>
 	)

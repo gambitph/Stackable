@@ -1,3 +1,6 @@
+
+// NOTE: The animation of the opening/closing of the accordion is implemented in
+// JavaScript.
 @import "common";
 
 .stk-block-accordion {
@@ -33,11 +36,22 @@
 			@include transition();
 		}
 	}
-	&[open] {
-		summary {
-			.stk--svg-wrapper {
-				transform: rotate(180deg);
+	&[open] summary {
+		.stk--svg-wrapper:not(.stk--has-icon2) {
+			transform: rotate(180deg);
+		}
+	}
+
+	// If another icon was used, don't rotate the icon, show the other icon when
+	// the accordion opens.
+	&[open] summary {
+		.stk--svg-wrapper.stk--has-icon2 {
+			.stk--inner-svg {
+				display: none;
 			}
+		}
+		.stk--icon-2 {
+			display: block !important;
 		}
 	}
 
@@ -48,39 +62,4 @@
 			flex-shrink: 0;
 		}
 	}
-
-	// Animate the height of the content when the accordion opens.
-	// @media (prefers-reduced-motion: no-preference) {
-	// 	// Animate the sliding up/down of the accordion. This is a work-around
-	// 	// since the details tag doesn't animate it.
-	// 	height: var(--stk-collapsed);
-	// 	// max-height: ;
-	// 	transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95), height 0.4s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-	// 	.stk-block-accordion__content {
-	// 		overflow-y: hidden;
-	// 		transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95), max-height 0.4s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-	// 	}
-	// 	&[open] {
-	// 		height: var(--stk-expanded);
-
-	// 	}
-
-	// 	// Animate the clipping of the content when opening/closing.  We need to
-	// 	// do this since the details tag immediately makes the content visible
-	// 	// and it can't be animated using normal means.
-	// 	&.stk--init {
-	// 		&[open] {
-	// 			&:not(.stk--is-expanded) {
-	// 				.stk-block-accordion__content {
-	// 					max-height: 0;
-	// 				}
-	// 			}
-	// 		}
-	// 		&.stk--is-expanded {
-	// 			.stk-block-accordion__content {
-	// 				max-height: calc(var(--stk-expanded) - var(--stk-collapsed));
-	// 			}
-	// 		}
-	// 	}
-	// }
 }
