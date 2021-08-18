@@ -4,9 +4,14 @@
 import { Style as StyleComponent } from '~stackable/components'
 import { getStyles, useStyles } from '~stackable/util'
 
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
 const getStyleParams = ( options = {}, location ) => {
 	const { } = options
-	return [
+	const params = [
 		{
 			attrNameTemplate: `${ location }%s`,
 			selector: `.stk-${ location }-separator`,
@@ -60,6 +65,8 @@ const getStyleParams = ( options = {}, location ) => {
 			format: 'drop-shadow(%s)',
 		},
 	]
+
+	return applyFilters( 'stackable.block-component.separator.get-style-params', params, options, location )
 }
 
 export const Style = props => {

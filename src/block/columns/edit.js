@@ -26,6 +26,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Separator,
+	getSeparatorClasses,
 } from '~stackable/block-components'
 
 /**
@@ -52,6 +53,7 @@ const Edit = props => {
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
 	const blockHoverClass = useBlockHoverClass()
@@ -61,6 +63,7 @@ const Edit = props => {
 		'stk-block-columns',
 		rowClass,
 		blockHoverClass,
+		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [

@@ -1,6 +1,23 @@
 .stk-block {
+	&:is(.stk-has-top-separator, .stk-has-bottom-separator) {
+		.stk-inner-blocks {
+			z-index: 5;
+		}
+		> * {
+			z-index: 2;
+		}
+	}
+
 	.stk-top-separator {
 		transform: scaleY(-1);
+	}
+
+	&.stk-has-top-separator {
+		padding-top: 200px;
+	}
+
+	&.stk-has-bottom-separator {
+		padding-bottom: 200px;
 	}
 
 	.stk-bottom-separator {

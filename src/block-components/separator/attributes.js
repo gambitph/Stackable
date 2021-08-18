@@ -1,5 +1,5 @@
 const createSeparatorLayerAttributes = ( location = 'top', layer = 2 ) => ( {
-	[ `${ location }SeparatorLayer${ layer }` ]: {
+	[ `${ location }SeparatorLayer${ layer }Show` ]: {
 		type: 'boolean',
 		default: '',
 	},

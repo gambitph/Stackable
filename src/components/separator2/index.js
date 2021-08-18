@@ -3,35 +3,21 @@
  */
 import { separators } from './designs'
 
-/**
- * External dependencies
- */
-import classnames from 'classnames'
-
 const Separator = props => {
 	const {
 		design,
-		className,
-		children,
 		inverted,
+		layer,
 	} = props
 
 	const { shape: SeparatorComp } = separators[ design || 'wave-1' ][ ! inverted ? 'default' : 'inverted' ]
 
-	const classNames = classnames( [
-		className,
-		'stk-separator__wrapper',
-	] )
-
 	return (
-		<div className={ classNames }>
-			<SeparatorComp
-				className="stk-separator__layer-1"
-				preserveAspectRatio="none"
-				aria-hidden={ true }
-			/>
-			{ children }
-		</div>
+		<SeparatorComp
+			className={ `stk-separator__layer-${ layer }` }
+			preserveAspectRatio="none"
+			aria-hidden={ true }
+		/>
 	)
 }
 
@@ -39,6 +25,7 @@ Separator.defaultProps = {
 	className: '',
 	design: 'wave-1',
 	inverted: false,
+	layer: 1,
 }
 
 Separator.Save = props => <Separator { ...props } />

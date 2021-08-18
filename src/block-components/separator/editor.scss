@@ -1,3 +1,12 @@
 .ugb-panel--top-separator .ugb-design-panel-item__image {
 	transform: scaleY(-1);
 }
+
+[data-type^="stackable"] .stk-block.stk-has-top-separator {
+	padding-top: 200px;
+}
+
+[data-type^="stackable"] .stk-block.stk-has-bottom-separator {
+	padding-bottom: 200px;
+}
+
