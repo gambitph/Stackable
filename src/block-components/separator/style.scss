@@ -31,6 +31,18 @@
 		}
 	}
 
+	.stk-separator__wrapper {
+		height: 200px;
+		inset: auto 0 0 0;
+	}
+
+	.stk-separator__layer-1 {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		z-index: 4;
+	}
+
 	.stk-top-separator,
 	.stk-bottom-separator {
 		&,
@@ -43,17 +55,6 @@
 		inset: -1px;
 		overflow: hidden;
 
-		.stk-separator__wrapper {
-			height: 200px;
-			inset: auto 0 0 0;
-		}
-
-		.stk-separator__layer-1 {
-			position: absolute;
-			height: 100%;
-			width: 100%;
-			z-index: 4;
-		}
 		svg {
 			left: 0;
 			right: 0;

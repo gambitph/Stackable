@@ -1,3 +1,8 @@
+/**
+ * External dependencies
+ */
+import { getAttrNameFunction } from '~stackable/util'
+
 const createSeparatorLayerAttributes = ( location = 'top', layer = 2 ) => ( {
 	[ `${ location }SeparatorLayer${ layer }Show` ]: {
 		type: 'boolean',
@@ -20,7 +25,7 @@ const createSeparatorLayerAttributes = ( location = 'top', layer = 2 ) => ( {
 		type: 'boolean',
 		default: '',
 	},
-	[ `${ location }SeparatorLayer${ layer }FlipHorizontally` ]: {
+	[ `${ location }SeparatorLayer${ layer }Inverted` ]: {
 		type: 'boolean',
 		default: '',
 	},
@@ -34,73 +39,53 @@ const createSeparatorLayerAttributes = ( location = 'top', layer = 2 ) => ( {
 	},
 } )
 
+export const createSeparatorAttributes = ( attrNameTemplate = '%s' ) => {
+	const getAttrName = getAttrNameFunction( attrNameTemplate )
+
+	return {
+		[ getAttrName( 'separatorShow' ) ]: {
+			type: 'boolean',
+			default: '',
+		},
+		[ getAttrName( 'separatorDesign' ) ]: {
+			type: 'string',
+			default: '',
+		},
+		[ getAttrName( 'separatorColor' ) ]: {
+			type: 'string',
+			default: '',
+		},
+		[ getAttrName( 'separatorHeight' ) ]: {
+			stkResponsive: true,
+			type: 'number',
+			default: '',
+		},
+		[ getAttrName( 'separatorWidth' ) ]: {
+			type: 'number',
+			default: '',
+		},
+		[ getAttrName( 'separatorShadow' ) ]: {
+			type: 'string',
+			default: '',
+		},
+		[ getAttrName( 'separatorFlipHorizontally' ) ]: {
+			type: 'boolean',
+			default: '',
+		},
+		[ getAttrName( 'separatorFlipVertically' ) ]: {
+			type: 'boolean',
+			default: '',
+		},
+		[ getAttrName( 'separatorBringToFront' ) ]: {
+			type: 'boolean',
+			default: '',
+		},
+	}
+}
+
 const separatorAttributes = {
-	topSeparatorShow: {
-		type: 'boolean',
-		default: '',
-	},
-	topSeparatorDesign: {
-		type: 'string',
-		default: '',
-	},
-	topSeparatorColor: {
-		type: 'string',
-		default: '',
-	},
-	topSeparatorHeight: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	topSeparatorWidth: {
-		type: 'number',
-		default: '',
-	},
-	topSeparatorShadow: {
-		type: 'string',
-		default: '',
-	},
-	topSeparatorFlipHorizontally: {
-		type: 'boolean',
-		default: '',
-	},
-	topSeparatorBringToFront: {
-		type: 'boolean',
-		default: '',
-	},
-	bottomSeparatorShow: {
-		type: 'boolean',
-		default: '',
-	},
-	bottomSeparatorDesign: {
-		type: 'string',
-		default: '',
-	},
-	bottomSeparatorColor: {
-		type: 'string',
-		default: '',
-	},
-	bottomSeparatorHeight: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	bottomSeparatorWidth: {
-		type: 'number',
-		default: '',
-	},
-	bottomSeparatorShadow: {
-		type: 'string',
-		default: '',
-	},
-	bottomSeparatorFlipHorizontally: {
-		type: 'boolean',
-		default: '',
-	},
-	bottomSeparatorBringToFront: {
-		type: 'boolean',
-		default: '',
-	},
+	...createSeparatorAttributes( 'top%s' ),
+	...createSeparatorAttributes( 'bottom%s' ),
 	...createSeparatorLayerAttributes( 'top', 2 ),
 	...createSeparatorLayerAttributes( 'top', 3 ),
 	...createSeparatorLayerAttributes( 'bottom', 2 ),

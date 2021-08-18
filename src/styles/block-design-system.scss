@@ -172,12 +172,16 @@
 // Block Background
 .stk-block-background {
 	background-color: cssvar(block-background-color);
-	padding: cssvar(block-background-padding);
+	&:not(.stk--no-padding) {
+		padding: cssvar(block-background-padding);
+	}
 }
 // TODO: revisit this since we're aiming for block max-width instead
 // Block background when the block is full width
 .stk-block-background.alignfull {
-	padding: cssvar(block-background-full-padding);
+	&:not(.stk--no-padding) {
+		padding: cssvar(block-background-full-padding);
+	}
 }
 
 // Icons

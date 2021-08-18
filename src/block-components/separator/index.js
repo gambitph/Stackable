@@ -8,9 +8,11 @@ import { Separator2 } from '~stackable/components'
 /**
  * Internal dependencies
  */
-import { Style } from './style'
+import { Style, separatorGetStyleParams } from './style'
 import { Edit } from './edit'
-import { addAttributes } from './attributes'
+import { addAttributes, createSeparatorAttributes } from './attributes'
+export { createSeparatorAttributes }
+export { separatorGetStyleParams }
 
 /**
  * WordPress dependencies
@@ -31,7 +33,7 @@ export const Separator = ( { children } ) => {
 						<div className="stk-separator__wrapper">
 							<Separator2
 								design={ getAttribute( 'topSeparatorDesign' ) }
-								inverted={ getAttribute( 'topSeparatorFlipVertically' ) }
+								inverted={ getAttribute( 'topSeparatorInverted' ) }
 							/>
 							{ applyFilters( 'stackable.block-component.separator.output.top.after', null, getAttributes() ) }
 						</div>
@@ -45,7 +47,7 @@ export const Separator = ( { children } ) => {
 						<div className="stk-separator__wrapper">
 							<Separator2
 								design={ getAttribute( 'bottomSeparatorDesign' ) }
-								inverted={ getAttribute( 'bottomSeparatorFlipVertically' ) }
+								inverted={ getAttribute( 'bottomSeparatorInverted' ) }
 							/>
 							{ applyFilters( 'stackable.block-component.separator.output.bottom.after', null, getAttributes() ) }
 						</div>
@@ -64,7 +66,7 @@ Separator.Content = ( { children, attributes } ) => {
 					<div className="stk-separator__wrapper">
 						<Separator2
 							design={ attributes.topSeparatorDesign }
-							inverted={ attributes.topSeparatorFlipVertically }
+							inverted={ attributes.topSeparatorInverted }
 						/>
 						{ applyFilters( 'stackable.block-component.separator.output.top.after', null, attributes ) }
 					</div>
@@ -76,7 +78,7 @@ Separator.Content = ( { children, attributes } ) => {
 					<div className="stk-separator__wrapper">
 						<Separator2
 							design={ attributes.bottomSeparatorDesign }
-							inverted={ attributes.bottomSeparatorFlipVertically }
+							inverted={ attributes.bottomSeparatorInverted }
 						/>
 						{ applyFilters( 'stackable.block-component.separator.output.bottom.after', null, attributes ) }
 					</div>

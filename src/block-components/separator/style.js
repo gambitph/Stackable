@@ -3,18 +3,26 @@
  */
 import { Style as StyleComponent } from '~stackable/components'
 import { getStyles, useStyles } from '~stackable/util'
+import { compact } from 'lodash'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
 
-const getStyleParams = ( options = {}, location ) => {
-	const { } = options
+export const separatorGetStyleParams = ( options = {}, location ) => {
+	const {
+		selector: _selector,
+		enableFlipHorizontally = true,
+		enableFlipVertically = false,
+	} = options
+
+	const selector = _selector !== undefined ? _selector : ` > .stk-${ location }-separator`
+
 	const params = [
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: ` > .stk-${ location }-separator`,
+			selector,
 			styleRule: 'zIndex',
 			attrName: 'separatorBringToFront',
 			valuePreCallback: value => {
@@ -26,32 +34,44 @@ const getStyleParams = ( options = {}, location ) => {
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: ` > .stk-${ location }-separator`,
+			selector,
 			styleRule: 'transform',
 			attrName: 'separatorFlipHorizontally',
-			valuePreCallback: value => {
-				if ( value ) {
-					return 'scale(-1)'
+			valuePreCallback: ( value, getAttribute ) => {
+				const flipHorizontally = value
+				const flipVertically = getAttribute( 'separatorFlipVertically' )
+
+				if ( ! enableFlipVertically && ! enableFlipHorizontally ) {
+					return undefined
 				}
-				return undefined
+
+				if ( ! flipHorizontally && ! flipVertically ) {
+					return undefined
+				}
+
+				return compact( [
+					( enableFlipHorizontally && flipHorizontally ) ? 'scaleX(-1)' : undefined,
+					( enableFlipVertically && flipVertically ) ? 'scaleY(-1)' : undefined,
+				] ).join( ' ' )
 			},
+			dependencies: [ 'separatorFlipVertically' ],
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: ` > .stk-${ location }-separator svg`,
+			selector: selector + ' svg',
 			styleRule: 'fill',
 			attrName: 'separatorColor',
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: ` > .stk-${ location }-separator .stk-separator__wrapper`,
+			selector: selector + ' .stk-separator__wrapper',
 			styleRule: 'transform',
 			attrName: 'separatorWidth',
 			format: 'scaleX(%s)',
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: ` > .stk-${ location }-separator .stk-separator__wrapper`,
+			selector: selector + ' .stk-separator__wrapper',
 			styleRule: 'height',
 			responsive: 'all',
 			attrName: 'separatorHeight',
@@ -59,7 +79,7 @@ const getStyleParams = ( options = {}, location ) => {
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: ` > .stk-${ location }-separator svg`,
+			selector: selector + ' svg',
 			styleRule: 'filter',
 			attrName: 'separatorShadow',
 			format: 'drop-shadow(%s)',
@@ -76,8 +96,8 @@ export const Style = props => {
 		...propsToPass
 	} = props
 
-	const topSeparatorStyles = useStyles( attributes, getStyleParams( options, 'top' ) )
-	const bottomSeparatorStyles = useStyles( attributes, getStyleParams( options, 'bottom' ) )
+	const topSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'top' ) )
+	const bottomSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'bottom' ) )
 
 	return (
 		<>
@@ -104,8 +124,8 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const topSeparatorStyles = getStyles( attributes, getStyleParams( options, 'top' ) )
-	const bottomSeparatorStyles = getStyles( attributes, getStyleParams( options, 'bottom' ) )
+	const topSeparatorStyles = getStyles( attributes, separatorGetStyleParams( options, 'top' ) )
+	const bottomSeparatorStyles = getStyles( attributes, separatorGetStyleParams( options, 'bottom' ) )
 
 	return (
 		<>

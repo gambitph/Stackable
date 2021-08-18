@@ -28,6 +28,6 @@ Separator.defaultProps = {
 	layer: 1,
 }
 
-Separator.Save = props => <Separator { ...props } />
+Separator.Content = props => <Separator { ...props } />
 
 export default Separator
