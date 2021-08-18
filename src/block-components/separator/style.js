@@ -14,7 +14,7 @@ const getStyleParams = ( options = {}, location ) => {
 	const params = [
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: `.stk-${ location }-separator`,
+			selector: ` > .stk-${ location }-separator`,
 			styleRule: 'zIndex',
 			attrName: 'separatorBringToFront',
 			valuePreCallback: value => {
@@ -26,7 +26,7 @@ const getStyleParams = ( options = {}, location ) => {
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: `.stk-${ location }-separator`,
+			selector: ` > .stk-${ location }-separator`,
 			styleRule: 'transform',
 			attrName: 'separatorFlipHorizontally',
 			valuePreCallback: value => {
@@ -38,20 +38,20 @@ const getStyleParams = ( options = {}, location ) => {
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: `.stk-${ location }-separator svg`,
+			selector: ` > .stk-${ location }-separator svg`,
 			styleRule: 'fill',
 			attrName: 'separatorColor',
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: `.stk-${ location }-separator .stk-separator__wrapper`,
+			selector: ` > .stk-${ location }-separator .stk-separator__wrapper`,
 			styleRule: 'transform',
 			attrName: 'separatorWidth',
 			format: 'scaleX(%s)',
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: `.stk-${ location }-separator .stk-separator__wrapper`,
+			selector: ` > .stk-${ location }-separator .stk-separator__wrapper`,
 			styleRule: 'height',
 			responsive: 'all',
 			attrName: 'separatorHeight',
@@ -59,7 +59,7 @@ const getStyleParams = ( options = {}, location ) => {
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: `.stk-${ location }-separator svg`,
+			selector: ` > .stk-${ location }-separator svg`,
 			styleRule: 'filter',
 			attrName: 'separatorShadow',
 			format: 'drop-shadow(%s)',

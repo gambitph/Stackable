@@ -15,6 +15,8 @@ import {
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
+	Separator,
+	getSeparatorClasses,
 } from '~stackable/block-components'
 
 /**
@@ -29,6 +31,7 @@ export const Save = props => {
 	} = props
 
 	const rowClass = getRowClasses( attributes )
+	const separatorClass = getSeparatorClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const responsiveClass = getResponsiveClasses( attributes )
 
@@ -36,6 +39,7 @@ export const Save = props => {
 		className,
 		'stk-block-video-popup',
 		responsiveClass,
+		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -55,9 +59,11 @@ export const Save = props => {
 		>
 			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<button className={ contentClassNames } aria-label="Play Video">
-				<InnerBlocks.Content />
-			</button>
+			<Separator.Content attributes={ attributes }>
+				<button className={ contentClassNames } aria-label="Play Video">
+					<InnerBlocks.Content />
+				</button>
+			</Separator.Content>
 		</BlockDiv.Content>
 	)
 }

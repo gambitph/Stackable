@@ -21,6 +21,8 @@ import {
 	ConditionalDisplay,
 	getRowClasses,
 	MarginBottom,
+	Separator,
+	getSeparatorClasses,
 } from '~stackable/block-components'
 import { useBlockHoverClass } from '~stackable/hooks'
 
@@ -51,6 +53,7 @@ const Edit = props => {
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
@@ -59,6 +62,7 @@ const Edit = props => {
 		'stk-block-feature',
 		rowClass,
 		blockHoverClass,
+		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -74,6 +78,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
@@ -85,13 +90,15 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-feature" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div className={ contentClassNames }>
-					<InnerBlocks
-						template={ TEMPLATE }
-						templateLock="insert"
-						orientation="horizontal"
-					/>
-				</div>
+				<Separator>
+					<div className={ contentClassNames }>
+						<InnerBlocks
+							template={ TEMPLATE }
+							templateLock="insert"
+							orientation="horizontal"
+						/>
+					</div>
+				</Separator>
 			</BlockDiv>
 			<MarginBottom />
 		</>

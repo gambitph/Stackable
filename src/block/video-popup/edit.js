@@ -27,6 +27,8 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Separator,
+	getSeparatorClasses,
 } from '~stackable/block-components'
 
 /**
@@ -53,6 +55,7 @@ const Edit = props => {
 
 	const { clientId } = useBlockEditContext()
 	const rowClass = getRowClasses( attributes )
+	const separatorClass = getSeparatorClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
@@ -60,6 +63,7 @@ const Edit = props => {
 		className,
 		'stk-block-video-popup',
 		rowClass,
+		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -75,6 +79,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
@@ -125,14 +130,14 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-video-popup" />
 
 			<BlockDiv className={ blockClassNames }>
-				<Fragment>
+				<Separator>
 					<div className={ contentClassNames }>
 						<InnerBlocks
 							template={ TEMPLATE }
 							templateLock="all"
 						/>
 					</div>
-				</Fragment>
+				</Separator>
 			</BlockDiv>
 			<MarginBottom />
 		</Fragment>

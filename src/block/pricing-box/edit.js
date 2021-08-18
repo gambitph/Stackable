@@ -21,6 +21,8 @@ import {
 	ConditionalDisplay,
 	getRowClasses,
 	MarginBottom,
+	Separator,
+	getSeparatorClasses,
 } from '~stackable/block-components'
 
 /**
@@ -66,6 +68,7 @@ const Edit = props => {
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
@@ -74,6 +77,7 @@ const Edit = props => {
 		'stk-block-pricing-box',
 		rowClass,
 		blockHoverClass,
+		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -89,6 +93,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
@@ -100,14 +105,16 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div className={ contentClassNames }>
-					<InnerBlocks
-						template={ TEMPLATE }
-						// templateLock="insert"
-						allowedBlocks={ ALLOWED_BLOCKS }
-						orientation="horizontal"
-					/>
-				</div>
+				<Separator>
+					<div className={ contentClassNames }>
+						<InnerBlocks
+							template={ TEMPLATE }
+							// templateLock="insert"
+							allowedBlocks={ ALLOWED_BLOCKS }
+							orientation="horizontal"
+						/>
+					</div>
+				</Separator>
 			</BlockDiv>
 			<MarginBottom />
 		</>
