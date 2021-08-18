@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { ExpandIcon } from '~stackable/icons'
+import { AccordionIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n'
 
 export const settings = {
 	...metadata,
-	icon: ExpandIcon,
+	icon: AccordionIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,

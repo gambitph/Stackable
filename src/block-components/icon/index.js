@@ -151,7 +151,10 @@ export const Icon = props => {
 
 	const classNames = classnames(
 		[ 'stk--svg-wrapper' ],
-		{ 'stk--show-cursor': debouncedIsSelected },
+		{
+			'stk--show-cursor': debouncedIsSelected,
+			'stk--has-icon2': getAttribute( 'icon2' ),
+		}
 	)
 
 	return (
@@ -167,17 +170,28 @@ export const Icon = props => {
 			} }
 
 		>
-			<SVGIcon
-				className="stk--inner-svg"
-				prependRender={ linearGradient }
-				value={ getAttribute( 'icon' ) }
-				ariaLabel={ getAttribute( 'ariaLabel' ) }
-			/>
+			{ getAttribute( 'icon' ) && (
+				<SVGIcon
+					className="stk--inner-svg"
+					prependRender={ linearGradient }
+					value={ getAttribute( 'icon' ) }
+					ariaLabel={ getAttribute( 'ariaLabel' ) }
+				/>
+			) }
 			{ getAttribute( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
 			{ isOpen && (
 				<IconSearchPopover
 					useRef={ popoverEl }
 					onChange={ updateAttributeHandler( 'icon' ) }
+				/>
+			) }
+			{ getAttribute( 'icon2' ) && (
+				<SVGIcon
+					className="stk--inner-svg stk--icon-2"
+					prependRender={ linearGradient }
+					value={ getAttribute( 'icon2' ) }
+					ariaLabel={ getAttribute( 'ariaLabel' ) }
+					style={ { display: 'none' } }
 				/>
 			) }
 		</span>
@@ -196,10 +210,6 @@ Icon.Content = props => {
 
 	const ShapeComp = getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' )
 
-	if ( ! getValue( 'icon' ) ) {
-		return null
-	}
-
 	const linearGradient = hasLinearGradient ? (
 		<LinearGradient
 			id={ 'linear-gradient-' + attributes.uniqueId }
@@ -215,12 +225,14 @@ Icon.Content = props => {
 
 	return (
 		<span className={ className }>
-			<SVGIcon.Content
-				className="stk--inner-svg"
-				prependRender={ linearGradient }
-				value={ getValue( 'icon' ) }
-				ariaLabel={ getValue( 'ariaLabel' ) }
-			/>
+			{ getValue( 'icon' ) && (
+				<SVGIcon.Content
+					className="stk--inner-svg"
+					prependRender={ linearGradient }
+					value={ getValue( 'icon' ) }
+					ariaLabel={ getValue( 'ariaLabel' ) }
+				/>
+			) }
 			{ getValue( 'showBackgroundShape' ) && (
 				<ShapeComp className="stk--shape-icon" />
 			) }
