@@ -27,8 +27,6 @@ import {
 	Advanced,
 	MarginBottom,
 	BlockLink,
-	Separator,
-	getSeparatorClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -59,14 +57,12 @@ const Edit = props => {
 
 	const { hasInnerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-blockquote',
 		blockHoverClass,
-		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -88,7 +84,6 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasBlockAlignment={ true } />
 			<BlockDiv.InspectorControls />
-			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
@@ -103,16 +98,14 @@ const Edit = props => {
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-blockquote" />
 
-				<Separator>
-					<ContainerDiv className={ contentClassNames }>
-						<InnerBlocks
-							template={ TEMPLATE }
-							templateLock="all"
-							templateInsertUpdatesSelection={ true }
-							renderAppender={ renderAppender }
-						/>
-					</ContainerDiv>
-				</Separator>
+				<ContainerDiv className={ contentClassNames }>
+					<InnerBlocks
+						template={ TEMPLATE }
+						templateLock="all"
+						templateInsertUpdatesSelection={ true }
+						renderAppender={ renderAppender }
+					/>
+				</ContainerDiv>
 			</BlockDiv>
 			<MarginBottom />
 		</>
