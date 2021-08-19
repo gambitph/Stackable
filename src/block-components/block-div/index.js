@@ -14,6 +14,14 @@ import { getHtmlTag } from '../advanced/use-html-tag'
 import { CustomAttributes } from '../custom-attributes'
 
 export const BlockDiv = props => {
+	const {
+		className,
+		applyCustomAttributes,
+		applyAdvancedAttributes,
+		renderHtmlTag,
+		...propsToPass
+	} = props
+
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
@@ -21,10 +29,10 @@ export const BlockDiv = props => {
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
-	const customAttributes = props.applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
+	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
 
 	const classNames = classnames( [
-		props.className,
+		className,
 		'stk-block',
 		getUniqueBlockClass( attributes.uniqueId ),
 	],
@@ -34,12 +42,12 @@ export const BlockDiv = props => {
 	} )
 
 	return <Div
-		{ ...props }
+		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ props.applyAdvancedAttributes && ( attributes.anchor || undefined ) }
+		id={ applyAdvancedAttributes && ( attributes.anchor || undefined ) }
 		data-block-id={ attributes.uniqueId }
-		blockTag={ props.renderHtmlTag ? htmlTag : 'div' }
+		blockTag={ renderHtmlTag ? htmlTag : 'div' }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
@@ -58,16 +66,19 @@ BlockDiv.defaultProps = {
 
 BlockDiv.Content = props => {
 	const {
+		className,
 		attributes,
+		applyCustomAttributes,
+		applyAdvancedAttributes,
 		...propsToPass
 	} = props
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
-	const customAttributes = props.applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
+	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
 
 	const classNames = classnames( [
-		props.className,
+		className,
 		'stk-block',
 		getUniqueBlockClass( attributes.uniqueId ),
 	],
@@ -80,7 +91,7 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ props.applyAdvancedAttributes && ( attributes.anchor || undefined ) }
+		id={ applyAdvancedAttributes && ( attributes.anchor || undefined ) }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
