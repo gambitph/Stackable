@@ -47,21 +47,23 @@ export const BackgroundControls = props => {
 
 	return (
 		<Fragment>
-			<AdvancedToolbarControl
-				controls={ [
-					{
-						value: '',
-						title: __( 'Single', i18n ),
-					},
-					{
-						value: 'gradient',
-						title: __( 'Gradient', i18n ),
-					},
-				] }
-				attribute={ getAttrName( 'backgroundColorType' ) }
-				fullwidth={ false }
-				isSmall={ true }
-			/>
+			{ props.hasGradient &&
+				<AdvancedToolbarControl
+					controls={ [
+						{
+							value: '',
+							title: __( 'Single', i18n ),
+						},
+						{
+							value: 'gradient',
+							title: __( 'Gradient', i18n ),
+						},
+					] }
+					attribute={ getAttrName( 'backgroundColorType' ) }
+					fullwidth={ false }
+					isSmall={ true }
+				/>
+			}
 			<ColorPaletteControl
 				label={
 					getAttribute( 'backgroundColorType' ) === 'gradient'
@@ -143,11 +145,13 @@ export const BackgroundControls = props => {
 						className="ugb--help-tip-gradient-location"
 					/>
 
-					<BlendModeControl
-						label={ __( 'Background Gradient Blend Mode', i18n ) }
-						attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
-						className="ugb--help-tip-background-blend-mode"
-					/>
+					{ props.hasBackgroundGradientBlendMode &&
+						<BlendModeControl
+							label={ __( 'Background Gradient Blend Mode', i18n ) }
+							attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
+							className="ugb--help-tip-background-blend-mode"
+						/>
+					}
 				</ButtonIconPopoverControl>
 			) }
 
@@ -155,13 +159,15 @@ export const BackgroundControls = props => {
 				<ControlSeparator />
 			}
 
-			<ImageControl2
-				label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-				help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
-				allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
-				attribute={ getAttrName( 'backgroundMedia' ) }
-				responsive="all"
-			/>
+			{ props.hasBackgroundImage &&
+				<ImageControl2
+					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
+					allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
+					attribute={ getAttrName( 'backgroundMedia' ) }
+					responsive="all"
+				/>
+			}
 
 			{ hasBackgroundMedia &&
 				<AdvancedRangeControl
@@ -287,4 +293,7 @@ export const BackgroundControls = props => {
 BackgroundControls.defaultProps = {
 	attrNameTemplate: '%s',
 	backgroundMediaAllowVideo: true,
+	hasGradient: true,
+	hasBackgroundImage: true,
+	hasBackgroundGradientBlendMode: true,
 }

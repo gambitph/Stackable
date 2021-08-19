@@ -87,7 +87,7 @@ export const BorderControls = props => {
 				hover={ props.hasBorderRadiusHover }
 				className="ugb--help-tip-general-border-radius"
 				min={ 0 }
-				sliderMax={ 50 }
+				sliderMax={ props.borderSliderMax }
 				placeholderRender={ props.borderRadiusPlaceholder }
 			/>
 			<ShadowControl
@@ -106,4 +106,5 @@ BorderControls.defaultProps = {
 	hasBorderControls: true,
 	hasBorderRadiusHover: true,
 	borderSelector: null,
+	borderSliderMax: 50,
 }
