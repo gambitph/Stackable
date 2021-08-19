@@ -67,12 +67,16 @@ const Edit = props => {
 	} = props
 
 	const [ isOpen, setIsOpen ] = useState( true )
+	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
 	// Opens or closes the accordion when the heading is clicked.
 	useEffect( () => {
+		if ( ! hasInitClickHandler ) {
+			return
+		}
 		const headerEl = document.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
 		const onClick = ev => {
 			// Dom't open the accordion if the user is clicking on the icon.
@@ -84,7 +88,15 @@ const Edit = props => {
 		return () => {
 			headerEl.removeEventListener( 'click', onClick )
 		}
-	}, [ clientId, isOpen, setIsOpen ] )
+	}, [ clientId, isOpen, setIsOpen, hasInitClickHandler ] )
+
+	// When first adding an accordion, the inner blocks may not be rendered yet, wait for it.
+	if ( ! hasInitClickHandler ) {
+		const headerEl = document.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
+		if ( headerEl ) {
+			setHasInitClickHandler( true )
+		}
+	}
 
 	const blockClassNames = classnames( [
 		className,
