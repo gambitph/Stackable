@@ -8,6 +8,7 @@ import {
 	EffectsAnimations,
 	Responsive,
 	createSeparatorAttributes,
+	createSeparatorLayerAttributes,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -31,6 +32,16 @@ export const attributes = ( version = VERSION ) => {
 				default: 'full',
 			},
 			...createSeparatorAttributes(),
+			...createSeparatorLayerAttributes( '%s', 2 ),
+			...createSeparatorLayerAttributes( '%s', 3 ),
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.addDefaultValues( {
+		attributes: {
+			separatorShow: true,
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

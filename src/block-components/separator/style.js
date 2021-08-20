@@ -13,13 +13,14 @@ import { applyFilters } from '@wordpress/hooks'
 export const separatorGetStyleParams = ( options = {}, location ) => {
 	const {
 		selector: _selector,
+		wrapperSelector = '.stk-separator__wrapper',
 		enableFlipHorizontally = true,
 		enableFlipVertically = false,
 	} = options
 
-	const selector = _selector !== undefined ? _selector : ` > .stk-${ location }-separator`
+	const selector = _selector !== undefined ? _selector : ` > .stk-separator__${ location }`
 
-	const params = [
+	return [
 		{
 			attrNameTemplate: `${ location }%s`,
 			selector,
@@ -64,14 +65,14 @@ export const separatorGetStyleParams = ( options = {}, location ) => {
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: selector + ' .stk-separator__wrapper',
+			selector: selector + ` ${ wrapperSelector }`,
 			styleRule: 'transform',
 			attrName: 'separatorWidth',
 			format: 'scaleX(%s)',
 		},
 		{
 			attrNameTemplate: `${ location }%s`,
-			selector: selector + ' .stk-separator__wrapper',
+			selector: selector + ` ${ wrapperSelector }`,
 			styleRule: 'height',
 			responsive: 'all',
 			attrName: 'separatorHeight',
@@ -85,8 +86,6 @@ export const separatorGetStyleParams = ( options = {}, location ) => {
 			format: 'drop-shadow(%s)',
 		},
 	]
-
-	return applyFilters( 'stackable.block-component.separator.get-style-params', params, options, location )
 }
 
 export const Style = props => {
@@ -98,6 +97,8 @@ export const Style = props => {
 
 	const topSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'top' ) )
 	const bottomSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'bottom' ) )
+	const topSeparatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'top' ) )
+	const bottomSeparatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'bottom' ) )
 
 	return (
 		<>
@@ -109,6 +110,18 @@ export const Style = props => {
 			/>
 			<StyleComponent
 				styles={ bottomSeparatorStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent
+				styles={ topSeparatorLayerStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent
+				styles={ bottomSeparatorLayerStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
@@ -126,6 +139,8 @@ Style.Content = props => {
 
 	const topSeparatorStyles = getStyles( attributes, separatorGetStyleParams( options, 'top' ) )
 	const bottomSeparatorStyles = getStyles( attributes, separatorGetStyleParams( options, 'bottom' ) )
+	const topSeparatorLayerStyles = getStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'top' ) )
+	const bottomSeparatorLayerStyles = getStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'bottom' ) )
 
 	return (
 		<>
@@ -137,6 +152,18 @@ Style.Content = props => {
 			/>
 			<StyleComponent.Content
 				styles={ bottomSeparatorStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent.Content
+				styles={ topSeparatorLayerStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent.Content
+				styles={ bottomSeparatorLayerStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }

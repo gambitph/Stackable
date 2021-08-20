@@ -22,10 +22,12 @@ import {
 	renderToString,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { applyFilters } from '@wordpress/hooks'
 
 const separatorOptions = {
 	selector: '',
 	enableFlipVertically: true,
+	wrapperSelector: '.stk-block-separator__inner',
 }
 
 export const SeparatorStyles = props => {
@@ -42,6 +44,7 @@ export const SeparatorStyles = props => {
 	propsToPass.attributes = { ...attributes, clientId }
 
 	const separatorStyles = useStyles( attributes, separatorGetStyleParams( separatorOptions, '' ) )
+	const separatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], separatorOptions, '' ) )
 
 	return (
 		<>
@@ -50,6 +53,12 @@ export const SeparatorStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<StyleComponent
 				styles={ separatorStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent
+				styles={ separatorLayerStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
@@ -70,6 +79,7 @@ SeparatorStyles.Content = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 
 	const separatorStyles = getStyles( props.attributes, separatorGetStyleParams( separatorOptions, '' ) )
+	const separatorLayerStyles = getStyles( props.attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], separatorOptions, '' ) )
 
 	const styles = (
 		<>
@@ -78,6 +88,12 @@ SeparatorStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
 				styles={ separatorStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent.Content
+				styles={ separatorLayerStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }

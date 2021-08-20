@@ -10,9 +10,12 @@ import { Separator2 } from '~stackable/components'
  */
 import { Style, separatorGetStyleParams } from './style'
 import { Edit } from './edit'
-import { addAttributes, createSeparatorAttributes } from './attributes'
-export { createSeparatorAttributes }
-export { separatorGetStyleParams }
+import {
+	addAttributes, createSeparatorAttributes, createSeparatorLayerAttributes,
+} from './attributes'
+export {
+	createSeparatorAttributes, createSeparatorLayerAttributes, separatorGetStyleParams,
+}
 
 /**
  * WordPress dependencies
@@ -29,7 +32,7 @@ export const Separator = ( { children } ) => {
 		<>
 			{ getAttribute( 'topSeparatorShow' ) && (
 				<>
-					<div className="stk-top-separator">
+					<div className="stk-separator stk-separator__top">
 						<div className="stk-separator__wrapper">
 							<Separator2
 								design={ getAttribute( 'topSeparatorDesign' ) }
@@ -43,7 +46,7 @@ export const Separator = ( { children } ) => {
 			{ children }
 			{ getAttribute( 'bottomSeparatorShow' ) && (
 				<>
-					<div className="stk-bottom-separator">
+					<div className="stk-separator stk-separator__bottom">
 						<div className="stk-separator__wrapper">
 							<Separator2
 								design={ getAttribute( 'bottomSeparatorDesign' ) }
@@ -62,7 +65,7 @@ Separator.Content = ( { children, attributes } ) => {
 	return (
 		<>
 			{ attributes.topSeparatorShow && (
-				<div className="stk-top-separator">
+				<div className="stk-separator stk-separator__top">
 					<div className="stk-separator__wrapper">
 						<Separator2
 							design={ attributes.topSeparatorDesign }
@@ -74,7 +77,7 @@ Separator.Content = ( { children, attributes } ) => {
 			) }
 			{ children }
 			{ attributes.bottomSeparatorShow && (
-				<div className="stk-bottom-separator">
+				<div className="stk-separator stk-separator__bottom">
 					<div className="stk-separator__wrapper">
 						<Separator2
 							design={ attributes.bottomSeparatorDesign }

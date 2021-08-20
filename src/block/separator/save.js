@@ -18,6 +18,11 @@ import {
 	Separator2,
 } from '~stackable/components'
 
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
 export const Save = props => {
 	const {
 		className,
@@ -39,8 +44,7 @@ export const Save = props => {
 	] )
 
 	const separatorClassNames = classnames( [
-		'stk-separator__wrapper',
-		'stk-block-separator__svg-inner',
+		'stk-block-separator__inner',
 	] )
 
 	return (
@@ -56,6 +60,7 @@ export const Save = props => {
 					design={ separatorDesign }
 					inverted={ separatorInverted }
 				/>
+				{ applyFilters( 'stackable.block.separator.save.output.layers', null, props ) }
 			</div>
 			<div className="stk-block-separator__bottom-pad" />
 		</BlockDiv.Content>

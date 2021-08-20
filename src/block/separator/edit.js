@@ -57,8 +57,7 @@ const Edit = props => {
 	] )
 
 	const separatorClassNames = classnames( [
-		'stk-separator__wrapper',
-		'stk-block-separator__svg-inner',
+		'stk-block-separator__inner',
 	] )
 
 	return (
@@ -116,6 +115,7 @@ const Edit = props => {
 						design={ separatorDesign }
 						inverted={ separatorInverted }
 					/>
+					{ applyFilters( 'stackable.block.separator.edit.output.layers', null, props ) }
 				</div>
 				<div className="stk-block-separator__bottom-pad" />
 			</BlockDiv>

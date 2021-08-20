@@ -76,11 +76,16 @@
 	icon-color: #A6A6A6,
 	icon-shape-color: #ddd,
 
-	/***
+	/**
 	 * Typography
 	 */
 	subtitle-size: 16px,
 	subtitle-color: #39414d,
+
+	/**
+	 * Separators
+	 */
+	separator-color: #fff,
 ) );
 
 /**
@@ -201,4 +206,12 @@
 .stk-subtitle {
 	font-size: cssvar(subtitle-size);
 	color: cssvar(subtitle-color);
+}
+
+// Separator
+.stk-block-separator__inner,
+.stk-separator__wrapper {
+	svg {
+		fill: cssvar(separator-color);
+	}
 }

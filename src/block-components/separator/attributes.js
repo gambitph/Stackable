@@ -3,41 +3,45 @@
  */
 import { getAttrNameFunction } from '~stackable/util'
 
-const createSeparatorLayerAttributes = ( location = 'top', layer = 2 ) => ( {
-	[ `${ location }SeparatorLayer${ layer }Show` ]: {
-		type: 'boolean',
-		default: '',
-	},
-	[ `${ location }SeparatorLayer${ layer }Color` ]: {
-		type: 'string',
-		default: '',
-	},
-	[ `${ location }SeparatorLayer${ layer }Height` ]: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	[ `${ location }SeparatorLayer${ layer }Width` ]: {
-		type: 'number',
-		default: '',
-	},
-	[ `${ location }SeparatorLayer${ layer }FlipHorizontally` ]: {
-		type: 'boolean',
-		default: '',
-	},
-	[ `${ location }SeparatorLayer${ layer }Inverted` ]: {
-		type: 'boolean',
-		default: '',
-	},
-	[ `${ location }SeparatorLayer${ layer }Opacity` ]: {
-		type: 'number',
-		default: '',
-	},
-	[ `${ location }SeparatorLayer${ layer }BlendMode` ]: {
-		type: 'string',
-		default: '',
-	},
-} )
+export const createSeparatorLayerAttributes = ( attrNameTemplate = 'top%s', layer = 2 ) => {
+	const getAttrName = getAttrNameFunction( attrNameTemplate )
+
+	return {
+		[ getAttrName( `SeparatorLayer${ layer }Show` ) ]: {
+			type: 'boolean',
+			default: '',
+		},
+		[ getAttrName( `SeparatorLayer${ layer }Color` ) ]: {
+			type: 'string',
+			default: '',
+		},
+		[ getAttrName( `SeparatorLayer${ layer }Height` ) ]: {
+			stkResponsive: true,
+			type: 'number',
+			default: '',
+		},
+		[ getAttrName( `SeparatorLayer${ layer }Width` ) ]: {
+			type: 'number',
+			default: '',
+		},
+		[ getAttrName( `SeparatorLayer${ layer }FlipHorizontally` ) ]: {
+			type: 'boolean',
+			default: '',
+		},
+		[ getAttrName( `SeparatorLayer${ layer }Inverted` ) ]: {
+			type: 'boolean',
+			default: '',
+		},
+		[ getAttrName( `SeparatorLayer${ layer }Opacity` ) ]: {
+			type: 'number',
+			default: '',
+		},
+		[ getAttrName( `SeparatorLayer${ layer }BlendMode` ) ]: {
+			type: 'string',
+			default: '',
+		},
+	}
+}
 
 export const createSeparatorAttributes = ( attrNameTemplate = '%s' ) => {
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -68,6 +72,10 @@ export const createSeparatorAttributes = ( attrNameTemplate = '%s' ) => {
 			type: 'string',
 			default: '',
 		},
+		[ getAttrName( 'separatorInverted' ) ]: {
+			type: 'boolean',
+			default: '',
+		},
 		[ getAttrName( 'separatorFlipHorizontally' ) ]: {
 			type: 'boolean',
 			default: '',
@@ -86,10 +94,10 @@ export const createSeparatorAttributes = ( attrNameTemplate = '%s' ) => {
 const separatorAttributes = {
 	...createSeparatorAttributes( 'top%s' ),
 	...createSeparatorAttributes( 'bottom%s' ),
-	...createSeparatorLayerAttributes( 'top', 2 ),
-	...createSeparatorLayerAttributes( 'top', 3 ),
-	...createSeparatorLayerAttributes( 'bottom', 2 ),
-	...createSeparatorLayerAttributes( 'bottom', 3 ),
+	...createSeparatorLayerAttributes( 'top%s', 2 ),
+	...createSeparatorLayerAttributes( 'top%s', 3 ),
+	...createSeparatorLayerAttributes( 'bottom%s', 2 ),
+	...createSeparatorLayerAttributes( 'bottom%s', 3 ),
 }
 
 export const addAttributes = ( attrObject, options = {} ) => {

@@ -8,7 +8,7 @@
 		}
 	}
 
-	.stk-top-separator {
+	.stk-separator__top {
 		transform: scaleY(-1);
 	}
 
@@ -20,7 +20,7 @@
 		padding-bottom: 200px;
 	}
 
-	.stk-bottom-separator {
+	.stk-separator__bottom {
 		.stk-separator__wrapper {
 			top: auto;
 			bottom: 0;
@@ -43,14 +43,13 @@
 		z-index: 4;
 	}
 
-	.stk-top-separator,
-	.stk-bottom-separator {
-		&,
-		.stk-separator__wrapper {
-			position: absolute !important;
-			margin: 0;
-		}
+	.stk-separator,
+	.stk-separator__wrapper {
+		position: absolute !important;
+		margin: 0;
+	}
 
+	.stk-separator {
 		pointer-events: none;
 		inset: -1px;
 		overflow: hidden;
