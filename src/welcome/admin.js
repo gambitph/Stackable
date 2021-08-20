@@ -168,7 +168,7 @@ const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
 	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
 	const [ v2EditorBackwardCompatibility, setV2EditorackwardCompatibility ] = useState( false )
-	const [ v2EditorBackwardCompatibilityHidden, setV2EditorackwardCompatibilityHidden ] = useState( false )
+	const [ v2EditorBackwardCompatibilityUsage, setV2EditorackwardCompatibilityUsage ] = useState( false )
 	const [ v2FrontendBackwardCompatibility, setV2FrontendBackwardCompatibility ] = useState( false )
 	const [ showPremiumNotices, setShowPremiumNotices ] = useState( false )
 	const [ isBusy, setIsBusy ] = useState( false )
@@ -181,7 +181,7 @@ const AdditionalOptions = props => {
 				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
 				setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
 				setV2EditorackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
-				setV2EditorackwardCompatibilityHidden( response.stackable_v2_editor_compatibility_hidden === '1' )
+				setV2EditorackwardCompatibilityUsage( response.stackable_v2_editor_compatibility_usage === '1' )
 				setV2FrontendBackwardCompatibility( response.stackable_v2_frontend_compatibility === '1' )
 				setShowPremiumNotices( response.stackable_show_pro_notices === '1' )
 				setIsBusy( false )
@@ -189,9 +189,9 @@ const AdditionalOptions = props => {
 		} )
 	}, [] )
 
-	const updateSetting = ( setting, value ) => {
+	const updateSetting = settings => {
 		setIsBusy( true )
-		const model = new models.Settings( { [ setting ]: value } )
+		const model = new models.Settings( settings )
 		model.save().then( () => setIsBusy( false ) )
 	}
 
@@ -202,7 +202,7 @@ const AdditionalOptions = props => {
 					label={ __( 'Show "Go premium" notices', i18n ) }
 					checked={ showPremiumNotices }
 					onChange={ checked => {
-						updateSetting( 'stackable_show_pro_notices', checked ? '1' : '' )
+						updateSetting( { stackable_show_pro_notices: checked ? '1' : '' } ) // eslint-disable-line camelcase
 						setShowPremiumNotices( checked )
 					} }
 				/>
@@ -211,7 +211,7 @@ const AdditionalOptions = props => {
 				label={ __( 'Don\'t show help video tooltips', i18n ) }
 				checked={ helpTooltipsDisabled }
 				onChange={ checked => {
-					updateSetting( 'stackable_help_tooltip_disabled', checked ? '1' : '' )
+					updateSetting( { stackable_help_tooltip_disabled: checked ? '1' : '' } ) // eslint-disable-line camelcase
 					setHelpTooltipsDisabled( checked )
 				} }
 			/>
@@ -225,25 +225,34 @@ const AdditionalOptions = props => {
 				label={ __( 'Load version 2 blocks in the editor', i18n ) }
 				checked={ v2EditorBackwardCompatibility }
 				onChange={ checked => {
-					updateSetting( 'stackable_v2_editor_compatibility', checked ? '1' : '' )
+					const settings = { stackable_v2_editor_compatibility: checked ? '1' : '' } // eslint-disable-line camelcase
+					if ( checked ) {
+						settings.stackable_v2_editor_compatibility_usage = '' // eslint-disable-line camelcase
+						setV2EditorackwardCompatibilityUsage( false )
+					}
+					updateSetting( settings )
 					setV2EditorackwardCompatibility( checked )
 				} }
 			/>
 			<CheckboxControl
-				label={ __( 'Prevent version 2 blocks from being added in the editor', i18n ) }
-				disabled={ ! v2EditorBackwardCompatibility }
-				checked={ v2EditorBackwardCompatibilityHidden }
+				label={ __( 'Load version 2 blocks in the editor only when the page was using version 2 blocks', i18n ) }
+				checked={ v2EditorBackwardCompatibilityUsage }
 				onChange={ checked => {
-					updateSetting( 'stackable_v2_editor_compatibility_hidden', checked ? '1' : '' )
-					setV2EditorackwardCompatibilityHidden( checked )
+					const settings = { stackable_v2_editor_compatibility_usage: checked ? '1' : '' } // eslint-disable-line camelcase
+					if ( checked ) {
+						settings.stackable_v2_editor_compatibility = '' // eslint-disable-line camelcase
+						setV2EditorackwardCompatibility( false )
+					}
+					updateSetting( settings )
+					setV2EditorackwardCompatibilityUsage( checked )
 				} }
 			/>
 			<CheckboxControl
-				disabled={ v2EditorBackwardCompatibility }
+				disabled={ v2EditorBackwardCompatibility || v2EditorBackwardCompatibilityUsage }
 				label={ __( 'Load version 2 frontend block stylesheet and scripts for backward compatibility', i18n ) }
-				checked={ v2EditorBackwardCompatibility || v2FrontendBackwardCompatibility }
+				checked={ v2EditorBackwardCompatibility || v2EditorBackwardCompatibilityUsage || v2FrontendBackwardCompatibility }
 				onChange={ checked => {
-					updateSetting( 'stackable_v2_frontend_compatibility', checked ? '1' : '' )
+					updateSetting( { stackable_v2_frontend_compatibility: checked ? '1' : '' } ) // eslint-disable-line camelcase
 					setV2FrontendBackwardCompatibility( checked )
 				} }
 			/>
@@ -251,7 +260,7 @@ const AdditionalOptions = props => {
 				label={ __( 'Load version 1 block stylesheet for backward compatibility', i18n ) }
 				checked={ v1BackwardCompatibility }
 				onChange={ checked => {
-					updateSetting( 'stackable_load_v1_styles', checked ? '1' : '' )
+					updateSetting( { stackable_load_v1_styles: checked ? '1' : '' } ) // eslint-disable-line camelcase
 					setV1BackwardCompatibility( checked )
 				} }
 			/>
