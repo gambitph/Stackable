@@ -198,3 +198,12 @@
 	font-size: cssvar(subtitle-size);
 	color: cssvar(subtitle-color);
 }
+
+// Heading and Subtitle combinations should be spaced closer.
+.stk-block.stk-block-heading + .stk-block-subtitle,
+.stk-block.stk-block-subtitle + .stk-block-heading {
+	margin-top: calc(-1 * #{ cssvar(block-margin-bottom) } + 8px);
+}
+.stk-block-subtitle + .stk-block-heading .stk-block-heading__text {
+	margin-top: 0;
+}
