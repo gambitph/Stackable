@@ -10,12 +10,3 @@
 .stk--block-orientation-horizontal > .block-editor-inner-blocks > .block-editor-block-list__layout > * + * {
 	margin-left: cssvar(block-margin-bottom);
 }
-
-// Heading and Subtitle combinations should be spaced closer.
-[data-type="stackable/subtitle"] + [data-type="stackable/heading"] .stk-block-heading,
-[data-type="stackable/heading"] + [data-type="stackable/subtitle"] .stk-block-subtitle {
-	margin-top: calc(-1 * #{ cssvar(block-margin-bottom) } + 8px);
-}
-[data-type="stackable/subtitle"] + [data-type="stackable/heading"] .stk-block-heading__text {
-	margin-top: 0;
-}
