@@ -23,7 +23,7 @@ import {
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
-	sizeSelector: '.stk-card__content',
+	sizeSelector: '.stk-block-card__content',
 	sizeVerticalAlignRule: 'justifyContent',
 	sizeHorizontalAlignRule: 'alignSelf',
 }
@@ -46,7 +46,7 @@ export const CardStyles = props => {
 		return {
 			enableWidth: blockStyle === 'horizontal',
 			enableHeight: blockStyle !== 'horizontal',
-			selector: '.stk-card__image',
+			selector: '.stk-block-card__image',
 		}
 	}, [ blockStyle ] )
 
@@ -91,7 +91,7 @@ CardStyles.Content = props => {
 			<ContainerDiv.Style.Content
 				{ ...propsToPass }
 				options={ {
-					sizeSelector: '.stk-card__content',
+					sizeSelector: '.stk-block-card__content',
 					sizeVerticalAlignRule: 'justifyContent',
 					sizeHorizontalAlignRule: 'alignSelf',
 				} }
@@ -101,7 +101,7 @@ CardStyles.Content = props => {
 				options={ {
 					enableWidth: blockStyle.name === 'horizontal',
 					enableHeight: blockStyle.name !== 'horizontal',
-					selector: '.stk-card__image',
+					selector: '.stk-block-card__image',
 				} }
 			/>
 		</Fragment>
