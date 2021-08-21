@@ -59,8 +59,8 @@
 	color: #ddd;
 	border: none;
 	position: absolute;
-	top: 22px;
-	right: 12px;
+	top: min(10%, 16px);
+	right: min(10%, 12px);
 	cursor: pointer;
 	display: none;
 	z-index: 9 !important;

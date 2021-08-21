@@ -9,9 +9,13 @@ import BlockStyles from './style'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
+	AdvancedRangeControl,
+	AdvancedToggleControl,
 	ColumnInserter,
 	GroupPlaceholder,
+	InspectorStyleControls,
 	InspectorTabs,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -36,6 +40,7 @@ import {
 import { Fragment, useCallback } from '@wordpress/element'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
+import { ColumnsControl } from './column-settings-button'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
@@ -43,7 +48,6 @@ const TEMPLATE = [
 	[ 'stackable/column' ],
 	[ 'stackable/column' ],
 ]
-const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
@@ -66,7 +70,9 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	] )
+	], {
+		'stk--fit-content': props.attributes.columnFit,
+	} )
 
 	const renderAppender = useCallback(
 		() => hasInnerBlocks ? <ColumnInserter label={ __( 'Add Column', i18n ) } /> : null,
@@ -75,7 +81,7 @@ const Edit = props => {
 
 	return (
 		<Fragment>
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
@@ -85,6 +91,28 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<ColumnsControl />
+					<AdvancedToggleControl
+						label={ __( 'Fit all columns to content', i18n ) }
+						attribute="columnFit"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Column Gap', i18n ) }
+						attribute="columnGap"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder="0"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames }>
 				<BlockStyles version={ VERSION } />

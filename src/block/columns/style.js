@@ -13,9 +13,33 @@ import {
 } from '~stackable/hooks'
 import {
 	getUniqueBlockClass,
+	getStyles,
+	useStyles,
 } from '~stackable/util'
+import { Style as StyleComponent } from '~stackable/components'
 import { Fragment, renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+
+const getStyleParams = () => {
+	return [
+		{
+			renderIn: 'save',
+			selector: '> .stk-block-content',
+			styleRule: 'columnGap',
+			attrName: 'columnGap',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
+			renderIn: 'edit',
+			selector: '> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout',
+			styleRule: 'columnGap',
+			attrName: 'columnGap',
+			responsive: 'all',
+			format: '%spx',
+		},
+	]
+}
 
 const BlockStyles = props => {
 	const {
@@ -25,6 +49,8 @@ const BlockStyles = props => {
 	const deviceType = useDeviceType()
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
+
+	const styles = useStyles( attributes, getStyleParams( props.options || {} ) )
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
@@ -40,6 +66,12 @@ const BlockStyles = props => {
 			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
+			<StyleComponent
+				styles={ styles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</Fragment>
 	)
 }
@@ -58,17 +90,25 @@ BlockStyles.Content = props => {
 		...propsToPass.options,
 	}
 
-	const styles = (
+	const styles = getStyles( props.attributes, getStyleParams( props.options ) )
+
+	const stylesToRender = (
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ styles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</Fragment>
 	)
 
-	return renderToString( styles ) ? <style>{ styles }</style> : null
+	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
 BlockStyles.Content.defaultProps = {

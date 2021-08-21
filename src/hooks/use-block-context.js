@@ -20,6 +20,7 @@ const useBlockContext = ( blockClientId = null ) => {
 				return {
 					numInnerBlocks: block?.innerBlocks?.length,
 					hasInnerBlocks: !! block?.innerBlocks?.length,
+					innerBlocks: block?.innerBlocks,
 				}
 			}
 
@@ -42,6 +43,7 @@ const useBlockContext = ( blockClientId = null ) => {
 						adjacentBlocks: [],
 						numInnerBlocks: block?.innerBlocks?.length,
 						hasInnerBlocks: !! block?.innerBlocks?.length,
+						innerBlocks: block?.innerBlocks,
 					}
 				}
 			}
@@ -57,6 +59,7 @@ const useBlockContext = ( blockClientId = null ) => {
 				adjacentBlocks: parent?.innerBlocks || [],
 				numInnerBlocks: block?.innerBlocks?.length,
 				hasInnerBlocks: !! block?.innerBlocks?.length,
+				innerBlocks: block?.innerBlocks,
 			}
 		},
 		[ clientId ]

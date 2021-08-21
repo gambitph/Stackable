@@ -33,6 +33,14 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			columnFit: {
+				type: 'boolean',
+				default: '',
+			},
+			columnGap: {
+				type: 'number',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

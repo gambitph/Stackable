@@ -138,6 +138,8 @@ AdvancedControl.defaultProps = {
 
 	onChangeUnit: null,
 	unit: null,
+
+	after: null,
 }
 
 export default AdvancedControl
