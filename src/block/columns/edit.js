@@ -11,7 +11,6 @@ import classnames from 'classnames'
 import {
 	AdvancedRangeControl,
 	AdvancedToggleControl,
-	ColumnInserter,
 	GroupPlaceholder,
 	InspectorStyleControls,
 	InspectorTabs,
@@ -37,7 +36,7 @@ import {
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment, useCallback } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 import { ColumnsControl } from './column-settings-button'
@@ -73,11 +72,6 @@ const Edit = props => {
 	], {
 		'stk--fit-content': props.attributes.columnFit,
 	} )
-
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? <ColumnInserter label={ __( 'Add Column', i18n ) } /> : null,
-		[ hasInnerBlocks ]
-	)
 
 	return (
 		<Fragment>
@@ -124,10 +118,9 @@ const Edit = props => {
 						<InnerBlocks
 							orientation="horizontal"
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
-							renderAppender={ renderAppender }
+							renderAppender={ false }
 							template={ TEMPLATE }
 							templateLock={ props.attributes.templateLock || false }
-							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
 				</Fragment>
