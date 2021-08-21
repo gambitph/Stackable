@@ -28,8 +28,9 @@ const useBlockContext = ( blockClientId = null ) => {
 			const index = hasParent ? indexOf( parent?.innerBlocks, getBlock( clientId ) ) : -1
 			const isLastBlock = hasParent ? last( parent?.innerBlocks )?.clientId === clientId : false
 
-			// Check if the block isn't used as a row. If not, then don't use row-like properties.
-			if ( hasParent ) {
+			// Check if a column block isn't used as a row. If not, then don't
+			// use row-like properties (column resizers, etc).
+			if ( hasParent && block.name === 'stackable/column' ) {
 				const isRow = document.querySelector( `[data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
 				if ( ! isRow ) {
 					return {
