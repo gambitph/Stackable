@@ -134,6 +134,11 @@
 	}
 }
 
+// If the image its too small, don't show the tooltip.
+.stk--too-small .stk-img-resizer-tooltip {
+	display: none !important;
+}
+
 .stk-image-size-popup {
 	.components-popover__content {
 		padding: 16px;
