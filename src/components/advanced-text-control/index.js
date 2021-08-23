@@ -22,6 +22,7 @@ const AdvancedTextControl = props => {
 	const {
 		isDynamic,
 		isMultiline,
+		dynamicType,
 		...inputProps
 	} = propsToPass
 
@@ -41,6 +42,7 @@ const AdvancedTextControl = props => {
 		<AdvancedControl { ...controlProps }>
 			<DynamicContentControl
 				enable={ isDynamic }
+				type={ dynamicType }
 				{ ...dynamicContentProps }
 			>
 				<TextInput

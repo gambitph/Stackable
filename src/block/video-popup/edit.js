@@ -110,6 +110,7 @@ const Edit = props => {
 							videoLink,
 							videoId: getVideoProviderFromURL( videoLink ).id,
 						} ) }
+						dynamicType={ [ 'link' ] }
 					/>
 				</PanelAdvancedSettings>
 
