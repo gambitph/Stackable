@@ -16,6 +16,7 @@ export const separatorGetStyleParams = ( options = {}, location ) => {
 		wrapperSelector = '.stk-separator__wrapper',
 		enableFlipHorizontally = true,
 		enableFlipVertically = false,
+		isInitiallyFlippedVertically = true,
 	} = options
 
 	const selector = _selector !== undefined ? _selector : ` > .stk-separator__${ location }`
@@ -52,6 +53,7 @@ export const separatorGetStyleParams = ( options = {}, location ) => {
 
 				return compact( [
 					( enableFlipHorizontally && flipHorizontally ) ? 'scaleX(-1)' : undefined,
+					( enableFlipHorizontally && flipHorizontally && isInitiallyFlippedVertically ) ? 'scaleY(-1)' : undefined,
 					( enableFlipVertically && flipVertically ) ? 'scaleY(-1)' : undefined,
 				] ).join( ' ' )
 			},

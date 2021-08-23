@@ -27,6 +27,7 @@ import { applyFilters } from '@wordpress/hooks'
 const separatorOptions = {
 	selector: '',
 	enableFlipVertically: true,
+	isInitiallyFlippedVertically: false,
 	wrapperSelector: '.stk-block-separator__inner',
 }
 
