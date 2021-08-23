@@ -18,26 +18,63 @@ import { Spinner } from '@wordpress/components'
  * Sets an aria-label to an SVG string and returning
  * the modified SVG string.
  *
- * @param {string} svgHTML
+ * @param {string} _svgHTML
  * @param {string} ariaLabel
  *
  * @return {string} modified SVG HTML
  */
-const addSVGAriaLabel = ( svgHTML, ariaLabel = '' ) => {
+const addSVGAriaLabel = ( _svgHTML, ariaLabel = '' ) => {
+	let svgHTML = ''
+	if ( ariaLabel ) {
+		svgHTML = addSVGAttributes(
+			_svgHTML,
+			{
+				'aria-label': ariaLabel,
+				role: 'img',
+			},
+			[
+				'aria-hidden',
+			]
+		)
+	} else {
+		svgHTML = addSVGAttributes(
+			_svgHTML,
+			{
+				'aria-hidden': 'true',
+			},
+			[
+				'aria-label',
+				'role',
+			]
+		)
+	}
+
+	return svgHTML
+}
+
+/**
+ * Given an SVG markup, sets an HTML attribute to the
+ * HTML tag.
+ *
+ * @param {string} svgHTML
+ * @param {Object} attributesToAdd
+ * @param {Array} attributesToRemove
+ *
+ * @return {string} modified SVG HTML
+ */
+const addSVGAttributes = ( svgHTML, attributesToAdd = {}, attributesToRemove = [] ) => {
 	const svgNode = createElementFromHTMLString( svgHTML )
 	if ( ! svgNode ) {
 		return ''
 	}
 
-	if ( ariaLabel ) {
-		svgNode.setAttribute( 'aria-label', ariaLabel )
-		svgNode.setAttribute( 'role', 'img' )
-		svgNode.removeAttribute( 'aria-hidden' )
-	} else {
-		svgNode.setAttribute( 'aria-hidden', 'true' )
-		svgNode.removeAttribute( 'aria-label' )
-		svgNode.removeAttribute( 'role' )
-	}
+	Object.keys( attributesToAdd ).forEach( key => {
+		svgNode.setAttribute( key, attributesToAdd[ key ] )
+	} )
+
+	attributesToRemove.forEach( key => {
+		svgNode.removeAttribute( key )
+	} )
 
 	return svgNode.outerHTML
 }
@@ -59,7 +96,9 @@ const FontAwesomeIcon = props => {
 
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' && props.value.match( /^<svg/ ) ) {
-		const svg = addSVGAriaLabel( props.value, props.ariaLabel )
+		let svg = addSVGAriaLabel( props.value, props.ariaLabel )
+		// Add fallback SVG width and height values.
+		svg = addSVGAttributes( svg, { width: '32', height: '32' } )
 		return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
 	}
 
@@ -80,12 +119,18 @@ const FontAwesomeIcon = props => {
 			return <Spinner />
 		}
 
-		return <RawHTML { ...propsToPass }>{ prependRender + addSVGAriaLabel( iconHTML, props.ariaLabel ) }</RawHTML>
+		let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
+		// Add fallback SVG width and height values.
+		svg = addSVGAttributes( svg, { width: '32', height: '32' } )
+		return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
 	}
 
 	// If no value, just display a smiley placeholder.
 	const iconHTML = faGetSVGIcon( 'far', 'smile' )
-	return <RawHTML { ...propsToPass }>{ prependRender + addSVGAriaLabel( iconHTML, props.ariaLabel ) }</RawHTML>
+	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
+	// Add fallback SVG width and height values.
+	svg = addSVGAttributes( svg, { width: '32', height: '32' } )
+	return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
 }
 
 FontAwesomeIcon.Content = props => {
@@ -96,7 +141,9 @@ FontAwesomeIcon.Content = props => {
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {
 		if ( props.value.match( /^<svg/ ) ) {
-			const svg = addSVGAriaLabel( props.value, props.ariaLabel )
+			let svg = addSVGAriaLabel( props.value, props.ariaLabel )
+			// Add fallback SVG width and height values.
+			svg = addSVGAttributes( svg, { width: '32', height: '32' } )
 			return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
 		}
 	}
@@ -105,7 +152,10 @@ FontAwesomeIcon.Content = props => {
 	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
 
 	const iconHTML = faGetSVGIcon( prefix, iconName )
-	return <RawHTML { ...propsToPass }>{ prependRender + addSVGAriaLabel( iconHTML, props.ariaLabel ) }</RawHTML>
+	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
+	// Add fallback SVG width and height values.
+	svg = addSVGAttributes( svg, { width: '32', height: '32' } )
+	return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
 }
 
 FontAwesomeIcon.defaultProps = {
