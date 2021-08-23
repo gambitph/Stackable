@@ -101,21 +101,25 @@ const BlockStyleItem = memo( props => {
 
 	const Image = style.image
 
+	const ifClickableProps = {
+		onClick: () => onSelect( style ),
+		onKeyDown: event => {
+			if ( ENTER === event.keyCode || SPACE === event.keyCode ) {
+				event.preventDefault()
+				onSelect( style )
+			}
+		},
+	}
+
 	return (
 		<div
 			className={ classnames( 'block-editor-block-styles__item', {
 				'is-active': isActive,
 			} ) }
-			onClick={ () => onSelect( style ) }
-			onKeyDown={ event => {
-				if ( ENTER === event.keyCode || SPACE === event.keyCode ) {
-					event.preventDefault()
-					onSelect( style )
-				}
-			} }
 			role="button"
 			tabIndex="0"
 			aria-label={ style.label || style.name }
+			{ ...( ! isActive ? ifClickableProps : {} ) }
 		>
 			<div
 				className="block-editor-block-styles__item-preview stk-block-styles-preview"
