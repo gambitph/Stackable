@@ -1,19 +1,18 @@
 /**
- * BLOCK: Expand Block.
+ * BLOCK: Container Block
  */
+/**
+ * Internal dependencies
+ */
+import metadata from './block.json'
+import edit from './edit'
+import save from './save'
+import schema from './schema'
 
 /**
  * External dependencies
  */
-import { AccordionIcon } from '~stackable/icons'
-
-/**
- * Internal dependencies
- */
-import edit from './edit'
-import save from './save'
-import schema from './schema'
-import metadata from './block.json'
+import { TestimonialIcon } from '~stackable/icons'
 
 /**
  * WordPress dependencies
@@ -22,14 +21,14 @@ import { __ } from '@wordpress/i18n'
 
 export const settings = {
 	...metadata,
-	icon: AccordionIcon,
+	icon: TestimonialIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
+		html: false,
+		align: true,
 	},
-	//  styles: blockStyles,
 
-	// deprecated,
 	edit,
 	save,
 }

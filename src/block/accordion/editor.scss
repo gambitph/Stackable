@@ -9,11 +9,49 @@
 		[data-type="stackable/icon"]:last-child .stk-block-icon {
 			justify-content: flex-end;
 		}
+		[data-type="stackable/icon"] {
+			flex: 0 0 40px;
+		}
 	}
 }
 
 .stk-block-accordion .stk-block-accordion__content {
 	> .stk-container {
 		padding: cssvar(container-padding);
+	}
+}
+
+// Accordion open/close display for the editor only.
+.stk-block-accordion {
+	// Hide the content.
+	&:not(.stk--is-open) {
+		.stk-block-accordion__content {
+			display: none;
+		}
+	}
+
+	// Rotate the icon when the accordion opens.
+	.stk-block-accordion__heading {
+		.stk--svg-wrapper {
+			@include transition();
+		}
+	}
+	&.stk--is-open .stk-block-accordion__heading {
+		.stk--svg-wrapper:not(.stk--has-icon2) {
+			transform: rotate(180deg);
+		}
+	}
+
+	// If another icon was used, don't rotate the icon, show the other icon when
+	// the accordion opens.
+	&.stk--is-open .stk-block-accordion__heading {
+		.stk--svg-wrapper.stk--has-icon2 {
+			.stk--inner-svg {
+				display: none;
+			}
+		}
+		.stk--icon-2 {
+			display: block !important;
+		}
 	}
 }

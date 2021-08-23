@@ -1,11 +1,10 @@
 /**
- * BLOCK: Expand Block.
+ * BLOCK: Count Up Block.
  */
-
 /**
  * External dependencies
  */
-import { AccordionIcon } from '~stackable/icons'
+import { NumberBoxIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -15,21 +14,14 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n'
-
 export const settings = {
 	...metadata,
-	icon: AccordionIcon,
+	icon: NumberBoxIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
+		align: true,
 	},
-	//  styles: blockStyles,
-
-	// deprecated,
 	edit,
 	save,
 }

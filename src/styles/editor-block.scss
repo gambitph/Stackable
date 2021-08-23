@@ -18,16 +18,6 @@
 	z-index: 1;
 }
 
-// Rows
-// Float the appender.
-.stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender {
-	position: absolute;
-	top: -40px;
-	right: 0;
-	width: auto !important;
-	z-index: 2;
-}
-
 /**
  * Resizeable rows and columns
  */

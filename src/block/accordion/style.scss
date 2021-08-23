@@ -26,6 +26,12 @@
 			justify-content: flex-end;
 		}
 	}
+	// Gap between icon and the title.
+	.stk-block-accordion__heading {
+		.stk-block-icon-label .stk-block-icon {
+			flex: 0 0 40px;
+		}
+	}
 	.stk-block-accordion__content > .stk-container {
 		padding: cssvar(container-padding);
 	}

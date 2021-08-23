@@ -37,7 +37,7 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { renderToString, useCallback } from '@wordpress/element'
+import { renderToString } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
@@ -55,7 +55,6 @@ const Edit = props => {
 		className,
 	} = props
 
-	const { hasInnerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
@@ -71,11 +70,6 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-blockquote__content',
 	] )
-
-	const renderAppender = useCallback(
-		() => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
 
 	return (
 		<>
@@ -102,8 +96,6 @@ const Edit = props => {
 					<InnerBlocks
 						template={ TEMPLATE }
 						templateLock="all"
-						templateInsertUpdatesSelection={ true }
-						renderAppender={ renderAppender }
 					/>
 				</ContainerDiv>
 			</BlockDiv>

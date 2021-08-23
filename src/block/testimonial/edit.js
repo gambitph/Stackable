@@ -6,7 +6,7 @@ import { ContainerStyles } from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
@@ -38,14 +38,15 @@ import { useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/icon-label', {}, [
-		[ 'stackable/icon', { contentAlign: 'left' } ],
-		[ 'stackable/heading', {
-			text: __( 'Icon Box' ), hasP: true, textTag: 'h4',
-		} ],
-	] ],
-	[ 'stackable/text', {
-		text: 'Description for this block. Use this space for describing your block.',
+	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
+	[ 'stackable/image', {
+		imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
+	} ],
+	[ 'stackable/heading', {
+		text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+	} ],
+	[ 'stackable/subtitle', {
+		text: __( 'Position', i18n ),
 	} ],
 ]
 
@@ -60,7 +61,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-icon-box',
+		'stk-block-testimonial',
 		blockHoverClass,
 	] )
 
@@ -68,7 +69,7 @@ const Edit = props => {
 		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-icon-box__content',
+		'stk-block-testimonial__content',
 	] )
 
 	const renderAppender = useCallback(
@@ -87,7 +88,7 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-box" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-testimonial" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
@@ -95,7 +96,7 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-block-icon-box" />
+				<CustomCSS mainBlockClass="stk-block-testimonial" />
 
 				<ContainerDiv className={ contentClassNames }>
 					<InnerBlocks

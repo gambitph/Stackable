@@ -14,10 +14,9 @@
 	&.stk-img-placeholder {
 		/* stylelint-disable function-url-quotes */
 		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 376' xmlns='http://www.w3.org/2000/svg' fill='%23ccc'%3E%3Cpath d='M0 0v376h512V0H0zm480 344H32V32h448v312z'%3E%3C/path%3E%3Ccircle cx='409.1' cy='102.9' r='40.9'%3E%3C/circle%3E%3Cpath d='M480 344H32l86.3-164.2 21.7 11.3 49-77.3 100 113.1 8.9-9.3 17.1 22.3 26-46.4 52.9 71.2 15.1-15.9z'%3E%3C/path%3E%3C/svg%3E") !important;
-		background-size: 80px !important;
+		background-size: #{ "min(40%, 80px)" } !important; // Workaround since `min` gets confused with a SASS function.
 		background-position: center !important;
 		background-repeat: no-repeat !important;
-		background-color: #f1f1f1 !important;
 		position: relative;
 		margin-left: auto;
 		margin-right: auto;
@@ -60,8 +59,8 @@
 	color: #ddd;
 	border: none;
 	position: absolute;
-	top: 22px;
-	right: 12px;
+	top: #{ "min(10%, 16px)" };
+	right: #{ "min(10%, 12px)" };
 	cursor: pointer;
 	display: none;
 	z-index: 9 !important;
@@ -135,6 +134,11 @@
 	}
 }
 
+// If the image its too small, don't show the tooltip.
+.stk--too-small .stk-img-resizer-tooltip {
+	display: none !important;
+}
+
 .stk-image-size-popup {
 	.components-popover__content {
 		padding: 16px;
@@ -177,6 +181,11 @@
 	margin: 0 !important;
 	display: block !important;
 	overflow: hidden;
+
+	// Add the placeholder background here so that the border radius would also
+	// show in the placeholder.
+	background: #f1f1f1;
+	mix-blend-mode: multiply;
 }
 
 .ugb-button-icon-control__popover .ugb-image-shape-control {

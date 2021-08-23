@@ -1,0 +1,15 @@
+.stk-tooltip__text {
+	display: block;
+	width: 200px;
+	white-space: normal;
+	text-align: left;
+	padding: 8px;
+	a {
+		display: block;
+		margin-top: 8px;
+		color: #e989ee;
+		&:hover {
+			color: #ddd;
+		}
+	}
+}

@@ -1,0 +1,18 @@
+@import "common";
+
+.stk-block-number-box__text {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	font-size: 56px;
+}
+.stk-block-number-box.stk--has-shape {
+	.stk-block-number-box__text {
+		background: cssvar(button-background-color);
+		color: #fff;
+		border-radius: 100%;
+		width: 96px;
+		height: 96px;
+	}
+}

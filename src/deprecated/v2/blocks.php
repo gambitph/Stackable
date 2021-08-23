@@ -93,8 +93,34 @@ if ( ! function_exists( 'stackable_register_blocks_v2' ) ) {
 		}
 	}
 
-	if ( has_stackable_v2_editor_compatibility() ) {
+	/**
+	 * Checks whether we're editing a post in Gutenberg, then loads the v2
+	 * scripts only when there are v2 blocks present in the content.
+	 *
+	 * @return void
+	 */
+	function stackable_load_editor_blocks_v2() {
+		$current_screen = get_current_screen();
+		if ( $current_screen->base === 'post' && $current_screen->is_block_editor() ) {
+			$content = get_the_content();
+			if ( stripos( $content, '<!-- wp:ugb/' ) !== false ) {
+				stackable_register_blocks_v2();
+			}
+		}
+	}
+
+	if ( has_stackable_v2_frontend_compatibility() && ! is_admin() ) {
+		// Load the scripts normally in the frontend.
 		add_action( 'init', 'stackable_register_blocks_v2' );
+	} else if ( has_stackable_v2_editor_compatibility() ) {
+		if ( ! is_admin() || ! has_stackable_v2_editor_compatibility_usage() ) {
+			// Load the block scripts normally in the editor.
+			add_action( 'init', 'stackable_register_blocks_v2' );
+		} else {
+			// This only loads v2 stackable blocks in the editor if there are v2
+			// blocks existing in the content.
+			add_action( 'enqueue_block_editor_assets', 'stackable_load_editor_blocks_v2' );
+		}
 	}
 }
 
