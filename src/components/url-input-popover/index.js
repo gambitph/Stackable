@@ -101,9 +101,9 @@ const UrlInputPopover = props => {
 						} )
 
 						// Trigger onChange only to changed values
-						keys( changedValues ).map( value => (
+						keys( changedValues ).forEach( value => {
 							onChangeKeys[ value ]?.( changedValues[ value ] )
-						) )
+						} )
 					}
 				}
 			>
