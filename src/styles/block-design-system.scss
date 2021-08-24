@@ -165,7 +165,7 @@
 .stk-column-wrapper {
 	margin: cssvar(column-margin);
 }
-.stk-is-first.stk-is-last > .stk-column-wrapper { // Remove the margins if it's only 1 block.
+.stk-block-column:first-child:last-child > .stk-column-wrapper { // Remove the margins if it's only 1 block.
 	margin: 0;
 }
 
