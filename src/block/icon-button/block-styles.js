@@ -26,7 +26,7 @@ const defaultOnSelect = attributes => {
 				: getAttribute( 'iconColor1', state ),
 			[ getAttributeName( 'iconColor1', state ) ]: getAttribute( 'buttonBackgroundColor', state ) === 'transparent'
 				? undefined
-				: getAttribute( 'buttonBackgroundColor', state ),
+				: getAttribute( 'iconColor1', state ),
 			[ getAttributeName( 'buttonWidth', state ) ]: undefined,
 		}
 	} )
