@@ -11,6 +11,7 @@ import classnames from 'classnames'
 import {
 	AdvancedRangeControl,
 	AdvancedToggleControl,
+	ColumnInnerBlocks,
 	GroupPlaceholder,
 	InspectorStyleControls,
 	InspectorTabs,
@@ -33,10 +34,6 @@ import {
 /**
  * WordPress dependencies
  */
-import {
-	InnerBlocks,
-} from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 import { ColumnsControl } from './column-settings-button'
@@ -57,12 +54,14 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
 	const blockHoverClass = useBlockHoverClass()
+	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-columns',
 		rowClass,
 		blockHoverClass,
+		columnTooltipClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -74,7 +73,7 @@ const Edit = props => {
 	} )
 
 	return (
-		<Fragment>
+		<>
 			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
@@ -113,9 +112,10 @@ const Edit = props => {
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
-				<Fragment>
+				<>
 					<div className={ contentClassNames }>
-						<InnerBlocks
+						<ColumnInnerBlocks
+							providerValue={ columnProviderValue }
 							orientation="horizontal"
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ false }
@@ -123,10 +123,10 @@ const Edit = props => {
 							templateLock={ props.attributes.templateLock || false }
 						/>
 					</div>
-				</Fragment>
+				</>
 			</BlockDiv>
 			{ hasInnerBlocks && <MarginBottom /> }
-		</Fragment>
+		</>
 	)
 }
 

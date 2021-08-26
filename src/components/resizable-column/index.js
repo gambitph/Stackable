@@ -4,6 +4,7 @@
 import { useDeviceEditorClasses } from './use-device-editor-classes'
 import { getSnapWidths } from './get-snap-widths'
 import { AdvancedTextControl } from '..'
+import { ColumnShowTooltipContext } from '../column-inner-blocks'
 
 /**
  * External dependencies
@@ -23,7 +24,7 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { ResizableBox, Popover } from '@wordpress/components'
 import {
-	Fragment, useState, useEffect, useRef, useCallback, useMemo, memo,
+	Fragment, useState, useEffect, useRef, useCallback, useMemo, memo, useContext,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
@@ -147,6 +148,8 @@ const ResizableColumn = props => {
 			const maxWidth = parentEl?.clientWidth || 0
 			setMaxWidth( maxWidth )
 		}
+
+		setIsTooltipOver( true )
 	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId ] )
 
 	const onResize = useCallback( ( _event, _direction, elt, delta ) => {
@@ -245,6 +248,7 @@ const ResizableColumn = props => {
 		}
 
 		setSnapWidths( null )
+		setIsTooltipOver( false )
 	}, [ isDesktop, isTablet, newWidthsPercent, props.onChangeDesktop, props.onChangeTablet, props.onChangeMobile, tempStyles, isMounted ] )
 
 	const onTooltipChange = useCallback( width => {
@@ -287,6 +291,38 @@ const ResizableColumn = props => {
 		}
 	}, [ deviceType, isDesktop, isTablet, adjacentBlocks, blockIndex ] )
 
+	/**
+	 * Tooltip context stuff to display all tooltip widths across all sibling columns.
+	 */
+	const [ isTooltipPopupOpen, setIsTooltipPopupOpen ] = useState( false )
+	const [ isTooltipOver, setIsTooltipOver ] = useState( false )
+	const onTooltipMouseEnter = useCallback( () => setIsTooltipOver( true ), [] )
+	const onTooltipMouseLeave = useCallback( () => setIsTooltipOver( false ), [] )
+	const { showColumnTooltip, setShowColumnTooltip } = useContext( ColumnShowTooltipContext )
+
+	// IF the width popup was opened, let the parent columns block know to
+	// display all the tooltip widths.
+	const onTooltipTogglePopup = useCallback( isOpen => {
+		setIsTooltipPopupOpen( isOpen )
+		if ( isOpen ) {
+			setShowColumnTooltip( clientId )
+		} else if ( ! isTooltipOver && showColumnTooltip === clientId ) {
+			setShowColumnTooltip( false )
+		}
+	}, [ showColumnTooltip, setShowColumnTooltip, setIsTooltipPopupOpen, isTooltipOver, clientId ] )
+
+	// If the invisible tooltip was hovered, let the parent columns block know
+	// to display all the tooltip widths.
+	useEffect( () => {
+		if ( ! isTooltipPopupOpen ) {
+			if ( isTooltipOver && ! showColumnTooltip ) {
+				setShowColumnTooltip( clientId )
+			} else if ( ! isTooltipOver && showColumnTooltip === clientId ) {
+				setShowColumnTooltip( false )
+			}
+		}
+	}, [ showColumnTooltip, setShowColumnTooltip, isTooltipOver, isTooltipPopupOpen, clientId ] )
+
 	return (
 		<ResizableBox
 			enable={ enable }
@@ -308,6 +344,11 @@ const ResizableColumn = props => {
 					: isTablet ? ( props.columnWidthTablet || props.columnWidth )
 						: props.columnWidthMobile }
 				onChange={ onTooltipChange }
+				onTogglePopup={ onTooltipTogglePopup }
+				tooltipProps={ {
+					onMouseEnter: onTooltipMouseEnter,
+					onMouseLeave: onTooltipMouseLeave,
+				} }
 			/> }
 			{ tempStyles && <style>{ tempStyles }</style> }
 			{ props.children }
@@ -358,6 +399,9 @@ const ResizableTooltip = props => {
 
 	// Setup the input field when the popup opens.
 	useEffect( () => {
+		if ( props.onTogglePopup ) {
+			props.onTogglePopup( isEditWidth )
+		}
 		if ( isEditWidth ) {
 			setOriginalInputValue( props.value )
 			setCurrentInputValue( props.value || ( columnLabel !== __( 'Auto', i18n ) ? columnLabel : '' ) )
@@ -440,10 +484,14 @@ const ResizableTooltip = props => {
 			{
 				! isOnlyBlock && (
 					<div
+						{ ...props.tooltipProps }
 						className="stk-resizable-column__size-tooltip"
 						ref={ tooltipRef }
 						style={ { '--width': tooltipLabel } }
-						onMouseDown={ () => setIsEditWidth( ! isEditWidth ) }
+						onMouseDown={ ev => {
+							setIsEditWidth( ! isEditWidth )
+							ev.preventDefault()
+						} }
 						onKeyDown={ event => {
 							if ( event.keyCode === 13 ) {
 								setIsEditWidth( ! isEditWidth )
@@ -464,6 +512,8 @@ ResizableTooltip.defaultProps = {
 	blockContext: {},
 	value: '',
 	onChange: () => {},
+	tooltipProps: {},
+	onTogglePopup: null,
 }
 
 ResizableColumn.defaultProps = {

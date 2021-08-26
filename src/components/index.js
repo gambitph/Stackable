@@ -113,3 +113,4 @@ export {
 export { default as Div } from './div'
 export { default as ControlIconToggle } from './control-icon-toggle'
 export { default as DynamicContentControl } from './dynamic-content-control'
+export { default as ColumnInnerBlocks } from './column-inner-blocks'
