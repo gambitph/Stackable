@@ -11,6 +11,7 @@ import {
 	EffectsAnimations,
 	Responsive,
 	Icon,
+	BlockLink,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -29,6 +30,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Icon.addAttributes( attrObject )
+	BlockLink.addAttributes( attrObject )
 	attrObject.add( {
 		attributes: {
 			ariaLabel: {
