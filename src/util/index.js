@@ -286,7 +286,7 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 				newSelector = s
 			} else if ( s.includes( uniqueClassName ) ) {
 				newSelector = s
-			} else if ( selectorsFromIsSelector.includes( s.trim().match( /.*\)/ ) ? s.trim().match( /.*\)/ )[ 0 ].replace( ')', '' ) : s.trim() ) ) {
+			} else if ( selectorsFromIsSelector.includes( s.trim().match( /[^\)]*\)/ ) ? s.trim().match( /[^\)]*\)/ )[ 0 ].replace( ')', '' ) : s.trim() ) ) {
 				newSelector = s
 			} else if ( uniqueClassName && ! mainClassName ) {
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
