@@ -7,6 +7,8 @@ import { Tooltip } from '~stackable/components'
 import { Dashicon } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { useMemo } from '@wordpress/element'
+import { getPlugin } from '@wordpress/plugins'
 
 export const Linking = () => {
 	const [ isLinked, setIsLinked ] = useLinking()
@@ -15,7 +17,12 @@ export const Linking = () => {
 	const { clientId } = useBlockEditContext()
 
 	const closestLinkableBlock = useClosestLinkableBlock( clientId )
-	if ( isOnlyBlock || ! closestLinkableBlock ) {
+
+	const isEnabled = useMemo( () => {
+		return !! getPlugin( 'stackable-block-linking' )
+	}, [] )
+
+	if ( ! isEnabled || isOnlyBlock || ! closestLinkableBlock ) {
 		return null
 	}
 
