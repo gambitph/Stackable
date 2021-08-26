@@ -66,7 +66,7 @@ const iconAttributes = {
 		type: 'string',
 		default: '',
 	},
-	shapeGradientDirection: {
+	shapeColorGradientDirection: {
 		type: 'number',
 		default: '',
 	},
