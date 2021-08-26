@@ -1,5 +1,4 @@
-/*
- * External dependencies
+/* External dependencies
  */
 import {
 	InspectorStyleControls,
@@ -8,11 +7,11 @@ import {
 	ColorPaletteControl,
 	IconControl,
 	AdvancedSelectControl,
-	ImageShapeControl,
 	AdvancedRangeControl,
 	FourRangeControl,
+	ProControlButton,
 } from '~stackable/components'
-import { i18n } from 'stackable'
+import { i18n, showProNotice } from 'stackable'
 import {
 	useAttributeEditHandlers,
 } from '~stackable/hooks'
@@ -20,25 +19,92 @@ import {
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
-import { Fragment } from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
+import { useMemo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+
+const colorTypes = applyFilters( 'stackable.block-component.icon.color-type', [
+	{
+		value: '',
+		title: __( 'Single', i18n ),
+		controls: () => {
+			return (
+				<ColorPaletteControl
+					label={ __( 'Icon Color', i18n ) }
+					attribute="iconColor1"
+					hover="all"
+				/>
+			)
+		},
+	},
+] )
+
+const shapeColorTypes = applyFilters( 'stackable.block-component.icon.shape-color-type', [
+	{
+		value: '',
+		title: __( 'Single', i18n ),
+		controls: () => {
+			return (
+				<ColorPaletteControl
+					label={ __( 'Shape Color', i18n ) }
+					attribute="shapeColor1"
+					hover="all"
+					hasTransparent={ true }
+				/>
+			)
+		},
+	},
+] )
 
 export const Edit = props => {
 	const {
-		hasColor,
-		hasGradient,
 		hasShape,
 		hasIconGap,
 		hasIconPosition,
-		hasBackgroundShape,
 		initialOpen,
+		hasMultiColor,
+		hasGradient,
 	} = props
 
 	const {
 		getAttribute,
 		updateAttributeHandler,
 	} = useAttributeEditHandlers()
+
+	const propsToPass = {
+		...props, getAttribute, updateAttributeHandler,
+	}
+
+	const { colorControls, shapeColorControls } = useMemo( () => {
+		let colorControls = null
+		let shapeColorControls = null
+		const selectedOption = colorTypes.find( colorType => colorType.value === ( getAttribute( 'iconColorType' ) || '' ) )
+		const selectedShapeOption = shapeColorTypes.find( colorType => colorType.value === ( getAttribute( 'shapeColorType' ) || '' ) )
+		if ( selectedOption ) {
+			if ( selectedOption.hasOwnProperty( 'show' ) ) {
+				if ( selectedOption.show( propsToPass ) ) {
+					colorControls = selectedOption.controls( propsToPass )
+				}
+			}
+
+			colorControls = selectedOption.controls( propsToPass )
+		}
+
+		if ( selectedShapeOption ) {
+			if ( selectedShapeOption.hasOwnProperty( 'show' ) ) {
+				if ( selectedShapeOption.show( propsToPass ) ) {
+					shapeColorControls = selectedShapeOption.controls( propsToPass )
+				}
+			}
+
+			shapeColorControls = selectedShapeOption.controls( propsToPass )
+		}
+
+		return { colorControls, shapeColorControls }
+	}, [ getAttribute, updateAttributeHandler, colorTypes, props ] )
+
+	const filteredColorTypes = useMemo( () => colorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, colorTypes, props ] )
+	const filteredShapeColorTypes = useMemo( () => shapeColorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, shapeColorTypes, props ] )
 
 	return (
 		<InspectorStyleControls>
@@ -54,59 +120,23 @@ export const Edit = props => {
 					onChange={ updateAttributeHandler( 'icon' ) }
 				/>
 
+				{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton
+					title={ __( 'Say Hello to Gorgeous Icons 👋', i18n ) }
+					description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
+				/> }
+
 				{ applyFilters( 'stackable.block-component.icon.after', null ) }
 
-				{ hasColor && hasGradient && (
-					<Fragment>
-						<AdvancedToolbarControl
-							controls={ [
-								{
-									value: '',
-									title: __( 'Single', i18n ),
-								},
-								{
-									value: 'gradient',
-									title: __( 'Gradient', i18n ),
-								},
-							] }
-							isSmall={ true }
-							fullwidth={ false }
-							attribute="iconColorType"
-						/>
-
-						<ColorPaletteControl
-							label={ getAttribute( 'iconColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Icon Color #%s', i18n ), 1 )
-								: __( 'Icon Color', i18n ) }
-							attribute="iconColor1"
-							hover={ getAttribute( 'iconColorType' ) !== 'gradient' ? 'all' : undefined }
-						/>
-						{ getAttribute( 'iconColorType' ) === 'gradient' && hasGradient && (
-							<Fragment>
-								<ColorPaletteControl
-									label={ sprintf( __( 'Icon Color #%s', i18n ), 2 ) }
-									attribute="iconColor2"
-								/>
-
-								<AdvancedRangeControl
-									label={ __( 'Gradient Direction (degrees)', i18n ) }
-									attribute="iconColorGradientDirection"
-									min={ 0 }
-									max={ 360 }
-									step={ 10 }
-									allowReset={ true }
-								/>
-							</Fragment>
-						) }
-					</Fragment>
-				) }
-
-				{ hasColor && ! hasGradient && (
-					<ColorPaletteControl
-						label={ __( 'Icon Color', i18n ) }
-						attribute="iconColor1"
-						hover="all"
+				{ filteredColorTypes.length > 1 && (
+					<AdvancedToolbarControl
+						controls={ filteredColorTypes }
+						isSmall={ true }
+						fullwidth={ false }
+						attribute="iconColorType"
 					/>
 				) }
+
+				{ colorControls }
 
 				<AdvancedRangeControl
 					label={ __( 'Icon Size', i18n ) }
@@ -116,6 +146,7 @@ export const Edit = props => {
 					step={ 1 }
 					allowReset={ true }
 					placeholder=""
+					responsive="all"
 				/>
 
 				<AdvancedRangeControl
@@ -168,12 +199,16 @@ export const Edit = props => {
 					id="icon-shape"
 				>
 
-					<ColorPaletteControl
-						label={ __( 'Shape Color', i18n ) }
-						attribute="shapeColor"
-						hover="all"
-						hasTransparent={ true }
-					/>
+					{ filteredShapeColorTypes.length > 1 && (
+						<AdvancedToolbarControl
+							controls={ filteredShapeColorTypes }
+							isSmall={ true }
+							fullwidth={ false }
+							attribute="shapeColorType"
+						/>
+					) }
+
+					{ shapeColorControls }
 
 					<AdvancedRangeControl
 						label={ __( 'Shape Border Radius', i18n ) }
@@ -217,69 +252,10 @@ export const Edit = props => {
 
 				</PanelAdvancedSettings>
 			) }
-			{ hasBackgroundShape && (
-				<PanelAdvancedSettings
-					title={ __( 'Background Shape', i18n ) }
-					id="icon-background-shape"
-					checked={ getAttribute( 'showBackgroundShape' ) }
-					onChange={ updateAttributeHandler( 'showBackgroundShape' ) }
-				>
 
-					<ImageShapeControl
-						label={ __( 'Shape', i18n ) }
-						selected={ getAttribute( 'backgroundShape' ) }
-						onChange={ updateAttributeHandler( 'backgroundShape' ) }
-					/>
-
-					<ColorPaletteControl
-						label={ __( 'Shape Color', i18n ) }
-						attribute="backgroundShapeColor"
-						hover="all"
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Shape Opacity', i18n ) }
-						attribute="backgroundShapeOpacity"
-						hover="all"
-						min={ 0 }
-						max={ 1 }
-						step={ 0.1 }
-						placeholder="1"
-						allowReset={ true }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Shape Size', i18n ) }
-						attribute="backgroundShapeSize"
-						min={ 0 }
-						sliderMax={ 3 }
-						step={ 0.1 }
-						placeholder="1"
-						allowReset={ true }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Horizontal Offset', i18n ) }
-						attribute="backgroundShapeOffsetHorizontal"
-						sliderMin={ -30 }
-						sliderMax={ 30 }
-						step={ 1 }
-						placeholder="0"
-						allowReset={ true }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Vertical Offset', i18n ) }
-						attribute="backgroundShapeOffsetVertical"
-						sliderMin={ -30 }
-						sliderMax={ 30 }
-						step={ 1 }
-						placeholder="0"
-						allowReset={ true }
-					/>
-
-				</PanelAdvancedSettings>
-			) }
+			{ applyFilters( 'stackable.block-component.icon.edit.after', null, {
+				...props, getAttribute, updateAttributeHandler,
+			} ) }
 		</InspectorStyleControls>
 	)
 }
@@ -289,8 +265,10 @@ Edit.defaultProps = {
 	hasColor: true,
 	hasGradient: true,
 	hasShape: true,
+	hasShapeGradient: true,
 	hasBackgroundShape: true,
 	initialOpen: false,
 	hasIconGap: false,
 	hasIconPosition: false,
+	hasMultiColor: false,
 }

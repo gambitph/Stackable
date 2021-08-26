@@ -25,3 +25,18 @@
 .stk-block-icon {
 	font-size: 0;
 }
+
+.stk-block {
+	.stk--inner-svg svg:last-child {
+		.fa-secondary {
+			fill: var(--fa-secondary-color, currentColor);
+			opacity: 0.4;
+			opacity: var(--fa-secondary-opacity, 0.4);
+		}
+		.fa-primary {
+			fill: var(--fa-primary-color, currentColor);
+			opacity: 1;
+			opacity: var(--fa-primary-opacity, 1);
+		}
+	}
+}
