@@ -68,15 +68,18 @@ const ResizableColumn = props => {
 	// Reset the column widths in desktop if a column was added / removed.
 	const [ prevAdjacentBlocks, setPrevAdjacentBlocks ] = useState( adjacentBlocks?.length )
 	useEffect( () => {
-		if ( typeof adjacentBlocks?.length !== 'undefined' ) {
-			if ( prevAdjacentBlocks !== adjacentBlocks.length ) {
-				// Reset the desktop sizes, no need to resize tablet and mobile.
-				props.onResetDesktop()
-
-				// Remember the previous block length.
-				setPrevAdjacentBlocks( adjacentBlocks.length )
-			}
+		// This will be zero when editor/content initializes, ignore this since
+		// it might trigger a reset on all column widths when you first load the
+		// editor.
+		if ( ! prevAdjacentBlocks || ! adjacentBlocks?.length ) {
+			return
 		}
+
+		// Reset the desktop sizes, no need to resize tablet and mobile.
+		props.onResetDesktop()
+
+		// Remember the previous block length.
+		setPrevAdjacentBlocks( adjacentBlocks.length )
 	}, [ adjacentBlocks ] )
 
 	// We have a timeout below, this ensures that our timeout only runs while
