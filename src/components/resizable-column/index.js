@@ -43,9 +43,13 @@ const MIN_COLUMN_WIDTH_PERCENTAGE = {
 const ResizableColumn = props => {
 	const { clientId } = useBlockEditContext()
 	const blockContext = useBlockContext()
+
 	const {
 		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlocks, blockIndex, parentBlock,
 	} = blockContext
+
+	// Block context is provided from the parent Columns block.
+	const allowResize = ! props.context[ 'stackable/columnFit' ]
 
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
@@ -330,14 +334,14 @@ const ResizableColumn = props => {
 			minHeight="100"
 			maxWidth={ maxWidth }
 			className={ className }
-			showHandle={ props.showHandle }
+			showHandle={ allowResize ? props.showHandle : false }
 			snap={ snapWidths }
 			snapGap={ 20 }
 			onResizeStart={ onResizeStart }
 			onResize={ onResize }
 			onResizeStop={ onResizeStop }
 		>
-			{ <ResizableTooltip
+			{ allowResize && <ResizableTooltip
 				isVisible={ ! isOnlyBlock }
 				blockContext={ blockContext }
 				value={ isDesktop ? props.columnWidth
@@ -518,6 +522,7 @@ ResizableTooltip.defaultProps = {
 
 ResizableColumn.defaultProps = {
 	className: '',
+	context: null,
 	showHandle: true,
 	columnWidth: '',
 	columnWidthTablet: '',

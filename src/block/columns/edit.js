@@ -36,7 +36,9 @@ import {
  */
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
+import { select, dispatch } from '@wordpress/data'
 import { ColumnsControl } from './column-settings-button'
+import { getAttributeName } from '~stackable/util'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
@@ -47,7 +49,9 @@ const TEMPLATE = [
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
+		setAttributes,
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
@@ -94,7 +98,26 @@ const Edit = props => {
 					<ColumnsControl />
 					<AdvancedToggleControl
 						label={ __( 'Fit all columns to content', i18n ) }
-						attribute="columnFit"
+						checked={ props.attributes.columnFit }
+						onChange={ value => {
+							setAttributes( { columnFit: value ? true : '' } )
+
+							// When columnFit is changed, remove all column widths.
+							if ( value ) {
+								const { getBlock } = select( 'core/block-editor' )
+								const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+
+								getBlock( clientId ).innerBlocks.forEach( block => {
+									if ( block.name === 'stackable/column' ) {
+										updateBlockAttributes( block.clientId, {
+											[ getAttributeName( 'columnWidth', 'desktop' ) ]: '',
+											[ getAttributeName( 'columnWidth', 'tablet' ) ]: '',
+											[ getAttributeName( 'columnWidth', 'mobile' ) ]: '',
+										} )
+									}
+								} )
+							}
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
