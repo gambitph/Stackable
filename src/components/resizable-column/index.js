@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { useDeviceEditorClasses } from './use-device-editor-classes'
-import { getSnapWidths } from './get-snap-widths'
+import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
 import { AdvancedTextControl } from '..'
 import { ColumnShowTooltipContext } from '../column-inner-blocks'
 
@@ -72,14 +72,18 @@ const ResizableColumn = props => {
 		// it might trigger a reset on all column widths when you first load the
 		// editor.
 		if ( ! prevAdjacentBlocks || ! adjacentBlocks?.length ) {
+			// Remember the previous block length.
+			setPrevAdjacentBlocks( adjacentBlocks?.length )
 			return
 		}
 
-		// Reset the desktop sizes, no need to resize tablet and mobile.
-		props.onResetDesktop()
+		if ( prevAdjacentBlocks !== adjacentBlocks?.length ) {
+			// Reset the desktop sizes, no need to resize tablet and mobile.
+			props.onResetDesktop()
 
-		// Remember the previous block length.
-		setPrevAdjacentBlocks( adjacentBlocks.length )
+			// Remember the previous block length.
+			setPrevAdjacentBlocks( adjacentBlocks.length )
+		}
 	}, [ adjacentBlocks ] )
 
 	// We have a timeout below, this ensures that our timeout only runs while
@@ -175,6 +179,9 @@ const ResizableColumn = props => {
 			columnPercentages = ( columnWidths || [] ).map( width => {
 				return parseFloat( ( width / totalWidth * 100 ).toFixed( 1 ) )
 			} )
+			// Fix the widths, ensure that we don't end up with off numbers 49.9% and 50.1%.
+			columnPercentages = fixFractionWidths( columnPercentages, isShiftKey )
+
 			const totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
 			if ( totalCurrentWidth !== 100 ) {
 				columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )

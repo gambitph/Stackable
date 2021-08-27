@@ -34,3 +34,25 @@ export const getSnapWidths = ( columnWidths, columnIndex, totalWidth, direction 
 		return direction === 'right' ? pxWidth - leftEdge : rightEdge - pxWidth
 	} )
 }
+
+/**
+ * When changing column widths, we can end up with off widths e.g. 16.4%, these
+ * widths can make us end up with uneven columns e.g. 49.9% and 50.1% for
+ * snapped widths.
+ *
+ * This makes sure that our columns snap at the correct numbers.
+ */
+const FRACTION_WIDTHS = SNAP_WIDTHS.map( n => n * 100 )
+const FRACTION_WIDTHS_TENS = SNAP_WIDTHS_TENS.map( n => n * 100 )
+
+export const fixFractionWidths = ( columnWidths, isShiftKey = false ) => {
+	const widths = ! isShiftKey ? FRACTION_WIDTHS : FRACTION_WIDTHS_TENS
+	return columnWidths.map( width => {
+		if ( widths.includes( width - 0.1 ) ) {
+			return width - 0.1
+		} else if ( widths.includes( width + 0.1 ) ) {
+			return width + 0.1
+		}
+		return width
+	} )
+}
