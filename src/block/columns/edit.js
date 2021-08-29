@@ -11,6 +11,7 @@ import classnames from 'classnames'
 import {
 	AdvancedRangeControl,
 	AdvancedToggleControl,
+	AdvancedToolbarControl,
 	ColumnInnerBlocks,
 	GroupPlaceholder,
 	InspectorStyleControls,
@@ -119,6 +120,14 @@ const Edit = props => {
 							}
 						} }
 					/>
+					{ props.attributes.columnFit &&
+						<AdvancedToolbarControl
+							label={ __( 'Columns Alignment', i18n ) }
+							attribute="columnFitAlign"
+							responsive="all"
+							controls="flex-horizontal"
+						/>
+					}
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
 						attribute="columnGap"

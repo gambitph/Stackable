@@ -27,7 +27,6 @@ const getStyleParams = () => {
 			selector: '> .stk-block-content',
 			styleRule: 'columnGap',
 			attrName: 'columnGap',
-			responsive: 'all',
 			format: '%spx',
 		},
 		{
@@ -35,8 +34,23 @@ const getStyleParams = () => {
 			selector: '> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout',
 			styleRule: 'columnGap',
 			attrName: 'columnGap',
-			responsive: 'all',
 			format: '%spx',
+		},
+		{
+			renderIn: 'save',
+			selector: '> .stk-block-content',
+			styleRule: 'justifyContent',
+			attrName: 'columnFitAlign',
+			responsive: 'all',
+			enabledCallback: getAttribute => !! getAttribute( 'columnFit' ),
+		},
+		{
+			renderIn: 'edit',
+			selector: '> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout',
+			styleRule: 'justifyContent',
+			attrName: 'columnFitAlign',
+			responsive: 'all',
+			enabledCallback: getAttribute => !! getAttribute( 'columnFit' ),
 		},
 	]
 }
