@@ -63,6 +63,9 @@
 	button-padding: (
 		desktop: 12px 16px,
 	),
+	button-icon-padding: (
+		desktop: 12px,
+	),
 	button-text-color: #fff,
 	button-gap: 12px,
 	button-ghost-border-width: 2px,
@@ -137,7 +140,12 @@
 		#{ '--stk-button-text-color' }: cssvar(button-background-color);
 	}
 }
-
+// Ensure buttons use the correct paddings.
+.stk-block-icon-button {
+	.stk-button {
+		#{ '--stk-button-padding' }: cssvar(button-icon-padding);
+	}
+}
 
 // Block spacing when horizontally oriented.
 .stk--block-orientation-horizontal > * + * {
