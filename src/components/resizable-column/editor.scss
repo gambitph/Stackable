@@ -44,7 +44,13 @@
 // }
 .stk-resizable-column__size-tooltip {
 	&::before {
-		content: var(--width);
+		content: "";
+		height: 0;
+		width: 0;
+		display: block;
+		border: 6px solid transparent;
+		border-right-color: var(--wp-admin-theme-color-darker-20);
+		transform: translate(-6px, -6px) rotate(45deg);
 	}
 	// Drop down icon.
 	&::after {
@@ -54,22 +60,23 @@
 		position: relative;
 		margin-left: 4px;
 		font-size: 11px;
+		display: none;
 	}
 
-	background: rgba(0, 0, 0, 0.75);
-	border-radius: 2px;
+	width: 16px;
+	height: 16px;
+	background: transparent;
 	box-sizing: border-box;
 	font-size: 12px;
 	color: #fff;
-	padding: 4px 8px;
+	padding: 0;
 	position: absolute;
+	opacity: 0;
 	top: 0;
 	left: 0;
 	white-space: nowrap;
 	z-index: 9;
 	cursor: pointer;
-	opacity: 0;
-	transition: opacity 0.1s ease-in-out;
 	user-select: none;
 	&:hover {
 		opacity: 1;
@@ -83,10 +90,35 @@
 	}
 }
 
+// If the column is hovered on, show the column width location.
+.stk-column-resizeable:hover > .stk-resizable-column__size-tooltip {
+	opacity: 1;
+}
+
 // The .stk--column-tooltip-hovered class is provided by the ColumnInnerBlocks
 // component.
 .stk--column-tooltip-hovered .stk-resizable-column__size-tooltip {
 	opacity: 1;
+	padding: 4px 8px;
+	background: rgba(0, 0, 0, 0.75);
+	width: auto;
+	height: auto;
+	&::before {
+		content: var(--width);
+		height: auto;
+		width: auto;
+		border: none;
+		transform: none;
+		background: transparent;
+		display: inline;
+	}
+	&::after {
+		display: inline;
+	}
+}
+// Don't make the tooltips of the nested columns show up when we're showing tooltips.
+.stk--column-tooltip-hovered .stk-block-columns .stk-resizable-column__size-tooltip {
+	opacity: 0;
 }
 
 .stk-resizable-column__popup .components-popover__content {
