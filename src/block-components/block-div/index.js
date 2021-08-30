@@ -5,7 +5,7 @@ import { Edit } from './edit'
 
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
-import { useBlockAttributes } from '~stackable/hooks'
+import { useBlockAttributes, useVariationPicker } from '~stackable/hooks'
 import { getUniqueBlockClass } from '~stackable/util'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -25,7 +25,14 @@ export const BlockDiv = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
-	useUniqueId()
+	useUniqueId( ! props.enableVariationPicker )
+
+	// Variation picker will show up if there's no uniqueId yet (which will be
+	// the case when props.enableVariationPicker = true)
+	const variationPicker = useVariationPicker( clientId, attributes.uniqueId )
+	if ( variationPicker && props.enableVariationPicker ) {
+		return variationPicker
+	}
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
@@ -62,6 +69,7 @@ BlockDiv.defaultProps = {
 	applyCustomAttributes: true,
 	applyAdvancedAttributes: true,
 	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
+	enableVariationPicker: false,
 }
 
 BlockDiv.Content = props => {

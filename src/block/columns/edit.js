@@ -139,7 +139,10 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<BlockStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
