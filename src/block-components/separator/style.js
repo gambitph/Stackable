@@ -90,6 +90,24 @@ export const separatorGetStyleParams = ( options = {}, location ) => {
 	]
 }
 
+const editorMarginBottomParams = ( options = {} ) => {
+	const {
+		selector: _selector,
+	} = options
+
+	return [
+		{
+			renderIn: 'edit',
+			selector: _selector !== undefined ? _selector : ` > .stk-separator__bottom`,
+			styleRule: 'bottom',
+			attrName: 'blockMargin',
+			responsive: 'all',
+			valuePreCallback: value => value.bottom,
+			format: '%spx',
+		},
+	]
+}
+
 export const Style = props => {
 	const {
 		attributes,
@@ -99,6 +117,7 @@ export const Style = props => {
 
 	const topSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'top' ) )
 	const bottomSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'bottom' ) )
+	const bottomMarginBottomStyle = useStyles( attributes, editorMarginBottomParams( options ) )
 	const topSeparatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'top' ) )
 	const bottomSeparatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'bottom' ) )
 
@@ -124,6 +143,12 @@ export const Style = props => {
 			/>
 			<StyleComponent
 				styles={ bottomSeparatorLayerStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent
+				styles={ bottomMarginBottomStyle }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
