@@ -123,7 +123,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<Column showHandle={ isHovered }>
+			<Column showHandle={ isHovered } context={ props.context }>
 				<Linking show={ isHovered } />
 				<BlockDiv className={ blockClassNames }>
 					<ContainerDiv className={ contentClassNames }>

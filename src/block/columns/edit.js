@@ -11,6 +11,8 @@ import classnames from 'classnames'
 import {
 	AdvancedRangeControl,
 	AdvancedToggleControl,
+	AdvancedToolbarControl,
+	ColumnInnerBlocks,
 	GroupPlaceholder,
 	InspectorStyleControls,
 	InspectorTabs,
@@ -35,13 +37,11 @@ import {
 /**
  * WordPress dependencies
  */
-import {
-	InnerBlocks,
-} from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
+import { select, dispatch } from '@wordpress/data'
 import { ColumnsControl } from './column-settings-button'
+import { getAttributeName } from '~stackable/util'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
@@ -52,7 +52,9 @@ const TEMPLATE = [
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
+		setAttributes,
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
@@ -60,6 +62,7 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
 	const blockHoverClass = useBlockHoverClass()
+	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const blockClassNames = classnames( [
 		className,
@@ -67,6 +70,7 @@ const Edit = props => {
 		rowClass,
 		blockHoverClass,
 		separatorClass,
+		columnTooltipClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -78,7 +82,7 @@ const Edit = props => {
 	} )
 
 	return (
-		<Fragment>
+		<>
 			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
@@ -100,8 +104,35 @@ const Edit = props => {
 					<ColumnsControl />
 					<AdvancedToggleControl
 						label={ __( 'Fit all columns to content', i18n ) }
-						attribute="columnFit"
+						checked={ props.attributes.columnFit }
+						onChange={ value => {
+							setAttributes( { columnFit: value ? true : '' } )
+
+							// When columnFit is changed, remove all column widths.
+							if ( value ) {
+								const { getBlock } = select( 'core/block-editor' )
+								const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+
+								getBlock( clientId ).innerBlocks.forEach( block => {
+									if ( block.name === 'stackable/column' ) {
+										updateBlockAttributes( block.clientId, {
+											[ getAttributeName( 'columnWidth', 'desktop' ) ]: '',
+											[ getAttributeName( 'columnWidth', 'tablet' ) ]: '',
+											[ getAttributeName( 'columnWidth', 'mobile' ) ]: '',
+										} )
+									}
+								} )
+							}
+						} }
 					/>
+					{ props.attributes.columnFit &&
+						<AdvancedToolbarControl
+							label={ __( 'Columns Alignment', i18n ) }
+							attribute="columnFitAlign"
+							responsive="all"
+							controls="flex-horizontal"
+						/>
+					}
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
 						attribute="columnGap"
@@ -113,14 +144,18 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<BlockStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Separator>
 					<div className={ contentClassNames }>
-						<InnerBlocks
+						<ColumnInnerBlocks
+							providerValue={ columnProviderValue }
 							orientation="horizontal"
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ false }
@@ -131,7 +166,7 @@ const Edit = props => {
 				</Separator>
 			</BlockDiv>
 			{ hasInnerBlocks && <MarginBottom /> }
-		</Fragment>
+		</>
 	)
 }
 

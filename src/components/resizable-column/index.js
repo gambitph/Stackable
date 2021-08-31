@@ -2,8 +2,9 @@
  * Internal dependencies
  */
 import { useDeviceEditorClasses } from './use-device-editor-classes'
-import { getSnapWidths } from './get-snap-widths'
+import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
 import { AdvancedTextControl } from '..'
+import { ColumnShowTooltipContext } from '../column-inner-blocks'
 
 /**
  * External dependencies
@@ -23,7 +24,7 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { ResizableBox, Popover } from '@wordpress/components'
 import {
-	Fragment, useState, useEffect, useRef, useCallback, useMemo, memo,
+	Fragment, useState, useEffect, useRef, useCallback, useMemo, memo, useContext,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
@@ -42,9 +43,13 @@ const MIN_COLUMN_WIDTH_PERCENTAGE = {
 const ResizableColumn = props => {
 	const { clientId } = useBlockEditContext()
 	const blockContext = useBlockContext()
+
 	const {
 		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlocks, blockIndex, parentBlock,
 	} = blockContext
+
+	// Block context is provided from the parent Columns block.
+	const allowResize = ! props.context[ 'stackable/columnFit' ]
 
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
@@ -63,14 +68,21 @@ const ResizableColumn = props => {
 	// Reset the column widths in desktop if a column was added / removed.
 	const [ prevAdjacentBlocks, setPrevAdjacentBlocks ] = useState( adjacentBlocks?.length )
 	useEffect( () => {
-		if ( typeof adjacentBlocks?.length !== 'undefined' ) {
-			if ( prevAdjacentBlocks !== adjacentBlocks.length ) {
-				// Reset the desktop sizes, no need to resize tablet and mobile.
-				props.onResetDesktop()
+		// This will be zero when editor/content initializes, ignore this since
+		// it might trigger a reset on all column widths when you first load the
+		// editor.
+		if ( ! prevAdjacentBlocks || ! adjacentBlocks?.length ) {
+			// Remember the previous block length.
+			setPrevAdjacentBlocks( adjacentBlocks?.length )
+			return
+		}
 
-				// Remember the previous block length.
-				setPrevAdjacentBlocks( adjacentBlocks.length )
-			}
+		if ( prevAdjacentBlocks !== adjacentBlocks?.length ) {
+			// Reset the desktop sizes, no need to resize tablet and mobile.
+			props.onResetDesktop()
+
+			// Remember the previous block length.
+			setPrevAdjacentBlocks( adjacentBlocks.length )
 		}
 	}, [ adjacentBlocks ] )
 
@@ -147,6 +159,8 @@ const ResizableColumn = props => {
 			const maxWidth = parentEl?.clientWidth || 0
 			setMaxWidth( maxWidth )
 		}
+
+		setIsTooltipOver( true )
 	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId ] )
 
 	const onResize = useCallback( ( _event, _direction, elt, delta ) => {
@@ -165,6 +179,9 @@ const ResizableColumn = props => {
 			columnPercentages = ( columnWidths || [] ).map( width => {
 				return parseFloat( ( width / totalWidth * 100 ).toFixed( 1 ) )
 			} )
+			// Fix the widths, ensure that we don't end up with off numbers 49.9% and 50.1%.
+			columnPercentages = fixFractionWidths( columnPercentages, isShiftKey )
+
 			const totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
 			if ( totalCurrentWidth !== 100 ) {
 				columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
@@ -245,6 +262,7 @@ const ResizableColumn = props => {
 		}
 
 		setSnapWidths( null )
+		setIsTooltipOver( false )
 	}, [ isDesktop, isTablet, newWidthsPercent, props.onChangeDesktop, props.onChangeTablet, props.onChangeMobile, tempStyles, isMounted ] )
 
 	const onTooltipChange = useCallback( width => {
@@ -287,6 +305,38 @@ const ResizableColumn = props => {
 		}
 	}, [ deviceType, isDesktop, isTablet, adjacentBlocks, blockIndex ] )
 
+	/**
+	 * Tooltip context stuff to display all tooltip widths across all sibling columns.
+	 */
+	const [ isTooltipPopupOpen, setIsTooltipPopupOpen ] = useState( false )
+	const [ isTooltipOver, setIsTooltipOver ] = useState( false )
+	const onTooltipMouseEnter = useCallback( () => setIsTooltipOver( true ), [] )
+	const onTooltipMouseLeave = useCallback( () => setIsTooltipOver( false ), [] )
+	const { showColumnTooltip, setShowColumnTooltip } = useContext( ColumnShowTooltipContext )
+
+	// IF the width popup was opened, let the parent columns block know to
+	// display all the tooltip widths.
+	const onTooltipTogglePopup = useCallback( isOpen => {
+		setIsTooltipPopupOpen( isOpen )
+		if ( isOpen ) {
+			setShowColumnTooltip( clientId )
+		} else if ( ! isTooltipOver && showColumnTooltip === clientId ) {
+			setShowColumnTooltip( false )
+		}
+	}, [ showColumnTooltip, setShowColumnTooltip, setIsTooltipPopupOpen, isTooltipOver, clientId ] )
+
+	// If the invisible tooltip was hovered, let the parent columns block know
+	// to display all the tooltip widths.
+	useEffect( () => {
+		if ( ! isTooltipPopupOpen ) {
+			if ( isTooltipOver && ! showColumnTooltip ) {
+				setShowColumnTooltip( clientId )
+			} else if ( ! isTooltipOver && showColumnTooltip === clientId ) {
+				setShowColumnTooltip( false )
+			}
+		}
+	}, [ showColumnTooltip, setShowColumnTooltip, isTooltipOver, isTooltipPopupOpen, clientId ] )
+
 	return (
 		<ResizableBox
 			enable={ enable }
@@ -294,20 +344,25 @@ const ResizableColumn = props => {
 			minHeight="100"
 			maxWidth={ maxWidth }
 			className={ className }
-			showHandle={ props.showHandle }
+			showHandle={ allowResize ? props.showHandle : false }
 			snap={ snapWidths }
 			snapGap={ 20 }
 			onResizeStart={ onResizeStart }
 			onResize={ onResize }
 			onResizeStop={ onResizeStop }
 		>
-			{ <ResizableTooltip
+			{ allowResize && <ResizableTooltip
 				isVisible={ ! isOnlyBlock }
 				blockContext={ blockContext }
 				value={ isDesktop ? props.columnWidth
 					: isTablet ? ( props.columnWidthTablet || props.columnWidth )
 						: props.columnWidthMobile }
 				onChange={ onTooltipChange }
+				onTogglePopup={ onTooltipTogglePopup }
+				tooltipProps={ {
+					onMouseEnter: onTooltipMouseEnter,
+					onMouseLeave: onTooltipMouseLeave,
+				} }
 			/> }
 			{ tempStyles && <style>{ tempStyles }</style> }
 			{ props.children }
@@ -358,6 +413,9 @@ const ResizableTooltip = props => {
 
 	// Setup the input field when the popup opens.
 	useEffect( () => {
+		if ( props.onTogglePopup ) {
+			props.onTogglePopup( isEditWidth )
+		}
 		if ( isEditWidth ) {
 			setOriginalInputValue( props.value )
 			setCurrentInputValue( props.value || ( columnLabel !== __( 'Auto', i18n ) ? columnLabel : '' ) )
@@ -440,10 +498,14 @@ const ResizableTooltip = props => {
 			{
 				! isOnlyBlock && (
 					<div
+						{ ...props.tooltipProps }
 						className="stk-resizable-column__size-tooltip"
 						ref={ tooltipRef }
 						style={ { '--width': tooltipLabel } }
-						onMouseDown={ () => setIsEditWidth( ! isEditWidth ) }
+						onMouseDown={ ev => {
+							setIsEditWidth( ! isEditWidth )
+							ev.preventDefault()
+						} }
 						onKeyDown={ event => {
 							if ( event.keyCode === 13 ) {
 								setIsEditWidth( ! isEditWidth )
@@ -464,10 +526,13 @@ ResizableTooltip.defaultProps = {
 	blockContext: {},
 	value: '',
 	onChange: () => {},
+	tooltipProps: {},
+	onTogglePopup: null,
 }
 
 ResizableColumn.defaultProps = {
 	className: '',
+	context: null,
 	showHandle: true,
 	columnWidth: '',
 	columnWidthTablet: '',

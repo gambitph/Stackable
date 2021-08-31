@@ -39,6 +39,11 @@ export const attributes = ( version = VERSION ) => {
 				type: 'boolean',
 				default: '',
 			},
+			columnFitAlign: {
+				type: 'string',
+				default: '',
+				stkResponsive: true,
+			},
 			columnGap: {
 				type: 'number',
 				default: '',
