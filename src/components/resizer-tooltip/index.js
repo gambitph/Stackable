@@ -194,8 +194,13 @@ const ResizerTooltip = props => {
 		} }
 	/>
 
-	const labelWidth = ( currentWidth || props.width || props.widthPlaceholder ) === 'auto' ? 'auto' : `${ currentWidth || props.width || props.widthPlaceholder }${ props.widthUnit }`
-	const labelHeight = ( currentHeight || props.height || props.heightPlaceholder ) === 'auto' ? 'auto' : `${ currentHeight || props.height || props.heightPlaceholder }${ props.heightUnit }`
+	let labelWidth = currentWidth || currentWidth === 0 ? currentWidth
+		: ( props.width || props.width === 0 ? props.width : props.widthPlaceholder )
+	labelWidth = labelWidth === 'auto' ? 'auto' : `${ labelWidth }${ props.widthUnit }`
+
+	let labelHeight = currentHeight || currentHeight === 0 ? currentHeight
+		: ( props.height || props.height === 0 ? props.height : props.heightPlaceholder )
+	labelHeight = labelHeight === 'auto' ? 'auto' : `${ labelHeight }${ props.heightUnit }`
 
 	return (
 		<Fragment>

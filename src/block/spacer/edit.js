@@ -120,6 +120,7 @@ const Edit = props => {
 					size={ {
 						height: height === '' ? defaultMinHeight : height,
 					} }
+					minHeight="0"
 					enable={ { bottom: true } }
 					onResize={ ( event, direction, elt, delta ) => {
 						let _height = height

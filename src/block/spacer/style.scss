@@ -1,7 +1,5 @@
 // Remove default paddings
 .stk-block.stk-block-spacer {
-	padding: 0;
-	margin: 0;
-	// Add default height.
+	margin-bottom: 0 !important;
 	height: 50px;
 }
