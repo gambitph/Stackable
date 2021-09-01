@@ -79,6 +79,7 @@ export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
 export { default as AdminSelectSetting } from './admin-select-setting'
 export { default as TaxonomyControl } from './taxonomy-control'
+export { default as Tooltip } from './tooltip'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'
@@ -113,3 +114,4 @@ export {
 export { default as Div } from './div'
 export { default as ControlIconToggle } from './control-icon-toggle'
 export { default as DynamicContentControl } from './dynamic-content-control'
+export { default as ColumnInnerBlocks } from './column-inner-blocks'

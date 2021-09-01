@@ -43,6 +43,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable-essentials', blocks => {
 			}
 			blocks[ blockType ].filterAttributes.push(
 				'uniqueId', // This should always be unique
+				'templateLock', // Column blocks can be template locked through attributes.
 				'columnWidth', 'columnWidthTablet', 'columnWidthMobile', 'isFirstBlock', 'isLastBlock', // Columns
 				'blockLinkUrl', // Block link url
 			)

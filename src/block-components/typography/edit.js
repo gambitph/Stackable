@@ -213,7 +213,7 @@ export const Edit = props => {
 						min={ [ 0, 0 ] }
 						max={ [ 150, 7 ] }
 						step={ [ 1, 0.05 ] }
-						placeholder="32"
+						placeholder={ props.sizePlaceholder }
 						responsive="all"
 					/>
 
@@ -283,4 +283,5 @@ Edit.defaultProps = {
 	initialOpen: true,
 	hasGradient: true,
 	hasRemoveMargins: false,
+	sizePlaceholder: '32',
 }

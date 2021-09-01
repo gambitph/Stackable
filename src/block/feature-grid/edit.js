@@ -8,7 +8,7 @@ import BlockStyles from './style'
  */
 import classnames from 'classnames'
 import { i18n, version as VERSION } from 'stackable'
-import { InspectorTabs } from '~stackable/components'
+import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
 	getAlignmentClasses,
@@ -26,7 +26,6 @@ import {
 /**
  * WordPress dependencies
  */
-import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { useBlockHoverClass } from '~stackable/hooks'
 
@@ -72,12 +71,14 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
+	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-feature-grid',
 		rowClass,
 		blockHoverClass,
+		columnTooltipClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -105,7 +106,8 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<div className={ contentClassNames }>
-					<InnerBlocks
+					<ColumnInnerBlocks
+						providerValue={ columnProviderValue }
 						template={ TEMPLATE }
 						// templateLock="insert"
 						allowedBlocks={ ALLOWED_BLOCKS }

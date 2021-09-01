@@ -3,6 +3,10 @@ const iconAttributes = {
 		type: 'string',
 		default: '',
 	},
+	icon2: { // Some parent blocks may have use for this second icon. By default this is rendered in the save output as a hidden SVG.
+		type: 'string',
+		default: '',
+	},
 	iconColorType: {
 		type: 'string',
 		default: '',

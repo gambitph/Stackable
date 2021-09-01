@@ -19,7 +19,7 @@ import { ResizerTooltip } from '~stackable/components'
 import { MediaUpload } from '@wordpress/block-editor'
 import { Dashicon, ResizableBox } from '@wordpress/components'
 import {
-	useState, useEffect, memo,
+	useState, useEffect, memo, useRef,
 } from '@wordpress/element'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
@@ -68,6 +68,8 @@ const Image = memo( props => {
 
 	const [ currentHeight, setCurrentHeight ] = useState()
 	const [ currentWidth, setCurrentWidth ] = useState()
+	const [ imageWidthIsTooSmall, setImageWidthIsTooSmall ] = useState( false )
+	const imageRef = useRef()
 
 	// Used to fix issue with Resizable where height in % doesn't show while resizing.
 	// @see https://github.com/bokuweb/re-resizable/issues/442
@@ -89,7 +91,23 @@ const Image = memo( props => {
 		'stk-img-placeholder': ! src || hasImageError,
 		'stk--is-resizing': isResizing,
 		'stk--no-click-to-edit': ! props.enableClickToEdit,
+		// If the image is too small, hide the size tooltip.
+		'stk--too-small': imageWidthIsTooSmall,
 	} )
+
+	// Observe the size of the image, if it's too small, we shouldn't show the
+	// size tooltip.
+	useEffect( () => {
+		if ( imageRef.current ) {
+			const resizeObserver = new ResizeObserver( entries => { // eslint-disable-line compat/compat
+				for ( const entry of entries ) {
+					setImageWidthIsTooSmall( entry.contentRect.width < 140 )
+				}
+			} )
+			resizeObserver.observe( imageRef.current )
+			return () => resizeObserver.disconnect()
+		}
+	}, [ imageRef.current ] )
 
 	const imageClasses = getImageClasses( props )
 
@@ -275,6 +293,7 @@ const Image = memo( props => {
 						/>
 						<div className="stk-img-resizer-wrapper">
 							<img
+								ref={ imageRef }
 								onLoad={ () => setHasImageError( false ) }
 								onError={ () => setHasImageError( true ) }
 								className={ imageClasses }

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { TypographyControl } from '~stackable/components'
+import { Tooltip, TypographyControl } from '~stackable/components'
 import {
 	createTypographyStyles, loadGoogleFont,
 } from '~stackable/util'
@@ -17,7 +17,7 @@ import { generateStyles } from '~stackable/block-components'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
-import { Tooltip, Dashicon } from '@wordpress/components'
+import { Dashicon } from '@wordpress/components'
 
 const TypographyPicker = props => {
 	const { value, help } = props
@@ -187,12 +187,7 @@ const TypographyPreview = props => {
 			{ props.help && (
 				<Tooltip
 					position="bottom"
-					className="stk-typography-preview__tooltip"
-					text={
-						<span className="stk-typography-preview__text">
-							{ props.help }
-						</span>
-					}
+					text={ props.help }
 				>
 					<Dashicon icon="editor-help" />
 				</Tooltip>

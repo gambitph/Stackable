@@ -5,7 +5,7 @@ import { Edit } from './edit'
 
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
-import { useBlockAttributes } from '~stackable/hooks'
+import { useBlockAttributes, useVariationPicker } from '~stackable/hooks'
 import { getUniqueBlockClass } from '~stackable/util'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -14,17 +14,32 @@ import { getHtmlTag } from '../advanced/use-html-tag'
 import { CustomAttributes } from '../custom-attributes'
 
 export const BlockDiv = props => {
+	const {
+		className,
+		applyCustomAttributes,
+		applyAdvancedAttributes,
+		renderHtmlTag,
+		...propsToPass
+	} = props
+
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
-	useUniqueId()
+	useUniqueId( ! props.enableVariationPicker )
+
+	// Variation picker will show up if there's no uniqueId yet (which will be
+	// the case when props.enableVariationPicker = true)
+	const variationPicker = useVariationPicker( clientId, attributes.uniqueId )
+	if ( variationPicker && props.enableVariationPicker ) {
+		return variationPicker
+	}
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
-	const customAttributes = props.applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
+	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
 
 	const classNames = classnames( [
-		props.className,
+		className,
 		'stk-block',
 		getUniqueBlockClass( attributes.uniqueId ),
 	],
@@ -34,12 +49,12 @@ export const BlockDiv = props => {
 	} )
 
 	return <Div
-		{ ...props }
+		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ props.applyAdvancedAttributes && ( attributes.anchor || undefined ) }
+		id={ applyAdvancedAttributes && ( attributes.anchor || undefined ) }
 		data-block-id={ attributes.uniqueId }
-		blockTag={ htmlTag }
+		blockTag={ renderHtmlTag ? htmlTag : 'div' }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
@@ -53,20 +68,25 @@ BlockDiv.defaultProps = {
 	className: '',
 	applyCustomAttributes: true,
 	applyAdvancedAttributes: true,
+	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
+	enableVariationPicker: false,
 }
 
 BlockDiv.Content = props => {
 	const {
+		className,
 		attributes,
+		applyCustomAttributes,
+		applyAdvancedAttributes,
 		...propsToPass
 	} = props
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
-	const customAttributes = props.applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
+	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
 
 	const classNames = classnames( [
-		props.className,
+		className,
 		'stk-block',
 		getUniqueBlockClass( attributes.uniqueId ),
 	],
@@ -79,7 +99,7 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ props.applyAdvancedAttributes && ( attributes.anchor || undefined ) }
+		id={ applyAdvancedAttributes && ( attributes.anchor || undefined ) }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }

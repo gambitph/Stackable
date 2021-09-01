@@ -16,7 +16,7 @@ import { applyFilters } from '@wordpress/hooks'
 export const MarginBottom = () => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
-	const { isLastBlock, parentBlock } = useBlockContext()
+	const { isLastBlock, parentBlock } = useBlockContext( clientId )
 
 	const enable = applyFilters( 'stackable.edit.margin-bottom.enable-handlers', true, parentBlock )
 	if ( isLastBlock || ! enable ) {

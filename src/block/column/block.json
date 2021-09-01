@@ -11,5 +11,8 @@
 		"stackable/feature",
 		"stackable/feature-grid"
 	],
+	"usesContext": [
+		"stackable/columnFit"
+	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks"
 }

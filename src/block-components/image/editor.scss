@@ -14,10 +14,9 @@
 	&.stk-img-placeholder {
 		/* stylelint-disable function-url-quotes */
 		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 376' xmlns='http://www.w3.org/2000/svg' fill='%23ccc'%3E%3Cpath d='M0 0v376h512V0H0zm480 344H32V32h448v312z'%3E%3C/path%3E%3Ccircle cx='409.1' cy='102.9' r='40.9'%3E%3C/circle%3E%3Cpath d='M480 344H32l86.3-164.2 21.7 11.3 49-77.3 100 113.1 8.9-9.3 17.1 22.3 26-46.4 52.9 71.2 15.1-15.9z'%3E%3C/path%3E%3C/svg%3E") !important;
-		background-size: 80px !important;
+		background-size: #{ "min(40%, 80px)" } !important; // Workaround since `min` gets confused with a SASS function.
 		background-position: center !important;
 		background-repeat: no-repeat !important;
-		background-color: #f1f1f1 !important;
 		position: relative;
 		margin-left: auto;
 		margin-right: auto;
@@ -60,8 +59,8 @@
 	color: #ddd;
 	border: none;
 	position: absolute;
-	top: 22px;
-	right: 12px;
+	top: #{ "min(10%, 16px)" };
+	right: #{ "min(10%, 12px)" };
 	cursor: pointer;
 	display: none;
 	z-index: 9 !important;
@@ -83,6 +82,96 @@
 	}
 }
 
+.stk-img-resizer-tooltip {
+	background: rgba(0, 0, 0, 0.75);
+	border-radius: 2px;
+	box-sizing: border-box;
+	font-size: 12px;
+	color: #fff;
+	padding: 4px 8px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	white-space: nowrap;
+	z-index: 9;
+	cursor: pointer;
+	opacity: 0.9;
+	transition: opacity 0.3s ease-in-out;
+	user-select: none;
+	&:hover {
+		opacity: 1;
+	}
+	&:focus {
+		border-color: #007cba;
+		border-color: var(--wp-admin-theme-color);
+		box-shadow: 0 0 0 1px #007cba;
+		box-shadow: 0 0 0 1px var(--wp-admin-theme-color);
+		outline: 2px solid transparent;
+	}
+
+	// Save for next time on when we decide to allow people to click and type in margins.
+	cursor: pointer;
+	z-index: 3;
+	&::after {
+		content: "\f347";
+		font-family: Dashicons;
+		top: 2px;
+		position: relative;
+		margin-left: 4px;
+		font-size: 11px;
+	}
+
+	// Create an outline since the tooltip is small so that it's easier to click.
+	&::before {
+		content: "";
+		position: absolute;
+		top: -8px;
+		right: -8px;
+		bottom: -8px;
+		left: -8px;
+		z-index: -1;
+	}
+}
+
+// If the image its too small, don't show the tooltip.
+.stk--too-small .stk-img-resizer-tooltip {
+	display: none !important;
+}
+
+.stk-image-size-popup {
+	.components-popover__content {
+		padding: 16px;
+		min-width: auto;
+		width: 200px;
+		font-size: 12px;
+		.stk-image-size-popup__control-wrapper {
+			display: flex;
+			column-gap: 8px;
+			margin-top: 8px;
+		}
+		.stk-image-size-popup__x {
+			align-self: flex-end;
+			padding: 0 8px;
+			line-height: 34px;
+		}
+		.stk-image-size-popup__reset {
+			align-self: flex-end;
+			margin-bottom: 10px;
+		}
+	}
+	.components-base-control,
+	.components-base-control__field {
+		margin-bottom: 0 !important;
+	}
+	// Wide when we can edit both width and height
+	&.stk--is-wide {
+		.components-popover__content {
+			width: 310px;
+		}
+	}
+}
+
 // The wrapper of the image. We need this wrapper for our image zoom feature,
 // but the resizer needs overflow visible.
 .stk-img-resizer-wrapper {
@@ -92,6 +181,11 @@
 	margin: 0 !important;
 	display: block !important;
 	overflow: hidden;
+
+	// Add the placeholder background here so that the border radius would also
+	// show in the placeholder.
+	background: #f1f1f1;
+	mix-blend-mode: multiply;
 }
 
 .ugb-button-icon-control__popover .ugb-image-shape-control {

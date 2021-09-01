@@ -151,7 +151,10 @@ export const Icon = props => {
 
 	const classNames = classnames(
 		[ 'stk--svg-wrapper' ],
-		{ 'stk--show-cursor': debouncedIsSelected },
+		{
+			'stk--show-cursor': debouncedIsSelected,
+			'stk--has-icon2': getAttribute( 'icon2' ),
+		}
 	)
 
 	return (
@@ -167,17 +170,28 @@ export const Icon = props => {
 			} }
 
 		>
-			<SVGIcon
-				className="stk--inner-svg"
-				prependRender={ linearGradient }
-				value={ getAttribute( 'icon' ) }
-				ariaLabel={ getAttribute( 'ariaLabel' ) }
-			/>
+			{ getAttribute( 'icon' ) && (
+				<SVGIcon
+					className="stk--inner-svg"
+					prependRender={ linearGradient }
+					value={ getAttribute( 'icon' ) }
+					ariaLabel={ getAttribute( 'ariaLabel' ) }
+				/>
+			) }
 			{ getAttribute( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
 			{ isOpen && (
 				<IconSearchPopover
 					useRef={ popoverEl }
 					onChange={ updateAttributeHandler( 'icon' ) }
+				/>
+			) }
+			{ getAttribute( 'icon2' ) && (
+				<SVGIcon
+					className="stk--inner-svg stk--icon-2"
+					prependRender={ linearGradient }
+					value={ getAttribute( 'icon2' ) }
+					ariaLabel={ getAttribute( 'ariaLabel' ) }
+					style={ { display: 'none' } }
 				/>
 			) }
 		</span>
@@ -196,10 +210,6 @@ Icon.Content = props => {
 
 	const ShapeComp = getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' )
 
-	if ( ! getValue( 'icon' ) ) {
-		return null
-	}
-
 	const linearGradient = hasLinearGradient ? (
 		<LinearGradient
 			id={ 'linear-gradient-' + attributes.uniqueId }
@@ -208,16 +218,32 @@ Icon.Content = props => {
 		/>
 	) : <Fragment />
 
+	const className = classnames(
+		[ 'stk--svg-wrapper' ],
+		{ 'stk--has-icon2': getValue( 'icon2' ) }
+	)
+
 	return (
-		<span className="stk--svg-wrapper">
-			<SVGIcon.Content
-				className="stk--inner-svg"
-				prependRender={ linearGradient }
-				value={ getValue( 'icon' ) }
-				ariaLabel={ getValue( 'ariaLabel' ) }
-			/>
+		<span className={ className }>
+			{ getValue( 'icon' ) && (
+				<SVGIcon.Content
+					className="stk--inner-svg"
+					prependRender={ linearGradient }
+					value={ getValue( 'icon' ) }
+					ariaLabel={ getValue( 'ariaLabel' ) }
+				/>
+			) }
 			{ getValue( 'showBackgroundShape' ) && (
 				<ShapeComp className="stk--shape-icon" />
+			) }
+			{ getValue( 'icon2' ) && ( // This is a second icon that's only outputted for reference. It's up to the parent block to decide what to do with it.
+				<SVGIcon.Content
+					className="stk--inner-svg stk--icon-2"
+					prependRender={ linearGradient }
+					value={ getValue( 'icon2' ) }
+					ariaLabel={ getValue( 'ariaLabel' ) }
+					style={ { display: 'none' } }
+				/>
 			) }
 		</span>
 	)
