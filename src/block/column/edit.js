@@ -80,7 +80,7 @@ const Edit = props => {
 	] )
 
 	const renderAppender = useCallback(
-		() => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender />,
+		() => hasInnerBlocks ? false : <InnerBlocks.ButtonBlockAppender />,
 		[ hasInnerBlocks ]
 	)
 
@@ -123,7 +123,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<Column showHandle={ isHovered }>
+			<Column showHandle={ isHovered } context={ props.context }>
 				<Linking show={ isHovered } />
 				<BlockDiv className={ blockClassNames }>
 					<ContainerDiv className={ contentClassNames }>
@@ -132,7 +132,6 @@ const Edit = props => {
 							templateLock={ props.attributes.templateLock || false }
 							orientation={ blockOrientation }
 							renderAppender={ renderAppender }
-							templateInsertUpdatesSelection={ true }
 						/>
 					</ContainerDiv>
 				</BlockDiv>

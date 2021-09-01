@@ -84,7 +84,7 @@ gulp.task( 'style-editor', function() {
 } )
 
 gulp.task( 'style', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
+	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks.css' ) )
 		.pipe( postcss( postCSSOptions ) )

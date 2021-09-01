@@ -65,14 +65,14 @@ if ( ! function_exists( 'stackable_v2_compatibility_option' ) ) {
 			)
 		);
 
-		// If true, v2 blocks will be hidden in the editor inserter. Only works
-		// if `stackable_v2_editor_compatibility` is true.
+		// If true, v2 blocks will only be loaded in the editor when there are
+		// v2 blocks used in the page being edited.
 		register_setting(
 			'stackable_v2_compatibility',
-			'stackable_v2_editor_compatibility_hidden',
+			'stackable_v2_editor_compatibility_usage',
 			array(
 				'type' => 'string',
-				'description' => __( 'Hide version 2 blocks from inserter', STACKABLE_I18N ),
+				'description' => __( 'Load version 2 blocks when old blocks are used', STACKABLE_I18N ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '',
@@ -103,7 +103,18 @@ if ( ! function_exists( 'has_stackable_v2_frontend_compatibility' ) ) {
 	 * @since 3.0.0
 	 */
 	function has_stackable_v2_editor_compatibility() {
-		return get_option( 'stackable_v2_editor_compatibility' ) === '1';
+		return get_option( 'stackable_v2_editor_compatibility' ) === '1' || get_option( 'stackable_v2_editor_compatibility_usage' ) === '1';
+	}
+
+	/**
+	 * Should we load v2 blocks only when they are used in the editor
+	 *
+	 * @return Boolean
+	 *
+	 * @since 3.0.0
+	 */
+	function has_stackable_v2_editor_compatibility_usage() {
+		return get_option( 'stackable_v2_editor_compatibility_usage' ) === '1';
 	}
 }
 
@@ -262,27 +273,6 @@ if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 
 	if ( has_stackable_v2_frontend_compatibility() && ! has_stackable_v2_editor_compatibility() ) {
 		add_filter( 'render_block', 'load_frontend_scripts_conditionally_v2', 10, 2 );
-	}
-}
-
-if ( ! function_exists( 'stackable_disabled_blocks_v2' ) ) {
-	/**
-	 * Hides all v2 blocks from Gutenberg if needed.
-	 *
-	 * @param Array $disabled_blocks
-	 * @return void
-	 */
-	function stackable_disabled_blocks_v2( $disabled_blocks ) {
-		$block_json_files = stackable_get_all_v2_blocks_json_paths();
-		foreach ( $block_json_files as $block_json_file ) {
-			$metadata = json_decode( file_get_contents( $block_json_file ), true );
-			$disabled_blocks[] = $metadata['name'];
-		}
-		return $disabled_blocks;
-
-	}
-	if ( get_option( 'stackable_v2_editor_compatibility_hidden' ) === '1' ) {
-		add_filter( 'stackable_disabled_blocks', 'stackable_disabled_blocks_v2' );
 	}
 }
 

@@ -42,7 +42,9 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	] )
+	], {
+		'stk--fit-content': attributes.columnFit,
+	} )
 
 	return (
 		<BlockDiv.Content

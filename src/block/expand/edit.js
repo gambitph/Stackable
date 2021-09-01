@@ -69,7 +69,6 @@ const Edit = props => {
 		className,
 		'stk-block-expand',
 		blockHoverClass,
-		'stk--revert',
 	] )
 
 	const contentClassNames = classnames( [

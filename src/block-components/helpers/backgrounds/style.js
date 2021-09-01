@@ -18,6 +18,7 @@ const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
+		backgroundFallbackColor = '#ffffff',
 	} = options
 
 	// const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -41,7 +42,7 @@ const getStyleParams = ( options = {} ) => {
 					getAttribute( 'backgroundMediaUrl', 'tablet' ) ||
 					getAttribute( 'backgroundMediaUrl', 'mobile' )
 
-				if ( ! backgroundColorType && backgroundColorOpacity && ! hasBackground ) {
+				if ( ! backgroundColorType && backgroundColorOpacity !== '' && ! hasBackground ) {
 					return `${ hexToRgba( value || '#ffffff', backgroundColorOpacity || 0 ) }`
 				}
 
@@ -49,9 +50,11 @@ const getStyleParams = ( options = {} ) => {
 			},
 			valuePreCallback: ( _value, getAttribute, device, state ) => {
 				let value = _value
-				if ( ! value && getAttribute( 'backgroundColorOpacity', 'desktop', state ) ) {
+				if ( ! value && getAttribute( 'backgroundColorOpacity', 'desktop', state ) !== '' ) {
 					if ( device !== 'desktop' || state !== 'normal' ) {
-						value = getAttribute( 'backgroundColor', 'desktop', 'normal' )
+						value = getAttribute( 'backgroundColor', 'desktop', 'normal' ) || backgroundFallbackColor
+					} else {
+						value = backgroundFallbackColor
 					}
 				}
 				return value

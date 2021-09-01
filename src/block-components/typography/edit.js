@@ -210,7 +210,7 @@ export const Controls = props => {
 				min={ [ 0, 0 ] }
 				max={ [ 150, 7 ] }
 				step={ [ 1, 0.05 ] }
-				placeholder="32"
+				placeholder={ props.sizePlaceholder }
 				responsive="all"
 			/>
 
@@ -345,6 +345,7 @@ Edit.defaultProps = {
 	hasGradient: true,
 	hasRemoveMargins: false,
 	label: __( 'Typography', i18n ),
+	sizePlaceholder: '32',
 }
 
 Edit.Controls = Controls

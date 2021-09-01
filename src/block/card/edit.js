@@ -88,7 +88,7 @@ const Edit = props => {
 	} )
 
 	const renderAppender = useCallback(
-		() => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender />,
+		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
 		[ hasInnerBlocks ]
 	)
 
@@ -140,7 +140,6 @@ const Edit = props => {
 							template={ TEMPLATE }
 							orientation={ blockOrientation }
 							renderAppender={ renderAppender }
-							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
 				</ContainerDiv>

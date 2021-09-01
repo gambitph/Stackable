@@ -2,10 +2,13 @@ import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { useBlockContext, useLinking } from '~stackable/hooks'
 import { useClosestLinkableBlock } from '~stackable/plugins/block-linking'
+import { Tooltip } from '~stackable/components'
 
-import { Dashicon, Tooltip } from '@wordpress/components'
+import { Dashicon } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { useMemo } from '@wordpress/element'
+import { getPlugin } from '@wordpress/plugins'
 
 export const Linking = () => {
 	const [ isLinked, setIsLinked ] = useLinking()
@@ -14,7 +17,12 @@ export const Linking = () => {
 	const { clientId } = useBlockEditContext()
 
 	const closestLinkableBlock = useClosestLinkableBlock( clientId )
-	if ( isOnlyBlock || ! closestLinkableBlock ) {
+
+	const isEnabled = useMemo( () => {
+		return !! getPlugin( 'stackable-block-linking' )
+	}, [] )
+
+	if ( ! isEnabled || isOnlyBlock || ! closestLinkableBlock ) {
 		return null
 	}
 
@@ -28,11 +36,11 @@ export const Linking = () => {
 		className="stk-linking-wrapper"
 	>
 		<Tooltip position="bottom" text={
-			<span className="stk-linking__tooltip">
+			<>
 				{ __( 'When linked, styling this block would also style other linked blocks in adjacent columns.', i18n ) }
 				<br />
 				<a href="https://docs.wpstackable.com/article/452-how-to-use-linking/?utm_source=wp-linking-tooltip&utm_campaign=learnmore&utm_medium=gutenberg" target="_blank" rel="noopener noreferrer">{ __( 'Learn more about linking', i18n ) }</a>
-			</span>
+			</>
 		}
 		>
 			<div

@@ -17,7 +17,7 @@ import { ConvertToContainerButton, GetBlockAttributesButton } from '~stackable/c
 import { devMode } from 'stackable'
 
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
-registerPlugin( 'stackable-attribute-listener', { render: BlockLinking } )
+registerPlugin( 'stackable-block-linking', { render: BlockLinking } )
 
 if ( devMode ) {
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )
