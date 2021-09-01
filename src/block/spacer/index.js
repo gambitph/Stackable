@@ -1,11 +1,6 @@
 /**
- * BLOCK: Columns Block
+ * BLOCK: Spacer Block
  */
-/**
- * External dependencies
- */
-import { ColumnsIcon } from '~stackable/icons'
-
 /**
  * Internal dependencies
  */
@@ -13,24 +8,20 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
-import variations from './variations'
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { SpacerIcon } from '~stackable/icons'
 
 export const settings = {
 	...metadata,
-	icon: ColumnsIcon,
+	icon: SpacerIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
-		align: [ 'center', 'wide', 'full' ],
 	},
 
-	variations,
 	edit,
 	save,
 }
-

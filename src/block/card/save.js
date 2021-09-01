@@ -38,7 +38,7 @@ export const Save = props => {
 
 	const blockClassNames = classnames( [
 		props.className,
-		'stk-card',
+		'stk-block-card',
 		responsiveClass,
 	] )
 
@@ -50,7 +50,7 @@ export const Save = props => {
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-card__content',
+		'stk-block-card__content',
 	], {
 		'stk-container-padding': hasContainer,
 	} )
@@ -68,7 +68,7 @@ export const Save = props => {
 			>
 				{ props.attributes.imageUrl &&
 					<Image.Content
-						className="stk-card__image"
+						className="stk-block-card__image"
 						attributes={ attributes }
 					/>
 				}

@@ -61,13 +61,10 @@ export const useColumn = () => {
 	}
 }
 
-export const getColumnClasses = attributes => {
+export const getColumnClasses = () => {
 	const columnClasses = classnames( [
 		'stk-column',
-	], {
-		'stk-is-first': attributes.isFirstBlock,
-		'stk-is-last': attributes.isLastBlock,
-	} )
+	] )
 	return [
 		columnClasses,
 		'stk-column-wrapper',
