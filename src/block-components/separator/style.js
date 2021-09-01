@@ -54,7 +54,7 @@ export const separatorGetStyleParams = ( options = {}, location ) => {
 				return compact( [
 					( enableFlipHorizontally && flipHorizontally ) ? 'scaleX(-1)' : undefined,
 					( enableFlipHorizontally && flipHorizontally && isInitiallyFlippedVertically ) ? 'scaleY(-1)' : undefined,
-					( enableFlipVertically && flipVertically ) ? 'scaleY(-1)' : undefined,
+					( enableFlipVertically && flipVertically && isInitiallyFlippedVertically ) ? 'scaleY(-1)' : undefined,
 				] ).join( ' ' )
 			},
 			dependencies: [ 'separatorFlipVertically' ],
@@ -116,7 +116,7 @@ export const Style = props => {
 	} = props
 
 	const topSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'top' ) )
-	const bottomSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'bottom' ) )
+	const bottomSeparatorStyles = useStyles( attributes, separatorGetStyleParams( { ...options, isInitiallyFlippedVertically: false }, 'bottom' ) )
 	const bottomMarginBottomStyle = useStyles( attributes, editorMarginBottomParams( options ) )
 	const topSeparatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'top' ) )
 	const bottomSeparatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'bottom' ) )
