@@ -102,7 +102,7 @@ const editorMarginBottomParams = ( options = {} ) => {
 			styleRule: 'bottom',
 			attrName: 'blockMargin',
 			responsive: 'all',
-			valuePreCallback: value => value.bottom,
+			valuePreCallback: value => value?.bottom,
 			format: '%spx',
 		},
 	]
