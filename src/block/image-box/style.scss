@@ -1,0 +1,16 @@
+.stk-block-image-box {
+	.stk-inner-blocks {
+		display: grid;
+		> .stk-block {
+			grid-column: 1 / 2;
+			grid-row: 1 / 2;
+			margin: 0;
+		}
+	}
+	.stk-img-wrapper {
+		height: 100%;
+	}
+	:is(.stk-block-column, .stk-block-image) {
+		--stk-block-margin-bottom: 0;
+	}
+}

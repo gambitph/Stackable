@@ -47,11 +47,16 @@ import {
 	Fragment, useCallback,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 const TEMPLATE = []
 
 const Edit = props => {
-	const { hasInnerBlocks, isOnlyBlock } = useBlockContext()
+	const {
+		hasInnerBlocks, isOnlyBlock,
+	} = useBlockContext()
+
+	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined )
 
 	const {
 		className,
@@ -128,6 +133,7 @@ const Edit = props => {
 				<BlockDiv className={ blockClassNames }>
 					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks
+							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							template={ TEMPLATE }
 							templateLock={ props.attributes.templateLock || false }
 							orientation={ blockOrientation }

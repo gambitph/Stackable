@@ -15,8 +15,7 @@ import {
 	ColumnInnerBlocks,
 	GroupPlaceholder,
 	InspectorStyleControls,
-	InspectorTabs,
-	PanelAdvancedSettings,
+	InspectorTabs, PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	BlockDiv,
