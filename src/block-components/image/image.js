@@ -4,11 +4,6 @@
 import getSnapSizes from './get-snap-sizes'
 
 /**
- * Internal dependencies
- */
-import Tooltip from './tooltip'
-
-/**
  * External dependencies
  */
 import { useDeviceType, useWithShift } from '~stackable/hooks'
@@ -16,6 +11,7 @@ import classnames from 'classnames'
 import striptags from 'striptags'
 import { clamp } from 'lodash'
 import { useDynamicContent } from '~stackable/components/dynamic-content-control'
+import { ResizerTooltip } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -264,7 +260,7 @@ const Image = memo( props => {
 								<Dashicon icon="no" />
 							</button>
 						) }
-						<Tooltip
+						<ResizerTooltip
 							enableHeight={ props.enableHeight || props.enableDiagonal }
 							enableWidth={ props.enableWidth || props.enableDiagonal }
 							height={ formSize( currentHeight || props.height, props.heightUnit, false, false ) }
