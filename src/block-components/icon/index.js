@@ -223,16 +223,18 @@ Icon.Content = props => {
 		{ 'stk--has-icon2': getValue( 'icon2' ) }
 	)
 
+	if ( ! getValue( 'icon' ) ) {
+		return null
+	}
+
 	return (
 		<span className={ className }>
-			{ getValue( 'icon' ) && (
-				<SVGIcon.Content
-					className="stk--inner-svg"
-					prependRender={ linearGradient }
-					value={ getValue( 'icon' ) }
-					ariaLabel={ getValue( 'ariaLabel' ) }
-				/>
-			) }
+			<SVGIcon.Content
+				className="stk--inner-svg"
+				prependRender={ linearGradient }
+				value={ getValue( 'icon' ) }
+				ariaLabel={ getValue( 'ariaLabel' ) }
+			/>
 			{ getValue( 'showBackgroundShape' ) && (
 				<ShapeComp className="stk--shape-icon" />
 			) }
