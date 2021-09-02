@@ -41,7 +41,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-image',
+		'stk-block-image',
 		blockHoverClass,
 	] )
 
@@ -59,12 +59,12 @@ const Edit = props => {
 			/>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-image" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<BlockStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-image" />
+			<CustomCSS mainBlockClass="stk-block-image" />
 
 			<BlockDiv className={ blockClassNames }>
 				<Image

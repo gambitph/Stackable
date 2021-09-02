@@ -36,6 +36,14 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
+	attrObject.addDefaultValues( {
+		attributes: {
+			contentAlign: 'center',
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 
