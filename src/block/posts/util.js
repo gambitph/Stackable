@@ -90,6 +90,7 @@ export const generateRenderPostItem = attributes => {
 
 	const categoryClassNames = classnames(
 		'stk-block-posts__category',
+		'stk-subtitle',
 		getTypographyClasses( attributes, 'category%s' )
 	)
 
@@ -100,6 +101,7 @@ export const generateRenderPostItem = attributes => {
 
 	const metaClassNames = classnames(
 		'stk-block-posts__meta',
+		'stk-subtitle',
 		getTypographyClasses( attributes, 'meta%s' )
 	)
 
@@ -177,7 +179,7 @@ export const generateRenderPostItem = attributes => {
 			</div>
 		)
 
-		const separator = <span>{ META_SEPARATORS[ metaSeparator || 'dot' ] }</span>
+		const separator = <span className="stk-block-posts__meta-sep">{ META_SEPARATORS[ metaSeparator || 'dot' ] }</span>
 		const author = authorInfo?.name && <span>{ authorInfo.name }</span>
 		const date = dateGmt && (
 			<time dateTime={ format( 'c', dateGmt ) }>
@@ -290,6 +292,7 @@ generateRenderPostItem.save = attributes => {
 
 	const categoryClassNames = classnames(
 		'stk-block-posts__category',
+		'stk-subtitle',
 		getTypographyClasses( attributes, 'category%s' )
 	)
 
@@ -300,6 +303,7 @@ generateRenderPostItem.save = attributes => {
 
 	const metaClassNames = classnames(
 		'stk-block-posts__meta',
+		'stk-subtitle',
 		getTypographyClasses( attributes, 'meta%s' )
 	)
 
@@ -331,7 +335,7 @@ generateRenderPostItem.save = attributes => {
 		/>
 	)
 
-	const separator = <span>!#metaSeparator!#</span>
+	const separator = <span className="stk-block-posts__meta-sep">!#metaSeparator!#</span>
 	const author = <span>!#authorName!#</span>
 	const date = (
 		<time dateTime="!#dateTime!#" >
