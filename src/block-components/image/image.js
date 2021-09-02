@@ -261,7 +261,7 @@ const Image = memo( props => {
 							</button>
 						) }
 						{ props.hasTooltip && (
-							<Tooltip
+							<ResizerTooltip
 								enableHeight={ props.enableHeight || props.enableDiagonal }
 								enableWidth={ props.enableWidth || props.enableDiagonal }
 								height={ formSize( currentHeight || props.height, props.heightUnit, false, false ) }
