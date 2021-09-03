@@ -1,6 +1,7 @@
 /**
  * Polyfills used.
  */
+import 'whatwg-fetch'
 
 // Nodelist forEach polyfill.
 if ( window.NodeList && ! window.NodeList.prototype.forEach ) {

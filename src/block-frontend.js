@@ -3,6 +3,7 @@
  *
  * This is the file that Webpack is compiling into blocks.frontend.build.js
  */
+import './polyfill'
 
 /**
  * Internal dependencies
