@@ -1,38 +1,35 @@
 // Show column widths when hovering.
-.stk-block:hover .stk-linking-wrapper {
-	display: block;
-}
-// Show column widths when columns and their contents are selected.
-[data-type^="stackable/"].has-child-selected .stk-linking-wrapper {
+.stk-inner-blocks:hover > * > * > [data-type="stackable/column"] > * > .stk-column-resizeable > .stk-linking-wrapper {
 	display: block;
 }
 
 .stk-linking-wrapper {
 	display: none;
 	position: absolute;
-	top: 0;
-	right: 2px;
+	top: 4px;
+	right: 4px;
 	z-index: 9;
 }
 .stk-linking-wrapper__tooltip {
-	height: 28px;
+	height: 20px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 28px;
-	background: rgba(0, 0, 0, 0.75);
+	width: 20px;
+	background: #fff;
 	border-radius: 2px;
-	color: #fff;
+	color: var(--wp-admin-theme-color);
 	.dashicon {
 		font-size: 16px;
 		height: 1em;
 	}
 	cursor: pointer;
-	opacity: 0.9;
-	transition: opacity 0.3s ease-in-out;
+	opacity: 0.8;
+	transition: none;
 	user-select: none;
-	&.stk--is-unlinked {
-		color: #aaa;
+	&:not(.stk--is-unlinked) {
+		color: #fff;
+		background: var(--wp-admin-theme-color-darker-20);
 	}
 	&:hover {
 		opacity: 1;

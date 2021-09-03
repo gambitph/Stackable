@@ -70,7 +70,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-card',
+		'stk-block-card',
 		blockHoverClass,
 	] )
 
@@ -82,7 +82,7 @@ const Edit = props => {
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-card__content',
+		'stk-block-card__content',
 	], {
 		'stk-container-padding': hasContainer,
 	} )
@@ -110,20 +110,20 @@ const Edit = props => {
 				hasBorderRadius={ false }
 				hasShape={ false }
 			/>
-			<ContainerDiv.InspectorControls sizeSelector=".stk-card__content" />
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<CardStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-card" />
+			<CustomCSS mainBlockClass="stk-block-card" />
 
 			<BlockDiv className={ blockClassNames }>
 				<ContainerDiv className={ contentClassNames }>
 					<Image
-						className="stk-card__image"
+						className="stk-block-card__image"
 						enableWidth={ blockStyle === 'horizontal' }
 						enableHeight={ blockStyle !== 'horizontal' }
 						enableDiagonal={ false }

@@ -61,3 +61,82 @@ svg.stk-stackable-icon-gradient {
 		}
 	}
 }
+
+/**
+ * Thicker column (blue) outlines for container-type blocks.
+ */
+
+$blocks: (
+	'[data-type="stackable/column"]',
+	'[data-type="stackable/call-to-action"]',
+	'[data-type="stackable/card"]',
+	'[data-type="stackable/hero"]',
+	'[data-type="stackable/notification"]',
+	'[data-type="stackable/testimonial"]',
+	'[data-type="stackable/team-member"]'
+);
+$block-joined: #{ join($blocks, (), $separator: comma) };
+
+// Highlight column blocks in a special color so people can see the column better.
+:is(#{ $block-joined }):hover {
+	outline: 2px solid var(--wp-admin-theme-color);
+}
+// Darker color for nested columns.
+:is(#{ $block-joined }) :is(#{ $block-joined }):hover {
+	outline: 2px solid var(--wp-admin-theme-color-darker-20);
+}
+
+/**
+ * Gray dotted outlines for blocks
+ */
+
+:root {
+	--stk-block-outline-color: #888;
+}
+// Highlight root blocks with an outline when they're hovered on. But only
+// stackable blocks to keep the default behavior of core blocks and other
+// third-party blocks.
+.is-root-container > [data-block][data-type^="stackable/"]:not([data-type*="/column"]):not(:focus) {
+	&::after {
+		content: "";
+		inset: 0;
+		pointer-events: none;
+	}
+	&:hover::after {
+		outline: 2px dotted var(--stk-block-outline-color);
+	}
+}
+// For blocks inside columns, highlight all blocks.
+[data-type^="stackable/"] {
+	[data-block]:not([data-type*="/column"]):not(:focus) { // Don't do this for columns and column blocks since they have their own highlight.
+		&::after {
+			content: "";
+			inset: 0;
+			pointer-events: none;
+		}
+		&:hover::after {
+			outline: 2px dotted var(--stk-block-outline-color);
+		}
+	}
+}
+// Some blocks contain other blocks, make them a lighter gray shade.
+[data-type="stackable/button-group"],
+[data-type="stackable/blockquote"],
+[data-type="stackable/icon-label"],
+[data-type="stackable/expand"] {
+	--stk-block-outline-color: #ccc;
+	* {
+		--stk-block-outline-color: #888;
+	}
+}
+
+// Hide the gray outline of some blocks.
+[data-type="stackable/accordion"]::after,
+[data-type="stackable/feature-grid"]::after,
+[data-type="stackable/pricing-box"]::after,
+[data-type="stackable/feature"]::after,
+.stk-block-accordion__heading [data-type="stackable/icon-label"]::after, // Hide the outline for the accordion heading.
+.stk-block-video-popup [data-type="stackable/image"]::after, // Hide the outline for the video popup image block.
+:is(#{ $block-joined })::after { // Make sure that all the blue highlighted blocks don't have gray outlines.
+	outline: none !important;
+}

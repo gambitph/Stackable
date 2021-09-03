@@ -1,5 +1,5 @@
 /**
- * BLOCK: Container Block
+ * BLOCK: Testimonial Block
  */
 /**
  * Internal dependencies

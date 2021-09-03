@@ -7,13 +7,9 @@ import {
 	InspectorTabs,
 } from '~stackable/components'
 import {
-	withIsHovered,
-} from '~stackable/higher-order'
-import {
 	BlockDiv,
 	Advanced, CustomCSS,
 	Responsive,
-	Linking,
 	Button,
 	BlockStyle,
 	CustomAttributes,
@@ -27,7 +23,6 @@ import {
 /**
  * WordPress dependencies
  */
-import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -39,7 +34,6 @@ import { blockStyles } from './block-styles'
 const Edit = props => {
 	const {
 		className,
-		isHovered,
 	} = props
 
 	const blockHoverClass = useBlockHoverClass()
@@ -79,7 +73,6 @@ const Edit = props => {
 			<IconButtonStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-icon-button" />
 
-			<Linking show={ isHovered } />
 			<BlockDiv
 				className={ blockClassNames }
 				applyAdvancedAttributes={ false }
@@ -96,6 +89,4 @@ const Edit = props => {
 	)
 }
 
-export default compose(
-	withIsHovered
-)( Edit )
+export default Edit
