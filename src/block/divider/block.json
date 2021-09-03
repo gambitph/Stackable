@@ -2,6 +2,10 @@
 	"name": "stackable/divider",
 	"title": "Divider",
 	"description": "Add a pause between your content.",
-	"category": "layout",
+	"category": "common",
+	"keywords": [
+		"Horizontal Rule",
+		"HR"
+	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks"
 }

@@ -71,7 +71,7 @@ const Edit = props => {
 						attribute="color"
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Height', i18n ) }
+						label={ __( 'Height / Size', i18n ) }
 						responsive="all"
 						attribute="height"
 						min={ 1 }
@@ -79,7 +79,7 @@ const Edit = props => {
 						placeholder=""
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Width', i18n ) }
+						label={ __( 'Width', i18n ) + ' (%)' }
 						responsive="all"
 						attribute="width"
 						min={ 1 }
