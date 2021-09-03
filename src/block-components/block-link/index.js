@@ -35,6 +35,7 @@ BlockLink.Content = props => {
 BlockLink.Content.defaultProps = {
 	className: '',
 	attributes: {},
+	href: '',
 }
 
 BlockLink.InspectorControls = Edit
