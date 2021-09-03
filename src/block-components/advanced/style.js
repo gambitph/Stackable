@@ -9,12 +9,12 @@ import {
 
 const getStyleParams = ( options = {} ) => {
 	const {
-		positionSelector,
+		positionSelector = '',
 	} = options
 
 	return [
 		{
-			selector: positionSelector || '',
+			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'top',
 			attrName: 'positionNum',
@@ -32,7 +32,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selector: positionSelector || '',
+			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'right',
 			attrName: 'positionNum',
@@ -42,7 +42,7 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: value => value?.right,
 		},
 		{
-			selector: positionSelector || '',
+			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'bottom',
 			attrName: 'positionNum',
@@ -52,7 +52,7 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: value => value?.bottom,
 		},
 		{
-			selector: positionSelector || '',
+			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'left',
 			attrName: 'positionNum',
@@ -63,7 +63,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'edit',
-			selector: positionSelector || '',
+			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'position',
 			attrName: 'positionNum',
@@ -133,12 +133,12 @@ const getStyleParams = ( options = {} ) => {
 // state position e.g. hover `top: 20px` given but no initial state.
 const getStyleParams2 = ( options = {} ) => {
 	const {
-		positionSelector,
+		positionSelector = '',
 	} = options
 
 	return [
 		{
-			selector: positionSelector || '',
+			selector: positionSelector,
 			styleRule: 'top',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -154,7 +154,7 @@ const getStyleParams2 = ( options = {} ) => {
 			},
 		},
 		{
-			selector: positionSelector || '',
+			selector: positionSelector,
 			styleRule: 'right',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -170,7 +170,7 @@ const getStyleParams2 = ( options = {} ) => {
 			},
 		},
 		{
-			selector: positionSelector || '',
+			selector: positionSelector,
 			styleRule: 'bottom',
 			attrName: 'positionNum',
 			responsive: 'all',
@@ -186,7 +186,7 @@ const getStyleParams2 = ( options = {} ) => {
 			},
 		},
 		{
-			selector: positionSelector || '',
+			selector: positionSelector,
 			styleRule: 'left',
 			attrName: 'positionNum',
 			responsive: 'all',
