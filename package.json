@@ -28,7 +28,8 @@
 		"react-file-drop": "^3.0.7",
 		"react-sortable-hoc": "^2.0.0",
 		"striptags": "^3.2.0",
-		"waypoints": "^4.0.1"
+		"waypoints": "^4.0.1",
+		"whatwg-fetch": "^3.6.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.0.0",
