@@ -84,6 +84,11 @@
 	 */
 	subtitle-size: 16px,
 	subtitle-color: #39414d,
+
+	/**
+	 * Dividers
+	 */
+	divider-color: #ddd,
 ) );
 
 /**
@@ -211,4 +216,12 @@
 .stk-subtitle {
 	font-size: cssvar(subtitle-size);
 	color: cssvar(subtitle-color);
+}
+
+// Divider
+.stk-block.stk-block-divider {
+	hr.stk-block-divider__hr,
+	.stk-block-divider__dot {
+		background: cssvar(divider-color);
+	}
 }
