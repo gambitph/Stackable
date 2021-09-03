@@ -81,32 +81,32 @@ const Controls = props => {
 			) }
 
 			{ props.hasWidth &&
-			<AdvancedRangeControl
-				label={ __( 'Width', i18n ) }
-				attribute="imageWidth"
-				units={ props.widthUnits }
-				min={ props.widthMin }
-				sliderMax={ props.widthMax }
-				step={ props.widthStep }
-				initialPosition={ 100 }
-				allowReset={ true }
-				placeholder="250" // TODO: This should be referenced somewher instead of just a static number
-				responsive="all"
-			/>
+				<AdvancedRangeControl
+					label={ __( 'Width', i18n ) }
+					attribute="imageWidth"
+					units={ props.widthUnits }
+					min={ props.widthMin }
+					sliderMax={ props.widthMax }
+					step={ props.widthStep }
+					initialPosition={ 100 }
+					allowReset={ true }
+					placeholder="250" // TODO: This should be referenced somewher instead of just a static number
+					responsive="all"
+				/>
 			}
 
 			{ props.hasHeight &&
-			<AdvancedRangeControl
-				label={ __( 'Height', i18n ) }
-				attribute="imageHeight"
-				units={ props.heightUnits }
-				min={ props.heightMin }
-				sliderMax={ props.heightMax }
-				step={ props.heightStep }
-				allowReset={ true }
-				placeholder=""
-				responsive="all"
-			/>
+				<AdvancedRangeControl
+					label={ __( 'Height', i18n ) }
+					attribute="imageHeight"
+					units={ props.heightUnits }
+					min={ props.heightMin }
+					sliderMax={ props.heightMax }
+					step={ props.heightStep }
+					allowReset={ true }
+					placeholder=""
+					responsive="all"
+				/>
 			}
 
 			{ props.hasAlt && (
@@ -154,16 +154,16 @@ const Controls = props => {
 			) }
 
 			{ props.hasBorderRadius &&
-			<AdvancedRangeControl
-				label={ __( 'Border Radius', i18n ) }
-				attribute="imageBorderRadius"
-				min="0"
-				sliderMax="30"
-				placeholder="0"
-				defaultValue={ 0 }
-				allowReset={ true }
-				className="ugb--help-tip-general-border-radius"
-			/>
+				<AdvancedRangeControl
+					label={ __( 'Border Radius', i18n ) }
+					attribute="imageBorderRadius"
+					min="0"
+					sliderMax="30"
+					placeholder="0"
+					defaultValue={ 0 }
+					allowReset={ true }
+					className="ugb--help-tip-general-border-radius"
+				/>
 			}
 
 			<AdvancedFocalPointControl
@@ -190,41 +190,41 @@ const Controls = props => {
 			/>
 
 			{ props.hasShape &&
-			<ButtonIconPopoverControl
-				label={ __( 'Image Shape', i18n ) }
-				onReset={ () => {
-					updateBlockAttributes( clientId, {
-						imageShape: '',
-						imageShapeFlipX: '',
-						imageShapeFlipY: '',
-						imageShapeStretch: true,
-					} )
-				} }
-				allowReset={
-					attributes.imageShape ||
+				<ButtonIconPopoverControl
+					label={ __( 'Image Shape', i18n ) }
+					onReset={ () => {
+						updateBlockAttributes( clientId, {
+							imageShape: '',
+							imageShapeFlipX: '',
+							imageShapeFlipY: '',
+							imageShapeStretch: true,
+						} )
+					} }
+					allowReset={
+						attributes.imageShape ||
 							attributes.imageShapeFlipX ||
 							attributes.imageShapeFlipY ||
 							! attributes.imageShapeStretch
-				}
-			>
-				<ImageShapeControl
-					selected={ attributes.imageShape }
-					onChange={ imageShape => updateBlockAttributes( clientId, { imageShape } ) }
-				/>
-				<AdvancedToggleControl
-					label={ __( 'Flip Shape Horizontally', i18n ) }
-					attribute="imageShapeFlipX"
-				/>
-				<AdvancedToggleControl
-					label={ __( 'Flip Shape Vertically', i18n ) }
-					attribute="imageShapeFlipY"
-				/>
-				<AdvancedToggleControl
-					label={ __( 'Stretch Shape Mask', i18n ) }
-					attribute="imageShapeStretch"
-					defaultValue={ true }
-				/>
-			</ButtonIconPopoverControl>
+					}
+				>
+					<ImageShapeControl
+						selected={ attributes.imageShape }
+						onChange={ imageShape => updateBlockAttributes( clientId, { imageShape } ) }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Flip Shape Horizontally', i18n ) }
+						attribute="imageShapeFlipX"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Flip Shape Vertically', i18n ) }
+						attribute="imageShapeFlipY"
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Stretch Shape Mask', i18n ) }
+						attribute="imageShapeStretch"
+						defaultValue={ true }
+					/>
+				</ButtonIconPopoverControl>
 			}
 
 			<ButtonIconPopoverControl
