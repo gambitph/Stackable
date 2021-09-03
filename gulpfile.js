@@ -123,6 +123,7 @@ gulp.task( 'style-editor-deprecated-v2', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/**/editor.scss' ) ] )
 		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks_deprecated_v2.css' ) )
+		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
 		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
 		.pipe( postcss( postCSSOptions ) )
 		.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
