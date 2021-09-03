@@ -134,15 +134,15 @@ export const Controls = props => {
 				} }
 				allowReset={
 					( getAttribute( 'fontFamily' ) ||
-								getAttribute( 'fontSize', 'desktop', state ) ||
-								getAttribute( 'fontSize', 'tablet', state ) ||
-								getAttribute( 'fontSize', 'mobile', state ) ||
-								getAttribute( 'fontWeight', 'desktop', state ) ||
-								getAttribute( 'textTransform', 'desktop', state ) ||
-								getAttribute( 'letterSpacing', 'desktop', state ) ||
-								getAttribute( 'lineHeight', 'desktop', state ) ||
-								getAttribute( 'lineHeight', 'tablet', state ) ||
-								getAttribute( 'lineHeight', 'mobile', state ) )
+						getAttribute( 'fontSize', 'desktop', state ) ||
+						getAttribute( 'fontSize', 'tablet', state ) ||
+						getAttribute( 'fontSize', 'mobile', state ) ||
+						getAttribute( 'fontWeight', 'desktop', state ) ||
+						getAttribute( 'textTransform', 'desktop', state ) ||
+						getAttribute( 'letterSpacing', 'desktop', state ) ||
+						getAttribute( 'lineHeight', 'desktop', state ) ||
+						getAttribute( 'lineHeight', 'tablet', state ) ||
+						getAttribute( 'lineHeight', 'mobile', state ) )
 				}
 			>
 				<FontFamilyControl
