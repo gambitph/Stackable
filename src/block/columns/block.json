@@ -6,5 +6,8 @@
 	"keywords": [
 		"Section rows"
 	],
+	"providesContext": {
+		"stackable/columnFit": "columnFit"
+	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks"
 }

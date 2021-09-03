@@ -20,6 +20,7 @@
 
 .stk--fit-content > * > * > [data-type="stackable/column"] {
 	width: fit-content !important;
-	flex: 0 0 auto !important;
-	min-width: 50px;
+	flex: 0 1 auto !important;
+	min-width: 24px;
+	max-width: none;
 }
