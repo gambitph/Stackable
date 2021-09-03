@@ -146,7 +146,12 @@
 		#{ '--stk-button-text-color' }: cssvar(button-background-color);
 	}
 }
-
+// Ensure buttons use the correct paddings.
+.stk-block-icon-button {
+	.stk-button {
+		#{ '--stk-button-padding' }: cssvar(button-icon-padding);
+	}
+}
 
 // Block spacing when horizontally oriented.
 .stk--block-orientation-horizontal > * + * {
@@ -174,7 +179,7 @@
 .stk-column-wrapper {
 	margin: cssvar(column-margin);
 }
-.stk-is-first.stk-is-last > .stk-column-wrapper { // Remove the margins if it's only 1 block.
+.stk-block-column:first-child:last-child > .stk-column-wrapper { // Remove the margins if it's only 1 block.
 	margin: 0;
 }
 

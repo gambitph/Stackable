@@ -95,9 +95,15 @@ const BlockStyleItem = memo( props => {
 	const {
 		style,
 		isActive,
-		onSelect,
+		onSelect: _onSelect,
 		blockName,
 	} = props
+
+	const onSelect = value => {
+		if ( ! isActive ) {
+			_onSelect( value )
+		}
+	}
 
 	const Image = style.image
 

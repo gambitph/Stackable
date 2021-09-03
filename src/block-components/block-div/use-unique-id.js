@@ -4,10 +4,14 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 
-export const useUniqueId = () => {
+export const useUniqueId = ( autoApplyUniqueId = true ) => {
 	const { clientId } = useBlockEditContext()
 
 	useEffect( () => {
+		if ( ! autoApplyUniqueId ) {
+			return
+		}
+
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
 		if ( ! attributes ) {
 			return
