@@ -91,6 +91,7 @@ gulp.task( 'style', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks.css' ) )
+		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
 		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
 		.pipe( postcss( postCSSOptions ) )
 		.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
