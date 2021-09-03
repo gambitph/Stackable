@@ -2,11 +2,15 @@
 
 .stk-block-posts {
 	$p: &;
+	@include mobile {
+		#{ "--stk-columns" }: 1;
+	}
+
 	& > &__items {
 		display: flex;
 		flex-wrap: wrap;
-		column-gap: var(--stk-column-gap, 16px);
-		row-gap: 16px;
+		column-gap: var(--stk-column-gap, 12px);
+		row-gap: 12px;
 		:is(#{ $p }__title,#{ $p }__meta,#{ $p }__category,#{ $p }__excerpt,#{ $p }__readmore,.stk-img-wrapper) {
 			margin-bottom: cssvar(block-margin-bottom);
 		}
@@ -27,6 +31,7 @@
 		position: relative;
 		// Generate a flex basis value based on the number of columns.
 		flex-basis: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
+		width: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
 	}
 }
 

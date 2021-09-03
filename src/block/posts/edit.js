@@ -42,7 +42,6 @@ import {
 	ConditionalDisplay,
 	BlockStyle,
 	Typography,
-	BlockLink,
 	FlexGapControls,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
@@ -56,6 +55,11 @@ import { applyFilters, addFilter } from '@wordpress/hooks'
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo, useEffect } from '@wordpress/element'
 import { useInstanceId } from '@wordpress/compose'
+
+const ALLOWED_INNER_BLOCKS = [
+	'stackable/load-more',
+	'stackable/pagination',
+]
 
 const Edit = props => {
 	const {
@@ -130,7 +134,6 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<BlockLink.InspectorControls hasLink={ false } />
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
@@ -339,7 +342,9 @@ const Edit = props => {
 						{ ( posts || [] ).map( editorPostItems ) }
 					</div>
 					<div className={ innerClassNames }>
-						<InnerBlocks />
+						<InnerBlocks
+							allowedBlocks={ ALLOWED_INNER_BLOCKS }
+						/>
 					</div>
 				</BlockDiv>
 			) }

@@ -9,7 +9,6 @@ import {
 	ContainerDiv,
 	Typography,
 	getTypographyClasses,
-	BlockLink,
 } from '~stackable/block-components'
 import { getBlockStyle } from '~stackable/hooks'
 
@@ -80,7 +79,6 @@ export const generateRenderPostItem = attributes => {
 
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',
-		'stk--no-padding',
 	] )
 
 	const titleClassNames = classnames(
@@ -236,7 +234,7 @@ export const generateRenderPostItem = attributes => {
 		} )
 
 		let output = (
-			<article className="stk-container-padding">
+			<article>
 				{ compact( contents ).map( content => content ) }
 				{ readmoreShow && readmore }
 			</article>
@@ -264,7 +262,6 @@ export const generateRenderPostItem = attributes => {
 generateRenderPostItem.save = attributes => {
 	const {
 		imageHasLink = true,
-		hasBlockLink = false,
 		className = '',
 		authorShow = true,
 		dateShow = true,
@@ -282,7 +279,6 @@ generateRenderPostItem.save = attributes => {
 
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',
-		'stk--no-padding',
 	] )
 
 	const titleClassNames = classnames(
@@ -313,7 +309,7 @@ generateRenderPostItem.save = attributes => {
 	)
 
 	let featuredImage = <Image.Content />
-	if ( ! hasBlockLink && imageHasLink ) {
+	if ( imageHasLink ) {
 		featuredImage = <a href="!#postLink!#">{ featuredImage }</a>
 	}
 
@@ -386,7 +382,7 @@ generateRenderPostItem.save = attributes => {
 	} )
 
 	let output = (
-		<article className="stk-container-padding">
+		<article>
 			{ compact( contents ).map( content => content ) }
 			{ readmoreShow && readmore }
 		</article>
@@ -408,7 +404,6 @@ generateRenderPostItem.save = attributes => {
 			{ '<!–- /stk-start:posts/template –->' }
 			<ContainerDiv.Content className={ itemClassNames } attributes={ attributes }>
 				{ output }
-				<BlockLink.Content href="!#postLink!#" attributes={ attributes } />
 			</ContainerDiv.Content>
 			{ '<!–- /stk-end:post/template –->' }
 		</>

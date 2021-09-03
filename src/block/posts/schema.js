@@ -5,7 +5,6 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
-	BlockLink,
 	ConditionalDisplay,
 	ContainerDiv,
 	CustomAttributes,
@@ -190,7 +189,6 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
-	BlockLink.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, 'stk-block-posts__title', {
 		hasTextContent: false,
 		attrNameTemplate: 'title%s',
