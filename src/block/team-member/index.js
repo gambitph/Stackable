@@ -1,5 +1,5 @@
 /**
- * BLOCK: Testimonial Block
+ * BLOCK: Team Member Block
  */
 /**
  * Internal dependencies
@@ -12,7 +12,7 @@ import schema from './schema'
 /**
  * External dependencies
  */
-import { TestimonialIcon } from '~stackable/icons'
+import { TeamMemberIcon } from '~stackable/icons'
 
 /**
  * WordPress dependencies
@@ -21,7 +21,7 @@ import { __ } from '@wordpress/i18n'
 
 export const settings = {
 	...metadata,
-	icon: TestimonialIcon,
+	icon: TeamMemberIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
