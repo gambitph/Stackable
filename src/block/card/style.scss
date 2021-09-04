@@ -1,19 +1,19 @@
 @import "common";
 
-.stk-card__image {
+.stk-block-card__image {
 	height: 300px;
 	width: 100%;
 	background-size: cover;
 
-	+ .stk-card__content:not(.stk-container-padding) {
+	+ .stk-block-card__content:not(.stk-container-padding) {
 		padding-top: cssvar(block-margin-bottom);
 	}
 }
 
-.stk-card.is-style-horizontal > .stk-container {
+.stk-block-card.is-style-horizontal > .stk-container {
 	flex-direction: row;
 
-	> .stk-card__image {
+	> .stk-block-card__image {
 		height: 100%;
 		width: 250px;
 	}

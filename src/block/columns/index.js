@@ -1,5 +1,5 @@
 /**
- * BLOCK: Button Block
+ * BLOCK: Columns Block
  */
 /**
  * External dependencies
@@ -26,7 +26,7 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
-		align: true,
+		align: [ 'center', 'wide', 'full' ],
 	},
 
 	variations,

@@ -61,6 +61,9 @@
 		margin-top: 0;
 		margin-bottom: 0;
 	}
+	> [data-block] {
+		width: auto;
+	}
 }
 
 // Columns should occupy the entire available area.

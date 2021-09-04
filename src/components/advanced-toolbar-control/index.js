@@ -17,6 +17,7 @@ import { ResetButton } from '../base-control2/reset-button'
  * External dependencies
  */
 import classnames from 'classnames'
+import { omit } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -124,7 +125,7 @@ const AdvancedToolbarControl = props => {
 				children={
 					controls.map( ( option, index ) => {
 						const controlProps = {
-							...option,
+							...( omit( option, 'controls', 'show' ) ),
 							onClick: () => {
 								// If toggle only, prevent buttons from being unselected.
 								if ( isToggleOnly && option.value === value ) {

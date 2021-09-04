@@ -9,6 +9,9 @@
 	position: relative;
 	width: 100%;
 }
+.stk--block-orientation-horizontal .stk-block {
+	width: auto;
+}
 .stk-block,
 .entry-content .stk-block {
 	margin-top: 0;

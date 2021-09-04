@@ -34,7 +34,7 @@
 		}
 
 		// Always hide the size tooltip.
-		.stk-img-resizer-tooltip {
+		.stk-resizer-tooltip {
 			display: none !important;
 		}
 	}
@@ -45,7 +45,7 @@
 
 	&:not(:hover):not(.stk--is-resizing) {
 		.components-resizable-box__handle,
-		.stk-img-resizer-tooltip:not(.stk--is-editing) {
+		.stk-resizer-tooltip:not(.stk--is-editing) {
 			display: none !important;
 		}
 	}

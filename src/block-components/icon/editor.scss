@@ -3,3 +3,13 @@
 .stk--svg-wrapper.stk--show-cursor > .stk--inner-svg {
 	cursor: copy;
 }
+
+// Font Awesome Duotone styles.
+.ugb-icon-control,
+.ugb-icon-popover {
+	svg .fa-secondary {
+		fill: var(--fa-secondary-color, currentColor);
+		opacity: 0.4;
+		opacity: var(--fa-secondary-opacity, 0.4);
+	}
+}
