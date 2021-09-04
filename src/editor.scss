@@ -72,7 +72,8 @@ $blocks: (
 	'[data-type="stackable/card"]',
 	'[data-type="stackable/hero"]',
 	'[data-type="stackable/notification"]',
-	'[data-type="stackable/testimonial"]'
+	'[data-type="stackable/testimonial"]',
+	'[data-type="stackable/team-member"]'
 );
 $block-joined: #{ join($blocks, (), $separator: comma) };
 
