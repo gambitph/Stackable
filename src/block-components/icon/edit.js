@@ -10,8 +10,11 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 	ProControlButton,
+	ProControl,
 } from '~stackable/components'
-import { i18n, showProNotice } from 'stackable'
+import {
+	i18n, showProNotice, isPro,
+} from 'stackable'
 import {
 	useAttributeEditHandlers,
 } from '~stackable/hooks'
@@ -253,9 +256,25 @@ export const Edit = props => {
 				</PanelAdvancedSettings>
 			) }
 
-			{ applyFilters( 'stackable.block-component.icon.edit.after', null, {
-				...props, getAttribute, updateAttributeHandler,
-			} ) }
+			{ props.hasBackgroundShape &&
+				<>
+					{ showProNotice && ! isPro && (
+						<PanelAdvancedSettings
+							title={ __( 'Background Shape', i18n ) }
+							id="icon-background-shape"
+						>
+							<ProControl
+								title={ __( 'Say Hello to Background Shapes 👋', i18n ) }
+								description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
+							/>
+						</PanelAdvancedSettings>
+					) }
+
+					{ isPro && applyFilters( 'stackable.block-component.icon.edit.background-shape', null, {
+						...props, getAttribute, updateAttributeHandler,
+					} ) }
+				</>
+			}
 		</InspectorStyleControls>
 	)
 }
