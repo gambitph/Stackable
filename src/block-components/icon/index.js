@@ -203,6 +203,7 @@ Icon.Content = props => {
 		attributes,
 		attrNameTemplate,
 		hasLinearGradient = true,
+		children,
 	} = props
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -245,6 +246,7 @@ Icon.Content = props => {
 					style={ { display: 'none' } }
 				/>
 			) }
+			{ children }
 		</span>
 	)
 }
