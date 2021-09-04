@@ -14,16 +14,8 @@
 }
 
 // Alignments when the icon list is aligned.
-:is(.has-text-align-center.stk-block-icon-list, .has-text-align-center .stk-block-icon-list) :is(ul, ol) {
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 0;
-}
-:is(.has-text-align-left.stk-block-icon-list, .has-text-align-left .stk-block-icon-list) :is(ul, ol) {
-	margin-left: 0;
-	margin-right: auto;
-}
-:is(.has-text-align-right.stk-block-icon-list, .has-text-align-right .stk-block-icon-list) :is(ul, ol) {
-	margin-left: auto;
-	margin-right: 0;
+.stk-block-icon-list :is(ul, ol) {
+	margin-left: var(--stk-alignment-margin-left);
+	margin-right: var(--stk-alignment-margin-right);
+	padding-left: var(--stk-alignment-padding-left);
 }
