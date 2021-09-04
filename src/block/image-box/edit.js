@@ -129,3 +129,8 @@ addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box',
 } )
 
 export default Edit
+
+// Disable bottom margins for child blocks.
+addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/image-box', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/image-box' ? false : enabled
+} )
