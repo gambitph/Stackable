@@ -43,7 +43,7 @@ import { addFilter } from '@wordpress/hooks'
 
 const TEMPLATE = [
 	[ 'stackable/image', {} ],
-	[ 'stackable/column', {}, [
+	[ 'stackable/column', { templateLock: false }, [
 		[ 'stackable/subtitle', { text: __( 'Subtitle', i18n ) } ],
 		[ 'stackable/heading', { text: __( 'Title', i18n ) } ],
 		[ 'stackable/text', { text: __( 'Description', i18n ) } ],
@@ -104,7 +104,7 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				<div className={ contentClassNames }>
 					<InnerBlocks
-						templateLock="all"
+						templateLock="insert"
 						template={ TEMPLATE }
 						orientation={ blockOrientation }
 						renderAppender={ renderAppender }
