@@ -12,8 +12,8 @@ import { applyFilters } from '@wordpress/hooks'
 const getShadows = () => {
 	return applyFilters( 'stackable.separator.shadows', [
 		'none',
-		'0 0 1px rgba(120, 120, 120, 0.1)',
-		'0 0 2px rgba(120, 120, 120, 0.1)',
+		'0px 0 1px rgba(120, 120, 120, 0.1)',
+		'0px 0 2px rgba(120, 120, 120, 0.1)',
 		'5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2)',
 		'0px 2px 20px rgba(153, 153, 153, 0.2)',
 		'5px 30px -10px rgba(18, 63, 82, 0.3)',

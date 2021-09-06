@@ -109,7 +109,6 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-separator" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div className="stk-block-separator__top-pad" />
 				<div className={ separatorClassNames }>
 					<Separator2
 						design={ separatorDesign }
@@ -117,7 +116,6 @@ const Edit = props => {
 					/>
 					{ applyFilters( 'stackable.block.separator.edit.output.layers', null, props ) }
 				</div>
-				<div className="stk-block-separator__bottom-pad" />
 			</BlockDiv>
 		</>
 	)

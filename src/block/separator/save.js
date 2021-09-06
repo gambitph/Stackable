@@ -54,7 +54,6 @@ export const Save = props => {
 		>
 			<SeparatorStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<div className="stk-block-separator__top-pad" />
 			<div className={ separatorClassNames }>
 				<Separator2.Content
 					design={ separatorDesign }
@@ -62,7 +61,6 @@ export const Save = props => {
 				/>
 				{ applyFilters( 'stackable.block.separator.save.output.layers', null, props ) }
 			</div>
-			<div className="stk-block-separator__bottom-pad" />
 		</BlockDiv.Content>
 	)
 }

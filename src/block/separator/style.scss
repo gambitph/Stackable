@@ -1,9 +1,12 @@
-.stk-block-separator__inner {
-	height: 200px;
-	overflow: hidden;
-	position: relative;
+.stk-block-separator {
+	.stk-block-separator__inner {
+		height: 248px;
+		position: relative;
+		overflow: hidden;
 
-	svg {
-		filter: drop-shadow(0px, 2px, 20px, rgba(153, 153, 153, 0.2));
+		svg {
+			padding-top: 48px;
+			filter: drop-shadow(0px, 2px, 20px, rgba(153, 153, 153, 0.2));
+		}
 	}
 }
