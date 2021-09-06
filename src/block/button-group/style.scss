@@ -1,0 +1,6 @@
+@import "common";
+
+// Button alignment.
+.stk-block-button-group {
+	justify-content: var(--stk-alignment-justify-content);
+}

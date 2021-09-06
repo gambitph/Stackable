@@ -178,5 +178,6 @@
 // We vertically center the buttons, but this doesn't work properly in the editor.
 :is([data-type="stackable/button-group"], [data-type="stackable/load-more"]) .stk-button-group.stk-inner-blocks {
 	align-items: normal;
+	justify-content: var(--stk-alignment-justify-content);
 }
 

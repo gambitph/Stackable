@@ -21,8 +21,6 @@ const getStyleParams = ( options = {} ) => {
 		backgroundFallbackColor = '#ffffff',
 	} = options
 
-	// const getAttrName = getAttrNameFunction( attrNameTemplate )
-
 	return [
 		{
 			selector,
@@ -115,7 +113,7 @@ const getStyleParams = ( options = {} ) => {
 
 		{
 			selector: `${ selector }:before`,
-			hoverSelector: `${ selector }:hover`,
+			hoverSelector: `${ selector }:hover:before`,
 			styleRule: 'backgroundColor',
 			attrName: 'backgroundColor',
 			attrNameTemplate,
@@ -136,7 +134,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector }:before`,
-			hoverSelector: `${ selector }:hover`,
+			hoverSelector: `${ selector }:hover:before`,
 			styleRule: 'opacity',
 			attrName: 'backgroundTintStrength',
 			attrNameTemplate,

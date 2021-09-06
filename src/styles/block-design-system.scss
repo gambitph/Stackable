@@ -63,7 +63,7 @@
 	button-padding: (
 		desktop: 12px 16px,
 	),
-	button-icon-padding: (
+	icon-button-padding: (
 		desktop: 12px,
 	),
 	button-text-color: #fff,
@@ -83,7 +83,12 @@
 	 * Typography
 	 */
 	subtitle-size: 16px,
-	subtitle-color: #656565,
+	subtitle-color: #39414d,
+
+	/**
+	 * Dividers
+	 */
+	divider-color: #ddd,
 ) );
 
 /**
@@ -101,6 +106,7 @@
 	.stk-button-group {
 		column-gap: cssvar(button-column-gap);
 		row-gap: cssvar(button-row-gap);
+		justify-content: var(--stk-alignment-justify-content);
 	}
 }
 
@@ -217,5 +223,12 @@
 .stk-block-posts {
 	&__meta {
 		color: cssvar(subtitle-color);
+	}
+}
+// Divider
+.stk-block.stk-block-divider {
+	hr.stk-block-divider__hr,
+	.stk-block-divider__dot {
+		background: cssvar(divider-color);
 	}
 }

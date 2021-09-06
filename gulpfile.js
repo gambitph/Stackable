@@ -7,7 +7,9 @@
 const autoprefixer = require( 'autoprefixer' ),
 	concat = require( 'gulp-concat' ),
 	cssnano = require( 'cssnano' ),
+	footer = require( 'gulp-footer' ),
 	gulp = require( 'gulp' ),
+	header = require( 'gulp-header' ),
 	mqpacker = require( 'css-mqpacker' ),
 	path = require( 'path' ),
 	postcss = require( 'gulp-postcss' ),
@@ -79,7 +81,10 @@ gulp.task( 'style-editor', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/**/editor.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/editor.scss' ) ] )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks.css' ) )
+		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
+		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
 		.pipe( postcss( postCSSOptions ) )
+		.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
 		.pipe( gulp.dest( 'dist/' ) )
 } )
 
@@ -87,7 +92,10 @@ gulp.task( 'style', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks.css' ) )
+		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
+		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
 		.pipe( postcss( postCSSOptions ) )
+		.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
 		.pipe( gulp.dest( 'dist/' ) )
 } )
 
@@ -115,7 +123,10 @@ gulp.task( 'style-editor-deprecated-v2', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/**/editor.scss' ) ] )
 		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks_deprecated_v2.css' ) )
+		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
+		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
 		.pipe( postcss( postCSSOptions ) )
+		.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
 		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 
@@ -123,7 +134,10 @@ gulp.task( 'style-deprecated-v2', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/common.scss' ), path.resolve( __dirname, './src/deprecated/v2/**/style.scss' ) ] )
 		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks_deprecated_v2.css' ) )
+		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
+		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
 		.pipe( postcss( postCSSOptions ) )
+		.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
 		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 

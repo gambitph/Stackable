@@ -264,28 +264,75 @@
 }
 
 // Text alignment should also work for flex blocks like the icon block.
-.stk-block.has-text-align-right {
-	justify-content: flex-end;
+@mixin align-center-styles {
+	--stk-alignment-padding-left: 0;
+	--stk-alignment-justify-content: center;
+	--stk-alignment-text-align: center;
+	--stk-alignment-margin-left: auto;
+	--stk-alignment-margin-right: auto;
+	text-align: var(--stk-alignment-text-align);
+}
+
+@mixin align-right-styles {
+	--stk-alignment-justify-content: flex-end;
+	--stk-alignment-text-align: end;
+	--stk-alignment-margin-left: auto;
+	--stk-alignment-margin-right: 0;
+	text-align: var(--stk-alignment-text-align);
+}
+
+@mixin align-left-styles {
+	--stk-alignment-justify-content: flex-start;
+	--stk-alignment-text-align: start;
+	--stk-alignment-margin-left: 0;
+	--stk-alignment-margin-right: auto;
+	text-align: var(--stk-alignment-text-align);
 }
 
 // Default text direction, we need to add this for RTL support.
-:where(.stk-block) {
+.stk-block {
 	text-align: start;
+	justify-content: var(--stk-alignment-justify-content);
+}
+
+.has-text-align {
+	&-center {
+		@include align-center-styles;
+	}
+	&-left {
+		@include align-left-styles;
+	}
+	&-right {
+		@include align-right-styles;
+	}
+}
+
+@include tablet {
+	.has-text-align-center-tablet {
+		@include align-center-styles;
+	}
+	.has-text-align-left-tablet {
+		@include align-left-styles;
+	}
+	.has-text-align-right-tablet {
+		@include align-right-styles;
+	}
+}
+
+@include mobile {
+	.has-text-align-center-mobile {
+		@include align-center-styles;
+	}
+	.has-text-align-left-mobile {
+		@include align-left-styles;
+	}
+	.has-text-align-right-mobile {
+		@include align-right-styles;
+	}
 }
 
 // Text alignment should also work for flex blocks like the icon block.
-.has-text-align-center .stk-block,
-.has-text-align-center:where(.stk-block) {
-	justify-content: center;
-	text-align: center;
-}
-.has-text-align-right .stk-block,
-.has-text-align-right:where(.stk-block) {
-	justify-content: flex-end;
-	text-align: end;
-}
-.has-text-align-left .stk-block,
-.has-text-align-left:where(.stk-block) {
-	justify-content: flex-start;
-	text-align: start;
+.stk-block {
+	justify-content: var(--stk-alignment-justify-content);
+	text-align: var(--stk-alignment-text-align);
 }

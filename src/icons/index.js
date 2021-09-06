@@ -21,6 +21,7 @@ import SVGHeroIcon from './images/hero-icon.svg'
 import SVGHeadingIcon from './images/heading-icon.svg'
 import SVGIconIcon from './images/icon-icon.svg'
 import SVGIconButtonIcon from './images/icon-button-icon.svg'
+import SVGIconButtonsIcon from './images/icon-buttons.svg'
 import SVGIconBoxIcon from './images/icon-box-icon.svg'
 import SVGIconListIcon from './images/icon-list-icon.svg'
 import SVGIconLabelIcon from './images/icon-label-icon.svg'
@@ -31,6 +32,7 @@ import SVGNumberBoxIcon from './images/number-box-icon.svg'
 import SVGPaginationIcon from './images/pagination.svg'
 import SVGPricingBoxIcon from './images/pricing-box-icon.svg'
 import SVGSeparatorIcon from './images/separator-icon.svg'
+import SVGSocialButtonsIcon from './images/social-buttons.svg'
 import SVGSpacerIcon from './images/spacer-icon.svg'
 import SVGTeamMemberIcon from './images/team-member-icon.svg'
 import SVGTestimonialIcon from './images/testimonial-icon.svg'
@@ -172,6 +174,10 @@ export const IconButtonIcon = () => {
 	return colorizeIcon( <SVGIconButtonIcon width="16" height="16" /> )
 }
 
+export const IconButtonsIcon = () => {
+	return colorizeIcon( <SVGIconButtonsIcon width="16" height="16" /> )
+}
+
 export const IconBoxIcon = () => {
 	return colorizeIcon( <SVGIconBoxIcon width="16" height="16" /> )
 }
@@ -210,6 +216,10 @@ export const PricingBoxIcon = () => {
 
 export const SeparatorIcon = () => {
 	return colorizeIcon( <SVGSeparatorIcon width="20" height="20" /> )
+}
+
+export const SocialButtonsIcon = () => {
+	return colorizeIcon( <SVGSocialButtonsIcon width="16" height="16" /> )
 }
 
 export const SpacerIcon = () => {

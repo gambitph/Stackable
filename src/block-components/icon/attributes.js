@@ -1,3 +1,8 @@
+/**
+ * External dependencies
+ */
+import { range } from 'lodash'
+
 const iconAttributes = {
 	icon: {
 		type: 'string',
@@ -11,15 +16,21 @@ const iconAttributes = {
 		type: 'string',
 		default: '',
 	},
-	iconColor1: {
-		stkHover: true,
-		type: 'string',
-		default: '',
-	},
-	iconColor2: {
-		type: 'string',
-		default: '',
-	},
+	...( range( 1, 11 ).reduce( ( acc, curr ) => {
+		return {
+			...acc,
+			[ `iconColor${ curr }` ]: {
+				stkHover: true,
+				type: 'string',
+				default: '',
+			},
+			[ `iconOpacity{ curr }` ]: {
+				stkHover: true,
+				type: 'number',
+				default: '',
+			},
+		}
+	}, {} ) ),
 	iconColorGradientDirection: {
 		type: 'number',
 		default: '',
@@ -42,9 +53,21 @@ const iconAttributes = {
 		type: 'number',
 		default: '',
 	},
-	shapeColor: {
+	shapeColorType: {
+		type: 'string',
+		default: '',
+	},
+	shapeColor1: {
 		stkHover: true,
 		type: 'string',
+		default: '',
+	},
+	shapeColor2: {
+		type: 'string',
+		default: '',
+	},
+	shapeColorGradientDirection: {
+		type: 'number',
 		default: '',
 	},
 	shapeBorderRadius: {
