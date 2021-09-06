@@ -8,6 +8,7 @@ import { blockStyles } from './block-styles'
  * External dependencies
  */
 import classnames from 'classnames'
+import { last } from 'lodash'
 import { version as VERSION, i18n } from 'stackable'
 import {
 	InspectorTabs,
@@ -29,12 +30,13 @@ import {
 	ConditionalDisplay,
 	getRowClasses,
 	BlockStyle,
+	MarginBottom,
 } from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
-import { InnerBlocks } from '@wordpress/block-editor'
+import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import {
 	Fragment, useCallback,
 } from '@wordpress/element'
@@ -49,6 +51,13 @@ const TEMPLATE = [
 		[ 'stackable/text', { text: __( 'Description', i18n ) } ],
 		[ 'stackable/icon', { icon: '<svg data-prefix="fas" data-icon="arrow-right" class="svg-inline--fa fa-arrow-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg>' } ],
 	] ],
+]
+
+const ALLOWED_BLOCKS = [
+	'stackable/subtitle',
+	'stackable/heading',
+	'stackable/text',
+	'stackable/icon',
 ]
 
 const Edit = props => {
@@ -101,7 +110,7 @@ const Edit = props => {
 			<ImageBoxStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-image-box" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<div className={ contentClassNames }>
 					<InnerBlocks
 						templateLock="insert"
@@ -111,21 +120,32 @@ const Edit = props => {
 					/>
 				</div>
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }
 
-addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box', template => {
-	const { parentBlock, innerBlocks } = useBlockContext()
+addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box', ( allowedBlocks, select ) => {
+	const { getBlock, getBlockParents } = select( 'core/block-editor' )
+	const { clientId } = useBlockEditContext()
+	const parentClientId = last( getBlockParents( clientId ) )
+	const hasParent = parentClientId && parentClientId !== clientId
 
-	if ( parentBlock.name !== 'stackable/image-box' ) {
-		return template
+	if ( ! hasParent ) {
+		return allowedBlocks
 	}
 
-	const allowedInnerBlocks = TEMPLATE[ 1 ][ 2 ].filter( blockTemplate => ! innerBlocks?.map( ( { name } ) => name ).includes( blockTemplate[ 0 ] )
-	).map( ( [ name ] ) => name )
+	const parentBlock = hasParent ? getBlock( parentClientId ) : null
+	const innerBlocks = getBlock( clientId ).innerBlocks
 
-	return allowedInnerBlocks
+	if ( parentBlock.name !== 'stackable/image-box' ) {
+		return allowedBlocks
+	}
+
+	const currentInnerBlocks = innerBlocks?.map( ( { name } ) => name ) || []
+	const allowedInnerBlocks = ALLOWED_BLOCKS.filter( allowedBlock => ! currentInnerBlocks.includes( allowedBlock ) )
+
+	return ! allowedInnerBlocks.length ? false : allowedInnerBlocks
 } )
 
 export default Edit

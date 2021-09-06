@@ -36,6 +36,7 @@ export const Save = props => {
 		props.className,
 		'stk-block-image-box',
 		responsiveClass,
+		'stk-hover-parent', // Hover parent here to make sure the effect shows even with a block link.
 	] )
 
 	const contentClassNames = classnames( [
@@ -43,7 +44,6 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		rowClass,
-		'stk-hover-parent',
 	] )
 
 	return (

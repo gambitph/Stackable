@@ -47,6 +47,7 @@ import {
 	Fragment, useCallback,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 
 const TEMPLATE = []
@@ -55,8 +56,6 @@ const Edit = props => {
 	const {
 		hasInnerBlocks, isOnlyBlock,
 	} = useBlockContext()
-
-	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined )
 
 	const {
 		className,
@@ -67,6 +66,10 @@ const Edit = props => {
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
+
+	const ALLOWED_INNER_BLOCKS = useSelect( select => {
+		return applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, select )
+	} )
 
 	const blockClassNames = classnames( [
 		className,
