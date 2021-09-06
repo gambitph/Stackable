@@ -29,6 +29,14 @@ if ( ! function_exists( 'stackable_block_frontend_assets' ) ) {
 			STACKABLE_VERSION
 		);
 
+		if ( ! is_admin() ) {
+			wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
+		}
+
+		wp_localize_script( 'ugb-block-frontend-js', 'stackable', array(
+			'restUrl' => get_rest_url(),
+		) );
+
 		// Frontend only scripts.
 		// if ( ! is_admin() ) {
 		// 	wp_register_script(
