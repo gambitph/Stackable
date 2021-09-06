@@ -31,6 +31,7 @@ import {
 	getRowClasses,
 	BlockStyle,
 	MarginBottom,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -99,6 +100,7 @@ const Edit = props => {
 			<Alignment.InspectorControls hasColumnAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<BlockLink.InspectorControls />
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<EffectsAnimations.InspectorControls />

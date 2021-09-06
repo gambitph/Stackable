@@ -11,6 +11,7 @@ import {
 	BlockDiv,
 	Column,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import {
 	Style as StyleComponent,
@@ -66,6 +67,7 @@ export const IconLabelStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<StyleComponent
 				styles={ styles }
@@ -96,6 +98,7 @@ IconLabelStyles.Content = props => {
 			<Column.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
 				styles={ styles }
 				versionAdded="3.0.0"

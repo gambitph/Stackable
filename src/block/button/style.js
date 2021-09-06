@@ -8,6 +8,7 @@ import {
 	BlockDiv,
 	Typography,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -44,6 +45,7 @@ export const ButtonStyles = props => {
 		<>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } options={ buttonOptions } />
 			<Typography.Style { ...propsToPass } options={ typographyOptions } />
 			<EffectsAnimations.Style { ...propsToPass } />
@@ -68,6 +70,7 @@ ButtonStyles.Content = props => {
 		<>
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } options={ buttonOptions } />
 			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />

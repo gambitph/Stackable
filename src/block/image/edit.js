@@ -23,6 +23,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	MarginBottom,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -53,6 +54,7 @@ const Edit = props => {
 			<Alignment.InspectorControls hasColumnAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<Image.InspectorControls
 				initialOpen={ true }
 				heightUnits={ heightUnit }
