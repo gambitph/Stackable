@@ -39,10 +39,10 @@ const ShadowControl = props => {
 	return (
 		<AdvancedRangeControl
 			{ ...props }
-			valueCallback={ valueCallback }
-			changeCallback={ changeCallback }
+			valueCallback={ props.valueCallback || valueCallback }
+			changeCallback={ props.changeCallback || changeCallback }
 			min={ 0 }
-			max={ shadows.length - 1 }
+			max={ props.max || shadows.length - 1 }
 			allowReset={ true }
 			placeholder=""
 			className="ugb--help-tip-general-shadow"

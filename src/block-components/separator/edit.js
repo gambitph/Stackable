@@ -7,8 +7,8 @@ import {
 	PanelAdvancedSettings,
 	ColorPaletteControl,
 	AdvancedToggleControl,
-	ShadowControl,
 	ProControlButton,
+	SeparatorShadowControl,
 } from '~stackable/components'
 import { i18n, showProNotice } from 'stackable'
 import {
@@ -61,7 +61,7 @@ const SeparatorControls = props => {
 				sliderMax={ 4 }
 				step={ 0.1 }
 			/>
-			<ShadowControl
+			<SeparatorShadowControl
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'separatorShadow' ) }
 			/>

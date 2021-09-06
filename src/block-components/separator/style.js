@@ -51,10 +51,14 @@ export const separatorGetStyleParams = ( options = {}, location ) => {
 					return undefined
 				}
 
+				const shouldApplyScaleX = enableFlipHorizontally && flipHorizontally
+				const shouldAddScaleYAlongsideScaleX = shouldApplyScaleX && isInitiallyFlippedVertically
+				const shouldApplyScaleY = enableFlipVertically && flipVertically
+
 				return compact( [
-					( enableFlipHorizontally && flipHorizontally ) ? 'scaleX(-1)' : undefined,
-					( enableFlipHorizontally && flipHorizontally && isInitiallyFlippedVertically ) ? 'scaleY(-1)' : undefined,
-					( enableFlipVertically && flipVertically && isInitiallyFlippedVertically ) ? 'scaleY(-1)' : undefined,
+					shouldApplyScaleX ? 'scaleX(-1)' : undefined,
+					shouldAddScaleYAlongsideScaleX ? 'scaleY(-1)' : undefined,
+					shouldApplyScaleY ? 'scaleY(-1)' : undefined,
 				] ).join( ' ' )
 			},
 			dependencies: [ 'separatorFlipVertically' ],
