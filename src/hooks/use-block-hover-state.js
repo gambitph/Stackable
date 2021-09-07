@@ -118,11 +118,10 @@ export const useBlockHoverState = () => {
 		if ( hoverStateClientId !== selectedClientId ) {
 			if ( selectedClientId ) {
 				dispatch( 'stackable/hover-state' ).updateSelectedBlock( selectedClientId )
-			} else if ( hoverStateClientId ) {
-				// If there's no selected block, clear the hover states.
-				dispatch( 'stackable/hover-state' ).clearSelectedBlock()
 			}
 		}
+
+		return () => dispatch( 'stackable/hover-state' ).clearSelectedBlock()
 	}, [ selectedClientId ] )
 
 	const setHoverState = useCallback( state => {
