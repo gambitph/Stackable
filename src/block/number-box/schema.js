@@ -16,6 +16,7 @@ import {
 	ConditionalDisplay,
 	addBackgroundAttributes,
 	addBorderAttributes,
+	Transform,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
@@ -30,6 +31,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
+	Transform.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-block-number-box__text' )
 
 	addBackgroundAttributes( attrObject, 'shape%s' )

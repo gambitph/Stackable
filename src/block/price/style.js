@@ -11,6 +11,7 @@ import {
 	BlockDiv,
 	Column,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -38,6 +39,7 @@ export const PriceStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</>
 	)
@@ -61,6 +63,7 @@ PriceStyles.Content = props => {
 			<Column.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 		</>
 	)
 

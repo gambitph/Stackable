@@ -8,6 +8,7 @@ import {
 	Alignment,
 	MarginBottom,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
@@ -64,6 +65,7 @@ export const TextStyles = props => {
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<Typography.Style { ...propsToPass } options={ typographyOptions } />
 			<StyleComponent
 				styles={ columnStyles }
@@ -95,6 +97,7 @@ TextStyles.Content = props => {
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />

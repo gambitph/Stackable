@@ -20,6 +20,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	MarginBottom,
+	Transform,
 } from '~stackable/block-components'
 import { useBlockHoverClass } from '~stackable/hooks'
 
@@ -85,6 +86,7 @@ const Edit = props => {
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-expand" />
