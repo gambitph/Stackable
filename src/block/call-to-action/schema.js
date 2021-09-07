@@ -13,6 +13,7 @@ import {
 	Responsive,
 	Advanced,
 	MarginBottom,
+	Separator,
 	Transform,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
@@ -33,6 +34,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
+	Separator.addAttributes( attrObject )
 
 	attrObject.addDefaultValues( {
 		attributes: {

@@ -2,13 +2,13 @@
  * Internal dependencies
  */
 import { getShapeCSS } from './get-shape-css'
-import { Style as StyleComponent } from '~stackable/components'
-import { getStyles, useStyles } from '~stackable/util'
 
 /**
  * External dependencies
  */
 import { toNumber } from 'lodash'
+import { Style as StyleComponent } from '~stackable/components'
+import { getStyles, useStyles } from '~stackable/util'
 
 /**
  * WordPress dependencies

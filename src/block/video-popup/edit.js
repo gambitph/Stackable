@@ -127,14 +127,12 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-video-popup" />
 
 			<BlockDiv className={ blockClassNames }>
-				<Fragment>
-					<div className={ contentClassNames }>
-						<InnerBlocks
-							template={ TEMPLATE }
-							templateLock="all"
-						/>
-					</div>
-				</Fragment>
+				<div className={ contentClassNames }>
+					<InnerBlocks
+						template={ TEMPLATE }
+						templateLock="all"
+					/>
+				</div>
 			</BlockDiv>
 			<MarginBottom />
 		</Fragment>

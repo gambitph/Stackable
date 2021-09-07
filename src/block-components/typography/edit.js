@@ -184,7 +184,7 @@ export const Controls = props => {
 					attribute={ attributeName( 'lineHeight' ) }
 					units={ [ 'px', 'em' ] }
 					min={ [ 1, 0.1 ] }
-					max={ [ 100, 10 ] }
+					sliderMax={ [ 100, 10 ] }
 					step={ [ 1, 0.1 ] }
 					placeholder={ [ 30, 1.5 ] }
 					allowReset={ true }
@@ -195,7 +195,7 @@ export const Controls = props => {
 					label={ __( 'Letter Spacing', i18n ) }
 					attribute={ attributeName( 'letterSpacing' ) }
 					min={ -5 }
-					max={ 10 }
+					sliderMax={ 10 }
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="0"
@@ -208,7 +208,7 @@ export const Controls = props => {
 				attribute={ attributeName( 'fontSize' ) }
 				units={ [ 'px', 'em' ] }
 				min={ [ 0, 0 ] }
-				max={ [ 150, 7 ] }
+				sliderMax={ [ 150, 7 ] }
 				step={ [ 1, 0.05 ] }
 				placeholder={ props.sizePlaceholder }
 				responsive="all"

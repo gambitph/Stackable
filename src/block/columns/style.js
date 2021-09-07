@@ -7,6 +7,7 @@ import {
 	BlockDiv,
 	EffectsAnimations,
 	MarginBottom,
+	Separator,
 	Transform,
 } from '~stackable/block-components'
 import {
@@ -18,7 +19,7 @@ import {
 	useStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
-import { Fragment, renderToString } from '@wordpress/element'
+import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const getStyleParams = () => {
@@ -75,20 +76,21 @@ const BlockStyles = props => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
+			<Separator.Style { ...propsToPass } />
 			<StyleComponent
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
 			/>
-		</Fragment>
+		</>
 	)
 }
 
@@ -109,20 +111,21 @@ BlockStyles.Content = props => {
 	const styles = getStyles( props.attributes, getStyleParams( props.options ) )
 
 	const stylesToRender = (
-		<Fragment>
+		<>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<Separator.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
 			/>
-		</Fragment>
+		</>
 	)
 
 	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null

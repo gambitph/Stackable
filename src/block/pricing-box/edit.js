@@ -21,6 +21,8 @@ import {
 	ConditionalDisplay,
 	getRowClasses,
 	MarginBottom,
+	Separator,
+	getSeparatorClasses,
 	Transform,
 } from '~stackable/block-components'
 
@@ -66,6 +68,7 @@ const Edit = props => {
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
@@ -75,6 +78,7 @@ const Edit = props => {
 		'stk-block-pricing-box',
 		rowClass,
 		blockHoverClass,
+		separatorClass,
 		columnTooltipClass,
 	] )
 
@@ -91,6 +95,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
@@ -103,15 +108,17 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div className={ contentClassNames }>
-					<ColumnInnerBlocks
-						providerValue={ columnProviderValue }
-						template={ TEMPLATE }
-						// templateLock="insert"
-						allowedBlocks={ ALLOWED_BLOCKS }
-						orientation="horizontal"
-					/>
-				</div>
+				<Separator>
+					<div className={ contentClassNames }>
+						<ColumnInnerBlocks
+							providerValue={ columnProviderValue }
+							template={ TEMPLATE }
+							// templateLock="insert"
+							allowedBlocks={ ALLOWED_BLOCKS }
+							orientation="horizontal"
+						/>
+					</div>
+				</Separator>
 			</BlockDiv>
 			<MarginBottom />
 		</>

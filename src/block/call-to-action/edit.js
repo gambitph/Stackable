@@ -24,6 +24,8 @@ import {
 	Advanced,
 	MarginBottom,
 	BlockLink,
+	Separator,
+	getSeparatorClasses,
 	Transform,
 } from '~stackable/block-components'
 import {
@@ -53,12 +55,14 @@ const Edit = props => {
 
 	const { hasInnerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-call-to-action',
 		blockHoverClass,
+		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -82,6 +86,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
+			<Separator.InspectorControls />
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
@@ -95,13 +100,15 @@ const Edit = props => {
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-call-to-action" />
 
-				<ContainerDiv className={ contentClassNames }>
-					<InnerBlocks
-						template={ TEMPLATE }
-						templateLock={ false }
-						renderAppender={ renderAppender }
-					/>
-				</ContainerDiv>
+				<Separator>
+					<ContainerDiv className={ contentClassNames }>
+						<InnerBlocks
+							template={ TEMPLATE }
+							templateLock={ false }
+							renderAppender={ renderAppender }
+						/>
+					</ContainerDiv>
+				</Separator>
 			</BlockDiv>
 			<MarginBottom />
 		</>
