@@ -44,9 +44,7 @@
 		// Generate a flex basis value based on the number of columns.
 		flex: 1;
 		flex-basis: calc(100% / var(--stk-columns, 2) - var(--stk-column-gap, 32px) - 5%);
-		@include mobile {
-			flex-basis: 100%;
-		}
+		min-width: 250px; // Use this instead of mobile media query.
 	}
 
 	// Force remove heading titles from themes.
