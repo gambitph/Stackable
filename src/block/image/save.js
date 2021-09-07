@@ -31,7 +31,7 @@ export const Save = props => {
 
 	const blockClassNames = classnames( [
 		props.className,
-		'stk-image',
+		'stk-block-image',
 		responsiveClass,
 	] )
 

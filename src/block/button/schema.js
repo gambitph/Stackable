@@ -11,6 +11,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Transform,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -24,6 +25,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
+	Transform.addAttributes( attrObject )
 	Button.addAttributes( attrObject, {
 		selector: '.stk-button',
 	} )

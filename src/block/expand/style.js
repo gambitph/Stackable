@@ -11,6 +11,7 @@ import {
 	BlockDiv,
 	Column,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -40,6 +41,7 @@ const BlockStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</>
 	)
@@ -63,6 +65,7 @@ BlockStyles.Content = props => {
 			<Column.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 		</>
 	)
 

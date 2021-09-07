@@ -8,6 +8,7 @@ import {
 	EffectsAnimations,
 	MarginBottom,
 	FlexGapStyles,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -47,6 +48,7 @@ export const ButtonGroupStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<FlexGapStyles { ...propsToPass } options={ flexGapOptionsEdit } />
 		</>
@@ -70,6 +72,7 @@ ButtonGroupStyles.Content = props => {
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<FlexGapStyles.Content { ...propsToPass } options={ flexGapOptionsSave } />
 		</>

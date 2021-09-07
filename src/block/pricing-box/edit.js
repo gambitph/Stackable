@@ -21,6 +21,7 @@ import {
 	ConditionalDisplay,
 	getRowClasses,
 	MarginBottom,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -91,6 +92,7 @@ const Edit = props => {
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />

@@ -27,6 +27,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	FlexGapControls,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -85,6 +86,7 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />
