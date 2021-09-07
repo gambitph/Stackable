@@ -31,6 +31,7 @@ export const Style = props => {
 				options={ {
 					attrNameTemplate: 'container%s',
 					selector: borderSelector,
+					hoverSelector: `${ borderSelector }:hover`,
 				} }
 			/>
 			<SizeStyle
@@ -71,6 +72,7 @@ Style.Content = props => {
 				options={ {
 					attrNameTemplate: 'container%s',
 					selector: borderSelector,
+					hoverSelector: `${ borderSelector }:hover`,
 				} }
 			/>
 			<SizeStyle.Content

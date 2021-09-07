@@ -9,20 +9,25 @@ import { Style as StyleComponent } from '~stackable/components'
 const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
+		selectorCallback = null,
+		attrNameTemplate = '%s',
 		inherit = true,
 		inheritMin,
 		inheritMax = 50,
 		hoverSelector = '',
+		hoverSelectorCallback = null,
+		dependencies = [],
 	} = options
 
 	return [
 		{
 			selector,
+			selectorCallback,
+			attrNameTemplate,
 			styleRule: 'fontSize',
 			attrName: 'fontSize',
 			hasUnits: 'px',
 			responsive: 'all',
-			hoverSelector,
 			clampCallback: ( _value, getAttribute, device, state ) => {
 				const currentValue = getAttribute( 'fontSize', device, state )
 				const isMobile = device === 'mobile'
@@ -55,21 +60,27 @@ const getStyleParams = ( options = {} ) => {
 					: isMobile ? undefined : value
 				return value
 			},
-			dependencies: [ 'fontSizeUnit', 'fontSize' ],
+			dependencies: [ 'fontSizeUnit', 'fontSize', ...dependencies ],
 		},
 		{
 			selector,
+			selectorCallback,
+			attrNameTemplate,
 			styleRule: 'margin',
 			attrName: 'textRemoveTextMargins',
 			valueCallback: value => {
 				return value ? 0 : undefined
 			},
+			dependencies,
 		},
 		{
 			selector,
+			selectorCallback,
+			attrNameTemplate,
 			styleRule: 'color',
 			hover: 'all',
 			hoverSelector,
+			hoverSelectorCallback,
 			attrName: 'textColor1',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if ( getAttribute( 'textColorType', 'desktop', state ) === 'gradient' ) {
@@ -77,12 +88,13 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return value
 			},
-			dependencies: [ 'textColorType' ],
+			dependencies: [ 'textColorType', ...dependencies ],
 		},
 		{
 			selector,
+			selectorCallback,
+			attrNameTemplate,
 			styleRule: 'backgroundImage',
-			hoverSelector,
 			attrName: 'textColor1',
 			valuePreCallback: ( value, getAttribute ) => {
 				if (
@@ -101,33 +113,45 @@ const getStyleParams = ( options = {} ) => {
 
 				return `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`
 			},
-			dependencies: [ 'textColorType', 'textColor1', 'textColor2', 'textGradientDirection' ],
+			dependencies: [ 'textColorType', 'textColor1', 'textColor2', 'textGradientDirection', ...dependencies ],
 		},
 		{
 			selector,
+			selectorCallback,
+			attrNameTemplate,
 			styleRule: 'lineHeight',
 			attrName: 'lineHeight',
 			responsive: 'all',
 			hasUnits: 'em',
+			dependencies,
 		},
 		{
 			selector,
+			selectorCallback,
+			attrNameTemplate,
 			styles: {
 				fontWeight: 'fontWeight',
 				textTransform: 'textTransform',
 			},
+			dependencies,
 		},
 		{
 			selector,
+			selectorCallback,
+			attrNameTemplate,
 			styleRule: 'fontFamily',
 			attrName: 'fontFamily',
 			valueCallback: value => getFontFamily( value ),
+			dependencies,
 		},
 		{
 			selector,
+			selectorCallback,
+			attrNameTemplate,
 			styleRule: 'letterSpacing',
 			attrName: 'letterSpacing',
 			format: '%spx',
+			dependencies,
 		},
 	]
 }

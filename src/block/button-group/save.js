@@ -42,6 +42,7 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
+		'stk-button-group',
 	] )
 
 	return (

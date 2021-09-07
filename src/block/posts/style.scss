@@ -1,0 +1,77 @@
+@import "common";
+
+.stk-block-posts {
+	$p: &;
+	@include mobile {
+		#{ "--stk-columns" }: 1;
+	}
+
+	// Gaps when we don't have containers.
+	&:not(.stk--has-container) &__items {
+		--stk-column-gap: 32px;
+		row-gap: 32px;
+	}
+
+	&__items {
+		flex-wrap: wrap;
+		display: flex;
+		column-gap: var(--stk-column-gap, 0);
+		row-gap: 0;
+
+		// All contents should have bottom margins
+		:is([class*="stk-block-posts__"], .stk-img-wrapper) {
+			margin-bottom: cssvar(block-margin-bottom);
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	// Add margins when there are containers, to mimic the sizes of columns that have containers.
+	&__items {
+		.stk-container:not(.stk--no-padding) {
+			margin: cssvar(column-margin);
+		}
+	}
+
+	// Category design when it's highlighted.
+	&__item &__category > a.stk-button {
+		padding: 4px 8px;
+		display: inline-flex;
+		border-radius: 4px;
+	}
+
+	&__item {
+		// We need this to make advanced position work.
+		position: relative;
+		// Generate a flex basis value based on the number of columns.
+		flex: 1;
+		flex-basis: calc(100% / var(--stk-columns, 2) - var(--stk-column-gap, 32px) - 5%);
+
+		@include mobile {
+			flex-basis: 100%;
+		}
+	}
+
+	// Force remove heading titles from themes.
+	&__title {
+		margin-top: 0 !important;
+	}
+
+	// Left & right margins for meta separators.
+	&__meta-sep {
+		margin-inline: 1ch;
+	}
+
+	// Need to set these to block to apply margin bottoms.
+	&__readmore,
+	&__image-link {
+		display: block;
+	}
+
+	// Remove theme text decoration on links.
+	&__title a,
+	&__category a {
+		text-decoration: none;
+	}
+}

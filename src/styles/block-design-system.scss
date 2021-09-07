@@ -89,7 +89,7 @@
 	 * Separators
 	 */
 	separator-color: #fff,
-  
+
 	/**
 	 * Dividers
 	 */
@@ -107,17 +107,19 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-.stk-block-button:not(.is-style-link) .stk-button {
-	padding: cssvar(button-padding);
-}
-.stk-block-icon-button:not(.is-style-link) .stk-button {
-	padding: cssvar(icon-button-padding);
+.stk-block {
+	.stk-button-group {
+		column-gap: cssvar(button-column-gap);
+		row-gap: cssvar(button-row-gap);
+		justify-content: var(--stk-alignment-justify-content);
+	}
 }
 
-:is(.stk-block-button, .stk-block-icon-button) {
+:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
 	&:not(.is-style-link) {
 		.stk-button {
 			background: cssvar(button-background-color);
+			padding: cssvar(button-padding);
 
 			// Adjust icon color and icon size.
 			#{ '--stk-icon-color' }: cssvar(button-text-color);
@@ -227,12 +229,19 @@
 	color: cssvar(subtitle-color);
 }
 
+// Posts
+.stk-block-posts {
+	&__meta {
+		color: cssvar(subtitle-color);
+	}
+}
+
 // Separator
 .stk-block-separator__inner,
 .stk-separator__wrapper {
 	svg {
 		fill: cssvar(separator-color);
-  }
+	}
 }
 
 // Divider

@@ -133,7 +133,7 @@ export const useClosestLinkableBlock = clientId => {
 		if ( linkableClientId ) {
 			const parent = last( getBlockParents( linkableClientId ) )
 			if ( parent ) {
-				const blockType = getBlock( parent ).name
+				const blockType = getBlock( parent )?.name
 				const blockData = wp.data.select( 'core/blocks' ).getBlockType( blockType )
 				if ( blockData?.supports?.stkBlockLinking === false ) {
 					return null

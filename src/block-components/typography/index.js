@@ -28,6 +28,8 @@ export const Typography = props => {
 		onChange: _onChange,
 		children,
 		ref,
+		editable,
+		defaultValue,
 		...rest
 	} = props
 
@@ -38,6 +40,7 @@ export const Typography = props => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
 	const value = _value === null ? getAttribute( 'text' ) : _value
+	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag || 'p'
 
 	useEffect( () => {
 		if ( value !== debouncedText ) {
@@ -53,11 +56,15 @@ export const Typography = props => {
 		return () => clearTimeout( timeout )
 	}, [ debouncedText ] )
 
+	if ( ! editable ) {
+		return <TagName className={ className }>{ debouncedText || defaultValue }</TagName>
+	}
+
 	return (
 		<RichText
 			className={ className }
-			tagName={ ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag }
-			value={ debouncedText }
+			tagName={ TagName }
+			value={ debouncedText || defaultValue }
 			onChange={ setDebouncedText }
 			ref={ ref }
 			{ ...rest }
@@ -73,6 +80,7 @@ Typography.defaultProps = {
 	defaultTag: 'p',
 	value: null,
 	onChange: null,
+	editable: true,
 }
 
 Typography.Content = props => {
