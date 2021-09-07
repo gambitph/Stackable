@@ -9,6 +9,7 @@ import {
 	Responsive,
 	Row,
 	Separator,
+	Transform,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -20,6 +21,7 @@ export const attributes = ( version = VERSION ) => {
 	Row.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
+	Transform.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )

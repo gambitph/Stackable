@@ -1,0 +1,31 @@
+.stk-block-image-box {
+	// Don't make the column clickable, just so we can easily click the image behind it.
+	[data-type="stackable/column"] {
+		pointer-events: none;
+		[data-block],
+		.block-list-appender {
+			pointer-events: all;
+		}
+	}
+
+	// Don't show the image resizer since we can't click on it.
+	.stk-resizer-tooltip {
+		display: none !important;
+	}
+
+	> div > div > .block-editor-block-list__layout {
+		display: grid;
+		> [data-block] {
+			grid-column: 1 / 2;
+			grid-row: 1 / 2;
+		}
+	}
+}
+
+// Slower transitions
+.editor-styles-wrapper .stk-block-image-box {
+	.stk-block,
+	.stk-img-wrapper img {
+		transition-duration: 0.32s;
+	}
+}

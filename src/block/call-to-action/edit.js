@@ -26,6 +26,7 @@ import {
 	BlockLink,
 	Separator,
 	getSeparatorClasses,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -84,6 +85,7 @@ const Edit = props => {
 			<Alignment.InspectorControls hasBlockAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<Separator.InspectorControls />
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />

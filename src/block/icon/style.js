@@ -7,6 +7,7 @@ import {
 	Alignment,
 	BlockDiv,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -42,6 +43,7 @@ export const IconStyles = props => {
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<Icon.Style { ...propsToPass } options={ iconStyleOptions } />
 		</Fragment>
@@ -64,6 +66,7 @@ IconStyles.Content = props => {
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Icon.Style.Content { ...propsToPass } options={ iconStyleOptions } />
 		</Fragment>

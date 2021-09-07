@@ -23,6 +23,7 @@ import {
 	MarginBottom,
 	Separator,
 	getSeparatorClasses,
+	Transform,
 } from '~stackable/block-components'
 import { useBlockHoverClass } from '~stackable/hooks'
 
@@ -81,6 +82,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
