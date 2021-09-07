@@ -27,30 +27,19 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 
-const getShadows = () => {
-	return applyFilters( 'stackable.separator.shadows', [
-		'none',
-		'0px 0 1px rgba(120, 120, 120, 0.1)',
-		'0px 0 2px rgba(120, 120, 120, 0.1)',
-		'5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2)',
-		'0px 2px 20px rgba(153, 153, 153, 0.2)',
-		'5px 30px -10px rgba(18, 63, 82, 0.3)',
-		'0px 10px 30px rgba(0, 0, 0, 0.05)',
-		'7px 5px 30px rgba(72, 73, 121, 0.15)',
-		'0px 10px 60px rgba(0, 0, 0, 0.1)',
-		'70px 130px -60px rgba(72, 73, 121, 0.38) ',
-	] )
-}
-
-const valueCallback = value => {
-	const shadows = getShadows()
-	return value ? shadows.indexOf( value ) : ''
-}
-
-const changeCallback = index => {
-	const shadows = getShadows()
-	return index !== '' ? shadows[ index ] : index
-}
+const SEPARATOR_SHADOWS = [
+	'none',
+	'0px 0 1px rgba(120, 120, 120, 0.5)',
+	'0px 0 2px rgba(120, 120, 120, 0.5)',
+	'2px 4px 6px #000', // This is a dark shadow similar to the shadow we used by default in v2.
+	'0px 5px 10px rgba(153, 153, 153, 0.35)',
+	'0px 2px 20px rgba(153, 153, 153, 0.2)',
+	'25px 10px 30px rgba(18, 63, 82, 0.3)',
+	'0px 10px 30px rgba(0, 0, 0, 0.05)',
+	'7px 5px 30px rgba(72, 73, 121, 0.15)',
+	'0px 10px 60px rgba(0, 0, 0, 0.1)',
+	'70px 130px -60px rgba(72, 73, 121, 0.38) ',
+]
 
 const SeparatorControls = props => {
 	const {
@@ -58,11 +47,11 @@ const SeparatorControls = props => {
 		hasFlipVertically,
 	} = props
 
+	const shadowOptions = useMemo( () => applyFilters( 'stackable.separator.shadows', SEPARATOR_SHADOWS ), [] )
+
 	const {
 		getAttrName,
 	} = useAttributeEditHandlers( attrNameTemplate )
-
-	const shadows = useMemo( () => getShadows(), [] )
 
 	return (
 		<>
@@ -92,9 +81,8 @@ const SeparatorControls = props => {
 			<ShadowControl
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'separatorShadow' ) }
-				valueCallback={ valueCallback }
-				changeCallback={ changeCallback }
-				max={ shadows.length - 1 }
+				options={ shadowOptions }
+				placeholder="5"
 			/>
 			<AdvancedToggleControl
 				label={ __( 'Invert Design', i18n ) }

@@ -4,7 +4,7 @@ import { AdvancedRangeControl } from '~stackable/components'
 import {
 	__,
 } from '@wordpress/i18n'
-import { useMemo } from '@wordpress/element'
+import { useCallback, useMemo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 const getShadows = () => {
@@ -22,29 +22,31 @@ const getShadows = () => {
 	] )
 }
 
-const valueCallback = value => {
-	const shadows = getShadows()
-	return value ? shadows.indexOf( value ) : ''
-}
-
-const changeCallback = index => {
-	const shadows = getShadows()
-	return index !== '' ? shadows[ index ] : index
-}
-
 // TODO: Turn this into an advanced shadow control
 const ShadowControl = props => {
-	const shadows = useMemo( () => getShadows(), [] )
+	const {
+		options,
+		...propsToPass
+	} = props
+
+	const shadows = useMemo( () => options || getShadows(), [ options ] )
+
+	const valueCallback = useCallback( value => {
+		return value ? shadows.indexOf( value ) : ''
+	}, [ shadows ] )
+
+	const changeCallback = useCallback( index => {
+		return index !== '' ? shadows[ index ] : index
+	}, [ shadows ] )
 
 	return (
 		<AdvancedRangeControl
-			{ ...props }
+			{ ...propsToPass }
 			valueCallback={ props.valueCallback || valueCallback }
 			changeCallback={ props.changeCallback || changeCallback }
 			min={ 0 }
-			max={ props.max || shadows.length - 1 }
+			max={ shadows.length - 1 }
 			allowReset={ true }
-			placeholder=""
 			className="ugb--help-tip-general-shadow"
 		/>
 	)
@@ -52,6 +54,10 @@ const ShadowControl = props => {
 
 ShadowControl.defaultProps = {
 	label: __( 'Shadow / Outline', i18n ),
+	placeholder: '',
+	options: null,
+	valueCallback: null,
+	changeCallback: null,
 }
 
 export default ShadowControl

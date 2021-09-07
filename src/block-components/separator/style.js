@@ -90,6 +90,9 @@ export const separatorGetStyleParams = ( options = {}, location ) => {
 			styleRule: 'filter',
 			attrName: 'separatorShadow',
 			format: 'drop-shadow(%s)',
+			valueCallback: value => {
+				return value === 'drop-shadow(none)' ? 'none' : value
+			},
 		},
 	]
 }
