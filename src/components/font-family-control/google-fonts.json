@@ -392,13 +392,25 @@
     ]
   },
   {
+    "family": "Allison",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Allura",
     "variants": [
       "regular"
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -443,6 +455,36 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Alumni Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -1150,6 +1192,33 @@
     ]
   },
   {
+    "family": "Azeret Mono",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "B612",
     "variants": [
       "regular",
@@ -1705,6 +1774,27 @@
     "family": "Berkshire Swash",
     "variants": [
       "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Besley",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -4945,6 +5035,32 @@
     ]
   },
   {
+    "family": "Glory",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Goblin One",
     "variants": [
       "regular"
@@ -5111,7 +5227,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -5429,6 +5546,19 @@
     ]
   },
   {
+    "family": "Hina Mincho",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Hind",
     "variants": [
       "300",
@@ -5584,6 +5714,24 @@
     ]
   },
   {
+    "family": "IBM Plex Sans Arabic",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "IBM Plex Sans Condensed",
     "variants": [
       "100",
@@ -5602,9 +5750,99 @@
       "700italic"
     ],
     "subsets": [
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "IBM Plex Sans Devanagari",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "IBM Plex Sans Hebrew",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "IBM Plex Sans KR",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "korean",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "IBM Plex Sans Thai",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "thai"
+    ]
+  },
+  {
+    "family": "IBM Plex Sans Thai Looped",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "thai"
     ]
   },
   {
@@ -6288,6 +6526,63 @@
     ]
   },
   {
+    "family": "Kaisei Decol",
+    "variants": [
+      "regular",
+      "500",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Kaisei HarunoUmi",
+    "variants": [
+      "regular",
+      "500",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Kaisei Opti",
+    "variants": [
+      "regular",
+      "500",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Kaisei Tokumin",
+    "variants": [
+      "regular",
+      "500",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Kalam",
     "variants": [
       "300",
@@ -6555,6 +6850,20 @@
     ]
   },
   {
+    "family": "Klee One",
+    "variants": [
+      "regular",
+      "600"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek-ext",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Knewave",
     "variants": [
       "regular"
@@ -6783,9 +7092,15 @@
   {
     "family": "Kumbh Sans",
     "variants": [
+      "100",
+      "200",
       "300",
       "regular",
-      "700"
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -6980,12 +7295,14 @@
     "family": "Lexend",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
       "600",
       "700",
-      "800"
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -6996,7 +7313,15 @@
   {
     "family": "Lexend Deca",
     "variants": [
-      "regular"
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -7007,7 +7332,15 @@
   {
     "family": "Lexend Exa",
     "variants": [
-      "regular"
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -7018,7 +7351,15 @@
   {
     "family": "Lexend Giga",
     "variants": [
-      "regular"
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -7029,7 +7370,15 @@
   {
     "family": "Lexend Mega",
     "variants": [
-      "regular"
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -7040,7 +7389,15 @@
   {
     "family": "Lexend Peta",
     "variants": [
-      "regular"
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -7051,7 +7408,15 @@
   {
     "family": "Lexend Tera",
     "variants": [
-      "regular"
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -7062,7 +7427,15 @@
   {
     "family": "Lexend Zetta",
     "variants": [
-      "regular"
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -8518,6 +8891,8 @@
       "900italic"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -10531,6 +10906,18 @@
     ]
   },
   {
+    "family": "Rampart One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Ranchers",
     "variants": [
       "regular"
@@ -11124,7 +11511,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -13114,6 +13502,33 @@
       "italic",
       "700",
       "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Urbanist",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",

@@ -88,6 +88,7 @@ const ResizableBottomMarginSingle = props => {
 			} }
 			onResize={ ( _event, _direction, elt, delta ) => {
 				setCurrentHeight( initialHeight + delta.height )
+				props.onChange( initialHeight + delta.height )
 
 				// Set snap widths. We need to do this here not on
 				// ResizeStart or it won't be used at first drag.

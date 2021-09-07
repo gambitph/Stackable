@@ -9,6 +9,7 @@ import {
 	MarginBottom,
 	Responsive,
 	Row,
+	Separator,
 	Transform,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
@@ -28,6 +29,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
+	Separator.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {
