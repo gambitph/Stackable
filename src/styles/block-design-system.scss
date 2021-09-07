@@ -161,7 +161,7 @@
 // Ensure buttons use the correct paddings.
 .stk-block-icon-button {
 	.stk-button {
-		#{ '--stk-button-padding' }: cssvar(button-icon-padding);
+		#{ '--stk-button-padding' }: cssvar(icon-button-padding);
 	}
 }
 
