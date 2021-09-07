@@ -75,7 +75,7 @@ export const Link = props => {
 						if ( ref ) {
 						// Only trigger the setIsOpen when the rich text is selected.
 							setPopoverRef( ref )
-							setIsOpen( true )
+							setIsOpen( ! isOpen )
 						}
 					}
 				} }

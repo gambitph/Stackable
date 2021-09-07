@@ -164,7 +164,7 @@ export const Icon = props => {
 				if ( debouncedIsSelected ) {
 					// Only register a click to .stk--inner-svg.
 					if ( event.target.closest( '.stk--inner-svg' ) ) {
-						setIsOpen( true )
+						setIsOpen( ! isOpen )
 					}
 				}
 			} }
