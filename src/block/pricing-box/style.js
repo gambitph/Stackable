@@ -9,9 +9,9 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
-	Column,
+	ContainerDiv,
 	EffectsAnimations,
-	Separator,
+	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
 import {
@@ -40,11 +40,11 @@ const BlockStyles = props => {
 		<>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
-			<Column.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
-			<Separator.Style { ...propsToPass } />
+			<ContainerDiv.Style { ...propsToPass } />
+			<MarginBottom.Style { ...propsToPass } />
 		</>
 	)
 }
@@ -64,11 +64,11 @@ BlockStyles.Content = props => {
 		<>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			<Column.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
-			<Separator.Style.Content { ...propsToPass } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<ContainerDiv.Style.Content { ...propsToPass } />
+			<MarginBottom.Style.Content { ...propsToPass } />
 		</>
 	)
 

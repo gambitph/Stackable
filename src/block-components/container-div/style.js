@@ -47,6 +47,10 @@ export const Style = props => {
 	)
 }
 
+Style.defaultProps = {
+	options: {},
+}
+
 Style.Content = props => {
 	const {
 		backgroundSelector = '.%s-container',
@@ -86,4 +90,8 @@ Style.Content = props => {
 			/>
 		</Fragment>
 	)
+}
+
+Style.Content.defaultProps = {
+	options: {},
 }
