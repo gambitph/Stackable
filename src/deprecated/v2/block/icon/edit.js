@@ -264,6 +264,11 @@ const Edit = props => {
 			clearInterval( refreshPositionInterval )
 			setRefreshPositionInterval( null )
 		}
+
+		if ( ! isSelected ) {
+			setSelected( false )
+		}
+
 		return () => {
 			if ( refreshPositionInterval ) {
 				clearInterval( refreshPositionInterval )
