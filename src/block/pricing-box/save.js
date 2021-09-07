@@ -42,7 +42,7 @@ export const Save = props => {
 		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		`stk-${ props.attributes.uniqueId }-container`,
+		`stk-${ attributes.uniqueId }-container`,
 	] )
 
 	return (
