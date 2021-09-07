@@ -183,8 +183,7 @@
 	overflow: hidden;
 
 	// Add the placeholder background here so that the border radius would also
-	// show in the placeholder.
-	background: #f1f1f1;
+	background: transparent;
 	mix-blend-mode: multiply;
 }
 
@@ -203,6 +202,11 @@
 
 // Image mask. We need this since our mask is on the resizable wrapper.
 .stk-img-wrapper {
+	z-index: 1; // Make the image on top of the background overlays
+	&.stk-img-placeholder {
+		// show in the placeholder.
+		background: #f1f1f1;
+	}
 	// Shapes.
 	&.stk-img--shape .stk-img-resizer-wrapper {
 		mask-mode: alpha;

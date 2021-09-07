@@ -1,21 +1,21 @@
 /**
  * Internal dependencies
  */
-import { CardStyles } from './style'
+import { TeamMemberStyles } from './style'
 
 /**
  * External dependencies
  */
-import classnames from 'classnames'
-import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
+import { withVersion } from '~stackable/higher-order'
+import classnames from 'classnames'
 import {
 	BlockDiv,
 	ContainerDiv,
-	CustomCSS,
+	BlockLink,
 	getAlignmentClasses,
+	CustomCSS,
 	getResponsiveClasses,
-	Image,
 } from '~stackable/block-components'
 
 /**
@@ -23,58 +23,41 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
-import { BlockLink } from '~stackable/block-components/block-link'
 
 export const Save = props => {
 	const {
 		attributes,
+		className,
 	} = props
-	const {
-		hasContainer,
-	} = props.attributes
 
-	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const responsiveClass = getResponsiveClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( attributes )
+	const responsiveClass = getResponsiveClasses( attributes )
 
 	const blockClassNames = classnames( [
-		props.className,
-		'stk-block-card',
+		className,
+		'stk-block-team-member',
 		responsiveClass,
 	] )
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
-		'stk--no-padding',
-	] )
-
-	const innerClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-card__content',
-	], {
-		'stk-container-padding': hasContainer,
-	} )
+		'stk-block-team-member__content',
+	] )
 
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<CardStyles.Content version={ props.version } attributes={ attributes } />
+			<TeamMemberStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<ContainerDiv.Content
 				className={ contentClassNames }
 				attributes={ attributes }
 			>
-				{ props.attributes.imageUrl &&
-					<Image.Content
-						className="stk-block-card__image"
-						attributes={ attributes }
-					/>
-				}
-				<div className={ innerClassNames }>
-					<InnerBlocks.Content />
-				</div>
+				<InnerBlocks.Content />
 				<BlockLink.Content attributes={ attributes } />
 			</ContainerDiv.Content>
 		</BlockDiv.Content>

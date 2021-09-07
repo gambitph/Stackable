@@ -63,7 +63,7 @@
 	button-padding: (
 		desktop: 12px 16px,
 	),
-	button-icon-padding: (
+	icon-button-padding: (
 		desktop: 12px,
 	),
 	button-text-color: #fff,
@@ -89,6 +89,11 @@
 	 * Separators
 	 */
 	separator-color: #fff,
+  
+	/**
+	 * Dividers
+	 */
+	divider-color: #ddd,
 ) );
 
 /**
@@ -102,11 +107,17 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
+.stk-block-button:not(.is-style-link) .stk-button {
+	padding: cssvar(button-padding);
+}
+.stk-block-icon-button:not(.is-style-link) .stk-button {
+	padding: cssvar(icon-button-padding);
+}
+
 :is(.stk-block-button, .stk-block-icon-button) {
 	&:not(.is-style-link) {
 		.stk-button {
 			background: cssvar(button-background-color);
-			padding: cssvar(button-padding);
 
 			// Adjust icon color and icon size.
 			#{ '--stk-icon-color' }: cssvar(button-text-color);
@@ -221,5 +232,13 @@
 .stk-separator__wrapper {
 	svg {
 		fill: cssvar(separator-color);
+  }
+}
+
+// Divider
+.stk-block.stk-block-divider {
+	hr.stk-block-divider__hr,
+	.stk-block-divider__dot {
+		background: cssvar(divider-color);
 	}
 }
