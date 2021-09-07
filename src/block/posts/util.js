@@ -129,7 +129,7 @@ export const generateRenderPostItem = attributes => {
 				hasRemove={ false }
 				enableClickToEdit={ false }
 				width={ 100 }
-				widthUnit={ '%' }
+				widthUnit="%"
 				enableWidth={ false }
 				enableDiagonal={ false }
 				enableHeight={ enableHeight }
