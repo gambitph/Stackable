@@ -182,7 +182,7 @@ export const Controls = props => {
 				<AdvancedRangeControl
 					label={ __( 'Line-Height', i18n ) }
 					attribute={ attributeName( 'lineHeight' ) }
-					units={ [ 'px', 'em' ] }
+					units={ [ 'px', 'em', 'rem' ] }
 					min={ [ 1, 0.1 ] }
 					sliderMax={ [ 100, 10 ] }
 					step={ [ 1, 0.1 ] }
@@ -206,7 +206,7 @@ export const Controls = props => {
 				label={ __( 'Size', i18n ) }
 				allowReset={ true }
 				attribute={ attributeName( 'fontSize' ) }
-				units={ [ 'px', 'em' ] }
+				units={ [ 'px', 'em', 'rem' ] }
 				min={ [ 0, 0 ] }
 				sliderMax={ [ 150, 7 ] }
 				step={ [ 1, 0.05 ] }
