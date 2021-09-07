@@ -15,8 +15,12 @@ import { getAttributeName, getAttrName } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { RichText } from '@wordpress/block-editor'
-import { useEffect, useState } from '@wordpress/element'
+import { RichText, useBlockEditContext } from '@wordpress/block-editor'
+import {
+	useEffect, useState, useRef,
+} from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
+import { useMergeRefs } from '@wordpress/compose'
 
 export const Typography = props => {
 	const {
@@ -26,12 +30,24 @@ export const Typography = props => {
 		defaultTag,
 		value: _value,
 		onChange: _onChange,
+		focusOnSelected = false,
 		children,
 		ref,
 		...rest
 	} = props
 
 	const [ debouncedText, setDebouncedText ] = useState( '' )
+	const richTextRef = useRef( null )
+	const { clientId } = useBlockEditContext()
+	const selectedClientId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
+
+	useEffect( () => {
+		if ( focusOnSelected ) {
+			if ( clientId === selectedClientId ) {
+				richTextRef.current.focus()
+			}
+		}
+	}, [ selectedClientId ] )
 
 	const {
 		getAttribute, updateAttribute,
@@ -59,7 +75,9 @@ export const Typography = props => {
 			tagName={ ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag }
 			value={ debouncedText }
 			onChange={ setDebouncedText }
-			ref={ ref }
+			ref={ useMergeRefs(
+				[ ref, richTextRef ]
+			) }
 			{ ...rest }
 		>
 			{ children }

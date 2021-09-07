@@ -325,6 +325,7 @@ const Edit = props => {
 					<Typography
 						tagName={ tagName }
 						multiline="li"
+						focusOnSelected={ true }
 					>
 						{ controls }
 					</Typography>
