@@ -118,14 +118,14 @@ const advancedOptions = {
 const getStyleParams = () => {
 	return [
 		{
-			selector: '.stk-block-posts__items',
+			selector: '',
 			styles: {
 				'--stk-columns': 'columns',
 			},
 			responsive: 'all',
 		},
 		{
-			selector: '.stk-block-posts__items',
+			selector: '',
 			styles: {
 				'--stk-column-gap': 'columnGap',
 			},

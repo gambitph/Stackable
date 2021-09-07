@@ -2,9 +2,6 @@
 
 .stk-block-posts {
 	$p: &;
-	@include mobile {
-		#{ "--stk-columns" }: 1;
-	}
 
 	// Gaps when we don't have containers.
 	&:not(.stk--has-container) &__items {
@@ -47,7 +44,6 @@
 		// Generate a flex basis value based on the number of columns.
 		flex: 1;
 		flex-basis: calc(100% / var(--stk-columns, 2) - var(--stk-column-gap, 32px) - 5%);
-
 		@include mobile {
 			flex-basis: 100%;
 		}
