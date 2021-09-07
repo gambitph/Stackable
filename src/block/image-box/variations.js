@@ -26,11 +26,19 @@ const variations = [
 			[ 'stackable/image', { imageHeight: 350, imageFilterParentHover: 'brightness(0.3)' } ],
 			[ 'stackable/column', { templateLock: false }, [
 				[ 'stackable/subtitle', {
-					text: __( 'Subtitle', i18n ), blockMargin: { bottom: 8 }, opacity: 0, textColor1: '#FFFFFF', opacityParentHover: 1,
+					text: __( 'Subtitle', i18n ),
+					blockMargin: { bottom: 8 },
+					opacity: 0,
+					textColor1: '#FFFFFF',
+					opacityParentHover: 1,
 				} ],
 				[ 'stackable/heading', { text: __( 'Title', i18n ), textTag: 'h4' } ],
 				[ 'stackable/text', {
-					text: __( 'Description', i18n ), opacity: 0, transform: 'translateY(-24px)', opacityParentHover: 1, transformParentHover: 'translateY(0px)',
+					text: __( 'Description', i18n ),
+					opacity: 0,
+					transform: 'translateY(-24px)',
+					opacityParentHover: 1,
+					transformParentHover: 'translateY(0px)',
 				} ],
 				[ 'stackable/icon', {
 					blockMargin: { top: 56 },
