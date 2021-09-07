@@ -100,7 +100,9 @@ const Edit = props => {
 		'stk-block-posts',
 		blockHoverClass,
 		blockAlignmentClass,
-	] )
+	], {
+		'stk--has-container': attributes.hasContainer,
+	} )
 
 	const contentClassNames = classnames( [
 		'stk-block-posts__items',

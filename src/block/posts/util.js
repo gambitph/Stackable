@@ -310,7 +310,7 @@ generateRenderPostItem.save = attributes => {
 
 	let featuredImage = <Image.Content />
 	if ( imageHasLink ) {
-		featuredImage = <a href="!#postLink!#">{ featuredImage }</a>
+		featuredImage = <a href="!#postLink!#" className="stk-block-posts__image-link">{ featuredImage }</a>
 	}
 
 	const title = (

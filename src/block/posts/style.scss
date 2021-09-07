@@ -6,22 +6,39 @@
 		#{ "--stk-columns" }: 1;
 	}
 
-	& > &__items {
-		flex-wrap: wrap;
-		display: flex;
-		column-gap: var(--stk-column-gap, 12px);
-		row-gap: 12px;
-		:is(#{ $p }__title,#{ $p }__meta,#{ $p }__category,#{ $p }__excerpt,#{ $p }__readmore,.stk-img-wrapper) {
-			margin-bottom: cssvar(block-margin-bottom);
+	// Gaps when we don't have containers.
+	&:not(.stk--has-container) {
+		.stk-block-posts__items {
+			--stk-column-gap: 32px;
+			row-gap: 32px;
 		}
 	}
 
-	:is(#{ $p }__title, #{ $p }__category) > a {
-		text-decoration: none;
+	& > &__items {
+		flex-wrap: wrap;
+		display: flex;
+		column-gap: var(--stk-column-gap, 0);
+		row-gap: 0;
+
+		// All contents should have bottom margins
+		:is([class*="stk-block-posts__"], .stk-img-wrapper) {
+			margin-bottom: cssvar(block-margin-bottom);
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
 	}
 
-	&__category > a.stk-button {
-		padding: 4px 8px 4px 8px;
+	// Add margins when there are containers, to mimic the sizes of columns that have containers.
+	.stk-block-posts__items {
+		.stk-container:not(.stk--no-padding) {
+			margin: cssvar(column-margin);
+		}
+	}
+
+	// Category design when it's highlighted.
+	.stk-block-posts__item .stk-block-posts__category > a.stk-button {
+		padding: 4px 8px;
 		display: inline-flex;
 		border-radius: 4px;
 	}
@@ -30,15 +47,32 @@
 		// We need this to make advanced position work.
 		position: relative;
 		// Generate a flex basis value based on the number of columns.
-		flex-basis: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
-		width: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
+		flex: 1;
+		flex-basis: calc(100% / var(--stk-columns, 2) - var(--stk-column-gap, 32px) - 5%);
+
+		@include mobile {
+			flex-basis: 100%;
+		}
 	}
-}
 
-.stk-block.stk-block-posts .stk-block-posts__title {
-	margin-top: 0;
-}
+	// Force remove heading titles from themes.
+	&__title {
+		margin-top: 0 !important;
+	}
 
-.stk-block-posts__meta-sep {
-	margin-inline: 1ch;
+	// Left & right margins for meta separators.
+	&__meta-sep {
+		margin-inline: 1ch;
+	}
+
+	// Need to set these to block to apply margin bottoms.
+	&__readmore,
+	&__image-link {
+		display: block;
+	}
+
+	// Remove theme text decoration on links.
+	:is(&__title, &__category) > a {
+		text-decoration: none;
+	}
 }

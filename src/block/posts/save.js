@@ -38,7 +38,9 @@ export const Save = props => {
 		'stk-block-posts',
 		responsiveClass,
 		blockAlignmentClasses,
-	] )
+	], {
+		'stk--has-container': attributes.hasContainer,
+	} )
 
 	const contentClassNames = classnames( [
 		'stk-block-posts__items',
