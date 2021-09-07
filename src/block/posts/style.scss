@@ -7,8 +7,8 @@
 	}
 
 	& > &__items {
-		display: flex;
 		flex-wrap: wrap;
+		display: flex;
 		column-gap: var(--stk-column-gap, 12px);
 		row-gap: 12px;
 		:is(#{ $p }__title,#{ $p }__meta,#{ $p }__category,#{ $p }__excerpt,#{ $p }__readmore,.stk-img-wrapper) {
