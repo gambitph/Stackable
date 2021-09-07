@@ -7,14 +7,12 @@
 	}
 
 	// Gaps when we don't have containers.
-	&:not(.stk--has-container) {
-		.stk-block-posts__items {
-			--stk-column-gap: 32px;
-			row-gap: 32px;
-		}
+	&:not(.stk--has-container) &__items {
+		--stk-column-gap: 32px;
+		row-gap: 32px;
 	}
 
-	& > &__items {
+	&__items {
 		flex-wrap: wrap;
 		display: flex;
 		column-gap: var(--stk-column-gap, 0);
@@ -30,14 +28,14 @@
 	}
 
 	// Add margins when there are containers, to mimic the sizes of columns that have containers.
-	.stk-block-posts__items {
+	&__items {
 		.stk-container:not(.stk--no-padding) {
 			margin: cssvar(column-margin);
 		}
 	}
 
 	// Category design when it's highlighted.
-	.stk-block-posts__item .stk-block-posts__category > a.stk-button {
+	&__item &__category > a.stk-button {
 		padding: 4px 8px;
 		display: inline-flex;
 		border-radius: 4px;
@@ -72,7 +70,8 @@
 	}
 
 	// Remove theme text decoration on links.
-	:is(&__title, &__category) > a {
+	&__title a,
+	&__category a {
 		text-decoration: none;
 	}
 }

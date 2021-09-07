@@ -35,7 +35,7 @@ import {
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const itemSelector = ' > .stk-block-posts__items .stk-block-posts__item'
+const itemSelector = ' .stk-block-posts__item'
 
 const hoverSelectorCallback = append => getAttribute =>
 	getAttribute( 'hoverStateInContainer' )
@@ -44,60 +44,60 @@ const hoverSelectorCallback = append => getAttribute =>
 const dependencies = [ 'hoverStateInContainer' ]
 
 const flexGapOptions = {
-	selector: '> .stk-block-posts__items',
+	selector: '.stk-block-posts__items',
 	enableColumnGap: false,
 }
 
 const containerDivOptions = {
 	backgroundSelector: itemSelector,
 	borderSelector: itemSelector,
-	sizeSelector: itemSelector + ' > article',
+	sizeSelector: itemSelector,
 }
 
 const titleTypographyOptionsEditor = {
-	selector: `${ itemSelector } .stk-block-posts__title`,
+	selector: `.stk-block-posts__title`,
 	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__title' ),
 	attrNameTemplate: 'title%s',
 	dependencies,
 }
 
 const titleTypographyOptions = {
-	selector: `${ itemSelector } .stk-block-posts__title > a`,
-	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__title > a' ),
+	selector: `.stk-block-posts__title a`,
+	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__title a' ),
 	attrNameTemplate: 'title%s',
 	dependencies,
 }
 
 const categoryTypographyOptions = {
-	selectorCallback: getAttribute => `${ itemSelector } .stk-block-posts__category > a${ getAttribute( 'highlighted' )
-		? ' > .stk-button__inner-text'
+	selectorCallback: getAttribute => `.stk-block-posts__category a${ getAttribute( 'highlighted' )
+		? ' .stk-button__inner-text'
 		: '' }`,
 	hoverSelectorCallback: getAttribute => {
-		const selector = getAttribute( 'highlighted' ) ? ' > .stk-button__inner-text' : ''
+		const selector = getAttribute( 'highlighted' ) ? ' .stk-button__inner-text' : ''
 		return getAttribute( 'hoverStateInContainer' )
-			? `${ itemSelector }:hover .stk-block-posts__category > a${ selector }`
-			: `${ itemSelector } .stk-block-posts__category > a:hover${ selector }`
+			? `${ itemSelector }:hover .stk-block-posts__category a${ selector }`
+			: `.stk-block-posts__category a:hover${ selector }`
 	},
 	attrNameTemplate: 'category%s',
 	dependencies: [ 'Highlighted', ...dependencies ],
 }
 
 const excerptTypographyOptions = {
-	selector: `${ itemSelector } .stk-block-posts__excerpt > p`,
-	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__excerpt > p' ),
+	selector: `.stk-block-posts__excerpt p`,
+	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__excerpt p' ),
 	attrNameTemplate: 'excerpt%s',
 	dependencies,
 }
 
 const metaTypographyOptions = {
-	selector: `${ itemSelector } .stk-block-posts__meta`,
+	selector: `.stk-block-posts__meta`,
 	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__meta' ),
 	attrNameTemplate: 'meta%s',
 	dependencies,
 }
 
 const readmoreTypographyOptions = {
-	selector: `${ itemSelector } .stk-block-posts__readmore`,
+	selector: `.stk-block-posts__readmore`,
 	hoverSelectorCallback: hoverSelectorCallback( '.stk-block-posts__readmore' ),
 	attrNameTemplate: 'readmore%s',
 	dependencies,
@@ -118,14 +118,14 @@ const advancedOptions = {
 const getStyleParams = () => {
 	return [
 		{
-			selector: '> .stk-block-posts__items',
+			selector: '.stk-block-posts__items',
 			styles: {
 				'--stk-columns': 'columns',
 			},
 			responsive: 'all',
 		},
 		{
-			selector: '> .stk-block-posts__items',
+			selector: '.stk-block-posts__items',
 			styles: {
 				'--stk-column-gap': 'columnGap',
 			},
@@ -142,7 +142,7 @@ const getStyleParams = () => {
 			dependencies: [ 'categoryHighlighted' ],
 		},
 		{
-			selector: '> .stk-block-posts__items .stk-button:after',
+			selector: `${ itemSelector } .stk-button:after`,
 			styleRule: 'background',
 			attrName: 'categoryHighlightColor',
 			hoverSelectorCallback: getAttribute => getAttribute( 'categoryHoverStateInContainer' )
@@ -187,35 +187,35 @@ const getStyleParams = () => {
 			responsive: 'all',
 		},
 		{
-			selector: `${ itemSelector } .stk-block-posts__title`,
+			selector: `.stk-block-posts__title`,
 			styleRule: 'marginBottom',
 			attrName: 'titleSpacing',
 			format: '%spx',
 			responsive: 'all',
 		},
 		{
-			selector: `${ itemSelector } .stk-block-posts__category`,
+			selector: `.stk-block-posts__category`,
 			styleRule: 'marginBottom',
 			attrName: 'categorySpacing',
 			format: '%spx',
 			responsive: 'all',
 		},
 		{
-			selector: `${ itemSelector } .stk-block-posts__excerpt`,
+			selector: `.stk-block-posts__excerpt`,
 			styleRule: 'marginBottom',
 			attrName: 'excerptSpacing',
 			format: '%spx',
 			responsive: 'all',
 		},
 		{
-			selector: `${ itemSelector } .stk-block-posts__meta`,
+			selector: `.stk-block-posts__meta`,
 			styleRule: 'marginBottom',
 			attrName: 'metaSpacing',
 			format: '%spx',
 			responsive: 'all',
 		},
 		{
-			selector: `${ itemSelector } .stk-block-posts__readmore`,
+			selector: `.stk-block-posts__readmore`,
 			styleRule: 'marginBottom',
 			attrName: 'readmoreSpacing',
 			format: '%spx',
