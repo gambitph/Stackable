@@ -55,6 +55,8 @@ const Edit = props => {
 		onReplace,
 		clientId,
 		setAttributes,
+		onRemove,
+		mergeBlocks,
 	} = props
 
 	const blockHoverClass = useBlockHoverClass()
@@ -192,6 +194,8 @@ const Edit = props => {
 					defaultTag="h2"
 					placeholder={ __( 'Title for This Block', i18n ) }
 					className={ textClassNames }
+					onMerge={ mergeBlocks }
+					onRemove={ onRemove }
 					onReplace={ onReplace }
 					onSplit={ ( value, isOriginal ) => {
 						let block
