@@ -31,6 +31,7 @@ import {
 	BlockLink,
 	ConditionalDisplay,
 	Transform,
+	MarginBottom,
 } from '~stackable/block-components'
 
 /**
@@ -146,6 +147,7 @@ const Edit = props => {
 					</div>
 				</ContainerDiv>
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }
