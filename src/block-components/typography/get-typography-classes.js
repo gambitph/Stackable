@@ -10,6 +10,6 @@ export const getTypographyClasses = ( attributes = {}, attrNameTemplate = '%s' )
 		'stk--is-gradient': attributes[ getAttributeName( 'textColorType' ) ] === 'gradient',
 		[ `has-text-align-${ attributes[ getAttributeName( 'textAlign' ) ] }` ]: attributes[ getAttributeName( 'textAlign' ) ],
 		'has-text-color': !! attributes[ getAttributeName( 'textColor1' ) ],
-		[ attributes.textColorClass ]: !! attributes.textColorClass,
+		[ attributes[ getAttributeName( 'textColorClass' ) ] ]: !! attributes[ getAttributeName( 'textColorClass' ) ],
 	} )
 }

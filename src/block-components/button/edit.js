@@ -18,6 +18,8 @@ import {
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
+import { useSelect } from '@wordpress/data'
+import { getColorClassName } from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
@@ -51,7 +53,10 @@ export const Colors = props => {
 
 	const {
 		getAttribute,
+		updateAttribute,
 	} = useAttributeEditHandlers()
+
+	const colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors ) || []
 
 	return (
 		<InspectorStyleControls>
@@ -105,6 +110,15 @@ export const Colors = props => {
 
 				{ props.hasTextColor && (
 					<ColorPaletteControl
+						onChangeCallback={ _value => {
+							const value = _value.startsWith( 'var(--stk-global-color' ) ? _value.match( /(#[^\)]*)/g )[ 0 ] : _value
+							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
+							if ( colorSlug ) {
+								updateAttribute( 'textColorClass', getColorClassName( 'color', colorSlug ) )
+							}
+
+							return _value
+						} }
 						label={ __( 'Text Color', i18n ) }
 						attribute="textColor1"
 						hover="all"
