@@ -37,7 +37,10 @@ const postCSSOptions = [
 ]
 
 const sassOptions = {
-	includePaths: path.resolve( __dirname, './src/' ),
+	includePaths: [
+		path.resolve( __dirname, './src/' ),
+		path.resolve( __dirname, './src/styles' ),
+	],
 }
 
 module.exports = {
