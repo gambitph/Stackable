@@ -10,6 +10,8 @@
 	}
 
 	&__items {
+		word-break: break-word;
+		hyphens: auto;
 		flex-wrap: wrap;
 		display: flex;
 		column-gap: var(--stk-column-gap, 0);

@@ -165,9 +165,12 @@
 .stk-block-heading,
 .stk-block-text,
 .stk-block-subtitle,
+.stk-block .stk-block-count-up__text,
 .stk-block .stk-block-subtitle__text,
 .stk-block .stk-block-text__text {
 	margin-top: 0;
+	word-break: break-word;
+	hyphens: auto;
 }
 // Headings have a large margin top except when they're the first entry.
 :where(.stk-block-heading:not(:first-child)) .stk-block-heading__text {
