@@ -182,7 +182,10 @@ export const Icon = props => {
 			{ isOpen && (
 				<IconSearchPopover
 					useRef={ popoverEl }
-					onChange={ updateAttributeHandler( 'icon' ) }
+					onChange={ icon => {
+						updateAttributeHandler( 'icon' )( icon )
+						setIsOpen( false )
+					} }
 				/>
 			) }
 			{ getAttribute( 'icon2' ) && (
