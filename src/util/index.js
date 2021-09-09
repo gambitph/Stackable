@@ -243,11 +243,11 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false, deviceTy
 					if ( isEditor && deviceType !== 'Desktop' ) {
 						let minWidth = mediaQuery?.match( /min-width:.*?([0-9]*)px/ )?.[ 1 ]
 						let maxWidth = mediaQuery?.match( /max-width:.*?([0-9]*)px/ )?.[ 1 ]
-						if ( minWidth === null ) {
+						if ( typeof minWidth !== 'string' ) {
 							minWidth = 0
 						}
 
-						if ( maxWidth === null ) {
+						if ( typeof maxWidth !== 'string' ) {
 							maxWidth = 9999
 						}
 
