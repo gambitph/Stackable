@@ -26,6 +26,7 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
+import { inRange } from 'lodash'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
@@ -208,6 +209,11 @@ export const minifyCSS = ( css, important = false ) => {
 		.trim()
 }
 
+const BREAKPOINT_MAP = {
+	Tablet: 780,
+	Mobile: 360,
+}
+
 /**
  * "Compiles" CSS - compiles the CSS for use of a specific block only.
  *
@@ -215,9 +221,10 @@ export const minifyCSS = ( css, important = false ) => {
  * @param {string} mainClass
  * @param {string} uniqueID
  * @param {boolean} isEditor If true, will preppend '.editor-styles-wrapper' to all selectors.
+ * @param {string} deviceType the current editor device type.
  * @return {string} CSS
  */
-export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
+export const compileCSS = ( css, mainClass, uniqueID, isEditor = false, deviceType = 'Desktop' ) => {
 	// Regex steps:
 	// Add the unique ID:
 	// 		".ugb-accordion" -> ".uniqueID .ugb-accordion"
@@ -232,6 +239,23 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
 			if ( selector.match( /@\w+/g ) ) {
 				return selector.replace( /(@\w+[^{]+{\s*)([^{]+)/g, ( match, mediaQuery, selector ) => {
 					const newSelector = prependCSSClass( selector, mainClass, uniqueID )
+
+					if ( isEditor && deviceType !== 'Desktop' ) {
+						let minWidth = mediaQuery?.match( /min-width:.*?([0-9]*)px/ )?.[ 1 ]
+						let maxWidth = mediaQuery?.match( /max-width:.*?([0-9]*)px/ )?.[ 1 ]
+						if ( minWidth === null ) {
+							minWidth = 0
+						}
+
+						if ( maxWidth === null ) {
+							maxWidth = 9999
+						}
+
+						if ( inRange( BREAKPOINT_MAP[ deviceType ], parseInt( minWidth ), parseInt( maxWidth ) ) ) {
+							return `${ newSelector } ${ paren }`
+						}
+					}
+
 					return `${ mediaQuery } ${ newSelector } ${ paren }`
 				} )
 			}
