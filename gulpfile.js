@@ -5,15 +5,18 @@
  */
 
 const autoprefixer = require( 'autoprefixer' ),
+	collect = require( 'gulp-collect-pattern' ),
 	concat = require( 'gulp-concat' ),
 	cssnano = require( 'cssnano' ),
 	footer = require( 'gulp-footer' ),
+	fs = require( 'fs' ),
 	gulp = require( 'gulp' ),
 	header = require( 'gulp-header' ),
 	mqpacker = require( 'css-mqpacker' ),
 	path = require( 'path' ),
 	postcss = require( 'gulp-postcss' ),
 	rename = require( 'gulp-rename' ),
+	replace = require( 'gulp-replace' ),
 	sass = require( 'gulp-sass' ),
 	zip = require( 'gulp-zip' )
 
@@ -91,16 +94,47 @@ gulp.task( 'style-editor', function() {
 		.pipe( gulp.dest( 'dist/' ) )
 } )
 
-gulp.task( 'style', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
-		.pipe( concat( 'frontend_blocks.css' ) )
-		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
-		.pipe( header( '#start-resizable-editor-section{display:none}' ) )
-		.pipe( postcss( postCSSOptions ) )
-		.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
-		.pipe( gulp.dest( 'dist/' ) )
-} )
+gulp.task( 'style', gulp.series(
+	function styleGenerateFrontend() {
+		return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
+			.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+			.pipe( concat( 'frontend_blocks.css' ) )
+			// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
+			.pipe( header( '#start-resizable-editor-section{display:none}' ) )
+			.pipe( postcss( postCSSOptions ) )
+			.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
+			// Extract media queries and move them to another file.
+			.pipe( collect( {
+				file: 'dist/frontend_blocks_responsive.css',
+				regex: /@media [\w\s\d]*screen(.*?)\}\}/g,
+			} ) )
+			// Remove the media queries from the stylesheet.
+			.pipe( replace( /@media [\w\s\d]*screen(.*?)\}\}/g, '' ) )
+			.pipe( gulp.dest( 'dist/' ) )
+	},
+	// Cleanup the responsiveness file.
+	function styleCleanupResponsiveCSS() {
+		// return gulp.src( [ path.resolve( __dirname, './dist/frontend_blocks_responsive.css' ) ] )
+		return gulp.src( [ 'dist/frontend_blocks_responsive.css' ] )
+			.pipe( header( '#start-resizable-editor-section{display:none}' ) )
+			.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
+			.pipe( gulp.dest( 'dist/' ) )
+	},
+	// Add the responsive styles to the dynamic breakpoint file.
+	function styleGenerateResponsivePHP() {
+		// const css = fs.readFileSync( path.resolve( __dirname, './dist/frontend_blocks_responsive.css' ), 'utf8' )
+		const css = fs.readFileSync( 'dist/frontend_blocks_responsive.css', 'utf8' )
+
+		return gulp.src( [ path.resolve( __dirname, './src/dynamic-breakpoints.php' ) ] )
+			.pipe( replace(
+				/return <<<STK_RESPONSIVE_CSS([\s\S]*?)STK_RESPONSIVE_CSS;/gm,
+				`return <<<STK_RESPONSIVE_CSS
+${ css }
+STK_RESPONSIVE_CSS;`
+			) )
+			.pipe( gulp.dest( path.resolve( __dirname, './src/' ) ) )
+	}
+) )
 
 gulp.task( 'welcome-styles', function() {
 	return gulp.src( path.resolve( __dirname, './src/welcome/admin.scss' ) )

@@ -27,7 +27,7 @@ import {
 	welcomeSrcUrl,
 } from 'stackable'
 import classnames from 'classnames'
-import { AdminToggleSetting } from '~stackable/components'
+import { AdminToggleSetting, AdminTextSetting } from '~stackable/components'
 
 class BlockToggler extends Component {
 	constructor() {
@@ -133,6 +133,69 @@ class BlockToggler extends Component {
 			</div>
 		)
 	}
+}
+
+const DynamicBreakpointsSettings = () => {
+	const [ tabletBreakpoint, setTabletBreakpoint ] = useState( '' )
+	const [ mobileBreakpoint, setMobileBreakpoint ] = useState( '' )
+	const [ isReady, setIsReady ] = useState( false )
+	const [ isBusy, setIsBusy ] = useState( false )
+
+	useEffect( () => {
+		setIsBusy( true )
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				const breakpoints = response.stackable_dynamic_breakpoints
+				if ( breakpoints ) {
+					setTabletBreakpoint( breakpoints.tablet || '' )
+					setMobileBreakpoint( breakpoints.mobile || '' )
+				}
+				setIsReady( true )
+				setIsBusy( false )
+			} )
+		} )
+	}, [] )
+
+	useEffect( () => {
+		if ( isReady ) {
+			const t = setTimeout( () => {
+				setIsBusy( true )
+				const model = new models.Settings( {
+					stackable_dynamic_breakpoints: { // eslint-disable-line camelcase
+						tablet: tabletBreakpoint,
+						mobile: mobileBreakpoint,
+					},
+				} )
+				model.save().then( () => setIsBusy( false ) )
+			}, 400 )
+			return () => clearTimeout( t )
+		}
+	}, [ tabletBreakpoint, mobileBreakpoint, isReady ] )
+
+	return <Fragment>
+		<div>
+			<AdminTextSetting
+				label={ __( 'Tablet Breakpoint', i18n ) }
+				type="number"
+				value={ tabletBreakpoint }
+				onChange={ value => setTabletBreakpoint( value ) }
+				placeholder="1024"
+			> px</AdminTextSetting>
+			<AdminTextSetting
+				label={ __( 'Mobile Breakpoint', i18n ) }
+				type="number"
+				value={ mobileBreakpoint }
+				onChange={ value => setMobileBreakpoint( value ) }
+				placeholder="768"
+			> px</AdminTextSetting>
+		</div>
+		{ isBusy &&
+			<div className="s-absolute-spinner">
+				<Spinner />
+			</div>
+		}
+	</Fragment>
 }
 
 const GlobalSettings = () => {
@@ -319,6 +382,11 @@ domReady( () => {
 			showProNoticesOption={ showProNoticesOption }
 		/>,
 		document.querySelector( '.s-other-options-wrapper' )
+	)
+
+	render(
+		<DynamicBreakpointsSettings />,
+		document.querySelector( '.s-dynamic-breakpoints' )
 	)
 
 	render(
