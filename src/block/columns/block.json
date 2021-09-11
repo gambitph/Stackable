@@ -4,7 +4,8 @@
 	"description": "Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.",
 	"category": "layout",
 	"keywords": [
-		"Section rows"
+		"Section rows",
+		"Container"
 	],
 	"providesContext": {
 		"stackable/columnFit": "columnFit"
