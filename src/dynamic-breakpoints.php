@@ -74,8 +74,12 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 						'schema' => array(
 							'type' => 'object',
 							'properties' => array(
-								'tablet' => '',
-								'mobile' => '',
+								'tablet' => array(
+									'type' => 'string',
+								),
+								'mobile' => array(
+									'type' => 'string',
+								),
 							)
 						)
 					),
