@@ -33,6 +33,7 @@ import {
 	MarginBottom,
 	Alignment,
 	getAlignmentClasses,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -312,6 +313,7 @@ const Edit = props => {
 			/>
 
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list" />
@@ -325,6 +327,7 @@ const Edit = props => {
 					<Typography
 						tagName={ tagName }
 						multiline="li"
+						focusOnSelected={ true }
 					>
 						{ controls }
 					</Typography>

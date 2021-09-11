@@ -2,7 +2,12 @@
  * Common SCSS
 */
 
+// Initialize the design system, but don't print it out.
 @import "styles/block-design-system";
+@import "styles/cssvars";
+@include cssvars-responsive( $block-design-system, true );
+
+@import "styles/block-design-system-blocks";
 @import "styles/block";
 
 @mixin transition() {
@@ -35,6 +40,6 @@
 	inset: 0 !important;
 	width: 100% !important;
 	background: transparent !important;
-	cursor: pointer;
-	z-index: 3;
+	cursor: pointer !important;
+	z-index: 3 !important;
 }

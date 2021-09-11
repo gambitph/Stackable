@@ -18,7 +18,7 @@ import { Fragment, useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { LinkControls } from '../helpers/link'
 
-export const Edit = () => {
+export const Edit = ( { hasLink } ) => {
 	const { clientId, name: blockName } = useBlockEditContext()
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
@@ -39,9 +39,13 @@ export const Edit = () => {
 					checked={ attributes.hasBlockLink }
 					onChange={ hasBlockLink => updateBlockAttributes( clientId, { hasBlockLink } ) }
 				>
-					<LinkControls attrNameTemplate="blockLink%s" />
+					<LinkControls attrNameTemplate="blockLink%s" hasLink={ hasLink } />
 				</PanelAdvancedSettings>
 			</InspectorBlockControls>
 		</Fragment>
 	)
+}
+
+Edit.defaultProps = {
+	hasLink: true,
 }

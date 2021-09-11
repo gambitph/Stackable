@@ -13,7 +13,6 @@ import {
 	InspectorTabs,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
-	AdvancedRangeControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -27,6 +26,8 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	FlexGapControls,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -65,6 +66,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
+		'stk-button-group',
 	] )
 
 	return (
@@ -80,25 +82,11 @@ const Edit = props => {
 					id="general"
 					initialOpen={ true }
 				>
-					<AdvancedRangeControl
-						label={ __( 'Column Gap', i18n ) }
-						attribute="columnGap"
-						responsive="all"
-						min="0"
-						sliderMax="50"
-						placeholder="12"
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Row Gap', i18n ) }
-						attribute="rowGap"
-						responsive="all"
-						min="0"
-						sliderMax="50"
-						placeholder="12"
-					/>
+					<FlexGapControls />
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />

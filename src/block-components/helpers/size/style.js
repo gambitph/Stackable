@@ -110,6 +110,9 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hasUnits: 'px',
 			valuePreCallback: value => value?.top,
+			valueCallback: value => {
+				return value.startsWith( 'auto' ) ? 'auto' : value
+			},
 		},
 		{
 			selector,
@@ -119,6 +122,9 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hasUnits: 'px',
 			valuePreCallback: value => value?.right,
+			valueCallback: value => {
+				return value.startsWith( 'auto' ) ? 'auto' : value
+			},
 		},
 		{
 			selector,
@@ -128,6 +134,9 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hasUnits: 'px',
 			valuePreCallback: value => value?.bottom,
+			valueCallback: value => {
+				return value.startsWith( 'auto' ) ? 'auto' : value
+			},
 		},
 		{
 			selector,
@@ -137,6 +146,9 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hasUnits: 'px',
 			valuePreCallback: value => value?.left,
+			valueCallback: value => {
+				return value.startsWith( 'auto' ) ? 'auto' : value
+			},
 		},
 	]
 }

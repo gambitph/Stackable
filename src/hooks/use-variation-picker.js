@@ -11,9 +11,9 @@ import { createUniqueClass } from '~stackable/block-components/block-div/use-uni
 /**
  * WordPress dependencies
  */
-import { __experimentalBlockVariationPicker } from '@wordpress/block-editor' // eslint-disable-line @wordpress/no-unsafe-wp-apis
 import { useSelect, useDispatch } from '@wordpress/data'
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
+import { VariationPicker } from '~stackable/components'
 
 /**
  * The variation picker will automatically show up when the block doesn't have a
@@ -51,7 +51,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 	const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	return uniqueId ? null : (
-		<__experimentalBlockVariationPicker
+		<VariationPicker
 			icon={ get( blockType, [ 'icon', 'src' ] ) }
 			label={ get( blockType, [ 'title' ] ) }
 			variations={ variations }
@@ -74,6 +74,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 					)
 				}
 			} }
+			allowSkip
 		/>
 	)
 }

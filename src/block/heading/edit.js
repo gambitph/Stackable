@@ -19,6 +19,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Transform,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -79,6 +80,7 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 
 			<Typography.InspectorControls hasRemoveMargins={ true } initialOpen={ true } />
 			<InspectorStyleControls>
