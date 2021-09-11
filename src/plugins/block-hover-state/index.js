@@ -2,8 +2,12 @@ import { dispatch, useSelect } from '@wordpress/data'
 import { useEffect } from '@wordpress/element'
 
 /**
- * Listens to any block selection changes. Used mainly by the useBlockHoverState
- * hook.
+ * Listens to any block selection changes. This is done as a plugin (and not
+ * implemented as a hook on a block level) so that we only have one listener
+ * active. Doing this prevents errors when our blocks are used inside Query Loop
+ * blocks.
+ *
+ * Used mainly by the useBlockHoverState hook.
  *
  * @return {Object} Null, nothing is rendered
  */
