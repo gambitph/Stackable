@@ -199,7 +199,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<?php endif; ?>
 						</article>
 						<article class="s-box" id="dynamic-breakpoints">
-							<h2><?php _e( '📱 Dynamic Breakpoints', STACKABLE_I18N ) ?></h2>
+							<h2><?php _e( '📱 Responsive Breakpoints', STACKABLE_I18N ) ?></h2>
 							<p class="s-settings-subtitle"><?php printf( __( 'Blocks can be styles differently for tablet and mobile screens, and some styles adjust to make them fit better in smaller screens. You can change the widths when tablet and mobile views are triggered. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/464-how-to-use-dynamic-breakpoints?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<div class="s-dynamic-breakpoints"></div>
 						</article>
