@@ -209,9 +209,9 @@ export const minifyCSS = ( css, important = false ) => {
 		.trim()
 }
 
-const BREAKPOINT_MAP = {
-	Tablet: 780,
-	Mobile: 360,
+const BREAKPOINTS = {
+	Tablet: 1024 - 1, // Need to minus one so we can detect between values.
+	Mobile: 768 - 1, // Need to minus one so we can detect between values.
 }
 
 /**
@@ -236,13 +236,14 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false, deviceTy
 		.replace( /\/\/(.*)?\n/g, '' )
 		.replace( /([^}]+)({)/g, ( match, selector, paren ) => {
 			// Ignore media queries (re-add them after fixing the classes)
-			if ( selector.match( /@\w+/g ) ) {
+			if ( selector.match( /@\w+/ ) ) {
 				return selector.replace( /(@\w+[^{]+{\s*)([^{]+)/g, ( match, mediaQuery, selector ) => {
 					const newSelector = prependCSSClass( selector, mainClass, uniqueID )
 
 					if ( isEditor && deviceType !== 'Desktop' ) {
-						let minWidth = mediaQuery?.match( /min-width:.*?([0-9]*)px/ )?.[ 1 ]
-						let maxWidth = mediaQuery?.match( /max-width:.*?([0-9]*)px/ )?.[ 1 ]
+						let minWidth = mediaQuery?.match( /min-width:\s*(\d+)px/ )?.[ 1 ]
+						let maxWidth = mediaQuery?.match( /max-width:\s*(\d+)px/ )?.[ 1 ]
+
 						if ( typeof minWidth !== 'string' ) {
 							minWidth = 0
 						}
@@ -251,8 +252,9 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false, deviceTy
 							maxWidth = 9999
 						}
 
-						if ( inRange( BREAKPOINT_MAP[ deviceType ], parseInt( minWidth ), parseInt( maxWidth ) ) ) {
-							return `${ newSelector } ${ paren }`
+						// If the value is for the responsive screen, enable them.
+						if ( inRange( BREAKPOINTS[ deviceType ], parseInt( minWidth ), parseInt( maxWidth ) ) ) {
+							return `@media screen { ${ newSelector } ${ paren }`
 						}
 					}
 
