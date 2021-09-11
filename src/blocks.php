@@ -25,6 +25,7 @@ $stk_block_folders = array(
 	'image',
 	'price',
 	'text',
+	'posts'
 );
 
 /**

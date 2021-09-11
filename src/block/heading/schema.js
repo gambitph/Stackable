@@ -14,6 +14,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Transform,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
@@ -28,6 +29,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
+	Transform.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-block-heading__text', {
 		defaultTextTag: 'h2',
 	} )

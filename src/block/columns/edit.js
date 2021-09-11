@@ -15,8 +15,7 @@ import {
 	ColumnInnerBlocks,
 	GroupPlaceholder,
 	InspectorStyleControls,
-	InspectorTabs,
-	PanelAdvancedSettings,
+	InspectorTabs, PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -30,6 +29,9 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Separator,
+	getSeparatorClasses,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -56,6 +58,7 @@ const Edit = props => {
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
 	const blockHoverClass = useBlockHoverClass()
@@ -66,6 +69,7 @@ const Edit = props => {
 		'stk-block-columns',
 		rowClass,
 		blockHoverClass,
+		separatorClass,
 		columnTooltipClass,
 	] )
 
@@ -83,7 +87,9 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
@@ -147,7 +153,7 @@ const Edit = props => {
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
-				<>
+				<Separator>
 					<div className={ contentClassNames }>
 						<ColumnInnerBlocks
 							providerValue={ columnProviderValue }
@@ -158,7 +164,7 @@ const Edit = props => {
 							templateLock={ props.attributes.templateLock || false }
 						/>
 					</div>
-				</>
+				</Separator>
 			</BlockDiv>
 			{ hasInnerBlocks && <MarginBottom /> }
 		</>

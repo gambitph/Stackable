@@ -154,12 +154,13 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
 // TODO: v3 block
-// require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
+ require_once( plugin_dir_path( __FILE__ ) . 'src/block/posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/help-tooltip.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/premium-notice/index.php' );

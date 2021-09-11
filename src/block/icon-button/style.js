@@ -7,6 +7,7 @@ import {
 	Button,
 	BlockDiv,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -41,6 +42,7 @@ export const IconButtonStyles = props => {
 		<>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</>
@@ -72,6 +74,7 @@ IconButtonStyles.Content = props => {
 		<>
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 		</>

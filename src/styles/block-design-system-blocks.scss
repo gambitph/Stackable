@@ -1,0 +1,155 @@
+/**
+ * Block implemtation of the Design System.
+ */
+
+// Blocks
+.stk-block,
+.entry-content .stk-block,
+.stk-column__content > * { // Some themes don't add margin bottom to insides of columns.
+	margin-bottom: cssvar(block-margin-bottom);
+}
+
+.stk-block {
+	.stk-button-group {
+		column-gap: cssvar(button-column-gap);
+		row-gap: cssvar(button-row-gap);
+		justify-content: var(--stk-alignment-justify-content);
+	}
+}
+
+:is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
+	&:not(.is-style-link) {
+		.stk-button {
+			background: cssvar(button-background-color);
+			padding: cssvar(button-padding);
+
+			// Adjust icon color and icon size.
+			#{ '--stk-icon-color' }: cssvar(button-text-color);
+
+			.stk--inner-svg {
+				color: cssvar(button-text-color);
+			}
+
+			> .stk-button__inner-text {
+				color: cssvar(button-text-color);
+				&:hover {
+					color: cssvar(button-text-color); // Override theme's hover text color.
+				}
+			}
+		}
+	}
+
+	.stk-button {
+		// Adjust icon color and icon size.
+		--stk-icon-size: 1em;
+	}
+
+	// Ghost button color.
+	&.is-style-ghost {
+		#{ '--stk-button-text-color' }: cssvar(button-background-color);
+		.stk-button {
+			&::before {
+				border-width: cssvar(button-ghost-border-width);
+				border-color: cssvar(button-background-color);
+			}
+		}
+	}
+
+	// Plain button color.
+	&.is-style-plain {
+		#{ '--stk-button-text-color' }: cssvar(button-background-color);
+	}
+}
+// Ensure buttons use the correct paddings.
+.stk-block-icon-button {
+	.stk-button {
+		#{ '--stk-button-padding' }: cssvar(icon-button-padding);
+	}
+}
+
+// Block spacing when horizontally oriented.
+.stk--block-orientation-horizontal > * + * {
+	margin-left: cssvar(block-margin-bottom);
+}
+
+// Containers
+.stk-container:not(.stk--no-padding) {
+	padding: cssvar(container-padding);
+}
+.stk--container-small .stk-container:not(.stk--no-padding) {
+	#{ '--stk-container-padding' }: cssvar(container-padding-small);
+}
+.stk-container:not(.stk--no-background) {
+	background-color: cssvar(container-background-color);
+	border-radius: cssvar(container-border-radius);
+	box-shadow: cssvar(container-box-shadow);
+	color: cssvar(container-color);
+}
+.stk-container-padding {
+	padding: cssvar(container-padding);
+}
+
+// Columns
+.stk-column-wrapper {
+	margin: cssvar(column-margin);
+}
+.stk-block-column:first-child:last-child > .stk-column-wrapper { // Remove the margins if it's only 1 block.
+	margin: 0;
+}
+
+// Block Background
+.stk-block-background {
+	background-color: cssvar(block-background-color);
+	&:not(.stk--no-padding) {
+		padding: cssvar(block-background-padding);
+	}
+}
+// TODO: revisit this since we're aiming for block max-width instead
+// Block background when the block is full width
+.stk-block-background.alignfull {
+	&:not(.stk--no-padding) {
+		padding: cssvar(block-background-full-padding);
+	}
+}
+
+// Icons
+.stk--inner-svg {
+	border-color: cssvar(icon-color);
+	svg:last-child {
+		width: cssvar(icon-size);
+		height: cssvar(icon-size);
+		&,
+		:is(g, path, rect, polygon, ellipse) {
+			fill: cssvar(icon-color);
+		}
+	}
+}
+
+// Typography
+.stk-subtitle {
+	font-size: cssvar(subtitle-size);
+	color: cssvar(subtitle-color);
+}
+
+// Posts
+.stk-block-posts {
+	&__meta {
+		color: cssvar(subtitle-color);
+	}
+}
+
+// Separator
+.stk-block-separator__inner,
+.stk-separator__wrapper {
+	svg {
+		fill: cssvar(separator-color);
+	}
+}
+
+// Divider
+.stk-block.stk-block-divider {
+	hr.stk-block-divider__hr,
+	.stk-block-divider__dot {
+		background: cssvar(divider-color);
+	}
+}

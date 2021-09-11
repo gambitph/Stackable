@@ -7,6 +7,7 @@ import {
 	useAttributeEditHandlers, useBlockHoverState, useFontLoader,
 } from '~stackable/hooks'
 import {
+	AlignButtonsControl,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	AdvancedTextControl,
@@ -19,26 +20,27 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { getAttributeName } from '~stackable/util'
+import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import {
-	Fragment, useEffect, useState,
+	useEffect, useState,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
+import { applyFilters } from '@wordpress/hooks'
 
-export const Edit = props => {
+export const Controls = props => {
 	const {
+		hasAlign,
 		hasColor,
 		hasTextTag,
 		hasTextContent,
 		hasRemoveMargins,
 		attrNameTemplate,
 		isMultiline,
-		initialOpen,
 		hasGradient,
 	} = props
 
@@ -48,6 +50,7 @@ export const Edit = props => {
 		updateAttributes,
 		updateAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
+	const attributeName = getAttrNameFunction( attrNameTemplate )
 
 	const text = getAttribute( 'text' )
 
@@ -80,201 +83,259 @@ export const Edit = props => {
 
 		return () => clearTimeout( timeout )
 	}, [ debouncedText ] )
+	return (
+		<>
+			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
+			{ hasTextContent && (
+				<AdvancedTextControl
+					label={ __( 'Content', i18n ) }
+					isMultiline={ isMultiline }
+					value={ unescapedDebouncedText }
+					onChange={ setDebouncedTextWithEscape }
+					/**
+					 * Pass the unescaped Dynamic Content `onChange` function.
+					 */
+					onChangeDynamicContent={ setDebouncedText }
+					isDynamic={ true }
+				/>
+			) }
+
+			{ hasRemoveMargins && (
+				<AdvancedToggleControl
+					label={ __( 'Remove extra text margins', i18n ) }
+					attribute={ attributeName( 'textRemoveTextMargins' ) }
+				/>
+			) }
+
+			{ hasTextTag && (
+				<HeadingButtonsControl
+					value={ getAttribute( 'textTag' ) }
+					onChange={ updateAttributeHandler( 'textTag' ) }
+					hasP={ getAttribute( 'hasP' ) }
+				/>
+			) }
+
+			<ButtonIconPopoverControl
+				label={ __( 'Typography', i18n ) }
+				popoverLabel={ __( 'Typography', i18n ) }
+				onReset={ () => {
+					updateAttributes( {
+						[ getAttributeName( 'fontFamily' ) ]: '',
+						[ getAttributeName( 'fontSize', 'desktop', state ) ]: '',
+						[ getAttributeName( 'fontSize', 'tablet', state ) ]: '',
+						[ getAttributeName( 'fontSize', 'mobile', state ) ]: '',
+						[ getAttributeName( 'fontWeight', 'desktop', state ) ]: '',
+						[ getAttributeName( 'textTransform', 'desktop', state ) ]: '',
+						[ getAttributeName( 'letterSpacing', 'desktop', state ) ]: '',
+						[ getAttributeName( 'lineHeight', 'desktop', state ) ]: '',
+						[ getAttributeName( 'lineHeight', 'tablet', state ) ]: '',
+						[ getAttributeName( 'lineHeight', 'mobile', state ) ]: '',
+					} )
+				} }
+				allowReset={
+					( getAttribute( 'fontFamily' ) ||
+						getAttribute( 'fontSize', 'desktop', state ) ||
+						getAttribute( 'fontSize', 'tablet', state ) ||
+						getAttribute( 'fontSize', 'mobile', state ) ||
+						getAttribute( 'fontWeight', 'desktop', state ) ||
+						getAttribute( 'textTransform', 'desktop', state ) ||
+						getAttribute( 'letterSpacing', 'desktop', state ) ||
+						getAttribute( 'lineHeight', 'desktop', state ) ||
+						getAttribute( 'lineHeight', 'tablet', state ) ||
+						getAttribute( 'lineHeight', 'mobile', state ) )
+				}
+			>
+				<FontFamilyControl
+					label={ __( 'Font Family', i18n ) }
+					onChange={ updateAttributeHandler( 'fontFamily' ) }
+					value={ getAttribute( 'fontFamily' ) }
+				/>
+				<AdvancedSelectControl
+					label={ __( 'Weight', i18n ) }
+					options={ [
+						{ label: '100', value: '100' },
+						{ label: '200', value: '200' },
+						{ label: '300', value: '300' },
+						{ label: '400', value: '400' },
+						{ label: '500', value: '500' },
+						{ label: '600', value: '600' },
+						{ label: '700', value: '700' },
+						{ label: '800', value: '800' },
+						{ label: '900', value: '900' },
+						{ label: __( 'Default', i18n ), value: '' },
+						{ label: __( 'Normal', i18n ), value: 'normal' },
+						{ label: __( 'Bold', i18n ), value: 'bold' },
+					] }
+					attribute={ attributeName( 'fontWeight' ) }
+				/>
+				<AdvancedSelectControl
+					label={ __( 'Transform', i18n ) }
+					options={ [
+						{ label: __( 'Default', i18n ), value: '' },
+						{ label: __( 'Uppercase', i18n ), value: 'uppercase' },
+						{ label: __( 'Lowercase', i18n ), value: 'lowercase' },
+						{ label: __( 'Capitalize', i18n ), value: 'capitalize' },
+						{ label: __( 'None', i18n ), value: 'none' },
+					] }
+					attribute={ attributeName( 'textTransform' ) }
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Line-Height', i18n ) }
+					attribute={ attributeName( 'lineHeight' ) }
+					units={ [ 'px', 'em', 'rem' ] }
+					min={ [ 1, 0.1 ] }
+					sliderMax={ [ 100, 10 ] }
+					step={ [ 1, 0.1 ] }
+					placeholder={ [ 30, 1.5 ] }
+					allowReset={ true }
+					initialPosition={ [ 37, 1.8 ] }
+					responsive="all"
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Letter Spacing', i18n ) }
+					attribute={ attributeName( 'letterSpacing' ) }
+					min={ -5 }
+					sliderMax={ 10 }
+					step={ 0.1 }
+					allowReset={ true }
+					placeholder="0"
+				/>
+			</ButtonIconPopoverControl>
+
+			<AdvancedRangeControl
+				label={ __( 'Size', i18n ) }
+				allowReset={ true }
+				attribute={ attributeName( 'fontSize' ) }
+				units={ [ 'px', 'em', 'rem' ] }
+				min={ [ 0, 0 ] }
+				sliderMax={ [ 150, 7 ] }
+				step={ [ 1, 0.05 ] }
+				placeholder={ props.sizePlaceholder }
+				responsive="all"
+			/>
+
+			{ hasColor && (
+				<>
+					{ hasGradient && (
+						<AdvancedToolbarControl
+							controls={ [
+								{
+									value: '',
+									title: __( 'Single', i18n ),
+								},
+								{
+									value: 'gradient',
+									title: __( 'Gradient', i18n ),
+								},
+							] }
+							isSmall={ true }
+							fullwidth={ false }
+							attribute={ attributeName( 'textColorType' ) }
+							onReset={ () => {
+								updateAttributes( {
+									[ getAttributeName( 'textColor1' ) ]: '',
+									[ getAttributeName( 'textColor2' ) ]: '',
+								} )
+							} }
+						/>
+					) }
+					<ColorPaletteControl
+						label={ getAttribute( 'textColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
+							: __( 'Text Color', i18n ) }
+						attribute={ attributeName( 'textColor1' ) }
+						hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
+					/>
+					{ getAttribute( 'textColorType' ) === 'gradient' && hasGradient && (
+						<>
+							<ColorPaletteControl
+								label={ sprintf( __( 'Text Color #%s', i18n ), 2 ) }
+								attribute={ attributeName( 'textColor2' ) }
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Gradient Direction (degrees)', i18n ) }
+								attribute={ attributeName( 'textGradientDirection' ) }
+								min={ 0 }
+								max={ 360 }
+								step={ 10 }
+								allowReset={ true }
+							/>
+						</>
+					) }
+					{ applyFilters( 'stackable.block-component.typography.color.after', null, props ) }
+				</>
+			) }
+
+			{ hasAlign && (
+				<AlignButtonsControl
+					label={ __( 'Align', i18n ) }
+					attribute={ attributeName( 'textAlign' ) }
+					responsive="all"
+				/>
+			) }
+		</>
+	)
+}
+
+Controls.defaultProps = {
+	hasAlign: false,
+	hasColor: true,
+	hasTextTag: true,
+	hasTextContent: true,
+	hasRemoveMargins: false,
+	attrNameTemplate: '%s',
+	isMultiline: false,
+	hasGradient: true,
+}
+
+export const Edit = props => {
+	const {
+		hasAlign,
+		hasColor,
+		hasTextTag,
+		hasTextContent,
+		hasRemoveMargins,
+		attrNameTemplate,
+		isMultiline,
+		initialOpen,
+		hasGradient,
+		hasToggle,
+		label,
+	} = props
+
+	const {
+		getAttribute,
+		updateAttributeHandler,
+	} = useAttributeEditHandlers( attrNameTemplate )
 
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
-				title={ __( 'Typography', i18n ) }
+				title={ label }
 				initialOpen={ initialOpen }
+				{ ...( hasToggle ? {
+					checked: getAttribute( 'show' ),
+					onChange: updateAttributeHandler( 'show' ),
+				} : {} ) }
 				id="text"
 			>
-				<Fragment>
-					{ hasTextContent && (
-						<AdvancedTextControl
-							label={ __( 'Content', i18n ) }
-							isMultiline={ isMultiline }
-							value={ unescapedDebouncedText }
-							onChange={ setDebouncedTextWithEscape }
-							/**
-							 * Pass the unescaped Dynamic Content `onChange` function.
-							 */
-							onChangeDynamicContent={ setDebouncedText }
-							isDynamic={ true }
-						/>
-					) }
-
-					{ hasRemoveMargins && (
-						<AdvancedToggleControl
-							label={ __( 'Remove extra text margins', i18n ) }
-							attribute="textRemoveTextMargins"
-						/>
-					) }
-
-					{ hasTextTag && (
-						<HeadingButtonsControl
-							value={ getAttribute( 'textTag' ) }
-							onChange={ updateAttributeHandler( 'textTag' ) }
-							hasP={ getAttribute( 'hasP' ) }
-						/>
-					) }
-
-					<ButtonIconPopoverControl
-						label={ __( 'Typography', i18n ) }
-						popoverLabel={ __( 'Typography', i18n ) }
-						onReset={ () => {
-							updateAttributes( {
-								[ getAttributeName( 'fontFamily' ) ]: '',
-								[ getAttributeName( 'fontSize', 'desktop', state ) ]: '',
-								[ getAttributeName( 'fontSize', 'tablet', state ) ]: '',
-								[ getAttributeName( 'fontSize', 'mobile', state ) ]: '',
-								[ getAttributeName( 'fontWeight', 'desktop', state ) ]: '',
-								[ getAttributeName( 'textTransform', 'desktop', state ) ]: '',
-								[ getAttributeName( 'letterSpacing', 'desktop', state ) ]: '',
-								[ getAttributeName( 'lineHeight', 'desktop', state ) ]: '',
-								[ getAttributeName( 'lineHeight', 'tablet', state ) ]: '',
-								[ getAttributeName( 'lineHeight', 'mobile', state ) ]: '',
-							} )
-						} }
-						allowReset={
-							( getAttribute( 'fontFamily' ) ||
-								getAttribute( 'fontSize', 'desktop', state ) ||
-								getAttribute( 'fontSize', 'tablet', state ) ||
-								getAttribute( 'fontSize', 'mobile', state ) ||
-								getAttribute( 'fontWeight', 'desktop', state ) ||
-								getAttribute( 'textTransform', 'desktop', state ) ||
-								getAttribute( 'letterSpacing', 'desktop', state ) ||
-								getAttribute( 'lineHeight', 'desktop', state ) ||
-								getAttribute( 'lineHeight', 'tablet', state ) ||
-								getAttribute( 'lineHeight', 'mobile', state ) )
-						}
-					>
-						<FontFamilyControl
-							label={ __( 'Font Family', i18n ) }
-							onChange={ updateAttributeHandler( 'fontFamily' ) }
-							value={ getAttribute( 'fontFamily' ) }
-						/>
-						<AdvancedSelectControl
-							label={ __( 'Weight', i18n ) }
-							options={ [
-								{ label: '100', value: '100' },
-								{ label: '200', value: '200' },
-								{ label: '300', value: '300' },
-								{ label: '400', value: '400' },
-								{ label: '500', value: '500' },
-								{ label: '600', value: '600' },
-								{ label: '700', value: '700' },
-								{ label: '800', value: '800' },
-								{ label: '900', value: '900' },
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Normal', i18n ), value: 'normal' },
-								{ label: __( 'Bold', i18n ), value: 'bold' },
-							] }
-							attribute="fontWeight"
-						/>
-						<AdvancedSelectControl
-							label={ __( 'Transform', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Uppercase', i18n ), value: 'uppercase' },
-								{ label: __( 'Lowercase', i18n ), value: 'lowercase' },
-								{ label: __( 'Capitalize', i18n ), value: 'capitalize' },
-								{ label: __( 'None', i18n ), value: 'none' },
-							] }
-							attribute="textTransform"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Line-Height', i18n ) }
-							attribute="lineHeight"
-							units={ [ 'px', 'em' ] }
-							min={ [ 1, 0.1 ] }
-							max={ [ 100, 10 ] }
-							step={ [ 1, 0.1 ] }
-							placeholder={ [ 30, 1.5 ] }
-							allowReset={ true }
-							initialPosition={ [ 37, 1.8 ] }
-							responsive="all"
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Letter Spacing', i18n ) }
-							attribute="letterSpacing"
-							min={ -5 }
-							max={ 10 }
-							step={ 0.1 }
-							allowReset={ true }
-							placeholder="0"
-						/>
-					</ButtonIconPopoverControl>
-
-					<AdvancedRangeControl
-						label={ __( 'Size', i18n ) }
-						allowReset={ true }
-						attribute="fontSize"
-						units={ [ 'px', 'em' ] }
-						min={ [ 0, 0 ] }
-						max={ [ 150, 7 ] }
-						step={ [ 1, 0.05 ] }
-						placeholder={ props.sizePlaceholder }
-						responsive="all"
-					/>
-
-					{ hasColor && (
-						<Fragment>
-							{ hasGradient && (
-								<AdvancedToolbarControl
-									controls={ [
-										{
-											value: '',
-											title: __( 'Single', i18n ),
-										},
-										{
-											value: 'gradient',
-											title: __( 'Gradient', i18n ),
-										},
-									] }
-									isSmall={ true }
-									fullwidth={ false }
-									attribute="textColorType"
-									onReset={ () => {
-										updateAttributes( {
-											[ getAttributeName( 'textColor1' ) ]: '',
-											[ getAttributeName( 'textColor2' ) ]: '',
-										} )
-									} }
-								/>
-							) }
-							<ColorPaletteControl
-								label={ getAttribute( 'textColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
-									: __( 'Text Color', i18n ) }
-								attribute="textColor1"
-								hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
-							/>
-							{ getAttribute( 'textColorType' ) === 'gradient' && hasGradient && (
-								<Fragment>
-									<ColorPaletteControl
-										label={ sprintf( __( 'Text Color #%s', i18n ), 2 ) }
-										attribute="textColor2"
-									/>
-
-									<AdvancedRangeControl
-										label={ __( 'Gradient Direction (degrees)', i18n ) }
-										attribute="textGradientDirection"
-										min={ 0 }
-										max={ 360 }
-										step={ 10 }
-										allowReset={ true }
-									/>
-								</Fragment>
-							) }
-						</Fragment>
-					) }
-				</Fragment>
-
+				<Controls
+					hasAlign={ hasAlign }
+					hasColor={ hasColor }
+					hasTextTag={ hasTextTag }
+					hasTextContent={ hasTextContent }
+					hasRemoveMargins={ hasRemoveMargins }
+					attrNameTemplate={ attrNameTemplate }
+					isMultiline={ isMultiline }
+					hasGradient={ hasGradient }
+				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)
 }
 
 Edit.defaultProps = {
+	hasAlign: false,
 	hasColor: true,
 	hasTextTag: true,
 	hasTextContent: true,
@@ -283,5 +344,8 @@ Edit.defaultProps = {
 	initialOpen: true,
 	hasGradient: true,
 	hasRemoveMargins: false,
+	label: __( 'Typography', i18n ),
 	sizePlaceholder: '32',
 }
+
+Edit.Controls = Controls

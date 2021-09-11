@@ -18,6 +18,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockHoverClass,
@@ -74,6 +75,7 @@ const Edit = props => {
 			/>
 
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
@@ -90,6 +92,7 @@ const Edit = props => {
 			>
 				<Button
 					buttonProps={ {
+						tagName: props.attributes.linkTag,
 						id: props.attributes.anchor || undefined,
 						...customAttributes,
 					} }

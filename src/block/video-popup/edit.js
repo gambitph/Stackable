@@ -27,6 +27,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -115,6 +116,7 @@ const Edit = props => {
 
 			</InspectorStyleControls>
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-video-popup" />
@@ -125,14 +127,12 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-video-popup" />
 
 			<BlockDiv className={ blockClassNames }>
-				<Fragment>
-					<div className={ contentClassNames }>
-						<InnerBlocks
-							template={ TEMPLATE }
-							templateLock="all"
-						/>
-					</div>
-				</Fragment>
+				<div className={ contentClassNames }>
+					<InnerBlocks
+						template={ TEMPLATE }
+						templateLock="all"
+					/>
+				</div>
 			</BlockDiv>
 			<MarginBottom />
 		</Fragment>

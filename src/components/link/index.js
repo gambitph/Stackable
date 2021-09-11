@@ -5,6 +5,7 @@ const Link = props => {
 	const {
 		children,
 		className,
+		tagName,
 		...propsToPass
 	} = props
 	const classNames = classnames( [
@@ -12,19 +13,22 @@ const Link = props => {
 		className,
 	] )
 
+	const TagName = tagName || 'a'
+
 	return (
-		<a
+		<TagName
 			className={ classNames }
 			href="#0" // Disallow links in the editor
 			{ ...propsToPass }
 		>
 			{ children }
-		</a>
+		</TagName>
 	)
 }
 
 Link.defaultProps = {
 	className: '',
+	tagName: 'a',
 }
 
 Link.Content = props => {
@@ -33,7 +37,8 @@ Link.Content = props => {
 		props.className,
 	] )
 
-	const propsToPass = omit( props, [ 'target', 'rel' ] )
+	const propsToPass = omit( props, [ 'target', 'rel', 'tagName' ] )
+	const TagName = props.tagName || 'a'
 
 	if ( props.target ) {
 		propsToPass.target = props.target
@@ -53,7 +58,7 @@ Link.Content = props => {
 	}
 
 	return (
-		<a // eslint-disable-line jsx-a11y/anchor-has-content
+		<TagName // eslint-disable-line jsx-a11y/anchor-has-content
 			{ ...propsToPass }
 			className={ className }
 		/>
@@ -65,6 +70,7 @@ Link.Content.defaultProps = {
 	target: '',
 	rel: '',
 	href: '',
+	tagName: 'a',
 }
 
 export default Link

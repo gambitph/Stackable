@@ -19,97 +19,91 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
-	getRowClasses,
 	MarginBottom,
+	Transform,
+	ContainerDiv,
+	BlockLink,
 } from '~stackable/block-components'
+import {
+	useBlockContext,
+	useBlockHoverClass,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useBlockHoverClass } from '~stackable/hooks'
+import { useCallback } from '@wordpress/element'
+import { InnerBlocks } from '@wordpress/block-editor'
 
-const ALLOWED_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
-	[ 'stackable/column', { templateLock: true, hasContainer: true }, [
-		[ 'stackable/heading', {
-			text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+	[ 'stackable/heading', {
+		text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+	} ],
+	[ 'stackable/price', {} ],
+	[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
+	[ 'stackable/button-group', {}, [
+		[ 'stackable/button', {
+			text: 'Button',
 		} ],
-		[ 'stackable/price', {} ],
-		[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
-		[ 'stackable/button-group', {}, [
-			[ 'stackable/button', {
-				text: 'Button',
-			} ],
-		] ],
-	] ],
-	[ 'stackable/column', { templateLock: true, hasContainer: true }, [
-		[ 'stackable/heading', {
-			text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-		} ],
-		[ 'stackable/price', {} ],
-		[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
-		[ 'stackable/button-group', {}, [
-			[ 'stackable/button', {
-				text: 'Button',
-			} ],
-		] ],
 	] ],
 ]
-
-const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
 		className,
 	} = props
 
-	const rowClass = getRowClasses( props.attributes )
+	const { hasInnerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
-	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-pricing-box',
-		rowClass,
 		blockHoverClass,
-		columnTooltipClass,
 	] )
 
 	const contentClassNames = classnames( [
+		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-content',
+		`stk-${ props.attributes.uniqueId }-container`,
 	] )
+
+	const renderAppender = useCallback(
+		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
+		[ hasInnerBlocks ]
+	)
 
 	return (
 		<>
 
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
-			<Alignment.InspectorControls hasRowAlignment={ true } />
+			<Alignment.InspectorControls hasBlockAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div className={ contentClassNames }>
+				<ContainerDiv className={ contentClassNames }>
 					<ColumnInnerBlocks
-						providerValue={ columnProviderValue }
 						template={ TEMPLATE }
-						// templateLock="insert"
-						allowedBlocks={ ALLOWED_BLOCKS }
-						orientation="horizontal"
+						templateLock={ false }
+						renderAppender={ renderAppender }
 					/>
-				</div>
+				</ContainerDiv>
 			</BlockDiv>
 			<MarginBottom />
 		</>
