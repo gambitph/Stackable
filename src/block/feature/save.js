@@ -15,6 +15,8 @@ import {
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
+	Separator,
+	getSeparatorClasses,
 } from '~stackable/block-components'
 
 /**
@@ -29,6 +31,7 @@ export const Save = props => {
 	} = props
 
 	const rowClass = getRowClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
@@ -36,6 +39,7 @@ export const Save = props => {
 		props.className,
 		'stk-block-feature',
 		responsiveClass,
+		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -52,9 +56,11 @@ export const Save = props => {
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<div className={ contentClassNames }>
-				<InnerBlocks.Content />
-			</div>
+			<Separator.Content attributes={ attributes }>
+				<div className={ contentClassNames }>
+					<InnerBlocks.Content />
+				</div>
+			</Separator.Content>
 		</BlockDiv.Content>
 	)
 }

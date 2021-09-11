@@ -26,6 +26,7 @@ import {
 	ConditionalDisplay,
 	MarginBottom,
 	BlockLink,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -55,6 +56,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<BlockLink.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 
 			<InspectorAdvancedControls>
 				<PanelAdvancedSettings

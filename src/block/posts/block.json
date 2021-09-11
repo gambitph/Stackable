@@ -1,0 +1,25 @@
+{
+	"name": "stackable/posts",
+	"title": "Posts",
+	"description": "Your latest blog posts. Use this to showcase a few of your posts in your landing pages.",
+	"category": "layout",
+	"keywords": [
+		"Blog Posts",
+		"Lastest Posts",
+		"Query Loop"
+	],
+	"providesContext": {
+		"type": "type",
+		"orderBy": "orderBy",
+		"order": "order",
+		"taxonomyType": "taxonomyType",
+		"taxonomy": "taxonomy",
+		"taxonomyFilterType": "taxonomyFilterType",
+		"postOffset": "postOffset",
+		"postExclude": "postExclude",
+		"postInclude": "postInclude",
+		"numberOfItems": "numberOfItems",
+		"stkQueryId": "stkQueryId"
+	},
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

@@ -31,6 +31,7 @@ export const Style = props => {
 				options={ {
 					attrNameTemplate: 'container%s',
 					selector: borderSelector,
+					hoverSelector: `${ borderSelector }:hover`,
 				} }
 			/>
 			<SizeStyle
@@ -44,6 +45,10 @@ export const Style = props => {
 			/>
 		</Fragment>
 	)
+}
+
+Style.defaultProps = {
+	options: {},
 }
 
 Style.Content = props => {
@@ -71,6 +76,7 @@ Style.Content = props => {
 				options={ {
 					attrNameTemplate: 'container%s',
 					selector: borderSelector,
+					hoverSelector: `${ borderSelector }:hover`,
 				} }
 			/>
 			<SizeStyle.Content
@@ -84,4 +90,8 @@ Style.Content = props => {
 			/>
 		</Fragment>
 	)
+}
+
+Style.Content.defaultProps = {
+	options: {},
 }

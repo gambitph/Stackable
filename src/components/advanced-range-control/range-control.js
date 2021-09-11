@@ -48,18 +48,21 @@ const StackableRangeControl = memo( props => {
 	// We have an internal state for the value so that the user can freely type
 	// any number in the number field without any validation and then we can
 	// just set the proper value on the onChange prop.
-	const [ value, setValue ] = useState( props.value === '' || isNaN( props.value ) ? '' : props.value )
+	const [ value, setValue ] = useState( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ? '' : props.value )
 
 	// Update the internal value state if the prop changes.
 	useEffect( () => {
-		setValue( props.value === '' || isNaN( props.value ) ? '' : props.value )
+		setValue( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ? '' : props.value )
 	}, [ props.value ] )
 
 	// When the value is changed, set the internal value to it, but provide only
 	// a valid number to the onChange event.
 	const handleOnChange = useCallback( value => {
 		setValue( value )
-		if ( ! isNaN( value ) ) {
+		if ( typeof value === 'string' && value.toLowerCase() === 'auto' ) {
+			props.onChange( value )
+			return
+		} else if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
 				props.onChange( clamp( parsedValue, props.min, props.max ) )
@@ -77,7 +80,10 @@ const StackableRangeControl = memo( props => {
 	// When the number input is blurred, make sure that the value inside the
 	// field looks correct.  The number is within min/max and is a number.
 	const handleOnBlur = useCallback( () => {
-		if ( ! isNaN( value ) ) {
+		if ( typeof value === 'string' && value.toLowerCase() === 'auto' ) {
+			setValue( value )
+			return
+		} else if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
 				setValue( clamp( parsedValue, props.min, props.max ) )
@@ -152,6 +158,7 @@ const StackableRangeControl = memo( props => {
 				step={ props.step }
 				value={ value }
 				placeholder={ placeholderValue }
+				type="text"
 			/>
 		) }
 		{ allowReset &&

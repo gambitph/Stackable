@@ -33,13 +33,16 @@ export const Typography = props => {
 		focusOnSelected = false,
 		children,
 		ref,
-		...rest
+		editable,
+		defaultValue,
+		...propsToPass
 	} = props
 
 	const [ debouncedText, setDebouncedText ] = useState( '' )
 	const richTextRef = useRef( null )
 	const { clientId } = useBlockEditContext()
 	const selectedClientId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
+	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
 
 	useEffect( () => {
 		if ( focusOnSelected ) {
@@ -54,6 +57,7 @@ export const Typography = props => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
 	const value = _value === null ? getAttribute( 'text' ) : _value
+	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag || 'p'
 
 	useEffect( () => {
 		if ( value !== debouncedText ) {
@@ -69,16 +73,18 @@ export const Typography = props => {
 		return () => clearTimeout( timeout )
 	}, [ debouncedText ] )
 
+	if ( ! editable ) {
+		return <TagName className={ className }>{ debouncedText || defaultValue }</TagName>
+	}
+
 	return (
 		<RichText
 			className={ className }
-			tagName={ ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag }
-			value={ debouncedText }
+			tagName={ TagName }
+			value={ debouncedText || defaultValue }
 			onChange={ setDebouncedText }
-			ref={ useMergeRefs(
-				[ ref, richTextRef ]
-			) }
-			{ ...rest }
+			ref={ mergedRef }
+			{ ...propsToPass }
 		>
 			{ children }
 		</RichText>
@@ -91,6 +97,7 @@ Typography.defaultProps = {
 	defaultTag: 'p',
 	value: null,
 	onChange: null,
+	editable: true,
 }
 
 Typography.Content = props => {

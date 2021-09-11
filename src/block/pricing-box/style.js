@@ -9,8 +9,10 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
-	Column,
+	ContainerDiv,
 	EffectsAnimations,
+	MarginBottom,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -38,9 +40,11 @@ const BlockStyles = props => {
 		<>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
-			<Column.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
+			<ContainerDiv.Style { ...propsToPass } />
+			<MarginBottom.Style { ...propsToPass } />
 		</>
 	)
 }
@@ -60,9 +64,11 @@ BlockStyles.Content = props => {
 		<>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			<Column.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<ContainerDiv.Style.Content { ...propsToPass } />
+			<MarginBottom.Style.Content { ...propsToPass } />
 		</>
 	)
 

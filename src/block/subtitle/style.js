@@ -8,6 +8,7 @@ import {
 	Alignment,
 	MarginBottom,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import {
 	getUniqueBlockClass,
@@ -43,6 +44,7 @@ export const SubtitleStyles = props => {
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<Typography.Style { ...propsToPass } options={ typographyOptions } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</>
@@ -67,6 +69,7 @@ SubtitleStyles.Content = props => {
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />

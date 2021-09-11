@@ -19,18 +19,19 @@ export const BlockDiv = props => {
 		applyCustomAttributes,
 		applyAdvancedAttributes,
 		renderHtmlTag,
+		enableVariationPicker,
 		...propsToPass
 	} = props
 
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
-	useUniqueId( ! props.enableVariationPicker )
+	useUniqueId( ! enableVariationPicker )
 
 	// Variation picker will show up if there's no uniqueId yet (which will be
-	// the case when props.enableVariationPicker = true)
+	// the case when enableVariationPicker = true)
 	const variationPicker = useVariationPicker( clientId, attributes.uniqueId )
-	if ( variationPicker && props.enableVariationPicker ) {
+	if ( variationPicker && enableVariationPicker ) {
 		return variationPicker
 	}
 

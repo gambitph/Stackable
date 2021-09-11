@@ -5,6 +5,7 @@ import {
 	Advanced,
 	BlockDiv,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
@@ -49,6 +50,7 @@ export const SpacerStyles = props => {
 		<>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<StyleComponent
 				styles={ spacerStyles }
@@ -78,6 +80,7 @@ SpacerStyles.Content = props => {
 		<>
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
 				styles={ spacerStyles }

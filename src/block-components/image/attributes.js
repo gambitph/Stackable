@@ -5,6 +5,10 @@ export const addAttributes = ( attrObject, options = {} ) => {
 
 	attrObject.add( {
 		attributes: {
+			imageShow: {
+				type: 'boolean',
+				default: true,
+			},
 			imageUrl: {
 				type: 'string',
 				default: '',

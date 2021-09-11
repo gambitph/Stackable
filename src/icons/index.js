@@ -26,8 +26,10 @@ import SVGIconBoxIcon from './images/icon-box-icon.svg'
 import SVGIconListIcon from './images/icon-list-icon.svg'
 import SVGIconLabelIcon from './images/icon-label-icon.svg'
 import SVGImageBoxIcon from './images/image-box-icon.svg'
+import SVGLoadMoreIcon from './images/load-more.svg'
 import SVGNotificationIcon from './images/notification-icon.svg'
 import SVGNumberBoxIcon from './images/number-box-icon.svg'
+import SVGPaginationIcon from './images/pagination.svg'
 import SVGPricingBoxIcon from './images/pricing-box-icon.svg'
 import SVGSeparatorIcon from './images/separator-icon.svg'
 import SVGSocialButtonsIcon from './images/social-buttons.svg'
@@ -192,12 +194,20 @@ export const ImageBoxIcon = () => {
 	return colorizeIcon( <SVGImageBoxIcon width="20" height="20" /> )
 }
 
+export const LoadMoreIcon = () => {
+	return colorizeIcon( <SVGLoadMoreIcon width="16" height="16" /> )
+}
+
 export const NotificationIcon = () => {
 	return colorizeIcon( <SVGNotificationIcon width="20" height="20" /> )
 }
 
 export const NumberBoxIcon = () => {
 	return colorizeIcon( <SVGNumberBoxIcon width="20" height="20" /> )
+}
+
+export const PaginationIcon = () => {
+	return colorizeIcon( <SVGPaginationIcon width="16" height="16" /> )
 }
 
 export const PricingBoxIcon = () => {

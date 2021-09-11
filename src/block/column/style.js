@@ -12,6 +12,7 @@ import {
 	Column,
 	ContainerDiv,
 	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -92,6 +93,7 @@ const BlockStyles = props => {
 			<Column.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
 			<Advanced.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<StyleComponent
 				styles={ styles }
@@ -123,6 +125,7 @@ BlockStyles.Content = props => {
 			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
 				styles={ styles }
 				versionAdded="3.0.0"

@@ -36,6 +36,7 @@ import {
 	ConditionalDisplay,
 	BlockLink,
 	ContainerDiv,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -47,11 +48,15 @@ import {
 	Fragment, useCallback,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { useSelect } from '@wordpress/data'
+import { applyFilters } from '@wordpress/hooks'
 
 const TEMPLATE = []
 
 const Edit = props => {
-	const { hasInnerBlocks, isOnlyBlock } = useBlockContext()
+	const {
+		hasInnerBlocks, isOnlyBlock,
+	} = useBlockContext()
 
 	const {
 		className,
@@ -62,6 +67,10 @@ const Edit = props => {
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
+
+	const ALLOWED_INNER_BLOCKS = useSelect( select => {
+		return applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, select )
+	} )
 
 	const blockClassNames = classnames( [
 		className,
@@ -92,6 +101,7 @@ const Edit = props => {
 			<Alignment.InspectorControls hasColumnAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
@@ -128,6 +138,7 @@ const Edit = props => {
 				<BlockDiv className={ blockClassNames }>
 					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks
+							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							template={ TEMPLATE }
 							templateLock={ props.attributes.templateLock || false }
 							orientation={ blockOrientation }
