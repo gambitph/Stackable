@@ -44,10 +44,23 @@ export const Typography = props => {
 	const selectedClientId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
 	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
 
+	// Focus on the richtext when clicking on the block.
 	useEffect( () => {
 		if ( focusOnSelected ) {
 			if ( clientId === selectedClientId ) {
 				richTextRef.current.focus()
+
+				// Move the cursor to the end.
+				const range = document.createRange()
+				if ( range ) {
+					range.selectNodeContents( richTextRef.current )
+					range.collapse( false )
+					const sel = window?.getSelection() // eslint-disable-line @wordpress/no-global-get-selection
+					if ( sel ) {
+						sel.removeAllRanges()
+						sel.addRange( range )
+					}
+				}
 			}
 		}
 	}, [ selectedClientId ] )
