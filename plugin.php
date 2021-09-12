@@ -149,6 +149,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
  * Block Initializer.
  */
 require_once( plugin_dir_path( __FILE__ ) . 'src/disabled-blocks.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/editor-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );

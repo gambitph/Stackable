@@ -135,6 +135,33 @@ class BlockToggler extends Component {
 	}
 }
 
+const EditorSettings = () => {
+	const [ disableDesignLibrary, setDisableDesignLibrary ] = useState( false )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setDisableDesignLibrary( !! response.stackable_disable_design_library )
+			} )
+		} )
+	}, [] )
+
+	return <>
+		<AdminToggleSetting
+			label={ __( 'Design Library', i18n ) }
+			value={ disableDesignLibrary }
+			onChange={ value => {
+				const model = new models.Settings( { stackable_disable_design_library: value } ) // eslint-disable-line camelcase
+				model.save()
+				setDisableDesignLibrary( value )
+			} }
+			disabled={ __( 'Hide Design Library Button', i18n ) }
+			enabled={ __( 'Show Design Library Button', i18n ) }
+		/>
+	</>
+}
+
 const DynamicBreakpointsSettings = () => {
 	const [ tabletBreakpoint, setTabletBreakpoint ] = useState( '' )
 	const [ mobileBreakpoint, setMobileBreakpoint ] = useState( '' )
@@ -382,6 +409,11 @@ domReady( () => {
 			showProNoticesOption={ showProNoticesOption }
 		/>,
 		document.querySelector( '.s-other-options-wrapper' )
+	)
+
+	render(
+		<EditorSettings />,
+		document.querySelector( '.s-editor-settings' )
 	)
 
 	render(
