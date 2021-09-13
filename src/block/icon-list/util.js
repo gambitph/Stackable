@@ -8,9 +8,6 @@ import { kebabCase } from 'lodash'
  * WordPress dependencies
  */
 import {
-	Fragment,
-} from '@wordpress/element'
-import {
 	BlockControls,
 	RichTextShortcut,
 } from '@wordpress/block-editor'
@@ -37,6 +34,7 @@ import {
 	formatIndentRTL,
 	formatOutdent,
 	formatOutdentRTL,
+	Icon,
 } from '@wordpress/icons'
 import {
 	__, _x, isRTL,
@@ -125,9 +123,9 @@ export const createIconListControls = ( options = {} ) => {
 	return ( {
 		value, onChange, onFocus,
 	} ) => (
-		<Fragment>
+		<>
 			{ isSelected && (
-				<Fragment>
+				<>
 					<RichTextShortcut
 						type="primary"
 						character="["
@@ -160,12 +158,12 @@ export const createIconListControls = ( options = {} ) => {
 							onChange( outdentListItems( value ) )
 						} }
 					/>
-				</Fragment>
+				</>
 			) }
 
 			<BlockControls group="block">
 				<ToolbarButton
-					icon={ isRTL() ? formatListBulletsRTL : formatListBullets }
+					icon={ <Icon icon={ isRTL() ? formatListBulletsRTL : formatListBullets } size={ 24 } /> }
 					title={ __( 'Unordered' ) }
 					describedBy={ __( 'Convert to unordered list' ) }
 					isActive={ isActiveListType( value, 'ul', tagName ) }
@@ -179,9 +177,7 @@ export const createIconListControls = ( options = {} ) => {
 					} }
 				/>
 				<ToolbarButton
-					icon={
-						isRTL() ? formatListNumberedRTL : formatListNumbered
-					}
+					icon={ <Icon icon={ isRTL() ? formatListNumberedRTL : formatListNumbered } size={ 24 } /> }
 					title={ __( 'Ordered' ) }
 					describedBy={ __( 'Convert to ordered list' ) }
 					isActive={ isActiveListType( value, 'ol', tagName ) }
@@ -195,7 +191,7 @@ export const createIconListControls = ( options = {} ) => {
 					} }
 				/>
 				<ToolbarButton
-					icon={ isRTL() ? formatOutdentRTL : formatOutdent }
+					icon={ <Icon icon={ isRTL() ? formatOutdentRTL : formatOutdent } size={ 24 } /> }
 					title={ __( 'Outdent' ) }
 					describedBy={ __( 'Outdent list item' ) }
 					shortcut={ _x( 'Backspace', 'keyboard key' ) }
@@ -206,7 +202,7 @@ export const createIconListControls = ( options = {} ) => {
 					} }
 				/>
 				<ToolbarButton
-					icon={ isRTL() ? formatIndentRTL : formatIndent }
+					icon={ <Icon icon={ isRTL() ? formatIndentRTL : formatIndent } size={ 24 } /> }
 					title={ __( 'Indent' ) }
 					describedBy={ __( 'Indent list item' ) }
 					shortcut={ _x( 'Space', 'keyboard key' ) }
@@ -217,6 +213,6 @@ export const createIconListControls = ( options = {} ) => {
 					} }
 				/>
 			</BlockControls>
-		</Fragment>
+		</>
 	)
 }
