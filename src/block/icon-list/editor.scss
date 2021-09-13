@@ -3,3 +3,20 @@
 	margin-top: 0;
 	margin-bottom: 0;
 }
+
+.stk-block-icon-list {
+	li {
+		position: relative;
+	}
+
+	li::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 1em;
+		width: var(--stk-icon-height, 1em);
+		cursor: copy;
+		margin-left: calc(var(--stk-icon-height, 1em) * -1);
+	}
+}
