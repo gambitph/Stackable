@@ -15,8 +15,12 @@ import { getAttributeName, getAttrName } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { RichText } from '@wordpress/block-editor'
-import { useEffect, useState } from '@wordpress/element'
+import { RichText, useBlockEditContext } from '@wordpress/block-editor'
+import {
+	useEffect, useState, useRef,
+} from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
+import { useMergeRefs } from '@wordpress/compose'
 
 export const Typography = props => {
 	const {
@@ -26,14 +30,40 @@ export const Typography = props => {
 		defaultTag,
 		value: _value,
 		onChange: _onChange,
+		focusOnSelected = false,
 		children,
 		ref,
 		editable,
 		defaultValue,
-		...rest
+		...propsToPass
 	} = props
 
 	const [ debouncedText, setDebouncedText ] = useState( '' )
+	const richTextRef = useRef( null )
+	const { clientId } = useBlockEditContext()
+	const selectedClientId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
+	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
+
+	// Focus on the richtext when clicking on the block.
+	useEffect( () => {
+		if ( focusOnSelected ) {
+			if ( clientId === selectedClientId ) {
+				richTextRef.current.focus()
+
+				// Move the cursor to the end.
+				const range = document.createRange()
+				if ( range ) {
+					range.selectNodeContents( richTextRef.current )
+					range.collapse( false )
+					const sel = window?.getSelection() // eslint-disable-line @wordpress/no-global-get-selection
+					if ( sel ) {
+						sel.removeAllRanges()
+						sel.addRange( range )
+					}
+				}
+			}
+		}
+	}, [ selectedClientId ] )
 
 	const {
 		getAttribute, updateAttribute,
@@ -67,8 +97,8 @@ export const Typography = props => {
 			tagName={ TagName }
 			value={ debouncedText || defaultValue }
 			onChange={ setDebouncedText }
-			ref={ ref }
-			{ ...rest }
+			ref={ mergedRef }
+			{ ...propsToPass }
 		>
 			{ children }
 		</RichText>

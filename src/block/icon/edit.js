@@ -25,7 +25,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	MarginBottom,
-	BlockLink,
+	Link,
 	Transform,
 } from '~stackable/block-components'
 
@@ -54,7 +54,6 @@ const Edit = props => {
 
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
-			<BlockLink.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 
@@ -72,6 +71,7 @@ const Edit = props => {
 			</InspectorAdvancedControls>
 
 			<EffectsAnimations.InspectorControls />
+			<Link.InspectorControls />
 			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
@@ -81,7 +81,9 @@ const Edit = props => {
 			<IconStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-icon" />
 			<BlockDiv className={ blockClassNames }>
-				<Icon />
+				<Link linkTrigger=".stk--inner-svg">
+					<Icon />
+				</Link>
 			</BlockDiv>
 			<MarginBottom />
 		</Fragment>

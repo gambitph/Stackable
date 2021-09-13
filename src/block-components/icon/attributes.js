@@ -24,7 +24,7 @@ const iconAttributes = {
 				type: 'string',
 				default: '',
 			},
-			[ `iconOpacity{ curr }` ]: {
+			[ `iconOpacity${ curr }` ]: {
 				stkHover: true,
 				type: 'number',
 				default: '',
