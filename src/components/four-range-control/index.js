@@ -35,7 +35,7 @@ import {
 } from '~stackable/hooks'
 
 const FourRangeControl = props => {
-	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.onChangeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
 	let value = _value || {

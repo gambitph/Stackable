@@ -38,7 +38,7 @@ const SeparatorControl = props => {
 		responsive,
 		hover,
 		valueCallback,
-		changeCallback,
+		onChangeCallback,
 		onChange: _onChange,
 		value: _value,
 	} = props
@@ -53,7 +53,7 @@ const SeparatorControl = props => {
 			)
 	, [ ...excludeDesigns ] )
 
-	const [ value, onChange ] = useControlHandlers( attribute, responsive, hover, valueCallback, changeCallback )
+	const [ value, onChange ] = useControlHandlers( attribute, responsive, hover, valueCallback, onChangeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
 	return (
