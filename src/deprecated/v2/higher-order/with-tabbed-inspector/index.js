@@ -16,6 +16,9 @@ import { __ } from '@wordpress/i18n'
 
 // Add the layout tab.
 addFilter( 'stackable.inspector.tabs', 'stackable/v2', tabs => {
+	if ( tabs.find( ( { value } ) => value === 'layout' ) ) {
+		return tabs
+	}
 	return [
 		{
 			value: 'layout',
