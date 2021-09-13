@@ -95,8 +95,8 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 		}
 
 		$blocks_metadata = stackable_get_metadata_by_folders( array_merge(
-			$stk_block_folders,
-			$stk_wrapper_block_folders
+			$stk_wrapper_block_folders,
+			$stk_block_folders
 		) );
 
 		foreach ( $blocks_metadata as $metadata ) {
