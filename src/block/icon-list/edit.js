@@ -168,6 +168,8 @@ const Edit = props => {
 		setAttributes,
 		className,
 		isSelected,
+		onRemove,
+		mergeBlocks,
 	} = props
 
 	const { ordered } = attributes
@@ -327,6 +329,8 @@ const Edit = props => {
 					<Typography
 						tagName={ tagName }
 						multiline="li"
+						onRemove={ onRemove }
+						onMerge={ mergeBlocks }
 					>
 						{ controls }
 					</Typography>
