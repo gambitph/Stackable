@@ -1,0 +1,329 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-button": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "opacity": undefined,
+    "paddingBottom": undefined,
+    "paddingLeft": undefined,
+    "paddingRight": undefined,
+    "paddingTop": undefined,
+  },
+  ".ugb-button .ugb-button--inner": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-button .ugb-button--inner, .ugb-button svg:not(.ugb-custom-icon)": Object {
+    "color": undefined,
+  },
+  ".ugb-button-container": Object {
+    "marginBottom": undefined,
+    "textAlign": undefined,
+  },
+  ".ugb-button.ugb-button--has-icon.ugb-button--has-icon svg": Object {
+    "height": undefined,
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "width": undefined,
+  },
+  ".ugb-button:before": Object {
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "content": undefined,
+  },
+  ".ugb-button:hover": Object {
+    "backgroundColor": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-button:hover .ugb-button--inner, .ugb-button:hover svg:not(.ugb-custom-icon)": Object {
+    "color": undefined,
+  },
+  ".ugb-card__description": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-card__image": Object {
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+    "height": undefined,
+  },
+  ".ugb-card__item": Object {
+    "backgroundAttachment": undefined,
+    "backgroundBlendMode": undefined,
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+    "borderRadius": undefined,
+  },
+  ".ugb-card__item1 .ugb-card__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".ugb-card__item2 .ugb-card__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".ugb-card__item3 .ugb-card__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".ugb-card__item:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-card__subtitle": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-card__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container": Object {
+    "textAlign": undefined,
+  },
+  "desktopTablet": Object {
+    ".ugb-card__content": Object {
+      "paddingBottom": undefined,
+      "paddingLeft": undefined,
+      "paddingRight": undefined,
+      "paddingTop": undefined,
+    },
+  },
+  "mobile": Object {
+    ".ugb-button .ugb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-button-container": Object {
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-card__content": Object {
+      "paddingBottom": undefined,
+      "paddingLeft": undefined,
+      "paddingRight": undefined,
+      "paddingTop": undefined,
+    },
+    ".ugb-card__description": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-card__image": Object {
+      "height": undefined,
+    },
+    ".ugb-card__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".ugb-card__item:before": Object {
+      "opacity": undefined,
+    },
+    ".ugb-card__subtitle": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-card__title": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container": Object {
+      "textAlign": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-button .ugb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-card__description": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-card__image": Object {},
+    ".ugb-card__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".ugb-card__item:before": Object {
+      "opacity": undefined,
+    },
+    ".ugb-card__subtitle": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-card__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container": Object {
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".ugb-button-container": Object {
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-card__content": Object {
+      "paddingBottom": undefined,
+      "paddingLeft": undefined,
+      "paddingRight": undefined,
+      "paddingTop": undefined,
+    },
+    ".ugb-card__description": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-card__image": Object {
+      "height": undefined,
+    },
+    ".ugb-card__subtitle": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-card__title": Object {
+      "marginBottom": undefined,
+    },
+  },
+}
+`;
+
+exports[`Card (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-card__image": Object {
+    "backgroundImage": "url(imageUrl)",
+    "backgroundPosition": "imageBackgroundPosition !important",
+    "backgroundRepeat": "imageBackgroundRepeat !important",
+    "backgroundSize": "imageBackgroundSize !important",
+  },
+  ".ugb-card__item": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "columnBackgroundImageBlendMode",
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": "url(columnBackgroundMediaUrl)",
+    "backgroundPosition": "columnBackgroundPosition",
+    "backgroundRepeat": "columnBackgroundRepeat",
+    "backgroundSize": "columnBackgroundSize",
+    "borderBottomWidth": "123px !important",
+    "borderColor": "#123456 !important",
+    "borderLeftWidth": "123px !important",
+    "borderRadius": "123px !important",
+    "borderRightWidth": "123px !important",
+    "borderStyle": "columnBorderType !important",
+    "borderTopWidth": "123px !important",
+  },
+  ".ugb-card__item1 .ugb-card__image": Object {
+    "backgroundImage": "url(image1Url)",
+  },
+  ".ugb-card__item2 .ugb-card__image": Object {
+    "backgroundImage": "url(image2Url)",
+  },
+  ".ugb-card__item3 .ugb-card__image": Object {
+    "backgroundImage": "url(image3Url)",
+  },
+  ".ugb-card__item:before": Object {
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": 12.3,
+  },
+  ".ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container": Object {
+    "textAlign": undefined,
+  },
+  "desktopTablet": Object {
+    ".ugb-card__content": Object {
+      "paddingBottom": undefined,
+      "paddingLeft": undefined,
+      "paddingRight": undefined,
+      "paddingTop": undefined,
+    },
+  },
+  "mobile": Object {
+    ".ugb-card__content": Object {
+      "paddingBottom": undefined,
+      "paddingLeft": undefined,
+      "paddingRight": undefined,
+      "paddingTop": undefined,
+    },
+    ".ugb-card__image": Object {},
+    ".ugb-card__item": Object {
+      "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
+      "backgroundPosition": "columnMobileBackgroundPosition",
+      "backgroundRepeat": "columnMobileBackgroundRepeat",
+      "backgroundSize": "columnMobileBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
+    },
+    ".ugb-card__item:before": Object {
+      "opacity": 12.3,
+    },
+    ".ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container": Object {
+      "textAlign": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-card__image": Object {},
+    ".ugb-card__item": Object {
+      "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
+      "backgroundPosition": "columnTabletBackgroundPosition",
+      "backgroundRepeat": "columnTabletBackgroundRepeat",
+      "backgroundSize": "columnTabletBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
+    },
+    ".ugb-card__item:before": Object {
+      "opacity": 12.3,
+    },
+    ".ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container": Object {
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".ugb-card__content": Object {
+      "paddingBottom": undefined,
+      "paddingLeft": undefined,
+      "paddingRight": undefined,
+      "paddingTop": undefined,
+    },
+  },
+}
+`;
