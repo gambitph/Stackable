@@ -14,5 +14,5 @@ jobs:
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
         clean-script: "clean"
-        pattern: "./dist/**/*.{js,css}"
+        pattern: "./build/Stackable/**/*.{js,css}"
         exclude: "{**/*.map,**/node_modules/**}"
