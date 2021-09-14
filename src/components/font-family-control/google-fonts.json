@@ -582,16 +582,6 @@
     ]
   },
   {
-    "family": "Andada",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
     "family": "Andada Pro",
     "variants": [
       "regular",
@@ -9297,6 +9287,15 @@
     ]
   },
   {
+    "family": "Noto Sans Vai",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "vai"
+    ]
+  },
+  {
     "family": "Noto Serif",
     "variants": [
       "regular",
@@ -11523,20 +11522,6 @@
     "subsets": [
       "latin",
       "latin-ext"
-    ]
-  },
-  {
-    "family": "STIX Two Math",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "cyrillic",
-      "cyrillic-ext",
-      "greek",
-      "latin",
-      "latin-ext",
-      "vietnamese"
     ]
   },
   {
