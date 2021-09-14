@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header block Save render should match snapshot 1`] = `
+exports[`Header (v2) block Save render should match snapshot 1`] = `
 <div
   class="wp-block-ugb-header ugb-header ugb-header--v3 ugb-header--design-basic ugb-main-block"
 >
@@ -63,7 +63,7 @@ exports[`Header block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Header block Save render should match snapshot with attributes 1`] = `
+exports[`Header (v2) block Save render should match snapshot with attributes 1`] = `
 <div
   class="wp-block-ugb-header ugb-header ugb-header--v3 ugb-header--design-wave-2 ugb-header--invert ugb-main-block"
 >
@@ -91,7 +91,7 @@ exports[`Header block Save render should match snapshot with attributes 1`] = `
               <a
                 class="ugb-button2 ugb-button ugb-button--size-button2Size ugb-button--ghost-to-normal-effect ugb--hover-effect-button2HoverEffect ugb-button--design-button2Design ugb-button--has-icon ugb-button--icon-position-button2IconPosition"
                 href="button2Url"
-                rel="noopener noreferrer nofollow"
+                rel="noopener noreferrer nofollow sponsored ugc"
                 target="_blank"
                 title=""
               >

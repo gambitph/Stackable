@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Feature block Save render should match snapshot 1`] = `
+exports[`Feature (v2) block Save render should match snapshot 1`] = `
 <div
   class="wp-block-ugb-feature ugb-feature--v2 ugb-feature--design-plain ugb-main-block"
 >
@@ -55,7 +55,7 @@ exports[`Feature block Save render should match snapshot 1`] = `
         >
           <img
             alt=""
-            class="ugb-feature__image ugb-img"
+            class="ugb-feature__image ugb-img ugb-image--shape-stretch"
             title=""
           />
         </div>
@@ -65,7 +65,7 @@ exports[`Feature block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Feature block Save render should match snapshot with attributes 1`] = `
+exports[`Feature (v2) block Save render should match snapshot with attributes 1`] = `
 <div
   class="wp-block-ugb-feature ugb-feature--v2 ugb-feature--design-wave-2 ugb-feature--invert ugb-main-block"
 >

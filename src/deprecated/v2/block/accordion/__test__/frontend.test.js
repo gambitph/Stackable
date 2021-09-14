@@ -8,7 +8,9 @@ import { initAll } from '../frontend'
  * External dependencies
  */
 import { getSavedBlockHTML } from '~stackable/test/helpers'
-import { fireEvent, getByText } from '@testing-library/dom'
+import {
+	fireEvent, getByText,
+} from '@testing-library/dom'
 
 describe( 'Accordion in frontend', () => {
 	const attributes = {

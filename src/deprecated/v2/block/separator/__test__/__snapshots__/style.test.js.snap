@@ -1,31 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Separator block Rendered styles should match snapshot 1`] = `
+exports[`Separator (v2) block Rendered styles should match snapshot 1`] = `
 Object {
   ".ugb-separator": Object {
     "backgroundColor": undefined,
-    "marginBottom": "-1px",
-    "marginTop": "-1px",
+    "marginBottom": "-1px !important",
+    "marginTop": "-1px !important",
   },
   ".ugb-separator__bottom-pad": Object {
     "background": undefined,
-    "height": "0px",
+    "height": "0px !important",
   },
   ".ugb-separator__shadow, .ugb-separator__layer-1": Object {
     "fill": undefined,
     "transform": "scaleX(1)",
   },
-  ".ugb-separator__svg-wrapper": Object {
-    "height": "undefinedpx",
-  },
   ".ugb-separator__top-pad": Object {
     "background": undefined,
-    "height": "0px",
+    "height": "0px !important",
+  },
+  "desktopTablet": Object {
+    ".ugb-separator__svg-wrapper": Object {
+      "height": undefined,
+    },
   },
   "mobile": Object {
     ".ugb-separator": Object {
-      "marginBottom": "-1px",
-      "marginTop": "-1px",
+      "marginBottom": "-1px !important",
+      "marginTop": "-1px !important",
     },
     ".ugb-separator__bottom-pad": Object {
       "height": undefined,
@@ -39,72 +41,78 @@ Object {
   },
   "tablet": Object {
     ".ugb-separator": Object {
-      "marginBottom": "-1px",
-      "marginTop": "-1px",
+      "marginBottom": "-1px !important",
+      "marginTop": "-1px !important",
     },
     ".ugb-separator__bottom-pad": Object {
       "height": undefined,
     },
-    ".ugb-separator__svg-wrapper": Object {
+    ".ugb-separator__top-pad": Object {
       "height": undefined,
     },
-    ".ugb-separator__top-pad": Object {
+  },
+  "tabletOnly": Object {
+    ".ugb-separator__svg-wrapper": Object {
       "height": undefined,
     },
   },
 }
 `;
 
-exports[`Separator block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Separator (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
   ".ugb-separator": Object {
     "backgroundColor": "#123456",
-    "marginBottom": "-1px",
-    "marginTop": "-1px",
+    "marginBottom": "-1px !important",
+    "marginTop": "-1px !important",
   },
   ".ugb-separator__bottom-pad": Object {
     "background": "#123456",
-    "height": "0px",
+    "height": "0px !important",
   },
   ".ugb-separator__shadow, .ugb-separator__layer-1": Object {
     "fill": "#123456",
     "transform": "scaleX(-1)",
   },
-  ".ugb-separator__svg-wrapper": Object {
-    "height": "100px",
-  },
   ".ugb-separator__top-pad": Object {
     "background": "#123456",
-    "height": "0px",
+    "height": "0px !important",
+  },
+  "desktopTablet": Object {
+    ".ugb-separator__svg-wrapper": Object {
+      "height": "100px !important",
+    },
   },
   "mobile": Object {
     ".ugb-separator": Object {
-      "marginBottom": "122px",
-      "marginTop": "122px",
+      "marginBottom": "122px !important",
+      "marginTop": "122px !important",
     },
     ".ugb-separator__bottom-pad": Object {
-      "height": "123px",
+      "height": "123px !important",
     },
     ".ugb-separator__svg-wrapper": Object {
-      "height": "123px",
+      "height": "123px !important",
     },
     ".ugb-separator__top-pad": Object {
-      "height": "123px",
+      "height": "123px !important",
     },
   },
   "tablet": Object {
     ".ugb-separator": Object {
-      "marginBottom": "122px",
-      "marginTop": "122px",
+      "marginBottom": "122px !important",
+      "marginTop": "122px !important",
     },
     ".ugb-separator__bottom-pad": Object {
-      "height": "123px",
-    },
-    ".ugb-separator__svg-wrapper": Object {
-      "height": "123px",
+      "height": "123px !important",
     },
     ".ugb-separator__top-pad": Object {
-      "height": "123px",
+      "height": "123px !important",
+    },
+  },
+  "tabletOnly": Object {
+    ".ugb-separator__svg-wrapper": Object {
+      "height": "123px !important",
     },
   },
 }
