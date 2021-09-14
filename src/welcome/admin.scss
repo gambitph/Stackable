@@ -267,6 +267,7 @@ body.toplevel_page_stk-custom-fields {
 		border: 0;
 		margin-bottom: 30px;
 		transition: all 0.3s ease;
+		position: relative;
 		&.s-is-disabled:not(:hover) {
 			opacity: 0.6;
 		}
@@ -281,6 +282,14 @@ body.toplevel_page_stk-custom-fields {
 			h3 {
 				color: #f34957;
 			}
+		}
+	}
+	.s-absolute-spinner {
+		position: absolute;
+		bottom: 16px;
+		left: 35px;
+		.components-spinner {
+			margin: 0;
 		}
 	}
 	.s-button {

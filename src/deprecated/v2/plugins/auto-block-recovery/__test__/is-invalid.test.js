@@ -4,7 +4,7 @@ import {
 	registerBlockType,
 	unregisterBlockType,
 } from '@wordpress/blocks'
-import { createBlockWithFallback } from '@wordpress/blocks/build/api/parser'
+import { parseRawBlock } from '@wordpress/blocks/build/api/parser'
 
 describe( 'isInvalid', () => {
 	beforeEach( () => {
@@ -21,7 +21,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block = createBlockWithFallback( {
+		const block = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>test</style><p attr="value">changed</p></div></div>',
 			attrs: {},
@@ -30,7 +30,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block, [ 'style', 'svg' ] ) ).toBe( false )
 
-		const block2 = createBlockWithFallback( {
+		const block2 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>test</style><p attr="value2">test</p></div></div>',
 			attrs: {},
@@ -39,7 +39,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block2, [ 'style', 'svg' ] ) ).toBe( false )
 
-		const block3 = createBlockWithFallback( {
+		const block3 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<aside class="ugb-dummy"><div class="ugb-main-block"><style>test</style><p attr="value2">test</p></div></aside>',
 			attrs: {},
@@ -60,7 +60,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block = createBlockWithFallback( {
+		const block = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>test2</style><p attr="value">changed</p></div></div>',
 			attrs: {},
@@ -69,7 +69,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block, [ 'style', 'p' ] ) ).toBe( true )
 
-		const block2 = createBlockWithFallback( {
+		const block2 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>test</style><p attr="value">changed</p></div></div>',
 			attrs: {},
@@ -90,7 +90,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'core/dummy', blockSettings )
 
-		const block = createBlockWithFallback( {
+		const block = parseRawBlock( {
 			blockName: 'core/dummy',
 			innerHTML: '<style>test2</style>',
 			attrs: {},
@@ -111,7 +111,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block = createBlockWithFallback( {
+		const block = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>test2</style></div></div>',
 			attrs: {},
@@ -132,7 +132,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block = createBlockWithFallback( {
+		const block = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>test</style></div></div>',
 			attrs: {},
@@ -153,7 +153,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block = createBlockWithFallback( {
+		const block = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block">test<div class="ugb-dummy2"><div class="ugb-main-block"><aside>changed</aside></div></div></div></div>',
 			attrs: {},
@@ -163,7 +163,7 @@ describe( 'isInvalid', () => {
 		expect( isInvalid( block, [ 'aside' ] ) ).toBe( true )
 		expect( isInvalid( block, [ 'div' ] ) ).toBe( true )
 
-		const block2 = createBlockWithFallback( {
+		const block2 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block">test<div class="ugb-dummy2"><div class="ugb-main-block"><aside class="test">test</aside></div></div></div></div>',
 			attrs: {},
@@ -185,7 +185,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><p attr="value2">test</p></div></div>',
 			attrs: {},
@@ -194,7 +194,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block1, [ 'style', 'svg' ] ) ).toBe( true )
 
-		const block2 = createBlockWithFallback( {
+		const block2 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><aside></aside><style>test</style><p attr="value2">test</p></div></div>',
 			attrs: {},
@@ -215,7 +215,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>test</style><p attr="value2">test</p></div></div>',
 			attrs: {},
@@ -236,7 +236,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="test ugb-class1"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -245,7 +245,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block1 ) ).toBe( true )
 
-		const block2 = createBlockWithFallback( {
+		const block2 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="test ugb-class1 ugb-class2 ugb-class3"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -254,7 +254,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block2 ) ).toBe( true )
 
-		const block3 = createBlockWithFallback( {
+		const block3 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="test ugb-class1 ugb-class-new"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -263,7 +263,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block3 ) ).toBe( true )
 
-		const block4 = createBlockWithFallback( {
+		const block4 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="test ugb-class1 ugb-class2 added-class"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -272,7 +272,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block4 ) ).toBe( false )
 
-		const block5 = createBlockWithFallback( {
+		const block5 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="test ugb-class1 ugb-class2"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -293,7 +293,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="ugb-image wp-image-123"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -302,7 +302,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block1 ) ).toBe( false )
 
-		const block2 = createBlockWithFallback( {
+		const block2 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="ugb-image"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -323,7 +323,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="ugb-image wp-image-123"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -332,7 +332,7 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block1 ) ).toBe( false )
 
-		const block2 = createBlockWithFallback( {
+		const block2 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="ugb-image wp-image-456"><p attr="value">test</p></div></div></div>',
 			attrs: {},
@@ -356,7 +356,7 @@ describe( 'isInvalid', () => {
 								'.ugb-main-block { color: #fff; }',
 							].join( ' ' ) }
 						</style>
-					test
+						test
 					</div>
 				</div>
 			),
@@ -365,7 +365,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>.ugb-main-block { color: #fff; } .ugb-dummy { color: #fff; }</style>test</div></div>',
 			attrs: {},
@@ -389,7 +389,7 @@ describe( 'isInvalid', () => {
 								'.ugb-main-block { color: #fff; }',
 							].join( ' ' ) }
 						</style>
-					test
+						test
 					</div>
 				</div>
 			),
@@ -398,7 +398,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>.ugb-dummy { color: #fff; }</style>test</div></div>',
 			attrs: {},
@@ -427,7 +427,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div>test</div></div></div>',
 			attrs: {},
@@ -456,7 +456,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div>test</div></div></div>',
 			attrs: {},
@@ -485,7 +485,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div>test</div></div></div>',
 			attrs: {},
@@ -506,7 +506,7 @@ describe( 'isInvalid', () => {
 
 		registerBlockType( 'ugb/dummy', blockSettings )
 
-		const block1 = createBlockWithFallback( {
+		const block1 = parseRawBlock( {
 			blockName: 'ugb/dummy',
 			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div class="ugb-image wp-image-123"><p attr="value">test</p></div></div></div>',
 			attrs: {},

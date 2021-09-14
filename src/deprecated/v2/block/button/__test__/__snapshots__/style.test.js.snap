@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-block-content": Object {
+    "justifyContent": undefined,
+  },
+  ".ugb-block-content .ugb-button": Object {
+    "borderRadius": undefined,
+  },
+  ".ugb-button1": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "opacity": undefined,
+    "paddingBottom": undefined,
+    "paddingLeft": undefined,
+    "paddingRight": undefined,
+    "paddingTop": undefined,
+  },
+  ".ugb-button1 .ugb-button--inner": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-button1 .ugb-button--inner, .ugb-button1 svg:not(.ugb-custom-icon)": Object {
+    "color": undefined,
+  },
+  ".ugb-button1.ugb-button--has-icon.ugb-button--has-icon svg": Object {
+    "height": undefined,
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "width": undefined,
+  },
+  ".ugb-button1:before": Object {
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "content": undefined,
+  },
+  ".ugb-button1:hover": Object {
+    "backgroundColor": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-button1:hover .ugb-button--inner, .ugb-button1:hover svg:not(.ugb-custom-icon)": Object {
+    "color": undefined,
+  },
+  "mobile": Object {
+    ".ugb-block-content": Object {
+      "alignItems": undefined,
+      "flexDirection": undefined,
+      "justifyContent": undefined,
+    },
+    ".ugb-button1 .ugb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-block-content": Object {
+      "alignItems": undefined,
+      "flexDirection": undefined,
+      "justifyContent": undefined,
+    },
+    ".ugb-button1 .ugb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+  },
+}
+`;
+
+exports[`Button (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-block-content": Object {
+    "justifyContent": undefined,
+  },
+  ".ugb-block-content .ugb-button": Object {
+    "borderRadius": "123px",
+  },
+  ".ugb-button1": Object {
+    "borderRadius": "123px !important",
+    "opacity": 123,
+  },
+  ".ugb-button1 .ugb-button--inner": Object {
+    "fontFamily": "\\"button1FontFamily\\", Sans-serif !important",
+    "fontSize": "123button1FontSizeUnit !important",
+    "fontWeight": "button1FontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123button1LineHeightUnit !important",
+    "textTransform": "button1TextTransform !important",
+  },
+  ".ugb-button1.ugb-button--has-icon.ugb-button--has-icon svg": Object {
+    "height": "123px",
+    "marginLeft": undefined,
+    "marginRight": "123px",
+    "width": "123px",
+  },
+  ".ugb-button1:before": Object {
+    "borderRadius": "123px !important",
+  },
+  ".ugb-button1:hover": Object {
+    "opacity": 123,
+  },
+  ".ugb-button2": Object {
+    "borderRadius": "123px !important",
+    "opacity": 123,
+  },
+  ".ugb-button2 .ugb-button--inner": Object {
+    "fontFamily": "\\"button2FontFamily\\", Sans-serif !important",
+    "fontSize": "123button2FontSizeUnit !important",
+    "fontWeight": "button2FontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123button2LineHeightUnit !important",
+    "textTransform": "button2TextTransform !important",
+  },
+  ".ugb-button2.ugb-button--has-icon.ugb-button--has-icon svg": Object {
+    "height": "123px",
+    "marginLeft": undefined,
+    "marginRight": "123px",
+    "width": "123px",
+  },
+  ".ugb-button2:before": Object {
+    "borderRadius": "123px !important",
+  },
+  ".ugb-button2:hover": Object {
+    "opacity": 123,
+  },
+  ".ugb-button3": Object {
+    "borderRadius": "123px !important",
+    "opacity": 123,
+  },
+  ".ugb-button3 .ugb-button--inner": Object {
+    "fontFamily": "\\"button3FontFamily\\", Sans-serif !important",
+    "fontSize": "123button3FontSizeUnit !important",
+    "fontWeight": "button3FontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123button3LineHeightUnit !important",
+    "textTransform": "button3TextTransform !important",
+  },
+  ".ugb-button3.ugb-button--has-icon.ugb-button--has-icon svg": Object {
+    "height": "123px",
+    "marginLeft": undefined,
+    "marginRight": "123px",
+    "width": "123px",
+  },
+  ".ugb-button3:before": Object {
+    "borderRadius": "123px !important",
+  },
+  ".ugb-button3:hover": Object {
+    "opacity": 123,
+  },
+  "mobile": Object {
+    ".ugb-block-content": Object {
+      "alignItems": undefined,
+      "flexDirection": "column",
+      "justifyContent": undefined,
+    },
+    ".ugb-button1 .ugb-button--inner": Object {
+      "fontSize": "123button1MobileFontSizeUnit !important",
+      "lineHeight": "123button1MobileLineHeightUnit !important",
+    },
+    ".ugb-button2 .ugb-button--inner": Object {
+      "fontSize": "123button2MobileFontSizeUnit !important",
+      "lineHeight": "123button2MobileLineHeightUnit !important",
+    },
+    ".ugb-button3 .ugb-button--inner": Object {
+      "fontSize": "123button3MobileFontSizeUnit !important",
+      "lineHeight": "123button3MobileLineHeightUnit !important",
+    },
+  },
+  "tablet": Object {
+    ".ugb-block-content": Object {
+      "alignItems": undefined,
+      "flexDirection": undefined,
+      "justifyContent": undefined,
+    },
+    ".ugb-button1 .ugb-button--inner": Object {
+      "fontSize": "123button1TabletFontSizeUnit !important",
+      "lineHeight": "123button1TabletLineHeightUnit !important",
+    },
+    ".ugb-button2 .ugb-button--inner": Object {
+      "fontSize": "123button2TabletFontSizeUnit !important",
+      "lineHeight": "123button2TabletLineHeightUnit !important",
+    },
+    ".ugb-button3 .ugb-button--inner": Object {
+      "fontSize": "123button3TabletFontSizeUnit !important",
+      "lineHeight": "123button3TabletLineHeightUnit !important",
+    },
+  },
+}
+`;
