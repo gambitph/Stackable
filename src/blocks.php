@@ -13,42 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * folders containing stackable blocks without inner blocks.
- */
-$stk_block_folders = array(
-	'button',
-	'count-up',
-	'heading',
-	'icon',
-	'icon-list',
-	'image',
-	'price',
-	'text',
-	'posts'
-);
-
-/**
- * folders containing stackable blocks with inner blocks.
- */
-$stk_wrapper_block_folders = array(
-	'button-group',
-	'blockquote',
-	'card',
-	'call-to-action',
-	'column',
-	'columns',
-	'container',
-	'expand',
-	'feature',
-	'feature-grid',
-	'hero',
-	'icon-box',
-	'icon-label',
-	'notification',
-	'pricing-box',
-);
-
 if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
 	/**
 	 * Function for getting the block.json metadata
@@ -85,19 +49,67 @@ if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
 	}
 }
 
+if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
+	function stackable_get_stk_block_folders_metadata() {
+	/**
+	 * folders containing stackable blocks without inner blocks.
+	 */
+	$stk_block_folders = array(
+		'button',
+		'count-up',
+		'heading',
+		'icon',
+		'icon-list',
+		'image',
+		'price',
+		'text',
+		'posts'
+	);
+
+	return stackable_get_metadata_by_folders( $stk_block_folders );
+	}
+}
+
+if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
+	function stackable_get_stk_wrapper_block_folders_metadata() {
+	/**
+	 * folders containing stackable blocks with inner blocks.
+	 */
+	$stk_wrapper_block_folders = array(
+		'button-group',
+		'blockquote',
+		'card',
+		'call-to-action',
+		'column',
+		'columns',
+		'container',
+		'expand',
+		'feature',
+		'feature-grid',
+		'hero',
+		'icon-box',
+		'icon-label',
+		'notification',
+		'pricing-box',
+	);
+
+	return stackable_get_metadata_by_folders( $stk_wrapper_block_folders );
+	}
+
+}
+
 if ( ! function_exists( 'stackable_register_blocks' ) ) {
 	function stackable_register_blocks() {
-		global $stk_block_folders, $stk_wrapper_block_folders;
 		// Blocks directory may not exist if working from a fresh clone.
 		$blocks_dir = dirname( __FILE__ ) . '/block';
 		if ( ! file_exists( $blocks_dir ) ) {
 			return;
 		}
 
-		$blocks_metadata = stackable_get_metadata_by_folders( array_merge(
-			$stk_block_folders,
-			$stk_wrapper_block_folders
-		) );
+		$blocks_metadata = array_merge(
+			stackable_get_stk_block_folders_metadata(),
+			stackable_get_stk_wrapper_block_folders_metadata()
+		);
 
 		foreach ( $blocks_metadata as $metadata ) {
 			$registry = WP_Block_Type_Registry::get_instance();
@@ -139,9 +151,8 @@ if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks' ) ) {
 			return $allowed_wrapper_blocks;
 		}
 
-		global $stk_wrapper_block_folders;
 		$allowed_stackable_wrapper_blocks = array();
-		$blocks_metadata = stackable_get_metadata_by_folders( $stk_wrapper_block_folders );
+		$blocks_metadata = stackable_get_metadata_by_folders( stackable_get_stk_wrapper_block_folders_metadata() );
 
 		foreach ( $blocks_metadata as $metadata ) {
 			array_push( $allowed_stackable_wrapper_blocks, $metadata['name'] );
@@ -163,9 +174,8 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks' ) ) {
 			return $allowed_blocks;
 		}
 
-		global $stk_block_folders;
 		$allowed_stackable_blocks = array();
-		$blocks_metadata = stackable_get_metadata_by_folders( $stk_block_folders );
+		$blocks_metadata = stackable_get_metadata_by_folders( stackable_get_stk_block_folders_metadata() );
 
 		foreach ( $blocks_metadata as $metadata ) {
 			array_push( $allowed_stackable_blocks, $metadata['name'] );

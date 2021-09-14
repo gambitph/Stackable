@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Number Box block Save render should match snapshot 1`] = `
+exports[`Number Box (v2) block Save render should match snapshot 1`] = `
 <div
-  class="ugb-number-box ugb-number-box--v3 ugb-number-box--columns-2 ugb-main-block"
+  class="wp-block-ugb-number-box ugb-number-box--v3 ugb-number-box--columns-2 ugb-main-block"
 >
   <div
     class="ugb-inner-block"
@@ -32,11 +32,11 @@ exports[`Number Box block Save render should match snapshot 1`] = `
           </h4>
           <p
             class="ugb-number-box__description"
-          />
-          <div>
-            Description for this block. Use this space for describing your block. Any text will do.
-          </div>
-          <p />
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do.
+            </div>
+          </p>
         </div>
       </div>
       <div
@@ -61,11 +61,11 @@ exports[`Number Box block Save render should match snapshot 1`] = `
           </h4>
           <p
             class="ugb-number-box__description"
-          />
-          <div>
-            Description for this block. Use this space for describing your block. Any text will do.
-          </div>
-          <p />
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do.
+            </div>
+          </p>
         </div>
       </div>
     </div>
@@ -73,10 +73,13 @@ exports[`Number Box block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Number Box block Save render should match snapshot with attributes 1`] = `
+exports[`Number Box (v2) block Save render should match snapshot with attributes 1`] = `
 <div
-  class="ugb-number-box ugb-number-box--v3 ugb-number-box--columns-1 ugb-number-box--design-wave-2 ugb-main-block"
+  class="wp-block-ugb-number-box ugb-number-box--v3 ugb-number-box--columns-3 ugb-number-box--design-wave-2 ugb-main-block"
 >
+  <style>
+    .ugb-number-box__item{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.ugb-number-box__item:before{background-color:#123456 !important;opacity:12.3}@media screen and (max-width:1025px){.ugb-number-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.ugb-number-box__item:before{opacity:12.3}}@media screen and (max-width:768px){.ugb-number-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.ugb-number-box__item:before{opacity:12.3}}
+  </style>
   <div
     class="ugb-inner-block"
   >
@@ -84,7 +87,13 @@ exports[`Number Box block Save render should match snapshot with attributes 1`] 
       class="ugb-block-content"
     >
       <div
-        class="ugb-number-box__item ugb-number-box__item1 ugb--shadow-1 ugb--has-background-overlay"
+        class="ugb-number-box__item ugb-number-box__item1 ugb--shadow-123 ugb--has-background-overlay"
+      />
+      <div
+        class="ugb-number-box__item ugb-number-box__item2 ugb--shadow-123 ugb--has-background-overlay"
+      />
+      <div
+        class="ugb-number-box__item ugb-number-box__item3 ugb--shadow-123 ugb--has-background-overlay"
       />
     </div>
   </div>
