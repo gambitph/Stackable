@@ -165,10 +165,13 @@
 .stk-block-heading,
 .stk-block-text,
 .stk-block-subtitle,
-.stk-block .stk-block-count-up__text,
 .stk-block .stk-block-subtitle__text,
 .stk-block .stk-block-text__text {
 	margin-top: 0;
+}
+.stk-block-heading,
+.stk-block-text,
+.stk-block-subtitle {
 	word-break: break-word;
 	hyphens: auto;
 }

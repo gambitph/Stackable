@@ -10,8 +10,6 @@
 	}
 
 	&__items {
-		word-break: break-word;
-		hyphens: auto;
 		flex-wrap: wrap;
 		display: flex;
 		column-gap: var(--stk-column-gap, 0);
@@ -69,5 +67,12 @@
 	&__title a,
 	&__category a {
 		text-decoration: none;
+	}
+
+	// Word wrap.
+	&__title,
+	&__excerpt {
+		word-break: break-word;
+		hyphens: auto;
 	}
 }
