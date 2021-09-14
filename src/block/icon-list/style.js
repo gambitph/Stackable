@@ -176,6 +176,16 @@ const getStyleParams = ( { attributes = {} } ) => {
 			responsive: 'all',
 			format: '%sem',
 		},
+		{
+			// For calculating the approximate clickable area for
+			// icon picker.
+			renderIn: 'edit',
+			selector: '',
+			styleRule: '--stk-icon-height',
+			attrName: 'iconSize',
+			responsive: 'all',
+			format: '%sem',
+		},
 	]
 }
 
