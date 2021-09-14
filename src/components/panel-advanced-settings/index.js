@@ -124,7 +124,7 @@ const PanelAdvancedSettings = props => {
 		</Fragment>
 	}, [ onToggle, hasToggle, props.checked, props.onChange, props.title ] )
 
-	return isSelected && (
+	return ( isSelected || ! name ) && ( // If there's no name, then the panel is used in another place.
 		<PanelBody
 			className={ mainClasses }
 			initialOpen={ initialOpen }
