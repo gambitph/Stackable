@@ -6,6 +6,9 @@ import BlockStyles, {
 } from '../'
 import { render } from '@testing-library/react'
 import { minifyCSS } from '~stackable/util'
+import { useDeviceType } from '~stackable/hooks'
+
+jest.mock( '~stackable/hooks' )
 
 describe( 'Add Block Class Names', () => {
 	test( 'should work', () => {
@@ -161,12 +164,12 @@ describe( 'generateStyles', () => {
 
 describe( 'BlockStyles', () => {
 	it( 'should render styles', () => {
-		const { container } = render( <BlockStyles style={ { '.test': { color: 'red' } } } /> )
+		const { container } = render( <BlockStyles.Content style={ { '.test': { color: 'red' } } } /> )
 		expect( container.querySelector( 'style' ).innerHTML ).toBe( '.test{color:red}' )
 	} )
 
 	it( 'should render nothing when there are no styles given', () => {
-		const { container } = render( <BlockStyles style={ {} } /> )
+		const { container } = render( <BlockStyles.Content style={ {} } /> )
 		expect( container.querySelector( 'style' ) ).toBeFalsy()
 	} )
 
@@ -186,7 +189,7 @@ describe( 'BlockStyles', () => {
 				},
 			},
 		}
-		const { container } = render( <BlockStyles style={ styles } breakTablet="900" breakMobile="400" /> )
+		const { container } = render( <BlockStyles.Content style={ styles } breakTablet="900" breakMobile="400" /> )
 		const results = container.querySelector( 'style' ).innerHTML
 
 		expect( results ).toEqual( expect.stringMatching( /.desktop\{color:yellow/ ) )
@@ -199,7 +202,7 @@ describe( 'BlockStyles', () => {
 			'.test': { color: 'red' },
 			'.main': { color: 'blue' },
 		}
-		const { container } = render( <BlockStyles style={ style } blockMainClassName="main" blockUniqueClassName="unique" /> )
+		const { container } = render( <BlockStyles.Content style={ style } blockMainClassName="main" blockUniqueClassName="unique" /> )
 		expect( container.querySelector( 'style' ).innerHTML ).toBe( '.unique .test{color:red}.unique.main{color:blue}' )
 	} )
 
@@ -210,7 +213,7 @@ describe( 'BlockStyles', () => {
 				'.editor': { color: 'blue' },
 			},
 		}
-		const { container } = render( <BlockStyles style={ style } editorMode={ false } /> )
+		const { container } = render( <BlockStyles.Content style={ style } editorMode={ false } /> )
 		expect( container.querySelector( 'style' ).innerHTML ).not.toEqual( expect.stringMatching( /.editor/ ) )
 	} )
 
@@ -239,11 +242,17 @@ describe( 'BlockStyles', () => {
 				},
 			},
 		}
-		const { container } = render( <BlockStyles style={ style } editorMode={ true } breakTablet="900" breakMobile="400" /> )
+
+		const { container, rerender } = render( <BlockStyles style={ style } editorMode={ true } breakTablet="900" breakMobile="400" /> )
 		expect( container.innerHTML ).toEqual( expect.stringMatching( /<style\s*>/ ) )
 		expect( container.innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
 		expect( container.innerHTML ).toEqual( expect.stringMatching( /.editor-styles-wrapper .editor\s*{\s*color:\s*blue/ ) )
-		expect( container.innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+.editor-styles-wrapper .tablet\s*{\s*color:\s*yellow/ ) )
-		expect( container.innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+.editor-styles-wrapper .mobile\s*{\s*color:\s*green/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /<style\s*>/ ) )
+		useDeviceType.mockImplementation( () => 'Tablet' )
+		rerender( <BlockStyles style={ style } editorMode={ true } breakTablet="900" breakMobile="400" /> )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /.editor-styles-wrapper .tablet\s*{\s*color:\s*yellow/ ) )
+		useDeviceType.mockImplementation( () => 'Mobile' )
+		rerender( <BlockStyles style={ style } editorMode={ true } breakTablet="900" breakMobile="400" /> )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /.editor-styles-wrapper .mobile\s*{\s*color:\s*green/ ) )
 	} )
 } )

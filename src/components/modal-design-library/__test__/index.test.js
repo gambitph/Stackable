@@ -3,14 +3,14 @@ import {
 	render, wait,
 } from '@testing-library/react'
 import { getAllBlocks, getDesigns } from '~stackable/design-library'
-import { select } from '@wordpress/data'
+import * as data from '@wordpress/data'
 
 jest.mock( '~stackable/design-library' )
-jest.mock( '@wordpress/data' )
+jest.spyOn( data, 'select' )
 
 describe( 'ModalDesignLibrary', () => {
 	beforeAll( () => {
-		select.mockImplementation( () => {
+		data.select.mockImplementation( () => {
 			return {
 				getBlockType: name => {
 					return {
