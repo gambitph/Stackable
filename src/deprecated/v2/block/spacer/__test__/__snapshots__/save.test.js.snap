@@ -1,29 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Spacer block Save render should match snapshot 1`] = `
+exports[`Spacer (v2) block Save render should match snapshot 1`] = `
 <div
-  class="ugb-spacer ugb-main-block"
+  class="wp-block-ugb-spacer ugb-spacer--v2 ugb-main-block"
 >
   <div
     class="ugb-inner-block"
   >
     <div
       class="ugb-block-content"
-    />
+    >
+      <div
+        class="ugb-spacer--inner"
+      />
+    </div>
   </div>
 </div>
 `;
 
-exports[`Spacer block Save render should match snapshot with attributes 1`] = `
+exports[`Spacer (v2) block Save render should match snapshot with attributes 1`] = `
 <div
-  class="ugb-spacer ugb-main-block"
+  class="wp-block-ugb-spacer ugb-spacer--v2 ugb-main-block"
 >
+  <style>
+    .ugb-spacer--inner{background-color:#123456 !important;background-attachment:fixed;background-image:url(backgroundMediaUrl);background-position:backgroundPosition;background-repeat:backgroundRepeat;background-size:backgroundSize;background-blend-mode:backgroundImageBlendMode}.ugb-spacer--inner:before{background-color:#123456 !important;opacity:12.3}@media screen and (min-width:768px){.ugb-spacer{height:123heightUnit !important}}@media screen and (max-width:1025px){.ugb-spacer--inner{background-image:url(tabletBackgroundMediaUrl);background-position:tabletBackgroundPosition;background-repeat:tabletBackgroundRepeat;background-size:tabletBackgroundSize}.ugb-spacer--inner:before{opacity:12.3}}@media screen and (min-width:768px) and (max-width:1025px){.ugb-spacer{height:123tabletHeightUnit !important}}@media screen and (max-width:768px){.ugb-spacer{height:123mobileHeightUnit !important}.ugb-spacer--inner{background-image:url(mobileBackgroundMediaUrl);background-position:mobileBackgroundPosition;background-repeat:mobileBackgroundRepeat;background-size:mobileBackgroundSize}.ugb-spacer--inner:before{opacity:12.3}}
+  </style>
   <div
     class="ugb-inner-block"
   >
     <div
       class="ugb-block-content"
-    />
+    >
+      <div
+        class="ugb-spacer--inner ugb--has-background-overlay"
+      />
+    </div>
   </div>
 </div>
 `;

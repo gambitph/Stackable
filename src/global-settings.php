@@ -463,7 +463,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( count( $css ) ) {
 				$inline_css = "/* Global typography */\n";
 				$inline_css .= implode( "\n", $css );
-				$this->generated_typography_css = $inline_css;
+				$this->generated_typography_css = apply_filters( 'stackable_frontend_css', $inline_css );
 			}
 		}
 
