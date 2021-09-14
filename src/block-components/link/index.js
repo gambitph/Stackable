@@ -19,12 +19,32 @@ import { __ } from '@wordpress/i18n'
 import {
 	Fragment, useRef, useState, useEffect, useCallback,
 } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 
 export const Link = props => {
 	const [ isOpen, setIsOpen ] = useState( false )
-	const popoverEl = useRef( null )
+	const popoverEl = useRef()
+	const [ popoverRef, setPopoverRef ] = useState( null )
 	const { parentBlock } = useBlockContext()
+
+	// Enable editing of the icon only when the current block that implements
+	// it is selected. We need to use setTimeout since the isSelected is
+	// changed earlier.
+	const { isSelected } = useBlockEditContext()
+	const [ debouncedIsSelected, setDebouncedIsSelected ] = useState( false )
+	useEffect( () => {
+		if ( ! isSelected ) {
+			setDebouncedIsSelected( false )
+			return
+		}
+		const t = setTimeout( () => {
+			if ( isSelected ) {
+				setDebouncedIsSelected( isSelected )
+			}
+		}, 1 )
+		return () => clearTimeout( t )
+	}, [ isSelected ] )
 
 	const clickOutsideListener = useCallback( event => {
 		if ( isOpen ) {
@@ -47,11 +67,16 @@ export const Link = props => {
 		<Fragment>
 			<LinkComponent
 				{ ...props.linkProps }
+				ref={ popoverEl }
 				className={ props.className }
 				onClick={ e => {
-					if ( e.target.closest( '.rich-text' ) ) {
+					if ( debouncedIsSelected ) {
+						const ref = e.target.closest( props.linkTrigger || '.rich-text' )
+						if ( ref ) {
 						// Only trigger the setIsOpen when the rich text is selected.
-						setIsOpen( ! isOpen )
+							setPopoverRef( ref )
+							setIsOpen( ! isOpen )
+						}
 					}
 				} }
 			>
@@ -59,8 +84,10 @@ export const Link = props => {
 			</LinkComponent>
 			{ isOpen && enable && (
 				<Popover
-					useRef={ popoverEl }
-					position="bottom center"
+					position="top center"
+					getAnchorRect={ () => {
+						return popoverRef?.getBoundingClientRect() || popoverEl.current?.getBoundingClientRect()
+					} }
 					focusOnMount={ false }
 					className="stk-link__popover"
 				>

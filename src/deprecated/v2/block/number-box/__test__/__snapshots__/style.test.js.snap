@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Number Box block Rendered styles should match snapshot 1`] = `
+exports[`Number Box (v2) block Rendered styles should match snapshot 1`] = `
 Object {
   ".ugb-number-box__description": Object {
     "color": undefined,
@@ -9,6 +9,7 @@ Object {
     "fontWeight": undefined,
     "letterSpacing": undefined,
     "lineHeight": undefined,
+    "marginBottom": undefined,
     "textAlign": undefined,
     "textTransform": undefined,
   },
@@ -22,54 +23,6 @@ Object {
     "backgroundSize": undefined,
     "borderRadius": undefined,
   },
-  ".ugb-number-box__item1": Object {
-    "backgroundColor": undefined,
-  },
-  ".ugb-number-box__item1 .ugb-number-box__description": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item1 .ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-  },
-  ".ugb-number-box__item1 .ugb-number-box__title": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item1:before": Object {
-    "background": undefined,
-  },
-  ".ugb-number-box__item2": Object {
-    "backgroundColor": undefined,
-  },
-  ".ugb-number-box__item2 .ugb-number-box__description": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item2 .ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-  },
-  ".ugb-number-box__item2 .ugb-number-box__title": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item2:before": Object {
-    "background": undefined,
-  },
-  ".ugb-number-box__item3": Object {
-    "backgroundColor": undefined,
-  },
-  ".ugb-number-box__item3 .ugb-number-box__description": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item3 .ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-  },
-  ".ugb-number-box__item3 .ugb-number-box__title": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item3:before": Object {
-    "background": undefined,
-  },
   ".ugb-number-box__item:before": Object {
     "backgroundColor": undefined,
     "backgroundImage": undefined,
@@ -82,17 +35,12 @@ Object {
     "fontFamily": undefined,
     "fontSize": undefined,
     "fontWeight": undefined,
-    "height": undefined,
     "letterSpacing": undefined,
     "lineHeight": undefined,
     "marginBottom": undefined,
-    "marginLeft": undefined,
-    "marginRight": undefined,
     "opacity": undefined,
-    "textAlign": undefined,
     "textIndent": undefined,
     "textTransform": undefined,
-    "width": undefined,
   },
   ".ugb-number-box__title": Object {
     "color": undefined,
@@ -105,10 +53,46 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
+  "desktopTablet": Object {
+    ".ugb-number-box__number": Object {
+      "height": undefined,
+      "lineHeight": undefined,
+      "marginLeft": undefined,
+      "marginRight": undefined,
+      "textAlign": undefined,
+      "width": undefined,
+    },
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
   "mobile": Object {
     ".ugb-number-box__description": Object {
-      "fontSize": undefined,
       "lineHeight": undefined,
+      "marginBottom": undefined,
       "textAlign": undefined,
     },
     ".ugb-number-box__item": Object {
@@ -130,15 +114,39 @@ Object {
       "width": undefined,
     },
     ".ugb-number-box__title": Object {
-      "fontSize": undefined,
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
     },
   },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
   "tablet": Object {
     ".ugb-number-box__description": Object {
-      "fontSize": undefined,
       "lineHeight": undefined,
       "textAlign": undefined,
     },
@@ -151,6 +159,15 @@ Object {
     ".ugb-number-box__item:before": Object {
       "opacity": undefined,
     },
+    ".ugb-number-box__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".ugb-number-box__description": Object {
+      "marginBottom": undefined,
+    },
     ".ugb-number-box__number": Object {
       "height": undefined,
       "lineHeight": undefined,
@@ -161,86 +178,61 @@ Object {
       "width": undefined,
     },
     ".ugb-number-box__title": Object {
-      "fontSize": undefined,
-      "lineHeight": undefined,
       "marginBottom": undefined,
-      "textAlign": undefined,
     },
   },
 }
 `;
 
-exports[`Number Box block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Number Box (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
   ".ugb-number-box__item": Object {
     "backgroundAttachment": "fixed",
     "backgroundBlendMode": "columnBackgroundImageBlendMode",
-    "backgroundColor": "#123456",
+    "backgroundColor": "#123456 !important",
     "backgroundImage": "url(columnBackgroundMediaUrl)",
     "backgroundPosition": "columnBackgroundPosition",
     "backgroundRepeat": "columnBackgroundRepeat",
     "backgroundSize": "columnBackgroundSize",
-    "borderRadius": "6px",
-  },
-  ".ugb-number-box__item1": Object {
-    "backgroundColor": undefined,
-  },
-  ".ugb-number-box__item1 .ugb-number-box__description": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item1 .ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-  },
-  ".ugb-number-box__item1 .ugb-number-box__title": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item1:before": Object {
-    "background": undefined,
-  },
-  ".ugb-number-box__item2": Object {
-    "backgroundColor": undefined,
-  },
-  ".ugb-number-box__item2 .ugb-number-box__description": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item2 .ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-  },
-  ".ugb-number-box__item2 .ugb-number-box__title": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item2:before": Object {
-    "background": undefined,
-  },
-  ".ugb-number-box__item3": Object {
-    "backgroundColor": undefined,
-  },
-  ".ugb-number-box__item3 .ugb-number-box__description": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item3 .ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-  },
-  ".ugb-number-box__item3 .ugb-number-box__title": Object {
-    "color": undefined,
-  },
-  ".ugb-number-box__item3:before": Object {
-    "background": undefined,
+    "borderBottomWidth": "123px !important",
+    "borderColor": "#123456 !important",
+    "borderLeftWidth": "123px !important",
+    "borderRadius": "123px !important",
+    "borderRightWidth": "123px !important",
+    "borderStyle": "columnBorderType !important",
+    "borderTopWidth": "123px !important",
   },
   ".ugb-number-box__item:before": Object {
-    "backgroundColor": undefined,
+    "backgroundColor": "#123456 !important",
     "backgroundImage": undefined,
-    "mixBlendMode": "columnBackgroundGradientBlendMode",
+    "mixBlendMode": undefined,
     "opacity": 12.3,
   },
-  ".ugb-number-box__number": Object {
-    "marginBottom": "123px",
-  },
-  ".ugb-number-box__title": Object {
-    "marginBottom": "123px",
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
   },
   "mobile": Object {
     ".ugb-number-box__item": Object {
@@ -248,15 +240,39 @@ Object {
       "backgroundPosition": "columnMobileBackgroundPosition",
       "backgroundRepeat": "columnMobileBackgroundRepeat",
       "backgroundSize": "columnMobileBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
     },
     ".ugb-number-box__item:before": Object {
       "opacity": 12.3,
     },
-    ".ugb-number-box__number": Object {
-      "marginBottom": "123px",
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
     },
-    ".ugb-number-box__title": Object {
-      "marginBottom": "123px",
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
     },
   },
   "tablet": Object {
@@ -265,15 +281,13 @@ Object {
       "backgroundPosition": "columnTabletBackgroundPosition",
       "backgroundRepeat": "columnTabletBackgroundRepeat",
       "backgroundSize": "columnTabletBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
     },
     ".ugb-number-box__item:before": Object {
       "opacity": 12.3,
-    },
-    ".ugb-number-box__number": Object {
-      "marginBottom": "123px",
-    },
-    ".ugb-number-box__title": Object {
-      "marginBottom": "123px",
     },
   },
 }

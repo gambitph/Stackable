@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image Box (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-image-box ugb-image-box--v4 ugb-image-box--columns-3 ugb-image-box--design-basic ugb-main-block"
+>
+  <style>
+    .ugb-image-box__item:hover .ugb-image-box__overlay-hover{opacity:0.7 !important}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-image-box__item ugb-image-box__item1 ugb-image-box__box"
+      >
+        
+        <div
+          class="ugb-image-box__box ugb-image-box__overlay-hover"
+        />
+        <div
+          class="ugb-image-box__content"
+        >
+          <div
+            class="ugb-image-box__header"
+          >
+            <div
+              class="ugb-image-box__subtitle"
+            >
+              <div>
+                Subtitle
+              </div>
+            </div>
+            <h4
+              class="ugb-image-box__title"
+            >
+              <div>
+                Title
+              </div>
+            </h4>
+          </div>
+          <p
+            class="ugb-image-box__description"
+          >
+            <div>
+              Description
+            </div>
+          </p>
+        </div>
+        
+      </div>
+      <div
+        class="ugb-image-box__item ugb-image-box__item2 ugb-image-box__box"
+      >
+        
+        <div
+          class="ugb-image-box__box ugb-image-box__overlay-hover"
+        />
+        <div
+          class="ugb-image-box__content"
+        >
+          <div
+            class="ugb-image-box__header"
+          >
+            <div
+              class="ugb-image-box__subtitle"
+            >
+              <div>
+                Subtitle
+              </div>
+            </div>
+            <h4
+              class="ugb-image-box__title"
+            >
+              <div>
+                Title
+              </div>
+            </h4>
+          </div>
+          <p
+            class="ugb-image-box__description"
+          >
+            <div>
+              Description
+            </div>
+          </p>
+        </div>
+        
+      </div>
+      <div
+        class="ugb-image-box__item ugb-image-box__item3 ugb-image-box__box"
+      >
+        
+        <div
+          class="ugb-image-box__box ugb-image-box__overlay-hover"
+        />
+        <div
+          class="ugb-image-box__content"
+        >
+          <div
+            class="ugb-image-box__header"
+          >
+            <div
+              class="ugb-image-box__subtitle"
+            >
+              <div>
+                Subtitle
+              </div>
+            </div>
+            <h4
+              class="ugb-image-box__title"
+            >
+              <div>
+                Title
+              </div>
+            </h4>
+          </div>
+          <p
+            class="ugb-image-box__description"
+          >
+            <div>
+              Description
+            </div>
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Image Box (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-image-box ugb-image-box--v4 ugb-image-box--columns-3 ugb-image-box--design-wave-2 ugb-image-box--effect-imageHoverEffect ugb-image-box--with-arrow ugb-main-block"
+>
+  <style>
+    .ugb-image-box__box{border-radius:123px !important}.ugb-image-box__item{border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important}.ugb-image-box__item1 .ugb-image-box__image{background-image:url(image1Url)}.ugb-image-box__item2 .ugb-image-box__image{background-image:url(image2Url)}.ugb-image-box__item3 .ugb-image-box__image{background-image:url(image3Url)}.ugb-image-box__item4 .ugb-image-box__image{background-image:url(image4Url)}.ugb-image-box__image{background-position:imageBackgroundPosition !important;background-repeat:imageBackgroundRepeat !important}.ugb-image-box__overlay{background-color:#123456 !important;background-attachment:fixed;background-position:overlayBackgroundPosition;background-repeat:overlayBackgroundRepeat;background-size:overlayBackgroundSize;background-blend-mode:overlayBackgroundImageBlendMode;opacity:12.3}.ugb-image-box__item:not(:hover) .ugb-image-box__overlay{opacity:0 !important}.ugb-image-box__arrow svg{fill:#123456 !important}.ugb-image-box__arrow{text-align:arrowAlign !important;margin-bottom:123px !important}@media screen and (min-width:1025px){.ugb-image-box__arrow svg{width:123px !important}}@media screen and (max-width:1025px){.ugb-image-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important}}@media screen and (min-width:768px) and (max-width:1025px){.ugb-image-box__arrow svg{width:123px !important}.ugb-image-box__arrow{text-align:arrowTabletAlign !important;margin-bottom:123px !important}}@media screen and (max-width:768px){.ugb-image-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important}.ugb-image-box__arrow svg{width:123px !important}.ugb-image-box__arrow{text-align:arrowMobileAlign !important;margin-bottom:123px !important}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-image-box__item ugb-image-box__item1 ugb-image-box__box ugb--shadow-123"
+      >
+        <div
+          class="ugb-image-box__box ugb-image-box__image-wrapper"
+        >
+          <div
+            class="ugb-image-box__box ugb-image-box__image"
+          />
+        </div>
+        <div
+          class="ugb-image-box__box ugb-image-box__overlay"
+        />
+        <div
+          class="ugb-image-box__content"
+        />
+        <div
+          class="ugb-image-box__arrow"
+        >
+          <svg />
+        </div>
+        <a
+          aria-label=""
+          class="ugb-image-box__overlay-link"
+          href="link1Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        />
+      </div>
+      <div
+        class="ugb-image-box__item ugb-image-box__item2 ugb-image-box__box ugb--shadow-123"
+      >
+        <div
+          class="ugb-image-box__box ugb-image-box__image-wrapper"
+        >
+          <div
+            class="ugb-image-box__box ugb-image-box__image"
+          />
+        </div>
+        <div
+          class="ugb-image-box__box ugb-image-box__overlay"
+        />
+        <div
+          class="ugb-image-box__content"
+        />
+        <div
+          class="ugb-image-box__arrow"
+        >
+          <svg />
+        </div>
+        <a
+          aria-label=""
+          class="ugb-image-box__overlay-link"
+          href="link2Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        />
+      </div>
+      <div
+        class="ugb-image-box__item ugb-image-box__item3 ugb-image-box__box ugb--shadow-123"
+      >
+        <div
+          class="ugb-image-box__box ugb-image-box__image-wrapper"
+        >
+          <div
+            class="ugb-image-box__box ugb-image-box__image"
+          />
+        </div>
+        <div
+          class="ugb-image-box__box ugb-image-box__overlay"
+        />
+        <div
+          class="ugb-image-box__content"
+        />
+        <div
+          class="ugb-image-box__arrow"
+        >
+          <svg />
+        </div>
+        <a
+          aria-label=""
+          class="ugb-image-box__overlay-link"
+          href="link3Url"
+          rel="noopener noreferrer nofollow sponsored ugc"
+          target="_blank"
+          title=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

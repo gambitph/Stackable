@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button block Save render should match snapshot 1`] = `
+exports[`Button (v2) block Save render should match snapshot 1`] = `
 <div
   class="wp-block-ugb-button ugb-main-block"
 >
@@ -34,7 +34,7 @@ exports[`Button block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Button block Save render should match snapshot with attributes 1`] = `
+exports[`Button (v2) block Save render should match snapshot with attributes 1`] = `
 <div
   class="wp-block-ugb-button ugb-button--collapse-collapseOn ugb-main-block"
 >
@@ -53,7 +53,7 @@ exports[`Button block Save render should match snapshot with attributes 1`] = `
         <a
           class="ugb-button1 ugb-button ugb-button--size-button1Size ugb-button--ghost-to-normal-effect ugb--hover-effect-button1HoverEffect ugb-button--design-button1Design ugb-button--has-icon ugb-button--icon-position-button1IconPosition"
           href="button1Url"
-          rel="noopener noreferrer nofollow"
+          rel="noopener noreferrer nofollow sponsored ugc"
           target="_blank"
           title=""
         >
@@ -75,7 +75,7 @@ exports[`Button block Save render should match snapshot with attributes 1`] = `
         <a
           class="ugb-button2 ugb-button ugb-button--size-button2Size ugb-button--ghost-to-normal-effect ugb--hover-effect-button2HoverEffect ugb-button--design-button2Design ugb-button--has-icon ugb-button--icon-position-button2IconPosition"
           href="button2Url"
-          rel="noopener noreferrer nofollow"
+          rel="noopener noreferrer nofollow sponsored ugc"
           target="_blank"
           title=""
         >
@@ -97,7 +97,7 @@ exports[`Button block Save render should match snapshot with attributes 1`] = `
         <a
           class="ugb-button3 ugb-button ugb-button--size-button3Size ugb-button--ghost-to-normal-effect ugb--hover-effect-button3HoverEffect ugb-button--design-button3Design ugb-button--has-icon ugb-button--icon-position-button3IconPosition"
           href="button3Url"
-          rel="noopener noreferrer nofollow"
+          rel="noopener noreferrer nofollow sponsored ugc"
           target="_blank"
           title=""
         >
