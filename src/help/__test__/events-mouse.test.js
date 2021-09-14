@@ -3,8 +3,21 @@ import {
 	startListening, stopListening, getParentControl,
 } from '../events-mouse'
 import { TextControl, PanelBody } from '@wordpress/components'
-import { PanelAdvancedSettings } from '~stackable/components'
+import PanelAdvancedSettings from '~stackable/components/panel-advanced-settings'
 import { render, fireEvent } from '@testing-library/react'
+
+jest.mock( '@wordpress/block-editor', () => ( {
+	useBlockEditContext: jest.fn( () => ( {
+		isSelected: true,
+		name: 'stackable/block',
+	} ) ),
+} ) )
+
+jest.mock( '~stackable/util/global-state', () => ( {
+	useGlobalState: jest.fn( ( key, value ) => {
+		return [ value, jest.fn() ]
+	} ),
+} ) )
 
 describe( 'getParentControl', () => {
 	it( 'should return the parent element with the tip class (PanelBody)', () => {

@@ -19,7 +19,7 @@ import { memo } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const AdvancedRangeControl = props => {
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.onChangeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
 	const deviceType = useDeviceType()

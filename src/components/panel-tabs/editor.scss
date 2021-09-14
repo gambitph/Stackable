@@ -63,33 +63,29 @@
 	padding-bottom: 0 !important;
 }
 
-.ugb-inspector-panel-controls {
-	.components-panel__body {
-		.components-panel__body-title {
-			&:not(:hover) {
-				background: #fff;
-			}
-			// If the first control is a toggle, it will display higher and will
-			// not look nice. Make it lower a bit.
-			+ .components-toggle-control {
-				margin-top: 24px !important;
-			}
+.ugb-toggle-panel-body {
+	.components-panel__body-title {
+		&:not(:hover) {
+			background: #fff;
 		}
-		&.is-opened .components-panel__body-title {
-			margin-bottom: 12px;
-			border-bottom: 1px solid #e1e1e1;
-			// Sticky.
-			position: sticky;
-			top: 81px;
-			z-index: 4;
+		// If the first control is a toggle, it will display higher and will
+		// not look nice. Make it lower a bit.
+		+ .components-toggle-control {
+			margin-top: 24px !important;
 		}
 	}
-	.components-panel__body {
-		background: #fafafa;
-		// Our tabs already have a bottom border. This will thicken it.
-		&:first-child {
-			border-top: 0 !important;
-		}
+	&.is-opened .components-panel__body-title {
+		margin-bottom: 12px;
+		border-bottom: 1px solid #e1e1e1;
+		// Sticky.
+		position: sticky;
+		top: 81px;
+		z-index: 4;
+	}
+	background: #fafafa;
+	// Our tabs already have a bottom border. This will thicken it.
+	&:first-child {
+		border-top: 0 !important;
 	}
 }
 
