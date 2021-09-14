@@ -13,6 +13,7 @@ import {
 	BlockDiv,
 	CustomCSS,
 	getResponsiveClasses,
+	getAlignmentClasses,
 	Image,
 } from '~stackable/block-components'
 
@@ -28,11 +29,13 @@ export const Save = props => {
 	} = props
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-block-image',
 		responsiveClass,
+		blockAlignmentClass,
 	] )
 
 	return (
