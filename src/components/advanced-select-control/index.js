@@ -30,6 +30,7 @@ const AdvancedSelectControl = props => {
 		>
 			<SelectControl
 				{ ...selectProps }
+				role="listbox"
 				value={ typeof props.value === 'undefined' ? value : props.value }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 			/>

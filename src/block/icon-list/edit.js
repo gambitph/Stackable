@@ -85,10 +85,8 @@ const Edit = props => {
 	const [ selectedEvent, setSelectedEvent ] = useState( null )
 	const {
 		isTyping,
-		deviceType,
 	} = useSelect( select => ( {
 		isTyping: select( 'core/block-editor' ).isTyping(),
-		deviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType(),
 	} ) )
 
 	// Click handler to detect whether an icon is clicked, and open the icon
@@ -104,15 +102,7 @@ const Edit = props => {
 		 * Check if the click is on the icon.
 		 */
 
-		// Different icon sizes per device preview.
-		const currentIconSize = (
-			deviceType === 'Desktop' ? props.attributes.iconSize
-				: deviceType === 'Tablet' ? ( props.attributes.iconSizeTablet || props.attributes.iconSize )
-					: ( props.attributes.iconSizeMobile || props.attributes.iconSizeTablet || props.attributes.iconSize ) ) ||
-		20
-
-		// Check if the click location if it's estimated to be on the icon.
-		if ( event.offsetX <= currentIconSize + 21 ) {
+		if ( event.offsetX <= 2 ) {
 			// Get the selected li and show the icon picker on it.
 			const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
 			const { currentlyOpenIndex } = event.target.parentElement
@@ -151,7 +141,7 @@ const Edit = props => {
 		event.target.parentElement.currentlyOpenIndex = undefined
 		setIconSearchAnchor( null )
 		return setIsOpenIconSearch( false )
-	}, [ deviceType, props.attributes.iconSize, props.attributes.iconSizeTablet, props.attributes.iconSizeMobile ] )
+	}, [ setSelectedEvent, setSelectedIconCSSSelector, setIconSearchAnchor, setIsOpenIconSearch ] )
 
 	useEffect( () => {
 		textRef.current.addEventListener( 'click', iconClickHandler )
@@ -327,6 +317,7 @@ const Edit = props => {
 					<Typography
 						tagName={ tagName }
 						multiline="li"
+						focusOnSelected={ true }
 					>
 						{ controls }
 					</Typography>

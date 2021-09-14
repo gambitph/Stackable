@@ -127,7 +127,7 @@ const blocks = {
 	},
 	'ugb/separator': {
 		title: __( 'Separator', i18n ),
-		description: __( 'A fancy separator to be placed between containers and content.', i18n ),
+		description: __( 'A fancy separator to be placed between content.', i18n ),
 		sDemoURL: 'https://wpstackable.com/separator-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 	},
 	'ugb/spacer': {

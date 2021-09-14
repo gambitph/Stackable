@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testimonial block Save render should match snapshot 1`] = `
+exports[`Testimonial (v2) block Save render should match snapshot 1`] = `
 <div
   class="wp-block-ugb-testimonial ugb-testimonial--v3 ugb-testimonial--columns-2 ugb-testimonial--design-basic ugb-main-block"
 >
@@ -86,7 +86,7 @@ exports[`Testimonial block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Testimonial block Save render should match snapshot with attributes 1`] = `
+exports[`Testimonial (v2) block Save render should match snapshot with attributes 1`] = `
 <div
   class="wp-block-ugb-testimonial ugb-testimonial--v3 ugb-testimonial--columns-3 ugb-testimonial--design-wave-2 ugb-main-block"
 >
