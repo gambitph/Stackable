@@ -16,7 +16,7 @@ export const BlockLink = () => {
 BlockLink.Content = props => {
 	const { href, attributes } = props
 
-	if ( ! attributes.hasBlockLink ) {
+	if ( ! attributes.blockLinkUrl ) {
 		return null
 	}
 
