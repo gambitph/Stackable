@@ -22,7 +22,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 const iconStyleOptions = {
 	selector: '.stk--svg-wrapper',
-	hoverSelector: ':hover .stk--svg-wrapper',
+	hoverSelector: '.stk--svg-wrapper:hover',
 }
 
 export const IconStyles = props => {

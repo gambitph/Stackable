@@ -39,7 +39,7 @@ $_cssvars: ();
 	}
 }
 
-@mixin cssvars-responsive( $css_variables ) {
+@mixin cssvars-responsive( $css_variables, $print-design-system ) {
 	$desktop: ();
 	$tablet: ();
 	$mobile: ();
@@ -64,35 +64,37 @@ $_cssvars: ();
 		}
 	}
 
-	@if length( $desktop ) > 0 {
-		:root {
-			@each $name, $value in $desktop {
-				--stk-#{ $name }: #{ $value };
-			}
-		}
-	}
-
-	@if length( $tablet ) > 0 {
-		@include tablet {
+	// This will print out the responsive custom properties.
+	@if $print-design-system {
+		@if length( $desktop ) > 0 {
 			:root {
-				@each $name, $value in $tablet {
+				@each $name, $value in $desktop {
 					--stk-#{ $name }: #{ $value };
 				}
 			}
 		}
-	}
 
-	@if length( $mobile ) > 0 {
-		@include mobile {
-			:root {
-				@each $name, $value in $mobile {
-					--stk-#{ $name }: #{ $value };
+		@if length( $tablet ) > 0 {
+			@include tablet {
+				:root {
+					@each $name, $value in $tablet {
+						--stk-#{ $name }: #{ $value };
+					}
+				}
+			}
+		}
+
+		@if length( $mobile ) > 0 {
+			@include mobile {
+				:root {
+					@each $name, $value in $mobile {
+						--stk-#{ $name }: #{ $value };
+					}
 				}
 			}
 		}
 	}
 }
-
 
 /**
  * Retrieve a css variable value with prefix

@@ -163,32 +163,32 @@ class TaxonomyControl extends Component {
 					/>
 				}
 				{ taxonomyTypeOptions.length > 0 &&
-				<Fragment>
-					<AdvancedSelectControl
-						label={ __( 'Taxonomy Filter Type', i18n ) }
-						allowReset={ allowReset }
-						options={ [
-							{ label: __( 'Included In', i18n ), value: '__in' },
-							{ label: __( 'Not In', i18n ), value: '__not_in' },
-						] }
-						value={ this.props.taxonomyFilterType }
-						onChange={ this.props.onChangeTaxonomyFilterType }
-						default="__in"
-					/>
-					<AdvancedTokenField
-						label={ taxonomyLabel }
-						suggestions={ taxonomySuggestionOptions }
-						value={ taxonomyValue }
-						onChange={ value => {
-							const passedTaxonomyValues = value?.map?.( selectedTaxonomy => {
-								const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy ) || {}
-								return entry
-							} )
+					<Fragment>
+						<AdvancedSelectControl
+							label={ __( 'Taxonomy Filter Type', i18n ) }
+							allowReset={ allowReset }
+							options={ [
+								{ label: __( 'Included In', i18n ), value: '__in' },
+								{ label: __( 'Not In', i18n ), value: '__not_in' },
+							] }
+							value={ this.props.taxonomyFilterType }
+							onChange={ this.props.onChangeTaxonomyFilterType }
+							default="__in"
+						/>
+						<AdvancedTokenField
+							label={ taxonomyLabel }
+							suggestions={ taxonomySuggestionOptions }
+							value={ taxonomyValue }
+							onChange={ value => {
+								const passedTaxonomyValues = value?.map?.( selectedTaxonomy => {
+									const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy ) || {}
+									return entry
+								} )
 
-							this.props.onChangeTaxonomy( compact( passedTaxonomyValues || [] ).join( ',' ) )
-						} }
-					/>
-				</Fragment>
+								this.props.onChangeTaxonomy( compact( passedTaxonomyValues || [] ).join( ',' ) )
+							} }
+						/>
+					</Fragment>
 				}
 			</div>
 		)
