@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Posts (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-blog-posts ugb-blog-posts--v2 ugb-blog-posts--design-basic ugb-blog-posts--columns-2 ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    />
+  </div>
+</div>
+`;
+
+exports[`Posts (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-blog-posts ugb-blog-posts--v2 ugb-blog-posts--design-wave-2 ugb-blog-posts--columns-3 ugb-blog-posts--cat-highlighted ugb-blog-posts--has-bg-color ugb-main-block"
+  data-id=""
+  data-load-items="123"
+>
+  <style>
+    .ugb-blog-posts__contentOrder{order:1 !important}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-button-container ugb-blog-posts__load-more-button"
+      >
+        <a
+          class="ugb-button ugb-button--size-loadMoreButtonSize ugb-button--ghost-to-normal-effect ugb--hover-effect-loadMoreButtonHoverEffect ugb-button--design-loadMoreButtonDesign ugb-button--has-icon ugb-button--icon-position-loadMoreButtonIconPosition"
+          href="#0"
+          rel=""
+          role="button"
+          title=""
+        >
+          <div
+            class="ugb-icon-inner-svg"
+          />
+          <span
+            class="ugb-button--inner"
+          >
+            <div>
+              loadMoreButtonText
+            </div>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

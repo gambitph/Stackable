@@ -185,7 +185,7 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 
 		return apply_filters( 'stackable/posts/post_query',
 			$post_query,
-			$context,
+			$context
 		);
 	}
 }
