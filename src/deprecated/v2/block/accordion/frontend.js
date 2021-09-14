@@ -116,7 +116,7 @@ const init = el => {
 }
 
 export const initAll = () => {
-	document.querySelectorAll( '.ugb-accordion' ).forEach( el => init( el ) )
+	document.querySelectorAll( '.ugb-accordion, .ugb-accordion--v2' ).forEach( el => init( el ) )
 }
 
 domReady( initAll )

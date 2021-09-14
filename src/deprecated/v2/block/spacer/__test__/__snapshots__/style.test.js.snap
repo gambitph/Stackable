@@ -1,16 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Spacer block Rendered styles should match snapshot 1`] = `
+exports[`Spacer (v2) block Rendered styles should match snapshot 1`] = `
 Object {
-  ".ugb-spacer": Object {
-    "height": undefined,
+  ".ugb-spacer--inner": Object {
+    "backgroundAttachment": undefined,
+    "backgroundBlendMode": undefined,
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+  },
+  ".ugb-spacer--inner:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": undefined,
+  },
+  "desktopTablet": Object {
+    ".ugb-spacer": Object {
+      "height": undefined,
+    },
   },
   "mobile": Object {
     ".ugb-spacer": Object {
       "height": undefined,
     },
+    ".ugb-spacer--inner": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".ugb-spacer--inner:before": Object {
+      "opacity": undefined,
+    },
   },
   "tablet": Object {
+    ".ugb-spacer--inner": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".ugb-spacer--inner:before": Object {
+      "opacity": undefined,
+    },
+  },
+  "tabletOnly": Object {
     ".ugb-spacer": Object {
       "height": undefined,
     },
@@ -18,19 +55,56 @@ Object {
 }
 `;
 
-exports[`Spacer block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Spacer (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-spacer": Object {
-    "height": "123heightUnit",
+  ".ugb-spacer--inner": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "backgroundImageBlendMode",
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": "url(backgroundMediaUrl)",
+    "backgroundPosition": "backgroundPosition",
+    "backgroundRepeat": "backgroundRepeat",
+    "backgroundSize": "backgroundSize",
+  },
+  ".ugb-spacer--inner:before": Object {
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": 12.3,
+  },
+  "desktopTablet": Object {
+    ".ugb-spacer": Object {
+      "height": "123heightUnit !important",
+    },
   },
   "mobile": Object {
     ".ugb-spacer": Object {
-      "height": "123mobileHeightUnit",
+      "height": "123mobileHeightUnit !important",
+    },
+    ".ugb-spacer--inner": Object {
+      "backgroundImage": "url(mobileBackgroundMediaUrl)",
+      "backgroundPosition": "mobileBackgroundPosition",
+      "backgroundRepeat": "mobileBackgroundRepeat",
+      "backgroundSize": "mobileBackgroundSize",
+    },
+    ".ugb-spacer--inner:before": Object {
+      "opacity": 12.3,
     },
   },
   "tablet": Object {
+    ".ugb-spacer--inner": Object {
+      "backgroundImage": "url(tabletBackgroundMediaUrl)",
+      "backgroundPosition": "tabletBackgroundPosition",
+      "backgroundRepeat": "tabletBackgroundRepeat",
+      "backgroundSize": "tabletBackgroundSize",
+    },
+    ".ugb-spacer--inner:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "tabletOnly": Object {
     ".ugb-spacer": Object {
-      "height": "123tabletHeightUnit",
+      "height": "123tabletHeightUnit !important",
     },
   },
 }

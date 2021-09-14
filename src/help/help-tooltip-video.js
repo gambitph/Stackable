@@ -60,7 +60,7 @@ const HelpToolTipVideo = props => {
 	// Get the position on where to place the tooltip, but change the X & width to match the whole inspector area.
 	const calculateRect = () => {
 		if ( ! target ) {
-			return null
+			return {}
 		}
 
 		const elRect = target.getBoundingClientRect()

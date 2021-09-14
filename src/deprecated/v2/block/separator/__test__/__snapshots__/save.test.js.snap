@@ -1,10 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Separator block Save render should match snapshot 1`] = `
+exports[`Separator (v2) block Save render should match snapshot 1`] = `
 <div
   aria-hidden="true"
-  class="ugb-separator ugb-separator--design-wave-1"
+  class="wp-block-ugb-separator alignfull ugb-separator--v2 ugb-separator--design-wave-1"
 >
+  <style>
+    .ugb-separator{margin-top:-1px !important;margin-bottom:-1px !important}.ugb-separator__bottom-pad{height:0px !important}.ugb-separator__top-pad{height:0px !important}.ugb-separator__shadow,.ugb-separator__layer-1{transform:scaleX(1)}@media screen and (min-width:768px){.ugb-separator__svg-wrapper{height:200px !important}}@media screen and (max-width:1025px){.ugb-separator{margin-top:-1px !important;margin-bottom:-1px !important}}@media screen and (max-width:768px){.ugb-separator{margin-top:-1px !important;margin-bottom:-1px !important}}
+  </style>
   <div
     class="ugb-inner-block"
   >
@@ -35,11 +38,14 @@ exports[`Separator block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Separator block Save render should match snapshot with attributes 1`] = `
+exports[`Separator (v2) block Save render should match snapshot with attributes 1`] = `
 <div
   aria-hidden="true"
-  class="ugb-separator ugb-separator--design-wave-2 ugb-separator--flip-vertical ugb-separator--flip-horizontal"
+  class="wp-block-ugb-separator alignfull ugb-separator--v2 ugb-separator--design-wave-2 ugb-separator--flip-vertical ugb-separator--flip-horizontal"
 >
+  <style>
+    .ugb-separator{background-color:#123456;margin-top:-1px !important;margin-bottom:-1px !important}.ugb-separator__bottom-pad{height:0px !important;background:#123456}.ugb-separator__top-pad{height:0px !important;background:#123456}.ugb-separator__shadow,.ugb-separator__layer-1{fill:#123456;transform:scaleX(-1)}@media screen and (min-width:768px){.ugb-separator__svg-wrapper{height:100px !important}}@media screen and (max-width:1025px){.ugb-separator{margin-top:122px !important;margin-bottom:122px !important}.ugb-separator__bottom-pad{height:123px !important}.ugb-separator__top-pad{height:123px !important}}@media screen and (min-width:768px) and (max-width:1025px){.ugb-separator__svg-wrapper{height:123px !important}}@media screen and (max-width:768px){.ugb-separator__svg-wrapper{height:123px !important}.ugb-separator{margin-top:122px !important;margin-bottom:122px !important}.ugb-separator__bottom-pad{height:123px !important}.ugb-separator__top-pad{height:123px !important}}
+  </style>
   <div
     class="ugb-inner-block"
   >

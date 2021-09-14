@@ -1,8 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Number Box (v2) block Rendered styles should match snapshot 1`] = `
+exports[`Feature Grid (v2) block Rendered styles should match snapshot 1`] = `
 Object {
-  ".ugb-number-box__description": Object {
+  ".ugb-button": Object {
+    "borderRadius": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-button .ugb-button--inner": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-button-container": Object {
+    "marginBottom": undefined,
+    "textAlign": undefined,
+  },
+  ".ugb-button.ugb-button--has-icon.ugb-button--has-icon svg": Object {
+    "height": undefined,
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "width": undefined,
+  },
+  ".ugb-button:before": Object {
+    "borderRadius": undefined,
+  },
+  ".ugb-button:hover": Object {
+    "opacity": undefined,
+  },
+  ".ugb-button:hover .ugb-button--inner": Object {
+    "color": undefined,
+  },
+  ".ugb-feature-grid__description": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -13,7 +45,10 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  ".ugb-number-box__item": Object {
+  ".ugb-feature-grid__image": Object {
+    "marginBottom": undefined,
+  },
+  ".ugb-feature-grid__item": Object {
     "backgroundAttachment": undefined,
     "backgroundBlendMode": undefined,
     "backgroundColor": undefined,
@@ -23,26 +58,13 @@ Object {
     "backgroundSize": undefined,
     "borderRadius": undefined,
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-feature-grid__item:before": Object {
     "backgroundColor": undefined,
     "backgroundImage": undefined,
     "mixBlendMode": undefined,
     "opacity": undefined,
   },
-  ".ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-    "fontFamily": undefined,
-    "fontSize": undefined,
-    "fontWeight": undefined,
-    "letterSpacing": undefined,
-    "lineHeight": undefined,
-    "marginBottom": undefined,
-    "opacity": undefined,
-    "textIndent": undefined,
-    "textTransform": undefined,
-  },
-  ".ugb-number-box__title": Object {
+  ".ugb-feature-grid__title": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -53,19 +75,18 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  "desktopTablet": Object {
-    ".ugb-number-box__number": Object {
-      "height": undefined,
-      "lineHeight": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
-      "width": undefined,
-    },
+  ".ugb-img": Object {
+    "borderRadius": undefined,
+    "height": undefined,
+    "width": undefined,
+  },
+  ".ugb-img, .ugb-feature-grid__image": Object {
+    "marginLeft": undefined,
+    "marginRight": undefined,
   },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-feature-grid__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -73,7 +94,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-feature-grid__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -81,7 +102,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-feature-grid__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -90,33 +111,42 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-button .ugb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-button-container": Object {
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-feature-grid__description": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
+    ".ugb-feature-grid__image": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-feature-grid__item": Object {
       "backgroundImage": undefined,
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-feature-grid__item:before": Object {
       "opacity": undefined,
     },
-    ".ugb-number-box__number": Object {
-      "height": undefined,
+    ".ugb-feature-grid__title": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
       "textAlign": undefined,
+    },
+    ".ugb-img": Object {
+      "height": undefined,
       "width": undefined,
     },
-    ".ugb-number-box__title": Object {
-      "lineHeight": undefined,
-      "marginBottom": undefined,
-      "textAlign": undefined,
+    ".ugb-img, .ugb-feature-grid__image": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
     },
   },
   "saveOnly": Object {
@@ -146,47 +176,58 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-button .ugb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-button-container": Object {
+      "textAlign": undefined,
+    },
+    ".ugb-feature-grid__description": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
+    ".ugb-feature-grid__item": Object {
       "backgroundImage": undefined,
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-feature-grid__item:before": Object {
       "opacity": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-feature-grid__title": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
+    },
+    ".ugb-img, .ugb-feature-grid__image": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
     },
   },
   "tabletOnly": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-button-container": Object {
       "marginBottom": undefined,
     },
-    ".ugb-number-box__number": Object {
+    ".ugb-feature-grid__description": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-feature-grid__image": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-feature-grid__title": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-img": Object {
       "height": undefined,
-      "lineHeight": undefined,
-      "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
       "width": undefined,
-    },
-    ".ugb-number-box__title": Object {
-      "marginBottom": undefined,
     },
   },
 }
 `;
 
-exports[`Number Box (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Feature Grid (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-number-box__item": Object {
+  ".ugb-feature-grid__item": Object {
     "backgroundAttachment": "fixed",
     "backgroundBlendMode": "columnBackgroundImageBlendMode",
     "backgroundColor": "#123456 !important",
@@ -202,7 +243,7 @@ Object {
     "borderStyle": "columnBorderType !important",
     "borderTopWidth": "123px !important",
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-feature-grid__item:before": Object {
     "backgroundColor": "#123456 !important",
     "backgroundImage": undefined,
     "mixBlendMode": undefined,
@@ -210,7 +251,7 @@ Object {
   },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-feature-grid__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -218,7 +259,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-feature-grid__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -226,7 +267,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-feature-grid__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -235,7 +276,7 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__item": Object {
+    ".ugb-feature-grid__item": Object {
       "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
       "backgroundPosition": "columnMobileBackgroundPosition",
       "backgroundRepeat": "columnMobileBackgroundRepeat",
@@ -245,7 +286,7 @@ Object {
       "borderRightWidth": "123px !important",
       "borderTopWidth": "123px !important",
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-feature-grid__item:before": Object {
       "opacity": 12.3,
     },
   },
@@ -276,7 +317,7 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__item": Object {
+    ".ugb-feature-grid__item": Object {
       "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
       "backgroundPosition": "columnTabletBackgroundPosition",
       "backgroundRepeat": "columnTabletBackgroundRepeat",
@@ -286,7 +327,7 @@ Object {
       "borderRightWidth": "123px !important",
       "borderTopWidth": "123px !important",
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-feature-grid__item:before": Object {
       "opacity": 12.3,
     },
   },
