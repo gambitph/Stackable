@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Video Popup block Rendered styles should match snapshot 1`] = `
+exports[`Video Popup (v2) block Rendered styles should match snapshot 1`] = `
 Object {
   ".ugb-video-popup__play-button svg": Object {
     "fill": undefined,
@@ -63,7 +63,7 @@ Object {
 }
 `;
 
-exports[`Video Popup block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Video Popup (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
   ".ugb-video-popup__play-button svg": Object {
     "fill": "#123456 !important",
@@ -79,15 +79,24 @@ Object {
     "backgroundPosition": "previewBackgroundPosition",
     "backgroundRepeat": "previewBackgroundRepeat",
     "backgroundSize": "previewBackgroundSize",
-    "borderRadius": "6px",
+    "borderBottomWidth": "123px !important",
+    "borderColor": "#123456 !important",
+    "borderLeftWidth": "123px !important",
+    "borderRadius": "123px",
+    "borderRightWidth": "123px !important",
+    "borderStyle": "columnBorderType !important",
+    "borderTopWidth": "123px !important",
     "height": "123px !important",
     "maxWidth": "123px",
   },
   ".ugb-video-popup__wrapper:before": Object {
-    "backgroundColor": undefined,
+    "backgroundColor": "#123456",
     "backgroundImage": undefined,
-    "mixBlendMode": "previewBackgroundGradientBlendMode",
+    "mixBlendMode": undefined,
     "opacity": 12.3,
+  },
+  ".ugb-video-popup__wrapper:hover:before": Object {
+    "opacity": 12,
   },
   "mobile": Object {
     ".ugb-video-popup__play-button svg": Object {
@@ -99,6 +108,10 @@ Object {
       "backgroundPosition": "previewMobileBackgroundPosition",
       "backgroundRepeat": "previewMobileBackgroundRepeat",
       "backgroundSize": "previewMobileBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
       "height": "123px !important",
       "maxWidth": "123px",
     },
@@ -116,6 +129,10 @@ Object {
       "backgroundPosition": "previewTabletBackgroundPosition",
       "backgroundRepeat": "previewTabletBackgroundRepeat",
       "backgroundSize": "previewTabletBackgroundSize",
+      "borderBottomWidth": "123px !important",
+      "borderLeftWidth": "123px !important",
+      "borderRightWidth": "123px !important",
+      "borderTopWidth": "123px !important",
       "height": "123px !important",
       "maxWidth": "123px",
     },

@@ -2,7 +2,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	registerStore, dispatch, useSelect,
 } from '@wordpress/data'
-import { useEffect, useCallback } from '@wordpress/element'
+import { useCallback } from '@wordpress/element'
 
 // Include all the stored state.
 const DEFAULT_STATE = {
@@ -95,7 +95,6 @@ registerStore( 'stackable/hover-state', {
 export const useBlockHoverState = () => {
 	const { clientId } = useBlockEditContext()
 	const {
-		selectedClientId,
 		hoverStateClientId,
 		hoverState,
 		parentHoverClientId,
@@ -113,18 +112,6 @@ export const useBlockHoverState = () => {
 			hasParentHoverState: select( 'stackable/hover-state' ).getHasParentHoverState(),
 		}
 	}, [] )
-
-	// Update the selected id if the selected block changes.
-	useEffect( () => {
-		if ( hoverStateClientId !== selectedClientId ) {
-			if ( selectedClientId ) {
-				dispatch( 'stackable/hover-state' ).updateSelectedBlock( selectedClientId )
-			} else {
-				// If there's no selected block, clear the hover states.
-				dispatch( 'stackable/hover-state' ).clearSelectedBlock()
-			}
-		}
-	}, [ selectedClientId, hoverStateClientId ] )
 
 	const setHoverState = useCallback( state => {
 		dispatch( 'stackable/hover-state' ).updateHoverState( state )

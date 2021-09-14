@@ -17,8 +17,8 @@ const getStyleParams = ( options = {} ) => {
 		hoverSelector = '',
 	} = options
 
-	const getSvgSelector = ( getAttribute, _selector = selector, suffixes = [] ) => {
-		const svgSelector = `${ _selector } .stk--inner-svg svg:last-child`
+	const getSvgSelector = ( getAttribute, _selector = selector, suffixes = [], fallback = selector ) => {
+		const svgSelector = `${ _selector || fallback } .stk--inner-svg svg:last-child`
 		if ( suffixes.length ) {
 			return [
 				svgSelector,
@@ -28,6 +28,8 @@ const getStyleParams = ( options = {} ) => {
 		return svgSelector
 	}
 
+	const getSvgHoverSelector = ( getAttribute, _selector = selector, suffixes = [] ) => getSvgSelector( getAttribute, _selector, suffixes, selector + ':hover' )
+
 	const shapeSelector = `${ selector } .stk--inner-svg`
 	const shapeHoverSelector = `${ hoverSelector } .stk--inner-svg`
 
@@ -35,7 +37,7 @@ const getStyleParams = ( options = {} ) => {
 		// Icon Styles
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
-			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector ),
+			hoverSelectorCallback: getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ),
 			styles: {
 				height: 'iconSize',
 				width: 'iconSize',
@@ -45,14 +47,14 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
-			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector ),
+			hoverSelectorCallback: getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ),
 			styleRule: 'opacity',
 			attrName: 'iconOpacity',
 			hover: 'all',
 		},
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
-			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector ),
+			hoverSelectorCallback: getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ),
 			styleRule: 'transform',
 			attrName: 'iconRotation',
 			hover: 'all',
@@ -73,7 +75,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute, selector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ),
-			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ),
+			hoverSelectorCallback: getAttribute => getSvgHoverSelector( getAttribute, hoverSelector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ),
 			styleRule: 'fill',
 			attrName: 'iconColor1',
 			valuePreCallback: ( value, getAttribute, device, state ) => {

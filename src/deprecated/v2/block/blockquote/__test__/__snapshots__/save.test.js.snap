@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Blockquote block Save render should match snapshot 1`] = `
+exports[`Blockquote (v2) block Save render should match snapshot 1`] = `
 <div
   class="wp-block-ugb-blockquote ugb-blockquote--v3 ugb-blockquote--design-plain ugb-main-block"
 >
@@ -27,9 +27,7 @@ exports[`Blockquote block Save render should match snapshot 1`] = `
           <p
             class="ugb-blockquote__text"
           >
-            <div>
-              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
-            </div>
+            <div />
           </p>
         </div>
       </div>
@@ -38,7 +36,7 @@ exports[`Blockquote block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Blockquote block Save render should match snapshot with attributes 1`] = `
+exports[`Blockquote (v2) block Save render should match snapshot with attributes 1`] = `
 <div
   class="wp-block-ugb-blockquote ugb-blockquote--v3 ugb-blockquote--design-wave-2 ugb-blockquote--small-quote ugb-main-block"
 >
