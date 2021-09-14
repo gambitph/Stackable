@@ -1,8 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Number Box (v2) block Rendered styles should match snapshot 1`] = `
+exports[`Notification (v2) block Rendered styles should match snapshot 1`] = `
 Object {
-  ".ugb-number-box__description": Object {
+  ".ugb-button-container": Object {
+    "marginBottom": undefined,
+  },
+  ".ugb-notification__description": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -13,7 +16,7 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  ".ugb-number-box__item": Object {
+  ".ugb-notification__item": Object {
     "backgroundAttachment": undefined,
     "backgroundBlendMode": undefined,
     "backgroundColor": undefined,
@@ -23,26 +26,13 @@ Object {
     "backgroundSize": undefined,
     "borderRadius": undefined,
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-notification__item:before": Object {
     "backgroundColor": undefined,
     "backgroundImage": undefined,
     "mixBlendMode": undefined,
     "opacity": undefined,
   },
-  ".ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-    "fontFamily": undefined,
-    "fontSize": undefined,
-    "fontWeight": undefined,
-    "letterSpacing": undefined,
-    "lineHeight": undefined,
-    "marginBottom": undefined,
-    "opacity": undefined,
-    "textIndent": undefined,
-    "textTransform": undefined,
-  },
-  ".ugb-number-box__title": Object {
+  ".ugb-notification__title": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -53,19 +43,9 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  "desktopTablet": Object {
-    ".ugb-number-box__number": Object {
-      "height": undefined,
-      "lineHeight": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
-      "width": undefined,
-    },
-  },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -73,7 +53,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -81,7 +61,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -90,30 +70,24 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-button-container": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-notification__description": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
+    ".ugb-notification__item": Object {
       "backgroundImage": undefined,
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-notification__item:before": Object {
       "opacity": undefined,
     },
-    ".ugb-number-box__number": Object {
-      "height": undefined,
-      "lineHeight": undefined,
-      "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
-      "width": undefined,
-    },
-    ".ugb-number-box__title": Object {
+    ".ugb-notification__title": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
@@ -146,47 +120,63 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-notification__description": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
+    ".ugb-notification__item": Object {
       "backgroundImage": undefined,
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-notification__item:before": Object {
       "opacity": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-notification__title": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
   },
   "tabletOnly": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-button-container": Object {
       "marginBottom": undefined,
     },
-    ".ugb-number-box__number": Object {
-      "height": undefined,
-      "lineHeight": undefined,
+    ".ugb-notification__description": Object {
       "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
-      "width": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-notification__title": Object {
       "marginBottom": undefined,
     },
   },
 }
 `;
 
-exports[`Number Box (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Notification (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-number-box__item": Object {
+  ".ugb-notification__close-button svg": Object {
+    "fill": "#123456 !important",
+  },
+  ".ugb-notification__icon": Object {
+    "height": "123px !important",
+    "marginBottom": "123px !important",
+    "marginLeft": "auto !important",
+    "marginRight": "auto !important",
+    "opacity": "123 !important",
+    "width": "123px !important",
+  },
+  ".ugb-notification__icon .ugb-icon-inner-svg": Object {
+    "color": "#123456 !important",
+    "transform": "rotate(123deg) !important",
+  },
+  ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg": Object {
+    "height": "123px !important",
+    "width": "123px !important",
+  },
+  ".ugb-notification__icon svg:not(.ugb-custom-icon)": Object {
+    "color": "#123456 !important",
+  },
+  ".ugb-notification__item": Object {
     "backgroundAttachment": "fixed",
     "backgroundBlendMode": "columnBackgroundImageBlendMode",
     "backgroundColor": "#123456 !important",
@@ -194,23 +184,28 @@ Object {
     "backgroundPosition": "columnBackgroundPosition",
     "backgroundRepeat": "columnBackgroundRepeat",
     "backgroundSize": "columnBackgroundSize",
-    "borderBottomWidth": "123px !important",
-    "borderColor": "#123456 !important",
-    "borderLeftWidth": "123px !important",
     "borderRadius": "123px !important",
-    "borderRightWidth": "123px !important",
-    "borderStyle": "columnBorderType !important",
-    "borderTopWidth": "123px !important",
+    "paddingRight": "100px !important",
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-notification__item:before": Object {
     "backgroundColor": "#123456 !important",
     "backgroundImage": undefined,
     "mixBlendMode": undefined,
     "opacity": 12.3,
   },
+  "desktopTablet": Object {
+    ".ugb-notification__close-button": Object {
+      "height": "123px",
+      "width": "123px",
+    },
+  },
   "editor": Object {
+    ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg path, .ugb-notification__icon .ugb-icon-inner-svg svg g, .ugb-notification__icon .ugb-icon-inner-svg svg shape, .ugb-notification__icon .ugb-icon-inner-svg svg circle, .ugb-notification__icon .ugb-icon-inner-svg svg path, .ugb-notification__icon .ugb-icon-inner-svg svg rect, .ugb-notification__icon .ugb-icon-inner-svg svg polygon, .ugb-notification__icon .ugb-icon-inner-svg svg ellipse": Object {
+      "color": "#123456 !important",
+      "fill": "#123456 !important",
+    },
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -218,7 +213,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -226,7 +221,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -235,21 +230,36 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__item": Object {
+    ".ugb-notification__close-button": Object {
+      "height": "123px",
+      "width": "123px",
+    },
+    ".ugb-notification__icon": Object {
+      "height": "123px !important",
+      "marginBottom": "123px !important",
+      "marginLeft": "auto !important",
+      "marginRight": "auto !important",
+      "width": "123px !important",
+    },
+    ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg": Object {
+      "height": "123px !important",
+      "width": "123px !important",
+    },
+    ".ugb-notification__item": Object {
       "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
       "backgroundPosition": "columnMobileBackgroundPosition",
       "backgroundRepeat": "columnMobileBackgroundRepeat",
       "backgroundSize": "columnMobileBackgroundSize",
-      "borderBottomWidth": "123px !important",
-      "borderLeftWidth": "123px !important",
-      "borderRightWidth": "123px !important",
-      "borderTopWidth": "123px !important",
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-notification__item:before": Object {
       "opacity": 12.3,
     },
   },
   "saveOnly": Object {
+    ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg *": Object {
+      "color": "#123456 !important",
+      "fill": "#123456 !important",
+    },
     "desktopTablet": Object {
       "> .ugb-inner-block > .ugb-block-content > *": Object {
         "paddingBottom": undefined,
@@ -276,18 +286,33 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__item": Object {
+    ".ugb-notification__icon": Object {
+      "height": "123px !important",
+      "marginLeft": "auto !important",
+      "marginRight": "auto !important",
+      "width": "123px !important",
+    },
+    ".ugb-notification__item": Object {
       "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
       "backgroundPosition": "columnTabletBackgroundPosition",
       "backgroundRepeat": "columnTabletBackgroundRepeat",
       "backgroundSize": "columnTabletBackgroundSize",
-      "borderBottomWidth": "123px !important",
-      "borderLeftWidth": "123px !important",
-      "borderRightWidth": "123px !important",
-      "borderTopWidth": "123px !important",
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-notification__item:before": Object {
       "opacity": 12.3,
+    },
+  },
+  "tabletOnly": Object {
+    ".ugb-notification__close-button": Object {
+      "height": "123px",
+      "width": "123px",
+    },
+    ".ugb-notification__icon": Object {
+      "marginBottom": "123px !important",
+    },
+    ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg": Object {
+      "height": "123px !important",
+      "width": "123px !important",
     },
   },
 }

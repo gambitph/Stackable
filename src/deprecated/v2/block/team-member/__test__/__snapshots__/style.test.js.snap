@@ -1,8 +1,62 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Number Box (v2) block Rendered styles should match snapshot 1`] = `
+exports[`Team Member (v2) block Rendered styles should match snapshot 1`] = `
 Object {
-  ".ugb-number-box__description": Object {
+  ".ugb-button": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "opacity": undefined,
+    "paddingBottom": undefined,
+    "paddingLeft": undefined,
+    "paddingRight": undefined,
+    "paddingTop": undefined,
+  },
+  ".ugb-button .ugb-button--inner": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-button .ugb-button--inner, .ugb-button svg:not(.ugb-custom-icon)": Object {
+    "color": undefined,
+  },
+  ".ugb-button-container": Object {
+    "marginBottom": undefined,
+  },
+  ".ugb-button.ugb-button--has-icon.ugb-button--has-icon svg": Object {
+    "height": "px",
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "width": "px",
+  },
+  ".ugb-button:before": Object {
+    "backgroundImage": undefined,
+    "borderRadius": undefined,
+    "content": undefined,
+  },
+  ".ugb-button:hover": Object {
+    "backgroundColor": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-button:hover .ugb-button--inner, .ugb-button:hover svg:not(.ugb-custom-icon)": Object {
+    "color": undefined,
+  },
+  ".ugb-img": Object {
+    "borderRadius": undefined,
+  },
+  ".ugb-img, .ugb-team-member__image": Object {
+    "marginLeft": undefined,
+    "marginRight": undefined,
+  },
+  ".ugb-team-member__buttons": Object {
+    "textAlign": undefined,
+  },
+  ".ugb-team-member__description": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -13,7 +67,10 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  ".ugb-number-box__item": Object {
+  ".ugb-team-member__image": Object {
+    "marginBottom": undefined,
+  },
+  ".ugb-team-member__item": Object {
     "backgroundAttachment": undefined,
     "backgroundBlendMode": undefined,
     "backgroundColor": undefined,
@@ -23,26 +80,13 @@ Object {
     "backgroundSize": undefined,
     "borderRadius": undefined,
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-team-member__item:before": Object {
     "backgroundColor": undefined,
     "backgroundImage": undefined,
     "mixBlendMode": undefined,
     "opacity": undefined,
   },
-  ".ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-    "fontFamily": undefined,
-    "fontSize": undefined,
-    "fontWeight": undefined,
-    "letterSpacing": undefined,
-    "lineHeight": undefined,
-    "marginBottom": undefined,
-    "opacity": undefined,
-    "textIndent": undefined,
-    "textTransform": undefined,
-  },
-  ".ugb-number-box__title": Object {
+  ".ugb-team-member__name": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -53,19 +97,32 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
+  ".ugb-team-member__position": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  "desktopOnly": Object {
+    ".ugb-team-member__image": Object {
+      "width": undefined,
+    },
+  },
   "desktopTablet": Object {
-    ".ugb-number-box__number": Object {
+    ".ugb-img": Object {
+      "borderRadius": undefined,
       "height": undefined,
-      "lineHeight": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
       "width": undefined,
     },
   },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-team-member__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -73,7 +130,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-team-member__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -81,7 +138,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-team-member__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -90,30 +147,51 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-button": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+    ".ugb-button .ugb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-button-container": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-img": Object {
+      "height": undefined,
+      "width": undefined,
+    },
+    ".ugb-img, .ugb-team-member__image": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+    ".ugb-team-member__buttons": Object {
+      "textAlign": undefined,
+    },
+    ".ugb-team-member__description": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
+    ".ugb-team-member__image": Object {
+      "marginBottom": undefined,
+      "width": undefined,
+    },
+    ".ugb-team-member__item": Object {
       "backgroundImage": undefined,
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-team-member__item:before": Object {
       "opacity": undefined,
     },
-    ".ugb-number-box__number": Object {
-      "height": undefined,
+    ".ugb-team-member__name": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
       "textAlign": undefined,
-      "width": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-team-member__position": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
@@ -146,47 +224,70 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-button .ugb-button--inner": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-img, .ugb-team-member__image": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+    ".ugb-team-member__buttons": Object {
+      "textAlign": undefined,
+    },
+    ".ugb-team-member__description": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
+    ".ugb-team-member__item": Object {
       "backgroundImage": undefined,
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-team-member__item:before": Object {
       "opacity": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-team-member__name": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-team-member__position": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
   },
   "tabletOnly": Object {
-    ".ugb-number-box__description": Object {
-      "marginBottom": undefined,
-    },
-    ".ugb-number-box__number": Object {
-      "height": undefined,
-      "lineHeight": undefined,
-      "marginBottom": undefined,
+    ".ugb-button": Object {
       "marginLeft": undefined,
       "marginRight": undefined,
-      "textAlign": undefined,
+    },
+    ".ugb-button-container": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-img": Object {
+      "height": undefined,
       "width": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-team-member__description": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-team-member__image": Object {
+      "marginBottom": undefined,
+      "width": undefined,
+    },
+    ".ugb-team-member__name": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-team-member__position": Object {
       "marginBottom": undefined,
     },
   },
 }
 `;
 
-exports[`Number Box (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Team Member (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-number-box__item": Object {
+  ".ugb-team-member__item": Object {
     "backgroundAttachment": "fixed",
     "backgroundBlendMode": "columnBackgroundImageBlendMode",
     "backgroundColor": "#123456 !important",
@@ -202,7 +303,7 @@ Object {
     "borderStyle": "columnBorderType !important",
     "borderTopWidth": "123px !important",
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-team-member__item:before": Object {
     "backgroundColor": "#123456 !important",
     "backgroundImage": undefined,
     "mixBlendMode": undefined,
@@ -210,7 +311,7 @@ Object {
   },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-team-member__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -218,7 +319,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-team-member__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -226,7 +327,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-team-member__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -235,7 +336,7 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__item": Object {
+    ".ugb-team-member__item": Object {
       "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
       "backgroundPosition": "columnMobileBackgroundPosition",
       "backgroundRepeat": "columnMobileBackgroundRepeat",
@@ -245,7 +346,7 @@ Object {
       "borderRightWidth": "123px !important",
       "borderTopWidth": "123px !important",
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-team-member__item:before": Object {
       "opacity": 12.3,
     },
   },
@@ -276,7 +377,7 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__item": Object {
+    ".ugb-team-member__item": Object {
       "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
       "backgroundPosition": "columnTabletBackgroundPosition",
       "backgroundRepeat": "columnTabletBackgroundRepeat",
@@ -286,7 +387,7 @@ Object {
       "borderRightWidth": "123px !important",
       "borderTopWidth": "123px !important",
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-team-member__item:before": Object {
       "opacity": 12.3,
     },
   },

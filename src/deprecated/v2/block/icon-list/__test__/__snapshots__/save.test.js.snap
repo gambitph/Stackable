@@ -1,9 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Icon List block Save render should match snapshot 1`] = `
+exports[`Icon List (v2) block Save render should match snapshot 1`] = `
 <div
-  class="ugb-icon-list ugb-icon--icon-check ugb-main-block"
+  class="wp-block-ugb-icon-list ugb-icon-list--v2 ugb-main-block"
 >
+  <style>
+    li::before{background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTAgMTkwIj48cG9seWdvbiBwb2ludHM9IjE3My44LDI4LjQgNjAuNCwxNDEuOCAxNS43LDk3LjIgNS4xLDEwNy44IDYwLjQsMTYzIDE4NC40LDM5IDE3My44LDI4LjQiLz48L3N2Zz4=')}.ugb-icon-list ul{columns:2}
+  </style>
   <div
     class="ugb-inner-block"
   >
@@ -11,17 +14,39 @@ exports[`Icon List block Save render should match snapshot 1`] = `
       class="ugb-block-content"
     >
       <ul>
-        <div />
+        <div>
+          <li>
+            Line 1
+          </li>
+          <li>
+            Line 2
+          </li>
+          <li>
+            Line 3
+          </li>
+          <li>
+            Line 4
+          </li>
+          <li>
+            Line 5
+          </li>
+          <li>
+            Line 6
+          </li>
+        </div>
       </ul>
     </div>
   </div>
 </div>
 `;
 
-exports[`Icon List block Save render should match snapshot with attributes 1`] = `
+exports[`Icon List (v2) block Save render should match snapshot with attributes 1`] = `
 <div
-  class="ugb-icon-list ugb-icon--icon-check ugb-icon-list--display-grid ugb-main-block"
+  class="wp-block-ugb-icon-list ugb-icon-list--v2 ugb-icon-list--display-grid ugb-main-block"
 >
+  <style>
+    li{font-family:"listTextFontFamily",Sans-serif !important;font-size:123listTextFontSizeUnit !important;font-weight:listTextFontWeight !important;text-transform:listTextTextTransform !important;letter-spacing:123px !important;line-height:123listTextLineHeightUnit !important;color:#123456;--icon-size:123px !important;margin-bottom:123px !important}li::before{width:123px !important;height:123px !important;opacity:123 !important;transform:rotate(123deg) !important}li:nth-child(1):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(2):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(3):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(4):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(5):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(6):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(7):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(8):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(9):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(10):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(11):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(12):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(13):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(14):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(15):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(16):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(17):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(18):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(19):before{background-image:url('data:image/svg+xml;base64,undefined')}li:nth-child(20):before{background-image:url('data:image/svg+xml;base64,undefined')}li ul{margin-bottom:123px !important}.ugb-icon-list ul{columns:3;grid-template-columns:1fr 1fr 1fr}@media screen and (max-width:1025px){li{line-height:123listTextTabletLineHeightUnit !important;font-size:123listTextTabletFontSizeUnit !important}.ugb-icon-list ul{columns:123 !important;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important}}@media screen and (min-width:768px) and (max-width:1025px){li{--icon-size:123px !important}li::before{width:123px !important;height:123px !important}}@media screen and (max-width:768px){li{line-height:123listTextMobileLineHeightUnit !important;font-size:123listTextMobileFontSizeUnit !important;--icon-size:123px !important}li::before{width:123px !important;height:123px !important}.ugb-icon-list ul{columns:123 !important;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important}}
+  </style>
   <div
     class="ugb-inner-block"
   >

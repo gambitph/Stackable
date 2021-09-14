@@ -1,8 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Count Up (v2) block Rendered styles should match snapshot 1`] = `
+exports[`Posts (v2) block Rendered styles should match snapshot 1`] = `
 Object {
-  ".ugb-countup__counter": Object {
+  ".ugb-blog-posts__category": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-blog-posts__category a": Object {
+    "color": undefined,
+  },
+  ".ugb-blog-posts__category a:hover": Object {
+    "color": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-blog-posts__excerpt": Object {
+    "marginBottom": undefined,
+    "textAlign": undefined,
+  },
+  ".ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-blog-posts__featured-image": Object {
+    "borderRadius": undefined,
+    "marginBottom": undefined,
+  },
+  ".ugb-blog-posts__featured-image img": Object {
+    "height": undefined,
+  },
+  ".ugb-blog-posts__meta": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -13,8 +50,7 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  ".ugb-countup__description": Object {
-    "color": undefined,
+  ".ugb-blog-posts__readmore": Object {
     "fontFamily": undefined,
     "fontSize": undefined,
     "fontWeight": undefined,
@@ -24,11 +60,14 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
-    "textAlign": undefined,
-  },
-  ".ugb-countup__title": Object {
+  ".ugb-blog-posts__readmore a": Object {
     "color": undefined,
+  },
+  ".ugb-blog-posts__readmore a:hover": Object {
+    "color": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-blog-posts__title": Object {
     "fontFamily": undefined,
     "fontSize": undefined,
     "fontWeight": undefined,
@@ -37,10 +76,17 @@ Object {
     "marginBottom": undefined,
     "textAlign": undefined,
     "textTransform": undefined,
+  },
+  ".ugb-blog-posts__title a": Object {
+    "color": undefined,
+  },
+  ".ugb-blog-posts__title a:hover": Object {
+    "color": undefined,
+    "opacity": undefined,
   },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-countup__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -48,7 +94,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-countup__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -56,7 +102,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-countup__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -65,20 +111,35 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-countup__counter": Object {
+    ".ugb-blog-posts__category": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
     },
-    ".ugb-countup__description": Object {
+    ".ugb-blog-posts__excerpt": Object {
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-blog-posts__featured-image": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__featured-image img": Object {
+      "height": undefined,
+    },
+    ".ugb-blog-posts__meta": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
     },
-    ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
+    ".ugb-blog-posts__readmore": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
       "textAlign": undefined,
     },
-    ".ugb-countup__title": Object {
+    ".ugb-blog-posts__title": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
@@ -111,65 +172,63 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-countup__counter": Object {
+    ".ugb-blog-posts__category": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
-    ".ugb-countup__description": Object {
+    ".ugb-blog-posts__excerpt": Object {
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-blog-posts__meta": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
-    ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
+    ".ugb-blog-posts__readmore": Object {
+      "lineHeight": undefined,
       "textAlign": undefined,
     },
-    ".ugb-countup__title": Object {
+    ".ugb-blog-posts__title": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
   },
   "tabletOnly": Object {
-    ".ugb-countup__counter": Object {
+    ".ugb-blog-posts__category": Object {
       "marginBottom": undefined,
     },
-    ".ugb-countup__description": Object {
+    ".ugb-blog-posts__excerpt": Object {
       "marginBottom": undefined,
     },
-    ".ugb-countup__title": Object {
+    ".ugb-blog-posts__featured-image": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__featured-image img": Object {
+      "height": undefined,
+    },
+    ".ugb-blog-posts__meta": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__readmore": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__title": Object {
       "marginBottom": undefined,
     },
   },
 }
 `;
 
-exports[`Count Up (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Posts (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-countup__icon": Object {
-    "marginBottom": "123px !important",
-    "marginLeft": "auto !important",
-    "marginRight": "auto !important",
-    "opacity": "123 !important",
-  },
-  ".ugb-countup__icon .ugb-icon-inner-svg": Object {
-    "color": "#123456 !important",
-    "transform": "rotate(123deg) !important",
-  },
-  ".ugb-countup__icon .ugb-icon-inner-svg, .ugb-countup__icon .ugb-icon-inner-svg svg": Object {
-    "height": "123px !important",
-    "width": "123px !important",
-  },
-  ".ugb-countup__icon svg:not(.ugb-custom-icon)": Object {
-    "color": "#123456",
-  },
-  ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
-    "textAlign": undefined,
+  ".ugb-blog-posts__contentOrder": Object {
+    "order": "1 !important",
   },
   "editor": Object {
-    ".ugb-countup__icon .ugb-icon-inner-svg, .ugb-countup__icon .ugb-icon-inner-svg svg path, .ugb-countup__icon .ugb-icon-inner-svg svg g, .ugb-countup__icon .ugb-icon-inner-svg svg shape, .ugb-countup__icon .ugb-icon-inner-svg svg circle, .ugb-countup__icon .ugb-icon-inner-svg svg path, .ugb-countup__icon .ugb-icon-inner-svg svg rect, .ugb-countup__icon .ugb-icon-inner-svg svg polygon, .ugb-countup__icon .ugb-icon-inner-svg svg ellipse": Object {
-      "color": "#123456 !important",
-      "fill": "#123456 !important",
-    },
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-countup__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -177,7 +236,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-countup__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -185,33 +244,15 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-countup__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
         "paddingTop": undefined,
       },
-    },
-  },
-  "mobile": Object {
-    ".ugb-countup__icon": Object {
-      "marginBottom": "123px !important",
-      "marginLeft": "auto !important",
-      "marginRight": "auto !important",
-    },
-    ".ugb-countup__icon .ugb-icon-inner-svg, .ugb-countup__icon .ugb-icon-inner-svg svg": Object {
-      "height": "123px !important",
-      "width": "123px !important",
-    },
-    ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
-      "textAlign": undefined,
     },
   },
   "saveOnly": Object {
-    ".ugb-countup__icon .ugb-icon-inner-svg, .ugb-countup__icon .ugb-icon-inner-svg svg *": Object {
-      "color": "#123456 !important",
-      "fill": "#123456 !important",
-    },
     "desktopTablet": Object {
       "> .ugb-inner-block > .ugb-block-content > *": Object {
         "paddingBottom": undefined,
@@ -235,24 +276,6 @@ Object {
         "paddingRight": undefined,
         "paddingTop": undefined,
       },
-    },
-  },
-  "tablet": Object {
-    ".ugb-countup__icon": Object {
-      "marginLeft": "auto !important",
-      "marginRight": "auto !important",
-    },
-    ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
-      "textAlign": undefined,
-    },
-  },
-  "tabletOnly": Object {
-    ".ugb-countup__icon": Object {
-      "marginBottom": "123px !important",
-    },
-    ".ugb-countup__icon .ugb-icon-inner-svg, .ugb-countup__icon .ugb-icon-inner-svg svg": Object {
-      "height": "123px !important",
-      "width": "123px !important",
     },
   },
 }

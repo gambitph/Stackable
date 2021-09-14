@@ -1,8 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Number Box (v2) block Rendered styles should match snapshot 1`] = `
+exports[`Image Box (v2) block Rendered styles should match snapshot 1`] = `
 Object {
-  ".ugb-number-box__description": Object {
+  ".ugb-image-box__box": Object {
+    "borderRadius": undefined,
+  },
+  ".ugb-image-box__description": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -13,36 +16,28 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  ".ugb-number-box__item": Object {
-    "backgroundAttachment": undefined,
-    "backgroundBlendMode": undefined,
-    "backgroundColor": undefined,
-    "backgroundImage": undefined,
+  ".ugb-image-box__image": Object {
     "backgroundPosition": undefined,
     "backgroundRepeat": undefined,
     "backgroundSize": undefined,
-    "borderRadius": undefined,
   },
-  ".ugb-number-box__item:before": Object {
-    "backgroundColor": undefined,
+  ".ugb-image-box__item": Object {
+    "height": undefined,
+    "justifyContent": undefined,
+  },
+  ".ugb-image-box__item1 .ugb-image-box__image": Object {
     "backgroundImage": undefined,
-    "mixBlendMode": undefined,
-    "opacity": undefined,
   },
-  ".ugb-number-box__number": Object {
-    "backgroundColor": undefined,
-    "color": undefined,
-    "fontFamily": undefined,
-    "fontSize": undefined,
-    "fontWeight": undefined,
-    "letterSpacing": undefined,
-    "lineHeight": undefined,
-    "marginBottom": undefined,
-    "opacity": undefined,
-    "textIndent": undefined,
-    "textTransform": undefined,
+  ".ugb-image-box__item2 .ugb-image-box__image": Object {
+    "backgroundImage": undefined,
   },
-  ".ugb-number-box__title": Object {
+  ".ugb-image-box__item3 .ugb-image-box__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".ugb-image-box__item4 .ugb-image-box__image": Object {
+    "backgroundImage": undefined,
+  },
+  ".ugb-image-box__subtitle": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -53,19 +48,20 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  "desktopTablet": Object {
-    ".ugb-number-box__number": Object {
-      "height": undefined,
-      "lineHeight": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
-      "width": undefined,
-    },
+  ".ugb-image-box__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
   },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-image-box__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -73,7 +69,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-image-box__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -81,7 +77,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-image-box__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -90,30 +86,21 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-image-box__description": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
-      "backgroundImage": undefined,
-      "backgroundPosition": undefined,
-      "backgroundRepeat": undefined,
-      "backgroundSize": undefined,
-    },
-    ".ugb-number-box__item:before": Object {
-      "opacity": undefined,
-    },
-    ".ugb-number-box__number": Object {
+    ".ugb-image-box__item": Object {
       "height": undefined,
+      "justifyContent": undefined,
+    },
+    ".ugb-image-box__subtitle": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
       "textAlign": undefined,
-      "width": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-image-box__title": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
@@ -146,71 +133,100 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-image-box__description": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
-      "backgroundImage": undefined,
-      "backgroundPosition": undefined,
-      "backgroundRepeat": undefined,
-      "backgroundSize": undefined,
+    ".ugb-image-box__item": Object {
+      "justifyContent": undefined,
     },
-    ".ugb-number-box__item:before": Object {
-      "opacity": undefined,
+    ".ugb-image-box__subtitle": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-image-box__title": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
   },
   "tabletOnly": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-image-box__description": Object {
       "marginBottom": undefined,
     },
-    ".ugb-number-box__number": Object {
+    ".ugb-image-box__item": Object {
       "height": undefined,
-      "lineHeight": undefined,
-      "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
-      "width": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-image-box__subtitle": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-image-box__title": Object {
       "marginBottom": undefined,
     },
   },
 }
 `;
 
-exports[`Number Box (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Image Box (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-number-box__item": Object {
-    "backgroundAttachment": "fixed",
-    "backgroundBlendMode": "columnBackgroundImageBlendMode",
-    "backgroundColor": "#123456 !important",
-    "backgroundImage": "url(columnBackgroundMediaUrl)",
-    "backgroundPosition": "columnBackgroundPosition",
-    "backgroundRepeat": "columnBackgroundRepeat",
-    "backgroundSize": "columnBackgroundSize",
+  ".ugb-image-box__arrow": Object {
+    "marginBottom": "123px !important",
+    "textAlign": "arrowAlign !important",
+  },
+  ".ugb-image-box__arrow svg": Object {
+    "fill": "#123456 !important",
+  },
+  ".ugb-image-box__box": Object {
+    "borderRadius": "123px !important",
+  },
+  ".ugb-image-box__image": Object {
+    "backgroundPosition": "imageBackgroundPosition !important",
+    "backgroundRepeat": "imageBackgroundRepeat !important",
+    "backgroundSize": undefined,
+  },
+  ".ugb-image-box__item": Object {
     "borderBottomWidth": "123px !important",
     "borderColor": "#123456 !important",
     "borderLeftWidth": "123px !important",
-    "borderRadius": "123px !important",
     "borderRightWidth": "123px !important",
     "borderStyle": "columnBorderType !important",
     "borderTopWidth": "123px !important",
+    "height": undefined,
+    "justifyContent": undefined,
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-image-box__item1 .ugb-image-box__image": Object {
+    "backgroundImage": "url(image1Url)",
+  },
+  ".ugb-image-box__item2 .ugb-image-box__image": Object {
+    "backgroundImage": "url(image2Url)",
+  },
+  ".ugb-image-box__item3 .ugb-image-box__image": Object {
+    "backgroundImage": "url(image3Url)",
+  },
+  ".ugb-image-box__item4 .ugb-image-box__image": Object {
+    "backgroundImage": "url(image4Url)",
+  },
+  ".ugb-image-box__item:not(:hover) .ugb-image-box__overlay": Object {
+    "opacity": "0 !important",
+  },
+  ".ugb-image-box__overlay": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "overlayBackgroundImageBlendMode",
     "backgroundColor": "#123456 !important",
     "backgroundImage": undefined,
+    "backgroundPosition": "overlayBackgroundPosition",
+    "backgroundRepeat": "overlayBackgroundRepeat",
+    "backgroundSize": "overlayBackgroundSize",
     "mixBlendMode": undefined,
     "opacity": 12.3,
   },
+  "desktopOnly": Object {
+    ".ugb-image-box__arrow svg": Object {
+      "width": "123px !important",
+    },
+  },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-image-box__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -218,7 +234,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-image-box__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -226,7 +242,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-image-box__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -235,18 +251,20 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__item": Object {
-      "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
-      "backgroundPosition": "columnMobileBackgroundPosition",
-      "backgroundRepeat": "columnMobileBackgroundRepeat",
-      "backgroundSize": "columnMobileBackgroundSize",
+    ".ugb-image-box__arrow": Object {
+      "marginBottom": "123px !important",
+      "textAlign": "arrowMobileAlign !important",
+    },
+    ".ugb-image-box__arrow svg": Object {
+      "width": "123px !important",
+    },
+    ".ugb-image-box__item": Object {
       "borderBottomWidth": "123px !important",
       "borderLeftWidth": "123px !important",
       "borderRightWidth": "123px !important",
       "borderTopWidth": "123px !important",
-    },
-    ".ugb-number-box__item:before": Object {
-      "opacity": 12.3,
+      "height": undefined,
+      "justifyContent": undefined,
     },
   },
   "saveOnly": Object {
@@ -276,18 +294,24 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__item": Object {
-      "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
-      "backgroundPosition": "columnTabletBackgroundPosition",
-      "backgroundRepeat": "columnTabletBackgroundRepeat",
-      "backgroundSize": "columnTabletBackgroundSize",
+    ".ugb-image-box__item": Object {
       "borderBottomWidth": "123px !important",
       "borderLeftWidth": "123px !important",
       "borderRightWidth": "123px !important",
       "borderTopWidth": "123px !important",
+      "justifyContent": undefined,
     },
-    ".ugb-number-box__item:before": Object {
-      "opacity": 12.3,
+  },
+  "tabletOnly": Object {
+    ".ugb-image-box__arrow": Object {
+      "marginBottom": "123px !important",
+      "textAlign": "arrowTabletAlign !important",
+    },
+    ".ugb-image-box__arrow svg": Object {
+      "width": "123px !important",
+    },
+    ".ugb-image-box__item": Object {
+      "height": undefined,
     },
   },
 }
