@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Count Up block Save render should match snapshot 1`] = `
+exports[`Count Up (v2) block Save render should match snapshot 1`] = `
 <div
-  aria-hidden="true"
-  class="ugb-count-up ugb-countup--v4 ugb-countup--columns-2 ugb-main-block"
+  class="wp-block-ugb-count-up ugb-countup--v4 ugb-countup--columns-2 ugb-main-block"
 >
   <div
     class="ugb-inner-block"
@@ -32,11 +31,11 @@ exports[`Count Up block Save render should match snapshot 1`] = `
         </div>
         <p
           class="ugb-countup__description"
-        />
-        <div>
-          Description
-        </div>
-        <p />
+        >
+          <div>
+            Description
+          </div>
+        </p>
       </div>
       <div
         class="ugb-countup__item ugb-countup__item2"
@@ -59,22 +58,24 @@ exports[`Count Up block Save render should match snapshot 1`] = `
         </div>
         <p
           class="ugb-countup__description"
-        />
-        <div>
-          Description
-        </div>
-        <p />
+        >
+          <div>
+            Description
+          </div>
+        </p>
       </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`Count Up block Save render should match snapshot with attributes 1`] = `
+exports[`Count Up (v2) block Save render should match snapshot with attributes 1`] = `
 <div
-  aria-hidden="true"
-  class="ugb-count-up ugb-countup--v4 ugb-countup--columns-1 ugb-countup--design-wave-2 ugb-main-block"
+  class="wp-block-ugb-count-up ugb-countup--v4 ugb-countup--columns-3 ugb-countup--design-wave-2 ugb-main-block"
 >
+  <style>
+    .ugb-countup__icon{margin-bottom:123px !important;margin-left:auto !important;margin-right:auto !important;opacity:123 !important}.ugb-countup__icon svg:not(.ugb-custom-icon){color:#123456}.ugb-countup__icon .ugb-icon-inner-svg,.ugb-countup__icon .ugb-icon-inner-svg svg{width:123px !important;height:123px !important}.ugb-countup__icon .ugb-icon-inner-svg{color:#123456 !important;transform:rotate(123deg) !important}@media screen and (max-width:1025px){.ugb-countup__icon{margin-left:auto !important;margin-right:auto !important}}@media screen and (min-width:768px) and (max-width:1025px){.ugb-countup__icon{margin-bottom:123px !important}.ugb-countup__icon .ugb-icon-inner-svg,.ugb-countup__icon .ugb-icon-inner-svg svg{width:123px !important;height:123px !important}}@media screen and (max-width:768px){.ugb-countup__icon{margin-bottom:123px !important;margin-left:auto !important;margin-right:auto !important}.ugb-countup__icon .ugb-icon-inner-svg,.ugb-countup__icon .ugb-icon-inner-svg svg{width:123px !important;height:123px !important}}.ugb-countup__icon .ugb-icon-inner-svg,.ugb-countup__icon .ugb-icon-inner-svg svg *{color:#123456 !important;fill:#123456 !important}
+  </style>
   <div
     class="ugb-inner-block"
   >
@@ -82,11 +83,37 @@ exports[`Count Up block Save render should match snapshot with attributes 1`] = 
       class="ugb-block-content"
     >
       <div
-        class="ugb-countup__item ugb-countup__item1 ugb--has-background-overlay"
+        class="ugb-countup__item ugb-countup__item1"
       >
         <div
-          class="ugb-countup__icon"
-        />
+          class="ugb-countup__icon ugb-countup__icon--v2"
+        >
+          <div
+            class="ugb-icon-inner-svg ugb-icon--#123456"
+          />
+        </div>
+      </div>
+      <div
+        class="ugb-countup__item ugb-countup__item2"
+      >
+        <div
+          class="ugb-countup__icon ugb-countup__icon--v2"
+        >
+          <div
+            class="ugb-icon-inner-svg ugb-icon--#123456"
+          />
+        </div>
+      </div>
+      <div
+        class="ugb-countup__item ugb-countup__item3"
+      >
+        <div
+          class="ugb-countup__icon ugb-countup__icon--v2"
+        >
+          <div
+            class="ugb-icon-inner-svg ugb-icon--#123456"
+          />
+        </div>
       </div>
     </div>
   </div>

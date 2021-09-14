@@ -1,7 +1,7 @@
 {
 	"name": "stackable/separator",
 	"title": "Separator",
-	"description": "A fancy separator to be placed between containers and content.",
+	"description": "A fancy separator to be placed between content.",
 	"category": "layout",
 	"keywords": [
 		"Svg Divider"

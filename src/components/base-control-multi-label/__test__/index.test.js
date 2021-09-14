@@ -41,6 +41,8 @@ describe( 'Unit switcher', () => {
 		const onChange = jest.fn()
 
 		const { getByText } = render( <BaseControlMultiLabel units={ [ 'px', '%' ] } onChangeUnit={ onChange } /> )
+		// Click the 'px' first to open the popover.
+		fireEvent.click( getByText( 'px' ) )
 		fireEvent.click( getByText( '%' ) )
 		expect( onChange ).toHaveBeenCalledWith( '%' )
 	} )
