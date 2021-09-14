@@ -103,6 +103,10 @@ gulp.task( 'style', gulp.series(
 			.pipe( header( '#start-resizable-editor-section{display:none}' ) )
 			.pipe( postcss( postCSSOptions ) )
 			.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
+			.pipe( gulp.dest( 'dist/' ) )
+	},
+	function generateResponsiveCSS() {
+		return gulp.src( [ 'dist/frontend_blocks.css' ] )
 			// Extract media queries and move them to another file.
 			.pipe( collect( {
 				file: 'dist/frontend_blocks_responsive.css',

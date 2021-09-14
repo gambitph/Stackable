@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature Grid (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-feature-grid ugb-feature-grid--v2 ugb-feature-grid--columns-3 ugb-feature-grid--design-basic ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-feature-grid__item ugb-feature-grid__item1"
+      >
+        
+        <div
+          class="ugb-feature-grid__content"
+        >
+          <h5
+            class="ugb-feature-grid__title"
+          >
+            <div>
+              Title
+            </div>
+          </h5>
+          <p
+            class="ugb-feature-grid__description"
+          >
+            <div>
+              Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+          <div
+            class="ugb-button-container"
+          >
+            <a
+              class="ugb-button ugb-button--size-normal ugb-button--design-plain"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="ugb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ugb-feature-grid__item ugb-feature-grid__item2"
+      >
+        
+        <div
+          class="ugb-feature-grid__content"
+        >
+          <h5
+            class="ugb-feature-grid__title"
+          >
+            <div>
+              Title
+            </div>
+          </h5>
+          <p
+            class="ugb-feature-grid__description"
+          >
+            <div>
+              Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+          <div
+            class="ugb-button-container"
+          >
+            <a
+              class="ugb-button ugb-button--size-normal ugb-button--design-plain"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="ugb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ugb-feature-grid__item ugb-feature-grid__item3"
+      >
+        
+        <div
+          class="ugb-feature-grid__content"
+        >
+          <h5
+            class="ugb-feature-grid__title"
+          >
+            <div>
+              Title
+            </div>
+          </h5>
+          <p
+            class="ugb-feature-grid__description"
+          >
+            <div>
+              Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+          <div
+            class="ugb-button-container"
+          >
+            <a
+              class="ugb-button ugb-button--size-normal ugb-button--design-plain"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="ugb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Feature Grid (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-feature-grid ugb-feature-grid--v2 ugb-feature-grid--columns-3 ugb-feature-grid--design-wave-2 ugb-main-block"
+>
+  <style>
+    .ugb-feature-grid__item{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.ugb-feature-grid__item:before{background-color:#123456 !important;opacity:12.3}@media screen and (max-width:1025px){.ugb-feature-grid__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.ugb-feature-grid__item:before{opacity:12.3}}@media screen and (max-width:768px){.ugb-feature-grid__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.ugb-feature-grid__item:before{opacity:12.3}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-feature-grid__item ugb-feature-grid__item1 ugb--shadow-123 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-feature-grid__content"
+        />
+      </div>
+      <div
+        class="ugb-feature-grid__item ugb-feature-grid__item2 ugb--shadow-123 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-feature-grid__content"
+        />
+      </div>
+      <div
+        class="ugb-feature-grid__item ugb-feature-grid__item3 ugb--shadow-123 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-feature-grid__content"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
