@@ -238,7 +238,7 @@ if ( ! function_exists( 'stackable_add_required_block_styles_v2' ) ) {
 		$custom_css = ':root {
 			--content-width: ' . esc_attr( $full_width_block_inner_width ) . 'px;
 		}';
-		wp_add_inline_style( 'ugb-style-css', $custom_css );
+		wp_add_inline_style( 'ugb-style-css-v2', $custom_css );
 	}
 	if ( has_stackable_v2_editor_compatibility() || has_stackable_v2_frontend_compatibility() ) {
 		add_action( 'enqueue_block_assets', 'stackable_add_required_block_styles_v2', 11 );
