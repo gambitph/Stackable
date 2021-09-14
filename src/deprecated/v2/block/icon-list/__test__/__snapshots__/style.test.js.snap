@@ -1,10 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Icon List block Rendered styles should match snapshot 1`] = `
+exports[`Icon List (v2) block Rendered styles should match snapshot 1`] = `
 Object {
-  ".ugb-icon-list li": Object {
-    "--gap": undefined,
-    "--icon": "url('data:image/svg+xml;base64,')",
+  ".ugb-icon-list ul": Object {
+    "columns": 3,
+    "gridTemplateColumns": undefined,
+  },
+  "li": Object {
     "--icon-size": undefined,
     "color": undefined,
     "fontFamily": undefined,
@@ -12,55 +14,173 @@ Object {
     "fontWeight": undefined,
     "letterSpacing": undefined,
     "lineHeight": undefined,
+    "marginBottom": undefined,
     "textTransform": undefined,
   },
-  ".ugb-icon-list ul": Object {
-    "columns": 3,
-    "gridTemplateColumns": undefined,
+  "li ul": Object {
+    "marginBottom": undefined,
+  },
+  "li::before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTAgMTkwIj48cG9seWdvbiBwb2ludHM9IjE3My44LDI4LjQgNjAuNCwxNDEuOCAxNS43LDk3LjIgNS4xLDEwNy44IDYwLjQsMTYzIDE4NC40LDM5IDE3My44LDI4LjQiLz48L3N2Zz4=')",
+    "height": undefined,
+    "opacity": undefined,
+    "transform": undefined,
+    "width": undefined,
   },
   "mobile": Object {
     ".ugb-icon-list ul": Object {
       "columns": undefined,
       "gridTemplateColumns": undefined,
     },
+    "li": Object {
+      "--icon-size": undefined,
+      "lineHeight": undefined,
+    },
+    "li::before": Object {
+      "height": undefined,
+      "width": undefined,
+    },
   },
   "tablet": Object {
     ".ugb-icon-list ul": Object {
       "columns": undefined,
       "gridTemplateColumns": undefined,
+    },
+    "li": Object {
+      "lineHeight": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    "li": Object {
+      "--icon-size": undefined,
+    },
+    "li::before": Object {
+      "height": undefined,
+      "width": undefined,
     },
   },
 }
 `;
 
-exports[`Icon List block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Icon List (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-icon-list li": Object {
-    "--gap": "8px",
-    "--icon": "url('data:image/svg+xml;base64,')",
-    "--icon-size": "10px",
-    "color": "#123456",
-    "fontFamily": "\\"listTextFontFamily\\", Sans-serif",
-    "fontSize": "123listTextFontSizeUnit",
-    "fontWeight": "listTextFontWeight",
-    "letterSpacing": "123px",
-    "lineHeight": "123em",
-    "textTransform": "listTextTextTransform",
-  },
   ".ugb-icon-list ul": Object {
     "columns": 3,
     "gridTemplateColumns": "1fr 1fr 1fr",
+  },
+  "li": Object {
+    "--icon-size": "123px !important",
+    "color": "#123456",
+    "fontFamily": "\\"listTextFontFamily\\", Sans-serif !important",
+    "fontSize": "123listTextFontSizeUnit !important",
+    "fontWeight": "listTextFontWeight !important",
+    "letterSpacing": "123px !important",
+    "lineHeight": "123listTextLineHeightUnit !important",
+    "marginBottom": "123px !important",
+    "textTransform": "listTextTextTransform !important",
+  },
+  "li ul": Object {
+    "marginBottom": "123px !important",
+  },
+  "li::before": Object {
+    "backgroundImage": undefined,
+    "height": "123px !important",
+    "opacity": "123 !important",
+    "transform": "rotate(123deg) !important",
+    "width": "123px !important",
+  },
+  "li:nth-child(1):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(10):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(11):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(12):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(13):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(14):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(15):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(16):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(17):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(18):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(19):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(2):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(20):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(3):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(4):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(5):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(6):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(7):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(8):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
+  },
+  "li:nth-child(9):before": Object {
+    "backgroundImage": "url('data:image/svg+xml;base64,undefined')",
   },
   "mobile": Object {
     ".ugb-icon-list ul": Object {
       "columns": "123 !important",
       "gridTemplateColumns": "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important",
     },
+    "li": Object {
+      "--icon-size": "123px !important",
+      "fontSize": "123listTextMobileFontSizeUnit !important",
+      "lineHeight": "123listTextMobileLineHeightUnit !important",
+    },
+    "li::before": Object {
+      "height": "123px !important",
+      "width": "123px !important",
+    },
   },
   "tablet": Object {
     ".ugb-icon-list ul": Object {
       "columns": "123 !important",
       "gridTemplateColumns": "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important",
+    },
+    "li": Object {
+      "fontSize": "123listTextTabletFontSizeUnit !important",
+      "lineHeight": "123listTextTabletLineHeightUnit !important",
+    },
+  },
+  "tabletOnly": Object {
+    "li": Object {
+      "--icon-size": "123px !important",
+    },
+    "li::before": Object {
+      "height": "123px !important",
+      "width": "123px !important",
     },
   },
 }

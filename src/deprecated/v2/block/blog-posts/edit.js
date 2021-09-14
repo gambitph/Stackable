@@ -79,7 +79,7 @@ import {
 import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
-import { decodeEntities } from '@wordpress/htmlEntities'
+import { decodeEntities } from '@wordpress/html-entities'
 import { useSelect } from '@wordpress/data'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
@@ -331,22 +331,22 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
 					>
 						{ ( show.showBackgroundInItem || show.showBackgroundInContent ) &&
-						<BackgroundControlsHelper
-							attrNameTemplate="column%s"
-							setAttributes={ setAttributes }
-							blockAttributes={ props.attributes }
-							backgroundMediaAllowVideo={ false }
-						/>
+							<BackgroundControlsHelper
+								attrNameTemplate="column%s"
+								setAttributes={ setAttributes }
+								blockAttributes={ props.attributes }
+								backgroundMediaAllowVideo={ false }
+							/>
 						}
 						{ ! ( show.showBackgroundInItem || show.showBackgroundInContent ) && show.columnBackground &&
-						<BackgroundControlsHelper
-							attrNameTemplate="column%s"
-							setAttributes={ setAttributes }
-							blockAttributes={ props.attributes }
-							onChangeBackgroundMedia={ false }
-							onChangeBackgroundColorOpacity={ false }
-							onChangeBackgroundGradientBlendMode={ false }
-						/>
+							<BackgroundControlsHelper
+								attrNameTemplate="column%s"
+								setAttributes={ setAttributes }
+								blockAttributes={ props.attributes }
+								onChangeBackgroundMedia={ false }
+								onChangeBackgroundColorOpacity={ false }
+								onChangeBackgroundGradientBlendMode={ false }
+							/>
 						}
 					</ButtonIconPopoverControl>
 
@@ -359,29 +359,29 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					}
 
 					{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
 					}
 
 					{ show.shadow &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ shadow }
+							onChange={ shadow => setAttributes( { shadow } ) }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="3"
+							className="ugb--help-tip-general-shadow"
+						/>
 					}
 				</PanelAdvancedSettings>
 			}
@@ -508,20 +508,20 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					</ResponsiveControl>
 				}
 				{ show.paginationSpacing &&
-				<ResponsiveControl
-					attrNameTemplate="pagination%sTopMargin"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Pagination', i18n ) }
-						min={ -50 }
-						max={ 100 }
-						placeholder="16"
-						allowReset={ true }
-						className="ugb--help-tip-alignment-button"
-					/>
-				</ResponsiveControl>
+					<ResponsiveControl
+						attrNameTemplate="pagination%sTopMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Pagination', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-alignment-button"
+						/>
+					</ResponsiveControl>
 				}
 			</PanelSpacingBody>
 
@@ -1018,16 +1018,16 @@ const Edit = props => {
 				{ ( currentPagePosts || [] ).map( ( post, i ) => {
 					const featuredImageSrc = ( ( post.featured_image_urls && post.featured_image_urls[ imageSize || 'large' ] ) || [] )[ 0 ]
 					const featuredImage = featuredImageSrc &&
-					<figure className={ featuredImageClasses }>
-						{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
-						<a><img src={ featuredImageSrc } alt={ __( 'featured', i18n ) } /></a>
-					</figure>
+						<figure className={ featuredImageClasses }>
+							{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
+							<a><img src={ featuredImageSrc } alt={ __( 'featured', i18n ) } /></a>
+						</figure>
 
 					const featuredImageBackground = featuredImageSrc &&
-					<div
-						className="ugb-blog-posts__featured-image-background"
-						style={ { backgroundImage: `url(${ featuredImageSrc })` } }
-					/>
+						<div
+							className="ugb-blog-posts__featured-image-background"
+							style={ { backgroundImage: `url(${ featuredImageSrc })` } }
+						/>
 
 					const title = <TitleTag className="ugb-blog-posts__title">
 						{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
@@ -1035,17 +1035,17 @@ const Edit = props => {
 					</TitleTag>
 
 					const category = post.category_list &&
-					<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list.replace( /href=['"].*?['"]/g, '' ) } } />
+						<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list.replace( /href=['"].*?['"]/g, '' ) } } />
 
 					const separator = <span className="ugb-blog-posts__sep">{ META_SEPARATORS[ metaSeparator || 'dot' ] }</span>
 
 					const author = post.author_info && post.author_info.name &&
-					<span>{ post.author_info.name }</span>
+						<span>{ post.author_info.name }</span>
 
 					const date = post.date_gmt &&
-					<time dateTime={ format( 'c', post.date_gmt ) } className="ugb-blog-posts__date">
-						{ dateI18n( 'F d, Y', post.date_gmt ) }
-					</time>
+						<time dateTime={ format( 'c', post.date_gmt ) } className="ugb-blog-posts__date">
+							{ dateI18n( 'F d, Y', post.date_gmt ) }
+						</time>
 
 					const comments = <span>{ post.comments_num }</span>
 
@@ -1058,7 +1058,7 @@ const Edit = props => {
 					}
 
 					const excerpt = excerptString &&
-					<div className="ugb-blog-posts__excerpt" dangerouslySetInnerHTML={ { __html: excerptString } } />
+						<div className="ugb-blog-posts__excerpt" dangerouslySetInnerHTML={ { __html: excerptString } } />
 
 					const readmore = <p className="ugb-blog-posts__readmore">
 						{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
@@ -1066,13 +1066,13 @@ const Edit = props => {
 					</p>
 
 					const meta = ( showAuthor || showDate || showComments ) &&
-					<aside className="entry-meta ugb-blog-posts__meta">
-						{ showAuthor && author }
-						{ showAuthor && author && ( ( showDate && date ) || ( showComments && comments ) ) && separator }
-						{ showDate && date }
-						{ ( ( showAuthor && author ) || ( showDate && date ) ) && showComments && comments && separator }
-						{ showComments && comments }
-					</aside>
+						<aside className="entry-meta ugb-blog-posts__meta">
+							{ showAuthor && author }
+							{ showAuthor && author && ( ( showDate && date ) || ( showComments && comments ) ) && separator }
+							{ showDate && date }
+							{ ( ( showAuthor && author ) || ( showDate && date ) ) && showComments && comments && separator }
+							{ showComments && comments }
+						</aside>
 
 					const output = applyFilters( 'stackable.blog-posts.edit.output', null, props, {
 						itemClasses,
@@ -1122,13 +1122,13 @@ const Edit = props => {
 					)
 				} ) }
 				{ showLoadMoreButton &&
-				<ButtonEditHelper
-					containerClassName="ugb-blog-posts__load-more-button"
-					attrNameTemplate="loadMoreButton%s"
-					setAttributes={ setAttributes }
-					blockAttributes={ attributes }
-					isSelected={ false }
-				/>
+					<ButtonEditHelper
+						containerClassName="ugb-blog-posts__load-more-button"
+						attrNameTemplate="loadMoreButton%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ attributes }
+						isSelected={ false }
+					/>
 				}
 				{ applyFilters( 'stackable.blog-posts.edit.output.pagination.after', null, {
 					...props,
