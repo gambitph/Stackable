@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Divider (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-block-content": Object {
+    "marginBottom": undefined,
+    "marginTop": undefined,
+  },
+  "hr.ugb-divider__hr": Object {
+    "backgroundColor": undefined,
+    "borderRadius": undefined,
+    "height": undefined,
+    "marginLeft": "auto !important",
+    "marginRight": "auto !important",
+    "width": undefined,
+  },
+  "mobile": Object {
+    "hr.ugb-divider__hr": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+  },
+  "tablet": Object {
+    "hr.ugb-divider__hr": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+  },
+}
+`;
+
+exports[`Divider (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-block-content": Object {
+    "marginBottom": "123px !important",
+    "marginTop": "123px !important",
+  },
+}
+`;

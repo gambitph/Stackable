@@ -1,0 +1,319 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-button-container": Object {
+    "marginBottom": undefined,
+  },
+  ".ugb-notification__description": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-notification__item": Object {
+    "backgroundAttachment": undefined,
+    "backgroundBlendMode": undefined,
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+    "borderRadius": undefined,
+  },
+  ".ugb-notification__item:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-notification__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".ugb-button-container": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-notification__description": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-notification__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".ugb-notification__item:before": Object {
+      "opacity": undefined,
+    },
+    ".ugb-notification__title": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".ugb-notification__description": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-notification__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+    },
+    ".ugb-notification__item:before": Object {
+      "opacity": undefined,
+    },
+    ".ugb-notification__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".ugb-button-container": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-notification__description": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-notification__title": Object {
+      "marginBottom": undefined,
+    },
+  },
+}
+`;
+
+exports[`Notification (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-notification__close-button svg": Object {
+    "fill": "#123456 !important",
+  },
+  ".ugb-notification__icon": Object {
+    "height": "123px !important",
+    "marginBottom": "123px !important",
+    "marginLeft": "auto !important",
+    "marginRight": "auto !important",
+    "opacity": "123 !important",
+    "width": "123px !important",
+  },
+  ".ugb-notification__icon .ugb-icon-inner-svg": Object {
+    "color": "#123456 !important",
+    "transform": "rotate(123deg) !important",
+  },
+  ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg": Object {
+    "height": "123px !important",
+    "width": "123px !important",
+  },
+  ".ugb-notification__icon svg:not(.ugb-custom-icon)": Object {
+    "color": "#123456 !important",
+  },
+  ".ugb-notification__item": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "columnBackgroundImageBlendMode",
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": "url(columnBackgroundMediaUrl)",
+    "backgroundPosition": "columnBackgroundPosition",
+    "backgroundRepeat": "columnBackgroundRepeat",
+    "backgroundSize": "columnBackgroundSize",
+    "borderRadius": "123px !important",
+    "paddingRight": "100px !important",
+  },
+  ".ugb-notification__item:before": Object {
+    "backgroundColor": "#123456 !important",
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": 12.3,
+  },
+  "desktopTablet": Object {
+    ".ugb-notification__close-button": Object {
+      "height": "123px",
+      "width": "123px",
+    },
+  },
+  "editor": Object {
+    ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg path, .ugb-notification__icon .ugb-icon-inner-svg svg g, .ugb-notification__icon .ugb-icon-inner-svg svg shape, .ugb-notification__icon .ugb-icon-inner-svg svg circle, .ugb-notification__icon .ugb-icon-inner-svg svg path, .ugb-notification__icon .ugb-icon-inner-svg svg rect, .ugb-notification__icon .ugb-icon-inner-svg svg polygon, .ugb-notification__icon .ugb-icon-inner-svg svg ellipse": Object {
+      "color": "#123456 !important",
+      "fill": "#123456 !important",
+    },
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-notification__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".ugb-notification__close-button": Object {
+      "height": "123px",
+      "width": "123px",
+    },
+    ".ugb-notification__icon": Object {
+      "height": "123px !important",
+      "marginBottom": "123px !important",
+      "marginLeft": "auto !important",
+      "marginRight": "auto !important",
+      "width": "123px !important",
+    },
+    ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg": Object {
+      "height": "123px !important",
+      "width": "123px !important",
+    },
+    ".ugb-notification__item": Object {
+      "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
+      "backgroundPosition": "columnMobileBackgroundPosition",
+      "backgroundRepeat": "columnMobileBackgroundRepeat",
+      "backgroundSize": "columnMobileBackgroundSize",
+    },
+    ".ugb-notification__item:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "saveOnly": Object {
+    ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg *": Object {
+      "color": "#123456 !important",
+      "fill": "#123456 !important",
+    },
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".ugb-notification__icon": Object {
+      "height": "123px !important",
+      "marginLeft": "auto !important",
+      "marginRight": "auto !important",
+      "width": "123px !important",
+    },
+    ".ugb-notification__item": Object {
+      "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
+      "backgroundPosition": "columnTabletBackgroundPosition",
+      "backgroundRepeat": "columnTabletBackgroundRepeat",
+      "backgroundSize": "columnTabletBackgroundSize",
+    },
+    ".ugb-notification__item:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "tabletOnly": Object {
+    ".ugb-notification__close-button": Object {
+      "height": "123px",
+      "width": "123px",
+    },
+    ".ugb-notification__icon": Object {
+      "marginBottom": "123px !important",
+    },
+    ".ugb-notification__icon .ugb-icon-inner-svg, .ugb-notification__icon .ugb-icon-inner-svg svg": Object {
+      "height": "123px !important",
+      "width": "123px !important",
+    },
+  },
+}
+`;
