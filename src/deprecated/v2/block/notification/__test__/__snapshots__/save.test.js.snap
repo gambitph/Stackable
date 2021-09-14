@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification (v2) block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-notification ugb-notification--v2 ugb-notification--design-basic ugb-notification--type-success ugb-main-block"
+>
+  <style>
+    .ugb-button{border-color:#ffffff}.ugb-button .ugb-button--inner,.ugb-button.ugb-button--has-icon.ugb-button--has-icon svg{color:#ffffff}.ugb-button:hover .ugb-button--inner,.ugb-button:hover svg{color:#ffffff}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-notification__item ugb-notification--new-icon ugb--shadow-3"
+      >
+        <h5
+          class="ugb-notification__title"
+        >
+          <div>
+            Title for This Block
+          </div>
+        </h5>
+        <p
+          class="ugb-notification__description"
+        >
+          <div>
+            Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+          </div>
+        </p>
+        <div
+          class="ugb-button-container"
+        >
+          <a
+            class="ugb-button ugb-button--size-normal ugb-button--design-ghost"
+            href=""
+            rel=""
+            title=""
+          >
+            
+            <span
+              class="ugb-button--inner"
+            >
+              <div>
+                Button text
+              </div>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Notification (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-notification ugb-notification--v2 ugb-notification--design-wave-2 ugb-notification--type-notifType ugb-notification--dismissible ugb-main-block"
+>
+  <style>
+    .ugb-notification__item{border-radius:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode;padding-right:100px !important}.ugb-notification__item:before{background-color:#123456 !important;opacity:12.3}.ugb-notification__close-button svg{fill:#123456 !important}.ugb-notification__icon svg:not(.ugb-custom-icon){color:#123456 !important}.ugb-notification__icon{margin-left:auto !important;margin-right:auto !important;height:123px !important;width:123px !important;opacity:123 !important;margin-bottom:123px !important}.ugb-notification__icon .ugb-icon-inner-svg,.ugb-notification__icon .ugb-icon-inner-svg svg{width:123px !important;height:123px !important}.ugb-notification__icon .ugb-icon-inner-svg{color:#123456 !important;transform:rotate(123deg) !important}@media screen and (min-width:768px){.ugb-notification__close-button{width:123px;height:123px}}@media screen and (max-width:1025px){.ugb-notification__item{background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.ugb-notification__item:before{opacity:12.3}.ugb-notification__icon{margin-left:auto !important;margin-right:auto !important;height:123px !important;width:123px !important}}@media screen and (min-width:768px) and (max-width:1025px){.ugb-notification__close-button{width:123px;height:123px}.ugb-notification__icon .ugb-icon-inner-svg,.ugb-notification__icon .ugb-icon-inner-svg svg{width:123px !important;height:123px !important}.ugb-notification__icon{margin-bottom:123px !important}}@media screen and (max-width:768px){.ugb-notification__item{background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.ugb-notification__item:before{opacity:12.3}.ugb-notification__close-button{width:123px;height:123px}.ugb-notification__icon{margin-left:auto !important;margin-right:auto !important;height:123px !important;width:123px !important;margin-bottom:123px !important}.ugb-notification__icon .ugb-icon-inner-svg,.ugb-notification__icon .ugb-icon-inner-svg svg{width:123px !important;height:123px !important}}.ugb-notification__icon .ugb-icon-inner-svg,.ugb-notification__icon .ugb-icon-inner-svg svg *{color:#123456 !important;fill:#123456 !important}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-notification__item ugb-notification--new-icon ugb--shadow-1 ugb--has-background-overlay"
+      >
+        <span
+          class="ugb-notification__close-button"
+          role="button"
+          tabindex="0"
+        >
+          <svg />
+        </span>
+        <div
+          class="ugb-notification__icon"
+        >
+          <div
+            class="ugb-icon-inner-svg ugb-icon--#123456"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

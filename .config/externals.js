@@ -29,7 +29,7 @@ const externals = [
 	'compose',
 	'data',
 	'date',
-	'htmlEntities',
+	'html-entities',
 	'hooks',
 	'edit-post',
 	'element',

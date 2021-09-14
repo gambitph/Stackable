@@ -26,6 +26,8 @@ const focalPointToPosition = ( { x, y } ) => {
 const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '.stk-img-wrapper',
+		hoverSelector,
+		hoverSelectorCallback = null,
 		enableWidth = true,
 		enableHeight = true,
 	} = options
@@ -69,6 +71,8 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector } .stk-img-resizer-wrapper`,
+			hoverSelector: hoverSelector ? `${ hoverSelector } .stk-img-resizer-wrapper` : undefined,
+			hoverSelectorCallback,
 			renderIn: 'edit',
 			styleRule: 'boxShadow',
 			attrName: 'imageShadow',
@@ -76,6 +80,8 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			hoverSelector,
+			hoverSelectorCallback,
 			renderIn: 'save',
 			styleRule: 'boxShadow',
 			attrName: 'imageShadow',
@@ -83,12 +89,16 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector } img`,
+			hoverSelector: `${ hoverSelector } img`,
+			hoverSelectorCallback,
 			styleRule: 'filter',
 			attrName: 'imageFilter',
 			hover: 'all',
 		},
 		{
 			selector: `${ selector } img`,
+			hoverSelector: `${ hoverSelector } img`,
+			hoverSelectorCallback,
 			styleRule: 'transform',
 			attrName: 'imageZoom',
 			format: 'scale(%s)',
@@ -102,7 +112,7 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 		},
 		{
-			selector: `${ selector }`,
+			selector,
 			renderIn: 'save',
 			styleRule: 'borderRadius',
 			attrName: 'imageBorderRadius',
@@ -110,6 +120,8 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector } img`,
+			hoverSelector: `${ hoverSelector } img`,
+			hoverSelectorCallback,
 			styleRule: 'objectPosition',
 			attrName: 'imageFocalPoint',
 			valueCallback: focalPointToPosition,

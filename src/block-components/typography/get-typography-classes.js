@@ -2,10 +2,12 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { getAttributeName } from '~stackable/util'
+import { getAttrNameFunction } from '~stackable/util'
 
-export const getTypographyClasses = ( attributes = {} ) => {
+export const getTypographyClasses = ( attributes = {}, attrNameTemplate = '%s' ) => {
+	const getAttributeName = getAttrNameFunction( attrNameTemplate )
 	return classnames( {
-		'stk--is-gradient': attributes[ getAttributeName( 'textColorType', 'desktop', 'normal' ) ] === 'gradient',
+		'stk--is-gradient': attributes[ getAttributeName( 'textColorType' ) ] === 'gradient',
+		[ `has-text-align-${ attributes[ getAttributeName( 'textAlign' ) ] }` ]: attributes[ getAttributeName( 'textAlign' ) ],
 	} )
 }

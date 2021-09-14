@@ -11,12 +11,11 @@ import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
+	BlockLink,
+	ContainerDiv,
 	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
-	getRowClasses,
-	Separator,
-	getSeparatorClasses,
 } from '~stackable/block-components'
 
 /**
@@ -30,8 +29,6 @@ export const Save = props => {
 		attributes,
 	} = props
 
-	const rowClass = getRowClasses( props.attributes )
-	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
@@ -39,14 +36,13 @@ export const Save = props => {
 		props.className,
 		'stk-block-pricing-box',
 		responsiveClass,
-		separatorClass,
 	] )
 
 	const contentClassNames = classnames( [
-		rowClass,
+		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-content',
+		`stk-${ attributes.uniqueId }-container`,
 	] )
 
 	return (
@@ -56,11 +52,13 @@ export const Save = props => {
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<Separator.Content attributes={ attributes }>
-				<div className={ contentClassNames }>
-					<InnerBlocks.Content />
-				</div>
-			</Separator.Content>
+			<ContainerDiv.Content
+				className={ contentClassNames }
+				attributes={ attributes }
+			>
+				<InnerBlocks.Content />
+				<BlockLink.Content attributes={ attributes } />
+			</ContainerDiv.Content>
 		</BlockDiv.Content>
 	)
 }

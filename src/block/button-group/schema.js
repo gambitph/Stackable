@@ -9,6 +9,7 @@ import {
 	MarginBottom,
 	Responsive,
 	Row,
+	addFlexGapAttributes,
 	Transform,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
@@ -28,23 +29,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
-
-	attrObject.add( {
-		attributes: {
-			columnGap: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			rowGap: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-		},
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
+	addFlexGapAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }

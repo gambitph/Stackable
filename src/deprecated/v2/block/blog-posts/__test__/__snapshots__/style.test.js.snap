@@ -1,0 +1,282 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Posts (v2) block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-blog-posts__category": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-blog-posts__category a": Object {
+    "color": undefined,
+  },
+  ".ugb-blog-posts__category a:hover": Object {
+    "color": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-blog-posts__excerpt": Object {
+    "marginBottom": undefined,
+    "textAlign": undefined,
+  },
+  ".ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-blog-posts__featured-image": Object {
+    "borderRadius": undefined,
+    "marginBottom": undefined,
+  },
+  ".ugb-blog-posts__featured-image img": Object {
+    "height": undefined,
+  },
+  ".ugb-blog-posts__meta": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-blog-posts__readmore": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-blog-posts__readmore a": Object {
+    "color": undefined,
+  },
+  ".ugb-blog-posts__readmore a:hover": Object {
+    "color": undefined,
+    "opacity": undefined,
+  },
+  ".ugb-blog-posts__title": Object {
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-blog-posts__title a": Object {
+    "color": undefined,
+  },
+  ".ugb-blog-posts__title a:hover": Object {
+    "color": undefined,
+    "opacity": undefined,
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "mobile": Object {
+    ".ugb-blog-posts__category": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__excerpt": Object {
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-blog-posts__featured-image": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__featured-image img": Object {
+      "height": undefined,
+    },
+    ".ugb-blog-posts__meta": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__readmore": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__title": Object {
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "tablet": Object {
+    ".ugb-blog-posts__category": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__excerpt": Object {
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p": Object {
+      "lineHeight": undefined,
+    },
+    ".ugb-blog-posts__meta": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__readmore": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-blog-posts__title": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "tabletOnly": Object {
+    ".ugb-blog-posts__category": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__excerpt": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__featured-image": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__featured-image img": Object {
+      "height": undefined,
+    },
+    ".ugb-blog-posts__meta": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__readmore": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-blog-posts__title": Object {
+      "marginBottom": undefined,
+    },
+  },
+}
+`;
+
+exports[`Posts (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-blog-posts__contentOrder": Object {
+    "order": "1 !important",
+  },
+  "editor": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+  "saveOnly": Object {
+    "desktopTablet": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "mobile": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+    "tabletOnly": Object {
+      "> .ugb-inner-block > .ugb-block-content > *": Object {
+        "paddingBottom": undefined,
+        "paddingLeft": undefined,
+        "paddingRight": undefined,
+        "paddingTop": undefined,
+      },
+    },
+  },
+}
+`;

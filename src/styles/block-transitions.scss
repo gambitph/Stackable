@@ -15,6 +15,8 @@
 .stk--has-background-overlay::before, // Image background overlays
 .stk-block-heading__top-line,
 .stk-block-heading__bottom-line,
+.stk-block-posts__item-hide, // For posts transitions
+.stk-block-posts__title > a, // For posts title
 .stk-block .stk-button::before, // For button animations
 .stk-block .stk-button::after, // For button animations
 .stk-block li::marker, // For icon list marker

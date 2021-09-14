@@ -12,7 +12,7 @@ import {
 	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
-	BlockLink,
+	Link,
 } from '~stackable/block-components'
 
 /**
@@ -42,9 +42,9 @@ export const Save = props => {
 		>
 			<IconStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<Icon.Content attributes={ attributes }>
-				<BlockLink.Content attributes={ attributes } />
-			</Icon.Content>
+			<Link.Content attributes={ attributes }>
+				<Icon.Content attributes={ attributes } />
+			</Link.Content>
 		</BlockDiv.Content>
 	)
 }

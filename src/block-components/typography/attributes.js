@@ -44,6 +44,10 @@ const typographyAttributes = {
 		type: 'string',
 		default: '',
 	},
+	textAlign: {
+		type: 'string',
+		default: '',
+	},
 	textGradientDirection: {
 		type: 'number',
 		default: '',
@@ -51,6 +55,10 @@ const typographyAttributes = {
 	hasP: {
 		type: 'boolean',
 		default: false,
+	},
+	show: {
+		type: 'booleam',
+		default: true,
 	},
 }
 

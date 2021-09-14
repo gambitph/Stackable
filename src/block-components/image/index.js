@@ -88,6 +88,9 @@ Image.Content = props => {
 		defaultWidth,
 		defaultHeight: _defaultHeight,
 		attributes,
+		src,
+		alt,
+		width,
 		...propsToPass
 	} = props
 
@@ -96,11 +99,11 @@ Image.Content = props => {
 	return <Image_.Content
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
-		alt={ attributes.imageAlt }
+		alt={ alt || attributes.imageAlt }
 		size={ attributes.imageSize }
-		src={ attributes.imageUrl }
+		src={ src || attributes.imageUrl }
 
-		width={ attributes.imageWidthAttribute || attributes.imageWidth || defaultWidth }
+		width={ width || attributes.imageWidthAttribute || attributes.imageWidth || defaultWidth }
 		height={ attributes.imageHeightAttribute || attributes.imageHeight || defaultHeight }
 
 		shape={ attributes.imageShape }

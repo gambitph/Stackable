@@ -21,11 +21,10 @@ const getStyleParams = ( options = {} ) => {
 		backgroundFallbackColor = '#ffffff',
 	} = options
 
-	// const getAttrName = getAttrNameFunction( attrNameTemplate )
-
 	return [
 		{
 			selector,
+			hoverSelector: `${ selector }:hover`,
 			styleRule: 'backgroundColor',
 			attrName: 'backgroundColor',
 			attrNameTemplate,

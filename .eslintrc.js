@@ -75,6 +75,9 @@ module.exports = {
 		// In array spread, ignore unused args if they start with _
 		// e.g. const [ _unused, used ] = [ 'a', 'b', 'c' ]
 		'no-unused-vars': [ 'error', { varsIgnorePattern: '^_' } ],
+
+		// Require tabbed indentation in jsx.
+		'react/jsx-indent': [ 2, 'tab', { indentLogicalExpressions: true } ],
 	},
 	globals: {
 		localStorage: true,
