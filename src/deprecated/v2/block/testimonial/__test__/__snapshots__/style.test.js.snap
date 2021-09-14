@@ -1,8 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Number Box (v2) block Rendered styles should match snapshot 1`] = `
+exports[`Testimonial (v2) block Rendered styles should match snapshot 1`] = `
 Object {
-  ".ugb-number-box__description": Object {
+  ".ugb-img": Object {
+    "borderRadius": undefined,
+  },
+  ".ugb-img, .ugb-testimonial__image": Object {
+    "marginLeft": undefined,
+    "marginRight": undefined,
+  },
+  ".ugb-testimonial__body": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -13,7 +20,10 @@ Object {
     "textAlign": undefined,
     "textTransform": undefined,
   },
-  ".ugb-number-box__item": Object {
+  ".ugb-testimonial__image": Object {
+    "marginBottom": undefined,
+  },
+  ".ugb-testimonial__item": Object {
     "backgroundAttachment": undefined,
     "backgroundBlendMode": undefined,
     "backgroundColor": undefined,
@@ -23,14 +33,13 @@ Object {
     "backgroundSize": undefined,
     "borderRadius": undefined,
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-testimonial__item:before": Object {
     "backgroundColor": undefined,
     "backgroundImage": undefined,
     "mixBlendMode": undefined,
     "opacity": undefined,
   },
-  ".ugb-number-box__number": Object {
-    "backgroundColor": undefined,
+  ".ugb-testimonial__name": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -38,11 +47,10 @@ Object {
     "letterSpacing": undefined,
     "lineHeight": undefined,
     "marginBottom": undefined,
-    "opacity": undefined,
-    "textIndent": undefined,
+    "textAlign": undefined,
     "textTransform": undefined,
   },
-  ".ugb-number-box__title": Object {
+  ".ugb-testimonial__position": Object {
     "color": undefined,
     "fontFamily": undefined,
     "fontSize": undefined,
@@ -54,18 +62,18 @@ Object {
     "textTransform": undefined,
   },
   "desktopTablet": Object {
-    ".ugb-number-box__number": Object {
+    ".ugb-img": Object {
+      "borderRadius": undefined,
       "height": undefined,
-      "lineHeight": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
+      "width": undefined,
+    },
+    ".ugb-testimonial__image": Object {
       "width": undefined,
     },
   },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-testimonial__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -73,7 +81,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-testimonial__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -81,7 +89,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-testimonial__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -90,30 +98,38 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-img": Object {
+      "height": undefined,
+      "width": undefined,
+    },
+    ".ugb-img, .ugb-testimonial__image": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+    ".ugb-testimonial__body": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
+    ".ugb-testimonial__image": Object {
+      "marginBottom": undefined,
+      "width": undefined,
+    },
+    ".ugb-testimonial__item": Object {
       "backgroundImage": undefined,
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-testimonial__item:before": Object {
       "opacity": undefined,
     },
-    ".ugb-number-box__number": Object {
-      "height": undefined,
+    ".ugb-testimonial__name": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
       "textAlign": undefined,
-      "width": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-testimonial__position": Object {
       "lineHeight": undefined,
       "marginBottom": undefined,
       "textAlign": undefined,
@@ -146,47 +162,57 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__description": Object {
+    ".ugb-img, .ugb-testimonial__image": Object {
+      "marginLeft": undefined,
+      "marginRight": undefined,
+    },
+    ".ugb-testimonial__body": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
-    ".ugb-number-box__item": Object {
+    ".ugb-testimonial__item": Object {
       "backgroundImage": undefined,
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-testimonial__item:before": Object {
       "opacity": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-testimonial__name": Object {
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-testimonial__position": Object {
       "lineHeight": undefined,
       "textAlign": undefined,
     },
   },
   "tabletOnly": Object {
-    ".ugb-number-box__description": Object {
-      "marginBottom": undefined,
-    },
-    ".ugb-number-box__number": Object {
+    ".ugb-img": Object {
       "height": undefined,
-      "lineHeight": undefined,
-      "marginBottom": undefined,
-      "marginLeft": undefined,
-      "marginRight": undefined,
-      "textAlign": undefined,
       "width": undefined,
     },
-    ".ugb-number-box__title": Object {
+    ".ugb-testimonial__body": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-testimonial__image": Object {
+      "marginBottom": undefined,
+      "width": undefined,
+    },
+    ".ugb-testimonial__name": Object {
+      "marginBottom": undefined,
+    },
+    ".ugb-testimonial__position": Object {
       "marginBottom": undefined,
     },
   },
 }
 `;
 
-exports[`Number Box (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
+exports[`Testimonial (v2) block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-number-box__item": Object {
+  ".ugb-testimonial__item": Object {
     "backgroundAttachment": "fixed",
     "backgroundBlendMode": "columnBackgroundImageBlendMode",
     "backgroundColor": "#123456 !important",
@@ -202,7 +228,7 @@ Object {
     "borderStyle": "columnBorderType !important",
     "borderTopWidth": "123px !important",
   },
-  ".ugb-number-box__item:before": Object {
+  ".ugb-testimonial__item:before": Object {
     "backgroundColor": "#123456 !important",
     "backgroundImage": undefined,
     "mixBlendMode": undefined,
@@ -210,7 +236,7 @@ Object {
   },
   "editor": Object {
     "desktopTablet": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-testimonial__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -218,7 +244,7 @@ Object {
       },
     },
     "mobile": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-testimonial__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -226,7 +252,7 @@ Object {
       },
     },
     "tabletOnly": Object {
-      "> .ugb-inner-block > .ugb-block-content > .ugb-number-box__item": Object {
+      "> .ugb-inner-block > .ugb-block-content > .ugb-testimonial__item": Object {
         "paddingBottom": undefined,
         "paddingLeft": undefined,
         "paddingRight": undefined,
@@ -235,7 +261,7 @@ Object {
     },
   },
   "mobile": Object {
-    ".ugb-number-box__item": Object {
+    ".ugb-testimonial__item": Object {
       "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
       "backgroundPosition": "columnMobileBackgroundPosition",
       "backgroundRepeat": "columnMobileBackgroundRepeat",
@@ -245,7 +271,7 @@ Object {
       "borderRightWidth": "123px !important",
       "borderTopWidth": "123px !important",
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-testimonial__item:before": Object {
       "opacity": 12.3,
     },
   },
@@ -276,7 +302,7 @@ Object {
     },
   },
   "tablet": Object {
-    ".ugb-number-box__item": Object {
+    ".ugb-testimonial__item": Object {
       "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
       "backgroundPosition": "columnTabletBackgroundPosition",
       "backgroundRepeat": "columnTabletBackgroundRepeat",
@@ -286,7 +312,7 @@ Object {
       "borderRightWidth": "123px !important",
       "borderTopWidth": "123px !important",
     },
-    ".ugb-number-box__item:before": Object {
+    ".ugb-testimonial__item:before": Object {
       "opacity": 12.3,
     },
   },
