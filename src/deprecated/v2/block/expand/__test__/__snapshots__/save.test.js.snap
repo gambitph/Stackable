@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Expand / Show More (v2) block Save render should match snapshot 1`] = `
+<div
+  aria-expanded="false"
+  class="wp-block-ugb-expand ugb-expand--v2 ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-expand__less-text"
+      />
+      <div
+        class="ugb-expand__more-text"
+        style="display: none;"
+      />
+      <div
+        class="ugb-expand__toggle-wrapper"
+      >
+        <a
+          class="ugb-expand__toggle"
+          href="#"
+        >
+          <span
+            class="ugb-expand__more-toggle-text"
+          >
+            <div>
+              Show more
+            </div>
+          </span>
+          <span
+            class="ugb-expand__less-toggle-text"
+            style="display: none;"
+          >
+            <div>
+              Show less
+            </div>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Expand / Show More (v2) block Save render should match snapshot with attributes 1`] = `
+<div
+  aria-expanded="false"
+  class="wp-block-ugb-expand ugb-expand--v2 ugb-main-block"
+>
+  <style>
+    .ugb-expand__less-text p,.ugb-expand__more-text p{font-family:"textFontFamily",Sans-serif !important;font-size:123textFontSizeUnit !important;font-weight:textFontWeight !important;text-transform:textTextTransform !important;letter-spacing:123px !important;line-height:123textLineHeightUnit !important;color:#123456;text-align:textAlign}.ugb-expand__toggle-wrapper{text-align:linkAlign !important}.ugb-expand__more-toggle-text,.ugb-expand__less-toggle-text{font-family:"linkFontFamily",Sans-serif !important;font-size:123linkFontSizeUnit !important;font-weight:linkFontWeight !important;text-transform:linkTextTransform !important;letter-spacing:123px !important;line-height:123linkLineHeightUnit !important;color:#123456;margin-bottom:123px !important}.ugb-expand__less-text,.ugb-expand__more-text{margin-bottom:123px !important}@media screen and (max-width:1025px){.ugb-expand__less-text p,.ugb-expand__more-text p{line-height:123textTabletLineHeightUnit !important;font-size:123textTabletFontSizeUnit !important;text-align:textTabletAlign}.ugb-expand__toggle-wrapper{text-align:linkTabletAlign !important}.ugb-expand__more-toggle-text,.ugb-expand__less-toggle-text{line-height:123linkTabletLineHeightUnit !important;font-size:123linkTabletFontSizeUnit !important}}@media screen and (min-width:768px) and (max-width:1025px){.ugb-expand__less-text,.ugb-expand__more-text{margin-bottom:123px !important}.ugb-expand__more-toggle-text,.ugb-expand__less-toggle-text{margin-bottom:123px !important}}@media screen and (max-width:768px){.ugb-expand__less-text p,.ugb-expand__more-text p{line-height:123textMobileLineHeightUnit !important;font-size:123textMobileFontSizeUnit !important;text-align:textMobileAlign}.ugb-expand__toggle-wrapper{text-align:linkMobileAlign !important}.ugb-expand__more-toggle-text,.ugb-expand__less-toggle-text{line-height:123linkMobileLineHeightUnit !important;font-size:123linkMobileFontSizeUnit !important;margin-bottom:123px !important}.ugb-expand__less-text,.ugb-expand__more-text{margin-bottom:123px !important}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-expand__less-text"
+      >
+        <div>
+          <p>
+            text
+          </p>
+        </div>
+      </div>
+      <div
+        class="ugb-expand__more-text"
+        style="display: none;"
+      >
+        <div>
+          <p>
+            moreText
+          </p>
+        </div>
+      </div>
+      <div
+        class="ugb-expand__toggle-wrapper"
+      >
+        <a
+          class="ugb-expand__toggle"
+          href="#"
+        >
+          <span
+            class="ugb-expand__more-toggle-text"
+          >
+            <div>
+              moreLabel
+            </div>
+          </span>
+          <span
+            class="ugb-expand__less-toggle-text"
+            style="display: none;"
+          >
+            <div>
+              lessLabel
+            </div>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
