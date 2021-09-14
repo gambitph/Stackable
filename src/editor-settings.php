@@ -14,6 +14,9 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		function __construct() {
 			// Register settings.
 			add_action( 'init', array( $this, 'register_settings' ) );
+
+			// Make our settings available in the editor.
+			add_filter( 'stackable_js_settings', array( $this, 'add_settings' ) );
 		}
 
 		/**
@@ -42,7 +45,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'description' => __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
-					'default' => false,
+					'default' => true,
 				)
 			);
 
@@ -57,6 +60,19 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'default' => false,
 				)
 			);
+		}
+
+		/**
+		 * Make our settings available in the editor.
+		 *
+		 * @param Array $settings
+		 * @return Array Settings array to be loaded in the editor.
+		 */
+		public function add_settings( $settings ) {
+			$settings['stackable_enable_design_library'] = get_option( 'stackable_enable_design_library' );
+			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
+			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
+			return $settings;
 		}
 	}
 

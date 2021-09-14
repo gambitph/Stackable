@@ -1,7 +1,12 @@
 /**
+ * Internal dependencies
+ */
+import withMemory from './with-memory'
+
+/**
  * External dependencies
  */
-import { InspectorPanelControls, PanelTabs } from '~stackable/components'
+import { InspectorPanelControls, PanelTabs as _PanelTabs } from '~stackable/components'
 import { i18n } from 'stackable'
 
 /**
@@ -13,6 +18,8 @@ import {
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { InspectorControls } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+
+const PanelTabs = withMemory( _PanelTabs )
 
 // Add the layout tab.
 addFilter( 'stackable.inspector.tabs', 'stackable/v2', tabs => {

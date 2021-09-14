@@ -212,7 +212,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'fontAwesomeSearchProIcons' => apply_filters( 'stackable_search_fontawesome_pro_icons', false ),
 
 			// Editor settings.
-			'enableDesignLibrary' => get_option( 'stackable_enable_design_library' ),
+			'settings' => apply_filters( 'stackable_js_settings', array() ),
 			'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 		) );
 	}
