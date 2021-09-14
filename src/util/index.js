@@ -26,6 +26,7 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
+import { inRange } from 'lodash'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
@@ -208,6 +209,11 @@ export const minifyCSS = ( css, important = false ) => {
 		.trim()
 }
 
+const BREAKPOINTS = {
+	Tablet: 1024 - 1, // Need to minus one so we can detect between values.
+	Mobile: 768 - 1, // Need to minus one so we can detect between values.
+}
+
 /**
  * "Compiles" CSS - compiles the CSS for use of a specific block only.
  *
@@ -215,9 +221,10 @@ export const minifyCSS = ( css, important = false ) => {
  * @param {string} mainClass
  * @param {string} uniqueID
  * @param {boolean} isEditor If true, will preppend '.editor-styles-wrapper' to all selectors.
+ * @param {string} deviceType the current editor device type.
  * @return {string} CSS
  */
-export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
+export const compileCSS = ( css, mainClass, uniqueID, isEditor = false, deviceType = 'Desktop' ) => {
 	// Regex steps:
 	// Add the unique ID:
 	// 		".ugb-accordion" -> ".uniqueID .ugb-accordion"
@@ -229,9 +236,28 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
 		.replace( /\/\/(.*)?\n/g, '' )
 		.replace( /([^}]+)({)/g, ( match, selector, paren ) => {
 			// Ignore media queries (re-add them after fixing the classes)
-			if ( selector.match( /@\w+/g ) ) {
+			if ( selector.match( /@\w+/ ) ) {
 				return selector.replace( /(@\w+[^{]+{\s*)([^{]+)/g, ( match, mediaQuery, selector ) => {
 					const newSelector = prependCSSClass( selector, mainClass, uniqueID )
+
+					if ( isEditor && deviceType !== 'Desktop' ) {
+						let minWidth = mediaQuery?.match( /min-width:\s*(\d+)px/ )?.[ 1 ]
+						let maxWidth = mediaQuery?.match( /max-width:\s*(\d+)px/ )?.[ 1 ]
+
+						if ( typeof minWidth !== 'string' ) {
+							minWidth = 0
+						}
+
+						if ( typeof maxWidth !== 'string' ) {
+							maxWidth = 9999
+						}
+
+						// If the value is for the responsive screen, enable them.
+						if ( inRange( BREAKPOINTS[ deviceType ], parseInt( minWidth ), parseInt( maxWidth ) ) ) {
+							return `@media screen { ${ newSelector } ${ paren }`
+						}
+					}
+
 					return `${ mediaQuery } ${ newSelector } ${ paren }`
 				} )
 			}

@@ -69,7 +69,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 				}
 			}
 
-			$fonts_url = sprintf( 'https://fonts.googleapis.com/css?family=%s', implode( rawurlencode( '|' ), $google_fonts ) );
+			$fonts_url = sprintf( 'https://fonts.googleapis.com/css?family=%s&display=swap', implode( rawurlencode( '|' ), $google_fonts ) );
 
 			$subsets = [
 				'ru_RU' => 'cyrillic',
