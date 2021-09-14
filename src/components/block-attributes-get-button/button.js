@@ -7,58 +7,22 @@ import { applyBlockDesign } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
-import { withSelect, withDispatch } from '@wordpress/data'
-import { compose, withState } from '@wordpress/compose'
+import { useState } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post'
 import { Modal } from '@wordpress/components'
 import { applyFilters } from '@wordpress/hooks'
 
-const GetBlockAttributesButton = withState( {
-	openPopover: false,
-	changed: false,
-} )( ( {
-	blockName,
-	openPopover,
-	changed,
-	setState,
-	getJSONBlockAttributes,
-	setJSONBlockAttributes,
+const GetBlockAttributesButton = ( {
+	clientId,
 } ) => {
-	return (
-		<Fragment>
-			<PluginBlockSettingsMenuItem
-				icon="editor-code"
-				label="Get / Set Block Attributes"
-				onClick={ () => {
-					setState( { openPopover: true, changed: false } )
-					setTimeout( () => document.querySelector( '.ugb-modal-get-block-attributes-button textarea' ).select(), 100 )
-				} }
-			/>
-			{ openPopover &&
-				<Modal
-					title={ `${ startCase( blockName ) } Block Attributes` }
-					focusOnMount={ true }
-					className="ugb-modal-get-block-attributes-button"
-					onRequestClose={ () => {
-						if ( changed ) {
-							const value = document.querySelector( '.ugb-modal-get-block-attributes-button textarea' ).value
-							setJSONBlockAttributes( value )
-						}
+	const [ openPopover, setOpenPopover ] = useState( false )
+	const [ changed, setChanged ] = useState( false )
 
-						setState( { openPopover: false } )
-					 } }
-				>
-					<p>{ 'Copy or modify the attributes of the block directly. Use only double quotes "' }</p>
-					<textarea onChange={ () => setState( { changed: true } ) }>{ getJSONBlockAttributes() }</textarea>
-				</Modal>
-			}
-		</Fragment>
-	)
-} )
-
-export default compose( [
-	withSelect( ( select, { clientId } ) => {
+	const {
+		blockName,
+		getJSONBlockAttributes,
+	} = useSelect( select => {
 		const { getBlockName } = select( 'core/block-editor' )
 
 		return {
@@ -90,20 +54,51 @@ export default compose( [
 				return JSON.stringify( applyFilters( `stackable.${ blockName }.design.filtered-block-attributes`, cleanedAttributes ), null, 4 )
 			},
 		}
-	} ),
-	withDispatch( ( dispatch, { clientId } ) => {
-		return {
-			setJSONBlockAttributes: jsonString => {
-				if ( ! clientId ) {
-					return
-				}
-				try {
-					const attributes = JSON.parse( jsonString )
-					applyBlockDesign( attributes, clientId )
-				} catch ( err ) {
-					console.error( err ) // eslint-disable-line no-console
-				}
-			},
+	} )
+
+	const setJSONBlockAttributes = jsonString => {
+		if ( ! clientId ) {
+			return
 		}
-	} ),
-] )( GetBlockAttributesButton )
+		try {
+			const attributes = JSON.parse( jsonString )
+			applyBlockDesign( attributes, clientId )
+		} catch ( err ) {
+			console.error( err ) // eslint-disable-line no-console
+		}
+	}
+
+	return (
+		<>
+			<PluginBlockSettingsMenuItem
+				icon="editor-code"
+				label="Get / Set Block Attributes"
+				onClick={ () => {
+					setOpenPopover( true )
+					setChanged( false )
+					setTimeout( () => document.querySelector( '.ugb-modal-get-block-attributes-button textarea' ).select(), 100 )
+				} }
+			/>
+			{ openPopover &&
+				<Modal
+					title={ `${ startCase( blockName ) } Block Attributes` }
+					focusOnMount={ true }
+					className="ugb-modal-get-block-attributes-button"
+					onRequestClose={ () => {
+						if ( changed ) {
+							const value = document.querySelector( '.ugb-modal-get-block-attributes-button textarea' ).value
+							setJSONBlockAttributes( value )
+						}
+
+						setOpenPopover( false )
+					 } }
+				>
+					<p>{ 'Copy or modify the attributes of the block directly. Use only double quotes "' }</p>
+					<textarea onChange={ () => setChanged( true ) }>{ getJSONBlockAttributes() }</textarea>
+				</Modal>
+			}
+		</>
+	)
+}
+
+export default GetBlockAttributesButton

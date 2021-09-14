@@ -17,7 +17,7 @@ import { TextControl, TextareaControl } from '@wordpress/components'
 import classnames from 'classnames'
 
 const AdvancedTextControl = props => {
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.onChangeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
 		isDynamic,

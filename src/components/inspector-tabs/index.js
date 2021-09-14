@@ -6,9 +6,10 @@ import { PanelTabs } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { useState, memo } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { createSlotFill } from '@wordpress/components'
 import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
+import { useGlobalState } from '~stackable/util/global-state'
 
 const { Slot: PreInspectorTabSlot, Fill: PreInspectorTabFill } = createSlotFill( 'StackablePreInspectorTab' )
 const { Slot: BlockInspectorTabSlot, Fill: BlockInspectorTabFill } = createSlotFill( 'StackableBlockInspectorTab' )
@@ -16,18 +17,36 @@ const { Slot: StyleInspectorTabSlot, Fill: StyleInspectorTabFill } = createSlotF
 const { Slot: AdvancedInspectorTabSlot, Fill: AdvancedInspectorTabFill } = createSlotFill( 'StackableAdvancedInspectorTab' )
 
 const InspectorBlockControls = ( { children } ) => {
-	const { isSelected } = useBlockEditContext()
-	return isSelected ? <BlockInspectorTabFill>{ children }</BlockInspectorTabFill> : null
+	const { isSelected, name } = useBlockEditContext()
+	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'style' )
+
+	if ( ! isSelected || activeTab !== 'block' ) {
+		return null
+	}
+
+	return <BlockInspectorTabFill>{ children }</BlockInspectorTabFill>
 }
 
 const InspectorStyleControls = ( { children } ) => {
-	const { isSelected } = useBlockEditContext()
-	return isSelected ? <StyleInspectorTabFill>{ children }</StyleInspectorTabFill> : null
+	const { isSelected, name } = useBlockEditContext()
+	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'style' )
+
+	if ( ! isSelected || activeTab !== 'style' ) {
+		return null
+	}
+
+	return <StyleInspectorTabFill>{ children }</StyleInspectorTabFill>
 }
 
 const InspectorAdvancedControls = ( { children } ) => {
-	const { isSelected } = useBlockEditContext()
-	return isSelected ? <AdvancedInspectorTabFill>{ children }</AdvancedInspectorTabFill> : null
+	const { isSelected, name } = useBlockEditContext()
+	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'style' )
+
+	if ( ! isSelected || activeTab !== 'advanced' ) {
+		return null
+	}
+
+	return <AdvancedInspectorTabFill>{ children }</AdvancedInspectorTabFill>
 }
 
 export {
@@ -38,7 +57,8 @@ export {
 }
 
 const InspectorTabs = props => {
-	const [ activeTab, setActiveTab ] = useState( null )
+	const { name } = useBlockEditContext()
+	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, 'style' )
 
 	return (
 		<InspectorControls>
@@ -46,15 +66,14 @@ const InspectorTabs = props => {
 
 			<PanelTabs
 				tabs={ props.tabs }
-				onTabFirstOpen={ setActiveTab }
+				initialTab={ activeTab }
 				onClick={ setActiveTab }
 			/>
 
-			{ ( ! activeTab || activeTab === 'block' ) && <BlockInspectorTabSlot /> }
+			<BlockInspectorTabSlot />
+			<StyleInspectorTabSlot />
+			<AdvancedInspectorTabSlot />
 
-			{ ( ! activeTab || activeTab === 'style' ) && <StyleInspectorTabSlot /> }
-
-			{ ( ! activeTab || activeTab === 'advanced' ) && <AdvancedInspectorTabSlot /> }
 		</InspectorControls>
 	)
 }
