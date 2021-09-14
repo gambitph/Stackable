@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Call to Action block Save render should match snapshot 1`] = `
+exports[`Call to Action (v2) block Save render should match snapshot 1`] = `
 <div
   class="wp-block-ugb-cta ugb-cta ugb-cta--v2 ugb-main-block"
 >
@@ -52,7 +52,7 @@ exports[`Call to Action block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Call to Action block Save render should match snapshot with attributes 1`] = `
+exports[`Call to Action (v2) block Save render should match snapshot with attributes 1`] = `
 <div
   class="wp-block-ugb-cta ugb-cta ugb-cta--v2 ugb-cta--design-wave-2 ugb-main-block"
 >

@@ -3,14 +3,14 @@ import {
 } from '@testing-library/react'
 import { getAllBlocks, getDesigns } from '~stackable/design-library'
 import BlockList from '../block-list'
-import { select } from '@wordpress/data'
+import * as data from '@wordpress/data'
 
 jest.mock( '~stackable/design-library' )
-jest.mock( '@wordpress/data' )
+jest.spyOn( data, 'select' )
 
 describe( 'BlockList', () => {
 	beforeEach( () => {
-		select.mockImplementation( () => {
+		data.select.mockImplementation( () => {
 			return {
 				getBlockType: name => {
 					return {
@@ -45,7 +45,7 @@ describe( 'BlockList', () => {
 
 	it( 'does not show hidden blocks', async () => {
 		getAllBlocks.mockReturnValue( Promise.resolve( [ 'ugb/header', 'ugb/feature' ] ) )
-		select.mockImplementation( () => {
+		data.select.mockImplementation( () => {
 			return {
 				getBlockType: name => {
 					return {
@@ -79,7 +79,7 @@ describe( 'BlockList', () => {
 
 	it( 'does not show non-existent blocks', async () => {
 		getAllBlocks.mockReturnValue( Promise.resolve( [ 'ugb/feature' ] ) )
-		select.mockImplementation( () => {
+		data.select.mockImplementation( () => {
 			return {
 				getBlockType: name => {
 					if ( name === 'ugb/header' ) {

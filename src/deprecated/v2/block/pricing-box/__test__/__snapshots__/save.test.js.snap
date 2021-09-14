@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Pricing Box block Save render should match snapshot 1`] = `
+exports[`Pricing Box (v2) block Save render should match snapshot 1`] = `
 <div
   class="wp-block-ugb-pricing-box ugb-pricing-box--v3 ugb-pricing-box--columns-2 ugb-pricing-box--design-basic ugb-main-block"
 >
@@ -171,7 +171,7 @@ exports[`Pricing Box block Save render should match snapshot 1`] = `
 </div>
 `;
 
-exports[`Pricing Box block Save render should match snapshot with attributes 1`] = `
+exports[`Pricing Box (v2) block Save render should match snapshot with attributes 1`] = `
 <div
   class="wp-block-ugb-pricing-box ugb-pricing-box--v3 ugb-pricing-box--columns-3 ugb-pricing-box--design-wave-2 ugb-main-block"
 >
