@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import './polyfill'
-import withMemory from './with-memory'
 
 /**
  * WordPress dependencies
@@ -14,7 +13,7 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { i18n, settings } from 'stackable'
 import { applyFilters } from '@wordpress/hooks'
 import { Icon } from '@wordpress/components'
 
@@ -88,7 +87,7 @@ class PanelTabs extends Component {
 		this.updateSidebarPanelTab( this.state.activeTab )
 
 		// Listen to panel closes
-		if ( this.props.closeOtherPanels ) {
+		if ( this.props.closeOtherPanels && settings.stackable_auto_collapse_panels ) {
 			document.body.addEventListener( 'click', this.onButtonPanelClick )
 		}
 	}
@@ -101,7 +100,7 @@ class PanelTabs extends Component {
 		}
 
 		// Remove listener to panel closes
-		if ( this.props.closeOtherPanels ) {
+		if ( this.props.closeOtherPanels && settings.stackable_auto_collapse_panels ) {
 			document.body.removeEventListener( 'click', this.onButtonPanelClick )
 		}
 	}
@@ -112,7 +111,7 @@ class PanelTabs extends Component {
 			return
 		}
 
-		// Don't auto-close panels in the layout tab.
+		// Don't auto-close panels in the layout tab. (v2)
 		if ( this.state.activeTab === 'layout' ) {
 			return
 		}
@@ -184,4 +183,4 @@ PanelTabs.defaultProps = {
 	onTabFirstOpen: () => {},
 }
 
-export default withMemory( PanelTabs )
+export default PanelTabs
