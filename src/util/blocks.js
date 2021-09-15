@@ -8,7 +8,7 @@ import { loadGoogleFontInAttributes, moveArrayIndex } from '~stackable/util'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { createBlock } from '@wordpress/blocks'
+import { createBlock, createBlocksFromInnerBlocksTemplate as _createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
 import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
@@ -114,7 +114,7 @@ const SHOWN_BLOCK_TYPES = 9
  *
  * @return {Object[]} Array of Block objects.
  */
-export const createBlocksFromInnerBlocksTemplate = ( innerBlocksOrTemplate = [] ) => {
+export const createBlocksFromInnerBlocksTemplate = _createBlocksFromInnerBlocksTemplate || ( ( innerBlocksOrTemplate = [] ) => {
 	return innerBlocksOrTemplate.map( innerBlock => {
 		const innerBlockTemplate = Array.isArray( innerBlock )
 			? innerBlock
@@ -131,7 +131,7 @@ export const createBlocksFromInnerBlocksTemplate = ( innerBlocksOrTemplate = [] 
 		)
 	}
 	)
-}
+} )
 
 /**
  * When adding a stackable block, typing
