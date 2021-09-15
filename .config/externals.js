@@ -42,7 +42,6 @@ const externals = [
 	'rich-text',
 	'url',
 	'keyboard-shortcuts',
-	'icons',
 	'token-list',
 	'keycodes',
 	'escape-html'
