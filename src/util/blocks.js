@@ -8,7 +8,7 @@ import { loadGoogleFontInAttributes, moveArrayIndex } from '~stackable/util'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { createBlock, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
+import { createBlock, createBlocksFromInnerBlocksTemplate as _createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
 import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
@@ -106,6 +106,32 @@ export const moveInnerBlock = ( clientId, fromIndex, toIndex ) => {
 }
 
 const SHOWN_BLOCK_TYPES = 9
+
+/**
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/f2de29830423d8c0890add9889ee07d6bf7163f1/packages/blocks/src/api/factory.js
+ * @param {Array} innerBlocksOrTemplate Nested blocks or InnerBlocks templates.
+ *
+ * @return {Object[]} Array of Block objects.
+ */
+export const createBlocksFromInnerBlocksTemplate = _createBlocksFromInnerBlocksTemplate || ( ( innerBlocksOrTemplate = [] ) => {
+	return innerBlocksOrTemplate.map( innerBlock => {
+		const innerBlockTemplate = Array.isArray( innerBlock )
+			? innerBlock
+			: [
+				innerBlock.name,
+				innerBlock.attributes,
+				innerBlock.innerBlocks,
+			]
+		const [ name, attributes, innerBlocks = [] ] = innerBlockTemplate
+		return createBlock(
+			name,
+			attributes,
+			createBlocksFromInnerBlocksTemplate( innerBlocks )
+		)
+	}
+	)
+} )
 
 /**
  * When adding a stackable block, typing
@@ -225,6 +251,7 @@ export const createBlockCompleter = () => {
 					initialAttributes,
 					createBlocksFromInnerBlocksTemplate( innerBlocks )
 				),
+
 			}
 		},
 	}
