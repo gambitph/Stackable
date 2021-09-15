@@ -110,12 +110,10 @@ export const Colors = props => {
 
 				{ props.hasTextColor && (
 					<ColorPaletteControl
-						onChangeCallback={ _value => {
+						changeCallback={ _value => {
 							const value = _value?.startsWith( 'var(--stk-global-color' ) ? _value.match( /(#[^\)]*)/g )[ 0 ] : _value
 							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-							if ( colorSlug ) {
-								updateAttribute( 'textColorClass', getColorClassName( 'color', colorSlug ) )
-							}
+							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
 
 							return _value
 						} }
