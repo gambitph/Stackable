@@ -182,7 +182,10 @@ export const Icon = props => {
 			{ isOpen && (
 				<IconSearchPopover
 					useRef={ popoverEl }
-					onChange={ updateAttributeHandler( 'icon' ) }
+					onChange={ icon => {
+						updateAttributeHandler( 'icon' )( icon )
+						setIsOpen( false )
+					} }
 				/>
 			) }
 			{ getAttribute( 'icon2' ) && (
@@ -224,18 +227,20 @@ Icon.Content = props => {
 		{ 'stk--has-icon2': getValue( 'icon2' ) }
 	)
 
-	if ( ! getValue( 'icon' ) ) {
+	if ( ! getValue( 'icon' ) && ! getValue( 'icon2' ) ) {
 		return null
 	}
 
 	return (
 		<span className={ className }>
-			<SVGIcon.Content
-				className="stk--inner-svg"
-				prependRender={ linearGradient }
-				value={ getValue( 'icon' ) }
-				ariaLabel={ getValue( 'ariaLabel' ) }
-			/>
+			{ getValue( 'icon' ) && (
+				<SVGIcon.Content
+					className="stk--inner-svg"
+					prependRender={ linearGradient }
+					value={ getValue( 'icon' ) }
+					ariaLabel={ getValue( 'ariaLabel' ) }
+				/>
+			) }
 			{ getValue( 'showBackgroundShape' ) && (
 				<ShapeComp className="stk--shape-icon" />
 			) }

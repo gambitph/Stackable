@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, settings } from 'stackable'
 import { SVGStackableIcon } from '~stackable/icons'
 import { Button } from '~stackable/components'
 
@@ -12,8 +12,8 @@ import { createBlock } from '@wordpress/blocks'
 import { dispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
-const InsertLibraryButton = () => {
-	return (
+const DesignLibraryButton = () => {
+	return ( settings.stackable_enable_design_library &&
 		<Button
 			onClick={ () => {
 				// Insert a design library block.
@@ -35,4 +35,4 @@ const InsertLibraryButton = () => {
 	)
 }
 
-export default InsertLibraryButton
+export default DesignLibraryButton

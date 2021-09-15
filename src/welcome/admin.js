@@ -8,6 +8,7 @@ import blockData from './blocks'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
+import { pick } from 'lodash'
 import {
 	Component, render, useEffect, useState, Fragment,
 } from '@wordpress/element'
@@ -133,6 +134,82 @@ class BlockToggler extends Component {
 			</div>
 		)
 	}
+}
+
+const EditorSettings = () => {
+	const [ settings, setSettings ] = useState( {} )
+	const [ isBusy, setIsBusy ] = useState( false )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setSettings( pick( response, [ 'stackable_enable_design_library', 'stackable_auto_collapse_panels', 'stackable_enable_block_linking' ] ) )
+			} )
+		} )
+	}, [] )
+
+	return <>
+		<AdminToggleSetting
+			label={ __( 'Design Library', i18n ) }
+			value={ settings.stackable_enable_design_library }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_design_library: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_design_library: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
+			disabled={ __( 'Disable feature', i18n ) }
+			enabled={ __( 'Enable feature', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Auto-Collapse Panels', i18n ) }
+			value={ settings.stackable_auto_collapse_panels }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_auto_collapse_panels: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', i18n ) }
+			disabled={ __( 'Disable feature', i18n ) }
+			enabled={ __( 'Enable feature', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Block Linking (Beta)', i18n ) }
+			value={ settings.stackable_enable_block_linking }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_block_linking: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={
+				<>
+					{ __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', i18n ) }
+					&nbsp;
+					<a target="_docs" href="https://docs.wpstackable.com/article/462-migrating-from-version-2-to-version-3?utm_source=wp-settings-migrating&utm_campaign=learnmore&utm_medium=wp-dashboard">{ __( 'Learn more', i18n ) }</a>
+				</>
+			}
+			disabled={ __( 'Disable feature', i18n ) }
+			enabled={ __( 'Enable feature', i18n ) }
+		/>
+		{ isBusy &&
+			<div className="s-absolute-spinner">
+				<Spinner />
+			</div>
+		}
+	</>
 }
 
 const DynamicBreakpointsSettings = () => {
@@ -382,6 +459,11 @@ domReady( () => {
 			showProNoticesOption={ showProNoticesOption }
 		/>,
 		document.querySelector( '.s-other-options-wrapper' )
+	)
+
+	render(
+		<EditorSettings />,
+		document.querySelector( '.s-editor-settings' )
 	)
 
 	render(

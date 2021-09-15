@@ -2,9 +2,11 @@
  * A Panel for selecting designs
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import withMemory from './with-memory'
+import classnames from 'classnames'
+import { i18n } from 'stackable'
+import { useGlobalState } from '~stackable/util/global-state'
 
 /**
  * WordPress dependencies
@@ -19,15 +21,15 @@ import {
 import { addFilter, removeFilter } from '@wordpress/hooks'
 import { FormToggle, PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-
-/**
- * External dependencies
- */
-import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const PanelAdvancedSettings = props => {
-	const [ isOpen, setIsOpen ] = useState( props.initialOpen )
+	// Remember whether this panel was open/closed before.
+	const { isSelected, name } = useBlockEditContext()
+	const [ tab ] = useGlobalState( `tabCache-${ name }`, 'style' )
+	const [ initialOpen, setInitialOpen ] = useGlobalState( `panelCache-${ name }-${ tab }-${ props.title }`, props.initialOpen )
+
+	const [ isOpen, setIsOpen ] = useState( initialOpen )
 	const [ showAdvanced, setShowAdvanced ] = useState( props.initialAdvanced )
 	const instanceId = useMemo( () => parseInt( ( Math.random() * 1000000 ), 10 ), [] )
 
@@ -78,7 +80,10 @@ const PanelAdvancedSettings = props => {
 		}
 	}, [] )
 
-	const onToggle = useCallback( () => setIsOpen( ! isOpen ), [ isOpen ] )
+	const onToggle = useCallback( () => {
+		setIsOpen( ! isOpen )
+		setInitialOpen( ! isOpen )
+	}, [ isOpen ] )
 	const onAdvancedToggle = useCallback( () => setShowAdvanced( ! showAdvanced ), [ showAdvanced ] )
 
 	const mainClasses = classnames( [
@@ -119,10 +124,10 @@ const PanelAdvancedSettings = props => {
 		</Fragment>
 	}, [ onToggle, hasToggle, props.checked, props.onChange, props.title ] )
 
-	return (
+	return ( isSelected || ! name ) && ( // If there's no name, then the panel is used in another place.
 		<PanelBody
 			className={ mainClasses }
-			initialOpen={ props.initialOpen }
+			initialOpen={ initialOpen }
 			onToggle={ onToggle }
 			opened={ isOpen }
 			title={ title }
@@ -155,4 +160,4 @@ PanelAdvancedSettings.defaultProps = {
 	toggleAttributeName: '',
 }
 
-export default withMemory( PanelAdvancedSettings )
+export default PanelAdvancedSettings

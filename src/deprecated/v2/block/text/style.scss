@@ -13,6 +13,8 @@
 	grid-column-gap: #{ $box-hori-padding };
 }
 .ugb-text__text {
+	word-break: break-word;
+	hyphens: auto;
 	display: flex;
 	flex-direction: column;
 	> p {

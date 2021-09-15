@@ -43,6 +43,7 @@ import {
 	BlockStyle,
 	Typography,
 	FlexGapControls,
+	MarginBottom,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -350,6 +351,7 @@ const Edit = props => {
 					</div>
 				</BlockDiv>
 			) }
+			{ ! isRequesting && hasPosts && <MarginBottom /> }
 		</>
 	)
 }

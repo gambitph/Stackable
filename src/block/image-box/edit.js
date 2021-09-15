@@ -122,7 +122,7 @@ const Edit = props => {
 					/>
 				</div>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</Fragment>
 	)
 }

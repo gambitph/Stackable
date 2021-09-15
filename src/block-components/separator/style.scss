@@ -12,14 +12,6 @@
 		transform: scaleY(-1);
 	}
 
-	&.stk-has-top-separator {
-		padding-top: 200px;
-	}
-
-	&.stk-has-bottom-separator {
-		padding-bottom: 200px;
-	}
-
 	.stk-separator__bottom {
 		.stk-separator__wrapper {
 			top: auto;
@@ -59,5 +51,16 @@
 			left: 0;
 			right: 0;
 		}
+	}
+}
+
+// More specificity for the paddings to apply in blocks.
+.entry-content .stk-block {
+	&.stk-has-top-separator {
+		padding-top: 200px;
+	}
+
+	&.stk-has-bottom-separator {
+		padding-bottom: 200px;
 	}
 }

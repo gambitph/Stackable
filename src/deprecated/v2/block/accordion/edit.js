@@ -55,8 +55,8 @@ import {
 } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { compose, withState } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+import { Fragment, useState } from '@wordpress/element'
 import { withSelect } from '@wordpress/data'
 
 addFilter( 'stackable.accordion.edit.layouts', 'default', layouts => {
@@ -191,35 +191,35 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						/>
 					</ButtonIconPopoverControl>
 					{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
 					}
 					{ show.containerBorder &&
-					<BorderControlsHelper
-						attrNameTemplate="container%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
+						<BorderControlsHelper
+							attrNameTemplate="container%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
 					}
 					{ ( show.headerBackground || show.containerBackground ) &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ shadow }
+							onChange={ shadow => setAttributes( { shadow } ) }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="3"
+							className="ugb--help-tip-general-shadow"
+						/>
 					}
 					{ design === 'colored' &&
 						<ColorPaletteControl
@@ -368,7 +368,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 
 const TEMPLATE = [ [ 'core/paragraph', { content: descriptionPlaceholder( 'long' ) } ] ]
 
-const edit = props => {
+const Edit = props => {
 	const {
 		className,
 		setAttributes,
@@ -385,12 +385,15 @@ const edit = props => {
 
 	const show = showOptions( props )
 
+	const [ isOpen, setIsOpen ] = useState( null )
+	const [ openTimeout, setOpenTimeout ] = useState( null )
+
 	const mainClasses = classnames( [
 		className,
 		'ugb-accordion--v2',
 		`ugb-accordion--design-${ design }`,
 	], applyFilters( 'stackable.accordion.mainclasses', {
-		'ugb-accordion--open': props.isOpen === null ? openStart : props.isOpen,
+		'ugb-accordion--open': isOpen === null ? openStart : isOpen,
 	}, props ) )
 
 	const itemClasses = classnames( [
@@ -418,24 +421,24 @@ const edit = props => {
 						blockProps={ props }
 						showBackground={ show.headerBackground }
 						onClick={ () => {
-							if ( props.openTimeout ) {
-								clearTimeout( props.openTimeout )
+							if ( openTimeout ) {
+								clearTimeout( openTimeout )
 							}
 							const newOpenTimeout = setTimeout( () => {
-								props.setState( { isOpen: ! props.isOpen } )
+								setIsOpen( ! isOpen )
 							}, 150 )
-							props.setState( { openTimeout: newOpenTimeout } )
+							setOpenTimeout( newOpenTimeout )
 						} }
 						onDoubleClick={ () => {
-							if ( props.openTimeout ) {
-								clearTimeout( props.openTimeout )
+							if ( openTimeout ) {
+								clearTimeout( openTimeout )
 							}
 						} }
 						onKeyPress={ () => {
-							if ( props.openTimeout ) {
-								clearTimeout( props.openTimeout )
+							if ( openTimeout ) {
+								clearTimeout( openTimeout )
 							}
-							props.setState( { isOpen: ! openStart } )
+							setIsOpen( ! openStart )
 						} }
 						role="button"
 						tabIndex="0"
@@ -488,8 +491,4 @@ export default compose(
 			hasInnerBlocks: !! ( block && block.innerBlocks.length ),
 		}
 	} ),
-	withState( {
-		openTimeout: null,
-		isOpen: null,
-	} )
-)( edit )
+)( Edit )

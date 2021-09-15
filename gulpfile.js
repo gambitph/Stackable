@@ -118,7 +118,6 @@ gulp.task( 'style', gulp.series(
 	},
 	// Cleanup the responsiveness file.
 	function styleCleanupResponsiveCSS() {
-		// return gulp.src( [ path.resolve( __dirname, './dist/frontend_blocks_responsive.css' ) ] )
 		return gulp.src( [ 'dist/frontend_blocks_responsive.css' ] )
 			.pipe( header( '#start-resizable-editor-section{display:none}' ) )
 			.pipe( footer( '#end-resizable-editor-section{display:none}' ) )
@@ -126,7 +125,6 @@ gulp.task( 'style', gulp.series(
 	},
 	// Add the responsive styles to the dynamic breakpoint file.
 	function styleGenerateResponsivePHP() {
-		// const css = fs.readFileSync( path.resolve( __dirname, './dist/frontend_blocks_responsive.css' ), 'utf8' )
 		const css = fs.readFileSync( 'dist/frontend_blocks_responsive.css', 'utf8' )
 
 		return gulp.src( [ path.resolve( __dirname, './src/dynamic-breakpoints.php' ) ] )
