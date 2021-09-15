@@ -81,6 +81,7 @@ const Edit = props => {
 				applyCustomAttributes={ false }
 			>
 				<Button
+					linkTrigger=".stk--inner-svg"
 					buttonProps={ {
 						id: props.attributes.anchor || undefined,
 						...customAttributes,
