@@ -9193,6 +9193,71 @@
     ]
   },
   {
+    "family": "Noto Kufi Arabic",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic"
+    ]
+  },
+  {
+    "family": "Noto Music",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "music"
+    ]
+  },
+  {
+    "family": "Noto Naskh Arabic",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "arabic"
+    ]
+  },
+  {
+    "family": "Noto Nastaliq Urdu",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "arabic"
+    ]
+  },
+  {
+    "family": "Noto Rashi Hebrew",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "hebrew"
+    ]
+  },
+  {
     "family": "Noto Sans",
     "variants": [
       "regular",
@@ -9212,6 +9277,463 @@
     ]
   },
   {
+    "family": "Noto Sans Adlam",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "adlam"
+    ]
+  },
+  {
+    "family": "Noto Sans Adlam Unjoined",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "adlam"
+    ]
+  },
+  {
+    "family": "Noto Sans Anatolian Hieroglyphs",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "anatolian-hieroglyphs"
+    ]
+  },
+  {
+    "family": "Noto Sans Arabic",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic"
+    ]
+  },
+  {
+    "family": "Noto Sans Armenian",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "armenian"
+    ]
+  },
+  {
+    "family": "Noto Sans Avestan",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "avestan"
+    ]
+  },
+  {
+    "family": "Noto Sans Balinese",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "balinese"
+    ]
+  },
+  {
+    "family": "Noto Sans Bamum",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "bamum"
+    ]
+  },
+  {
+    "family": "Noto Sans Bassa Vah",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "bassa-vah"
+    ]
+  },
+  {
+    "family": "Noto Sans Batak",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "batak"
+    ]
+  },
+  {
+    "family": "Noto Sans Bengali",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "bengali"
+    ]
+  },
+  {
+    "family": "Noto Sans Bhaiksuki",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "bhaiksuki"
+    ]
+  },
+  {
+    "family": "Noto Sans Brahmi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "brahmi"
+    ]
+  },
+  {
+    "family": "Noto Sans Buginese",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "buginese"
+    ]
+  },
+  {
+    "family": "Noto Sans Buhid",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "buhid"
+    ]
+  },
+  {
+    "family": "Noto Sans Canadian Aboriginal",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "canadian-aboriginal"
+    ]
+  },
+  {
+    "family": "Noto Sans Carian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "carian"
+    ]
+  },
+  {
+    "family": "Noto Sans Caucasian Albanian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "caucasian-albanian"
+    ]
+  },
+  {
+    "family": "Noto Sans Chakma",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chakma"
+    ]
+  },
+  {
+    "family": "Noto Sans Cham",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cham"
+    ]
+  },
+  {
+    "family": "Noto Sans Cherokee",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cherokee"
+    ]
+  },
+  {
+    "family": "Noto Sans Coptic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "coptic"
+    ]
+  },
+  {
+    "family": "Noto Sans Cuneiform",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cuneiform"
+    ]
+  },
+  {
+    "family": "Noto Sans Cypriot",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cypriot"
+    ]
+  },
+  {
+    "family": "Noto Sans Deseret",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "deseret"
+    ]
+  },
+  {
+    "family": "Noto Sans Devanagari",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "devanagari"
+    ]
+  },
+  {
+    "family": "Noto Sans Display",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Noto Sans Duployan",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "duployan"
+    ]
+  },
+  {
+    "family": "Noto Sans Egyptian Hieroglyphs",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "egyptian-hieroglyphs"
+    ]
+  },
+  {
+    "family": "Noto Sans Elbasan",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "elbasan"
+    ]
+  },
+  {
+    "family": "Noto Sans Elymaic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "elymaic"
+    ]
+  },
+  {
+    "family": "Noto Sans Georgian",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "georgian"
+    ]
+  },
+  {
+    "family": "Noto Sans Glagolitic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "glagolitic"
+    ]
+  },
+  {
+    "family": "Noto Sans Gothic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "gothic"
+    ]
+  },
+  {
+    "family": "Noto Sans Grantha",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "grantha"
+    ]
+  },
+  {
+    "family": "Noto Sans Gujarati",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "gujarati"
+    ]
+  },
+  {
+    "family": "Noto Sans Gunjala Gondi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "gunjala-gondi"
+    ]
+  },
+  {
+    "family": "Noto Sans Gurmukhi",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "gurmukhi"
+    ]
+  },
+  {
     "family": "Noto Sans HK",
     "variants": [
       "100",
@@ -9224,6 +9746,89 @@
     "subsets": [
       "chinese-hongkong",
       "latin"
+    ]
+  },
+  {
+    "family": "Noto Sans Hanifi Rohingya",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "hanifi-rohingya"
+    ]
+  },
+  {
+    "family": "Noto Sans Hanunoo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "hanunoo"
+    ]
+  },
+  {
+    "family": "Noto Sans Hatran",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "hatran"
+    ]
+  },
+  {
+    "family": "Noto Sans Hebrew",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "hebrew"
+    ]
+  },
+  {
+    "family": "Noto Sans Imperial Aramaic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "imperial-aramaic"
+    ]
+  },
+  {
+    "family": "Noto Sans Indic Siyaq Numbers",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "indic-siyaq-numbers"
+    ]
+  },
+  {
+    "family": "Noto Sans Inscriptional Pahlavi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "inscriptional-pahlavi"
+    ]
+  },
+  {
+    "family": "Noto Sans Inscriptional Parthian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "inscriptional-parthian"
     ]
   },
   {
@@ -9242,6 +9847,16 @@
     ]
   },
   {
+    "family": "Noto Sans Javanese",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "javanese"
+    ]
+  },
+  {
     "family": "Noto Sans KR",
     "variants": [
       "100",
@@ -9254,6 +9869,614 @@
     "subsets": [
       "korean",
       "latin"
+    ]
+  },
+  {
+    "family": "Noto Sans Kaithi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "kaithi"
+    ]
+  },
+  {
+    "family": "Noto Sans Kannada",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "kannada"
+    ]
+  },
+  {
+    "family": "Noto Sans Kayah Li",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "kayah-li"
+    ]
+  },
+  {
+    "family": "Noto Sans Kharoshthi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "kharoshthi"
+    ]
+  },
+  {
+    "family": "Noto Sans Khmer",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "khmer"
+    ]
+  },
+  {
+    "family": "Noto Sans Khojki",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "khojki"
+    ]
+  },
+  {
+    "family": "Noto Sans Khudawadi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "khudawadi"
+    ]
+  },
+  {
+    "family": "Noto Sans Lao",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "lao"
+    ]
+  },
+  {
+    "family": "Noto Sans Lepcha",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "lepcha"
+    ]
+  },
+  {
+    "family": "Noto Sans Limbu",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "limbu"
+    ]
+  },
+  {
+    "family": "Noto Sans Linear A",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "linear-a"
+    ]
+  },
+  {
+    "family": "Noto Sans Linear B",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "linear-b"
+    ]
+  },
+  {
+    "family": "Noto Sans Lisu",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "lisu"
+    ]
+  },
+  {
+    "family": "Noto Sans Lycian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "lycian"
+    ]
+  },
+  {
+    "family": "Noto Sans Lydian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "lydian"
+    ]
+  },
+  {
+    "family": "Noto Sans Mahajani",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "mahajani"
+    ]
+  },
+  {
+    "family": "Noto Sans Malayalam",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "malayalam"
+    ]
+  },
+  {
+    "family": "Noto Sans Mandaic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "mandaic"
+    ]
+  },
+  {
+    "family": "Noto Sans Manichaean",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "manichaean"
+    ]
+  },
+  {
+    "family": "Noto Sans Marchen",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "marchen"
+    ]
+  },
+  {
+    "family": "Noto Sans Masaram Gondi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "masaram-gondi"
+    ]
+  },
+  {
+    "family": "Noto Sans Math",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "math"
+    ]
+  },
+  {
+    "family": "Noto Sans Mayan Numerals",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "mayan-numerals"
+    ]
+  },
+  {
+    "family": "Noto Sans Medefaidrin",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "medefaidrin"
+    ]
+  },
+  {
+    "family": "Noto Sans MeeteiMayek",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "meetei-mayek"
+    ]
+  },
+  {
+    "family": "Noto Sans Meroitic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "meroitic"
+    ]
+  },
+  {
+    "family": "Noto Sans Miao",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "miao"
+    ]
+  },
+  {
+    "family": "Noto Sans Modi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "modi"
+    ]
+  },
+  {
+    "family": "Noto Sans Mongolian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "mongolian"
+    ]
+  },
+  {
+    "family": "Noto Sans Mono",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Noto Sans Mro",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "mro"
+    ]
+  },
+  {
+    "family": "Noto Sans Multani",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "multani"
+    ]
+  },
+  {
+    "family": "Noto Sans Myanmar",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "myanmar"
+    ]
+  },
+  {
+    "family": "Noto Sans N Ko",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "nko"
+    ]
+  },
+  {
+    "family": "Noto Sans Nabataean",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "nabataean"
+    ]
+  },
+  {
+    "family": "Noto Sans New Tai Lue",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "new-tai-lue"
+    ]
+  },
+  {
+    "family": "Noto Sans Newa",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "newa"
+    ]
+  },
+  {
+    "family": "Noto Sans Nushu",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "nushu"
+    ]
+  },
+  {
+    "family": "Noto Sans Ogham",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "ogham"
+    ]
+  },
+  {
+    "family": "Noto Sans Ol Chiki",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "ol-chiki"
+    ]
+  },
+  {
+    "family": "Noto Sans Old Hungarian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "old-hungarian"
+    ]
+  },
+  {
+    "family": "Noto Sans Old Italic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "old-italic"
+    ]
+  },
+  {
+    "family": "Noto Sans Old North Arabian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "old-north-arabian"
+    ]
+  },
+  {
+    "family": "Noto Sans Old Permic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "old-permic"
+    ]
+  },
+  {
+    "family": "Noto Sans Old Persian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "old-persian"
+    ]
+  },
+  {
+    "family": "Noto Sans Old Sogdian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "old-sogdian"
+    ]
+  },
+  {
+    "family": "Noto Sans Old South Arabian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "old-south-arabian"
+    ]
+  },
+  {
+    "family": "Noto Sans Old Turkic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "old-turkic"
+    ]
+  },
+  {
+    "family": "Noto Sans Oriya",
+    "variants": [
+      "100",
+      "regular",
+      "700",
+      "900"
+    ],
+    "subsets": [
+      "oriya"
+    ]
+  },
+  {
+    "family": "Noto Sans Osage",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "osage"
+    ]
+  },
+  {
+    "family": "Noto Sans Osmanya",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "osmanya"
+    ]
+  },
+  {
+    "family": "Noto Sans Pahawh Hmong",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "pahawh-hmong"
+    ]
+  },
+  {
+    "family": "Noto Sans Palmyrene",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "palmyrene"
+    ]
+  },
+  {
+    "family": "Noto Sans Pau Cin Hau",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "pau-cin-hau"
+    ]
+  },
+  {
+    "family": "Noto Sans Phags Pa",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "phags-pa"
+    ]
+  },
+  {
+    "family": "Noto Sans Phoenician",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "phoenician"
+    ]
+  },
+  {
+    "family": "Noto Sans Psalter Pahlavi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "psalter-pahlavi"
+    ]
+  },
+  {
+    "family": "Noto Sans Rejang",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "rejang"
+    ]
+  },
+  {
+    "family": "Noto Sans Runic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "runic"
     ]
   },
   {
@@ -9272,6 +10495,156 @@
     ]
   },
   {
+    "family": "Noto Sans Samaritan",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "samaritan"
+    ]
+  },
+  {
+    "family": "Noto Sans Saurashtra",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "saurashtra"
+    ]
+  },
+  {
+    "family": "Noto Sans Sharada",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "sharada"
+    ]
+  },
+  {
+    "family": "Noto Sans Shavian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "shavian"
+    ]
+  },
+  {
+    "family": "Noto Sans Siddham",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "siddham"
+    ]
+  },
+  {
+    "family": "Noto Sans Sinhala",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "sinhala"
+    ]
+  },
+  {
+    "family": "Noto Sans Sogdian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "sogdian"
+    ]
+  },
+  {
+    "family": "Noto Sans Sora Sompeng",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "sora-sompeng"
+    ]
+  },
+  {
+    "family": "Noto Sans Soyombo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "soyombo"
+    ]
+  },
+  {
+    "family": "Noto Sans Sundanese",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "sundanese"
+    ]
+  },
+  {
+    "family": "Noto Sans Syloti Nagri",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "syloti-nagri"
+    ]
+  },
+  {
+    "family": "Noto Sans Symbols",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "symbols"
+    ]
+  },
+  {
+    "family": "Noto Sans Symbols 2",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "symbols"
+    ]
+  },
+  {
+    "family": "Noto Sans Syriac",
+    "variants": [
+      "100",
+      "regular",
+      "900"
+    ],
+    "subsets": [
+      "syriac"
+    ]
+  },
+  {
     "family": "Noto Sans TC",
     "variants": [
       "100",
@@ -9287,12 +10660,226 @@
     ]
   },
   {
+    "family": "Noto Sans Tagalog",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "tagalog"
+    ]
+  },
+  {
+    "family": "Noto Sans Tagbanwa",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "tagbanwa"
+    ]
+  },
+  {
+    "family": "Noto Sans Tai Le",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "tai-le"
+    ]
+  },
+  {
+    "family": "Noto Sans Tai Tham",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "tai-tham"
+    ]
+  },
+  {
+    "family": "Noto Sans Tai Viet",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "tai-viet"
+    ]
+  },
+  {
+    "family": "Noto Sans Takri",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "takri"
+    ]
+  },
+  {
+    "family": "Noto Sans Tamil",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "tamil"
+    ]
+  },
+  {
+    "family": "Noto Sans Tamil Supplement",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "tamil-supplement"
+    ]
+  },
+  {
+    "family": "Noto Sans Telugu",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "telugu"
+    ]
+  },
+  {
+    "family": "Noto Sans Thaana",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "thaana"
+    ]
+  },
+  {
+    "family": "Noto Sans Thai",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "thai"
+    ]
+  },
+  {
+    "family": "Noto Sans Thai Looped",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "thai"
+    ]
+  },
+  {
+    "family": "Noto Sans Tifinagh",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "tifinagh"
+    ]
+  },
+  {
+    "family": "Noto Sans Tirhuta",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "tirhuta"
+    ]
+  },
+  {
+    "family": "Noto Sans Ugaritic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "ugaritic"
+    ]
+  },
+  {
     "family": "Noto Sans Vai",
     "variants": [
       "regular"
     ],
     "subsets": [
       "vai"
+    ]
+  },
+  {
+    "family": "Noto Sans Wancho",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "wancho"
+    ]
+  },
+  {
+    "family": "Noto Sans Warang Citi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "warang-citi"
+    ]
+  },
+  {
+    "family": "Noto Sans Yi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "yi"
+    ]
+  },
+  {
+    "family": "Noto Sans Zanabazar Square",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "zanabazar-square"
     ]
   },
   {
@@ -9311,6 +10898,210 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Noto Serif Ahom",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "ahom"
+    ]
+  },
+  {
+    "family": "Noto Serif Armenian",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "armenian"
+    ]
+  },
+  {
+    "family": "Noto Serif Balinese",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "balinese"
+    ]
+  },
+  {
+    "family": "Noto Serif Bengali",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "bengali"
+    ]
+  },
+  {
+    "family": "Noto Serif Devanagari",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "devanagari"
+    ]
+  },
+  {
+    "family": "Noto Serif Display",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Noto Serif Dogra",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "dogra"
+    ]
+  },
+  {
+    "family": "Noto Serif Ethiopic",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "ethiopic"
+    ]
+  },
+  {
+    "family": "Noto Serif Georgian",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "georgian"
+    ]
+  },
+  {
+    "family": "Noto Serif Grantha",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "grantha"
+    ]
+  },
+  {
+    "family": "Noto Serif Gujarati",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "gujarati"
+    ]
+  },
+  {
+    "family": "Noto Serif Gurmukhi",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "gurmukhi"
+    ]
+  },
+  {
+    "family": "Noto Serif Hebrew",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "hebrew"
     ]
   },
   {
@@ -9346,6 +11137,103 @@
     ]
   },
   {
+    "family": "Noto Serif Kannada",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "kannada"
+    ]
+  },
+  {
+    "family": "Noto Serif Khmer",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "khmer"
+    ]
+  },
+  {
+    "family": "Noto Serif Lao",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "lao"
+    ]
+  },
+  {
+    "family": "Noto Serif Malayalam",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "malayalam"
+    ]
+  },
+  {
+    "family": "Noto Serif Myanmar",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "myanmar"
+    ]
+  },
+  {
+    "family": "Noto Serif Nyiakeng Puachue Hmong",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "nyiakeng-puachue-hmong"
+    ]
+  },
+  {
     "family": "Noto Serif SC",
     "variants": [
       "200",
@@ -9362,6 +11250,23 @@
     ]
   },
   {
+    "family": "Noto Serif Sinhala",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "sinhala"
+    ]
+  },
+  {
     "family": "Noto Serif TC",
     "variants": [
       "200",
@@ -9375,6 +11280,113 @@
     "subsets": [
       "chinese-traditional",
       "latin"
+    ]
+  },
+  {
+    "family": "Noto Serif Tamil",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "tamil"
+    ]
+  },
+  {
+    "family": "Noto Serif Tangut",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "tangut"
+    ]
+  },
+  {
+    "family": "Noto Serif Telugu",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "telugu"
+    ]
+  },
+  {
+    "family": "Noto Serif Thai",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "thai"
+    ]
+  },
+  {
+    "family": "Noto Serif Tibetan",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "tibetan"
+    ]
+  },
+  {
+    "family": "Noto Serif Yezidi",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "yezidi"
+    ]
+  },
+  {
+    "family": "Noto Traditional Nushu",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "nushu"
     ]
   },
   {
