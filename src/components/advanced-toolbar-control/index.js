@@ -94,7 +94,7 @@ const CONTROLS = {
 }
 
 const AdvancedToolbarControl = props => {
-	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.onChangeCallback )
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
 	const {

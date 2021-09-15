@@ -35,7 +35,7 @@ const ShadowControl = props => {
 		return value ? shadows.indexOf( value ) : ''
 	}, [ shadows ] )
 
-	const onChangeCallback = useCallback( index => {
+	const changeCallback = useCallback( index => {
 		return index !== '' ? shadows[ index ] : index
 	}, [ shadows ] )
 
@@ -43,7 +43,7 @@ const ShadowControl = props => {
 		<AdvancedRangeControl
 			{ ...propsToPass }
 			valueCallback={ props.valueCallback || valueCallback }
-			onChangeCallback={ props.onChangeCallback || onChangeCallback }
+			changeCallback={ props.changeCallback || changeCallback }
 			min={ 0 }
 			max={ shadows.length - 1 }
 			allowReset={ true }
@@ -57,7 +57,7 @@ ShadowControl.defaultProps = {
 	placeholder: '',
 	options: null,
 	valueCallback: null,
-	onChangeCallback: null,
+	changeCallback: null,
 }
 
 export default ShadowControl

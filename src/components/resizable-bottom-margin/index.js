@@ -118,7 +118,7 @@ ResizableBottomMarginSingle.defaultProps = {
 	onChange: () => {},
 }
 
-const onChangeCallback = ( value, originalValue ) => {
+const changeCallback = ( value, originalValue ) => {
 	return {
 		...( originalValue || {} ),
 		bottom: value,
@@ -157,7 +157,7 @@ const ResizableBottomMargin = memo( props => {
 		return value
 	}, [ props.attribute, attributes, device ] )
 
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, false, valueCallback, onChangeCallback )
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, false, valueCallback, changeCallback )
 
 	return (
 		<ResizableBottomMarginSingle
