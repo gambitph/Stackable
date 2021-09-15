@@ -160,64 +160,64 @@ const HighlightButton = props => {
 					<span className="components-stackable-highlight-color__indicator" style={ { backgroundColor: displayIconColor } } />
 				</Button>
 				{ isOpen &&
-				<Popover
-					position="bottom center"
-					className="components-stackable-highlight__popover"
-					focusOnMount="container"
-					useRef={ popoverEl }
-					isAlternate
-				>
-					<div className="components-stackable-highlight__inner">
-						<AdvancedToolbarControl
-							controls={ [
-								{
-									value: '',
-									title: __( 'Normal', i18n ),
-								},
-								{
-									value: 'highlight',
-									title: __( 'Highlight', i18n ),
-								},
-								{
-									value: 'low',
-									title: __( 'Low', i18n ),
-								},
-							] }
-							value={ colorType }
-							onChange={ colorType => {
+					<Popover
+						position="bottom center"
+						className="components-stackable-highlight__popover"
+						focusOnMount="container"
+						useRef={ popoverEl }
+						isAlternate
+					>
+						<div className="components-stackable-highlight__inner">
+							<AdvancedToolbarControl
+								controls={ [
+									{
+										value: '',
+										title: __( 'Normal', i18n ),
+									},
+									{
+										value: 'highlight',
+										title: __( 'Highlight', i18n ),
+									},
+									{
+										value: 'low',
+										title: __( 'Low', i18n ),
+									},
+								] }
+								value={ colorType }
+								onChange={ colorType => {
 								// Pick default colors for when the highlight type changes.
-								const defaultHighlightColor = highlightColor ? highlightColor
-									: colorType !== '' ? ( textColor || '#f34957' ) : highlightColor
-								const defaultTextColor = colorType === 'highlight' ? whiteIfDarkBlackIfLight( '', defaultHighlightColor )
-									: colorType === 'low' ? ''
-										: highlightColor || textColor || ''
+									const defaultHighlightColor = highlightColor ? highlightColor
+										: colorType !== '' ? ( textColor || '#f34957' ) : highlightColor
+									const defaultTextColor = colorType === 'highlight' ? whiteIfDarkBlackIfLight( '', defaultHighlightColor )
+										: colorType === 'low' ? ''
+											: highlightColor || textColor || ''
 
-								onChange( createApplyFormat( value, colorType, defaultTextColor, defaultHighlightColor ), { withoutHistory: true } )
-							} }
-							isSmall
-						/>
-						<div className="ugb-highlight-format__color-picker">
-							<ColorPaletteControl
-								label={ __( 'Text Color', i18n ) }
-								value={ textColor }
-								onChange={ textColor => {
-									onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
+									onChange( createApplyFormat( value, colorType, defaultTextColor, defaultHighlightColor ), { withoutHistory: true } )
 								} }
+								isSmall
 							/>
-						</div>
-						{ colorType !== '' &&
 							<div className="ugb-highlight-format__color-picker">
 								<ColorPaletteControl
-									label={ __( 'Highlight Color', i18n ) }
-									value={ highlightColor }
-									onChange={ highlightColor => {
+									label={ __( 'Text Color', i18n ) }
+									value={ textColor }
+									onChange={ textColor => {
 										onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
 									} }
 								/>
 							</div>
-						}
-					</div>
-				</Popover>
+							{ colorType !== '' &&
+								<div className="ugb-highlight-format__color-picker">
+									<ColorPaletteControl
+										label={ __( 'Highlight Color', i18n ) }
+										value={ highlightColor }
+										onChange={ highlightColor => {
+											onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
+										} }
+									/>
+								</div>
+							}
+						</div>
+					</Popover>
 				}
 			</Toolbar>
 		</BlockControls>
@@ -238,10 +238,12 @@ registerFormatType(
 
 domReady( () => {
 	// Turn off EditorsKit features to prevent duplicates.
-	if ( ! select( 'core/edit-post' ).isFeatureActive( 'disableEditorsKitColorsFormats' ) ) {
-		dispatch( 'core/edit-post' ).toggleFeature( 'disableEditorsKitColorsFormats' )
-	}
-	if ( ! select( 'core/edit-post' ).isFeatureActive( 'disableEditorsKitHighlightFormats' ) ) {
-		dispatch( 'core/edit-post' ).toggleFeature( 'disableEditorsKitHighlightFormats' )
+	if ( select( 'core/edit-post' ) ) {
+		if ( ! select( 'core/edit-post' )?.isFeatureActive( 'disableEditorsKitColorsFormats' ) ) {
+			dispatch( 'core/edit-post' ).toggleFeature( 'disableEditorsKitColorsFormats' )
+		}
+		if ( ! select( 'core/edit-post' )?.isFeatureActive( 'disableEditorsKitHighlightFormats' ) ) {
+			dispatch( 'core/edit-post' ).toggleFeature( 'disableEditorsKitHighlightFormats' )
+		}
 	}
 } )

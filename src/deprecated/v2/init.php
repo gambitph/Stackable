@@ -181,7 +181,7 @@ if ( ! function_exists( 'stackable_block_editor_assets_v2' ) ) {
 		}
 
 		// Backend editor scripts: blocks.
-		$dependencies = array( 'ugb-block-js', 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-api' );
+		$dependencies = array( 'ugb-block-js', 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' );
 		wp_register_script(
 			'ugb-block-js-v2',
 			plugins_url( 'dist/deprecated/editor_blocks_deprecated_v2.js', STACKABLE_FILE ),

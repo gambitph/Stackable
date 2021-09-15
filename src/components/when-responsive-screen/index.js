@@ -18,7 +18,9 @@ const WhenResponsiveScreen = props => {
 	} )
 
 	// If this is the currently selected screen.
-	const isCurrentScreen = deviceType.toLowerCase() === props.screen
+	const isCurrentScreen = !! deviceType
+		? ( deviceType?.toLowerCase() === props.screen ) // If there's a device type, check if it's the current screen.
+		: props.screen.toLowerCase() === 'desktop' // If there's no device type, then only show desktop.
 
 	// If there is no screen available, then just show the desktop. For
 	// example, if only desktop & tablet are assigned to the screens prop,
