@@ -52,7 +52,11 @@ const StackableRangeControl = memo( props => {
 
 	// Update the internal value state if the prop changes.
 	useEffect( () => {
-		setValue( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ? '' : props.value )
+		// Only change the local state `value` if the value is invalid. Otherwise, do nothing since
+		// it might cause unexpected behavior in WP 5.5
+		if ( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ) {
+			setValue( '' )
+		}
 	}, [ props.value ] )
 
 	// When the value is changed, set the internal value to it, but provide only
