@@ -16,12 +16,14 @@ export const Button = props => {
 	const {
 		className,
 		buttonProps,
+		linkTrigger,
 	} = props
 
 	return (
 		<Link
 			className={ classnames( [ className, 'stk-button' ] ) }
 			linkProps={ buttonProps }
+			linkTrigger={ linkTrigger }
 		>
 			<Icon hasLinearGradient={ false } />
 			{ props.children }
