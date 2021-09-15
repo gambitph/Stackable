@@ -2,17 +2,13 @@
  * External dependencies
  */
 import { get } from 'lodash'
-
-/**
- * Internal dependencies
- */
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import { createBlocksFromInnerBlocksTemplate } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { useSelect, useDispatch } from '@wordpress/data'
-import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
 import { VariationPicker } from '~stackable/components'
 
 /**
