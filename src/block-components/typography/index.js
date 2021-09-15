@@ -20,7 +20,10 @@ import {
 	useEffect, useState, useRef,
 } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
-import { useMergeRefs } from '@wordpress/compose'
+import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
+
+// Add WP 5.5 compatibility
+const useMergeRefs = _useMergeRefs || ( () => {} )
 
 export const Typography = props => {
 	const {
@@ -48,12 +51,18 @@ export const Typography = props => {
 	useEffect( () => {
 		if ( focusOnSelected ) {
 			if ( clientId === selectedClientId ) {
-				richTextRef.current.focus()
+				// Add WP 5.5 compatibility.
+				const el = richTextRef.current || document.querySelector( '.wp-block.is-selected .rich-text' )
+				if ( ! el ) {
+					return
+				}
+
+				el?.focus()
 
 				// Move the cursor to the end.
 				const range = document.createRange()
 				if ( range ) {
-					range.selectNodeContents( richTextRef.current )
+					range.selectNodeContents( el )
 					range.collapse( false )
 					const sel = window?.getSelection() // eslint-disable-line @wordpress/no-global-get-selection
 					if ( sel ) {
