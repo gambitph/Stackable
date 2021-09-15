@@ -49,11 +49,12 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 */
 		public function get_dynamic_breakpoints() {
 			$breakpoints = get_option( 'stackable_dynamic_breakpoints' );
-			return ! empty( $breakpoints ) ? $breakpoints :
+			$breakpoints = ! empty( $breakpoints ) ? $breakpoints :
 				array(
 					'tablet' => '',
 					'mobile' => '',
 				);
+			return apply_filters( 'stackable_responsive_breakpoints', $breakpoints );
 		}
 
 		/**

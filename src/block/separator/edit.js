@@ -28,6 +28,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Separator,
+	MarginBottom,
 } from '~stackable/block-components'
 
 /**
@@ -117,6 +118,7 @@ const Edit = props => {
 					{ applyFilters( 'stackable.block.separator.edit.output.layers', null, props ) }
 				</div>
 			</BlockDiv>
+			<MarginBottom />
 		</>
 	)
 }

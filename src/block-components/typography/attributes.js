@@ -35,6 +35,10 @@ const typographyAttributes = {
 		type: 'string',
 		default: '',
 	},
+	textColorClass: {
+		type: 'string',
+		default: '',
+	},
 	textColor1: {
 		type: 'string',
 		stkHover: true,

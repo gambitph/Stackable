@@ -174,6 +174,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-icons&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
 						</article>
+						<article class="s-box" id="editor-settings">
+							<h2><?php _e( '🎛 Editor Settings', STACKABLE_I18N ) ?></h2>
+							<p class="s-settings-subtitle"><?php printf( __( 'You can customize some of the features and behavior of Stackable in the editor here. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/361-how-to-use-global-settings?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<div class="s-editor-settings"></div>
+						</article>
 						<article class="s-box" id="role-manager">
 							<h2><?php _e( '📰 Role Manager', STACKABLE_I18N ) ?></h2>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>

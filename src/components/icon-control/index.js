@@ -2,7 +2,12 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { withInstanceId, withState } from '@wordpress/compose'
+import { useInstanceId } from '@wordpress/compose'
+import { useState } from '@wordpress/element'
+
+/**
+ * Internal dependencies
+ */
 import SVGIconControl from './images/smile.svg'
 
 /**
@@ -14,16 +19,11 @@ import {
 	IconSearchPopover, SvgIcon, Button, BaseControl,
 } from '~stackable/components'
 
-const IconControl = withInstanceId( withState( {
-	openPopover: false,
-	clickedOnButton: false,
-} )( props => {
-	const {
-		instanceId,
-		openPopover,
-		clickedOnButton,
-		setState,
-	} = props
+const IconControl = props => {
+	const [ openPopover, setOpenPopover ] = useState( false )
+	const [ clickedOnButton, setClickedOnButton ] = useState( false )
+
+	const instanceId = useInstanceId( IconControl, 'iconControl' )
 
 	return (
 		<BaseControl
@@ -40,14 +40,12 @@ const IconControl = withInstanceId( withState( {
 						className="ugb-icon-control__icon-button"
 						onClick={ () => {
 							if ( ! clickedOnButton ) {
-								setState( { openPopover: true } )
+								setOpenPopover( true )
 							} else {
 								// If the popup closed because this button was clicked (while the popup was open) ensure the popup is closed.
 								// This is needed or else the popup will always open when spam clicking the button.
-								setState( {
-									openPopover: false,
-									clickedOnButton: false,
-								} )
+								setOpenPopover( false )
+								setClickedOnButton( false )
 							}
 						} }
 					>
@@ -61,16 +59,15 @@ const IconControl = withInstanceId( withState( {
 								// This is needed or else the popup will always open when spam clicking the button.
 								if ( event.target ) {
 									if ( event.target.closest( `.ugb-icon-control-${ instanceId }` ) ) {
-										setState( { clickedOnButton: true } )
+										setClickedOnButton( true )
 										return
 									}
 								}
-								setState( {
-									openPopover: false,
-									clickedOnButton: false,
-								} )
+
+								setOpenPopover( false )
+								setClickedOnButton( false )
 							} }
-							onClose={ () => setState( { openPopover: false } ) }
+							onClose={ () => setOpenPopover( false ) }
 							returnSVGValue={ props.returnSVGValue }
 							onChange={ props.onChange }
 						/>
@@ -79,7 +76,7 @@ const IconControl = withInstanceId( withState( {
 			</div>
 		</BaseControl>
 	)
-} ) )
+}
 
 IconControl.defaultProps = {
 	label: __( 'Icon', i18n ),

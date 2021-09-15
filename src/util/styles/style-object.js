@@ -322,7 +322,8 @@ class StyleObject {
 				const prependArray = []
 				prependArray.push( blockState === blockStateCompare ? prependStringIfEditor : prependString )
 				prependArray.push( s )
-				return compact( prependArray ).join( ' ' )
+				// Pseudoselectors should not be delimited by spaces.
+				return compact( prependArray ).join( s.startsWith( ':' ) ? '' : ' ' )
 			}
 
 			if ( Array.isArray( _selector ) ) {

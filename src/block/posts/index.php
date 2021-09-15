@@ -203,6 +203,83 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 
 		function __construct() {
 			add_filter( 'stackable.register-blocks.options', array( $this, 'register_block_type' ), 1, 3 );
+			add_action( 'rest_api_init', array( $this, 'register_rest_fields' ) );
+		}
+
+		/**
+		 * Add more data in the REST API that we'll use in the posts block
+		 *
+		 * @since 3.0.0
+		 */
+		public function register_rest_fields() {
+			$post_types = get_post_types( array( 'public' => true ), 'objects' );
+
+			foreach ( $post_types as $post_type => $data ) {
+				if ( $post_type === 'attachment' ) {
+					continue;
+				}
+
+				// Feature image urls.
+				register_rest_field( $post_type, 'feature_image_urls',
+					array(
+						'get_callback' => array( new Stackable_Posts_Block(), 'get_featured_image_urls' ),
+						'update_callback' => null,
+						'schema' => array(
+							'description' => __( 'Different sized featured images', STACKABLE_I18N ),
+							'type' => 'array',
+						)
+					)
+				);
+
+				// Excerpt.
+				register_rest_field( $post_type, 'post_excerpt_stackable',
+					array(
+						'get_callback' => array( new Stackable_Posts_Block(), 'get_excerpt' ),
+						'update_callback' => null,
+						'schema' => array(
+							'description' => __( 'Post excerpt for Stackable', STACKABLE_I18N ),
+							'type' => 'string',
+						),
+					)
+				);
+
+				// Category links.
+				register_rest_field( $post_type, 'category_list',
+					array(
+						'get_callback' => array( new Stackable_Posts_Block(), 'get_category_list' ),
+						'update_callback' => null,
+						'schema' => array(
+							'description' => __( 'Category list links', STACKABLE_I18N ),
+							'type' => 'string',
+						),
+					)
+				);
+
+				// Author name.
+				register_rest_field( $post_type, 'author_info',
+					array(
+						'get_callback' => array( new Stackable_Posts_Block(), 'get_author_info' ),
+						'update_callback' => null,
+						'schema' => array(
+							'description' => __( 'Author information', STACKABLE_I18N ),
+							'type' => 'array',
+						),
+					)
+				);
+
+				// Number of comments.
+				register_rest_field( $post_type, 'comments_num',
+					array(
+						'get_callback' => 'stackable_commments_number_v2',
+						'get_callback' => array( new Stackable_Posts_Block(), 'get_comments_number' ),
+						'update_callback' => null,
+						'schema' => array(
+							'description' => __( 'Number of comments', STACKABLE_I18N ),
+							'type' => 'number',
+						),
+					)
+				);
+			}
 		}
 
 		/**
@@ -382,6 +459,50 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			// Remove the jetpack sharing button filter.
 			remove_filter( 'sharing_show', '__return_false' );
 			return empty( $excerpt ) ? "" : $excerpt;
+		}
+
+		/**
+		 * Get the category list
+		 *
+		 * @param array post object
+		 *
+		 * @return the category list.
+		 */
+		public static function get_category_list( $object ) {
+			return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $object['id'] );
+		}
+
+		/**
+		 * Get the author info
+		 *
+		 * @param array post object
+		 *
+		 * @return author info.
+		 */
+		public static function get_author_info( $object ) {
+			if ( ! array_key_exists( 'author', $object ) ) {
+				return array(
+					'name' => '',
+					'url' => ''
+				);
+			}
+
+			return array(
+				'name' => get_the_author_meta( 'display_name', $object['author'] ),
+				'url' => get_author_posts_url( $object['author'] )
+			);
+		}
+
+		/**
+		 * Get the post's comments number
+		 *
+		 * @param array post object
+		 *
+		 * @return comments number.
+		 */
+		public static function get_comments_number( $object ) {
+			$num = get_comments_number( $object['id'] );
+			return sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
 		}
 	}
 

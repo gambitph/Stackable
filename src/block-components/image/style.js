@@ -26,7 +26,7 @@ const focalPointToPosition = ( { x, y } ) => {
 const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '.stk-img-wrapper',
-		hoverSelector,
+		hoverSelector = '.stk-img-wrapper:hover',
 		hoverSelectorCallback = null,
 		enableWidth = true,
 		enableHeight = true,

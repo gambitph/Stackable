@@ -79,11 +79,11 @@ export const useDynamicContentControlProps = props => {
 
 	if ( debouncedValue?.includes?.( '!#stk_dynamic' ) ) {
 		debouncedValue
-			.match( /\!#stk_dynamic:(.*)\!#/g )
+			.match( /\!#stk_dynamic\/(.*)\!#/g )
 			?.forEach( match => {
 				const value = match
 					.replace( /\!#/g, '' )
-					.replace( 'stk_dynamic:', '' )
+					.replace( 'stk_dynamic/', '' )
 
 				activeAttributes.push( value )
 			} )
@@ -113,7 +113,7 @@ export const useDynamicContentControlProps = props => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
 		const willChangeValue = props.isFormatType
 			? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
-			: `!#stk_dynamic:${ frontendQueryString }!#`
+			: `!#stk_dynamic/${ frontendQueryString }!#`
 
 		props.onChange( willChangeValue )
 		setDebouncedValue( willChangeValue )
@@ -144,7 +144,7 @@ export const useDynamicContentControlProps = props => {
  *
  * @example
  * ```
- * const value = useDynamicContent( 'Post Title: !#stk_dynamic:current-page/post-title!#' )
+ * const value = useDynamicContent( 'Post Title: !#stk_dynamic/current-page/post-title!#' )
  * // returns `Post Title: The actual post title`
  * ```
  * @param {string} value
@@ -174,7 +174,7 @@ export const useDynamicContent = ( value = '' ) => {
  *
  * @example
  * ```
- * const fieldName = useValueWithPostTitle( 'Post title: !#stk_dynamic:current-page/post-title' )
+ * const fieldName = useValueWithPostTitle( 'Post title: !#stk_dynamic/current-page/post-title' )
  * // returns `Post title: [Post Title]`
  * ```
  *
@@ -189,8 +189,8 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 
 		let newValue = value
 		if ( value?.includes?.( '!#stk_dynamic' ) ) {
-			newValue = newValue.replace( /\!#stk_dynamic:(.*)\!#/g, match => {
-				const field = match.replace( /\!#/g, '' ).replace( 'stk_dynamic:', '' )
+			newValue = newValue.replace( /\!#stk_dynamic\/(.*)\!#/g, match => {
+				const field = match.replace( /\!#/g, '' ).replace( 'stk_dynamic/', '' )
 				let fieldTitle = first( select( 'stackable/dynamic-content' ).getFieldTitle( field ) )
 
 				if ( ! fieldTitle ) {

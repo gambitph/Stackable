@@ -24,6 +24,7 @@ import {
 	ConditionalDisplay,
 	MarginBottom,
 	Transform,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -39,11 +40,13 @@ const Edit = props => {
 	} = props
 
 	const blockHoverClass = useBlockHoverClass()
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-image',
 		blockHoverClass,
+		blockAlignmentClass,
 	] )
 
 	return (

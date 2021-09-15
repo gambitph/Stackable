@@ -532,6 +532,7 @@ addFilter( 'stackable.columns.setAttributes', 'stackable/columns/columns-change'
 } )
 
 export default compose(
+	// `withState` is needed to allow higher order functions to access the local state.
 	withState( { sortColumnHighlight: null } ),
 	withUniqueClass,
 	withSetAttributeHook,
