@@ -4,6 +4,8 @@
 	// background.
 	.ugb-design-panel-item__image {
 		mix-blend-mode: darken;
+		max-width: 100%;
+		height: auto;
 	}
 }
 .ugb-design-panel-item__hover-image {

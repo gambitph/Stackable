@@ -44,8 +44,6 @@
 		"@wordpress/blocks": "^11.1.0",
 		"@wordpress/browserslist-config": "^4.1.0",
 		"@wordpress/components": "^17.0.0",
-		"@wordpress/edit-post": "^5.0.2",
-		"@wordpress/editor": "^11.0.2",
 		"@wordpress/eslint-plugin": "^8.0.0",
 		"@wordpress/hooks": "^3.2.0",
 		"@wordpress/i18n": "^3.17.0",

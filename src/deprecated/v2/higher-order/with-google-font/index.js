@@ -14,7 +14,7 @@ const withGoogleFont = createHigherOrderComponent(
 	WrappedComponent => {
 		const NewComponent = props => {
 			const isEditingTemplate = useSelect( select =>
-				select( 'core/edit-post' ).isEditingTemplate?.()
+				select( 'core/edit-post' )?.isEditingTemplate?.()
 			)
 
 			// Reload the Google Fonts in the editor when switching to and from page template editing.
