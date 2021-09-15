@@ -52,6 +52,8 @@ const Edit = props => {
 	const {
 		className,
 		onReplace,
+		onRemove,
+		mergeBlocks,
 	} = props
 
 	const blockHoverClass = useBlockHoverClass()
@@ -132,6 +134,8 @@ const Edit = props => {
 					tagName={ props.attributes.innerTextTag || 'p' }
 					className={ textClassNames }
 					placeholder={ __( 'Type / to choose a block', i18n ) }
+					onMerge={ mergeBlocks }
+					onRemove={ onRemove }
 					onReplace={ onReplace }
 					onSplit={ ( value, isOriginal ) => {
 						// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js

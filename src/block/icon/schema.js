@@ -12,7 +12,6 @@ import {
 	Responsive,
 	Icon,
 	Link,
-	BlockLink,
 	Transform,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'

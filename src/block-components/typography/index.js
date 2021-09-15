@@ -92,6 +92,7 @@ export const Typography = props => {
 
 	return (
 		<RichText
+			identifier="text"
 			className={ className }
 			tagName={ TagName }
 			value={ debouncedText || defaultValue }
