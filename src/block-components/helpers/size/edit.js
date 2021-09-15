@@ -40,7 +40,6 @@ export const SizeControls = props => {
 				label={ labelHeight }
 				attribute={ getAttrName( 'height' ) }
 				responsive="all"
-				hover="all"
 				units={ [ 'px', 'vh' ] }
 				min={ [ 0, 0 ] }
 				sliderMax={ [ 1000, 100 ] }
@@ -62,7 +61,6 @@ export const SizeControls = props => {
 				label={ labelContentWidth }
 				attribute={ getAttrName( 'width' ) }
 				responsive="all"
-				hover="all"
 				units={ [ 'px', '%' ] }
 				min={ [ 0, 0 ] }
 				sliderMax={ [ 1500, 100 ] }

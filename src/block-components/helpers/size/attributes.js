@@ -1,14 +1,12 @@
 export const sizeAttributes = {
 	height: {
 		stkResponsive: true,
-		stkHover: true,
 		stkUnits: 'px',
 		type: 'number',
 		default: '',
 	},
 	width: {
 		stkResponsive: true,
-		stkHover: true,
 		stkUnits: 'px',
 		type: 'number',
 		default: '',

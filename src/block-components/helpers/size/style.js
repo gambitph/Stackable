@@ -24,7 +24,6 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'height',
 			attrNameTemplate,
 			responsive: 'all',
-			hover: 'all',
 			hasUnits: 'px',
 		},
 		{
@@ -47,7 +46,6 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'width',
 			attrNameTemplate,
 			responsive: 'all',
-			hover: 'all',
 			hasUnits: 'px',
 		},
 		{
