@@ -1,5 +1,5 @@
 // Add a slightly higher z-index so that the column resize handlers are visible
 // and on top of the other overlapping column.
-.editor-styles-wrapper [data-block][data-type="stackable/column"]:not(:first-child):not(:last-child):hover {
+.editor-styles-wrapper [data-block][data-type="stackable/column"]:not(:first-child:last-child):hover {
 	z-index: 2;
 }
