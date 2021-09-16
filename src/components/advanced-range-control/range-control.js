@@ -54,8 +54,12 @@ const StackableRangeControl = memo( props => {
 
 	// Update the internal value state if the prop changes.
 	useEffect( () => {
+		// Invalid values entered inside the number control will be omitted.
 		if ( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ) {
 			setValue( '' )
+			// Only allow updating of the local state if the number control is not in focus.
+			// We do this so the clamping of values will not get triggered as long as the
+			// user is typing inside the number control. This happens in WP 5.5
 		} else if ( numberControlRef.current !== document.activeElement ) { // eslint-disable-line
 			setValue( props.value )
 		}
