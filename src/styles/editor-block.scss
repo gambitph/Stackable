@@ -11,11 +11,29 @@
 }
 
 // Blocks
-.editor-styles-wrapper [data-type^="stackable/"],
-.editor-styles-wrapper [data-type^="stackable/"].wp-block { // .wp-block to ensure our styles are followed.
+.editor-styles-wrapper [data-block][data-type^="stackable/"],
+[data-type^="stackable/"] > .wp-block {
 	margin-top: 0;
 	margin-bottom: 0;
 	z-index: 1;
+}
+
+
+// Make sure by default, our inner blocks are center aligned.
+.stk-row {
+	> .stk-inner-blocks:not(.alignfull):not(.alignwide) {
+		// --block-max-width comes from Blocksy
+		// --responsive--aligndefault-width comes from Twenty Twenty One
+		max-width: var(--block-max-width, var(--responsive--aligndefault-width));
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+// Some themes add margins when alignwide and alignfull are used.
+.editor-styles-wrapper .stk-row {
+	> .stk-inner-blocks.wp-block[data-align] {
+		margin: 0 !important;
+	}
 }
 
 /**
@@ -145,8 +163,8 @@
 }
 
 // Wide and full width blocks are limited by some themes in the editor, make them span any width.
-.editor-styles-wrapper [data-type^="stackable/"][data-align="wide"] .wp-block,
-.editor-styles-wrapper [data-type^="stackable/"][data-align="full"] .wp-block {
+.editor-styles-wrapper [data-type^="stackable/"][data-align="wide"] .wp-block:not(.alignwide):not(.alignfull),
+.editor-styles-wrapper [data-type^="stackable/"][data-align="full"] .wp-block:not(.alignwide):not(.alignfull) {
 	max-width: 100%;
 }
 

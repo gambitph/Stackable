@@ -17,6 +17,22 @@
 	margin-top: 0;
 }
 
+// Block default widths
+.entry-content > .stk-block:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.wp-block-separator) {
+	max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
+}
+.entry-content .stk-block .stk-row {
+	margin-block: 0; // Some themes add margin top/bottom when alignfull or alignwide is used.
+	// Make sure by default, our inner blocks are center aligned.
+	&.stk-inner-blocks:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright) {
+		// --block-max-width - comes from Blocksy
+		// --responsive--aligndefault-width - comes from Twenty Twenty & Twenty Twenty One
+		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
 // Containers
 .stk-column,
 .stk-block.stk-column {
