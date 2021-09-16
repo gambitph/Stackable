@@ -6,7 +6,7 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.0.0-beta3-range-control-wp55-fix
+ * Version: 3.0.0-beta3
  *
  * @package Stackable
  */
