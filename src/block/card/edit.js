@@ -107,7 +107,7 @@ const Edit = props => {
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
-				hasHeight={ blockStyle !== 'horizontal' }
+				hasHeight={ blockStyle === 'default' }
 				widthUnits={ widthUnit }
 				heightUnits={ heightUnit }
 				hasBorderRadius={ false }
@@ -128,7 +128,7 @@ const Edit = props => {
 					<Image
 						className="stk-block-card__image"
 						enableWidth={ blockStyle === 'horizontal' }
-						enableHeight={ blockStyle !== 'horizontal' }
+						enableHeight={ blockStyle === 'default' }
 						enableDiagonal={ false }
 						widthUnits={ widthUnit }
 						heightUnits={ heightUnit }
@@ -137,6 +137,7 @@ const Edit = props => {
 						widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
 						height={ blockStyle !== 'horizontal' ? undefined : 100 }
 						heightUnit={ blockStyle !== 'horizontal' ? 'px' : '%' }
+						hasTooltip={ ! [ 'full', 'faded' ].includes( blockStyle ) }
 					/>
 					<div className={ innerClassNames }>
 						<InnerBlocks
