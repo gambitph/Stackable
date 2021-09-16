@@ -16,7 +16,11 @@ import { registerPlugin } from '@wordpress/plugins'
 import {
 	Fragment, render, unmountComponentAtNode, useEffect,
 } from '@wordpress/element'
-import { PluginSidebar } from '@wordpress/edit-post'
+// TODO: @wordpress/edit-post isn't loaded in the Widget Editor. In the future,
+// Gutenberg will add a @wordpress/edit-site, so we can use that instead when it
+// arrives.
+// @see https://github.com/WordPress/gutenberg/pull/34460
+// import { PluginSidebar } from '@wordpress/edit-post'
 import { __ } from '@wordpress/i18n'
 import {
 	applyFilters, addAction,
@@ -38,7 +42,7 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 } )
 
 const GlobalSettings = () => {
-	const isEditingTemplate = useSelect( select => select( 'core/edit-post' ).isEditingTemplate?.() )
+	const isEditingTemplate = useSelect( select => select( 'core/edit-post' )?.isEditingTemplate?.() )
 
 	/**
 	 * Render the global colors and typography in Gutenberg
@@ -76,6 +80,17 @@ const GlobalSettings = () => {
 		}
 	}, [ isEditingTemplate ] )
 
+	// TODO: PluginSidebar doesn't work in the Widget Editor since
+	// @wordpress/edit-post isn't loaded in there. In the future, Gutenberg will
+	// add a @wordpress/edit-site that will have a PluginSidebar, so we can use
+	// that instead when it arrives.
+	// @see https://github.com/WordPress/gutenberg/pull/34460
+	// This is a workaround to make PluginSidebar work without @wordpress/edit-post.
+	if ( ! window.wp.editPost?.PluginSidebar ) {
+		return null
+	}
+	const PluginSidebar = window.wp.editPost.PluginSidebar
+
 	return (
 		<Fragment>
 			<PluginSidebar
@@ -93,4 +108,3 @@ if ( ! isContentOnlyMode ) {
 		render: GlobalSettings,
 	} )
 }
-

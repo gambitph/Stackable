@@ -33,11 +33,12 @@ export const GlobalTypographyStyles = () => {
 	const [ styleTimeout, setStyleTimeout ] = useState( null )
 
 	const { device } = useSelect(
-		select => ( {
-			device: select(
-				'core/edit-post'
-			).__experimentalGetPreviewDeviceType && select( 'core/edit-post' ).__experimentalGetPreviewDeviceType(),
-		} ),
+		select => {
+			const device = select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType()
+			return {
+				device,
+			}
+		},
 		[]
 	)
 

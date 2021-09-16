@@ -9,9 +9,9 @@ import { applyBlockDesign } from '~stackable/util'
  */
 import { useState } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
-import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post'
-import { Modal } from '@wordpress/components'
+import { Modal, MenuItem } from '@wordpress/components'
 import { applyFilters } from '@wordpress/hooks'
+import { BlockSettingsMenuControls } from '@wordpress/block-editor'
 
 const GetBlockAttributesButton = ( {
 	clientId,
@@ -70,15 +70,21 @@ const GetBlockAttributesButton = ( {
 
 	return (
 		<>
-			<PluginBlockSettingsMenuItem
-				icon="editor-code"
-				label="Get / Set Block Attributes"
-				onClick={ () => {
-					setOpenPopover( true )
-					setChanged( false )
-					setTimeout( () => document.querySelector( '.ugb-modal-get-block-attributes-button textarea' ).select(), 100 )
-				} }
-			/>
+			<BlockSettingsMenuControls>
+				{ ( { onClose } ) => (
+					<MenuItem
+						icon="editor-code"
+						onClick={ () => {
+							setOpenPopover( true )
+							setChanged( false )
+							setTimeout( () => document.querySelector( '.ugb-modal-get-block-attributes-button textarea' ).select(), 100 )
+							onClose()
+						} }
+					>
+						Get / Set Block Attributes
+					</MenuItem>
+				) }
+			</BlockSettingsMenuControls>
 			{ openPopover &&
 				<Modal
 					title={ `${ startCase( blockName ) } Block Attributes` }

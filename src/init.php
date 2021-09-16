@@ -156,7 +156,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		);
 
 		// Backend editor scripts: blocks.
-		$dependencies = array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-api' );
+		$dependencies = array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' );
 		wp_register_script(
 			'ugb-block-js',
 			plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),

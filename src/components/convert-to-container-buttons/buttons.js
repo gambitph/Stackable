@@ -20,7 +20,8 @@ import {
 	select, withSelect, withDispatch,
 } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
-import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post'
+import { MenuItem } from '@wordpress/components'
+import { BlockSettingsMenuControls } from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
@@ -41,18 +42,34 @@ export function ConvertToGroupButton( {
 	return (
 		<Fragment>
 			{ isGroupable && (
-				<PluginBlockSettingsMenuItem
-					icon={ Group }
-					label={ __( 'Group into Container', i18n ) }
-					onClick={ onConvertToGroup }
-				/>
+				<BlockSettingsMenuControls>
+					{ ( { onClose } ) => (
+						<MenuItem
+							icon={ Group }
+							onClick={ () => {
+								onConvertToGroup()
+								onClose()
+							} }
+						>
+							{ __( 'Group into Container', i18n ) }
+						</MenuItem>
+					) }
+				</BlockSettingsMenuControls>
 			) }
 			{ isUngroupable && (
-				<PluginBlockSettingsMenuItem
-					icon={ Ungroup }
-					label={ __( 'Ungroup from Container', i18n ) }
-					onClick={ onConvertFromGroup }
-				/>
+				<BlockSettingsMenuControls>
+					{ ( { onClose } ) => (
+						<MenuItem
+							icon={ Ungroup }
+							onClick={ () => {
+								onConvertFromGroup()
+								onClose()
+							} }
+						>
+							{ __( 'Ungroup from Container', i18n ) }
+						</MenuItem>
+					) }
+				</BlockSettingsMenuControls>
 			) }
 		</Fragment>
 	)
@@ -68,9 +85,9 @@ export default compose( [
 
 		const groupingBlockName = 'ugb/container'
 
-		const rootClientId = clientIds && clientIds.length > 0 ?
-			getBlockRootClientId( clientIds[ 0 ] ) :
-			undefined
+		const rootClientId = clientIds && clientIds.length > 0
+			? getBlockRootClientId( clientIds[ 0 ] )
+			: undefined
 
 		const groupingBlockAvailable = canInsertBlockType( groupingBlockName, rootClientId )
 

@@ -6,11 +6,11 @@ export const useDeviceType = () => {
 			return {
 				deviceType: select(
 					'core/edit-post'
-				).__experimentalGetPreviewDeviceType(),
+				)?.__experimentalGetPreviewDeviceType(),
 			}
 		},
 		[]
 	)
 
-	return deviceType
+	return deviceType || ''
 }

@@ -43,7 +43,7 @@
 
 	.stk-separator {
 		pointer-events: none;
-		inset: -1px;
+		inset: -1px 0; // -1px on the sides might make horizontal scrollbars appear.
 		overflow: hidden;
 
 		svg {

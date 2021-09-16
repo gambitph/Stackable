@@ -1,4 +1,5 @@
 .stk-block-separator {
+	overflow-x: hidden; // Prevent horizontal scrollbar.
 	.stk-block-separator__inner {
 		height: 248px;
 		position: relative;

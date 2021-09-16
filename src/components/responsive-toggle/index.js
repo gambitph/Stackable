@@ -64,6 +64,11 @@ const ResponsiveToggle = props => {
 		return null
 	}
 
+	// In the Widget editor, the device type is always set to desktop.
+	if ( ! deviceType ) {
+		return null
+	}
+
 	return (
 		<ControlIconToggle
 			className="stk-control-responsive-toggle"
