@@ -15,7 +15,7 @@ import {
 	RangeControl, __experimentalNumberControl as NumberControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
 import {
-	useState, useLayoutEffect, useEffect, useCallback, memo,
+	useState, useLayoutEffect, useEffect, useCallback, memo, useRef,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -45,6 +45,8 @@ const StackableRangeControl = memo( props => {
 		...propsToPass
 	} = props
 
+	const numberControlRef = useRef( null )
+
 	// We have an internal state for the value so that the user can freely type
 	// any number in the number field without any validation and then we can
 	// just set the proper value on the onChange prop.
@@ -52,10 +54,10 @@ const StackableRangeControl = memo( props => {
 
 	// Update the internal value state if the prop changes.
 	useEffect( () => {
-		// Only change the local state `value` if the value is invalid. Otherwise, do nothing since
-		// it might cause unexpected behavior in WP 5.5
 		if ( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ) {
 			setValue( '' )
+		} else if ( numberControlRef.current !== document.activeElement ) { // eslint-disable-line
+			setValue( props.value )
 		}
 	}, [ props.value ] )
 
@@ -152,6 +154,7 @@ const StackableRangeControl = memo( props => {
 		/>
 		{ withInputField && isNumberControlSupported && (
 			<NumberControl
+				ref={ numberControlRef }
 				disabled={ props.disabled }
 				isShiftStepEnabled={ isShiftStepEnabled }
 				max={ props.max }
