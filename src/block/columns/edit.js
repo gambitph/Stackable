@@ -71,6 +71,7 @@ const Edit = props => {
 		blockHoverClass,
 		separatorClass,
 		columnTooltipClass,
+		'stk-block-columns__inner-container', // `*inner-container` class is required for inner block widths to work properly.
 	] )
 
 	const contentClassNames = classnames( [
@@ -79,6 +80,9 @@ const Edit = props => {
 		'stk-block-content',
 	], {
 		'stk--fit-content': props.attributes.columnFit,
+		alignwide: props.attributes.contentAlign === 'alignwide', // This will align the columns inside.
+		alignfull: props.attributes.contentAlign === 'alignfull', // This will align the columns inside.
+		'wp-block': !! props.attributes.contentAlign, // Only in the backend.
 	} )
 
 	return (
@@ -103,6 +107,27 @@ const Edit = props => {
 					initialOpen={ true }
 				>
 					<ColumnsControl />
+					<AdvancedToolbarControl
+						label={ __( 'Content Alignment', i18n ) }
+						attribute="contentAlign"
+						controls={ [
+							{
+								value: '',
+								title: __( 'Align Center', i18n ),
+								icon: 'align-center',
+							},
+							{
+								value: 'alignwide',
+								title: __( 'Align Wide', i18n ),
+								icon: 'align-wide',
+							},
+							{
+								value: 'alignfull',
+								title: __( 'Align Full', i18n ),
+								icon: 'align-full-width',
+							},
+						] }
+					/>
 					<AdvancedToggleControl
 						label={ __( 'Fit all columns to content', i18n ) }
 						checked={ props.attributes.columnFit }
@@ -154,7 +179,12 @@ const Edit = props => {
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Separator>
-					<div className={ contentClassNames }>
+					<div
+						className={ contentClassNames }
+						data-align={ ! props.attributes.contentAlign ? undefined // Only needed in the backend
+							: props.attributes.contentAlign === 'alignwide' ? 'wide'
+								: props.attributes.contentAlign === 'alignfull' ? 'full' : undefined }
+					>
 						<ColumnInnerBlocks
 							providerValue={ columnProviderValue }
 							orientation="horizontal"
