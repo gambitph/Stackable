@@ -26,6 +26,12 @@ const getStyleParams = options => {
 
 	return [
 		{
+			selector: '',
+			styleRule: 'width',
+			attrName: 'buttonFullWidth',
+			valueCallback: () => '100%',
+		},
+		{
 			selector,
 			responsive: 'all',
 			styleRule: 'minHeight',
@@ -38,6 +44,8 @@ const getStyleParams = options => {
 			styleRule: 'width',
 			attrName: 'buttonWidth',
 			format: '%spx',
+			enabledCallback: getAttribute => ! getAttribute( 'buttonFullWidth' ),
+			dependencies: [ 'buttonFullWidth' ],
 		},
 		{
 			selector,

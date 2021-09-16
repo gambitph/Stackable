@@ -67,6 +67,7 @@ const Edit = props => {
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Button.InspectorControls
 				borderSelector=".stk-button"
+				hasFullWidth={ true }
 			/>
 			<Typography.InspectorControls
 				hasTextTag={ false }

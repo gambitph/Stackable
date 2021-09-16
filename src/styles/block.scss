@@ -205,17 +205,25 @@
 }
 
 // Button alignment.
-:where(.has-text-align-center) .stk-button-group,
-.stk-button-group.has-text-align-center {
-	justify-content: center;
+.stk-button-group {
+	&:not(.stk-collapse-on-desktop) {
+		justify-content: var(--stk-alignment-justify-content);
+	}
+	&:is(.stk--collapse-on-desktop) {
+		justify-content: var(--stk-alignment-justify-content);
+	}
 }
-:where(.has-text-align-right) .stk-button-group,
-.stk-button-group.has-text-align-right {
-	justify-content: flex-end;
+
+@include tablet {
+	.stk-button-group:is(.stk--collapse-on-tablet) {
+		align-items: var(--stk-alignment-justify-content);
+	}
 }
-:where(.has-text-align-left) .stk-button-group,
-.stk-button-group.has-text-align-left {
-	justify-content: flex-start;
+
+@include mobile {
+	.stk-button-group:is(.stk--collapse-on-mobile) {
+		align-items: var(--stk-alignment-justify-content);
+	}
 }
 
 .stk-block .stk-button-group {
