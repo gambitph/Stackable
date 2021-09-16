@@ -1,67 +1,38 @@
 /**
  * This defines all styles related to making the hover states of blocks animate smoothly.
  */
-// TODO: rethink how to implement these transitions. These are currently also
-// animating blocks when the webpage is loaded - producing unwanted layout
-// shifts and animations.
-
 // Hover transitions.
-.wp-block[data-type^="stackable/"],
-.stk-block,
-.stk-container,
-.stk-container-padding,
-.stk-img-wrapper, // Images.
-.stk-img-wrapper img, // Images.
-.stk--has-background-overlay::before, // Image background overlays
-.stk-block-heading__top-line,
-.stk-block-heading__bottom-line,
-.stk-block-posts__item-hide, // For posts transitions
-.stk-block-posts__title > a, // For posts title
-.stk-block .stk-button::before, // For button animations
-.stk-block .stk-button::after, // For button animations
-.stk-block li::marker, // For icon list marker
-.stk-block li, // For icon list texts
-.stk-block p,
-.stk-block h1,
-.stk-block h2,
-.stk-block h3,
-.stk-block h4,
-.stk-block h5,
-.stk-block h6 {
-	transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-	border-width: 1px;
-	border-style: none;
-}
-.stk--svg-wrapper {
-	.stk--shape-icon,
-	.stk--inner-svg {
-		&,
-		* {
-			transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-		}
+body.stk--anim-init {
+	.wp-block[data-type^="stackable/"],
+	.stk-block,
+	.stk-container,
+	.stk-container-padding,
+	.stk-img-wrapper, // Images.
+	.stk-img-wrapper img, // Images.
+	.stk--has-background-overlay::before, // Image background overlays
+	.stk-block-heading__top-line,
+	.stk-block-heading__bottom-line,
+	.stk-block-posts__item-hide, // For posts transitions
+	.stk-block-posts__title > a, // For posts title
+	.stk-block .stk-button::before, // For button animations
+	.stk-block .stk-button::after, // For button animations
+	.stk-block li::marker, // For icon list marker
+	.stk-block li, // For icon list texts
+	.stk-block p,
+	.stk-block h1,
+	.stk-block h2,
+	.stk-block h3,
+	.stk-block h4,
+	.stk-block h5,
+	.stk-block h6 {
+		transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+		border-width: 1px;
+		border-style: none;
+	}
+	.stk--svg-wrapper :is(.stk--shape-icon, .stk--inner-svg, .stk--inner-svg *) {
+		transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 	}
 }
-
-// Comment for now but keep updating this, will need to test first if animations become slow since this may bog down the browser.
-// .stk-block {
-// 	will-change: transform, box-shadow, opacity, top, right, bottom, left, background, margin, padding, min-height, max-width;
-// }
-// .stk-container,
-// .stk-container-padding {
-// 	will-change: transform, box-shadow, background, margin, padding, min-height, max-width;
-// }
-// .stk-img-wrapper img {
-// 	will-change: filter;
-// }
-// .stk-block p,
-// .stk-block h1
-// .stk-block h2,
-// .stk-block h3,
-// .stk-block h4,
-// .stk-block h5,
-// .stk-block h6 {
-// 	will-change: color, font-size;
-// }
 
 // Some attributes will not animate if they have no starting values.
 .stk-container,
