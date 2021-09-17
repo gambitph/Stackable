@@ -53,7 +53,7 @@ jobs:
     # Check the current PHP version installed
     - name: Check PHP version
       run: php -v
-      
+
     # Install all dependencies from composer.json
     - name: Install dependencies
       run: |
