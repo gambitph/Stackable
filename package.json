@@ -109,7 +109,7 @@
 		"build:css": "gulp build",
 		"build:sub-builds": "node ./tools/run-src-build-scripts.js",
 		"build:pot": "./vendor/wp-cli/wp-cli/bin/wp i18n make-pot . languages/stackable-ultimate-gutenberg-blocks.pot --slug=stackable-ultimate-gutenberg-blocks --domain=stackable-ultimate-gutenberg-blocks --ignore-domain --include=\"*.php,src/,pro__premium_only/\" --exclude=\"pro__premium_only/dist,pro__premium_only/node_modules,pro__premium_only/tests,*.test.js,*.config.js,__test__,wordpress,build,tools,vendor,docs\"",
-		"prebuild": "node ./tools/ensure-version-number && node ./tools/ensure-cloudfront-domain && composer install",
+		"prebuild": "node ./tools/ensure-version-number && node ./tools/ensure-cloudfront-domain",
 		"build": "npm run clean && concurrently --raw \"npm:build:js\" \"npm:build:css\" \"npm:build:sub-builds\" \"npm:build:pot\" && npm run package",
 		"test": "jest --no-cache --watchAll",
 		"test:coverage": "jest --no-cache --coverage",
