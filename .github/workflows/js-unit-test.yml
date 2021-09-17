@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install Composer Dependencies
       run: |
-        composer install --prefer-dist --no-progress --ignore-platfrom-reqs
+        composer install --prefer-dist --no-progress --ignore-platform-reqs
 
     - name: Cache node modules
       uses: actions/cache@v2
