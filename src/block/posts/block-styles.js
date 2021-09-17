@@ -18,6 +18,11 @@ export const blockStyles = applyFilters(
 			isDefault: true,
 			onSelect: () => ( { hasContainer: false } ),
 		},
+		{
+			name: 'list',
+			label: __( 'List', i18n ),
+			onSelect: () => ( { hasContainer: false } ),
+		},
 	]
 )
 

@@ -118,9 +118,11 @@ export const generateRenderPostItem = attributes => {
 			comments_num: commentsNum,
 			post_excerpt_stackable: postExcerptStackable,
 		} = post
+
 		const featuredImgSrc = featuredImageUrls?.[ imageSize || 'full' ]?.[ 0 ]
 
 		const enableHeight = ! [ 'portfolio' ].includes( style?.name )
+		const enableWidth = [ 'list' ].includes( style?.name )
 
 		const featuredImage = !! featuredImgSrc && (
 			<Image
@@ -130,7 +132,7 @@ export const generateRenderPostItem = attributes => {
 				enableClickToEdit={ false }
 				width={ 100 }
 				widthUnit="%"
-				enableWidth={ false }
+				enableWidth={ enableWidth }
 				enableDiagonal={ false }
 				enableHeight={ enableHeight }
 				hasTooltip={ enableHeight }

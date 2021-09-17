@@ -269,7 +269,7 @@ const Edit = props => {
 				hasHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
 				hasBorderRadius={ ! [ 'portfolio' ].includes( blockStyle ) }
 				hasShape={ false }
-				hasWidth={ false }
+				hasWidth={ [ 'list' ].includes( blockStyle ) }
 				hasAlt={ false }
 				hasSelector={ false }
 				src={ focalPointPlaceholder }

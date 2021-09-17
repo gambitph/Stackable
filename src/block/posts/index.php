@@ -31,7 +31,7 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		$featured_image_id = get_post_thumbnail_id( $post_id );
 
 		if ( ! empty( $featured_image_id ) ) {
-			$featured_image_urls = Stackable_Posts_Block::get_featured_image_urls( $featured_image_id );
+			$featured_image_urls = Stackable_Posts_Block::get_featured_image_urls_from_attachment_id( $featured_image_id );
 			$featured_image_src = $featured_image_urls[ $image_size ];
 			if ( ! empty( $featured_image_src ) ) {
 				$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
@@ -104,7 +104,7 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		$new_template = str_replace( '!#commentsNum!#', $num, $new_template );
 
 		// Excerpt.
-		$excerpt = Stackable_Posts_Block::get_excerpt( $post_id, $post );
+		$excerpt = Stackable_Posts_Block::get_excerpt_by_post_id( $post_id, $post );
 
 		// Trim the excerpt.
 		if ( ! empty( $excerpt ) ) {
@@ -220,7 +220,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				}
 
 				// Feature image urls.
-				register_rest_field( $post_type, 'feature_image_urls',
+				register_rest_field( $post_type, 'featured_image_urls',
 					array(
 						'get_callback' => array( new Stackable_Posts_Block(), 'get_featured_image_urls' ),
 						'update_callback' => null,
@@ -403,34 +403,45 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		}
 
 		/**
-		 * Get the featured image URLs
+		 * Get the featured image URLs by attachment ID.
 		 *
 		 * @param string $attachment_id
 		 *
 		 * @return array featured image URLs
 		 */
-		public static function get_featured_image_urls( $attachment_id ) {
+		public static function get_featured_image_urls_from_attachment_id( $attachment_id ) {
 			$image = wp_get_attachment_image_src( $attachment_id, 'full', false );
 			$sizes = get_intermediate_image_sizes();
 
 			$image_sizes = array( 'full' => is_array( $image ) ? $image : '' );
 
 			foreach ( $sizes as $size ) {
-				$image_sizes[ $size ] = wp_get_attachment_image_src( $attachment_id, $size, false );
+			$imageSizes[ $size ] = is_array( $image ) ? wp_get_attachment_image_src( $attachment_id, $size, false ) : '';
 			}
 
 			return $image_sizes;
 		}
 
 		/**
-		 * Get the post excerpt
+		 * Get the featured image URLs.
+		 *
+		 * @param array post object
+		 *
+		 * @return array featured image URLs
+		 */
+		public static function get_featured_image_urls( $object, $field_name, $request ) {
+			return Stackable_Posts_Block::get_featured_image_urls_from_attachment_id( ! empty( $object['featured_media'] ) ? $object['featured_media'] : '' );
+		}
+
+		/**
+		 * Get the post excerpt by post ID
 		 *
 		 * @param string $post_id
 		 * @param array $post
 		 *
 		 * @return string the excerpt.
 		 */
-		public static function get_excerpt( $post_id, $post ) {
+		public static function get_excerpt_by_post_id( $post_id, $post = null ) {
 			// Remove jetpack sharing button.
 			add_filter( 'sharing_show', '__return_false' );
 			$excerpt = get_post_field( 'post_excerpt', $post_id, 'display' );
@@ -459,6 +470,17 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			// Remove the jetpack sharing button filter.
 			remove_filter( 'sharing_show', '__return_false' );
 			return empty( $excerpt ) ? "" : $excerpt;
+		}
+
+		/**
+		 * Get the post excerpt
+		 *
+		 * @param array post object
+		 *
+		 * @return string the excerpt.
+		 */
+		public static function get_excerpt( $object ) {
+			return Stackable_Posts_Block::get_excerpt_by_post_id( $object['id'] );
 		}
 
 		/**

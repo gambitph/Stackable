@@ -1,3 +1,4 @@
+import './design'
 /**
  * BLOCK: Posts
  */

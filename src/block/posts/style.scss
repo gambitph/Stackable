@@ -75,4 +75,10 @@
 		word-break: break-word;
 		hyphens: auto;
 	}
+
+	&:is(.is-style-list) {
+		.stk-block-posts__item {
+			display: flex;
+		}
+	}
 }
