@@ -2,6 +2,9 @@
 	flex-direction: row;
 }
 .stk-block-blockquote {
+	.stk-block-text__text {
+		font-style: italic;
+	}
 	.stk-block-icon {
 		flex: 0;
 		margin-inline-end: 16px;

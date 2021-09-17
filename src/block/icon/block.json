@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/icon",
 	"title": "Icon",
 	"description": "Pick an icon or upload your own SVG icon to decorate your content.",

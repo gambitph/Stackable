@@ -28,12 +28,16 @@ import {
 	Link,
 	Transform,
 } from '~stackable/block-components'
+import {
+	getUniqueBlockClass,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { useBlockProps } from '@wordpress/block-editor'
 
 const Edit = props => {
 	const { className, attributes } = props
@@ -78,14 +82,16 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<IconStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-block-icon" />
-			<BlockDiv className={ blockClassNames }>
-				<Link linkTrigger=".stk--inner-svg">
-					<Icon />
-				</Link>
-			</BlockDiv>
-			<MarginBottom />
+			<div { ...useBlockProps( { className: getUniqueBlockClass( attributes.uniqueId ) } ) }>
+				<BlockDiv className={ blockClassNames } withUniqueClass={ false }>
+					<IconStyles version={ VERSION } />
+					<CustomCSS mainBlockClass="stk-block-icon" />
+					<Link linkTrigger=".stk--inner-svg">
+						<Icon />
+					</Link>
+				</BlockDiv>
+				<MarginBottom />
+			</div>
 		</Fragment>
 	)
 }
