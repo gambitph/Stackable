@@ -40,14 +40,25 @@ const variations = [
 				} ],
 			] ],
 		],
+		scope: [ 'block' ],
 	},
 	{
 		name: 'plain',
 		title: __( 'Plain', i18n ),
 		description: __( 'Plain Layout' ),
+		attributes: {
+			blockBorderType: 'solid',
+			blockBorderColor: 'var(--stk-accordion-border-color)',
+			blockBorderWidth: {
+				top: 0,
+				right: 0,
+				bottom: 1,
+				left: 0,
+			},
+		},
 		innerBlocks: [
 			[ 'stackable/column', {
-				templateLock: 'insert', hasContainer: true, htmlTag: 'summary',
+				templateLock: 'insert', htmlTag: 'summary',
 				className: 'stk--container-small stk-block-accordion__heading',
 			}, [
 				[ 'stackable/icon-label', {}, [
@@ -65,6 +76,48 @@ const variations = [
 				} ],
 			] ],
 		],
+		scope: [ 'block' ],
+	},
+	{
+		name: 'colored',
+		title: __( 'Colored', i18n ),
+		description: __( 'Colored Layout' ),
+		attributes: {
+			hasBackground: true,
+			blockMargin: {
+				top: '',
+				right: '',
+				bottom: '',
+				left: '',
+			},
+			blockPadding: {
+				top: 0,
+				right: 0,
+				bottom: 0,
+				left: 0,
+			},
+		},
+		innerBlocks: [
+			[ 'stackable/column', {
+				templateLock: 'insert', htmlTag: 'summary',
+				className: 'stk--container-small stk-block-accordion__heading',
+			}, [
+				[ 'stackable/icon-label', {}, [
+					[ 'stackable/heading', {
+						text: __( 'Accordion Title' ), hasP: true, textTag: 'h4',
+					} ],
+					[ 'stackable/icon', {
+						icon: defaultIcon,
+					} ],
+				] ],
+			] ],
+			[ 'stackable/column', { templateLock: false, className: 'stk-block-accordion__content' }, [
+				[ 'stackable/text', {
+					text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
+				} ],
+			] ],
+		],
+		scope: [ 'block' ],
 	},
 ]
 
