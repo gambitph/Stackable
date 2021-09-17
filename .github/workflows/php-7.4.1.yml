@@ -17,6 +17,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/checkout@v2 # Checkout the Stackable Premium repo.
+      with:
+        repository: 'bfintal/Stackable-Premium'
+        ref: 'v3'
+        path: 'pro__premium_only'
+        token: '${{ secrets.ACCESS_KEY }}'
 
     # Change the PHP version to v7.4.1
     - name: Setup PHP v7.4.1

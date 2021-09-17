@@ -15,6 +15,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install Composer Dependencies
+      run: |
+        composer install --prefer-dist --no-progress --ignore-platfrom-reqs
 
     - name: Cache node modules
       uses: actions/cache@v2
@@ -32,10 +35,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build Stackable Free Version
+    - name: Install NPM Dependencies
       run: |
         npm ci
-        npm run build
+
     - name: Run Test Suite
       run: |
         npm test -- --watchAll=false

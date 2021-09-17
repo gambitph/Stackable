@@ -10,6 +10,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/checkout@v2 # Checkout the Stackable Premium repo.
+      with:
+        repository: 'bfintal/Stackable-Premium'
+        ref: 'v3'
+        path: 'pro__premium_only'
+        token: '${{ secrets.ACCESS_KEY }}'
+    - name: Install Composer Dependencies
+      run: |
+        composer install --prefer-dist --no-progress --ignore-platfrom-reqs
     - uses: preactjs/compressed-size-action@v2
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
