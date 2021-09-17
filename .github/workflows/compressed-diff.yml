@@ -18,7 +18,7 @@ jobs:
         token: '${{ secrets.ACCESS_KEY }}'
     - name: Install Composer Dependencies
       run: |
-        composer install --prefer-dist --no-progress --ignore-platfrom-reqs
+        composer install --prefer-dist --no-progress --ignore-platform-reqs
     - uses: preactjs/compressed-size-action@v2
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
