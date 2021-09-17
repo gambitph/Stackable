@@ -27,6 +27,7 @@ const buildInclude = [
 	path.resolve( __dirname, './src/**/block.json' ), // Allow block metadata files.
 	path.resolve( __dirname, './dist/**' ),
 	path.resolve( __dirname, './freemius/**' ),
+	path.resolve( __dirname, './languages/**' ),
 	path.resolve( __dirname, './images/**' ),
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.

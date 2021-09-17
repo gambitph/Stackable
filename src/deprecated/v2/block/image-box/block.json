@@ -1,6 +1,6 @@
 {
 	"name": "ugb/image-box",
-	"title": "Image Box (v2)",
+	"title": "Image Box",
 	"description": "Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.",
 	"category": "stackable-v2",
 	"textdomain": "stackable-ultimate-gutenberg-blocks"

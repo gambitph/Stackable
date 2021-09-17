@@ -17,6 +17,29 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/checkout@v2 # Checkout the Stackable Premium repo.
+      with:
+        repository: 'bfintal/Stackable-Premium'
+        ref: 'v3'
+        path: 'pro__premium_only'
+        token: '${{ secrets.ACCESS_KEY }}'
+
+    # Change the PHP version to v5.6.39
+    - name: Setup PHP v5.6.39
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '5.6.39'
+
+    # Check the current PHP version installed
+    - name: Check PHP version
+      run: php -v
+      
+    - name: Install dependencies
+      run: |
+        composer require phpunit/phpunit:5.6.8 --dev
+        composer require wp-phpunit/wp-phpunit:${{ matrix.wp-versions }} --dev
+        composer require roots/wordpress:${{ matrix.wp-versions }} --dev
+        composer install --prefer-dist --no-progress
 
     - name: Setup Node
       uses: actions/setup-node@v1
@@ -43,23 +66,6 @@ jobs:
         while ! mysqladmin ping --host=127.0.0.1 --password=root --silent; do
           sleep 1
         done
-
-    # Change the PHP version to v5.6.39
-    - name: Setup PHP v5.6.39
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '5.6.39'
-
-    # Check the current PHP version installed
-    - name: Check PHP version
-      run: php -v
-      
-    - name: Install dependencies
-      run: |
-        composer require phpunit/phpunit:5.6.8 --dev
-        composer require wp-phpunit/wp-phpunit:${{ matrix.wp-versions }} --dev
-        composer require roots/wordpress:${{ matrix.wp-versions }} --dev
-        composer install --prefer-dist --no-progress
 
     # Run all tests.
     - name: Run test suite
