@@ -104,13 +104,6 @@
 		padding: cssvar(block-background-padding);
 	}
 }
-// TODO: revisit this since we're aiming for block max-width instead
-// Block background when the block is full width
-.stk-block-background.alignfull {
-	&:not(.stk--no-padding) {
-		padding: cssvar(block-background-full-padding);
-	}
-}
 
 // Icons
 .stk--inner-svg {

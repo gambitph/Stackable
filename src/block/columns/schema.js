@@ -50,6 +50,10 @@ export const attributes = ( version = VERSION ) => {
 				type: 'number',
 				default: '',
 			},
+			contentAlign: {
+				type: 'string',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
