@@ -146,7 +146,7 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 	function generate_post_query_from_stackable_posts_block( $blockOrAttribute ) {
 		$is_wp_block = ! is_array( $blockOrAttribute ) && get_class( $blockOrAttribute ) === 'WP_Block';
 		/**
-		 * If the passed object is an instance of
+		 * If the passed object is an instance of 
 		 * WP_Block, it is assumed that the block
 		 * uses the provided context of the posts block.
 		 *
