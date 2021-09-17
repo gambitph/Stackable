@@ -18,6 +18,7 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { useBlockProps } from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
@@ -48,7 +49,7 @@ export const Save = props => {
 
 	return (
 		<BlockDiv.Content
-			className={ blockClassNames }
+			{ ...useBlockProps.save( { className: blockClassNames } ) }
 			attributes={ props.attributes }
 			applyAdvancedAttributes={ false }
 			applyCustomAttributes={ false }
