@@ -14,6 +14,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import variations from './variations'
 
 /**
  * WordPress dependencies
@@ -30,6 +31,7 @@ export const settings = {
 	//  styles: blockStyles,
 
 	// deprecated,
+	variations,
 	edit,
 	save,
 }
