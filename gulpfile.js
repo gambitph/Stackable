@@ -207,6 +207,12 @@ gulp.task( 'package', function() {
 		.pipe( gulp.dest( 'build/stackable' ) )
 } )
 
+// Copy the translations to the build folder.
+gulp.task( 'copy-po', function() {
+	return gulp.src( './languages/**/*' )
+		.pipe( gulp.dest( 'build/stackable/langauges' ) )
+} )
+
 // Zips the build folder.
 gulp.task( 'zip', function() {
 	return gulp.src( 'build/stackable/**/*' )

@@ -33,6 +33,7 @@ export { name }
 
 export const settings = {
 	...metadata,
+	title: metadata.title + ' (v2)',
 	icon: ImageBoxIcon,
 	supports: {
 		align: [ 'center', 'wide', 'full' ],

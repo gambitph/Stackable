@@ -146,7 +146,7 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 	function generate_post_query_from_stackable_posts_block( $blockOrAttribute ) {
 		$is_wp_block = ! is_array( $blockOrAttribute ) && get_class( $blockOrAttribute ) === 'WP_Block';
 		/**
-		 * If the passed object is an instance of 
+		 * If the passed object is an instance of
 		 * WP_Block, it is assumed that the block
 		 * uses the provided context of the posts block.
 		 *
@@ -334,7 +334,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		}
 
 		/**
-		 * Modify the register_options of the 
+		 * Modify the register_options of the
 		 * posts block.
 		 *
 		 * @param array $register_options
@@ -370,8 +370,8 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 
 			$attributes = $this->generate_defaults( $attributes );
 			$content = $this->render_post_items( $match, $content, $attributes );
-			$content = apply_filters( 'stackable.posts.output', 
-				$content, 
+			$content = apply_filters( 'stackable.posts.output',
+				$content,
 				$attributes,
 				$block,
 				$match
@@ -397,7 +397,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			foreach ( $recent_posts as $post ) {
 				$posts .= generate_render_item_from_stackable_posts_block( $post, $attributes, $template );
 			}
-			
+
 			$new_content = str_replace( $to_replace, $posts, $content );
 			return $new_content;
 		}
