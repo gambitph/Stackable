@@ -48,6 +48,19 @@ const variations = [
 		scope: [ 'block' ],
 	},
 	{
+		name: 'highlighted',
+		title: __( 'Highlighted', i18n ),
+		description: __( 'Highlighted Layout', i18n ),
+		innerBlocks: [
+			[ 'stackable/icon', { icon: renderToString( <SVGDefaultQuote /> ) } ],
+			[ 'stackable/text', {
+				text: '<span style="background-color: var(--stk-blockquote-highlight-color, #D1D1E4);" class="ugb-highlight">Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.</span>',
+				fontSize: 40,
+			} ],
+		],
+		scope: [ 'block' ],
+	},
+	{
 		name: 'huge',
 		title: __( 'Huge', i18n ),
 		description: __( 'Huge Layout', i18n ),

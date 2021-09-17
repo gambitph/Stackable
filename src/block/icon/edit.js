@@ -48,8 +48,12 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon',
-		blockHoverClass,
 		blockAlignmentClass,
+	] )
+
+	const wrapperClassNames = classnames( [
+		getUniqueBlockClass( attributes.uniqueId ),
+		blockHoverClass,
 	] )
 
 	return (
@@ -82,7 +86,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<div { ...useBlockProps( { className: getUniqueBlockClass( attributes.uniqueId ) } ) }>
+			<div { ...useBlockProps( { className: wrapperClassNames } ) }>
 				<BlockDiv className={ blockClassNames } withUniqueClass={ false }>
 					<IconStyles version={ VERSION } />
 					<CustomCSS mainBlockClass="stk-block-icon" />
