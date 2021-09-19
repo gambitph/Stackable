@@ -8,12 +8,5 @@
 		"Faq"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special",
-	"stk-depends": [
-		"stackable/column",
-		"stackable/icon-label",
-		"stackable/heading",
-		"stackable/icon",
-		"stackable/text"
-	]
+	"stk-type": "special"
 }
