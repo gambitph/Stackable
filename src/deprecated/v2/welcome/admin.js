@@ -24,7 +24,7 @@ import {
 	v2nonce as nonce,
 } from 'stackable'
 import classnames from 'classnames'
-import { AdminToggleSetting } from '~stackable/components'
+import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 
 class BlockToggler extends Component {
 	constructor() {
