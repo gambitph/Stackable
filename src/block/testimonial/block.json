@@ -3,5 +3,6 @@
 	"title": "Testimonial",
 	"description": "Showcase what your users say about your product or service.",
 	"category": "layout",
-	"textdomain": "stackable-ultimate-gutenberg-blocks"
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "section"
 }

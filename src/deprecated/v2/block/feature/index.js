@@ -21,7 +21,7 @@ import { FeatureIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
 const {

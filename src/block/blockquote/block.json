@@ -3,5 +3,6 @@
 	"title": "Blockquote",
 	"description": "Display a quote in style",
 	"category": "layout",
-	"textdomain": "stackable-ultimate-gutenberg-blocks"
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "section"
 }

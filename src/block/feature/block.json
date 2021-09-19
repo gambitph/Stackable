@@ -3,5 +3,6 @@
 	"title": "Feature",
 	"description": "Display a product feature or a service in a large area.",
 	"category": "layout",
-	"textdomain": "stackable-ultimate-gutenberg-blocks"
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "section"
 }

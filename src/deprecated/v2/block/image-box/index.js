@@ -22,7 +22,7 @@ import { ImageBoxIcon } from '~stackable/icons'
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 
 const {
 	name,

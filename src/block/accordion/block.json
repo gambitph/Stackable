@@ -7,5 +7,13 @@
 		"Toggle",
 		"Faq"
 	],
-	"textdomain": "stackable-ultimate-gutenberg-blocks"
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special",
+	"stk-depends": [
+		"stackable/column",
+		"stackable/icon-label",
+		"stackable/heading",
+		"stackable/icon",
+		"stackable/text"
+	]
 }

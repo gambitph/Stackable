@@ -22,7 +22,7 @@ import _metadata from './block.json'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 
 const {
 	name,

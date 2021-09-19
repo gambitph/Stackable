@@ -6,6 +6,7 @@
  * External dependencies
  */
 import { ImageBoxIcon } from '~stackable/icons'
+import { settings as _settings } from 'stackable'
 
 /**
  * Internal dependencies
@@ -25,6 +26,7 @@ export const settings = {
 	icon: ImageBoxIcon,
 	attributes: schema,
 	supports: {
+		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 		align: true,
 	},

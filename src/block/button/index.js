@@ -14,6 +14,7 @@ import transforms from './transforms'
  * External dependencies
  */
 import { ButtonIcon } from '~stackable/icons'
+import { settings as _settings } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -25,6 +26,7 @@ export const settings = {
 	icon: ButtonIcon,
 	attributes: schema,
 	supports: {
+		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 	},
 	transforms,

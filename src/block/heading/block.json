@@ -6,5 +6,6 @@
 	"keywords": [
 		"Title"
 	],
-	"textdomain": "stackable-ultimate-gutenberg-blocks"
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "essential"
 }

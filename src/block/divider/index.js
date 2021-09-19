@@ -5,6 +5,7 @@
  * External dependencies
  */
 import { DividerIcon } from '~stackable/icons'
+import { settings as _settings } from 'stackable'
 
 /**
  * Internal dependencies
@@ -19,6 +20,7 @@ export const settings = {
 	icon: DividerIcon,
 	attributes: schema,
 	supports: {
+		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		align: [ 'center', 'wide', 'full' ],
 		anchor: true,
 	},

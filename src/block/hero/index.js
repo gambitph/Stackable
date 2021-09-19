@@ -13,6 +13,7 @@ import schema from './schema'
  * External dependencies
  */
 import { HeroIcon } from '~stackable/icons'
+import { settings as _settings } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -24,6 +25,7 @@ export const settings = {
 	icon: HeroIcon,
 	attributes: schema,
 	supports: {
+		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 		html: false,
 		align: true,

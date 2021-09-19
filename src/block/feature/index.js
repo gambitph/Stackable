@@ -6,6 +6,7 @@
  * External dependencies
  */
 import { FeatureIcon } from '~stackable/icons'
+import { settings as _settings } from 'stackable'
 
 /**
  * Internal dependencies
@@ -25,6 +26,7 @@ export const settings = {
 	icon: FeatureIcon,
 	attributes: schema,
 	supports: {
+		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 		stkBlockLinking: false, // Disable linking on the columns in this block.
