@@ -454,6 +454,14 @@ body.toplevel_page_stk-custom-fields {
 		.s-toggle-button {
 			margin: 0 !important;
 		}
+		.s-block-demo {
+			margin: 0 16px;
+			flex: 1;
+			text-align: right;
+		}
+		.s-toggle-button {
+			min-width: 120px;
+		}
 		&::after {
 			content: "";
 			position: absolute;

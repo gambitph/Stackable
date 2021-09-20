@@ -4,5 +4,6 @@
 	"description": "Display members of your team or your office. Use multiple Team Member blocks if you have a large team.",
 	"category": "layout",
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "section"
+	"stk-type": "section",
+	"stk-demo": "https://wpstackable.com/team-member-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

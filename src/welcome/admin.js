@@ -80,6 +80,7 @@ const BlockToggle = props => {
 		onChange,
 		value = '',
 		label = '',
+		demo = '',
 		...propsToPass
 	} = props
 	const ref = createRef()
@@ -94,6 +95,18 @@ const BlockToggle = props => {
 			{ ...propsToPass }
 		>
 			<h4>{ label }</h4>
+			{ demo && (
+				<span className="s-block-demo">
+					<a
+						href={ demo }
+						target="_blank"
+						rel="noopener noreferrer"
+						onClick={ ev => ev.stopPropagation() }
+					>
+						{ __( 'view demo', i18n ) }
+					</a>
+				</span>
+			) }
 			<button
 				className="s-toggle-button"
 				ref={ ref }
@@ -115,6 +128,7 @@ BlockToggle.defaultProps = {
 	label: '',
 	value: '',
 	onChange: () => {},
+	demo: '',
 }
 
 const BlockToggler = () => {
@@ -196,6 +210,7 @@ const BlockToggler = () => {
 										label={ block.title }
 										value={ block.name }
 										className={ mainClasses }
+										demo={ block[ 'stk-demo' ] }
 										onChange={ value => {
 											toggleBlock( value, id )
 										} }

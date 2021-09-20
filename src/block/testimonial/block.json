@@ -4,5 +4,6 @@
 	"description": "Showcase what your users say about your product or service.",
 	"category": "layout",
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "section"
+	"stk-type": "section",
+	"stk-demo": "https://wpstackable.com/testimonial-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

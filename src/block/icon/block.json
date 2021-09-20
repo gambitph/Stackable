@@ -7,5 +7,6 @@
 		"SVG"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "essential"
+	"stk-type": "essential",
+	"stk-demo": "https://wpstackable.com/icon-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

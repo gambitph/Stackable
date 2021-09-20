@@ -4,5 +4,6 @@
 	"description": "Describe a single subject in a small card. You can use this to describe your product, service or a person.",
 	"category": "layout",
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special"
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/card-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }
