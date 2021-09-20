@@ -32,7 +32,7 @@ const variations = [
 		scope: [ 'block' ],
 	},
 	{
-		name: 'default',
+		name: 'plain',
 		title: __( 'Plain', i18n ),
 		description: __( 'Plain Layout', i18n ),
 		attributes: {
