@@ -396,8 +396,8 @@ const GlobalSettings = () => {
 const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
 	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
-	const [ v2EditorBackwardCompatibility, setV2EditorackwardCompatibility ] = useState( false )
-	const [ v2EditorBackwardCompatibilityUsage, setV2EditorackwardCompatibilityUsage ] = useState( false )
+	const [ v2EditorBackwardCompatibility, setV2EditorBackwardCompatibility ] = useState( false )
+	const [ v2EditorBackwardCompatibilityUsage, setV2EditorBackwardCompatibilityUsage ] = useState( false )
 	const [ v2FrontendBackwardCompatibility, setV2FrontendBackwardCompatibility ] = useState( false )
 	const [ showPremiumNotices, setShowPremiumNotices ] = useState( false )
 	const [ isBusy, setIsBusy ] = useState( false )
@@ -409,8 +409,8 @@ const AdditionalOptions = props => {
 			settings.fetch().then( response => {
 				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
 				setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
-				setV2EditorackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
-				setV2EditorackwardCompatibilityUsage( response.stackable_v2_editor_compatibility_usage === '1' )
+				setV2EditorBackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
+				setV2EditorBackwardCompatibilityUsage( response.stackable_v2_editor_compatibility_usage === '1' )
 				setV2FrontendBackwardCompatibility( response.stackable_v2_frontend_compatibility === '1' )
 				setShowPremiumNotices( response.stackable_show_pro_notices === '1' )
 				setIsBusy( false )
@@ -457,10 +457,10 @@ const AdditionalOptions = props => {
 					const settings = { stackable_v2_editor_compatibility: checked ? '1' : '' } // eslint-disable-line camelcase
 					if ( checked ) {
 						settings.stackable_v2_editor_compatibility_usage = '' // eslint-disable-line camelcase
-						setV2EditorackwardCompatibilityUsage( false )
+						setV2EditorBackwardCompatibilityUsage( false )
 					}
 					updateSetting( settings )
-					setV2EditorackwardCompatibility( checked )
+					setV2EditorBackwardCompatibility( checked )
 				} }
 			/>
 			<CheckboxControl
@@ -470,10 +470,10 @@ const AdditionalOptions = props => {
 					const settings = { stackable_v2_editor_compatibility_usage: checked ? '1' : '' } // eslint-disable-line camelcase
 					if ( checked ) {
 						settings.stackable_v2_editor_compatibility = '' // eslint-disable-line camelcase
-						setV2EditorackwardCompatibility( false )
+						setV2EditorBackwardCompatibility( false )
 					}
 					updateSetting( settings )
-					setV2EditorackwardCompatibilityUsage( checked )
+					setV2EditorBackwardCompatibilityUsage( checked )
 				} }
 			/>
 			<CheckboxControl
