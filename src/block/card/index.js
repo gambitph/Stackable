@@ -10,6 +10,7 @@ import { CardIcon } from '~stackable/icons'
 /**
  * Internal dependencies
  */
+import variations from './variations'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
@@ -30,6 +31,7 @@ export const settings = {
 	//  styles: blockStyles,
 
 	// deprecated,
+	variations,
 	edit,
 	save,
 }

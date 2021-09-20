@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { CardStyles } from './style'
-import { blockStyles } from './block-styles'
+import variations from './variations'
 
 /**
  * External dependencies
@@ -25,7 +25,6 @@ import {
 	CustomCSS,
 	Responsive,
 	ContainerDiv,
-	BlockStyle,
 	CustomAttributes,
 	EffectsAnimations,
 	BlockLink,
@@ -42,14 +41,7 @@ import {
 	Fragment, useCallback,
 } from '@wordpress/element'
 
-const TEMPLATE = [
-	[ 'stackable/heading', {} ],
-	[ 'stackable/subtitle', { text: 'Subtitle for This Block' } ],
-	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', { text: 'Button' } ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const widthUnit = [ 'px' ]
 const heightUnit = [ 'px' ]
@@ -67,7 +59,7 @@ const Edit = props => {
 
 	const { blockOrientation } = useAlignment()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockStyle = useBlockStyle( blockStyles )
+	const blockStyle = useBlockStyle( variations )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
@@ -104,7 +96,6 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 			<BlockLink.InspectorControls />
-			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
 				hasHeight={ blockStyle === 'default' }
@@ -123,7 +114,7 @@ const Edit = props => {
 			<CardStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-card" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerDiv className={ contentClassNames }>
 					<Image
 						className="stk-block-card__image"
@@ -148,7 +139,7 @@ const Edit = props => {
 					</div>
 				</ContainerDiv>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</Fragment>
 	)
 }
