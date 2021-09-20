@@ -74,8 +74,7 @@ export const BackgroundControls = props => {
 				hasTransparent={ true }
 				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
 			/>
-			{ getAttribute( 'backgroundColorType' ) !== 'gradient' &&
-				( ! getAttribute( 'backgroundMediaUrl' ) && ! getAttribute( 'backgroundMediaUrlTablet' ) && ! getAttribute( 'backgroundMediaUrlMobile' ) ) && (
+			{ getAttribute( 'backgroundColorType' ) !== 'gradient' && ( ! getAttribute( 'backgroundMediaUrl' ) && ! getAttribute( 'backgroundMediaUrlTablet' ) && ! getAttribute( 'backgroundMediaUrlMobile' ) ) && (
 				<AdvancedRangeControl
 					label={ __( 'Background Color Opacity', i18n ) }
 					attribute={ getAttrName( 'backgroundColorOpacity' ) }
