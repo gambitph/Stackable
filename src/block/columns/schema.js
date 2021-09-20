@@ -33,6 +33,10 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			forceHideVariationPicker: {
+				type: 'boolean',
+				default: false,
+			},
 			templateLock: {
 				type: 'string',
 				default: '',
