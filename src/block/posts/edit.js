@@ -5,7 +5,7 @@ import { PostsStyles } from './style'
 import {
 	generateRenderPostItem, CONTENTS,
 } from './util'
-import { blockStyles } from './block-styles'
+import variations from './variations'
 
 /**
  * External dependencies
@@ -40,10 +40,10 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
-	BlockStyle,
 	Typography,
 	FlexGapControls,
 	MarginBottom,
+	Transform,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -83,12 +83,14 @@ const Edit = props => {
 			'meta',
 			'category',
 			'excerpt',
+			'readmore',
 		],
+		uniqueId,
 	} = attributes
 
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const blockStyle = useBlockStyle( blockStyles )
+	const blockStyle = useBlockStyle( variations )
 
 	const {
 		posts, isRequesting, hasPosts,
@@ -137,7 +139,7 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<BlockStyle.InspectorControls styles={ blockStyles } />
+			<Transform.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General' ) }
@@ -340,7 +342,7 @@ const Edit = props => {
 					) }
 				</Placeholder>
 			) : (
-				<BlockDiv className={ blockClassNames }>
+				<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 					<div className={ contentClassNames }>
 						{ ( posts || [] ).map( editorPostItems ) }
 					</div>
@@ -351,7 +353,7 @@ const Edit = props => {
 					</div>
 				</BlockDiv>
 			) }
-			{ ! isRequesting && hasPosts && <MarginBottom /> }
+			{ ! isRequesting && hasPosts && uniqueId && <MarginBottom /> }
 		</>
 	)
 }

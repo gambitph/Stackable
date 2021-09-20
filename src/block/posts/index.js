@@ -5,6 +5,7 @@ import './design'
 /**
  * Internal dependencies
  */
+import variations from './variations'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
@@ -20,6 +21,7 @@ export const settings = {
 	},
 	attributes: schema,
 
+	variations,
 	edit,
 	save,
 }

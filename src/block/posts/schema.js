@@ -14,6 +14,7 @@ import {
 	Responsive,
 	Typography,
 	addFlexGapAttributes,
+	Transform,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -213,6 +214,7 @@ export const attributes = ( version = VERSION ) => {
 		hasTextContent: false,
 		attrNameTemplate: 'readmore%s',
 	} )
+	Transform.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: postsAttributes,
@@ -242,6 +244,7 @@ export const attributes = ( version = VERSION ) => {
 				'title',
 				'meta',
 				'excerpt',
+				'readmore',
 			],
 		},
 		versionAdded: '3.0.0',

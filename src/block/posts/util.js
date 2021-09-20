@@ -23,7 +23,7 @@ import { applyFilters } from '@wordpress/hooks'
 /**
  * Internal dependencies
  */
-import { blockStyles } from './block-styles'
+import variations from './variations'
 
 export const META_SEPARATORS = {
 	dot: '·',
@@ -54,6 +54,10 @@ export const CONTENTS = [
 		label: __( 'Excerpt', i18n ),
 		value: 'excerpt',
 	},
+	{
+		label: __( 'Read More Button', i18n ),
+		value: 'readmore',
+	},
 ]
 
 export const generateRenderPostItem = attributes => {
@@ -75,7 +79,7 @@ export const generateRenderPostItem = attributes => {
 		contentOrder = [],
 	} = attributes
 
-	const style = getBlockStyle( blockStyles, className )
+	const style = getBlockStyle( variations, className )
 
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',
@@ -205,6 +209,7 @@ export const generateRenderPostItem = attributes => {
 
 		const readmore = (
 			<Typography
+				identifier={ 'read-more-' + idx }
 				tagName="a"
 				attrNameTemplate="readmore%s"
 				className={ readmoreClassNames }
@@ -228,6 +233,7 @@ export const generateRenderPostItem = attributes => {
 			category: categoryShow && category,
 			meta: metaShow && meta,
 			excerpt: excerptShow && excerpt,
+			readmore: readmoreShow && readmore,
 		}
 
 		const contents = contentOrder.map( key => {
@@ -238,7 +244,6 @@ export const generateRenderPostItem = attributes => {
 		let output = (
 			<article>
 				{ compact( contents ).map( content => content ) }
-				{ readmoreShow && readmore }
 			</article>
 		)
 
@@ -249,7 +254,6 @@ export const generateRenderPostItem = attributes => {
 			attributes,
 			{
 				...contentFactory,
-				readmore: readmoreShow && readmore,
 			}
 		)
 
@@ -277,7 +281,7 @@ generateRenderPostItem.save = attributes => {
 		contentOrder = [],
 	} = attributes
 
-	const style = getBlockStyle( blockStyles, className )
+	const style = getBlockStyle( variations, className )
 
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',
@@ -376,6 +380,7 @@ generateRenderPostItem.save = attributes => {
 		category: categoryShow && category,
 		meta: metaShow && meta,
 		excerpt: excerptShow && excerpt,
+		readmore: readmoreShow && readmore,
 	}
 
 	const contents = contentOrder.map( key => {
@@ -386,7 +391,6 @@ generateRenderPostItem.save = attributes => {
 	let output = (
 		<article>
 			{ compact( contents ).map( content => content ) }
-			{ readmoreShow && readmore }
 		</article>
 	)
 
@@ -397,7 +401,6 @@ generateRenderPostItem.save = attributes => {
 		attributes,
 		{
 			...contentFactory,
-			readmore: readmoreShow && readmore,
 		}
 	)
 
