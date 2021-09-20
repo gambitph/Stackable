@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { IconListIcon } from '~stackable/icons'
-import { settings as _settings } from 'stackable'
 
 /**
  * Internal dependencies
@@ -16,13 +15,13 @@ import schema from './schema'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: IconListIcon,
 	attributes: schema,
 	supports: {
-		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 	},
 
@@ -37,4 +36,4 @@ export const settings = {
 				( attributesToMerge.text || '' ),
 		}
 	},
-}
+} )

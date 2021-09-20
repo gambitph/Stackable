@@ -13,19 +13,18 @@ import schema from './schema'
  * External dependencies
  */
 import { TeamMemberIcon } from '~stackable/icons'
-import { settings as _settings } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: TeamMemberIcon,
 	attributes: schema,
 	supports: {
-		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 		html: false,
 		align: true,
@@ -33,4 +32,4 @@ export const settings = {
 
 	edit,
 	save,
-}
+} )

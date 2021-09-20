@@ -14,24 +14,23 @@ import transforms from './transforms'
  * External dependencies
  */
 import { ButtonIcon } from '~stackable/icons'
-import { settings as _settings } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: ButtonIcon,
 	attributes: schema,
 	supports: {
-		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 	},
 	transforms,
 
 	edit,
 	save,
-}
+} )
 

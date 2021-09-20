@@ -9,13 +9,12 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import { BlogPostsIcon } from '~stackable/icons'
-import { settings as _settings } from 'stackable'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: BlogPostsIcon,
 	supports: {
-		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		align: [ 'center', 'wide', 'full' ],
 		anchor: true,
 	},
@@ -23,4 +22,4 @@ export const settings = {
 
 	edit,
 	save,
-}
+} )

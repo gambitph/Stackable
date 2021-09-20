@@ -5,7 +5,6 @@
  * External dependencies
  */
 import { ColumnsIcon } from '~stackable/icons'
-import { settings as _settings } from 'stackable'
 
 /**
  * Internal dependencies
@@ -20,13 +19,13 @@ import variations from './variations'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: ColumnsIcon,
 	attributes: schema,
 	supports: {
-		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 	},
@@ -34,5 +33,5 @@ export const settings = {
 	variations,
 	edit,
 	save,
-}
+} )
 

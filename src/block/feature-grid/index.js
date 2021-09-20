@@ -6,7 +6,6 @@
  * External dependencies
  */
 import { FeatureGridIcon } from '~stackable/icons'
-import { settings as _settings } from 'stackable'
 
 /**
  * Internal dependencies
@@ -20,13 +19,13 @@ import metadata from './block.json'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: FeatureGridIcon,
 	attributes: schema,
 	supports: {
-		inserter: ! _settings.stackable_disabled_blocks.includes( metadata.name ),
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 	},
@@ -35,4 +34,4 @@ export const settings = {
 	// deprecated,
 	edit,
 	save,
-}
+} )
