@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import {
-	backgroundAttributes,
 	BackgroundControls,
 	BorderControls,
 	SizeControls,
@@ -12,26 +11,20 @@ import {
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { pick } from 'lodash'
 import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
-	useBlockAttributes, useBlockEl, useDidAttributesChange,
+	useBlockAttributes, useBlockEl,
 } from '~stackable/hooks'
-import { getAttrName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch } from '@wordpress/data'
-import { useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-
-// These attributes will turn on the container background.
-const containerAttributeNames = Object.keys( backgroundAttributes ).map( name => getAttrName( 'container%s', name ) )
 
 export const Edit = props => {
 	const {
@@ -39,18 +32,12 @@ export const Edit = props => {
 		borderSelector = '.stk-container',
 	} = props
 
-	const { clientId, name: blockName } = useBlockEditContext()
+	const { clientId } = useBlockEditContext()
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const attributes = useBlockAttributes( clientId )
 	const blockElSize = useBlockEl( sizeSelector )
 	const blockElBorder = useBlockEl( borderSelector )
-
-	// Turn on hasContainer when background attributes are changed.
-	const onAttributesChanged = useCallback( () => {
-		updateBlockAttributes( clientId, { hasContainer: true } )
-	}, [ clientId ] )
-	useDidAttributesChange( onAttributesChanged, blockName, pick( attributes, containerAttributeNames ) )
 
 	return (
 		<InspectorStyleControls>

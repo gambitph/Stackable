@@ -39,6 +39,7 @@ export const Save = props => {
 		'stk-block-columns',
 		responsiveClass,
 		separatorClass,
+		'stk-block-columns__inner-container', // `*inner-container` class is required for inner block widths to work properly.
 	] )
 
 	const contentClassNames = classnames( [
@@ -48,6 +49,8 @@ export const Save = props => {
 		'stk-block-content',
 	], {
 		'stk--fit-content': attributes.columnFit,
+		alignwide: attributes.contentAlign === 'alignwide', // This will align the columns inside.
+		alignfull: attributes.contentAlign === 'alignfull', // This will align the columns inside.
 	} )
 
 	return (

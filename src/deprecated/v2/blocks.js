@@ -27,7 +27,7 @@ setCategories( [
 	...getCategories(),
 	{
 		slug: 'stackable-v2',
-		title: __( 'Stackable (v2)', i18n ),
+		title: __( 'Stackable', i18n ) + ' (v2)',
 		icon: SVGStackableCategoryIcon,
 	},
 ] )
