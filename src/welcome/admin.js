@@ -2,17 +2,15 @@
  * Internal dependencies
  */
 import './news'
-import blockData from './blocks'
 
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
-import { pick } from 'lodash'
+import { __ } from '@wordpress/i18n'
+import { pick, sortBy } from 'lodash'
 import {
-	Component, render, useEffect, useState, Fragment,
+	render, useEffect, useState, Fragment, createRef, useCallback,
 } from '@wordpress/element'
-import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
 import { loadPromise, models } from '@wordpress/api'
@@ -21,119 +19,210 @@ import { loadPromise, models } from '@wordpress/api'
  * External dependencies
  */
 import {
-	disabledBlocks,
 	i18n,
-	nonce,
 	showProNoticesOption,
-	welcomeSrcUrl,
 } from 'stackable'
 import classnames from 'classnames'
 import { AdminToggleSetting, AdminTextSetting } from '~stackable/components'
 
-class BlockToggler extends Component {
-	constructor() {
-		super( ...arguments )
-		this.toggleBlock = this.toggleBlock.bind( this )
-		this.enableAllBlocks = this.enableAllBlocks.bind( this )
-		this.disableAllBlocks = this.disableAllBlocks.bind( this )
-		this.ajaxTimeout = null
-		this.state = {
-			disabledBlocks: this.props.disabledBlocks || [],
-			isSaving: false,
-		}
-	}
-
-	// Send our changes.
-	componentDidUpdate( prevProps, prevState ) {
-		if ( this.state.disabledBlocks === prevState.disabledBlocks ) {
-			return
+// Collect all the blocks and their variations for enabling/disabling and sort
+// them by type.
+const importBlocks = r => {
+	const blocks = {}
+	r.keys().forEach( key => {
+		const meta = r( key )
+		const type = meta[ 'stk-type' ]
+		if ( type ) {
+			if ( ! blocks[ type ] ) {
+				blocks[ type ] = []
+			}
+			blocks[ type ].push( meta )
 		}
 
-		clearTimeout( this.ajaxTimeout )
-		this.ajaxTimeout = setTimeout( () => {
-			ajaxSend( 'stackable_update_disable_blocks', {
-				success: () => {
-					this.setState( { isSaving: false } )
-				},
-				error: message => {
-					this.setState( { isSaving: false } )
-					alert( message ) // eslint-disable-line no-alert
-				},
-				data: {
-					nonce,
-					disabledBlocks: this.state.disabledBlocks,
-				},
+		// Add any varations if any.
+		( meta.variations || [] ).forEach( variation => {
+			const type = variation[ 'stk-type' ]
+			if ( type ) {
+				if ( ! blocks[ type ] ) {
+					blocks[ type ] = []
+				}
+				blocks[ type ].push( {
+					...variation,
+					name: `${ meta.name }|${ variation.name }`,
+				} )
+			}
+		} )
+	} )
+	Object.keys( blocks ).forEach( type => {
+		blocks[ type ] = sortBy( blocks[ type ], 'name' )
+	} )
+	return blocks
+}
+
+const BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
+const BLOCK_CATEROGIES = [
+	{
+		id: 'essential',
+		label: __( 'Essential Blocks', i18n ),
+	},
+	{
+		id: 'special',
+		label: __( 'Special Blocks', i18n ),
+	},
+	{
+		id: 'section',
+		label: __( 'Section Blocks', i18n ),
+	},
+]
+
+const BlockToggle = props => {
+	const {
+		onChange,
+		value = '',
+		label = '',
+		demo = '',
+		...propsToPass
+	} = props
+	const ref = createRef()
+
+	return (
+		<label // eslint-disable-line
+			onClick={ ev => {
+				onChange( value )
+				ev.preventDefault()
+				ref.current.focus()
+			} }
+			{ ...propsToPass }
+		>
+			<h4>{ label }</h4>
+			{ demo && (
+				<span className="s-block-demo">
+					<a
+						href={ demo }
+						target="_blank"
+						rel="noopener noreferrer"
+						onClick={ ev => ev.stopPropagation() }
+					>
+						{ __( 'view demo', i18n ) }
+					</a>
+				</span>
+			) }
+			<button
+				className="s-toggle-button"
+				ref={ ref }
+				data-value={ value }
+				onClick={ ev => {
+					onChange( value )
+					ev.stopPropagation()
+					ev.preventDefault()
+				} }
+			>
+				<span>{ __( 'Disabled', i18n ) }</span>
+				<span>{ __( 'Enabled', i18n ) }</span>
+			</button>
+		</label>
+	)
+}
+
+BlockToggle.defaultProps = {
+	label: '',
+	value: '',
+	onChange: () => {},
+	demo: '',
+}
+
+const BlockToggler = () => {
+	const [ isSaving, setIsSaving ] = useState( false )
+	const [ disabledBlocks, setDisabledBlocks ] = useState( [] )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setDisabledBlocks( response.stackable_disabled_blocks )
 			} )
-			this.setState( { isSaving: true } )
-		}, 600 )
+		} )
+	}, [] )
+
+	const save = ( disabledBlocks, type ) => {
+		setIsSaving( type )
+		const model = new models.Settings( { stackable_disabled_blocks: disabledBlocks } ) // eslint-disable-line camelcase
+		model.save().then( () => setIsSaving( false ) )
 	}
 
-	toggleBlock( blockName ) {
-		if ( this.state.disabledBlocks.includes( blockName ) ) {
-			this.setState( { disabledBlocks: this.state.disabledBlocks.filter( value => value !== blockName ) } )
+	const enableAllBlocks = type => () => {
+		let newDisabledBlocks = [ ...disabledBlocks ]
+		BLOCKS[ type ].forEach( block => {
+			newDisabledBlocks = newDisabledBlocks.filter( blockName => blockName !== block.name )
+		} )
+		setDisabledBlocks( newDisabledBlocks )
+		save( newDisabledBlocks, type )
+	}
+
+	const disableAllBlocks = type => () => {
+		const newDisabledBlocks = [ ...disabledBlocks ]
+		BLOCKS[ type ].forEach( block => {
+			if ( ! newDisabledBlocks.includes( block.name ) ) {
+				newDisabledBlocks.push( block.name )
+			}
+		} )
+		setDisabledBlocks( newDisabledBlocks )
+		save( newDisabledBlocks, type )
+	}
+
+	const toggleBlock = useCallback( ( name, type ) => {
+		let newDisabledBlocks = null
+		if ( disabledBlocks.includes( name ) ) {
+			newDisabledBlocks = disabledBlocks.filter( block => block !== name )
 		} else {
-			this.setState( { disabledBlocks: [ ...this.state.disabledBlocks, blockName ] } )
+			newDisabledBlocks = [
+				...disabledBlocks,
+				name,
+			]
 		}
-	}
+		setDisabledBlocks( newDisabledBlocks )
+		save( newDisabledBlocks, type )
+	}, [ setDisabledBlocks, disabledBlocks ] )
 
-	enableAllBlocks() {
-		this.setState( { disabledBlocks: [] } )
-	}
+	return (
+		<>
+			{ BLOCK_CATEROGIES.map( ( { id, label } ) => {
+				return (
+					<div className="s-box" key={ id }>
+						<h3>{ label }</h3>
+						<div className="s-settings-header">
+							{ isSaving === id && <Spinner /> }
+							<button onClick={ enableAllBlocks( id ) } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
+							<button onClick={ disableAllBlocks( id ) } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
+						</div>
+						<div className="s-settings-grid">
+							{ BLOCKS[ id ].map( ( block, i ) => {
+								const isDisabled = disabledBlocks.includes( block.name )
+								const mainClasses = classnames( [
+									's-block',
+								], {
+									's-is-disabled': isDisabled,
+								} )
 
-	disableAllBlocks() {
-		this.setState( { disabledBlocks: Object.keys( this.props.blocks ) } )
-	}
-
-	render() {
-		const { blocks: blockData } = this.props
-
-		return (
-			<div>
-				<div className="s-settings-header">
-					{ this.state.isSaving && <Spinner /> }
-					<button onClick={ this.enableAllBlocks } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
-					<button onClick={ this.disableAllBlocks } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
-				</div>
-				<div className="s-settings-grid">
-					{ Object.keys( blockData ).map( ( blockName, i ) => {
-						const block = blockData[ blockName ]
-
-						// Don't show blocks that we really hide due to deprecation.
-						if ( block.sDeprecated ) {
-							return null
-						}
-
-						const isDisabled = this.state.disabledBlocks.includes( blockName )
-						const mainClasses = classnames( [
-							's-box',
-							's-box-small',
-						], {
-							's-is-disabled': isDisabled,
-						} )
-
-						const blockNameTrim = blockName.replace( /\w+\//, '' )
-						return (
-							<div key={ i + 1 } className={ mainClasses }>
-								<img src={ `${ welcomeSrcUrl }/images/block-${ blockNameTrim }.svg` } alt={ `${ block.title } icon` } className="s-block-icon" />
-								<h4>{ block.title }</h4>
-								<p className="s-block-description">{ block.description }</p>
-								{ block.sDemoURL && (
-									<p className="s-demo-url"><small><a href={ block.sDemoURL } target="stackable_demo" title={ sprintf( __( 'View %s Demo', i18n ), block.title ) } >{ __( 'View Block Demo', i18n ) }</a></small></p>
-								) }
-								<button
-									className="s-toggle-button"
-									onClick={ () => this.toggleBlock( blockName ) }
-								>
-									<span>{ __( 'Disabled', i18n ) }</span>
-									<span>{ __( 'Enabled', i18n ) }</span>
-								</button>
-							</div>
-						)
-					} ) }
-				</div>
-			</div>
-		)
-	}
+								return (
+									<BlockToggle
+										key={ i + 1 }
+										label={ block.title }
+										value={ block.name }
+										className={ mainClasses }
+										demo={ block[ 'stk-demo' ] }
+										onChange={ value => {
+											toggleBlock( value, id )
+										} }
+									/>
+								)
+							} ) }
+						</div>
+					</div>
+				)
+			} ) }
+		</>
+	)
 }
 
 const EditorSettings = () => {
@@ -417,40 +506,10 @@ AdditionalOptions.defaultProps = {
 	showProNoticesOption: false,
 }
 
-// TODO: move to deprecated v2
-const OptimizationSettings = () => {
-	const [ optimizeScriptLoad, setOptimizeScriptLoad ] = useState( false )
-
-	useEffect( () => {
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setOptimizeScriptLoad( !! response.stackable_optimize_script_load )
-			} )
-		} )
-	}, [] )
-
-	const updateOptimizeScriptLoad = value => {
-		const model = new models.Settings( { stackable_optimize_script_load: value } ) // eslint-disable-line camelcase
-		model.save()
-		setOptimizeScriptLoad( value )
-	}
-
-	return <Fragment>
-		<AdminToggleSetting
-			label={ __( 'Frontend JS & CSS Files', i18n ) }
-			value={ optimizeScriptLoad }
-			onChange={ updateOptimizeScriptLoad }
-			disabled={ __( 'Load across entire site', i18n ) }
-			enabled={ __( 'Load only in posts with Stackable blocks', i18n ) }
-		/>
-	</Fragment>
-}
-
 // Load all the options into the UI.
 domReady( () => {
 	render(
-		<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />,
+		<BlockToggler />,
 		document.querySelector( '.s-settings-wrapper' )
 	)
 
@@ -475,12 +534,4 @@ domReady( () => {
 		<GlobalSettings />,
 		document.querySelector( '.s-global-settings' )
 	)
-
-	// TODO: move to deprecated v2
-	if ( document.querySelector( '.s-optimization-settings' ) ) {
-		render(
-			<OptimizationSettings />,
-			document.querySelector( '.s-optimization-settings' )
-		)
-	}
 } )

@@ -3,5 +3,6 @@
 	"title": "Icon Box",
 	"description": "A small text area with an icon that can be used to summarize features or services",
 	"category": "layout",
-	"textdomain": "stackable-ultimate-gutenberg-blocks"
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "section"
 }

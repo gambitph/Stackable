@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	disabledBlocks, isContentOnlyMode,
-} from 'stackable'
+import { isContentOnlyMode } from 'stackable'
 
 /**
  * Internal dependencies
@@ -20,10 +18,6 @@ import { subscribe } from '@wordpress/data'
 const mountDesignLibrary = () => {
 	// Content only editing mode shouldn't have a button.
 	if ( isContentOnlyMode ) {
-		return
-	}
-
-	if ( disabledBlocks.includes( name ) ) {
 		return
 	}
 

@@ -6,7 +6,7 @@
  * External dependencies
  */
 import { ContainerIcon } from '~stackable/icons'
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies

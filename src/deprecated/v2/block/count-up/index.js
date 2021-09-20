@@ -21,7 +21,7 @@ import _metadata from './block.json'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 
 const {
 	name,

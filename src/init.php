@@ -195,11 +195,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			global $content_width;
 			global $wp_version;
-			wp_localize_script( 'ugb-block-js-vendor', 'stackable', array(
+			$args = apply_filters( 'stackable_localize_script', array(
 				'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 				'contentWidth' => isset( $content_width ) ? $content_width : 900,
 				'i18n' => STACKABLE_I18N,
-				'disabledBlocks' => stackable_get_disabled_blocks(),
 				'nonce' => wp_create_nonce( 'stackable' ),
 				'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
 				'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
@@ -229,6 +228,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'settings' => apply_filters( 'stackable_js_settings', array() ),
 				'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 			) );
+			wp_localize_script( 'ugb-block-js-vendor', 'stackable', $args );
 		}
 
 		/**
