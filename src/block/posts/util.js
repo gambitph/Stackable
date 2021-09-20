@@ -125,8 +125,8 @@ export const generateRenderPostItem = attributes => {
 
 		const featuredImgSrc = featuredImageUrls?.[ imageSize || 'full' ]?.[ 0 ]
 
-		const enableHeight = ! [ 'portfolio' ].includes( style?.name )
-		const enableWidth = [ 'list' ].includes( style?.name )
+		const enableHeight = ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( style?.name )
+		const enableWidth = [ 'list', 'horizontal' ].includes( style?.name )
 
 		const featuredImage = !! featuredImgSrc && (
 			<Image
@@ -134,10 +134,13 @@ export const generateRenderPostItem = attributes => {
 				alt={ __( 'featured', i18n ) }
 				hasRemove={ false }
 				enableClickToEdit={ false }
-				width={ 100 }
-				widthUnit="%"
+				defaultWidth={ 100 }
+				defaultHeight={ 300 }
 				enableWidth={ enableWidth }
-				enableDiagonal={ false }
+				widthResizePosition={ style?.name === 'horizontal'
+					? 'left'
+					: 'right' }
+				enableDiagonal={ style?.name === 'list' }
 				enableHeight={ enableHeight }
 				hasTooltip={ enableHeight }
 				heightResizePosition={ style?.name === 'vertical-card-2'

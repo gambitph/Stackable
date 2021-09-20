@@ -58,7 +58,7 @@ export const Save = props => {
 			<PostsStyles.Content version={ version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ contentClassNames }>
-				{ generateRenderPostItem.save( attributes ) }
+				{ generateRenderPostItem.save( { ...attributes, className } ) }
 			</div>
 			<div className={ innerClassNames }>
 				<InnerBlocks.Content />

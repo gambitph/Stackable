@@ -33,7 +33,6 @@ const list = ( output, style, attributes, comps ) => {
 			{ comps[ 'featured-image' ] }
 			<article className="stk-container-padding">
 				{ compact( contents ).map( content => content ) }
-				{ comps.readmore }
 			</article>
 		</>
 	)

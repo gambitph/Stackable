@@ -45,6 +45,7 @@
 		flex: 1;
 		flex-basis: calc(100% / var(--stk-columns, 2) - var(--stk-column-gap, 32px) - 5%);
 		min-width: 250px; // Use this instead of mobile media query.
+		overflow: hidden;
 	}
 
 	// Force remove heading titles from themes.

@@ -268,10 +268,10 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<Image.InspectorControls
 				label={ __( 'Featured Image', i18n ) }
-				hasHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
-				hasBorderRadius={ ! [ 'portfolio' ].includes( blockStyle ) }
+				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( blockStyle ) }
+				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( blockStyle ) }
 				hasShape={ false }
-				hasWidth={ [ 'list' ].includes( blockStyle ) }
+				hasWidth={ [ 'list', 'horizontal' ].includes( blockStyle ) }
 				hasAlt={ false }
 				hasSelector={ false }
 				src={ focalPointPlaceholder }

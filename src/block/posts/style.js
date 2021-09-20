@@ -127,6 +127,24 @@ const getStyleParams = () => {
 		},
 		{
 			selector: '',
+			responsive: 'all',
+			styles: {
+				'--stk-container-padding-left': 'containePadding',
+			},
+			hasUnits: 'px',
+			valueCallback: value => value?.left,
+		},
+		{
+			selector: '',
+			responsive: 'all',
+			styles: {
+				'--stk-container-padding-right': 'containePadding',
+			},
+			hasUnits: 'px',
+			valueCallback: value => value?.right,
+		},
+		{
+			selector: '',
 			styles: {
 				'--stk-column-gap': 'columnGap',
 			},

@@ -32,6 +32,10 @@ const variations = applyFilters(
 			title: __( 'List', i18n ),
 			description: __( 'List Layout', i18n ),
 			attributes: {
+				imageWidth: 150,
+				imageHeight: 150,
+				imageWidthUnit: 'px',
+				imageHeightUnit: 'px',
 				hasContainer: false,
 				className: 'is-style-list',
 			},
