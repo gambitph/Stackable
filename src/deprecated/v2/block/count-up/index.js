@@ -32,6 +32,7 @@ export { name }
 
 export const settings = {
 	...metadata,
+	title: metadata.title + ' (v2)',
 	icon: CountUpIcon,
 	attributes: schema,
 	example,

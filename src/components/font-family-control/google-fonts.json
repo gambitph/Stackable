@@ -10129,23 +10129,6 @@
     ]
   },
   {
-    "family": "Noto Sans MeeteiMayek",
-    "variants": [
-      "100",
-      "200",
-      "300",
-      "regular",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900"
-    ],
-    "subsets": [
-      "meetei-mayek"
-    ]
-  },
-  {
     "family": "Noto Sans Meroitic",
     "variants": [
       "regular"

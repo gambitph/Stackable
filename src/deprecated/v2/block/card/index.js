@@ -33,6 +33,7 @@ export { name }
 
 export const settings = {
 	...metadata,
+	title: metadata.title + ' (v2)',
 	icon: CardIcon,
 	attributes: schema,
 	example,
