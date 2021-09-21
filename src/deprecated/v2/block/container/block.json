@@ -1,6 +1,6 @@
 {
 	"name": "ugb/container",
-	"title": "Container (v2)",
+	"title": "Container",
 	"description": "A styled container that you can add other blocks inside. Use this to create unique layouts.",
 	"category": "stackable-v2",
 	"keywords": [

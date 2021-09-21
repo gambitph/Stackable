@@ -9,6 +9,7 @@ import './format-types'
 import './plugins'
 import './help'
 import './compatibility'
+import './disabled-blocks'
 import { SVGStackableCategoryIcon } from './icons'
 
 /**

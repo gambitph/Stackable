@@ -13,8 +13,9 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: NumberBoxIcon,
 	attributes: schema,
@@ -24,4 +25,4 @@ export const settings = {
 	},
 	edit,
 	save,
-}
+} )

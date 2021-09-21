@@ -5,7 +5,7 @@
  * External dependencies
  */
 import { StackableIcon } from '~stackable/icons'
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies
@@ -30,6 +30,7 @@ export { name }
 
 export const settings = {
 	...metadata,
+	title: metadata.title + ' (v2)',
 	icon: StackableIcon,
 	attributes: schema,
 	example: {

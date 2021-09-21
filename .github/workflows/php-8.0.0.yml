@@ -16,6 +16,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/checkout@v2 # Checkout the Stackable Premium repo.
+      with:
+        repository: 'bfintal/Stackable-Premium'
+        ref: 'v3'
+        path: 'pro__premium_only'
+        token: '${{ secrets.ACCESS_KEY }}'
+
+    # Change the PHP version to v8.0.0
+    - name: Setup PHP v8.0.0
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0.0'
+
+    - name: Check PHP version
+      run: php -v
+      
+    - name: Install dependencies
+      run: |
+        composer require phpunit/phpunit:7.5.20 --dev --ignore-platform-reqs
+        composer require wp-phpunit/wp-phpunit:${{ matrix.wp-versions }} --dev --ignore-platform-reqs
+        composer require roots/wordpress:${{ matrix.wp-versions }} --dev --ignore-platform-reqs
+        composer install --prefer-dist --no-progress --ignore-platform-reqs
 
     - name: Setup Node
       uses: actions/setup-node@v1
@@ -41,22 +63,6 @@ jobs:
         while ! mysqladmin ping --host=127.0.0.1 --password=root --silent; do
           sleep 1
         done
-
-    # Change the PHP version to v8.0.0
-    - name: Setup PHP v8.0.0
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.0.0'
-
-    - name: Check PHP version
-      run: php -v
-      
-    - name: Install dependencies
-      run: |
-        composer require phpunit/phpunit:7.5.20 --dev --ignore-platform-reqs
-        composer require wp-phpunit/wp-phpunit:${{ matrix.wp-versions }} --dev --ignore-platform-reqs
-        composer require roots/wordpress:${{ matrix.wp-versions }} --dev --ignore-platform-reqs
-        composer install --prefer-dist --no-progress --ignore-platform-reqs
 
     - name: Run test suite
       env:

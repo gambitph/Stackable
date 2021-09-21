@@ -1,6 +1,6 @@
 {
 	"name": "ugb/video-popup",
-	"title": "Video Popup (v2)",
+	"title": "Video Popup",
 	"description": "Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.",
 	"category": "stackable-v2",
 	"keywords": [

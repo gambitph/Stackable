@@ -20,7 +20,7 @@ import { SeparatorIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 import { applyFilters } from '@wordpress/hooks'
 
 const {
@@ -32,6 +32,7 @@ export { name }
 
 export const settings = {
 	...metadata,
+	title: metadata.title + ' (v2)',
 	icon: SeparatorIcon,
 	attributes: schema,
 	example,

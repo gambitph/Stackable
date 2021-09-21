@@ -21,7 +21,7 @@ import { FeatureIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
 const {
@@ -33,6 +33,7 @@ export { name }
 
 export const settings = {
 	...metadata,
+	title: metadata.title + ' (v2)',
 	icon: FeatureIcon,
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
