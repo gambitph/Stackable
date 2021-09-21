@@ -45,7 +45,7 @@ import { addFilter } from '@wordpress/hooks'
 
 export const defaultIcon = renderToString( <SVGDefaultQuote /> )
 
-const TEMPLATE = variations[ 0 ].InnerBlocks
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
@@ -54,6 +54,7 @@ const Edit = props => {
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
+	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
@@ -97,7 +98,7 @@ const Edit = props => {
 					/>
 				</ContainerDiv>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }

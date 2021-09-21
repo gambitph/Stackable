@@ -54,7 +54,7 @@ const variations = [
 		innerBlocks: [
 			[ 'stackable/icon', { icon: renderToString( <SVGDefaultQuote /> ) } ],
 			[ 'stackable/text', {
-				text: '<span style="background-color: var(--stk-blockquote-highlight-color, #D1D1E4);" class="ugb-highlight">Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.</span>',
+				text: '<span style="background-color: #D1D1E4;" class="ugb-highlight">Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.</span>',
 				fontSize: 40,
 			} ],
 		],

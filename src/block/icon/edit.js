@@ -87,9 +87,9 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 
 			<div { ...useBlockProps( { className: wrapperClassNames } ) }>
+				<IconStyles version={ VERSION } />
+				<CustomCSS mainBlockClass="stk-block-icon" />
 				<BlockDiv className={ blockClassNames } withUniqueClass={ false }>
-					<IconStyles version={ VERSION } />
-					<CustomCSS mainBlockClass="stk-block-icon" />
 					<Link linkTrigger=".stk--inner-svg">
 						<Icon />
 					</Link>
