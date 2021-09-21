@@ -221,12 +221,12 @@
 }
 
 // Button alignment.
-.stk-button-group {
+.stk-block .stk-button-group {
 	&:not(.stk-collapse-on-desktop) {
 		justify-content: var(--stk-alignment-justify-content);
 	}
 	&:is(.stk--collapse-on-desktop) {
-		justify-content: var(--stk-alignment-justify-content);
+		align-items: var(--stk-alignment-justify-content);
 	}
 }
 

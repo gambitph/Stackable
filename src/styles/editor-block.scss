@@ -180,7 +180,7 @@
 		justify-content: var(--stk-alignment-justify-content);
 	}
 	&:is(.stk--collapse-on-desktop) .block-editor-block-list__layout {
-		justify-content: var(--stk-alignment-justify-content);
+		align-items: var(--stk-alignment-justify-content);
 	}
 }
 
