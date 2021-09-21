@@ -40,6 +40,7 @@ export const Save = props => {
 		responsiveClass,
 	], {
 		'stk--is-dismissible': attributes.isDismissible,
+		[ `stk--is-${ props.attributes.notificationType }` ]: props.attributes.notificationType,
 	} )
 
 	const contentClassNames = classnames( [

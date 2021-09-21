@@ -36,6 +36,10 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			notificationType: {
+				type: 'string',
+				default: '',
+			},
 			isDismissible: {
 				type: 'boolean',
 				default: true,
