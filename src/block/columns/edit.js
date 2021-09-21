@@ -172,7 +172,7 @@ const Edit = props => {
 
 			<BlockDiv
 				className={ blockClassNames }
-				enableVariationPicker={ true }
+				enableVariationPicker={ ! props.attributes.forceHideVariationPicker }
 			>
 				<BlockStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-columns" />
