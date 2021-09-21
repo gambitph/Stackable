@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import { ImageBoxStyles } from './style'
-import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -29,7 +28,6 @@ import {
 	BlockLink,
 	ConditionalDisplay,
 	getRowClasses,
-	BlockStyle,
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
@@ -102,7 +100,6 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 			<BlockLink.InspectorControls />
-			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
