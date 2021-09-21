@@ -165,7 +165,7 @@ const variations = [
 				bottom: 32,
 				left: 32,
 			},
-			dismissibleColor: 'var(--stk-container-background-color, #40ba7b)',
+			dismissibleColor: '#000000',
 		},
 		innerBlocks: [
 			[ 'stackable/icon', {
