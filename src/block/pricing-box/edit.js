@@ -2,12 +2,13 @@
  * Internal dependencies
  */
 import BlockStyles from './style'
+import variations from './variations'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
@@ -36,18 +37,7 @@ import { __ } from '@wordpress/i18n'
 import { useCallback } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 
-const TEMPLATE = [
-	[ 'stackable/heading', {
-		text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-	} ],
-	[ 'stackable/price', {} ],
-	[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', {
-			text: 'Button',
-		} ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
