@@ -24,6 +24,7 @@ import {
 	Separator,
 	getSeparatorClasses,
 	Transform,
+	ContainerDiv,
 } from '~stackable/block-components'
 import { useBlockHoverClass } from '~stackable/hooks'
 
@@ -44,8 +45,6 @@ const TEMPLATE = [
 		[ 'stackable/image', {} ],
 	] ],
 ]
-
-const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
@@ -76,10 +75,11 @@ const Edit = props => {
 	return (
 		<>
 
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls />
 			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
@@ -94,14 +94,14 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<Separator>
-					<div className={ contentClassNames }>
+					<ContainerDiv className={ contentClassNames }>
 						<ColumnInnerBlocks
 							providerValue={ columnProviderValue }
 							template={ TEMPLATE }
 							templateLock="insert"
 							orientation="horizontal"
 						/>
-					</div>
+					</ContainerDiv>
 				</Separator>
 			</BlockDiv>
 			<MarginBottom />

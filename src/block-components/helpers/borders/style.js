@@ -28,6 +28,17 @@ const getStyleParams = ( options = {} ) => {
 			hover: 'all',
 			hoverSelector: borderRadiusSelector ? undefined : hoverSelector,
 		},
+		// Adding a border radius should append `overflow: hidden`.
+		{
+			selector: borderRadiusSelector || selector,
+			styleRule: 'overflow',
+			attrName: 'borderRadius',
+			attrNameTemplate,
+			responsive: 'all',
+			hover: 'all',
+			hoverSelector: borderRadiusSelector ? undefined : hoverSelector,
+			valueCallback: () => 'hidden',
+		},
 		{
 			selector,
 			styleRule: 'boxShadow',
