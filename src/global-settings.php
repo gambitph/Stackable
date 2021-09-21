@@ -46,7 +46,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			/**
 			 * Color hooks
 			 */
-			add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
+			add_action( 'stackable_inline_styles', array( $this, 'color_add_global_styles' ) );
 
 			add_action( 'after_setup_theme', array( $this, 'color_add_global_color_palette' ), 9999 );
 
@@ -66,7 +66,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
 
 			// Add our global typography styles.
-			add_action( 'wp_enqueue_scripts', array( $this, 'typography_add_global_styles' ) );
+			add_action( 'stackable_inline_styles', array( $this, 'typography_add_global_styles' ) );
 		}
 
 		/**
@@ -349,13 +349,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		/**
 		 * Add our global color styles in the frontend.
 		 *
-		 * @return void
+		 * @param String $current_css
+		 * @return String
 		 */
-		public function color_add_global_styles() {
+		public function color_add_global_styles( $current_css ) {
 			// Don't do anything if we doon't have any global color.
 			$colors = get_option( 'stackable_global_colors' );
 			if ( ! $colors || ! is_array( $colors ) ) {
-				return;
+				return $current_css;
 			}
 
 			$css = array();
@@ -396,19 +397,17 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 			}
 
-			// Register our dummy style so that the inline styles would get added.
-			wp_register_style( 'ugb-style-global-colors', false );
-			wp_enqueue_style( 'ugb-style-global-colors' );
-
 			if ( count( $css ) ) {
 				$generated_color_css = "/* Global colors */\n";
 				$generated_color_css .= ':root {' . implode( ' ', $css ) . '}';
-				wp_add_inline_style( 'ugb-style-global-colors', $generated_color_css );
+				$current_css .= $generated_color_css;
 			}
 
 			if ( count( $core_css ) ) {
-				wp_add_inline_style( 'ugb-style-global-colors', implode( ' ', $core_css ) );
+				$current_css .= implode( ' ', $core_css );
 			}
+
+			return $current_css;
 		}
 
 		/**-----------------------------------------------------------------------------
@@ -474,13 +473,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		*
 		* @since 2.17.2
 		*/
-		public function typography_add_global_styles() {
-			if ( ! empty( $this->generated_typography_css ) ) {
-				// Register our dummy style so that the inline styles would get added.
-				wp_register_style( 'ugb-style-global-typography', false );
-				wp_enqueue_style( 'ugb-style-global-typography' );
-				wp_add_inline_style( 'ugb-style-global-typography', $this->generated_typography_css );
-			}
+		public function typography_add_global_styles( $css ) {
+			return $css . $this->generated_typography_css;
 		}
 
 		public function form_selectors( $selector ) {
@@ -758,7 +752,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			// Only do this if we have some global typography settings to apply.
-			if ( ! $this->generated_typography_css ) {
+			if ( empty( $this->generated_typography_css ) ) {
 				return $block_content;
 			}
 

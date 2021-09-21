@@ -18,13 +18,16 @@
 	z-index: 1;
 }
 
-
+// Block widths,
+.is-root-container > [data-block]:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
+	max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
+}
 // Make sure by default, our inner blocks are center aligned.
 .stk-row {
 	> .stk-inner-blocks:not(.alignfull):not(.alignwide) {
 		// --block-max-width comes from Blocksy
 		// --responsive--aligndefault-width comes from Twenty Twenty One
-		max-width: var(--block-max-width, var(--responsive--aligndefault-width));
+		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
 		margin-left: auto;
 		margin-right: auto;
 	}
