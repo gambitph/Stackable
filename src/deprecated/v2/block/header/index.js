@@ -6,7 +6,7 @@
  * External dependencies
  */
 import { HeroIcon } from '~stackable/icons'
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies
@@ -33,6 +33,7 @@ export { name }
 
 export const settings = {
 	...metadata,
+	title: metadata.title + ' (v2)',
 	icon: HeroIcon,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.

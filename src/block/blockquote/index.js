@@ -18,8 +18,9 @@ import { BlockquoteIcon } from '~stackable/icons'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: BlockquoteIcon,
 	attributes: schema,
@@ -31,4 +32,4 @@ export const settings = {
 
 	edit,
 	save,
-}
+} )

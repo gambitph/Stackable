@@ -19,7 +19,7 @@ import _metadata from './block.json'
 /**
  * WordPress dependencies
  */
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 const {
@@ -31,6 +31,7 @@ export { name }
 
 export const settings = {
 	...metadata,
+	title: metadata.title + ' (v2)',
 	icon: SpacerIcon,
 	attributes: schema,
 	example,

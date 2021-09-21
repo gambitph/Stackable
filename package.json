@@ -108,8 +108,9 @@
 		"build:js": "webpack --config .config/webpack.config.prod.js",
 		"build:css": "gulp build",
 		"build:sub-builds": "node ./tools/run-src-build-scripts.js",
+		"build:pot": "./vendor/wp-cli/wp-cli/bin/wp i18n make-pot . languages/stackable-ultimate-gutenberg-blocks.pot --slug=stackable-ultimate-gutenberg-blocks --domain=stackable-ultimate-gutenberg-blocks --ignore-domain --include=\"*.php,src/,pro__premium_only/\" --exclude=\"pro__premium_only/dist,pro__premium_only/node_modules,pro__premium_only/tests,*.test.js,*.config.js,__test__,wordpress,build,tools,vendor,docs\"",
 		"prebuild": "node ./tools/ensure-version-number && node ./tools/ensure-cloudfront-domain",
-		"build": "npm run clean && concurrently --raw \"npm:build:js\" \"npm:build:css\" \"npm:build:sub-builds\" && npm run package",
+		"build": "npm run clean && concurrently --raw \"npm:build:js\" \"npm:build:css\" \"npm:build:sub-builds\" \"npm:build:pot\" && npm run package",
 		"test": "jest --no-cache --watchAll",
 		"test:coverage": "jest --no-cache --coverage",
 		"test:fast": "npm run clean:build && jest",
@@ -122,7 +123,8 @@
 		"lint-css:fix": "stylelint './src/**/*.scss' --fix",
 		"check-licenses": "concurrently \"wp-scripts check-licenses --prod --gpl2 --ignore=stackable\" \"wp-scripts check-licenses --dev --ignore=stackable\"",
 		"deploy:help-videos": "s3-deploy './dist/videos/**/*.mp4' --cwd './' --bucket $npm_package_cloudfront_bucket --distId $npm_package_cloudfront_distributionId --invalidate '/videos/*'",
-		"deploy": "npm run build && concurrently --raw \"npm:deploy:help-videos\""
+		"deploy": "npm run build && concurrently --raw \"npm:deploy:help-videos\"",
+		"install-composer": "node ./tools/download-composer.js && php composer.phar install && php composer.phar install"
 	},
 	"lint-staged": {
 		"*.scss": [

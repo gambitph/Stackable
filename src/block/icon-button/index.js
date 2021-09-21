@@ -14,8 +14,9 @@ import transforms from './transforms'
  * External dependencies
  */
 import { IconButtonIcon } from '~stackable/icons'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: IconButtonIcon,
 	attributes: schema,
@@ -26,4 +27,4 @@ export const settings = {
 
 	edit,
 	save,
-}
+} )
