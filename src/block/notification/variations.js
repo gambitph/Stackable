@@ -99,6 +99,27 @@ const variations = applyFilters(
 			],
 			scope: [ 'block' ],
 		},
+		{
+			name: 'bordered',
+			title: __( 'Bordered', i18n ),
+			description: __( 'Bordered Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'outlined',
+			title: __( 'Outlined', i18n ),
+			description: __( 'Outlined Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'large-icon',
+			title: __( 'Large Icon', i18n ),
+			description: __( 'Large Icon Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
 	]
 )
 
