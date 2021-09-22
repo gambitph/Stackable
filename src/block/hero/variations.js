@@ -50,6 +50,34 @@ const variations = applyFilters(
 			],
 			scope: [ 'block' ],
 		},
+		{
+			name: 'half-overlay',
+			title: __( 'Half Overlay', i18n ),
+			description: __( 'Half Overlay Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'center-overlay',
+			title: __( 'Center Overlay', i18n ),
+			description: __( 'Center Overlay Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'side-overlay',
+			title: __( 'Side Overlay', i18n ),
+			description: __( 'Side Overlay Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'half',
+			title: __( 'Half', i18n ),
+			description: __( 'Half Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
 	]
 )
 
