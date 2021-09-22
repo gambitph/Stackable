@@ -101,6 +101,34 @@ const variations = applyFilters(
 			],
 			scope: [ 'block' ],
 		},
+		{
+			name: 'box',
+			title: __( 'Box', i18n ),
+			description: __( 'Box Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'captioned',
+			title: __( 'Captioned', i18n ),
+			description: __( 'Captioned Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'fade',
+			title: __( 'Fade', i18n ),
+			description: __( 'Fade Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'line',
+			title: __( 'Line', i18n ),
+			description: __( 'Line Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
 	]
 )
 
