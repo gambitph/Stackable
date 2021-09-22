@@ -292,7 +292,7 @@
 	--stk-alignment-text-align: center;
 	--stk-alignment-margin-left: auto;
 	--stk-alignment-margin-right: auto;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 @mixin align-right-styles {
@@ -300,7 +300,7 @@
 	--stk-alignment-text-align: end;
 	--stk-alignment-margin-left: auto;
 	--stk-alignment-margin-right: 0;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 @mixin align-left-styles {
@@ -308,7 +308,7 @@
 	--stk-alignment-text-align: start;
 	--stk-alignment-margin-left: 0;
 	--stk-alignment-margin-right: auto;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 // Default text direction, we need to add this for RTL support.
@@ -356,5 +356,5 @@
 // Text alignment should also work for flex blocks like the icon block.
 .stk-block {
 	justify-content: var(--stk-alignment-justify-content);
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }

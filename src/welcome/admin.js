@@ -228,12 +228,13 @@ const BlockToggler = () => {
 const EditorSettings = () => {
 	const [ settings, setSettings ] = useState( {} )
 	const [ isBusy, setIsBusy ] = useState( false )
+	const [ saveTimeout, setSaveTimeout ] = useState( null )
 
 	useEffect( () => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setSettings( pick( response, [ 'stackable_enable_design_library', 'stackable_auto_collapse_panels', 'stackable_enable_block_linking' ] ) )
+				setSettings( pick( response, [ 'stackable_enable_design_library', 'stackable_block_max_width', 'stackable_auto_collapse_panels', 'stackable_enable_block_linking' ] ) )
 			} )
 		} )
 	}, [] )
@@ -255,6 +256,24 @@ const EditorSettings = () => {
 			disabled={ __( 'Disable feature', i18n ) }
 			enabled={ __( 'Enable feature', i18n ) }
 		/>
+		<AdminTextSetting
+			label={ __( 'Block Max Width', i18n ) }
+			value={ settings.stackable_block_max_width }
+			type="number"
+			onChange={ value => {
+				clearTimeout( saveTimeout )
+				setSettings( {
+					...settings,
+					stackable_block_max_width: value, // eslint-disable-line camelcase
+				} )
+				setSaveTimeout( setTimeout( () => {
+					setIsBusy( true )
+					const model = new models.Settings( { stackable_block_max_width: value } ) // eslint-disable-line camelcase
+					model.save().then( () => setIsBusy( false ) )
+				}, 400 ) )
+			} }
+			help={ __( 'The maximum width of Stackable blocks. Leave blank for the blocks to follow the content width of your theme.', i18n ) }
+		> px</AdminTextSetting>
 		<AdminToggleSetting
 			label={ __( 'Auto-Collapse Panels', i18n ) }
 			value={ settings.stackable_auto_collapse_panels }

@@ -65,6 +65,14 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				STACKABLE_VERSION
 			);
 
+			// Frtonend only inline styles.
+			if ( ! is_admin() ) {
+				$inline_css = apply_filters( 'stackable_inline_styles', '' );
+				if ( ! empty( $inline_css ) ) {
+					wp_add_inline_style( 'ugb-style-css', $inline_css );
+				}
+			}
+
 			// Frontend block styles (responsive).
 			wp_register_style(
 				'ugb-style-css-responsive',
@@ -190,6 +198,12 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				apply_filters( 'stackable_editor_css_dependencies', array( 'wp-edit-blocks' ) ),
 				STACKABLE_VERSION
 			);
+
+			// Backend editor only inline styles.
+			$inline_css = apply_filters( 'stackable_inline_editor_styles', '' );
+			if ( ! empty( $inline_css ) ) {
+				wp_add_inline_style( 'ugb-block-editor-css', $inline_css );
+			}
 
 			$version_parts = explode( '-', STACKABLE_VERSION );
 
