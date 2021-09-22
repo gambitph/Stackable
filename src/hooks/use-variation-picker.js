@@ -34,6 +34,10 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 				getBlock,
 			} = select( 'core/block-editor' )
 
+			if ( ! clientId ) {
+				return {}
+			}
+
 			const name = getBlock( clientId ).name
 
 			return {
@@ -50,7 +54,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 		<VariationPicker
 			icon={ get( blockType, [ 'icon', 'src' ] ) }
 			label={ get( blockType, [ 'title' ] ) }
-			variations={ variations }
+			variations={ variations || [] }
 			onSelect={ ( nextVariation = defaultVariation ) => {
 				// When selecting a variation, add a unique Id, this will
 				// indicate not to show the variation picker afterwards.
