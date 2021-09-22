@@ -41,6 +41,27 @@ const variations = applyFilters(
 			],
 			scope: [ 'block' ],
 		},
+		{
+			name: 'horizontal',
+			title: __( 'Horizontal', i18n ),
+			description: __( 'Horizontal Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'full',
+			title: __( 'Full', i18n ),
+			description: __( 'Full Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'faded',
+			title: __( 'Faded', i18n ),
+			description: __( 'Faded Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
 	]
 )
 
