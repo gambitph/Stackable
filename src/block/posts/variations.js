@@ -24,6 +24,8 @@ const variations = applyFilters(
 			isDefault: true,
 			attributes: {
 				hasContainer: false,
+				imageWidth: 100,
+				imageWidthUnit: '%',
 			},
 			scope: [ 'block' ],
 		},
