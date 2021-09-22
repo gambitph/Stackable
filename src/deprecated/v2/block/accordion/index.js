@@ -16,7 +16,7 @@ import _metadata from './block.json'
  * External dependencies
  */
 import { AccordionIcon } from '~stackable/icons'
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies

@@ -13,8 +13,9 @@ import metadata from './block.json'
  * External dependencies
  */
 import { SpacerIcon } from '~stackable/icons'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: SpacerIcon,
 	attributes: schema,
@@ -24,4 +25,4 @@ export const settings = {
 
 	edit,
 	save,
-}
+} )

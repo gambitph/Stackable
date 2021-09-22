@@ -106,7 +106,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 		public function add_optimization_settings() {
 			?>
 			<article class="s-box" id="optimization-settings">
-				<h2><?php _e( '🏃‍♂️ Optimization Settings', STACKABLE_I18N ) ?></h2>
+				<h2><?php _e( '🏃‍♂️ Optimization Settings', STACKABLE_I18N ) ?> (V2)</h2>
 				<p class="s-settings-subtitle">
 					<?php printf( __( 'Here are some settings that you can tweak to optimize Stackable. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/460-how-to-use-optimization-settings?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?>
 					<br />

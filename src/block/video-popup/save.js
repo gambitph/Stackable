@@ -8,7 +8,7 @@ import { IconLabelStyles } from './style'
  */
 import classnames from 'classnames'
 import { withVersion } from '~stackable/higher-order'
-import { version as VERSION } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import {
 	BlockDiv,
 	CustomCSS,
@@ -22,6 +22,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
 
 export const Save = props => {
 	const {
@@ -55,7 +56,7 @@ export const Save = props => {
 		>
 			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<button className={ contentClassNames } aria-label="Play Video">
+			<button className={ contentClassNames } aria-label={ __( 'Play Video', i18n ) }>
 				<InnerBlocks.Content />
 			</button>
 		</BlockDiv.Content>
@@ -65,5 +66,3 @@ export const Save = props => {
 export default compose(
 	withVersion( VERSION )
 )( Save )
-
-// TODO: add "play video" accessibility label

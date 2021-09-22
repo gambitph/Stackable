@@ -71,6 +71,10 @@ module.exports = [ {
 	entry: {
 		'admin_welcome': path.resolve( __dirname, '../src/welcome/admin.js' ),
 		// V2 deprecated script, we build this here since that's how we did it before.
+		'admin_welcome_v2': {
+			import: path.resolve( __dirname, '../src/deprecated/v2/welcome/admin.js' ),
+			filename: 'deprecated/[name].js'
+		},
 		'frontend_blocks_deprecated_v2': {
 			import: path.resolve( __dirname, '../src/deprecated/v2/block-frontend.js' ),
 			filename: 'deprecated/[name].js'

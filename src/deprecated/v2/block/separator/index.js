@@ -20,7 +20,7 @@ import { SeparatorIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 import { applyFilters } from '@wordpress/hooks'
 
 const {

@@ -19,8 +19,9 @@ import { CTAIcon } from '~stackable/icons'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: CTAIcon,
 	attributes: schema,
@@ -33,4 +34,4 @@ export const settings = {
 	variations,
 	edit,
 	save,
-}
+} )

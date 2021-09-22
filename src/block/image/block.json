@@ -3,5 +3,6 @@
 	"title": "Image",
 	"description": "An image with advanced controls to make a visual statement.",
 	"category": "media",
-	"textdomain": "stackable-ultimate-gutenberg-blocks"
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "essential"
 }
