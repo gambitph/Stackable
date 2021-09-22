@@ -50,6 +50,34 @@ const variations = applyFilters(
 			],
 			scope: [ 'block' ],
 		},
+		{
+			name: 'horizontal',
+			title: __( 'Horizontal', i18n ),
+			description: __( 'Horizontal Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'horizontal-2',
+			title: __( 'Horizontal 2', i18n ),
+			description: __( 'Horizontal 2 Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'horizontal-3',
+			title: __( 'Horizontal 3', i18n ),
+			description: __( 'Horizontal 3 Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'split-centered',
+			title: __( 'Split Centered', i18n ),
+			description: __( 'Split Centered Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
 	]
 )
 
