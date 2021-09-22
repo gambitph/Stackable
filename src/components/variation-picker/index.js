@@ -7,7 +7,6 @@ import { isPro } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { __experimentalBlockVariationPicker } from '@wordpress/block-editor' // eslint-disable-line @wordpress/no-unsafe-wp-apis
 import { __ } from '@wordpress/i18n'
 import { Button, Placeholder } from '@wordpress/components'
 import { layout } from '@wordpress/icons'
