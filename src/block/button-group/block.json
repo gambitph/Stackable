@@ -7,15 +7,19 @@
 		"Link"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "hidden",
 	"variations": [
 		{
-			"name": "custom",
+			"name": "button",
 			"title": "Button",
+			"stk-type": "essential",
+			"stk-demo": "https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink",
 			"isDefault": true
 		},
 		{
-			"name": "icon-buttons",
+			"name": "icon-button",
 			"title": "Icon Button",
+			"stk-type": "essential",
 			"innerBlocks": [
 				[
 					"stackable/icon-button",
@@ -26,6 +30,7 @@
 		{
 			"name": "social-buttons",
 			"title": "Social Buttons",
+			"stk-type": "special",
 			"scope": [
 				"inserter"
 			],

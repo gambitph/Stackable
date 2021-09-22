@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 import { DividerIcon } from '~stackable/icons'
 
 /**

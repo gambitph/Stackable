@@ -15,8 +15,9 @@ import save from './save'
 import schema from './schema'
 import variations from './variations'
 import metadata from './block.json'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: ImageBoxIcon,
 	supports: {
@@ -28,4 +29,4 @@ export const settings = {
 	variations,
 	edit,
 	save,
-}
+} )

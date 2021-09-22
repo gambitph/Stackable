@@ -80,8 +80,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'pricingURL' => sugb_fs()->get_upgrade_url(),
 					'contactURL' => ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '',
 					'planName' => sugb_fs()->get_plan_name(),
-					'disabledBlocks' => stackable_get_disabled_blocks(),
-					'nonce' => stackable_get_disabled_blocks_nonce(),
 					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
 					'nonceNews' => stackable_get_news_feed_nonce(),
 				) );
@@ -213,13 +211,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<p class="s-settings-subtitle"><?php printf( __( 'Each WordPress theme is unique, so if your global settings are not working correctly with your theme, here are a few options you can tweak to make them work. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/361-how-to-use-global-settings?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<div class="s-global-settings"></div>
 						</article>
-						<?php do_action( 'stackable_settings_page_mid' ); ?>
                         <article class="s-box" id="block-settings">
                             <h2><?php _e( '🎛 Enable & Disable Blocks', STACKABLE_I18N ) ?></h2>
                             <p class="s-settings-subtitle"><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , STACKABLE_I18N ) ?> <em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , STACKABLE_I18N ) ?></em></p>
 							<!-- We put all the block controls here. -->
                             <div class="s-settings-wrapper" />
 						</article>
+						<?php do_action( 'stackable_settings_page_mid' ); ?>
 						<!-- We put all the other options here. -->
 						<article class="s-box" id="other-settings">
 							<h2><?php _e( '🔩 Other Settings', STACKABLE_I18N ) ?></h2>

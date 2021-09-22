@@ -53,5 +53,3 @@ export const Save = props => {
 export default compose(
 	withVersion( VERSION )
 )( Save )
-
-// TODO: add "play video" accessibility label
