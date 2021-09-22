@@ -64,6 +64,27 @@ const variations = applyFilters(
 			],
 			scope: [ 'block' ],
 		},
+		{
+			name: 'compact',
+			title: __( 'Compact', i18n ),
+			description: __( 'Compact Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'colored',
+			title: __( 'Colored', i18n ),
+			description: __( 'Colored Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'sectioned',
+			title: __( 'Sectioned', i18n ),
+			description: __( 'Sectioned Layout', i18n ),
+			isPremium: true,
+			scope: [ 'block' ],
+		},
 	]
 )
 
