@@ -259,7 +259,7 @@ const addVideoBackgroundOutput = ( output, design, blockProps ) => {
 	)
 }
 
-const addStyles = ( styleObject, props, options = { importantBackgroundSize: false } ) => {
+const addStyles = ( styleObject, props, options = { importantBackgroundSize: false, importantBackgroundPosition: false } ) => {
 	const getValue = __getValue( props.attributes )
 
 	if ( ! props.attributes.showBlockBackground ) {
