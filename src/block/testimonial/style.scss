@@ -1,1 +1,16 @@
 @import "common";
+
+.stk-block.stk-block-testimonial {
+	.stk-block-text.stk-block-testimonial__text {
+		&::after {
+			content: "" !important;
+			width: 16px;
+			height: 16px;
+			background-color: var(--stk-block-background-color);
+			position: absolute;
+			bottom: -8px;
+			left: 64px;
+			transform: rotate(45deg);
+		}
+	}
+}

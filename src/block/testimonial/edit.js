@@ -2,11 +2,12 @@
  * Internal dependencies
  */
 import { ContainerStyles } from './style'
+import variations from './variations'
 
 /**
  * External dependencies
  */
-import { version as VERSION, i18n } from 'stackable'
+import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
@@ -38,18 +39,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const TEMPLATE = [
-	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
-	[ 'stackable/image', {
-		imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
-	} ],
-	[ 'stackable/heading', {
-		text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-	} ],
-	[ 'stackable/subtitle', {
-		text: __( 'Position', i18n ),
-	} ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
@@ -96,7 +86,7 @@ const Edit = props => {
 
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-testimonial" />
 
@@ -108,7 +98,7 @@ const Edit = props => {
 					/>
 				</ContainerDiv>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
