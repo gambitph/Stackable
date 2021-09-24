@@ -17,7 +17,7 @@ const DesignLibraryButton = () => {
 		<Button
 			onClick={ () => {
 				// Insert a design library block.
-				const block = createBlock( 'ugb/design-library' )
+				const block = createBlock( 'stackable/design-library' )
 
 				dispatch( 'core/block-editor' ).insertBlocks( block )
 					.then( () => {
