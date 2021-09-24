@@ -98,7 +98,7 @@ export const Controls = props => {
 					/**
 					 * Pass the unescaped Dynamic Content `onChange` function.
 					 */
-					onChangeDynamicContent={ setDebouncedText }
+					changeDynamicContent={ setDebouncedText }
 					isDynamic={ true }
 				/>
 			) }
