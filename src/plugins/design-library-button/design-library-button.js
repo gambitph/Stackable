@@ -21,7 +21,7 @@ const DesignLibraryButton = () => {
 
 				dispatch( 'core/block-editor' ).insertBlocks( block )
 					.then( () => {
-						const button = document.querySelector( `[data-block="${ block.clientId }"] .ugb-design-library-block__button` )
+						const button = document.querySelector( `[data-block="${ block.clientId }"] button` )
 						// Open the design library.
 						if ( button ) {
 							button.click()
