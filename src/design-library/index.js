@@ -1,13 +1,15 @@
 import domReady from '@wordpress/dom-ready'
 import apiFetch from '@wordpress/api-fetch'
 
+const LATEST_API_VERSION = 'v3'
+
 let designLibrary = null
 let blockDesigns = {}
 let designs = []
 
 export const getBlockName = block => block.replace( /^[\w-]+\//, '' )
 
-export const fetchDesignLibrary = async ( forceReset = false ) => {
+export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => {
 	if ( ! designLibrary || forceReset ) {
 		const results = await apiFetch( {
 			path: `/wp/v2/stk_design_library${ forceReset ? '/reset' : '' }`,
@@ -21,10 +23,12 @@ export const fetchDesignLibrary = async ( forceReset = false ) => {
 			designs = []
 		}
 	}
-	return designLibrary
+
+	return designLibrary[ version || LATEST_API_VERSION ]
 }
 
-export const fetchBlockDesigns = async block => {
+// TODO: Move to v2
+export const fetchBlockDesigns = async ( block, version = '' ) => { // Always v2
 	const blockName = getBlockName( block )
 	if ( ! blockDesigns[ blockName ] ) {
 		const results = await apiFetch( {
@@ -36,10 +40,10 @@ export const fetchBlockDesigns = async block => {
 	return blockDesigns[ blockName ]
 }
 
-export const fetchDesign = async designId => {
+export const fetchDesign = async ( designId, version = '' ) => {
 	if ( ! designs[ designId ] ) {
 		const results = await apiFetch( {
-			path: `/wp/v2/stk_design/${ designId }`,
+			path: `/wp/v2/stk_design/${ version }/${ designId }`,
 			method: 'GET',
 		} )
 		designs[ designId ] = await results
@@ -72,16 +76,17 @@ export const getDesigns = async ( {
 	categories: hasCategories = [],
 	search = '',
 	reset = false,
+	apiVersion = '',
 } ) => {
-	let library = Object.values( await fetchDesignLibrary( reset ) )
+	let library = Object.values( await fetchDesignLibrary( reset, apiVersion ) )
 
 	if ( isType ) {
 		library = library.filter( ( { type } ) => type === isType )
 	}
 
 	if ( isBlock ) {
-		const blockName = isBlock.indexOf( 'ugb/' ) === -1 ? `ugb/${ isBlock }` : isBlock
-		library = library.filter( ( { block } ) => block === blockName )
+		const blockName = isBlock.replace( /^\w+\//, '' )
+		library = library.filter( ( { block } ) => block.endsWith( `/${ blockName }` ) )
 	}
 
 	if ( isMood ) {
@@ -118,8 +123,15 @@ export const getDesigns = async ( {
 	return library
 }
 
-export const getDesign = async designId => {
-	const library = await fetchDesignLibrary()
+/**
+ *
+ * @param {string} designId The name of the design
+ * @param {string} version The version of the design library API to use.
+ *
+ * @return
+ */
+export const getDesign = async ( designId, version = '' ) => {
+	const library = await fetchDesignLibrary( false, version )
 
 	const meta = library[ designId ]
 	const {
@@ -128,7 +140,7 @@ export const getDesign = async designId => {
 
 	// We have a unified list of all designs per block, look there first to save of fetch time.
 	if ( type === 'block' && block ) {
-		const blockDesigns = await fetchBlockDesigns( block )
+		const blockDesigns = await fetchBlockDesigns( block, version )
 		return blockDesigns[ designId ]
 
 	// Every design has their own template file which contains the entire design, get that.
@@ -141,9 +153,13 @@ export const getDesign = async designId => {
 
 /**
  * Gets the list of blocks available in the design library.
+ *
+ * @param {string} version The version of the design library API to use.
+ *
+ * @return {Array} An array of block names.
  */
-export const getAllBlocks = async () => {
-	const library = Object.values( await fetchDesignLibrary() )
+export const getAllBlocks = async ( version = '' ) => {
+	const library = Object.values( await fetchDesignLibrary( false, version ) )
 
 	return library.reduce( ( blocks, design ) => {
 		const { block, type } = design

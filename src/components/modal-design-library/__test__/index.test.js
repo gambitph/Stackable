@@ -51,7 +51,7 @@ describe( 'ModalDesignLibrary', () => {
 
 		await wait()
 
-		expect( getByText( 'Stackable Design Library' ) ).toBeTruthy()
+		expect( getByText( 'Stackable Design Library', { exact: false } ) ).toBeTruthy()
 		expect( getByTestId( 'input-search' ) ).toBeTruthy()
 		expect( getByText( 'UI Kits' ) ).toBeTruthy()
 		expect( getByText( 'Block Designs' ) ).toBeTruthy()

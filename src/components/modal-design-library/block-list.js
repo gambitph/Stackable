@@ -31,11 +31,12 @@ const BlockList = props => {
 	const [ selected, setSelected ] = useState( '' )
 	const {
 		viewBy,
+		apiVersion,
 	} = props
 
 	// Create our block list.
 	useEffect( () => {
-		getAllBlocks().then( blocks => {
+		getAllBlocks( apiVersion ).then( blocks => {
 			const blockList = blocks.reduce( ( blocks, name ) => {
 				if ( ! blocks[ name ] ) {
 					// Ignore if block is hidden from the Block Manager.
@@ -71,6 +72,7 @@ const BlockList = props => {
 			search: props.search,
 			mood: props.mood,
 			colors: props.colors,
+			apiVersion: 'v2',
 		} ).then( designs => {
 			// We need to create a blank list first.
 			const initBlocks = Object.keys( blockList ).reduce( ( blocks, name ) => {
@@ -346,6 +348,7 @@ BlockList.defaultProps = {
 	forceBlock: '',
 	viewBy: '',
 	onChangeViewBy: () => {},
+	apiVersion: '',
 }
 
 export default BlockList

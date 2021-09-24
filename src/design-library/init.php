@@ -49,26 +49,16 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				),
 			) );
 
-			register_rest_route( 'wp/v2', '/stk_block_designs/(?P<block>[\w\d-]+)', array(
-				'methods' => 'GET',
-				'callback' => array( $this, 'get_block_designs' ),
-				'permission_callback' => function () {
-					return current_user_can( 'edit_posts' );
-				},
-				'args' => array(
-					'block' => array(
-						'validate_callback' => __CLASS__ . '::validate_string'
-					),
-				),
-			) );
-
-			register_rest_route( 'wp/v2', '/stk_design/(?P<design>[\w\d-]+)', array(
+			register_rest_route( 'wp/v2', '/stk_design/(?P<version>[\w\d-]+)/(?P<design>[\w\d-]+)', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_design' ),
 				'permission_callback' => function () {
 					return current_user_can( 'edit_posts' );
 				},
 				'args' => array(
+					'version' => array(
+						'validate_callback' => __CLASS__ . '::validate_string'
+					),
 					'design' => array(
 						'validate_callback' => __CLASS__ . '::validate_string'
 					),
@@ -96,18 +86,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			// Delete design library.
 			delete_transient( 'stackable_get_design_library' );
 
-			// Delete block designs.
-			global $wpdb;
-			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_stackable_get_block_designs_%'" );
-
-			if ( $transients ) {
-				foreach ( $transients as $transient ) {
-					$transient = preg_replace( '/^_transient_/i', '', $transient );
-					delete_transient( $transient );
-				}
-			}
-
 			// Delete designs.
+			global $wpdb;
 			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_stackable_get_design_%'" );
 
 			if ( $transients ) {
@@ -116,6 +96,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					delete_transient( $transient );
 				}
 			}
+
+			do_action( 'stackable_delete_design_library_cache' );
 		}
 
 		public function _get_design_library() {
@@ -151,28 +133,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			}
 
 			return rest_ensure_response( $this->_get_design_library() );
-		}
-
-		public function get_block_designs( $request ) {
-			$block = $request->get_param( 'block' );
-
-			$designs = get_transient( 'stackable_get_block_designs_' . $block );
-
-			// Fetch designs.
-			if ( empty( $designs ) ) {
-
-				$response = wp_remote_get( self::get_cdn_url() . 'library/block-' . $block . '.json' );
-				$content = wp_remote_retrieve_body( $response );
-				$content = apply_filters( 'stackable_design_library_retreive_body', $content );
-				$designs = json_decode( $content, true );
-
-				// Cache results.
-				set_transient( 'stackable_get_block_designs_' . $block, $designs, DAY_IN_SECONDS );
-			}
-
-			$designs = apply_filters( 'stackable_block_design_' . $block, $designs );
-
-			return rest_ensure_response( $designs );
 		}
 
 		public function get_design( $request ) {

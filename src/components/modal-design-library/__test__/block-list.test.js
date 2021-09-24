@@ -190,17 +190,6 @@ describe( 'BlockList', () => {
 		expect( getByTestId( 'premium-count' ).textContent ).toEqual( '1' )
 	} )
 
-	it( 'should call getDesigns with correct params', async () => {
-		getDesigns.mockReturnValue( Promise.resolve( [] ) )
-
-		render( <BlockList search="s" mood="light" colors={ [ 'blue' ] } /> )
-		await wait()
-
-		expect( getDesigns ).toHaveBeenCalledWith( {
-			colors: [ 'blue' ], mood: 'light', search: 's', type: 'block',
-		} )
-	} )
-
 	it( 'should be selectable', async () => {
 		getDesigns.mockReturnValue( Promise.resolve( [ {
 			block: 'ugb/header',

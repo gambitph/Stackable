@@ -42,6 +42,7 @@ const ModalDesignLibrary = props => {
 	const [ viewBy, setViewBy ] = useState( props.selectedBlock ? 'block-designs' : 'ui-kits' )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 	const [ firstSelectedCategory, setFirstSelectedCategory ] = useState( '' )
+	const [ apiVersion, setApiVersion ] = useState( 'v2' )
 
 	useEffect( () => setBlock( props.selectedBlock ), [ props.selectedBlock ] )
 
@@ -79,6 +80,7 @@ const ModalDesignLibrary = props => {
 			categories,
 			search: searchDebounced,
 			reset: doReset,
+			apiVersion,
 		} ).then( designs => {
 			setDesigns( designs )
 
@@ -126,7 +128,7 @@ const ModalDesignLibrary = props => {
 				<aside className="ugb-modal-design-library__sidebar">
 					<TextControl
 						className="ugb-modal-design-library__search"
-						placeholder={ __( 'E.g. light, dark, red, minimalist...', i18n ) }
+						placeholder={ __( 'E.g. light, dark, red, minimalist…', i18n ) }
 						value={ search }
 						onChange={ search => setSearch( search ) }
 						data-testid="input-search"
@@ -134,6 +136,7 @@ const ModalDesignLibrary = props => {
 					/>
 					<div className="ugb-modal-design-library__filters">
 						<BlockList
+							apiVersion={ apiVersion }
 							search={ search }
 							categories={ categories }
 							forceBlock={ props.selectedBlock }
