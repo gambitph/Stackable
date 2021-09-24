@@ -1,7 +1,12 @@
 /**
+ * Internal dependencies
+ */
+import { DesignLibraryControl } from '../../components'
+
+/**
  * External dependencies
  */
-import { DesignLibraryControl, PanelAdvancedSettings } from '~stackable/components'
+import { PanelAdvancedSettings } from '~stackable/components'
 import { applyBlockDesign } from '~stackable/util'
 import { i18n } from 'stackable'
 

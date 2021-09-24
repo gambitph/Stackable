@@ -1,13 +1,11 @@
 /**
- * Internal dependencies
- */
-import AdvancedToolbarControl from '../advanced-toolbar-control'
-
-/**
  * External dependencies
  */
 import {
-	DesignLibraryList, ModalDesignLibrary, Button,
+	AdvancedToolbarControl,
+	DesignLibraryList,
+	ModalDesignLibrary,
+	Button,
 } from '~stackable/components'
 import { getDesigns } from '~stackable/design-library'
 import { isPro, i18n } from 'stackable'
@@ -32,6 +30,7 @@ const DesignLibraryControl = props => {
 			type: 'block',
 			block: props.block,
 			search,
+			apiVersion: 'v2',
 		} ).then( designs => {
 			if ( isMounted ) {
 				setDesigns( designs )
@@ -56,7 +55,7 @@ const DesignLibraryControl = props => {
 				onClick={ () => setIsLibraryOpen( true ) }
 			>{ __( 'Open Design Library', i18n ) }</Button>
 			<TextControl
-				placeholder={ __( 'E.g. light, dark, red, minimalist...', i18n ) }
+				placeholder={ __( 'E.g. light, dark, red, minimalist…', i18n ) }
 				value={ search }
 				onChange={ search => setSearch( search ) }
 			/>
