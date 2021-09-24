@@ -1,10 +1,14 @@
 /**
+ * Internal dependencies
+ */
+import ModalDesignLibrary from '../modal-design-library'
+
+/**
  * External dependencies
  */
 import {
 	AdvancedToolbarControl,
 	DesignLibraryList,
-	ModalDesignLibrary,
 	Button,
 } from '~stackable/components'
 import { getDesigns } from '~stackable/design-library'

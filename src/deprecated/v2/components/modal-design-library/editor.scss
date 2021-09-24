@@ -169,16 +169,3 @@
 .ugb-modal-design-library__dev-mode .components-base-control__field {
 	margin: 2px 24px 0 !important;
 }
-
-// Design library version switcher (only used when v2 backward compatibility).
-.ugb-modal-design-library .components-modal__header-heading {
-	display: flex;
-	align-items: center;
-	.ugb-advanced-toolbar-control {
-		margin: 0 32px;
-		> *,
-		> * > * {
-			margin: 0;
-		}
-	}
-}

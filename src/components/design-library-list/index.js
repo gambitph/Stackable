@@ -48,7 +48,7 @@ const DesignLibraryList = props => {
 		{ isBusy && <div className="ugb-design-library-search__spinner" data-testid="spinner"><Spinner /></div> }
 
 		{ ! isBusy && ! ( designs || [] ).length &&
-		<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
+			<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
 		}
 	</div>
 }
