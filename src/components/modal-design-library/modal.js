@@ -4,7 +4,7 @@
 import SVGViewSingle from './images/view-single.svg'
 import SVGViewMany from './images/view-many.svg'
 import SVGViewFew from './images/view-few.svg'
-import BlockList from './block-list'
+// import BlockList from './block-list'
 // import ColorList from './color-list'
 import Button from '../button'
 import AdvancedToolbarControl from '../advanced-toolbar-control'
@@ -44,7 +44,7 @@ export const ModalDesignLibrary = props => {
 	const [ viewBy, setViewBy ] = useState( props.selectedBlock ? 'block-designs' : 'ui-kits' )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 	const [ firstSelectedCategory, setFirstSelectedCategory ] = useState( '' )
-	const [ apiVersion, setApiVersion ] = useState( 'v2' )
+	const [ apiVersion, setApiVersion ] = useState( '' )
 
 	useEffect( () => setBlock( props.selectedBlock ), [ props.selectedBlock ] )
 
@@ -161,7 +161,7 @@ export const ModalDesignLibrary = props => {
 						type="search"
 					/>
 					<div className="ugb-modal-design-library__filters">
-						<BlockList
+						{ /* <BlockList
 							apiVersion={ apiVersion }
 							search={ search }
 							categories={ categories }
@@ -175,7 +175,7 @@ export const ModalDesignLibrary = props => {
 								setCategories( categories )
 							} }
 							onChangeViewBy={ setViewBy }
-						/>
+						/> */ }
 					</div>
 				</aside>
 

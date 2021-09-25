@@ -7,10 +7,11 @@ import { ModalDesignLibrary } from './modal'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo, useState } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
+import { useLocalStorage } from '~stackable/util'
 
 export const Switcher = props => {
-	const [ apiVersion, setApiVersion ] = useState( '' )
+	const [ apiVersion, setApiVersion ] = useLocalStorage( '' )
 
 	const versions = useMemo( () => {
 		return applyFilters( 'stackable.design-library.versions', [ '' ] ) // Blank means the latest version.

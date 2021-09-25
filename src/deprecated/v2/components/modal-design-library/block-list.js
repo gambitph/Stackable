@@ -6,9 +6,8 @@ import {
 } from 'lodash'
 import ControlSeparator from '../../../../components/control-separator'
 import AdvancedToolbarControl from '../../../../components/advanced-toolbar-control'
-import {
-	getAllBlocks, getDesigns,
-} from '~stackable/design-library'
+import { getAllBlocks } from '../../design-library/index'
+import { getDesigns } from '~stackable/design-library'
 import { isPro, i18n } from 'stackable'
 import classnames from 'classnames'
 

@@ -1,10 +1,10 @@
 import domReady from '@wordpress/dom-ready'
 import apiFetch from '@wordpress/api-fetch'
+import { doAction, applyFilters } from '@wordpress/hooks'
 
 const LATEST_API_VERSION = 'v3'
 
 let designLibrary = null
-let blockDesigns = {}
 let designs = []
 
 export const getBlockName = block => block.replace( /^[\w-]+\//, '' )
@@ -19,25 +19,12 @@ export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => 
 
 		// Reset all designs that we already have cached.
 		if ( forceReset ) {
-			blockDesigns = {}
+			doAction( 'stackable.design-library.reset-cache' )
 			designs = []
 		}
 	}
 
 	return designLibrary[ version || LATEST_API_VERSION ]
-}
-
-// TODO: Move to v2
-export const fetchBlockDesigns = async ( block, version = '' ) => { // Always v2
-	const blockName = getBlockName( block )
-	if ( ! blockDesigns[ blockName ] ) {
-		const results = await apiFetch( {
-			path: `/wp/v2/stk_block_designs/${ blockName }`,
-			method: 'GET',
-		} )
-		blockDesigns[ blockName ] = await results
-	}
-	return blockDesigns[ blockName ]
 }
 
 export const fetchDesign = async ( designId, version = '' ) => {
@@ -128,44 +115,22 @@ export const getDesigns = async ( {
  * @param {string} designId The name of the design
  * @param {string} version The version of the design library API to use.
  *
- * @return
+ * @return {Object} The design object.
  */
 export const getDesign = async ( designId, version = '' ) => {
 	const library = await fetchDesignLibrary( false, version )
 
 	const meta = library[ designId ]
-	const {
-		type, block, template,
-	} = meta
 
-	// We have a unified list of all designs per block, look there first to save of fetch time.
-	if ( type === 'block' && block ) {
-		const blockDesigns = await fetchBlockDesigns( block, version )
-		return blockDesigns[ designId ]
-
-	// Every design has their own template file which contains the entire design, get that.
-	} else if ( template ) {
-		return await fetchDesign( designId )
+	let design = await applyFilters( 'stackable.design-library.get-design', null, designId, meta, version )
+	if ( design ) {
+		return design
 	}
 
-	return null
-}
+	// Every design has their own template file which contains the entire design, get that.
+	if ( meta.template ) {
+		design = await fetchDesign( designId )
+	}
 
-/**
- * Gets the list of blocks available in the design library.
- *
- * @param {string} version The version of the design library API to use.
- *
- * @return {Array} An array of block names.
- */
-export const getAllBlocks = async ( version = '' ) => {
-	const library = Object.values( await fetchDesignLibrary( false, version ) )
-
-	return library.reduce( ( blocks, design ) => {
-		const { block, type } = design
-		if ( ! blocks.includes( block ) && type === 'block' ) {
-			blocks.push( block )
-		}
-		return blocks
-	}, [] )
+	return design
 }
