@@ -1,13 +1,15 @@
 /**
  * Internal dependencies
  */
-import AdvancedToolbarControl from '../advanced-toolbar-control'
+import ModalDesignLibrary from '../modal-design-library'
 
 /**
  * External dependencies
  */
 import {
-	DesignLibraryList, ModalDesignLibrary, Button,
+	AdvancedToolbarControl,
+	DesignLibraryList,
+	Button,
 } from '~stackable/components'
 import { getDesigns } from '~stackable/design-library'
 import { isPro, i18n } from 'stackable'
@@ -25,6 +27,7 @@ const DesignLibraryControl = props => {
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ plan, setPlan ] = useState( '' )
+	const apiVersion = 'v2'
 
 	useEffect( () => {
 		let isMounted = true
@@ -32,6 +35,7 @@ const DesignLibraryControl = props => {
 			type: 'block',
 			block: props.block,
 			search,
+			apiVersion,
 		} ).then( designs => {
 			if ( isMounted ) {
 				setDesigns( designs )
@@ -56,7 +60,7 @@ const DesignLibraryControl = props => {
 				onClick={ () => setIsLibraryOpen( true ) }
 			>{ __( 'Open Design Library', i18n ) }</Button>
 			<TextControl
-				placeholder={ __( 'E.g. light, dark, red, minimalist...', i18n ) }
+				placeholder={ __( 'E.g. light, dark, red, minimalist…', i18n ) }
 				value={ search }
 				onChange={ search => setSearch( search ) }
 			/>
@@ -84,6 +88,7 @@ const DesignLibraryControl = props => {
 				designs={ designs.filter( ( { plan: designPlan } ) => plan ? designPlan === plan : true ) }
 				isBusy={ isBusy }
 				onSelect={ props.onSelect }
+				apiVersion={ apiVersion }
 			/>
 			{ isLibraryOpen &&
 				<ModalDesignLibrary
