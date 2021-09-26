@@ -21,7 +21,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 * The current version of the API we're using.
 		 * @var String
 		 */
-		public const API_VERSION = 'v3';
+		const API_VERSION = 'v3';
 
 		/**
 		 * Constructor
