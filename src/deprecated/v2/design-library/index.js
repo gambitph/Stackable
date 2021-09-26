@@ -7,7 +7,9 @@ import { fetchDesignLibrary } from '../../../design-library'
 /**
  * WordPress dependencies
  */
-import { addFilter, addAction } from '@wordpress/hooks'
+import {
+	addFilter, addAction, applyFilters,
+} from '@wordpress/hooks'
 import apiFetch from '@wordpress/api-fetch'
 
 // Add v2 in the design library modal. This enables the design library switch.
@@ -75,3 +77,14 @@ export const getAllBlocks = async ( version = '' ) => {
 		return blocks
 	}, [] )
 }
+
+// V2 designs are segregated by blocks, allow searching for blocks.
+applyFilters( 'stackable.design-library.search-properties', 'stackable/v2', ( properties, version ) => {
+	if ( version === 'v2' ) {
+		return [
+			...properties,
+			'block',
+		].filter( property => property !== 'uikit' )
+	}
+	return properties
+} )

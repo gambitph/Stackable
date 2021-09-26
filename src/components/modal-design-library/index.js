@@ -11,7 +11,7 @@ import { useMemo } from '@wordpress/element'
 import { useLocalStorage } from '~stackable/util'
 
 export const Switcher = props => {
-	const [ apiVersion, setApiVersion ] = useLocalStorage( '' )
+	const [ apiVersion, setApiVersion ] = useLocalStorage( 'stk__design_library_api_version', '' )
 
 	const versions = useMemo( () => {
 		return applyFilters( 'stackable.design-library.versions', [ '' ] ) // Blank means the latest version.

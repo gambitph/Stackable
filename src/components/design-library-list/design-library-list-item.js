@@ -15,7 +15,7 @@ import { __ } from '@wordpress/i18n'
 
 const DesignLibraryListItem = props => {
 	const {
-		designId, image, label, onClick, plan, isPro,
+		designId, image, label, onClick, plan, isPro, apiVersion,
 	} = props
 
 	const [ isBusy, setIsBusy ] = useState( false )
@@ -44,7 +44,7 @@ const DesignLibraryListItem = props => {
 						return
 					}
 					setIsBusy( true )
-					getDesign( designId, 'v2' ).then( designData => {
+					getDesign( designId, apiVersion ).then( designData => {
 						setIsBusy( false )
 						onClick( designData )
 					} )
@@ -80,6 +80,7 @@ DesignLibraryListItem.defaultProps = {
 	plan: 'free',
 	isPro,
 	premiumLabel: __( 'Go Premium', i18n ),
+	apiVersion: '',
 	// isFavorite: false,
 }
 

@@ -1,4 +1,3 @@
-import domReady from '@wordpress/dom-ready'
 import apiFetch from '@wordpress/api-fetch'
 import { doAction, applyFilters } from '@wordpress/hooks'
 
@@ -49,11 +48,6 @@ export const setDevModeDesignLibrary = async ( devMode = false ) => {
 	return await results
 }
 
-domReady( () => {
-	// Save the option to not show the video again.
-	// fetchDesignLibrary()
-} )
-
 export const getDesigns = async ( {
 	type: isType = '',
 	block: isBlock = '',
@@ -61,6 +55,7 @@ export const getDesigns = async ( {
 	plan: isPlan = '',
 	colors: hasColors = [],
 	categories: hasCategories = [],
+	uikit: isUiKit = '',
 	search = '',
 	reset = false,
 	apiVersion = '',
@@ -92,6 +87,10 @@ export const getDesigns = async ( {
 		library = library.filter( ( { categories } ) => categories.some( category => hasCategories.includes( category ) ) )
 	}
 
+	if ( isUiKit ) {
+		library = library.filter( ( { uikit } ) => uikit === isUiKit )
+	}
+
 	if ( search ) {
 		const terms = search.toLowerCase().replace( /\s+/, ' ' ).trim().split( ' ' )
 
@@ -99,7 +98,10 @@ export const getDesigns = async ( {
 		terms.forEach( searchTerm => {
 			library = library.filter( design => {
 				// Our search term needs to match at least one of these properties.
-				return [ 'label', 'plan', 'block', 'tags', 'categories', 'colors' ].some( designProp => {
+				const propertiesToSearch = applyFilters( 'stackable.design-library.search-properties',
+					[ 'label', 'plan', 'tags', 'categories', 'colors' ], apiVersion )
+
+				return propertiesToSearch.some( designProp => {
 					// Search whether the term matched.
 					return design[ designProp ].toString().toLowerCase().indexOf( searchTerm ) !== -1
 				} )
@@ -123,13 +125,10 @@ export const getDesign = async ( designId, version = '' ) => {
 	const meta = library[ designId ]
 
 	let design = await applyFilters( 'stackable.design-library.get-design', null, designId, meta, version )
-	if ( design ) {
-		return design
-	}
 
 	// Every design has their own template file which contains the entire design, get that.
-	if ( meta.template ) {
-		design = await fetchDesign( designId )
+	if ( ! design && meta.template ) {
+		design = await fetchDesign( designId, version )
 	}
 
 	return design

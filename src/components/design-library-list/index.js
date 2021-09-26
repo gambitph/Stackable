@@ -17,7 +17,7 @@ import { __ } from '@wordpress/i18n'
 
 const DesignLibraryList = props => {
 	const {
-		designs, isBusy, onSelect,
+		designs, isBusy, onSelect, apiVersion,
 	} = props
 
 	const listClasses = classnames( [
@@ -38,6 +38,7 @@ const DesignLibraryList = props => {
 					designId={ design.id }
 					image={ design.image }
 					label={ design.label }
+					apiVersion={ apiVersion }
 					onClick={ designData => {
 						onSelect( designData )
 					} }
@@ -58,6 +59,7 @@ DesignLibraryList.defaultProps = {
 	columns: 1,
 	onSelect: () => {},
 	isBusy: false,
+	apiVersion: '',
 }
 
 export default DesignLibraryList

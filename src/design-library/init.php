@@ -18,6 +18,12 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 	class Stackable_Design_Library {
 
 		/**
+		 * The current version of the API we're using.
+		 * @var String
+		 */
+		public const API_VERSION = 'v3';
+
+		/**
 		 * Constructor
 		 */
 		public function __construct() {
@@ -49,7 +55,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				),
 			) );
 
-			register_rest_route( 'wp/v2', '/stk_design/(?P<version>[\w\d-]+)/(?P<design>[\w\d-]+)', array(
+			register_rest_route( 'wp/v2', '/stk_design/(?P<version>[\w\d-]*)/(?P<design>[\w\d-]+)', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_design' ),
 				'permission_callback' => function () {
@@ -111,7 +117,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 				// We add the latest designs in the `v3` area.
 				$designs = array(
-					'v3' => json_decode( $content, true ),
+					self::API_VERSION => json_decode( $content, true ),
 				);
 
 				// Allow deprecated code to fetch other designs
@@ -145,7 +151,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 				// Get the template Url.
 				$designs = $this->_get_design_library();
-				$template_url = $designs[ $design_id ]['template'];
+				$template_url = $designs[ self::API_VERSION ][ $design_id ]['template'];
 
 				$response = wp_remote_get( $template_url );
 				$content = wp_remote_retrieve_body( $response );

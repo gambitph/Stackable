@@ -225,6 +225,7 @@ const ModalDesignLibrary = props => {
 						onSelect={ props.onSelect }
 						isBusy={ isBusy }
 						designs={ designSorted }
+						apiVersion={ apiVersion }
 					/>
 				</div>
 			</div>

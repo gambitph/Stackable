@@ -27,6 +27,7 @@ const DesignLibraryControl = props => {
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ plan, setPlan ] = useState( '' )
+	const apiVersion = 'v2'
 
 	useEffect( () => {
 		let isMounted = true
@@ -34,7 +35,7 @@ const DesignLibraryControl = props => {
 			type: 'block',
 			block: props.block,
 			search,
-			apiVersion: 'v2',
+			apiVersion,
 		} ).then( designs => {
 			if ( isMounted ) {
 				setDesigns( designs )
@@ -87,6 +88,7 @@ const DesignLibraryControl = props => {
 				designs={ designs.filter( ( { plan: designPlan } ) => plan ? designPlan === plan : true ) }
 				isBusy={ isBusy }
 				onSelect={ props.onSelect }
+				apiVersion={ apiVersion }
 			/>
 			{ isLibraryOpen &&
 				<ModalDesignLibrary

@@ -4,8 +4,7 @@
 import SVGViewSingle from './images/view-single.svg'
 import SVGViewMany from './images/view-many.svg'
 import SVGViewFew from './images/view-few.svg'
-// import BlockList from './block-list'
-// import ColorList from './color-list'
+import BlockList from './block-list'
 import Button from '../button'
 import AdvancedToolbarControl from '../advanced-toolbar-control'
 
@@ -14,11 +13,8 @@ import AdvancedToolbarControl from '../advanced-toolbar-control'
  */
 import DesignLibraryList from '~stackable/components/design-library-list'
 import { getDesigns, setDevModeDesignLibrary } from '~stackable/design-library'
-import {
-	i18n, isPro, devMode,
-} from 'stackable'
+import { i18n, devMode } from 'stackable'
 import { useLocalStorage } from '~stackable/util'
-import { last } from 'lodash'
 
 /**
  * WordPress deprendencies
@@ -27,26 +23,22 @@ import {
 	Modal, TextControl, ToggleControl,
 } from '@wordpress/components'
 import {
-	useEffect, useState, useMemo,
+	useEffect, useState,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 export const ModalDesignLibrary = props => {
 	const [ search, setSearch ] = useState( props.search )
-	// const [ searchParams, setSearchParams ] = useState( {} )
-	const [ block, setBlock ] = useState()
-	const [ plan, setPlan ] = useState( '' )
-	const [ categories, setCategories ] = useState( [] )
 	const [ columns, setColumns ] = useState( 3 )
-	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ doReset, setDoReset ] = useState( false )
-	const [ viewBy, setViewBy ] = useState( props.selectedBlock ? 'block-designs' : 'ui-kits' )
+	const [ selectedId, setSelectedId ] = useState( '' )
+	const [ selectedType, setSelectedType ] = useState( '' )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
-	const [ firstSelectedCategory, setFirstSelectedCategory ] = useState( '' )
-	const [ apiVersion, setApiVersion ] = useState( '' )
-
-	useEffect( () => setBlock( props.selectedBlock ), [ props.selectedBlock ] )
+	// The sidebar designs are used to update the list of blocks in the sidebar.
+	const [ sidebarDesigns, setSidebarDesigns ] = useState( [] )
+	// The display designs are used to list the available designs the user can choose.
+	const [ displayDesigns, setDisplayDesigns ] = useState( [] )
 
 	const [ searchDebounced, setSearchDebounced ] = useState( search )
 	const [ debounceTimeout, setDebounceTimeout ] = useState( null )
@@ -70,55 +62,37 @@ export const ModalDesignLibrary = props => {
 		}
 	}, [] )
 
+	// Update the designs on the sidebar. (this will trigger the display designs update next)
 	useEffect( () => {
 		if ( doReset ) {
-			setDesigns( [] )
-			setIsBusy( true )
+			setSidebarDesigns( [] )
+			setDisplayDesigns( [] )
 		}
 		getDesigns( {
-			type: 'block',
-			block,
-			plan,
-			categories,
 			search: searchDebounced,
 			reset: doReset,
-			apiVersion,
+			apiVersion: props.apiVersion,
 		} ).then( designs => {
-			setDesigns( designs )
-
-			// Get the first category that can be selected by default when viewing UI Kits.
-			if ( ! firstSelectedCategory ) {
-				designs.some( design => {
-					// When free, select the first free category.
-					if ( ! isPro && design.plan === 'free' ) {
-						setFirstSelectedCategory( last( design.categories ) )
-						return true
-					// If pro, select the first available.
-					} else if ( isPro ) {
-						setFirstSelectedCategory( last( design.categories ) )
-						return true
-					}
-					return false
-				} )
-			}
-			// console.log( designs )
+			setSidebarDesigns( designs )
 		} ).finally( () => {
-			setIsBusy( false )
 			setDoReset( false )
 		} )
-	}, [ block, plan, categories, searchDebounced, doReset ] )
+	}, [ searchDebounced, doReset, props.apiVersion ] )
 
-	// Filter the designs
-	const designSorted = useMemo( () => {
-		let designSorted = ! props.selectedBlock ? designs : designs.filter( design => design.block === props.selectedBlock )
-		// If we're vieiwng the default list of UI Kits, show only the first free one.
-		if ( viewBy === 'ui-kits' && categories.length === 0 ) {
-			designSorted = designSorted.filter( design => {
-				return design.categories.includes( firstSelectedCategory )
-			} )
-		}
-		return designSorted
-	}, [ props.selectedBlock, designs, viewBy, categories.length, firstSelectedCategory ] )
+	// This updates the displayed designs the user can pick.
+	useEffect( () => {
+		setIsBusy( true )
+		getDesigns( {
+			apiVersion: props.apiVersion,
+			search: searchDebounced,
+			uikit: selectedType === 'uikit' ? selectedId : '',
+			categories: selectedType === 'category' && selectedId !== 'all' ? [ selectedId ] : [],
+		} ).then( designs => {
+			setDisplayDesigns( designs )
+		} ).finally( () => {
+			setIsBusy( false )
+		} )
+	}, [ selectedId, selectedType, doReset, searchDebounced ] )
 
 	return (
 		<Modal
@@ -161,21 +135,16 @@ export const ModalDesignLibrary = props => {
 						type="search"
 					/>
 					<div className="ugb-modal-design-library__filters">
-						{ /* <BlockList
-							apiVersion={ apiVersion }
-							search={ search }
-							categories={ categories }
-							forceBlock={ props.selectedBlock }
-							viewBy={ viewBy }
+						<BlockList
+							apiVersion={ props.apiVersion }
+							designs={ sidebarDesigns }
 							onSelect={ ( {
-								block, plan, categories,
+								id, type,
 							} ) => {
-								setBlock( block )
-								setPlan( plan )
-								setCategories( categories )
+								setSelectedId( id )
+								setSelectedType( type )
 							} }
-							onChangeViewBy={ setViewBy }
-						/> */ }
+						/>
 					</div>
 				</aside>
 
@@ -226,7 +195,8 @@ export const ModalDesignLibrary = props => {
 						columns={ columns }
 						onSelect={ props.onSelect }
 						isBusy={ isBusy }
-						designs={ designSorted }
+						designs={ displayDesigns }
+						apiVersion={ props.apiVersion }
 					/>
 				</div>
 			</div>
@@ -236,7 +206,6 @@ export const ModalDesignLibrary = props => {
 
 ModalDesignLibrary.defaultProps = {
 	search: '',
-	selectedBlock: '',
 	onClose: () => {},
 	onSelect: () => {},
 
