@@ -5,7 +5,6 @@ import SVGViewSingle from './images/view-single.svg'
 import SVGViewMany from './images/view-many.svg'
 import SVGViewFew from './images/view-few.svg'
 import BlockList from './block-list'
-// import ColorList from './color-list'
 import Button from '../../../../components/button'
 import AdvancedToolbarControl from '../../../../components/advanced-toolbar-control'
 
@@ -33,7 +32,6 @@ import { __ } from '@wordpress/i18n'
 
 const ModalDesignLibrary = props => {
 	const [ search, setSearch ] = useState( props.search )
-	// const [ searchParams, setSearchParams ] = useState( {} )
 	const [ block, setBlock ] = useState()
 	const [ plan, setPlan ] = useState( '' )
 	const [ categories, setCategories ] = useState( [] )
@@ -101,7 +99,6 @@ const ModalDesignLibrary = props => {
 					return false
 				} )
 			}
-			// console.log( designs )
 		} ).finally( () => {
 			setIsBusy( false )
 			setDoReset( false )
