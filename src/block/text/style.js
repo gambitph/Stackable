@@ -42,13 +42,6 @@ const getStyleParams = () => {
 			responsive: 'all',
 			format: '%spx',
 		},
-		{
-			selector: '',
-			styleRule: 'color',
-			attrName: 'backgroundColor',
-			attrNameTemplate: 'block%s',
-			hover: 'all',
-		},
 	]
 }
 
