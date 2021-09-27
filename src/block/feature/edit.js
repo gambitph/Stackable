@@ -1,13 +1,12 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
+import variations from './variations'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
@@ -32,18 +31,7 @@ import { useBlockHoverClass } from '~stackable/hooks'
  */
 import { __ } from '@wordpress/i18n'
 
-const TEMPLATE = [
-	[ 'stackable/column', {}, [
-		[ 'stackable/heading', { text: __( 'Feature' ) } ],
-		[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
-		[ 'stackable/button-group', {}, [
-			[ 'stackable/button', { text: __( 'Button' ) } ],
-		] ],
-	] ],
-	[ 'stackable/column', { templateLock: 'insert' }, [
-		[ 'stackable/image', {} ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const TABS = [ 'block', 'advanced' ]
 
@@ -52,7 +40,7 @@ const Edit = props => {
 		className,
 	} = props
 
-	const rowClass = getRowClasses( props.attributes )
+	const rowClass = props.attributes.alignVertical ? undefined : getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
@@ -75,7 +63,6 @@ const Edit = props => {
 
 	return (
 		<>
-
 			<InspectorTabs tabs={ TABS } />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
@@ -89,17 +76,15 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<Separator>
 					<div className={ contentClassNames }>
 						<ColumnInnerBlocks
 							providerValue={ columnProviderValue }
 							template={ TEMPLATE }
 							templateLock="insert"
-							orientation="horizontal"
 						/>
 					</div>
 				</Separator>

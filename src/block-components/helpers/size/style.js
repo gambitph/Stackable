@@ -15,6 +15,7 @@ const getStyleParams = ( options = {} ) => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'justifyContent',
 		verticalAlignRule = 'alignItems',
+		enableMargin = true,
 	} = options
 
 	return [
@@ -25,13 +26,6 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hasUnits: 'px',
-		},
-		{
-			selector,
-			styleRule: horizontalAlignRule || 'justifyContent',
-			attrName: 'horizontalAlign',
-			attrNameTemplate,
-			responsive: 'all',
 		},
 		{
 			selector,
@@ -100,54 +94,97 @@ const getStyleParams = ( options = {} ) => {
 			hasUnits: 'px',
 			valuePreCallback: value => value?.left,
 		},
-		{
+		...( enableMargin ? [
+			{
+				selector,
+				styleRule: 'marginTop',
+				attrName: 'margin',
+				attrNameTemplate,
+				responsive: 'all',
+				hasUnits: 'px',
+				valuePreCallback: value => value?.top,
+				valueCallback: value => {
+					return value.startsWith( 'auto' ) ? 'auto' : value
+				},
+			},
+			{
+				selector,
+				styleRule: 'marginRight',
+				attrName: 'margin',
+				attrNameTemplate,
+				responsive: 'all',
+				hasUnits: 'px',
+				valuePreCallback: value => value?.right,
+				valueCallback: value => {
+					return value.startsWith( 'auto' ) ? 'auto' : value
+				},
+			},
+			{
+				selector,
+				styleRule: 'marginBottom',
+				attrName: 'margin',
+				attrNameTemplate,
+				responsive: 'all',
+				hasUnits: 'px',
+				valuePreCallback: value => value?.bottom,
+				valueCallback: value => {
+					return value.startsWith( 'auto' ) ? 'auto' : value
+				},
+			},
+			{
+				selector,
+				styleRule: 'marginLeft',
+				attrName: 'margin',
+				attrNameTemplate,
+				responsive: 'all',
+				hasUnits: 'px',
+				valuePreCallback: value => value?.left,
+				valueCallback: value => {
+					return value.startsWith( 'auto' ) ? 'auto' : value
+				},
+			},
+		] : [] ),
+		...( ( horizontalAlignRule === 'margin' && ! enableMargin ) ? [
+			{
+				selector,
+				styleRule: 'marginLeft',
+				attrName: 'horizontalAlign',
+				attrNameTemplate,
+				responsive: 'all',
+				valueCallback: value => {
+					switch ( value ) {
+						case 'flex-start': return undefined
+						case 'center':
+						case 'flex-end':
+							return 'auto'
+						default: return value
+					}
+				},
+			},
+			{
+				selector,
+				styleRule: 'marginRight',
+				attrName: 'horizontalAlign',
+				attrNameTemplate,
+				responsive: 'all',
+				valueCallback: value => {
+					switch ( value ) {
+						case 'flex-start':
+						case 'center':
+							return 'auto'
+						case 'flex-end':
+							return undefined
+						default: return value
+					}
+				},
+			},
+		] : [ {
 			selector,
-			styleRule: 'marginTop',
-			attrName: 'margin',
+			styleRule: horizontalAlignRule || 'justifyContent',
+			attrName: 'horizontalAlign',
 			attrNameTemplate,
 			responsive: 'all',
-			hasUnits: 'px',
-			valuePreCallback: value => value?.top,
-			valueCallback: value => {
-				return value.startsWith( 'auto' ) ? 'auto' : value
-			},
-		},
-		{
-			selector,
-			styleRule: 'marginRight',
-			attrName: 'margin',
-			attrNameTemplate,
-			responsive: 'all',
-			hasUnits: 'px',
-			valuePreCallback: value => value?.right,
-			valueCallback: value => {
-				return value.startsWith( 'auto' ) ? 'auto' : value
-			},
-		},
-		{
-			selector,
-			styleRule: 'marginBottom',
-			attrName: 'margin',
-			attrNameTemplate,
-			responsive: 'all',
-			hasUnits: 'px',
-			valuePreCallback: value => value?.bottom,
-			valueCallback: value => {
-				return value.startsWith( 'auto' ) ? 'auto' : value
-			},
-		},
-		{
-			selector,
-			styleRule: 'marginLeft',
-			attrName: 'margin',
-			attrNameTemplate,
-			responsive: 'all',
-			hasUnits: 'px',
-			valuePreCallback: value => value?.left,
-			valueCallback: value => {
-				return value.startsWith( 'auto' ) ? 'auto' : value
-			},
-		},
+		} ] ),
 	]
 }
 

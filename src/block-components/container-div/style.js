@@ -12,7 +12,8 @@ export const Style = props => {
 		borderSelector = '.%s-container',
 		sizeSelector = '.%s-container',
 		sizeVerticalAlignRule = null,
-		sizeHorizontalAlignRule = null,
+		sizeHorizontalAlignRule = 'margin',
+		enableMargin = false,
 	} = props.options
 
 	return (
@@ -41,6 +42,7 @@ export const Style = props => {
 					selector: sizeSelector,
 					verticalAlignRule: sizeVerticalAlignRule,
 					horizontalAlignRule: sizeHorizontalAlignRule,
+					enableMargin,
 				} }
 			/>
 		</Fragment>
@@ -57,7 +59,8 @@ Style.Content = props => {
 		borderSelector = '.%s-container',
 		sizeSelector = '.%s-container',
 		sizeVerticalAlignRule = null,
-		sizeHorizontalAlignRule = null,
+		sizeHorizontalAlignRule = 'margin',
+		enableMargin = false,
 	} = props.options
 
 	return (
@@ -86,6 +89,7 @@ Style.Content = props => {
 					selector: sizeSelector,
 					verticalAlignRule: sizeVerticalAlignRule,
 					horizontalAlignRule: sizeHorizontalAlignRule,
+					enableMargin,
 				} }
 			/>
 		</Fragment>
