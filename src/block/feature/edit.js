@@ -2,10 +2,12 @@
  * Internal dependencies
  */
 import variations from './variations'
+import BlockStyles from './style'
 
 /**
  * External dependencies
  */
+import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
@@ -76,6 +78,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

@@ -153,7 +153,7 @@ const getStyleParams = ( options = {} ) => {
 				responsive: 'all',
 				valueCallback: value => {
 					switch ( value ) {
-						case 'flex-start': return undefined
+						case 'flex-start': return 0
 						case 'center':
 						case 'flex-end':
 							return 'auto'
@@ -173,7 +173,7 @@ const getStyleParams = ( options = {} ) => {
 						case 'center':
 							return 'auto'
 						case 'flex-end':
-							return undefined
+							return 0
 						default: return value
 					}
 				},
