@@ -634,7 +634,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -803,6 +804,17 @@
       "600italic",
       "700",
       "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Are You Serious",
+    "variants": [
+      "regular"
     ],
     "subsets": [
       "latin",
@@ -1605,11 +1617,15 @@
   {
     "family": "Battambang",
     "variants": [
+      "100",
+      "300",
       "regular",
-      "700"
+      "700",
+      "900"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -1627,7 +1643,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -1647,6 +1664,34 @@
       "700italic",
       "800",
       "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Be Vietnam Pro",
+    "variants": [
+      "100",
+      "100italic",
+      "200",
+      "200italic",
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic",
+      "800",
+      "800italic",
+      "900",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -1815,6 +1860,7 @@
     "family": "Big Shoulders Display",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
@@ -1833,6 +1879,7 @@
     "family": "Big Shoulders Inline Display",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
@@ -1851,6 +1898,7 @@
     "family": "Big Shoulders Inline Text",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
@@ -1869,6 +1917,7 @@
     "family": "Big Shoulders Stencil Display",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
@@ -1887,6 +1936,7 @@
     "family": "Big Shoulders Stencil Text",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
@@ -1905,6 +1955,7 @@
     "family": "Big Shoulders Text",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
@@ -1985,6 +2036,29 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Birthstone",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Birthstone Bounce",
+    "variants": [
+      "regular",
+      "500"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -2108,7 +2182,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -2135,6 +2210,17 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Bonheur Royale",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -2504,6 +2590,28 @@
     ]
   },
   {
+    "family": "Caramel",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Carattere",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Cardo",
     "variants": [
       "regular",
@@ -2778,6 +2886,17 @@
     ],
     "subsets": [
       "khmer"
+    ]
+  },
+  {
+    "family": "Cherish",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -3484,7 +3603,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -3876,7 +3996,8 @@
     "subsets": [
       "arabic",
       "cyrillic",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -4077,6 +4198,17 @@
     ]
   },
   {
+    "family": "Ephesis",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Epilogue",
     "variants": [
       "100",
@@ -4219,6 +4351,18 @@
     ]
   },
   {
+    "family": "Explora",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cherokee",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Fahkwang",
     "variants": [
       "200",
@@ -4309,7 +4453,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -4568,6 +4713,17 @@
     ]
   },
   {
+    "family": "Fleur De Leah",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Fondamento",
     "variants": [
       "regular",
@@ -4688,7 +4844,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -4864,6 +5021,23 @@
     ]
   },
   {
+    "family": "Gemunu Libre",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "sinhala"
+    ]
+  },
+  {
     "family": "Gentium Basic",
     "variants": [
       "regular",
@@ -4955,6 +5129,17 @@
     ]
   },
   {
+    "family": "Gideon Roman",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Gidugu",
     "variants": [
       "regular"
@@ -5043,6 +5228,25 @@
       "600italic",
       "700italic",
       "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Gluten",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
@@ -5222,6 +5426,17 @@
     ]
   },
   {
+    "family": "Grechen Fuemen",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Grenze",
     "variants": [
       "100",
@@ -5261,6 +5476,17 @@
       "700",
       "800",
       "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Grey Qo",
+    "variants": [
+      "regular"
     ],
     "subsets": [
       "latin",
@@ -5430,11 +5656,15 @@
   {
     "family": "Hanuman",
     "variants": [
+      "100",
+      "300",
       "regular",
-      "700"
+      "700",
+      "900"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -6910,6 +7140,20 @@
     ]
   },
   {
+    "family": "Koh Santepheap",
+    "variants": [
+      "100",
+      "300",
+      "regular",
+      "700",
+      "900"
+    ],
+    "subsets": [
+      "khmer",
+      "latin"
+    ]
+  },
+  {
     "family": "Kosugi",
     "variants": [
       "regular"
@@ -6947,7 +7191,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -8060,14 +8305,18 @@
   {
     "family": "Manuale",
     "variants": [
+      "300",
       "regular",
       "500",
       "600",
       "700",
+      "800",
+      "300italic",
       "italic",
       "500italic",
       "600italic",
-      "700italic"
+      "700italic",
+      "800italic"
     ],
     "subsets": [
       "latin",
@@ -8368,7 +8617,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -8710,7 +8960,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -8719,7 +8970,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -11499,6 +11751,8 @@
       "900italic"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -11519,7 +11773,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -11594,14 +11849,16 @@
     "family": "Open Sans",
     "variants": [
       "300",
-      "300italic",
       "regular",
-      "italic",
+      "500",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
       "800italic"
     ],
     "subsets": [
@@ -11609,6 +11866,7 @@
       "cyrillic-ext",
       "greek",
       "greek-ext",
+      "hebrew",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -12506,7 +12764,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -13003,13 +13262,19 @@
   {
     "family": "Red Hat Display",
     "variants": [
+      "300",
       "regular",
-      "italic",
       "500",
-      "500italic",
+      "600",
       "700",
-      "700italic",
+      "800",
       "900",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -13020,11 +13285,15 @@
   {
     "family": "Red Hat Text",
     "variants": [
+      "300",
       "regular",
-      "italic",
       "500",
-      "500italic",
+      "600",
       "700",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -13408,6 +13677,19 @@
     ]
   },
   {
+    "family": "Rubik Beastly",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Rubik Mono One",
     "variants": [
       "regular"
@@ -13453,7 +13735,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -13853,6 +14136,18 @@
     "subsets": [
       "arabic",
       "latin"
+    ]
+  },
+  {
+    "family": "Scheherazade New",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -14645,6 +14940,23 @@
     ]
   },
   {
+    "family": "Stick No Bills",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "sinhala"
+    ]
+  },
+  {
     "family": "Stint Ultra Condensed",
     "variants": [
       "regular"
@@ -14814,10 +15126,15 @@
   {
     "family": "Suwannaphum",
     "variants": [
-      "regular"
+      "100",
+      "300",
+      "regular",
+      "700",
+      "900"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -14905,7 +15222,8 @@
       "regular"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -15835,6 +16153,22 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Yaldevi",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "sinhala"
     ]
   },
   {

@@ -31,6 +31,7 @@ export const Save = props => {
 		propsToPass.className,
 		'stk-block-spacer',
 		responsiveClass,
+		'stk--no-padding',
 	] )
 
 	return (
