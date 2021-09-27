@@ -18,9 +18,9 @@ const variations = applyFilters(
 	'stackable.call-to-action.variations',
 	[
 		{
-			name: 'default',
-			title: __( 'Default', i18n ),
-			description: __( 'Default Layout', i18n ),
+			name: 'basic',
+			title: __( 'Basic', i18n ),
+			description: __( 'Basic Layout', i18n ),
 			isDefault: true,
 			attributes: {
 				hasContainer: true,
