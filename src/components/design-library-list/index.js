@@ -17,7 +17,7 @@ import { __ } from '@wordpress/i18n'
 
 const DesignLibraryList = props => {
 	const {
-		designs, isBusy, onSelect,
+		designs, isBusy, onSelect, apiVersion,
 	} = props
 
 	const listClasses = classnames( [
@@ -38,6 +38,7 @@ const DesignLibraryList = props => {
 					designId={ design.id }
 					image={ design.image }
 					label={ design.label }
+					apiVersion={ apiVersion }
 					onClick={ designData => {
 						onSelect( designData )
 					} }
@@ -48,7 +49,7 @@ const DesignLibraryList = props => {
 		{ isBusy && <div className="ugb-design-library-search__spinner" data-testid="spinner"><Spinner /></div> }
 
 		{ ! isBusy && ! ( designs || [] ).length &&
-		<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
+			<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
 		}
 	</div>
 }
@@ -58,6 +59,7 @@ DesignLibraryList.defaultProps = {
 	columns: 1,
 	onSelect: () => {},
 	isBusy: false,
+	apiVersion: '',
 }
 
 export default DesignLibraryList
