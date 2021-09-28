@@ -33,6 +33,9 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 
 				// Add the optimization setting.
 				add_action( 'stackable_settings_page_mid', array( $this, 'add_optimization_settings' ) );
+
+				// Add the optimization setting for the wizard.
+				add_filter( 'stackable_localize_settings_script', array( $this, 'add_optimization_setting_in_script' ) );
 			}
 		}
 
@@ -115,6 +118,17 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 				<div class="s-optimization-settings"></div>
 			</article>
 			<?php
+		}
+
+		/**
+		 * Adds the optimization setting to the script for the migration/onboarding wizard
+		 *
+		 * @param Array $args
+		 * @return Array
+		 */
+		public function add_optimization_setting_in_script( $args ) {
+			$args['v2optimizationScriptLoad'] = get_option( 'stackable_optimize_script_load' );
+			return $args;
 		}
 	}
 

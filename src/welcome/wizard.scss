@@ -1,0 +1,61 @@
+.wrap.s-wrapper--no-menu {
+	.s-header {
+		padding-bottom: 40px;
+	}
+}
+.s-wrap-onboarding-wizard .s-body-container {
+	max-width: 1024px;
+}
+.s-welcome-wizard__steps {
+	display: flex;
+	justify-content: space-between;
+	margin: 40px auto 0;
+	&.s-welcome-wizard__steps--small {
+		max-width: 350px;
+	}
+}
+.s-welcome-wizard__step {
+	color: #3ca540;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+	font-weight: bold;
+}
+.s-welcome-wizard__step-number {
+	background: #d1e4d1;
+	height: 32px;
+	width: 32px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100%;
+}
+.s-welcome-wizard__step-divider {
+	height: 2px;
+	background: #3ca540;
+	margin: auto 2%;
+	width: 100%;
+	min-width: 10px;
+}
+.s-welcome-wizard__step:not(.s-welcome-wizard__step--active) {
+	color: #bebebe;
+}
+.s-welcome-wizard__step-divider:not(.s-welcome-wizard__step--active),
+.s-welcome-wizard__step:not(.s-welcome-wizard__step--active) .s-welcome-wizard__step-number {
+	background: #e2e2e2;
+}
+.s-welcome-wizard__buttons {
+	text-align: end;
+	button {
+		margin-inline-start: 16px;
+		&.secondary {
+			color: #333;
+		}
+	}
+}
+.s-wrap-onboarding-wizard {
+	h3 {
+		margin-top: 40px;
+	}
+}

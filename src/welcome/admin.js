@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import './news'
+import './wizard'
 import SVGEssentialIcon from './images/settings-icon-essential.svg'
 import SVGSpecialIcon from './images/settings-icon-special.svg'
 import SVGSectionIcon from './images/settings-icon-section.svg'
@@ -542,30 +543,40 @@ AdditionalOptions.defaultProps = {
 
 // Load all the options into the UI.
 domReady( () => {
-	render(
-		<BlockToggler />,
-		document.querySelector( '.s-settings-wrapper' )
-	)
+	if ( document.querySelector( '.s-settings-wrapper' ) ) {
+		render(
+			<BlockToggler />,
+			document.querySelector( '.s-settings-wrapper' )
+		)
+	}
 
-	render(
-		<AdditionalOptions
-			showProNoticesOption={ showProNoticesOption }
-		/>,
-		document.querySelector( '.s-other-options-wrapper' )
-	)
+	if ( document.querySelector( '.s-other-options-wrapper' ) ) {
+		render(
+			<AdditionalOptions
+				showProNoticesOption={ showProNoticesOption }
+			/>,
+			document.querySelector( '.s-other-options-wrapper' )
+		)
+	}
 
-	render(
-		<EditorSettings />,
-		document.querySelector( '.s-editor-settings' )
-	)
+	if ( document.querySelector( '.s-editor-settings' ) ) {
+		render(
+			<EditorSettings />,
+			document.querySelector( '.s-editor-settings' )
+		)
+	}
 
-	render(
-		<DynamicBreakpointsSettings />,
-		document.querySelector( '.s-dynamic-breakpoints' )
-	)
+	if ( document.querySelector( '.s-dynamic-breakpoints' ) ) {
+		render(
+			<DynamicBreakpointsSettings />,
+			document.querySelector( '.s-dynamic-breakpoints' )
+		)
+	}
 
-	render(
-		<GlobalSettings />,
-		document.querySelector( '.s-global-settings' )
-	)
+	if ( document.querySelector( '.s-global-settings' ) ) {
+		render(
+			<GlobalSettings />,
+			document.querySelector( '.s-global-settings' )
+		)
+	}
 } )
