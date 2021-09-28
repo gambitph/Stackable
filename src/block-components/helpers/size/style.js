@@ -120,7 +120,7 @@ const getStyleParams = ( options = {} ) => {
 					case 'center':
 						return 'auto'
 					case 'flex-end':
-						return right
+						return right || 0
 					default: return right
 				}
 			},
@@ -151,7 +151,7 @@ const getStyleParams = ( options = {} ) => {
 				const left = value?.left
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
 				switch ( horizontalAlign ) {
-					case 'flex-start': return left
+					case 'flex-start': return left || 0
 					case 'center':
 					case 'flex-end':
 						return 'auto'

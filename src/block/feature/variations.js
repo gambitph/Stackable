@@ -43,12 +43,6 @@ const variations = [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -400,
-				},
-				blockMarginMobile: {
-					bottom: -200,
-				},
 			}, [
 				[ 'stackable/image', {
 					imageShape: 'blob1',
@@ -58,6 +52,12 @@ const variations = [
 				hasContainer: true,
 				containerWidth: 350,
 				zIndex: 2,
+				blockMargin: {
+					top: -400,
+				},
+				blockMarginMobile: {
+					top: -200,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -77,12 +77,6 @@ const variations = [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -300,
-				},
-				blockMarginMobile: {
-					bottom: -150,
-				},
 			}, [
 				[ 'stackable/image', {
 					imageShape: 'blob1',
@@ -92,6 +86,12 @@ const variations = [
 				hasContainer: true,
 				containerWidth: 400,
 				zIndex: 2,
+				blockMargin: {
+					top: -300,
+				},
+				blockMarginMobile: {
+					top: -150,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -111,12 +111,6 @@ const variations = [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -450,
-				},
-				blockMarginMobile: {
-					bottom: -225,
-				},
 			}, [
 				[ 'stackable/image', {
 					imageShape: 'blob1',
@@ -126,6 +120,12 @@ const variations = [
 				hasContainer: true,
 				containerWidth: 400,
 				zIndex: 2,
+				blockMargin: {
+					top: -450,
+				},
+				blockMarginMobile: {
+					top: -225,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -145,12 +145,6 @@ const variations = [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -400,
-				},
-				blockMarginMobile: {
-					bottom: -200,
-				},
 			}, [
 				[ 'stackable/image', {
 					imageShape: 'blob1',
@@ -161,6 +155,12 @@ const variations = [
 				containerWidth: 350,
 				containerHorizontalAlign: 'center',
 				zIndex: 2,
+				blockMargin: {
+					top: -400,
+				},
+				blockMarginMobile: {
+					top: -200,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -180,12 +180,6 @@ const variations = [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -450,
-				},
-				blockMarginMobile: {
-					bottom: -225,
-				},
 			}, [
 				[ 'stackable/image', {
 					imageShape: 'blob1',
@@ -196,6 +190,12 @@ const variations = [
 				containerWidth: 350,
 				containerHorizontalAlign: 'center',
 				zIndex: 2,
+				blockMargin: {
+					top: -450,
+				},
+				blockMarginMobile: {
+					top: -225,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -215,12 +215,6 @@ const variations = [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -450,
-				},
-				blockMarginMobile: {
-					bottom: -225,
-				},
 			}, [
 				[ 'stackable/image', {} ],
 			] ],
@@ -228,6 +222,12 @@ const variations = [
 				hasContainer: true,
 				containerWidth: 350,
 				zIndex: 2,
+				blockMargin: {
+					top: -450,
+				},
+				blockMarginMobile: {
+					top: -225,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -247,12 +247,6 @@ const variations = [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -300,
-				},
-				blockMarginMobile: {
-					bottom: -150,
-				},
 			}, [
 				[ 'stackable/image', {} ],
 			] ],
@@ -260,6 +254,12 @@ const variations = [
 				hasContainer: true,
 				containerWidth: 400,
 				zIndex: 2,
+				blockMargin: {
+					top: -300,
+				},
+				blockMarginMobile: {
+					top: -150,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -274,17 +274,13 @@ const variations = [
 		name: 'overlap-background-3',
 		title: __( 'Overlap Background 3', i18n ),
 		description: __( 'Overlap Background 3 Layout', i18n ),
-		attributes: { className: 'is-style-overlap-background-3', alignVertical: true },
+		attributes: {
+			className: 'is-style-overlap-background-3', alignVertical: true, blockMargin: { bottom: 200 }, blockMarginMobile: { bottom: 24 },
+		},
 		innerBlocks: [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -500,
-				},
-				blockMarginMobile: {
-					bottom: -250,
-				},
 			}, [
 				[ 'stackable/image', {} ],
 			] ],
@@ -292,6 +288,12 @@ const variations = [
 				hasContainer: true,
 				containerWidth: 400,
 				zIndex: 2,
+				blockMargin: {
+					top: -500,
+				},
+				blockMarginMobile: {
+					top: -250,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -306,17 +308,13 @@ const variations = [
 		name: 'overlap-background-4',
 		title: __( 'Overlap Background 4', i18n ),
 		description: __( 'Overlap Background 4 Layout', i18n ),
-		attributes: { className: 'is-style-overlap-background-4', alignVertical: true },
+		attributes: {
+			className: 'is-style-overlap-background-4', alignVertical: true, blockMargin: { bottom: 200 }, blockMarginMobile: { bottom: 24 },
+		},
 		innerBlocks: [
 			[ 'stackable/column', {
 				zIndex: 1,
 				templateLock: 'insert',
-				blockMargin: {
-					bottom: -450,
-				},
-				blockMarginMobile: {
-					bottom: -225,
-				},
 			}, [
 				[ 'stackable/image', {} ],
 			] ],
@@ -325,6 +323,12 @@ const variations = [
 				containerWidth: 350,
 				containerHorizontalAlign: 'center',
 				zIndex: 2,
+				blockMargin: {
+					top: -450,
+				},
+				blockMarginMobile: {
+					top: -225,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
@@ -339,31 +343,33 @@ const variations = [
 		name: 'overlap-background-5',
 		title: __( 'Overlap Background 5', i18n ),
 		description: __( 'Overlap Background 5 Layout', i18n ),
-		attributes: { className: 'is-style-overlap-background-5', alignVertical: true },
+		attributes: {
+			className: 'is-style-overlap-background-5', alignVertical: true, blockMargin: { bottom: 200 }, blockMarginMobile: { bottom: 24 },
+		},
 		innerBlocks: [
-			[ 'stackable/column', {
-				zIndex: 1,
-				templateLock: 'insert',
-				blockMargin: {
-					bottom: -500,
-				},
-				blockMarginMobile: {
-					bottom: -250,
-				},
-			}, [
-				[ 'stackable/image', {} ],
-			] ],
 			[ 'stackable/column', {
 				hasContainer: true,
 				containerWidth: 350,
 				containerHorizontalAlign: 'center',
 				zIndex: 2,
+				blockMargin: {
+					bottom: -300,
+				},
+				blockMarginMobile: {
+					bottom: -150,
+				},
 			}, [
 				[ 'stackable/heading', { text: __( 'Feature' ) } ],
 				[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
 				[ 'stackable/button-group', {}, [
 					[ 'stackable/button', { text: __( 'Button' ) } ],
 				] ],
+			] ],
+			[ 'stackable/column', {
+				zIndex: 1,
+				templateLock: 'insert',
+			}, [
+				[ 'stackable/image', {} ],
 			] ],
 		],
 		scope: [ 'block' ],

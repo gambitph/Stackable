@@ -37,7 +37,7 @@
 // Some themes add margins when alignwide and alignfull are used.
 .editor-styles-wrapper .stk-row {
 	> .stk-inner-blocks.wp-block[data-align] {
-		margin: 0 !important;
+		margin: 0 auto !important;
 	}
 }
 
