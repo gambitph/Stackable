@@ -158,7 +158,7 @@ const Controls = props => {
 					label={ __( 'Border Radius', i18n ) }
 					attribute="imageBorderRadius"
 					min="0"
-					sliderMax="30"
+					sliderMax="100"
 					placeholder="0"
 					defaultValue={ 0 }
 					allowReset={ true }
