@@ -136,6 +136,12 @@ if ( ! function_exists( 'stackable_block_assets_v2' ) ) {
 
 		// Frontend only scripts.
 		if ( ! is_admin() ) {
+			// Add global colors.
+			$inline_css = apply_filters( 'stackable_inline_styles', '' );
+			if ( ! empty( $inline_css ) ) {
+				wp_add_inline_style( 'ugb-style-css-v2', $inline_css );
+			}
+
 			wp_register_script(
 				'ugb-block-frontend-js-v2',
 				plugins_url( 'dist/deprecated/frontend_blocks_deprecated_v2.js', STACKABLE_FILE ),
