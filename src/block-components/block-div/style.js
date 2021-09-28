@@ -8,6 +8,7 @@ import {
 
 export const Style = props => {
 	const options = {
+		...props.options,
 		attrNameTemplate: 'block%s',
 	}
 
@@ -22,6 +23,7 @@ export const Style = props => {
 
 Style.Content = props => {
 	const options = {
+		...props.options,
 		attrNameTemplate: 'block%s',
 	}
 

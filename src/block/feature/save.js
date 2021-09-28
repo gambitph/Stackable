@@ -30,7 +30,7 @@ export const Save = props => {
 		attributes,
 	} = props
 
-	const rowClass = getRowClasses( props.attributes )
+	const rowClass = props.attributes.alignVertical ? undefined : getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )

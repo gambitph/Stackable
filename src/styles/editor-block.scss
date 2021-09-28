@@ -37,7 +37,7 @@
 // Some themes add margins when alignwide and alignfull are used.
 .editor-styles-wrapper .stk-row {
 	> .stk-inner-blocks.wp-block[data-align] {
-		margin: 0 !important;
+		margin: 0 auto !important;
 	}
 }
 
@@ -142,6 +142,11 @@
 			margin-bottom: 0;
 		}
 	}
+}
+
+// Block appender in latest Gutenberg adds margins on the appender.
+.stk-block .block-list-appender {
+	margin: 8px;
 }
 
 // Block float alignment.
