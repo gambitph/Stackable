@@ -136,7 +136,7 @@ if ( ! function_exists( 'stackable_block_assets_v2' ) ) {
 
 		// Frontend only scripts.
 		if ( ! is_admin() ) {
-			// Add global colors.
+			// Add global colors and typography.
 			$inline_css = apply_filters( 'stackable_inline_styles', '' );
 			if ( ! empty( $inline_css ) ) {
 				wp_add_inline_style( 'ugb-style-css-v2', $inline_css );
