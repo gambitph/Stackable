@@ -144,6 +144,11 @@
 	}
 }
 
+// Block appender in latest Gutenberg adds margins on the appender.
+.stk-block .block-list-appender {
+	margin: 8px;
+}
+
 // Block float alignment.
 [data-type^="stackable/"] {
 	&[data-align="left"] {
