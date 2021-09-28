@@ -19,6 +19,7 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { useBlockProps } from '@wordpress/block-editor'
 
 export const Save = props => {
 	const {
@@ -37,7 +38,7 @@ export const Save = props => {
 
 	return (
 		<BlockDiv.Content
-			className={ blockClassNames }
+			{ ...useBlockProps.save( { className: blockClassNames } ) }
 			attributes={ attributes }
 		>
 			<IconStyles.Content version={ props.version } attributes={ attributes } />
