@@ -1,1 +1,8 @@
 @import "common";
+
+.stk-block.stk-block-feature.is-style-plain > .stk-inner-blocks {
+	@include mobile {
+		// Make sure the image is at the top.
+		flex-direction: column-reverse;
+	}
+}

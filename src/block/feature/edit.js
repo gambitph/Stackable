@@ -26,7 +26,7 @@ import {
 	getSeparatorClasses,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockHoverClass } from '~stackable/hooks'
+import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -47,6 +47,7 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
@@ -92,7 +93,7 @@ const Edit = props => {
 					</div>
 				</Separator>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
