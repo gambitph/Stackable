@@ -132,6 +132,7 @@ const getStyleParams = ( options = {} ) => {
 			styles: {
 				fontWeight: 'fontWeight',
 				textTransform: 'textTransform',
+				fontStyle: 'fontStyle',
 			},
 			dependencies,
 		},

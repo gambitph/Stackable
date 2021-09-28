@@ -15,6 +15,10 @@ const typographyAttributes = {
 		type: 'string',
 		default: '',
 	},
+	fontStyle: {
+		type: 'string',
+		default: '',
+	},
 	fontWeight: {
 		type: 'string',
 		default: '',

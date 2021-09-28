@@ -26,7 +26,7 @@
 }
 // Make sure by default, our inner blocks are center aligned.
 .stk-row {
-	> .stk-inner-blocks:not(.alignfull):not(.alignwide) {
+	> .stk-inner-blocks:not(.alignfull):not(.alignwide):not(.stk-button-group) {
 		// --block-max-width comes from Blocksy
 		// --responsive--aligndefault-width comes from Twenty Twenty One
 		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
