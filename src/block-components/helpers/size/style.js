@@ -13,7 +13,7 @@ const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
-		horizontalAlignRule = 'justifyContent',
+		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
 	} = options
 
@@ -162,6 +162,26 @@ const getStyleParams = ( options = {} ) => {
 				return value.startsWith( 'auto' ) ? 'auto' : value
 			},
 			dependencies: [ 'horizontalAlign' ],
+		},
+		{
+			selector,
+			styleRule: 'display',
+			attrName: 'verticalAlign',
+			attrNameTemplate,
+			responsive: 'all',
+			valueCallback: () => {
+				return 'flex'
+			},
+		},
+		{
+			selector,
+			styleRule: 'flexDirection',
+			attrName: 'verticalAlign',
+			responsive: 'all',
+			attrNameTemplate,
+			valueCallback: () => {
+				return ( verticalAlignRule || 'alignItems' ) === 'justifyContent' ? 'column' : undefined
+			},
 		},
 		...( ( horizontalAlignRule !== 'margin' ) ? [
 			{
