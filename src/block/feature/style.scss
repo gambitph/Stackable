@@ -1,1 +1,9 @@
 @import "common";
+
+.stk-block.stk-block-feature.is-style-plain {
+	> .stk-inner-blocks.stk-block-content {
+		@include mobile {
+			flex-direction: column-reverse;
+		}
+	}
+}
