@@ -131,7 +131,7 @@ const Edit = props => {
 				traverseToRichText = traverseToRichText.parentElement
 			}
 
-			setSelectedIconCSSSelector( `li:nth-child(${ found })` )
+			setSelectedIconCSSSelector( `ul li:nth-child(${ found })` )
 			setIconSearchAnchor( event.target )
 			return setIsOpenIconSearch( true )
 		}
