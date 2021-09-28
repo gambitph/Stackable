@@ -27,6 +27,7 @@ const buildInclude = [
 	path.resolve( __dirname, './src/**/block.json' ), // Allow block metadata files.
 	path.resolve( __dirname, './dist/**' ),
 	path.resolve( __dirname, './freemius/**' ),
+	path.resolve( __dirname, './languages/**' ),
 	path.resolve( __dirname, './images/**' ),
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.
@@ -96,7 +97,7 @@ gulp.task( 'style-editor', function() {
 
 gulp.task( 'style', gulp.series(
 	function styleGenerateFrontend() {
-		return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
+		return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/styles/*.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/styles/editor-*.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
 			.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 			.pipe( concat( 'frontend_blocks.css' ) )
 			// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/

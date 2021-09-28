@@ -8,5 +8,6 @@
 		"Pricing",
 		"Number"
 	],
-	"textdomain": "stackable-ultimate-gutenberg-blocks"
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special"
 }

@@ -1,6 +1,6 @@
 {
 	"name": "ugb/notification",
-	"title": "Notification (v2)",
+	"title": "Notification",
 	"description": "Show a notice to your readers. People can dismiss the notice to permanently hide it.",
 	"category": "stackable-v2",
 	"keywords": [

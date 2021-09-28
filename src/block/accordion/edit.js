@@ -67,6 +67,7 @@ const Edit = props => {
 		const headerEl = document.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
 		const onClick = ev => {
 			// Dom't open the accordion if the user is clicking on the icon.
+			console.log( 'clicked' )
 			if ( ! ev.target.closest( '[data-type="stackable/icon"]' ) ) {
 				setIsOpen( ! isOpen )
 			}

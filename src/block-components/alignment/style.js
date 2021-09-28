@@ -35,7 +35,7 @@ const getStyleParams = () => {
 
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 			styles: {
 				alignItems: 'rowAlign',
 				justifyContent: 'innerBlockVerticalAlign',
@@ -45,7 +45,7 @@ const getStyleParams = () => {
 		},
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 			styleRule: 'alignItems',
 			attrName: 'innerBlockVerticalAlign',
 			responsive: 'all',

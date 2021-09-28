@@ -148,14 +148,12 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
 /**
  * Block Initializer.
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/disabled-blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/editor-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
-// TODO: v3 block
- require_once( plugin_dir_path( __FILE__ ) . 'src/block/posts/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block/posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/help-tooltip.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );
@@ -196,5 +194,8 @@ if ( sugb_fs()->is__premium_only() ) {
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v1/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/blocks.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/disabled-blocks.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/design-library/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/admin.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/optimization-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/global-settings.php' );

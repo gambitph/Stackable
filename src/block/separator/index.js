@@ -13,8 +13,9 @@ import metadata from './block.json'
  * External dependencies
  */
 import { SeparatorIcon } from '~stackable/icons'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: SeparatorIcon,
 	supports: {
@@ -25,4 +26,4 @@ export const settings = {
 	attributes: schema,
 	edit,
 	save,
-}
+} )

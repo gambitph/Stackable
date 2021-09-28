@@ -6,6 +6,7 @@
  * Internal dependencies
  */
 import './plugins'
+import './design-library'
 import { SVGStackableCategoryIcon } from '../../icons'
 
 /**
@@ -27,7 +28,7 @@ setCategories( [
 	...getCategories(),
 	{
 		slug: 'stackable-v2',
-		title: __( 'Stackable (v2)', i18n ),
+		title: __( 'Stackable', i18n ) + ' (v2)',
 		icon: SVGStackableCategoryIcon,
 	},
 ] )

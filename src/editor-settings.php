@@ -17,6 +17,10 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 			// Make our settings available in the editor.
 			add_filter( 'stackable_js_settings', array( $this, 'add_settings' ) );
+
+			// Add block max width CSS.
+			add_action( 'stackable_inline_styles', array( $this, 'add_block_max_width' ) );
+			add_action( 'stackable_inline_editor_styles', array( $this, 'add_block_max_width' ) );
 		}
 
 		/**
@@ -27,6 +31,24 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		public function register_settings() {
 			register_setting(
 				'stackable_editor_settings',
+				'stackable_disabled_blocks',
+				array(
+					'type' => 'array',
+					'description' => __( 'Blocks that should be hidden in the block editor', STACKABLE_I18N ),
+					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
+					'show_in_rest' => array(
+						'schema' => array(
+							'items' => array(
+								'type' => 'string',
+							)
+						)
+					),
+					'default' => array(),
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
 				'stackable_enable_design_library',
 				array(
 					'type' => 'boolean',
@@ -34,6 +56,18 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_block_max_width',
+				array(
+					'type' => 'string',
+					'description' => __( 'The maximum width of Stackable blocks.', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
 				)
 			);
 
@@ -62,6 +96,10 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			);
 		}
 
+		public function sanitize_array_setting( $input ) {
+			return ! is_array( $input ) ? array( array() ) : $input;
+		}
+
 		/**
 		 * Make our settings available in the editor.
 		 *
@@ -69,10 +107,28 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		 * @return Array Settings array to be loaded in the editor.
 		 */
 		public function add_settings( $settings ) {
+			$settings['stackable_disabled_blocks'] = get_option( 'stackable_disabled_blocks' );
 			$settings['stackable_enable_design_library'] = get_option( 'stackable_enable_design_library' );
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
 			return $settings;
+		}
+
+		/**
+		 * Add styles for the block max width.
+		 *
+		 * @param String $css
+		 * @return String CSS to be added.
+		 */
+		public function add_block_max_width( $css ) {
+			$max_width = get_option( 'stackable_block_max_width' );
+			if ( ! empty( $max_width ) ) {
+				$css .= ':root {
+					--stk-block-max-width: ' . esc_attr( $max_width ) . 'px;
+				}';
+			}
+
+			return $css;
 		}
 	}
 

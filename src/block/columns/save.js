@@ -47,6 +47,7 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
+		`stk-${ props.attributes.uniqueId }-column`,
 	], {
 		'stk--fit-content': attributes.columnFit,
 		alignwide: attributes.contentAlign === 'alignwide', // This will align the columns inside.

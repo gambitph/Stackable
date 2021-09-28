@@ -36,7 +36,7 @@ const variations = [
 			] ],
 			[ 'stackable/column', { templateLock: false, className: 'stk-block-accordion__content' }, [
 				[ 'stackable/text', {
-					text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
+					text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ),
 				} ],
 			] ],
 		],
@@ -72,7 +72,7 @@ const variations = [
 			] ],
 			[ 'stackable/column', { templateLock: false, className: 'stk-block-accordion__content' }, [
 				[ 'stackable/text', {
-					text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
+					text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ),
 				} ],
 			] ],
 		],
@@ -113,7 +113,7 @@ const variations = [
 			] ],
 			[ 'stackable/column', { templateLock: false, className: 'stk-block-accordion__content' }, [
 				[ 'stackable/text', {
-					text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
+					text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ),
 				} ],
 			] ],
 		],
