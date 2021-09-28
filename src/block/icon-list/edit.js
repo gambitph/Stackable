@@ -120,19 +120,18 @@ const Edit = props => {
 			 * @since 3.0.0
 			 */
 			let traverseToRichText = event.target
-			const selectors = []
+			let found = null
 			while ( traverseToRichText.tagName !== 'DIV' ) {
-				traverseToRichText.parentElement.childNodes.forEach( ( el, idx ) => {
-					if ( el === traverseToRichText ) {
-						const tagName = traverseToRichText.tagName.toLowerCase()
-						const selector = `${ tagName }${ tagName === 'li' ? `:nth-child(${ idx + 1 })` : '' }`
-						selectors.push( selector )
+				for ( let i = 0; i < Array.from( traverseToRichText.parentElement.childNodes ).length; i++ ) {
+					if ( traverseToRichText.parentElement.childNodes[ i ] === traverseToRichText && found === null ) {
+						found = i + 1
+						break
 					}
-				} )
+				}
 				traverseToRichText = traverseToRichText.parentElement
 			}
 
-			setSelectedIconCSSSelector( selectors.reverse().join( '>' ) )
+			setSelectedIconCSSSelector( `li:nth-child(${ found })` )
 			setIconSearchAnchor( event.target )
 			return setIsOpenIconSearch( true )
 		}
