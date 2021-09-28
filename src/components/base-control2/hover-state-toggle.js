@@ -42,7 +42,7 @@ const HOVER_OPTIONS = [
 ]
 
 const HoverStateToggle = props => {
-	const [ currentHoverState, setCurrentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState ] = useBlockHoverState()
+	const [ currentHoverState, setCurrentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
 
 	const stateOptions = useMemo( () => {
 		const hover = props.hover === 'all' ? [ 'normal', 'hover', 'parent-hovered', 'collapsed' ] : props.hover
@@ -52,7 +52,7 @@ const HoverStateToggle = props => {
 				return false
 			}
 
-			if ( ! hasCollapsedState && value === 'collapsed' ) {
+			if ( ! hasCollapsedState && value === 'collapsed' && ! isCollapsedBlock ) {
 				return false
 			}
 

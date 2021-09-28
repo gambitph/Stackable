@@ -344,7 +344,7 @@ class StyleObject {
 			return getSelector( _selector )
 		}
 
-		const collapsedSelector = prependClass( selector, '.stk-block-accordion.stk--is-open .%s', '.stk-block-accordion.stk--is-open .%s', 'collapsed' )
+		const collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open', ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open', 'collapsed' )
 		const parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover) .%s', '.%s.stk--is-hovered', 'parent-hovered' )
 		hoverSelector = hoverSelector
 			// In editor, always use the `selector` instead of the hoverSelector.

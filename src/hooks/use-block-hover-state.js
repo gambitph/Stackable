@@ -36,7 +36,7 @@ const STORE_ACTIONS = {
 		const hoverChildrenClientIds = Array.from( blockEl?.querySelectorAll( '[data-block]' ) || [] )
 			.map( el => el.getAttribute( 'data-block' ) ) || []
 
-		const collapsedEl = blockEl?.closest( '.stk-block-accordion' )?.closest( '[data-block]' )
+		const collapsedEl = blockEl?.closest( '.stk-block-accordion' )?.closest( '[data-block]' ) || ( blockEl?.getAttribute( 'data-type' ) === 'stackable/accordion' ? blockEl : null )
 		const collapsedClientId = collapsedEl?.getAttribute( 'data-block' ) || null
 
 		// Get all the child blocks of the accordion block.
@@ -162,9 +162,8 @@ export const useBlockHoverState = () => {
 	if ( isBlockSelected ) {
 		if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
 			blockHoverClass = 'stk--is-hovered'
-		} else if ( hoverState === 'collapsed' ) {
-			blockHoverClass = 'stk--is-open'
 		}
+
 		currentHoverState = hoverState
 
 		// If we changed the hover state to parent-hovered, but the block
@@ -185,11 +184,11 @@ export const useBlockHoverState = () => {
 			currentHoverState = 'parent-hovered'
 		}
 	} else if ( isChildOfCollapsedBlock || isCollapsedBlock ) {
-		blockHoverClass = 'stk--is-open'
+		// We won't add any classes here anymore.
 		currentHoverState = 'collapsed'
 	}
 
-	return [ currentHoverState, setHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState ]
+	return [ currentHoverState, setHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
 }
 
 export const useBlockHoverClass = () => {
