@@ -20,8 +20,9 @@ import metadata from './block.json'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const settings = {
+export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: CardIcon,
 	attributes: schema,
@@ -34,4 +35,4 @@ export const settings = {
 	variations,
 	edit,
 	save,
-}
+} )

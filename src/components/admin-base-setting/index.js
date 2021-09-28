@@ -13,7 +13,11 @@ const AdminBaseSetting = props => {
 
 	return (
 		<div className={ mainClasses } id={ uid }>
-			<label className="ugb-admin-setting__label-wrapper" htmlFor={ uid }>
+			<label // eslint-disable-line
+				className="ugb-admin-setting__label-wrapper"
+				htmlFor={ uid }
+				onClick={ props.onClick }
+			>
 				<span className="ugb-admin-setting__label">{ props.label }</span>
 				<div className="ugb-admin-setting__field">
 					{ props.children }
@@ -26,6 +30,7 @@ const AdminBaseSetting = props => {
 
 AdminBaseSetting.defaultProps = {
 	label: '',
+	onClick: () => {},
 }
 
 export default AdminBaseSetting

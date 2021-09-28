@@ -65,6 +65,14 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				STACKABLE_VERSION
 			);
 
+			// Frtonend only inline styles.
+			if ( ! is_admin() ) {
+				$inline_css = apply_filters( 'stackable_inline_styles', '' );
+				if ( ! empty( $inline_css ) ) {
+					wp_add_inline_style( 'ugb-style-css', $inline_css );
+				}
+			}
+
 			// Frontend block styles (responsive).
 			wp_register_style(
 				'ugb-style-css-responsive',
@@ -191,15 +199,20 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				STACKABLE_VERSION
 			);
 
+			// Backend editor only inline styles.
+			$inline_css = apply_filters( 'stackable_inline_editor_styles', '' );
+			if ( ! empty( $inline_css ) ) {
+				wp_add_inline_style( 'ugb-block-editor-css', $inline_css );
+			}
+
 			$version_parts = explode( '-', STACKABLE_VERSION );
 
 			global $content_width;
 			global $wp_version;
-			wp_localize_script( 'ugb-block-js-vendor', 'stackable', array(
+			$args = apply_filters( 'stackable_localize_script', array(
 				'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 				'contentWidth' => isset( $content_width ) ? $content_width : 900,
 				'i18n' => STACKABLE_I18N,
-				'disabledBlocks' => stackable_get_disabled_blocks(),
 				'nonce' => wp_create_nonce( 'stackable' ),
 				'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
 				'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
@@ -229,6 +242,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'settings' => apply_filters( 'stackable_js_settings', array() ),
 				'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 			) );
+			wp_localize_script( 'ugb-block-js-vendor', 'stackable', $args );
 		}
 
 		/**

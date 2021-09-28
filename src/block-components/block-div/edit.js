@@ -26,7 +26,10 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
-export const Edit = () => {
+export const Edit = props => {
+	const {
+		hasSizeSpacing,
+	} = props
 	const { clientId } = useBlockEditContext()
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
@@ -43,15 +46,17 @@ export const Edit = () => {
 			>
 				<BackgroundControls attrNameTemplate="block%s" />
 			</PanelAdvancedSettings>
-			<PanelAdvancedSettings
-				title={ __( 'Size & Spacing', i18n ) }
-				id="size"
-			>
-				<SizeControls
-					attrNameTemplate="block%s"
-					blockEl={ blockEl }
-				/>
-			</PanelAdvancedSettings>
+			{ hasSizeSpacing && (
+				<PanelAdvancedSettings
+					title={ __( 'Size & Spacing', i18n ) }
+					id="size"
+				>
+					<SizeControls
+						attrNameTemplate="block%s"
+						blockEl={ blockEl }
+					/>
+				</PanelAdvancedSettings>
+			) }
 			<PanelAdvancedSettings
 				title={ __( 'Borders & Shadows', i18n ) }
 				id="borders"
@@ -63,4 +68,8 @@ export const Edit = () => {
 			</PanelAdvancedSettings>
 		</InspectorBlockControls>
 	)
+}
+
+Edit.defaultProps = {
+	hasSizeSpacing: true,
 }

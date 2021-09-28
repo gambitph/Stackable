@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
 if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 
 	/**
@@ -20,10 +19,11 @@ if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 	 * @since 3.0.0
 	 */
 	function stackable_auto_compatibility_v2( $old_version, $new_version ) {
-		if ( version_compare( $old_version, "3.0", "<" ) && get_option( 'stackable_v2_compatibility_ask' ) === false ) {
+		if ( ! empty( $old_version ) && version_compare( $old_version, "3.0", "<" ) && get_option( 'stackable_v2_compatibility_ask' ) === false ) {
 			// TODO: when this option becomes on, then show a question to the user on what to do about upgrading from v2 to v3. Since upgrading, we will keep v2 blocks, but where do you switch it off? Link to upgrading docs.
-			update_option( 'stackable_v2_compatibility_ask', '1' );
-			update_option( 'stackable_v2_editor_compatibility', '1' );
+			update_option( 'stackable_v2_compatibility_ask', '1' ); // Show the onboarding page.
+			update_option( 'stackable_v2_editor_compatibility', '1' ); // Load version 2 blocks in the editor
+			update_option( 'stackable_v2_disabled_blocks', get_option( 'stackable_disabled_blocks' ) ); // Migrate the disabled blocks.
 		}
 	}
 	add_action( 'stackable_version_upgraded', 'stackable_auto_compatibility_v2', 10, 2 );
@@ -136,6 +136,12 @@ if ( ! function_exists( 'stackable_block_assets_v2' ) ) {
 
 		// Frontend only scripts.
 		if ( ! is_admin() ) {
+			// Add global colors and typography.
+			$inline_css = apply_filters( 'stackable_inline_styles', '' );
+			if ( ! empty( $inline_css ) ) {
+				wp_add_inline_style( 'ugb-style-css-v2', $inline_css );
+			}
+
 			wp_register_script(
 				'ugb-block-frontend-js-v2',
 				plugins_url( 'dist/deprecated/frontend_blocks_deprecated_v2.js', STACKABLE_FILE ),

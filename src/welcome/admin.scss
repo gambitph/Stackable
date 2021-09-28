@@ -410,8 +410,9 @@ body.toplevel_page_stk-custom-fields {
 	}
 	.s-settings-grid {
 		display: grid;
-		grid-gap: 30px;
-		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-gap: 64px;
+		grid-row-gap: 24px;
 		.s-box {
 			margin: 0;
 			padding: 35px * 0.8 35px * 0.6;
@@ -441,6 +442,56 @@ body.toplevel_page_stk-custom-fields {
 					margin-top: 0 !important;
 				}
 			}
+		}
+	}
+	.s-block {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		position: relative;
+		h4,
+		.s-toggle-button {
+			margin: 0 !important;
+		}
+		.s-block-demo {
+			margin: 0 16px;
+			flex: 1;
+			text-align: right;
+		}
+		.s-toggle-button {
+			min-width: 120px;
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: -13px;
+			height: 1px;
+			background: #efefef;
+			width: 100%;
+		}
+	}
+	.s-box-block {
+		padding-top: 32px;
+	}
+	.s-box-block__title {
+		display: flex;
+		align-items: center;
+		margin: -32px 12px 0 -8px !important;
+		svg {
+			padding: 20px;
+			border-radius: 100%;
+			overflow: visible;
+			margin-right: 12px;
+		}
+		&.s-box-block__title--essential svg {
+			background: rgba(71, 160, 221, 0.15);
+		}
+		&.s-box-block__title--special svg {
+			background: rgba(226, 115, 93, 0.15);
+		}
+		&.s-box-block__title--section svg {
+			background: rgba(234, 189, 89, 0.15);
 		}
 	}
 	.s-video-tutorial-wrapper {
@@ -517,6 +568,10 @@ body.toplevel_page_stk-custom-fields {
 		display: inline-block;
 		background: #e4f5e4;
 		margin-top: 0;
+		outline-offset: 2px;
+		&:focus {
+			outline: 1px dashed #888;
+		}
 
 		&::after,
 		&::before {

@@ -337,7 +337,7 @@ class StyleObject {
 		hoverSelector = hoverSelector
 			// In editor, always use the `selector` instead of the hoverSelector.
 			? prependClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.%s.stk--is-hovered', 'hover' )
-			: prependClass( selector, '.stk-block.%s:hover', '.%s.stk--is-hovered', 'hover' )
+			: prependClass( selector, '.%s:hover', '.%s.stk--is-hovered', 'hover' )
 		selector = prependClass( selector )
 
 		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), 'desktop', renderIn, vendorPrefixes )

@@ -21,7 +21,7 @@ import { TeamMemberIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { disabledBlocks } from 'stackable'
+import { v2disabledBlocks as disabledBlocks } from 'stackable'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 const {

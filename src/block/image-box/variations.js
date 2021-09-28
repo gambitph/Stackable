@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { i18n } from 'stackable'
 import SVGBasic from './images/basic.svg'
 import SVGSide from './images/side.svg'
 
@@ -9,6 +8,11 @@ import SVGSide from './images/side.svg'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
 
 /**
  * Template option choices for predefined columns layouts.
