@@ -144,7 +144,7 @@ const getStyleParams = options => {
 				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', 'desktop', state )
 
 				if (
-					typeof buttonBackgroundColor !== undefined &&
+					typeof buttonBackgroundColor !== 'undefined' &&
 					buttonBackgroundColor !== ''
 				) {
 					return 1

@@ -18,6 +18,12 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 	class Stackable_Design_Library {
 
 		/**
+		 * The current version of the API we're using.
+		 * @var String
+		 */
+		const API_VERSION = 'v3';
+
+		/**
 		 * Constructor
 		 */
 		public function __construct() {
@@ -49,26 +55,16 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				),
 			) );
 
-			register_rest_route( 'wp/v2', '/stk_block_designs/(?P<block>[\w\d-]+)', array(
-				'methods' => 'GET',
-				'callback' => array( $this, 'get_block_designs' ),
-				'permission_callback' => function () {
-					return current_user_can( 'edit_posts' );
-				},
-				'args' => array(
-					'block' => array(
-						'validate_callback' => __CLASS__ . '::validate_string'
-					),
-				),
-			) );
-
-			register_rest_route( 'wp/v2', '/stk_design/(?P<design>[\w\d-]+)', array(
+			register_rest_route( 'wp/v2', '/stk_design/(?P<version>[\w\d-]*)/(?P<design>[\w\d-]+)', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_design' ),
 				'permission_callback' => function () {
 					return current_user_can( 'edit_posts' );
 				},
 				'args' => array(
+					'version' => array(
+						'validate_callback' => __CLASS__ . '::validate_string'
+					),
 					'design' => array(
 						'validate_callback' => __CLASS__ . '::validate_string'
 					),
@@ -96,18 +92,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			// Delete design library.
 			delete_transient( 'stackable_get_design_library' );
 
-			// Delete block designs.
-			global $wpdb;
-			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_stackable_get_block_designs_%'" );
-
-			if ( $transients ) {
-				foreach ( $transients as $transient ) {
-					$transient = preg_replace( '/^_transient_/i', '', $transient );
-					delete_transient( $transient );
-				}
-			}
-
 			// Delete designs.
+			global $wpdb;
 			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_stackable_get_design_%'" );
 
 			if ( $transients ) {
@@ -116,20 +102,29 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					delete_transient( $transient );
 				}
 			}
+
+			do_action( 'stackable_delete_design_library_cache' );
 		}
 
 		public function _get_design_library() {
-			$designs = get_transient( 'stackable_get_design_library' );
+			$designs = get_transient( 'stackable_get_design_library_v3' );
 
 			// Fetch designs.
 			if ( empty( $designs ) ) {
-				$response = wp_remote_get( $this->get_cdn_url() . 'library/library-v2.json' );
+				$response = wp_remote_get( self::get_cdn_url() . 'library-v3/library.json' );
 				$content = wp_remote_retrieve_body( $response );
 				$content = apply_filters( 'stackable_design_library_retreive_body', $content );
-				$designs = json_decode( $content, true );
+
+				// We add the latest designs in the `v3` area.
+				$designs = array(
+					self::API_VERSION => json_decode( $content, true ),
+				);
+
+				// Allow deprecated code to fetch other designs
+				$designs = apply_filters( 'stackable_fetch_design_library', $designs );
 
 				// Cache results.
-				set_transient( 'stackable_get_design_library', $designs, DAY_IN_SECONDS );
+				set_transient( 'stackable_get_design_library_v3', $designs, DAY_IN_SECONDS );
 			}
 
 			return apply_filters( 'stackable_design_library', $designs );
@@ -146,28 +141,6 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			return rest_ensure_response( $this->_get_design_library() );
 		}
 
-		public function get_block_designs( $request ) {
-			$block = $request->get_param( 'block' );
-
-			$designs = get_transient( 'stackable_get_block_designs_' . $block );
-
-			// Fetch designs.
-			if ( empty( $designs ) ) {
-
-				$response = wp_remote_get( $this->get_cdn_url() . 'library/block-' . $block . '.json' );
-				$content = wp_remote_retrieve_body( $response );
-				$content = apply_filters( 'stackable_design_library_retreive_body', $content );
-				$designs = json_decode( $content, true );
-
-				// Cache results.
-				set_transient( 'stackable_get_block_designs_' . $block, $designs, DAY_IN_SECONDS );
-			}
-
-			$designs = apply_filters( 'stackable_block_design_' . $block, $designs );
-
-			return rest_ensure_response( $designs );
-		}
-
 		public function get_design( $request ) {
 			$design_id = $request->get_param( 'design' );
 
@@ -178,7 +151,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 				// Get the template Url.
 				$designs = $this->_get_design_library();
-				$template_url = $designs[ $design_id ]['template'];
+				$template_url = $designs[ self::API_VERSION ][ $design_id ]['template'];
 
 				$response = wp_remote_get( $template_url );
 				$content = wp_remote_retrieve_body( $response );
@@ -198,7 +171,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 * Replaces all the URLs that use the CDN with local ones if dev mode is turned on.
 		 */
 		public function replace_dev_mode_urls( $content ) {
-			if ( $this->is_dev_mode() ) {
+			if ( self::is_dev_mode() ) {
 				$content = str_replace(
 					trailingslashit( STACKABLE_CLOUDFRONT_URL ),
 					trailingslashit( plugin_dir_url( STACKABLE_DLH_LIBRARY_FILE ) ),
@@ -213,15 +186,15 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 * developer mode for the design library is turned on, the URL of the
 		 * design library internal exporter tool will be used instead.
 		 */
-		public function get_cdn_url() {
-			if ( $this->is_dev_mode() ) {
+		public static function get_cdn_url() {
+			if ( self::is_dev_mode() ) {
 				return trailingslashit( plugin_dir_url( STACKABLE_DLH_LIBRARY_FILE ) );
 			} else {
 				return trailingslashit( STACKABLE_CLOUDFRONT_URL );
 			}
 		}
 
-		public function is_dev_mode() {
+		public static function is_dev_mode() {
 			$dev_env = defined( 'WP_ENV' ) ? WP_ENV === 'development' : false;
 			$export_tool_installed = defined( 'STACKABLE_DLH_LIBRARY_FILE' );
 			$library_dev_mode_toggled = !! get_option( 'stackable_library_dev_mode' );

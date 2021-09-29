@@ -8,6 +8,7 @@
 .stk-block {
 	position: relative;
 	width: 100%;
+	margin-inline: auto;
 }
 .stk--block-orientation-horizontal .stk-block {
 	width: auto;
@@ -21,10 +22,11 @@
 .entry-content > .stk-block:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.wp-block-separator) {
 	max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
 }
-.entry-content .stk-block .stk-row {
+
+.entry-content .stk-block .stk-content-align {
 	margin-block: 0; // Some themes add margin top/bottom when alignfull or alignwide is used.
 	// Make sure by default, our inner blocks are center aligned.
-	&.stk-inner-blocks:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright) {
+	&.stk-inner-blocks:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.stk-button-group) {
 		// --block-max-width - comes from Blocksy
 		// --responsive--aligndefault-width - comes from Twenty Twenty & Twenty Twenty One
 		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
@@ -246,6 +248,9 @@
 	flex-direction: row;
 	align-items: center; // Vertically align the buttons.
 }
+.stk-button-group .stk-block { // Prevent buttons from being always in the middle.
+	margin-inline: revert;
+}
 
 // Buttons.
 :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination, .stk-block-load-more, .stk-block-posts) {
@@ -300,7 +305,7 @@
 	--stk-alignment-text-align: center;
 	--stk-alignment-margin-left: auto;
 	--stk-alignment-margin-right: auto;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 @mixin align-right-styles {
@@ -308,7 +313,7 @@
 	--stk-alignment-text-align: end;
 	--stk-alignment-margin-left: auto;
 	--stk-alignment-margin-right: 0;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 @mixin align-left-styles {
@@ -316,7 +321,7 @@
 	--stk-alignment-text-align: start;
 	--stk-alignment-margin-left: 0;
 	--stk-alignment-margin-right: auto;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 // Default text direction, we need to add this for RTL support.
@@ -364,5 +369,5 @@
 // Text alignment should also work for flex blocks like the icon block.
 .stk-block {
 	justify-content: var(--stk-alignment-justify-content);
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }

@@ -2,6 +2,9 @@
  * Internal dependencies
  */
 import './news'
+import SVGEssentialIcon from './images/settings-icon-essential.svg'
+import SVGSpecialIcon from './images/settings-icon-special.svg'
+import SVGSectionIcon from './images/settings-icon-section.svg'
 
 /**
  * WordPress dependencies
@@ -64,14 +67,17 @@ const BLOCK_CATEROGIES = [
 	{
 		id: 'essential',
 		label: __( 'Essential Blocks', i18n ),
+		icon: <SVGEssentialIcon height="20" width="20" />,
 	},
 	{
 		id: 'special',
 		label: __( 'Special Blocks', i18n ),
+		icon: <SVGSpecialIcon height="20" width="20" />,
 	},
 	{
 		id: 'section',
 		label: __( 'Section Blocks', i18n ),
+		icon: <SVGSectionIcon height="20" width="20" />,
 	},
 ]
 
@@ -186,10 +192,19 @@ const BlockToggler = () => {
 
 	return (
 		<>
-			{ BLOCK_CATEROGIES.map( ( { id, label } ) => {
+			{ BLOCK_CATEROGIES.map( ( {
+				id, label, icon,
+			} ) => {
+				const classes = classnames( [
+					's-box-block__title',
+					`s-box-block__title--${ id }`,
+				] )
 				return (
-					<div className="s-box" key={ id }>
-						<h3>{ label }</h3>
+					<div className="s-box s-box-block" key={ id }>
+						<h3 className={ classes }>
+							{ icon }
+							<span>{ label }</span>
+						</h3>
 						<div className="s-settings-header">
 							{ isSaving === id && <Spinner /> }
 							<button onClick={ enableAllBlocks( id ) } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
@@ -228,12 +243,13 @@ const BlockToggler = () => {
 const EditorSettings = () => {
 	const [ settings, setSettings ] = useState( {} )
 	const [ isBusy, setIsBusy ] = useState( false )
+	const [ saveTimeout, setSaveTimeout ] = useState( null )
 
 	useEffect( () => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setSettings( pick( response, [ 'stackable_enable_design_library', 'stackable_auto_collapse_panels', 'stackable_enable_block_linking' ] ) )
+				setSettings( pick( response, [ 'stackable_enable_design_library', 'stackable_block_max_width', 'stackable_auto_collapse_panels', 'stackable_enable_block_linking' ] ) )
 			} )
 		} )
 	}, [] )
@@ -255,6 +271,24 @@ const EditorSettings = () => {
 			disabled={ __( 'Disable feature', i18n ) }
 			enabled={ __( 'Enable feature', i18n ) }
 		/>
+		<AdminTextSetting
+			label={ __( 'Block Max Width', i18n ) }
+			value={ settings.stackable_block_max_width }
+			type="number"
+			onChange={ value => {
+				clearTimeout( saveTimeout )
+				setSettings( {
+					...settings,
+					stackable_block_max_width: value, // eslint-disable-line camelcase
+				} )
+				setSaveTimeout( setTimeout( () => {
+					setIsBusy( true )
+					const model = new models.Settings( { stackable_block_max_width: value } ) // eslint-disable-line camelcase
+					model.save().then( () => setIsBusy( false ) )
+				}, 400 ) )
+			} }
+			help={ __( 'The maximum width of Stackable blocks. Leave blank for the blocks to follow the content width of your theme.', i18n ) }
+		> px</AdminTextSetting>
 		<AdminToggleSetting
 			label={ __( 'Auto-Collapse Panels', i18n ) }
 			value={ settings.stackable_auto_collapse_panels }

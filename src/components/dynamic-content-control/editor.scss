@@ -1,5 +1,9 @@
 @import "common";
 
+.stackable-dynamic-content__popover > .components-popover__content {
+	width: 250px;
+}
+
 .stk-dynamic-content-control {
 	display: flex;
 	align-items: flex-start;

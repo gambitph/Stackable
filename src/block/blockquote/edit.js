@@ -4,6 +4,7 @@
 import { ContainerStyles } from './style'
 import SVGDefaultQuote from './images/round-thin.svg'
 import { QUOTE_ICONS } from './quotes'
+import variations from './variations'
 
 /**
  * External dependencies
@@ -28,6 +29,8 @@ import {
 	MarginBottom,
 	BlockLink,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -44,12 +47,7 @@ import { addFilter } from '@wordpress/hooks'
 
 export const defaultIcon = renderToString( <SVGDefaultQuote /> )
 
-const TEMPLATE = [
-	[ 'stackable/icon', { icon: defaultIcon } ],
-	[ 'stackable/text', {
-		text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
-	} ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
@@ -58,10 +56,12 @@ const Edit = props => {
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
+	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-blockquote',
+		'stk-block-blockquote__inner-container',
 		blockHoverClass,
 	] )
 
@@ -70,7 +70,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-blockquote__content',
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
 	return (
 		<>
@@ -88,9 +88,10 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-blockquote" />
 
@@ -101,7 +102,7 @@ const Edit = props => {
 					/>
 				</ContainerDiv>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }

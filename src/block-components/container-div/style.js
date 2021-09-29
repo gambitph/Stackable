@@ -12,7 +12,7 @@ export const Style = props => {
 		borderSelector = '.%s-container',
 		sizeSelector = '.%s-container',
 		sizeVerticalAlignRule = null,
-		sizeHorizontalAlignRule = null,
+		sizeHorizontalAlignRule = 'margin',
 	} = props.options
 
 	return (
@@ -57,7 +57,7 @@ Style.Content = props => {
 		borderSelector = '.%s-container',
 		sizeSelector = '.%s-container',
 		sizeVerticalAlignRule = null,
-		sizeHorizontalAlignRule = null,
+		sizeHorizontalAlignRule = 'margin',
 	} = props.options
 
 	return (
