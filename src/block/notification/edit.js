@@ -30,6 +30,8 @@ import {
 	MarginBottom,
 	BlockLink,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -65,6 +67,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-notification',
+		'stk-block-notification__inner-container',
 		blockHoverClass,
 	], {
 		'stk--is-dismissible': attributes.isDismissible,
@@ -75,7 +78,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-notification__content',
-	] )
+	], useContentAlignmentClasses( attributes ) )
 
 	const renderAppender = useCallback(
 		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
@@ -98,6 +101,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'Dismissible', i18n ) }

@@ -23,6 +23,8 @@ import {
 	Transform,
 	ContainerDiv,
 	BlockLink,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -61,6 +63,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-pricing-box',
+		'stk-block-pricing-box__inner-container',
 		blockHoverClass,
 	] )
 
@@ -69,7 +72,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		`stk-${ props.attributes.uniqueId }-container`,
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
 	const renderAppender = useCallback(
 		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
@@ -91,6 +94,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockStyles version={ VERSION } />

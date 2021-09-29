@@ -27,6 +27,8 @@ import {
 	Separator,
 	getSeparatorClasses,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -63,6 +65,8 @@ const Edit = props => {
 		'stk-block-hero',
 		blockHoverClass,
 		separatorClass,
+		'stk-content-align',
+		'stk-block-hero__inner-container',
 	] )
 
 	const contentClassNames = classnames( [
@@ -70,7 +74,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-hero__content',
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
 	const renderAppender = useCallback(
 		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
@@ -94,6 +98,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockDiv className={ blockClassNames }>

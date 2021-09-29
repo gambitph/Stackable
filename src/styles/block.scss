@@ -22,7 +22,8 @@
 .entry-content > .stk-block:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.wp-block-separator) {
 	max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
 }
-.entry-content .stk-block .stk-row {
+
+.entry-content .stk-block .stk-content-align {
 	margin-block: 0; // Some themes add margin top/bottom when alignfull or alignwide is used.
 	// Make sure by default, our inner blocks are center aligned.
 	&.stk-inner-blocks:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.stk-button-group) {
