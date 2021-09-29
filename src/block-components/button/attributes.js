@@ -41,6 +41,10 @@ const buttonAttributes = {
 		type: 'number',
 		default: '',
 	},
+	buttonFullWidth: {
+		type: 'boolean',
+		default: '',
+	},
 }
 
 export const addAttributes = ( attrObject, options = {} ) => {

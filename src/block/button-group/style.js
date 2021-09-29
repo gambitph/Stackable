@@ -13,7 +13,10 @@ import {
 import {
 	useBlockAttributes, useDeviceType,
 } from '~stackable/hooks'
-import { getUniqueBlockClass } from '~stackable/util'
+import {
+	getUniqueBlockClass, useStyles, getStyles,
+} from '~stackable/util'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -29,6 +32,33 @@ const flexGapOptionsSave = {
 	selector: '.stk-inner-blocks',
 }
 
+const getStyleParams = () => {
+	return [
+		{
+			renderIn: 'save',
+			selector: '.stk-button-group',
+			styleRule: 'flexDirection',
+			attrObject: 'collapseOn',
+			responsive: 'all',
+			valuePreCallback: ( _, getAttribute, device ) => {
+				return device === getAttribute( 'collapseOn' ) ? 'column' : undefined
+			},
+			dependencies: [ 'collapseOn' ],
+		},
+		{
+			renderIn: 'edit',
+			selector: '.stk-button-group .block-editor-block-list__layout',
+			styleRule: 'flexDirection',
+			attrObject: 'collapseOn',
+			responsive: 'all',
+			valuePreCallback: ( _, getAttribute, device ) => {
+				return device === getAttribute( 'collapseOn' ) ? 'column' : undefined
+			},
+			dependencies: [ 'collapseOn' ],
+		},
+	]
+}
+
 export const ButtonGroupStyles = props => {
 	const {
 		...propsToPass
@@ -42,6 +72,8 @@ export const ButtonGroupStyles = props => {
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
+	const buttonGroupStyles = useStyles( attributes, getStyleParams() )
+
 	return (
 		<>
 			<Alignment.Style { ...propsToPass } />
@@ -51,6 +83,12 @@ export const ButtonGroupStyles = props => {
 			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<FlexGapStyles { ...propsToPass } options={ flexGapOptionsEdit } />
+			<StyleComponent
+				styles={ buttonGroupStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</>
 	)
 }
@@ -65,6 +103,7 @@ ButtonGroupStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	const buttonGroupStyles = getStyles( propsToPass.attributes, getStyleParams() )
 
 	const styles = (
 		<>
@@ -75,6 +114,12 @@ ButtonGroupStyles.Content = props => {
 			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<FlexGapStyles.Content { ...propsToPass } options={ flexGapOptionsSave } />
+			<StyleComponent.Content
+				styles={ buttonGroupStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</>
 	)
 
