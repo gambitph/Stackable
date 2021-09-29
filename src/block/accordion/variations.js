@@ -30,7 +30,7 @@ const variations = applyFilters(
 				}, [
 					[ 'stackable/icon-label', {}, [
 						[ 'stackable/heading', {
-							text: __( 'Accordion Title' ), hasP: true, textTag: 'h4',
+							text: __( 'Accordion Title', i18n ), hasP: true, textTag: 'h4',
 						} ],
 						[ 'stackable/icon', {
 							icon: defaultIcon,
