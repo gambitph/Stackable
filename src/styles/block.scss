@@ -240,6 +240,9 @@
 	flex-direction: row;
 	align-items: center; // Vertically align the buttons.
 }
+.stk-button-group .stk-block { // Prevent buttons from being always in the middle.
+	margin-inline: revert;
+}
 
 // Buttons.
 :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination, .stk-block-load-more, .stk-block-posts) {
