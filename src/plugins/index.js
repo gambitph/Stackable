@@ -6,6 +6,7 @@ import './premium-notice'
 import './design-library-button'
 import { BlockLinking } from './block-linking'
 import { BlockHoverState } from './block-hover-state'
+import { ContentAlign } from './content-align'
 
 /**
  * WordPress dependencies
@@ -21,6 +22,7 @@ import { devMode } from 'stackable'
 
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
 registerPlugin( 'stackable-block-hover-state', { render: BlockHoverState } )
+registerPlugin( 'stackable-content-align', { render: ContentAlign } )
 
 if ( devMode ) {
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )

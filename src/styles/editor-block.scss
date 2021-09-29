@@ -30,14 +30,19 @@
 }
 
 // Block widths,
-.is-root-container > [data-block]:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
-	max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
-	margin-left: auto;
-	margin-right: auto;
+.is-root-container > [data-block] {
+	&:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
+		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
+
 // Make sure by default, our inner blocks are center aligned.
-.stk-row {
-	> .stk-inner-blocks:not(.alignfull):not(.alignwide):not(.stk-button-group) {
+.stk-inner-blocks.stk-content-align {
+	margin-top: 0;
+	margin-bottom: 0;
+	&:not(.alignfull):not(.alignwide):not(.stk-button-group) {
 		// --block-max-width comes from Blocksy
 		// --responsive--aligndefault-width comes from Twenty Twenty One
 		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
@@ -45,9 +50,10 @@
 		margin-right: auto;
 	}
 }
+
 // Some themes add margins when alignwide and alignfull are used.
-.editor-styles-wrapper .stk-row {
-	> .stk-inner-blocks.wp-block[data-align] {
+.editor-styles-wrapper {
+	> .stk-inner-blocks.stk-content-align.wp-block[data-align] {
 		margin: 0 auto !important;
 	}
 }
