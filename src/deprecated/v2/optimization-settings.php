@@ -86,7 +86,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 				if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
 					if (
 						stripos( $block['blockName'], 'ugb/' ) === 0 ||
-						stripos( $block_content, '<!-- wp:ugb/' ) !==  false 
+						stripos( $block_content, '<!-- wp:ugb/' ) !==  false
 					) {
 						stackable_block_enqueue_frontend_assets_v2();
 						stackable_add_required_block_styles_v2();
