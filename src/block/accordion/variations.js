@@ -54,10 +54,10 @@ const variations = applyFilters(
 				blockBorderType: 'solid',
 				blockBorderColor: '#dfdad1',
 				blockBorderWidth: {
-					top: 0,
-					right: 0,
-					bottom: 1,
-					left: 0,
+					top: 0, right: 0, bottom: 1, left: 0,
+				},
+				blockPadding: {
+					top: '', right: '', bottom: 24, left: '',
 				},
 			},
 			innerBlocks: [
@@ -75,7 +75,13 @@ const variations = applyFilters(
 						} ],
 					] ],
 				] ],
-				[ 'stackable/column', { templateLock: false, className: 'stk-block-accordion__content' }, [
+				[ 'stackable/column', {
+					templateLock: false,
+					className: 'stk-block-accordion__content',
+					containerPadding: {
+						top: 0, right: 0, bottom: 0, left: 0,
+					},
+				}, [
 					[ 'stackable/text', {
 						text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ),
 					} ],
