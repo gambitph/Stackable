@@ -45,10 +45,27 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Load our editor scripts.
 			add_action( 'init', array( $this, 'register_block_editor_assets' ) );
 
+			add_filter( 'init', array( $this, 'register_frontend_assets_nodep' ), 10, 2 );
+
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
 			// Adds a special class to the body tag, to indicate we can now run animations.
 			add_action( 'wp_footer', array( $this, 'init_animation' ) );
+		}
+
+		/**
+		 * Register inline frontend styles.
+		 *
+		 * @since 3.0.0
+		 */
+		public function register_frontend_assets_nodep() {
+			// Register our dummy style so that the inline styles would get added.
+			wp_register_style( 'ugb-style-css-nodep', false );
+			wp_enqueue_style( 'ugb-style-css-nodep' );
+			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
+			if ( ! empty( $inline_css ) ) {
+				wp_add_inline_style( 'ugb-style-css-nodep', $inline_css );
+			}
 		}
 
 		/**

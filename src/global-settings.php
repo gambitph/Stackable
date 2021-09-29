@@ -46,7 +46,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			/**
 			 * Color hooks
 			 */
-			add_action( 'stackable_inline_styles', array( $this, 'color_add_global_styles' ) );
+			add_filter( 'stackable_inline_styles_nodep', array( $this, 'color_add_global_styles' ) );
 
 			add_action( 'after_setup_theme', array( $this, 'color_add_global_color_palette' ), 9999 );
 
@@ -66,7 +66,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
 
 			// Add our global typography styles.
-			add_action( 'stackable_inline_styles', array( $this, 'typography_add_global_styles' ) );
+			add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
 		}
 
 		/**
