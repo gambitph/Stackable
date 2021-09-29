@@ -26,12 +26,12 @@ import {
 	getSeparatorClasses,
 	Transform,
 } from '~stackable/block-components'
+import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useBlockHoverClass } from '~stackable/hooks'
 
 const ALLOWED_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -43,6 +43,7 @@ const Edit = props => {
 		className,
 	} = props
 
+	const { hasInnerBlocks } = useBlockContext()
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -96,7 +97,7 @@ const Edit = props => {
 					</div>
 				</Separator>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
