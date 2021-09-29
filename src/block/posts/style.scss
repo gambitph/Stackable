@@ -81,5 +81,9 @@
 		.stk-block-posts__item {
 			display: flex;
 		}
+		.stk-container-padding {
+			padding-block: 0;
+			padding-inline-end: 0;
+		}
 	}
 }
