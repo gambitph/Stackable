@@ -45,7 +45,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Load our editor scripts.
 			add_action( 'init', array( $this, 'register_block_editor_assets' ) );
 
-			add_filter( 'init', array( $this, 'register_frontend_assets_nodep' ), 10, 2 );
+			add_filter( 'init', array( $this, 'register_frontend_assets_nodep' ) );
 
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
