@@ -27,6 +27,8 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -57,6 +59,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-label',
+		'stk-block-icon-label__inner-container',
 		rowClass,
 	] )
 
@@ -64,7 +67,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	] )
+	], useContentAlignmentClasses( attributes ) )
 
 	return (
 		<Fragment>
@@ -72,11 +75,12 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
 					id="general"
-					initialOpen={ true }
+					initialOpen={ false }
 				>
 					<AdvancedRangeControl
 						label={ __( 'Icon Gap' ) }
