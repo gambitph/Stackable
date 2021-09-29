@@ -17,6 +17,11 @@
 	margin-bottom: 0;
 	z-index: 1;
 }
+// Add small margin between blocks so that placing your mouse between blocks
+// will make the block appender appear.
+.editor-styles-wrapper [data-block][data-type^="stackable/"] ~ [data-block] {
+	margin-top: 12px;
+}
 
 // Block widths,
 .is-root-container > [data-block]:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
