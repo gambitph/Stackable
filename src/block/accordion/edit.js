@@ -51,6 +51,7 @@ const TEMPLATE = [
 			} ],
 			[ 'stackable/icon', {
 				icon: defaultIcon,
+				linkHasLink: false,
 			} ],
 		] ],
 	] ],
