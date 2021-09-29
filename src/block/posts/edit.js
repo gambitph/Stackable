@@ -44,6 +44,8 @@ import {
 	FlexGapControls,
 	MarginBottom,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -98,9 +100,15 @@ const Edit = props => {
 
 	const instanceId = useInstanceId( Edit )
 
+	const wrapperClassNames = classnames(
+		'stk-inner-blocks',
+		useContentAlignmentClasses( attributes ),
+	)
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-posts',
+		'stk-block-posts__inner-container',
 		blockHoverClass,
 		blockAlignmentClass,
 	], {
@@ -140,6 +148,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
+			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General' ) }
@@ -343,13 +352,15 @@ const Edit = props => {
 				</Placeholder>
 			) : (
 				<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
-					<div className={ contentClassNames }>
-						{ ( posts || [] ).map( editorPostItems ) }
-					</div>
-					<div className={ innerClassNames }>
-						<InnerBlocks
-							allowedBlocks={ ALLOWED_INNER_BLOCKS }
-						/>
+					<div className={ wrapperClassNames }>
+						<div className={ contentClassNames }>
+							{ ( posts || [] ).map( editorPostItems ) }
+						</div>
+						<div className={ innerClassNames }>
+							<InnerBlocks
+								allowedBlocks={ ALLOWED_INNER_BLOCKS }
+							/>
+						</div>
 					</div>
 				</BlockDiv>
 			) }

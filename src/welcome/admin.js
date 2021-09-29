@@ -2,6 +2,9 @@
  * Internal dependencies
  */
 import './news'
+import SVGEssentialIcon from './images/settings-icon-essential.svg'
+import SVGSpecialIcon from './images/settings-icon-special.svg'
+import SVGSectionIcon from './images/settings-icon-section.svg'
 
 /**
  * WordPress dependencies
@@ -64,14 +67,17 @@ const BLOCK_CATEROGIES = [
 	{
 		id: 'essential',
 		label: __( 'Essential Blocks', i18n ),
+		icon: <SVGEssentialIcon height="20" width="20" />,
 	},
 	{
 		id: 'special',
 		label: __( 'Special Blocks', i18n ),
+		icon: <SVGSpecialIcon height="20" width="20" />,
 	},
 	{
 		id: 'section',
 		label: __( 'Section Blocks', i18n ),
+		icon: <SVGSectionIcon height="20" width="20" />,
 	},
 ]
 
@@ -186,10 +192,19 @@ const BlockToggler = () => {
 
 	return (
 		<>
-			{ BLOCK_CATEROGIES.map( ( { id, label } ) => {
+			{ BLOCK_CATEROGIES.map( ( {
+				id, label, icon,
+			} ) => {
+				const classes = classnames( [
+					's-box-block__title',
+					`s-box-block__title--${ id }`,
+				] )
 				return (
-					<div className="s-box" key={ id }>
-						<h3>{ label }</h3>
+					<div className="s-box s-box-block" key={ id }>
+						<h3 className={ classes }>
+							{ icon }
+							<span>{ label }</span>
+						</h3>
 						<div className="s-settings-header">
 							{ isSaving === id && <Spinner /> }
 							<button onClick={ enableAllBlocks( id ) } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>

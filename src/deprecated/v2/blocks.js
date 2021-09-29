@@ -6,6 +6,7 @@
  * Internal dependencies
  */
 import './plugins'
+import './design-library'
 import { SVGStackableCategoryIcon } from '../../icons'
 
 /**

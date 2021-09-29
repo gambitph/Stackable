@@ -471,6 +471,29 @@ body.toplevel_page_stk-custom-fields {
 			width: 100%;
 		}
 	}
+	.s-box-block {
+		padding-top: 32px;
+	}
+	.s-box-block__title {
+		display: flex;
+		align-items: center;
+		margin: -32px 12px 0 -8px !important;
+		svg {
+			padding: 20px;
+			border-radius: 100%;
+			overflow: visible;
+			margin-right: 12px;
+		}
+		&.s-box-block__title--essential svg {
+			background: rgba(71, 160, 221, 0.15);
+		}
+		&.s-box-block__title--special svg {
+			background: rgba(226, 115, 93, 0.15);
+		}
+		&.s-box-block__title--section svg {
+			background: rgba(234, 189, 89, 0.15);
+		}
+	}
 	.s-video-tutorial-wrapper {
 		padding-bottom: 58.4%;
 		height: 0;
