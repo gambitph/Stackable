@@ -37,10 +37,13 @@ export const ContentAlign = () => {
 				case 'full':
 					newContentAlign = 'alignfull'
 					break
+				case '':
+					newContentAlign = ''
+					break
 				default: break
 			}
 
-			if ( newContentAlign ) {
+			if ( typeof newContentAlign !== 'undefined' ) {
 				updateBlockAttributes( clientId, { innerBlockContentAlign: newContentAlign } )
 			}
 		}
