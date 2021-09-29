@@ -153,7 +153,7 @@ export const Size = props => {
 			>
 				{ props.hasFullWidth && (
 					<AdvancedToggleControl
-						label={ __( 'Full Width' ) }
+						label={ __( 'Full Width', i18n ) }
 						attribute="buttonFullWidth"
 					/>
 				) }
