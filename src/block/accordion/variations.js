@@ -34,6 +34,7 @@ const variations = applyFilters(
 						} ],
 						[ 'stackable/icon', {
 							icon: defaultIcon,
+							linkHasLink: false,
 						} ],
 					] ],
 				] ],
@@ -70,6 +71,7 @@ const variations = applyFilters(
 						} ],
 						[ 'stackable/icon', {
 							icon: defaultIcon,
+							linkHasLink: false,
 						} ],
 					] ],
 				] ],
