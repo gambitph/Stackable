@@ -7,6 +7,7 @@ import BlockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
+import { last } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
 	FourRangeControl,
@@ -45,7 +46,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import {
-	Fragment, useCallback,
+	Fragment, useMemo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
@@ -55,7 +56,7 @@ const TEMPLATE = []
 
 const Edit = props => {
 	const {
-		hasInnerBlocks, isOnlyBlock,
+		hasInnerBlocks, isOnlyBlock, innerBlocks,
 	} = useBlockContext()
 
 	const {
@@ -88,10 +89,9 @@ const Edit = props => {
 		`stk-${ props.attributes.uniqueId }-container`,
 	] )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.ButtonBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? InnerBlocks.DefaultBlockAppender : () => <></> ) : () => <></>
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<Fragment>

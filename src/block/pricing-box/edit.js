@@ -7,6 +7,7 @@ import BlockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
+import { last } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
@@ -35,7 +36,7 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useCallback } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 
 const TEMPLATE = [
@@ -56,7 +57,7 @@ const Edit = props => {
 		className,
 	} = props
 
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
@@ -74,10 +75,9 @@ const Edit = props => {
 		`stk-${ props.attributes.uniqueId }-container`,
 	], useContentAlignmentClasses( props.attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? InnerBlocks.DefaultBlockAppender : () => <></> ) : () => <></>
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<>

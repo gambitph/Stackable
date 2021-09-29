@@ -41,7 +41,7 @@ import {
  */
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import {
-	Fragment, useCallback,
+	Fragment, useMemo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
@@ -64,7 +64,7 @@ const ALLOWED_BLOCKS = [
 ]
 
 const Edit = props => {
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
 	const {
 		className,
@@ -90,10 +90,9 @@ const Edit = props => {
 		'stk-hover-parent',
 	], useContentAlignmentClasses( props.attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? InnerBlocks.DefaultBlockAppender : () => <></> ) : () => <></>
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<Fragment>

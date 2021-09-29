@@ -7,6 +7,7 @@ import { TeamMemberStyles } from './style'
  * External dependencies
  */
 import { version as VERSION, i18n } from 'stackable'
+import { last } from 'lodash'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
@@ -37,7 +38,7 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { useCallback } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
@@ -86,7 +87,7 @@ const Edit = props => {
 		className,
 	} = props
 
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
@@ -104,10 +105,9 @@ const Edit = props => {
 		'stk-block-team-member__content',
 	], useContentAlignmentClasses( props.attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? InnerBlocks.DefaultBlockAppender : () => <></> ) : () => <></>
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<>
