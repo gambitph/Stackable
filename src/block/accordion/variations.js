@@ -20,9 +20,9 @@ const variations = applyFilters(
 	'stackable.accordion.variations',
 	[
 		{
-			name: 'default',
-			title: __( 'Default', i18n ),
-			description: __( 'Default Layout' ),
+			name: 'basic',
+			title: __( 'Basic', i18n ),
+			description: __( 'Basic Layout', i18n ),
 			innerBlocks: [
 				[ 'stackable/column', {
 					templateLock: 'insert', hasContainer: true, htmlTag: 'summary',
