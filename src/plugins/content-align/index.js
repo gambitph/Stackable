@@ -7,7 +7,7 @@ import { usePrevious } from '@wordpress/compose'
 
 export const ContentAlign = () => {
 	const {
-		hasStkAlign, align, contentAlign, clientId,
+		hasStkAlign, align, innerBlockContentAlign, clientId,
 	} = useSelect( select => {
 		const clientId = select( 'core/block-editor' ).getSelectedBlockClientId()
 		const block = select( 'core/block-editor' ).getBlock( clientId )
@@ -16,7 +16,7 @@ export const ContentAlign = () => {
 			clientId,
 			hasStkAlign: blockName.startsWith( 'stackable/' ) && select( 'core/blocks' ).getBlockType( blockName )?.supports?.stkAlign,
 			align: block?.attributes?.align,
-			contentAlign: block?.attributes?.contentAlign,
+			innerBlockContentAlign: block?.attributes?.innerBlockContentAlign,
 		}
 	}, [] )
 
@@ -25,7 +25,7 @@ export const ContentAlign = () => {
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	useEffect( () => {
-		if ( hasStkAlign && align && align !== contentAlign && previousClientId === clientId ) {
+		if ( hasStkAlign && align && align !== innerBlockContentAlign && previousClientId === clientId ) {
 			let newContentAlign
 			switch ( align ) {
 				case 'center':
@@ -41,7 +41,7 @@ export const ContentAlign = () => {
 			}
 
 			if ( newContentAlign ) {
-				updateBlockAttributes( clientId, { contentAlign: newContentAlign } )
+				updateBlockAttributes( clientId, { innerBlockContentAlign: newContentAlign } )
 			}
 		}
 	}, [ align ] )

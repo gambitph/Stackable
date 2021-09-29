@@ -14,7 +14,7 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
-			contentAlign: {
+			innerBlockContentAlign: {
 				type: 'string',
 				default: '',
 			},

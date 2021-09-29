@@ -47,7 +47,7 @@ export const Edit = props => {
 
 				<AdvancedToolbarControl
 					label={ __( 'Content Alignment', i18n ) }
-					attribute="contentAlign"
+					attribute="innerBlockContentAlign"
 					controls={ [
 						{
 							value: '',
