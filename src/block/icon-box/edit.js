@@ -77,7 +77,7 @@ const Edit = props => {
 	], useContentAlignmentClasses( props.attributes ) )
 
 	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? InnerBlocks.DefaultBlockAppender : () => <></> ) : InnerBlocks.ButtonBlockAppender
+		return hasInnerBlocks ? ! ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? InnerBlocks.DefaultBlockAppender : () => <></> ) : InnerBlocks.ButtonBlockAppender
 	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
