@@ -17,10 +17,16 @@
 	margin-bottom: 0;
 	z-index: 1;
 }
+
 // Add small margin between blocks so that placing your mouse between blocks
 // will make the block appender appear.
 .is-root-container > [data-block][data-type^="stackable/"] ~ [data-block][data-type^="stackable/"] {
-	margin-top: 12px;
+	margin-top: 8px;
+}
+// Add small margin between blocks so that placing your mouse between blocks
+// will make the block appender appear. This is for nested blocks.
+:not(.stk-block-icon-label):not(.stk-block-blockquote):not(.stk-block-columns):not(.stk-block-expand):not(.stk-block-button-group) > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block][data-type^="stackable/"] ~ [data-block][data-type^="stackable/"]:not([data-type="stackable/column"]) {
+	margin-top: 8px;
 }
 
 // Block widths,
