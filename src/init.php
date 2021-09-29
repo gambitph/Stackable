@@ -54,7 +54,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		}
 
 		/**
-		 * Register inline frontend styles.
+		 * Register inline frontend styles, these are always loaded.
 		 *
 		 * @since 3.0.0
 		 */
