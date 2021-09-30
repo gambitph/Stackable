@@ -26,8 +26,13 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	useAttributeEditHandlers, useBlockHoverClass,
+	useAttributeEditHandlers, useBlockHoverClass, useBlockContext,
 } from '~stackable/hooks'
+
+/**
+ * Internal dependencies
+ */
+import variations from './variations'
 
 /**
  * WordPress dependencies
@@ -38,29 +43,8 @@ import { useSelect } from '@wordpress/data'
 import { useState, useEffect } from '@wordpress/element'
 import { addFilter } from '@wordpress/hooks'
 
-const defaultIcon = '<svg data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path></svg>'
-
-const TEMPLATE = [
-	[ 'stackable/column', {
-		templateLock: 'insert', hasContainer: true, htmlTag: 'summary',
-		className: 'stk--container-small stk-block-accordion__heading',
-	}, [
-		[ 'stackable/icon-label', {}, [
-			[ 'stackable/heading', {
-				text: __( 'Accordion Title' ), hasP: true, textTag: 'h4',
-			} ],
-			[ 'stackable/icon', {
-				icon: defaultIcon,
-				linkHasLink: false,
-			} ],
-		] ],
-	] ],
-	[ 'stackable/column', { templateLock: false, className: 'stk-block-accordion__content' }, [
-		[ 'stackable/text', {
-			text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ),
-		} ],
-	] ],
-]
+// Use the default template from the block variations.
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
@@ -69,6 +53,7 @@ const Edit = props => {
 	} = props
 
 	const [ isOpen, setIsOpen ] = useState( true )
+	const { hasInnerBlocks } = useBlockContext()
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -147,13 +132,13 @@ const Edit = props => {
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-accordion" />
 
-			<BlockDiv className={ blockClassNames } renderHtmlTag={ false }>
+			<BlockDiv className={ blockClassNames } renderHtmlTag={ false } enableVariationPicker={ true }>
 				<InnerBlocks
 					template={ TEMPLATE }
 					templateLock="insert"
 				/>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }

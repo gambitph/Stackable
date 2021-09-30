@@ -1,13 +1,14 @@
-/**
- * Internal dependencies
+/** Internal dependencies
  */
 import BlockStyles from './style'
+import variations from './variations'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
+import { last } from 'lodash'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
@@ -23,6 +24,8 @@ import {
 	Transform,
 	ContainerDiv,
 	BlockLink,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -33,34 +36,24 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useCallback } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 
-const TEMPLATE = [
-	[ 'stackable/heading', {
-		text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-	} ],
-	[ 'stackable/price', {} ],
-	[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', {
-			text: 'Button',
-		} ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
 		className,
 	} = props
 
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-pricing-box',
+		'stk-block-pricing-box__inner-container',
 		blockHoverClass,
 	] )
 
@@ -69,12 +62,11 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		`stk-${ props.attributes.uniqueId }-container`,
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<>
@@ -91,12 +83,13 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerDiv className={ contentClassNames }>
 					<ColumnInnerBlocks
 						template={ TEMPLATE }
@@ -105,7 +98,7 @@ const Edit = props => {
 					/>
 				</ContainerDiv>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }

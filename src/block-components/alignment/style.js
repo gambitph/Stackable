@@ -4,7 +4,12 @@
 import { Style as StyleComponent } from '~stackable/components'
 import { getStyles, useStyles } from '~stackable/util'
 
-const getStyleParams = () => {
+const getStyleParams = ( options = {} ) => {
+	const {
+		selectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+	} = options
+
 	return [
 		{
 			selector: '',
@@ -16,7 +21,7 @@ const getStyleParams = () => {
 
 		{
 			renderIn: 'save',
-			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+			selectorCallback,
 			styles: {
 				alignItems: 'rowAlign',
 				justifyContent: 'innerBlockVerticalAlign',
@@ -26,7 +31,7 @@ const getStyleParams = () => {
 		},
 		{
 			renderIn: 'save',
-			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+			selectorCallback,
 			styleRule: 'alignItems',
 			attrName: 'innerBlockVerticalAlign',
 			responsive: 'all',
@@ -35,7 +40,7 @@ const getStyleParams = () => {
 
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+			selectorCallback: editorSelectorCallback,
 			styles: {
 				alignItems: 'rowAlign',
 				justifyContent: 'innerBlockVerticalAlign',
@@ -45,7 +50,7 @@ const getStyleParams = () => {
 		},
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+			selectorCallback: editorSelectorCallback,
 			styleRule: 'alignItems',
 			attrName: 'innerBlockVerticalAlign',
 			responsive: 'all',

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { blockStyles } from './block-styles'
+import variations from './variations'
 
 /**
  * External dependencies
@@ -16,6 +16,7 @@ import {
 	Image,
 	Typography,
 	FlexGapStyles,
+	Transform,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType, useBlockStyle, getBlockStyle,
@@ -126,11 +127,68 @@ const getStyleParams = () => {
 		},
 		{
 			selector: '',
+			responsive: 'all',
+			styles: {
+				'--stk-container-padding-left': 'containePadding',
+			},
+			hasUnits: 'px',
+			valueCallback: value => value?.left,
+		},
+		{
+			selector: '',
+			responsive: 'all',
+			styles: {
+				'--stk-container-padding-right': 'containePadding',
+			},
+			hasUnits: 'px',
+			valueCallback: value => value?.right,
+		},
+		{
+			selector: '',
 			styles: {
 				'--stk-column-gap': 'columnGap',
 			},
 			format: '%spx',
 			responsive: 'all',
+		},
+		{
+			selector: '.stk-content-align',
+			hasUnits: 'px',
+			responsive: 'all',
+			styleRule: 'maxWidth',
+			attrName: 'innerBlockContentWidth',
+		},
+		{
+			selector: '.stk-content-align',
+			responsive: 'all',
+			styleRule: 'marginLeft',
+			attrName: 'innerBlockAlign',
+			valueCallback: ( value, getAttribute, device ) => {
+				if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
+					return undefined
+				}
+				if ( value === 'center' || value === 'flex-end' ) {
+					return 'auto'
+				}
+				return 0
+			},
+			dependencies: [ 'innerBlockContentWidth' ],
+		},
+		{
+			selector: '.stk-content-align',
+			responsive: 'all',
+			styleRule: 'marginRight',
+			attrName: 'innerBlockAlign',
+			valueCallback: ( value, getAttribute, device ) => {
+				if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
+					return undefined
+				}
+				if ( value === 'center' || value === 'flex-start' ) {
+					return 'auto'
+				}
+				return 0
+			},
+			dependencies: [ 'innerBlockContentWidth' ],
 		},
 
 		// Category Highlight Color
@@ -237,7 +295,7 @@ export const PostsStyles = props => {
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
-	const blockStyle = useBlockStyle( blockStyles )
+	const blockStyle = useBlockStyle( variations )
 	const postsStyles = useStyles( attributes, getStyleParams() )
 	const imageOptions = useMemo( () => ( {
 		..._imageOptions,
@@ -249,6 +307,7 @@ export const PostsStyles = props => {
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
+			<Transform.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } options={ advancedOptions } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
@@ -279,7 +338,7 @@ PostsStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const blockStyle = getBlockStyle( blockStyles, propsToPass.attributes.className )
+	const blockStyle = getBlockStyle( variations, propsToPass.attributes.className )
 	const postsStyles = getStyles( propsToPass.attributes, getStyleParams() )
 	const imageOptions = {
 		..._imageOptions,
@@ -291,6 +350,7 @@ PostsStyles.Content = props => {
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Column.Style.Content { ...propsToPass } />
+			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } options={ advancedOptions } />
 			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />

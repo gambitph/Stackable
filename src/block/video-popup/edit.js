@@ -28,6 +28,8 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -62,6 +64,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-video-popup',
+		'stk-block-video-popup__inner-container',
 		rowClass,
 	] )
 
@@ -70,7 +73,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 		'stk-hover-parent',
-	] )
+	], useContentAlignmentClasses( attributes ) )
 
 	return (
 		<Fragment>
@@ -78,6 +81,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }

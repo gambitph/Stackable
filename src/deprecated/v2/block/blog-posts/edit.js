@@ -1016,7 +1016,7 @@ const Edit = props => {
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				{ ( currentPagePosts || [] ).map( ( post, i ) => {
-					const featuredImageSrc = ( ( post.featured_image_urls && post.featured_image_urls[ imageSize || 'large' ] ) || [] )[ 0 ]
+					const featuredImageSrc = ( ( post.featured_image_urls_v2 && post.featured_image_urls_v2[ imageSize || 'large' ] ) || [] )[ 0 ]
 					const featuredImage = featuredImageSrc &&
 						<figure className={ featuredImageClasses }>
 							{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
@@ -1034,23 +1034,23 @@ const Edit = props => {
 						<a>{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)', i18n ) }</a>
 					</TitleTag>
 
-					const category = post.category_list &&
-						<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list.replace( /href=['"].*?['"]/g, '' ) } } />
+					const category = post.category_list_v2 &&
+						<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list_v2.replace( /href=['"].*?['"]/g, '' ) } } />
 
 					const separator = <span className="ugb-blog-posts__sep">{ META_SEPARATORS[ metaSeparator || 'dot' ] }</span>
 
-					const author = post.author_info && post.author_info.name &&
-						<span>{ post.author_info.name }</span>
+					const author = post.author_info_v2 && post.author_info_v2.name &&
+						<span>{ post.author_info_v2.name }</span>
 
 					const date = post.date_gmt &&
 						<time dateTime={ format( 'c', post.date_gmt ) } className="ugb-blog-posts__date">
 							{ dateI18n( 'F d, Y', post.date_gmt ) }
 						</time>
 
-					const comments = <span>{ post.comments_num }</span>
+					const comments = <span>{ post.comments_num_v2 }</span>
 
 					// Trim the excerpt.
-					let excerptString = post.post_excerpt_stackable.split( ' ' )
+					let excerptString = post.post_excerpt_stackable_v2.split( ' ' )
 					if ( excerptString.length > ( excerptLength || 55 ) ) {
 						excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'
 					} else {
