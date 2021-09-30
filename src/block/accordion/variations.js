@@ -102,7 +102,7 @@ const variations = applyFilters(
 		{
 			name: 'colored',
 			title: __( 'Colored', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored Layout', i18n ) ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored', i18n ) ),
 			isPremium: true,
 			scope: [ 'block' ],
 		},
