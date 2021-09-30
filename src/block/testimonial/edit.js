@@ -8,6 +8,7 @@ import variations from './variations'
  * External dependencies
  */
 import { version as VERSION } from 'stackable'
+import { last } from 'lodash'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
@@ -26,6 +27,8 @@ import {
 	MarginBottom,
 	BlockLink,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -36,7 +39,7 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { useCallback } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -46,13 +49,14 @@ const Edit = props => {
 		className,
 	} = props
 
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-testimonial',
+		'stk-block-testimonial__inner-container',
 		blockHoverClass,
 	] )
 
@@ -61,12 +65,11 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-testimonial__content',
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<>
@@ -84,6 +87,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

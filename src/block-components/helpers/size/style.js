@@ -13,7 +13,7 @@ const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
-		horizontalAlignRule = 'justifyContent',
+		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
 	} = options
 
@@ -25,13 +25,6 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hasUnits: 'px',
-		},
-		{
-			selector,
-			styleRule: horizontalAlignRule || 'justifyContent',
-			attrName: 'horizontalAlign',
-			attrNameTemplate,
-			responsive: 'all',
 		},
 		{
 			selector,
@@ -119,7 +112,18 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hasUnits: 'px',
-			valuePreCallback: value => value?.right,
+			valuePreCallback: ( value, getAttribute, device ) => {
+				const right = value?.right
+				const horizontalAlign = getAttribute( 'horizontalAlign', device )
+				switch ( horizontalAlign ) {
+					case 'flex-start':
+					case 'center':
+						return 'auto'
+					case 'flex-end':
+						return right || 0
+					default: return right
+				}
+			},
 			valueCallback: value => {
 				return value.startsWith( 'auto' ) ? 'auto' : value
 			},
@@ -143,11 +147,51 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hasUnits: 'px',
-			valuePreCallback: value => value?.left,
+			valuePreCallback: ( value, getAttribute, device ) => {
+				const left = value?.left
+				const horizontalAlign = getAttribute( 'horizontalAlign', device )
+				switch ( horizontalAlign ) {
+					case 'flex-start': return left || 0
+					case 'center':
+					case 'flex-end':
+						return 'auto'
+					default: return left
+				}
+			},
 			valueCallback: value => {
 				return value.startsWith( 'auto' ) ? 'auto' : value
 			},
+			dependencies: [ 'horizontalAlign' ],
 		},
+		{
+			selector,
+			styleRule: 'display',
+			attrName: 'verticalAlign',
+			attrNameTemplate,
+			responsive: 'all',
+			valueCallback: () => {
+				return 'flex'
+			},
+		},
+		{
+			selector,
+			styleRule: 'flexDirection',
+			attrName: 'verticalAlign',
+			responsive: 'all',
+			attrNameTemplate,
+			valueCallback: () => {
+				return ( verticalAlignRule || 'alignItems' ) === 'justifyContent' ? 'column' : undefined
+			},
+		},
+		...( ( horizontalAlignRule !== 'margin' ) ? [
+			{
+				selector,
+				styleRule: horizontalAlignRule || 'justifyContent',
+				attrName: 'horizontalAlign',
+				attrNameTemplate,
+				responsive: 'all',
+			},
+		] : [] ),
 	]
 }
 

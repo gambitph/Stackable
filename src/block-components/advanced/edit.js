@@ -131,6 +131,7 @@ export const Edit = () => {
 						label={ __( 'Position', i18n ) }
 						attribute="positionNum"
 						responsive="all"
+						units={ [ 'px', '%' ] }
 						hover="all"
 						defaultLocked={ false }
 						hasLock={ false }

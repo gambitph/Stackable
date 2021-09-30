@@ -68,7 +68,7 @@ export const usePostsQuery = attributes => {
 
 		return {
 			posts,
-			hasPosts: Array.isArray( posts ) && posts.length,
+			hasPosts: !! ( Array.isArray( posts ) && posts.length ),
 			isRequesting: isResolving( 'core', 'getEntityRecords', [
 				'postType',
 				type,

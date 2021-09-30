@@ -22,6 +22,7 @@ import {
 	getRowClasses,
 	Separator,
 	getSeparatorClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
 
 export const Save = props => {
@@ -47,11 +48,8 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	], {
-		'stk--fit-content': attributes.columnFit,
-		alignwide: attributes.contentAlign === 'alignwide', // This will align the columns inside.
-		alignfull: attributes.contentAlign === 'alignfull', // This will align the columns inside.
-	} )
+		`stk-${ props.attributes.uniqueId }-column`,
+	], getContentAlignmentClasses( props.attributes ) )
 
 	return (
 		<BlockDiv.Content
