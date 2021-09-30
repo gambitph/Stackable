@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -60,28 +60,28 @@ const variations = applyFilters(
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			isPremium: true,
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal-2',
 			title: __( 'Horizontal 2', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
-			isPremium: true,
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal-3',
 			title: __( 'Horizontal 3', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 3', i18n ) ),
-			isPremium: true,
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'split-centered',
 			title: __( 'Split Centered', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Split Centered', i18n ) ),
-			isPremium: true,
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]
