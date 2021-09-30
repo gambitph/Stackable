@@ -34,8 +34,8 @@ export const IconButtonStyles = props => {
 		...propsToPass.options,
 		selector: '.stk-button',
 		hoverSelector: '.stk-button:hover',
-		textSelector: '.stk-button > .stk-button__inner-text',
-		textHoverSelector: '.stk-button:hover > .stk-button__inner-text',
+		textSelector: '.stk-button__inner-text',
+		textHoverSelector: '.stk-button:hover .stk-button__inner-text',
 	}
 
 	return (
@@ -66,8 +66,8 @@ IconButtonStyles.Content = props => {
 		...options,
 		selector: '.stk-button',
 		hoverSelector: '.stk-button:hover',
-		textSelector: '.stk-button > .stk-button__inner-text',
-		textHoverSelector: '.stk-button:hover > .stk-button__inner-text',
+		textSelector: '.stk-button__inner-text',
+		textHoverSelector: '.stk-button:hover .stk-button__inner-text',
 	}
 
 	const styles = (

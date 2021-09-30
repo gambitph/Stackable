@@ -8,6 +8,7 @@ import variations from './variations'
  */
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
+import { last } from 'lodash'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
@@ -23,6 +24,8 @@ import {
 	Transform,
 	ContainerDiv,
 	BlockLink,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -33,7 +36,7 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useCallback } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -43,13 +46,14 @@ const Edit = props => {
 		className,
 	} = props
 
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-pricing-box',
+		'stk-block-pricing-box__inner-container',
 		blockHoverClass,
 	] )
 
@@ -58,12 +62,11 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		`stk-${ props.attributes.uniqueId }-container`,
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<>
@@ -80,6 +83,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockStyles version={ VERSION } />

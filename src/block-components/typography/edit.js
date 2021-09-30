@@ -98,7 +98,7 @@ export const Controls = props => {
 					/**
 					 * Pass the unescaped Dynamic Content `onChange` function.
 					 */
-					onChangeDynamicContent={ setDebouncedText }
+					changeDynamicContent={ setDebouncedText }
 					isDynamic={ true }
 				/>
 			) }
@@ -181,6 +181,16 @@ export const Controls = props => {
 						{ label: __( 'None', i18n ), value: 'none' },
 					] }
 					attribute={ attributeName( 'textTransform' ) }
+				/>
+				<AdvancedSelectControl
+					label={ __( 'Font Style', i18n ) }
+					options={ [
+						{ label: __( 'Default', i18n ), value: '' },
+						{ label: __( 'Normal', i18n ), value: 'normal' },
+						{ label: __( 'Italic', i18n ), value: 'italic' },
+						{ label: __( 'Oblique', i18n ), value: 'oblique' },
+					] }
+					attribute={ attributeName( 'fontStyle' ) }
 				/>
 				<AdvancedRangeControl
 					label={ __( 'Line-Height', i18n ) }

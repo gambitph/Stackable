@@ -137,7 +137,13 @@ export const HeadingStyles = props => {
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
+			<BlockDiv.Style { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					verticalAlignRule: 'justifyContent',
+				},
+			} } />
 			<Advanced.Style { ...propsToPass } />
 			<Transform.Style { ...propsToPass } />
 			<Typography.Style { ...{
@@ -175,7 +181,13 @@ HeadingStyles.Content = props => {
 	const styles = (
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
+			<BlockDiv.Style.Content { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					verticalAlignRule: 'justifyContent',
+				},
+			} } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...{
