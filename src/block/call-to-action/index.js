@@ -1,9 +1,10 @@
 /**
- * BLOCK: Container Block
+ * BLOCK: Call to Action Block
  */
 /**
  * Internal dependencies
  */
+import variations from './variations'
 import metadata from './block.json'
 import edit from './edit'
 import save from './save'
@@ -31,6 +32,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		stkAlign: true,
 	},
 
+	variations,
 	edit,
 	save,
 } )

@@ -50,7 +50,7 @@ const getStyleParams = () => {
 			selector: '.stk-block-notification__close-button svg',
 			attrName: 'dismissibleColor',
 			styleRule: 'fill',
-			enabledCallback: getAttribute => getAttribute( 'isDismissible' ) && getAttribute( 'dismissibleSize' ),
+			enabledCallback: getAttribute => getAttribute( 'isDismissible' ),
 		},
 	]
 }

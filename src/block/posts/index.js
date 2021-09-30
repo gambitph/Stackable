@@ -1,9 +1,11 @@
+import './design'
 /**
  * BLOCK: Posts
  */
 /**
  * Internal dependencies
  */
+import variations from './variations'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
@@ -17,9 +19,11 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		anchor: true,
+		stkAlign: true,
 	},
 	attributes: schema,
 
+	variations,
 	edit,
 	save,
 } )

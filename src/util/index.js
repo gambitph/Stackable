@@ -27,6 +27,7 @@ import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
 import { inRange } from 'lodash'
+import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
@@ -365,3 +366,27 @@ export const getDocumentHead = () => {
  * @return {boolean} true if open.
  */
 export const hasEditingContent = () => !! document.querySelector( 'iframe[name="editor-canvas"]' )
+
+/**
+ * Recursively add uniqueId to inner blocks.
+ *
+ * @param {Array} innerBlocks
+ *
+ * @return {void}
+ */
+export const recursivelyAddUniqueIdToInnerBlocks = ( innerBlocks = [] ) => {
+	if ( innerBlocks.length === 0 ) {
+		return null
+	}
+
+	innerBlocks.forEach( innerBlock => {
+		if ( innerBlock.name.startsWith( 'stackable/' ) ) {
+			innerBlock.attributes = {
+				...innerBlock.attributes,
+				uniqueId: createUniqueClass( innerBlock.clientId ),
+			}
+		}
+
+		recursivelyAddUniqueIdToInnerBlocks( innerBlock.innerBlocks )
+	} )
+}
