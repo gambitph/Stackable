@@ -26,21 +26,21 @@ const getStyleParams = () => {
 	return [
 		{
 			renderIn: 'save',
-			selector: '> .stk-block-content',
+			selector: '.%s-column',
 			styleRule: 'columnGap',
 			attrName: 'columnGap',
 			format: '%spx',
 		},
 		{
 			renderIn: 'edit',
-			selector: '> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout',
+			selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
 			styleRule: 'columnGap',
 			attrName: 'columnGap',
 			format: '%spx',
 		},
 		{
 			renderIn: 'save',
-			selector: '> .stk-block-content',
+			selector: '.%s-column',
 			styleRule: 'justifyContent',
 			attrName: 'columnFitAlign',
 			responsive: 'all',
@@ -48,7 +48,7 @@ const getStyleParams = () => {
 		},
 		{
 			renderIn: 'edit',
-			selector: '> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout',
+			selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
 			styleRule: 'justifyContent',
 			attrName: 'columnFitAlign',
 			responsive: 'all',

@@ -17,6 +17,7 @@ import {
 	getAlignmentClasses,
 	CustomCSS,
 	getResponsiveClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -37,6 +38,7 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-notification',
+		'stk-block-notification__inner-container',
 		responsiveClass,
 	], {
 		'stk--is-dismissible': attributes.isDismissible,
@@ -48,7 +50,7 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-notification__content',
-	] )
+	], getContentAlignmentClasses( attributes ) )
 
 	return (
 		<BlockDiv.Content

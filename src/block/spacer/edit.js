@@ -63,6 +63,7 @@ const Edit = props => {
 		className,
 		'stk-block-spacer',
 		blockHoverClass,
+		'stk--no-padding',
 	] )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
@@ -87,7 +88,7 @@ const Edit = props => {
 	return (
 		<>
 			<InspectorTabs />
-			<BlockDiv.InspectorControls />
+			<BlockDiv.InspectorControls hasSizeSpacing={ false } />
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings

@@ -89,6 +89,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	}, [ JSON.stringify( typographySettings ), applySettingsTo ] )
 
 	const changeStyles = ( selector, styles ) => {
+		/**
+		 * Delete the object keys with empty strings.
+		 * Otherwise, the API will throw an error code 400
+		 * because of incompatible schema type.
+		 */
+		Object.keys( styles ).forEach( key => {
+			if ( styles[ key ] === '' ) {
+				delete styles[ key ]
+			}
+		} )
+
 		const newSettings = {
 			...typographySettings,
 			[ selector ]: styles,

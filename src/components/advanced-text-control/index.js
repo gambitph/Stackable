@@ -25,13 +25,13 @@ const AdvancedTextControl = props => {
 		...inputProps
 	} = propsToPass
 
-	const onChangeDynamicContent = typeof props.onChangeDynamicContent !== 'undefined'
-		? props.onChangeDynamicContent
+	const changeDynamicContent = typeof props.changeDynamicContent !== 'undefined'
+		? props.changeDynamicContent
 		: typeof props.onChange === 'undefined' ? onChange : props.onChange
 
 	const dynamicContentProps = useDynamicContentControlProps( {
 		value: typeof props.value === 'undefined' ? value : props.value,
-		onChange: onChangeDynamicContent,
+		onChange: changeDynamicContent,
 		isFormatType: props.isFormatType,
 	} )
 
@@ -75,7 +75,7 @@ AdvancedTextControl.defaultProps = {
 	value: undefined,
 	onChange: undefined,
 	// Allow custom onChange when dynamic content is changed.
-	onChangeDynamicContent: undefined,
+	changeDynamicContent: undefined,
 }
 
 export default AdvancedTextControl

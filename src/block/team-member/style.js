@@ -28,7 +28,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const containerDivOptions = {
 	sizeSelector: '.stk-block-team-member__content',
 	sizeVerticalAlignRule: 'justifyContent',
-	sizeHorizontalAlignRule: 'alignSelf',
+	sizeHorizontalAlignRule: 'margin',
 }
 
 export const TeamMemberStyles = props => {
