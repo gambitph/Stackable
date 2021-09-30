@@ -7,7 +7,7 @@ import { getStyles, useStyles } from '~stackable/util'
 const getStyleParams = ( options = {} ) => {
 	const {
 		selectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
-		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 	} = options
 
 	return [
