@@ -62,6 +62,10 @@ class StackableAccordion {
 					el.contentEl.anim.cancel()
 				}
 
+				el.classList[
+					! Array.from( el.classList ).includes( 'stk--is-open' ) ? 'add' : 'remove'
+				]( 'stk--is-open' )
+
 				// When the accordion is triggered to open/close, we animate
 				// from this current height.
 				el.dataset.preHeight = el.dataset.height

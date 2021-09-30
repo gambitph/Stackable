@@ -143,7 +143,7 @@ export const expandAttributes = attributes => {
 			suffixes.push( [ '', 'Tablet', 'Mobile' ] )
 		}
 		if ( newAttributes[ name ].stkHover ) {
-			suffixes.push( [ '', 'Hover', 'ParentHover' ] )
+			suffixes.push( [ '', 'Hover', 'ParentHover', 'Collapsed' ] )
 		}
 
 		const attributeNames = getPermutation( suffixes )
@@ -175,7 +175,8 @@ export const getAttributeName = ( attrName, deviceType = 'desktop', hoverState =
 	const hoverAttrName =
 		hoverState === 'normal' ? ''
 			: hoverState === 'hover' ? 'Hover'
-				: 'ParentHover'
+				: hoverState === 'parent-hover' ? 'ParentHover'
+					: 'Collapsed'
 
 	// Follow format if supplied.
 	if ( attrName?.includes( '%s' ) ) {
