@@ -27,6 +27,10 @@ export const Save = props => {
 		attributes,
 	} = props
 
+	const {
+		collapseOn = '',
+	} = attributes
+
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
@@ -43,6 +47,9 @@ export const Save = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 		'stk-button-group',
+		{
+			[ `stk--collapse-on-${ collapseOn }` ]: collapseOn,
+		},
 	] )
 
 	return (

@@ -29,23 +29,23 @@ import {
 
 const typographyOptions = {
 	selector: [
-		'ul > li',
-		'ol > li',
+		'ul li',
+		'ol li',
 	],
 	hoverSelector: [
-		'.%s:hover ul > li',
-		'.%s:hover ol > li',
+		'.%s:hover ul li',
+		'.%s:hover ol li',
 	],
 }
 
 const getStyleParams = ( { attributes = {} } ) => {
 	const selector = [
-		'ul > li',
-		'ol > li',
+		'ul li',
+		'ol li',
 	]
 	const hoverSelector = [
-		'.%s:hover ul > li',
-		'.%s:hover ol > li',
+		'.%s:hover ul li',
+		'.%s:hover ol li',
 	]
 
 	const orderedListMarkerSelector = 'ol > li::marker'
@@ -56,9 +56,9 @@ const getStyleParams = ( { attributes = {} } ) => {
 			...acc,
 			{
 				renderIn: 'edit',
-				selector: '> div >' + key,
+				selector: key,
 				hover: 'all',
-				hoverSelector: '.%s:hover > div >' + key,
+				hoverSelector: '.%s:hover ' + key,
 				styleRule: 'listStyleImage',
 				attrName: 'iconColor',
 				valuePreCallback: ( value, getAttribute, device, state ) => {
@@ -76,9 +76,9 @@ const getStyleParams = ( { attributes = {} } ) => {
 			},
 			{
 				renderIn: 'save',
-				selector: '>' + key,
+				selector: key,
 				hover: 'all',
-				hoverSelector: '.%s:hover >' + key,
+				hoverSelector: '.%s:hover ' + key,
 				styleRule: 'listStyleImage',
 				attrName: 'iconColor',
 				valuePreCallback: ( value, getAttribute, device, state ) => {
@@ -132,9 +132,9 @@ const getStyleParams = ( { attributes = {} } ) => {
 			format: '%spx',
 		},
 		{
-			selector: 'ul > li',
+			selector: 'ul li',
 			hover: 'all',
-			hoverSelector: '.%s:hover ul > li',
+			hoverSelector: '.%s:hover ul li',
 			styleRule: 'listStyleImage',
 			attrName: 'iconColor',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
@@ -170,7 +170,7 @@ const getStyleParams = ( { attributes = {} } ) => {
 			hover: 'all',
 		},
 		{
-			selector: 'ul > li::marker',
+			selector: 'ul li::marker',
 			styleRule: 'fontSize',
 			attrName: 'iconSize',
 			responsive: 'all',
