@@ -20,10 +20,7 @@ import {
 	useEffect, useState, useRef,
 } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
-import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
-
-// Add WP 5.5 compatibility
-const useMergeRefs = _useMergeRefs || ( () => {} )
+import { useMergeRefs } from '@wordpress/compose'
 
 export const Typography = props => {
 	const {
@@ -38,6 +35,7 @@ export const Typography = props => {
 		ref,
 		editable,
 		defaultValue,
+		identifier,
 		...propsToPass
 	} = props
 
@@ -51,8 +49,7 @@ export const Typography = props => {
 	useEffect( () => {
 		if ( focusOnSelected ) {
 			if ( clientId === selectedClientId ) {
-				// Add WP 5.5 compatibility.
-				const el = richTextRef.current || document.querySelector( '.wp-block.is-selected .rich-text' )
+				const el = richTextRef.current
 				if ( ! el ) {
 					return
 				}
@@ -101,7 +98,7 @@ export const Typography = props => {
 
 	return (
 		<RichText
-			identifier="text"
+			identifier={ identifier }
 			className={ className }
 			tagName={ TagName }
 			value={ debouncedText || defaultValue }
@@ -121,6 +118,7 @@ Typography.defaultProps = {
 	value: null,
 	onChange: null,
 	editable: true,
+	identifier: 'text',
 }
 
 Typography.Content = props => {

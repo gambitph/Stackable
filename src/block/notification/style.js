@@ -33,7 +33,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const containerDivOptions = {
 	sizeSelector: '.stk-block-notification__content',
 	sizeVerticalAlignRule: 'justifyContent',
-	sizeHorizontalAlignRule: 'alignSelf',
+	sizeHorizontalAlignRule: 'margin',
 }
 
 const getStyleParams = () => {
@@ -50,7 +50,7 @@ const getStyleParams = () => {
 			selector: '.stk-block-notification__close-button svg',
 			attrName: 'dismissibleColor',
 			styleRule: 'fill',
-			enabledCallback: getAttribute => getAttribute( 'isDismissible' ) && getAttribute( 'dismissibleSize' ),
+			enabledCallback: getAttribute => getAttribute( 'isDismissible' ),
 		},
 	]
 }

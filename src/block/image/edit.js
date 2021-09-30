@@ -32,7 +32,7 @@ import {
  */
 import { Fragment } from '@wordpress/element'
 
-const heightUnit = [ 'px', 'vh' ]
+const heightUnit = [ 'px', 'vh', '%' ]
 
 const Edit = props => {
 	const {
@@ -54,7 +54,7 @@ const Edit = props => {
 
 			<InspectorTabs />
 
-			<Alignment.InspectorControls hasColumnAlignment={ true } />
+			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />

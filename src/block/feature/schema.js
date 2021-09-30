@@ -10,6 +10,8 @@ import {
 	Row,
 	Separator,
 	Transform,
+	ContentAlign,
+	ContainerDiv,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -28,6 +30,19 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Separator.addAttributes( attrObject )
+	ContentAlign.addAttributes( attrObject )
+	ContainerDiv.addAttributes( attrObject )
+
+	attrObject.add( {
+		attributes: {
+			alignVertical: {
+				type: 'boolean',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 
 	return attrObject.getMerged( version )
 }
