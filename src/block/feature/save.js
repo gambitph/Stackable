@@ -17,6 +17,7 @@ import {
 	getRowClasses,
 	Separator,
 	getSeparatorClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -38,6 +39,7 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-block-feature',
+		'stk-block-feature__inner-container',
 		responsiveClass,
 		separatorClass,
 	] )
@@ -47,7 +49,7 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	] )
+	], getContentAlignmentClasses( attributes ) )
 
 	return (
 		<BlockDiv.Content

@@ -17,6 +17,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		anchor: true,
+		stkAlign: true,
 	},
 	attributes: schema,
 

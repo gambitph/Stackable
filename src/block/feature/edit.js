@@ -25,6 +25,8 @@ import {
 	Separator,
 	getSeparatorClasses,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 
@@ -34,8 +36,6 @@ import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
-
-const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
@@ -52,6 +52,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-feature',
+		'stk-block-feature__inner-container',
 		rowClass,
 		blockHoverClass,
 		separatorClass,
@@ -62,11 +63,11 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
 	return (
 		<>
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
@@ -78,6 +79,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<ContentAlign.InspectorControls />
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature" />
