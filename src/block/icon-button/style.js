@@ -18,6 +18,13 @@ import { useBlockEditContext } from '@wordpress/block-editor'
  */
 import { renderToString } from '@wordpress/element'
 
+const buttonOptions = {
+	selector: '.stk-button',
+	hoverSelector: '.stk-button:hover',
+	textSelector: '.stk-button__inner-text',
+	textHoverSelector: '.stk-button:hover .stk-button__inner-text',
+}
+
 export const IconButtonStyles = props => {
 	const {
 		...propsToPass
@@ -30,20 +37,13 @@ export const IconButtonStyles = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
-	propsToPass.options = {
-		...propsToPass.options,
-		selector: '.stk-button',
-		hoverSelector: '.stk-button:hover',
-		textSelector: '.stk-button__inner-text',
-		textHoverSelector: '.stk-button:hover .stk-button__inner-text',
-	}
 
 	return (
 		<>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Transform.Style { ...propsToPass } />
-			<Button.Style { ...propsToPass } />
+			<Button.Style { ...propsToPass } options={ buttonOptions } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</>
 	)
@@ -75,7 +75,7 @@ IconButtonStyles.Content = props => {
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
-			<Button.Style.Content { ...propsToPass } />
+			<Button.Style.Content { ...propsToPass } options={ buttonOptions } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 		</>
 	)
