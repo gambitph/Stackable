@@ -1,12 +1,14 @@
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -18,21 +20,21 @@ const variations = applyFilters(
 	'stackable.feature-grid.variations',
 	[
 		{
-			name: 'basic',
-			title: __( 'Basic', i18n ),
-			description: __( 'Basic Layout', i18n ),
-			attributes: { className: 'is-style-basic' },
+			name: 'default',
+			title: __( 'Default', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
+			attributes: { className: 'is-style-default' },
 			isDefault: true,
 			innerBlocks: [
 				[ 'stackable/column', { templateLock: true, hasContainer: true }, [
 					[ 'stackable/image' ],
 					[ 'stackable/heading', {
-						text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
 					} ],
-					[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
+					[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 					[ 'stackable/button-group', {}, [
 						[ 'stackable/button', {
-							text: 'Button',
+							text: _x( 'Button', 'Button placeholder', i18n ),
 							buttonBackgroundColor: 'transparent',
 							className: 'is-style-plain',
 						} ],
@@ -41,12 +43,12 @@ const variations = applyFilters(
 				[ 'stackable/column', { templateLock: true, hasContainer: true }, [
 					[ 'stackable/image' ],
 					[ 'stackable/heading', {
-						text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
 					} ],
-					[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
+					[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 					[ 'stackable/button-group', {}, [
 						[ 'stackable/button', {
-							text: 'Button',
+							text: _x( 'Button', 'Button placeholder', i18n ),
 							buttonBackgroundColor: 'transparent',
 							className: 'is-style-plain',
 						} ],
@@ -55,12 +57,12 @@ const variations = applyFilters(
 				[ 'stackable/column', { templateLock: true, hasContainer: true }, [
 					[ 'stackable/image' ],
 					[ 'stackable/heading', {
-						text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
 					} ],
-					[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
+					[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 					[ 'stackable/button-group', {}, [
 						[ 'stackable/button', {
-							text: 'Button',
+							text: _x( 'Button', 'Button placeholder', i18n ),
 							buttonBackgroundColor: 'transparent',
 							className: 'is-style-plain',
 						} ],
@@ -72,22 +74,22 @@ const variations = applyFilters(
 		{
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
-			description: __( 'Horizontal Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'large-mid',
 			title: __( 'Large Mid', i18n ),
-			description: __( 'Large Mid Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Mid', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'zigzag',
 			title: __( 'Zigzag', i18n ),
-			description: __( 'Zigzag Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Zizag', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]
