@@ -2,13 +2,14 @@
  * Internal dependencies
  */
 import { CardStyles } from './style'
-import { blockStyles } from './block-styles'
+import variations from './variations'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
+import { last } from 'lodash'
 import {
 	InspectorTabs,
 } from '~stackable/components'
@@ -25,7 +26,6 @@ import {
 	CustomCSS,
 	Responsive,
 	ContainerDiv,
-	BlockStyle,
 	CustomAttributes,
 	EffectsAnimations,
 	BlockLink,
@@ -39,23 +39,16 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import {
-	Fragment, useCallback,
+	Fragment, useMemo,
 } from '@wordpress/element'
 
-const TEMPLATE = [
-	[ 'stackable/heading', {} ],
-	[ 'stackable/subtitle', { text: 'Subtitle for This Block' } ],
-	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', { text: 'Button' } ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const widthUnit = [ 'px' ]
 const heightUnit = [ 'px' ]
 
 const Edit = props => {
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
 	const {
 		hasContainer,
@@ -67,7 +60,7 @@ const Edit = props => {
 
 	const { blockOrientation } = useAlignment()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockStyle = useBlockStyle( blockStyles )
+	const blockStyle = useBlockStyle( variations )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
@@ -89,10 +82,9 @@ const Edit = props => {
 		'stk-container-padding': hasContainer,
 	} )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<Fragment>
@@ -104,10 +96,9 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 			<BlockLink.InspectorControls />
-			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
-				hasHeight={ blockStyle !== 'horizontal' }
+				hasHeight={ blockStyle === 'default' }
 				widthUnits={ widthUnit }
 				heightUnits={ heightUnit }
 				hasBorderRadius={ false }
@@ -123,12 +114,12 @@ const Edit = props => {
 			<CardStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-card" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerDiv className={ contentClassNames }>
 					<Image
 						className="stk-block-card__image"
 						enableWidth={ blockStyle === 'horizontal' }
-						enableHeight={ blockStyle !== 'horizontal' }
+						enableHeight={ blockStyle === 'default' }
 						enableDiagonal={ false }
 						widthUnits={ widthUnit }
 						heightUnits={ heightUnit }
@@ -137,6 +128,7 @@ const Edit = props => {
 						widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
 						height={ blockStyle !== 'horizontal' ? undefined : 100 }
 						heightUnit={ blockStyle !== 'horizontal' ? 'px' : '%' }
+						hasTooltip={ ! [ 'full', 'faded' ].includes( blockStyle ) }
 					/>
 					<div className={ innerClassNames }>
 						<InnerBlocks
@@ -147,7 +139,7 @@ const Edit = props => {
 					</div>
 				</ContainerDiv>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</Fragment>
 	)
 }

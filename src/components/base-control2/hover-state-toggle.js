@@ -34,18 +34,28 @@ const HOVER_OPTIONS = [
 		value: 'parent-hovered',
 		icon: <SVGStateParentHover />,
 	},
+	{
+		label: __( 'Collapsed', i18n ),
+		value: 'collapsed',
+		icon: <SVGStateParentHover />,
+	},
 ]
 
 const HoverStateToggle = props => {
-	const [ currentHoverState, setCurrentHoverState, _blockHoverClass, hasParentHoverState ] = useBlockHoverState()
+	const [ currentHoverState, setCurrentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
 
 	const stateOptions = useMemo( () => {
-		const hover = props.hover === 'all' ? [ 'normal', 'hover', 'parent-hovered' ] : props.hover
+		const hover = props.hover === 'all' ? [ 'normal', 'hover', 'parent-hovered', 'collapsed' ] : props.hover
 		return HOVER_OPTIONS.filter( ( { value } ) => {
 			// Don't include the parent hover state toggle if there's no parent hovered.
 			if ( ! hasParentHoverState && value === 'parent-hovered' ) {
 				return false
 			}
+
+			if ( ! hasCollapsedState && value === 'collapsed' && ! isCollapsedBlock ) {
+				return false
+			}
+
 			return hover.includes( value )
 		} )
 	}, [ props.hover ] )

@@ -8,6 +8,7 @@ import {
 	AdvancedToolbarControl,
 	ColorPaletteControl,
 	FourRangeControl,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
@@ -150,6 +151,12 @@ export const Size = props => {
 				title={ __( 'Button Size & Spacing', i18n ) }
 				id="button"
 			>
+				{ props.hasFullWidth && (
+					<AdvancedToggleControl
+						label={ __( 'Full Width', i18n ) }
+						attribute="buttonFullWidth"
+					/>
+				) }
 				<AdvancedRangeControl
 					label={ __( 'Min. Button Height', i18n ) }
 					responsive="all"
@@ -157,7 +164,7 @@ export const Size = props => {
 					min={ 0 }
 					max={ 100 }
 				/>
-				{ props.hasWidth && (
+				{ props.hasWidth && ! props.hasFullWidth && (
 					<AdvancedRangeControl
 						label={ __( 'Button Width', i18n ) }
 						responsive="all"
@@ -230,6 +237,7 @@ export const Edit = props => {
 		hasIconGap,
 		hasIconPosition,
 		borderRadiusPlaceholder,
+		hasFullWidth,
 	} = props
 
 	const { parentBlock } = useBlockContext()
@@ -240,7 +248,7 @@ export const Edit = props => {
 		<>
 			{ ( hasLink || enableLink ) && <Link /> }
 			<Colors hasTextColor={ hasTextColor } />
-			<Size />
+			<Size hasFullWidth={ hasFullWidth } />
 			<Borders
 				borderSelector={ borderSelector }
 				placeholder={ borderRadiusPlaceholder }
@@ -262,6 +270,7 @@ Edit.defaultProps = {
 	hasTextColor: true,
 	hasIconGap: true,
 	hasIconPosition: true,
+	hasFullWidth: false,
 }
 
 Edit.Link = Link

@@ -3,11 +3,13 @@
  */
 import { ContainerStyles } from './style'
 import SVGCloseIcon from './images/close-icon.svg'
+import variations from './variations'
 
 /**
  * External dependencies
  */
 import { version as VERSION, i18n } from 'stackable'
+import { last } from 'lodash'
 import classnames from 'classnames'
 import {
 	AdvancedRangeControl,
@@ -15,6 +17,7 @@ import {
 	InspectorStyleControls,
 	InspectorTabs,
 	PanelAdvancedSettings,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -30,6 +33,8 @@ import {
 	MarginBottom,
 	BlockLink,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -40,16 +45,10 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { useCallback } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const TEMPLATE = [
-	[ 'stackable/heading', { text: __( 'Notification', i18n ), textTag: 'h3' } ],
-	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', { text: 'Button' } ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
@@ -58,16 +57,18 @@ const Edit = props => {
 		setAttributes,
 	} = props
 
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-notification',
+		'stk-block-notification__inner-container',
 		blockHoverClass,
 	], {
 		'stk--is-dismissible': attributes.isDismissible,
+		[ `stk--is-${ props.attributes.notificationType }` ]: props.attributes.notificationType,
 	} )
 
 	const contentClassNames = classnames( [
@@ -75,12 +76,11 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-notification__content',
-	] )
+	], useContentAlignmentClasses( attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<>
@@ -98,7 +98,36 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedSelectControl
+						label={ __( 'Notification Type', i18n ) }
+						attribute="notificationType"
+						options={ [
+							{
+								label: __( 'Success', i18n ),
+								value: '',
+							},
+							{
+								label: __( 'Error', i18n ),
+								value: 'error',
+							},
+							{
+								label: __( 'Warning', i18n ),
+								value: 'warning',
+							},
+							{
+								label: __( 'Information', i18n ),
+								value: 'info',
+							},
+						] }
+					/>
+				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					title={ __( 'Dismissible', i18n ) }
 					initialOpen={ props.attributes.isDismissible }
@@ -123,7 +152,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-notification" />
 

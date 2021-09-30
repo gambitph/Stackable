@@ -2,11 +2,13 @@
  * Internal dependencies
  */
 import { ContainerStyles } from './style'
+import variations from './variations'
 
 /**
  * External dependencies
  */
 import { version as VERSION } from 'stackable'
+import { last } from 'lodash'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
@@ -27,6 +29,8 @@ import {
 	Separator,
 	getSeparatorClasses,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -37,23 +41,17 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { useCallback } from '@wordpress/element'
+import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const TEMPLATE = [
-	[ 'stackable/heading', { text: __( 'Call to Action' ), textTag: 'h3' } ],
-	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', { text: 'Button' } ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
 		className,
 	} = props
 
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
@@ -61,6 +59,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-call-to-action',
+		'stk-block-call-to-action__inner-container',
 		blockHoverClass,
 		separatorClass,
 	] )
@@ -70,19 +69,18 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-call-to-action__content',
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<>
 
 			<InspectorTabs />
 
-			<Alignment.InspectorControls hasBlockAlignment={ true } />
+			<Alignment.InspectorControls hasBlockAlignment={ true } hasColumnAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
@@ -94,9 +92,10 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-call-to-action" />
 
@@ -110,7 +109,7 @@ const Edit = props => {
 					</ContainerDiv>
 				</Separator>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }

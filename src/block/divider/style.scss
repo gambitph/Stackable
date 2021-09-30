@@ -1,3 +1,10 @@
+.stk-block.stk-block-divider {
+	hr.stk-block-divider__hr,
+	.stk-block-divider__dot {
+		background: #ddd;
+	}
+}
+
 :where(.has-text-align-left) .stk-block-divider,
 .stk-block.stk-block-divider.has-text-align-left {
 	--stk-dots-margin-left: 0;

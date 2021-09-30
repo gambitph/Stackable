@@ -12,6 +12,11 @@ const DEFAULT_STATE = {
 	selectedParentHoverBlock: null,
 	selectedParentHoverChildren: [],
 	selectedHoverChildren: [],
+
+	// Accordion collapsed state.
+	hasCollapsedState: false,
+	selectedCollapsedBlock: null,
+	selectedCollapsedChildren: [],
 }
 
 const STORE_ACTIONS = {
@@ -31,6 +36,13 @@ const STORE_ACTIONS = {
 		const hoverChildrenClientIds = Array.from( blockEl?.querySelectorAll( '[data-block]' ) || [] )
 			.map( el => el.getAttribute( 'data-block' ) ) || []
 
+		const collapsedEl = blockEl?.closest( '.stk-block-accordion' )?.closest( '[data-block]' ) || ( blockEl?.getAttribute( 'data-type' ) === 'stackable/accordion' ? blockEl : null )
+		const collapsedClientId = collapsedEl?.getAttribute( 'data-block' ) || null
+
+		// Get all the child blocks of the accordion block.
+		const collapsedChildrenClientIds = Array.from( collapsedEl?.querySelectorAll( '[data-block]' ) || [] )
+			.map( el => el.getAttribute( 'data-block' ) ) || []
+
 		return {
 			type: 'UPDATE_SELECTED_BLOCK',
 			clientId,
@@ -38,6 +50,9 @@ const STORE_ACTIONS = {
 			hasParentHoverState: !! parentHoverClientId,
 			parentHoverChildrenClientIds,
 			hoverChildrenClientIds,
+			collapsedClientId,
+			collapsedChildrenClientIds,
+			hasCollapsedState: !! collapsedClientId,
 		}
 	},
 	clearSelectedBlock: () => ( {
@@ -56,6 +71,9 @@ const STORE_SELECTORS = {
 	getSelectedParentHoverBlock: state => state.selectedParentHoverBlock,
 	getSelectedParentHoverBlockChildren: state => state.selectedParentHoverChildren,
 	getSelectedHoverChildren: state => state.selectedHoverChildren,
+	getHasCollapsedState: state => state.hasCollapsedState,
+	getSelectedCollapsedBlock: state => state.selectedCollapsedBlock,
+	getSelectedCollapsedBlockChildren: state => state.selectedCollapsedChildren,
 }
 
 const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
@@ -69,6 +87,11 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 				hasParentHoverState: action.hasParentHoverState,
 				selectedParentHoverChildren: action.parentHoverChildrenClientIds,
 				selectedHoverChildren: action.hoverChildrenClientIds,
+
+				// Accordion collapsed state.
+				hasCollapsedState: action.hasCollapsedState,
+				selectedCollapsedBlock: action.collapsedClientId,
+				selectedCollapsedChildren: action.collapsedChildrenClientIds,
 			}
 		}
 		case 'CLEAR_SELECTED_BLOCK': {
@@ -101,6 +124,10 @@ export const useBlockHoverState = () => {
 		parentHoverChildrenClientIds,
 		hoverChildrenClientIds,
 		hasParentHoverState,
+
+		hasCollapsedState,
+		collapsedClientId,
+		collapsedChildrenClientIds,
 	} = useSelect( select => {
 		return {
 			selectedClientId: select( 'core/block-editor' ).getSelectedBlockClientId(),
@@ -110,6 +137,11 @@ export const useBlockHoverState = () => {
 			parentHoverChildrenClientIds: select( 'stackable/hover-state' ).getSelectedParentHoverBlockChildren(),
 			hoverChildrenClientIds: select( 'stackable/hover-state' ).getSelectedHoverChildren(),
 			hasParentHoverState: select( 'stackable/hover-state' ).getHasParentHoverState(),
+
+			// Accordion collapsed state.
+			hasCollapsedState: select( 'stackable/hover-state' ).getHasCollapsedState(),
+			collapsedClientId: select( 'stackable/hover-state' ).getSelectedCollapsedBlock(),
+			collapsedChildrenClientIds: select( 'stackable/hover-state' ).getSelectedCollapsedBlockChildren(),
 		}
 	}, [] )
 
@@ -121,36 +153,42 @@ export const useBlockHoverState = () => {
 	const isParentHoverBlock = clientId === parentHoverClientId
 	const isChildOfParentHover = parentHoverChildrenClientIds.includes( clientId )
 	const isChildOfHoverBlock = hoverChildrenClientIds.includes( clientId )
+	const isCollapsedBlock = clientId === collapsedClientId
+	const isChildOfCollapsedBlock = collapsedChildrenClientIds.includes( clientId )
 
 	// The hover state only applies to the currently selected block.
 	let blockHoverClass = ''
 	let currentHoverState = 'normal'
 	if ( isBlockSelected ) {
-		if ( hoverState !== 'normal' ) {
+		if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
 			blockHoverClass = 'stk--is-hovered'
 		}
+
 		currentHoverState = hoverState
 
 		// If we changed the hover state to parent-hovered, but the block
-		// doens't have a parent to hover, make it hover instead.
+		// doesn't have a parent to hover, make it hover instead.
 		if ( ! hasParentHoverState && hoverState === 'parent-hovered' ) {
 			currentHoverState = 'hover'
 		}
 
 	// Also change the hover states of the other
 	} else if ( isParentHoverBlock ) {
-		if ( hoverState !== 'normal' ) {
+		if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
 			blockHoverClass = 'stk--is-hovered'
 			currentHoverState = 'hover'
 		}
 	} else if ( isChildOfParentHover || isChildOfHoverBlock ) {
-		if ( hoverState !== 'normal' ) {
+		if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
 			blockHoverClass = 'stk--is-hovered'
 			currentHoverState = 'parent-hovered'
 		}
+	} else if ( isChildOfCollapsedBlock || isCollapsedBlock ) {
+		// We won't add any classes here anymore.
+		currentHoverState = 'collapsed'
 	}
 
-	return [ currentHoverState, setHoverState, blockHoverClass, hasParentHoverState ]
+	return [ currentHoverState, setHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
 }
 
 export const useBlockHoverClass = () => {
