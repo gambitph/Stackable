@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { ContainerStyles } from './style'
+import variations from './variations'
 
 /**
  * External dependencies
@@ -43,13 +44,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const TEMPLATE = [
-	[ 'stackable/heading', { text: __( 'Hero Section' ) } ],
-	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', { text: 'Button' } ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
@@ -101,7 +96,7 @@ const Edit = props => {
 			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-hero" />
 
@@ -115,7 +110,7 @@ const Edit = props => {
 					</ContainerDiv>
 				</Separator>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }

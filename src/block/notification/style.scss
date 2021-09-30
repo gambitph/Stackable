@@ -1,6 +1,15 @@
 @import "common";
 
 .stk-block-notification {
+	&.stk--is-error {
+		--stk-container-background-color: #d9534f;
+	}
+	&.stk--is-warning {
+		--stk-container-background-color: #ffdd57;
+	}
+	&.stk--is-info {
+		--stk-container-background-color: #2091e1;
+	}
 	--stk-container-background-color: #40ba7b;
 	--stk-container-color: #fff;
 	&.stk--is-dismissible .stk-container {

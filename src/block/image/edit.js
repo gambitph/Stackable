@@ -32,7 +32,7 @@ import {
  */
 import { Fragment } from '@wordpress/element'
 
-const heightUnit = [ 'px', 'vh' ]
+const heightUnit = [ 'px', 'vh', '%' ]
 
 const Edit = props => {
 	const {

@@ -1,14 +1,14 @@
-/**
- * Internal dependencies
+/** Internal dependencies
  */
 import BlockStyles from './style'
+import variations from './variations'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
+import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
-import { i18n, version as VERSION } from 'stackable'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
@@ -39,18 +39,7 @@ import { __ } from '@wordpress/i18n'
 import { useMemo } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 
-const TEMPLATE = [
-	[ 'stackable/heading', {
-		text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-	} ],
-	[ 'stackable/price', {} ],
-	[ 'stackable/icon-list', { text: '<li>Feature</li><li>Benefit</li><li>Description</li>' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', {
-			text: 'Button',
-		} ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
@@ -100,7 +89,7 @@ const Edit = props => {
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerDiv className={ contentClassNames }>
 					<ColumnInnerBlocks
 						template={ TEMPLATE }
@@ -109,7 +98,7 @@ const Edit = props => {
 					/>
 				</ContainerDiv>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
