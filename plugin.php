@@ -195,6 +195,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v1/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/disabled-blocks.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/admin.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/optimization-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/global-settings.php' );

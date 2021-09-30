@@ -121,10 +121,6 @@ export const useDynamicContentControlProps = props => {
 		setIsPopoverOpen( false )
 	}, [ props.isFormatType, props.onChange ] )
 
-	if ( ! isPro ) {
-		return {}
-	}
-
 	return {
 		onClick: () => setIsPopoverOpen( ! isPopoverOpen ),
 		isPressed,

@@ -1,13 +1,14 @@
 /**
  * Internal dependencies
  */
+import variations from './variations'
 import BlockStyles from './style'
 
 /**
  * External dependencies
  */
-import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
+import classnames from 'classnames'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
@@ -26,36 +27,26 @@ import {
 	Transform,
 	ContainerDiv,
 } from '~stackable/block-components'
-import { useBlockHoverClass } from '~stackable/hooks'
+import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 
-const TEMPLATE = [
-	[ 'stackable/column', {}, [
-		[ 'stackable/heading', { text: __( 'Feature' ) } ],
-		[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.' ) } ],
-		[ 'stackable/button-group', {}, [
-			[ 'stackable/button', { text: __( 'Button' ) } ],
-		] ],
-	] ],
-	[ 'stackable/column', { templateLock: 'insert' }, [
-		[ 'stackable/image', {} ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
 		className,
 	} = props
 
-	const rowClass = getRowClasses( props.attributes )
+	const rowClass = props.attributes.alignVertical ? undefined : getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
@@ -74,7 +65,6 @@ const Edit = props => {
 
 	return (
 		<>
-
 			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
@@ -92,19 +82,18 @@ const Edit = props => {
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<Separator>
 					<ContainerDiv className={ contentClassNames }>
 						<ColumnInnerBlocks
 							providerValue={ columnProviderValue }
 							template={ TEMPLATE }
 							templateLock="insert"
-							orientation="horizontal"
 						/>
 					</ContainerDiv>
 				</Separator>
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }

@@ -1,12 +1,14 @@
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -20,16 +22,16 @@ const variations = applyFilters(
 		{
 			name: 'default',
 			title: __( 'Default', i18n ),
-			description: __( 'Default Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			isDefault: true,
 			attributes: {
 				hasContainer: true,
 			},
 			innerBlocks: [
-				[ 'stackable/heading', { text: __( 'Hero Section' ) } ],
-				[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
+				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ) } ],
+				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/button-group', {}, [
-					[ 'stackable/button', { text: 'Button' } ],
+					[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
 				] ],
 			],
 			scope: [ 'block' ],
@@ -37,15 +39,15 @@ const variations = applyFilters(
 		{
 			name: 'plain',
 			title: __( 'Plain', i18n ),
-			description: __( 'Plain Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
 			attributes: {
 				hasContainer: false,
 			},
 			innerBlocks: [
-				[ 'stackable/heading', { text: __( 'Hero Section' ) } ],
-				[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
+				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ) } ],
+				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/button-group', {}, [
-					[ 'stackable/button', { text: 'Button' } ],
+					[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
 				] ],
 			],
 			scope: [ 'block' ],
@@ -53,29 +55,29 @@ const variations = applyFilters(
 		{
 			name: 'half-overlay',
 			title: __( 'Half Overlay', i18n ),
-			description: __( 'Half Overlay Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Half Overlay', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'center-overlay',
 			title: __( 'Center Overlay', i18n ),
-			description: __( 'Center Overlay Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Center Overlay', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'side-overlay',
 			title: __( 'Side Overlay', i18n ),
-			description: __( 'Side Overlay Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side Overlay', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'half',
 			title: __( 'Half', i18n ),
 			description: __( 'Half Layout', i18n ),
-			isPremium: true,
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

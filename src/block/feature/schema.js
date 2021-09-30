@@ -31,6 +31,17 @@ export const attributes = ( version = VERSION ) => {
 	Separator.addAttributes( attrObject )
 	ContainerDiv.addAttributes( attrObject )
 
+	attrObject.add( {
+		attributes: {
+			alignVertical: {
+				type: 'boolean',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 
