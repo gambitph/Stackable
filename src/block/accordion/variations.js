@@ -1,7 +1,9 @@
 /**
  * WorddPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 
 /**
  * External dependencies
@@ -22,7 +24,8 @@ const variations = applyFilters(
 		{
 			name: 'basic',
 			title: __( 'Basic', i18n ),
-			description: __( 'Basic Layout', i18n ),
+			isDefault: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Basic Layout', i18n ) ),
 			innerBlocks: [
 				[ 'stackable/column', {
 					templateLock: 'insert', hasContainer: true, htmlTag: 'summary',
@@ -30,7 +33,7 @@ const variations = applyFilters(
 				}, [
 					[ 'stackable/icon-label', {}, [
 						[ 'stackable/heading', {
-							text: __( 'Accordion Title', i18n ), hasP: true, textTag: 'h4',
+							text: _x( 'Title for This Block', 'Heading placeholder', i18n ), hasP: true, textTag: 'h4',
 						} ],
 						[ 'stackable/icon', {
 							icon: defaultIcon,
@@ -40,7 +43,7 @@ const variations = applyFilters(
 				] ],
 				[ 'stackable/column', { templateLock: false, className: 'stk-block-accordion__content' }, [
 					[ 'stackable/text', {
-						text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ),
+						text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ),
 					} ],
 				] ],
 			],
@@ -49,7 +52,7 @@ const variations = applyFilters(
 		{
 			name: 'plain',
 			title: __( 'Plain', i18n ),
-			description: __( 'Plain Layout' ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain Layout', i18n ) ),
 			attributes: {
 				blockBorderType: 'solid',
 				blockBorderColor: '#dfdad1',
@@ -67,7 +70,7 @@ const variations = applyFilters(
 				}, [
 					[ 'stackable/icon-label', {}, [
 						[ 'stackable/heading', {
-							text: __( 'Accordion Title' ), hasP: true, textTag: 'h4',
+							text: _x( 'Title for This Block', 'Heading placeholder', i18n ), hasP: true, textTag: 'h4',
 						} ],
 						[ 'stackable/icon', {
 							icon: defaultIcon,
@@ -83,7 +86,7 @@ const variations = applyFilters(
 					},
 				}, [
 					[ 'stackable/text', {
-						text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ),
+						text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ),
 					} ],
 				] ],
 			],
@@ -92,14 +95,14 @@ const variations = applyFilters(
 		{
 			name: 'line-to-colored',
 			title: __( 'Line to Colored', i18n ),
-			description: __( 'Line to Colored Layout' ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Line to Colored Layout', i18n ) ),
 			isPremium: true,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'colored',
 			title: __( 'Colored', i18n ),
-			description: __( 'Colored Layout' ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored Layout', i18n ) ),
 			isPremium: true,
 			scope: [ 'block' ],
 		},
