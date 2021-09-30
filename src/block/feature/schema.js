@@ -10,6 +10,7 @@ import {
 	Row,
 	Separator,
 	Transform,
+	ContentAlign,
 	ContainerDiv,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
@@ -29,6 +30,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Separator.addAttributes( attrObject )
+	ContentAlign.addAttributes( attrObject )
 	ContainerDiv.addAttributes( attrObject )
 
 	attrObject.add( {

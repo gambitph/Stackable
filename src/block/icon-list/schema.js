@@ -9,6 +9,7 @@ import {
 	MarginBottom,
 	Alignment,
 	Transform,
+	ConditionalDisplay,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -92,6 +93,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
+	ConditionalDisplay.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, 'ul,ol', {
 		hasTextTag: false,
 		multiline: 'li',

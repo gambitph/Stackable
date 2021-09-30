@@ -108,7 +108,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-			<ContentAlign.InspectorControls />
+			<ContentAlign.InspectorControls hasColumnCount={ true } />
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature-grid" />
@@ -122,6 +122,7 @@ const Edit = props => {
 							// templateLock="insert"
 							allowedBlocks={ ALLOWED_BLOCKS }
 							orientation="horizontal"
+							renderAppender={ false }
 						/>
 					</div>
 				</Separator>
