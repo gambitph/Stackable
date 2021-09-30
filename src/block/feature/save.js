@@ -18,6 +18,7 @@ import {
 	Separator,
 	getSeparatorClasses,
 	getContentAlignmentClasses,
+	ContainerDiv,
 } from '~stackable/block-components'
 
 /**
@@ -59,9 +60,9 @@ export const Save = props => {
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<Separator.Content attributes={ attributes }>
-				<div className={ contentClassNames }>
+				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 					<InnerBlocks.Content />
-				</div>
+				</ContainerDiv.Content>
 			</Separator.Content>
 		</BlockDiv.Content>
 	)

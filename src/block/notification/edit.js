@@ -3,6 +3,7 @@
  */
 import { ContainerStyles } from './style'
 import SVGCloseIcon from './images/close-icon.svg'
+import variations from './variations'
 
 /**
  * External dependencies
@@ -16,6 +17,7 @@ import {
 	InspectorStyleControls,
 	InspectorTabs,
 	PanelAdvancedSettings,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -46,13 +48,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const TEMPLATE = [
-	[ 'stackable/heading', { text: __( 'Notification', i18n ), textTag: 'h3' } ],
-	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
-	[ 'stackable/button-group', {}, [
-		[ 'stackable/button', { text: 'Button' } ],
-	] ],
-]
+const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
@@ -72,6 +68,7 @@ const Edit = props => {
 		blockHoverClass,
 	], {
 		'stk--is-dismissible': attributes.isDismissible,
+		[ `stk--is-${ props.attributes.notificationType }` ]: props.attributes.notificationType,
 	} )
 
 	const contentClassNames = classnames( [
@@ -104,6 +101,34 @@ const Edit = props => {
 			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedSelectControl
+						label={ __( 'Notification Type', i18n ) }
+						attribute="notificationType"
+						options={ [
+							{
+								label: __( 'Success', i18n ),
+								value: '',
+							},
+							{
+								label: __( 'Error', i18n ),
+								value: 'error',
+							},
+							{
+								label: __( 'Warning', i18n ),
+								value: 'warning',
+							},
+							{
+								label: __( 'Information', i18n ),
+								value: 'info',
+							},
+						] }
+					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
 					title={ __( 'Dismissible', i18n ) }
 					initialOpen={ props.attributes.isDismissible }
 					id="dismissible"
@@ -127,7 +152,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-notification" />
 

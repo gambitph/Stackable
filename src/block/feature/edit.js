@@ -27,6 +27,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	ContainerDiv,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 
@@ -71,6 +72,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<ContainerDiv.InspectorControls />
 			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
@@ -86,13 +88,13 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<Separator>
-					<div className={ contentClassNames }>
+					<ContainerDiv className={ contentClassNames }>
 						<ColumnInnerBlocks
 							providerValue={ columnProviderValue }
 							template={ TEMPLATE }
 							templateLock="insert"
 						/>
-					</div>
+					</ContainerDiv>
 				</Separator>
 			</BlockDiv>
 			{ hasInnerBlocks && <MarginBottom /> }
