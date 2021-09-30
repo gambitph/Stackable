@@ -151,6 +151,45 @@ const getStyleParams = () => {
 			format: '%spx',
 			responsive: 'all',
 		},
+		{
+			selector: '.stk-content-align',
+			hasUnits: 'px',
+			responsive: 'all',
+			styleRule: 'maxWidth',
+			attrName: 'innerBlockContentWidth',
+		},
+		{
+			selector: '.stk-content-align',
+			responsive: 'all',
+			styleRule: 'marginLeft',
+			attrName: 'innerBlockAlign',
+			valueCallback: ( value, getAttribute, device ) => {
+				if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
+					return undefined
+				}
+				if ( value === 'center' || value === 'flex-end' ) {
+					return 'auto'
+				}
+				return 0
+			},
+			dependencies: [ 'innerBlockContentWidth' ],
+		},
+		{
+			selector: '.stk-content-align',
+			responsive: 'all',
+			styleRule: 'marginRight',
+			attrName: 'innerBlockAlign',
+			valueCallback: ( value, getAttribute, device ) => {
+				if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
+					return undefined
+				}
+				if ( value === 'center' || value === 'flex-start' ) {
+					return 'auto'
+				}
+				return 0
+			},
+			dependencies: [ 'innerBlockContentWidth' ],
+		},
 
 		// Category Highlight Color
 		{

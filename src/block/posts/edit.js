@@ -24,9 +24,10 @@ import {
 	AdvancedToggleControl,
 	ColorPaletteControl,
 	ImageSizeControl,
+	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass, useBlockStyle, usePostsQuery, useAttributeEditHandlers,
+	useBlockHoverClass, useBlockStyle, usePostsQuery, useAttributeEditHandlers, useDeviceType,
 } from '~stackable/hooks'
 import {
 	getAlignmentClasses,
@@ -70,6 +71,8 @@ const Edit = props => {
 		className,
 		setAttributes,
 	} = props
+
+	const deviceType = useDeviceType()
 
 	const {
 		stkQueryId,
@@ -148,7 +151,6 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
-			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General' ) }
@@ -162,6 +164,47 @@ const Edit = props => {
 						sliderMax={ 4 }
 						placeholder="2"
 					/>
+					<ContentAlign.InspectorControls.Controls />
+					<AdvancedRangeControl
+						label={ __( 'Content Width', i18n ) }
+						attribute="innerBlockContentWidth"
+						responsive="all"
+						units={ [ 'px', '%' ] }
+						min={ [ 0, 0 ] }
+						sliderMax={ [ 1500, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						placeholder=""
+						initialPosition="1500"
+						className="ugb--help-tip-advanced-block-content-width"
+					/>
+					{ attributes.innerBlockContentWidth !== '' && deviceType === 'Desktop' &&
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							attribute="innerBlockAlign"
+							responsive="all"
+							controls="flex-horizontal"
+							className="ugb--help-tip-advanced-block-horizontal-align"
+						/>
+					}
+					{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' ) && deviceType === 'Tablet' &&
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							attribute="innerBlockAlign"
+							responsive="all"
+							controls="flex-horizontal"
+							className="ugb--help-tip-advanced-block-horizontal-align"
+						/>
+					}
+					{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' || attributes.innerBlockContentWidthMobile !== '' ) && deviceType === 'Mobile' &&
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							attribute="innerBlockAlign"
+							responsive="all"
+							controls="flex-horizontal"
+							className="ugb--help-tip-advanced-block-horizontal-align"
+						/>
+					}
 					<FlexGapControls />
 					<SortControl
 						label={ __( 'Content Arrangement', i18n ) }

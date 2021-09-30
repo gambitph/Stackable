@@ -1,12 +1,14 @@
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -20,7 +22,7 @@ const variations = applyFilters(
 		{
 			name: 'default',
 			title: __( 'Default', i18n ),
-			description: __( 'Default Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			isDefault: true,
 			attributes: {
 				hasContainer: false,
@@ -32,7 +34,7 @@ const variations = applyFilters(
 		{
 			name: 'list',
 			title: __( 'List', i18n ),
-			description: __( 'List Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'List', i18n ) ),
 			attributes: {
 				imageWidth: 35,
 				imageHeight: 'auto',
@@ -48,43 +50,43 @@ const variations = applyFilters(
 		{
 			name: 'image-card',
 			title: __( 'Image Card', i18n ),
-			description: __( 'Image Card Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Image Card', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
-			description: __( 'Horizontal Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'portfolio',
 			title: __( 'Portfolio', i18n ),
-			description: __( 'Portfolio Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Portfolio', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'portfolio-2',
 			title: __( 'Portfolio 2', i18n ),
-			description: __( 'Portfolio 2 Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Portfolio 2', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'vertical-card',
 			title: __( 'Vertical Card', i18n ),
-			description: __( 'Verical Card Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical Card', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'vertical-card-2',
 			title: __( 'Vertical Card 2', i18n ),
-			description: __( 'Verical Card 2 Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical Card 2', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]

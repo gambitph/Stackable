@@ -34,6 +34,16 @@ const postsAttributes = {
 		type: 'array',
 		default: '',
 	},
+	innerBlockContentWidth: {
+		stkResponsive: true,
+		stkUnits: 'px',
+		type: 'number',
+		default: '',
+	},
+	innerBlockAlign: {
+		type: 'string',
+		default: '',
+	},
 	// Query.
 	numberOfItems: {
 		type: 'number',
