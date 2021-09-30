@@ -30,6 +30,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	getTypographyClasses,
+	ConditionalDisplay,
 	MarginBottom,
 	Alignment,
 	getAlignmentClasses,
@@ -309,6 +310,7 @@ const Edit = props => {
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list" />
 			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
 
 			<IconListStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-icon-list" />

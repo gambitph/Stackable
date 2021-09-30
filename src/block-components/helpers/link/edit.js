@@ -24,7 +24,7 @@ export const LinkControls = props => {
 
 	return (
 		<>
-			{ hasLink && (
+			{ ( hasLink || getAttribute( 'hasLink' ) ) && (
 				<LinkControl
 					label={ __( 'Link / URL', i18n ) }
 					value={ getAttribute( 'url' ) }

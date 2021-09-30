@@ -25,6 +25,8 @@ import {
 	Separator,
 	getSeparatorClasses,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 	ContainerDiv,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
@@ -51,6 +53,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-feature',
+		'stk-block-feature__inner-container',
 		rowClass,
 		blockHoverClass,
 		separatorClass,
@@ -61,7 +64,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
 	return (
 		<>
@@ -69,6 +72,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls />
 			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
