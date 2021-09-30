@@ -44,7 +44,7 @@ const Controls = props => {
 
 	const borderRadiusSliderMax = useMemo( () => {
 		if (
-			[ '', 'px' ].includes( attributes.imageWidthUnit ) &&
+			attributes.imageWidthUnit === 'px' &&
 			[ '', 'px' ].includes( attributes.imageHeightUnit )
 		) {
 			return ( Math.max( attributes.imageWidth, attributes.imageHeight ) || 100 ) / 2
