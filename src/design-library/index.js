@@ -1,13 +1,14 @@
-import domReady from '@wordpress/dom-ready'
 import apiFetch from '@wordpress/api-fetch'
+import { doAction, applyFilters } from '@wordpress/hooks'
+
+const LATEST_API_VERSION = 'v3'
 
 let designLibrary = null
-let blockDesigns = {}
 let designs = []
 
 export const getBlockName = block => block.replace( /^[\w-]+\//, '' )
 
-export const fetchDesignLibrary = async ( forceReset = false ) => {
+export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => {
 	if ( ! designLibrary || forceReset ) {
 		const results = await apiFetch( {
 			path: `/wp/v2/stk_design_library${ forceReset ? '/reset' : '' }`,
@@ -17,29 +18,18 @@ export const fetchDesignLibrary = async ( forceReset = false ) => {
 
 		// Reset all designs that we already have cached.
 		if ( forceReset ) {
-			blockDesigns = {}
+			doAction( 'stackable.design-library.reset-cache' )
 			designs = []
 		}
 	}
-	return designLibrary
+
+	return designLibrary[ version || LATEST_API_VERSION ]
 }
 
-export const fetchBlockDesigns = async block => {
-	const blockName = getBlockName( block )
-	if ( ! blockDesigns[ blockName ] ) {
-		const results = await apiFetch( {
-			path: `/wp/v2/stk_block_designs/${ blockName }`,
-			method: 'GET',
-		} )
-		blockDesigns[ blockName ] = await results
-	}
-	return blockDesigns[ blockName ]
-}
-
-export const fetchDesign = async designId => {
+export const fetchDesign = async ( designId, version = '' ) => {
 	if ( ! designs[ designId ] ) {
 		const results = await apiFetch( {
-			path: `/wp/v2/stk_design/${ designId }`,
+			path: `/wp/v2/stk_design/${ version }/${ designId }`,
 			method: 'GET',
 		} )
 		designs[ designId ] = await results
@@ -58,11 +48,6 @@ export const setDevModeDesignLibrary = async ( devMode = false ) => {
 	return await results
 }
 
-domReady( () => {
-	// Save the option to not show the video again.
-	// fetchDesignLibrary()
-} )
-
 export const getDesigns = async ( {
 	type: isType = '',
 	block: isBlock = '',
@@ -70,18 +55,20 @@ export const getDesigns = async ( {
 	plan: isPlan = '',
 	colors: hasColors = [],
 	categories: hasCategories = [],
+	uikit: isUiKit = '',
 	search = '',
 	reset = false,
+	apiVersion = '',
 } ) => {
-	let library = Object.values( await fetchDesignLibrary( reset ) )
+	let library = Object.values( await fetchDesignLibrary( reset, apiVersion ) )
 
 	if ( isType ) {
 		library = library.filter( ( { type } ) => type === isType )
 	}
 
 	if ( isBlock ) {
-		const blockName = isBlock.indexOf( 'ugb/' ) === -1 ? `ugb/${ isBlock }` : isBlock
-		library = library.filter( ( { block } ) => block === blockName )
+		const blockName = isBlock.replace( /^\w+\//, '' )
+		library = library.filter( ( { block } ) => block.endsWith( `/${ blockName }` ) )
 	}
 
 	if ( isMood ) {
@@ -100,6 +87,10 @@ export const getDesigns = async ( {
 		library = library.filter( ( { categories } ) => categories.some( category => hasCategories.includes( category ) ) )
 	}
 
+	if ( isUiKit ) {
+		library = library.filter( ( { uikit } ) => uikit === isUiKit )
+	}
+
 	if ( search ) {
 		const terms = search.toLowerCase().replace( /\s+/, ' ' ).trim().split( ' ' )
 
@@ -107,7 +98,10 @@ export const getDesigns = async ( {
 		terms.forEach( searchTerm => {
 			library = library.filter( design => {
 				// Our search term needs to match at least one of these properties.
-				return [ 'label', 'plan', 'block', 'tags', 'categories', 'colors' ].some( designProp => {
+				const propertiesToSearch = applyFilters( 'stackable.design-library.search-properties',
+					[ 'label', 'plan', 'tags', 'categories', 'colors' ], apiVersion )
+
+				return propertiesToSearch.some( designProp => {
 					// Search whether the term matched.
 					return design[ designProp ].toString().toLowerCase().indexOf( searchTerm ) !== -1
 				} )
@@ -118,38 +112,24 @@ export const getDesigns = async ( {
 	return library
 }
 
-export const getDesign = async designId => {
-	const library = await fetchDesignLibrary()
+/**
+ *
+ * @param {string} designId The name of the design
+ * @param {string} version The version of the design library API to use.
+ *
+ * @return {Object} The design object.
+ */
+export const getDesign = async ( designId, version = '' ) => {
+	const library = await fetchDesignLibrary( false, version )
 
 	const meta = library[ designId ]
-	const {
-		type, block, template,
-	} = meta
 
-	// We have a unified list of all designs per block, look there first to save of fetch time.
-	if ( type === 'block' && block ) {
-		const blockDesigns = await fetchBlockDesigns( block )
-		return blockDesigns[ designId ]
+	let design = await applyFilters( 'stackable.design-library.get-design', null, designId, meta, version )
 
 	// Every design has their own template file which contains the entire design, get that.
-	} else if ( template ) {
-		return await fetchDesign( designId )
+	if ( ! design && meta.template ) {
+		design = await fetchDesign( designId, version )
 	}
 
-	return null
-}
-
-/**
- * Gets the list of blocks available in the design library.
- */
-export const getAllBlocks = async () => {
-	const library = Object.values( await fetchDesignLibrary() )
-
-	return library.reduce( ( blocks, design ) => {
-		const { block, type } = design
-		if ( ! blocks.includes( block ) && type === 'block' ) {
-			blocks.push( block )
-		}
-		return blocks
-	}, [] )
+	return design
 }

@@ -6,7 +6,9 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -18,16 +20,16 @@ const variations = applyFilters(
 	'stackable.call-to-action.variations',
 	[
 		{
-			name: 'basic',
-			title: __( 'Basic', i18n ),
-			description: __( 'Basic Layout', i18n ),
+			name: 'default',
+			title: __( 'Default', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			isDefault: true,
 			attributes: {
 				hasContainer: true,
 			},
 			innerBlocks: [
-				[ 'stackable/heading', { text: __( 'Call to Action' ), textTag: 'h3' } ],
-				[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
+				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3' } ],
+				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/button-group', {}, [
 					[ 'stackable/button', { text: 'Button' } ],
 				] ],
@@ -37,13 +39,13 @@ const variations = applyFilters(
 		{
 			name: 'plain',
 			title: __( 'Plain', i18n ),
-			description: __( 'Plain Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
 			attributes: {
 				hasContainer: false,
 			},
 			innerBlocks: [
-				[ 'stackable/heading', { text: __( 'Call to Action' ), textTag: 'h3' } ],
-				[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
+				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3' } ],
+				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/button-group', {}, [
 					[ 'stackable/button', { text: 'Button' } ],
 				] ],
@@ -53,28 +55,28 @@ const variations = applyFilters(
 		{
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
-			description: __( 'Horizontal Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
 			isPremium: true,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal-2',
 			title: __( 'Horizontal 2', i18n ),
-			description: __( 'Horizontal 2 Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
 			isPremium: true,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal-3',
 			title: __( 'Horizontal 3', i18n ),
-			description: __( 'Horizontal 3 Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 3', i18n ) ),
 			isPremium: true,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'split-centered',
 			title: __( 'Split Centered', i18n ),
-			description: __( 'Split Centered Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Split Centered', i18n ) ),
 			isPremium: true,
 			scope: [ 'block' ],
 		},

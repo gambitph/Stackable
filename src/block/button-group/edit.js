@@ -13,6 +13,7 @@ import {
 	InspectorTabs,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -48,10 +49,15 @@ const TEMPLATE = [
 const Edit = props => {
 	const {
 		className,
+		attributes,
 	} = props
 
-	const rowClass = getRowClasses( props.attributes )
-	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const {
+		collapseOn = '',
+	} = attributes
+
+	const rowClass = getRowClasses( attributes )
+	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const blockHoverClass = useBlockHoverClass()
 	const { hasInnerBlocks } = useBlockContext()
 
@@ -67,6 +73,9 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 		'stk-button-group',
+		{
+			[ `stk--collapse-on-${ collapseOn }` ]: collapseOn,
+		},
 	] )
 
 	return (
@@ -83,6 +92,28 @@ const Edit = props => {
 					initialOpen={ true }
 				>
 					<FlexGapControls />
+					<AdvancedSelectControl
+						label={ __( 'Collapse Buttons On', i18n ) }
+						attribute="collapseOn"
+						options={ [
+							{
+								label: __( 'Don\'t collapse', i18n ),
+								value: '',
+							},
+							{
+								label: __( 'Desktop', i18n ),
+								value: 'desktop',
+							},
+							{
+								label: __( 'Tablet', i18n ),
+								value: 'tablet',
+							},
+							{
+								label: __( 'Mobile', i18n ),
+								value: 'mobile',
+							},
+						] }
+					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<Advanced.InspectorControls />

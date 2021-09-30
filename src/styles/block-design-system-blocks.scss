@@ -130,19 +130,3 @@
 		color: cssvar(subtitle-color);
 	}
 }
-
-// Separator
-.stk-block-separator__inner,
-.stk-separator__wrapper {
-	svg {
-		fill: cssvar(separator-color);
-	}
-}
-
-// Divider
-.stk-block.stk-block-divider {
-	hr.stk-block-divider__hr,
-	.stk-block-divider__dot {
-		background: cssvar(divider-color);
-	}
-}
