@@ -72,6 +72,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls />
 			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
@@ -81,7 +82,6 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-			<ContentAlign.InspectorControls />
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature" />
