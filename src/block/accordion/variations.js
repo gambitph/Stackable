@@ -25,7 +25,7 @@ const variations = applyFilters(
 			name: 'basic',
 			title: __( 'Basic', i18n ),
 			isDefault: true,
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Basic Layout', i18n ) ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Basic', i18n ) ),
 			innerBlocks: [
 				[ 'stackable/column', {
 					templateLock: 'insert', hasContainer: true, htmlTag: 'summary',
