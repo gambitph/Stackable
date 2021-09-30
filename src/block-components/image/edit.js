@@ -47,7 +47,7 @@ const Controls = props => {
 			attributes.imageWidthUnit === 'px' &&
 			[ '', 'px' ].includes( attributes.imageHeightUnit )
 		) {
-			return ( Math.max( attributes.imageWidth, attributes.imageHeight ) || 100 ) / 2
+			return ( Math.max( attributes.imageWidth, attributes.imageHeight ) || 200 ) / 2
 		}
 
 		if ( attributes.imageWidthUnit === 'px' ) {
@@ -55,7 +55,7 @@ const Controls = props => {
 		}
 
 		if ( [ '', 'px' ].includes( attributes.imageHeightUnit ) ) {
-			return ( ( attributes.imageHeight || 100 ) / 2 )
+			return ( ( attributes.imageHeight || 200 ) / 2 )
 		}
 
 		return 100
