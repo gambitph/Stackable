@@ -28,6 +28,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch, useSelect } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { useMemo } from '@wordpress/element'
 
 const Controls = props => {
 	const { clientId } = useBlockEditContext()
@@ -40,6 +41,25 @@ const Controls = props => {
 		const image = select( 'core' ).getMedia( attributes.imageId )
 		return { imageData: { ...image } }
 	}, [ attributes.imageId ] )
+
+	const borderRadiusSliderMax = useMemo( () => {
+		if (
+			attributes.imageWidthUnit === 'px' &&
+			( [ '', 'px' ].includes( attributes.imageHeightUnit ) )
+		) {
+			return ( Math.max( attributes.imageWidth, attributes.imageHeight ) || 100 ) / 2
+		}
+
+		if ( attributes.imageWidthUnit === 'px' ) {
+			return attributes.imageWidth
+		}
+
+		if ( [ '', 'px' ].includes( attributes.imageHeightUnit ) ) {
+			return ( ( attributes.imageHeight || 100 ) / 2 )
+		}
+
+		return 50
+	}, [ attributes.imageWidth, attributes.imageWidthUnit, attributes.imageHeight, attributes.imageHeightUnit ] )
 
 	return (
 		<>
@@ -158,7 +178,7 @@ const Controls = props => {
 					label={ __( 'Border Radius', i18n ) }
 					attribute="imageBorderRadius"
 					min="0"
-					sliderMax="100"
+					sliderMax={ borderRadiusSliderMax }
 					placeholder="0"
 					defaultValue={ 0 }
 					allowReset={ true }
