@@ -23,7 +23,9 @@ const variations = applyFilters(
 			name: 'default',
 			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			attributes: { className: 'is-style-default' },
+			attributes: {
+				className: 'is-style-default',
+			},
 			isDefault: true,
 			innerBlocks: [
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
@@ -43,7 +45,10 @@ const variations = applyFilters(
 			name: 'plain',
 			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			attributes: { className: 'is-style-plain', hasContainer: false },
+			attributes: {
+				className: 'is-style-plain',
+				hasContainer: false,
+			},
 			innerBlocks: [
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/image', {
