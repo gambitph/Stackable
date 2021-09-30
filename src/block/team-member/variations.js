@@ -1,12 +1,14 @@
 /**
  * Internal dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 
 /**
  * Template option choices for predefined columns layouts.
@@ -43,10 +45,10 @@ import { __ } from '@wordpress/i18n'
 
 const variations = [
 	{
-		name: 'basic',
-		title: __( 'Basic', i18n ),
-		description: __( 'Basic Layout', i18n ),
-		attributes: { className: 'is-style-basic' },
+		name: 'default',
+		title: __( 'Default', i18n ),
+		description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
+		attributes: { className: 'is-style-default' },
 		isDefault: true,
 		innerBlocks: [
 			[ 'stackable/image', {
@@ -58,7 +60,7 @@ const variations = [
 			[ 'stackable/subtitle', {
 				text: __( 'Position', i18n ),
 			} ],
-			[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
+			[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 			[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
 		],
 		scope: [ 'block' ],
@@ -66,7 +68,7 @@ const variations = [
 	{
 		name: 'plain',
 		title: __( 'Plain', i18n ),
-		description: __( 'Plain Layout', i18n ),
+		description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
 		attributes: { className: 'is-style-plain', hasContainer: false },
 		innerBlocks: [
 			[ 'stackable/image', {
@@ -86,8 +88,8 @@ const variations = [
 	{
 		name: 'horizontal',
 		title: __( 'Horizontal', i18n ),
-		description: __( 'Horizontal Layout', i18n ),
-		isPremium: true,
+		description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+		isPremium: ! isPro,
 		scope: [ 'block' ],
 	},
 ]
