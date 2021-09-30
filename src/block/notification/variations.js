@@ -59,6 +59,7 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
 			attributes: {
 				className: 'is-style-plain',
+				blockShadow: '0px 2px 20px rgba(153, 153, 153, 0.2)',
 				hasContainer: false,
 				containerPadding: {
 					top: 32,
