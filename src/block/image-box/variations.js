@@ -7,13 +7,15 @@ import SVGSide from './images/side.svg'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 
 /**
  * Template option choices for predefined columns layouts.
@@ -24,24 +26,24 @@ const variations = applyFilters(
 	'stackable.image-box.variations',
 	[
 		{
-			name: 'basic',
-			title: __( 'Basic', i18n ),
-			description: __( 'Basic Layout', i18n ),
+			name: 'default',
+			title: __( 'Default', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			icon: <SVGBasic />,
-			attributes: { className: 'is-style-basic' },
+			attributes: { className: 'is-style-default' },
 			innerBlocks: [
 				[ 'stackable/image', { imageHeight: 350, imageFilterParentHover: 'brightness(0.3)' } ],
 				[ 'stackable/column', { templateLock: false }, [
 					[ 'stackable/subtitle', {
-						text: __( 'Subtitle', i18n ),
+						text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ),
 						blockMargin: { bottom: 8 },
 						opacity: 0,
 						textColor1: '#FFFFFF',
 						opacityParentHover: 1,
 					} ],
-					[ 'stackable/heading', { text: __( 'Title', i18n ), textTag: 'h4' } ],
+					[ 'stackable/heading', { text: _x( 'title for This Block', 'Heading placeholder', i18n ), textTag: 'h4' } ],
 					[ 'stackable/text', {
-						text: __( 'Description', i18n ),
+						text: _x( 'Text for This Block', 'Text placeholder', i18n ),
 						opacity: 0,
 						transform: 'translateY(-24px)',
 						opacityParentHover: 1,
@@ -62,7 +64,7 @@ const variations = applyFilters(
 		{
 			name: 'plain',
 			title: __( 'Plain', i18n ),
-			description: __( 'Plain Layout', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
 			icon: <SVGSide />,
 			attributes: { contentAlign: 'left', className: 'is-style-plain' },
 			innerBlocks: [
@@ -78,19 +80,19 @@ const variations = applyFilters(
 					templateLock: false,
 				}, [
 					[ 'stackable/subtitle', {
-						text: __( 'Subtitle', i18n ),
+						text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ),
 						blockMargin: { bottom: 8 },
 						transform: 'translateY(32px)',
 						transformParentHover: 'translateY(0px)',
 					} ],
 					[ 'stackable/heading', {
-						text: __( 'Title', i18n ),
+						text: _x( 'title for This Block', 'Heading placeholder', i18n ),
 						textTag: 'h4',
 						transform: 'translateY(32px)',
 						transformParentHover: 'translateY(0px)',
 					} ],
 					[ 'stackable/text', {
-						text: __( 'Description', i18n ),
+						text: _x( 'Text for This Block', 'Text placeholder', i18n ),
 						opacity: 0,
 						opacityParentHover: 1,
 					} ],
@@ -108,29 +110,29 @@ const variations = applyFilters(
 		{
 			name: 'box',
 			title: __( 'Box', i18n ),
-			description: __( 'Box Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Box', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'captioned',
 			title: __( 'Captioned', i18n ),
-			description: __( 'Captioned Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Captioned', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'fade',
 			title: __( 'Fade', i18n ),
-			description: __( 'Fade Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Fade', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'line',
 			title: __( 'Line', i18n ),
-			description: __( 'Line Layout', i18n ),
-			isPremium: true,
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Line', i18n ) ),
+			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 	]
