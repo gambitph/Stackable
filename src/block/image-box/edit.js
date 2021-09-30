@@ -30,6 +30,8 @@ import {
 	getRowClasses,
 	MarginBottom,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -37,7 +39,7 @@ import {
  */
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import {
-	Fragment, useCallback,
+	Fragment, useMemo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
@@ -60,7 +62,7 @@ const ALLOWED_BLOCKS = [
 ]
 
 const Edit = props => {
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
 	const {
 		className,
@@ -74,6 +76,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-image-box',
+		'stk-block-image-box__inner-container',
 		blockHoverClass,
 	] )
 
@@ -83,12 +86,11 @@ const Edit = props => {
 		blockAlignmentClass,
 		rowClass,
 		'stk-hover-parent',
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? false : <InnerBlocks.DefaultBlockAppender />,
-		[ hasInnerBlocks ]
-	)
+	const renderAppender = useMemo( () => {
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (
 		<Fragment>
@@ -105,6 +107,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<ContentAlign.InspectorControls />
 
 			<ImageBoxStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-image-box" />

@@ -48,7 +48,6 @@ export const Save = props => {
 		blockAlignmentClass,
 		'stk-column__content',
 		'stk-hover-parent',
-		`stk-${ attributes.uniqueId }-container`,
 	] )
 
 	return (

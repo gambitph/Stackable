@@ -56,6 +56,7 @@ const DesignLayoutSelector = props => {
 		getDesigns( {
 			type: 'block',
 			block: name,
+			apiVersion: 'v2',
 		} ).then( designs => {
 			if ( isMounted ) {
 				setDesigns( designs )
@@ -114,7 +115,7 @@ const DesignLayoutSelector = props => {
 
 									setIsBusy( true )
 
-									getDesign( design.id )
+									getDesign( design.id, 'v2' )
 										.then( designData => {
 											setIsBusy( false )
 											applyBlockDesign( designData.attributes, props.clientId )

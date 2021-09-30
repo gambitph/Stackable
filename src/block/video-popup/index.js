@@ -22,6 +22,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	supports: {
 		anchor: true,
 		align: true,
+		stkAlign: true,
 	},
 
 	edit,

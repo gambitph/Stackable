@@ -8,6 +8,7 @@
 .stk-block {
 	position: relative;
 	width: 100%;
+	margin-inline: auto;
 }
 .stk--block-orientation-horizontal .stk-block {
 	width: auto;
@@ -21,10 +22,11 @@
 .entry-content > .stk-block:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.wp-block-separator) {
 	max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
 }
-.entry-content .stk-block .stk-row {
+
+.entry-content .stk-block .stk-content-align {
 	margin-block: 0; // Some themes add margin top/bottom when alignfull or alignwide is used.
 	// Make sure by default, our inner blocks are center aligned.
-	&.stk-inner-blocks:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright) {
+	&.stk-inner-blocks:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.stk-button-group) {
 		// --block-max-width - comes from Blocksy
 		// --responsive--aligndefault-width - comes from Twenty Twenty & Twenty Twenty One
 		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
@@ -221,22 +223,33 @@
 }
 
 // Button alignment.
-:where(.has-text-align-center) .stk-button-group,
-.stk-button-group.has-text-align-center {
-	justify-content: center;
+.stk-block .stk-button-group {
+	&:not(.stk-collapse-on-desktop) {
+		justify-content: var(--stk-alignment-justify-content);
+	}
+	&:is(.stk--collapse-on-desktop) {
+		align-items: var(--stk-alignment-justify-content);
+	}
 }
-:where(.has-text-align-right) .stk-button-group,
-.stk-button-group.has-text-align-right {
-	justify-content: flex-end;
+
+@include tablet {
+	.stk-button-group:is(.stk--collapse-on-tablet) {
+		align-items: var(--stk-alignment-justify-content);
+	}
 }
-:where(.has-text-align-left) .stk-button-group,
-.stk-button-group.has-text-align-left {
-	justify-content: flex-start;
+
+@include mobile {
+	.stk-button-group:is(.stk--collapse-on-mobile) {
+		align-items: var(--stk-alignment-justify-content);
+	}
 }
 
 .stk-block .stk-button-group {
 	flex-direction: row;
 	align-items: center; // Vertically align the buttons.
+}
+.stk-button-group .stk-block { // Prevent buttons from being always in the middle.
+	margin-inline: revert;
 }
 
 // Buttons.
@@ -292,7 +305,7 @@
 	--stk-alignment-text-align: center;
 	--stk-alignment-margin-left: auto;
 	--stk-alignment-margin-right: auto;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 @mixin align-right-styles {
@@ -300,7 +313,7 @@
 	--stk-alignment-text-align: end;
 	--stk-alignment-margin-left: auto;
 	--stk-alignment-margin-right: 0;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 @mixin align-left-styles {
@@ -308,7 +321,7 @@
 	--stk-alignment-text-align: start;
 	--stk-alignment-margin-left: 0;
 	--stk-alignment-margin-right: auto;
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }
 
 // Default text direction, we need to add this for RTL support.
@@ -356,5 +369,5 @@
 // Text alignment should also work for flex blocks like the icon block.
 .stk-block {
 	justify-content: var(--stk-alignment-justify-content);
-	text-align: var(--stk-alignment-text-align);
+	text-align: var(--stk-alignment-text-align, start);
 }

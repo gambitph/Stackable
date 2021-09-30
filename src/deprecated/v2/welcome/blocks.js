@@ -45,9 +45,9 @@ const blocks = {
 	'ugb/count-up': {
 		title: _x( 'Count Up', 'block title', i18n ),
 	},
-	'ugb/design-library': {
-		title: _x( 'Design Library', 'block title', i18n ),
-	},
+	// 'ugb/design-library': {
+	// 	title: _x( 'Design Library', 'block title', i18n ),
+	// },
 	'ugb/divider': {
 		title: _x( 'Divider', 'block title', i18n ),
 	},
