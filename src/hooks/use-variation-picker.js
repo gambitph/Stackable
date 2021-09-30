@@ -3,6 +3,7 @@
  */
 import { get } from 'lodash'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import { recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -61,11 +62,11 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 
 				// Apply the variation.
 				if ( nextVariation.innerBlocks ) {
+					const innerBlocks = createBlocksFromInnerBlocksTemplate( nextVariation.innerBlocks )
+					recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
 					replaceInnerBlocks(
 						clientId,
-						createBlocksFromInnerBlocksTemplate(
-							nextVariation.innerBlocks
-						),
+						innerBlocks,
 						true
 					)
 				}
