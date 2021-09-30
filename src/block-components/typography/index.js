@@ -35,6 +35,7 @@ export const Typography = props => {
 		ref,
 		editable,
 		defaultValue,
+		identifier,
 		...propsToPass
 	} = props
 
@@ -97,7 +98,7 @@ export const Typography = props => {
 
 	return (
 		<RichText
-			identifier="text"
+			identifier={ identifier }
 			className={ className }
 			tagName={ TagName }
 			value={ debouncedText || defaultValue }
@@ -117,6 +118,7 @@ Typography.defaultProps = {
 	value: null,
 	onChange: null,
 	editable: true,
+	identifier: 'text',
 }
 
 Typography.Content = props => {
