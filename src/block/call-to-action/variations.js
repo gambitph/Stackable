@@ -35,11 +35,15 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'plain',
-			title: __( 'Plain', i18n ),
-			description: __( 'Plain Layout', i18n ),
+			name: 'horizontal',
+			title: __( 'Horizontal', i18n ),
+			description: __( 'Horizontal Layout', i18n ),
 			attributes: {
-				hasContainer: false,
+				className: 'is-style-horizontal',
+				hasContainer: true,
+				innerBlockOrientation: 'horizontal',
+				innerBlockContentAlign: 'alignwide',
+				align: 'wide',
 			},
 			innerBlocks: [
 				[ 'stackable/heading', { text: __( 'Call to Action' ), textTag: 'h3' } ],
