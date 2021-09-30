@@ -58,7 +58,7 @@ const Controls = props => {
 			return ( ( attributes.imageHeight || 100 ) / 2 )
 		}
 
-		return 50
+		return 100
 	}, [ attributes.imageWidth, attributes.imageWidthUnit, attributes.imageHeight, attributes.imageHeightUnit ] )
 
 	return (
