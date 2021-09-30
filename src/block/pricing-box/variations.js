@@ -26,7 +26,6 @@ const variations = applyFilters(
 			attributes: { className: 'is-style-basic' },
 			isDefault: true,
 			innerBlocks: [
-				[ 'stackable/image', {} ],
 				[ 'stackable/heading', {
 					text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
 				} ],
@@ -49,7 +48,6 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
 			attributes: { className: 'is-style-plain', hasContainer: false },
 			innerBlocks: [
-				[ 'stackable/image', {} ],
 				[ 'stackable/heading', {
 					text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
 				} ],
