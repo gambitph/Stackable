@@ -52,7 +52,7 @@ const variations = applyFilters(
 		{
 			name: 'plain',
 			title: __( 'Plain', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain Layout', i18n ) ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
 			attributes: {
 				blockBorderType: 'solid',
 				blockBorderColor: '#dfdad1',
