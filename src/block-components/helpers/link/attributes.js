@@ -1,5 +1,9 @@
 export const linkAttributes = ( selector = 'a' ) => {
 	return {
+		hasLink: {
+			type: 'boolean',
+			default: true,
+		},
 		url: {
 			type: 'string',
 			source: 'attribute',
