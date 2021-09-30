@@ -1,0 +1,7 @@
+@import "common";
+
+.stk-block.stk-block-feature.is-style-plain > .stk-inner-blocks.stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	@include mobile {
+		flex-direction: column-reverse;
+	}
+}

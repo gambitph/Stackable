@@ -5,6 +5,14 @@
 import { settings } from 'stackable'
 import { addFilter } from '@wordpress/hooks'
 
+// Disable these blocks when the following variables are disabled. We need this
+// so that if a variation is disabled, we will no longer be able to add the
+// relevant block.
+const BLOCK_DEPENDENCIES = {
+	'stackable/icon-button': 'stackable/button-group|icon-button',
+	'stackable/button': 'stackable/button-group|button',
+}
+
 const getDefaultVariation = variations => {
 	return variations?.find( ( { isDefault } ) => isDefault )?.name
 }
@@ -16,11 +24,18 @@ const getVariationsToRemove = ( disabledBlocks, blockName ) => {
 const applySettingsToMeta = metadata => {
 	let inserter = ! settings.stackable_disabled_blocks.includes( metadata.name )
 
+	// Check if this block is dependent on another variation being enabled.
+	if ( BLOCK_DEPENDENCIES[ metadata.name ] ) {
+		if ( settings.stackable_disabled_blocks.includes( BLOCK_DEPENDENCIES[ metadata.name ] ) ) {
+			inserter = false
+		}
+	}
+
 	const variationsToRemove = getVariationsToRemove( settings.stackable_disabled_blocks, metadata.name )
 	let variations = metadata.variations || []
 
 	// Remove variations if there are ones disabled.
-	if ( variationsToRemove ) {
+	if ( variationsToRemove.length ) {
 		const hasDefaultVariation = !! getDefaultVariation( metadata.variations )
 		variations = variations.filter( variation => ! variationsToRemove.includes( variation.name ) )
 		// If there was a default variation before, ensure we still have a default

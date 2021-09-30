@@ -1,0 +1,11 @@
+{
+	"name": "stackable/design-library",
+	"title": "Design Library",
+	"description": "Choose a layout or block from the Stackable Design Library.",
+	"category": "layout",
+	"keywords": [
+		"Template"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special"
+}
