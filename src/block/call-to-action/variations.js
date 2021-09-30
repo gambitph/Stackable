@@ -45,6 +45,7 @@ const variations = applyFilters(
 				hasContainer: true,
 				innerBlockOrientation: 'horizontal',
 				innerBlockContentAlign: 'alignwide',
+				innerBlockVerticalAlign: 'center',
 				align: 'wide',
 			},
 			innerBlocks: [
