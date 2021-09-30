@@ -5,7 +5,7 @@ import { PostsStyles } from './style'
 import {
 	generateRenderPostItem, CONTENTS,
 } from './util'
-import { blockStyles } from './block-styles'
+import variations from './variations'
 
 /**
  * External dependencies
@@ -24,9 +24,10 @@ import {
 	AdvancedToggleControl,
 	ColorPaletteControl,
 	ImageSizeControl,
+	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass, useBlockStyle, usePostsQuery, useAttributeEditHandlers,
+	useBlockHoverClass, useBlockStyle, usePostsQuery, useAttributeEditHandlers, useDeviceType,
 } from '~stackable/hooks'
 import {
 	getAlignmentClasses,
@@ -40,10 +41,10 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
-	BlockStyle,
 	Typography,
 	FlexGapControls,
 	MarginBottom,
+	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
 } from '~stackable/block-components'
@@ -71,6 +72,8 @@ const Edit = props => {
 		setAttributes,
 	} = props
 
+	const deviceType = useDeviceType()
+
 	const {
 		stkQueryId,
 		imageSize,
@@ -85,12 +88,14 @@ const Edit = props => {
 			'meta',
 			'category',
 			'excerpt',
+			'readmore',
 		],
+		uniqueId,
 	} = attributes
 
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const blockStyle = useBlockStyle( blockStyles )
+	const blockStyle = useBlockStyle( variations )
 
 	const {
 		posts, isRequesting, hasPosts,
@@ -145,8 +150,7 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<BlockStyle.InspectorControls styles={ blockStyles } />
-			<ContentAlign.InspectorControls />
+			<Transform.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General' ) }
@@ -160,6 +164,47 @@ const Edit = props => {
 						sliderMax={ 4 }
 						placeholder="2"
 					/>
+					<ContentAlign.InspectorControls.Controls />
+					<AdvancedRangeControl
+						label={ __( 'Content Width', i18n ) }
+						attribute="innerBlockContentWidth"
+						responsive="all"
+						units={ [ 'px', '%' ] }
+						min={ [ 0, 0 ] }
+						sliderMax={ [ 1500, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						placeholder=""
+						initialPosition="1500"
+						className="ugb--help-tip-advanced-block-content-width"
+					/>
+					{ attributes.innerBlockContentWidth !== '' && deviceType === 'Desktop' &&
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							attribute="innerBlockAlign"
+							responsive="all"
+							controls="flex-horizontal"
+							className="ugb--help-tip-advanced-block-horizontal-align"
+						/>
+					}
+					{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' ) && deviceType === 'Tablet' &&
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							attribute="innerBlockAlign"
+							responsive="all"
+							controls="flex-horizontal"
+							className="ugb--help-tip-advanced-block-horizontal-align"
+						/>
+					}
+					{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' || attributes.innerBlockContentWidthMobile !== '' ) && deviceType === 'Mobile' &&
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							attribute="innerBlockAlign"
+							responsive="all"
+							controls="flex-horizontal"
+							className="ugb--help-tip-advanced-block-horizontal-align"
+						/>
+					}
 					<FlexGapControls />
 					<SortControl
 						label={ __( 'Content Arrangement', i18n ) }
@@ -275,10 +320,10 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<Image.InspectorControls
 				label={ __( 'Featured Image', i18n ) }
-				hasHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
-				hasBorderRadius={ ! [ 'portfolio' ].includes( blockStyle ) }
+				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( blockStyle ) }
+				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( blockStyle ) }
 				hasShape={ false }
-				hasWidth={ false }
+				hasWidth={ [ 'list', 'horizontal' ].includes( blockStyle ) }
 				hasAlt={ false }
 				hasSelector={ false }
 				src={ focalPointPlaceholder }
@@ -349,7 +394,7 @@ const Edit = props => {
 					) }
 				</Placeholder>
 			) : (
-				<BlockDiv className={ blockClassNames }>
+				<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 					<div className={ wrapperClassNames }>
 						<div className={ contentClassNames }>
 							{ ( posts || [] ).map( editorPostItems ) }
@@ -362,7 +407,7 @@ const Edit = props => {
 					</div>
 				</BlockDiv>
 			) }
-			{ ! isRequesting && hasPosts && <MarginBottom /> }
+			{ ! isRequesting && hasPosts && uniqueId && <MarginBottom /> }
 		</>
 	)
 }

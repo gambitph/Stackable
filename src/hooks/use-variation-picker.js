@@ -3,13 +3,14 @@
  */
 import { get } from 'lodash'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
-import { createBlocksFromInnerBlocksTemplate } from '~stackable/util'
+import { recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { useSelect, useDispatch } from '@wordpress/data'
 import { VariationPicker } from '~stackable/components'
+import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
 
 /**
  * The variation picker will automatically show up when the block doesn't have a
@@ -61,11 +62,11 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 
 				// Apply the variation.
 				if ( nextVariation.innerBlocks ) {
+					const innerBlocks = createBlocksFromInnerBlocksTemplate( nextVariation.innerBlocks )
+					recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
 					replaceInnerBlocks(
 						clientId,
-						createBlocksFromInnerBlocksTemplate(
-							nextVariation.innerBlocks
-						),
+						innerBlocks,
 						true
 					)
 				}
