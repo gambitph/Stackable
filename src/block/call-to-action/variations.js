@@ -37,11 +37,15 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'plain',
-			title: __( 'Plain', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
+			name: 'horizontal',
+			title: __( 'Horizontal', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
 			attributes: {
-				hasContainer: false,
+				className: 'is-style-horizontal',
+				hasContainer: true,
+				innerBlockOrientation: 'horizontal',
+				innerBlockContentAlign: 'alignwide',
+				align: 'wide',
 			},
 			innerBlocks: [
 				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3' } ],
