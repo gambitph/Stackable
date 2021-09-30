@@ -1,4 +1,5 @@
-/** Internal dependencies
+/**
+ * Internal dependencies
  */
 import BlockStyles from './style'
 
