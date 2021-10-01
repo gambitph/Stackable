@@ -11,7 +11,7 @@ export const addAttributes = attrObject => {
 				default: '',
 			},
 			effectEntranceDuration: {
-				type: 'number',
+				type: 'string',
 				default: '',
 			},
 			effectEntranceDelay: {

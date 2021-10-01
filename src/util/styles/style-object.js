@@ -101,6 +101,7 @@ class StyleObject {
 
 			const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
 			const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
+			const hasCollapsed = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'collapsed' ) )
 
 			pushAttr( attrName )
 			if ( hasHover ) {
@@ -108,6 +109,9 @@ class StyleObject {
 			}
 			if ( hasParentHover ) {
 				pushAttr( attrName, 'desktop', 'parent-hover' )
+			}
+			if ( hasCollapsed ) {
+				pushAttr( attrName, 'desktop', 'collapsed' )
 			}
 
 			if ( hasTablet ) {
@@ -118,6 +122,9 @@ class StyleObject {
 				if ( hasParentHover ) {
 					pushAttr( attrName, 'tablet', 'parent-hover' )
 				}
+				if ( hasCollapsed ) {
+					pushAttr( attrName, 'tablet', 'collapsed' )
+				}
 			}
 
 			if ( hasMobile ) {
@@ -127,6 +134,9 @@ class StyleObject {
 				}
 				if ( hasParentHover ) {
 					pushAttr( attrName, 'mobile', 'parent-hover' )
+				}
+				if ( hasCollapsed ) {
+					pushAttr( attrName, 'mobile', 'collapsed' )
 				}
 			}
 		} )
@@ -316,6 +326,7 @@ class StyleObject {
 
 		const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
+		const hasCollapsed = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'collapsed' ) )
 
 		const prependClass = ( _selector, prependString, prependStringIfEditor, blockStateCompare ) => {
 			const getSelector = s => {
@@ -333,11 +344,12 @@ class StyleObject {
 			return getSelector( _selector )
 		}
 
-		const parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover) .%s', '.%s.stk--is-hovered', 'parent-hovered' )
+		const collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open', ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open', 'collapsed' )
+		const parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .%s', '.%s.stk--is-hovered', 'parent-hovered' )
 		hoverSelector = hoverSelector
 			// In editor, always use the `selector` instead of the hoverSelector.
 			? prependClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.%s.stk--is-hovered', 'hover' )
-			: prependClass( selector, '.stk-block.%s:hover', '.%s.stk--is-hovered', 'hover' )
+			: prependClass( selector, '.%s:hover', '.%s.stk--is-hovered', 'hover' )
 		selector = prependClass( selector )
 
 		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), 'desktop', renderIn, vendorPrefixes )
@@ -346,6 +358,9 @@ class StyleObject {
 		}
 		if ( hasParentHover ) {
 			this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'desktop', 'parent-hover' ), 'desktop', renderIn, vendorPrefixes )
+		}
+		if ( hasCollapsed ) {
+			this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'desktop', 'collapsed' ), 'desktop', renderIn, vendorPrefixes )
 		}
 
 		if ( hasTablet ) {
@@ -356,6 +371,9 @@ class StyleObject {
 			if ( hasParentHover ) {
 				this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'tablet', 'parent-hover' ), 'tablet', renderIn, vendorPrefixes )
 			}
+			if ( hasCollapsed ) {
+				this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'tablet', 'collapsed' ), 'desktop', renderIn, vendorPrefixes )
+			}
 		}
 
 		if ( hasMobile ) {
@@ -365,6 +383,9 @@ class StyleObject {
 			}
 			if ( hasParentHover ) {
 				this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'mobile', 'parent-hover' ), 'mobile', renderIn, vendorPrefixes )
+			}
+			if ( hasCollapsed ) {
+				this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'mobile', 'collapsed' ), 'desktop', renderIn, vendorPrefixes )
 			}
 		}
 	}

@@ -19,6 +19,7 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { useBlockProps } from '@wordpress/block-editor'
 
 export const Save = props => {
 	const {
@@ -37,14 +38,17 @@ export const Save = props => {
 
 	return (
 		<BlockDiv.Content
-			className={ blockClassNames }
+			{ ...useBlockProps.save( { className: blockClassNames } ) }
 			attributes={ attributes }
 		>
 			<IconStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<Link.Content attributes={ attributes }>
-				<Icon.Content attributes={ attributes } />
-			</Link.Content>
+			{ /** Don't add an `a` tag if linkUrl is not defined. **/ }
+			{ attributes.linkUrl ? (
+				<Link.Content attributes={ attributes }>
+					<Icon.Content attributes={ attributes } />
+				</Link.Content>
+			) : <Icon.Content attributes={ attributes } /> }
 		</BlockDiv.Content>
 	)
 }

@@ -16,8 +16,6 @@ import {
 } from '@wordpress/components'
 /* eslint-disable @wordpress/no-unsafe-wp-apis */
 import {
-	__unstableCanIndentListItems as canIndentListItems,
-	__unstableCanOutdentListItems as canOutdentListItems,
 	__unstableIndentListItems as indentListItems,
 	__unstableOutdentListItems as outdentListItems,
 	__unstableChangeListType as changeListType,
@@ -30,10 +28,6 @@ import {
 	formatListBulletsRTL,
 	formatListNumbered,
 	formatListNumberedRTL,
-	formatIndent,
-	formatIndentRTL,
-	formatOutdent,
-	formatOutdentRTL,
 	Icon,
 } from '@wordpress/icons'
 import {
@@ -188,28 +182,6 @@ export const createIconListControls = ( options = {} ) => {
 						if ( isListRootSelected( value ) ) {
 							setAttributes( { ordered: true } )
 						}
-					} }
-				/>
-				<ToolbarButton
-					icon={ <Icon icon={ isRTL() ? formatOutdentRTL : formatOutdent } size={ 24 } /> }
-					title={ __( 'Outdent' ) }
-					describedBy={ __( 'Outdent list item' ) }
-					shortcut={ _x( 'Backspace', 'keyboard key' ) }
-					isDisabled={ ! canOutdentListItems( value ) }
-					onClick={ () => {
-						onChange( outdentListItems( value ) )
-						onFocus()
-					} }
-				/>
-				<ToolbarButton
-					icon={ <Icon icon={ isRTL() ? formatIndentRTL : formatIndent } size={ 24 } /> }
-					title={ __( 'Indent' ) }
-					describedBy={ __( 'Indent list item' ) }
-					shortcut={ _x( 'Space', 'keyboard key' ) }
-					isDisabled={ ! canIndentListItems( value ) }
-					onClick={ () => {
-						onChange( indentListItems( value, { type: tagName } ) )
-						onFocus()
 					} }
 				/>
 			</BlockControls>

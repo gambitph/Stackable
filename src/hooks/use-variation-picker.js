@@ -3,13 +3,14 @@
  */
 import { get } from 'lodash'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
-import { createBlocksFromInnerBlocksTemplate } from '~stackable/util'
+import { recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { useSelect, useDispatch } from '@wordpress/data'
 import { VariationPicker } from '~stackable/components'
+import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
 
 /**
  * The variation picker will automatically show up when the block doesn't have a
@@ -34,6 +35,10 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 				getBlock,
 			} = select( 'core/block-editor' )
 
+			if ( ! clientId ) {
+				return {}
+			}
+
 			const name = getBlock( clientId ).name
 
 			return {
@@ -50,7 +55,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 		<VariationPicker
 			icon={ get( blockType, [ 'icon', 'src' ] ) }
 			label={ get( blockType, [ 'title' ] ) }
-			variations={ variations }
+			variations={ variations || [] }
 			onSelect={ ( nextVariation = defaultVariation ) => {
 				// When selecting a variation, add a unique Id, this will
 				// indicate not to show the variation picker afterwards.
@@ -61,11 +66,11 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 
 				// Apply the variation.
 				if ( nextVariation.innerBlocks ) {
+					const innerBlocks = createBlocksFromInnerBlocksTemplate( nextVariation.innerBlocks )
+					recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
 					replaceInnerBlocks(
 						clientId,
-						createBlocksFromInnerBlocksTemplate(
-							nextVariation.innerBlocks
-						),
+						innerBlocks,
 						true
 					)
 				}

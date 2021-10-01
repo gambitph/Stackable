@@ -17,9 +17,9 @@ export const BlockDiv = props => {
 	const {
 		className,
 		applyCustomAttributes,
-		applyAdvancedAttributes,
 		renderHtmlTag,
 		enableVariationPicker,
+		withUniqueClass,
 		...propsToPass
 	} = props
 
@@ -42,7 +42,9 @@ export const BlockDiv = props => {
 	const classNames = classnames( [
 		className,
 		'stk-block',
-		getUniqueBlockClass( attributes.uniqueId ),
+		{
+			[ getUniqueBlockClass( attributes.uniqueId ) ]: withUniqueClass,
+		},
 	],
 	applyFilters( 'stackable.block-components.block-div.classnames', [], attributes ),
 	{
@@ -53,7 +55,6 @@ export const BlockDiv = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ applyAdvancedAttributes && ( attributes.anchor || undefined ) }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ renderHtmlTag ? htmlTag : 'div' }
 		hasBackground={ attributes.hasBackground }
@@ -71,6 +72,7 @@ BlockDiv.defaultProps = {
 	applyAdvancedAttributes: true,
 	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
 	enableVariationPicker: false,
+	withUniqueClass: true,
 }
 
 BlockDiv.Content = props => {

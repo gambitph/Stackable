@@ -9,7 +9,7 @@ import { Edit } from './edit'
  * External dependencies
  */
 import { Link as LinkComponent } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useAttributeEditHandlers } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -27,6 +27,7 @@ export const Link = props => {
 	const popoverEl = useRef()
 	const [ popoverRef, setPopoverRef ] = useState( null )
 	const { parentBlock } = useBlockContext()
+	const { getAttribute } = useAttributeEditHandlers()
 
 	// Enable editing of the icon only when the current block that implements
 	// it is selected. We need to use setTimeout since the isSelected is
@@ -62,6 +63,10 @@ export const Link = props => {
 
 	// Allow parent blocks to prevent the link popup to open.
 	const enable = applyFilters( 'stackable.edit.link.enable-link-popup', true, parentBlock )
+
+	if ( ! getAttribute( 'linkHasLink' ) ) {
+		return props.children
+	}
 
 	return (
 		<Fragment>
@@ -110,6 +115,10 @@ Link.Content = props => {
 		linkProps = {},
 		attributes,
 	} = props
+
+	if ( ! attributes.linkHasLink ) {
+		return props.children
+	}
 
 	return (
 		<LinkComponent.Content

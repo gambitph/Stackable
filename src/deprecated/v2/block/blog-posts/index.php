@@ -410,7 +410,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields_v2' ) ) {
 			}
 
 			// Featured image urls.
-			register_rest_field( $post_type, 'featured_image_urls',
+			register_rest_field( $post_type, 'featured_image_urls_v2',
 				array(
 					'get_callback' => 'stackable_featured_image_urls_v2',
 					'update_callback' => null,
@@ -422,7 +422,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields_v2' ) ) {
 			);
 
 			// Excerpt.
-			register_rest_field( $post_type, 'post_excerpt_stackable',
+			register_rest_field( $post_type, 'post_excerpt_stackable_v2',
 				array(
 					'get_callback' => 'stackable_post_excerpt_v2',
 					'update_callback' => null,
@@ -434,7 +434,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields_v2' ) ) {
 			);
 
 			// Category links.
-			register_rest_field( $post_type, 'category_list',
+			register_rest_field( $post_type, 'category_list_v2',
 				array(
 					'get_callback' => 'stackable_category_list_v2',
 					'update_callback' => null,
@@ -446,7 +446,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields_v2' ) ) {
 			);
 
 			// Author name.
-			register_rest_field( $post_type, 'author_info',
+			register_rest_field( $post_type, 'author_info_v2',
 				array(
 					'get_callback' => 'stackable_author_info_v2',
 					'update_callback' => null,
@@ -458,7 +458,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields_v2' ) ) {
 			);
 
 			// Number of comments.
-			register_rest_field( $post_type, 'comments_num',
+			register_rest_field( $post_type, 'comments_num_v2',
 				array(
 					'get_callback' => 'stackable_commments_number_v2',
 					'update_callback' => null,
