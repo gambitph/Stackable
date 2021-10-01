@@ -13,7 +13,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { LinkControls } from '../helpers/link'
 
-export const Edit = ( { hasLink } ) => {
+export const Edit = ( { hasLink, hasTitle } ) => {
 	return (
 		<>
 			<InspectorBlockControls>
@@ -21,7 +21,7 @@ export const Edit = ( { hasLink } ) => {
 					title={ __( 'Link', i18n ) }
 					id="link"
 				>
-					<LinkControls attrNameTemplate="blockLink%s" hasLink={ hasLink } />
+					<LinkControls attrNameTemplate="blockLink%s" hasLink={ hasLink } hasTitle={ hasTitle } />
 				</PanelAdvancedSettings>
 			</InspectorBlockControls>
 		</>
@@ -30,4 +30,5 @@ export const Edit = ( { hasLink } ) => {
 
 Edit.defaultProps = {
 	hasLink: true,
+	hasTitle: true,
 }
