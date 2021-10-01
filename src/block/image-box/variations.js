@@ -41,7 +41,7 @@ const variations = applyFilters(
 						textColor1: '#FFFFFF',
 						opacityParentHover: 1,
 					} ],
-					[ 'stackable/heading', { text: _x( 'title for This Block', 'Heading placeholder', i18n ), textTag: 'h4' } ],
+					[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h4' } ],
 					[ 'stackable/text', {
 						text: _x( 'Text for This Block', 'Text placeholder', i18n ),
 						opacity: 0,
@@ -86,7 +86,7 @@ const variations = applyFilters(
 						transformParentHover: 'translateY(0px)',
 					} ],
 					[ 'stackable/heading', {
-						text: _x( 'title for This Block', 'Heading placeholder', i18n ),
+						text: _x( 'Title for This Block', 'Heading placeholder', i18n ),
 						textTag: 'h4',
 						transform: 'translateY(32px)',
 						transformParentHover: 'translateY(0px)',
