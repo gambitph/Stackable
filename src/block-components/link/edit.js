@@ -3,6 +3,7 @@
  */
 import { i18n } from 'stackable'
 import { InspectorStyleControls, PanelAdvancedSettings } from '~stackable/components'
+import { useAttributeEditHandlers } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -15,7 +16,11 @@ import { __ } from '@wordpress/i18n'
 import { LinkControls } from '../helpers/link'
 
 export const Edit = () => {
-	return (
+	const {
+		getAttribute,
+	} = useAttributeEditHandlers()
+
+	return getAttribute( 'linkHasLink' ) && (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Link', i18n ) }

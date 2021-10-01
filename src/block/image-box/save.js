@@ -58,7 +58,7 @@ export const Save = props => {
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
 			</div>
-			<BlockLink.Content attributes={ attributes } />
+			<BlockLink.Content attributes={ attributes } isHidden={ false } />
 		</BlockDiv.Content>
 	)
 }

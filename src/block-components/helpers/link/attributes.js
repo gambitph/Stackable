@@ -25,6 +25,13 @@ export const linkAttributes = ( selector = 'a' ) => {
 			attribute: 'rel',
 			default: '',
 		},
+		title: {
+			type: 'string',
+			source: 'attribute',
+			selector,
+			attribute: 'title',
+			default: '',
+		},
 	}
 }
 
