@@ -23,7 +23,11 @@ const variations = applyFilters(
 			name: 'default',
 			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			attributes: { className: 'is-style-default' },
+			attributes: {
+				className: 'is-style-default',
+				innerBlockContentAlign: 'alignwide',
+				align: 'full',
+			},
 			isDefault: true,
 			innerBlocks: [
 				[ 'stackable/column', { hasContainer: true }, [
@@ -75,9 +79,9 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'horizontal',
-			title: __( 'Horizontal', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			name: 'float',
+			title: __( 'Float', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Float', i18n ) ),
 			attributes: {
 				innerBlockContentAlign: 'alignwide',
 				className: 'is-style-horizontal',
@@ -166,9 +170,9 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'outlined',
-			title: __( 'Outlined', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Outlined', i18n ) ),
+			name: 'offset',
+			title: __( 'Offset', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Offset', i18n ) ),
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

@@ -55,7 +55,6 @@ const variations = applyFilters(
 			icon: ImageStyleDefault,
 			innerBlocks: [
 				[ 'stackable/heading', {} ],
-				[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/columns', {
 					rowAlign: 'center',

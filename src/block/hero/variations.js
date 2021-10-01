@@ -41,6 +41,14 @@ const variations = applyFilters(
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
 			attributes: {
+				hasBackground: true,
+				blockBackgroundColor: '#FFFFFF',
+				blockPadding: {
+					top: 0,
+					right: 0,
+					bottom: 0,
+					left: 0,
+				},
 				hasContainer: false,
 				innerBlockContentAlign: 'alignfull',
 				align: 'full',
@@ -49,6 +57,9 @@ const variations = applyFilters(
 				[ 'stackable/columns', {
 					innerBlockContentAlign: 'alignfull',
 					align: 'full',
+					blockMargin: {
+						bottom: 0,
+					},
 				}, [
 					[ 'stackable/column', {
 						containerWidth: 450,
@@ -61,9 +72,16 @@ const variations = applyFilters(
 							[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
 						] ],
 					] ],
-					[ 'stackable/column', {}, [
+					[ 'stackable/column', {
+						columnSpacing: {
+							top: 0,
+							right: 0,
+							bottom: 0,
+							left: 0,
+						},
+					}, [
 						[ 'stackable/image', {
-							imageHeight: 600,
+							imageHeight: 750,
 							imageWidth: 100,
 						} ],
 					] ],
