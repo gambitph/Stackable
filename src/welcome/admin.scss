@@ -249,7 +249,8 @@ body.settings_page_stackable-getting-started {
 }
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started,
-body.toplevel_page_stk-custom-fields {
+body.toplevel_page_stk-custom-fields,
+body.settings_page_stackable-settings-wizard {
 	img {
 		max-width: 100%;
 	}
@@ -346,18 +347,21 @@ body.toplevel_page_stk-custom-fields {
 			display: flex;
 			flex-direction: column;
 		}
-		*:first-child {
-			margin-top: 0 !important;
-		}
-		*:last-child {
-			margin-bottom: 0 !important;
-		}
 		p,
 		li {
 			line-height: 1.6;
 		}
 		li {
 			margin-bottom: 0.6em;
+		}
+	}
+	.s-body-container,
+	.s-box {
+		> *:first-child {
+			margin-top: 0 !important;
+		}
+		> *:last-child {
+			margin-bottom: 0 !important;
 		}
 	}
 	.s-body-container-grid {

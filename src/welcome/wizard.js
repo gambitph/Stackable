@@ -1,3 +1,4 @@
+import backgroundImage from './images/cta-bg.jpg'
 import { i18n, _isPro } from 'stackable'
 import domReady from '@wordpress/dom-ready'
 import classnames from 'classnames'
@@ -71,7 +72,9 @@ const WelcomeMessage = () => {
 	// TODO:
 	return (
 		<>
-			<h3>{ __( 'Welcome to Stackable', i18n ) }</h3>
+			<div className="s-welcome-wizard__content s-welcome-wizard__step-1" style={ { backgroundImage } }>
+				<h3>{ __( 'Welcome to Stackable', i18n ) }</h3>
+			</div>
 		</>
 	)
 }

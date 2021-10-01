@@ -46,7 +46,7 @@ if ( ! class_exists( 'Stackable_Onboarding_Wizard' ) ) {
 			?>
 			<div class="wrap s-wrapper--no-menu s-wrap-onboarding-wizard">
 				<?php Stackable_Welcome_Screen::print_header( __( 'Stackable Onboarding Wizard', STACKABLE_I18N ) ) ?>
-                <section class="s-body-container s-body-container-grid">
+                <section class="s-body-container">
 					<div class="s-body">
 						<div class="s-onboarding-wizard"></div>
 					</div>
