@@ -55,7 +55,7 @@ const variations = applyFilters(
 			isDefault: true,
 			innerBlocks: [
 				[ 'stackable/image', {
-					imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
+					imageHeight: 150, imageWidth: 150, imageWidthUnit: 'px', imageBorderRadius: 90,
 				} ],
 				[ 'stackable/heading', {
 					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
@@ -72,18 +72,17 @@ const variations = applyFilters(
 			name: 'plain',
 			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			attributes: { className: 'is-style-plain', hasContainer: false },
+			attributes: {
+				className: 'is-style-plain', hasContainer: false, contentAlign: 'left',
+			},
 			innerBlocks: [
-				[ 'stackable/image', {
-					imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
-				} ],
+				[ 'stackable/image', {} ],
 				[ 'stackable/heading', {
 					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
 				} ],
 				[ 'stackable/subtitle', {
 					text: __( 'Position', i18n ),
 				} ],
-				[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
 				[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
 			],
 			scope: [ 'block' ],
@@ -92,6 +91,20 @@ const variations = applyFilters(
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			isPremium: ! isPro,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'horizontal-2',
+			title: __( 'Horizontal 2', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
+			isPremium: ! isPro,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'cover',
+			title: __( 'Cover', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Cover', i18n ) ),
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

@@ -21,7 +21,7 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	useBlockHoverClass,
+	useBlockHoverClass, useBlockStyle,
 } from '~stackable/hooks'
 
 /**
@@ -53,12 +53,19 @@ const Edit = props => {
 
 	const blockHoverClass = useBlockHoverClass()
 
-	const blockProps = useBlockProps()
+	const blockStyle = useBlockStyle( blockStyles )
+
+	const blockProps = useBlockProps( {} )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-button',
 		blockHoverClass,
+		// We need to add the blockStyle here to append the class alongside `.stk-block`
+		// Only in the editor.
+		{
+			[ `is-style-${ blockStyle }` ]: blockStyle,
+		},
 	] )
 
 	const typographyInnerClassNames = classnames( [

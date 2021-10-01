@@ -101,6 +101,13 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
+			name: 'side',
+			title: __( 'Side', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side', i18n ) ),
+			isPremium: ! isPro,
+			scope: [ 'block' ],
+		},
+		{
 			name: 'bordered',
 			title: __( 'Bordered', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Bordered', i18n ) ),

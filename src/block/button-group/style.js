@@ -37,24 +37,36 @@ const getStyleParams = () => {
 		{
 			renderIn: 'save',
 			selector: '.stk-button-group',
+			styleRule: 'flexWrap',
+			attrName: 'flexWrap',
+			responsive: 'all',
+		},
+		{
+			renderIn: 'edit',
+			selector: '.stk-button-group .block-editor-block-list__layout',
+			styleRule: 'flexWrap',
+			attrName: 'flexWrap',
+			responsive: 'all',
+		},
+		{
+			renderIn: 'save',
+			selector: '.stk-button-group',
 			styleRule: 'flexDirection',
-			attrObject: 'collapseOn',
+			attrName: 'collapseOn',
 			responsive: 'all',
 			valuePreCallback: ( _, getAttribute, device ) => {
 				return device === getAttribute( 'collapseOn' ) ? 'column' : undefined
 			},
-			dependencies: [ 'collapseOn' ],
 		},
 		{
 			renderIn: 'edit',
 			selector: '.stk-button-group .block-editor-block-list__layout',
 			styleRule: 'flexDirection',
-			attrObject: 'collapseOn',
+			attrName: 'collapseOn',
 			responsive: 'all',
 			valuePreCallback: ( _, getAttribute, device ) => {
 				return device === getAttribute( 'collapseOn' ) ? 'column' : undefined
 			},
-			dependencies: [ 'collapseOn' ],
 		},
 	]
 }

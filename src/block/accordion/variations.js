@@ -22,10 +22,10 @@ const variations = applyFilters(
 	'stackable.accordion.variations',
 	[
 		{
-			name: 'basic',
-			title: __( 'Basic', i18n ),
+			name: 'default',
+			title: __( 'Default', i18n ),
 			isDefault: true,
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Basic', i18n ) ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			innerBlocks: [
 				[ 'stackable/column', {
 					templateLock: 'insert', hasContainer: true, htmlTag: 'summary',
@@ -103,6 +103,13 @@ const variations = applyFilters(
 			name: 'colored',
 			title: __( 'Colored', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored', i18n ) ),
+			isPremium: ! isPro,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'plus',
+			title: __( 'Plus', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plus', i18n ) ),
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

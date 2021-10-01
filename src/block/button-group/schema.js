@@ -35,6 +35,11 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			flexWrap: {
+				type: 'string',
+				stkResponsive: true,
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

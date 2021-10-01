@@ -42,31 +42,41 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'plain',
-			title: __( 'Plain', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
+			name: 'compact',
+			title: __( 'Compact', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Compact', i18n ) ),
 			attributes: {
-				className: 'is-style-plain',
+				className: 'is-style-compact',
 				hasContainer: false,
+				contentAlign: '',
 			},
 			innerBlocks: [
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
-				[ 'stackable/image', {
-					imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
-				} ],
-				[ 'stackable/heading', {
-					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-				} ],
-				[ 'stackable/subtitle', {
-					text: __( 'Position', i18n ),
-				} ],
+				[ 'stackable/columns', {}, [
+					[ 'stackable/column', { columnWidth: 25 }, [
+						[ 'stackable/image', {
+							imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
+						} ],
+					] ],
+					[ 'stackable/column', { columnWidth: 75, contentAlign: 'left' }, [
+						[ 'stackable/heading', {
+							text: __( 'Name', i18n ),
+							textTag: 'h3',
+							textRemoveTextMargins: true,
+							blockMargin: { bottom: 0 },
+						} ],
+						[ 'stackable/subtitle', {
+							text: __( 'Position', i18n ),
+						} ],
+					] ],
+				] ],
 			],
 			scope: [ 'block' ],
 		},
 		{
-			name: 'basic',
-			title: __( 'Basic', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Basic', i18n ) ),
+			name: 'horizontal',
+			title: __( 'Horizontal', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
