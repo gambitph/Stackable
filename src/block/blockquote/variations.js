@@ -47,7 +47,7 @@ const variations = applyFilters(
 				hasContainer: true,
 			},
 			innerBlocks: [
-				[ 'stackable/icon', { icon: renderToString( <SVGDefaultQuote /> ) } ],
+				[ 'stackable/icon', { icon: renderToString( <SVGDefaultQuote /> ), linkHasLink: false } ],
 				[ 'stackable/text', {
 					text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
 				} ],
@@ -81,6 +81,7 @@ const variations = applyFilters(
 						top: -50, right: '', bottom: '', left: -50,
 					},
 					iconSize: 200,
+					linkHasLink: false,
 				} ],
 				[ 'stackable/text', {
 					text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',

@@ -43,9 +43,12 @@ export const Save = props => {
 		>
 			<IconStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<Link.Content attributes={ attributes }>
-				<Icon.Content attributes={ attributes } />
-			</Link.Content>
+			{ /** Don't add an `a` tag if linkUrl is not defined. **/ }
+			{ attributes.linkUrl ? (
+				<Link.Content attributes={ attributes }>
+					<Icon.Content attributes={ attributes } />
+				</Link.Content>
+			) : <Icon.Content attributes={ attributes } /> }
 		</BlockDiv.Content>
 	)
 }
