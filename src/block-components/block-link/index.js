@@ -14,7 +14,9 @@ export const BlockLink = () => {
 }
 
 BlockLink.Content = props => {
-	const { href, attributes } = props
+	const {
+		href, attributes, isHidden,
+	} = props
 
 	if ( ! attributes.blockLinkUrl ) {
 		return null
@@ -25,9 +27,10 @@ BlockLink.Content = props => {
 			className="stk-block-link stk--transparent-overlay"
 			href={ href || attributes.blockLinkUrl }
 			target={ attributes.blockLinkNewTab ? '_blank' : '' }
-			rel={ attributes.blockLinkRel }
-			aria-hidden="true"
-			tabindex="-1"
+			rel={ attributes.blockLinkRel || undefined }
+			title={ attributes.blockLinkTitle || undefined }
+			aria-hidden={ isHidden ? 'true' : undefined }
+			tabindex={ isHidden ? '-1' : undefined }
 		/>
 	)
 }
@@ -36,6 +39,7 @@ BlockLink.Content.defaultProps = {
 	className: '',
 	attributes: {},
 	href: '',
+	isHidden: true,
 }
 
 BlockLink.InspectorControls = Edit

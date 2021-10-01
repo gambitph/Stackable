@@ -56,6 +56,7 @@ export const settings = {
 		'advanced-responsive': true,
 		'block-background': {
 			importantBackgroundSize: true,
+			importantBackgroundPosition: true,
 		},
 		'block-separators': true,
 		'block-title': {

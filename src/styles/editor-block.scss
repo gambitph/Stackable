@@ -18,15 +18,31 @@
 	z-index: 1;
 }
 
-// Block widths,
-.is-root-container > [data-block]:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
-	max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
-	margin-left: auto;
-	margin-right: auto;
+// Add small margin between blocks so that placing your mouse between blocks
+// will make the block appender appear.
+.is-root-container > [data-block][data-type^="stackable/"] ~ [data-block][data-type^="stackable/"] {
+	margin-top: 8px;
 }
+// Add small margin between blocks so that placing your mouse between blocks
+// will make the block appender appear. This is for nested blocks.
+:where(:not(.stk-block-icon-label):not(.stk-block-blockquote):not(.stk-block-columns):not(.stk-block-expand):not(.stk-block-button-group) > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block][data-type^="stackable/"]) ~ [data-block][data-type^="stackable/"]:not([data-type="stackable/column"]) {
+	margin-top: 8px;
+}
+
+// Block widths,
+.is-root-container > [data-block] {
+	&:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
+		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
 // Make sure by default, our inner blocks are center aligned.
-.stk-row {
-	> .stk-inner-blocks:not(.alignfull):not(.alignwide):not(.stk-button-group) {
+.stk-inner-blocks.stk-content-align {
+	margin-top: 0;
+	margin-bottom: 0;
+	&:not(.alignfull):not(.alignwide):not(.stk-button-group) {
 		// --block-max-width comes from Blocksy
 		// --responsive--aligndefault-width comes from Twenty Twenty One
 		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
@@ -34,9 +50,10 @@
 		margin-right: auto;
 	}
 }
+
 // Some themes add margins when alignwide and alignfull are used.
-.editor-styles-wrapper .stk-row {
-	> .stk-inner-blocks.wp-block[data-align] {
+.editor-styles-wrapper {
+	> .stk-inner-blocks.stk-content-align.wp-block[data-align] {
 		margin: 0 auto !important;
 	}
 }
@@ -185,17 +202,25 @@
 }
 
 // Button alignment.
-:where(.has-text-align-center) .stk-button-group .block-editor-block-list__layout,
-.stk-button-group.has-text-align-center .block-editor-block-list__layout {
-	justify-content: center;
+.stk-button-group {
+	&:not(.stk-collapse-on-desktop) .block-editor-block-list__layout {
+		justify-content: var(--stk-alignment-justify-content);
+	}
+	&:is(.stk--collapse-on-desktop) .block-editor-block-list__layout {
+		align-items: var(--stk-alignment-justify-content);
+	}
 }
-:where(.has-text-align-right) .stk-button-group .block-editor-block-list__layout,
-.stk-button-group.has-text-align-right .block-editor-block-list__layout {
-	justify-content: flex-end;
+
+@include tablet {
+	.stk-button-group:is(.stk--collapse-on-tablet) .block-editor-block-list__layout {
+		align-items: var(--stk-alignment-justify-content);
+	}
 }
-:where(.has-text-align-left) .stk-button-group .block-editor-block-list__layout,
-.stk-button-group.has-text-align-left .block-editor-block-list__layout {
-	justify-content: flex-start;
+
+@include mobile {
+	.stk-button-group:is(.stk--collapse-on-mobile) .block-editor-block-list__layout {
+		align-items: var(--stk-alignment-justify-content);
+	}
 }
 
 .stk-button-group .block-editor-block-list__layout {

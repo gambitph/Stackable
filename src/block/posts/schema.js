@@ -14,6 +14,8 @@ import {
 	Responsive,
 	Typography,
 	addFlexGapAttributes,
+	Transform,
+	ContentAlign,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -30,6 +32,16 @@ const postsAttributes = {
 	},
 	contentOrder: {
 		type: 'array',
+		default: '',
+	},
+	innerBlockContentWidth: {
+		stkResponsive: true,
+		stkUnits: 'px',
+		type: 'number',
+		default: '',
+	},
+	innerBlockAlign: {
+		type: 'string',
 		default: '',
 	},
 	// Query.
@@ -213,6 +225,8 @@ export const attributes = ( version = VERSION ) => {
 		hasTextContent: false,
 		attrNameTemplate: 'readmore%s',
 	} )
+	Transform.addAttributes( attrObject )
+	ContentAlign.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: postsAttributes,
@@ -242,6 +256,7 @@ export const attributes = ( version = VERSION ) => {
 				'title',
 				'meta',
 				'excerpt',
+				'readmore',
 			],
 		},
 		versionAdded: '3.0.0',

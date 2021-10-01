@@ -29,6 +29,7 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
+import { useBlockProps } from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
@@ -40,12 +41,19 @@ const Edit = props => {
 	const {
 		className,
 		onReplace,
+		attributes,
 	} = props
+
+	const {
+		buttonFullWidth,
+	} = attributes
 
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
+
+	const blockProps = useBlockProps()
 
 	const blockClassNames = classnames( [
 		className,
@@ -67,6 +75,7 @@ const Edit = props => {
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Button.InspectorControls
 				borderSelector=".stk-button"
+				hasFullWidth={ true }
 			/>
 			<Typography.InspectorControls
 				hasTextTag={ false }
@@ -82,34 +91,37 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ButtonStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-block-button" />
+			<div { ...blockProps } style={ { width: buttonFullWidth ? '100%' : undefined } }>
+				<ButtonStyles version={ VERSION } />
+				<CustomCSS mainBlockClass="stk-block-button" />
 
-			<BlockDiv
-				className={ blockClassNames }
-				applyAdvancedAttributes={ false }
-				applyCustomAttributes={ false }
-			>
-				<Button
-					buttonProps={ {
-						tagName: props.attributes.linkTag,
-						id: props.attributes.anchor || undefined,
-						...customAttributes,
-					} }
+				<BlockDiv
+					className={ blockClassNames }
+					applyAdvancedAttributes={ false }
+					applyCustomAttributes={ false }
 				>
-					<Typography
-						tagName="span"
-						className={ typographyInnerClassNames }
-						placeholder={ __( 'Button text', i18n ) }
-						withoutInteractiveFormatting={ true }
-						onReplace={ onReplace }
-						onSplit={ value => createBlock(
-							'stackable/button',
-							{ ...props.attributes, text: value }
-						) }
-					/>
-				</Button>
-			</BlockDiv>
+					<Button
+						buttonProps={ {
+							tagName: props.attributes.linkTag,
+							id: props.attributes.anchor || undefined,
+							...customAttributes,
+						} }
+					>
+						<Typography
+							tagName="span"
+							className={ typographyInnerClassNames }
+							placeholder={ __( 'Button text', i18n ) }
+							withoutInteractiveFormatting={ true }
+							onReplace={ onReplace }
+							onSplit={ value => createBlock(
+								'stackable/button',
+								{ ...props.attributes, text: value }
+							) }
+						/>
+					</Button>
+				</BlockDiv>
+			</div>
+
 		</>
 	)
 }

@@ -25,6 +25,8 @@ import {
 	Separator,
 	getSeparatorClasses,
 	Transform,
+	ContentAlign,
+	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 
@@ -35,8 +37,6 @@ import { __ } from '@wordpress/i18n'
 
 const ALLOWED_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = variations[ 0 ].innerBlocks
-
-const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
@@ -57,18 +57,19 @@ const Edit = props => {
 		blockHoverClass,
 		separatorClass,
 		columnTooltipClass,
+		'stk-block-feature-grid__inner-container',
 	] )
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	] )
+	], useContentAlignmentClasses( props.attributes ) )
 
 	return (
 		<>
 
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
@@ -80,6 +81,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<ContentAlign.InspectorControls hasColumnCount={ true } />
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature-grid" />
@@ -93,6 +95,7 @@ const Edit = props => {
 							// templateLock="insert"
 							allowedBlocks={ ALLOWED_BLOCKS }
 							orientation="horizontal"
+							renderAppender={ false }
 						/>
 					</div>
 				</Separator>

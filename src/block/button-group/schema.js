@@ -29,6 +29,16 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
+	attrObject.add( {
+		attributes: {
+			collapseOn: {
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 	addFlexGapAttributes( attrObject )
 
 	return attrObject.getMerged( version )

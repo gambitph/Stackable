@@ -1,5 +1,9 @@
 export const linkAttributes = ( selector = 'a' ) => {
 	return {
+		hasLink: {
+			type: 'boolean',
+			default: true,
+		},
 		url: {
 			type: 'string',
 			source: 'attribute',
@@ -19,6 +23,13 @@ export const linkAttributes = ( selector = 'a' ) => {
 			source: 'attribute',
 			selector,
 			attribute: 'rel',
+			default: '',
+		},
+		title: {
+			type: 'string',
+			source: 'attribute',
+			selector,
+			attribute: 'title',
 			default: '',
 		},
 	}
