@@ -293,15 +293,11 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 		return prependCSSClassCache[ key ]
 	}
 
-	// Handle :is selectors.
-	const selectorsFromIsSelector = cssSelector.match( /:is\((.*?)\)/g )?.reduce( ( acc, curr ) => {
-		return [
-			...acc,
-			...( curr.replace( ':is(', '' ).replace( ')', '' ).split( ',' ) || [] ),
-		]
-	}, [] ) || []
-
 	const selector = cssSelector.trim().replace( /[\n\s\t]+/g, ' ' )
+		// Ensure that the commas inside :is and :where are untouched.
+		.replace( /:(is|where|matches)\([^\)]*\)/g, s => {
+			return s.replace( /,/g, '|||' )
+		} )
 		.split( ',' )
 		.map( s => {
 			let newSelector = ''
@@ -313,19 +309,18 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 				newSelector = s
 			} else if ( s.includes( uniqueClassName ) ) {
 				newSelector = s
-			} else if ( selectorsFromIsSelector.includes( s.trim().match( /[^\)]*\)/ ) ? s.trim().match( /[^\)]*\)/ )[ 0 ].replace( ')', '' ) : s.trim() ) ) {
-				newSelector = s
 			} else if ( uniqueClassName && ! mainClassName ) {
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
 			} else {
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
 					.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|:|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
-					.replace( ':is', ' :is' )
-					.replace( /\s:/, ':' ) // If the selector given is just a pseudo selector ':before', it will produce ' :before', remove the extra space.
+					.replace( /\s:(?!(is|where))/, ':' ) // If the selector given is just a pseudo selector ':before', it will produce ' :before', remove the extra space.
 			}
 			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
 		} )
 		.join( ', ' )
+		// Bring back the commas inside :is and :where.
+		.replace( /\|\|\|/g, ', ' )
 
 	prependCSSClassCache[ key ] = selector
 	return selector
