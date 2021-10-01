@@ -72,28 +72,8 @@ const variations = applyFilters(
 			name: 'plain',
 			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			attributes: { className: 'is-style-plain', hasContainer: false },
-			innerBlocks: [
-				[ 'stackable/image', {
-					imageHeight: 150, imageWidth: 150, imageWidthUnit: 'px', imageBorderRadius: 90,
-				} ],
-				[ 'stackable/heading', {
-					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-				} ],
-				[ 'stackable/subtitle', {
-					text: __( 'Position', i18n ),
-				} ],
-				[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
-				[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
-			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'plain-2',
-			title: __( 'Plain 2', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain 2', i18n ) ),
 			attributes: {
-				className: 'is-style-plain-2', hasContainer: false, contentAlign: 'left',
+				className: 'is-style-plain', hasContainer: false, contentAlign: 'left',
 			},
 			innerBlocks: [
 				[ 'stackable/image', {} ],
@@ -122,9 +102,9 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'vertical-card',
-			title: __( 'Vertical Card', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical card', i18n ) ),
+			name: 'cover',
+			title: __( 'Cover', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Cover', i18n ) ),
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
