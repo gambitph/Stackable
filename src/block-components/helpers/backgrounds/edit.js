@@ -125,7 +125,7 @@ export const BackgroundControls = props => {
 					<AdvancedRangeControl
 						label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
 						attribute={ getAttrName( 'backgroundGradientLocation1' ) }
-						min={ 0 }
+						sliderMin={ 0 }
 						max={ 100 }
 						step={ 1 }
 						allowReset={ true }
@@ -136,7 +136,7 @@ export const BackgroundControls = props => {
 					<AdvancedRangeControl
 						label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
 						attribute={ getAttrName( 'backgroundGradientLocation2' ) }
-						min={ 0 }
+						sliderMin={ 0 }
 						max={ 100 }
 						step={ 1 }
 						allowReset={ true }

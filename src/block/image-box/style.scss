@@ -24,8 +24,8 @@
 		margin: 0;
 	}
 
-	.stk-block,
-	.stk-img-wrapper img {
+	&.stk-block .stk-block.stk-block,
+	&.stk-block .stk-img-wrapper > img.stk-img {
 		transition-duration: 0.32s;
 	}
 

@@ -55,9 +55,9 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'plain',
-			title: __( 'Plain', i18n ),
-			description: __( 'Plain Layout', i18n ),
+			name: 'simple',
+			title: __( 'Simple', i18n ),
+			description: __( 'Simple Layout', i18n ),
 			icon: (
 				<SVG
 					width="48"
@@ -73,7 +73,16 @@ const variations = applyFilters(
 				</SVG>
 			),
 			innerBlocks: [
-				[ 'stackable/icon', { icon: renderToString( <SVGDefaultQuote /> ), linkHasLink: false } ],
+				[ 'stackable/icon', {
+					icon: renderToString( <SVGDefaultQuote /> ),
+					opacity: 0.2,
+					position: 'absolute',
+					positionNum: {
+						top: -50, right: '', bottom: '', left: -50,
+					},
+					iconSize: 200,
+					linkHasLink: false,
+				} ],
 				[ 'stackable/text', {
 					text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
 				} ],
