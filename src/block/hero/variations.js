@@ -1,4 +1,14 @@
 /**
+ * Internal dependencies
+ */
+import ImageDefault from './images/default.svg'
+import ImageHorizontal from './images/horizontal.svg'
+import ImageHalfOverlay from './images/half-overlay.svg'
+import ImageCenterOverlay from './images/center-overlay.svg'
+import ImageSideOverlay from './images/side-overlay.svg'
+import ImageHalf from './images/half.svg'
+
+/**
  * External dependencies
  */
 import { i18n, isPro } from 'stackable'
@@ -23,6 +33,7 @@ const variations = applyFilters(
 			name: 'default',
 			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
+			icon: ImageDefault,
 			isDefault: true,
 			attributes: {
 				hasContainer: true,
@@ -40,6 +51,7 @@ const variations = applyFilters(
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			icon: ImageHorizontal,
 			attributes: {
 				hasBackground: true,
 				blockBackgroundColor: '#FFFFFF',
@@ -93,6 +105,7 @@ const variations = applyFilters(
 			name: 'half-overlay',
 			title: __( 'Half Overlay', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Half Overlay', i18n ) ),
+			icon: ImageHalfOverlay,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -100,6 +113,7 @@ const variations = applyFilters(
 			name: 'center-overlay',
 			title: __( 'Center Overlay', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Center Overlay', i18n ) ),
+			icon: ImageCenterOverlay,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -107,6 +121,7 @@ const variations = applyFilters(
 			name: 'side-overlay',
 			title: __( 'Side Overlay', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side Overlay', i18n ) ),
+			icon: ImageSideOverlay,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -114,6 +129,7 @@ const variations = applyFilters(
 			name: 'half',
 			title: __( 'Half', i18n ),
 			description: __( 'Half Layout', i18n ),
+			icon: ImageHalf,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

@@ -1,4 +1,13 @@
 /**
+ * Internal dependencies
+ */
+import ImageDefault from './images/default.svg'
+import ImagePlain from './images/plain.svg'
+import ImageShadow from './images/shadow.svg'
+import ImageColored from './images/colored.svg'
+import ImagePlus from './images/plus.svg'
+
+/**
  * WorddPress dependencies
  */
 import {
@@ -24,6 +33,7 @@ const variations = applyFilters(
 		{
 			name: 'default',
 			title: __( 'Default', i18n ),
+			icon: ImageDefault,
 			isDefault: true,
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			innerBlocks: [
@@ -53,6 +63,7 @@ const variations = applyFilters(
 			name: 'plain',
 			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
+			icon: ImagePlain,
 			attributes: {
 				blockBorderType: 'solid',
 				blockBorderColor: '#dfdad1',
@@ -96,6 +107,7 @@ const variations = applyFilters(
 			name: 'shadow',
 			title: __( 'Shadow', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Shadow', i18n ) ),
+			icon: ImageShadow,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -103,6 +115,7 @@ const variations = applyFilters(
 			name: 'colored',
 			title: __( 'Colored', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored', i18n ) ),
+			icon: ImageColored,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -110,6 +123,7 @@ const variations = applyFilters(
 			name: 'plus',
 			title: __( 'Plus', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plus', i18n ) ),
+			icon: ImagePlus,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
