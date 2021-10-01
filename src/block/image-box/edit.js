@@ -90,7 +90,7 @@ const Edit = props => {
 
 			<InspectorTabs />
 
-			<Alignment.InspectorControls hasColumnAlignment={ true } />
+			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
@@ -140,7 +140,7 @@ addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box',
 	const currentInnerBlocks = innerBlocks?.map( ( { name } ) => name ) || []
 	const allowedInnerBlocks = ALLOWED_BLOCKS.filter( allowedBlock => ! currentInnerBlocks.includes( allowedBlock ) )
 
-	return ! allowedInnerBlocks.length ? false : allowedInnerBlocks
+	return ! allowedInnerBlocks.length ? [] : allowedInnerBlocks
 } )
 
 export default Edit

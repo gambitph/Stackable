@@ -51,7 +51,7 @@ export const Save = props => {
 
 	const contentClassNames = classnames( [
 		'stk-block-posts__items',
-	], )
+	] )
 
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
@@ -66,7 +66,7 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ wrapperClassNames }>
 				<div className={ contentClassNames }>
-					{ generateRenderPostItem.save( attributes ) }
+					{ generateRenderPostItem.save( { ...attributes, className } ) }
 				</div>
 				<div className={ innerClassNames }>
 					<InnerBlocks.Content />
