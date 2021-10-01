@@ -20,10 +20,10 @@ const variations = applyFilters(
 	'stackable.feature.variations',
 	[
 		{
-			name: 'plain',
-			title: __( 'Plain', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			attributes: { className: 'is-style-plain' },
+			name: 'default',
+			title: __( 'Default', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
+			attributes: { className: 'is-style-default' },
 			isDefault: true,
 			innerBlocks: [
 				[ 'stackable/column', {}, [
