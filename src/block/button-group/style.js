@@ -37,6 +37,20 @@ const getStyleParams = () => {
 		{
 			renderIn: 'save',
 			selector: '.stk-button-group',
+			styleRule: 'flexWrap',
+			attrObject: 'flexWrap',
+			responsive: 'all',
+		},
+		{
+			renderIn: 'edit',
+			selector: '.stk-button-group .block-editor-block-list__layout',
+			styleRule: 'flexWrap',
+			attrObject: 'flexWrap',
+			responsive: 'all',
+		},
+		{
+			renderIn: 'save',
+			selector: '.stk-button-group',
 			styleRule: 'flexDirection',
 			attrObject: 'collapseOn',
 			responsive: 'all',

@@ -89,6 +89,27 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
+			name: 'plain-2',
+			title: __( 'Plain 2', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain 2', i18n ) ),
+			attributes: {
+				className: 'is-style-plain-2', hasContainer: false, contentAlign: 'left',
+			},
+			innerBlocks: [
+				[ 'stackable/image', {
+					imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
+				} ],
+				[ 'stackable/heading', {
+					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+				} ],
+				[ 'stackable/subtitle', {
+					text: __( 'Position', i18n ),
+				} ],
+				[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
+			],
+			scope: [ 'block' ],
+		},
+		{
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),

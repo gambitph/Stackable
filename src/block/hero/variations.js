@@ -37,17 +37,36 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'plain',
-			title: __( 'Plain', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
+			name: 'horizontal',
+			title: __( 'Horizontal', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
 			attributes: {
 				hasContainer: false,
+				innerBlockContentAlign: 'alignfull',
+				align: 'full',
 			},
 			innerBlocks: [
-				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ) } ],
-				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
-				[ 'stackable/button-group', {}, [
-					[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
+				[ 'stackable/columns', {
+					innerBlockContentAlign: 'alignfull',
+					align: 'full',
+				}, [
+					[ 'stackable/column', {
+						containerWidth: 450,
+						contentAlign: 'left',
+						columnAlign: 'center',
+					}, [
+						[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h1' } ],
+						[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
+						[ 'stackable/button-group', {}, [
+							[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
+						] ],
+					] ],
+					[ 'stackable/column', {}, [
+						[ 'stackable/image', {
+							imageHeight: 600,
+							imageWidth: 100,
+						} ],
+					] ],
 				] ],
 			],
 			scope: [ 'block' ],

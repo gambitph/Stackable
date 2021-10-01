@@ -93,6 +93,25 @@ const Edit = props => {
 				>
 					<FlexGapControls />
 					<AdvancedSelectControl
+						label={ __( 'Flex Wrap' ) }
+						attribute="flexWrap"
+						options={ [
+							{
+								label: __( 'No Wrap', i18n ),
+								value: '',
+							},
+							{
+								label: __( 'Wrap', i18n ),
+								value: 'wrap',
+							},
+							{
+								label: __( 'Wrap Reverse', i18n ),
+								value: 'wrap-reverse',
+							},
+						] }
+						responsive="all"
+					/>
+					<AdvancedSelectControl
 						label={ __( 'Collapse Buttons On', i18n ) }
 						attribute="collapseOn"
 						options={ [

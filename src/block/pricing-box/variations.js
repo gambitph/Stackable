@@ -43,32 +43,35 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'plain',
-			title: __( 'Plain', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			attributes: { className: 'is-style-plain', hasContainer: false },
+			name: 'compact',
+			title: __( 'Compact', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Compact', i18n ) ),
+			attributes: { className: 'is-style-compact' },
 			innerBlocks: [
-				[ 'stackable/heading', {
-					text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-				} ],
-				[ 'stackable/price', {} ],
-				[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],
-				[ 'stackable/button-group', {}, [
-					[ 'stackable/button', {
-						text: _x( 'Button', 'Button placeholder', i18n ),
-					} ],
+				[ 'stackable/columns', {}, [
+					[ 'stackable/column', {}, [
+						[ 'stackable/image', {} ],
+					] ],
+					[ 'stackable/column', {
+						contentAlign: 'left',
+						columnAlign: 'center',
+					}, [
+						[ 'stackable/heading', {
+							text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						} ],
+						[ 'stackable/price', {} ],
+						[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],
+						[ 'stackable/button-group', {}, [
+							[ 'stackable/button', {
+								text: _x( 'Button', 'Button placeholder', i18n ),
+							} ],
+						] ],
+					] ],
 				] ],
 				[ 'stackable/text', {
 					text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ),
 				} ],
 			],
-			scope: [ 'block' ],
-		},
-		{
-			name: 'compact',
-			title: __( 'Compact', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Compact', i18n ) ),
-			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
