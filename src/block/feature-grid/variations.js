@@ -156,9 +156,9 @@ const variations = applyFilters(
 			scope: [ 'block' ],
 		},
 		{
-			name: 'horizontal-2',
-			title: __( 'Horizontal 2', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
+			name: 'horizontal',
+			title: __( 'Horizontal', i18n ),
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
