@@ -11,7 +11,6 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
-import { getBlockAttributes } from '@wordpress/blocks'
 
 export const LinkControls = props => {
 	const {
@@ -43,7 +42,7 @@ export const LinkControls = props => {
 				value={ getAttribute( 'rel' ) }
 				onChange={ updateAttributeHandler( 'rel' ) }
 			/>
-			{ ( hasTitle || getBlockAttributes( 'hasTitle' ) ) && (
+			{ ( hasTitle || getAttribute( 'hasTitle' ) ) && (
 				<AdvancedTextControl
 					label={ __( 'Link Title', i18n ) }
 					value={ getAttribute( 'title' ) }
