@@ -12,6 +12,15 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 
 /**
+ * Internal dependencies
+ */
+import ImageDefault from './images/default.svg'
+import ImageCompact from './images/compact.svg'
+import ImageBanner from './images/banner.svg'
+import ImageColored from './images/colored.svg'
+import ImageSectioned from './images/sectioned.svg'
+
+/**
  * Template option choices for predefined columns layouts.
  *
  * @type {WPBlockVariation[]}
@@ -23,6 +32,7 @@ const variations = applyFilters(
 			name: 'default',
 			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
+			icon: ImageDefault,
 			attributes: { className: 'is-style-basic' },
 			isDefault: true,
 			innerBlocks: [
@@ -46,6 +56,7 @@ const variations = applyFilters(
 			name: 'compact',
 			title: __( 'Compact', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Compact', i18n ) ),
+			icon: ImageCompact,
 			attributes: { className: 'is-style-compact' },
 			innerBlocks: [
 				[ 'stackable/columns', {}, [
@@ -78,6 +89,7 @@ const variations = applyFilters(
 			name: 'banner',
 			title: __( 'Banner', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Banner Layout', i18n ) ),
+			icon: ImageBanner,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -85,6 +97,7 @@ const variations = applyFilters(
 			name: 'colored',
 			title: __( 'Colored', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored Layout', i18n ) ),
+			icon: ImageColored,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -92,6 +105,7 @@ const variations = applyFilters(
 			name: 'sectioned',
 			title: __( 'Sectioned', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Sectioned Layout', i18n ) ),
+			icon: ImageSectioned,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

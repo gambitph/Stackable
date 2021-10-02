@@ -12,6 +12,15 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 
 /**
+ * Internal dependencies
+ */
+import ImageDefault from './images/default.svg'
+import ImagePlain from './images/plain.svg'
+import ImageHorizontal from './images/horizontal.svg'
+import ImageHorizontal2 from './images/horizontal-2.svg'
+import ImageCover from './images/cover.svg'
+
+/**
  * Template option choices for predefined columns layouts.
  *
  * @type {WPBlockVariation[]}
@@ -51,6 +60,7 @@ const variations = applyFilters(
 			name: 'default',
 			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
+			icon: ImageDefault,
 			attributes: { className: 'is-style-default' },
 			isDefault: true,
 			innerBlocks: [
@@ -72,6 +82,7 @@ const variations = applyFilters(
 			name: 'plain',
 			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
+			icon: ImagePlain,
 			attributes: {
 				className: 'is-style-plain', hasContainer: false, contentAlign: 'left',
 			},
@@ -91,6 +102,7 @@ const variations = applyFilters(
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			icon: ImageHorizontal,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -98,6 +110,7 @@ const variations = applyFilters(
 			name: 'horizontal-2',
 			title: __( 'Horizontal 2', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
+			icon: ImageHorizontal2,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -105,6 +118,7 @@ const variations = applyFilters(
 			name: 'cover',
 			title: __( 'Cover', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Cover', i18n ) ),
+			icon: ImageCover,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

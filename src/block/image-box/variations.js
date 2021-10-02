@@ -1,8 +1,12 @@
 /**
  * Internal dependencies
  */
-import SVGBasic from './images/basic.svg'
-import SVGSide from './images/side.svg'
+import ImageDefault from './images/default.svg'
+import ImagePlain from './images/plain.svg'
+import ImageBox from './images/box.svg'
+import ImageCaptioned from './images/captioned.svg'
+import ImageFade from './images/fade.svg'
+import ImageLine from './images/line.svg'
 
 /**
  * WordPress dependencies
@@ -29,7 +33,7 @@ const variations = applyFilters(
 			name: 'default',
 			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: <SVGBasic />,
+			icon: ImageDefault,
 			attributes: { className: 'is-style-default' },
 			innerBlocks: [
 				[ 'stackable/image', { imageHeight: 350, imageFilterParentHover: 'brightness(0.3)' } ],
@@ -65,7 +69,7 @@ const variations = applyFilters(
 			name: 'plain',
 			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			icon: <SVGSide />,
+			icon: ImagePlain,
 			attributes: { contentAlign: 'left', className: 'is-style-plain' },
 			innerBlocks: [
 				[ 'stackable/image', {
@@ -111,6 +115,7 @@ const variations = applyFilters(
 			name: 'box',
 			title: __( 'Box', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Box', i18n ) ),
+			icon: ImageBox,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -118,6 +123,7 @@ const variations = applyFilters(
 			name: 'captioned',
 			title: __( 'Captioned', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Captioned', i18n ) ),
+			icon: ImageCaptioned,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -125,6 +131,7 @@ const variations = applyFilters(
 			name: 'fade',
 			title: __( 'Fade', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Fade', i18n ) ),
+			icon: ImageFade,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -132,6 +139,7 @@ const variations = applyFilters(
 			name: 'line',
 			title: __( 'Line', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Line', i18n ) ),
+			icon: ImageLine,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
