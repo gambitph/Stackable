@@ -54,6 +54,23 @@ const ResizableBottomMarginSingle = props => {
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
+	const onResizeStart = () => {
+		let currentMargin = props.value ? parseFloat( props.value ) : 0
+		if ( ! props.value ) {
+			const el = document.querySelector( props.previewSelector )
+			if ( el ) {
+				currentMargin = parseFloat( window.getComputedStyle( el ).marginBottom )
+			}
+		}
+		setInitialHeight( currentMargin || 0 )
+		setIsResizing( true )
+		setCurrentHeight( currentMargin || 0 )
+	}
+
+	useEffect( () => {
+		onResizeStart()
+	}, [] )
+
 	return (
 		<ResizableBox
 			className={ classNames }
@@ -70,22 +87,11 @@ const ResizableBottomMarginSingle = props => {
 				left: false,
 			} }
 			size={ {
-				height: props.value || props.value === 0 ? props.value : defaultBottomMargin,
+				height: props.value || props.value === 0 ? props.value : initialHeight || defaultBottomMargin,
 			} }
 			snap={ snapWidths }
 			snapGap={ 5 }
-			onResizeStart={ () => {
-				let currentMargin = props.value ? parseFloat( props.value ) : 0
-				if ( ! props.value ) {
-					const el = document.querySelector( props.previewSelector )
-					if ( el ) {
-						currentMargin = parseFloat( window.getComputedStyle( el ).marginBottom )
-					}
-				}
-				setInitialHeight( currentMargin || 0 )
-				setIsResizing( true )
-				setCurrentHeight( currentMargin || 0 )
-			} }
+			onResizeStart={ onResizeStart }
 			onResize={ ( _event, _direction, elt, delta ) => {
 				setCurrentHeight( initialHeight + delta.height )
 

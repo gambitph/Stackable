@@ -8,7 +8,6 @@ import {
 	EffectsAnimations,
 	ContainerDiv,
 	MarginBottom,
-	Separator,
 	Transform,
 } from '~stackable/block-components'
 import {
@@ -54,7 +53,6 @@ export const ContainerStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
 			<MarginBottom.Style { ...propsToPass } />
-			<Separator.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -79,7 +77,6 @@ ContainerStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
 			<MarginBottom.Style.Content { ...propsToPass } />
-			<Separator.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 
