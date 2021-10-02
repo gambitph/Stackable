@@ -304,7 +304,8 @@ class StyleObject {
 			}
 
 			if ( unit ) { // Note: this will only work for non-objects.
-				value = `${ value }${ unit }`
+				// If the value is `auto`, don't add units.
+				value = value === 'auto' ? `${ value }` : `${ value }${ unit }`
 			}
 			if ( format !== '%s' && format !== '' ) {
 				value = sprintf(
