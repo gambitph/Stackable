@@ -54,7 +54,7 @@ const ResizableBottomMarginSingle = props => {
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
-	const onResizeStart = () => {
+	const getInitialHeight = () => {
 		let currentMargin = props.value ? parseFloat( props.value ) : 0
 		if ( ! props.value ) {
 			const el = document.querySelector( props.previewSelector )
@@ -63,12 +63,11 @@ const ResizableBottomMarginSingle = props => {
 			}
 		}
 		setInitialHeight( currentMargin || 0 )
-		setIsResizing( true )
-		setCurrentHeight( currentMargin || 0 )
+		return currentMargin || 0
 	}
 
 	useEffect( () => {
-		onResizeStart()
+		getInitialHeight()
 	}, [] )
 
 	return (
@@ -91,7 +90,11 @@ const ResizableBottomMarginSingle = props => {
 			} }
 			snap={ snapWidths }
 			snapGap={ 5 }
-			onResizeStart={ onResizeStart }
+			onResizeStart={ () => {
+				const currentHeight = getInitialHeight()
+				setCurrentHeight( currentHeight )
+				setIsResizing( true )
+			} }
 			onResize={ ( _event, _direction, elt, delta ) => {
 				setCurrentHeight( initialHeight + delta.height )
 
