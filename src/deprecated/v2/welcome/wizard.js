@@ -32,12 +32,12 @@ const WelcomeMessage = () => {
 	return (
 		<>
 			<div className="s-welcome-wizard__content s-box">
-				<h2>{ __( 'Thanks for updating to Stackable 3', i18n ) }</h2>
+				<h2>{ __( 'Thanks for Updating to Stackable 3', i18n ) }</h2>
 				<p>{ __( 'There are huge changes in Stackable, and this wizard will help you get started with migrating to the new version.', i18n ) }</p>
-				<p>{ __( 'We\'ve made upgrading as smooth and conflict free as possible. Version 3 is fully backward compatible with version 2. And don\'t worry, you don\'t have to rebuild any of your web pages.', i18n ) }</p>
-				<h2>{ __( 'What\'s new in Version 3', i18n ) }</h2>
+				<p>{ __( 'We\'ve made upgrading as smooth and hassle free as possible, click on the Next button at the lower right to move to the next step.', i18n ) }</p>
+				<h2>{ __( 'What\’s New in Version 3', i18n ) }</h2>
 				<ul>
-					<li>{ __( 'Unbelievably lightweight and faster performance', i18n ) }</li>
+					<li>{ __( 'Unbelievably lightweight, faster performance, focus on core web vitals and accessibility', i18n ) }</li>
 					<li>{ __( 'Completely new way to use Stackable blocks', i18n ) }</li>
 					<li>{ __( 'Advanced Columns which are immensely responsive (you can control how they collapse in tablet and mobile)', i18n ) }</li>
 					<li>{ __( 'Style blocks when they\'re hovered', i18n ) }</li>
@@ -58,7 +58,17 @@ const MigrationSettings = () => {
 	// stackable_v2_editor_compatibility_usage
 	return (
 		<>
-			<h3>{ __( 'Migration', i18n ) }</h3>
+			<div className="s-welcome-wizard__content s-box">
+				<h2>{ __( 'Migrating to the New Stackable Blocks', i18n ) }</h2>
+				<p>{ __( 'Stackable 3 replaces ALL Stackable blocks with an updated set of new, more flexible, more powerful and faster blocks.', i18n ) }</p>
+				<p>{ __( 'While we\'ve replaced all blocks, version 3 is fully backward compatible with version 2. Don\'t worry, you don\'t have to rebuild any of your web pages!', i18n ) }</p>
+				<p><strong>{ __( 'How would you like to transition your workflow when editing your pages?', i18n ) }</strong></p>
+				{ /* → Option 1: Allow adding of v2 blocks only if there are already existing v2 blocks in the post/page being edited
+
+→ Option 2: Allow adding of both v2 and v3 blocks in Gutenberg
+
+→ Option 3: Only allow adding of the new v3 blocks */ }
+			</div>
 		</>
 	)
 }

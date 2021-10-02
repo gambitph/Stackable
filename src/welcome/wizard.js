@@ -9,9 +9,16 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 const isPro = true
 
+const startStep = parseInt( location.hash.match( /^#step-(\d+)/ )?.[ 1 ] || 1, 10 )
+
 const Wizard = () => {
-	const [ step, setStep ] = useState( 1 )
+	const [ step, setStep ] = useState( startStep )
 	// const [ state, setState ] = useState( null )
+
+	// Add the step to the URL so that we still get back here when the user refreshes.
+	useEffect( () => {
+		location.hash = `step-${ step }`
+	}, [ step ] )
 
 	// Move to the next step if the step component is done saving.
 	// useEffect( () => {
@@ -153,16 +160,15 @@ const Steps = props => {
 				} )
 
 				return (
-					<>
+					<Fragment key={ i }>
 						{ i > 0 && <div className={ dividerClassNames } /> }
 						<div
 							className={ classNames }
-							key={ i }
 						>
 							<span className="s-welcome-wizard__step-number">{ i + 1 }</span>
 							<span className="s-welcome-wizard__step-label">{ stepData.label }</span>
 						</div>
-					</>
+					</Fragment>
 				)
 			} ) }
 		</div>
