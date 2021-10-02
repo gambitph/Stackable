@@ -31,6 +31,11 @@
 		.stk-block-icon-label .stk-block-icon {
 			flex: 0 0 40px;
 		}
+		// Unset the width to avoid content overflow in safari.
+		// @see https://github.com/gambitph/Stackable/issues/1707
+		.stk-column__content {
+			width: unset;
+		}
 	}
 	.stk-block-accordion__content > .stk-container {
 		padding: cssvar(container-padding);
