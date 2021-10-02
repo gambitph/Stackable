@@ -56,7 +56,7 @@ const ResizableBottomMarginSingle = props => {
 
 	const getInitialHeight = () => {
 		let currentMargin = props.value ? parseFloat( props.value ) : 0
-		if ( ! props.value ) {
+		if ( ! props.value && props.previewSelector ) {
 			const el = document.querySelector( props.previewSelector )
 			if ( el ) {
 				currentMargin = parseFloat( window.getComputedStyle( el ).marginBottom )
@@ -68,7 +68,7 @@ const ResizableBottomMarginSingle = props => {
 
 	useEffect( () => {
 		getInitialHeight()
-	}, [] )
+	}, [ props.previewSelector ] )
 
 	return (
 		<ResizableBox

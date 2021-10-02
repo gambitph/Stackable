@@ -25,7 +25,7 @@ export const MarginBottom = () => {
 
 	return (
 		<ResizableBottomMargin
-			previewSelector={ `.${ getUniqueBlockClass( attributes.uniqueId ) }` }
+			previewSelector={ attributes.uniqueId ? `.${ getUniqueBlockClass( attributes.uniqueId ) }` : undefined }
 			attribute="blockMargin"
 			responsive="all"
 		/>
