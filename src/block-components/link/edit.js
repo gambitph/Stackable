@@ -20,7 +20,7 @@ export const Edit = () => {
 		getAttribute,
 	} = useAttributeEditHandlers()
 
-	return getAttribute( 'linkHasLink' ) && (
+	return getAttribute( 'linkHasLink' ) ? (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Link', i18n ) }
@@ -29,5 +29,5 @@ export const Edit = () => {
 				<LinkControls attrNameTemplate="link%s" />
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
-	)
+	) : null
 }

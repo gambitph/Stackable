@@ -14,9 +14,13 @@
 	align-items: center;
 
 	// Use margin-inline-end in gaps instead since safari does not support it.
-	> :is([data-block], .stk-button) {
+	> .stk-button {
 		&:not(last-child) {
 			margin-inline-end: cssvar(button-column-gap);
 		}
+	}
+
+	> [data-block]:not(last-child) .stk-block {
+		margin-inline-end: cssvar(button-column-gap);
 	}
 }
