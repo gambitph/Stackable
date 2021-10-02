@@ -50,6 +50,7 @@ const TypographyPicker = props => {
 
 	return (
 		<TypographyControl
+			fontSizeProps={ { units: [ 'px', 'em', 'rem' ] } }
 			className={ mainClasses }
 			label={ label }
 			popoverLabel={ null }
