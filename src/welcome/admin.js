@@ -63,22 +63,22 @@ const importBlocks = r => {
 	return blocks
 }
 
-const BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
-const BLOCK_CATEROGIES = [
+export const BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
+export const BLOCK_CATEROGIES = [
 	{
 		id: 'essential',
 		label: __( 'Essential Blocks', i18n ),
-		icon: <SVGEssentialIcon height="20" width="20" />,
+		Icon: SVGEssentialIcon,
 	},
 	{
 		id: 'special',
 		label: __( 'Special Blocks', i18n ),
-		icon: <SVGSpecialIcon height="20" width="20" />,
+		Icon: SVGSpecialIcon,
 	},
 	{
 		id: 'section',
 		label: __( 'Section Blocks', i18n ),
-		icon: <SVGSectionIcon height="20" width="20" />,
+		Icon: SVGSectionIcon,
 	},
 ]
 
@@ -194,7 +194,7 @@ const BlockToggler = () => {
 	return (
 		<>
 			{ BLOCK_CATEROGIES.map( ( {
-				id, label, icon,
+				id, label, Icon,
 			} ) => {
 				const classes = classnames( [
 					's-box-block__title',
@@ -203,7 +203,7 @@ const BlockToggler = () => {
 				return (
 					<div className="s-box s-box-block" key={ id }>
 						<h3 className={ classes }>
-							{ icon }
+							{ Icon && <Icon height="20" width="20" /> }
 							<span>{ label }</span>
 						</h3>
 						<div className="s-settings-header">

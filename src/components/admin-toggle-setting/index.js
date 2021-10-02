@@ -26,6 +26,7 @@ const AdminToggleSetting = props => {
 					ev.stopPropagation()
 				} }
 				style={ { minWidth: props.width || undefined } }
+				disabled={ props.isDisabled ? 'disabled' : '' }
 			>
 				<span>{ props.disabled }</span>
 				<span>{ props.enabled }</span>
@@ -42,6 +43,7 @@ AdminToggleSetting.defaultProps = {
 	disabled: __( 'Disabled', i18n ),
 	enabled: __( 'Enabled', i18n ),
 	width: '',
+	isDisabled: false,
 }
 
 export default AdminToggleSetting
