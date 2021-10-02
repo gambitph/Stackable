@@ -180,10 +180,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<article class="s-box" id="role-manager">
 							<h2><?php _e( '📰 Role Manager', STACKABLE_I18N ) ?></h2>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-subtitle"><?php printf( __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+								<p class="s-settings-subtitle"><?php echo __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks.' , STACKABLE_I18N ) . ' <a href="https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">' . __( 'Learn more', STACKABLE_I18N ) . '</a>' ?></em></p>
 							<?php endif; ?>
 							<?php if ( sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-subtitle"><?php printf( __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/360-role-manager-and-content-editing-mode?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+								<p class="s-settings-subtitle"><?php echo __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks.' , STACKABLE_I18N ) . ' <a href="https://docs.wpstackable.com/article/360-role-manager-and-content-editing-mode?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">' . __( 'Learn more', STACKABLE_I18N ) . '</a>' ?></em></p>
 							<?php endif; ?>
 							<div class="s-editing-mode-settings"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
@@ -508,6 +508,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
         public function redirect_to_welcome_page() {
             if ( ! sugb_fs()->is_activation_mode() && get_option( 'stackable_redirect_to_welcome' ) ) {
                 delete_option( 'stackable_redirect_to_welcome' );
+				do_action( 'stackable_redirect_to_welcome_page' );
                 wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-getting-started' ) ) );
                 die();
             }
