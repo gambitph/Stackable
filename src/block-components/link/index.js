@@ -10,6 +10,7 @@ import { Edit } from './edit'
  */
 import { Link as LinkComponent } from '~stackable/components'
 import { useBlockContext, useAttributeEditHandlers } from '~stackable/hooks'
+import { isElementDescendant } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -21,21 +22,6 @@ import {
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
-
-const isDescendant = function( parent, child ) {
-	let node = child.parentNode
-	while ( node ) {
-		if ( node === parent ) {
-			return true
-		}
-
-		// Traverse up to the parent
-		node = node.parentNode
-	}
-
-	// Go up until the root but couldn't find the `parent`
-	return false
-}
 
 export const Link = props => {
 	const [ isOpen, setIsOpen ] = useState( false )
@@ -64,7 +50,7 @@ export const Link = props => {
 
 	const clickOutsideListener = useCallback( event => {
 		if ( isOpen ) {
-			if ( ! isDescendant( popoverEl.curent, event.target ) && ! event.target.closest( '.components-popover' ) ) {
+			if ( ! isElementDescendant( popoverEl.curent, event.target ) && ! event.target.closest( '.components-popover' ) ) {
 				setIsOpen( false )
 			}
 		}

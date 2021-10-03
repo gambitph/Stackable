@@ -385,3 +385,25 @@ export const recursivelyAddUniqueIdToInnerBlocks = ( innerBlocks = [] ) => {
 		recursivelyAddUniqueIdToInnerBlocks( innerBlock.innerBlocks )
 	} )
 }
+
+/**
+ * Checks whether the DOM element is the parent of another DOM element.
+ *
+ * @param {Element} parent Parent element
+ * @param {Element} child Child element
+ * @return {boolean} True if the parent has the child
+ */
+export const isElementDescendant = function( parent, child ) {
+	let node = child.parentNode
+	while ( node ) {
+		if ( node === parent ) {
+			return true
+		}
+
+		// Traverse up to the parent
+		node = node.parentNode
+	}
+
+	// Go up until the root but couldn't find the `parent`
+	return false
+}

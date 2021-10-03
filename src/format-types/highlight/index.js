@@ -4,7 +4,7 @@
 import {
 	ColorPaletteControl, AdvancedToolbarControl, Button,
 } from '~stackable/components'
-import { whiteIfDarkBlackIfLight } from '~stackable/util'
+import { isElementDescendant, whiteIfDarkBlackIfLight } from '~stackable/util'
 import { i18n } from 'stackable'
 
 /**
@@ -116,7 +116,7 @@ const HighlightButton = props => {
 	// Close the window if the user clicks outside.
 	const clickOutsideListener = useCallback( event => {
 		if ( isOpen ) {
-			if ( ! event.target.closest( popoverEl.current ) && ! event.target.closest( '.components-popover' ) ) {
+			if ( ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
 				setIsOpen( false )
 			}
 		}
