@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 
+// Note: image drop shadows do not accept negative spread.
 const IMAGE_SHADOWS = [
 	'none',
 	'0px 0 1px rgba(120, 120, 120, 0.5)',
