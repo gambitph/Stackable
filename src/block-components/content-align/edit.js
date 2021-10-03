@@ -23,7 +23,7 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { select } from '@wordpress/data'
+import { select, dispatch } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const Controls = props => {
@@ -33,7 +33,7 @@ export const Controls = props => {
 
 	const { clientId } = useBlockEditContext()
 	const {
-		getAttribute, updateAttribute, updateAttributes,
+		getAttribute, updateAttribute,
 	} = useAttributeEditHandlers()
 
 	return (
@@ -72,10 +72,10 @@ export const Controls = props => {
 							// When columnFit is changed, remove all column widths.
 							if ( value ) {
 								const { getBlock } = select( 'core/block-editor' )
-
+								const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 								getBlock( clientId ).innerBlocks.forEach( block => {
 									if ( block.name === 'stackable/column' ) {
-										updateAttributes( {
+										updateBlockAttributes( block.clientId, {
 											[ getAttributeName( 'columnWidth', 'desktop' ) ]: '',
 											[ getAttributeName( 'columnWidth', 'tablet' ) ]: '',
 											[ getAttributeName( 'columnWidth', 'mobile' ) ]: '',
