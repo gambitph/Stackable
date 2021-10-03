@@ -2,7 +2,7 @@
  * This defines all styles related to making the hover states of blocks animate smoothly.
  */
 // Hover transitions.
-body.stk--anim-init {
+body:is(.stk--anim-init, .wp-admin) {
 	:is(
 	.wp-block[data-type^="stackable/"],
 	.stk-block,
