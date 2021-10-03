@@ -161,7 +161,7 @@ const TypographyPreview = props => {
 		select => ( {
 			device: select(
 				'core/edit-post'
-			).__experimentalGetPreviewDeviceType().toLowerCase(),
+			)?.__experimentalGetPreviewDeviceType()?.toLowerCase() || 'Desktop',
 		} ),
 		[]
 	)
