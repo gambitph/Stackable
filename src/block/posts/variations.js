@@ -37,7 +37,6 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'List', i18n ) ),
 			attributes: {
 				imageWidth: 35,
-				imageHeight: 'auto',
 				imageWidthUnit: '%',
 				imageHeightUnit: 'px',
 				hasContainer: false,

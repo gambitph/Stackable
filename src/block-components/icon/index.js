@@ -3,7 +3,7 @@
  */
 import { useAttributeEditHandlers, useBlockAttributes } from '~stackable/hooks'
 import {
-	getAttrNameFunction, __getValue, getShapeSVG,
+	getAttrNameFunction, __getValue, getShapeSVG, isElementDescendant,
 } from '~stackable/util'
 import { kebabCase } from 'lodash'
 import classnames from 'classnames'
@@ -88,7 +88,7 @@ export const Icon = props => {
 
 	const clickOutsideListener = useCallback( event => {
 		if ( isOpen ) {
-			if ( ! event.target.closest( popoverEl.current ) && ! event.target.closest( '.components-popover' ) ) {
+			if ( ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
 				setIsOpen( false )
 			}
 		}

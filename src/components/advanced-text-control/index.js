@@ -22,17 +22,20 @@ const AdvancedTextControl = props => {
 	const {
 		isDynamic,
 		isMultiline,
+		changeDynamicContent: _changeDynamicContent,
+		allowReset,
+		isFormatType,
 		...inputProps
 	} = propsToPass
 
-	const changeDynamicContent = typeof props.changeDynamicContent !== 'undefined'
-		? props.changeDynamicContent
+	const changeDynamicContent = typeof _changeDynamicContent !== 'undefined'
+		? _changeDynamicContent
 		: typeof props.onChange === 'undefined' ? onChange : props.onChange
 
 	const dynamicContentProps = useDynamicContentControlProps( {
 		value: typeof props.value === 'undefined' ? value : props.value,
 		onChange: changeDynamicContent,
-		isFormatType: props.isFormatType,
+		isFormatType,
 	} )
 
 	const TextInput = isMultiline ? TextareaControl : TextControl
@@ -47,12 +50,11 @@ const AdvancedTextControl = props => {
 					{ ...inputProps }
 					value={ typeof props.value === 'undefined' ? value : props.value }
 					onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
-					allowReset={ false }
 					className={ classnames( propsToPass.className, 'ugb-advanced-text-control' ) }
 				/>
 			</DynamicContentControl>
 			<ResetButton
-				allowReset={ props.allowReset && ! props.dynamic }
+				allowReset={ allowReset && ! props.dynamic }
 				value={ typeof props.value === 'undefined' ? value : props.value }
 				default={ props.default }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }

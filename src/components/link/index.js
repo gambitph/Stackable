@@ -1,7 +1,15 @@
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { omit } from 'lodash'
 
-const Link = props => {
+/**
+ * WordPress dependencies
+ */
+import { forwardRef } from '@wordpress/element'
+
+const Link = forwardRef( ( props, ref ) => {
 	const {
 		children,
 		className,
@@ -17,6 +25,7 @@ const Link = props => {
 
 	return (
 		<TagName
+			ref={ ref }
 			className={ classNames }
 			href="#0" // Disallow links in the editor
 			{ ...propsToPass }
@@ -24,7 +33,7 @@ const Link = props => {
 			{ children }
 		</TagName>
 	)
-}
+} )
 
 Link.defaultProps = {
 	className: '',

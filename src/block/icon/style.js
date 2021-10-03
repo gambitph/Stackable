@@ -41,7 +41,7 @@ export const IconStyles = props => {
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
+			<BlockDiv.Style { ...propsToPass } options={ { selector: '.stk-block', hoverSelector: '.stk-block:hover' } } />
 			<Advanced.Style { ...propsToPass } />
 			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />

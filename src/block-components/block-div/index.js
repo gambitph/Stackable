@@ -17,6 +17,7 @@ export const BlockDiv = props => {
 	const {
 		className,
 		applyCustomAttributes,
+		applyAdvancedAttributes,
 		renderHtmlTag,
 		enableVariationPicker,
 		withUniqueClass,
@@ -55,6 +56,7 @@ export const BlockDiv = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
+		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ renderHtmlTag ? htmlTag : 'div' }
 		hasBackground={ attributes.hasBackground }
@@ -102,7 +104,7 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ applyAdvancedAttributes && ( attributes.anchor || undefined ) }
+		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }

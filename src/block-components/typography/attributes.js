@@ -28,7 +28,7 @@ const typographyAttributes = {
 		default: '',
 	},
 	letterSpacing: {
-		type: 'string',
+		type: 'number',
 		default: '',
 	},
 	textRemoveTextMargins: {
