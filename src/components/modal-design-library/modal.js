@@ -92,7 +92,7 @@ export const ModalDesignLibrary = props => {
 		} ).finally( () => {
 			setIsBusy( false )
 		} )
-	}, [ selectedId, selectedType, doReset, searchDebounced ] )
+	}, [ selectedId, selectedType, doReset, searchDebounced, props.apiVersion ] )
 
 	return (
 		<Modal

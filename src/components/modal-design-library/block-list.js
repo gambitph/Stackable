@@ -76,7 +76,7 @@ const BlockList = props => {
 			setUiKitList( uikits )
 			setCategoryList( categories )
 		} )
-	}, [] )
+	}, [ apiVersion ] )
 
 	// Update the counts of the designs, but don't update the list, only the counts.
 	useEffect( () => {
@@ -127,7 +127,7 @@ const BlockList = props => {
 			sorted[ 0 ].label = __( 'All', i18n )
 		}
 		setCategoryList( sorted )
-	}, [ props.designs ] )
+	}, [ props.designs.length, JSON.stringify( uiKitList ), JSON.stringify( categoryList ) ] )
 
 	useEffect( () => {
 		// If these are empty, then our component hasn't finished initializing.
