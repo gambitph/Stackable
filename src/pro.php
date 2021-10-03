@@ -49,7 +49,7 @@ if ( ! function_exists( 'stackable_register_show_pro_notice_option' ) ) {
 				'description' => __( 'Hide "Go Premium" notices', STACKABLE_I18N ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
-				'default' => '',
+				'default' => '1',
 			)
 		);
 	}
