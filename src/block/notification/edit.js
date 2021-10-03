@@ -176,7 +176,7 @@ const Edit = props => {
 					</span>
 				}
 			</BlockDiv>
-			<MarginBottom />
+			{ hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
