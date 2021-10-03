@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-03T12:12:30+00:00\n"
+"POT-Creation-Date: 2021-10-03T13:24:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -1783,9 +1783,9 @@ msgstr ""
 #: pro__premium_only/src/block/image-box/index.js:111
 #: pro__premium_only/src/block/image-box/index.js:165
 #: pro__premium_only/src/block/image-box/index.js:220
-#: pro__premium_only/src/block/notification/index.js:91
-#: pro__premium_only/src/block/notification/index.js:141
-#: pro__premium_only/src/block/notification/index.js:186
+#: pro__premium_only/src/block/notification/index.js:93
+#: pro__premium_only/src/block/notification/index.js:143
+#: pro__premium_only/src/block/notification/index.js:188
 #: pro__premium_only/src/block/pricing-box/index.js:50
 #: pro__premium_only/src/block/pricing-box/index.js:90
 #: pro__premium_only/src/block/pricing-box/index.js:165
@@ -1849,9 +1849,9 @@ msgstr ""
 #: pro__premium_only/src/block/hero/index.js:71
 #: pro__premium_only/src/block/hero/index.js:106
 #: pro__premium_only/src/block/hero/index.js:139
-#: pro__premium_only/src/block/notification/index.js:96
-#: pro__premium_only/src/block/notification/index.js:146
-#: pro__premium_only/src/block/notification/index.js:189
+#: pro__premium_only/src/block/notification/index.js:98
+#: pro__premium_only/src/block/notification/index.js:148
+#: pro__premium_only/src/block/notification/index.js:191
 #: pro__premium_only/src/block/team-member/index.js:63
 #: pro__premium_only/src/block/testimonial/index.js:38
 #: pro__premium_only/src/block/testimonial/index.js:62
@@ -1929,9 +1929,9 @@ msgstr ""
 #: pro__premium_only/src/block/hero/index.js:76
 #: pro__premium_only/src/block/hero/index.js:111
 #: pro__premium_only/src/block/hero/index.js:144
-#: pro__premium_only/src/block/notification/index.js:102
-#: pro__premium_only/src/block/notification/index.js:152
-#: pro__premium_only/src/block/notification/index.js:193
+#: pro__premium_only/src/block/notification/index.js:104
+#: pro__premium_only/src/block/notification/index.js:154
+#: pro__premium_only/src/block/notification/index.js:195
 #: pro__premium_only/src/block/pricing-box/index.js:59
 #: pro__premium_only/src/block/pricing-box/index.js:125
 #: pro__premium_only/src/block/pricing-box/index.js:205
@@ -2094,7 +2094,7 @@ msgstr ""
 msgid "Number of Items"
 msgstr ""
 
-#: pro__premium_only/src/block/notification/index.js:62
+#: pro__premium_only/src/block/notification/index.js:64
 #: pro__premium_only/src/block/team-member/index.js:106
 msgctxt "Content placeholder"
 msgid "Description for this block. Use this space for describing your block. Any text will do."

@@ -120,7 +120,13 @@ const MigrationSettings = () => {
 				<h2>{ __( 'Migrating to the New Stackable Blocks', i18n ) }</h2>
 				<p>{ __( 'Stackable V3 provides NEW blocks which are more flexible, more powerful and faster. These new blocks are meant to replace the old V2 blocks.', i18n ) }</p>
 				<p>{ __( 'Not to worry, version 3 is fully backward compatible with version 2, all your existing blocks should work fine, and you don\'t have to rebuild any of your web pages!', i18n ) }</p>
-				<h2>{ __( 'How would you like to transition your Editor workflow when editing your pages?', i18n ) }</h2>
+				<h2>
+					{ __( 'How would you like to transition your Editor workflow when editing your pages?', i18n ) }
+					&nbsp;
+					<a href="https://docs.wpstackable.com/article/462-migrating-from-version-2-to-version-3?utm_source=wp-settings-wizard&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">
+						{ __( 'Learn more about migrating from V2 to V3', i18n ) }
+					</a>
+				</h2>
 				<div className="s-welcome-wizard__options s-welcome-wizard__migration">
 					<div
 						className={ classNames( 's-welcome-wizard__option s-box', {
