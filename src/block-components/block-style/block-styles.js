@@ -128,7 +128,7 @@ const BlockStyleItem = memo( props => {
 				data-block={ blockName }
 				data-style={ style.name }
 			>
-				{ Image && <Image /> }
+				{ Image && <Image className="block-editor-block-styles__icon" /> }
 			</div>
 			<div className="block-editor-block-styles__item-label">
 				{ style.label || style.name }
