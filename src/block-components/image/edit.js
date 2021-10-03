@@ -30,6 +30,20 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 
+// Note: image drop shadows do not accept negative spread.
+const IMAGE_SHADOWS = [
+	'none',
+	'0px 0 1px rgba(120, 120, 120, 0.5)',
+	'0px 0 2px rgba(120, 120, 120, 0.5)',
+	'0px 5px 10px rgba(153, 153, 153, 0.35)',
+	'0px 2px 20px rgba(153, 153, 153, 0.2)',
+	'25px 10px 30px rgba(18, 63, 82, 0.3)',
+	'0px 10px 30px rgba(0, 0, 0, 0.1)',
+	'7px 5px 30px rgba(72, 73, 121, 0.15)',
+	'0px 10px 60px rgba(0, 0, 0, 0.1)',
+	'70px 60px 60px rgba(72, 73, 121, 0.2) ',
+]
+
 const Controls = props => {
 	const { clientId } = useBlockEditContext()
 
@@ -149,6 +163,7 @@ const Controls = props => {
 			/>
 
 			<ShadowControl
+				options={ IMAGE_SHADOWS }
 				attribute="imageShadow"
 				hover="all"
 			/>
