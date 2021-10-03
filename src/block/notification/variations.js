@@ -12,6 +12,16 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 
 /**
+ * Internal dependencies
+ */
+import ImageDefault from './images/default.svg'
+import ImagePlain from './images/plain.svg'
+import ImageSide from './images/side.svg'
+import ImageBordered from './images/bordered.svg'
+import ImageOutlined from './images/outlined.svg'
+import ImageLargeIcon from './images/large-icon.svg'
+
+/**
  * Template option choices for predefined columns layouts.
  *
  * @type {WPBlockVariation[]}
@@ -23,6 +33,7 @@ const variations = applyFilters(
 			name: 'default',
 			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
+			icon: ImageDefault,
 			attributes: { className: 'is-style-default' },
 			isDefault: true,
 			innerBlocks: [
@@ -57,6 +68,7 @@ const variations = applyFilters(
 			name: 'plain',
 			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
+			icon: ImagePlain,
 			attributes: {
 				className: 'is-style-plain',
 				blockShadow: '0px 2px 20px rgba(153, 153, 153, 0.2)',
@@ -104,6 +116,7 @@ const variations = applyFilters(
 			name: 'side',
 			title: __( 'Side', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side', i18n ) ),
+			icon: ImageSide,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -111,6 +124,7 @@ const variations = applyFilters(
 			name: 'bordered',
 			title: __( 'Bordered', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Bordered', i18n ) ),
+			icon: ImageBordered,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -118,6 +132,7 @@ const variations = applyFilters(
 			name: 'outlined',
 			title: __( 'Outlined', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Outlined', i18n ) ),
+			icon: ImageOutlined,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -125,6 +140,7 @@ const variations = applyFilters(
 			name: 'large-icon',
 			title: __( 'Large Icon', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Icon', i18n ) ),
+			icon: ImageLargeIcon,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

@@ -12,6 +12,16 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 
 /**
+ * Internal dependencies
+ */
+import ImageDefault from './images/default.svg'
+import ImageHorizontal from './images/horizontal.svg'
+import ImageLargeMid from './images/large-mid.svg'
+import ImageZigZag from './images/zig-zag.svg'
+import ImageOffset from './images/offset.svg'
+import ImageFloat from './images/float.svg'
+
+/**
  * Template option choices for predefined columns layouts.
  *
  * @type {WPBlockVariation[]}
@@ -28,6 +38,7 @@ const variations = applyFilters(
 				innerBlockContentAlign: 'alignwide',
 				align: 'full',
 			},
+			icon: ImageDefault,
 			isDefault: true,
 			innerBlocks: [
 				[ 'stackable/column', { hasContainer: true }, [
@@ -79,6 +90,7 @@ const variations = applyFilters(
 			name: 'float',
 			title: __( 'Float', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Float', i18n ) ),
+			icon: ImageFloat,
 			attributes: {
 				innerBlockContentAlign: 'alignwide',
 				className: 'is-style-horizontal',
@@ -156,6 +168,7 @@ const variations = applyFilters(
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			icon: ImageHorizontal,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -163,6 +176,7 @@ const variations = applyFilters(
 			name: 'large-mid',
 			title: __( 'Large Mid', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Mid', i18n ) ),
+			icon: ImageLargeMid,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -170,6 +184,7 @@ const variations = applyFilters(
 			name: 'offset',
 			title: __( 'Offset', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Offset', i18n ) ),
+			icon: ImageOffset,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -177,6 +192,7 @@ const variations = applyFilters(
 			name: 'zigzag',
 			title: __( 'Zigzag', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Zizag', i18n ) ),
+			icon: ImageZigZag,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

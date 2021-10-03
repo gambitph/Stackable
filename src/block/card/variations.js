@@ -1,8 +1,11 @@
 /**
  * Internal dependencies
  */
-import ImageStyleDefault from './images/default.svg'
-import ImageStyleHorizontal from './images/horizontal.svg'
+import ImageDefault from './images/default.svg'
+import ImageDefault2 from './images/default-2.svg'
+import ImageHorizontal from './images/horizontal.svg'
+import ImageFull from './images/full.svg'
+import ImageFaded from './images/faded.svg'
 
 /**
  * External dependencies
@@ -33,7 +36,7 @@ const variations = applyFilters(
 			attributes: {
 				className: 'is-style-default',
 			},
-			icon: ImageStyleDefault,
+			icon: ImageDefault,
 			innerBlocks: [
 				[ 'stackable/heading', {} ],
 				[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],
@@ -52,7 +55,7 @@ const variations = applyFilters(
 			attributes: {
 				className: 'is-style-default-2',
 			},
-			icon: ImageStyleDefault,
+			icon: ImageDefault2,
 			innerBlocks: [
 				[ 'stackable/heading', {} ],
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
@@ -116,7 +119,7 @@ const variations = applyFilters(
 			name: 'horizontal',
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			icon: ImageStyleHorizontal,
+			icon: ImageHorizontal,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -124,7 +127,7 @@ const variations = applyFilters(
 			name: 'full',
 			title: __( 'Full', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Full', i18n ) ),
-			icon: ImageStyleHorizontal,
+			icon: ImageFull,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
@@ -132,7 +135,7 @@ const variations = applyFilters(
 			name: 'faded',
 			title: __( 'Faded', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Faded', i18n ) ),
-			icon: ImageStyleHorizontal,
+			icon: ImageFaded,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
