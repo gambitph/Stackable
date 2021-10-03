@@ -2,7 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { isPro } from 'stackable'
+import {
+	isPro, showProNotice, i18n,
+} from 'stackable'
 
 /**
  * WordPress dependencies
@@ -25,6 +27,8 @@ const VariationPicker = props => {
 	const classes = classnames( 'block-editor-block-variation-picker', {
 		'has-many-variations': variations.length > 4,
 	} )
+
+	const hasPremium = variations.some( variation => variation.isPremium )
 
 	return (
 		<div className="stk-variation-picker">
@@ -63,6 +67,15 @@ const VariationPicker = props => {
 						</li>
 					) ) }
 				</ul>
+				{ ! isPro && showProNotice && hasPremium && (
+					<p className="block-editor-block-variation-picker__notice">
+						{ __( 'Upgrade to Premium to get more design variations.', i18n ) }
+						&nbsp;
+						<a href={ `https://wpstackable.com/upgrade/?utm_source=variation-picker&utm_campaign=learnmore&utm_medium=gutenberg` } target="_premium">
+							{ __( 'Learn more', i18n ) }
+						</a>
+					</p>
+				) }
 				{ /* eslint-enable jsx-a11y/no-redundant-roles */ }
 				{ allowSkip && (
 					<div className="block-editor-block-variation-picker__skip">
