@@ -18,7 +18,7 @@ const AdminBaseSetting = props => {
 				htmlFor={ uid }
 				onClick={ props.onClick }
 			>
-				<span className="ugb-admin-setting__label">{ props.label }</span>
+				{ !! props.label && <span className="ugb-admin-setting__label">{ props.label }</span> }
 				<div className="ugb-admin-setting__field">
 					{ props.children }
 				</div>

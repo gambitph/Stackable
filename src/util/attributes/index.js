@@ -175,8 +175,8 @@ export const getAttributeName = ( attrName, deviceType = 'desktop', hoverState =
 	const hoverAttrName =
 		hoverState === 'normal' ? ''
 			: hoverState === 'hover' ? 'Hover'
-				: hoverState === 'parent-hover' ? 'ParentHover'
-					: 'Collapsed'
+				: hoverState === 'collapsed' ? 'Collapsed'
+					: 'ParentHover'
 
 	// Follow format if supplied.
 	if ( attrName?.includes( '%s' ) ) {

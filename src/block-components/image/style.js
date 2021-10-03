@@ -69,22 +69,29 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			enabledCallback: () => enableHeight,
 		},
+		/**
+		 * `box-shadow` will not work alongside
+		 * `mask-image`. Use `drop-shadow` instead.
+		 *
+		 * @see https://stackoverflow.com/questions/12492006/box-shadow-on-element-with-webkit-mask-image
+		 */
 		{
 			selector: `${ selector } .stk-img-resizer-wrapper`,
 			hoverSelector: hoverSelector ? `${ hoverSelector } .stk-img-resizer-wrapper` : undefined,
 			hoverSelectorCallback,
 			renderIn: 'edit',
-			styleRule: 'boxShadow',
+			styleRule: 'filter',
 			attrName: 'imageShadow',
+			format: 'drop-shadow(%s)',
 			hover: 'all',
 		},
 		{
 			selector,
 			hoverSelector,
-			hoverSelectorCallback,
 			renderIn: 'save',
-			styleRule: 'boxShadow',
+			styleRule: 'filter',
 			attrName: 'imageShadow',
+			format: 'drop-shadow(%s)',
 			hover: 'all',
 		},
 		{
@@ -139,7 +146,7 @@ const getStyleParams = ( options = {} ) => {
 		{
 			renderIn: 'edit',
 			// This is so that the resizer won't get clipped.
-			selector: `${ selector } .stk-img-resizer-wrapper`,
+			selector: `${ selector } .stk-img-resizer-wrapper img`,
 			styleRule: 'mask-image',
 			vendorPrefixes: [ '-webkit-' ],
 			attrName: 'imageShape',
@@ -152,7 +159,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'save',
-			selector,
+			selector: `${ selector } img`,
 			styleRule: 'mask-image',
 			vendorPrefixes: [ '-webkit-' ],
 			attrName: 'imageShape',

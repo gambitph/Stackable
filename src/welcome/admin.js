@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import './news'
+import './wizard'
 import SVGEssentialIcon from './images/settings-icon-essential.svg'
 import SVGSpecialIcon from './images/settings-icon-special.svg'
 import SVGSectionIcon from './images/settings-icon-section.svg'
@@ -62,22 +63,22 @@ const importBlocks = r => {
 	return blocks
 }
 
-const BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
-const BLOCK_CATEROGIES = [
+export const BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
+export const BLOCK_CATEROGIES = [
 	{
 		id: 'essential',
 		label: __( 'Essential Blocks', i18n ),
-		icon: <SVGEssentialIcon height="20" width="20" />,
+		Icon: SVGEssentialIcon,
 	},
 	{
 		id: 'special',
 		label: __( 'Special Blocks', i18n ),
-		icon: <SVGSpecialIcon height="20" width="20" />,
+		Icon: SVGSpecialIcon,
 	},
 	{
 		id: 'section',
 		label: __( 'Section Blocks', i18n ),
-		icon: <SVGSectionIcon height="20" width="20" />,
+		Icon: SVGSectionIcon,
 	},
 ]
 
@@ -193,7 +194,7 @@ const BlockToggler = () => {
 	return (
 		<>
 			{ BLOCK_CATEROGIES.map( ( {
-				id, label, icon,
+				id, label, Icon,
 			} ) => {
 				const classes = classnames( [
 					's-box-block__title',
@@ -202,7 +203,7 @@ const BlockToggler = () => {
 				return (
 					<div className="s-box s-box-block" key={ id }>
 						<h3 className={ classes }>
-							{ icon }
+							{ Icon && <Icon height="20" width="20" /> }
 							<span>{ label }</span>
 						</h3>
 						<div className="s-settings-header">
@@ -542,30 +543,40 @@ AdditionalOptions.defaultProps = {
 
 // Load all the options into the UI.
 domReady( () => {
-	render(
-		<BlockToggler />,
-		document.querySelector( '.s-settings-wrapper' )
-	)
+	if ( document.querySelector( '.s-settings-wrapper' ) ) {
+		render(
+			<BlockToggler />,
+			document.querySelector( '.s-settings-wrapper' )
+		)
+	}
 
-	render(
-		<AdditionalOptions
-			showProNoticesOption={ showProNoticesOption }
-		/>,
-		document.querySelector( '.s-other-options-wrapper' )
-	)
+	if ( document.querySelector( '.s-other-options-wrapper' ) ) {
+		render(
+			<AdditionalOptions
+				showProNoticesOption={ showProNoticesOption }
+			/>,
+			document.querySelector( '.s-other-options-wrapper' )
+		)
+	}
 
-	render(
-		<EditorSettings />,
-		document.querySelector( '.s-editor-settings' )
-	)
+	if ( document.querySelector( '.s-editor-settings' ) ) {
+		render(
+			<EditorSettings />,
+			document.querySelector( '.s-editor-settings' )
+		)
+	}
 
-	render(
-		<DynamicBreakpointsSettings />,
-		document.querySelector( '.s-dynamic-breakpoints' )
-	)
+	if ( document.querySelector( '.s-dynamic-breakpoints' ) ) {
+		render(
+			<DynamicBreakpointsSettings />,
+			document.querySelector( '.s-dynamic-breakpoints' )
+		)
+	}
 
-	render(
-		<GlobalSettings />,
-		document.querySelector( '.s-global-settings' )
-	)
+	if ( document.querySelector( '.s-global-settings' ) ) {
+		render(
+			<GlobalSettings />,
+			document.querySelector( '.s-global-settings' )
+		)
+	}
 } )

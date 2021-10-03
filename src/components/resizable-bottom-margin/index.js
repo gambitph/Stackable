@@ -54,6 +54,22 @@ const ResizableBottomMarginSingle = props => {
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
+	const getInitialHeight = () => {
+		let currentMargin = props.value ? parseFloat( props.value ) : 0
+		if ( ! props.value && props.previewSelector ) {
+			const el = document.querySelector( props.previewSelector )
+			if ( el ) {
+				currentMargin = parseFloat( window.getComputedStyle( el ).marginBottom )
+			}
+		}
+		setInitialHeight( currentMargin || 0 )
+		return currentMargin || 0
+	}
+
+	useEffect( () => {
+		getInitialHeight()
+	}, [ props.previewSelector ] )
+
 	return (
 		<ResizableBox
 			className={ classNames }
@@ -70,21 +86,14 @@ const ResizableBottomMarginSingle = props => {
 				left: false,
 			} }
 			size={ {
-				height: props.value || props.value === 0 ? props.value : defaultBottomMargin,
+				height: props.value || props.value === 0 ? props.value : initialHeight || defaultBottomMargin,
 			} }
 			snap={ snapWidths }
 			snapGap={ 5 }
 			onResizeStart={ () => {
-				let currentMargin = props.value ? parseFloat( props.value ) : 0
-				if ( ! props.value ) {
-					const el = document.querySelector( props.previewSelector )
-					if ( el ) {
-						currentMargin = parseFloat( window.getComputedStyle( el ).marginBottom )
-					}
-				}
-				setInitialHeight( currentMargin || 0 )
+				const currentHeight = getInitialHeight()
+				setCurrentHeight( currentHeight )
 				setIsResizing( true )
-				setCurrentHeight( currentMargin || 0 )
 			} }
 			onResize={ ( _event, _direction, elt, delta ) => {
 				setCurrentHeight( initialHeight + delta.height )
@@ -106,7 +115,7 @@ const ResizableBottomMarginSingle = props => {
 				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ currentHeight }px !important; }` }</style>
 			}
 			<span className="stk-resizable-bottom-margin__label">
-				{ `${ isResizing ? currentHeight : ( props.value !== '' ? props.value : defaultBottomMargin ) }px` }
+				{ `${ isResizing ? currentHeight : ( props.value !== '' ? props.value : ( initialHeight || defaultBottomMargin ) ) }px` }
 			</span>
 		</ResizableBox>
 	)
