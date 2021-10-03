@@ -57,6 +57,8 @@ const StackableRangeControl = memo( props => {
 		// Invalid values entered inside the number control will be omitted.
 		if ( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ) {
 			setValue( '' )
+		} else {
+			setValue( props.value )
 		}
 	}, [ props.value ] )
 
