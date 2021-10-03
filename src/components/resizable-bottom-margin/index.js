@@ -115,7 +115,7 @@ const ResizableBottomMarginSingle = props => {
 				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ currentHeight }px !important; }` }</style>
 			}
 			<span className="stk-resizable-bottom-margin__label">
-				{ `${ isResizing ? currentHeight : ( props.value !== '' ? props.value : defaultBottomMargin ) }px` }
+				{ `${ isResizing ? currentHeight : ( props.value !== '' ? props.value : ( initialHeight || defaultBottomMargin ) ) }px` }
 			</span>
 		</ResizableBox>
 	)
