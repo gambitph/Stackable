@@ -53,7 +53,7 @@ const includeEditorContentAlignClassName = attributes => {
 		tabletContentAlign,
 		mobileContentAlign,
 	} = attributes
-	const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
+	const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' ) || {}
 
 	const addedAlignmentClass = {}
 
@@ -242,7 +242,7 @@ const Edit = props => {
 		 */
 
 		// Different icon sizes per device preview.
-		const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
+		const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' ) || {}
 		const previewDeviceType = getPreviewDeviceType ? getPreviewDeviceType() : 'Desktop'
 		const currentIconSize = (
 			previewDeviceType === 'Desktop' ? props.attributes.iconSize
@@ -306,19 +306,19 @@ const Edit = props => {
 						keepPlaceholderOnFocus
 					/>
 					{ ! isTyping && isSelected && isOpenIconSearch &&
-					<IconSearchPopover
-						position="bottom left"
-						anchorRef={ iconSearchAnchor }
-						onClose={ () => {
-							if ( selectedEvent ) {
-								selectedEvent.target.parentElement.currentlyOpenIndex = undefined
-							}
-							setIsOpenIconSearch( false )
-						} }
-						onChange={ icon => {
-							setAttributes( { [ `icon${ selectedIconIndex }` ]: icon } )
-						} }
-					/>
+						<IconSearchPopover
+							position="bottom left"
+							anchorRef={ iconSearchAnchor }
+							onClose={ () => {
+								if ( selectedEvent ) {
+									selectedEvent.target.parentElement.currentlyOpenIndex = undefined
+								}
+								setIsOpenIconSearch( false )
+							} }
+							onChange={ icon => {
+								setAttributes( { [ `icon${ selectedIconIndex }` ]: icon } )
+							} }
+						/>
 					}
 				</div>
 			</Fragment>

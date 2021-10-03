@@ -98,7 +98,7 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
-				hasHeight={ blockStyle === 'default' }
+				hasHeight={ [ 'default', 'default-2' ].includes( blockStyle ) }
 				widthUnits={ widthUnit }
 				heightUnits={ heightUnit }
 				hasBorderRadius={ false }
@@ -119,7 +119,7 @@ const Edit = props => {
 					<Image
 						className="stk-block-card__image"
 						enableWidth={ blockStyle === 'horizontal' }
-						enableHeight={ blockStyle === 'default' }
+						enableHeight={ [ 'default', 'default-2' ].includes( blockStyle ) }
 						enableDiagonal={ false }
 						widthUnits={ widthUnit }
 						heightUnits={ heightUnit }

@@ -47,40 +47,41 @@ const ImageControl = props => {
 						return (
 							<Fragment>
 								{ props.imageURL &&
-								<div className="ugb-image-preview-wrapper">
-									<button className="ugb-image-preview-remove" onClick={ onRemove }>
-										<Dashicon icon="no" />
-									</button>
-									{ type === 'video' && (
-										<video
-											className="ugb-image-preview"
-											autoPlay
-											muted
-											loop
-											src={ props.imageURL }
-											onClick={ obj.open }
-											onKeyDown={ event => {
-												if ( event.keyCode === 13 ) {
-													obj.open()
-												}
-											} }
-										/>
-									) }
-									{ type === 'image' && (
+									<div className="ugb-image-preview-wrapper">
+										<button className="ugb-image-preview-remove" onClick={ onRemove }>
+											<Dashicon icon="no" />
+										</button>
+										{ type === 'video' && (
+											<video
+												className="ugb-image-preview"
+												autoPlay
+												muted
+												loop
+												src={ props.imageURL }
+												onClick={ obj.open }
+												onKeyDown={ event => {
+													if ( event.keyCode === 13 ) {
+														obj.open()
+													}
+												} }
+											/>
+										) }
+										{ type === 'image' && (
 										/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
-										<img
-											className="ugb-image-preview"
-											src={ props.imageURL }
-											onClick={ obj.open }
-											onKeyDown={ event => {
-												if ( event.keyCode === 13 ) {
-													obj.open()
-												}
-											} }
-											alt={ __( 'preview', i18n ) }
-										/>
-									) }
-								</div>
+											<img
+												className="ugb-image-preview"
+												draggable="false"
+												src={ props.imageURL }
+												onClick={ obj.open }
+												onKeyDown={ event => {
+													if ( event.keyCode === 13 ) {
+														obj.open()
+													}
+												} }
+												alt={ __( 'preview', i18n ) }
+											/>
+										) }
+									</div>
 								}
 								{ ! props.imageURL && (
 									<div

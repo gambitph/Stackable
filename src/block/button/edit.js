@@ -48,14 +48,14 @@ const Edit = props => {
 		buttonFullWidth,
 	} = attributes
 
+	const blockProps = useBlockProps( { style: { width: buttonFullWidth ? '100%' : undefined } } ) || {}
+
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockStyle = useBlockStyle( blockStyles )
-
-	const blockProps = useBlockProps( {} )
 
 	const blockClassNames = classnames( [
 		className,
@@ -98,7 +98,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<div { ...blockProps } style={ { width: buttonFullWidth ? '100%' : undefined } }>
+			<div { ...blockProps }>
 				<ButtonStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-button" />
 

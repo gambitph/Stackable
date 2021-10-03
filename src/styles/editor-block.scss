@@ -30,7 +30,7 @@
 }
 
 // Block widths,
-.is-root-container > [data-block] {
+.is-root-container > [data-block]:not([data-type="core/widget-area"]) {
 	&:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
 		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
 		margin-left: auto;
@@ -223,8 +223,7 @@
 	}
 }
 
-.stk-button-group .block-editor-block-list__layout {
-	column-gap: 12px;
+.stk-block .stk-button-group .block-editor-block-list__layout {
 	align-items: center;
 }
 

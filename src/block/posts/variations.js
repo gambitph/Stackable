@@ -51,7 +51,6 @@ const variations = applyFilters(
 			icon: ImageList,
 			attributes: {
 				imageWidth: 35,
-				imageHeight: 'auto',
 				imageWidthUnit: '%',
 				imageHeightUnit: 'px',
 				hasContainer: false,

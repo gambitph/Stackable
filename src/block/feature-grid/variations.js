@@ -79,10 +79,7 @@ const variations = applyFilters(
 						[ 'stackable/button', {
 							text: _x( 'Button', 'Button placeholder', i18n ),
 							buttonBackgroundColor: 'transparent',
-							buttonBorderType: 'solid',
-							buttonBackgroundColorHover: 'transparent',
-							buttonBackgroundColorParentHover: 'transparent',
-							className: 'is-style-ghost',
+							className: 'is-style-plain',
 						} ],
 					] ],
 				] ],

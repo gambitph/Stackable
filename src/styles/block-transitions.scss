@@ -2,7 +2,7 @@
  * This defines all styles related to making the hover states of blocks animate smoothly.
  */
 // Hover transitions.
-body.stk--anim-init {
+body:is(.stk--anim-init, .wp-admin) {
 	:is(
 	.wp-block[data-type^="stackable/"],
 	.stk-block,
@@ -10,14 +10,12 @@ body.stk--anim-init {
 	.stk-container-padding,
 	.stk-img-wrapper, // Images.
 	.stk-img-wrapper img, // Images.
-	.stk--has-background-overlay::before, // Image background overlays
 	.stk-block-heading__top-line,
 	.stk-block-heading__bottom-line,
 	.stk-block-posts__item-hide, // For posts transitions
 	.stk-block-posts__title > a, // For posts title
-	.stk-block .stk-button::before, // For button animations
-	.stk-block .stk-button::after, // For button animations
-	.stk-block li::marker, // For icon list marker
+	.stk-button, // Buttons
+	.stk-button__inner-text, // Button text
 	.stk-block li, // For icon list texts
 	.stk-block p,
 	.stk-block h1,
@@ -25,7 +23,12 @@ body.stk--anim-init {
 	.stk-block h3,
 	.stk-block h4,
 	.stk-block h5,
-	.stk-block h6) {
+	.stk-block h6),
+	// These are outside :is() since pseudo elements won't compile correctly.
+	.stk--has-background-overlay::before, // Image background overlays
+	.stk-block .stk-button::before, // For button animations
+	.stk-block .stk-button::after, // For button animations
+	.stk-block li::marker { // For icon list marker
 		transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 		border-width: 1px;
 		border-style: none;

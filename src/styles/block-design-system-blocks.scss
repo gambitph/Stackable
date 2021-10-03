@@ -11,9 +11,13 @@
 
 .stk-block {
 	.stk-button-group {
-		column-gap: cssvar(button-column-gap);
 		row-gap: cssvar(button-row-gap);
 		justify-content: var(--stk-alignment-justify-content);
+
+		// Use margin-inline-end in gaps instead since safari does not support it.
+		> :is(.stk-block, .stk-button):not(last-child) {
+			margin-inline-end: cssvar(button-column-gap);
+		}
 	}
 }
 

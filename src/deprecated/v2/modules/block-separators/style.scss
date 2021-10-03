@@ -1,5 +1,9 @@
+// Add some default paddings if we have a separator.
 .ugb--has-top-separator {
 	padding-top: 200px !important;
+}
+.ugb--has-bottom-separator {
+	padding-bottom: 200px !important;
 }
 .ugb-main-block {
 	position: relative;
@@ -8,10 +12,6 @@
 	}
 	.ugb-inner-block {
 		z-index: 5;
-	}
-	// Add some default paddings if we have a separator.
-	&.ugb--has-bottom-separator {
-		padding-bottom: 200px !important;
 	}
 }
 .ugb-top-separator,

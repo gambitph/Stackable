@@ -130,10 +130,14 @@ body[class*="page_stk-"] {
 	}
 }
 .s-custom-fields-enable {
-	margin-top: -4px;
 	margin-left: 32px;
+	display: flex;
+	align-items: center;
+	.ugb-admin-setting {
+		margin: 0;
+	}
 }
-.s-icon-settings .s-settings-field p {
+.s-icon-kit-settings-field > p {
 	margin-left: 240px;
 }
 .s-settings-error {
@@ -249,7 +253,8 @@ body.settings_page_stackable-getting-started {
 }
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started,
-body.toplevel_page_stk-custom-fields {
+body.toplevel_page_stk-custom-fields,
+body.settings_page_stackable-settings-wizard {
 	img {
 		max-width: 100%;
 	}
@@ -293,23 +298,18 @@ body.toplevel_page_stk-custom-fields {
 		}
 	}
 	.s-button {
-		border: none;
-		border-radius: 35px;
-		box-shadow: none !important;
-		cursor: pointer;
-		opacity: 1;
-		background: #8c33da;
-		background: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
-		transition: opacity 0.2s ease-in-out;
-		box-shadow: none !important;
-		color: #fff;
+		background: linear-gradient(135deg, #b300be, #f00069);
+		transition: all 0.1s ease-in-out;
 		text-decoration: none;
-		padding: 0.75em 1.25em;
-		display: block;
-		margin: 0 auto;
-		max-width: 200px;
-		text-align: center;
-		outline: none;
+		border: none;
+		color: #fff;
+		padding: 12px 20px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-size: 14px;
+		cursor: pointer;
+		box-sizing: border-box !important;
+		display: inline-block;
 		&:hover {
 			opacity: 0.85;
 			box-shadow: none !important;
@@ -322,14 +322,14 @@ body.toplevel_page_stk-custom-fields {
 			margin-left: 0;
 		}
 		&.s-button--ghost {
-			border: 1px solid linear-gradient(90deg, #8c33da -100%, #f34957 200%);
-			border: 1px solid #8c33da;
-			color: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			border: 1px solid linear-gradient(135deg, #b300be, #f00069);
+			border: 1px solid #b300be;
+			color: linear-gradient(135deg, #b300be, #f00069);
 			color: #8c33da;
 			background: #fff;
 		}
 		&.s-button--plain {
-			color: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			color: linear-gradient(135deg, #b300be, #f00069);
 			color: #8c33da;
 			background: #fff;
 		}
@@ -346,18 +346,21 @@ body.toplevel_page_stk-custom-fields {
 			display: flex;
 			flex-direction: column;
 		}
-		*:first-child {
-			margin-top: 0 !important;
-		}
-		*:last-child {
-			margin-bottom: 0 !important;
-		}
 		p,
 		li {
 			line-height: 1.6;
 		}
 		li {
 			margin-bottom: 0.6em;
+		}
+	}
+	.s-body-container,
+	.s-box {
+		> *:first-child {
+			margin-top: 0 !important;
+		}
+		> *:last-child {
+			margin-bottom: 0 !important;
 		}
 	}
 	.s-body-container-grid {
@@ -745,4 +748,5 @@ body.toplevel_page_stk-custom-fields {
 @import "news";
 @import "../components/pro-modal/editor";
 @import "getting-started";
+@import "wizard";
 @import "freemius";

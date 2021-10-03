@@ -10,6 +10,7 @@ import { Edit } from './edit'
  */
 import { Link as LinkComponent } from '~stackable/components'
 import { useBlockContext, useAttributeEditHandlers } from '~stackable/hooks'
+import { isElementDescendant } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -49,7 +50,7 @@ export const Link = props => {
 
 	const clickOutsideListener = useCallback( event => {
 		if ( isOpen ) {
-			if ( ! event.target.closest( popoverEl.current ) && ! event.target.closest( '.components-popover' ) ) {
+			if ( ! isElementDescendant( popoverEl.curent, event.target ) && ! event.target.closest( '.components-popover' ) ) {
 				setIsOpen( false )
 			}
 		}

@@ -58,7 +58,7 @@ export {
 
 const InspectorTabs = props => {
 	const { name } = useBlockEditContext()
-	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, 'style' )
+	const [ activeTab, setActiveTab ] = useGlobalState( `tabCache-${ name }`, props.tabs.includes( 'style' ) ? 'style' : 'block' )
 
 	return (
 		<InspectorControls>

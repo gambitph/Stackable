@@ -50,6 +50,7 @@ const TypographyPicker = props => {
 
 	return (
 		<TypographyControl
+			fontSizeProps={ { units: [ 'px', 'em', 'rem' ] } }
 			className={ mainClasses }
 			label={ label }
 			popoverLabel={ null }
@@ -161,7 +162,7 @@ const TypographyPreview = props => {
 		select => ( {
 			device: select(
 				'core/edit-post'
-			).__experimentalGetPreviewDeviceType().toLowerCase(),
+			)?.__experimentalGetPreviewDeviceType()?.toLowerCase() || 'Desktop',
 		} ),
 		[]
 	)

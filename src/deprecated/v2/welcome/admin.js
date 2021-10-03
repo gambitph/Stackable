@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import blockData from './blocks'
+import './wizard'
 
 /**
  * WordPress dependencies
@@ -157,10 +158,12 @@ const OptimizationSettings = () => {
 
 // Load all the options into the UI.
 domReady( () => {
-	render(
-		<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />,
-		document.querySelector( '.s-settings-wrapper-v2' )
-	)
+	if ( document.querySelector( '.s-settings-wrapper-v2' ) ) {
+		render(
+			<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />,
+			document.querySelector( '.s-settings-wrapper-v2' )
+		)
+	}
 
 	if ( document.querySelector( '.s-optimization-settings' ) ) {
 		render(
