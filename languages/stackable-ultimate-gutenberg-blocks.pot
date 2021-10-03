@@ -1,20 +1,20 @@
 # Copyright (C) 2021 Gambit Technologies, Inc
-# This file is distributed under the same license as the Stackable - Gutenberg Blocks (v3 Beta 3) plugin.
+# This file is distributed under the same license as the Stackable - Gutenberg Blocks (V3 RC1) plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks (v3 Beta 3) 3.0.0-rc1\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks (V3 RC1) 3.0.0-rc1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-03T13:24:54+00:00\n"
+"POT-Creation-Date: 2021-10-03T13:53:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
 #. Plugin Name of the plugin
-msgid "Stackable - Gutenberg Blocks (v3 Beta 3)"
+msgid "Stackable - Gutenberg Blocks (V3 RC1)"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -7464,17 +7464,17 @@ msgid "Disable All"
 msgstr ""
 
 #: src/deprecated/v2/welcome/admin.js:150
-#: src/deprecated/v2/welcome/wizard.js:233
+#: src/deprecated/v2/welcome/wizard.js:239
 msgid "Frontend JS & CSS Files"
 msgstr ""
 
 #: src/deprecated/v2/welcome/admin.js:153
-#: src/deprecated/v2/welcome/wizard.js:239
+#: src/deprecated/v2/welcome/wizard.js:245
 msgid "Load across entire site"
 msgstr ""
 
 #: src/deprecated/v2/welcome/admin.js:154
-#: src/deprecated/v2/welcome/wizard.js:240
+#: src/deprecated/v2/welcome/wizard.js:246
 msgid "Load only in posts with Stackable blocks"
 msgstr ""
 
@@ -7736,50 +7736,54 @@ msgstr ""
 msgid "Not to worry, version 3 is fully backward compatible with version 2, all your existing blocks should work fine, and you don't have to rebuild any of your web pages!"
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:123
+#: src/deprecated/v2/welcome/wizard.js:124
 msgid "How would you like to transition your Editor workflow when editing your pages?"
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:146
-#: src/deprecated/v2/welcome/wizard.js:174
-#: src/deprecated/v2/welcome/wizard.js:199
+#: src/deprecated/v2/welcome/wizard.js:127
+msgid "Learn more about migrating from V2 to V3"
+msgstr ""
+
+#: src/deprecated/v2/welcome/wizard.js:152
+#: src/deprecated/v2/welcome/wizard.js:180
+#: src/deprecated/v2/welcome/wizard.js:205
 msgctxt "Option number"
 msgid "Option %s"
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:147
+#: src/deprecated/v2/welcome/wizard.js:153
 msgid "Use Old V2 Blocks, but Only When Editing Existing Posts"
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:148
+#: src/deprecated/v2/welcome/wizard.js:154
 msgid "Enable old V2 blocks in the Editor when editing posts that previously had old V2 blocks. For new posts, only use the new V3 blocks."
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:175
+#: src/deprecated/v2/welcome/wizard.js:181
 msgid "Use Both New V3 and Old V2 Blocks"
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:176
+#: src/deprecated/v2/welcome/wizard.js:182
 msgid "Always allow adding of both v2 and v3 blocks in the Editor, even in new posts."
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:200
+#: src/deprecated/v2/welcome/wizard.js:206
 msgid "Use New V3 Blocks Only"
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:201
+#: src/deprecated/v2/welcome/wizard.js:207
 msgid "Only allow adding of the new v3 blocks in the Editor. Old v2 blocks will no longer work in the Editor, but they will still work fine in your frontend."
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:229
+#: src/deprecated/v2/welcome/wizard.js:235
 msgid "Optimization Settings"
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:230
+#: src/deprecated/v2/welcome/wizard.js:236
 msgid "We recommend that you turn on the Optimization Setting for v2, so that old v2 styles and scripts would only get loaded when v2 blocks are present in the post. This will ensure your website loads fast even with version 2 backward compatibility enabled"
 msgstr ""
 
-#: src/deprecated/v2/welcome/wizard.js:231
+#: src/deprecated/v2/welcome/wizard.js:237
 msgid "Please enable the option below"
 msgstr ""
 

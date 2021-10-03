@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Stackable - Gutenberg Blocks (v3 Beta 3)
+ * Plugin Name: Stackable - Gutenberg Blocks (V3 RC1)
  * Plugin URI: https://wpstackable.com
  * Description: An Amazing Block Library That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
  * Author: Gambit Technologies, Inc
