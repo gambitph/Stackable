@@ -93,37 +93,38 @@ const ImageControl = props => {
 						return (
 							<Fragment>
 								{ imageUrl &&
-								<div className="ugb-image-preview-wrapper">
-									{ type === 'video' && (
-										<video
-											className="ugb-image-preview"
-											autoPlay
-											muted
-											loop
-											src={ imageUrl }
-											onClick={ obj.open }
-											onKeyDown={ event => {
-												if ( event.keyCode === 13 ) {
-													obj.open()
-												}
-											} }
-										/>
-									) }
-									{ type === 'image' && (
+									<div className="ugb-image-preview-wrapper">
+										{ type === 'video' && (
+											<video
+												className="ugb-image-preview"
+												autoPlay
+												muted
+												loop
+												src={ imageUrl }
+												onClick={ obj.open }
+												onKeyDown={ event => {
+													if ( event.keyCode === 13 ) {
+														obj.open()
+													}
+												} }
+											/>
+										) }
+										{ type === 'image' && (
 										/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
-										<img
-											className="ugb-image-preview"
-											src={ imageUrl }
-											onClick={ obj.open }
-											onKeyDown={ event => {
-												if ( event.keyCode === 13 ) {
-													obj.open()
-												}
-											} }
-											alt={ __( 'preview', i18n ) }
-										/>
-									) }
-								</div>
+											<img
+												className="ugb-image-preview"
+												draggable="false"
+												src={ imageUrl }
+												onClick={ obj.open }
+												onKeyDown={ event => {
+													if ( event.keyCode === 13 ) {
+														obj.open()
+													}
+												} }
+												alt={ __( 'preview', i18n ) }
+											/>
+										) }
+									</div>
 								}
 								{ ! imageUrl && (
 									<div
