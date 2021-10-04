@@ -164,6 +164,7 @@ export const useDynamicContent = ( value = '' ) => {
 		// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
 		if ( queryLoopContext?.postId && queryLoopContext.postId !== currentPostId ) {
 			// Replace all post IDS.
+			console.log( 'before: ', tempValue )
 			tempValue = tempValue?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
 				const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
 				const splitFieldString = dataFieldString.split( '/' )
@@ -182,6 +183,7 @@ export const useDynamicContent = ( value = '' ) => {
 
 			tempValue = tempValue?.replace( /!#stk_dynamic(.*)\!#/g, value => {
 				const dataFieldString = value.replace( /\!#/g, '' ).replace( 'stk_dynamic/', '' )
+				const splitFieldString = dataFieldString.split( '/' )
 				if ( ! dataFieldString.startsWith( 'current-page' ) ) {
 					return value
 				}
@@ -192,8 +194,9 @@ export const useDynamicContent = ( value = '' ) => {
 					splitFieldString.push( queryLoopContext.postId.toString() )
 				}
 
-				return `!#stk_dynamic/${ splitFieldString.join('/') }!#`
+				return `!#stk_dynamic/${ splitFieldString.join( '/' ) }!#`
 			} )
+
 		}
 
 		/**
