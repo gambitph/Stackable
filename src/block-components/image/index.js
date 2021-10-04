@@ -6,6 +6,7 @@ import Image_ from './image'
 
 import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
 import { pickBy } from 'lodash'
+import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useState, useEffect } from '@wordpress/element'
@@ -45,6 +46,8 @@ export const Image = props => {
 		return () => clearTimeout( t )
 	}, [ isSelected ] )
 
+	console.log( attributes.imageUrl, useDynamicContent( attributes.imageUrl ) )
+
 	return <Image_
 		{ ...setImage }
 		enableClickToEdit={ debouncedIsSelected }
@@ -53,7 +56,7 @@ export const Image = props => {
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
 		size={ attributes.imageSize }
-		src={ attributes.imageUrl }
+		src={ useDynamicContent( attributes.imageUrl ) }
 
 		width={ attributes.imageWidth || defaultWidth }
 		widthTablet={ attributes.imageWidthTablet }

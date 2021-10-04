@@ -11,6 +11,7 @@ export { getTypographyClasses } from './get-typography-classes'
  */
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import { getAttributeName, getAttrName } from '~stackable/util'
+import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
 /**
  * WordPress dependencies
@@ -43,7 +44,10 @@ export const Typography = props => {
 	const [ debouncedText, setDebouncedText ] = useState( '' )
 	const richTextRef = useRef( null )
 	const { clientId } = useBlockEditContext()
-	const selectedClientId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
+	const { selectedClientId, currentPostId } = useSelect( select => ( {
+		selectedClientId: select( 'core/block-editor' ).getSelectedBlockClientId(),
+		currentPostId: select( 'core/editor' ).getCurrentPostId() || -1,
+	} ) )
 	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
 
 	// Focus on the richtext when clicking on the block.
@@ -93,18 +97,10 @@ export const Typography = props => {
 		return () => clearTimeout( timeout )
 	}, [ debouncedText ] )
 
-	let textValue = debouncedText || defaultValue
-	const queryLoopContext = useContext( QueryLoopContext )
-
-	// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
-	if ( queryLoopContext?.postId ) {
-		// TODO: implement
-		// textValue = queryLoopContext?.postId.toString()
-		textValue = textValue
-	}
+	const dynamicContentText = useDynamicContent( debouncedText )
 
 	if ( ! editable ) {
-		return <TagName className={ className }>{ textValue }</TagName>
+		return <TagName className={ className }>{ dynamicContentText }</TagName>
 	}
 
 	return (
@@ -112,7 +108,7 @@ export const Typography = props => {
 			identifier={ identifier }
 			className={ className }
 			tagName={ TagName }
-			value={ textValue }
+			value={ dynamicContentText }
 			onChange={ setDebouncedText }
 			ref={ mergedRef }
 			{ ...propsToPass }
