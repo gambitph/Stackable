@@ -99,7 +99,8 @@ export const Typography = props => {
 	// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
 	if ( queryLoopContext?.postId ) {
 		// TODO: implement
-		textValue = queryLoopContext?.postId.toString()
+		// textValue = queryLoopContext?.postId.toString()
+		textValue = textValue
 	}
 
 	if ( ! editable ) {
