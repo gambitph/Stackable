@@ -19,13 +19,14 @@ if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
 	 * based on folder names array.
 	 *
 	 * @array array folders
+	 * @array string handle
 	 * @return array metadata
 	 */
-	function stackable_get_metadata_by_folders( $block_folders ) {
+	function stackable_get_metadata_by_folders( $block_folders, $handle = 'metadata' ) {
 		// Check if the metadata have been parsed already.
 		global $stk_block_meta_data_cache;
-		if ( ! empty( $stk_block_meta_data_cache ) ) {
-			return $stk_block_meta_data_cache;
+		if ( ! empty( $stk_block_meta_data_cache ) && isset( $stk_block_meta_data_cache[ $handle ] ) ) {
+			return $stk_block_meta_data_cache[ $handle ];
 		}
 
 		$blocks = array();
@@ -44,7 +45,10 @@ if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
 			array_push( $blocks, array_merge( $metadata, array( 'block_json_file' => $block_json_file ) ) );
 		}
 
-		$stk_block_meta_data_cache = $blocks; // Cache.
+		if ( empty( $stk_block_meta_data_cache ) ) {
+			$stk_block_meta_data_cache = array();
+		}
+		$stk_block_meta_data_cache[ $handle ] = $blocks; // Cache.
 		return $blocks;
 	}
 }
@@ -66,7 +70,7 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 		'posts'
 	);
 
-	return stackable_get_metadata_by_folders( $stk_block_folders );
+	return stackable_get_metadata_by_folders( $stk_block_folders, 'stk-block-folders' );
 	}
 }
 
@@ -93,7 +97,7 @@ if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
 		'pricing-box',
 	);
 
-	return stackable_get_metadata_by_folders( $stk_wrapper_block_folders );
+	return stackable_get_metadata_by_folders( $stk_wrapper_block_folders, 'stk-wrapper-block-folders' );
 	}
 
 }
