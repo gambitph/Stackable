@@ -3,6 +3,7 @@
 	"title": "Column",
 	"description": "A single column within an advanced columns block. Get advanced options on how you want your column to look.",
 	"category": "layout",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Section rows"
 	],

@@ -17,10 +17,11 @@ import { getAttributeName, getAttrName } from '~stackable/util'
  */
 import { RichText, useBlockEditContext } from '@wordpress/block-editor'
 import {
-	useEffect, useState, useRef,
+	useEffect, useState, useRef, useContext,
 } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { useMergeRefs } from '@wordpress/compose'
+import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
 
 export const Typography = props => {
 	const {
@@ -92,8 +93,17 @@ export const Typography = props => {
 		return () => clearTimeout( timeout )
 	}, [ debouncedText ] )
 
+	let textValue = debouncedText || defaultValue
+	const queryLoopContext = useContext( QueryLoopContext )
+
+	// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
+	if ( queryLoopContext?.postId ) {
+		// TODO: implement
+		textValue = queryLoopContext?.postId.toString()
+	}
+
 	if ( ! editable ) {
-		return <TagName className={ className }>{ debouncedText || defaultValue }</TagName>
+		return <TagName className={ className }>{ textValue }</TagName>
 	}
 
 	return (
@@ -101,7 +111,7 @@ export const Typography = props => {
 			identifier={ identifier }
 			className={ className }
 			tagName={ TagName }
-			value={ debouncedText || defaultValue }
+			value={ textValue }
 			onChange={ setDebouncedText }
 			ref={ mergedRef }
 			{ ...propsToPass }

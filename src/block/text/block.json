@@ -3,6 +3,7 @@
 	"title": "Text",
 	"description": "Start with the building block of all page layouts.",
 	"category": "common",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Paragraph"
 	],

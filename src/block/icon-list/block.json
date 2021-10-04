@@ -3,6 +3,7 @@
 	"title": "Icon List",
 	"description": "An unordered list with icons. You can use this as a list of features or benefits.",
 	"category": "common",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Checklist",
 		"Bullets",

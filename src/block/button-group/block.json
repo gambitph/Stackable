@@ -3,6 +3,7 @@
 	"title": "Button Group",
 	"description": "Add a customizable button.",
 	"category": "layout",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Link"
 	],
