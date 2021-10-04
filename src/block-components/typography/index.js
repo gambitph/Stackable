@@ -55,18 +55,6 @@ export const Typography = props => {
 				}
 
 				el?.focus()
-
-				// Move the cursor to the end.
-				const range = document.createRange()
-				if ( range ) {
-					range.selectNodeContents( el )
-					range.collapse( false )
-					const sel = window?.getSelection() // eslint-disable-line @wordpress/no-global-get-selection
-					if ( sel ) {
-						sel.removeAllRanges()
-						sel.addRange( range )
-					}
-				}
 			}
 		}
 	}, [ selectedClientId ] )
