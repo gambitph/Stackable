@@ -47,7 +47,6 @@ export const Save = props => {
 		columnWrapperClass,
 		blockAlignmentClass,
 		'stk-column__content',
-		'stk-hover-parent',
 	] )
 
 	return (

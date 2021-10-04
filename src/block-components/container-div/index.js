@@ -14,10 +14,10 @@ export const ContainerDiv = props => {
 
 	const classNames = classnames( [
 		props.className,
-		'stk-hover-parent', // This is needed to trigger parent-hovered hover styles.
 		'stk-container',
 		`stk-${ attributes.uniqueId }-container`,
 	], {
+		'stk-hover-parent': attributes.hasContainer, // This is needed to trigger parent-hovered hover styles.
 		'stk--no-background': ! attributes.hasContainer,
 		'stk--no-padding': ! attributes.hasContainer,
 	} )
@@ -45,10 +45,10 @@ ContainerDiv.Content = props => {
 
 	const classNames = classnames( [
 		props.className,
-		'stk-hover-parent', // This is needed to trigger parent-hovered hover styles.
 		'stk-container',
 		`stk-${ attributes.uniqueId }-container`,
 	], {
+		'stk-hover-parent': attributes.hasContainer, // This is needed to trigger parent-hovered hover styles.
 		'stk--no-background': ! attributes.hasContainer,
 		'stk--no-padding': ! attributes.hasContainer,
 	} )
