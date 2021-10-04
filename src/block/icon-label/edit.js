@@ -30,6 +30,7 @@ import {
 	ContentAlign,
 	useContentAlignmentClasses,
 } from '~stackable/block-components'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -120,7 +121,7 @@ const Edit = props => {
 		</Fragment>
 	)
 }
-export default Edit
+export default withQueryLoopContext( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/icon-label', ( enabled, parentBlock ) => {

@@ -25,7 +25,7 @@ import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, ResizerTooltip,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
-import { withIsHovered } from '~stackable/higher-order'
+import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -169,6 +169,7 @@ const Edit = props => {
 }
 
 export default compose(
-	withIsHovered
+	withIsHovered,
+	withQueryLoopContext,
 )( Edit )
 

@@ -36,6 +36,7 @@ import {
 	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -115,4 +116,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

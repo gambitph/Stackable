@@ -27,8 +27,8 @@ import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, ColorPaletteControl, AdvancedRangeControl, AlignButtonsControl,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
-import { createBlockCompleter } from '~stackable/util'
 import { withQueryLoopContext } from '~stackable/higher-order'
+import { createBlockCompleter } from '~stackable/util'
 
 /**
  * WordPress dependencies
