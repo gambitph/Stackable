@@ -18,7 +18,7 @@ const getShadows = () => {
 		'0px 10px 30px rgba(0, 0, 0, 0.05)',
 		'7px 5px 30px rgba(72, 73, 121, 0.15)',
 		'0px 10px 60px rgba(0, 0, 0, 0.1)',
-		'0px 70px 130px -60px rgba(72, 73, 121, 0.38) ',
+		'0px 70px 90 -20px rgba(72, 73, 121, 0.30) ',
 	] )
 }
 
