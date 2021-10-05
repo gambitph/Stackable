@@ -20,8 +20,11 @@ import {
 	useEffect, useState, useRef, useContext,
 } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
-import { useMergeRefs } from '@wordpress/compose'
+import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
 import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
+
+// WP 5.6 Compatibility
+const useMergeRefs = _useMergeRefs || ( () => {} )
 
 export const Typography = props => {
 	const {
@@ -50,7 +53,7 @@ export const Typography = props => {
 	useEffect( () => {
 		if ( focusOnSelected ) {
 			if ( clientId === selectedClientId ) {
-				const el = richTextRef.current
+				const el = richTextRef.current || document.querySelector( '.wp-block.is-selected .rich-text' )
 				if ( ! el ) {
 					return
 				}
