@@ -166,6 +166,7 @@ const Controls = props => {
 				options={ IMAGE_SHADOWS }
 				attribute="imageShadow"
 				hover="all"
+				isFilter={ true }
 			/>
 
 			{ attributes.imageId && (

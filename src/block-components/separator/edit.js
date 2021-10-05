@@ -79,6 +79,7 @@ const SeparatorControls = props => {
 				step={ 0.1 }
 			/>
 			<ShadowControl
+				isFilter={ true }
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'separatorShadow' ) }
 				options={ shadowOptions }
