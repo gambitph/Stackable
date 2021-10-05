@@ -126,3 +126,8 @@ export default Edit
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/icon-label', ( enabled, parentBlock ) => {
 	return parentBlock?.name === 'stackable/icon-label' ? false : enabled
 } )
+
+// Disable top and bottom line of heading block.
+addFilter( 'stackable.heading.edit.top-bottom-line.enable-handlers', 'stackable/icon-label', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/icon-label' ? false : enabled
+} )
