@@ -29,8 +29,6 @@ import {
 	MarginBottom,
 	BlockLink,
 	Transform,
-	ContentAlign,
-	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -62,7 +60,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-blockquote',
-		'stk-block-blockquote__inner-container',
 		blockHoverClass,
 	] )
 
@@ -71,7 +68,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-blockquote__content',
-	], useContentAlignmentClasses( props.attributes ) )
+	] )
 
 	return (
 		<>
@@ -89,7 +86,6 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

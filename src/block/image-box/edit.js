@@ -32,8 +32,6 @@ import {
 	getRowClasses,
 	MarginBottom,
 	Transform,
-	ContentAlign,
-	useContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -70,7 +68,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-image-box',
-		'stk-block-image-box__inner-container',
 		blockHoverClass,
 	] )
 
@@ -80,7 +77,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		rowClass,
 		'stk-hover-parent',
-	], useContentAlignmentClasses( props.attributes ) )
+	] )
 
 	const renderAppender = useMemo( () => {
 		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
@@ -101,7 +98,6 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-			<ContentAlign.InspectorControls />
 
 			<ImageBoxStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-image-box" />
