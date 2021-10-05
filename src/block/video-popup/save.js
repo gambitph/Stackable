@@ -15,7 +15,6 @@ import {
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
-	getContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -47,7 +46,7 @@ export const Save = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 		'stk-hover-parent',
-	], getContentAlignmentClasses( attributes ) )
+	] )
 
 	return (
 		<BlockDiv.Content
