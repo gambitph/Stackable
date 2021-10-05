@@ -18,11 +18,10 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
  */
 import { RichText, useBlockEditContext } from '@wordpress/block-editor'
 import {
-	useEffect, useState, useRef, useContext,
+	useEffect, useState, useRef,
 } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import { useMergeRefs } from '@wordpress/compose'
-import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
 
 export const Typography = props => {
 	const {
@@ -36,15 +35,15 @@ export const Typography = props => {
 		children,
 		ref,
 		editable,
-		defaultValue,
 		identifier,
+		defaultValue,
 		...propsToPass
 	} = props
 
-	const [ debouncedText, setDebouncedText ] = useState( '' )
+	const [ debouncedText, setDebouncedText ] = useState( defaultValue )
 	const richTextRef = useRef( null )
 	const { clientId } = useBlockEditContext()
-	const { selectedClientId, currentPostId } = useSelect( select => ( {
+	const { selectedClientId } = useSelect( select => ( {
 		selectedClientId: select( 'core/block-editor' ).getSelectedBlockClientId(),
 		currentPostId: select( 'core/editor' ).getCurrentPostId() || -1,
 	} ) )
@@ -91,7 +90,7 @@ export const Typography = props => {
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
-			onChange( debouncedText )
+			onChange( debouncedText || defaultValue )
 		}, 300 )
 
 		return () => clearTimeout( timeout )

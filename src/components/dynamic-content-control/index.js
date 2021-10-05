@@ -171,7 +171,7 @@ export const useDynamicContent = ( value = '' ) => {
 					return value
 				}
 
-				if ( splitFieldString.length > 2 ) {
+				if ( splitFieldString.length > 2 && splitFieldString[ 2 ].startsWith( '?' ) ) {
 					splitFieldString.splice( 2, 0, queryLoopContext.postId.toString() )
 				} else if ( splitFieldString.length === 2 ) {
 					splitFieldString.push( queryLoopContext.postId.toString() )
