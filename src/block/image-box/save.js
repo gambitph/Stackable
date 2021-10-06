@@ -44,6 +44,7 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		rowClass,
+		'stk-block-image-box__content',
 	] )
 
 	return (

@@ -36,7 +36,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-blockquote',
-		'stk-block-blockquote__inner-container',
 		responsiveClass,
 	] )
 

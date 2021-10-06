@@ -44,6 +44,7 @@ export const Save = props => {
 		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
+		'stk-block-pricing-box__content',
 	], getContentAlignmentClasses( attributes ) )
 
 	return (

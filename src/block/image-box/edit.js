@@ -76,6 +76,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		rowClass,
 		'stk-hover-parent',
+		'stk-block-image-box__content',
 	] )
 
 	const renderAppender = useMemo( () => {
