@@ -9,7 +9,7 @@ export { getTypographyClasses } from './get-typography-classes'
 /**
  * External dependencies
  */
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, useFontLoader } from '~stackable/hooks'
 import { getAttributeName, getAttrName } from '~stackable/util'
 
 /**
@@ -78,6 +78,8 @@ export const Typography = props => {
 	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
 	const value = _value === null ? getAttribute( 'text' ) : _value
 	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag || 'p'
+
+	useFontLoader( getAttribute( 'fontFamily' ) )
 
 	useEffect( () => {
 		if ( value !== debouncedText ) {
