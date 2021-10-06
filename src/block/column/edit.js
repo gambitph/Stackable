@@ -85,7 +85,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		columnWrapperClass,
 		blockAlignmentClass,
-		'stk-column__content',
+		'stk-block-column__content',
 		`stk-${ props.attributes.uniqueId }-container`,
 	] )
 

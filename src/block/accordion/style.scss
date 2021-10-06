@@ -33,7 +33,7 @@
 		}
 		// Unset the width to avoid content overflow in safari.
 		// @see https://github.com/gambitph/Stackable/issues/1707
-		.stk-column__content {
+		.stk-block-column__content {
 			width: unset;
 		}
 	}
