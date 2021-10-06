@@ -84,7 +84,11 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 
-			<Typography.InspectorControls hasRemoveMargins={ true } initialOpen={ true } />
+			<Typography.InspectorControls
+				hasRemoveMargins={ true }
+				initialOpen={ true }
+				hasTextShadow={ true }
+			/>
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'Top Line', i18n ) }

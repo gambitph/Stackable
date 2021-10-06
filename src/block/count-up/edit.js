@@ -61,7 +61,11 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
-			<Typography.InspectorControls hasTextTag={ false } initialOpen={ true } />
+			<Typography.InspectorControls
+				hasTextTag={ false }
+				initialOpen={ true }
+				hasTextShadow={ true }
+			/>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-count-up" />

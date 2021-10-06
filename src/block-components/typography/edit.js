@@ -19,6 +19,7 @@ import {
 	HeadingButtonsControl,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
+	ShadowControl,
 } from '~stackable/components'
 import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
@@ -34,6 +35,20 @@ import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 import { getColorClassName } from '@wordpress/block-editor'
 
+const TYPOGRAPHY_SHADOWS = [
+	'none',
+	'0px 0 1px rgba(120, 120, 120, 0.5)',
+	'0px 0 2px rgba(120, 120, 120, 0.5)',
+	'0 5px 5px rgba(18, 63, 82, 0.035)',
+	'0px 5px 10px rgba(153, 153, 153, 0.35)',
+	'0px 2px 20px rgba(153, 153, 153, 0.2)',
+	'25px 10px 30px rgba(18, 63, 82, 0.3)',
+	'0px 10px 30px rgba(0, 0, 0, 0.05)',
+	'7px 5px 30px rgba(72, 73, 121, 0.15)',
+	'0px 10px 60px rgba(0, 0, 0, 0.1)',
+	'70px 130px -60px rgba(72, 73, 121, 0.38) ',
+]
+
 export const Controls = props => {
 	const {
 		hasAlign,
@@ -44,6 +59,7 @@ export const Controls = props => {
 		attrNameTemplate,
 		isMultiline,
 		hasGradient,
+		hasTextShadow,
 	} = props
 
 	const {
@@ -288,6 +304,17 @@ export const Controls = props => {
 				</>
 			) }
 
+			{ hasTextShadow && (
+				<ShadowControl
+					isFilter={ true }
+					label={ __( 'Shadow / Outline', i18n ) }
+					attribute={ attributeName( 'textShadow' ) }
+					options={ TYPOGRAPHY_SHADOWS }
+					placeholder=""
+					hover="all"
+				/>
+			) }
+
 			{ hasAlign && (
 				<AlignButtonsControl
 					label={ __( 'Align', i18n ) }
@@ -308,6 +335,7 @@ Controls.defaultProps = {
 	attrNameTemplate: '%s',
 	isMultiline: false,
 	hasGradient: true,
+	hasTextShadow: false,
 }
 
 export const Edit = props => {
@@ -323,6 +351,7 @@ export const Edit = props => {
 		hasGradient,
 		hasToggle,
 		label,
+		hasTextShadow,
 	} = props
 
 	const {
@@ -350,6 +379,7 @@ export const Edit = props => {
 					attrNameTemplate={ attrNameTemplate }
 					isMultiline={ isMultiline }
 					hasGradient={ hasGradient }
+					hasTextShadow={ hasTextShadow }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
@@ -368,6 +398,7 @@ Edit.defaultProps = {
 	hasRemoveMargins: false,
 	label: __( 'Typography', i18n ),
 	sizePlaceholder: '32',
+	hasTextShadow: false,
 }
 
 Edit.Controls = Controls

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { compact } from 'lodash'
+import { compact, isNumber } from 'lodash'
 import {
 	AdvancedRangeControl, ColorPaletteControl,
 } from '~stackable/components'
@@ -70,7 +70,7 @@ const FILTERS = [
 		props: {
 			label: __( 'Blur', i18n ),
 			placeholder: 0,
-			sliderMin: -100,
+			min: 0,
 			sliderMax: 100,
 		},
 		format: '%spx',
@@ -82,7 +82,7 @@ const FILTERS = [
 		props: {
 			label: __( 'Shadow Spread', i18n ),
 			placeholder: 0,
-			sliderMin: -100,
+			min: 0,
 			sliderMax: 100,
 		},
 		format: '%spx',
@@ -121,7 +121,7 @@ const filterToValue = ( props, filters ) => {
 
 		if ( key === 'shadowColor' ) {
 			const opacity = filters.opacity
-			if ( opacity ) {
+			if ( isNumber( opacity ) ) {
 				return ( filters[ key ] || filterItem.default || '' ).replace( /,[\d| ||\.]*\)$/g, () => `, ${ opacity })` )
 			}
 		}
