@@ -126,10 +126,9 @@ export const formSelectors = ( selector, applyTo ) => {
 	return formParagraphSelectors( applyTo )
 }
 
-export const formClassOrTagSelectors = ( _selector, applyTo ) => {
+export const formClassOrTagSelectors = ( selector, applyTo ) => {
 	const selectors = []
-	const isClassSelector = _selector.startsWith( '.' )
-	const selector = isClassSelector ? 'p' + _selector : _selector
+	const isClassSelector = selector.startsWith( '.' )
 
 	// Include Stackable blocks.
 	selectors.push( `[data-type^="stackable/"] ${ selector }` )
@@ -146,7 +145,7 @@ export const formClassOrTagSelectors = ( _selector, applyTo ) => {
 		selectors.push( `.editor-styles-wrapper ${ selector }[data-type]` )
 	}
 
-	return applyFilters( 'stackable.global-settings.typography-selectors', selectors, _selector )
+	return applyFilters( 'stackable.global-settings.typography-selectors', selectors, selector )
 }
 
 export const formParagraphSelectors = applyTo => {
