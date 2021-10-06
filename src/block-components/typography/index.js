@@ -45,7 +45,7 @@ export const Typography = props => {
 	const { clientId } = useBlockEditContext()
 	const { selectedClientId } = useSelect( select => ( {
 		selectedClientId: select( 'core/block-editor' ).getSelectedBlockClientId(),
-		currentPostId: select( 'core/editor' ).getCurrentPostId() || -1,
+		currentPostId: select( 'core/editor' )?.getCurrentPostId() || -1,
 	} ) )
 	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
 

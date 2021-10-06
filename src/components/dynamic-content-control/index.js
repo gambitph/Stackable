@@ -157,12 +157,12 @@ export const useDynamicContent = ( value = '' ) => {
 			return value
 		}
 
-		const currentPostId = select( 'core/editor' ).getCurrentPostId()
+		const currentPostId = select( 'core/editor' )?.getCurrentPostId() || -1
 
 		let tempValue = value
 
 		// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
-		if ( queryLoopContext?.postId && queryLoopContext.postId !== currentPostId ) {
+		if ( currentPostId !== -1 && queryLoopContext?.postId && queryLoopContext.postId !== currentPostId ) {
 			// Replace all post IDS.
 			tempValue = tempValue?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
 				const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
