@@ -253,13 +253,7 @@ const Edit = props => {
 					/>
 
 					<ColorPaletteControl
-						label={ __( 'Icon Color', i18n ) }
-						attribute="iconColor"
-						hover="all"
-					/>
-
-					<ColorPaletteControl
-						label={ __( 'Number Color', i18n ) }
+						label={ __( 'Color', i18n ) }
 						attribute="markerColor"
 						hover="all"
 					/>
