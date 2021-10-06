@@ -227,7 +227,8 @@ const ShadowControl = props => {
 		return index !== '' ? shadows[ index ] : index
 	}, [ shadows ] )
 
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
+	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
+	const value = typeof props.value === 'undefined' ? _value : props.value
 	const [ propsToPass ] = extractControlProps( _props )
 
 	useEffect( () => {
@@ -240,7 +241,7 @@ const ShadowControl = props => {
 			<AdvancedRangeControl
 				{ ...propsToPass }
 				label={ label }
-				value={ typeof props.value === 'undefined' ? value : props.value }
+				value={ value }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 				min={ 0 }
 				max={ shadows.length - 1 }
@@ -251,7 +252,7 @@ const ShadowControl = props => {
 						ref={ buttonRef }
 						isSmall
 						isTertiary
-						isPressed={ isPopoverOpen }
+						isPressed={ isPopoverOpen || value === 'custom' }
 						aria-label={ __( 'Shadow Settings', i18n ) }
 						onClick={ () => setIsPopoverOpen( ! isPopoverOpen ) }
 						icon={ <Dashicon icon="admin-generic" /> }
