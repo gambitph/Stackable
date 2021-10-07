@@ -79,7 +79,7 @@ const Edit = props => {
 			</InspectorAdvancedControls>
 
 			<EffectsAnimations.InspectorControls />
-			<Link.InspectorControls />
+			<Link.InspectorControls hasToggle={ true } />
 			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
