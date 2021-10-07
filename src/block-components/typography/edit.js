@@ -43,10 +43,10 @@ const TYPOGRAPHY_SHADOWS = [
 	'0px 5px 10px rgba(153, 153, 153, 0.35)',
 	'0px 2px 20px rgba(153, 153, 153, 0.2)',
 	'25px 10px 30px rgba(18, 63, 82, 0.3)',
-	'0px 10px 30px rgba(0, 0, 0, 0.05)',
+	'0px 10px 30px rgba(0, 0, 0, 0.2)',
 	'7px 5px 30px rgba(72, 73, 121, 0.15)',
 	'0px 10px 60px rgba(0, 0, 0, 0.1)',
-	'70px 130px -60px rgba(72, 73, 121, 0.38) ',
+	'0px 0px 60px rgba(72, 73, 121, 0.38) ',
 ]
 
 export const Controls = props => {

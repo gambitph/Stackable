@@ -70,7 +70,7 @@ const FILTERS = [
 		props: {
 			label: __( 'Blur', i18n ),
 			placeholder: 0,
-			min: 0,
+			sliderMin: 0,
 			sliderMax: 100,
 		},
 		format: '%spx',
@@ -82,7 +82,7 @@ const FILTERS = [
 		props: {
 			label: __( 'Shadow Spread', i18n ),
 			placeholder: 0,
-			min: 0,
+			sliderMin: 0,
 			sliderMax: 100,
 		},
 		format: '%spx',
@@ -121,8 +121,8 @@ const filterToValue = ( props, filters ) => {
 
 		if ( key === 'shadowColor' ) {
 			const opacity = filters.opacity
-			if ( isNumber( opacity ) ) {
-				return ( filters[ key ] || filterItem.default || '' ).replace( /,[\d| ||\.]*\)$/g, () => `, ${ opacity })` )
+			if ( isNumber( opacity ) || opacity === '' || opacity === undefined ) {
+				return ( filters[ key ] || filterItem.default || '' ).replace( /,[\d| ||\.]*\)$/g, () => `, ${ ! isNumber( opacity ) ? 1 : opacity })` )
 			}
 		}
 
@@ -130,7 +130,7 @@ const filterToValue = ( props, filters ) => {
 			return undefined
 		}
 
-		if ( filterItem.format && filters[ key ] !== undefined ) {
+		if ( filterItem.format && filters[ key ] !== undefined && filters[ key ] !== '' ) {
 			return sprintf( filterItem.format, filters[ key ] )
 		}
 
