@@ -7,6 +7,7 @@
 .stk-dynamic-content-control {
 	display: flex;
 	align-items: flex-start;
+	overflow: hidden;
 
 	.stk-dynamic-content-control__button {
 		height: 100%;

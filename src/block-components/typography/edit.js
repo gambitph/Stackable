@@ -4,7 +4,7 @@
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
 import {
-	useAttributeEditHandlers, useBlockHoverState, useFontLoader,
+	useAttributeEditHandlers, useBlockHoverState,
 } from '~stackable/hooks'
 import {
 	AlignButtonsControl,
@@ -75,7 +75,6 @@ export const Controls = props => {
 
 	const [ state ] = useBlockHoverState()
 	const [ debouncedText, setDebouncedText ] = useState( text )
-	useFontLoader( getAttribute( 'fontFamily' ) )
 
 	/**
 	 * Setter and getter for escaped/unscaped strings.
