@@ -112,5 +112,9 @@ $_cssvars: ();
  * }
  */
 @function cssvar( $name ) {
-	@return var(--stk-#{ $name }, map-get( $_cssvars, $name ) );
+	@if map-get( $_cssvars, $name ) {
+		@return var(--stk-#{ $name }, map-get( $_cssvars, $name ));
+	}
+
+	@return var(--stk-#{ $name });
 }
