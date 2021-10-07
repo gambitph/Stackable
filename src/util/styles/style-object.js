@@ -159,7 +159,7 @@ class StyleObject {
 	appendToSelector( selector, rule, value, device = 'desktop', renderIn = '', vendorPrefixes = [] ) {
 		// Add instance id to classes. ( e.g. `stk-abc123` -> `stk-abc123-2`, where 2 is `this.queryLoopInstance`. )
 		if ( this.queryLoopInstance ) {
-			selector = selector.replace( /%s[^-]/g, `%s-${ this.queryLoopInstance }` )
+			selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ this.queryLoopInstance }$2` )
 		}
 
 		const styles = renderIn === '' ? this.styles
