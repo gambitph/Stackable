@@ -128,6 +128,7 @@ Link.Content = props => {
 			href={ attributes.linkUrl || undefined }
 			target={ attributes.linkNewTab ? '_blank' : undefined }
 			rel={ attributes.linkRel || undefined }
+			title={ attributes.linkTitle || undefined }
 		>
 			{ props.children }
 		</LinkComponent.Content>
