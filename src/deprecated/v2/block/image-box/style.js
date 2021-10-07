@@ -158,7 +158,7 @@ export const createStyles = props => {
 			backgroundRepeat: appendImportant( getValue( 'imageBackgroundRepeat' ) ),
 			backgroundSize: appendImportant( getValue( 'imageBackgroundSize' ) === 'custom'
 				? getValue( 'imageBackgroundCustomSize', `%s${ getValue( 'imageBackgroundCustomSizeUnit' ) || 'px' }` )
-				: getValue( 'imagebackgroundSize' ) ),
+				: getValue( 'imageBackgroundSize' ) ),
 		},
 	} )
 
