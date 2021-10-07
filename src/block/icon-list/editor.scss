@@ -6,6 +6,9 @@
 
 // Show a cursor pointer when hovering over the bullet icons
 .stk-block-icon-list {
+	.block-editor-rich-text__editable {
+		width: 100%;
+	}
 	li {
 		position: relative;
 	}

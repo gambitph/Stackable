@@ -15,11 +15,10 @@ import { getAttributeName, getAttrName } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { RichText, useBlockEditContext } from '@wordpress/block-editor'
+import { RichText } from '@wordpress/block-editor'
 import {
 	useEffect, useState, useRef,
 } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
 import { useMergeRefs } from '@wordpress/compose'
 
 export const Typography = props => {
@@ -30,7 +29,6 @@ export const Typography = props => {
 		defaultTag,
 		value: _value,
 		onChange: _onChange,
-		focusOnSelected = false,
 		children,
 		ref,
 		editable,
@@ -41,23 +39,7 @@ export const Typography = props => {
 
 	const [ debouncedText, setDebouncedText ] = useState( '' )
 	const richTextRef = useRef( null )
-	const { clientId } = useBlockEditContext()
-	const selectedClientId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
 	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
-
-	// Focus on the richtext when clicking on the block.
-	useEffect( () => {
-		if ( focusOnSelected ) {
-			if ( clientId === selectedClientId ) {
-				const el = richTextRef.current
-				if ( ! el ) {
-					return
-				}
-
-				el?.focus()
-			}
-		}
-	}, [ selectedClientId ] )
 
 	const {
 		getAttribute, updateAttribute,
