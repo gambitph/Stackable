@@ -99,13 +99,13 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
 					id="general"
 					initialOpen={ true }
 				>
+					<ContentAlign.InspectorControls.Controls />
 					<AdvancedSelectControl
 						label={ __( 'Notification Type', i18n ) }
 						attribute="notificationType"
