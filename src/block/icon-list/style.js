@@ -39,18 +39,6 @@ const typographyOptions = {
 }
 
 const getStyleParams = ( { attributes = {} } ) => {
-	const selector = [
-		'ul li',
-		'ol li',
-	]
-	const hoverSelector = [
-		'.%s:hover ul li',
-		'.%s:hover ol li',
-	]
-
-	const orderedListMarkerSelector = 'ol > li::marker'
-	const orderedListMarkerHoverSelector = '.%s:hover ol > li::marker'
-
 	const individualIconStyles = Object.keys( attributes.icons ).reduce( ( acc, key ) => {
 		return [
 			...acc,
@@ -60,16 +48,17 @@ const getStyleParams = ( { attributes = {} } ) => {
 				hover: 'all',
 				hoverSelector: '.%s:hover ' + key,
 				styleRule: 'listStyleImage',
-				attrName: 'iconColor',
+				attrName: 'markerColor',
 				valuePreCallback: ( value, getAttribute, device, state ) => {
 					const iconRotation = getAttribute( 'iconRotation' )
-					if ( state !== 'normal' && ! value && ! iconRotation ) {
+					const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
+					if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
 						return undefined
 					}
 
 					const transform = `rotate(${ iconRotation + 'deg' })`
 
-					const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000', { transform } )
+					const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000', { transform, opacity: iconOpacity } )
 					return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 				},
 				dependencies: [ 'icons', 'iconRotation' ],
@@ -80,16 +69,17 @@ const getStyleParams = ( { attributes = {} } ) => {
 				hover: 'all',
 				hoverSelector: '.%s:hover ' + key,
 				styleRule: 'listStyleImage',
-				attrName: 'iconColor',
+				attrName: 'markerColor',
 				valuePreCallback: ( value, getAttribute, device, state ) => {
 					const iconRotation = getAttribute( 'iconRotation' )
-					if ( state !== 'normal' && ! value && ! iconRotation ) {
+					const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
+					if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
 						return undefined
 					}
 
 					const transform = `rotate(${ iconRotation + 'deg' })`
 
-					const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000', { transform } )
+					const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000', { transform, opacity: iconOpacity } )
 					return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 				},
 				dependencies: [ 'icons', 'iconRotation' ],
@@ -132,15 +122,16 @@ const getStyleParams = ( { attributes = {} } ) => {
 			format: '%spx',
 		},
 		{
-			selector: 'ul li',
+			selector: 'li',
 			hover: 'all',
-			hoverSelector: '.%s:hover ul li',
+			hoverSelector: '.%s:hover li',
 			styleRule: 'listStyleImage',
-			attrName: 'iconColor',
+			attrName: 'markerColor',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				const iconSVG = getAttribute( 'icon' )
 				const iconRotation = getAttribute( 'iconRotation' )
-				if ( state !== 'normal' && ! value && ! iconRotation ) {
+				const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
+				if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
 					return undefined
 				}
 
@@ -150,27 +141,20 @@ const getStyleParams = ( { attributes = {} } ) => {
 
 				const transform = `rotate(${ iconRotation + 'deg' })`
 
-				const iconWithColor = convertSVGStringToBase64( iconSVG, value || '#000', { transform } )
+				const iconWithColor = convertSVGStringToBase64( iconSVG, value || '#000', { transform, opacity: iconOpacity } )
 				return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 			},
-			dependencies: [ 'icon', 'iconRotation' ],
+			dependencies: [ 'icon', 'iconRotation', 'iconOpacity' ],
 		},
 		{
-			selector: orderedListMarkerSelector,
+			selector: 'li::marker',
 			hover: 'all',
-			hoverSelector: orderedListMarkerHoverSelector,
+			hoverSelector: '.%s:hover li::marker',
 			styleRule: 'color',
 			attrName: 'markerColor',
 		},
 		{
-			selector,
-			hoverSelector,
-			styleRule: 'opacity',
-			attrName: 'iconOpacity',
-			hover: 'all',
-		},
-		{
-			selector: 'ul li::marker',
+			selector: 'li::marker',
 			styleRule: 'fontSize',
 			attrName: 'iconSize',
 			responsive: 'all',

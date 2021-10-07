@@ -41,11 +41,6 @@ export const iconListAttributes = {
 		type: 'string',
 		default: DEFAULT_SVG,
 	},
-	iconColor: {
-		type: 'string',
-		default: '',
-		stkHover: true,
-	},
 	markerColor: {
 		type: 'string',
 		default: '',
