@@ -162,12 +162,14 @@ const Controls = props => {
 				allowReset={ true }
 			/>
 
-			<ShadowControl
-				options={ IMAGE_SHADOWS }
-				attribute="imageShadow"
-				hover="all"
-				isFilter={ true }
-			/>
+			{ props.hasShadow && (
+				<ShadowControl
+					options={ IMAGE_SHADOWS }
+					attribute="imageShadow"
+					hover="all"
+					isFilter={ true }
+				/>
+			) }
 
 			{ attributes.imageId && (
 				<ImageSizeControl
@@ -285,6 +287,7 @@ Controls.defaultProps = {
 	hasAlt: true,
 	hasWidth: true,
 	hasSelector: true,
+	hasShadow: true,
 	widthUnits: [ 'px', '%', 'vw' ],
 	widthMin: [ 0, 0, 0 ],
 	widthMax: [ 1000, 100, 100 ],
@@ -328,6 +331,23 @@ Edit.defaultProps = {
 	initialOpen: false,
 	label: __( 'Image', i18n ),
 	hasToggle: false,
+	hasAlt: true,
+	hasWidth: true,
+	hasSelector: true,
+	hasShadow: true,
+	widthUnits: [ 'px', '%', 'vw' ],
+	widthMin: [ 0, 0, 0 ],
+	widthMax: [ 1000, 100, 100 ],
+	widthStep: [ 1, 1, 1 ],
+
+	hasHeight: true,
+	heightUnits: [ 'px', '%', 'vh' ],
+	heightMin: [ 0, 0, 0 ],
+	heightMax: [ 1000, 100, 100 ],
+	heightStep: [ 1, 1, 1 ],
+
+	hasBorderRadius: true,
+	hasShape: true,
 }
 
 Edit.Controls = Controls
