@@ -40,6 +40,7 @@ import {
 	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -98,13 +99,13 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
 					id="general"
 					initialOpen={ true }
 				>
+					<ContentAlign.InspectorControls.Controls />
 					<AdvancedSelectControl
 						label={ __( 'Notification Type', i18n ) }
 						attribute="notificationType"
@@ -181,4 +182,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

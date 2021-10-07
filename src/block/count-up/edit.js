@@ -25,6 +25,7 @@ import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -87,4 +88,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

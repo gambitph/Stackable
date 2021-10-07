@@ -2,6 +2,7 @@
 	"name": "stackable/icon-label",
 	"title": "Icon Label",
 	"category": "layout",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"SVG"
 	],

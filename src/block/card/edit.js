@@ -16,6 +16,7 @@ import {
 import {
 	useBlockContext, useBlockHoverClass, useBlockStyle,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
 	Image,
@@ -144,4 +145,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

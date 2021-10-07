@@ -4,10 +4,12 @@
 @import "editor-breakpoints";
 @import "editor-block-transitions";
 
-// Position relative (required for block links) will not work properly with
-// margin bottom resizer, make it static in the editor.
 .editor-styles-wrapper .stk-block {
+	// Position relative (required for block links) will not work properly with
+	// margin bottom resizer, make it static in the editor.
 	position: static;
+	// In the template editor, the blocks can go past their containers.
+	box-sizing: border-box;
 }
 
 // Blocks
@@ -82,7 +84,7 @@
 	}
 }
 [data-type^="stackable/"] .stk-row,
-.stk-column .block-editor-block-list__layout {
+.stk-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	display: block;
 }
 

@@ -27,6 +27,7 @@ import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
 } from '~stackable/components'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
 
 /**
@@ -164,4 +165,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

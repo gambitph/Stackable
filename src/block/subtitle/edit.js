@@ -27,6 +27,7 @@ import {
 	InspectorTabs,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
 
 /**
@@ -131,4 +132,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )
