@@ -25,7 +25,7 @@
 .stk-block-accordion {
 	// Hide the content.
 	&:not(.stk--is-open) {
-		.stk-block-accordion__content {
+		> .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block]:last-child {
 			display: none;
 		}
 	}
