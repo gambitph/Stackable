@@ -53,6 +53,8 @@ const ALLOWED_BLOCKS = [
 	'stackable/icon',
 ]
 
+const TABS = [ 'block', 'advanced' ]
+
 const Edit = props => {
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
@@ -87,7 +89,7 @@ const Edit = props => {
 	return (
 		<Fragment>
 
-			<InspectorTabs />
+			<InspectorTabs tabs={ TABS } />
 
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
