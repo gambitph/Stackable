@@ -20,7 +20,10 @@ import { RichText } from '@wordpress/block-editor'
 import {
 	useEffect, useState, useRef,
 } from '@wordpress/element'
-import { useMergeRefs } from '@wordpress/compose'
+import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
+
+// WP 5.6 Compatibility
+const useMergeRefs = _useMergeRefs || ( () => {} )
 
 export const Typography = props => {
 	const {
