@@ -249,6 +249,7 @@ const ShadowControl = props => {
 				className="ugb--help-tip-general-shadow"
 				after={ (
 					<Button
+						className="stk-shadow-control__more-button"
 						ref={ buttonRef }
 						isSmall
 						isTertiary
