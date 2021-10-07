@@ -41,7 +41,7 @@ export const Controls = props => {
 			{ hasColumnCount && <ColumnsControl /> }
 
 			<AdvancedToolbarControl
-				label={ __( 'Content Alignment', i18n ) }
+				label={ __( 'Content Width', i18n ) }
 				attribute="innerBlockContentAlign"
 				controls={ [
 					{

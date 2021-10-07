@@ -19,6 +19,7 @@ import {
 import {
 	useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
 	Advanced,
@@ -123,4 +124,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

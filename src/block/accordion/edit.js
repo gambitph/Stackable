@@ -28,6 +28,7 @@ import {
 import {
 	useAttributeEditHandlers, useBlockHoverClass, useBlockContext,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * Internal dependencies
@@ -143,7 +144,7 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )
 
 // Add another icon picker to the Icon block for picking the icon for the opened accordion.
 addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {

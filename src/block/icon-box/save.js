@@ -16,7 +16,6 @@ import {
 	getAlignmentClasses,
 	CustomCSS,
 	getResponsiveClasses,
-	getContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -37,7 +36,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-box',
-		'stk-block-icon-box__inner-container',
 		responsiveClass,
 	] )
 
@@ -46,7 +44,7 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-icon-box__content',
-	], getContentAlignmentClasses( attributes ) )
+	] )
 
 	return (
 		<BlockDiv.Content

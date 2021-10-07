@@ -6,7 +6,7 @@ import { Edit } from './edit'
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
 import { useBlockAttributes, useVariationPicker } from '~stackable/hooks'
-import { getUniqueBlockClass } from '~stackable/util'
+import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
@@ -28,6 +28,9 @@ export const BlockDiv = props => {
 	const attributes = useBlockAttributes( clientId )
 
 	useUniqueId( ! enableVariationPicker )
+	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
+	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
+	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass
 
 	// Variation picker will show up if there's no uniqueId yet (which will be
 	// the case when enableVariationPicker = true)
@@ -44,7 +47,7 @@ export const BlockDiv = props => {
 		className,
 		'stk-block',
 		{
-			[ getUniqueBlockClass( attributes.uniqueId ) ]: withUniqueClass,
+			[ uniqueBlockClass ]: withUniqueClass,
 		},
 	],
 	applyFilters( 'stackable.block-components.block-div.classnames', [], attributes ),

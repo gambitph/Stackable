@@ -1,7 +1,9 @@
 import compareVersions from 'compare-versions'
 import { getEditorStylesOnly, generateStyles } from '~stackable/block-components/style'
 import { useDynamicContent } from '../dynamic-content-control'
-import { appendImportant, minifyCSS } from '~stackable/util'
+import {
+	appendImportant, minifyCSS, useQueryLoopInstanceId,
+} from '~stackable/util'
 import {
 	Fragment, memo, useMemo,
 } from '@wordpress/element'
@@ -9,8 +11,13 @@ import {
 const Style = memo( props => {
 	const {
 		version, versionAdded, versionDeprecated,
-		styles, deviceType, blockUniqueClassName, breakTablet, breakMobile,
+		styles, deviceType, blockUniqueClassName: _blockUniqueClassName, breakTablet, breakMobile,
 	} = props
+
+	const uniqueId = _blockUniqueClassName?.replace( 'stk-', '' ) || ''
+	const instanceId = useQueryLoopInstanceId( uniqueId )
+
+	const blockUniqueClassName = ( instanceId && ! _blockUniqueClassName.match( /-[\d]$/g ) ) ? _blockUniqueClassName + `-${ instanceId }` : _blockUniqueClassName
 
 	const doRender = useMemo( () => {
 		// If no version was given, just get everything that's not yet deprecated.

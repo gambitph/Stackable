@@ -9,9 +9,6 @@ export const addAttributes = attrObject => {
 		attributes: {
 			uniqueId: {
 				type: 'string',
-				source: 'attribute',
-				selector: '[data-block-id]',
-				attribute: 'data-block-id',
 				default: '',
 			},
 			hasBackground: {

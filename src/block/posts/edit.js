@@ -29,6 +29,7 @@ import {
 import {
 	useBlockHoverClass, useBlockStyle, usePostsQuery, useAttributeEditHandlers, useDeviceType,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	getAlignmentClasses,
 	BlockDiv,
@@ -412,7 +413,7 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )
 
 // Add hover selector control
 addFilter( 'stackable.block-component.typography.color.after', 'stackable/posts', ( output, props ) => {
