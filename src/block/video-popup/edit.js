@@ -28,9 +28,9 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
-	ContentAlign,
-	useContentAlignmentClasses,
 } from '~stackable/block-components'
+import { getVideoProviderFromURL, urlIsVideo } from '~stackable/util'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -40,7 +40,6 @@ import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { useDispatch } from '@wordpress/data'
-import { getVideoProviderFromURL, urlIsVideo } from '~stackable/util'
 
 export const defaultIcon = '<svg data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>'
 
@@ -64,7 +63,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-video-popup',
-		'stk-block-video-popup__inner-container',
 		rowClass,
 	] )
 
@@ -73,7 +71,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 		'stk-hover-parent',
-	], useContentAlignmentClasses( attributes ) )
+	] )
 
 	return (
 		<Fragment>
@@ -81,7 +79,6 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
-			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
@@ -144,7 +141,8 @@ const Edit = props => {
 		</Fragment>
 	)
 }
-export default Edit
+
+export default withQueryLoopContext( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/video-popup', ( enabled, parentBlock ) => {

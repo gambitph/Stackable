@@ -11,6 +11,7 @@ export { getTypographyClasses } from './get-typography-classes'
  */
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import { getAttributeName, getAttrName } from '~stackable/util'
+import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
 /**
  * WordPress dependencies
@@ -32,12 +33,12 @@ export const Typography = props => {
 		children,
 		ref,
 		editable,
-		defaultValue,
 		identifier,
+		defaultValue,
 		...propsToPass
 	} = props
 
-	const [ debouncedText, setDebouncedText ] = useState( '' )
+	const [ debouncedText, setDebouncedText ] = useState( defaultValue )
 	const richTextRef = useRef( null )
 	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
 
@@ -56,14 +57,16 @@ export const Typography = props => {
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
-			onChange( debouncedText )
+			onChange( debouncedText || defaultValue )
 		}, 300 )
 
 		return () => clearTimeout( timeout )
 	}, [ debouncedText ] )
 
+	const dynamicContentText = useDynamicContent( debouncedText )
+
 	if ( ! editable ) {
-		return <TagName className={ className }>{ debouncedText || defaultValue }</TagName>
+		return <TagName className={ className }>{ dynamicContentText }</TagName>
 	}
 
 	return (
@@ -71,7 +74,7 @@ export const Typography = props => {
 			identifier={ identifier }
 			className={ className }
 			tagName={ TagName }
-			value={ debouncedText || defaultValue }
+			value={ dynamicContentText }
 			onChange={ setDebouncedText }
 			ref={ mergedRef }
 			{ ...propsToPass }

@@ -3,6 +3,7 @@
 	"title": "Subtitle",
 	"description": "Subtitle text that you can add custom styling to from the global settings.",
 	"category": "common",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special"
 }

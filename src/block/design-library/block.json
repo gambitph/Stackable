@@ -3,6 +3,7 @@
 	"title": "Design Library",
 	"description": "Choose a layout or block from the Stackable Design Library.",
 	"category": "layout",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Template"
 	],

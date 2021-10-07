@@ -78,7 +78,6 @@ const Image = memo( props => {
 	const [ snap, setSnap ] = useState( null )
 
 	const src = useDynamicContent( props.src )
-
 	const isShiftKey = useWithShift()
 	useEffect( () => {
 		setSnap( null )

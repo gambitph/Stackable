@@ -3,6 +3,7 @@
 	"title": "Icon Button",
 	"description": "Add a customizable button.",
 	"category": "layout",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"parent": [
 		"stackable/button-group"
 	],
