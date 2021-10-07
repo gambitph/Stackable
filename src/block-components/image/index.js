@@ -6,6 +6,7 @@ import Image_ from './image'
 
 import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
 import { pickBy } from 'lodash'
+import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useState, useEffect } from '@wordpress/element'

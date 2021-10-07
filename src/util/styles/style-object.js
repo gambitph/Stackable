@@ -9,13 +9,17 @@ import { getAttrName } from '../attributes'
 import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
 import { compact } from 'lodash'
+import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
 
 /**
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useMemo } from '@wordpress/element'
+import {
+	useMemo, useContext, useState, useEffect,
+} from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
+import { useSelect } from '@wordpress/data'
 
 /**
  * Style object, this manages the generation of styles.
@@ -27,6 +31,7 @@ class StyleObject {
 	  // Initialize
 	  this.initStyles()
 	  this.attributesUsed = this.getDependencyAttrnames( this.styleParams )
+		this.queryLoopInstance = null
 	}
 
 	/**
@@ -143,7 +148,20 @@ class StyleObject {
 		return deps
 	}
 
+	setQueryLoopInstance( instanceNumber ) {
+		this.queryLoopInstance = instanceNumber
+	}
+
+	getQueryLoopInstance() {
+		return this.queryLoopInstance
+	}
+
 	appendToSelector( selector, rule, value, device = 'desktop', renderIn = '', vendorPrefixes = [] ) {
+		// Add instance id to classes. ( e.g. `stk-abc123` -> `stk-abc123-2`, where 2 is `this.queryLoopInstance`. )
+		if ( this.queryLoopInstance ) {
+			selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ this.queryLoopInstance }$2` )
+		}
+
 		const styles = renderIn === '' ? this.styles
 			: this.styles[ renderIn ]
 
@@ -403,6 +421,46 @@ class StyleObject {
 
 export default StyleObject
 
+export const QUERY_LOOP_UNIQUEID_INSTANCES = {}
+
+/**
+ * Function which determines whether the block
+ * is inside a query loop > post template block
+ * and is a preview of the original inner block
+ * (part of 2nd - last inner blocks).
+ *
+ * @param {Object} postContext
+ * @param {string} currentPostId
+ *
+ * @return {boolean} true or false
+ */
+const isBlockAQueryLoopPreview = ( postContext, currentPostId ) => {
+	// Compare if the consumed context's postId is not equal to the current post id.
+	return postContext?.postId && currentPostId && postContext?.postId !== currentPostId
+}
+
+export const useQueryLoopInstanceId = uniqueId => {
+	const postContext = useContext( QueryLoopContext )
+	const currentPostId = useSelect( select => select( 'core/editor' )?.getCurrentPostId() )
+	const [ instanceId, setInstanceId ] = useState( 0 )
+
+	useEffect( () => {
+		if ( isBlockAQueryLoopPreview( postContext, currentPostId ) ) {
+			if ( uniqueId ) {
+				const newInstanceIds = ( QUERY_LOOP_UNIQUEID_INSTANCES[ uniqueId ] || [] )
+				if ( ! newInstanceIds.includes( postContext?.postId ) ) {
+					newInstanceIds.push( postContext?.postId )
+				}
+
+				QUERY_LOOP_UNIQUEID_INSTANCES[ uniqueId ] = newInstanceIds
+				setInstanceId( newInstanceIds.findIndex( id => id === postContext?.postId ) + 1 )
+			}
+		}
+	}, [ postContext?.id, currentPostId, uniqueId ] )
+
+	return instanceId
+}
+
 /**
  * Generates styles based on styleParams. This works by creating a memoed
  * StyleObject, and only regenerating the CSS styles only when the
@@ -426,9 +484,22 @@ export const useStyles = ( _attributes, styleParams ) => {
 		clientId,
 	}
 
-	const styleObject = useMemo( () => new StyleObject( styleParams ), [ styleParams.length ] )
+	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
+
+	const styleObject = useMemo( () => {
+		const styleObjectInstance = new StyleObject( styleParams )
+		// If the block is inside a query loop, make sure that the uniqueIds are not the same.
+		if ( ! styleObjectInstance.getQueryLoopInstance() ) {
+			styleObjectInstance.setQueryLoopInstance( instanceId )
+		}
+
+		return styleObjectInstance
+	}, [ styleParams.length, instanceId ] )
+
 	return useMemo(
-		() => styleObject.generateStyles( attributes, currentHoverState ),
+		() => {
+			return styleObject.generateStyles( attributes, currentHoverState )
+		},
 		[
 			...styleObject.getDependencies( attributes, deviceType, currentHoverState ),
 			styleObject,

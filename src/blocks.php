@@ -156,7 +156,7 @@ if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks' ) ) {
 		}
 
 		$allowed_stackable_wrapper_blocks = array();
-		$blocks_metadata = stackable_get_metadata_by_folders( stackable_get_stk_wrapper_block_folders_metadata() );
+		$blocks_metadata = stackable_get_stk_wrapper_block_folders_metadata(); 
 
 		foreach ( $blocks_metadata as $metadata ) {
 			array_push( $allowed_stackable_wrapper_blocks, $metadata['name'] );
@@ -179,7 +179,7 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks' ) ) {
 		}
 
 		$allowed_stackable_blocks = array();
-		$blocks_metadata = stackable_get_metadata_by_folders( stackable_get_stk_block_folders_metadata() );
+		$blocks_metadata = stackable_get_stk_block_folders_metadata();
 
 		foreach ( $blocks_metadata as $metadata ) {
 			array_push( $allowed_stackable_blocks, $metadata['name'] );
