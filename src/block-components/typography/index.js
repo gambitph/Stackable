@@ -16,11 +16,10 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
 /**
  * WordPress dependencies
  */
-import { RichText, useBlockEditContext } from '@wordpress/block-editor'
+import { RichText } from '@wordpress/block-editor'
 import {
 	useEffect, useState, useRef,
 } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
 import { useMergeRefs } from '@wordpress/compose'
 
 export const Typography = props => {
@@ -31,7 +30,6 @@ export const Typography = props => {
 		defaultTag,
 		value: _value,
 		onChange: _onChange,
-		focusOnSelected = false,
 		children,
 		ref,
 		editable,
@@ -42,38 +40,7 @@ export const Typography = props => {
 
 	const [ debouncedText, setDebouncedText ] = useState( defaultValue )
 	const richTextRef = useRef( null )
-	const { clientId } = useBlockEditContext()
-	const { selectedClientId } = useSelect( select => ( {
-		selectedClientId: select( 'core/block-editor' ).getSelectedBlockClientId(),
-		currentPostId: select( 'core/editor' )?.getCurrentPostId() || -1,
-	} ) )
 	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
-
-	// Focus on the richtext when clicking on the block.
-	useEffect( () => {
-		if ( focusOnSelected ) {
-			if ( clientId === selectedClientId ) {
-				const el = richTextRef.current
-				if ( ! el ) {
-					return
-				}
-
-				el?.focus()
-
-				// Move the cursor to the end.
-				const range = document.createRange()
-				if ( range ) {
-					range.selectNodeContents( el )
-					range.collapse( false )
-					const sel = window?.getSelection() // eslint-disable-line @wordpress/no-global-get-selection
-					if ( sel ) {
-						sel.removeAllRanges()
-						sel.addRange( range )
-					}
-				}
-			}
-		}
-	}, [ selectedClientId ] )
 
 	const {
 		getAttribute, updateAttribute,

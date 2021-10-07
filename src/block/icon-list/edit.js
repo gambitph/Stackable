@@ -323,7 +323,6 @@ const Edit = props => {
 						multiline="li"
 						onRemove={ onRemove }
 						onMerge={ mergeBlocks }
-						focusOnSelected={ true }
 					>
 						{ controls }
 					</Typography>
