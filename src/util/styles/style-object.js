@@ -456,7 +456,7 @@ export const useQueryLoopInstanceId = uniqueId => {
 				setInstanceId( newInstanceIds.findIndex( id => id === postContext?.postId ) + 1 )
 			}
 		}
-	}, [ postContext?.id, currentPostId ] )
+	}, [ postContext?.id, currentPostId, uniqueId ] )
 
 	return instanceId
 }
