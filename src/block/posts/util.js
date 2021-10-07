@@ -1,4 +1,6 @@
-/** External dependencies */
+/**
+ * External dependencies
+ */
 import striptags from 'striptags'
 import { compact } from 'lodash'
 import classnames from 'classnames'
