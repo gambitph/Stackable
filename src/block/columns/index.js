@@ -13,6 +13,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import transforms from './transforms'
 import variations from './variations'
 
 /**
@@ -31,6 +32,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		stkAlign: true,
 	},
 
+	transforms,
 	variations,
 	edit,
 	save,

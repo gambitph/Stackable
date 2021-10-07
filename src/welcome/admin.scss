@@ -198,6 +198,9 @@ body[class*="page_stk-"] {
 	.components-spinner {
 		margin-top: 0;
 	}
+	button:last-child {
+		margin-left: auto;
+	}
 }
 
 .s-tabs {

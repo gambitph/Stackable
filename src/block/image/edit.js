@@ -26,6 +26,7 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -83,4 +84,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )
