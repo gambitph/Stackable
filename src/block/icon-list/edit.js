@@ -259,7 +259,7 @@ const Edit = props => {
 					/>
 
 					<AdvancedRangeControl
-						label={ __( 'Icon Size', i18n ) }
+						label={ __( 'Icon / Number Size', i18n ) }
 						attribute="iconSize"
 						min={ 0 }
 						max={ 5 }
