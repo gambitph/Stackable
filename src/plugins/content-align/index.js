@@ -25,7 +25,7 @@ export const ContentAlign = () => {
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	useEffect( () => {
-		if ( hasStkAlign && align && align !== innerBlockContentAlign && previousClientId === clientId ) {
+		if ( hasStkAlign && align !== innerBlockContentAlign && previousClientId === clientId ) {
 			let newContentAlign
 			switch ( align ) {
 				case 'center':
@@ -38,6 +38,7 @@ export const ContentAlign = () => {
 					newContentAlign = 'alignfull'
 					break
 				case '':
+				case undefined:
 					newContentAlign = ''
 					break
 				default: break
