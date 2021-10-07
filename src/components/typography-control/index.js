@@ -141,7 +141,7 @@ const TypographyControl = props => {
 						<WhenResponsiveScreen>
 							<AdvancedRangeControl
 								label={ __( 'Line-Height', i18n ) }
-								units={ [ 'px', 'em' ] }
+								units={ props.lineHeightUnits }
 								min={ [ 1, 0.1 ] }
 								max={ [ 100, 10 ] }
 								step={ [ 1, 0.1 ] }
@@ -269,6 +269,7 @@ TypographyControl.defaultProps = {
 	tabletLineHeight: '',
 	mobileLineHeight: '',
 	lineHeightUnit: 'em',
+	lineHeightUnits: [ 'px', 'em' ],
 	tabletLineHeightUnit: 'em',
 	mobileLineHeightUnit: 'em',
 	letterSpacing: '',
