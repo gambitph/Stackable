@@ -93,6 +93,7 @@ const Edit = props => {
 							providerValue={ columnProviderValue }
 							template={ TEMPLATE }
 							templateLock="insert"
+							orientation={ props.attributes.alignVertical ? 'vertical' : 'horizontal' }
 						/>
 					</ContainerDiv>
 				</Separator>
