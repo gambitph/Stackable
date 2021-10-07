@@ -79,6 +79,7 @@ export const Typography = props => {
 	const value = _value === null ? getAttribute( 'text' ) : _value
 	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag || 'p'
 
+	// Load any Google Fonts used.
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
 	useEffect( () => {
