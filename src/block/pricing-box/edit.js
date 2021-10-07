@@ -63,6 +63,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		`stk-${ props.attributes.uniqueId }-container`,
+		'stk-block-pricing-box__content',
 	], useContentAlignmentClasses( props.attributes ) )
 
 	const renderAppender = useMemo( () => {
