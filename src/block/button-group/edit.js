@@ -30,6 +30,8 @@ import {
 	FlexGapControls,
 	Transform,
 } from '~stackable/block-components'
+import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -37,7 +39,6 @@ import {
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button', 'stackable/icon-button' ]
@@ -164,4 +165,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

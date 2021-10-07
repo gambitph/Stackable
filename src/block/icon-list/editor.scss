@@ -6,6 +6,10 @@
 
 // Show a cursor pointer when hovering over the bullet icons
 .stk-block-icon-list {
+	// Make the text occupy the entire space so that clicking on the empty space focuses the cursor correctly.
+	.block-editor-rich-text__editable {
+		width: 100%;
+	}
 	li {
 		position: relative;
 	}

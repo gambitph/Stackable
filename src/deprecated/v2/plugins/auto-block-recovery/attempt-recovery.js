@@ -37,7 +37,7 @@ export const autoAttemptRecovery = () => {
 			if ( select( 'core' ).getEntityRecords( 'postType', 'wp_block' ) !== null ) {
 				unsubscribe()
 				// Recover all the blocks that we can find.
-				const mainBlocks = recoverBlocks( select( 'core/editor' ).getEditorBlocks() )
+				const mainBlocks = select( 'core/editor' ) ? recoverBlocks( select( 'core/editor' ).getEditorBlocks() ) : []
 				// Replace the recovered blocks with the new ones.
 				mainBlocks.forEach( block => {
 					if ( block.isReusable && block.ref ) {
