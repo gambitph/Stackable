@@ -25,7 +25,6 @@ import {
 	Responsive,
 	Advanced,
 	MarginBottom,
-	BlockLink,
 	Separator,
 	getSeparatorClasses,
 	Transform,
@@ -87,7 +86,6 @@ const Edit = props => {
 			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-hero" />

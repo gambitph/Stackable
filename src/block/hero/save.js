@@ -12,7 +12,6 @@ import classnames from 'classnames'
 import {
 	BlockDiv,
 	ContainerDiv,
-	BlockLink,
 	getAlignmentClasses,
 	CustomCSS,
 	getResponsiveClasses,
@@ -65,7 +64,6 @@ export const Save = props => {
 					attributes={ attributes }
 				>
 					<InnerBlocks.Content />
-					<BlockLink.Content attributes={ attributes } />
 				</ContainerDiv.Content>
 			</Separator.Content>
 		</BlockDiv.Content>

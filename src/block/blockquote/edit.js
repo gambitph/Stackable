@@ -27,7 +27,6 @@ import {
 	Responsive,
 	Advanced,
 	MarginBottom,
-	BlockLink,
 	Transform,
 } from '~stackable/block-components'
 import {
@@ -79,7 +78,6 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-blockquote" />

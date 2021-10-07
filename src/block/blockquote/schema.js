@@ -3,7 +3,6 @@
  */
 import {
 	BlockDiv,
-	BlockLink,
 	Alignment,
 	EffectsAnimations,
 	ConditionalDisplay,
@@ -32,7 +31,6 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
-	BlockLink.addAttributes( attrObject )
 
 	attrObject.addDefaultValues( {
 		attributes: {
