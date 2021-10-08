@@ -279,6 +279,15 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 						),
 					)
 				);
+
+				// API endpoint for getting all the terms/taxonomies.
+				register_rest_route( 'wp/v3', '/stk_terms', array(
+					'methods' => 'GET',
+					'callback' => array( new Stackable_Posts_Block(), 'get_terms' ),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
+				) );
 			}
 		}
 
@@ -536,6 +545,49 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		public static function get_comments_number( $object ) {
 			$num = get_comments_number( $object['id'] );
 			return sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
+		}
+
+		/**
+		 * REST Callback. Get all the terms registered for all post types.
+		 *
+		 * @return array
+		 */
+		public static function get_terms() {
+			$args = array(
+				'public' => true,
+			);
+			$taxonomies = get_taxonomies( $args, 'objects' );
+
+			$return = array();
+
+			$post_types = get_post_types( array( 'public' => true ), 'objects' );
+			foreach ( $post_types as $post_type => $data ) {
+				// Don't include attachments.
+				if ( $post_type === 'attachment' ) {
+					continue;
+				}
+				$return[ $post_type ] = array(
+					'label' => $data->label,
+					'taxonomies' => array(),
+				);
+			}
+
+			foreach ( $taxonomies as $taxonomy_slug => $taxonomy ) {
+				foreach ( $taxonomy->object_type as $post_type ) {
+
+					// Don't include post formats.
+					if ( $post_type === 'post' && $taxonomy_slug === 'post_format' ) {
+						continue;
+					}
+
+					$return[ $post_type ]['taxonomies'][ $taxonomy_slug ] = array(
+						'label' => $taxonomy->label,
+						'terms' => get_terms( $taxonomy->name ),
+					);
+				}
+			}
+
+			return new WP_REST_Response( $return, 200 );
 		}
 	}
 

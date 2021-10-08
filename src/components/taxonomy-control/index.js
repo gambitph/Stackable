@@ -31,7 +31,7 @@ class TaxonomyControl extends Component {
 		if ( ! this.state.termList.length ) {
 			this.isStillMounted = true
 			this.fetchRequest = apiFetch( {
-				path: addQueryArgs( `/wp/v2/stk_terms`, {
+				path: addQueryArgs( `/wp/${ 'v' + this.props.stkVersion || '2' }/stk_terms`, {
 					per_page: -1, // eslint-disable-line camelcase
 				} ),
 			} ).then(
