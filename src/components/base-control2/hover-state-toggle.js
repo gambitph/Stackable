@@ -58,7 +58,7 @@ const HoverStateToggle = props => {
 					disabled: ! hasParentHoverState,
 					tooltip: ! hasParentHoverState
 						? <span className="stk-hover-state-toggle__tooltip">
-							{ sprintf( '%s - %s', __( 'Parent Hovered', i18n ), __( 'add a Container Background to a parent block to enable this feature.', i18n ) ) }
+							{ sprintf( '%s - %s', __( 'Parent Hovered', i18n ), __( 'Add a Container Background to a parent block to enable this state.', i18n ) ) }
 						</span> : undefined,
 					...state,
 				}
