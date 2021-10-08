@@ -52,6 +52,11 @@ const typographyAttributes = {
 		type: 'string',
 		default: '',
 	},
+	textShadow: {
+		stkHover: true,
+		type: 'string',
+		default: '',
+	},
 	textAlign: {
 		type: 'string',
 		default: '',

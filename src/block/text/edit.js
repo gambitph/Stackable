@@ -120,6 +120,7 @@ const Edit = props => {
 				hasTextTag={ false }
 				isMultiline={ true }
 				initialOpen={ ! enableColumns }
+				hasTextShadow={ true }
 			/>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />

@@ -87,6 +87,7 @@ const Edit = props => {
 				hasTextTag={ false }
 				isMultiline={ false }
 				initialOpen={ true }
+				hasTextShadow={ true }
 			/>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />

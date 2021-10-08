@@ -104,6 +104,7 @@ const Edit = props => {
 				heightUnits={ heightUnit }
 				hasBorderRadius={ false }
 				hasShape={ false }
+				hasShadow={ false }
 			/>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
 			<EffectsAnimations.InspectorControls />

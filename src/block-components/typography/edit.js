@@ -19,6 +19,7 @@ import {
 	HeadingButtonsControl,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
+	ShadowControl,
 } from '~stackable/components'
 import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
@@ -34,6 +35,21 @@ import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 import { getColorClassName } from '@wordpress/block-editor'
 
+const TYPOGRAPHY_SHADOWS = [
+	'none',
+	'2px 2px 4px rgba(0, 0, 0, 0.2)',
+	'6px 6px 4px rgba(120, 120, 120, 0.2)',
+	'2px 4px 5px rgba(0, 0, 0, 0.4)',
+	'0px 0px 5px rgba(0, 0, 0, 0.4)',
+	'4px 4px 0px rgba(0, 0, 0, 1)',
+	'0px 15px 14px rgba(18, 63, 82, 0.3)',
+	'25px 10px 14px rgba(18, 63, 82, 0.3)',
+	'25px 10px 30px rgba(18, 63, 82, 0.3)',
+	'0px 0px 40px rgba(18, 63, 82, 0.6)',
+	'0px 0px 62px rgba(71, 73, 79, 1)',
+	'0px 0px 100px rgba(71, 73, 79, 1)',
+]
+
 export const Controls = props => {
 	const {
 		hasAlign,
@@ -44,6 +60,7 @@ export const Controls = props => {
 		attrNameTemplate,
 		isMultiline,
 		hasGradient,
+		hasTextShadow,
 	} = props
 
 	const {
@@ -287,6 +304,17 @@ export const Controls = props => {
 				</>
 			) }
 
+			{ hasTextShadow && (
+				<ShadowControl
+					isFilter={ true }
+					label={ __( 'Shadow / Outline', i18n ) }
+					attribute={ attributeName( 'textShadow' ) }
+					options={ TYPOGRAPHY_SHADOWS }
+					placeholder=""
+					hover="all"
+				/>
+			) }
+
 			{ hasAlign && (
 				<AlignButtonsControl
 					label={ __( 'Align', i18n ) }
@@ -307,6 +335,7 @@ Controls.defaultProps = {
 	attrNameTemplate: '%s',
 	isMultiline: false,
 	hasGradient: true,
+	hasTextShadow: false,
 }
 
 export const Edit = props => {
@@ -322,6 +351,7 @@ export const Edit = props => {
 		hasGradient,
 		hasToggle,
 		label,
+		hasTextShadow,
 	} = props
 
 	const {
@@ -349,6 +379,7 @@ export const Edit = props => {
 					attrNameTemplate={ attrNameTemplate }
 					isMultiline={ isMultiline }
 					hasGradient={ hasGradient }
+					hasTextShadow={ hasTextShadow }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
@@ -367,6 +398,7 @@ Edit.defaultProps = {
 	hasRemoveMargins: false,
 	label: __( 'Typography', i18n ),
 	sizePlaceholder: '32',
+	hasTextShadow: false,
 }
 
 Edit.Controls = Controls

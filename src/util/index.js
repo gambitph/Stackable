@@ -161,6 +161,10 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
 	}
 
 	hex = hex.replace( /#/, '' )
+	// If the fallback value is rgb or rgba, return the value instead.
+	if ( hex.match( /rgb(a?)\(/g ) ) {
+		return hex
+	}
 
 	if ( hex.length <= 4 ) {
 		hex = hex.replace( /#?(.)(.)(.)/, '$1$1$2$2$3$3' )

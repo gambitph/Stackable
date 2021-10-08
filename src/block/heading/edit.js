@@ -86,7 +86,11 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 
-			<Typography.InspectorControls hasRemoveMargins={ true } initialOpen={ true } />
+			<Typography.InspectorControls
+				hasRemoveMargins={ true }
+				initialOpen={ true }
+				hasTextShadow={ true }
+			/>
 			{ !! applyFilters( 'stackable.heading.edit.top-bottom-line.enable-handlers', true, parentBlock ) && (
 				<InspectorStyleControls>
 					<PanelAdvancedSettings
