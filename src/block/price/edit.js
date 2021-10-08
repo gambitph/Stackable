@@ -67,7 +67,7 @@ const Edit = props => {
 		<>
 			<InspectorTabs />
 
-			<Alignment.InspectorControls hasRowAlignment={ true } />
+			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
