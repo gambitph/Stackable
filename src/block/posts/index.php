@@ -72,14 +72,14 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		$new_template = str_replace( '!#title!#', $title, $new_template );
 
 		// Category.
-		$category = get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id );
+		$category = Stackable_Posts_Block::get_category_list_by_id( $post_id );
 		if ( $category_highlighted ) {
 			preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
 			foreach ( $matches[0] as $i=>$match ) {
 				$href = $matches[1][$i];
 				$category_title = $matches[2][$i];
 				$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
-				$category = str_replace( $category_title, "<span class=\"stk-button__inner-text\">$category_title</span>", $category );
+				$category = str_replace( ">$category_title<", "><span class=\"stk-button__inner-text\">$category_title</span><", $category );
 			}
 		}
 
@@ -484,14 +484,25 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		}
 
 		/**
+		 * Get the category list by post id
+		 *
+		 * @param string post id
+		 *
+		 * @return string the category list
+		 */
+		public static function get_category_list_by_id( $id ) {
+			return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $id );
+		}
+
+		/**
 		 * Get the category list
 		 *
 		 * @param array post object
 		 *
-		 * @return the category list.
+		 * @return string the category list.
 		 */
 		public static function get_category_list( $object ) {
-			return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $object['id'] );
+			return Stackable_Posts_Block::get_category_list_by_id( $object['id'] );
 		}
 
 		/**
