@@ -106,7 +106,9 @@ const FILTERS = [
 				return color?.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) || ''
 			}
 
-			return hexToRgba( color )
+			const rgba = hexToRgba( color )
+
+			return rgba.startsWith( 'rgb(' ) ? rgba.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) : rgba
 		},
 	},
 	{
