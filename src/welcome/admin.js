@@ -102,7 +102,7 @@ const BlockToggle = props => {
 			{ ...propsToPass }
 		>
 			<h4>{ label }</h4>
-			{ demo && (
+			{ false && demo && ( // TODO: Remove view demo when we have demos for all our blocks.
 				<span className="s-block-demo">
 					<a
 						href={ demo }
