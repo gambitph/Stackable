@@ -26,8 +26,9 @@ import classnames from 'classnames'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, ColorPaletteControl, AdvancedRangeControl, AlignButtonsControl,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
+import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 import { createBlockCompleter } from '~stackable/util'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -35,7 +36,7 @@ import { createBlockCompleter } from '~stackable/util'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 
 /**
  * Add `autocompleters` support for stackable/heading
@@ -60,6 +61,7 @@ const Edit = props => {
 	} = props
 
 	const blockHoverClass = useBlockHoverClass()
+	const { parentBlock } = useBlockContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [
@@ -85,99 +87,101 @@ const Edit = props => {
 			<Transform.InspectorControls />
 
 			<Typography.InspectorControls hasRemoveMargins={ true } initialOpen={ true } />
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'Top Line', i18n ) }
-					id="top-line"
-					hasToggle={ true }
-					checked={ props.attributes.showTopLine }
-					onChange={ value => setAttributes( { showTopLine: value } ) }
-				>
-					<ColorPaletteControl
-						label={ __( 'Line Color', i18n ) }
-						attribute="topLineColor"
-						hover="all"
-					/>
+			{ !! applyFilters( 'stackable.heading.edit.top-bottom-line.enable-handlers', true, parentBlock ) && (
+				<InspectorStyleControls>
+					<PanelAdvancedSettings
+						title={ __( 'Top Line', i18n ) }
+						id="top-line"
+						hasToggle={ true }
+						checked={ props.attributes.showTopLine }
+						onChange={ value => setAttributes( { showTopLine: value } ) }
+					>
+						<ColorPaletteControl
+							label={ __( 'Line Color', i18n ) }
+							attribute="topLineColor"
+							hover="all"
+						/>
 
-					<AdvancedRangeControl
-						label={ __( 'Width', i18n ) }
-						units={ [ 'px', '%' ] }
-						attribute="topLineWidth"
-						min="0"
-						sliderMax={ [ 200, 100 ] }
-						hover="all"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Width', i18n ) }
+							units={ [ 'px', '%' ] }
+							attribute="topLineWidth"
+							min="0"
+							sliderMax={ [ 200, 100 ] }
+							hover="all"
+						/>
 
-					<AdvancedRangeControl
-						label={ __( 'Height', i18n ) }
-						attribute="topLineHeight"
-						min="0"
-						sliderMax="20"
-						placeholder="4"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Height', i18n ) }
+							attribute="topLineHeight"
+							min="0"
+							sliderMax="20"
+							placeholder="4"
+						/>
 
-					<AdvancedRangeControl
-						label={ __( 'Margin', i18n ) }
-						attribute="topLineMargin"
-						responsive="all"
-						sliderMin="0"
-						sliderMax="100"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Margin', i18n ) }
+							attribute="topLineMargin"
+							responsive="all"
+							sliderMin="0"
+							sliderMax="100"
+						/>
 
-					<AlignButtonsControl
-						label={ __( 'Align', i18n ) }
-						attribute="topLineAlign"
-						responsive="all"
-					/>
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							attribute="topLineAlign"
+							responsive="all"
+						/>
 
-				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					title={ __( 'Bottom Line', i18n ) }
-					id="bottom-line"
-					hasToggle={ true }
-					checked={ props.attributes.showBottomLine }
-					onChange={ value => setAttributes( { showBottomLine: value } ) }
-				>
+					</PanelAdvancedSettings>
+					<PanelAdvancedSettings
+						title={ __( 'Bottom Line', i18n ) }
+						id="bottom-line"
+						hasToggle={ true }
+						checked={ props.attributes.showBottomLine }
+						onChange={ value => setAttributes( { showBottomLine: value } ) }
+					>
 
-					<ColorPaletteControl
-						label={ __( 'Line Color', i18n ) }
-						attribute="bottomLineColor"
-						hover="all"
-					/>
+						<ColorPaletteControl
+							label={ __( 'Line Color', i18n ) }
+							attribute="bottomLineColor"
+							hover="all"
+						/>
 
-					<AdvancedRangeControl
-						label={ __( 'Width', i18n ) }
-						units={ [ 'px', '%' ] }
-						attribute="bottomLineWidth"
-						min={ 0 }
-						sliderMax={ [ 200, 100 ] }
-						hover="all"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Width', i18n ) }
+							units={ [ 'px', '%' ] }
+							attribute="bottomLineWidth"
+							min={ 0 }
+							sliderMax={ [ 200, 100 ] }
+							hover="all"
+						/>
 
-					<AdvancedRangeControl
-						label={ __( 'Height', i18n ) }
-						attribute="bottomLineHeight"
-						min="0"
-						sliderMax="20"
-						placeholder="4"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Height', i18n ) }
+							attribute="bottomLineHeight"
+							min="0"
+							sliderMax="20"
+							placeholder="4"
+						/>
 
-					<AdvancedRangeControl
-						label={ __( 'Margin', i18n ) }
-						attribute="bottomLineMargin"
-						responsive="all"
-						sliderMin="0"
-						sliderMax="100"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Margin', i18n ) }
+							attribute="bottomLineMargin"
+							responsive="all"
+							sliderMin="0"
+							sliderMax="100"
+						/>
 
-					<AlignButtonsControl
-						label={ __( 'Align', i18n ) }
-						attribute="bottomLineAlign"
-						responsive="all"
-					/>
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							attribute="bottomLineAlign"
+							responsive="all"
+						/>
 
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
+					</PanelAdvancedSettings>
+				</InspectorStyleControls>
+			) }
 
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
@@ -223,4 +227,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

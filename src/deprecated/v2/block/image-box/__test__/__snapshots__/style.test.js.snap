@@ -181,7 +181,7 @@ Object {
   ".ugb-image-box__image": Object {
     "backgroundPosition": "imageBackgroundPosition !important",
     "backgroundRepeat": "imageBackgroundRepeat !important",
-    "backgroundSize": undefined,
+    "backgroundSize": "imageBackgroundSize !important",
   },
   ".ugb-image-box__item": Object {
     "borderBottomWidth": "123px !important",

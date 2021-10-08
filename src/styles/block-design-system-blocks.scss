@@ -1,3 +1,5 @@
+@import "block-design-system";
+
 /**
  * Block implemtation of the Design System.
  */
@@ -5,7 +7,7 @@
 // Blocks
 .stk-block,
 .entry-content .stk-block,
-.stk-column__content > * { // Some themes don't add margin bottom to insides of columns.
+.stk-block-column__content > * { // Some themes don't add margin bottom to insides of columns.
 	margin-bottom: cssvar(block-margin-bottom);
 }
 

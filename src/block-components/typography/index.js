@@ -9,18 +9,21 @@ export { getTypographyClasses } from './get-typography-classes'
 /**
  * External dependencies
  */
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useAttributeEditHandlers, useFontLoader } from '~stackable/hooks'
 import { getAttributeName, getAttrName } from '~stackable/util'
+import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
 /**
  * WordPress dependencies
  */
-import { RichText, useBlockEditContext } from '@wordpress/block-editor'
+import { RichText } from '@wordpress/block-editor'
 import {
 	useEffect, useState, useRef,
 } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
-import { useMergeRefs } from '@wordpress/compose'
+import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
+
+// WP 5.6 Compatibility
+const useMergeRefs = _useMergeRefs || ( () => {} )
 
 export const Typography = props => {
 	const {
@@ -30,46 +33,17 @@ export const Typography = props => {
 		defaultTag,
 		value: _value,
 		onChange: _onChange,
-		focusOnSelected = false,
 		children,
 		ref,
 		editable,
-		defaultValue,
 		identifier,
+		defaultValue,
 		...propsToPass
 	} = props
 
-	const [ debouncedText, setDebouncedText ] = useState( '' )
+	const [ debouncedText, setDebouncedText ] = useState( defaultValue )
 	const richTextRef = useRef( null )
-	const { clientId } = useBlockEditContext()
-	const selectedClientId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
 	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
-
-	// Focus on the richtext when clicking on the block.
-	useEffect( () => {
-		if ( focusOnSelected ) {
-			if ( clientId === selectedClientId ) {
-				const el = richTextRef.current
-				if ( ! el ) {
-					return
-				}
-
-				el?.focus()
-
-				// Move the cursor to the end.
-				const range = document.createRange()
-				if ( range ) {
-					range.selectNodeContents( el )
-					range.collapse( false )
-					const sel = window?.getSelection() // eslint-disable-line @wordpress/no-global-get-selection
-					if ( sel ) {
-						sel.removeAllRanges()
-						sel.addRange( range )
-					}
-				}
-			}
-		}
-	}, [ selectedClientId ] )
 
 	const {
 		getAttribute, updateAttribute,
@@ -77,6 +51,9 @@ export const Typography = props => {
 	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
 	const value = _value === null ? getAttribute( 'text' ) : _value
 	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag || 'p'
+
+	// Load any Google Fonts used.
+	useFontLoader( getAttribute( 'fontFamily' ) )
 
 	useEffect( () => {
 		if ( value !== debouncedText ) {
@@ -86,14 +63,16 @@ export const Typography = props => {
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
-			onChange( debouncedText )
+			onChange( debouncedText || defaultValue )
 		}, 300 )
 
 		return () => clearTimeout( timeout )
 	}, [ debouncedText ] )
 
+	const dynamicContentText = useDynamicContent( debouncedText )
+
 	if ( ! editable ) {
-		return <TagName className={ className }>{ debouncedText || defaultValue }</TagName>
+		return <TagName className={ className }>{ dynamicContentText }</TagName>
 	}
 
 	return (
@@ -101,7 +80,7 @@ export const Typography = props => {
 			identifier={ identifier }
 			className={ className }
 			tagName={ TagName }
-			value={ debouncedText || defaultValue }
+			value={ dynamicContentText }
 			onChange={ setDebouncedText }
 			ref={ mergedRef }
 			{ ...propsToPass }

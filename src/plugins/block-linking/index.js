@@ -123,7 +123,7 @@ export const useClosestLinkableBlock = clientId => {
 		if ( ! linkableClientId ) {
 			const parents = [ ...getBlockParents( clientId ) ].reverse() // Create a new array so as not to accidentally mutate the property.
 			linkableClientId = parents.find( clientId => {
-				const blockType = getBlock( clientId ).name
+				const blockType = getBlock( clientId )?.name
 				return linkableBlockTypes.includes( blockType ) ? clientId : false
 			} ) || null
 		}

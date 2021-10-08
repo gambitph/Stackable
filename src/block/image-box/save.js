@@ -14,7 +14,6 @@ import {
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
-	getContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -36,7 +35,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-block-image-box',
-		'stk-block-image-box__inner-container',
 		responsiveClass,
 		'stk-hover-parent', // Hover parent here to make sure the effect shows even with a block link.
 	] )
@@ -46,7 +44,8 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		rowClass,
-	], getContentAlignmentClasses( attributes ) )
+		'stk-block-image-box__content',
+	] )
 
 	return (
 		<BlockDiv.Content

@@ -15,19 +15,25 @@ import { __ } from '@wordpress/i18n'
  */
 import { LinkControls } from '../helpers/link'
 
-export const Edit = () => {
+export const Edit = props => {
 	const {
-		getAttribute,
-	} = useAttributeEditHandlers()
+		getAttribute, updateAttributeHandler,
+	} = useAttributeEditHandlers( 'link%s' )
 
-	return getAttribute( 'linkHasLink' ) ? (
+	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Link', i18n ) }
 				id="link"
+				checked={ props.hasToggle ? getAttribute( 'hasLink' ) : undefined }
+				onChange={ props.hasToggle ? updateAttributeHandler( 'hasLink' ) : undefined }
 			>
 				<LinkControls attrNameTemplate="link%s" />
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
-	) : null
+	)
+}
+
+Edit.defaultProps = {
+	hasToggle: false,
 }

@@ -25,7 +25,6 @@ import {
 	Responsive,
 	Advanced,
 	MarginBottom,
-	BlockLink,
 	Separator,
 	getSeparatorClasses,
 	Transform,
@@ -36,6 +35,7 @@ import {
 	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -86,7 +86,6 @@ const Edit = props => {
 			<Separator.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-hero" />
@@ -115,4 +114,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

@@ -39,7 +39,11 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 				return {}
 			}
 
-			const name = getBlock( clientId ).name
+			const name = getBlock( clientId )?.name
+
+			if ( ! name ) {
+				return {}
+			}
 
 			return {
 				blockType: getBlockType( name ),

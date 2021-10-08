@@ -27,15 +27,13 @@ import {
 	Responsive,
 	Advanced,
 	MarginBottom,
-	BlockLink,
 	Transform,
-	ContentAlign,
-	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -61,7 +59,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-blockquote',
-		'stk-block-blockquote__inner-container',
 		blockHoverClass,
 	] )
 
@@ -70,7 +67,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-blockquote__content',
-	], useContentAlignmentClasses( props.attributes ) )
+	] )
 
 	return (
 		<>
@@ -81,14 +78,12 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-blockquote" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
@@ -107,7 +102,7 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/blockquote', ( enabled, parentBlock ) => {

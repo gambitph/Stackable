@@ -19,7 +19,7 @@ import {
 	useBlockContext, useBlockHoverClass,
 } from '~stackable/hooks'
 import {
-	withIsHovered,
+	withIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	Column,
@@ -85,7 +85,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		columnWrapperClass,
 		blockAlignmentClass,
-		'stk-column__content',
+		'stk-block-column__content',
 		`stk-${ props.attributes.uniqueId }-container`,
 	] )
 
@@ -153,4 +153,5 @@ const Edit = props => {
 
 export default compose(
 	withIsHovered,
+	withQueryLoopContext,
 )( Edit )

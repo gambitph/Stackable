@@ -47,6 +47,7 @@ export const attributes = ( version = VERSION ) => {
 	attrObject.addDefaultValues( {
 		attributes: {
 			icon: defaultIcon,
+			linkHasLink: false,
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

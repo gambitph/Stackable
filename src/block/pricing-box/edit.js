@@ -31,6 +31,7 @@ import {
 	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -62,6 +63,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		`stk-${ props.attributes.uniqueId }-container`,
+		'stk-block-pricing-box__content',
 	], useContentAlignmentClasses( props.attributes ) )
 
 	const renderAppender = useMemo( () => {
@@ -103,4 +105,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

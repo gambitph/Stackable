@@ -13,6 +13,7 @@ import {
 import {
 	useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
 	Icon,
@@ -79,8 +80,8 @@ const Edit = props => {
 			</InspectorAdvancedControls>
 
 			<EffectsAnimations.InspectorControls />
-			<Link.InspectorControls />
 			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
+			<Link.InspectorControls hasToggle={ true } />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
 			<Responsive.InspectorControls />
@@ -100,4 +101,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

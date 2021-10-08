@@ -46,7 +46,7 @@ export const Save = props => {
 		'stk-inner-blocks',
 		columnWrapperClass,
 		blockAlignmentClass,
-		'stk-column__content',
+		'stk-block-column__content',
 	] )
 
 	return (

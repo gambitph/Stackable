@@ -26,13 +26,12 @@ import {
 	MarginBottom,
 	BlockLink,
 	Transform,
-	ContentAlign,
-	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -65,7 +64,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-box',
-		'stk-block-icon-box__inner-container',
 		blockHoverClass,
 	] )
 
@@ -74,7 +72,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-icon-box__content',
-	], useContentAlignmentClasses( props.attributes ) )
+	] )
 
 	const renderAppender = useMemo( () => {
 		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
@@ -96,7 +94,6 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<BlockDiv className={ blockClassNames }>
@@ -116,4 +113,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

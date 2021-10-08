@@ -27,9 +27,8 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
-	ContentAlign,
-	useContentAlignmentClasses,
 } from '~stackable/block-components'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -59,7 +58,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-label',
-		'stk-block-icon-label__inner-container',
 		rowClass,
 	] )
 
@@ -67,7 +65,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	], useContentAlignmentClasses( attributes ) )
+	] )
 
 	return (
 		<Fragment>
@@ -75,7 +73,6 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
-			<ContentAlign.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
@@ -120,9 +117,14 @@ const Edit = props => {
 		</Fragment>
 	)
 }
-export default Edit
+export default withQueryLoopContext( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/icon-label', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/icon-label' ? false : enabled
+} )
+
+// Disable top and bottom line of heading block.
+addFilter( 'stackable.heading.edit.top-bottom-line.enable-handlers', 'stackable/icon-label', ( enabled, parentBlock ) => {
 	return parentBlock?.name === 'stackable/icon-label' ? false : enabled
 } )

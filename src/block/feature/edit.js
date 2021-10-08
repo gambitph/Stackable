@@ -30,6 +30,7 @@ import {
 	ContainerDiv,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -93,6 +94,7 @@ const Edit = props => {
 							providerValue={ columnProviderValue }
 							template={ TEMPLATE }
 							templateLock="insert"
+							orientation={ props.attributes.alignVertical ? 'vertical' : 'horizontal' }
 						/>
 					</ContainerDiv>
 				</Separator>
@@ -102,4 +104,4 @@ const Edit = props => {
 	)
 }
 
-export default Edit
+export default withQueryLoopContext( Edit )

@@ -4,6 +4,7 @@
 	"title": "Icon",
 	"description": "Pick an icon or upload your own SVG icon to decorate your content.",
 	"category": "common",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"SVG"
 	],

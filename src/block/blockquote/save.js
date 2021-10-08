@@ -12,11 +12,9 @@ import classnames from 'classnames'
 import {
 	BlockDiv,
 	ContainerDiv,
-	BlockLink,
 	getAlignmentClasses,
 	CustomCSS,
 	getResponsiveClasses,
-	getContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -37,7 +35,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-blockquote',
-		'stk-block-blockquote__inner-container',
 		responsiveClass,
 	] )
 
@@ -46,7 +43,7 @@ export const Save = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-blockquote__content',
-	], getContentAlignmentClasses( attributes ) )
+	] )
 
 	return (
 		<BlockDiv.Content
@@ -60,7 +57,6 @@ export const Save = props => {
 				attributes={ attributes }
 			>
 				<InnerBlocks.Content />
-				<BlockLink.Content attributes={ attributes } />
 			</ContainerDiv.Content>
 		</BlockDiv.Content>
 	)

@@ -4,6 +4,7 @@ import { Edit } from './edit'
 
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
+import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
 import { useBlockAttributes } from '~stackable/hooks'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -11,11 +12,14 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 export const ContainerDiv = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
+	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
+	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
+	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass
 
 	const classNames = classnames( [
 		props.className,
 		'stk-container',
-		`stk-${ attributes.uniqueId }-container`,
+		`${ uniqueBlockClass }-container`,
 	], {
 		'stk-hover-parent': attributes.hasContainer, // This is needed to trigger parent-hovered hover styles.
 		'stk--no-background': ! attributes.hasContainer,

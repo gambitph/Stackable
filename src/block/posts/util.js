@@ -1,4 +1,5 @@
-/** External dependencies
+/**
+ * External dependencies
  */
 import striptags from 'striptags'
 import { compact } from 'lodash'
@@ -200,7 +201,7 @@ export const generateRenderPostItem = attributes => {
 		if ( excerptString.length > ( excerptLength || 55 ) ) {
 			excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'
 		} else {
-			excerptString = post.postExcerptStackable
+			excerptString = post.post_excerpt_stackable
 		}
 
 		const excerpt = excerptString && (

@@ -16,6 +16,7 @@ import {
 import {
 	useBlockContext, useBlockHoverClass,
 } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
 	getAlignmentClasses,
@@ -31,8 +32,6 @@ import {
 	getRowClasses,
 	MarginBottom,
 	Transform,
-	ContentAlign,
-	useContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -54,6 +53,8 @@ const ALLOWED_BLOCKS = [
 	'stackable/icon',
 ]
 
+const TABS = [ 'block', 'advanced' ]
+
 const Edit = props => {
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
@@ -69,7 +70,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-image-box',
-		'stk-block-image-box__inner-container',
 		blockHoverClass,
 	] )
 
@@ -79,7 +79,8 @@ const Edit = props => {
 		blockAlignmentClass,
 		rowClass,
 		'stk-hover-parent',
-	], useContentAlignmentClasses( props.attributes ) )
+		'stk-block-image-box__content',
+	] )
 
 	const renderAppender = useMemo( () => {
 		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
@@ -88,7 +89,7 @@ const Edit = props => {
 	return (
 		<Fragment>
 
-			<InspectorTabs />
+			<InspectorTabs tabs={ TABS } />
 
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
@@ -100,7 +101,6 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-			<ContentAlign.InspectorControls />
 
 			<ImageBoxStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-image-box" />
@@ -143,7 +143,7 @@ addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box',
 	return ! allowedInnerBlocks.length ? [] : allowedInnerBlocks
 } )
 
-export default Edit
+export default withQueryLoopContext( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/image-box', ( enabled, parentBlock ) => {

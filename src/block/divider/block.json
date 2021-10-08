@@ -3,6 +3,7 @@
 	"title": "Divider",
 	"description": "Add a pause between your content.",
 	"category": "common",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Horizontal Rule",
 		"HR"

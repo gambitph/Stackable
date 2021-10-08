@@ -8,6 +8,7 @@ import {
 	isString, first,
 } from 'lodash'
 import classnames from 'classnames'
+import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
 
 /**
  * WordPress dependencies
@@ -17,7 +18,7 @@ import {
 	Button, Popover, TextControl,
 } from '@wordpress/components'
 import {
-	useState, Fragment, useCallback, useEffect,
+	useState, Fragment, useCallback, useEffect, useContext,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
@@ -146,6 +147,7 @@ export const useDynamicContentControlProps = props => {
  * @param {string} value
  */
 export const useDynamicContent = ( value = '' ) => {
+	const queryLoopContext = useContext( QueryLoopContext )
 	return useSelect( select => {
 		if ( ! select( 'stackable/dynamic-content' ) ) {
 			return value
@@ -155,13 +157,56 @@ export const useDynamicContent = ( value = '' ) => {
 			return value
 		}
 
+		const currentPostId = select( 'core/editor' )?.getCurrentPostId() || -1
+
+		let tempValue = value
+
+		// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
+		if ( currentPostId !== -1 && queryLoopContext?.postId && queryLoopContext.postId !== currentPostId ) {
+			// Replace all post IDS.
+			tempValue = tempValue?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
+				const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
+				const splitFieldString = dataFieldString.split( '/' )
+				if ( ! dataFieldString.startsWith( 'current-page' ) ) {
+					return value
+				}
+
+				if ( splitFieldString.length > 2 && splitFieldString[ 2 ].startsWith( '?' ) ) {
+					splitFieldString.splice( 2, 0, queryLoopContext.postId.toString() )
+				} else if ( splitFieldString.length === 2 ) {
+					splitFieldString.push( queryLoopContext.postId.toString() )
+				}
+
+				return value.replace(
+					/data-stk-dynamic="[^\"]*"/g,
+					'data-stk-dynamic="' + splitFieldString.join( '/' ) + '"'
+				)
+			} )
+
+			tempValue = tempValue?.replace( /!#stk_dynamic(.*)\!#/g, value => {
+				const dataFieldString = value.replace( /\!#/g, '' ).replace( 'stk_dynamic/', '' )
+				const splitFieldString = dataFieldString.split( '/' )
+				if ( ! dataFieldString.startsWith( 'current-page' ) ) {
+					return value
+				}
+
+				if ( splitFieldString.length > 2 ) {
+					splitFieldString.splice( 2, 0, queryLoopContext.postId.toString() )
+				} else if ( splitFieldString.length === 2 ) {
+					splitFieldString.push( queryLoopContext.postId.toString() )
+				}
+
+				return '!#stk_dynamic/' + splitFieldString.join( '/' ) + '!#'
+			} )
+		}
+
 		/**
 		 * A simple trick for subscribing to post changes.
 		 */
 		select( 'core/editor' )?.getPostEdits()
 
-		return select( 'stackable/dynamic-content' ).parseDynamicContents( value )
-	}, [ value ] )
+		return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue )
+	}, [ value, queryLoopContext ] )
 }
 
 /**
