@@ -57,8 +57,10 @@ const HoverStateToggle = props => {
 				return {
 					disabled: ! hasParentHoverState,
 					tooltip: ! hasParentHoverState
-						? <span className="stk-hover-state-toggle__tooltip">
+						? <span className="stk-tooltip__text">
 							{ sprintf( '%s - %s', __( 'Parent Hovered', i18n ), __( 'Add a Container Background to a parent block to enable this state.', i18n ) ) }
+							<br />
+							<a href="https://docs.wpstackable.com/article/465-how-to-style-the-different-block-hover-states?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">{ __( 'Learn more', i18n ) }</a>
 						</span> : undefined,
 					...state,
 				}
