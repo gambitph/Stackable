@@ -15,7 +15,7 @@ export const currentUserHasCapability = async cap => {
 	}
 
 	const results = await apiFetch( {
-		path: addQueryArgs( `/wp/v2/users/${ id }`, {
+		path: addQueryArgs( `/stackable/v2/users/${ id }`, {
 			context: 'edit',
 		} ),
 	} )

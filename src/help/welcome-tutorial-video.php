@@ -25,7 +25,7 @@ if ( ! function_exists( 'stackable_welcome_video_closed_endpoint' ) ) {
 	 * Add rest endpoint for noting that the welcome video was closed.
 	 */
 	function stackable_welcome_video_closed_endpoint() {
-		register_rest_route( 'wp/v2', '/stk_welcome_video_closed', array(
+		register_rest_route( 'stackable/v2', '/stk_welcome_video_closed', array(
 			'methods' => 'POST',
 			'callback' => 'stackable_welcome_video_closed_callback',
 			'permission_callback' => function () {

@@ -13,7 +13,7 @@ if ( ! function_exists( 'stackable_get_latest_update_article' ) ) {
 	 * Gets the latest update article. No caching.
 	 */
 	function stackable_get_latest_update_article() {
-		$response = wp_remote_get( 'https://wpstackable.com/wp-json/wp/v2/posts?categories=3&per_page=1' );
+		$response = wp_remote_get( 'https://wpstackable.com/wp-json/stackable/v2/posts?categories=3&per_page=1' );
 
 		if ( is_wp_error( $response ) || '200' != wp_remote_retrieve_response_code( $response ) ) {
 			return null;

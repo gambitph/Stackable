@@ -67,7 +67,7 @@ if ( ! class_exists( 'Stackable_Design_Library_V2' ) ) {
 		 * @return void
 		 */
 		public function register_design_library_route() {
-			register_rest_route( 'wp/v2', '/stk_block_designs/(?P<block>[\w\d-]+)', array(
+			register_rest_route( 'stackable/v2', '/stk_block_designs/(?P<block>[\w\d-]+)', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_block_designs' ),
 				'permission_callback' => function () {

@@ -703,7 +703,7 @@ if ( ! function_exists( 'stackable_get_terms_endpoint_v2' ) ) {
 			return;
 		}
 
-		register_rest_route( 'wp/v2', '/stk_terms', array(
+		register_rest_route( 'stackable/v2', '/stk_terms', array(
 			'methods' => 'GET',
 			'callback' => 'stackable_rest_get_terms_v2',
 			'permission_callback' => function () {

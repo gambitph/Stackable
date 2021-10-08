@@ -67,7 +67,7 @@ const PostPickerControl = props => {
 		const postIds = props.value.map( v => v.postId )
 		// const results = [ { title: 'hello', postId: 9 }, { title: 'world', postId: 123 } ]
 		apiFetch( {
-			path: addQueryArgs( `/wp/v2/stk_editor_mode_get_all_posts`, {
+			path: addQueryArgs( `/stackable/v2/stk_editor_mode_get_all_posts`, {
 				search,
 			} ),
 			method: 'GET',
@@ -118,19 +118,23 @@ const PostPickerControl = props => {
 								}
 							} }
 						/>
-						{ ( focused && searchResults && searchResults.length ) ?
-							<div className="ugb-post-picker__search-results-wrapper">
+						{ ( focused && searchResults && searchResults.length )
+							? <div className="ugb-post-picker__search-results-wrapper">
 								{ searchResults.map( post => {
 									const title = getName( post )
 									const { postId } = post
-									return <button
-										key={ postId }
-										className="ugb-post-picker__search-result button button-large button-link"
-										onClick={ () => onSelect( { ...post, title } ) }
-									>{ title }</button>
+									return (
+										<button
+											key={ postId }
+											className="ugb-post-picker__search-result button button-large button-link"
+											onClick={ () => onSelect( { ...post, title } ) }
+										>
+											{ title }
+										</button>
+									)
 								} ) }
-							</div> :
-							null
+							</div>
+							: null
 						}
 						{ ( focused && inputValue && ! searchResults.length ) &&
 							<div className="ugb-post-picker__search-results-wrapper">

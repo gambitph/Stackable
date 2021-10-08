@@ -46,7 +46,7 @@ export const fetchBlockDesigns = async block => { // Always v2
 	const blockName = getBlockName( block )
 	if ( ! blockDesigns[ blockName ] ) {
 		const results = await apiFetch( {
-			path: `/wp/v2/stk_block_designs/${ blockName }`,
+			path: `/stackable/v2/stk_block_designs/${ blockName }`,
 			method: 'GET',
 		} )
 		blockDesigns[ blockName ] = await results

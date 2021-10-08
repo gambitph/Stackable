@@ -29,7 +29,7 @@ const withWelcomeTutorialModal = createHigherOrderComponent( BlockEdit => {
 
 			// Save the option to not show the video again.
 			apiFetch( {
-				path: `/wp/v2/stk_welcome_video_closed`,
+				path: `/stackable/v2/stk_welcome_video_closed`,
 				method: 'POST',
 			} )
 		}
