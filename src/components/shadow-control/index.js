@@ -97,7 +97,17 @@ const FILTERS = [
 			disableAlpha: false,
 		},
 		default: 'rgba(0,0,0,1)',
-		changeCallback: hex => hexToRgba( hex ),
+		changeCallback: color => {
+			if ( color?.startsWith( 'rgba(' ) ) {
+				return color
+			}
+
+			if ( color?.startsWith( 'rgb(' ) ) {
+				return color?.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) || ''
+			}
+
+			return color?.startsWith( '#' ) ? hexToRgba( color ) : ''
+		},
 	},
 	{
 		component: AdvancedRangeControl,
