@@ -37,16 +37,17 @@ import { getColorClassName } from '@wordpress/block-editor'
 
 const TYPOGRAPHY_SHADOWS = [
 	'none',
-	'0px 0 1px rgba(120, 120, 120, 0.5)',
-	'0px 0 2px rgba(120, 120, 120, 0.5)',
-	'0 5px 5px rgba(18, 63, 82, 0.035)',
-	'0px 5px 10px rgba(153, 153, 153, 0.35)',
-	'0px 2px 20px rgba(153, 153, 153, 0.2)',
+	'2px 2px 4px rgba(0, 0, 0, 0.2)',
+	'6px 6px 4px rgba(120, 120, 120, 0.2)',
+	'2px 4px 5px rgba(0, 0, 0, 0.4)',
+	'0px 0px 5px rgba(0, 0, 0, 0.4)',
+	'4px 4px 0px rgba(0, 0, 0, 1)',
+	'0px 15px 14px rgba(18, 63, 82, 0.3)',
+	'25px 10px 14px rgba(18, 63, 82, 0.3)',
 	'25px 10px 30px rgba(18, 63, 82, 0.3)',
-	'0px 10px 30px rgba(0, 0, 0, 0.2)',
-	'7px 5px 30px rgba(72, 73, 121, 0.15)',
-	'0px 10px 60px rgba(0, 0, 0, 0.1)',
-	'0px 0px 60px rgba(72, 73, 121, 0.38) ',
+	'0px 0px 40px rgba(18, 63, 82, 0.6)',
+	'0px 0px 62px rgba(71, 73, 79, 1)',
+	'0px 0px 100px rgba(71, 73, 79, 1)',
 ]
 
 export const Controls = props => {
