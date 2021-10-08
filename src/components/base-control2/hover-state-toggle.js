@@ -66,6 +66,7 @@ const HoverStateToggle = props => {
 			options={ stateOptions }
 			onChange={ state => setCurrentHoverState( state ) }
 			buttonLabel={ __( 'Hover State', i18n ) }
+			labelPosition="bottom"
 		/>
 	)
 }
