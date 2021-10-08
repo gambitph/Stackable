@@ -77,11 +77,18 @@ const ControlIconToggle = props => {
 						return (
 							<div
 								key={ i }
+								onMouseEnter={ () => {
+									setIsMouseOver( option.value )
+								} }
+								onMouseLeave={ () => {
+									setIsMouseOver( false )
+								} }
 							>
 								<Button
 									className={ value === option.value ? 'is-active' : '' }
 									data-index={ i }
 									data-value={ option.value }
+									disabled={ option.disabled }
 									onClick={ () => {
 										if ( ! isOpen ) {
 											setIsOpen( true )
@@ -93,12 +100,6 @@ const ControlIconToggle = props => {
 									icon={ option.icon }
 									showTooltip={ false }
 									label={ label }
-									onMouseEnter={ () => {
-										setIsMouseOver( option.value )
-									} }
-									onMouseLeave={ () => {
-										setIsMouseOver( false )
-									} }
 								>
 									{ ! option.icon ? label : undefined }
 								</Button>
@@ -109,7 +110,7 @@ const ControlIconToggle = props => {
 										className="components-tooltip stk-label-unit-toggle__popup"
 										aria-hidden="true"
 									>
-										{ tooltip }
+										{ option.tooltip || tooltip }
 									</Popover>
 								}
 							</div>

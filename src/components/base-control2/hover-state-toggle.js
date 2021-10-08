@@ -16,7 +16,7 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import { useMemo } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 
 const HOVER_OPTIONS = [
 	{
@@ -47,18 +47,25 @@ const HoverStateToggle = props => {
 	const stateOptions = useMemo( () => {
 		const hover = props.hover === 'all' ? [ 'normal', 'hover', 'parent-hovered', 'collapsed' ] : props.hover
 		return HOVER_OPTIONS.filter( ( { value } ) => {
-			// Don't include the parent hover state toggle if there's no parent hovered.
-			if ( ! hasParentHoverState && value === 'parent-hovered' ) {
-				return false
-			}
-
 			if ( ! hasCollapsedState && value === 'collapsed' && ! isCollapsedBlock ) {
 				return false
 			}
 
 			return hover.includes( value )
+		} ).map( state => {
+			if ( state.value === 'parent-hovered' ) {
+				return {
+					disabled: ! hasParentHoverState,
+					tooltip: ! hasParentHoverState
+						? <span className="stk-hover-state-toggle__tooltip">
+							{ sprintf( '%s - %s', __( 'Parent Hovered', i18n ), __( 'add a Container Background to a parent block to enable this feature.', i18n ) ) }
+						</span> : undefined,
+					...state,
+				}
+			}
+			return state
 		} )
-	}, [ props.hover ] )
+	}, [ props.hover, hasParentHoverState ] )
 
 	return (
 		<ControlIconToggle
