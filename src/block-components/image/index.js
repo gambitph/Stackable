@@ -1,13 +1,21 @@
+/**
+ * Internal dependencies
+ */
 import { addAttributes } from './attributes'
 import { Style } from './style'
 import { useImage } from './use-image'
 import { Edit } from './edit'
 import Image_ from './image'
 
+/**
+ * External dependencies
+ */
 import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
 import { pickBy } from 'lodash'
-import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
+/**
+ * WordPress dependencies
+ */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'

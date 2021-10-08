@@ -177,7 +177,10 @@ export const useDynamicContent = ( value = '' ) => {
 					splitFieldString.push( queryLoopContext.postId.toString() )
 				}
 
-				return value.replace( /data-stk-dynamic="[^\"]*"/g, `data-stk-dynamic="${ splitFieldString.join( '/' ) }"` )
+				return value.replace(
+					/data-stk-dynamic="[^\"]*"/g,
+					'data-stk-dynamic="' + splitFieldString.join( '/' ) + '"'
+				)
 			} )
 
 			tempValue = tempValue?.replace( /!#stk_dynamic(.*)\!#/g, value => {
@@ -193,7 +196,7 @@ export const useDynamicContent = ( value = '' ) => {
 					splitFieldString.push( queryLoopContext.postId.toString() )
 				}
 
-				return `!#stk_dynamic/${ splitFieldString.join( '/' ) }!#`
+				return '!#stk_dynamic/' + splitFieldString.join( '/' ) + '!#'
 			} )
 		}
 
