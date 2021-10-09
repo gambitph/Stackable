@@ -8,12 +8,14 @@ export const useUniqueId = ( autoApplyUniqueId = true ) => {
 	const { clientId } = useBlockEditContext()
 
 	useEffect( () => {
-		if ( ! autoApplyUniqueId ) {
+		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
+		if ( ! attributes ) {
 			return
 		}
 
-		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
-		if ( ! attributes ) {
+		// If auto apply unique id is disabled, don't generate a new one. But if
+		// there already is a unique id, we need to still check if it's unique.
+		if ( ! autoApplyUniqueId && ! attributes.uniqueId ) {
 			return
 		}
 
