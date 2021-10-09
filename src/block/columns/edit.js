@@ -65,7 +65,6 @@ const Edit = props => {
 		blockHoverClass,
 		separatorClass,
 		columnTooltipClass,
-		'stk-block-columns__inner-container', // `*inner-container` class is required for inner block widths to work properly.
 	] )
 
 	const contentClassNames = classnames( [

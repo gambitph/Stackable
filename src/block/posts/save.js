@@ -42,7 +42,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-posts',
-		'stk-block-posts__inner-container',
 		responsiveClass,
 		blockAlignmentClasses,
 	], {

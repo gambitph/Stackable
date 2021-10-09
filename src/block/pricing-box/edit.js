@@ -54,7 +54,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-pricing-box',
-		'stk-block-pricing-box__inner-container',
 		blockHoverClass,
 	] )
 

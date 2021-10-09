@@ -54,7 +54,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-feature',
-		'stk-block-feature__inner-container',
 		rowClass,
 		blockHoverClass,
 		separatorClass,

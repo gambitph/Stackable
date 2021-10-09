@@ -36,7 +36,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-block-pricing-box',
-		'stk-block-pricing-box__inner-container',
 		responsiveClass,
 	] )
 

@@ -65,7 +65,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-notification',
-		'stk-block-notification__inner-container',
 		blockHoverClass,
 	], {
 		'stk--is-dismissible': attributes.isDismissible,

@@ -57,7 +57,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-team-member',
-		'stk-block-team-member__inner-container',
 		blockHoverClass,
 	] )
 

@@ -112,7 +112,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-posts',
-		'stk-block-posts__inner-container',
 		blockHoverClass,
 		blockAlignmentClass,
 	], {

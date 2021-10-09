@@ -40,7 +40,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-block-feature',
-		'stk-block-feature__inner-container',
 		responsiveClass,
 		separatorClass,
 	] )
