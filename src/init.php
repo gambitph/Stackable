@@ -51,6 +51,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Adds a special class to the body tag, to indicate we can now run animations.
 			add_action( 'wp_footer', array( $this, 'init_animation' ) );
+
+			// Add the fallback values for the default block width and wide block width.
+			// These are used for the inside "Content width" option of Columns.
+			add_action( 'stackable_inline_styles', array( $this, 'add_block_widths' ) );
+			add_action( 'stackable_inline_editor_styles', array( $this, 'add_block_widths' ) );
 		}
 
 		/**
@@ -260,6 +265,56 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 			) );
 			wp_localize_script( 'ugb-block-js-vendor', 'stackable', $args );
+		}
+
+		/**
+		 * Gets the default/center and wide block widths from the theme if
+		 * possible. We need this so our "Content Width" option can be
+		 * consistent with what the theme uses.
+		 *
+		 * @param String $css
+		 * @return String The CSS to print out in the frontend.
+		 */
+		public function add_block_widths( $css ) {
+			$width_default = '';
+			$width_wide = '';
+
+			// Check the theme.json file if we have any block sizes set.
+			// @see https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-json/#styles
+			if ( class_exists( 'WP_Theme_JSON_Resolver_Gutenberg' ) ) {
+				$layout = WP_Theme_JSON_Resolver_Gutenberg::get_merged_data()->get_settings()['layout'];
+				if ( ! empty( $layout ) ) {
+					if ( array_key_exists( 'contentSize', $layout ) ) {
+						$width_default = $layout['contentSize'];
+					}
+					if ( array_key_exists( 'wideSize', $layout ) ) {
+						$width_wide = $layout['wideSize'];
+					}
+				}
+			}
+
+			// The old way for themes to specify the contents are through
+			// $content_width, we can use this for the default block width.
+			global $content_width;
+			if ( empty( $width_default ) && ! empty( $content_width ) ) {
+				$width_default = $content_width;
+			}
+
+			// Add the CSS to the frontend.
+			if ( ! empty( $width_default ) || ! empty( $width_wide ) ) {
+				$css .= ':root {';
+				if ( ! empty( $width_default ) ) {
+					$width_default .= is_numeric( $width_default ) ? 'px' : '';
+					$css .= '--stk-block-width-default-detected: ' . $width_default . ';';
+				}
+				if ( ! empty( $width_wide ) ) {
+					$width_wide .= is_numeric( $width_wide ) ? 'px' : '';
+					$css .= '--stk-block-width-wide-detected: ' . $width_wide . ';';
+				}
+				$css .= '}';
+			}
+
+			return $css;
 		}
 
 		/**

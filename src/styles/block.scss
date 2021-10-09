@@ -62,20 +62,20 @@
 }
 
 :root {
-	--stk-block-width-default: 900px;
-	--stk-block-width-wide: 80vw;
+	--stk-block-width-default-detected: 900px;
+	--stk-block-width-wide-detected: 80vw;
 }
 
 @include desktop-tablet {
 	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-inner-blocks:not(.alignwide):not(.alignfull) {
 		// max-width: 1242px;
-		max-width: var(--stk-block-default-width, var(--block-max-width, var(--responsive--aligndefault-width, var(--stk-block-width-default, 900px))));
+		max-width: var(--stk-block-default-width, var(--block-max-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px))));
 	}
 }
 @include desktop-tablet {
 	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-inner-blocks.alignwide {
 		// max-width: #{ "max(80vw, 1242px)" };
-		max-width: var(--stk-block-wide-width, var(--wide-block-max-width, var(--responsive--alignwide-width, var(--stk-block-width-wide, 80vw))));
+		max-width: var(--stk-block-wide-width, var(--wide-block-max-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, 80vw))));
 	}
 }
 
@@ -290,6 +290,9 @@
 }
 
 // Buttons.
+.stk-button {
+	text-decoration: none !important; // Some themes may add underlines on buttons, we need to force remove it. !important is the only way.
+}
 :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination, .stk-block-load-more, .stk-block-posts) {
 	&:not(.is-style-link) {
 		.stk-button {
