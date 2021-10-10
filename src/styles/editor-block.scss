@@ -61,6 +61,19 @@
 	}
 }
 
+.editor-styles-wrapper .stk-block-columns .wp-block,
+.editor-styles-wrapper .stk-block-columns .stk-block-column {
+	max-width: inherit;
+}
+
+// Columns should occupy the entire available area.
+[data-type^="stackable/"] {
+	display: flex;
+}
+[data-type^="stackable/"] > div {
+	width: 100%;
+}
+
 /**
  * Block widths for when blocks are placed inside columns, and Content Width is set to center or wide.
  */
@@ -140,16 +153,7 @@
 	}
 }
 
-// Columns should occupy the entire available area.
-[data-type^="stackable/"] {
-	// width: 100%;
-	// width: fit-content;
-	// margin-inline: auto;
-	display: flex;
-}
-[data-type^="stackable/"] > div {
-	width: 100%;
-}
+// Columns
 .stk-column-resizeable {
 	height: 100% !important;
 	width: 100% !important;
@@ -224,28 +228,6 @@
 	}
 
 }
-
-// .editor-styles-wrapper [data-block][data-type^="stackable/"] {
-//     width: fit-content;
-//     margin-inline: auto;
-// }
-
-// Wide and full width blocks are limited by some themes in the editor, make them span any width.
-// .editor-styles-wrapper [data-type^="stackable/"][data-align="wide"] .wp-block:not(.alignwide):not(.alignfull),
-// .editor-styles-wrapper [data-type^="stackable/"][data-align="full"] .wp-block:not(.alignwide):not(.alignfull) {
-// 	max-width: 100%;
-// }
-// [data-type="stackable/column"] {
-// 	max-width: none;
-// }
-.editor-styles-wrapper .stk-block-columns .wp-block,
-.editor-styles-wrapper .stk-block-columns .stk-block-column {
-	max-width: inherit;
-}
-// .editor-styles-wrapper [data-type^="stackable/"][data-align="wide"] {
-// 	width: fit-content;
-// 	margin-inline: auto;
-// }
 
 // Headings
 // Our headings have top margins if they're not the first heading, handle the different block structures.
