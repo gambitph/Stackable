@@ -27,8 +27,6 @@
 	margin-block: 0; // Some themes add margin top/bottom when alignfull or alignwide is used.
 }
 
-// Block default widths
-
 // Containers
 .stk-column,
 .stk-block.stk-column {
@@ -39,6 +37,9 @@
 	min-width: 1px;
 }
 
+/**
+ * Block widths for when blocks are placed inside columns, and Content Width is set to center or wide.
+ */
 :root {
 	--stk-block-width-default-detected: 900px;
 	--stk-block-width-wide-detected: 80vw;
@@ -60,9 +61,6 @@
 		max-width: var(--stk-block-wide-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, 80vw)));
 	}
 }
-
-// Note: we can detect the widths by checking theme.json if there is, use that for  --stk-inner-aligndefault-dete & --stk-inner-alignwide-detected
-// if no theme.json, use $content_width,
 
 /**
  * Resizeable rows and columns

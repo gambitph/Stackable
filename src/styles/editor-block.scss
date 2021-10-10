@@ -33,16 +33,12 @@
 }
 
 // Block widths,
-.is-root-container > [data-block]:not([data-type="core/widget-area"]) {
-	&:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
-		// max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
-		margin-left: auto;
-		margin-right: auto;
-	}
+.edit-widgets-block-editor .is-root-container > [data-type^="stackable/"] {
+	margin-left: auto;
+	margin-right: auto;
 }
-
+// Wide align, make sure the contents are centered.
 .is-root-container > [data-type^="stackable/"][data-align="wide"] {
-	// width: fit-content;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -50,27 +46,24 @@
 .is-root-container > [data-type^="stackable/"][data-align="full"] {
 	margin-left: -8px;
 	margin-right: -8px;
-	// Add wp-block to main block??
 	> .wp-block[data-align="full"] {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
 }
-
-// Make sure by default, our inner blocks are center aligned.
+// Make sure by default, all our inner blocks are center aligned.
 .stk-inner-blocks.stk-content-align {
 	margin-top: 0;
 	margin-bottom: 0;
 	&:not(.alignfull):not(.alignwide):not(.stk-button-group) {
-		// --block-max-width comes from Blocksy
-		// --responsive--aligndefault-width comes from Twenty Twenty One
-		// max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
-// .editor-styles-wrapper {
+/**
+ * Block widths for when blocks are placed inside columns, and Content Width is set to center or wide.
+ */
 :root {
 	--stk-block-width-default-detected: 900px;
 	--stk-block-width-wide-detected: calc(80vw - 280px); // Make way for the inspector
@@ -83,16 +76,13 @@
 	// --stk-block-width-default-detected is from the fallback autodetected value.
 	max-width: var(--stk-block-default-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px)));
 }
-// }
-// @include desktop-tablet {
-.is-root-container > [data-type^="stackable/"][data-align="wide"], // Wide blocks show up as full-width (with blank sides), resize wide blocks correctly.
+:is(.stk-preview-device-desktop, .stk-preview-device-tablet) .is-root-container > [data-type^="stackable/"][data-align="wide"], // Wide blocks show up as full-width (with blank sides), resize wide blocks correctly.
 :is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks.alignwide {
 	// --stk-block-default-width is a Stackable setting
 	// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 	// --stk-block-width-default-detected is from the fallback autodetected value.
 	max-width: var(--stk-block-wide-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, calc(80vw - 280px)))); // Make way for the inspector
 }
-// }
 
 
 // Some themes add margins when alignwide and alignfull are used.
