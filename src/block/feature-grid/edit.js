@@ -58,7 +58,6 @@ const Edit = props => {
 		blockHoverClass,
 		separatorClass,
 		columnTooltipClass,
-		'stk-block-feature-grid__inner-container',
 	] )
 
 	const contentClassNames = classnames( [

@@ -41,7 +41,6 @@ export const Save = props => {
 		'stk-block-hero',
 		responsiveClass,
 		separatorClass,
-		'stk-block-hero__inner-container',
 	] )
 
 	const contentClassNames = classnames( [

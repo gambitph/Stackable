@@ -57,7 +57,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-testimonial',
-		'stk-block-testimonial__inner-container',
 		blockHoverClass,
 	] )
 

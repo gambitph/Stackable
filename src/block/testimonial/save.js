@@ -37,7 +37,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-testimonial',
-		'stk-block-testimonial__inner-container',
 		responsiveClass,
 	] )
 

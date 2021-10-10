@@ -3,6 +3,7 @@
  */
 @import "editor-breakpoints";
 @import "editor-block-transitions";
+@import "editor-compat";
 
 .editor-styles-wrapper .stk-block {
 	// Position relative (required for block links) will not work properly with
@@ -32,26 +33,70 @@
 }
 
 // Block widths,
-.is-root-container > [data-block]:not([data-type="core/widget-area"]) {
-	&:not([data-align="wide"]):not([data-align="full"]):not([data-align="right"]):not([data-align="left"]) {
-		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
+.edit-widgets-block-editor .is-root-container > [data-type^="stackable/"] {
+	margin-left: auto;
+	margin-right: auto;
+}
+// Wide align, make sure the contents are centered.
+.is-root-container > [data-type^="stackable/"][data-align="wide"] {
+	margin-left: auto;
+	margin-right: auto;
+}
+// When full alignment, remove the sides.
+.is-root-container > [data-type^="stackable/"][data-align="full"] {
+	margin-left: -8px;
+	margin-right: -8px;
+	> .wp-block[data-align="full"] {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+}
+// Make sure by default, all our inner blocks are center aligned.
+.stk-inner-blocks.stk-content-align {
+	margin-top: 0;
+	margin-bottom: 0;
+	&:not(.alignfull):not(.alignwide):not(.stk-button-group) {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
-// Make sure by default, our inner blocks are center aligned.
-.stk-inner-blocks.stk-content-align {
-	margin-top: 0;
-	margin-bottom: 0;
-	&:not(.alignfull):not(.alignwide):not(.stk-button-group) {
-		// --block-max-width comes from Blocksy
-		// --responsive--aligndefault-width comes from Twenty Twenty One
-		max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
-		margin-left: auto;
-		margin-right: auto;
-	}
+.editor-styles-wrapper .stk-block-columns .wp-block,
+.editor-styles-wrapper .stk-block-columns .stk-block-column {
+	max-width: inherit;
 }
+
+// Columns should occupy the entire available area.
+[data-type^="stackable/"] {
+	display: flex;
+}
+[data-type^="stackable/"] > div {
+	width: 100%;
+}
+
+/**
+ * Block widths for when blocks are placed inside columns, and Content Width is set to center or wide.
+ */
+:root {
+	--stk-block-width-default-detected: 900px;
+	--stk-block-width-wide-detected: calc(80vw - 280px); // Make way for the inspector
+}
+
+// For wide/full width blocks, but with their contents center aligned.
+:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks:not(.alignwide):not(.alignfull) {
+	// --stk-block-default-width is a Stackable setting
+	// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
+	// --stk-block-width-default-detected is from the fallback autodetected value.
+	max-width: var(--stk-block-default-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px)));
+}
+:is(.stk-preview-device-desktop, .stk-preview-device-tablet) .is-root-container > [data-type^="stackable/"][data-align="wide"], // Wide blocks show up as full-width (with blank sides), resize wide blocks correctly.
+:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks.alignwide {
+	// --stk-block-default-width is a Stackable setting
+	// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
+	// --stk-block-width-default-detected is from the fallback autodetected value.
+	max-width: var(--stk-block-wide-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, calc(80vw - 280px)))); // Make way for the inspector
+}
+
 
 // Some themes add margins when alignwide and alignfull are used.
 .editor-styles-wrapper {
@@ -108,14 +153,7 @@
 	}
 }
 
-// Columns should occupy the entire available area.
-[data-type^="stackable/"] {
-	width: 100%;
-	display: flex;
-}
-[data-type^="stackable/"] > div {
-	width: 100%;
-}
+// Columns
 .stk-column-resizeable {
 	height: 100% !important;
 	width: 100% !important;
@@ -189,12 +227,6 @@
 		}
 	}
 
-}
-
-// Wide and full width blocks are limited by some themes in the editor, make them span any width.
-.editor-styles-wrapper [data-type^="stackable/"][data-align="wide"] .wp-block:not(.alignwide):not(.alignfull),
-.editor-styles-wrapper [data-type^="stackable/"][data-align="full"] .wp-block:not(.alignwide):not(.alignfull) {
-	max-width: 100%;
 }
 
 // Headings

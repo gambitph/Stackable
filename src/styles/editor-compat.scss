@@ -1,0 +1,16 @@
+/**
+ * Place styles here that fixes theme specific issues in the editor.
+ */
+
+// Blocksy theme
+// Full width needs more margins on the sides to make look full.
+.ct-theme-editor-styles .is-root-container > [data-type^="stackable/"][data-align="full"] {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+// Default block width and wide widths - used for Content Width of column-type blocks.
+.ct-theme-editor-styles {
+	--stk-block-width-default-detected: var(--has-wide, var(--block-max-width));
+	--stk-block-width-wide-detected: var(--has-wide, var(--wide-block-max-width));
+}

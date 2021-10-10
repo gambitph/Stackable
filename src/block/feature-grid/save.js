@@ -41,7 +41,6 @@ export const Save = props => {
 		'stk-block-feature-grid',
 		responsiveClass,
 		separatorClass,
-		'stk-block-feature-grid__inner-container',
 	] )
 
 	const contentClassNames = classnames( [

@@ -62,7 +62,6 @@ const Edit = props => {
 		blockHoverClass,
 		separatorClass,
 		'stk-content-align',
-		'stk-block-hero__inner-container',
 	] )
 
 	const contentClassNames = classnames( [

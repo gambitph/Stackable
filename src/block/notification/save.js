@@ -38,7 +38,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-notification',
-		'stk-block-notification__inner-container',
 		responsiveClass,
 	], {
 		'stk--is-dismissible': attributes.isDismissible,
