@@ -56,6 +56,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// These are used for the inside "Content width" option of Columns.
 			add_action( 'stackable_inline_styles', array( $this, 'add_block_widths' ) );
 			add_action( 'stackable_inline_editor_styles', array( $this, 'add_block_widths' ) );
+
+			// Add theme classes for compatibility detection.
+			add_action( 'body_class', array( $this, 'add_body_class_theme_compatibility' ) );
 		}
 
 		/**
@@ -315,6 +318,25 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			return $css;
+		}
+
+		/**
+		 * Adds a class that denotes the current theme, so we can add CSS to
+		 * make our blocks look better.
+		 */
+		public function add_body_class_theme_compatibility( $classes ) {
+			if ( defined( 'ASTRA_THEME_VERSION' ) ) {
+				$classes[] = 'stk--is-astra-theme';
+			} else if ( class_exists( 'Blocksy_Translations_Manager' ) ) {
+				$classes[] = 'stk--is-blocksy-theme';
+			} else if ( defined( 'NEVE_VERSION' ) ) {
+				$classes[] = 'stk--is-neve-theme';
+			} else if ( defined( 'KADENCE_VERSION' ) ) {
+				$classes[] = 'stk--is-kadence-theme';
+			} else if ( class_exists( 'Storefront' ) ) {
+				$classes[] = 'stk--is-storefront-theme';
+			}
+			return $classes;
 		}
 
 		/**

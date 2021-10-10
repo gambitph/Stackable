@@ -1,0 +1,47 @@
+/**
+ * Place styles here that fixes theme specific issues in the frontend.
+ */
+
+// Blocksy theme
+// Default and wide widths - used for Content Width of column-type blocks.
+body.stk--is-blocksy-theme .stk-block { // Need to add .stk-block here, this doesn't work when in body.
+	--stk-block-width-default-detected: var(--block-max-width);
+	--stk-block-width-wide-detected: var(--block-wide-max-width);
+}
+
+// Astra theme
+// Wide block width - used for Content Width of column-type blocks.
+body.stk--is-astra-theme {
+	--stk-block-width-wide-detected: calc(var(--stk-block-width-default-detected) + 200px);
+}
+
+// Neve theme
+// Wide block width - used for Content Width of column-type blocks.
+body.stk--is-neve-theme {
+	--stk-block-width-wide-detected: 70vw;
+}
+
+// Kadence theme
+// Kadence adds negative inline margins that screws up our blocks, make the selector more specific.
+body.stk--is-kadence-theme {
+	:is(.entry-content, .site-content) .stk-block > .stk-inner-blocks:is(.alignwide, :not(.alignwide)) {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+// Storefront theme
+// Storefront adds negative inline margins and paddings inside our blocks.
+body.stk--is-storefront-theme {
+	// There are added paddings to the sides of wide blocks
+	:is(.entry-content, .site-content) .stk-block.alignwide:not(.stk-block-background) {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	// There are inline margins, make the selector more specific.
+	:is(.entry-content, .site-content) .stk-block > .stk-inner-blocks:is(.alignwide, .alignfull) {
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0;
+	}
+}

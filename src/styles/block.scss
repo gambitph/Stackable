@@ -3,12 +3,11 @@
  */
 @import "breakpoints";
 @import "block-transitions";
+@import "block-compat";
 
 // We need to set this to relative for making the whole block clickable.
 .stk-block {
 	position: relative;
-	// width: 100%;
-	// margin-inline: auto;
 	box-sizing: border-box;
 }
 .stk--block-orientation-horizontal .stk-block {
@@ -21,35 +20,14 @@
 }
 
 // IMPORTANT: This fixes wide and full block widths and tame them in the frontend.
-:is(.entry-content, .site-content) .stk-block > .stk-inner-blocks.alignwide,
-:is(.entry-content, .site-content) .stk-block > .stk-inner-blocks.alignfull {
+:is(.entry-content, .site-content) .stk-block > .stk-inner-blocks {
 	margin-left: auto;
 	margin-right: auto;
 	width: auto;
+	margin-block: 0; // Some themes add margin top/bottom when alignfull or alignwide is used.
 }
 
 // Block default widths
-:is(.entry-content, .site-content) > .stk-block:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.wp-block-separator) {
-	// max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
-}
-
-:is(.entry-content, .site-content) .stk-block .stk-content-align {
-	margin-block: 0; // Some themes add margin top/bottom when alignfull or alignwide is used.
-	// Make sure by default, our inner blocks are center aligned.
-	&.stk-inner-blocks:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright):not(.stk-button-group) {
-		// --block-max-width - comes from Blocksy
-		// --responsive--aligndefault-width - comes from Twenty Twenty & Twenty Twenty One
-		// max-width: var(--stk-block-max-width, var(--block-max-width, var(--responsive--aligndefault-width, none)));
-		margin-left: auto;
-		margin-right: auto;
-		// width: 100%;
-	}
-}
-.stk-block .stk-block {
-	// Themes may provide some widths to the blocks which can interfere with
-	// the normal widths, always make these inner widths 100%
-	// width: 100%;
-}
 
 // Containers
 .stk-column,
@@ -68,14 +46,18 @@
 
 @include desktop-tablet {
 	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-inner-blocks:not(.alignwide):not(.alignfull) {
-		// max-width: 1242px;
-		max-width: var(--stk-block-default-width, var(--block-max-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px))));
+		// --stk-block-default-width is a Stackable setting
+		// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
+		// --stk-block-width-default-detected is from the fallback autodetected value.
+		max-width: var(--stk-block-default-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px)));
 	}
 }
 @include desktop-tablet {
 	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-inner-blocks.alignwide {
-		// max-width: #{ "max(80vw, 1242px)" };
-		max-width: var(--stk-block-wide-width, var(--wide-block-max-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, 80vw))));
+		// --stk-block-default-width is a Stackable setting
+		// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
+		// --stk-block-width-default-detected is from the fallback autodetected value.
+		max-width: var(--stk-block-wide-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, 80vw)));
 	}
 }
 
