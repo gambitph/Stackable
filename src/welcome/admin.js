@@ -250,7 +250,13 @@ const EditorSettings = () => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setSettings( pick( response, [ 'stackable_enable_design_library', 'stackable_block_max_width', 'stackable_auto_collapse_panels', 'stackable_enable_block_linking' ] ) )
+				setSettings( pick( response, [
+					'stackable_enable_design_library',
+					'stackable_block_default_width',
+					'stackable_block_wide_width',
+					'stackable_auto_collapse_panels',
+					'stackable_enable_block_linking',
+				] ) )
 			} )
 		} )
 	}, [] )
@@ -273,23 +279,41 @@ const EditorSettings = () => {
 			enabled={ __( 'Enable feature', i18n ) }
 		/>
 		<AdminTextSetting
-			label={ __( 'Block Max Width', i18n ) }
-			value={ settings.stackable_block_max_width }
-			type="number"
+			label={ __( 'Nested Block Width', i18n ) }
+			value={ settings.stackable_block_default_width }
+			type="text"
 			onChange={ value => {
 				clearTimeout( saveTimeout )
 				setSettings( {
 					...settings,
-					stackable_block_max_width: value, // eslint-disable-line camelcase
+					stackable_block_default_width: value, // eslint-disable-line camelcase
 				} )
 				setSaveTimeout( setTimeout( () => {
 					setIsBusy( true )
-					const model = new models.Settings( { stackable_block_max_width: value } ) // eslint-disable-line camelcase
+					const model = new models.Settings( { stackable_block_default_width: value } ) // eslint-disable-line camelcase
 					model.save().then( () => setIsBusy( false ) )
 				}, 400 ) )
 			} }
-			help={ __( 'The maximum width of Stackable blocks. Leave blank for the blocks to follow the content width of your theme.', i18n ) }
-		> px</AdminTextSetting>
+			help={ __( 'The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
+		></AdminTextSetting>
+		<AdminTextSetting
+			label={ __( 'Nested Wide Block Width', i18n ) }
+			value={ settings.stackable_block_wide_width }
+			type="text"
+			onChange={ value => {
+				clearTimeout( saveTimeout )
+				setSettings( {
+					...settings,
+					stackable_block_wide_width: value, // eslint-disable-line camelcase
+				} )
+				setSaveTimeout( setTimeout( () => {
+					setIsBusy( true )
+					const model = new models.Settings( { stackable_block_wide_width: value } ) // eslint-disable-line camelcase
+					model.save().then( () => setIsBusy( false ) )
+				}, 400 ) )
+			} }
+			help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
+		></AdminTextSetting>
 		<AdminToggleSetting
 			label={ __( 'Auto-Collapse Panels', i18n ) }
 			value={ settings.stackable_auto_collapse_panels }

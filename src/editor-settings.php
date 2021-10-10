@@ -18,9 +18,9 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			// Make our settings available in the editor.
 			add_filter( 'stackable_js_settings', array( $this, 'add_settings' ) );
 
-			// Add block max width CSS.
-			add_action( 'stackable_inline_styles', array( $this, 'add_block_max_width' ) );
-			add_action( 'stackable_inline_editor_styles', array( $this, 'add_block_max_width' ) );
+			// Add block nested widths CSS.
+			add_action( 'stackable_inline_styles', array( $this, 'add_nested_block_width' ) );
+			add_action( 'stackable_inline_editor_styles', array( $this, 'add_nested_block_width' ) );
 		}
 
 		/**
@@ -61,10 +61,22 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 			register_setting(
 				'stackable_editor_settings',
-				'stackable_block_max_width',
+				'stackable_block_default_width',
 				array(
 					'type' => 'string',
-					'description' => __( 'The maximum width of Stackable blocks.', STACKABLE_I18N ),
+					'description' => __( 'The width used when a Columns block has its Content Width set to center.', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_block_wide_width',
+				array(
+					'type' => 'string',
+					'description' => __( 'The width used when a Columns block has its Content Width set to wide.', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -115,17 +127,27 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		}
 
 		/**
-		 * Add styles for the block max width.
+		 * Add styles for the block nested widths.
 		 *
 		 * @param String $css
 		 * @return String CSS to be added.
 		 */
-		public function add_block_max_width( $css ) {
-			$max_width = get_option( 'stackable_block_max_width' );
-			if ( ! empty( $max_width ) ) {
-				$css .= ':root {
-					--stk-block-max-width: ' . esc_attr( $max_width ) . 'px;
-				}';
+		public function add_nested_block_width( $css ) {
+			$default_width = get_option( 'stackable_block_default_width' );
+			$wide_width = get_option( 'stackable_block_wide_width' );
+
+			if ( ! empty( $default_width ) || ! empty( $wide_width ) ) {
+				$css .= ':root {';
+					if ( ! empty( $default_width ) ) {
+						$default_width .= is_numeric( $default_width ) ? 'px' : '';
+						$css .= '--stk-block-default-width: ' . esc_attr( $default_width ) . ';';
+					}
+					if ( ! empty( $wide_width ) ) {
+						$wide_width .= is_numeric( $wide_width ) ? 'px' : '';
+						$css .= '--stk-block-wide-width: ' . esc_attr( $wide_width ) . ';';
+					}
+
+					$css .= '}';
 			}
 
 			return $css;

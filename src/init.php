@@ -308,11 +308,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$css .= ':root {';
 				if ( ! empty( $width_default ) ) {
 					$width_default .= is_numeric( $width_default ) ? 'px' : '';
-					$css .= '--stk-block-width-default-detected: ' . $width_default . ';';
+					$css .= '--stk-block-width-default-detected: ' . esc_attr( $width_default ) . ';';
 				}
 				if ( ! empty( $width_wide ) ) {
 					$width_wide .= is_numeric( $width_wide ) ? 'px' : '';
-					$css .= '--stk-block-width-wide-detected: ' . $width_wide . ';';
+					$css .= '--stk-block-width-wide-detected: ' . esc_attr( $width_wide ) . ';';
 				}
 				$css .= '}';
 			}
