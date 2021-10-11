@@ -68,9 +68,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 */
 		public function register_frontend_assets_nodep() {
 			// Register our dummy style so that the inline styles would get added.
-		
-			// Enqueue the inline styles in frontend only. We already handle the global
-			// settings styles inside the editor.
 			wp_register_style( 'ugb-style-css-nodep', false );
 			wp_enqueue_style( 'ugb-style-css-nodep' );
 			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
