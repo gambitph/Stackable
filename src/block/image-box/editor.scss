@@ -29,3 +29,7 @@
 		transition-duration: 0.32s;
 	}
 }
+
+.editor-styles-wrapper .stk-block-image-box__content [data-block] {
+	max-width: none;
+}

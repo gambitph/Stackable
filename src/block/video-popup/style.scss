@@ -1,6 +1,7 @@
 .stk-block-video-popup {
 	.stk-inner-blocks {
 		display: grid;
+		max-width: none !important;
 		.stk-block {
 			grid-column: 1 / 2;
 			grid-row: 1 / 2;

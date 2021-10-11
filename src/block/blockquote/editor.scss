@@ -12,3 +12,8 @@
 		width: auto;
 	}
 }
+.editor-styles-wrapper .stk-block-blockquote {
+	[data-type="stackable/text"] {
+		max-width: none;
+	}
+}
