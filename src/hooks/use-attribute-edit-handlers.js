@@ -20,9 +20,9 @@ import { useCallback } from '@wordpress/element'
 export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 	const { clientId } = useBlockEditContext()
 
-	const getAttrName = ( attrName, device = 'desktop', state = 'normal' ) => {
+	const getAttrName = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
 		return getAttributeName( getAttrNameFunction( attrNameTemplate )( attrName ), device, state )
-	}
+	}, [ clientId, attrNameTemplate ] )
 
 	const getAttribute = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
