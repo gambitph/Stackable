@@ -112,14 +112,14 @@ const getStyleParams = ( options = {} ) => {
 			hover: 'all',
 		},
 		{
-			selector: `${ selector } .stk-img-resizer-wrapper`,
+			selector: `${ selector } .stk-img-resizer-wrapper img`,
 			renderIn: 'edit',
 			styleRule: 'borderRadius',
 			attrName: 'imageBorderRadius',
 			format: '%spx',
 		},
 		{
-			selector,
+			selector: `${ selector } img`,
 			renderIn: 'save',
 			styleRule: 'borderRadius',
 			attrName: 'imageBorderRadius',
