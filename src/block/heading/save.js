@@ -53,6 +53,7 @@ const Save = props => {
 			<Typography.Content
 				attributes={ attributes }
 				className={ textClassNames }
+				defaultTag="h2"
 			/>
 			{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 		</BlockDiv.Content>

@@ -111,6 +111,13 @@ const getStyleParams = ( options = {} ) => {
 			format: 'scale(%s)',
 			hover: 'all',
 		},
+		/**
+		 * Add the border radius in the actual image since
+		 * filter CSS style values (e.g. `brightness`) can sometimes mess up
+		 * the border radius of the image. So add the border-radius alongside filters.
+		 *
+		 * @see https://github.com/gambitph/Stackable/issues/1833
+		 */
 		{
 			selector: `${ selector } .stk-img-resizer-wrapper img`,
 			renderIn: 'edit',
