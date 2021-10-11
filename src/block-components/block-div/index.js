@@ -13,6 +13,8 @@ import { applyFilters } from '@wordpress/hooks'
 import { getHtmlTag } from '../advanced/use-html-tag'
 import { CustomAttributes } from '../custom-attributes'
 
+export { useUniqueId }
+
 export const BlockDiv = props => {
 	const {
 		className,

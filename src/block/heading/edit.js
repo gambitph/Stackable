@@ -20,6 +20,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	useUniqueId,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -75,6 +76,8 @@ const Edit = props => {
 		textClasses,
 		blockAlignmentClass,
 	] )
+
+	useUniqueId( true, 'anchor' )
 
 	return (
 		<Fragment>
