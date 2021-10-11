@@ -77,7 +77,7 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	useUniqueId( true, 'anchor' )
+	useUniqueId( true, true )
 
 	return (
 		<Fragment>
