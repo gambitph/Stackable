@@ -311,7 +311,8 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-icon-list" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div ref={ textRef }>
+				{ /** make the whole area editable so that clicking the block will focus on the rich-text **/ }
+				<div ref={ textRef } contentEditable={ true }>
 					<Typography
 						tagName={ tagName }
 						multiline="li"
