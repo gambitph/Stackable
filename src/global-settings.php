@@ -353,6 +353,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return String
 		 */
 		public function color_add_global_styles( $current_css ) {
+			// If we're inside the editor, don't add the styles.
+			if ( is_admin() ) {
+				return $current_css;
+			}
 			// Don't do anything if we doon't have any global color.
 			$colors = get_option( 'stackable_global_colors' );
 			if ( ! $colors || ! is_array( $colors ) ) {
@@ -474,6 +478,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		* @since 2.17.2
 		*/
 		public function typography_add_global_styles( $css ) {
+			// If we're inside the editor, don't add the styles.
+			if ( is_admin() ) {
+				return $css;
+			}
 			return $css . $this->generated_typography_css;
 		}
 
