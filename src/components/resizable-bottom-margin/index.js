@@ -11,7 +11,7 @@ import {
  * WordPress dependencies
  */
 import {
-	useState, useEffect, useCallback, memo,
+	useState, useEffect, useCallback, memo, useMemo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
@@ -30,6 +30,18 @@ const SNAP_HEIGHTS_TENS = range( 8, 1001, 8 )
 
 const getSnapWidths = ( isShiftKey = false ) => {
 	return { y: ! isShiftKey ? SNAP_HEIGHTS : SNAP_HEIGHTS_TENS }
+}
+
+const HANDLE_STYLES = {
+	bottom: {
+		height: '100%', // Ensure the bottom handle occupies the entire area.
+	},
+}
+const ENABLE = {
+	top: false,
+	right: false,
+	bottom: true,
+	left: false,
 }
 
 const ResizableBottomMarginSingle = props => {
@@ -54,7 +66,7 @@ const ResizableBottomMarginSingle = props => {
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
-	const getInitialHeight = () => {
+	const getInitialHeight = useCallback( () => {
 		let currentMargin = props.value ? parseFloat( props.value ) : 0
 		if ( ! props.value && props.previewSelector ) {
 			const el = document.querySelector( props.previewSelector )
@@ -64,30 +76,25 @@ const ResizableBottomMarginSingle = props => {
 		}
 		setInitialHeight( currentMargin || 0 )
 		return currentMargin || 0
-	}
+	}, [ props.value, props.previewSelector ] )
 
 	useEffect( () => {
 		getInitialHeight()
 	}, [ props.previewSelector ] )
 
+	const size = useMemo( () => {
+		return {
+			height: props.value || props.value === 0 ? props.value : initialHeight || defaultBottomMargin,
+		}
+	}, [ props.value, initialHeight, defaultBottomMargin ] )
+
 	return (
 		<ResizableBox
 			className={ classNames }
 			minHeight="0"
-			handleStyles={ {
-				bottom: {
-					height: '100%', // Ensure the bottom handle occupies the entire area.
-				},
-			} }
-			enable={ {
-				top: false,
-				right: false,
-				bottom: true,
-				left: false,
-			} }
-			size={ {
-				height: props.value || props.value === 0 ? props.value : initialHeight || defaultBottomMargin,
-			} }
+			handleStyles={ HANDLE_STYLES }
+			enable={ ENABLE }
+			size={ size }
 			snap={ snapWidths }
 			snapGap={ 5 }
 			onResizeStart={ () => {
