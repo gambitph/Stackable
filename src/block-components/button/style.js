@@ -26,7 +26,7 @@ const getStyleParams = options => {
 
 	return [
 		{
-			selector: '',
+			selector: [ '', '.stk-button' ],
 			styleRule: 'width',
 			attrName: 'buttonFullWidth',
 			valueCallback: () => '100%',

@@ -11,15 +11,13 @@
 	margin-bottom: cssvar(block-margin-bottom);
 }
 
-.stk-block {
-	.stk-button-group {
-		row-gap: cssvar(button-row-gap);
-		justify-content: var(--stk-alignment-justify-content);
+.stk-button-group {
+	row-gap: cssvar(button-row-gap);
+	justify-content: var(--stk-alignment-justify-content);
 
-		// Use margin-inline-end in gaps instead since safari does not support it.
-		> :is(.stk-block, .stk-button):not(last-child) {
-			margin-inline-end: cssvar(button-column-gap);
-		}
+	// Use margin-inline-end in gaps instead since safari does not support it.
+	:is(.stk-block, .stk-button):not(:last-child) {
+		margin-inline-end: cssvar(button-column-gap);
 	}
 }
 

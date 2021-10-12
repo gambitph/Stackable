@@ -245,19 +245,28 @@
 		justify-content: var(--stk-alignment-justify-content);
 	}
 	&:is(.stk--collapse-on-desktop) {
-		align-items: var(--stk-alignment-justify-content);
+		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
+			margin-inline-start: var(--stk-alignment-margin-left);
+			margin-inline-end: var(--stk-alignment-margin-right);
+		}
 	}
 }
 
 @include tablet {
 	.stk-button-group:is(.stk--collapse-on-tablet) {
-		align-items: var(--stk-alignment-justify-content);
+		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
+			margin-inline-start: var(--stk-alignment-margin-left);
+			margin-inline-end: var(--stk-alignment-margin-right);
+		}
 	}
 }
 
 @include mobile {
 	.stk-button-group:is(.stk--collapse-on-mobile) {
-		align-items: var(--stk-alignment-justify-content);
+		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
+			margin-inline-start: var(--stk-alignment-margin-left);
+			margin-inline-end: var(--stk-alignment-margin-right);
+		}
 	}
 }
 
@@ -271,6 +280,7 @@
 
 // Buttons.
 .stk-button {
+	width: max-content;
 	text-decoration: none !important; // Some themes may add underlines on buttons, we need to force remove it. !important is the only way.
 }
 :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination, .stk-block-load-more, .stk-block-posts) {
