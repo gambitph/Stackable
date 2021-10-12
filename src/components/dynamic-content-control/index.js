@@ -157,6 +157,10 @@ export const useDynamicContent = ( value = '' ) => {
 			return value
 		}
 
+		if ( ! value.includes( '!#stk_dynamic' ) && ! value.includes( 'data-stk-dynamic' ) ) {
+			return value
+		}
+
 		const currentPostId = select( 'core/editor' )?.getCurrentPostId() || -1
 
 		let tempValue = value
