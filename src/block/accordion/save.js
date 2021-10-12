@@ -38,7 +38,7 @@ export const Save = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 	], {
-		'stk--is-expanded': attributes.startOpen,
+		'stk--is-open': attributes.startOpen,
 		'stk--single-open': attributes.onlyOnePanelOpen,
 	} )
 
