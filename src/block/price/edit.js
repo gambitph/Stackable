@@ -100,6 +100,26 @@ addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/price', ( 
 } )
 
 // Disable columns for child text blocks.
-addFilter( 'stackable.edit.text.enable-column', 'stackable/price', ( enabled, parentBlock ) => {
+addFilter( 'stackable.text.edit.enable-column', 'stackable/price', ( enabled, parentBlock ) => {
 	return parentBlock?.name === 'stackable/price' ? false : enabled
 } )
+
+// Add custom text placeholders
+addFilter( 'stackable.text.edit.placeholder', 'stackable/price', ( placeholder, {
+	parentBlock, isFirstBlock, isLastBlock,
+} ) => {
+	if ( parentBlock?.name !== 'stackable/price' ) {
+		return placeholder
+	}
+
+	if ( isFirstBlock ) {
+		return '$'
+	}
+
+	if ( isLastBlock ) {
+		return '.00'
+	}
+
+	return '100'
+} )
+
