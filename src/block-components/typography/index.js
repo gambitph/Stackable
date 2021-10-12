@@ -73,7 +73,7 @@ export const Typography = props => {
 		}
 
 		return () => clearTimeout( timeout )
-	}, [ debouncedText, onChange, value ] )
+	}, [ debouncedText, onChange ] ) // Don't include `value` in the dependency list because it will cause a double triggering of the `onChange`.
 
 	const dynamicContentText = useDynamicContent( debouncedText )
 
