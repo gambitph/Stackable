@@ -18,7 +18,7 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	useEffect, useState, useRef,
+	useEffect, useState, useRef, useMemo,
 } from '@wordpress/element'
 import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
 
@@ -41,20 +41,23 @@ export const Typography = props => {
 		...propsToPass
 	} = props
 
-	const [ debouncedText, setDebouncedText ] = useState( defaultValue )
-	const richTextRef = useRef( null )
-	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
-
 	const {
 		getAttribute, updateAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
-	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
-	const value = _value === null ? getAttribute( 'text' ) : _value
 	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag || 'p'
+	const value = _value === null ? getAttribute( 'text' ) : _value
+	const onChange = useMemo( () => {
+		return _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
+	}, [ _onChange, updateAttribute ] )
+
+	const [ debouncedText, setDebouncedText ] = useState( value )
+	const richTextRef = useRef( null )
+	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
 
 	// Load any Google Fonts used.
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
+	// If value was changed externally.
 	useEffect( () => {
 		if ( value !== debouncedText ) {
 			setDebouncedText( value )
@@ -62,12 +65,15 @@ export const Typography = props => {
 	}, [ value ] )
 
 	useEffect( () => {
-		const timeout = setTimeout( () => {
-			onChange( debouncedText || defaultValue )
-		}, 300 )
+		let timeout
+		if ( value !== debouncedText ) {
+			timeout = setTimeout( () => {
+				onChange( debouncedText || defaultValue )
+			}, 300 )
+		}
 
 		return () => clearTimeout( timeout )
-	}, [ debouncedText ] )
+	}, [ debouncedText, onChange, value ] )
 
 	const dynamicContentText = useDynamicContent( debouncedText )
 
