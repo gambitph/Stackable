@@ -9,6 +9,7 @@ import {
 	ColorPaletteControl,
 	FourRangeControl,
 	AdvancedToggleControl,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
@@ -48,6 +49,43 @@ Icon.defaultProps = {
 }
 
 export const Link = _Link.InspectorControls
+
+const HOVER_OPTIONS = [
+	{
+		label: __( 'None', i18n ),
+		value: '',
+	},
+	{
+		label: __( 'Darken', i18n ),
+		value: 'darken',
+	},
+	{
+		label: __( 'Scale', i18n ),
+		value: 'scale',
+	},
+	{
+		label: __( 'Lift & Scale', i18n ),
+		value: 'lift-scale',
+	},
+	{
+		label: __( 'Scale More', i18n ),
+		value: 'scale-more',
+	},
+	{
+		label: __( 'Lift & Scale More', i18n ),
+		value: 'lift-scale-more',
+	},
+]
+
+export const HoverEffects = () => {
+	return (
+		<AdvancedSelectControl
+			label={ __( 'Hover Effect', i18n ) }
+			attribute="buttonHoverEffect"
+			options={ HOVER_OPTIONS }
+		/>
+	)
+}
 
 export const Colors = props => {
 	const [ state ] = useBlockHoverState()
@@ -278,3 +316,4 @@ Edit.Colors = Colors
 Edit.Size = Size
 Edit.Borders = Borders
 Edit.Icon = Icon
+Edit.HoverEffects = HoverEffects
