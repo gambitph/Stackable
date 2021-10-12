@@ -27,7 +27,7 @@ import { getAttributeName, getAttrNameFunction } from '~stackable/util'
  * WordPress dependencies
  */
 import {
-	useEffect, useState,
+	useEffect, useState, useCallback,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
@@ -85,7 +85,7 @@ export const Controls = props => {
 	 * in side effects.
 	 */
 	const unescapedDebouncedText = unescape( debouncedText )
-	const setDebouncedTextWithEscape = text => setDebouncedText( escapeHTML( text ) )
+	const setDebouncedTextWithEscape = useCallback( text => setDebouncedText( escapeHTML( text ) ), [ setDebouncedText ] )
 
 	useEffect( () => {
 		if ( text !== debouncedText ) {
@@ -94,14 +94,16 @@ export const Controls = props => {
 	}, [ text ] )
 
 	useEffect( () => {
-		const timeout = setTimeout( () => {
-			if ( debouncedText !== text ) {
+		let timeout
+		if ( debouncedText !== text ) {
+			timeout = setTimeout( () => {
 				updateAttribute( 'text', debouncedText )
-			}
-		}, 300 )
+			}, 300 )
+		}
 
 		return () => clearTimeout( timeout )
-	}, [ debouncedText ] )
+	}, [ updateAttribute, debouncedText, text ] )
+
 	return (
 		<>
 			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
