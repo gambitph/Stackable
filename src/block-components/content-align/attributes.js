@@ -11,6 +11,7 @@ export const addAttributes = attrObject => {
 				stkResponsive: true,
 			},
 			columnGap: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
 			},

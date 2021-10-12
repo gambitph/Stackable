@@ -9,7 +9,6 @@ import {
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
 
 /**
@@ -165,7 +164,7 @@ export const Style = props => {
 	const styles = useStyles( attributes, getStyleParams( propsToPass.options ) )
 
 	return (
-		<Fragment>
+		<>
 			<StyleComponent
 				styles={ styles }
 				versionAdded="3.0.0"
@@ -190,7 +189,7 @@ export const Style = props => {
 					attributes,
 					...propsToPass,
 				} } />
-		</Fragment>
+		</>
 	)
 }
 
@@ -203,7 +202,7 @@ Style.Content = props => {
 	const styles = getStyles( attributes, getStyleParams( propsToPass.options ) )
 
 	return (
-		<Fragment>
+		<>
 			<StyleComponent.Content
 				styles={ styles }
 				versionAdded="3.0.0"
@@ -228,6 +227,6 @@ Style.Content = props => {
 					attributes,
 					...propsToPass,
 				} } />
-		</Fragment>
+		</>
 	)
 }

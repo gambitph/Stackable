@@ -10,6 +10,7 @@ import {
 	MarginBottom,
 	Separator,
 	Transform,
+	ContentAlign,
 } from '~stackable/block-components'
 import {
 	useDeviceType, useBlockAttributes,
@@ -55,6 +56,7 @@ export const ContainerStyles = props => {
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
 			<MarginBottom.Style { ...propsToPass } />
 			<Separator.Style { ...propsToPass } />
+			<ContentAlign.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -80,6 +82,7 @@ ContainerStyles.Content = props => {
 			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<Separator.Style.Content { ...propsToPass } />
+			<ContentAlign.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 
