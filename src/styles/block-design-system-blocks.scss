@@ -94,7 +94,7 @@
 }
 
 // Columns
-.stk-column-wrapper {
+.stk-block.stk-block-column.stk-column > .stk-column-wrapper {
 	margin: cssvar(column-margin);
 }
 .stk-block-column:first-child:last-child > .stk-column-wrapper { // Remove the margins if it's only 1 block.
