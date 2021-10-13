@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	SvgIcon, SvgIconPlaceholder, UrlInputPopover,
+	UrlInputPopover,
 } from '~stackable/components'
 import striptags from 'striptags'
 
@@ -18,6 +18,8 @@ import { RichText } from '@wordpress/block-editor'
 // Deprecated ButtonEdit.Content methods.
 export * from './deprecated'
 export { default as ButtonEditHelper } from './helper'
+import SvgIcon from '../svg-icon'
+import SvgIconPlaceholder from '../svg-icon-placeholder'
 
 let buttonInstanceId = 1
 
