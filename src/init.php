@@ -347,7 +347,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		}
 
 		/**
-		 * Adds a special class to the body tag, to indicate we can now run animations.
+		 * Adds a special class to the body tag, to indicate we can now run
+		 * hover transitions and other effects.
 		 *
 		 * @see src/styles/block-transitions.scss
 		 *
