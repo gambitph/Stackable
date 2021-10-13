@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { FontAwesomeIcon } from '~stackable/components'
+import { FontAwesomeIcon } from '../font-awesome-icon'
 import { getShapeSVG } from '~stackable/util'
 import classnames from 'classnames'
 
