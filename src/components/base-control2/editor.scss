@@ -73,7 +73,7 @@ $right-space: 28px;
 // will be clipped, be sure that the toggle always opens downward.
 .components-popover__content .components-panel__body > .stk-control:first-child,
 .components-popover__content .components-panel__body > .components-panel__body-title:first-child ~ .stk-control {
-	.stk-label-unit-toggle__wrapper {
+	.stk-label-unit-toggle__wrapper.is-open {
 		transform: none !important;
 	}
 }
