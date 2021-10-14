@@ -45,15 +45,15 @@ const removeOnClick = selector => {
 	document.body.removeEventListener( 'click', clickListeners[ selector ] )
 }
 
-export const getParentControl = el => el.closest( '[class*="ugb--help-tip-"]' )
+export const getParentControl = el => el.closest( '[class*="stk--help-tip-"]' )
 
 export const startListening = () => {
 	// If hovered long enough on a control label, show the tooltip.
 	onHover(
 		[
-			'[class*="ugb--help-tip-"].components-base-control .components-base-control__label',
-			'[class*="ugb--help-tip-"].components-base-control .components-toggle-control__label',
-			'[class*="ugb--help-tip-"].components-panel__body .components-panel__body-toggle',
+			'[class*="stk--help-tip-"].components-base-control .components-base-control__label',
+			'[class*="stk--help-tip-"].components-base-control .components-toggle-control__label',
+			'[class*="stk--help-tip-"].components-panel__body .components-panel__body-toggle',
 		].join( ', ' ),
 		el => doAction( 'stackable.help-video.control.hover.in', el, getParentControl( el ) ),
 		() => doAction( 'stackable.help-video.control.hover.out' ),
@@ -62,8 +62,8 @@ export const startListening = () => {
 	// When a control label is clicked, show the tooltip.
 	onClick(
 		[
-			'[class*="ugb--help-tip-"].components-base-control .components-base-control__label',
-			'[class*="ugb--help-tip-"].components-base-control .components-toggle-control__label',
+			'[class*="stk--help-tip-"].components-base-control .components-base-control__label',
+			'[class*="stk--help-tip-"].components-base-control .components-toggle-control__label',
 		].join( ', ' ),
 		el => doAction( 'stackable.help-video.control.click', el, getParentControl( el ) )
 	)
@@ -71,12 +71,12 @@ export const startListening = () => {
 
 export const stopListening = () => {
 	removeOnHover( [
-		'[class*="ugb--help-tip-"].components-base-control .components-base-control__label',
-		'[class*="ugb--help-tip-"].components-base-control .components-toggle-control__label',
-		'[class*="ugb--help-tip-"].components-panel__body .components-panel__body-toggle',
+		'[class*="stk--help-tip-"].components-base-control .components-base-control__label',
+		'[class*="stk--help-tip-"].components-base-control .components-toggle-control__label',
+		'[class*="stk--help-tip-"].components-panel__body .components-panel__body-toggle',
 	].join( ', ' ) )
 	removeOnClick( [
-		'[class*="ugb--help-tip-"].components-base-control .components-base-control__label',
-		'[class*="ugb--help-tip-"].components-base-control .components-toggle-control__label',
+		'[class*="stk--help-tip-"].components-base-control .components-base-control__label',
+		'[class*="stk--help-tip-"].components-base-control .components-toggle-control__label',
 	].join( ', ' ) )
 }

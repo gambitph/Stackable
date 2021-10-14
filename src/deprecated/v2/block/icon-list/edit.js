@@ -107,7 +107,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 						label={ __( 'Display as a grid (left to right & evenly spaced)', i18n ) }
 						checked={ displayAsGrid }
 						onChange={ displayAsGrid => setAttributes( { displayAsGrid } ) }
-						className="ugb--help-tip-icon-list-grid"
+						className="stk--help-tip-icon-list-grid"
 					/>
 				) }
 				<ContentAlignControl
@@ -125,7 +125,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					max={ 30 }
 					allowReset={ true }
 					placeholder="16"
-					className="ugb--help-tip-icon-list-gap"
+					className="stk--help-tip-icon-list-gap"
 				/>
 			</PanelSpacingBody>
 

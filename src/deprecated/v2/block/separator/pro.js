@@ -24,7 +24,7 @@ if ( showProNotice ) {
 				<PanelAdvancedSettings
 					initialOpen={ false }
 					title={ sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Layer', i18n ), 2 ) }
-					className="ugb--help-tip-separator-layer2"
+					className="stk--help-tip-separator-layer2"
 				>
 					<ProControl
 						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
@@ -34,7 +34,7 @@ if ( showProNotice ) {
 				<PanelAdvancedSettings
 					initialOpen={ false }
 					title={ sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Layer', i18n ), 3 ) }
-					className="ugb--help-tip-separator-layer3"
+					className="stk--help-tip-separator-layer3"
 				>
 					<ProControl
 						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }

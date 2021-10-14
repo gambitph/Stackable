@@ -84,7 +84,7 @@ export const BackgroundControls = props => {
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="1.0"
-					className="ugb--help-tip-background-color-opacity"
+					className="stk--help-tip-background-color-opacity"
 				/>
 			) }
 			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
@@ -119,7 +119,7 @@ export const BackgroundControls = props => {
 						step={ 10 }
 						allowReset={ true }
 						placeholder="90"
-						className="ugb--help-tip-gradient-direction"
+						className="stk--help-tip-gradient-direction"
 					/>
 
 					<AdvancedRangeControl
@@ -130,7 +130,7 @@ export const BackgroundControls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="0"
-						className="ugb--help-tip-gradient-location"
+						className="stk--help-tip-gradient-location"
 					/>
 
 					<AdvancedRangeControl
@@ -141,14 +141,14 @@ export const BackgroundControls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="100"
-						className="ugb--help-tip-gradient-location"
+						className="stk--help-tip-gradient-location"
 					/>
 
 					{ props.hasBackgroundGradientBlendMode &&
 						<BlendModeControl
 							label={ __( 'Background Gradient Blend Mode', i18n ) }
 							attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
-							className="ugb--help-tip-background-blend-mode"
+							className="stk--help-tip-background-blend-mode"
 						/>
 					}
 				</ButtonIconPopoverControl>
@@ -178,7 +178,7 @@ export const BackgroundControls = props => {
 					step={ 1 }
 					allowReset={ true }
 					placeholder={ getAttribute( 'backgroundColor' ) ? '5' : '0' }
-					className="ugb--help-tip-background-tint"
+					className="stk--help-tip-background-tint"
 				/>
 			}
 
@@ -186,7 +186,7 @@ export const BackgroundControls = props => {
 				<AdvancedToggleControl
 					label={ __( 'Fixed Background', i18n ) }
 					attribute={ getAttrName( 'fixedBackground' ) }
-					className="ugb--help-tip-background-fixed"
+					className="stk--help-tip-background-fixed"
 				/>
 			}
 
@@ -236,7 +236,7 @@ export const BackgroundControls = props => {
 							{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
 							{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 						] }
-						className="ugb--help-tip-background-image-position"
+						className="stk--help-tip-background-image-position"
 						responsive="all"
 					/>
 
@@ -250,7 +250,7 @@ export const BackgroundControls = props => {
 							{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
 							{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 						] }
-						className="ugb--help-tip-background-image-repeat"
+						className="stk--help-tip-background-image-repeat"
 						responsive="all"
 					/>
 
@@ -264,7 +264,7 @@ export const BackgroundControls = props => {
 							{ label: __( 'Contain', i18n ), value: 'contain' },
 							{ label: __( 'Custom', i18n ), value: 'custom' },
 						] }
-						className="ugb--help-tip-background-image-size"
+						className="stk--help-tip-background-image-size"
 						responsive="all"
 					/>
 

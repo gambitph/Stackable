@@ -162,7 +162,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 3 }
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 					default={ 2 }
 				/>
 				<ContentAlignControl
@@ -178,7 +178,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 					<ButtonIconPopoverControl
 						label={ __( 'Background', i18n ) }
@@ -224,7 +224,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
+						className="stk--help-tip-general-border-radius"
 					/>
 					}
 
@@ -237,7 +237,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
-						className="ugb--help-tip-general-shadow"
+						className="stk--help-tip-general-shadow"
 					/>
 					}
 				</PanelAdvancedSettings>
@@ -261,7 +261,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-pricing-image-spacing"
+							className="stk--help-tip-pricing-image-spacing"
 						/>
 					</ResponsiveControl>
 				}
@@ -277,7 +277,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-pricing-title-spacing"
+							className="stk--help-tip-pricing-title-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -293,7 +293,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-pricing-price-spacing"
+							className="stk--help-tip-pricing-price-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -309,7 +309,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-pricing-subprice-spacing"
+							className="stk--help-tip-pricing-subprice-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -325,7 +325,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							max={ 100 }
 							placeholder="32"
 							allowReset={ true }
-							className="ugb--help-tip-pricing-button-spacing"
+							className="stk--help-tip-pricing-button-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -341,7 +341,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-pricing-description-spacing"
+							className="stk--help-tip-pricing-description-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -392,7 +392,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					>
 						<AlignButtonsControl
 							label={ __( 'Align', i18n ) }
-							className="ugb--help-tip-pricing-image-align"
+							className="stk--help-tip-pricing-image-align"
 						/>
 					</ResponsiveControl>
 				</PanelAdvancedSettings>
@@ -434,7 +434,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-pricing-title-align"
+						className="stk--help-tip-pricing-title-align"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -469,7 +469,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-pricing-price-align"
+						className="stk--help-tip-pricing-price-align"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -562,7 +562,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-pricing-subprice-align"
+						className="stk--help-tip-pricing-subprice-align"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -594,7 +594,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-pricing-button-align"
+						className="stk--help-tip-pricing-button-align"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -628,7 +628,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-pricing-button-align"
+						className="stk--help-tip-pricing-button-align"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

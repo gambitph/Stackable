@@ -32,7 +32,7 @@ const ImageShapeControl = props => {
 		<Fragment>
 			<DesignControl
 				{ ...propsToPass }
-				className={ classnames( className, [ 'ugb-image-shape-control', 'ugb--help-tip-image-shape' ] ) }
+				className={ classnames( className, [ 'ugb-image-shape-control', 'stk--help-tip-image-shape' ] ) }
 				options={ [
 					...( hasDefault ? [ {
 						label: __( 'Default', i18n ), value: '', image: ImageShapeDefault,

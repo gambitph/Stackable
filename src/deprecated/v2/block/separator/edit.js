@@ -118,7 +118,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					allowReset={ true }
 					placeholder="1"
 					defaultValue={ 1 }
-					className="ugb--help-tip-separator-width"
+					className="stk--help-tip-separator-width"
 				/>
 				<AdvancedToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
@@ -129,7 +129,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					label={ __( 'Shadow', i18n ) }
 					checked={ layer1Shadow }
 					onChange={ layer1Shadow => setAttributes( { layer1Shadow } ) }
-					className="ugb--help-tip-separator-shadow"
+					className="stk--help-tip-separator-shadow"
 				/>
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings

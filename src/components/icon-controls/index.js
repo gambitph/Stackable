@@ -195,7 +195,7 @@ const IconControls = props => {
 							max={ 9 }
 							allowReset={ true }
 							placeholder="0"
-							className="ugb--help-tip-general-shadow"
+							className="stk--help-tip-general-shadow"
 						/>
 					}
 

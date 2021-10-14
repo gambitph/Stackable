@@ -148,7 +148,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								placeholder="2000"
 								allowReset={ true }
 								onChange={ width => props.setAttributes( { width } ) }
-								className="ugb--help-tip-video-popup-width"
+								className="stk--help-tip-video-popup-width"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -160,7 +160,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								placeholder="1000"
 								allowReset={ true }
 								onChange={ tabletWidth => props.setAttributes( { tabletWidth } ) }
-								className="ugb--help-tip-video-popup-width"
+								className="stk--help-tip-video-popup-width"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -172,7 +172,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								placeholder="700"
 								allowReset={ true }
 								onChange={ mobileWidth => props.setAttributes( { mobileWidth } ) }
-								className="ugb--help-tip-video-popup-width"
+								className="stk--help-tip-video-popup-width"
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>
@@ -188,7 +188,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						max={ 1000 }
 						allowReset={ true }
 						placeholder="400"
-						className="ugb--help-tip-video-popup-height"
+						className="stk--help-tip-video-popup-height"
 					/>
 				</ResponsiveControl>
 
@@ -209,7 +209,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
+						className="stk--help-tip-general-border-radius"
 					/>
 				}
 
@@ -221,7 +221,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					max={ 9 }
 					allowReset={ true }
 					placeholder="3"
-					className="ugb--help-tip-general-shadow"
+					className="stk--help-tip-general-shadow"
 				/>
 			</PanelAdvancedSettings>
 

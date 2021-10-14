@@ -81,7 +81,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 					min={ 1 }
 					max={ 8 }
 					placeholder="1"
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }
@@ -106,7 +106,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 						max={ 100 }
 						placeholder="0"
 						allowReset={ true }
-						className="ugb--help-tip-spacing-icon"
+						className="stk--help-tip-spacing-icon"
 					/>
 				</ResponsiveControl>
 				{ show.titleSpacing && (
@@ -121,7 +121,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 							max={ 100 }
 							placeholder="0"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
+							className="stk--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				) }
@@ -159,7 +159,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 					>
 						<AlignButtonsControl
 							label={ __( 'Align', i18n ) }
-							className="ugb--help-tip-alignment-icon"
+							className="stk--help-tip-alignment-icon"
 						/>
 					</ResponsiveControl>
 				}
@@ -206,7 +206,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

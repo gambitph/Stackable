@@ -258,7 +258,7 @@ const ShadowControl = props => {
 				min={ 0 }
 				max={ shadows.length - 1 }
 				allowReset={ true }
-				className="ugb--help-tip-general-shadow"
+				className="stk--help-tip-general-shadow"
 				after={ (
 					<Button
 						className="stk-shadow-control__more-button"

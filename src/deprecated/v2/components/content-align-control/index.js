@@ -20,7 +20,7 @@ const ContentAlignControl = props => {
 		>
 			<AlignButtonsControl
 				label={ props.label }
-				className={ classnames( [ props.className, 'ugb--help-tip-alignment-all' ] ) }
+				className={ classnames( [ props.className, 'stk--help-tip-alignment-all' ] ) }
 			/>
 		</ResponsiveControl>
 	)

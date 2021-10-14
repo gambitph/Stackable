@@ -105,7 +105,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -139,7 +139,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -191,7 +191,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -243,7 +243,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -261,7 +261,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing"
+							className="stk--help-tip-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -276,7 +276,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 						max={ 100 }
 						placeholder="8"
 						allowReset={ true }
-						className="ugb--help-tip-spacing-title"
+						className="stk--help-tip-spacing-title"
 					/>
 				</ResponsiveControl>
 				{ show.subtitleSpacing && (
@@ -291,7 +291,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
+							className="stk--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				) }
@@ -307,7 +307,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 							max={ 100 }
 							placeholder="0"
 							allowReset={ true }
-							className="ugb--help-tip-spacing"
+							className="stk--help-tip-spacing"
 						/>
 					</ResponsiveControl>
 				) }

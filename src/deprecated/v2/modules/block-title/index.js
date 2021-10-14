@@ -168,7 +168,7 @@ const addInspectorPanel = ( output, props ) => {
 				>
 					<AlignButtonsControl
 						label={ __( 'Text Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -262,7 +262,7 @@ const addInspectorPanel = ( output, props ) => {
 				>
 					<AlignButtonsControl
 						label={ __( 'Text Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -414,7 +414,7 @@ const addTitleSpacing = ( output, props ) => {
 						max={ 100 }
 						placeholder="16"
 						allowReset={ true }
-						className="ugb--help-tip-spacing-block-title"
+						className="stk--help-tip-spacing-block-title"
 					/>
 				</ResponsiveControl>
 			) }
@@ -430,7 +430,7 @@ const addTitleSpacing = ( output, props ) => {
 						max={ 100 }
 						placeholder="50"
 						allowReset={ true }
-						className="ugb--help-tip-spacing-block-description"
+						className="stk--help-tip-spacing-block-description"
 					/>
 				</ResponsiveControl>
 			) }

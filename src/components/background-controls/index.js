@@ -40,7 +40,7 @@ const BackgroundControls = props => {
 			{ props.onChangeBackgroundColorType && (
 				<BaseControl
 					id="ugb-background-color-type"
-					className="ugb--help-tip-background-color-type"
+					className="stk--help-tip-background-color-type"
 				>
 					<AdvancedToolbarControl
 						controls={ [
@@ -83,7 +83,7 @@ const BackgroundControls = props => {
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="1.0"
-					className="ugb--help-tip-background-color-opacity"
+					className="stk--help-tip-background-color-opacity"
 				/>
 			) }
 
@@ -116,7 +116,7 @@ const BackgroundControls = props => {
 							step={ 10 }
 							allowReset={ true }
 							placeholder="90"
-							className="ugb--help-tip-gradient-direction"
+							className="stk--help-tip-gradient-direction"
 						/>
 					) }
 
@@ -130,7 +130,7 @@ const BackgroundControls = props => {
 							step={ 1 }
 							allowReset={ true }
 							placeholder="0"
-							className="ugb--help-tip-gradient-location"
+							className="stk--help-tip-gradient-location"
 						/>
 					) }
 
@@ -144,7 +144,7 @@ const BackgroundControls = props => {
 							step={ 1 }
 							allowReset={ true }
 							placeholder="100"
-							className="ugb--help-tip-gradient-location"
+							className="stk--help-tip-gradient-location"
 						/>
 					) }
 
@@ -153,7 +153,7 @@ const BackgroundControls = props => {
 							label={ __( 'Background Gradient Blend Mode', i18n ) }
 							value={ props.backgroundGradientBlendMode }
 							onChange={ props.onChangeBackgroundGradientBlendMode }
-							className="ugb--help-tip-background-blend-mode"
+							className="stk--help-tip-background-blend-mode"
 						/>
 					) }
 				</ButtonIconPopoverControl>
@@ -223,7 +223,7 @@ const BackgroundControls = props => {
 					step={ 1 }
 					allowReset={ true }
 					placeholder={ props.backgroundColor ? '5' : '0' }
-					className="ugb--help-tip-background-tint"
+					className="stk--help-tip-background-tint"
 				/>
 			) }
 
@@ -234,7 +234,7 @@ const BackgroundControls = props => {
 					label={ __( 'Fixed Background', i18n ) }
 					checked={ props.fixedBackground }
 					onChange={ props.onChangeFixedBackground }
-					className="ugb--help-tip-background-fixed"
+					className="stk--help-tip-background-fixed"
 				/>
 			) }
 
@@ -268,7 +268,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.backgroundPosition }
 							onChange={ props.onChangeBackgroundPosition }
-							className="ugb--help-tip-background-image-position"
+							className="stk--help-tip-background-image-position"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -288,7 +288,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.tabletBackgroundPosition }
 							onChange={ props.onChangeTabletBackgroundPosition }
-							className="ugb--help-tip-background-image-position"
+							className="stk--help-tip-background-image-position"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -308,7 +308,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.mobileBackgroundPosition }
 							onChange={ props.onChangeMobileBackgroundPosition }
-							className="ugb--help-tip-background-image-position"
+							className="stk--help-tip-background-image-position"
 						/>
 					</WhenResponsiveScreen>
 
@@ -324,7 +324,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.backgroundRepeat }
 							onChange={ props.onChangeBackgroundRepeat }
-							className="ugb--help-tip-background-image-repeat"
+							className="stk--help-tip-background-image-repeat"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -339,7 +339,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.tabletBackgroundRepeat }
 							onChange={ props.onChangeTabletBackgroundRepeat }
-							className="ugb--help-tip-background-image-repeat"
+							className="stk--help-tip-background-image-repeat"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -354,7 +354,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.mobileBackgroundRepeat }
 							onChange={ props.onChangeMobileBackgroundRepeat }
-							className="ugb--help-tip-background-image-repeat"
+							className="stk--help-tip-background-image-repeat"
 						/>
 					</WhenResponsiveScreen>
 
@@ -370,7 +370,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.backgroundSize }
 							onChange={ props.onChangeBackgroundSize }
-							className="ugb--help-tip-background-image-size"
+							className="stk--help-tip-background-image-size"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -385,7 +385,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.tabletBackgroundSize }
 							onChange={ props.onChangeTabletBackgroundSize }
-							className="ugb--help-tip-background-image-size"
+							className="stk--help-tip-background-image-size"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -400,7 +400,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.mobileBackgroundSize }
 							onChange={ props.onChangeMobileBackgroundSize }
-							className="ugb--help-tip-background-image-size"
+							className="stk--help-tip-background-image-size"
 						/>
 					</WhenResponsiveScreen>
 

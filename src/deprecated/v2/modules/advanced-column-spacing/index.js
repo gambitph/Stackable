@@ -24,7 +24,7 @@ const fineGrainedProPanel = output => {
 			<PanelAdvancedSettings
 				title={ __( 'Column Spacing & More', i18n ) }
 				initialOpen={ false }
-				className="ugb--help-tip-advanced-column-spacing"
+				className="stk--help-tip-advanced-column-spacing"
 			>
 				{ <ProControl type="advanced" /> }
 			</PanelAdvancedSettings>

@@ -104,7 +104,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -131,7 +131,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -158,7 +158,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-button"
+						className="stk--help-tip-alignment-button"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -176,7 +176,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
+							className="stk--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				}
@@ -191,7 +191,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 						max={ 100 }
 						placeholder="16"
 						allowReset={ true }
-						className="ugb--help-tip-spacing-description"
+						className="stk--help-tip-spacing-description"
 					/>
 				</ResponsiveControl>
 				<ResponsiveControl
@@ -205,7 +205,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 						max={ 100 }
 						placeholder="0"
 						allowReset={ true }
-						className="ugb--help-tip-spacing-button"
+						className="stk--help-tip-spacing-button"
 					/>
 				</ResponsiveControl>
 			</PanelSpacingBody>

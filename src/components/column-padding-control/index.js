@@ -45,7 +45,7 @@ const ColumnPaddingControl = props => {
 	return <Fragment>
 		<SpacingControl
 			label={ label }
-			className="ugb--help-tip-advanced-column-paddings"
+			className="stk--help-tip-advanced-column-paddings"
 			defaultLocked={ true }
 			min={ [ 0, 0, 0 ] }
 			sliderMax={ [ 500, 100, 100 ] }

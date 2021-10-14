@@ -85,7 +85,7 @@ export const BorderControls = props => {
 				attribute={ getAttrName( 'borderRadius' ) }
 				responsive="all"
 				hover={ props.hasBorderRadiusHover }
-				className="ugb--help-tip-general-border-radius"
+				className="stk--help-tip-general-border-radius"
 				min={ 0 }
 				sliderMax={ props.borderSliderMax }
 				placeholderRender={ props.borderRadiusPlaceholder }

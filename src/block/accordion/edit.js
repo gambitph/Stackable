@@ -125,7 +125,7 @@ const Edit = props => {
 					<AdvancedToggleControl
 						label={ __( 'Close adjacent on open', i18n ) }
 						attribute="onlyOnePanelOpen"
-						className="ugb--help-tip-accordion-adjacent-open"
+						className="stk--help-tip-accordion-adjacent-open"
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>

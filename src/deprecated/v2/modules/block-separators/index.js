@@ -80,7 +80,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					'topSeparatorLayer3FlipHorizontally',
 				] }
 				toggleAttributeName="showTopSeparator"
-				className="ugb-top-block-separator-panel ugb--help-tip-separator-top-on"
+				className="ugb-top-block-separator-panel stk--help-tip-separator-top-on"
 			>
 				<DesignSeparatorControl
 					label={ __( 'Design', i18n ) }
@@ -103,7 +103,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 						max="400"
 						allowReset={ true }
 						placeholder="200"
-						className="ugb--help-tip-separator-height"
+						className="stk--help-tip-separator-height"
 					/>
 				</ResponsiveControl>
 				<AdvancedRangeControl
@@ -115,7 +115,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					onChange={ topSeparatorWidth => setAttributes( { topSeparatorWidth } ) }
 					allowReset={ true }
 					placeholder="1.0"
-					className="ugb--help-tip-separator-width"
+					className="stk--help-tip-separator-width"
 				/>
 				<AdvancedToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
@@ -132,14 +132,14 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					checked={ topSeparatorShadow }
 					onChange={ topSeparatorShadow => setAttributes( { topSeparatorShadow } ) }
 					defaultValue={ true }
-					className="ugb--help-tip-separator-shadow"
+					className="stk--help-tip-separator-shadow"
 				/>
 				{ options.enableBringToFront &&
 					<AdvancedToggleControl
 						label={ __( 'Bring to Front', i18n ) }
 						checked={ topSeparatorBringToFront }
 						onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
-						className="ugb--help-tip-separator-bring-to-front"
+						className="stk--help-tip-separator-bring-to-front"
 					/>
 				}
 				{ applyFilters( 'stackable.block-separators.edit.top', null, props ) }
@@ -180,7 +180,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					'bottomSeparatorLayer3FlipHorizontally',
 				] }
 				toggleAttributeName="showBottomSeparator"
-				className="ugb-bottom-block-separator-panel ugb--help-tip-separator-bottom-on"
+				className="ugb-bottom-block-separator-panel stk--help-tip-separator-bottom-on"
 			>
 				<DesignSeparatorControl
 					label={ __( 'Design', i18n ) }
@@ -203,7 +203,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 						max="400"
 						allowReset={ true }
 						placeholder="200"
-						className="ugb--help-tip-separator-height"
+						className="stk--help-tip-separator-height"
 					/>
 				</ResponsiveControl>
 				<AdvancedRangeControl
@@ -215,7 +215,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					onChange={ bottomSeparatorWidth => setAttributes( { bottomSeparatorWidth } ) }
 					allowReset={ true }
 					placeholder="1.0"
-					className="ugb--help-tip-separator-width"
+					className="stk--help-tip-separator-width"
 				/>
 				<AdvancedToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
@@ -232,14 +232,14 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					checked={ bottomSeparatorShadow }
 					onChange={ bottomSeparatorShadow => setAttributes( { bottomSeparatorShadow } ) }
 					defaultValue={ true }
-					className="ugb--help-tip-separator-shadow"
+					className="stk--help-tip-separator-shadow"
 				/>
 				{ options.enableBringToFront &&
 					<AdvancedToggleControl
 						label={ __( 'Bring to Front', i18n ) }
 						checked={ bottomSeparatorBringToFront }
 						onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }
-						className="ugb--help-tip-separator-bring-to-front"
+						className="stk--help-tip-separator-bring-to-front"
 					/>
 				}
 				{ applyFilters( 'stackable.block-separators.edit.bottom', null, props ) }

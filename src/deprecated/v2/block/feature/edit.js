@@ -185,7 +185,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							max={ 100 }
 							allowReset={ true }
 							placeholder="50"
-							className="ugb--help-tip-image-column-width"
+							className="stk--help-tip-image-column-width"
 						/>
 					</ResponsiveControl>
 				}
@@ -207,7 +207,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 					<ButtonIconPopoverControl
 						label={ __( 'Background', i18n ) }
@@ -247,7 +247,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							min={ 0 }
 							max={ 1000 }
 							allowReset={ true }
-							className="ugb--help-tip-feature-container-width"
+							className="stk--help-tip-feature-container-width"
 						/>
 					</ResponsiveControl>
 					}
@@ -262,7 +262,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							min={ 0 }
 							max={ 300 }
 							allowReset={ true }
-							className="ugb--help-tip-feature-container-offset"
+							className="stk--help-tip-feature-container-offset"
 						/>
 					</ResponsiveControl>
 					}
@@ -284,7 +284,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
+						className="stk--help-tip-general-border-radius"
 					/>
 					}
 
@@ -297,7 +297,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
-						className="ugb--help-tip-general-shadow"
+						className="stk--help-tip-general-shadow"
 					/>
 					}
 				</PanelAdvancedSettings>
@@ -316,7 +316,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
+							className="stk--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				}
@@ -332,7 +332,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
+							className="stk--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -348,7 +348,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							max={ 100 }
 							placeholder="0"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-button"
+							className="stk--help-tip-spacing-button"
 						/>
 					</ResponsiveControl>
 				}
@@ -383,7 +383,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 								min={ 0 }
 								max={ 1000 }
 								allowReset={ true }
-								className="ugb--help-tip-image-height-crop"
+								className="stk--help-tip-image-height-crop"
 							/>
 						</ResponsiveControl>
 					</Fragment>
@@ -426,7 +426,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -460,7 +460,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -490,7 +490,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-button"
+						className="stk--help-tip-alignment-button"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

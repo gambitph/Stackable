@@ -160,7 +160,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 3 }
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 					default={ 2 }
 				/>
 				<ContentAlignControl
@@ -176,7 +176,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 					{ applyFilters( 'stackable.testimonial.edit.inspector.style.container.before',
 						<Fragment>
@@ -225,7 +225,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 								max={ 50 }
 								allowReset={ true }
 								placeholder="12"
-								className="ugb--help-tip-general-border-radius"
+								className="stk--help-tip-general-border-radius"
 							/>
 							}
 
@@ -238,7 +238,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 									max={ 9 }
 									allowReset={ true }
 									placeholder={ design !== 'basic2' ? 3 : '' }
-									className="ugb--help-tip-general-shadow"
+									className="stk--help-tip-general-shadow"
 								/>
 							}
 						</Fragment>
@@ -264,7 +264,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
+							className="stk--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -280,7 +280,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-image"
+							className="stk--help-tip-spacing-image"
 						/>
 					</ResponsiveControl>
 				}
@@ -296,7 +296,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-name"
+							className="stk--help-tip-spacing-name"
 						/>
 					</ResponsiveControl>
 				) }
@@ -312,7 +312,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							max={ 100 }
 							placeholder="0"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-name"
+							className="stk--help-tip-spacing-name"
 						/>
 					</ResponsiveControl>
 				) }
@@ -347,7 +347,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -399,7 +399,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					>
 						<AlignButtonsControl
 							label={ __( 'Align', i18n ) }
-							className="ugb--help-tip-alignment-image"
+							className="stk--help-tip-alignment-image"
 						/>
 					</ResponsiveControl>
 				</PanelAdvancedSettings>
@@ -442,7 +442,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-name"
+						className="stk--help-tip-alignment-name"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -477,7 +477,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-name"
+						className="stk--help-tip-alignment-name"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

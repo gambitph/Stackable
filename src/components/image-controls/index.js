@@ -141,7 +141,7 @@ const ImageControls = props => {
 								)
 							} }
 							allowReset={ true }
-							className="ugb--help-tip-image-size-no-crop"
+							className="stk--help-tip-image-size-no-crop"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -152,7 +152,7 @@ const ImageControls = props => {
 							min={ 0 }
 							onChange={ props.onChangeTabletWidth }
 							allowReset={ true }
-							className="ugb--help-tip-image-size-no-crop"
+							className="stk--help-tip-image-size-no-crop"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -163,7 +163,7 @@ const ImageControls = props => {
 							min={ 0 }
 							onChange={ props.onChangeMobileWidth }
 							allowReset={ true }
-							className="ugb--help-tip-image-size-no-crop"
+							className="stk--help-tip-image-size-no-crop"
 						/>
 					</WhenResponsiveScreen>
 				</Fragment>
@@ -177,7 +177,7 @@ const ImageControls = props => {
 							label={ __( 'Force square image', i18n ) }
 							checked={ props.square }
 							onChange={ props.onChangeSquare }
-							className="ugb--help-tip-image-square"
+							className="stk--help-tip-image-square"
 						/>
 					</WhenResponsiveScreen>
 				}
@@ -187,7 +187,7 @@ const ImageControls = props => {
 							label={ __( 'Force square image', i18n ) }
 							checked={ props.tabletSquare }
 							onChange={ props.onChangeTabletSquare }
-							className="ugb--help-tip-image-square"
+							className="stk--help-tip-image-square"
 						/>
 					</WhenResponsiveScreen>
 				}
@@ -197,7 +197,7 @@ const ImageControls = props => {
 							label={ __( 'Force square image', i18n ) }
 							checked={ props.mobileSquare }
 							onChange={ props.onChangeMobileSquare }
-							className="ugb--help-tip-image-square"
+							className="stk--help-tip-image-square"
 							defaultValue={ true }
 						/>
 					</WhenResponsiveScreen>
@@ -214,7 +214,7 @@ const ImageControls = props => {
 					max={ 100 }
 					allowReset={ true }
 					placeholder="0"
-					className="ugb--help-tip-image-border-radius"
+					className="stk--help-tip-image-border-radius"
 				/>
 			}
 
@@ -227,7 +227,7 @@ const ImageControls = props => {
 					max={ 9 }
 					allowReset={ true }
 					placeholder="0"
-					className="ugb--help-tip-image-shadow"
+					className="stk--help-tip-image-shadow"
 				/>
 			}
 
