@@ -136,7 +136,7 @@ export const generateRenderPostItem = attributes => {
 				hasRemove={ false }
 				enableClickToEdit={ false }
 				defaultWidth={ 100 }
-				defaultHeight={ 300 }
+				defaultHeight="auto"
 				enableWidth={ enableWidth }
 				widthResizePosition={ style?.name === 'horizontal'
 					? 'left'
