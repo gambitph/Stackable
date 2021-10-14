@@ -2,7 +2,9 @@
  * WordPress dependencies
  */
 import { useMemo } from '@wordpress/element'
-import { applyFilters, addFilter } from '@wordpress/hooks'
+import {
+	applyFilters, addFilter, hasFilter,
+} from '@wordpress/hooks'
 
 /**
  * Internal dependencies
@@ -43,7 +45,7 @@ export const usePlaceholder = ( attribute = '' ) => {
 }
 
 /**
- * Default block placeholders
+ * Default block placeholders.
  *
  * @example
  * ```
@@ -54,10 +56,12 @@ export const usePlaceholder = ( attribute = '' ) => {
  * }
  * ```
  */
-addFilter( 'stackable.placeholders', 'default', placeholders => ( {
-	...placeholders,
-	containerPaddingTop: 32,
-	containerPaddingRight: 32,
-	containerPaddingBottom: 32,
-	containerPaddingLeft: 32,
-} ) )
+if ( ! hasFilter( 'stackable.placeholders', 'default' ) ) {
+	addFilter( 'stackable.placeholders', 'default', placeholders => ( {
+		...placeholders,
+		containerPaddingTop: 32,
+		containerPaddingRight: 32,
+		containerPaddingBottom: 32,
+		containerPaddingLeft: 32,
+	} ) )
+}
