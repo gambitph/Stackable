@@ -10,6 +10,7 @@ import {
 	useBlockAttributes,
 	useBlockHoverState,
 	useDeviceType,
+	usePlaceholder,
 } from '~stackable/hooks'
 
 /**
@@ -29,6 +30,7 @@ const AdvancedRangeControl = props => {
 
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
+	const placeholder = usePlaceholder( props.attribute )
 
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
@@ -72,6 +74,10 @@ const AdvancedRangeControl = props => {
 	let placeholderRender = props.placeholderRender
 	if ( deviceType !== 'Desktop' || currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
 		placeholderRender = null
+	}
+
+	if ( ( propsToPass.placeholder === '' || propsToPass.placeholder === null || propsToPass.placeholder === undefined ) && placeholder !== null ) {
+		propsToPass.placeholder = placeholder
 	}
 
 	return (
