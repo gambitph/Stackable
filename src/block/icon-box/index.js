@@ -8,6 +8,7 @@ import metadata from './block.json'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import example from './example'
 
 /**
  * External dependencies
@@ -29,6 +30,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		html: false,
 		align: true,
 	},
+	example,
 
 	edit,
 	save,

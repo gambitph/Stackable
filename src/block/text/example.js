@@ -1,0 +1,5 @@
+export default {
+	clientId: '6d6baabc-ed99-4fea-bf6a-06592ad2fa1e', name: 'stackable/text', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-text stk-block-text stk-block stk-65c216a" data-block-id="65c216a"><p class="stk-block-text__text"><meta charset="utf-8">Text for this block. Use this space for describing your block. Any text will do. Text for this block. You can use this space for describing your block.</p></div>', attributes: {
+		uniqueId: '65c216a', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: '<meta charset="utf-8">Text for this block. Use this space for describing your block. Any text will do. Text for this block. You can use this space for describing your block.', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
+	}, innerBlocks: [],
+}

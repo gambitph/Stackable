@@ -1,0 +1,5 @@
+export default {
+	clientId: '9c993570-fa03-4d83-bc89-91a31bcce399', name: 'stackable/number-box', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-number-box stk-block-number-box stk--has-shape stk-block stk-d8282a9" data-block-id="d8282a9"><div class="stk-block-number-box__text" role="presentation">01</div></div>', attributes: {
+		uniqueId: 'd8282a9', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: '01', textTag: 'p', hasShape: true, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em', shapeBackgroundCustomSizeUnit: '%', shapeBackgroundCustomSizeUnitTablet: '%', shapeBackgroundCustomSizeUnitMobile: '%', contentAlign: 'center',
+	}, innerBlocks: [],
+}

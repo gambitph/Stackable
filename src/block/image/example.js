@@ -1,0 +1,5 @@
+export default {
+	clientId: '40ac052f-67c0-4594-b696-d8600e3d380c', name: 'stackable/image', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-image stk-block-image stk-block stk-7fb9397" data-block-id="7fb9397"><figure class="stk-img-wrapper stk-image--shape-stretch"><img class="stk-img" src="https://source.unsplash.com/400x300/?fashion" width="150" height="300"/></figure></div>', attributes: {
+		uniqueId: '7fb9397', hasBackground: false, hasBorders: false, imageShow: true, imageUrl: 'https://source.unsplash.com/400x300/?fashion', imageSize: 'full', imageShapeStretch: true, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, blockLinkHasLink: true, blockLinkNewTab: false, blockLinkHasTitle: true, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', imageWidthUnit: '%', imageWidthUnitTablet: '%', imageWidthUnitMobile: '%',
+	}, innerBlocks: [],
+}
