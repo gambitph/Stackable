@@ -46,7 +46,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			/**
 			 * Color hooks
 			 */
-			add_filter( 'stackable_inline_styles_nodep', array( $this, 'color_add_global_styles' ) );
+			// Add the color styles in the frontend only.
+			if ( ! is_admin() ) {
+				add_filter( 'stackable_inline_styles_nodep', array( $this, 'color_add_global_styles' ) );
+			}
 
 			add_action( 'after_setup_theme', array( $this, 'color_add_global_color_palette' ), 9999 );
 
@@ -65,8 +68,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			// For some native blocks, add a note that they're core blocks.
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
 
-			// Add our global typography styles.
-			add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
+			// Add our global typography styles in the frontend only.
+			if ( ! is_admin() ) {
+				add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
+			}
 		}
 
 		/**
@@ -353,10 +358,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return String
 		 */
 		public function color_add_global_styles( $current_css ) {
-			// If we're inside the editor, don't add the styles.
-			if ( is_admin() ) {
-				return $current_css;
-			}
 			// Don't do anything if we doon't have any global color.
 			$colors = get_option( 'stackable_global_colors' );
 			if ( ! $colors || ! is_array( $colors ) ) {
@@ -478,10 +479,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		* @since 2.17.2
 		*/
 		public function typography_add_global_styles( $css ) {
-			// If we're inside the editor, don't add the styles.
-			if ( is_admin() ) {
-				return $css;
-			}
 			return $css . $this->generated_typography_css;
 		}
 
