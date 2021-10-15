@@ -20,6 +20,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	useUniqueId,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -27,7 +28,7 @@ import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, ColorPaletteControl, AdvancedRangeControl, AlignButtonsControl,
 } from '~stackable/components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
-import { createBlockCompleter } from '~stackable/util'
+import { createBlockCompleter, sanitizeIdAttr } from '~stackable/util'
 import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
@@ -75,6 +76,8 @@ const Edit = props => {
 		textClasses,
 		blockAlignmentClass,
 	] )
+
+	useUniqueId( true, true )
 
 	return (
 		<Fragment>
@@ -196,7 +199,10 @@ const Edit = props => {
 			<HeadingStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-heading" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				className={ blockClassNames }
+				enableId={ false }
+			>
 				{ props.attributes.showTopLine && <div className="stk-block-heading__top-line" /> }
 				<Typography
 					defaultTag="h2"
@@ -223,6 +229,7 @@ const Edit = props => {
 
 						return block
 					} }
+					id={ props.attributes.anchor || sanitizeIdAttr( props.attributes.text ) }
 				/>
 				{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 			</BlockDiv>
