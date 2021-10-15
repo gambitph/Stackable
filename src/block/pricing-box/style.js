@@ -13,6 +13,7 @@ import {
 	EffectsAnimations,
 	MarginBottom,
 	Transform,
+	ContentAlign,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -45,6 +46,7 @@ const BlockStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } />
 			<MarginBottom.Style { ...propsToPass } />
+			<ContentAlign.Style { ...propsToPass } />
 		</>
 	)
 }
@@ -69,6 +71,7 @@ BlockStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<ContainerDiv.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
+			<ContentAlign.Style.Content { ...propsToPass } />
 		</>
 	)
 

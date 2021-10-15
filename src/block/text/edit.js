@@ -36,6 +36,7 @@ import { createBlockCompleter } from '~stackable/util'
 import { createBlock } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
+import { useMemo } from '@wordpress/element'
 
 /**
  * Add `autocompleters` support for stackable/text
@@ -60,9 +61,11 @@ const Edit = props => {
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { parentBlock } = useBlockContext()
+	const {
+		parentBlock, isFirstBlock, isLastBlock,
+	} = useBlockContext()
 
-	const enableColumns = applyFilters( 'stackable.edit.text.enable-column', true, parentBlock )
+	const enableColumns = useMemo( () => applyFilters( 'stackable.text.edit.enable-column', true, parentBlock ), [ parentBlock ] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -75,6 +78,10 @@ const Edit = props => {
 		textClasses,
 		blockAlignmentClass,
 	] )
+
+	const placeholder = useMemo( () => applyFilters( 'stackable.text.edit.placeholder', __( 'Type / to choose a block', i18n ), {
+		parentBlock, isFirstBlock, isLastBlock,
+	} ), [ parentBlock, isFirstBlock, isLastBlock ] )
 
 	return (
 		<>
@@ -135,7 +142,7 @@ const Edit = props => {
 				<Typography
 					tagName={ props.attributes.innerTextTag || 'p' }
 					className={ textClassNames }
-					placeholder={ __( 'Type / to choose a block', i18n ) }
+					placeholder={ placeholder }
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }

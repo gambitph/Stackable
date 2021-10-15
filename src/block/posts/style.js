@@ -17,6 +17,7 @@ import {
 	Typography,
 	FlexGapStyles,
 	Transform,
+	ContentAlign,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType, useBlockStyle, getBlockStyle,
@@ -317,6 +318,7 @@ export const PostsStyles = props => {
 			<Typography.Style { ...propsToPass } options={ excerptTypographyOptions } />
 			<Typography.Style { ...propsToPass } options={ metaTypographyOptions } />
 			<Typography.Style { ...propsToPass } options={ readmoreTypographyOptions } />
+			<ContentAlign.Style { ...propsToPass } />
 			<FlexGapStyles { ...propsToPass } options={ flexGapOptions } />
 			<StyleComponent
 				styles={ postsStyles }
@@ -360,6 +362,7 @@ PostsStyles.Content = props => {
 			<Typography.Style.Content { ...propsToPass } options={ excerptTypographyOptions } />
 			<Typography.Style.Content { ...propsToPass } options={ metaTypographyOptions } />
 			<Typography.Style.Content { ...propsToPass } options={ readmoreTypographyOptions } />
+			<ContentAlign.Style.Content { ...propsToPass } />
 			<FlexGapStyles.Content { ...propsToPass } options={ flexGapOptions } />
 			<StyleComponent.Content
 				styles={ postsStyles }

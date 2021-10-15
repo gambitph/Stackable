@@ -10,17 +10,14 @@
 	margin: 0;
 }
 
-[data-type] .stk-block .stk-button-group .block-editor-block-list__layout {
-	align-items: center;
-
-	// Use margin-inline-end in gaps instead since safari does not support it.
-	> .stk-button {
-		&:not(last-child) {
-			margin-inline-end: cssvar(button-column-gap);
-		}
+.stk-button-group {
+	.block-editor-block-list__layout {
+		align-items: center;
+		row-gap: cssvar(button-row-gap);
 	}
 
-	> [data-block]:not(last-child) .stk-block {
+	// Use margin-inline-end in gaps instead since safari does not support it.
+	[data-block]:not(:last-child) .stk-block {
 		margin-inline-end: cssvar(button-column-gap);
 	}
 }

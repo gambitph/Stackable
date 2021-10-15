@@ -13,7 +13,7 @@ import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 
-export const MarginBottom = () => {
+export const MarginBottom = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 	const { isLastBlock, parentBlock } = useBlockContext( clientId )
@@ -25,7 +25,7 @@ export const MarginBottom = () => {
 
 	return (
 		<ResizableBottomMargin
-			previewSelector={ attributes.uniqueId ? `.${ getUniqueBlockClass( attributes.uniqueId ) }` : undefined }
+			previewSelector={ props.previewSelector || ( attributes.uniqueId ? `.${ getUniqueBlockClass( attributes.uniqueId ) }` : undefined ) }
 			attribute="blockMargin"
 			responsive="all"
 		/>

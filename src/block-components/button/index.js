@@ -2,6 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
+import { useBlockAttributes } from '~stackable/hooks'
 
 /**
  * Internal dependencies
@@ -11,6 +12,14 @@ import { Style } from './style'
 import { Edit } from './edit'
 import { Link } from '../link'
 import { Icon } from '../icon'
+import { getButtonClasses } from './get-button-classes'
+
+/**
+ * WordPress dependencies
+ */
+import { useBlockEditContext } from '@wordpress/block-editor'
+
+export { getButtonClasses }
 
 export const Button = props => {
 	const {
@@ -19,9 +28,12 @@ export const Button = props => {
 		linkTrigger,
 	} = props
 
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+
 	return (
 		<Link
-			className={ classnames( [ className, 'stk-button' ] ) }
+			className={ classnames( [ className, getButtonClasses( attributes ) ] ) }
 			linkProps={ buttonProps }
 			linkTrigger={ linkTrigger }
 		>
@@ -47,7 +59,7 @@ Button.Content = props => {
 		<Link.Content
 			linkProps={ buttonProps }
 			attributes={ attributes }
-			className={ classnames( [ className, 'stk-button' ] ) }
+			className={ classnames( [ className, getButtonClasses( attributes ) ] ) }
 		>
 			<Icon.Content
 				attributes={ attributes }
