@@ -30,7 +30,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-column__content',
-	sizeVerticalAlignRule: 'justifyContent',
 	sizeHorizontalAlignRule: 'margin',
 }
 

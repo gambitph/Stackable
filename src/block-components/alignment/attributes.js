@@ -22,11 +22,6 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-			innerBlockVerticalAlign: {
-				stkResponsive: true,
-				type: 'string',
-				default: '',
-			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

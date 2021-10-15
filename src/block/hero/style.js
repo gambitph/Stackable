@@ -29,7 +29,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-hero__content',
-	sizeVerticalAlignRule: 'justifyContent',
 	sizeHorizontalAlignRule: 'margin',
 }
 
