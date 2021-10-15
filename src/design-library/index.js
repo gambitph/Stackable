@@ -29,7 +29,7 @@ export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => 
 export const fetchDesign = async ( designId, version = '' ) => {
 	if ( ! designs[ designId ] ) {
 		const results = await apiFetch( {
-			path: `/stackable/v2/stk_design/${ version }/${ designId }`,
+			path: `/stackable/v2/design/${ version }/${ designId }`,
 			method: 'GET',
 		} )
 		designs[ designId ] = await results

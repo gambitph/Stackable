@@ -55,7 +55,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				),
 			) );
 
-			register_rest_route( 'stackable/v2', '/stk_design/(?P<version>[\w\d-]*)/(?P<design>[\w\d-]+)', array(
+			register_rest_route( 'stackable/v2', '/design/(?P<version>[\w\d-]*)/(?P<design>[\w\d-]+)', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_design' ),
 				'permission_callback' => function () {
