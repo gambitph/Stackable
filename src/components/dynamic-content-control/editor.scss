@@ -53,11 +53,11 @@
 	}
 }
 
-
 .ugb-image-control {
 	.stk-dynamic-content-control {
 		display: block;
-		> .ugb-image-preview-wrapper {
+		> .ugb-image-preview-wrapper,
+		.ugb-placeholder {
 			margin-top: 0;
 		}
 	}

@@ -289,9 +289,18 @@
 			justify-content: center;
 			display: flex;
 			align-items: center;
-			column-gap: 8px;
 			text-decoration: none;
 			position: relative;
+
+			.stk--svg-wrapper {
+				&:first-child .stk--inner-svg svg:last-child {
+					margin-inline-end: 8px;
+				}
+				&:last-child .stk--inner-svg svg:last-child {
+					margin-inline-start: 8px;
+				}
+			}
+			column-gap: 8px;
 
 			&::before,
 			&::after {

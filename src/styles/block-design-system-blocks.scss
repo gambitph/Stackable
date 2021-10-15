@@ -17,7 +17,7 @@
 
 	// Use margin-inline-end in gaps instead since safari does not support it.
 	:is(.stk-block, .stk-button):not(:last-child) {
-		margin-inline-end: cssvar(button-column-gap);
+		margin-inline-end: cssvar(button-gap);
 	}
 }
 
