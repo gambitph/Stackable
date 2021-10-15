@@ -18,7 +18,7 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	useEffect, useState, useRef, forwardRef, useMemo
+	useEffect, useState, useRef, forwardRef, useMemo,
 } from '@wordpress/element'
 import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
 

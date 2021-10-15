@@ -122,7 +122,7 @@ const getStyleParams = ( { attributes = {} } ) => {
 			format: '%spx',
 		},
 		{
-			selector: 'li',
+			selector: 'ul li',
 			hover: 'all',
 			hoverSelector: '.%s:hover li',
 			styleRule: 'listStyleImage',
