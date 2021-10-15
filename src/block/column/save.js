@@ -42,11 +42,14 @@ export const Save = props => {
 	] )
 
 	const contentClassNames = classnames( [
+		columnWrapperClass,
+		'stk-block-column__content',
+	] )
+
+	const innerClassNames = classnames( [
+		blockAlignmentClass,
 		'stk-block-content',
 		'stk-inner-blocks',
-		columnWrapperClass,
-		blockAlignmentClass,
-		'stk-block-column__content',
 	] )
 
 	return (
@@ -60,7 +63,9 @@ export const Save = props => {
 				className={ contentClassNames }
 				attributes={ attributes }
 			>
-				<InnerBlocks.Content />
+				<div className={ innerClassNames }>
+					<InnerBlocks.Content />
+				</div>
 				<BlockLink.Content attributes={ attributes } />
 			</ContainerDiv.Content>
 		</BlockDiv.Content>

@@ -174,6 +174,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
+			renderIn: 'save',
 			selector,
 			styleRule: 'flexDirection',
 			attrName: 'verticalAlign',
@@ -181,6 +182,17 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			valueCallback: () => {
 				return ( verticalAlignRule || 'alignItems' ) === 'justifyContent' ? 'column' : undefined
+			},
+		},
+		{
+			renderIn: 'edit',
+			selector,
+			styleRule: 'flexDirection',
+			attrName: 'verticalAlign',
+			responsive: 'all',
+			attrNameTemplate,
+			valueCallback: () => {
+				return ( verticalAlignRule || 'alignItems' ) === 'justifyContent' ? 'column' : 'row'
 			},
 		},
 		...( ( horizontalAlignRule !== 'margin' ) ? [

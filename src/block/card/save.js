@@ -43,14 +43,14 @@ export const Save = props => {
 	] )
 
 	const contentClassNames = classnames( [
-		'stk-block-content',
+		'stk-block-card__content',
 		'stk--no-padding',
 	] )
 
 	const innerClassNames = classnames( [
+		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-block-card__content',
 	], {
 		'stk-container-padding': hasContainer,
 	} )

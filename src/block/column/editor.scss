@@ -3,3 +3,7 @@
 .editor-styles-wrapper [data-block][data-type="stackable/column"]:not(:first-child:last-child):hover {
 	z-index: 2;
 }
+
+.editor-styles-wrapper .stk-column-wrapper > .block-editor-inner-blocks {
+	width: 100%;
+}

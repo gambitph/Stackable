@@ -46,10 +46,13 @@ export const Save = props => {
 
 	const contentClassNames = classnames( [
 		rowClass,
+	], getContentAlignmentClasses( attributes ) )
+
+	const innerClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	], getContentAlignmentClasses( attributes ) )
+	] )
 
 	return (
 		<BlockDiv.Content
@@ -60,7 +63,9 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			<Separator.Content attributes={ attributes }>
 				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-					<InnerBlocks.Content />
+					<div className={ innerClassNames }>
+						<InnerBlocks.Content />
+					</div>
 				</ContainerDiv.Content>
 			</Separator.Content>
 		</BlockDiv.Content>

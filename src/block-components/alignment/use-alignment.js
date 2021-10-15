@@ -32,8 +32,7 @@ export const getAlignmentClasses = attributes => {
 		// We need to add our own class so we won't have to worry about rules
 		// being applied to the nested children of our blocks.
 		[ `stk--block-align-${ attributes.uniqueId }` ]:
-			attributes.rowAlign || attributes.rowAlignTablet || attributes.rowAlignMobile ||
-			attributes.innerBlockVerticalAlign || attributes.innerBlockVerticalAlignTablet || attributes.innerBlockVerticalAlignMobile,
+			attributes.rowAlign || attributes.rowAlignTablet || attributes.rowAlignMobile,
 	} )
 
 	return innerBlocksClass

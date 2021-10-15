@@ -23,7 +23,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-card__content',
-	sizeVerticalAlignRule: 'justifyContent',
 	sizeHorizontalAlignRule: 'margin',
 }
 
@@ -91,11 +90,7 @@ CardStyles.Content = props => {
 			<Transform.Style.Content { ...propsToPass } />
 			<ContainerDiv.Style.Content
 				{ ...propsToPass }
-				options={ {
-					sizeSelector: '.stk-block-card__content',
-					sizeVerticalAlignRule: 'justifyContent',
-					sizeHorizontalAlignRule: 'alignSelf',
-				} }
+				options={ containerDivOptions }
 			/>
 			<Image.Style.Content
 				{ ...propsToPass }

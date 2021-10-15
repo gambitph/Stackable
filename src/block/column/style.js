@@ -30,7 +30,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-column__content',
-	sizeVerticalAlignRule: 'justifyContent',
 	sizeHorizontalAlignRule: 'margin',
 }
 
@@ -88,7 +87,9 @@ const BlockStyles = props => {
 
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
+			<Alignment.Style { ...propsToPass } options={ {
+				columnAlignSelectorCallback: getAttribute => `[data-block="${ getAttribute( 'clientId' ) }"]`,
+			} } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
