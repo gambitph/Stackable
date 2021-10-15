@@ -2,7 +2,7 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.6.5
-Tested up to: 5.8
+Tested up to: 5.8.1
 Requires PHP: 5.6
 Stable tag: 3.0.0
 License: GPLv3
@@ -238,6 +238,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 3.0.0 =
 * New: New version 3 blocks (old version 2 blocks will still be available)
+* New: Completely new way to use Stackable blocks
+* New: Now very lightweight
+* New: Advanced Columns which are immensely responsive (you can control how they collapse in tablet and mobile)
+* New: Style blocks when they're hovered
+* New: Dyanmic Breakpoints
+* New: Stackable Custom Fields (premium)
+* New: Use Dynamic Content in images, buttons, and other content (premium)
+* New: Motion Effects (premium)
+* New: Conditionally Display blocks (premium)
+* New: A lot more
+
 
 = 2.17.1 =
 * Fixed: Compatibility fix with Toolset

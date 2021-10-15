@@ -49,7 +49,7 @@ export const TEMPLATE = [
 
 const Edit = props => {
 	const {
-		className, attributes,
+		className, attributes, clientId,
 	} = props
 
 	const rowClass = getRowClasses( attributes )
@@ -113,7 +113,8 @@ const Edit = props => {
 					</div>
 				</Fragment>
 			</BlockDiv>
-			<MarginBottom />
+			{ /* Hack, somehow the icon list doesn't have a uniqueId when it's just added, so the data-block-id isn't populated and isn't detected, this fixes that. */ }
+			<MarginBottom previewSelector={ `[data-block="${ clientId }"] > .stk-block` } />
 		</Fragment>
 	)
 }
