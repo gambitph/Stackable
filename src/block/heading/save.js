@@ -3,6 +3,9 @@
  */
 import { HeadingStyles } from './style'
 
+/**
+ * External dependencies
+ */
 import {
 	BlockDiv,
 	CustomCSS,
@@ -19,6 +22,7 @@ import { withVersion } from '~stackable/higher-order'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { sanitizeIdAttr } from '~stackable/util'
 
 const Save = props => {
 	const {
@@ -46,6 +50,7 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			enableId={ false }
 		>
 			<HeadingStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
@@ -54,6 +59,7 @@ const Save = props => {
 				attributes={ attributes }
 				className={ textClassNames }
 				defaultTag="h2"
+				id={ attributes.anchor || sanitizeIdAttr( attributes.text ) }
 			/>
 			{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 		</BlockDiv.Content>

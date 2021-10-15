@@ -4,7 +4,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 
-export const useUniqueId = ( autoApplyUniqueId = true, withAnchor = false ) => {
+export const useUniqueId = ( autoApplyUniqueId = true ) => {
 	const { clientId } = useBlockEditContext()
 
 	useEffect( () => {
@@ -23,18 +23,12 @@ export const useUniqueId = ( autoApplyUniqueId = true, withAnchor = false ) => {
 		const uniqueClass = createUniqueClass( clientId )
 		if ( ! attributes.uniqueId ) {
 			attributes.uniqueId = uniqueClass
-			// Also append the uniqueId to the anchor attribute.
-			if ( withAnchor ) {
-				attributes.anchor = `stk-${ uniqueClass }`
-			}
+
 			// If there's one already, check whether the we need to re-create one.
 			// Duplicating a block or copy pasting a block may give us duplicate IDs.
-		} else if ( `stk-${ createUniqueClass( clientId ) }` !== attributes.uniqueId ) {
+		} else if ( uniqueClass !== attributes.uniqueId ) {
 			if ( document.querySelectorAll( `[data-block-id="${ attributes.uniqueId }"]` ).length > 1 ) {
 				attributes.uniqueId = uniqueClass
-				if ( withAnchor ) {
-					attributes.anchor = `stk-${ uniqueClass }`
-				}
 			}
 		}
 	}, [ clientId ] )
