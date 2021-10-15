@@ -420,7 +420,7 @@ export const isElementDescendant = function( parent, child ) {
  * @return {string} The sanitized
  */
 export const sanitizeIdAttr = str => {
-	return striptags( str.replace( /&lt;/g, '<' ).replace( /&gt;/g, '>' ) )
+	return striptags( str.replace( /&lt;/g, '<' ).replace( /&gt;/g, '>' ).replace( /&nbsp;/g, ' ' ).replace( /&[\w\d]+;/g, '-' ) )
 		.replace( /<[^>]*>/g, '' )
 		.replace( /[^\w\d\s-_]/g, '' )
 		.replace( /[^\w\d]/g, '-' )
