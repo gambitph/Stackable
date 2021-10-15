@@ -296,7 +296,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 						<div class="s-getting-started__two-column">
 							<div class="s-getting-started__entry">
-								<h4><?php _e( 'ADDING BLOCKS', STACKABLE_I18N )?></h4>
+								<h3><?php _e( 'Adding Blocks', STACKABLE_I18N )?></h3>
 								<p><?php _e( 'There are 2 ways to start using Stackable:', STACKABLE_I18N)?></p>
 								<ul>
 									<li>
@@ -314,7 +314,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 						<div class="s-getting-started__two-column">
 							<div class="s-getting-started__entry">
-								<h4><?php _e( 'Adding by Block Type', STACKABLE_I18N )?></h4>
+								<h3><?php _e( 'Adding by Block Type', STACKABLE_I18N )?></h3>
 								<p><?php _e( 'Click the <strong>(+) icon</strong> then scroll to the <strong>Stackable Blocks area</strong> to add a block.', STACKABLE_I18N )?></p>
 							</div>
 							<div class="s-image-caption">
@@ -324,16 +324,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 						<div class="s-getting-started__two-column">
 							<div class="s-getting-started__entry">
-								<h4><?php _e( 'Adding from the Design Library', STACKABLE_I18N )?></h4>
-								<p><?php _e( 'You can also launch the Design Library, and choose from <strong>ready-made UI Kits</strong> & <strong>Block Designs</strong>.', STACKABLE_I18N ) ?></p>
-								<span class="indented">
-									<h5><?php _e( 'UI Kits', STACKABLE_I18N )?></h5>
-									<p><?php _e( 'Choose blocks from different <strong>UI Kits</strong> that can be used to build an entire website.', STACKABLE_I18N ) ?></p>
-								</span>
-								<span class="indented">
-									<h5><?php _e( 'Block Designs', STACKABLE_I18N )?></h5>
-									<p><?php _e( 'Choose from different <strong>individual Block Designs</strong>. Mix and match block designs to build your site.', STACKABLE_I18N )?></p>
-								</span>
+								<h3><?php _e( 'Adding from the Design Library', STACKABLE_I18N )?></h3>
+								<p><?php _e( 'You can also launch the Design Library, and choose from <strong>ready-made UI Kits & Block Designs</strong>.', STACKABLE_I18N ) ?></p>
+								<br />
+								<h4><?php _e( 'UI Kits', STACKABLE_I18N )?></h4>
+								<p><?php _e( 'Choose blocks from different pre-made templates that can be used to build an entire website.', STACKABLE_I18N ) ?></p>
+								<h4><?php _e( 'Block Designs', STACKABLE_I18N )?></h4>
+								<p><?php _e( 'Choose from different individual designs. Mix and match block designs to build your site.', STACKABLE_I18N )?></p>
 							</div>
 							<div class="s-image-caption">
 								<img draggable="false" src="<?php echo plugins_url( 'images/design-library.jpg', __FILE__ )?>">
@@ -341,51 +338,48 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						</div>
 
 						<div class="s-getting-started__centered">
-							<div class="s-getting-started__help-tip primary">
-								<img draggable="false" src="<?php echo plugins_url( 'images/info.svg', __FILE__ )?>">
-								<h4><?php _e( 'What is a UI Kit?', STACKABLE_I18N )?></h4>
-								<p><?php _e( 'A UI Kit is a cohesive collection of block designs with a uniform look and feel.', STACKABLE_I18N )?></p>
+							<h2 class="title"><?php _e( 'Styling Blocks', STACKABLE_I18N ) ?></h2>
+							<p class="subtitle"><?php _e( 'Style your blocks using 3 tool areas.', STACKABLE_I18N )?></p>
+						</div>
+
+						<div class="s-getting-started__two-column reverse">
+							<div class="s-getting-started__entry">
+								<h3><?php _e( '1. Inspector', STACKABLE_I18N )?></h3>
+								<p><?php _e( 'The Inspector is the main styling area consisting of Block, Style and Advanced tabs.', STACKABLE_I18N )?></p>
+								<div class="s-getting-started__help-tip secondary">
+									<img draggable="false" src="<?php echo plugins_url( 'images/star.svg', __FILE__ )?>">
+									<span>
+										<h4><?php _e( 'Tip', STACKABLE_I18N)?></h4>
+										<p><?php _e( 'Hover over the names or info icons in the options to preview a tooltip that will guide you on what an option does.', STACKABLE_I18N )?></p>
+									</span>
+								</div>
+							</div>
+							<div class="s-image-caption">
+								<img draggable="false" src="<?php echo plugins_url( 'images/inspector.jpg', __FILE__ )?>">
 							</div>
 						</div>
 
-						<div class="s-getting-started__centered">
-							<h4><?php _e( 'STYLING BLOCKS', STACKABLE_I18N )?></h4>
-							<div class="inner-columns">
-								<div class="getting-started__entry">
-									<p><?php _e( 'You can style your blocks using 3 tool areas:', STACKABLE_I18N )?></p>
-									<ul>
-										<li><p><?php _e( 'Inspector', STACKABLE_I18N )?></p></li>
-										<li><p><?php _e( 'Toolbar', STACKABLE_I18N )?></p></li>
-										<li><p><?php _e( 'Global Settings Panel', STACKABLE_I18N )?></p></li>
-									</ul>
-								</div>
-								<div class="s-getting-started__entry">
-									<h5><strong><?php _e( 'Inspector', STACKABLE_I18N )?></strong></h5>
-									<p><?php _e( 'The <strong>Inspector</strong> is the main styling area. Explore the 3 tabs to style the block to your liking & level of expertise.', STACKABLE_I18N )?></p>
-									<h5><strong><?php _e( 'Toolbar', STACKABLE_I18N )?></strong></h5>
-									<p><?php _e( 'Use the Toolbar to edit elements such as your Block Width, Text and other formatting specs.', STACKABLE_I18N )?></p>
+						<div class="s-getting-started__two-column">
+							<div class="s-getting-started__entry">
+								<h3><?php _e( '2. Toolbar', STACKABLE_I18N )?></h3>
+								<p><?php _e( 'Use the Toolbar to edit your block\'s formatting specs.', STACKABLE_I18N )?></p>
+								<div class="s-getting-started__help-tip secondary">
+									<img draggable="false" src="<?php echo plugins_url( 'images/star.svg', __FILE__ )?>">
+									<span>
+										<h4><?php _e( 'Tip', STACKABLE_I18N)?></h4>
+										<p><?php printf( __( '<strong>Dynamic content</strong> and <strong>copy and paste</strong> buttons are only available in %sStackable Premium%s.', STACKABLE_I18N ), '<a href="https://wpstackable.com/premium/?utm_source=wp-getting-started&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_blank">', '</a>' ) ?></p>
+									</span>
 								</div>
 							</div>
-						</div>
-
-						<div class="s-getting-started__centered">
-							<img draggable="false" src="<?php echo plugins_url( 'images/toolbar-and-inspector.jpg', __FILE__ )?>">
-						</div>
-
-						<div class="s-getting-started__centered">
-							<div class="s-getting-started__help-tip secondary">
-								<img draggable="false" src="<?php echo plugins_url( 'images/star.svg', __FILE__ )?>">
-								<span>
-									<h4><?php _e( 'Tip', STACKABLE_I18N)?></h4>
-									<p><?php _e( 'You can automatically open the inspector panel you want to tweak (ex. Title, Container, etc.) by double-clicking the element on the design area.', STACKABLE_I18N )?></p>
-								</span>
+							<div class="s-image-caption">
+								<img draggable="false" src="<?php echo plugins_url( 'images/toolbar.jpg', __FILE__ )?>">
 							</div>
 						</div>
 
 						<div class="s-getting-started__two-column reverse">
 							<div class="s-getting-started__entry">
-								<h4><?php _e( 'Global Settings Panel', STACKABLE_I18N )?></h4>
-								<p><?php _e( 'Define and edit site-wide typography and color palettes in one place. Launch Global Settings with the Stackable icon.', STACKABLE_I18N )?></p>
+								<h3><?php _e( '3. Global Settings Panel', STACKABLE_I18N )?></h3>
+								<p><?php _e( 'Define and edit site-wide typography and color palettes in one place.', STACKABLE_I18N )?></p>
 							</div>
 							<div class="s-image-caption">
 								<img draggable="false" src="<?php echo plugins_url( 'images/global-settings.jpg', __FILE__ )?>">
@@ -403,13 +397,15 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							</div>
 						</div>
 
-						<h4 class="title"><?php _e( 'More Resources', STACKABLE_I18N )?></h4>
+						<div class="s-getting-started__centered">
+							<h2 class="title"><?php _e( 'More Resources', STACKABLE_I18N ) ?></h2>
+						</div>
 
 						<div class="s-getting-started__centered">
 							<div class="inner-columns">
 								<div class="resources__item s-box">
 									<img draggable="false" src="<?php echo plugins_url( 'images/smile.svg', __FILE__ )?>">
-									<h5><?php _e( 'Community', STACKABLE_I18N )?></h5>
+									<h3><?php _e( 'Community', STACKABLE_I18N )?></h3>
 									<p><?php _e( 'Join like-minded people who help each other do amazing things', STACKABLE_I18N )?></p>
 									<a class="s-getting-started__button primary" href="https://wpstackable.com/community/?utm_source=wp-getting-started-footer&utm_campaign=getting-started&utm_medium=wp-dashboard">
 										<?php _e( 'Join Now', STACKABLE_I18N )?>
@@ -418,7 +414,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 								<div class="resources__item s-box">
 									<img draggable="false" src="<?php echo plugins_url( 'images/book-open.svg', __FILE__ )?>">
-									<h5><?php _e( 'Documentation', STACKABLE_I18N )?></h5>
+									<h3><?php _e( 'Documentation', STACKABLE_I18N )?></h3>
 									<p><?php _e( 'Learn how to use Stackable\'s powerful page building tools', STACKABLE_I18N )?></p>
 									<a class="s-getting-started__button primary" href="https://docs.wpstackable.com/?utm_source=wp-getting-started-footer&utm_campaign=getting-started&utm_medium=wp-dashboard">
 										<?php _e( 'Visit Docs', STACKABLE_I18N )?>
@@ -427,7 +423,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 								<div class="resources__item s-box">
 									<img draggable="false" src="<?php echo plugins_url( 'images/align-left.svg', __FILE__ )?>">
-									<h5><?php _e( 'Blog', STACKABLE_I18N )?></h5>
+									<h3><?php _e( 'Blog', STACKABLE_I18N )?></h3>
 									<p><?php _e( 'Browse through our articles and find what you\'re looking for', STACKABLE_I18N )?></p>
 									<a class="s-getting-started__button primary" href="https://wpstackable.com/blog/?utm_source=wp-getting-started-footer&utm_campaign=getting-started&utm_medium=wp-dashboard">
 										<?php _e( 'Read More', STACKABLE_I18N )?>
@@ -437,13 +433,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								<div class="resources__item s-box">
 									<img draggable="false" src="<?php echo plugins_url( 'images/headphones.svg', __FILE__ )?>">
 									<?php if ( sugb_fs()->can_use_premium_code() ) { ?>
-										<h5><?php _e( 'Get Support', STACKABLE_I18N )?></h5>
+										<h3><?php _e( 'Get Support', STACKABLE_I18N )?></h3>
 										<p><?php _e( 'Stuck with something? Email us and we\'ll help you out', STACKABLE_I18N )?></p>
 										<a class="s-getting-started__button primary" href="<?php echo esc_url( sugb_fs()->contact_url( 'technical_support' ) ) ?>">
 											<?php _e( 'Contact Support', STACKABLE_I18N )?>
 										</a>
 									<?php } else { ?>
-										<h5><?php _e( 'Get Support', STACKABLE_I18N )?></h5>
+										<h3><?php _e( 'Get Support', STACKABLE_I18N )?></h3>
 										<p><?php _e( 'Upgrade to Premium and our support team can help you out.', STACKABLE_I18N )?></p>
 										<a class="s-getting-started__button primary" href="https://wpstackable.com/upgrade/?utm_source=wp-getting-started-footer&utm_campaign=getting-started&utm_medium=wp-dashboard">
 											<?php _e( 'Learn more', STACKABLE_I18N )?>

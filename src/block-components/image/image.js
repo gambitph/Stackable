@@ -303,6 +303,7 @@ const Image = memo( props => {
 								title={ striptags( props.title || undefined ) }
 								width={ props.width || undefined }
 								height={ props.height || undefined }
+								draggable="false"
 							/>
 						</div>
 						{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }

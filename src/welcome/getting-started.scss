@@ -75,13 +75,13 @@
 		margin: 8px;
 	}
 
-	h4 {
+	h3 {
 		font-size: 21px;
 		color: #000;
 		margin-bottom: 1em;
 	}
 
-	h5 {
+	h4 {
 		font-size: 16px;
 		color: #000;
 		margin-bottom: 1em;
@@ -98,6 +98,7 @@
 }
 
 .s-getting-started__entry p,
+.s-getting-started__entry h3,
 .s-getting-started__entry h4,
 .s-getting-started__entry ul {
 	margin-top: 0;
@@ -147,6 +148,7 @@
 	padding-bottom: 64px;
 	color: #fff;
 	h2 {
+		margin-top: 0;
 		font-size: 24px;
 		font-weight: 400;
 		letter-spacing: 1px;
@@ -167,9 +169,10 @@
 .s-getting-started__help-tip {
 	position: relative;
 	padding: 24px 24px 24px 65px;
+	margin: 16px 0;
 	h4 {
 		font-size: 16px;
-		margin: 0;
+		margin: 0 0 8px;
 	}
 	p {
 		margin: 0;

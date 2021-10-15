@@ -1,4 +1,4 @@
-.ugb-highlight[style*="background"] {
+:is(.ugb-highlight, .stk-highlight)[style*="background"] {
 	padding: 0.1em 0.4em;
 	display: inline;
 }

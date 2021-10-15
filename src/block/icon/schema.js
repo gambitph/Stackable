@@ -37,6 +37,9 @@ export const attributes = ( version = VERSION ) => {
 		attributes: {
 			ariaLabel: {
 				type: 'string',
+				source: 'attribute',
+				selector: 'svg[data-icon]',
+				attribute: 'aria-label',
 				default: '',
 			},
 		},

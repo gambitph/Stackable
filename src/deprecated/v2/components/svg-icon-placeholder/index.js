@@ -8,8 +8,13 @@ import { useState, useEffect } from '@wordpress/element'
  * External dependencies
  */
 import {
-	Button, IconSearchPopover, SvgIconHelper,
+	Button, IconSearchPopover,
 } from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import SvgIconHelper from '../svg-icon-helper'
 
 const SvgIconPlaceholder = withInstanceId( ( props => {
 	const [ openPopover, setOpenPopover ] = useState( false )

@@ -1,6 +1,7 @@
 @import "common";
 
 // Button alignment.
-.stk-block-button-group {
+.stk-button-group {
 	justify-content: var(--stk-alignment-justify-content);
+	max-width: none !important;
 }

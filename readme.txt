@@ -14,62 +14,78 @@ All-in-one solution for creating stunning websites with Gutenberg.
 
 **The Ultimate Companion to Gutenberg**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted Gutenberg companion you've been waiting for. Build any website with our ready made designs, extensive block collection, UI Kits, and more. Have the confidence to easily design the fastest websites using a new page building experience for Gutenberg.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted Gutenberg companion you've been waiting for. Build dynamic websites with our powerful yet lightweight custom blocks, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg.
 
-[youtube https://www.youtube.com/watch?v=PeR76cXLmdk]
+[youtube https://www.youtube.com/watch?v=yzmk0qoW880]
 
-## More than Just Blocks. Discover a whole new experience of web design with the new WordPress Editor.
+## Transforming Gutenberg into a Page Builder. Discover a Whole New Experience of Web Design With the WordPress Block Editor.
 
-Stackable is the all-in-one solution for creating stunning websites with Gutenberg. Stackable has helped thousands of bloggers, merchants, designers and web development professionals make the most out of the new WordPress Editor through these awesome features.
+Stackable is the all-in-one solution for creating stunning websites by transforming Gutenberg into a Page Builder. With over 100K websites using (and growing!) Stackable, Stackable has helped thousands of bloggers, merchants, designers and web development professionals make the most out of the WordPress Block Editor through fast, powerful and intuitive features.
 
 > [Try our live demos](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ## Ready Made Block Designs and UI Kits
 
-Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to jumpstart your designing process. Never start from scratch and design like a pro with the help of our gorgeous and professionally-made designs.
+Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to jumpstart your designing process. Never start from scratch and design like a pro with the help of our stunning and professionally-made designs.
 
 - Dozens of UI Kit Designs
-- Hundreds of Block Designs
+- Hundreds of ready-made Block Designs
+- Dozens of block layout variations
 - Various built-in Separator Designs
 
 ## Powerful Custom Blocks
 
-Get 27 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 35 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
-- Advanced Columns & Grid Block — [View Block](https://wpstackable.com/columns-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Container Block — [View Block](https://wpstackable.com/container-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+You can choose which of these blocks you need, depending on your workflow.
+
+Essential Blocks
+- Advanced Columns Block — [View Block](https://wpstackable.com/columns-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Advanced Heading Block - [View Block](https://wpstackable.com/advanced-heading-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Advanced Text Block - [View Block](https://wpstackable.com/advanced-text-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Separator Block — [View Block](https://wpstackable.com/separator-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Feature Grid Block — [View Block](https://wpstackable.com/feature-grid-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Accordion Block — [View Block](https://wpstackable.com/accordion-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Feature Block — [View Block](https://wpstackable.com/feature-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Advanced Image Block
 - Icon List Block — [View Block](https://wpstackable.com/icon-list-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Call to Action Block — [View Block](https://wpstackable.com/call-to-action-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Card Block — [View Block](https://wpstackable.com/card-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Header Block — [View Block](https://wpstackable.com/header-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Count Up Block — [View Block](https://wpstackable.com/count-up-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Pricing Box Block — [View Block](https://wpstackable.com/pricing-table-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Testimonial Block — [View Block](https://wpstackable.com/testimonial-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Team Members Block — [View Block](https://wpstackable.com/team-member-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Notification Block — [View Block](https://wpstackable.com/notification-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Number Box Block — [View Block](https://wpstackable.com/number-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Expand / Show More Block — [View Block](https://wpstackable.com/expand-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Button Block — [View Block](https://wpstackable.com/button-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Blockquote Block — [View Block](https://wpstackable.com/blockquote-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Icon Button Block
+- Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+Special Blocks
+- Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Accordion Block — [View Block](https://wpstackable.com/accordion-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Icon Label Block
+- Social Buttons Block
+- Card Block — [View Block](https://wpstackable.com/card-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Count Up Block — [View Block](https://wpstackable.com/count-up-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Number Box Block — [View Block](https://wpstackable.com/number-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Notification Block — [View Block](https://wpstackable.com/notification-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Expand / Show More Block — [View Block](https://wpstackable.com/expand-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Separator Block — [View Block](https://wpstackable.com/separator-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Load More Block (for the Blog Posts Block)
+- Pagination Block (for the Blog Posts Block)
+- Subtitle Block
+- Price Block
 - Divider Block
 - Spacer Block
+
+Section Blocks
+- Hero Block — [View Block](https://wpstackable.com/header-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Call to Action Block — [View Block](https://wpstackable.com/call-to-action-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Feature Block — [View Block](https://wpstackable.com/feature-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Feature Grid Block — [View Block](https://wpstackable.com/feature-grid-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Pricing Box Block — [View Block](https://wpstackable.com/pricing-table-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Icon Box Block
+- Testimonial Block — [View Block](https://wpstackable.com/testimonial-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Team Members Block — [View Block](https://wpstackable.com/team-member-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Blockquote Block — [View Block](https://wpstackable.com/blockquote-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ## Page Builder-like Design Options
 
 Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
 
 - Multiple Block Layouts
-- Hover Animations and Image Box Effects
+- Animate Blocks on Hover
 - Block Background and Image Color Settings
 - Block Typography Settings
 - Image Shapes and Settings
@@ -79,9 +95,20 @@ Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a w
 - Responsiveness
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
+	- Specify how Columns collapse in Tablet and Mobile
     - Hide / Show Specific Blocks on Desktop, Tablet or Mobile
 - Custom data-* attributes
-- Dynamic Content **
+- Scroll and Entrance Animations**
+
+## Dynamic Content
+
+Create dynamic WordPress websites that cater to the specific interests of visitors.
+
+- Dynamic Content**
+- Fully Customize your Query Loops**
+- Built-in Custom Fields**
+- Block Conditional Display**
+
 
 ## Agency Tools
 
@@ -92,7 +119,7 @@ Cater to more clients effectively and efficiently with our Agency Tools, which w
 
 ## Integrations
 
-Make your page building experience more well-rounded by using other popular tools. We’ve seamlessly integrated with these essential third-party plugins and tools:
+Make your page building experience more well-rounded by using other popular tools. We've seamlessly integrated with these essential third-party plugins and tools:
 
 - ACF **
 - WPML
@@ -103,11 +130,12 @@ Make your page building experience more well-rounded by using other popular tool
 
 ## Fast Page Loading Speed
 
-Optimize your website’s performance, and get lightning fast page loading and maximize your page speed insights
+Optimize your website’s performance, and get lightning fast page loading to make your site visitors stay. Have the chance to maximize your page speed insights and achieve high Core Web Vitals and higher SEO rankings.
 
-- Loads the minimal amount of CSS and JS files in the frontend, less than ~30kb total
+- Loads the smallest file size possible of CSS and JS files in the frontend, ~ only 7.8kb total
 - Adds almost no PHP server overhead for fast page loads
-- Optimized page loading with browser caching for fast viewing speeds
+- Zero Bloat, no jQuery, no dependencies
+- Optimized page loading with focus on Core Web Vitals
 - Responsive image loading for faster browsing speeds in mobile devices
 - Compatible with Optimization Plugins and use optimization techniques such as combining CSS and JS files and minification
 
@@ -152,7 +180,7 @@ Optimize your website’s performance, and get lightning fast page loading and m
 
 = Minimum Requirements =
 
-You’ll need WordPress version 5.4 or higher for this to work.
+You'll need WordPress version 5.6 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -172,13 +200,17 @@ Yes, we have [live demo that you can check out here](https://demo.wpstackable.co
 
 **What are Blocks?**
 
-Blocks are the new shortcodes in WordPress 5.0 / Gutenberg. They’re the basic elements that you add into your content to build your pages, like buttons, cards, videos, etc.
+Blocks are the new shortcodes in WordPress 5.0 / Gutenberg. They're the basic elements that you add into your content to build your pages, like buttons, cards, videos, etc.
 
-Stackable gives you lots of awesome blocks for you to create awesome landing pages and front pages.
+Stackable gives you an extensive collection of blocks that allows you to flexibly create any kind of professional landing page and front page.
 
 **What are UI Kits?**
 
 UI kits are a beautiful and cohesive collection of our block designs for budiling full sites easily. These kits offer a wide variety of web design styles and categories that allow you to kick start your design process right away
+
+**What themes can I use with Stackable?**
+
+Stackable should work with any theme.
 
 **Can I disable blocks that I do not use?**
 
@@ -188,7 +220,7 @@ Yes, you can manage your blocks and choose what blocks to enable/disable.
 
 Yes! Stackable blocks play well with other blocks.
 
-**Can I use this add-on for other page builders I’m using?**
+**Can I use this add-on for other page builders I'm using?**
 
 Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
@@ -203,6 +235,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.0.0 =
+* New: New version 3 blocks (old version 2 blocks will still be available)
 
 = 2.17.1 =
 * Fixed: Compatibility fix with Toolset

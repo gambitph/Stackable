@@ -77,7 +77,7 @@ const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
 					id="general"
-					initialOpen={ false }
+					initialOpen={ true }
 				>
 					<AdvancedRangeControl
 						label={ __( 'Icon Gap' ) }

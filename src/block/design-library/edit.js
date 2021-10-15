@@ -14,7 +14,9 @@ import { SVGStackableIcon } from '~stackable/icons'
  */
 import { __ } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
-import { createBlock, parse } from '@wordpress/blocks'
+import {
+	createBlock, parse, createBlocksFromInnerBlocksTemplate,
+} from '@wordpress/blocks'
 import { useState, useCallback } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { Placeholder } from '@wordpress/components'
@@ -34,7 +36,7 @@ const Edit = props => {
 		const shortBlockName = blockName.replace( /^\w+\//g, '' )
 		const blockAttributes = applyFilters( `stackable.${ shortBlockName }.design.filtered-block-attributes`, attributes )
 
-		const block = createBlock( blockName, blockAttributes, innerBlocks )
+		const block = createBlock( blockName, blockAttributes, createBlocksFromInnerBlocksTemplate( innerBlocks ) )
 		replaceBlock( clientId, block )
 	}, [ clientId ] )
 
@@ -79,11 +81,11 @@ const Edit = props => {
 					} }
 					onSelect={ designData => {
 						const {
-							name, attributes, serialized,
+							name, attributes, innerBlocks, serialized,
 						} = designData
 
 						if ( name && attributes ) {
-							replaceBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), [] )
+							replaceBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [] )
 						} else if ( serialized ) {
 							replaceBlocWithContent( serialized )
 						} else {
