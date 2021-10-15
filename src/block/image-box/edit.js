@@ -44,7 +44,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-const TEMPLATE = variations[ 0 ].innerBlocks
+export const TEMPLATE = variations[ 0 ].innerBlocks
 
 const ALLOWED_BLOCKS = [
 	'stackable/subtitle',

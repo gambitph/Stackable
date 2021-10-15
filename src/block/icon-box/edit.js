@@ -40,7 +40,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const TEMPLATE = [
+export const TEMPLATE = [
 	[ 'stackable/icon-label', {}, [
 		[ 'stackable/icon', { contentAlign: 'left' } ],
 		[ 'stackable/heading', {

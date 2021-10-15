@@ -7,6 +7,10 @@
 		list-style-image: none;
 	}
 
+	&.stk-block :is(ul, ol) {
+		padding-inline-start: 1em;
+	}
+
 	// Line height creates unnecessary row gaps.
 	::marker {
 		line-height: 0;

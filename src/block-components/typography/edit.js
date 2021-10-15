@@ -278,7 +278,7 @@ export const Controls = props => {
 							const value = _value?.startsWith( 'var(--stk-global-color' ) ? _value.match( /(#[^\)]*)/g )[ 0 ] : _value
 							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
 							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
-							return value
+							return _value
 						} }
 						label={ getAttribute( 'textColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
 							: __( 'Text Color', i18n ) }

@@ -33,7 +33,7 @@ export const Image = props => {
 
 	const { setImage } = useImage()
 
-	const defaultHeight = _defaultHeight === 'auto' && attributes.imageUrl ? 'auto' : 300
+	const defaultHeight = _defaultHeight === 'auto' ? 'auto' : 300
 
 	const enableHandlers = applyFilters( 'stackable.image.enable-handlers', true, parentBlock )
 
