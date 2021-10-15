@@ -281,11 +281,11 @@
 // Buttons.
 .stk-button {
 	width: max-content;
-	text-decoration: none !important; // Some themes may add underlines on buttons, we need to force remove it. !important is the only way.
 }
 :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination, .stk-block-load-more, .stk-block-posts) {
 	&:not(.is-style-link) {
 		.stk-button {
+			text-decoration: none !important; // Some themes may add underlines on buttons, we need to force remove it. !important is the only way.
 			justify-content: center;
 			display: flex;
 			align-items: center;
