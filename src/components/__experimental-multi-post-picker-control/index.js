@@ -67,7 +67,7 @@ const PostPickerControl = props => {
 		const postIds = props.value.map( v => v.postId )
 		// const results = [ { title: 'hello', postId: 9 }, { title: 'world', postId: 123 } ]
 		apiFetch( {
-			path: addQueryArgs( `/stackable/v2/stk_editor_mode_get_all_posts`, {
+			path: addQueryArgs( `/stackable/v2/editor_mode_get_all_posts`, {
 				search,
 			} ),
 			method: 'GET',

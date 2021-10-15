@@ -11,7 +11,7 @@ export const getBlockName = block => block.replace( /^[\w-]+\//, '' )
 export const fetchDesignLibrary = async ( forceReset = false, version = '' ) => {
 	if ( ! designLibrary || forceReset ) {
 		const results = await apiFetch( {
-			path: `/stackable/v2/stk_design_library${ forceReset ? '/reset' : '' }`,
+			path: `/stackable/v2/design_library${ forceReset ? '/reset' : '' }`,
 			method: 'GET',
 		} )
 		designLibrary = await results
@@ -39,7 +39,7 @@ export const fetchDesign = async ( designId, version = '' ) => {
 
 export const setDevModeDesignLibrary = async ( devMode = false ) => {
 	const results = await apiFetch( {
-		path: `/stackable/v2/stk_design_library_dev_mode/`,
+		path: `/stackable/v2/design_library_dev_mode/`,
 		method: 'POST',
 		data: {
 			devmode: devMode,

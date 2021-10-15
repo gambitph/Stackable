@@ -31,7 +31,7 @@ class TaxonomyControl extends Component {
 		if ( ! this.state.termList.length ) {
 			this.isStillMounted = true
 			this.fetchRequest = apiFetch( {
-				path: addQueryArgs( `/stackable/${ 'v' + this.props.stkVersion || '2' }/stk_terms`, {
+				path: addQueryArgs( `/stackable/${ 'v' + this.props.stkVersion || '2' }/terms`, {
 					per_page: -1, // eslint-disable-line camelcase
 				} ),
 			} ).then(

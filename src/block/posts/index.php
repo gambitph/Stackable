@@ -281,7 +281,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				);
 
 				// API endpoint for getting all the terms/taxonomies.
-				register_rest_route( 'wp/v3', '/stk_terms', array(
+				register_rest_route( 'wp/v3', '/terms', array(
 					'methods' => 'GET',
 					'callback' => array( new Stackable_Posts_Block(), 'get_terms' ),
 					'permission_callback' => function () {

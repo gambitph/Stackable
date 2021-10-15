@@ -42,7 +42,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 * Register Rest API routes for the design library.
 		 */
 		public function register_route() {
-			register_rest_route( 'stackable/v2', '/stk_design_library(?:/(?P<reset>reset))?', array(
+			register_rest_route( 'stackable/v2', '/design_library(?:/(?P<reset>reset))?', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_design_library' ),
 				'permission_callback' => function () {
@@ -71,7 +71,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				),
 			) );
 
-			register_rest_route( 'stackable/v2', '/stk_design_library_dev_mode', array(
+			register_rest_route( 'stackable/v2', '/design_library_dev_mode', array(
 				'methods' => 'POST',
 				'callback' => array( $this, 'set_dev_mode' ),
 				'permission_callback' => function () {
