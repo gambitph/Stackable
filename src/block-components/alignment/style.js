@@ -8,11 +8,11 @@ const getStyleParams = ( options = {} ) => {
 	const {
 		selectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+		columnAlignSelectorCallback = ( () => '' ),
 	} = options
-
 	return [
 		{
-			selector: '',
+			selectorCallback: columnAlignSelectorCallback,
 			responsive: 'all',
 			styles: {
 				alignSelf: 'columnAlign',
@@ -23,18 +23,9 @@ const getStyleParams = ( options = {} ) => {
 			selectorCallback,
 			styles: {
 				alignItems: 'rowAlign',
-				justifyContent: 'innerBlockVerticalAlign',
 			},
 			responsive: 'all',
 			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
-		},
-		{
-			renderIn: 'save',
-			selectorCallback,
-			styleRule: 'alignItems',
-			attrName: 'innerBlockVerticalAlign',
-			responsive: 'all',
-			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
 		},
 
 		{
@@ -42,18 +33,9 @@ const getStyleParams = ( options = {} ) => {
 			selectorCallback: editorSelectorCallback,
 			styles: {
 				alignItems: 'rowAlign',
-				justifyContent: 'innerBlockVerticalAlign',
 			},
 			responsive: 'all',
 			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
-		},
-		{
-			renderIn: 'edit',
-			selectorCallback: editorSelectorCallback,
-			styleRule: 'alignItems',
-			attrName: 'innerBlockVerticalAlign',
-			responsive: 'all',
-			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
 		},
 	]
 }

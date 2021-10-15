@@ -78,15 +78,6 @@ export const Edit = props => {
 							attribute="innerBlockOrientation"
 						/>
 					}
-					{ props.hasColumnAlignment &&
-						<AdvancedToolbarControl
-							label={ __( 'Inner Block Vertical Alignment', i18n ) }
-							attribute="innerBlockVerticalAlign"
-							responsive="all"
-							controls="flex-vertical"
-							className="ugb--help-tip-advanced-block-vertical-align"
-						/>
-					}
 				</PanelAdvancedSettings>
 			</InspectorBlockControls>
 		</Fragment>
