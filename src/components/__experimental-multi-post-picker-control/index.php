@@ -27,7 +27,7 @@ if ( ! class_exists( 'Stackable_Post_Picker' ) ) {
 		 * Register our get posts endpoint.
 		 */
 		public function register_rest_route() {
-			register_rest_route( 'wp/v2', '/stk_editor_mode_get_all_posts', array(
+			register_rest_route( 'stackable/v2', '/editor_mode_get_all_posts', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'editor_mode_get_all_posts' ),
 				'permission_callback' => function () {
