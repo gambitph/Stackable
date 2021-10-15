@@ -8,10 +8,11 @@ const getStyleParams = ( options = {} ) => {
 	const {
 		selectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+		columnAlignSelectorCallback = ( () => '' ),
 	} = options
 	return [
 		{
-			selector: '',
+			selectorCallback: columnAlignSelectorCallback,
 			responsive: 'all',
 			styles: {
 				alignSelf: 'columnAlign',

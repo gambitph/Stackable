@@ -87,7 +87,9 @@ const BlockStyles = props => {
 
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
+			<Alignment.Style { ...propsToPass } options={ {
+				columnAlignSelectorCallback: getAttribute => `[data-block="${ getAttribute( 'clientId' ) }"]`,
+			} } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
