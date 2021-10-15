@@ -18,6 +18,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import variations from './variations'
+import { buttonExample } from './example'
 
 /**
  * WordPress dependencies
@@ -39,6 +40,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	},
 	variations,
 
+	example: buttonExample,
 	edit,
 	save,
 } )
