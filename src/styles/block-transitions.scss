@@ -22,7 +22,8 @@ body.stk--anim-init {
 	.stk-block h3,
 	.stk-block h4,
 	.stk-block h5,
-	.stk-block h6),
+	.stk-block h6,
+	.stk-block [class*="__text"]), // Text inside blocks.
 	// These are outside :is() since pseudo elements won't compile correctly.
 	.stk--has-background-overlay::before, // Image background overlays
 	.stk-block .stk-button::before, // For button animations

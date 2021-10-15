@@ -11,6 +11,10 @@ export const addAttributes = attrObject => {
 				type: 'boolean',
 				default: false,
 			},
+			triggerHoverState: {
+				type: 'boolean',
+				default: true,
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
