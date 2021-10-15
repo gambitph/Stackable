@@ -37,8 +37,9 @@ export const Button = props => {
 			linkProps={ buttonProps }
 			linkTrigger={ linkTrigger }
 		>
+			{ attributes.iconPosition === 'right' && props.children }
 			<Icon hasLinearGradient={ false } />
-			{ props.children }
+			{ attributes.iconPosition !== 'right' && props.children }
 		</Link>
 	)
 }
@@ -61,11 +62,12 @@ Button.Content = props => {
 			attributes={ attributes }
 			className={ classnames( [ className, getButtonClasses( attributes ) ] ) }
 		>
+			{ attributes.iconPosition === 'right' && props.children }
 			<Icon.Content
 				attributes={ attributes }
 				hasLinearGradient={ false }
 			/>
-			{ props.children }
+			{ attributes.iconPosition !== 'right' && props.children }
 		</Link.Content>
 	)
 }

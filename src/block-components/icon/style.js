@@ -61,17 +61,12 @@ const getStyleParams = ( options = {} ) => {
 			format: 'rotate(%sdeg)',
 		},
 		{
-			selector,
-			styleRule: 'flexDirection',
-			attrName: 'iconPosition',
-			valuePreCallback: value => value ? 'row-reverse' : undefined,
-		},
-		{
-			selector,
-			styleRule: 'columnGap',
+			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
+			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector ),
+			styleRuleCallback: getAttribute => getAttribute( 'iconPosition' ) === 'right' ? 'marginInlineStart' : 'marginInlineEnd',
 			attrName: 'iconGap',
-			hoverSelector,
 			format: `%spx`,
+			dependencies: [ 'iconPosition' ],
 		},
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute, selector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ),
