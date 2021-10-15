@@ -56,7 +56,7 @@ export const Save = props => {
 		>
 			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<button className={ contentClassNames } aria-label={ __( 'Play Video', i18n ) }>
+			<button className={ contentClassNames } aria-label={ attributes.ariaLabel || __( 'Play Video', i18n ) }>
 				<InnerBlocks.Content />
 			</button>
 		</BlockDiv.Content>
