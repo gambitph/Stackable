@@ -249,16 +249,16 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							</p>
 						</aside>
 						<?php endif; ?>
-                        <aside class="s-box">
-                            <h3><?php _e( '🍺 Free Theme Download', STACKABLE_I18N ) ?></h3>
-                            <p><?php _e( 'Get our FREE WordPress theme that\'s beautiful & flexible, and made especially for Stackable blocks and the new WordPress editor. Subscribe to our newsletter to get the Stackable Theme now.', STACKABLE_I18N ) ?></p>
-							<p><a href="https://rebrand.ly/plugin-welcome-theme-download" class="s-button" target="_blank" title="<?php esc_attr_e( 'Subscribe & Download', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe & Download', STACKABLE_I18N ) ?></a></p>
+                        <aside class="s-box s-left-align">
+                            <h3><?php _e( '🎉 Join the Community', STACKABLE_I18N ) ?></h3>
+                            <p><?php _e( 'Join the very active Stackable Community in Facebook, join thousands of like-minded people who are also building their websites and crafting beautiful and impactful web pages.', STACKABLE_I18N ) ?></p>
+							<p><a href="https://rebrand.ly/join-fb-community" class="s-button" target="_new" title="<?php esc_attr_e( 'Join Facebook Community', STACKABLE_I18N ) ?>"><?php _e( 'Join Facebook Community', STACKABLE_I18N ) ?></a></p>
                         </aside>
-                        <aside class="s-box s-news-box">
+                        <aside class="s-box s-news-box s-left-align">
 							<h3><?php _e( '🗞 Stackable Blog', STACKABLE_I18N ) ?></h3>
 							<div class="s-news-box-content"><?php stackable_news_feed_links_cached() ?></div>
 							<p><?php _e( 'Keep up to date by subscribing to our newsletter.', STACKABLE_I18N ) ?></p>
-							<p><a href="https://rebrand.ly/plugin-welcome-subscribe" class="s-button" target="_blank" title="<?php esc_attr_e( 'Subscribe', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe', STACKABLE_I18N ) ?></a></p>
+							<p><a href="https://rebrand.ly/plugin-welcome-subscribe" class="s-button" target="_new" title="<?php esc_attr_e( 'Subscribe', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe', STACKABLE_I18N ) ?></a></p>
                         </aside>
                     </div>
                 </section>
