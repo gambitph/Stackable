@@ -14,8 +14,10 @@ class StackableCountUp {
 		entries.forEach( entry => {
 			const el = entry.target
 			if ( ! el.classList.contains( ACTIVE ) && entry.isIntersecting ) {
-				counterUp( el )
-				el.classList.add( ACTIVE )
+				setTimeout( () => {
+					counterUp( el )
+					el.classList.add( ACTIVE )
+				}, 200 )
 			}
 		} )
 	}
@@ -36,7 +38,9 @@ class StackableCountUp {
 		if ( this.io ) {
 			this.io.disconnect()
 		}
-		this.io = new IntersectionObserver( this.callback, { threshold: 1 } ) // eslint-disable-line compat/compat
+		// Don't use threshold 1 because if a small part of the text is hidden,
+		// the IO won't trigger.
+		this.io = new IntersectionObserver( this.callback, { threshold: 0.25 } ) // eslint-disable-line compat/compat
 		els.forEach( el => {
 			this.io.observe( el )
 		} )
