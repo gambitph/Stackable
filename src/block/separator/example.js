@@ -1,5 +1,5 @@
 export default {
-	clientId: 'de2bd574-0edc-4602-85d8-3399810b639e', name: 'stackable/separator', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-separator alignfull stk-block-separator stk--no-padding stk-block stk-067ed3b" data-block-id="067ed3b"><style>.stk-067ed3b svg{fill:#6f6d9f !important}</style><div class="stk-block-separator__inner"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1600 200" class="stk-separator__layer-1" preserveaspectratio="none" aria-hidden="true"><path class="wave-1_svg__st2" d="M1341.4 48.9c-182.4 0-254.2 80.4-429.4 80.4-117.8 0-209.7-67.5-393.5-67.5-142.2 0-212.6 38.8-324.6 38.8S-10 64.7-10 64.7V210h1620V102c-110.6-40.2-181-53.1-268.6-53.1z"></path></svg></div></div>', attributes: {
+	attributes: {
 		uniqueId: '067ed3b', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, blockLinkHasLink: true, blockLinkNewTab: false, blockLinkHasTitle: true, align: 'full', separatorShow: true, separatorColor: '#6f6d9f', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%',
 	}, innerBlocks: [],
 }

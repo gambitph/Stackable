@@ -1,19 +1,19 @@
 export default {
-	clientId: 'b9e59600-7b0b-445c-a411-c67febe14625', name: 'stackable/call-to-action', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-call-to-action stk-block-call-to-action stk-block stk-e1cf244" data-block-id="e1cf244"><div class="stk-block-content stk-inner-blocks has-text-align-center stk-block-call-to-action__content stk-content-align stk-container stk-e1cf244-container stk-hover-parent">\n\n\n\n</div></div>', attributes: {
+	attributes: {
 		uniqueId: 'e1cf244', hasBackground: false, hasBorders: false, hasContainer: true, contentAlign: 'center', effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], displayCondition: {}, hideDesktop: false, hideTablet: false, hideMobile: false, blockLinkHasLink: true, blockLinkNewTab: false, blockLinkHasTitle: true, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', containerBackgroundCustomSizeUnit: '%', containerBackgroundCustomSizeUnitTablet: '%', containerBackgroundCustomSizeUnitMobile: '%',
 	}, innerBlocks: [ {
-		clientId: '8a45d569-b573-41ed-8171-ce3e68b9aab4', name: 'stackable/heading', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-heading stk-block-heading stk-block stk-0482a4d" data-block-id="0482a4d"><h3 class="stk-block-heading__text">Title for This Block</h3></div>', attributes: {
+		name: 'stackable/heading', attributes: {
 			uniqueId: '0482a4d', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: 'Title for This Block', textTag: 'h3', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 		}, innerBlocks: [],
 	}, {
-		clientId: 'f8b1d5d9-6866-41a5-9d66-0b5ae341eb1d', name: 'stackable/text', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-text stk-block-text stk-block stk-3d22629" data-block-id="3d22629"><p class="stk-block-text__text">Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.</p></div>', attributes: {
+		name: 'stackable/text', attributes: {
 			uniqueId: '3d22629', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 		}, innerBlocks: [],
 	}, {
-		clientId: 'd02c4a05-57e3-4aec-a5cf-f63c0405c346', name: 'stackable/button-group', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-button-group stk-block-button-group stk-block stk-e1e1c84" data-block-id="e1e1c84"><div class="stk-row stk-inner-blocks stk-block-content stk-button-group"></div></div>', attributes: {
+		name: 'stackable/button-group', attributes: {
 			uniqueId: 'e1e1c84', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%',
 		}, innerBlocks: [ {
-			clientId: '4f3637b0-8416-45af-b932-5097ebccf355', name: 'stackable/button', isValid: true, validationIssues: [], originalContent: '<div class="wp-block-stackable-button stk-block-button stk-block stk-852fde3" data-block-id="852fde3"><a class="stk-link stk-button" href=""><span class="stk-button__inner-text">Button</span></a></div>', attributes: {
+			name: 'stackable/button', attributes: {
 				uniqueId: '852fde3', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, hasP: false, show: true, showText: true, text: 'Button', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 			}, innerBlocks: [],
 		} ],
