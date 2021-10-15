@@ -10,6 +10,12 @@
 	margin: 0 !important;
 }
 
+:where(.ugb-icon) {
+	.ugb-icon__item {
+		text-align: center;
+		align-items: center;
+	}
+}
 .ugb-icon {
 	&.ugb-icon--v2 {
 		display: flex;
@@ -25,13 +31,12 @@
 		grid-gap: $box-hori-padding;
 	}
 	.ugb-icon__item {
-		text-align: center;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
 	}
 	// Default icon dimensions.
 	&.ugb-main-block .ugb-icon-inner-svg svg {
+		display: block;
 		height: 50px;
 		width: 50px;
 	}

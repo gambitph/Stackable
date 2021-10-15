@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { SvgIcon } from '~stackable/components'
 import { __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
 
@@ -9,6 +8,11 @@ import { camelCase } from 'lodash'
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
+
+/**
+ * Internal dependencies
+ */
+import SvgIcon from '../svg-icon'
 
 const SvgIconHelper = props => {
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )

@@ -5,9 +5,10 @@ import classnames from 'classnames'
 import {
 	withBlockStyles, withUniqueClass,
 } from '../../higher-order'
-import { ButtonEdit, DivBackground } from '../../components'
 import {
-	SvgIconHelper,
+	ButtonEdit, DivBackground, SvgIconHelper,
+} from '../../components'
+import {
 	BlockContainer,
 } from '~stackable/components'
 
