@@ -4,7 +4,11 @@
 import { Style as StyleComponent } from '~stackable/components'
 import { getStyles, useStyles } from '~stackable/util'
 
-const getStyleParams = () => {
+const getStyleParams = ( options = {} ) => {
+	const {
+		selectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
+	} = options
 	return [
 		{
 			selector: '',
@@ -12,6 +16,25 @@ const getStyleParams = () => {
 			styles: {
 				alignSelf: 'columnAlign',
 			},
+		},
+		{
+			renderIn: 'save',
+			selectorCallback,
+			styles: {
+				alignItems: 'rowAlign',
+			},
+			responsive: 'all',
+			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+		},
+
+		{
+			renderIn: 'edit',
+			selectorCallback: editorSelectorCallback,
+			styles: {
+				alignItems: 'rowAlign',
+			},
+			responsive: 'all',
+			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
 		},
 	]
 }
