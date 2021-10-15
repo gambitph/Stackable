@@ -41,7 +41,7 @@ const variations = applyFilters(
 			innerBlocks: [
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/image', {
-					imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
+					imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageShape: 'circle',
 				} ],
 				[ 'stackable/heading', {
 					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
@@ -67,7 +67,7 @@ const variations = applyFilters(
 				[ 'stackable/columns', { columnFit: true }, [
 					[ 'stackable/column', {}, [
 						[ 'stackable/image', {
-							imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageBorderRadius: 90,
+							imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageShape: 'circle',
 						} ],
 					] ],
 					[ 'stackable/column', { contentAlign: 'left' }, [

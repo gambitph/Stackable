@@ -38,8 +38,8 @@ const typographyOptions = {
 	],
 }
 
-const getStyleParams = ( { attributes = {} } ) => {
-	const individualIconStyles = Object.keys( attributes.icons ).reduce( ( acc, key ) => {
+const getStyleParams = options => {
+	const individualIconStyles = Object.keys( options?.attributes.icons || {} ).reduce( ( acc, key ) => {
 		return [
 			...acc,
 			{
