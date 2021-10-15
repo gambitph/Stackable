@@ -48,6 +48,8 @@ const TEMPLATE = [
 	} ],
 ]
 
+const TABS = [ 'block', 'advanced' ]
+
 const Edit = props => {
 	const {
 		className, attributes,
@@ -65,7 +67,7 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
+			<InspectorTabs tabs={ TABS } />
 
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
