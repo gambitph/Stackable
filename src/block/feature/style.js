@@ -14,6 +14,7 @@ import {
 	Separator,
 	Transform,
 	ContainerDiv,
+	ContentAlign,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -47,6 +48,7 @@ const BlockStyles = props => {
 			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<Separator.Style { ...propsToPass } />
+			<ContentAlign.Style { ...propsToPass } />
 		</>
 	)
 }
@@ -72,6 +74,7 @@ BlockStyles.Content = props => {
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
 			<Separator.Style.Content { ...propsToPass } />
+			<ContentAlign.Style.Content { ...propsToPass } />
 		</>
 	)
 

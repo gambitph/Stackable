@@ -1,5 +1,4 @@
-/**
- * Internal dependencies
+/** Internal dependencies
  */
 import { IconStyles } from './style'
 /**
@@ -95,7 +94,7 @@ const Edit = props => {
 						<Icon />
 					</Link>
 				</BlockDiv>
-				<MarginBottom />
+				<MarginBottom previewSelector={ attributes.uniqueId ? `.${ getUniqueBlockClass( attributes.uniqueId ) } > .stk-block` : undefined } />
 			</div>
 		</Fragment>
 	)

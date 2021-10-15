@@ -64,17 +64,17 @@ export const Save = props => {
 			>
 				<InnerBlocks.Content />
 				<BlockLink.Content attributes={ attributes } />
+				{ attributes.isDismissible &&
+					<button
+						className="stk-block-notification__close-button"
+					>
+						<SVGCloseIcon
+							width={ attributes.dismissibleSize || 16 }
+							height={ attributes.dismissibleSize || 16 }
+						/>
+					</button>
+				}
 			</ContainerDiv.Content>
-			{ attributes.isDismissible &&
-				<button
-					className="stk-block-notification__close-button"
-				>
-					<SVGCloseIcon
-						width={ attributes.dismissibleSize || 16 }
-						height={ attributes.dismissibleSize || 16 }
-					/>
-				</button>
-			}
 		</BlockDiv.Content>
 	)
 }

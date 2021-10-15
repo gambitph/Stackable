@@ -27,7 +27,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-blockquote__content',
-	sizeVerticalAlignRule: 'justifyContent',
+	sizeVerticalAlignRule: 'alignItems',
 	sizeHorizontalAlignRule: 'margin',
 }
 

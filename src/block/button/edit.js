@@ -80,7 +80,9 @@ const Edit = props => {
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />
 
-			<BlockStyle.InspectorControls styles={ blockStyles } />
+			<BlockStyle.InspectorControls styles={ blockStyles }>
+				<Button.InspectorControls.HoverEffects />
+			</BlockStyle.InspectorControls>
 			<Button.InspectorControls
 				borderSelector=".stk-button"
 				hasFullWidth={ true }
