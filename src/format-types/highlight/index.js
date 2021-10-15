@@ -25,20 +25,23 @@ import domReady from '@wordpress/dom-ready'
 import { dispatch, select } from '@wordpress/data'
 
 // Apply the proper styles for the different text highlights.
-const createApplyFormat = ( textValue, colorType, textColor, highlightColor ) => {
+const createApplyFormat = ( _textValue, colorType, textColor, highlightColor ) => {
+	// Backward compatibility with the old named format.
+	const textValue = removeFormat( _textValue, 'ugb/highlight' )
+
 	// Normal text color
 	if ( colorType === '' ) {
 		if ( ! textColor ) {
 			return removeFormat(
 				textValue,
-				'ugb/highlight',
+				'stk/highlight',
 			)
 		}
 
 		return applyFormat(
 			textValue,
 			{
-				type: 'ugb/highlight',
+				type: 'stk/highlight',
 				attributes: {
 					style: `color: ${ textColor };`,
 				},
@@ -51,7 +54,7 @@ const createApplyFormat = ( textValue, colorType, textColor, highlightColor ) =>
 		return applyFormat(
 			textValue,
 			{
-				type: 'ugb/highlight',
+				type: 'stk/highlight',
 				attributes: {
 					style: ( textColor ? `color: ${ textColor };` : '' ) +
 						( highlightColor ? `background-color: ${ highlightColor }` : '' ),
@@ -64,7 +67,7 @@ const createApplyFormat = ( textValue, colorType, textColor, highlightColor ) =>
 	return applyFormat(
 		textValue,
 		{
-			type: 'ugb/highlight',
+			type: 'stk/highlight',
 			attributes: {
 				style: ( textColor ? `color: ${ textColor };` : '' ) +
 					( highlightColor ? `background: linear-gradient(to bottom, transparent 50%, ${ highlightColor } 50%)` : '' ),
@@ -130,17 +133,31 @@ const HighlightButton = props => {
 
 	const {
 		activeAttributes,
-		isActive,
+		isActive: _isActive,
 		onChange,
 		value,
 	} = props
+
+	// Backward compatibility for ugb/highlight.
+	let isActive = _isActive
+	let highlightStyles = activeAttributes?.style
+	if ( value ) {
+		( value.activeFormats || [] ).some( format => {
+			if ( format?.type === 'ugb/highlight' ) {
+				highlightStyles = format?.attributes.style
+				isActive = true
+				return true
+			}
+			return false
+		} )
+	}
 
 	// Detect the current colors based on the styles applied on the text.
 	const {
 		textColor = '',
 		highlightColor = '',
 		colorType = '',
-	} = isActive ? extractColors( activeAttributes.style ) : {}
+	} = isActive ? extractColors( highlightStyles ) : {}
 
 	// If highlighted, show the highlight color, otherwise show the text color.
 	const displayIconColor = ( colorType !== '' ? highlightColor : textColor ) || textColor
@@ -196,7 +213,7 @@ const HighlightButton = props => {
 								} }
 								isSmall
 							/>
-							<div className="ugb-highlight-format__color-picker">
+							<div className="stk-highlight-format__color-picker">
 								<ColorPaletteControl
 									label={ __( 'Text Color', i18n ) }
 									value={ textColor }
@@ -206,7 +223,7 @@ const HighlightButton = props => {
 								/>
 							</div>
 							{ colorType !== '' &&
-								<div className="ugb-highlight-format__color-picker">
+								<div className="stk-highlight-format__color-picker">
 									<ColorPaletteControl
 										label={ __( 'Highlight Color', i18n ) }
 										value={ highlightColor }
@@ -225,11 +242,23 @@ const HighlightButton = props => {
 }
 
 registerFormatType(
-	'ugb/highlight', {
+	'stk/highlight', {
 		title: __( 'Highlight Text', i18n ),
 		tagName: 'span',
-		className: 'ugb-highlight',
+		className: 'stk-highlight',
 		edit: HighlightButton,
+		attributes: {
+			style: 'style',
+		},
+	}
+)
+
+// Backward compatibility, ugb/highlight, but this is not visible.
+registerFormatType(
+	'ugb/highlight', {
+		title: __( 'Highlight Text', i18n ) + ' (v2)',
+		tagName: 'span',
+		className: 'ugb-highlight',
 		attributes: {
 			style: 'style',
 		},

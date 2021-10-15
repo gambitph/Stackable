@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { ImageBoxIcon } from '~stackable/icons'
+import { ImageIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -23,7 +23,7 @@ import { applyFilters } from '@wordpress/hooks'
 
 export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
-	icon: ImageBoxIcon,
+	icon: ImageIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,

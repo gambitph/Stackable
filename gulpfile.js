@@ -171,7 +171,11 @@ gulp.task( 'style-editor-deprecated-v2', function() {
 } )
 
 gulp.task( 'style-deprecated-v2', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/common.scss' ), path.resolve( __dirname, './src/deprecated/v2/**/style.scss' ) ] )
+	return gulp.src( [
+		path.resolve( __dirname, './src/deprecated/v2/common.scss' ),
+		path.resolve( __dirname, './src/format-types/highlight/style.scss' ),
+		path.resolve( __dirname, './src/deprecated/v2/**/style.scss' ),
+	] )
 		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks_deprecated_v2.css' ) )
 		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/

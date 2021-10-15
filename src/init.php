@@ -136,7 +136,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			if ( ! $this->is_main_script_loaded && ! is_admin() ) {
 				if (
 					stripos( $block['blockName'], 'stackable/' ) === 0 ||
-					stripos( $block_content, '<!-- wp:stackable/' ) !==  false
+					stripos( $block_content, '<!-- wp:stackable/' ) !==  false ||
+					stripos( $block_content, 'stk-highlight' ) !==  false
 				) {
 					$this->block_enqueue_frontend_assets();
 					$this->is_main_script_loaded = true;

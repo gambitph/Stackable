@@ -9,6 +9,7 @@ import {
 	ContainerDiv,
 	MarginBottom,
 	Transform,
+	ContentAlign,
 } from '~stackable/block-components'
 import {
 	useDeviceType, useBlockAttributes,
@@ -53,6 +54,7 @@ export const TeamMemberStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
 			<MarginBottom.Style { ...propsToPass } />
+			<ContentAlign.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -77,6 +79,7 @@ TeamMemberStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
 			<MarginBottom.Style.Content { ...propsToPass } />
+			<ContentAlign.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 

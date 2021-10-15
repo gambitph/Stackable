@@ -1,36 +1,14 @@
 /**
  * Internal dependencies
  */
-import { FontAwesomeIcon } from '~stackable/components'
-import { getShapeSVG } from '~stackable/util'
-import classnames from 'classnames'
+import FontAwesomeIcon from '../font-awesome-icon'
 
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { useMemo } from '@wordpress/element'
 
-const wrapBackgroundShape = ( icon, shape ) => {
-	const ShapeComp = getShapeSVG( shape || 'blob1' )
-	if ( ! ShapeComp ) {
-		return icon
-	}
-
-	return (
-		<div className="ugb-icon__bg-shape-wrapper">
-			{ icon }
-			<ShapeComp className="ugb-icon__bg-shape" />
-		</div>
-	)
-}
-
-/**
- * Extracts the first SVG tag it could find in an HTML string.
- *
- * @param {string} _htmlString String to extract the svg.
- */
-const extractSvg = _htmlString => {
-	const htmlString = applyFilters( 'stackable.svg-icon.extract-svg', _htmlString )
+const extractSvg = htmlString => {
 	if ( htmlString.match( /^<svg(.*?)<\/svg>$/g ) ) {
 		return htmlString
 	} else if ( htmlString.match( /<svg/ ) ) {
@@ -39,97 +17,24 @@ const extractSvg = _htmlString => {
 	return htmlString
 }
 
-const SvgIcon = props => {
-	const propsToPass = {
-		...props,
-		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
-	}
+const SVGIcon = props => {
+	const {
+		...propsToPass
+	} = props
 
-	const classNames = classnames( [
-		'ugb-icon-inner-svg',
-		props.className,
-	], {
-		[ `ugb-icon--${ props.colorType }` ]: props.colorType && props.colorType !== 'single',
-	} )
+	propsToPass.value = useMemo( () => props.value === 'string' ? extractSvg( props.value ) : props.value, [ props.value ] )
 
-	let ret = (
-		<FontAwesomeIcon { ...propsToPass } className={ classNames } />
-	)
-
-	if ( props.design === 'shaped' || props.design === 'outlined' ) {
-		const wrapperClasses = classnames( [
-			'ugb-icon__design-wrapper',
-			`ugb-icon__design-${ props.design }`,
-		], {
-			[ `ugb--shadow-${ props.shadow }` ]: props.shadow && props.design === 'shaped',
-		} )
-		ret = <div className={ wrapperClasses } >{ ret }</div>
-	}
-
-	if ( props.showBackgroundShape ) {
-		ret = wrapBackgroundShape( ret, props.backgroundShape )
-	}
-
-	ret = applyFilters( 'stackable.component.svg-icon', ret, propsToPass )
-
-	return ret
+	return <FontAwesomeIcon { ...propsToPass } />
 }
 
-SvgIcon.defaultProps = {
-	className: '',
+SVGIcon.Content = props => {
+	const {
+		...propsToPass
+	} = props
 
-	value: '', // The icon name or icon SVG.
-	design: '', // Can be plain, shaped or outlined
+	propsToPass.value = props.value === 'string' ? extractSvg( props.value ) : props.value
 
-	colorType: '', // Blank/single, gradient or multicolor.
-
-	// Show background shape.
-	showBackgroundShape: false,
-	backgroundShape: '', // An SVG to add as a background
-	shadow: '', // For shaped only
-
-	// The icon has a gradient color.
-	gradientColor1: '',
-	gradientColor2: '',
-	gradientDirection: 0, // Only supports every 45 degrees.
+	return <FontAwesomeIcon.Content { ...propsToPass } />
 }
 
-SvgIcon.Content = props => {
-	const propsToPass = {
-		...props,
-		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
-	}
-
-	const classNames = classnames( [
-		'ugb-icon-inner-svg',
-		props.className,
-	], {
-		[ `ugb-icon--${ props.colorType }` ]: props.colorType && props.colorType !== 'single',
-	} )
-
-	let ret = <FontAwesomeIcon.Content { ...propsToPass } className={ classNames } />
-
-	if ( props.design === 'shaped' || props.design === 'outlined' ) {
-		const wrapperClasses = classnames( [
-			'ugb-icon__design-wrapper',
-			`ugb-icon__design-${ props.design }`,
-		], {
-			[ `ugb--shadow-${ props.shadow }` ]: props.shadow && props.design === 'shaped',
-		} )
-		ret = <div className={ wrapperClasses } >{ ret }</div>
-	}
-
-	if ( props.showBackgroundShape ) {
-		ret = wrapBackgroundShape( ret, props.backgroundShape )
-	}
-
-	ret = applyFilters( 'stackable.component.svg-icon', ret, propsToPass )
-
-	return ret
-}
-
-SvgIcon.Content.defaultProps = {
-	...SvgIcon.defaultProps,
-}
-
-export default SvgIcon
+export default SVGIcon

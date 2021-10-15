@@ -36,6 +36,14 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			// Redefine anchor here as a normal json attribute (and not sourced
+			// from the html), because it will get our generated ID and may
+			// produce block errors.
+			anchor: {
+				type: 'string',
+				default: '',
+			},
+
 			showTopLine: {
 				type: 'boolean',
 				default: '',

@@ -20,13 +20,15 @@ export const useUniqueId = ( autoApplyUniqueId = true ) => {
 		}
 
 		// When there's no unique ID yet, create one.
+		const uniqueClass = createUniqueClass( clientId )
 		if ( ! attributes.uniqueId ) {
-			attributes.uniqueId = createUniqueClass( clientId )
+			attributes.uniqueId = uniqueClass
+
 			// If there's one already, check whether the we need to re-create one.
 			// Duplicating a block or copy pasting a block may give us duplicate IDs.
-		} else if ( createUniqueClass( clientId ) !== attributes.uniqueId ) {
+		} else if ( uniqueClass !== attributes.uniqueId ) {
 			if ( document.querySelectorAll( `[data-block-id="${ attributes.uniqueId }"]` ).length > 1 ) {
-				attributes.uniqueId = createUniqueClass( clientId )
+				attributes.uniqueId = uniqueClass
 			}
 		}
 	}, [ clientId ] )

@@ -41,6 +41,13 @@ export const attributes = ( version = VERSION ) => {
 				attribute: 'data-video',
 				default: '',
 			},
+			ariaLabel: {
+				type: 'string',
+				source: 'attribute',
+				selector: 'button',
+				attribute: 'aria-label',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
