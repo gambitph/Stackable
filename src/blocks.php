@@ -61,13 +61,17 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 	$stk_block_folders = array(
 		'button',
 		'count-up',
+		'divider',
 		'heading',
-		'icon',
+		'icon-button',
 		'icon-list',
+		'icon',
 		'image',
-		'price',
+		'number-box',
+		'separator',
+		'spacer',
+		'subtitle',
 		'text',
-		'posts'
 	);
 
 	return stackable_get_metadata_by_folders( $stk_block_folders, 'stk-block-folders' );
@@ -80,21 +84,27 @@ if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
 	 * folders containing stackable blocks with inner blocks.
 	 */
 	$stk_wrapper_block_folders = array(
-		'button-group',
+		'accordion',
 		'blockquote',
-		'card',
+		'button-group',
 		'call-to-action',
+		'card',
 		'column',
 		'columns',
-		'container',
 		'expand',
-		'feature',
 		'feature-grid',
+		'feature',
 		'hero',
 		'icon-box',
 		'icon-label',
+		'image-box',
 		'notification',
+		'posts',
+		'price',
 		'pricing-box',
+		'team-member',
+		'testimonial',
+		'video-popup',
 	);
 
 	return stackable_get_metadata_by_folders( $stk_wrapper_block_folders, 'stk-wrapper-block-folders' );

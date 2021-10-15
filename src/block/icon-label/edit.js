@@ -40,7 +40,7 @@ import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-const TEMPLATE = [
+export const TEMPLATE = [
 	[ 'stackable/icon', { contentAlign: 'left' } ],
 	[ 'stackable/heading', {
 		text: __( 'Icon Label' ), hasP: true, textTag: 'h4',

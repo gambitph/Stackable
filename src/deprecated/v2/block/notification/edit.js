@@ -28,7 +28,6 @@ import {
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	FourRangeControl,
-	SvgIconPlaceholder,
 	IconControlsHelper,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
@@ -39,6 +38,7 @@ import {
 	ContentAlignControl,
 	DivBackground,
 	ResponsiveControl,
+	SvgIconPlaceholder,
 } from '../../components'
 import {
 	descriptionPlaceholder,
@@ -250,28 +250,28 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						/>
 					}
 					{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
 					}
 					{ show.shadow &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ shadow }
+							onChange={ shadow => setAttributes( { shadow } ) }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="3"
+							className="ugb--help-tip-general-shadow"
+						/>
 					}
 				</PanelAdvancedSettings>
 			}

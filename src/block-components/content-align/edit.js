@@ -43,6 +43,7 @@ export const Controls = props => {
 			<AdvancedToolbarControl
 				label={ __( 'Content Width', i18n ) }
 				attribute="innerBlockContentAlign"
+				default={ getAttribute( 'align' ) ? `align${ getAttribute( 'align' ) }` : '' }
 				controls={ [
 					{
 						value: '',

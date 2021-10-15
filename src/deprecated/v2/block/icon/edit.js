@@ -11,7 +11,6 @@ import {
 	AdvancedToggleControl,
 	BlockContainer,
 	AdvancedRangeControl,
-	SvgIconPlaceholder,
 	IconControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
@@ -24,7 +23,7 @@ import {
 	ColumnPaddingControl,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl,
+	DivBackground, ContentAlignControl, ResponsiveControl, SvgIconPlaceholder,
 } from '../../components'
 import {
 	withUniqueClass,

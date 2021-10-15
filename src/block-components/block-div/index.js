@@ -13,6 +13,8 @@ import { applyFilters } from '@wordpress/hooks'
 import { getHtmlTag } from '../advanced/use-html-tag'
 import { CustomAttributes } from '../custom-attributes'
 
+export { useUniqueId }
+
 export const BlockDiv = props => {
 	const {
 		className,
@@ -21,6 +23,7 @@ export const BlockDiv = props => {
 		renderHtmlTag,
 		enableVariationPicker,
 		withUniqueClass,
+		enableId,
 		...propsToPass
 	} = props
 
@@ -59,7 +62,7 @@ export const BlockDiv = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
+		id={ enableId ? ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined : undefined }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ renderHtmlTag ? htmlTag : 'div' }
 		hasBackground={ attributes.hasBackground }
@@ -78,6 +81,7 @@ BlockDiv.defaultProps = {
 	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
 	enableVariationPicker: false,
 	withUniqueClass: true,
+	enableId: true,
 }
 
 BlockDiv.Content = props => {
@@ -86,6 +90,7 @@ BlockDiv.Content = props => {
 		attributes,
 		applyCustomAttributes,
 		applyAdvancedAttributes,
+		enableId,
 		...propsToPass
 	} = props
 
@@ -107,7 +112,7 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
+		id={ enableId ? ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined : undefined }
 		data-block-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
@@ -124,6 +129,7 @@ BlockDiv.Content.defaultProps = {
 	attributes: {},
 	applyCustomAttributes: true,
 	applyAdvancedAttributes: true,
+	enableId: true,
 }
 
 BlockDiv.InspectorControls = Edit

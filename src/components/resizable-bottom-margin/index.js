@@ -113,6 +113,7 @@ const ResizableBottomMarginSingle = props => {
 			} }
 			onResizeStop={ () => {
 				props.onChange( currentHeight === defaultBottomMargin ? '' : currentHeight )
+				setInitialHeight( 0 )
 				setCurrentHeight( null )
 				setIsResizing( false )
 			} }

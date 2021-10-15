@@ -136,7 +136,7 @@ export const generateRenderPostItem = attributes => {
 				hasRemove={ false }
 				enableClickToEdit={ false }
 				defaultWidth={ 100 }
-				defaultHeight={ 300 }
+				defaultHeight="auto"
 				enableWidth={ enableWidth }
 				widthResizePosition={ style?.name === 'horizontal'
 					? 'left'
@@ -262,9 +262,11 @@ export const generateRenderPostItem = attributes => {
 		)
 
 		return (
-			<ContainerDiv className={ itemClassNames } key={ idx }>
-				{ output }
-			</ContainerDiv>
+			<div className={ itemClassNames } key={ idx }>
+				<ContainerDiv>
+					{ output }
+				</ContainerDiv>
+			</div>
 		)
 	}
 }
@@ -411,9 +413,11 @@ generateRenderPostItem.save = attributes => {
 	return (
 		<>
 			{ '<!–- /stk-start:posts/template –->' }
-			<ContainerDiv.Content className={ itemClassNames } attributes={ attributes }>
-				{ output }
-			</ContainerDiv.Content>
+			<div className={ itemClassNames }>
+				<ContainerDiv.Content attributes={ attributes }>
+					{ output }
+				</ContainerDiv.Content>
+			</div>
 			{ '<!–- /stk-end:post/template –->' }
 		</>
 	)

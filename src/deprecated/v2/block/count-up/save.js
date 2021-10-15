@@ -2,9 +2,9 @@
  * External dependencies
  */
 import {
-	BlockContainer, SvgIconHelper,
+	BlockContainer,
 } from '~stackable/components'
-import { DivBackground } from '../../components'
+import { DivBackground, SvgIconHelper } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
 } from '../../higher-order'

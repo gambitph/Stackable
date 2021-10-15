@@ -57,7 +57,11 @@
 .ugb-image-control {
 	.stk-dynamic-content-control {
 		display: block;
+		> .ugb-image-preview-wrapper {
+			margin-top: 0;
+		}
 	}
+
 
 	.stk-dynamic-content-control__button {
 		position: absolute;

@@ -105,7 +105,7 @@ const variations = applyFilters(
 					},
 				}, [
 					[ 'stackable/image', {
-						imageBorderRadius: 125,
+						imageShape: 'circle',
 						imageHeight: 250,
 						imageWidth: 250,
 						positionNum: {
@@ -137,7 +137,7 @@ const variations = applyFilters(
 					},
 				}, [
 					[ 'stackable/image', {
-						imageBorderRadius: 125,
+						imageShape: 'circle',
 						imageHeight: 250,
 						imageWidth: 250,
 						positionNum: {

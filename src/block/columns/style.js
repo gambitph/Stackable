@@ -9,52 +9,19 @@ import {
 	MarginBottom,
 	Separator,
 	Transform,
+	ContentAlign,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
 } from '~stackable/hooks'
 import {
 	getUniqueBlockClass,
-	getStyles,
-	useStyles,
 } from '~stackable/util'
-import { Style as StyleComponent } from '~stackable/components'
 import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const getStyleParams = () => {
-	return [
-		{
-			renderIn: 'save',
-			selector: '.%s-column',
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			format: '%spx',
-		},
-		{
-			renderIn: 'edit',
-			selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			format: '%spx',
-		},
-		{
-			renderIn: 'save',
-			selector: '.%s-column',
-			styleRule: 'justifyContent',
-			attrName: 'columnFitAlign',
-			responsive: 'all',
-			enabledCallback: getAttribute => !! getAttribute( 'columnFit' ),
-		},
-		{
-			renderIn: 'edit',
-			selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
-			styleRule: 'justifyContent',
-			attrName: 'columnFitAlign',
-			responsive: 'all',
-			enabledCallback: getAttribute => !! getAttribute( 'columnFit' ),
-		},
-	]
+const alignmentOptions = {
+	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 }
 
 const BlockStyles = props => {
@@ -66,8 +33,6 @@ const BlockStyles = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
-	const styles = useStyles( attributes, getStyleParams( props.options || {} ) )
-
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
@@ -77,19 +42,14 @@ const BlockStyles = props => {
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
+			<Alignment.Style { ...propsToPass } options={ alignmentOptions } />
 			<BlockDiv.Style { ...propsToPass } />
 			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 			<Separator.Style { ...propsToPass } />
-			<StyleComponent
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
+			<ContentAlign.Style { ...propsToPass } />
 		</>
 	)
 }
@@ -108,23 +68,16 @@ BlockStyles.Content = props => {
 		...propsToPass.options,
 	}
 
-	const styles = getStyles( props.attributes, getStyleParams( props.options ) )
-
 	const stylesToRender = (
 		<>
-			<Alignment.Style.Content { ...propsToPass } />
+			<Alignment.Style.Content { ...propsToPass } options={ alignmentOptions } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Separator.Style.Content { ...propsToPass } />
-			<StyleComponent.Content
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
+			<ContentAlign.Style.Content { ...propsToPass } />
 		</>
 	)
 
