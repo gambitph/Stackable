@@ -14,6 +14,7 @@ import { i18n } from 'stackable'
 import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import {
 	useBlockAttributes, useBlockEl,
@@ -45,8 +46,26 @@ export const Edit = props => {
 				title={ __( 'Container Background', i18n ) }
 				id="container"
 				checked={ attributes.hasContainer }
-				onChange={ hasContainer => updateBlockAttributes( clientId, { hasContainer } ) }
+				onChange={ hasContainer => updateBlockAttributes( clientId, { hasContainer, triggerHoverState: hasContainer } ) }
 			>
+				<AdvancedToggleControl
+					label={ __( 'Trigger hover state on nested blocks', i18n ) }
+					attribute="triggerHoverState"
+					valueCallback={ value => {
+						if ( value && ! attributes.hasContainer ) {
+							return false
+						}
+
+						return value
+					} }
+					changeCallback={ value => {
+						if ( value && ! attributes.hasContainer ) {
+							return false
+						}
+
+						return value
+					} }
+				/>
 				<BackgroundControls attrNameTemplate="container%s" />
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
