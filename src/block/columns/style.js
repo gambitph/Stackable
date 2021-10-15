@@ -20,6 +20,10 @@ import {
 import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
+const alignmentOptions = {
+	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+}
+
 const BlockStyles = props => {
 	const {
 		...propsToPass
@@ -38,7 +42,7 @@ const BlockStyles = props => {
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
+			<Alignment.Style { ...propsToPass } options={ alignmentOptions } />
 			<BlockDiv.Style { ...propsToPass } />
 			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
@@ -66,7 +70,7 @@ BlockStyles.Content = props => {
 
 	const stylesToRender = (
 		<>
-			<Alignment.Style.Content { ...propsToPass } />
+			<Alignment.Style.Content { ...propsToPass } options={ alignmentOptions } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />

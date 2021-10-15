@@ -1,6 +1,7 @@
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		imageWidthUnitDefault = '%',
+		selector = 'img',
 	} = options
 
 	attrObject.add( {
@@ -19,6 +20,9 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			},
 			imageAlt: {
 				type: 'string',
+				source: 'attribute',
+				selector,
+				attribute: 'alt',
 				default: '',
 			},
 			imageSize: {

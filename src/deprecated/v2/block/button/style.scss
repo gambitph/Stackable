@@ -6,9 +6,11 @@
 
 @import "common";
 
+:where(.ugb-button-wrapper) .ugb-block-content {
+	justify-content: center;
+}
 .ugb-button-wrapper .ugb-block-content {
 	display: flex !important;
-	justify-content: center;
 	flex-wrap: wrap;
 	align-items: center;
 	margin-left: -0.5em;
