@@ -230,9 +230,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                             <h3><?php _e( '🚀 Stackable Premium', STACKABLE_I18N ) ?></h3>
 							<p><?php _e( 'If you are ready for even more, upgrade to Premium and get:', STACKABLE_I18N ) ?></p>
 								<ul class="s-check-list">
-									<li><?php _e( '60+ Additional Block Layouts', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '230+ Additional Block Designs', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Additional Block Styling Options', STACKABLE_I18N ) ?></li>
+									<li><?php _e( '54+ Additional Block Layouts', STACKABLE_I18N ) ?></li>
+									<li><?php _e( '230+ Additional Library Designs', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'Dynamic Content', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'Motion Effects', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'Conditionally Display Blocks', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'User Role Manager', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'Font Awesome Pro Integration', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'Custom Block CSS', STACKABLE_I18N ) ?></li>
