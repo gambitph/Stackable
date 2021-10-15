@@ -1,4 +1,5 @@
 .stk-block .stk-button {
+	transform-origin: center;
 	&.stk--hover-effect-darken:hover {
 		filter: brightness(0.9) contrast(1.2);
 	}
@@ -12,6 +13,10 @@
 	&.stk--hover-effect-lift-scale:hover {
 		transform: translateY(-4px) scale(1.05);
 		box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.2);
+	}
+	&.stk--hover-effect-lift-more:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.2);
 	}
 	&.stk--hover-effect-scale-more:hover {
 		transform: scale(1.1);

@@ -47,7 +47,7 @@ const buttonAttributes = {
 	},
 	buttonHoverEffect: {
 		type: 'string',
-		default: '',
+		default: 'darken',
 	},
 }
 

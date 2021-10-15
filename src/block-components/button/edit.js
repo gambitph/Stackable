@@ -60,12 +60,20 @@ const HOVER_OPTIONS = [
 		value: 'darken',
 	},
 	{
+		label: __( 'Lift', i18n ),
+		value: 'lift',
+	},
+	{
 		label: __( 'Scale', i18n ),
 		value: 'scale',
 	},
 	{
 		label: __( 'Lift & Scale', i18n ),
 		value: 'lift-scale',
+	},
+	{
+		label: __( 'Lift More', i18n ),
+		value: 'lift-more',
 	},
 	{
 		label: __( 'Scale More', i18n ),
@@ -83,6 +91,7 @@ export const HoverEffects = () => {
 			label={ __( 'Hover Effect', i18n ) }
 			attribute="buttonHoverEffect"
 			options={ HOVER_OPTIONS }
+			default="darken"
 		/>
 	)
 }

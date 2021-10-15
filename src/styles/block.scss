@@ -280,9 +280,6 @@
 
 // Buttons.
 .stk-button {
-	&:hover {
-		opacity: 0.85;
-	}
 	width: max-content;
 	text-decoration: none !important; // Some themes may add underlines on buttons, we need to force remove it. !important is the only way.
 }
