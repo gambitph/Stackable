@@ -170,6 +170,13 @@ const getStyleParams = ( { attributes = {} } ) => {
 			responsive: 'all',
 			format: '%sem',
 		},
+		{
+			selector: [ 'ul', 'ol' ],
+			styleRule: 'alignItems',
+			attrName: 'listAlignment',
+			responsive: 'all',
+			valueCallback: value => value === 'right' ? 'flex-end' : value === 'left' ? 'flex-start' : value,
+		},
 	]
 }
 

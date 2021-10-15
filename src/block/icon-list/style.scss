@@ -17,4 +17,6 @@
 .stk-block-icon-list :is(ul, ol) {
 	margin-left: var(--stk-alignment-margin-left);
 	margin-right: var(--stk-alignment-margin-right);
+	display: flex;
+	flex-direction: column;
 }
