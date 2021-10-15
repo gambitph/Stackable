@@ -35,6 +35,11 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+	listAlignment: {
+		stkResponsive: true,
+		type: 'string',
+		default: '',
+	},
 
 	// Icon.
 	icon: {

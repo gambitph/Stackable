@@ -122,7 +122,7 @@ const getStyleParams = options => {
 			format: '%spx',
 		},
 		{
-			selector: 'li',
+			selector: 'ul li',
 			hover: 'all',
 			hoverSelector: '.%s:hover li',
 			styleRule: 'listStyleImage',
@@ -169,6 +169,13 @@ const getStyleParams = options => {
 			attrName: 'iconSize',
 			responsive: 'all',
 			format: '%sem',
+		},
+		{
+			selector: [ 'ul', 'ol' ],
+			styleRule: 'alignItems',
+			attrName: 'listAlignment',
+			responsive: 'all',
+			valueCallback: value => value === 'right' ? 'flex-end' : value === 'left' ? 'flex-start' : value,
 		},
 	]
 }

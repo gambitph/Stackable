@@ -17,6 +17,7 @@ import {
 	ColorPaletteControl,
 	IconSearchPopover,
 	AdvancedSelectControl,
+	AlignButtonsControl,
 } from '~stackable/components'
 import {
 	useBlockHoverClass,
@@ -229,6 +230,11 @@ const Edit = props => {
 						responsive="all"
 						placeholder=""
 					/>
+					<AlignButtonsControl
+						label={ __( 'List Alignment', i18n ) }
+						attribute="listAlignment"
+						responsive="all"
+					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
@@ -311,12 +317,28 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-icon-list" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div ref={ textRef }>
+				{ /* eslint-disable-next-line */ }
+				<div onClick={ e => {
+					if (
+						e.target.closest( '.rich-text' ) !== textRef.current &&
+						document.activeElement !== textRef.current // eslint-disable-line
+					) {
+						textRef.current.focus()
+						const range = document.createRange()
+						range.selectNodeContents( textRef.current )
+						range.collapse( false )
+
+						const selection = window.getSelection() // eslint-disable-line
+						selection.removeAllRanges()
+						selection.addRange( range )
+					}
+				} }>
 					<Typography
 						tagName={ tagName }
 						multiline="li"
 						onRemove={ onRemove }
 						onMerge={ mergeBlocks }
+						ref={ textRef }
 					>
 						{ controls }
 					</Typography>
