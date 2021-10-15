@@ -292,7 +292,7 @@
 			text-decoration: none;
 			position: relative;
 
-			.stk--svg-wrapper {
+			.stk--svg-wrapper:not(:only-child) {
 				&:first-child .stk--inner-svg svg:last-child {
 					margin-inline-end: 8px;
 				}
