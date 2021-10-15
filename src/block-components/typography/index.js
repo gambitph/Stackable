@@ -18,14 +18,14 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	useEffect, useState, useRef,
+	useEffect, useState, useRef, forwardRef,
 } from '@wordpress/element'
 import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
 
 // WP 5.6 Compatibility
 const useMergeRefs = _useMergeRefs || ( () => {} )
 
-export const Typography = props => {
+export const Typography = forwardRef( ( props, ref ) => {
 	const {
 		className,
 		attrNameTemplate,
@@ -34,7 +34,6 @@ export const Typography = props => {
 		value: _value,
 		onChange: _onChange,
 		children,
-		ref,
 		editable,
 		identifier,
 		defaultValue,
@@ -88,7 +87,7 @@ export const Typography = props => {
 			{ children }
 		</RichText>
 	)
-}
+} )
 
 Typography.defaultProps = {
 	attrNameTemplate: '%s',

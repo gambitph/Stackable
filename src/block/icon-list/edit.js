@@ -82,6 +82,7 @@ const listTypeOptions = [
 const Edit = props => {
 	const textRef = useRef()
 	const [ isOpenIconSearch, setIsOpenIconSearch ] = useState( false )
+	const [ isRichTextSelected, setIsRichTextSelected ] = useState( false )
 	const [ iconSearchAnchor, setIconSearchAnchor ] = useState( null )
 	const [ selectedIconCSSSelector, setSelectedIconCSSSelector ] = useState( null )
 	const [ selectedEvent, setSelectedEvent ] = useState( null )
@@ -311,13 +312,18 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-icon-list" />
 
 			<BlockDiv className={ blockClassNames }>
-				{ /** make the whole area editable so that clicking the block will focus on the rich-text **/ }
-				<div ref={ textRef } contentEditable={ true }>
+				{ /* eslint-disable-next-line */ }
+				<div onClick={ () => {
+					setIsRichTextSelected( false )
+					setIsRichTextSelected( true )
+				} } contentEditable={ true }>
 					<Typography
 						tagName={ tagName }
 						multiline="li"
 						onRemove={ onRemove }
 						onMerge={ mergeBlocks }
+						ref={ textRef }
+						isSelected={ isRichTextSelected }
 					>
 						{ controls }
 					</Typography>
