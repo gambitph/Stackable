@@ -85,7 +85,7 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '', styles = {} )
 					child.style.stroke = _color
 				}
 			} )
-			const willEnqueueStyles = Object.keys( styles ).map( key => styles[ key ] !== undefined && styles[ key ] !== '' ? `${ kebabCase( key ) }: ${ styles[ key ] } !important;` : '' ).join( '' )
+			const willEnqueueStyles = Object.keys( styles ).map( key => typeof styles[ key ] !== 'undefined' && styles[ key ] !== '' ? `${ kebabCase( key ) }: ${ styles[ key ] } !important;` : '' ).join( '' )
 			svgEl.setAttribute( 'style', `fill: ${ _color } !important; color: ${ _color } !important;` + willEnqueueStyles )
 		}
 
