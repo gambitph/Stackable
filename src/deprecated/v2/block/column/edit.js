@@ -222,7 +222,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 					<ButtonIconPopoverControl
 						label={ __( 'Background', i18n ) }
@@ -269,7 +269,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
+						className="stk--help-tip-general-border-radius"
 					/>
 					}
 
@@ -282,7 +282,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
-						className="ugb--help-tip-general-shadow"
+						className="stk--help-tip-general-shadow"
 					/>
 					}
 				</PanelAdvancedSettings>

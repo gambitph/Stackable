@@ -46,7 +46,7 @@ export const SizeControls = props => {
 				step={ [ 1, 1 ] }
 				allowReset={ true }
 				placeholder="0"
-				className="ugb--help-tip-advanced-block-height"
+				className="stk--help-tip-advanced-block-height"
 			/>
 
 			<AdvancedToolbarControl
@@ -54,7 +54,7 @@ export const SizeControls = props => {
 				attribute={ getAttrName( 'verticalAlign' ) }
 				responsive="all"
 				controls="flex-vertical"
-				className="ugb--help-tip-advanced-block-vertical-align"
+				className="stk--help-tip-advanced-block-vertical-align"
 			/>
 
 			<AdvancedRangeControl
@@ -68,7 +68,7 @@ export const SizeControls = props => {
 				allowReset={ true }
 				placeholder=""
 				initialPosition="1500"
-				className="ugb--help-tip-advanced-block-content-width"
+				className="stk--help-tip-advanced-block-content-width"
 			/>
 
 			{ getAttribute( 'width' ) !== '' && deviceType === 'Desktop' &&
@@ -78,7 +78,7 @@ export const SizeControls = props => {
 					responsive="all"
 					controls="flex-horizontal"
 					value={ getAttribute( 'HorizontalAlign' ) }
-					className="ugb--help-tip-advanced-block-horizontal-align"
+					className="stk--help-tip-advanced-block-horizontal-align"
 				/>
 			}
 			{ ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' ) && deviceType === 'Tablet' &&
@@ -87,7 +87,7 @@ export const SizeControls = props => {
 					attribute={ getAttrName( 'HorizontalAlign' ) }
 					responsive="all"
 					controls="flex-horizontal"
-					className="ugb--help-tip-advanced-block-horizontal-align"
+					className="stk--help-tip-advanced-block-horizontal-align"
 				/>
 			}
 			{ ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' || getAttribute( 'widthMobile' ) !== '' ) && deviceType === 'Mobile' &&
@@ -96,7 +96,7 @@ export const SizeControls = props => {
 					attribute={ getAttrName( 'HorizontalAlign' ) }
 					responsive="all"
 					controls="flex-horizontal"
-					className="ugb--help-tip-advanced-block-horizontal-align"
+					className="stk--help-tip-advanced-block-horizontal-align"
 				/>
 			}
 
@@ -109,7 +109,7 @@ export const SizeControls = props => {
 				defaultLocked={ true }
 				min={ [ 0, 0, 0 ] }
 				sliderMax={ [ 200, 30, 100 ] }
-				className="ugb--help-tip-advanced-block-paddings"
+				className="stk--help-tip-advanced-block-paddings"
 			/>
 
 			{ props.enableMargin &&
@@ -122,7 +122,7 @@ export const SizeControls = props => {
 					sliderMin={ [ -200, -100 ] }
 					sliderMax={ [ 200, 100 ] }
 					placeholder="0"
-					className="ugb--help-tip-advanced-block-margins"
+					className="stk--help-tip-advanced-block-margins"
 				/>
 			}
 

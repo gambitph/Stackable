@@ -187,7 +187,7 @@ const Controls = props => {
 						} )
 					} }
 					defaultValue="full"
-					className="ugb--help-tip-image-size"
+					className="stk--help-tip-image-size"
 				/>
 			) }
 
@@ -200,7 +200,7 @@ const Controls = props => {
 					placeholder="0"
 					defaultValue={ 0 }
 					allowReset={ true }
-					className="ugb--help-tip-general-border-radius"
+					className="stk--help-tip-general-border-radius"
 				/>
 			}
 
@@ -223,7 +223,7 @@ const Controls = props => {
 					{ label: __( 'None', i18n ), value: 'none' },
 					{ label: __( 'Scale Down', i18n ), value: 'scale-down' },
 				] }
-				className="ugb--help-tip-background-image-size"
+				className="stk--help-tip-background-image-size"
 				responsive="all"
 			/>
 

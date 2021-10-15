@@ -45,7 +45,7 @@ Usage
 
 You can use the entry by adding the corresponding `className` to the inspector control / component you want the tooltip to appear.
 
-Use a className of `ugb--help-tip-kebabCase` where `kebabCase` is the **kebabCase** name.
+Use a className of `stk--help-tip-kebabCase` where `kebabCase` is the **kebabCase** name.
 
 For example:
 
@@ -54,7 +54,7 @@ For example:
 	label={ __( 'Shadow / Outline', i18n ) }
 	value={ shadow }
 	onChange={ shadow => setAttributes( { shadow } ) }
-	className="ugb--help-tip-general-shadows"
+	className="stk--help-tip-general-shadows"
 />
 ```
 

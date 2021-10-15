@@ -161,7 +161,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 3 }
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 					default={ 2 }
 				/>
 				<ContentAlignControl
@@ -175,7 +175,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					title={ __( 'Container', i18n ) }
 					initialOpen={ false }
 					id="column-background"
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 					<ButtonIconPopoverControl
 						label={ __( 'Background', i18n ) }
@@ -221,7 +221,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
+						className="stk--help-tip-general-border-radius"
 					/>
 					}
 
@@ -234,7 +234,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
-						className="ugb--help-tip-general-shadow"
+						className="stk--help-tip-general-shadow"
 					/>
 					}
 				</PanelAdvancedSettings>
@@ -261,7 +261,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							max={ 100 }
 							placeholder="24"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-image"
+							className="stk--help-tip-spacing-image"
 						/>
 					</ResponsiveControl>
 				}
@@ -277,7 +277,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							max={ 100 }
 							placeholder="8"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-name"
+							className="stk--help-tip-spacing-name"
 						/>
 					</ResponsiveControl>
 				}
@@ -293,7 +293,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-name"
+							className="stk--help-tip-spacing-name"
 						/>
 					</ResponsiveControl>
 				}
@@ -309,7 +309,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
+							className="stk--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -325,7 +325,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							max={ 100 }
 							placeholder="4"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-button"
+							className="stk--help-tip-spacing-button"
 						/>
 					</ResponsiveControl>
 				}
@@ -341,7 +341,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							max={ 30 }
 							placeholder="0"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-button-gap"
+							className="stk--help-tip-spacing-button-gap"
 						/>
 					</ResponsiveControl>
 				}
@@ -397,7 +397,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 						>
 							<AlignButtonsControl
 								label={ __( 'Align', i18n ) }
-								className="ugb--help-tip-alignment-image"
+								className="stk--help-tip-alignment-image"
 							/>
 						</ResponsiveControl>
 					</Fragment>
@@ -429,7 +429,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 									min={ 0 }
 									max={ 800 }
 									allowReset={ true }
-									className="ugb--help-tip-image-height-crop"
+									className="stk--help-tip-image-height-crop"
 								/>
 							</ResponsiveControl>
 						}
@@ -445,7 +445,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 									max={ 90 }
 									allowReset={ true }
 									placeholder="50"
-									className="ugb--help-tip-image-width-crop"
+									className="stk--help-tip-image-width-crop"
 								/>
 							</ResponsiveControl>
 						}
@@ -489,7 +489,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-name"
+						className="stk--help-tip-alignment-name"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -523,7 +523,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-name"
+						className="stk--help-tip-alignment-name"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -557,7 +557,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -602,7 +602,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					>
 						<AlignButtonsControl
 							label={ __( 'Align', i18n ) }
-							className="ugb--help-tip-alignment-button"
+							className="stk--help-tip-alignment-button"
 						/>
 					</ResponsiveControl>
 				</PanelAdvancedSettings>

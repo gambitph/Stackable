@@ -55,7 +55,7 @@ const TypographyControl = props => {
 						label={ __( 'Font Family', i18n ) }
 						onChange={ props.onChangeFontFamily }
 						value={ props.fontFamily }
-						className="ugb--help-tip-typography-family"
+						className="stk--help-tip-typography-family"
 					/>
 				) }
 				{ props.onChangeFontSize && (
@@ -70,7 +70,7 @@ const TypographyControl = props => {
 								onChangeUnit={ props.onChangeFontSizeUnit }
 								{ ...props.fontSizeProps }
 								placeholder={ placeholder }
-								className="ugb--help-tip-typography-size"
+								className="stk--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -82,7 +82,7 @@ const TypographyControl = props => {
 								unit={ props.tabletFontSizeUnit }
 								onChangeUnit={ props.onChangeTabletFontSizeUnit }
 								{ ...props.fontSizeProps }
-								className="ugb--help-tip-typography-size"
+								className="stk--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -94,7 +94,7 @@ const TypographyControl = props => {
 								unit={ props.mobileFontSizeUnit }
 								onChangeUnit={ props.onChangeMobileFontSizeUnit }
 								{ ...props.fontSizeProps }
-								className="ugb--help-tip-typography-size"
+								className="stk--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>
@@ -118,7 +118,7 @@ const TypographyControl = props => {
 						] }
 						onChange={ props.onChangeFontWeight }
 						value={ props.fontWeight }
-						className="ugb--help-tip-typography-weight"
+						className="stk--help-tip-typography-weight"
 					/>
 				) }
 				{ props.onChangeTextTransform && (
@@ -133,7 +133,7 @@ const TypographyControl = props => {
 						] }
 						onChange={ props.onChangeTextTransform }
 						value={ props.textTransform }
-						className="ugb--help-tip-typography-transform"
+						className="stk--help-tip-typography-transform"
 					/>
 				) }
 				{ props.onChangeLineHeight && (
@@ -152,7 +152,7 @@ const TypographyControl = props => {
 								unit={ props.lineHeightUnit }
 								onChangeUnit={ props.onChangeLineHeightUnit }
 								initialPosition={ [ 37, 1.8 ] }
-								className="ugb--help-tip-typography-line-height"
+								className="stk--help-tip-typography-line-height"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -169,7 +169,7 @@ const TypographyControl = props => {
 								unit={ props.tabletLineHeightUnit }
 								onChangeUnit={ props.onChangeTabletLineHeightUnit }
 								initialPosition={ [ 37, 1.8 ] }
-								className="ugb--help-tip-typography-line-height"
+								className="stk--help-tip-typography-line-height"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -186,7 +186,7 @@ const TypographyControl = props => {
 								unit={ props.mobileLineHeightUnit }
 								onChangeUnit={ props.onChangeMobileLineHeightUnit }
 								initialPosition={ [ 37, 1.8 ] }
-								className="ugb--help-tip-typography-line-height"
+								className="stk--help-tip-typography-line-height"
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>
@@ -201,7 +201,7 @@ const TypographyControl = props => {
 						onChange={ props.onChangeLetterSpacing }
 						value={ props.letterSpacing }
 						placeholder="0"
-						className="ugb--help-tip-typography-letter-spacing"
+						className="stk--help-tip-typography-letter-spacing"
 					/>
 				) }
 			</ButtonIconPopoverControl>
@@ -218,7 +218,7 @@ const TypographyControl = props => {
 							onChangeUnit={ props.onChangeFontSizeUnit }
 							{ ...props.fontSizeProps }
 							placeholder={ placeholder }
-							className="ugb--help-tip-typography-size"
+							className="stk--help-tip-typography-size"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -230,7 +230,7 @@ const TypographyControl = props => {
 							unit={ props.tabletFontSizeUnit }
 							onChangeUnit={ props.onChangeTabletFontSizeUnit }
 							{ ...props.fontSizeProps }
-							className="ugb--help-tip-typography-size"
+							className="stk--help-tip-typography-size"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -242,7 +242,7 @@ const TypographyControl = props => {
 							unit={ props.mobileFontSizeUnit }
 							onChangeUnit={ props.onChangeMobileFontSizeUnit }
 							{ ...props.fontSizeProps }
-							className="ugb--help-tip-typography-size"
+							className="stk--help-tip-typography-size"
 						/>
 					</WhenResponsiveScreen>
 				</Fragment>
@@ -254,7 +254,7 @@ const TypographyControl = props => {
 TypographyControl.defaultProps = {
 	label: __( 'Typography', i18n ),
 	popoverLabel: undefined,
-	className: 'ugb--help-tip-typography',
+	className: 'stk--help-tip-typography',
 	showSecondFontSize: true,
 	fontFamily: '',
 	fontSize: '',

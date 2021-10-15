@@ -167,7 +167,7 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 					min={ 2 }
 					max={ design !== 'grid' ? 6 : 8 }
 					default={ 2 }
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 				/>
 
 				{ applyFilters( 'stackable.columns.edit.inspector.columns.after', null, props ) }
@@ -268,7 +268,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 					min={ 2 }
 					max={ design !== 'grid' ? 6 : 8 }
 					default={ 2 }
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 				/>
 
 				{ applyFilters( 'stackable.columns.edit.inspector.columns.after', null, props ) }
@@ -314,7 +314,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 						label={ __( 'No Paddings', i18n ) }
 						checked={ noPaddings }
 						onChange={ noPaddings => setAttributes( { noPaddings } ) }
-						className="ugb--help-tip-no-padding"
+						className="stk--help-tip-no-padding"
 					/>
 				}
 

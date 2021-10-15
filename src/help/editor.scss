@@ -1,7 +1,7 @@
 body.ugb--help-tips-enabled {
 	// Visible feedback that there's a tooltip for Inspector Controls.
-	[class*="ugb--help-tip-"].components-base-control .components-base-control__label,
-	[class*="ugb--help-tip-"].components-base-control .components-toggle-control__label {
+	[class*="stk--help-tip-"].components-base-control .components-base-control__label,
+	[class*="stk--help-tip-"].components-base-control .components-toggle-control__label {
 		cursor: help;
 		&:hover {
 			color: #b300be;
@@ -9,7 +9,7 @@ body.ugb--help-tips-enabled {
 			text-underline-offset: 3px;
 		}
 	}
-	.components-base-control[class*="ugb--help-tip-"]:hover {
+	.components-base-control[class*="stk--help-tip-"]:hover {
 		.components-base-control__label,
 		.components-toggle-control__label {
 			text-decoration: #b300be underline dashed 1px;
@@ -18,7 +18,7 @@ body.ugb--help-tips-enabled {
 	}
 
 	// Visible feedback that there's a tooltip for Panel titles.
-	[class*="ugb--help-tip-"].components-panel__body .components-panel__body-toggle {
+	[class*="stk--help-tip-"].components-panel__body .components-panel__body-toggle {
 		cursor: pointer;
 		&::after {
 			content: "\f223";

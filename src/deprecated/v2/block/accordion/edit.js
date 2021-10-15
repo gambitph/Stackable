@@ -139,7 +139,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					label={ __( 'Close adjacent on open', i18n ) }
 					checked={ onlyOnePanelOpen }
 					onChange={ onlyOnePanelOpen => setAttributes( { onlyOnePanelOpen } ) }
-					className="ugb--help-tip-accordion-adjacent-open"
+					className="stk--help-tip-accordion-adjacent-open"
 				/>
 				<AdvancedToggleControl
 					label={ __( 'Open at the start', i18n ) }
@@ -199,7 +199,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 							max={ 50 }
 							allowReset={ true }
 							placeholder="12"
-							className="ugb--help-tip-general-border-radius"
+							className="stk--help-tip-general-border-radius"
 						/>
 					}
 					{ show.containerBorder &&
@@ -218,7 +218,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 							max={ 9 }
 							allowReset={ true }
 							placeholder="3"
-							className="ugb--help-tip-general-shadow"
+							className="stk--help-tip-general-shadow"
 						/>
 					}
 					{ design === 'colored' &&
@@ -226,7 +226,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 							value={ containerClosedBackgroundColor }
 							onChange={ containerClosedBackgroundColor => setAttributes( { containerClosedBackgroundColor } ) }
 							label={ __( 'Closed State Background Color', i18n ) }
-							className="ugb--help-tip-accordion-closed-state-background-color"
+							className="stk--help-tip-accordion-closed-state-background-color"
 						/>
 					}
 				</PanelAdvancedSettings>
@@ -251,7 +251,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						} ) }
 						max={ 200 }
 						placeholder="18"
-						className="ugb--help-tip-accordion-padding"
+						className="stk--help-tip-accordion-padding"
 					/>
 				}
 				{ show.titleSpacing &&
@@ -266,7 +266,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 							max={ 100 }
 							allowReset={ true }
 							placeholder="0"
-							className="ugb--help-tip-accordion-title-spacing"
+							className="stk--help-tip-accordion-title-spacing"
 						/>
 					</ResponsiveControl>
 				}
@@ -300,7 +300,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -342,7 +342,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						'borderColor',
 					] }
 					toggleAttributeName="showBorder"
-					className="ugb--help-tip-accordion-border"
+					className="stk--help-tip-accordion-border"
 				>
 					<AdvancedRangeControl
 						label={ __( 'Size', i18n ) }
@@ -352,7 +352,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						value={ borderSize }
 						onChange={ borderSize => setAttributes( { borderSize } ) }
 						placeholder="3"
-						className="ugb--help-tip-accordion-border-size"
+						className="stk--help-tip-accordion-border-size"
 					/>
 					<ColorPaletteControl
 						value={ borderColor }

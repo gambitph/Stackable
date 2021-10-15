@@ -206,7 +206,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 4 }
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 					default={ 2 }
 				/>
 
@@ -219,7 +219,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
+						className="stk--help-tip-general-border-radius"
 					/>
 				}
 				{ ! show.columnBackground && show.shadow &&
@@ -231,7 +231,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
-						className="ugb--help-tip-general-shadow"
+						className="stk--help-tip-general-shadow"
 					/>
 				}
 				<AdvancedSelectControl
@@ -247,7 +247,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					] }
 					value={ contentOrder }
 					onChange={ contentOrder => setAttributes( { contentOrder } ) }
-					className="ugb--help-tip-posts-content-order"
+					className="stk--help-tip-posts-content-order"
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }
@@ -307,7 +307,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 					<ButtonIconPopoverControl
 						label={ __( 'Background', i18n ) }
@@ -367,7 +367,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 50 }
 							allowReset={ true }
 							placeholder="12"
-							className="ugb--help-tip-general-border-radius"
+							className="stk--help-tip-general-border-radius"
 						/>
 					}
 
@@ -380,7 +380,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 9 }
 							allowReset={ true }
 							placeholder="3"
-							className="ugb--help-tip-general-shadow"
+							className="stk--help-tip-general-shadow"
 						/>
 					}
 				</PanelAdvancedSettings>
@@ -407,7 +407,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-alignment-image"
+							className="stk--help-tip-alignment-image"
 						/>
 					</ResponsiveControl>
 				}
@@ -423,7 +423,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-alignment-description"
+							className="stk--help-tip-alignment-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -439,7 +439,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-alignment-title"
+							className="stk--help-tip-alignment-title"
 						/>
 					</ResponsiveControl>
 				}
@@ -455,7 +455,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-alignment-description"
+							className="stk--help-tip-alignment-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -471,7 +471,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-alignment-description"
+							className="stk--help-tip-alignment-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -487,7 +487,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-alignment-button"
+							className="stk--help-tip-alignment-button"
 						/>
 					</ResponsiveControl>
 				}
@@ -503,7 +503,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-alignment-button"
+							className="stk--help-tip-alignment-button"
 						/>
 					</ResponsiveControl>
 				}
@@ -519,7 +519,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-alignment-button"
+							className="stk--help-tip-alignment-button"
 						/>
 					</ResponsiveControl>
 				}
@@ -541,7 +541,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					label={ __( 'Image Size', i18n ) }
 					value={ imageSize }
 					onChange={ imageSize => setAttributes( { imageSize } ) }
-					className="ugb--help-tip-image-size"
+					className="stk--help-tip-image-size"
 				/>
 				{ show.imageWidth &&
 					<ResponsiveControl
@@ -555,7 +555,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 600 }
 							placeholder="100"
 							allowReset={ true }
-							className="ugb--help-tip-image-width-crop"
+							className="stk--help-tip-image-width-crop"
 						/>
 					</ResponsiveControl>
 				}
@@ -571,7 +571,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							max={ 1000 }
 							placeholder="500"
 							allowReset={ true }
-							className="ugb--help-tip-image-height-crop"
+							className="stk--help-tip-image-height-crop"
 						/>
 					</ResponsiveControl>
 				}
@@ -619,7 +619,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -666,7 +666,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -710,7 +710,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -771,7 +771,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					] }
 					value={ metaSeparator }
 					onChange={ metaSeparator => setAttributes( { metaSeparator } ) }
-					className="ugb--help-tip-posts-meta-separator"
+					className="stk--help-tip-posts-meta-separator"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Meta%sAlign"
@@ -780,7 +780,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -827,7 +827,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-button"
+						className="stk--help-tip-alignment-button"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

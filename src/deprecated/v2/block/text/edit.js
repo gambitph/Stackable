@@ -128,7 +128,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					value={ columns }
 					onChange={ columns => setAttributes( { columns } ) }
 					default={ 1 }
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 				/>
 				{ show.reverseTitle &&
 					<AdvancedToggleControl
@@ -161,7 +161,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
+							className="stk--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				) }
@@ -177,7 +177,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
+							className="stk--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				) }
@@ -191,7 +191,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 						min={ 0 }
 						max={ 100 }
 						allowReset={ true }
-						className="ugb--help-tip-spacing"
+						className="stk--help-tip-spacing"
 					/>
 				</ResponsiveControl>
 			</PanelSpacingBody>
@@ -253,7 +253,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -301,7 +301,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -342,7 +342,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

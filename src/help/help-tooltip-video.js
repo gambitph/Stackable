@@ -24,7 +24,7 @@ import { startListening, stopListening } from './events-show'
 const videoUrl = video => `${ process.env.NODE_ENV === 'development' ? srcUrl : cdnUrl }/${ video }`
 
 // Gets the Help ID from the class.
-export const getHelpId = el => el && el.closest( '[class*="ugb--help-tip-"]' ) && camelCase( ( el.closest( '[class*="ugb--help-tip-"]' ).getAttribute( 'class' ).match( /ugb--help-tip-([\w\d-_]+)/ ) || [ '', '' ] )[ 1 ] )
+export const getHelpId = el => el && el.closest( '[class*="stk--help-tip-"]' ) && camelCase( ( el.closest( '[class*="stk--help-tip-"]' ).getAttribute( 'class' ).match( /stk--help-tip-([\w\d-_]+)/ ) || [ '', '' ] )[ 1 ] )
 
 const HelpToolTipVideo = props => {
 	const [ target, setTarget ] = useState( null )

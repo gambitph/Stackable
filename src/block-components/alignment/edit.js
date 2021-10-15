@@ -50,7 +50,7 @@ export const Edit = props => {
 							attribute="columnAlign"
 							responsive="all"
 							controls="flex-vertical-with-stretch"
-							className="ugb--help-tip-advanced-block-vertical-align"
+							className="stk--help-tip-advanced-block-vertical-align"
 						/>
 					}
 					{ props.hasRowAlignment &&
@@ -59,7 +59,7 @@ export const Edit = props => {
 							attribute="rowAlign"
 							responsive="all"
 							controls="flex-vertical-with-stretch"
-							className="ugb--help-tip-advanced-block-vertical-align"
+							className="stk--help-tip-advanced-block-vertical-align"
 						/>
 					}
 					{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
@@ -84,7 +84,7 @@ export const Edit = props => {
 							attribute="innerBlockVerticalAlign"
 							responsive="all"
 							controls="flex-vertical"
-							className="ugb--help-tip-advanced-block-vertical-align"
+							className="stk--help-tip-advanced-block-vertical-align"
 						/>
 					}
 				</PanelAdvancedSettings>

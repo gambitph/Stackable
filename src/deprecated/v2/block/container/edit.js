@@ -197,7 +197,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						label={ __( 'Restrict to Content Width', i18n ) }
 						checked={ restrictContentWidth }
 						onChange={ restrictContentWidth => setAttributes( { restrictContentWidth } ) }
-						className="ugb--help-tip-general-restrict-content"
+						className="stk--help-tip-general-restrict-content"
 					/>
 				}
 				<ResponsiveControl
@@ -258,7 +258,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 					<ButtonIconPopoverControl
 						label={ __( 'Background', i18n ) }
@@ -305,7 +305,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
+						className="stk--help-tip-general-border-radius"
 					/>
 					}
 
@@ -318,7 +318,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
-						className="ugb--help-tip-general-shadow"
+						className="stk--help-tip-general-shadow"
 					/>
 					}
 				</PanelAdvancedSettings>

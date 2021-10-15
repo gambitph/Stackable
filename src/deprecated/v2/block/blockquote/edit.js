@@ -135,7 +135,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 					<ButtonIconPopoverControl
 						label={ __( 'Background', i18n ) }
@@ -181,7 +181,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 							max={ 50 }
 							allowReset={ true }
 							placeholder="12"
-							className="ugb--help-tip-general-border-radius"
+							className="stk--help-tip-general-border-radius"
 						/>
 					) }
 
@@ -194,7 +194,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 							max={ 9 }
 							allowReset={ true }
 							placeholder="3"
-							className="ugb--help-tip-general-shadow"
+							className="stk--help-tip-general-shadow"
 						/>
 					) }
 				</PanelAdvancedSettings>
@@ -311,7 +311,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

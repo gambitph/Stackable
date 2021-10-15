@@ -40,7 +40,7 @@ const ImageSizeControl = ( {
 		{ ...propsToPass }
 		value={ value || 'large' }
 		options={ imageSizeOptions }
-		className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
+		className={ classnames( className, [ 'stk--help-tip-image-size' ] ) }
 		defaultValue={ defaultValue || 'large' }
 	/>
 }

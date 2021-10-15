@@ -152,7 +152,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 3 }
-					className="ugb--help-tip-general-columns"
+					className="stk--help-tip-general-columns"
 					default={ 2 }
 				/>
 				<ContentAlignControl
@@ -166,7 +166,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
+					className="stk--help-tip-column-background-on-off"
 				>
 
 					<ButtonIconPopoverControl
@@ -214,7 +214,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
+						className="stk--help-tip-general-border-radius"
 					/>
 					}
 
@@ -227,7 +227,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
-						className="ugb--help-tip-general-shadow"
+						className="stk--help-tip-general-shadow"
 					/>
 					}
 				</PanelAdvancedSettings>
@@ -251,7 +251,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-number"
+							className="stk--help-tip-spacing-number"
 						/>
 					</ResponsiveControl>
 				) }
@@ -267,7 +267,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
+							className="stk--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				) }
@@ -283,7 +283,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							max={ 100 }
 							placeholder="16"
 							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
+							className="stk--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				) }
@@ -395,7 +395,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-number"
+						className="stk--help-tip-alignment-number"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -436,7 +436,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-title"
+						className="stk--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -470,7 +470,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-description"
+						className="stk--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

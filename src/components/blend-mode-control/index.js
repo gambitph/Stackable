@@ -18,7 +18,7 @@ const BlendModeControl = props => {
 	return (
 		<AdvancedSelectControl
 			{ ...props }
-			className={ classnames( [ 'ugb--help-tip-background-blend-mode', props.className ] ) }
+			className={ classnames( [ 'stk--help-tip-background-blend-mode', props.className ] ) }
 			options={ [
 				{ value: '', label: __( 'None', i18n ) },
 				{ value: 'normal', label: __( 'Normal', i18n ) },

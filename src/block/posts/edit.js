@@ -176,7 +176,7 @@ const Edit = props => {
 						allowReset={ true }
 						placeholder=""
 						initialPosition="1500"
-						className="ugb--help-tip-advanced-block-content-width"
+						className="stk--help-tip-advanced-block-content-width"
 					/>
 					{ attributes.innerBlockContentWidth !== '' && deviceType === 'Desktop' &&
 						<AdvancedToolbarControl
@@ -184,7 +184,7 @@ const Edit = props => {
 							attribute="innerBlockAlign"
 							responsive="all"
 							controls="flex-horizontal"
-							className="ugb--help-tip-advanced-block-horizontal-align"
+							className="stk--help-tip-advanced-block-horizontal-align"
 						/>
 					}
 					{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' ) && deviceType === 'Tablet' &&
@@ -193,7 +193,7 @@ const Edit = props => {
 							attribute="innerBlockAlign"
 							responsive="all"
 							controls="flex-horizontal"
-							className="ugb--help-tip-advanced-block-horizontal-align"
+							className="stk--help-tip-advanced-block-horizontal-align"
 						/>
 					}
 					{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' || attributes.innerBlockContentWidthMobile !== '' ) && deviceType === 'Mobile' &&
@@ -202,7 +202,7 @@ const Edit = props => {
 							attribute="innerBlockAlign"
 							responsive="all"
 							controls="flex-horizontal"
-							className="ugb--help-tip-advanced-block-horizontal-align"
+							className="stk--help-tip-advanced-block-horizontal-align"
 						/>
 					}
 					<FlexGapControls />
@@ -550,7 +550,7 @@ addFilter( 'stackable.block-component.image.before', 'stackable/posts', output =
 				value={ getAttribute( 'imageSize' ) }
 				onChange={ updateAttributeHandler( 'imageSize' ) }
 				default="full"
-				className="ugb--help-tip-image-size"
+				className="stk--help-tip-image-size"
 			/>
 			<AdvancedToggleControl
 				label={ __( 'Apply hover effect when container is hovered', i18n ) }
