@@ -14,6 +14,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import example from './example'
 import { applyFilters } from '@wordpress/hooks'
 
 export const settings = applyFilters( 'stackable.block.metadata', {
@@ -25,6 +26,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	},
 	edit,
 	save,
+	example,
 	transforms,
 	merge( attributes, attributesToMerge ) {
 		// Make sure that the selection is always at the end of the text.

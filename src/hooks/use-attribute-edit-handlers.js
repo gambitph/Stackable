@@ -1,6 +1,8 @@
 import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
-import { select, dispatch } from '@wordpress/data'
+import {
+	dispatch, useSelect,
+} from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useCallback } from '@wordpress/element'
 
@@ -19,6 +21,9 @@ import { useCallback } from '@wordpress/element'
  */
 export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 	const { clientId } = useBlockEditContext()
+	const { getBlockAttributes } = useSelect( select => ( {
+		getBlockAttributes: select( 'core/block-editor' ).getBlockAttributes,
+	} ), [ clientId ] )
 
 	const getAttrName = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
 		return getAttributeName( getAttrNameFunction( attrNameTemplate )( attrName ), device, state )
@@ -26,13 +31,13 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 
 	const getAttribute = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
-		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId ) || {}
+		const attributes = getBlockAttributes( clientId ) || {}
 		return attributes[ getAttributeName( getAttrName( attrName ), device, state ) ]
-	}, [ clientId, attrNameTemplate ] )
+	}, [ clientId, attrNameTemplate, getBlockAttributes ] )
 
 	const getAttributes = useCallback( () => {
-		return select( 'core/block-editor' ).getBlockAttributes( clientId ) || {}
-	}, [ clientId ] )
+		return getBlockAttributes( clientId ) || {}
+	}, [ clientId, getBlockAttributes ] )
 
 	const updateAttribute = useCallback( ( attrName, value, device = 'desktop', state = 'normal' ) => {
 		const { updateBlockAttributes } = dispatch( 'core/block-editor' )

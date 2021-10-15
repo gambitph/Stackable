@@ -15,6 +15,7 @@ import schema from './schema'
 import metadata from './block.json'
 import transforms from './transforms'
 import variations from './variations'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -31,6 +32,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		align: [ 'center', 'wide', 'full' ],
 		stkAlign: true,
 	},
+	example,
 
 	transforms,
 	variations,
