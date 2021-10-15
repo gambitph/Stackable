@@ -134,7 +134,7 @@
 	}
 }
 [data-type^="stackable/"] .stk-row,
-.stk-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+.stk-column > .stk-inner-blocks:not(.stk--block-orientation-horizontal) > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	display: block;
 }
 
