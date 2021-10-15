@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies
  */
-import { createBlock } from '@wordpress/blocks'
+import { createBlock, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
+
+/**
+ * Internal dependencies
+ */
+import { TEMPLATE as ICON_LABEL_TEMPLATE } from '../icon-label/edit'
 
 const transforms = {
 	from: [
@@ -57,6 +62,25 @@ const transforms = {
 			blocks: [ 'core/heading' ],
 			transform: attributes => {
 				return attributes.map( ( { text } ) => createBlock( 'core/heading', { content: text } ) )
+			},
+		},
+		{
+			type: 'block',
+			isMultiBlock: true,
+			blocks: [ 'stackable/icon-label' ],
+			transform: attributes => {
+				return attributes.map( ( { ...attrs } ) => createBlocksFromInnerBlocksTemplate(
+					[
+						[ 'stackable/icon-label', {}, ICON_LABEL_TEMPLATE.map(
+							block => {
+								if ( block[ 0 ] === 'stackable/heading' ) {
+									block[ 1 ] = attrs
+								}
+								return block
+							}
+						) ],
+					]
+				)[ 0 ] )
 			},
 		},
 	],

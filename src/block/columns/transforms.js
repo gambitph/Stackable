@@ -1,8 +1,14 @@
 /**
+ * External dependencies
+ */
+import { get } from 'lodash'
+import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+
+/**
  * WordPress dependencies
  */
 import { createBlock } from '@wordpress/blocks'
-import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import { select } from '@wordpress/data'
 
 const MAXIMUM_SELECTED_BLOCKS = 10
 
@@ -16,6 +22,67 @@ const transforms = {
 				// Avoid transforming a single `stackable/column` Block
 				if ( blocks.length === 1 && blocks[ 0 ].name === 'stackable/column' ) {
 					return
+				}
+
+				if ( blocks.length === 1 && blocks[ 0 ].name === 'core/columns' ) {
+					const oldColumnsBlock = blocks[ 0 ]
+
+					const newInnerBlocks = []
+					const newColumnsAttributes = { uniqueId: createUniqueClass( oldColumnsBlock.clientId ) }
+
+					for ( const [ attrKey, value ] of Object.entries( oldColumnsBlock.attributes ) ) {
+						switch ( attrKey ) {
+							case 'align': {
+								if ( attrKey ) {
+									newColumnsAttributes.align = value
+									newColumnsAttributes.innerBlockContentAlign = 'align' + value
+								}
+								break
+							}
+							case 'style': {
+								const background = get( value, 'color.background' )
+								if ( background ) {
+									newColumnsAttributes.hasBackground = true
+									newColumnsAttributes.blockBackgroundColor = background
+								}
+								break
+							}
+							case 'backgroundColor': {
+								if ( value ) {
+									newColumnsAttributes.hasBackground = true
+									const colorObject = select( 'core/block-editor' ).getSettings().colors.find( ( { slug } ) => slug === value )
+									if ( value.startsWith( 'stk-global-color' ) ) {
+										newColumnsAttributes.blockBackgroundColor = `var(--${ value }, ${ colorObject.color })`
+									} else {
+										newColumnsAttributes.blockBackgroundColor = colorObject.color
+									}
+								}
+
+								break
+							}
+							default: break
+						}
+					}
+
+					for ( const innerBlock of oldColumnsBlock.innerBlocks ) {
+						const newAttributes = { uniqueId: createUniqueClass( innerBlock.clientId ) }
+						const padding = get( innerBlock.attributes, 'style.spacing.padding' )
+						if ( padding ) {
+							newAttributes.containerPadding = {}
+							newAttributes.containerPadding.top = parseInt( padding.top )
+							newAttributes.containerPadding.right = parseInt( padding.right )
+							newAttributes.containerPadding.bottom = parseInt( padding.bottom )
+							newAttributes.containerPadding.left = parseInt( padding.left )
+							newAttributes.containerPaddingUnit = padding.top?.match( /([a-z]*)$/g )?.[ 0 ] || ''
+						}
+						newInnerBlocks.push( createBlock(
+							'stackable/column',
+							newAttributes,
+							innerBlock.innerBlocks,
+						) )
+					}
+
+					return createBlock( 'stackable/columns', newColumnsAttributes, newInnerBlocks )
 				}
 
 				// Clone the Blocks to be converted into columns.

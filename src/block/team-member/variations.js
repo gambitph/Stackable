@@ -65,7 +65,7 @@ const variations = applyFilters(
 			isDefault: true,
 			innerBlocks: [
 				[ 'stackable/image', {
-					imageHeight: 150, imageWidth: 150, imageWidthUnit: 'px', imageBorderRadius: 90,
+					imageHeight: 150, imageWidth: 150, imageWidthUnit: 'px', imageShape: 'circle',
 				} ],
 				[ 'stackable/heading', {
 					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,

@@ -7,6 +7,7 @@ import {
 } from '~stackable/util'
 import { kebabCase } from 'lodash'
 import classnames from 'classnames'
+import { IconSearchPopover, SvgIcon } from '~stackable/components'
 
 /**
  * Internal dependencies
@@ -14,8 +15,6 @@ import classnames from 'classnames'
 import { Edit } from './edit'
 import { addAttributes } from './attributes'
 import { Style } from './style'
-import { extractSvg } from './util'
-import FontAwesomeIcon from './font-awesome-icon'
 
 /**
  * WordPress dependencies
@@ -24,27 +23,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	useMemo, Fragment, useState, useRef, useEffect, useCallback,
 } from '@wordpress/element'
-import { IconSearchPopover } from '~stackable/components'
-
-const SVGIcon = props => {
-	const {
-		...propsToPass
-	} = props
-
-	propsToPass.value = useMemo( () => props.value === 'string' ? extractSvg( props.value ) : props.value, [ props.value ] )
-
-	return <FontAwesomeIcon { ...propsToPass } />
-}
-
-SVGIcon.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
-	propsToPass.value = props.value === 'string' ? extractSvg( props.value ) : props.value
-
-	return <FontAwesomeIcon.Content { ...propsToPass } />
-}
 
 const LinearGradient = ( {
 	id,
@@ -171,7 +149,7 @@ export const Icon = props => {
 
 		>
 			{ getAttribute( 'icon' ) && (
-				<SVGIcon
+				<SvgIcon
 					className="stk--inner-svg"
 					prependRender={ linearGradient }
 					value={ getAttribute( 'icon' ) }
@@ -189,7 +167,7 @@ export const Icon = props => {
 				/>
 			) }
 			{ getAttribute( 'icon2' ) && (
-				<SVGIcon
+				<SvgIcon
 					className="stk--inner-svg stk--icon-2"
 					prependRender={ linearGradient }
 					value={ getAttribute( 'icon2' ) }
@@ -234,7 +212,7 @@ Icon.Content = props => {
 	return (
 		<span className={ className }>
 			{ getValue( 'icon' ) && (
-				<SVGIcon.Content
+				<SvgIcon.Content
 					className="stk--inner-svg"
 					prependRender={ linearGradient }
 					value={ getValue( 'icon' ) }
@@ -245,7 +223,7 @@ Icon.Content = props => {
 				<ShapeComp className="stk--shape-icon" />
 			) }
 			{ getValue( 'icon2' ) && ( // This is a second icon that's only outputted for reference. It's up to the parent block to decide what to do with it.
-				<SVGIcon.Content
+				<SvgIcon.Content
 					className="stk--inner-svg stk--icon-2"
 					prependRender={ linearGradient }
 					value={ getValue( 'icon2' ) }

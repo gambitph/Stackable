@@ -18,7 +18,12 @@ import {
 	ContentAlign,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
 
 const postsAttributes = {
 	// General.
@@ -238,6 +243,7 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.addDefaultValues( {
 		attributes: {
+			readmoreText: __( 'Continue Reading', i18n ),
 			commentsShow: true,
 			authorShow: true,
 			dateShow: true,

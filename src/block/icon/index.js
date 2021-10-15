@@ -14,6 +14,8 @@ import edit from './edit'
 import save from './save'
 import metadata from './block.json'
 import schema from './schema'
+import example from './example'
+import transforms from './transforms'
 
 /**
  * WordPress dependencies
@@ -28,6 +30,8 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	supports: {
 		anchor: true,
 	},
+	example,
+	transforms,
 
 	edit,
 	save,

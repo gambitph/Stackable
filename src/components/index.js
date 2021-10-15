@@ -51,8 +51,6 @@ export { default as IconControlsHelper } from './icon-controls-helper'
 export { default as SocialControls } from './social-controls'
 export { default as SocialControlsHelper } from './social-controls-helper'
 export { default as SpacingControl } from './spacing-control'
-export { default as SvgIconHelper } from './svg-icon-helper'
-export { default as SvgIconPlaceholder } from './svg-icon-placeholder'
 export { default as ProControl } from './pro-control'
 export { default as ProControlButton } from './pro-control-button'
 export { default as ProModal } from './pro-modal'
@@ -80,12 +78,12 @@ export { default as Tooltip } from './tooltip'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'
-export { default as FontAwesomeIcon } from './font-awesome-icon'
-export { default as SvgIcon } from './svg-icon'
 export { default as Separator } from './separator'
 export { default as ControlSeparator } from './control-separator'
 
 // V3 only Components
+export { default as SvgIcon } from './svg-icon'
+export { default as FontAwesomeIcon } from './font-awesome-icon'
 export { default as BaseControl } from './base-control'
 export { default as BaseControl2 } from './base-control2'
 export { default as ImageControl2 } from './image-control2'

@@ -28,6 +28,9 @@
 	}
 	// Gap between icon and the title.
 	.stk-block-accordion__heading {
+		.stk-block-icon-label .stk-block-heading {
+			flex: 1;
+		}
 		.stk-block-icon-label .stk-block-icon {
 			flex: 0 0 40px;
 		}

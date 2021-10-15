@@ -22,7 +22,7 @@ import {
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
-	sizeSelector: '.stk-container',
+	sizeSelector: '.stk-block-card__content',
 	sizeVerticalAlignRule: 'justifyContent',
 	sizeHorizontalAlignRule: 'margin',
 }

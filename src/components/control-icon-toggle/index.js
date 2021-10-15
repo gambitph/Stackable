@@ -65,7 +65,7 @@ const ControlIconToggle = props => {
 			ref={ buttonRef }
 		>
 			<div
-				className="stk-label-unit-toggle__wrapper"
+				className={ classnames( 'stk-label-unit-toggle__wrapper', { 'is-open': isOpen } ) }
 				style={ { transform: `translateY(-${ offset }%)` } }
 			>
 				{ options.length > 1 &&

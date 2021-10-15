@@ -25,6 +25,7 @@ import { applyFilters } from '@wordpress/hooks'
  * External dependencies
  */
 import { i18n } from 'stackable'
+import striptags from 'striptags'
 import rgba from 'color-rgba'
 import { inRange } from 'lodash'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
@@ -52,7 +53,7 @@ export const range = ( start, end ) => {
  *
  * @return {boolean} True if a video.
  */
-export const urlIsVideo = url => url.endsWith( 'mp4' ) || url.endsWith( 'webm' ) || url.endsWith( 'ogg' )
+export const urlIsVideo = url => url?.endsWith( 'mp4' ) || url?.endsWith( 'webm' ) || url?.endsWith( 'ogg' )
 
 /**
  * From a URL, get the video ID and provider: YouTube or Vimeo.
@@ -410,4 +411,20 @@ export const isElementDescendant = function( parent, child ) {
 
 	// Go up until the root but couldn't find the `parent`
 	return false
+}
+
+/**
+ * Sanitized a string to be used as an id attribute in html
+ *
+ * @param {string} str
+ * @return {string} The sanitized
+ */
+export const sanitizeIdAttr = str => {
+	return striptags( str.replace( /&lt;/g, '<' ).replace( /&gt;/g, '>' ) )
+		.replace( /<[^>]*>/g, '' )
+		.replace( /[^\w\d\s-_]/g, '' )
+		.replace( /[^\w\d]/g, '-' )
+		.replace( /[-]+/g, '-' )
+		.trim()
+		.toLowerCase()
 }

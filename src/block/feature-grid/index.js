@@ -15,6 +15,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -31,6 +32,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		align: [ 'center', 'wide', 'full' ],
 		stkAlign: true,
 	},
+	example,
 	//  styles: blockStyles,
 
 	// deprecated,

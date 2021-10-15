@@ -45,6 +45,10 @@ const buttonAttributes = {
 		type: 'boolean',
 		default: '',
 	},
+	buttonHoverEffect: {
+		type: 'string',
+		default: 'darken',
+	},
 }
 
 export const addAttributes = ( attrObject, options = {} ) => {

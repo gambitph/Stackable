@@ -162,19 +162,19 @@ const Edit = props => {
 						templateLock={ false }
 						renderAppender={ renderAppender }
 					/>
+					{ attributes.isDismissible &&
+						<span
+							className="stk-block-notification__close-button"
+							role="button"
+							tabIndex="0"
+						>
+							<SVGCloseIcon
+								width={ attributes.dismissibleSize || 16 }
+								height={ attributes.dismissibleSize || 16 }
+							/>
+						</span>
+					}
 				</ContainerDiv>
-				{ attributes.isDismissible &&
-					<span
-						className="stk-block-notification__close-button"
-						role="button"
-						tabIndex="0"
-					>
-						<SVGCloseIcon
-							width={ attributes.dismissibleSize || 16 }
-							height={ attributes.dismissibleSize || 16 }
-						/>
-					</span>
-				}
 			</BlockDiv>
 			{ hasInnerBlocks && <MarginBottom /> }
 		</>

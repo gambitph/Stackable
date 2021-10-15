@@ -72,14 +72,14 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		$new_template = str_replace( '!#title!#', $title, $new_template );
 
 		// Category.
-		$category = get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id );
+		$category = Stackable_Posts_Block::get_category_list_by_id( $post_id );
 		if ( $category_highlighted ) {
 			preg_match_all( '/<a href="([^"]*)"[^>]*>([^<]*)<\/a>/', $category, $matches );
 			foreach ( $matches[0] as $i=>$match ) {
 				$href = $matches[1][$i];
 				$category_title = $matches[2][$i];
 				$category = str_replace( "<a href=\"$href\"", "<a class=\"stk-button\" href=\"$href\"", $category );
-				$category = str_replace( $category_title, "<span class=\"stk-button__inner-text\">$category_title</span>", $category );
+				$category = str_replace( ">$category_title<", "><span class=\"stk-button__inner-text\">$category_title</span><", $category );
 			}
 		}
 
@@ -279,6 +279,15 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 						),
 					)
 				);
+
+				// API endpoint for getting all the terms/taxonomies.
+				register_rest_route( 'stackable/v3', '/terms', array(
+					'methods' => 'GET',
+					'callback' => array( new Stackable_Posts_Block(), 'get_terms' ),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
+				) );
 			}
 		}
 
@@ -484,14 +493,25 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		}
 
 		/**
+		 * Get the category list by post id
+		 *
+		 * @param string post id
+		 *
+		 * @return string the category list
+		 */
+		public static function get_category_list_by_id( $id ) {
+			return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $id );
+		}
+
+		/**
 		 * Get the category list
 		 *
 		 * @param array post object
 		 *
-		 * @return the category list.
+		 * @return string the category list.
 		 */
 		public static function get_category_list( $object ) {
-			return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $object['id'] );
+			return Stackable_Posts_Block::get_category_list_by_id( $object['id'] );
 		}
 
 		/**
@@ -525,6 +545,49 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		public static function get_comments_number( $object ) {
 			$num = get_comments_number( $object['id'] );
 			return sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
+		}
+
+		/**
+		 * REST Callback. Get all the terms registered for all post types.
+		 *
+		 * @return array
+		 */
+		public static function get_terms() {
+			$args = array(
+				'public' => true,
+			);
+			$taxonomies = get_taxonomies( $args, 'objects' );
+
+			$return = array();
+
+			$post_types = get_post_types( array( 'public' => true ), 'objects' );
+			foreach ( $post_types as $post_type => $data ) {
+				// Don't include attachments.
+				if ( $post_type === 'attachment' ) {
+					continue;
+				}
+				$return[ $post_type ] = array(
+					'label' => $data->label,
+					'taxonomies' => array(),
+				);
+			}
+
+			foreach ( $taxonomies as $taxonomy_slug => $taxonomy ) {
+				foreach ( $taxonomy->object_type as $post_type ) {
+
+					// Don't include post formats.
+					if ( $post_type === 'post' && $taxonomy_slug === 'post_format' ) {
+						continue;
+					}
+
+					$return[ $post_type ]['taxonomies'][ $taxonomy_slug ] = array(
+						'label' => $taxonomy->label,
+						'terms' => get_terms( $taxonomy->name ),
+					);
+				}
+			}
+
+			return new WP_REST_Response( $return, 200 );
 		}
 	}
 
