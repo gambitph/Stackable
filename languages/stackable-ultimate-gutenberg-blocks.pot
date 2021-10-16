@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.1\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-16T06:09:23+00:00\n"
+"POT-Creation-Date: 2021-10-16T18:12:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -518,16 +518,16 @@ msgstr ""
 msgid "Continue reading"
 msgstr ""
 
-#: src/deprecated/v2/init.php:56
+#: src/deprecated/v2/init.php:61
 msgid "Load version 2 frontend styles and scripts"
 msgstr ""
 
-#: src/deprecated/v2/init.php:71
+#: src/deprecated/v2/init.php:76
 #: src/welcome/admin.js:513
 msgid "Load version 2 blocks in the editor"
 msgstr ""
 
-#: src/deprecated/v2/init.php:85
+#: src/deprecated/v2/init.php:90
 msgid "Load version 2 blocks when old blocks are used"
 msgstr ""
 
@@ -1084,12 +1084,12 @@ msgstr ""
 msgid "Don't show me this anymore"
 msgstr ""
 
-#: src/welcome/wizard.php:37
-#: src/welcome/wizard.php:38
+#: src/welcome/wizard.php:24
+#: src/welcome/wizard.php:25
 msgid "Wizard"
 msgstr ""
 
-#: src/welcome/wizard.php:49
+#: src/welcome/wizard.php:36
 msgid "Stackable Onboarding Wizard"
 msgstr ""
 
