@@ -105,6 +105,14 @@ if ( ! function_exists( 'stackable_register_blocks_v2' ) ) {
 			$content = get_the_content();
 			if ( stripos( $content, '<!-- wp:ugb/' ) !== false ) {
 				stackable_register_blocks_v2();
+				return;
+			}
+
+			// If we can't find it, maybe another plugin changed the output
+			// of get_the_content(), try getting it again.
+			global $post;
+			if ( ! empty( $post ) && stripos( $post->post_content, '<!-- wp:ugb/' ) !== false ) {
+				stackable_register_blocks_v2();
 			}
 		}
 	}
