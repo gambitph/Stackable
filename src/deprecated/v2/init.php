@@ -102,6 +102,10 @@ if ( ! function_exists( 'has_stackable_v2_frontend_compatibility' ) ) {
 	 * @since 3.0.0
 	 */
 	function has_stackable_v2_frontend_compatibility() {
+		// In case the plugin was auto-updated from v2 to v3, run auto-compatibility cehck.
+		if ( ! is_admin() && get_option( 'stackable_current_version_installed' ) !== STACKABLE_VERSION ) {
+			stackable_auto_compatibility_v2( get_option( 'stackable_current_version_installed' ), STACKABLE_VERSION );
+		}
 		return get_option( 'stackable_v2_frontend_compatibility' ) === '1';
 	}
 
