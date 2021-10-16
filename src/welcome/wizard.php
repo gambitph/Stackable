@@ -22,8 +22,9 @@ if ( ! class_exists( 'Stackable_Onboarding_Wizard' ) ) {
 
 		public function redirect_to_onboarding_wizard() {
 			// If we have never redirected to the onboarding wizard before, redirect to it now.
-			if ( get_option( 'stackable_redirect_to_wizard' ) === false ) {
-				update_option( 'stackable_redirect_to_wizard', '1' );
+			if ( get_option( 'stackable_redirected_to_wizard' ) === false || ! empty( get_option( 'stackable_v2_compatibility_ask' ) ) ) {
+				delete_option( 'stackable_v2_compatibility_ask' );
+				update_option( 'stackable_redirected_to_wizard', '1' );
 				wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-settings-wizard' ) ) );
 				die();
 			}

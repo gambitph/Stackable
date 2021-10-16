@@ -25,7 +25,7 @@ if ( ! class_exists( 'Stackable_Admin_Settings_V2' ) ) {
 		}
 
 		public function admin_enqueue_scripts() {
-			wp_enqueue_script( 'stackable-welcome-v2', plugins_url( 'dist/deprecated/admin_welcome_v2.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor' ) );
+			wp_enqueue_script( 'stackable-welcome-v2', plugins_url( 'dist/deprecated/admin_welcome_v2.js', STACKABLE_FILE ), array( 'stackable-welcome', 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor' ) );
 		}
 
 		/**

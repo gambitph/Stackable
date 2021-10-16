@@ -20,7 +20,6 @@ if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 	 */
 	function stackable_auto_compatibility_v2( $old_version, $new_version ) {
 		if ( ! empty( $old_version ) && version_compare( $old_version, "3.0", "<" ) && get_option( 'stackable_v2_compatibility_ask' ) === false ) {
-			// TODO: when this option becomes on, then show a question to the user on what to do about upgrading from v2 to v3. Since upgrading, we will keep v2 blocks, but where do you switch it off? Link to upgrading docs.
 			update_option( 'stackable_v2_compatibility_ask', '1' ); // Show the onboarding page.
 			update_option( 'stackable_v2_editor_compatibility_usage', '1' ); // Load version 2 blocks in the editor
 			update_option( 'stackable_v2_frontend_compatibility', '1' ); // Load version 2 blocks in the editor

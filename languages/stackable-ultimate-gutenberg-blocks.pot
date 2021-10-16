@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.0\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-15T17:32:06+00:00\n"
+"POT-Creation-Date: 2021-10-16T02:47:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -1084,12 +1084,12 @@ msgstr ""
 msgid "Don't show me this anymore"
 msgstr ""
 
-#: src/welcome/wizard.php:36
 #: src/welcome/wizard.php:37
+#: src/welcome/wizard.php:38
 msgid "Wizard"
 msgstr ""
 
-#: src/welcome/wizard.php:48
+#: src/welcome/wizard.php:49
 msgid "Stackable Onboarding Wizard"
 msgstr ""
 
@@ -4007,10 +4007,6 @@ msgstr ""
 #: src/block/testimonial/variations.js:107
 #: src/deprecated/v2/block/testimonial/edit.js:92
 msgid "Vertical"
-msgstr ""
-
-#: src/block-components/alignment/edit.js:83
-msgid "Inner Block Vertical Alignment"
 msgstr ""
 
 #: src/block-components/block-div/edit.js:42
