@@ -111,9 +111,34 @@ if ( ! function_exists( 'stackable_register_blocks_v2' ) ) {
 			// If we can't find it, maybe another plugin changed the output
 			// of get_the_content(), try getting it again.
 			global $post;
-			if ( ! empty( $post ) && stripos( $post->post_content, '<!-- wp:ugb/' ) !== false ) {
+			$content = ! empty( $post ) ? $post->post_content : $content;
+			if ( stripos( $content, '<!-- wp:ugb/' ) !== false ) {
 				stackable_register_blocks_v2();
+				return;
 			}
+
+			// If no v2 blocks found, check for any reusable blocks in the
+			// current content.
+			if ( stripos( $content, '<!-- wp:block' ) !== false ) {
+				// Find all reusable block reference Ids.
+				if ( preg_match_all( '#wp:block(.*?)[\'"]ref[\'"]*:(\d+)#', $content, $matches ) ) {
+					if ( count( $matches ) >= 3 ) {
+						foreach ( $matches[2] as $reusable_id ) {
+
+							// Reusable block Ids are post ids.
+							$resuable_post = get_post( (int) $reusable_id );
+							$reusable_content = ! empty( $resuable_post ) ? $resuable_post->post_content : '';
+
+							// Check if the reusable block uses a v2 block.
+							if ( stripos( $reusable_content, '<!-- wp:ugb/' ) !== false ) {
+								stackable_register_blocks_v2();
+								return;
+							}
+						}
+					}
+				}
+			}
+
 		}
 	}
 
