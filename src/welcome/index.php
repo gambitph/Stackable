@@ -504,12 +504,22 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
          * Redirect to the welcome screen if our marker exists.
          */
         public function redirect_to_welcome_page() {
-            if ( ! sugb_fs()->is_activation_mode() && (
-				get_option( 'stackable_redirect_to_welcome' ) || get_option( 'stackable_v2_compatibility_ask' )
-			) ) {
+            if ( ! sugb_fs()->is_activation_mode() && current_user_can( 'manage_options' ) &&
+				( get_option( 'stackable_redirect_to_welcome' ) || get_option( 'stackable_redirected_to_wizard' ) === false )
+			) {
+				// Never go here again.
                 delete_option( 'stackable_redirect_to_welcome' );
-				do_action( 'stackable_redirect_to_welcome_page' );
-                wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-getting-started' ) ) );
+
+				// If we haven't been to the wizard yet, go there.
+				if ( get_option( 'stackable_redirected_to_wizard' ) === false ) {
+					update_option( 'stackable_redirected_to_wizard', '1' );
+					wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-settings-wizard' ) ) );
+
+				// Or go to the getting started page.
+				} else {
+					wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-getting-started' ) ) );
+				}
+
                 die();
             }
         }

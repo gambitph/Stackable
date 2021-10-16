@@ -19,11 +19,16 @@ if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 	 * @since 3.0.0
 	 */
 	function stackable_auto_compatibility_v2( $old_version, $new_version ) {
-		if ( ! empty( $old_version ) && version_compare( $old_version, "3.0", "<" ) && get_option( 'stackable_v2_compatibility_ask' ) === false ) {
-			update_option( 'stackable_v2_compatibility_ask', '1' ); // Show the onboarding page.
-			update_option( 'stackable_v2_editor_compatibility_usage', '1' ); // Load version 2 blocks in the editor
-			update_option( 'stackable_v2_frontend_compatibility', '1' ); // Load version 2 blocks in the editor
-			update_option( 'stackable_v2_disabled_blocks', get_option( 'stackable_disabled_blocks' ) ); // Migrate the disabled blocks.
+		if ( ! empty( $old_version ) && version_compare( $old_version, "3.0", "<" ) ) {
+			// Only do this if we have never set the compatibility options before.
+			if ( get_option( 'stackable_v2_editor_compatibility' ) === false &&
+				get_option( 'stackable_v2_editor_compatibility_usage' ) === false &&
+				get_option( 'stackable_v2_frontend_compatibility' ) === false
+			) {
+				update_option( 'stackable_v2_editor_compatibility_usage', '1' ); // Load version 2 blocks in the editor
+				update_option( 'stackable_v2_frontend_compatibility', '1' ); // Load version 2 blocks in the editor
+				update_option( 'stackable_v2_disabled_blocks', get_option( 'stackable_disabled_blocks' ) ); // Migrate the disabled blocks.
+			}
 		}
 	}
 	add_action( 'stackable_version_upgraded', 'stackable_auto_compatibility_v2', 10, 2 );

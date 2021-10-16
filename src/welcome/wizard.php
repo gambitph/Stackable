@@ -13,22 +13,9 @@ if ( ! class_exists( 'Stackable_Onboarding_Wizard' ) ) {
         function __construct() {
             add_action( 'admin_menu', array( $this, 'add_dashboard_page' ) );
 
-			// Redirect to the onboarding wizard if the user hasn't seen it yet.
-			add_action( 'stackable_redirect_to_welcome_page', array( $this, 'redirect_to_onboarding_wizard' ) );
-
             // Add the admin settings for our wizard.
 			add_filter( 'stackable_localize_settings_script', array( $this, 'add_wizard_settings' ) );
         }
-
-		public function redirect_to_onboarding_wizard() {
-			// If we have never redirected to the onboarding wizard before, redirect to it now.
-			if ( get_option( 'stackable_redirected_to_wizard' ) === false || ! empty( get_option( 'stackable_v2_compatibility_ask' ) ) ) {
-				delete_option( 'stackable_v2_compatibility_ask' );
-				update_option( 'stackable_redirected_to_wizard', '1' );
-				wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-settings-wizard' ) ) );
-				die();
-			}
-		}
 
         public function add_dashboard_page() {
 			// Our wizard page.

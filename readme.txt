@@ -239,6 +239,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 3.0.2 =
 * Fixed: Compatibility with some plugins when backward compatibility with v2 blocks is enabled
 * Fixed: Backward compatibility with v2 blocks now work with reusable blocks
+* Fixed: Possible too many redirects when going to the wizard
 
 = 3.0.1 =
 * Fixed: The onboarding / migration wizard sometimes did not appear
