@@ -16,6 +16,7 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	ShadowControl,
+	ColorPaletteControl,
 } from '~stackable/components'
 import {
 	useBlockAttributes,
@@ -203,6 +204,22 @@ const Controls = props => {
 					className="ugb--help-tip-general-border-radius"
 				/>
 			}
+
+			<ColorPaletteControl
+				label={ __( 'Overlay Color', i18n ) }
+				attribute="imageOverlayColor"
+				hover="all"
+			/>
+
+			<AdvancedRangeControl
+				label={ __( 'Overlay Opacity', i18n ) }
+				attribute="imageOverlayOpacity"
+				hover="all"
+				min={ 0 }
+				max={ 1 }
+				step={ 0.1 }
+				placeholder="0.3"
+			/>
 
 			<AdvancedFocalPointControl
 				attribute="imageFocalPoint"

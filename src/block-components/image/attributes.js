@@ -46,6 +46,16 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				type: 'number',
 				default: '',
 			},
+			imageOverlayColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			imageOverlayOpacity: {
+				type: 'number',
+				default: '',
+				stkHover: true,
+			},
 			imageFocalPoint: {
 				stkResponsive: true,
 				stkHover: true,

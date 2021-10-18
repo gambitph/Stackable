@@ -1,9 +1,17 @@
 .stk-img-wrapper {
+	position: relative;
 	width: 100%;
 	// max-width: 100%;
 	margin: 0 auto;
 	display: block;
 	overflow: hidden; // This is needed for zooming the image.
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		opacity: 0.3;
+	}
 
 	img {
 		object-fit: cover;
@@ -15,6 +23,7 @@
 
 	// Shapes.
 	&.stk-img--shape {
+		&:is(::after),
 		img {
 			mask-mode: alpha;
 			mask-repeat: no-repeat;
@@ -25,7 +34,10 @@
 	}
 	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
 	&.stk-image--shape-stretch {
-		mask-size: 100% 100%;
+		&,
+		&::after {
+			mask-size: 100% 100%;
+		}
 	}
 }
 

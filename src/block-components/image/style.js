@@ -153,7 +153,10 @@ const getStyleParams = ( options = {} ) => {
 		{
 			renderIn: 'edit',
 			// This is so that the resizer won't get clipped.
-			selector: `${ selector } .stk-img-resizer-wrapper img`,
+			selector: [
+				`${ selector } .stk-img-resizer-wrapper img`,
+				`${ selector } .stk-img-resizer-wrapper::after`,
+			],
 			styleRule: 'mask-image',
 			vendorPrefixes: [ '-webkit-' ],
 			attrName: 'imageShape',
@@ -166,7 +169,10 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'save',
-			selector: `${ selector } img`,
+			selector: [
+				`${ selector } img`,
+				`${ selector }::after`,
+			],
 			styleRule: 'mask-image',
 			vendorPrefixes: [ '-webkit-' ],
 			attrName: 'imageShape',
@@ -176,6 +182,40 @@ const getStyleParams = ( options = {} ) => {
 				return getShapeCSS( value, getAttribute( 'imageShapeFlipX' ), getAttribute( 'imageShapeFlipY' ), getAttribute( 'imageShapeStretch' ) )
 			},
 			dependencies: [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ],
+		},
+		{
+			renderIn: 'save',
+			selector: `${ selector }::after`,
+			hoverSelector: `${ hoverSelector }::after`,
+			hoverSelectorCallback,
+			styleRule: 'backgroundColor',
+			attrName: 'imageOverlayColor',
+			hover: 'all',
+		},
+		{
+			renderIn: 'edit',
+			selector: `${ selector } .stk-img-resizer-wrapper::after`,
+			hoverSelector: `${ hoverSelector } .stk-img-resizer-wrapper::after`,
+			hoverSelectorCallback,
+			styleRule: 'backgroundColor',
+			attrName: 'imageOverlayColor',
+			hover: 'all',
+		},
+		{
+			renderIn: 'save',
+			selector: `${ selector }::after`,
+			styleRule: 'opacity',
+			attrName: 'imageOverlayOpacity',
+			hover: 'all',
+		},
+		{
+			renderIn: 'edit',
+			selector: `${ selector } .stk-img-resizer-wrapper::after`,
+			hoverSelector: `${ hoverSelector } .stk-img-resizer-wrapper::after`,
+			hoverSelectorCallback,
+			styleRule: 'opacity',
+			attrName: 'imageOverlayOpacity',
+			hover: 'all',
 		},
 	]
 }

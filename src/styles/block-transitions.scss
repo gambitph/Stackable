@@ -28,6 +28,7 @@ body.stk--anim-init {
 	.stk--has-background-overlay::before, // Image background overlays
 	.stk-block .stk-button::before, // For button animations
 	.stk-block .stk-button::after, // For button animations
+	.stk-img-wrapper::after, // Images.
 	.stk-block li::marker { // For icon list marker
 		transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 		border-width: 1px;
