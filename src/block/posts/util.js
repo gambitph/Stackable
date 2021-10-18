@@ -1,10 +1,11 @@
 /**
  * External dependencies
  */
+import compareVersions from 'compare-versions'
 import striptags from 'striptags'
 import { compact } from 'lodash'
 import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import {
 	Image,
 	ContainerDiv,
@@ -271,7 +272,7 @@ export const generateRenderPostItem = attributes => {
 	}
 }
 
-generateRenderPostItem.save = attributes => {
+generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 	const {
 		imageHasLink = true,
 		className = '',
@@ -331,6 +332,7 @@ generateRenderPostItem.save = attributes => {
 			attrNameTemplate="title%s"
 			className={ titleClassNames }
 			value="<a href='!#postLink!#'>!#title!#</a>"
+			attributes={ compareVersions( version, '3.0.2' ) >= 0 ? attributes : undefined }
 		/>
 	)
 
@@ -340,6 +342,7 @@ generateRenderPostItem.save = attributes => {
 			attrNameTemplate="category%s"
 			className={ categoryClassNames }
 			value="!#category!#"
+			attributes={ compareVersions( version, '3.0.2' ) >= 0 ? attributes : undefined }
 		/>
 	)
 
@@ -367,6 +370,7 @@ generateRenderPostItem.save = attributes => {
 			attrNameTemplate="readmore%s"
 			className={ readmoreClassNames }
 			value="!#readmoreText!#"
+			attributes={ compareVersions( version, '3.0.2' ) >= 0 ? attributes : undefined }
 		/>
 	)
 
