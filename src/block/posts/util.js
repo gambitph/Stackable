@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import compareVersions from 'compare-versions'
 import striptags from 'striptags'
 import { compact } from 'lodash'
 import classnames from 'classnames'
@@ -332,7 +331,8 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 			attrNameTemplate="title%s"
 			className={ titleClassNames }
 			value="<a href='!#postLink!#'>!#title!#</a>"
-			attributes={ compareVersions( version, '3.0.3' ) >= 0 ? attributes : undefined }
+			attributes={ attributes }
+			{ ...applyFilters( 'stackable.posts.title.typography-content', {}, version ) }
 		/>
 	)
 
@@ -342,7 +342,8 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 			attrNameTemplate="category%s"
 			className={ categoryClassNames }
 			value="!#category!#"
-			attributes={ compareVersions( version, '3.0.3' ) >= 0 ? attributes : undefined }
+			attributes={ attributes }
+			{ ...applyFilters( 'stackable.posts.title.category-content', {}, version ) }
 		/>
 	)
 
@@ -370,7 +371,8 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 			attrNameTemplate="readmore%s"
 			className={ readmoreClassNames }
 			value="!#readmoreText!#"
-			attributes={ compareVersions( version, '3.0.3' ) >= 0 ? attributes : undefined }
+			attributes={ attributes }
+			{ ...applyFilters( 'stackable.posts.title.readmore-content', {}, version ) }
 		/>
 	)
 
