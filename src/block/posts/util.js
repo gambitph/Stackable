@@ -332,7 +332,7 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 			attrNameTemplate="title%s"
 			className={ titleClassNames }
 			value="<a href='!#postLink!#'>!#title!#</a>"
-			attributes={ compareVersions( version, '3.0.2' ) >= 0 ? attributes : undefined }
+			attributes={ compareVersions( version, '3.0.3' ) >= 0 ? attributes : undefined }
 		/>
 	)
 
@@ -342,7 +342,7 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 			attrNameTemplate="category%s"
 			className={ categoryClassNames }
 			value="!#category!#"
-			attributes={ compareVersions( version, '3.0.2' ) >= 0 ? attributes : undefined }
+			attributes={ compareVersions( version, '3.0.3' ) >= 0 ? attributes : undefined }
 		/>
 	)
 
@@ -370,7 +370,7 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 			attrNameTemplate="readmore%s"
 			className={ readmoreClassNames }
 			value="!#readmoreText!#"
-			attributes={ compareVersions( version, '3.0.2' ) >= 0 ? attributes : undefined }
+			attributes={ compareVersions( version, '3.0.3' ) >= 0 ? attributes : undefined }
 		/>
 	)
 
