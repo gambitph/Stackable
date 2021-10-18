@@ -1,8 +1,8 @@
 /**
  * Internal dependencies
  */
-import { attributes } from '../schema'
-import { Save } from '../save'
+import { attributes } from './schema'
+import { Save } from './save'
 
 /**
  * External dependencies
