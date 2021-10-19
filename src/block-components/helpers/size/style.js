@@ -15,7 +15,7 @@ const getStyleParams = ( options = {} ) => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
-		wrapperSelector,
+		wrapperSelectorCallback,
 	} = options
 
 	return [
@@ -35,7 +35,7 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 		},
 		{
-			selector: wrapperSelector || selector,
+			selectorCallback: wrapperSelectorCallback || ( () => selector ),
 			styleRule: 'maxWidth',
 			attrName: 'width',
 			attrNameTemplate,
@@ -43,7 +43,7 @@ const getStyleParams = ( options = {} ) => {
 			hasUnits: 'px',
 		},
 		{
-			selector: wrapperSelector || selector,
+			selectorCallback: wrapperSelectorCallback || ( () => selector ),
 			styleRule: 'minWidth',
 			attrName: 'width',
 			attrNameTemplate,
@@ -96,7 +96,7 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: value => value?.left,
 		},
 		{
-			selector: wrapperSelector || selector,
+			selectorCallback: wrapperSelectorCallback || ( () => selector ),
 			styleRule: 'marginTop',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -108,7 +108,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selector: wrapperSelector || selector,
+			selectorCallback: wrapperSelectorCallback || ( () => selector ),
 			styleRule: 'marginRight',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -131,7 +131,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selector: wrapperSelector || selector,
+			selectorCallback: wrapperSelectorCallback || ( () => selector ),
 			styleRule: 'marginBottom',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -143,7 +143,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selector: wrapperSelector || selector,
+			selectorCallback: wrapperSelectorCallback || ( () => selector ),
 			styleRule: 'marginLeft',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -199,7 +199,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		...( ( horizontalAlignRule !== 'margin' ) ? [
 			{
-				selector: wrapperSelector || selector,
+				selectorCallback: wrapperSelectorCallback || ( () => selector ),
 				styleRule: horizontalAlignRule || 'justifyContent',
 				attrName: 'horizontalAlign',
 				attrNameTemplate,

@@ -5,6 +5,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	Style,
 	ConditionalDisplay,
 	CustomAttributes,
 	CustomCSS,
@@ -23,6 +24,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	Style.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Transform.addAttributes( attrObject )

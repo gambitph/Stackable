@@ -2,6 +2,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	Style,
 	BlockLink,
 	ConditionalDisplay,
 	ContainerDiv,
@@ -20,6 +21,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	Style.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	ContainerDiv.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
