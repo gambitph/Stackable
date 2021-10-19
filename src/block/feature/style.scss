@@ -1,7 +1,7 @@
 @import "common";
 
-.stk-block.stk-block-feature.is-style-plain {
-	> .stk-inner-blocks.stk-block-content {
+.stk-block.stk-block-feature:is(.is-style-default, .is-style-horizontal) {
+	> .stk-container > .stk-inner-blocks.stk-block-content {
 		@include mobile {
 			flex-direction: column-reverse;
 		}

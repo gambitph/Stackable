@@ -26,6 +26,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -44,15 +45,18 @@ export const Save = props => {
 		separatorClass,
 	] )
 
-	const contentClassNames = classnames( [
-		rowClass,
-	], getContentAlignmentClasses( attributes ) )
+	const contentClassNames = classnames( {
+		[ getContentAlignmentClasses( attributes ) ]: getContentAlignmentClasses( attributes ),
+		...applyFilters( 'stackable.feature.save.contentClassNames', {}, props.version, rowClass ),
+	} )
 
-	const innerClassNames = classnames( [
-		'stk-inner-blocks',
-		blockAlignmentClass,
-		'stk-block-content',
-	] )
+	const innerClassNames = classnames( {
+		'stk-inner-blocks': true,
+		[ blockAlignmentClass ]: blockAlignmentClass,
+		'stk-block-content': true,
+		[ rowClass ]: [ rowClass ],
+		...applyFilters( 'stackable.feature.save.innerClassNames', {}, props.version, rowClass ),
+	} )
 
 	return (
 		<BlockDiv.Content
