@@ -17,13 +17,14 @@ import {
 	getResponsiveClasses,
 	Image,
 } from '~stackable/block-components'
+import { BlockLink } from '~stackable/block-components/block-link'
 
 /**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
-import { BlockLink } from '~stackable/block-components/block-link'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -42,17 +43,23 @@ export const Save = props => {
 		responsiveClass,
 	] )
 
-	const contentClassNames = classnames( [
-		'stk-block-card__content',
-		'stk--no-padding',
-	] )
+	const contentClassNames = classnames( {
+		...applyFilters( 'stackable.card.save.contentClassNames', {
+			'stk--no-padding': true,
+		}, props.version ),
+	} )
 
-	const innerClassNames = classnames( [
-		'stk-block-content',
-		'stk-inner-blocks',
-		blockAlignmentClass,
-	], {
+	const wrapperClassNames = classnames( {
 		'stk-container-padding': hasContainer,
+		'stk-block-card__content': true,
+		...applyFilters( 'stackable.card.save.wrapperClassNames', {}, props.version ),
+	} )
+
+	const innerClassNames = classnames( {
+		'stk-block-content': true,
+		'stk-inner-blocks': true,
+		[ blockAlignmentClass ]: blockAlignmentClass,
+		...applyFilters( 'stackable.card.save.innerClassNames', {}, props.version, props.attributes ),
 	} )
 
 	return (
@@ -72,9 +79,13 @@ export const Save = props => {
 						attributes={ attributes }
 					/>
 				}
-				<div className={ innerClassNames }>
-					<InnerBlocks.Content />
-				</div>
+				{ applyFilters( 'stackable.card.save.container-div.content', (
+					<div className={ wrapperClassNames }>
+						<div className={ innerClassNames }>
+							<InnerBlocks.Content />
+						</div>
+					</div>
+				), props.version, innerClassNames ) }
 				<BlockLink.Content attributes={ attributes } />
 			</ContainerDiv.Content>
 		</BlockDiv.Content>

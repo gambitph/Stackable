@@ -15,6 +15,7 @@ const getStyleParams = ( options = {} ) => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
+		wrapperSelector,
 	} = options
 
 	return [
@@ -34,7 +35,7 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 		},
 		{
-			selector,
+			selector: wrapperSelector || selector,
 			styleRule: 'maxWidth',
 			attrName: 'width',
 			attrNameTemplate,
@@ -42,17 +43,18 @@ const getStyleParams = ( options = {} ) => {
 			hasUnits: 'px',
 		},
 		{
-			selector,
+			selector: wrapperSelector || selector,
 			styleRule: 'minWidth',
 			attrName: 'width',
 			attrNameTemplate,
 			responsive: 'all',
 			hover: 'all',
+			versionAdded: '3.0.0',
+			versionDeprecated: '3.0.2',
 			valueCallback: value => {
 				return value !== '' ? 'auto' : undefined
 			},
 		},
-
 		{
 			selector,
 			styleRule: 'paddingTop',
@@ -94,7 +96,7 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: value => value?.left,
 		},
 		{
-			selector,
+			selector: wrapperSelector || selector,
 			styleRule: 'marginTop',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -106,7 +108,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selector,
+			selector: wrapperSelector || selector,
 			styleRule: 'marginRight',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -129,7 +131,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selector,
+			selector: wrapperSelector || selector,
 			styleRule: 'marginBottom',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -141,7 +143,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selector,
+			selector: wrapperSelector || selector,
 			styleRule: 'marginLeft',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -197,7 +199,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		...( ( horizontalAlignRule !== 'margin' ) ? [
 			{
-				selector,
+				selector: wrapperSelector || selector,
 				styleRule: horizontalAlignRule || 'justifyContent',
 				attrName: 'horizontalAlign',
 				attrNameTemplate,
@@ -232,10 +234,11 @@ SizeStyle.Content = props => {
 	const {
 		attributes,
 		options = {},
+		version,
 		...propsToPass
 	} = props
 
-	const styles = getStyles( attributes, getStyleParams( options ) )
+	const styles = getStyles( attributes, getStyleParams( options ), version )
 
 	return (
 		<Fragment>
