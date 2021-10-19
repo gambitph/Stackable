@@ -206,6 +206,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		...( ( horizontalAlignRule !== 'margin' ) ? [
 			{
+				renderIn: 'save',
 				selector,
 				styleRule: horizontalAlignRule || 'justifyContent',
 				attrName: 'horizontalAlign',
