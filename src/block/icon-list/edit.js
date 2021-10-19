@@ -162,6 +162,7 @@ const Edit = props => {
 		isSelected,
 		onRemove,
 		mergeBlocks,
+		clientId,
 	} = props
 
 	const { ordered } = attributes
@@ -320,6 +321,7 @@ const Edit = props => {
 				{ /* eslint-disable-next-line */ }
 				<div onClick={ e => {
 					if (
+						e.target.closest( `[data-block="${ clientId }"]` ) &&
 						e.target.closest( '.rich-text' ) !== textRef.current &&
 						document.activeElement !== textRef.current // eslint-disable-line
 					) {
