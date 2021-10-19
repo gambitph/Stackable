@@ -42,6 +42,12 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			generatedCss: {
+				type: 'string',
+				source: 'html',
+				selector: 'style:not(.stk-custom-css)',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

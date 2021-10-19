@@ -67,7 +67,7 @@ export const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<CardStyles.Content version={ props.version } attributes={ attributes } />
+			{ props.attributes.generatedCss ? <style>{ props.attributes.generatedCss }</style> : <CardStyles.Content version={ props.version } attributes={ attributes } /> }
 			<CustomCSS.Content attributes={ attributes } />
 			<ContainerDiv.Content
 				className={ contentClassNames }
