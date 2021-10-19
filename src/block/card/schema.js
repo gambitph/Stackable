@@ -42,6 +42,13 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.add( {
+		attributes: {
 			generatedCss: {
 				type: 'string',
 				source: 'html',
@@ -49,7 +56,7 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 			},
 		},
-		versionAdded: '3.0.0',
+		versionAdded: '3.0.3',
 		versionDeprecated: '',
 	} )
 

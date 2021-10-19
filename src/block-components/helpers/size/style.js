@@ -234,11 +234,10 @@ SizeStyle.Content = props => {
 	const {
 		attributes,
 		options = {},
-		version,
 		...propsToPass
 	} = props
 
-	const styles = getStyles( attributes, getStyleParams( options ), version )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<Fragment>
