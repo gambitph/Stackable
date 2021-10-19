@@ -19,7 +19,7 @@
 		row-gap: 0;
 
 		// All contents should have bottom margins
-		:is([class*="stk-block-posts__"], .stk-img-wrapper) {
+		:is([class*="stk-block-posts__"], .stk-img-wrapper):not(.stk-block-posts__item) {
 			margin-bottom: cssvar(block-margin-bottom);
 			&:last-child {
 				margin-bottom: 0;
