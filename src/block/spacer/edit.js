@@ -11,6 +11,7 @@ import { i18n, version as VERSION } from 'stackable'
 import {
 	Advanced,
 	BlockDiv,
+	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	CustomAttributes,
@@ -56,6 +57,8 @@ const Edit = props => {
 		isHovered,
 		isSelected,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const deviceType = useDeviceType()
 	const blockHoverClass = useBlockHoverClass()

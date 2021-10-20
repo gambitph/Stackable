@@ -9,6 +9,7 @@ import {
 import {
 	getTypographyClasses,
 	BlockDiv,
+	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -44,6 +45,8 @@ const Edit = props => {
 		onReplace,
 		attributes,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const {
 		buttonFullWidth,

@@ -14,6 +14,7 @@ import {
 import { useBlockHoverClass } from '~stackable/hooks'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	Image,
 	Alignment,
 	Advanced,
@@ -39,6 +40,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -76,6 +79,7 @@ const Edit = props => {
 				<Image
 					heightUnits={ heightUnit }
 					defaultWidth="100"
+					defaultHeight="auto"
 				/>
 			</BlockDiv>
 			<MarginBottom />

@@ -14,6 +14,7 @@ import {
 } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -52,6 +53,8 @@ const Edit = props => {
 		clientId,
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const [ isOpen, setIsOpen ] = useState( true )
 	const { hasInnerBlocks } = useBlockContext()

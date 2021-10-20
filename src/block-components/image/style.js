@@ -30,6 +30,7 @@ const getStyleParams = ( options = {} ) => {
 		hoverSelectorCallback = null,
 		enableWidth = true,
 		enableHeight = true,
+		widthStyleRule = null,
 	} = options
 
 	return [
@@ -45,7 +46,7 @@ const getStyleParams = ( options = {} ) => {
 		{
 			selector,
 			renderIn: 'save',
-			styleRule: 'width',
+			styleRule: widthStyleRule || 'width',
 			attrName: 'imageWidth',
 			hasUnits: '%',
 			responsive: 'all',
