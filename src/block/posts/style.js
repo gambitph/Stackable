@@ -117,7 +117,11 @@ const advancedOptions = {
 	positionSelector: itemSelector,
 }
 
-const getStyleParams = () => {
+const getStyleParams = ( options = {} ) => {
+	const {
+		blockStyle,
+	} = options
+
 	return [
 		{
 			selector: '',
@@ -294,6 +298,7 @@ const getStyleParams = () => {
 
 				return undefined
 			},
+			enabledCallback: () => blockStyle === 'list',
 		},
 	]
 }
@@ -360,7 +365,7 @@ PostsStyles.Content = props => {
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const blockStyle = getBlockStyle( variations, propsToPass.attributes.className )
-	const postsStyles = getStyles( propsToPass.attributes, getStyleParams() )
+	const postsStyles = getStyles( propsToPass.attributes, getStyleParams( { blockStyle: blockStyle?.name } ) )
 	const imageOptions = {
 		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
