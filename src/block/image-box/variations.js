@@ -37,7 +37,10 @@ const variations = applyFilters(
 			attributes: { className: 'is-style-default' },
 			innerBlocks: [
 				[ 'stackable/image', { imageHeight: 350, imageFilterParentHover: 'brightness(0.3)' } ],
-				[ 'stackable/column', { templateLock: false }, [
+				[ 'stackable/column', {
+					templateLock: false,
+					blockVerticalAlign: 'center',
+				}, [
 					[ 'stackable/subtitle', {
 						text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ),
 						blockMargin: { bottom: 8 },
@@ -89,8 +92,8 @@ const variations = applyFilters(
 					containerPadding: {
 						top: 32, right: 32, bottom: 32, left: 32,
 					},
-					innerBlockVerticalAlign: 'flex-end',
 					templateLock: false,
+					containerVerticalAlign: 'flex-end',
 				}, [
 					[ 'stackable/subtitle', {
 						text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ),
