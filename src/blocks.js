@@ -36,6 +36,9 @@ registerBlockCollection( 'stackable', {
 const importAllAndRegister = r => {
 	r.keys().forEach( key => {
 		const { settings } = r( key )
+		if ( ! settings ) {
+			return
+		}
 		const { name } = settings
 
 		// Register the block.

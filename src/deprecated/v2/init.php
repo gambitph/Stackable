@@ -93,6 +93,20 @@ if ( ! function_exists( 'stackable_v2_compatibility_option' ) ) {
 				'default' => '',
 			)
 		);
+
+		// The auto-detect for v2 blocks is always present, but it will not be
+		// checked anymore if this is set
+		register_setting(
+			'stackable_v2_compatibility',
+			'stackable_v2_block_detector_disabled',
+			array(
+				'type' => 'string',
+				'description' => __( 'This disables the v2 block detected in the editor', STACKABLE_I18N ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest' => true,
+				'default' => '',
+			)
+		);
 	}
 	add_action( 'init', 'stackable_v2_compatibility_option' );
 }

@@ -56,7 +56,7 @@ const WelcomeMessage = () => {
 			<div className="s-welcome-wizard__content s-box">
 				<h2>{ __( 'Thanks for Updating to Stackable V3', i18n ) }</h2>
 				<p>{ __( 'There are huge changes in Stackable, and this wizard will help you get started with migrating to the new version.', i18n ) }</p>
-				<p>{ __( 'We\'ve made upgrading as smooth and hassle free as possible, click on the Next button at the lower right to move to the next step.', i18n ) }</p>
+				<p>{ __( 'We\'ve made upgrading as smooth and hassle free as possible, click on the Get Started button at the lower right to move to the next step.', i18n ) }</p>
 				<h2>{ __( 'What\’s New in Version 3', i18n ) }</h2>
 				<ul>
 					<li>{ __( 'Unbelievably lightweight, faster performance, focus on core web vitals and accessibility', i18n ) }</li>
