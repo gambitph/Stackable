@@ -12,6 +12,7 @@ import classnames from 'classnames'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -43,6 +44,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const rowClass = props.attributes.alignVertical ? undefined : getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
