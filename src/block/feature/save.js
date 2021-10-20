@@ -45,18 +45,22 @@ export const Save = props => {
 		separatorClass,
 	] )
 
-	const contentClassNames = classnames( {
-		[ getContentAlignmentClasses( attributes ) ]: getContentAlignmentClasses( attributes ),
-		...applyFilters( 'stackable.feature.save.contentClassNames', {}, props.version, rowClass ),
-	} )
+	const contentClassNames = applyFilters( 'stackable.feature.save.contentClassNames',
+		classnames( getContentAlignmentClasses( attributes ) ),
+		props.version,
+		rowClass
+	)
 
-	const innerClassNames = classnames( {
-		'stk-inner-blocks': true,
-		[ blockAlignmentClass ]: blockAlignmentClass,
-		'stk-block-content': true,
-		[ rowClass ]: [ rowClass ],
-		...applyFilters( 'stackable.feature.save.innerClassNames', {}, props.version, rowClass ),
-	} )
+	const innerClassNames = applyFilters( 'stackable.feature.save.innerClassNames',
+		classnames( {
+			'stk-inner-blocks': true,
+			[ blockAlignmentClass ]: blockAlignmentClass,
+			'stk-block-content': true,
+			[ rowClass ]: [ rowClass ],
+		} ),
+		props.version,
+		rowClass
+	)
 
 	return (
 		<BlockDiv.Content
