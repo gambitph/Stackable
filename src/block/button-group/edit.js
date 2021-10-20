@@ -17,6 +17,7 @@ import {
 } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
 	Alignment,
@@ -52,6 +53,8 @@ const Edit = props => {
 		className,
 		attributes,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const {
 		collapseOn = '',

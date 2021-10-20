@@ -33,6 +33,7 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	getAlignmentClasses,
 	BlockDiv,
+	useGeneratedCss,
 	Image,
 	Alignment,
 	Advanced,
@@ -72,6 +73,8 @@ const Edit = props => {
 		className,
 		setAttributes,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const deviceType = useDeviceType()
 

@@ -8,6 +8,7 @@ import {
 } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	Advanced, CustomCSS,
 	Responsive,
 	Button,
@@ -37,6 +38,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
