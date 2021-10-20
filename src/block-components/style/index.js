@@ -325,7 +325,7 @@ export const getEditorStylesOnly = ( style, deviceType = 'Desktop' ) => {
 	return deepmerge.all( styles )
 }
 
-// TODO: Deprecated this.
+// TODO: Deprecated this (actual code is no longer used - need to double check)
 export const Style = memo( props => {
 	const {
 		breakTablet = 1024,
@@ -363,6 +363,7 @@ export const Style = memo( props => {
 	return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
 } )
 
+// TODO: Deprecated this (actual code is no longer used - need to double check)
 Style.Content = props => {
 	const {
 		breakTablet = 1024,
