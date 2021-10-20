@@ -37,7 +37,7 @@ const getStyleParams = () => {
 		},
 		{
 			renderIn: 'edit',
-			selector: '[data-block][data-type="stackable/icon"]',
+			selector: '.stk-inner-blocks [data-block][data-type="stackable/icon"]',
 			attrName: 'iconGap',
 			styleRule: 'flexBasis',
 			format: '%spx',
