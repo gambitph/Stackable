@@ -15,7 +15,7 @@ const getStyleParams = ( options = {} ) => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
-		wrapperSelectorCallback,
+		wrapperSelector = '', // The outer wrapper element that where the outer flex alignments, widths and margins are applied to.
 	} = options
 
 	return [
@@ -35,7 +35,7 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 		},
 		{
-			selectorCallback: wrapperSelectorCallback || ( () => selector ),
+			selector: wrapperSelector || selector,
 			styleRule: 'maxWidth',
 			attrName: 'width',
 			attrNameTemplate,
@@ -43,7 +43,7 @@ const getStyleParams = ( options = {} ) => {
 			hasUnits: 'px',
 		},
 		{
-			selectorCallback: wrapperSelectorCallback || ( () => selector ),
+			selector: wrapperSelector || selector,
 			styleRule: 'minWidth',
 			attrName: 'width',
 			attrNameTemplate,
@@ -96,7 +96,7 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: value => value?.left,
 		},
 		{
-			selectorCallback: wrapperSelectorCallback || ( () => selector ),
+			selector: wrapperSelector || selector,
 			styleRule: 'marginTop',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -108,7 +108,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selectorCallback: wrapperSelectorCallback || ( () => selector ),
+			selector: wrapperSelector || selector,
 			styleRule: 'marginRight',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -131,7 +131,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selectorCallback: wrapperSelectorCallback || ( () => selector ),
+			selector: wrapperSelector || selector,
 			styleRule: 'marginBottom',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -143,7 +143,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 		{
-			selectorCallback: wrapperSelectorCallback || ( () => selector ),
+			selector: wrapperSelector || selector,
 			styleRule: 'marginLeft',
 			attrName: 'margin',
 			attrNameTemplate,
@@ -199,7 +199,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		...( ( horizontalAlignRule !== 'margin' ) ? [
 			{
-				selectorCallback: wrapperSelectorCallback || ( () => selector ),
+				selector: wrapperSelector || selector,
 				styleRule: horizontalAlignRule || 'justifyContent',
 				attrName: 'horizontalAlign',
 				attrNameTemplate,
