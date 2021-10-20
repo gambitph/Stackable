@@ -37,7 +37,7 @@ import {
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const itemSelector = ' .stk-block-posts__item > .stk-container'
+const itemSelector = ' .%s-container'
 
 const hoverSelectorCallback = append => getAttribute =>
 	getAttribute( 'hoverStateInContainer' )
