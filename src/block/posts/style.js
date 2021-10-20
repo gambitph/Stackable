@@ -339,6 +339,10 @@ PostsStyles.Content = props => {
 		...propsToPass
 	} = props
 
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
+
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const blockStyle = getBlockStyle( variations, propsToPass.attributes.className )
 	const postsStyles = getStyles( propsToPass.attributes, getStyleParams() )

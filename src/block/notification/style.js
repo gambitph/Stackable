@@ -99,6 +99,10 @@ ContainerStyles.Content = props => {
 		...propsToPass
 	} = props
 
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
+
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const styles = getStyles( propsToPass.attributes, getStyleParams() )
 

@@ -64,6 +64,10 @@ ButtonStyles.Content = props => {
 		...propsToPass
 	} = props
 
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
+
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( propsToPass.attributes.uniqueId )
 
 	const styles = (

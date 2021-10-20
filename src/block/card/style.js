@@ -24,6 +24,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const containerDivOptions = {
 	sizeSelector: '.stk-block-card__content',
 	sizeHorizontalAlignRule: 'margin',
+	wrapperSelector: '.%s-container',
 }
 
 export const CardStyles = props => {
@@ -76,6 +77,10 @@ CardStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
+
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const blockStyle = getBlockStyle( variations, props.attributes.className )

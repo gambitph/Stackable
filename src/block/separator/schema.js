@@ -1,6 +1,7 @@
 import {
 	Advanced,
 	BlockDiv,
+	Style,
 	BlockLink,
 	ConditionalDisplay,
 	CustomAttributes,
@@ -17,6 +18,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	Style.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
