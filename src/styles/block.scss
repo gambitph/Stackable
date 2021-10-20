@@ -20,7 +20,7 @@
 }
 
 // IMPORTANT: This fixes wide and full block widths and tame them in the frontend.
-:is(.entry-content, .site-content) .stk-block > .stk-inner-blocks {
+:is(.entry-content, .site-content) .stk-block > .stk-content-align {
 	margin-left: auto;
 	margin-right: auto;
 	width: auto;
@@ -46,7 +46,7 @@
 }
 
 @include desktop-tablet {
-	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-inner-blocks:not(.alignwide):not(.alignfull) {
+	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align:not(.alignwide):not(.alignfull) {
 		// --stk-block-default-width is a Stackable setting
 		// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 		// --stk-block-width-default-detected is from the fallback autodetected value.
@@ -54,7 +54,7 @@
 	}
 }
 @include desktop-tablet {
-	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-inner-blocks.alignwide {
+	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align.alignwide {
 		// --stk-block-default-width is a Stackable setting
 		// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 		// --stk-block-width-default-detected is from the fallback autodetected value.
