@@ -27,8 +27,8 @@ addFilter( 'stackable.feature.save.contentClassNames', 'stackable/3.0.2', ( outp
 	const contentAlignmentClasses = getContentAlignmentClasses( props.attributes )
 	const rowClass = props.attributes.alignVertical ? undefined : getRowClasses( props.attributes )
 	return {
-		[ contentAlignmentClasses ]: contentAlignmentClasses,
 		[ rowClass ]: rowClass,
+		[ contentAlignmentClasses ]: contentAlignmentClasses,
 	}
 } )
 
