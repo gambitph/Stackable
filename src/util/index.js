@@ -29,6 +29,7 @@ import striptags from 'striptags'
 import rgba from 'color-rgba'
 import { inRange } from 'lodash'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import { cloneBlock } from '@wordpress/blocks'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
@@ -379,16 +380,18 @@ export const recursivelyAddUniqueIdToInnerBlocks = ( innerBlocks = [] ) => {
 		return null
 	}
 
-	innerBlocks.forEach( innerBlock => {
-		if ( innerBlock.name.startsWith( 'stackable/' ) ) {
-			innerBlock.attributes = {
-				...innerBlock.attributes,
-				uniqueId: createUniqueClass( innerBlock.clientId ),
+	for ( let i = 0; i < innerBlocks.length; i++ ) {
+		if ( innerBlocks[ i ].name.startsWith( 'stackable/' ) ) {
+			// Clone the blocks as well to change the `clientId`
+			innerBlocks[ i ] = cloneBlock( innerBlocks[ i ] )
+			innerBlocks[ i ].attributes = {
+				...innerBlocks[ i ].attributes,
+				uniqueId: createUniqueClass( innerBlocks[ i ].clientId ),
 			}
 		}
 
-		recursivelyAddUniqueIdToInnerBlocks( innerBlock.innerBlocks )
-	} )
+		recursivelyAddUniqueIdToInnerBlocks( innerBlocks[ i ].innerBlocks )
+	}
 }
 
 /**

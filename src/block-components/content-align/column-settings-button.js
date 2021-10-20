@@ -1,17 +1,20 @@
 import { i18n } from 'stackable'
-import { last, pick } from 'lodash'
+import { last } from 'lodash'
 import { useBlockContext } from '~stackable/hooks'
 import { AdvancedRangeControl, Tooltip } from '~stackable/components'
+import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
 
 import { __ } from '@wordpress/i18n'
 import {
 	Button, Dashicon,
 } from '@wordpress/components'
-import { getBlockFromExample } from '@wordpress/blocks'
+import { createBlock } from '@wordpress/blocks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { dispatch } from '@wordpress/data'
 import { useCallback } from '@wordpress/element'
-import { useLocalStorage } from '~stackable/util'
+import {
+	useLocalStorage, recursivelyAddUniqueIdToInnerBlocks,
+} from '~stackable/util'
 
 export const ColumnsControl = () => {
 	const { clientId } = useBlockEditContext()
@@ -32,16 +35,18 @@ export const ColumnsControl = () => {
 		} else if ( numColumns > numInnerBlocks && ! isDuplicate ) {
 			const numToAdd = numColumns - numInnerBlocks
 			for ( let i = 0; i < numToAdd; i++ ) {
-				const block = getBlockFromExample( 'stackable/column', {} )
+				const block = createBlock( 'stackable/column', {} )
 				insertBlock( block, numInnerBlocks + i + 1, clientId, false )
 			}
 
 		// Duplicate the last column.
 		} else if ( numColumns > numInnerBlocks ) {
 			const lastColumnBlock = last( innerBlocks )
-			const block = getBlockFromExample( 'stackable/column', pick( lastColumnBlock, [ 'attributes', 'innerBlocks' ] ) )
 			const numToAdd = numColumns - numInnerBlocks
 			for ( let i = 0; i < numToAdd; i++ ) {
+				const block = createBlock( 'stackable/column', lastColumnBlock.attributes, lastColumnBlock.innerBlocks )
+				block.attributes.uniqueId = createUniqueClass( block.clientId )
+				recursivelyAddUniqueIdToInnerBlocks( block.innerBlocks )
 				insertBlock( block, numInnerBlocks + i + 1, clientId, false )
 			}
 		}
