@@ -16,6 +16,7 @@ import {
 } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
 	Alignment,
@@ -51,6 +52,8 @@ const Edit = props => {
 	const {
 		className, attributes, clientId,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )

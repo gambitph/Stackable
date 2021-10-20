@@ -8,6 +8,7 @@ import { SubtitleStyles } from './style'
 k*/
 import {
 	BlockDiv,
+	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -56,6 +57,8 @@ const Edit = props => {
 		onRemove,
 		mergeBlocks,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
