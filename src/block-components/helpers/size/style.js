@@ -28,8 +28,17 @@ const getStyleParams = ( options = {} ) => {
 			hasUnits: 'px',
 		},
 		{
+			renderIn: 'save',
 			selector,
 			styleRule: verticalAlignRule || 'alignItems',
+			attrName: 'verticalAlign',
+			attrNameTemplate,
+			responsive: 'all',
+		},
+		{
+			renderIn: 'edit',
+			selector,
+			styleRule: 'justifyContent',
 			attrName: 'verticalAlign',
 			attrNameTemplate,
 			responsive: 'all',
@@ -194,11 +203,13 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			attrNameTemplate,
 			valueCallback: () => {
-				return ( verticalAlignRule || 'alignItems' ) === 'justifyContent' ? 'column' : 'row'
+				return 'column'
 			},
 		},
 		...( ( horizontalAlignRule !== 'margin' ) ? [
 			{
+
+				renderIn: 'save',
 				selector: wrapperSelector || selector,
 				styleRule: horizontalAlignRule || 'justifyContent',
 				attrName: 'horizontalAlign',
