@@ -88,6 +88,19 @@
 		.stk-container {
 			display: flex;
 		}
+		.stk-img-wrapper {
+			width: 100%;
+			height: 100%;
+		}
+
+		.stk-block-posts__image-link:not(:empty) {
+			flex-basis: 50%;
+
+			~ .stk-container-padding {
+				flex-basis: 50%;
+			}
+		}
+
 		.stk-container-padding {
 			padding-block: 0;
 			padding-inline-end: 0;

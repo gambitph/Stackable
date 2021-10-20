@@ -280,6 +280,21 @@ const getStyleParams = () => {
 			format: '%spx',
 			responsive: 'all',
 		},
+
+		{
+			renderIn: 'save',
+			selector: `.stk-container-padding`,
+			styleRule: 'width',
+			attrName: 'imageWidth',
+			responsive: 'all',
+			valueCallback: ( value, getAttribute, device ) => {
+				if ( getAttribute( 'imageWidthUnit', device ) === '%' && value !== undefined && value !== '' ) {
+					return ( 100 - parseInt( value ) ) + '%'
+				}
+
+				return undefined
+			},
+		},
 	]
 }
 
@@ -301,7 +316,7 @@ export const PostsStyles = props => {
 	const imageOptions = useMemo( () => ( {
 		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle ),
-	} ), [ blockStyle ] )
+	} ), [ blockStyle, attributes.imageHasLink ] )
 
 	return (
 		<>
@@ -349,6 +364,7 @@ PostsStyles.Content = props => {
 	const imageOptions = {
 		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
+		...( [ 'list' ].includes( blockStyle?.name ) && props.attributes.imageHasLink ? { selector: `${ itemSelector } .stk-block-posts__image-link`, widthStyleRule: 'flexBasis' } : {} ),
 	}
 
 	const styles = (
