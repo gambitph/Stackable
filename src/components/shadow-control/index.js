@@ -259,6 +259,7 @@ const ShadowControl = props => {
 				max={ shadows.length - 1 }
 				allowReset={ true }
 				className="ugb--help-tip-general-shadow"
+				hover={ props.hover }
 				after={ (
 					<Button
 						className="stk-shadow-control__more-button"
