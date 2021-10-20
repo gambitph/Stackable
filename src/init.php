@@ -286,13 +286,16 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Check the theme.json file if we have any block sizes set.
 			// @see https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-json/#styles
 			if ( class_exists( 'WP_Theme_JSON_Resolver_Gutenberg' ) ) {
-				$layout = WP_Theme_JSON_Resolver_Gutenberg::get_merged_data()->get_settings()['layout'];
-				if ( ! empty( $layout ) ) {
-					if ( array_key_exists( 'contentSize', $layout ) ) {
-						$width_default = $layout['contentSize'];
-					}
-					if ( array_key_exists( 'wideSize', $layout ) ) {
-						$width_wide = $layout['wideSize'];
+				$settings = WP_Theme_JSON_Resolver_Gutenberg::get_merged_data()->get_settings();
+				if ( ! empty( $settings ) && array_key_exists( 'layout', $settings ) ) {
+					$layout = $settings['layout'];
+					if ( ! empty( $layout ) ) {
+						if ( array_key_exists( 'contentSize', $layout ) ) {
+							$width_default = $layout['contentSize'];
+						}
+						if ( array_key_exists( 'wideSize', $layout ) ) {
+							$width_wide = $layout['wideSize'];
+						}
 					}
 				}
 			}

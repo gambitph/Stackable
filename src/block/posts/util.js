@@ -4,7 +4,7 @@
 import striptags from 'striptags'
 import { compact } from 'lodash'
 import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import {
 	Image,
 	ContainerDiv,
@@ -271,7 +271,7 @@ export const generateRenderPostItem = attributes => {
 	}
 }
 
-generateRenderPostItem.save = attributes => {
+generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 	const {
 		imageHasLink = true,
 		className = '',
@@ -331,6 +331,8 @@ generateRenderPostItem.save = attributes => {
 			attrNameTemplate="title%s"
 			className={ titleClassNames }
 			value="<a href='!#postLink!#'>!#title!#</a>"
+			attributes={ attributes }
+			{ ...applyFilters( 'stackable.posts.title.typography-content', {}, version ) }
 		/>
 	)
 
@@ -340,6 +342,8 @@ generateRenderPostItem.save = attributes => {
 			attrNameTemplate="category%s"
 			className={ categoryClassNames }
 			value="!#category!#"
+			attributes={ attributes }
+			{ ...applyFilters( 'stackable.posts.title.category-content', {}, version ) }
 		/>
 	)
 
@@ -367,6 +371,8 @@ generateRenderPostItem.save = attributes => {
 			attrNameTemplate="readmore%s"
 			className={ readmoreClassNames }
 			value="!#readmoreText!#"
+			attributes={ attributes }
+			{ ...applyFilters( 'stackable.posts.title.readmore-content', {}, version ) }
 		/>
 	)
 

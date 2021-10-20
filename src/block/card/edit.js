@@ -40,7 +40,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import {
-	Fragment, useMemo,
+	Fragment, useMemo, useEffect,
 } from '@wordpress/element'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -58,6 +58,10 @@ const Edit = props => {
 	const {
 		className, //isHovered,
 	} = props
+
+	useEffect( () => {
+		props.attributes.generatedCss = ''
+	}, [] )
 
 	const { blockOrientation } = useAlignment()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
