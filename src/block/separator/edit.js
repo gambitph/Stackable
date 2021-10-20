@@ -22,6 +22,7 @@ import {
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -43,6 +44,8 @@ const Edit = props => {
 		className,
 		attributes,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const {
 		separatorDesign,

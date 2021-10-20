@@ -26,6 +26,7 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	Typography,
 	BlockDiv,
+	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -164,6 +165,8 @@ const Edit = props => {
 		onRemove,
 		mergeBlocks,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const { ordered } = attributes
 	const tagName = ordered ? 'ol' : 'ul'

@@ -8,6 +8,7 @@ import { HeadingStyles } from './style'
  */
 import {
 	BlockDiv,
+	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -37,6 +38,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )

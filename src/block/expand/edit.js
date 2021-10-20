@@ -11,6 +11,7 @@ import { version as VERSION, i18n } from 'stackable'
 import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -63,6 +64,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()

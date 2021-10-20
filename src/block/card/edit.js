@@ -19,6 +19,7 @@ import {
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	Image,
 	getAlignmentClasses,
 	Alignment,
@@ -40,7 +41,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import {
-	Fragment, useMemo, useEffect,
+	Fragment, useMemo,
 } from '@wordpress/element'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -55,13 +56,11 @@ const Edit = props => {
 		hasContainer,
 	} = props.attributes
 
+	useGeneratedCss( props.attributes )
+
 	const {
 		className, //isHovered,
 	} = props
-
-	useEffect( () => {
-		props.attributes.generatedCss = ''
-	}, [] )
 
 	const { blockOrientation } = useAlignment()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )

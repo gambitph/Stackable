@@ -19,6 +19,7 @@ import {
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	useAlignment,
@@ -61,6 +62,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const { blockOrientation } = useAlignment()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )

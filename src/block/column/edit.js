@@ -25,6 +25,7 @@ import {
 	Column,
 	getColumnClasses,
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	useAlignment,
@@ -63,6 +64,8 @@ const Edit = props => {
 		className,
 		isHovered,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const { blockOrientation } = useAlignment()
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
