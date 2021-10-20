@@ -19,7 +19,7 @@
 		row-gap: 0;
 
 		// All contents should have bottom margins
-		:is([class*="stk-block-posts__"], .stk-img-wrapper) {
+		:is([class*="stk-block-posts__"], .stk-img-wrapper):not(.stk-block-posts__item) {
 			margin-bottom: cssvar(block-margin-bottom);
 			&:last-child {
 				margin-bottom: 0;
@@ -30,7 +30,7 @@
 	// Add margins when there are containers, to mimic the sizes of columns that have containers.
 	&__items {
 		.stk-container {
-			height: 100%;
+			flex: 1;
 			margin: 6px; // Use margins instead of column-gap
 
 			&:not(.stk--no-padding) {
@@ -53,6 +53,8 @@
 		flex-basis: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
 		width: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
 		overflow: hidden;
+		// Make the contents occupy entire area.
+		display: flex;
 	}
 
 	// Force remove heading titles from themes.
@@ -85,12 +87,29 @@
 	}
 
 	&:is(.is-style-list) {
-		.stk-block-posts__item {
+		.stk-container {
 			display: flex;
 		}
+		.stk-img-wrapper {
+			width: 100%;
+			height: 100%;
+		}
+
+		.stk-block-posts__image-link:not(:empty) {
+			flex-basis: 50%;
+
+			~ .stk-container-padding {
+				flex-basis: 50%;
+			}
+		}
+
 		.stk-container-padding {
 			padding-block: 0;
 			padding-inline-end: 0;
 		}
+	}
+
+	.stk-container-padding {
+		flex: 1;
 	}
 }

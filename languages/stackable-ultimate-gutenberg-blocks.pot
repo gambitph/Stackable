@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.2\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-16T18:12:45+00:00\n"
+"POT-Creation-Date: 2021-10-20T09:31:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -52,15 +52,15 @@ msgid "%s must be a string."
 msgstr ""
 
 #: pro__premium_only/src/block/pagination/index.php:73
-#: pro__premium_only/src/block/pagination/edit.js:89
-#: pro__premium_only/src/block/pagination/schema.js:64
+#: pro__premium_only/src/block/pagination/edit.js:92
+#: pro__premium_only/src/block/pagination/schema.js:66
 #: src/welcome/wizard.js:61
 msgid "Previous"
 msgstr ""
 
 #: pro__premium_only/src/block/pagination/index.php:74
-#: pro__premium_only/src/block/pagination/edit.js:84
-#: pro__premium_only/src/block/pagination/schema.js:60
+#: pro__premium_only/src/block/pagination/edit.js:87
+#: pro__premium_only/src/block/pagination/schema.js:62
 msgid "Next"
 msgstr ""
 
@@ -476,7 +476,7 @@ msgid "Number of comments"
 msgstr ""
 
 #: src/block/posts/index.php:323
-#: src/block/posts/schema.js:246
+#: src/block/posts/schema.js:248
 #: src/block/posts/util.js:220
 msgid "Continue Reading"
 msgstr ""
@@ -529,6 +529,10 @@ msgstr ""
 
 #: src/deprecated/v2/init.php:90
 msgid "Load version 2 blocks when old blocks are used"
+msgstr ""
+
+#: src/deprecated/v2/init.php:104
+msgid "This disables the v2 block detected in the editor"
 msgstr ""
 
 #: src/deprecated/v2/optimization-settings.php:53
@@ -1360,7 +1364,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:32
 #: pro__premium_only/src/features/icon-controls/index.js:260
-#: src/block/number-box/edit.js:86
+#: src/block/number-box/edit.js:89
 #: src/components/image-shape-control/index.js:59
 #: src/help/videos.js:181
 msgid "Shape"
@@ -1482,7 +1486,7 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:132
 #: src/block-components/button/edit.js:179
 #: src/block-components/icon/edit.js:36
-#: src/block/notification/edit.js:148
+#: src/block/notification/edit.js:151
 #: src/components/icon-controls/index.js:107
 #: src/deprecated/v2/block/icon-list/edit.js:143
 #: src/deprecated/v2/block/notification/edit.js:384
@@ -1492,7 +1496,7 @@ msgstr ""
 #: pro__premium_only/src/block-components/icon/multicolor-controls.js:55
 #: pro__premium_only/src/features/icon-controls/index.js:145
 #: src/block-components/icon/edit.js:156
-#: src/block/icon-list/edit.js:280
+#: src/block/icon-list/edit.js:284
 #: src/components/icon-controls/index.js:259
 #: src/deprecated/v2/block/icon-list/edit.js:162
 msgid "Icon Opacity"
@@ -1508,8 +1512,8 @@ msgstr ""
 #: pro__premium_only/src/block/separator/index.js:116
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:76
 #: src/block-components/separator/edit.js:63
-#: src/block/divider/edit.js:72
-#: src/block/icon-list/edit.js:263
+#: src/block/divider/edit.js:75
+#: src/block/icon-list/edit.js:267
 #: src/components/blend-mode-control/index.js:38
 #: src/deprecated/v2/block/accordion/edit.js:331
 #: src/deprecated/v2/block/accordion/edit.js:360
@@ -1551,7 +1555,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:155
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:103
 #: src/block-components/separator/edit.js:93
-#: src/block/separator/edit.js:86
+#: src/block/separator/edit.js:89
 #: src/deprecated/v2/block/separator/edit.js:124
 #: src/deprecated/v2/block/separator/edit.js:183
 #: src/deprecated/v2/modules/block-separators/index.js:121
@@ -1993,8 +1997,8 @@ msgstr ""
 #: pro__premium_only/src/block/feature-grid/index.js:59
 #: src/block/feature-grid/variations.js:118
 #: src/block/feature-grid/variations.js:150
-#: src/block/posts/edit.js:281
-#: src/block/posts/edit.js:334
+#: src/block/posts/edit.js:284
+#: src/block/posts/edit.js:337
 #: src/block/posts/util.js:43
 #: src/components/heading-buttons-control/index.js:76
 #: src/deprecated/v2/block/accordion/edit.js:264
@@ -2072,27 +2076,27 @@ msgctxt "Text placeholder"
 msgid "Text for This Block"
 msgstr ""
 
-#: pro__premium_only/src/block/load-more/edit.js:42
+#: pro__premium_only/src/block/load-more/edit.js:43
 #: src/deprecated/v2/block/blog-posts/edit.js:501
 #: src/deprecated/v2/block/blog-posts/schema.js:295
 msgid "Load More"
 msgstr ""
 
-#: pro__premium_only/src/block/load-more/edit.js:78
-#: pro__premium_only/src/block/pagination/edit.js:69
+#: pro__premium_only/src/block/load-more/edit.js:81
+#: pro__premium_only/src/block/pagination/edit.js:72
 #: src/block-components/advanced/edit.js:53
 #: src/block-components/content-align/edit.js:120
-#: src/block/accordion/edit.js:117
-#: src/block/button-group/edit.js:91
-#: src/block/divider/edit.js:68
-#: src/block/icon-label/edit.js:78
-#: src/block/icon-list/edit.js:195
-#: src/block/notification/edit.js:103
-#: src/block/posts/edit.js:156
-#: src/block/separator/edit.js:73
-#: src/block/spacer/edit.js:95
-#: src/block/text/edit.js:99
-#: src/block/video-popup/edit.js:84
+#: src/block/accordion/edit.js:120
+#: src/block/button-group/edit.js:94
+#: src/block/divider/edit.js:71
+#: src/block/icon-label/edit.js:81
+#: src/block/icon-list/edit.js:199
+#: src/block/notification/edit.js:106
+#: src/block/posts/edit.js:159
+#: src/block/separator/edit.js:76
+#: src/block/spacer/edit.js:98
+#: src/block/text/edit.js:102
+#: src/block/video-popup/edit.js:87
 #: src/deprecated/v2/block/accordion/edit.js:135
 #: src/deprecated/v2/block/blockquote/edit.js:124
 #: src/deprecated/v2/block/blog-posts/edit.js:200
@@ -2125,7 +2129,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: pro__premium_only/src/block/load-more/edit.js:83
+#: pro__premium_only/src/block/load-more/edit.js:86
 msgid "Number of Items"
 msgstr ""
 
@@ -2135,15 +2139,15 @@ msgctxt "Content placeholder"
 msgid "Description for this block. Use this space for describing your block. Any text will do."
 msgstr ""
 
-#: pro__premium_only/src/block/pagination/edit.js:75
+#: pro__premium_only/src/block/pagination/edit.js:78
 msgid "Show Next & Previous Button"
 msgstr ""
 
-#: pro__premium_only/src/block/pagination/edit.js:82
+#: pro__premium_only/src/block/pagination/edit.js:85
 msgid "Next Label"
 msgstr ""
 
-#: pro__premium_only/src/block/pagination/edit.js:87
+#: pro__premium_only/src/block/pagination/edit.js:90
 msgid "Previous Label"
 msgstr ""
 
@@ -2843,8 +2847,8 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:130
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:185
 #: src/block-components/typography/edit.js:322
-#: src/block/heading/edit.js:138
-#: src/block/heading/edit.js:184
+#: src/block/heading/edit.js:141
+#: src/block/heading/edit.js:187
 #: src/components/align-buttons-control/index.js:58
 #: src/deprecated/v2/block/accordion/edit.js:302
 #: src/deprecated/v2/block/blockquote/edit.js:313
@@ -2923,7 +2927,7 @@ msgid "Load More Button"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:160
-#: src/block/posts/edit.js:224
+#: src/block/posts/edit.js:227
 #: src/deprecated/v2/block/blog-posts/edit.js:263
 msgid "Number of items"
 msgstr ""
@@ -2944,8 +2948,8 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/modules/advanced-column-spacing/index.js:68
 #: src/block-components/content-align/edit.js:98
 #: src/block-components/helpers/flex-gap/edit.js:16
-#: src/block/icon-list/edit.js:210
-#: src/block/text/edit.js:115
+#: src/block/icon-list/edit.js:214
+#: src/block/text/edit.js:118
 #: src/help/videos.js:572
 msgid "Column Gap"
 msgstr ""
@@ -3062,7 +3066,7 @@ msgstr ""
 #: src/block-components/icon/edit.js:115
 #: src/block-components/icon/edit.js:121
 #: src/block-components/icon/edit.js:283
-#: src/block/icon-list/edit.js:248
+#: src/block/icon-list/edit.js:252
 #: src/components/button-controls/index.js:400
 #: src/components/icon-control/index.js:82
 #: src/components/icon-controls/index.js:39
@@ -3152,7 +3156,7 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/components/image-size-control.js:17
 #: src/block-components/helpers/backgrounds/edit.js:258
 #: src/block-components/image/edit.js:176
-#: src/block/posts/edit.js:550
+#: src/block/posts/edit.js:553
 #: src/components/background-controls/index.js:363
 #: src/components/background-controls/index.js:378
 #: src/components/background-controls/index.js:393
@@ -3427,7 +3431,7 @@ msgid "Remove"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/excerpt-control.js:16
-#: src/block/posts/edit.js:482
+#: src/block/posts/edit.js:485
 #: src/deprecated/v2/block/blog-posts/edit.js:688
 msgid "Excerpt Length"
 msgstr ""
@@ -3661,7 +3665,7 @@ msgid "Text"
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/admin.js:301
-#: src/block/icon-list/edit.js:58
+#: src/block/icon-list/edit.js:59
 #: src/deprecated/v2/block/count-up/edit.js:268
 #: src/deprecated/v2/block/count-up/edit.js:390
 #: src/deprecated/v2/block/number-box/edit.js:249
@@ -4199,9 +4203,9 @@ msgid "Container Borders & Shadow"
 msgstr ""
 
 #: src/block-components/content-align/column-settings-button.js:52
-#: src/block/icon-list/edit.js:200
-#: src/block/posts/edit.js:160
-#: src/block/text/edit.js:104
+#: src/block/icon-list/edit.js:204
+#: src/block/posts/edit.js:163
+#: src/block/text/edit.js:107
 #: src/deprecated/v2/block/blog-posts/edit.js:204
 #: src/deprecated/v2/block/card/edit.js:158
 #: src/deprecated/v2/block/columns/edit.js:155
@@ -4224,7 +4228,7 @@ msgid "When enabled, the last column will be cloned instead of adding a blank co
 msgstr ""
 
 #: src/block-components/content-align/edit.js:44
-#: src/block/posts/edit.js:169
+#: src/block/posts/edit.js:172
 #: src/deprecated/v2/block/column/edit.js:137
 #: src/deprecated/v2/block/column/edit.js:152
 #: src/deprecated/v2/block/column/edit.js:167
@@ -4335,7 +4339,7 @@ msgid "Background Image"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:164
-#: src/block/video-popup/edit.js:91
+#: src/block/video-popup/edit.js:94
 #: src/components/background-controls/index.js:171
 #: src/components/background-controls/index.js:182
 #: src/components/background-controls/index.js:193
@@ -4501,9 +4505,9 @@ msgid "Max. Content Width"
 msgstr ""
 
 #: src/block-components/helpers/size/edit.js:31
-#: src/block/posts/edit.js:183
-#: src/block/posts/edit.js:192
-#: src/block/posts/edit.js:201
+#: src/block/posts/edit.js:186
+#: src/block/posts/edit.js:195
+#: src/block/posts/edit.js:204
 #: src/deprecated/v2/block/column/edit.js:184
 #: src/deprecated/v2/block/column/edit.js:194
 #: src/deprecated/v2/block/column/edit.js:204
@@ -4554,7 +4558,7 @@ msgid "Liven up your icons with gradient fills, multiple colors and background s
 msgstr ""
 
 #: src/block-components/icon/edit.js:145
-#: src/block/notification/edit.js:140
+#: src/block/notification/edit.js:143
 #: src/components/button-controls/index.js:414
 #: src/components/icon-controls/index.js:226
 #: src/components/icon-controls/index.js:236
@@ -4565,7 +4569,7 @@ msgid "Icon Size"
 msgstr ""
 
 #: src/block-components/icon/edit.js:167
-#: src/block/icon-list/edit.js:291
+#: src/block/icon-list/edit.js:295
 #: src/components/icon-controls/index.js:272
 #: src/deprecated/v2/block/icon-list/edit.js:172
 msgid "Icon Rotation"
@@ -4577,8 +4581,8 @@ msgid "Icon Position"
 msgstr ""
 
 #: src/block-components/icon/edit.js:189
-#: src/block/icon-label/edit.js:83
-#: src/block/icon-list/edit.js:218
+#: src/block/icon-label/edit.js:86
+#: src/block/icon-list/edit.js:222
 msgid "Icon Gap"
 msgstr ""
 
@@ -4612,9 +4616,9 @@ msgstr ""
 
 #: src/block-components/image/edit.js:119
 #: src/block-components/separator/edit.js:75
-#: src/block/divider/edit.js:84
-#: src/block/heading/edit.js:113
-#: src/block/heading/edit.js:159
+#: src/block/divider/edit.js:87
+#: src/block/heading/edit.js:116
+#: src/block/heading/edit.js:162
 #: src/components/resizer-tooltip/index.js:96
 #: src/deprecated/v2/block/divider/edit.js:125
 #: src/deprecated/v2/block/heading/edit.js:166
@@ -4630,10 +4634,10 @@ msgstr ""
 
 #: src/block-components/image/edit.js:134
 #: src/block-components/separator/edit.js:67
-#: src/block/heading/edit.js:122
-#: src/block/heading/edit.js:168
-#: src/block/separator/edit.js:78
-#: src/block/spacer/edit.js:100
+#: src/block/heading/edit.js:125
+#: src/block/heading/edit.js:171
+#: src/block/separator/edit.js:81
+#: src/block/spacer/edit.js:103
 #: src/components/resizer-tooltip/index.js:148
 #: src/deprecated/v2/block/columns/edit.js:329
 #: src/deprecated/v2/block/container/edit.js:151
@@ -4785,7 +4789,7 @@ msgid "Invert Design"
 msgstr ""
 
 #: src/block-components/separator/edit.js:98
-#: src/block/separator/edit.js:90
+#: src/block/separator/edit.js:93
 #: src/deprecated/v2/block/separator/edit.js:178
 #: src/deprecated/v2/modules/block-separators/index.js:126
 #: src/deprecated/v2/modules/block-separators/index.js:226
@@ -4909,7 +4913,7 @@ msgid "Letter Spacing"
 msgstr ""
 
 #: src/block-components/typography/edit.js:237
-#: src/block/number-box/edit.js:93
+#: src/block/number-box/edit.js:96
 #: src/components/typography-control/index.js:65
 #: src/components/typography-control/index.js:78
 #: src/components/typography-control/index.js:90
@@ -4931,22 +4935,22 @@ msgstr ""
 msgid "Text Color #%s"
 msgstr ""
 
-#: src/block/accordion/edit.js:122
+#: src/block/accordion/edit.js:125
 #: src/deprecated/v2/block/accordion/edit.js:145
 msgid "Open at the start"
 msgstr ""
 
-#: src/block/accordion/edit.js:126
+#: src/block/accordion/edit.js:129
 #: src/deprecated/v2/block/accordion/edit.js:139
 #: src/help/videos.js:592
 msgid "Close adjacent on open"
 msgstr ""
 
-#: src/block/accordion/edit.js:186
+#: src/block/accordion/edit.js:189
 msgid "Open Icon"
 msgstr ""
 
-#: src/block/accordion/edit.js:189
+#: src/block/accordion/edit.js:192
 msgid "The open icon will appear when the accordion is opened"
 msgstr ""
 
@@ -5081,11 +5085,11 @@ msgstr ""
 msgid "Plus"
 msgstr ""
 
-#: src/block/blockquote/edit.js:119
+#: src/block/blockquote/edit.js:122
 msgid "Quotation Mark Icons"
 msgstr ""
 
-#: src/block/blockquote/edit.js:135
+#: src/block/blockquote/edit.js:138
 msgid "Pick another icon"
 msgstr ""
 
@@ -5144,7 +5148,7 @@ msgstr ""
 
 #: src/block/blockquote/variations.js:74
 #: src/block/blockquote/variations.js:75
-#: src/block/posts/edit.js:454
+#: src/block/posts/edit.js:457
 #: src/deprecated/v2/block/blog-posts/edit.js:601
 msgid "Highlighted"
 msgstr ""
@@ -5162,44 +5166,44 @@ msgstr ""
 msgid "Centered Quote"
 msgstr ""
 
-#: src/block/button-group/edit.js:97
+#: src/block/button-group/edit.js:100
 msgid "Flex Wrap"
 msgstr ""
 
-#: src/block/button-group/edit.js:101
+#: src/block/button-group/edit.js:104
 msgid "No Wrap"
 msgstr ""
 
-#: src/block/button-group/edit.js:105
+#: src/block/button-group/edit.js:108
 msgid "Wrap"
 msgstr ""
 
-#: src/block/button-group/edit.js:109
+#: src/block/button-group/edit.js:112
 msgid "Wrap Reverse"
 msgstr ""
 
-#: src/block/button-group/edit.js:116
+#: src/block/button-group/edit.js:119
 #: src/deprecated/v2/block/button/edit.js:135
 msgid "Collapse Buttons On"
 msgstr ""
 
-#: src/block/button-group/edit.js:120
+#: src/block/button-group/edit.js:123
 #: src/deprecated/v2/block/button/edit.js:138
 msgid "Don't collapse"
 msgstr ""
 
-#: src/block/button-group/edit.js:124
+#: src/block/button-group/edit.js:127
 #: src/components/responsive-toggle/index.js:32
 msgid "Desktop"
 msgstr ""
 
-#: src/block/button-group/edit.js:128
+#: src/block/button-group/edit.js:131
 #: src/components/responsive-toggle/index.js:37
 #: src/deprecated/v2/block/button/edit.js:139
 msgid "Tablet"
 msgstr ""
 
-#: src/block/button-group/edit.js:132
+#: src/block/button-group/edit.js:135
 #: src/components/responsive-toggle/index.js:42
 #: src/deprecated/v2/block/button/edit.js:140
 msgid "Mobile"
@@ -5242,7 +5246,7 @@ msgstr ""
 msgid "Ghost"
 msgstr ""
 
-#: src/block/button/edit.js:123
+#: src/block/button/edit.js:126
 #: src/deprecated/v2/block/button/deprecated.js:38
 #: src/deprecated/v2/block/button/deprecated.js:83
 #: src/deprecated/v2/block/button/deprecated.js:121
@@ -5296,12 +5300,12 @@ msgstr ""
 msgid "Faded"
 msgstr ""
 
-#: src/block/column/edit.js:117
+#: src/block/column/edit.js:120
 msgid "Column Spacing"
 msgstr ""
 
-#: src/block/column/edit.js:122
-#: src/block/posts/edit.js:269
+#: src/block/column/edit.js:125
+#: src/block/posts/edit.js:272
 #: src/components/panel-spacing-body/index.js:18
 #: src/components/spacing-control/index.js:118
 #: src/deprecated/v2/block/separator/edit.js:194
@@ -5365,7 +5369,7 @@ msgstr ""
 msgid "Four columns; equal split"
 msgstr ""
 
-#: src/block/count-up/edit.js:82
+#: src/block/count-up/edit.js:85
 msgid "1,234.56"
 msgstr ""
 
@@ -5401,40 +5405,40 @@ msgstr ""
 msgid "Asterisks"
 msgstr ""
 
-#: src/block/divider/edit.js:76
+#: src/block/divider/edit.js:79
 msgid "Height / Size"
 msgstr ""
 
-#: src/block/expand/edit.js:37
+#: src/block/expand/edit.js:38
 #: src/deprecated/v2/block/expand/edit.js:259
 #: src/deprecated/v2/block/expand/edit.js:283
 msgid "Some short text that can be expanded to show more details."
 msgstr ""
 
-#: src/block/expand/edit.js:42
+#: src/block/expand/edit.js:43
 #: src/deprecated/v2/block/expand/deprecated.js:30
 #: src/deprecated/v2/block/expand/edit.js:269
 #: src/deprecated/v2/block/expand/schema.js:59
 msgid "Show more"
 msgstr ""
 
-#: src/block/expand/edit.js:48
+#: src/block/expand/edit.js:49
 msgid "Some long text that will be expanded when the show more button is clicked by the visitor."
 msgstr ""
 
-#: src/block/expand/edit.js:53
+#: src/block/expand/edit.js:54
 #: src/deprecated/v2/block/expand/deprecated.js:35
 #: src/deprecated/v2/block/expand/edit.js:295
 #: src/deprecated/v2/block/expand/schema.js:64
 msgid "Show less"
 msgstr ""
 
-#: src/block/expand/edit.js:100
+#: src/block/expand/edit.js:103
 #: src/deprecated/v2/block/expand/edit.js:253
 msgid "Less text"
 msgstr ""
 
-#: src/block/expand/edit.js:101
+#: src/block/expand/edit.js:104
 #: src/deprecated/v2/block/expand/edit.js:275
 msgid "More text"
 msgstr ""
@@ -5515,31 +5519,31 @@ msgstr ""
 msgid "Overlap Background 5"
 msgstr ""
 
-#: src/block/heading/edit.js:100
+#: src/block/heading/edit.js:103
 #: src/deprecated/v2/block/heading/edit.js:148
 #: src/deprecated/v2/block/heading/edit.js:259
 msgid "Top Line"
 msgstr ""
 
-#: src/block/heading/edit.js:107
-#: src/block/heading/edit.js:153
+#: src/block/heading/edit.js:110
+#: src/block/heading/edit.js:156
 #: src/deprecated/v2/block/heading/edit.js:163
 #: src/deprecated/v2/block/heading/edit.js:215
 msgid "Line Color"
 msgstr ""
 
-#: src/block/heading/edit.js:130
-#: src/block/heading/edit.js:176
+#: src/block/heading/edit.js:133
+#: src/block/heading/edit.js:179
 msgid "Margin"
 msgstr ""
 
-#: src/block/heading/edit.js:145
+#: src/block/heading/edit.js:148
 #: src/deprecated/v2/block/heading/edit.js:200
 #: src/deprecated/v2/block/heading/edit.js:305
 msgid "Bottom Line"
 msgstr ""
 
-#: src/block/heading/edit.js:206
+#: src/block/heading/edit.js:209
 #: src/deprecated/v2/block/accordion/deprecated.js:116
 #: src/deprecated/v2/block/accordion/edit.js:451
 #: src/deprecated/v2/block/accordion/schema.js:60
@@ -5594,7 +5598,7 @@ msgstr ""
 msgid "Half Layout"
 msgstr ""
 
-#: src/block/icon-box/edit.js:47
+#: src/block/icon-box/edit.js:48
 msgid "Icon Box"
 msgstr ""
 
@@ -5602,48 +5606,48 @@ msgstr ""
 msgid "Pill"
 msgstr ""
 
-#: src/block/icon-label/edit.js:46
-#: src/block/icon/edit.js:75
+#: src/block/icon-label/edit.js:47
+#: src/block/icon/edit.js:78
 msgid "Icon Label"
 msgstr ""
 
-#: src/block/icon-list/edit.js:62
+#: src/block/icon-list/edit.js:63
 msgid "Padded Number"
 msgstr ""
 
-#: src/block/icon-list/edit.js:66
+#: src/block/icon-list/edit.js:67
 msgid "Lowercase Roman"
 msgstr ""
 
-#: src/block/icon-list/edit.js:70
+#: src/block/icon-list/edit.js:71
 msgid "Uppercase Roman"
 msgstr ""
 
-#: src/block/icon-list/edit.js:74
+#: src/block/icon-list/edit.js:75
 msgid "Lowercase Letters"
 msgstr ""
 
-#: src/block/icon-list/edit.js:78
+#: src/block/icon-list/edit.js:79
 msgid "Uppercase Letters"
 msgstr ""
 
-#: src/block/icon-list/edit.js:226
+#: src/block/icon-list/edit.js:230
 msgid "Indendation"
 msgstr ""
 
-#: src/block/icon-list/edit.js:234
+#: src/block/icon-list/edit.js:238
 msgid "List Alignment"
 msgstr ""
 
-#: src/block/icon-list/edit.js:243
+#: src/block/icon-list/edit.js:247
 msgid "Icons & Numbers"
 msgstr ""
 
-#: src/block/icon-list/edit.js:257
+#: src/block/icon-list/edit.js:261
 msgid "List Type"
 msgstr ""
 
-#: src/block/icon-list/edit.js:269
+#: src/block/icon-list/edit.js:273
 msgid "Icon / Number Size"
 msgstr ""
 
@@ -5663,7 +5667,7 @@ msgstr ""
 msgid "Convert to ordered list"
 msgstr ""
 
-#: src/block/icon/edit.js:70
+#: src/block/icon/edit.js:73
 msgid "Accessibility"
 msgstr ""
 
@@ -5693,32 +5697,32 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: src/block/notification/edit.js:109
+#: src/block/notification/edit.js:112
 #: src/deprecated/v2/block/notification/edit.js:161
 msgid "Notification Type"
 msgstr ""
 
-#: src/block/notification/edit.js:113
+#: src/block/notification/edit.js:116
 #: src/deprecated/v2/block/notification/edit.js:75
 msgid "Success"
 msgstr ""
 
-#: src/block/notification/edit.js:117
+#: src/block/notification/edit.js:120
 #: src/deprecated/v2/block/notification/edit.js:76
 msgid "Error"
 msgstr ""
 
-#: src/block/notification/edit.js:121
+#: src/block/notification/edit.js:124
 #: src/deprecated/v2/block/notification/edit.js:77
 msgid "Warning"
 msgstr ""
 
-#: src/block/notification/edit.js:125
+#: src/block/notification/edit.js:128
 #: src/deprecated/v2/block/notification/edit.js:78
 msgid "Information"
 msgstr ""
 
-#: src/block/notification/edit.js:132
+#: src/block/notification/edit.js:135
 #: src/deprecated/v2/block/notification/edit.js:357
 #: src/help/videos.js:652
 msgid "Dismissible"
@@ -5749,68 +5753,68 @@ msgstr ""
 msgid "Large Icon"
 msgstr ""
 
-#: src/block/posts/edit.js:210
+#: src/block/posts/edit.js:213
 msgid "Content Arrangement"
 msgstr ""
 
-#: src/block/posts/edit.js:220
+#: src/block/posts/edit.js:223
 msgid "Query"
 msgstr ""
 
-#: src/block/posts/edit.js:233
+#: src/block/posts/edit.js:236
 #: src/deprecated/v2/block/blog-posts/edit.js:273
 msgid "Order by"
 msgstr ""
 
-#: src/block/posts/edit.js:235
+#: src/block/posts/edit.js:238
 #: src/deprecated/v2/block/blog-posts/edit.js:275
 msgid "Newest to Oldest"
 msgstr ""
 
-#: src/block/posts/edit.js:236
+#: src/block/posts/edit.js:239
 #: src/deprecated/v2/block/blog-posts/edit.js:276
 msgid "Oldest to Newest"
 msgstr ""
 
-#: src/block/posts/edit.js:237
+#: src/block/posts/edit.js:240
 #: src/deprecated/v2/block/blog-posts/edit.js:277
 msgid "A → Z"
 msgstr ""
 
-#: src/block/posts/edit.js:238
+#: src/block/posts/edit.js:241
 #: src/deprecated/v2/block/blog-posts/edit.js:278
 msgid "Z → A"
 msgstr ""
 
-#: src/block/posts/edit.js:239
+#: src/block/posts/edit.js:242
 #: src/deprecated/v2/block/blog-posts/edit.js:279
 msgid "Last Modified to Oldest"
 msgstr ""
 
-#: src/block/posts/edit.js:240
+#: src/block/posts/edit.js:243
 #: src/deprecated/v2/block/blog-posts/edit.js:280
 msgid "Oldest Modified to Last"
 msgstr ""
 
-#: src/block/posts/edit.js:241
+#: src/block/posts/edit.js:244
 #: src/deprecated/v2/block/blog-posts/edit.js:281
 msgid "Menu Order"
 msgstr ""
 
-#: src/block/posts/edit.js:242
+#: src/block/posts/edit.js:245
 #: src/deprecated/v2/block/blog-posts/edit.js:282
 msgid "Random"
 msgstr ""
 
-#: src/block/posts/edit.js:273
-#: src/block/posts/edit.js:323
+#: src/block/posts/edit.js:276
+#: src/block/posts/edit.js:326
 #: src/block/posts/util.js:39
 #: src/deprecated/v2/block/blog-posts/edit.js:529
 msgid "Featured Image"
 msgstr ""
 
-#: src/block/posts/edit.js:289
-#: src/block/posts/edit.js:342
+#: src/block/posts/edit.js:292
+#: src/block/posts/edit.js:345
 #: src/block/posts/util.js:51
 #: src/deprecated/v2/block/blog-posts/edit.js:191
 #: src/deprecated/v2/block/blog-posts/edit.js:421
@@ -5818,8 +5822,8 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: src/block/posts/edit.js:297
-#: src/block/posts/edit.js:351
+#: src/block/posts/edit.js:300
+#: src/block/posts/edit.js:354
 #: src/block/posts/util.js:55
 #: src/deprecated/v2/block/blog-posts/edit.js:194
 #: src/deprecated/v2/block/blog-posts/edit.js:453
@@ -5827,8 +5831,8 @@ msgstr ""
 msgid "Excerpt"
 msgstr ""
 
-#: src/block/posts/edit.js:305
-#: src/block/posts/edit.js:360
+#: src/block/posts/edit.js:308
+#: src/block/posts/edit.js:363
 #: src/block/posts/util.js:47
 #: src/deprecated/v2/block/blog-posts/edit.js:193
 #: src/deprecated/v2/block/blog-posts/edit.js:469
@@ -5836,80 +5840,80 @@ msgstr ""
 msgid "Meta"
 msgstr ""
 
-#: src/block/posts/edit.js:313
-#: src/block/posts/edit.js:369
+#: src/block/posts/edit.js:316
+#: src/block/posts/edit.js:372
 #: src/deprecated/v2/block/blog-posts/edit.js:789
 msgid "Read More Link"
 msgstr ""
 
-#: src/block/posts/edit.js:389
+#: src/block/posts/edit.js:392
 #: src/deprecated/v2/block/blog-posts/edit.js:1004
 msgid "Posts"
 msgstr ""
 
-#: src/block/posts/edit.js:394
+#: src/block/posts/edit.js:397
 #: src/deprecated/v2/block/blog-posts/edit.js:1009
 msgid "No posts found."
 msgstr ""
 
-#: src/block/posts/edit.js:430
-#: src/block/posts/edit.js:557
+#: src/block/posts/edit.js:433
+#: src/block/posts/edit.js:560
 msgid "Apply hover effect when container is hovered"
 msgstr ""
 
-#: src/block/posts/edit.js:459
+#: src/block/posts/edit.js:462
 #: src/format-types/highlight/index.js:228
 msgid "Highlight Color"
 msgstr ""
 
-#: src/block/posts/edit.js:505
+#: src/block/posts/edit.js:508
 #: src/deprecated/v2/block/blog-posts/edit.js:735
 msgid "Show Author"
 msgstr ""
 
-#: src/block/posts/edit.js:509
+#: src/block/posts/edit.js:512
 #: src/deprecated/v2/block/blog-posts/edit.js:741
 msgid "Show Date"
 msgstr ""
 
-#: src/block/posts/edit.js:513
+#: src/block/posts/edit.js:516
 #: src/deprecated/v2/block/blog-posts/edit.js:747
 msgid "Show Comments"
 msgstr ""
 
-#: src/block/posts/edit.js:517
-#: src/block/separator/edit.js:95
+#: src/block/posts/edit.js:520
+#: src/block/separator/edit.js:98
 #: src/deprecated/v2/block/blog-posts/edit.js:764
 #: src/deprecated/v2/block/separator/edit.js:103
 msgid "Separator"
 msgstr ""
 
-#: src/block/posts/edit.js:519
+#: src/block/posts/edit.js:522
 #: src/deprecated/v2/block/blog-posts/edit.js:766
 msgid "Default (Dot)"
 msgstr ""
 
-#: src/block/posts/edit.js:520
+#: src/block/posts/edit.js:523
 #: src/deprecated/v2/block/blog-posts/edit.js:767
 msgid "Space"
 msgstr ""
 
-#: src/block/posts/edit.js:521
+#: src/block/posts/edit.js:524
 #: src/deprecated/v2/block/blog-posts/edit.js:768
 msgid "Comma"
 msgstr ""
 
-#: src/block/posts/edit.js:522
+#: src/block/posts/edit.js:525
 #: src/deprecated/v2/block/blog-posts/edit.js:769
 msgid "Dash"
 msgstr ""
 
-#: src/block/posts/edit.js:523
+#: src/block/posts/edit.js:526
 #: src/deprecated/v2/block/blog-posts/edit.js:770
 msgid "Pipe"
 msgstr ""
 
-#: src/block/posts/edit.js:546
+#: src/block/posts/edit.js:549
 msgid "Add post links to images"
 msgstr ""
 
@@ -5987,12 +5991,12 @@ msgstr ""
 msgid "Sectioned Layout"
 msgstr ""
 
-#: src/block/spacer/edit.js:149
+#: src/block/spacer/edit.js:152
 msgid "Spacer"
 msgstr ""
 
-#: src/block/subtitle/edit.js:105
-#: src/block/text/edit.js:82
+#: src/block/subtitle/edit.js:108
+#: src/block/text/edit.js:85
 msgid "Type / to choose a block"
 msgstr ""
 
@@ -6007,17 +6011,17 @@ msgstr ""
 msgid "Inverted Vertical"
 msgstr ""
 
-#: src/block/video-popup/edit.js:90
+#: src/block/video-popup/edit.js:93
 #: src/deprecated/v2/block/video-popup/edit.js:79
 msgid "Popup Option #1: Upload Video"
 msgstr ""
 
-#: src/block/video-popup/edit.js:107
+#: src/block/video-popup/edit.js:110
 #: src/deprecated/v2/block/video-popup/edit.js:96
 msgid "Popup Option #2: Video URL"
 msgstr ""
 
-#: src/block/video-popup/edit.js:108
+#: src/block/video-popup/edit.js:111
 #: src/deprecated/v2/block/video-popup/edit.js:97
 msgid "Paste a Youtube / Vimeo URL"
 msgstr ""
@@ -7757,7 +7761,7 @@ msgid "There are huge changes in Stackable, and this wizard will help you get st
 msgstr ""
 
 #: src/deprecated/v2/welcome/wizard.js:59
-msgid "We've made upgrading as smooth and hassle free as possible, click on the Next button at the lower right to move to the next step."
+msgid "We've made upgrading as smooth and hassle free as possible, click on the Get Started button at the lower right to move to the next step."
 msgstr ""
 
 #: src/deprecated/v2/welcome/wizard.js:60
@@ -8870,6 +8874,38 @@ msgstr ""
 
 #: src/plugins/premium-notice/index.js:57
 msgid "If you're enjoying Stackable blocks, we have a Premium version that lets you do so much more. Check it out now."
+msgstr ""
+
+#: src/plugins/v2-migration-popup/migration-popover.js:32
+msgid "The page will now reload for the old blocks to load. Please reload it if it does not refresh automatically."
+msgstr ""
+
+#: src/plugins/v2-migration-popup/migration-popover.js:63
+msgid "Stackable V2 Block Detected"
+msgstr ""
+
+#: src/plugins/v2-migration-popup/migration-popover.js:67
+msgid "Hello! 👋"
+msgstr ""
+
+#: src/plugins/v2-migration-popup/migration-popover.js:68
+msgid "We noticed that the page you are editing contians old Stackable version 2 blocks. Starting Stackable version 3, old v2 blocks are not anymore loaded in the editor. This means that you would not be able to edit the old v2 blocks in the editor and any old v2 block would show a block error in the editor."
+msgstr ""
+
+#: src/plugins/v2-migration-popup/migration-popover.js:69
+msgid "Do you want to enable backward compatibility, so the old blocks will be loaded in the editor?"
+msgstr ""
+
+#: src/plugins/v2-migration-popup/migration-popover.js:75
+msgid "Yes, load V2 Blocks in the editor, but only when V2 blocks are present already"
+msgstr ""
+
+#: src/plugins/v2-migration-popup/migration-popover.js:81
+msgid "Yes, always load V2 blocks in the editor"
+msgstr ""
+
+#: src/plugins/v2-migration-popup/migration-popover.js:87
+msgid "No, don't load V2 blocks in the editor"
 msgstr ""
 
 #: src/util/index.js:117

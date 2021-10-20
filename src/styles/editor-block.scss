@@ -123,6 +123,7 @@
 	margin-left: 0;
 	margin-right: 0;
 	width: 100%; // Some native blocks have auto widths so they won't follow left/center/right text alignment e.g. buttons
+	max-width: inherit;
 }
 :where(.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout) > div {
 	flex: 1 1 0;

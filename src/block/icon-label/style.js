@@ -37,7 +37,7 @@ const getStyleParams = () => {
 		},
 		{
 			renderIn: 'edit',
-			selector: '[data-block][data-type="stackable/icon"]',
+			selector: '.stk-inner-blocks [data-block][data-type="stackable/icon"]',
 			attrName: 'iconGap',
 			styleRule: 'flexBasis',
 			format: '%spx',
@@ -87,6 +87,10 @@ IconLabelStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
+
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const styles = getStyles( propsToPass.attributes, getStyleParams() )

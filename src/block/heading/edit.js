@@ -8,6 +8,7 @@ import { HeadingStyles } from './style'
  */
 import {
 	BlockDiv,
+	useGeneratedCss,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -60,6 +61,8 @@ const Edit = props => {
 		onRemove,
 		mergeBlocks,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 	const { parentBlock } = useBlockContext()

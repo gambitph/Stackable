@@ -19,6 +19,7 @@ import {
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	Image,
 	getAlignmentClasses,
 	Alignment,
@@ -54,6 +55,8 @@ const Edit = props => {
 	const {
 		hasContainer,
 	} = props.attributes
+
+	useGeneratedCss( props.attributes )
 
 	const {
 		className, //isHovered,

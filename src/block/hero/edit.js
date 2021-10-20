@@ -15,6 +15,7 @@ import {
 } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	ContainerDiv,
 	ConditionalDisplay,
 	Alignment,
@@ -50,6 +51,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )

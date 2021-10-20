@@ -12,6 +12,7 @@ import { version as VERSION } from 'stackable'
 import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -43,6 +44,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const { hasInnerBlocks } = useBlockContext()
 	const rowClass = getRowClasses( props.attributes )
