@@ -13,7 +13,7 @@ export const Style = props => {
 		sizeSelector = '.%s-container',
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = 'margin',
-		wrapperSelectorCallback,
+		wrapperSelector = '',
 	} = props.options
 
 	return (
@@ -42,7 +42,7 @@ export const Style = props => {
 					selector: sizeSelector,
 					verticalAlignRule: sizeVerticalAlignRule,
 					horizontalAlignRule: sizeHorizontalAlignRule,
-					wrapperSelectorCallback,
+					wrapperSelector,
 				} }
 			/>
 		</Fragment>
@@ -60,7 +60,7 @@ Style.Content = props => {
 		sizeSelector = '.%s-container',
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = 'margin',
-		wrapperSelectorCallback,
+		wrapperSelector = '',
 	} = props.options
 
 	return (
@@ -89,7 +89,7 @@ Style.Content = props => {
 					selector: sizeSelector,
 					verticalAlignRule: sizeVerticalAlignRule,
 					horizontalAlignRule: sizeHorizontalAlignRule,
-					wrapperSelectorCallback,
+					wrapperSelector,
 				} }
 			/>
 		</Fragment>
