@@ -91,13 +91,13 @@ const ResizerTooltip = props => {
 
 	const widthControl = <AdvancedTextControl
 		placeholder={ props.widthPlaceholder }
-		default={ props.defaultWidth }
+		default={ props.defaultWidth === 'auto' ? '' : props.defaultWidth }
 		type="number"
 		label={ props.enableWidth && props.enableHeight ? __( 'Width', i18n ) : sprintf( __( '%s Width', i18n ), props.label ) }
 		className="stk-resizer-popup__size"
 		units={ props.widthUnits }
 		unit={ props.widthUnit }
-		value={ currentWidth }
+		value={ currentWidth === 'auto' ? '' : currentWidth }
 		allowReset={ props.allowReset }
 		onChangeUnit={ unit => {
 			if ( unit === props.widthUnit ) {
@@ -123,7 +123,8 @@ const ResizerTooltip = props => {
 			props.onChangeWidth( { value: width, unit } )
 			focusInput()
 		} }
-		onChange={ value => {
+		onChange={ _value => {
+			const value = _value === 'auto' ? '' : _value
 			setPrevSwitchedWidth( null )
 			setCurrentWidth( value )
 			if ( value >= 5 ) {
@@ -143,13 +144,13 @@ const ResizerTooltip = props => {
 
 	const heightControl = <AdvancedTextControl
 		placeholder={ props.heightPlaceholder }
-		default={ props.defaultHeight }
+		default={ props.defaultHeight === 'auto' ? '' : props.defaultHeight }
 		type="number"
 		label={ props.enableWidth && props.enableHeight ? __( 'Height', i18n ) : sprintf( __( '%s Height', i18n ), props.label ) }
 		className="stk-resizer-popup__size"
 		units={ props.heightUnits }
 		unit={ props.heightUnit }
-		value={ currentHeight }
+		value={ currentHeight === 'auto' ? '' : currentHeight }
 		allowReset={ props.allowReset }
 		onChangeUnit={ unit => {
 			if ( unit === props.heightUnit ) {
@@ -176,7 +177,8 @@ const ResizerTooltip = props => {
 			props.onChangeHeight( { value: height, unit } )
 			focusInput()
 		} }
-		onChange={ value => {
+		onChange={ _value => {
+			const value = _value === 'auto' ? '' : _value
 			setPrevSwitchedHeight( null )
 			setCurrentHeight( value )
 			if ( value >= 5 ) {
@@ -275,6 +277,9 @@ ResizerTooltip.defaultProps = {
 	onChangeWidth: () => {},
 	onChangeHeight: () => {},
 	label: __( 'Image', i18n ),
+
+	defaultWidth: '',
+	defaultHeight: '',
 }
 
 export default ResizerTooltip

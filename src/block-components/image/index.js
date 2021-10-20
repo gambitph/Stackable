@@ -82,6 +82,9 @@ export const Image = props => {
 		shapeStretch={ attributes.imageShapeStretch }
 		shadow={ attributes.imageShadow }
 
+		defaultWidth={ props.defaultWidth }
+		defaultHeight={ props.defaultHeight }
+
 		{ ...pickBy( propsToPass, v => v !== undefined ) }
 	/>
 }
