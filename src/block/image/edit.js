@@ -76,6 +76,7 @@ const Edit = props => {
 				<Image
 					heightUnits={ heightUnit }
 					defaultWidth="100"
+					defaultHeight="auto"
 				/>
 			</BlockDiv>
 			<MarginBottom />
