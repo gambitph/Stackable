@@ -9,7 +9,9 @@ import { attributes } from './schema'
  */
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
-import classnames from 'classnames/dedupe'
+import {
+	getAlignmentClasses, getContentAlignmentClasses, getRowClasses,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
@@ -17,20 +19,31 @@ import classnames from 'classnames/dedupe'
 import { addFilter } from '@wordpress/hooks'
 
 // Version 3.0.2 Deprecations
-addFilter( 'stackable.feature.save.contentClassNames', 'stackable/3.0.2', ( output, version, rowClass ) => {
-	if ( compareVersions( version, '3.0.2' ) < 1 ) {
-		return classnames( output, rowClass )
+addFilter( 'stackable.feature.save.contentClassNames', 'stackable/3.0.2', ( output, props ) => {
+	if ( compareVersions( props.version, '3.0.2' ) === 1 ) {
+		return output
 	}
 
-	return output
+	const contentAlignmentClasses = getContentAlignmentClasses( props.attributes )
+	const rowClass = props.attributes.alignVertical ? undefined : getRowClasses( props.attributes )
+	return {
+		[ contentAlignmentClasses ]: contentAlignmentClasses,
+		[ rowClass ]: rowClass,
+	}
 } )
 
-addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.0.2', ( output, version, rowClass ) => {
-	if ( compareVersions( version, '3.0.2' ) < 1 ) {
-		return classnames( output, { [ rowClass ]: false } )
+addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.0.2', ( output, props ) => {
+	if ( compareVersions( props.version, '3.0.2' ) === 1 ) {
+		return output
 	}
 
-	return output
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+
+	return {
+		'stk-inner-blocks': true,
+		[ blockAlignmentClass ]: blockAlignmentClass,
+		'stk-block-content': true,
+	}
 } )
 
 const deprecated = [

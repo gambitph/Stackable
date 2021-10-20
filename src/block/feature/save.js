@@ -37,6 +37,7 @@ export const Save = props => {
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
+	const contentAlignmentClasses = getContentAlignmentClasses( attributes )
 
 	const blockClassNames = classnames( [
 		props.className,
@@ -45,21 +46,18 @@ export const Save = props => {
 		separatorClass,
 	] )
 
-	const contentClassNames = applyFilters( 'stackable.feature.save.contentClassNames',
-		classnames( getContentAlignmentClasses( attributes ) ),
-		props.version,
-		rowClass
-	)
+	const contentClassNames = classnames(
+		applyFilters( 'stackable.feature.save.contentClassNames', {
+			[ contentAlignmentClasses ]: contentAlignmentClasses,
+		}, props ) )
 
-	const innerClassNames = applyFilters( 'stackable.feature.save.innerClassNames',
-		classnames( {
+	const innerClassNames = classnames(
+		applyFilters( 'stackable.feature.save.innerClassNames', {
 			'stk-inner-blocks': true,
 			[ blockAlignmentClass ]: blockAlignmentClass,
 			'stk-block-content': true,
 			[ rowClass ]: [ rowClass ],
-		} ),
-		props.version,
-		rowClass
+		}, props )
 	)
 
 	return (
