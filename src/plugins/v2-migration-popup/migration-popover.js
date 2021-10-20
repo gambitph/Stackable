@@ -65,7 +65,7 @@ const MigrationModal = () => {
 			onRequestClose={ () => setIsOpen( false ) }
 		>
 			<p>{ __( 'Hello! 👋', i18n ) }</p>
-			<p>{ __( 'We noticed that the page you are editing contians old Stackable version 2 blocks. Starting Stackable version 3, old v2 blocks are not anymore loaded in the editor. This means that you would not be able to edit the old v2 blocks in the editor and any old v2 block would show a block error in the editor.', i18n ) }</p>
+			<p>{ __( 'We noticed that the page you are editing contains old Stackable version 2 blocks. Starting Stackable version 3, old v2 blocks are not anymore loaded in the editor. This means that you would not be able to edit the old v2 blocks in the editor and any old v2 block would show a block error in the editor.', i18n ) }</p>
 			<p>{ __( 'Do you want to enable backward compatibility, so the old blocks will be loaded in the editor?', i18n ) }</p>
 			<div className="stk-v2-migration-modal__button-wrapper">
 				<Button

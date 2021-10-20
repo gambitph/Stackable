@@ -630,7 +630,7 @@ const VIDEOS = {
 	featureContainerOffset: {
 		video: featureContainerOffset,
 		title: __( 'Container Offset', i18n ),
-		description: __( 'Adjusts the relative arrangement of the image and the text and button contianer', i18n ),
+		description: __( 'Adjusts the relative arrangement of the image and the text and button container', i18n ),
 	},
 	iconListGrid: {
 		video: iconListGrid,
