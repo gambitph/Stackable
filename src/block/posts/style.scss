@@ -30,7 +30,7 @@
 	// Add margins when there are containers, to mimic the sizes of columns that have containers.
 	&__items {
 		.stk-container {
-			height: 100%;
+			flex: 1;
 			margin: 6px; // Use margins instead of column-gap
 
 			&:not(.stk--no-padding) {
@@ -53,6 +53,8 @@
 		flex-basis: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
 		width: calc((100%/var(--stk-columns, 2)) - (var(--stk-column-gap, 16px)) + (var(--stk-column-gap, 16px)/var(--stk-columns, 2)));
 		overflow: hidden;
+		// Make the contents occupy entire area.
+		display: flex;
 	}
 
 	// Force remove heading titles from themes.
