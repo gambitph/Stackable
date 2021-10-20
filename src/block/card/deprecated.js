@@ -36,7 +36,6 @@ addFilter( 'stackable.card.save.contentClassNames', 'stackable/3.0.2', ( output,
 	}
 
 	return {
-		// `stk-block-card__content` is the first class, so we put it before the other classes.
 		'stk-block-card__content': true,
 		'stk--no-padding': true,
 	}
