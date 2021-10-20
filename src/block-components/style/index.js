@@ -10,9 +10,17 @@ import {
 } from 'lodash'
 import deepmerge from 'deepmerge'
 
+/**
+ * WordPress dependencies
+ */
 import { memo } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
+
+/**
+ * Internal dependencies
+ */
+import { addAttributes } from './attributes'
 
 /**
  * Returns an identical styleObject with all the selectors modified to be wrapped
@@ -317,6 +325,7 @@ export const getEditorStylesOnly = ( style, deviceType = 'Desktop' ) => {
 	return deepmerge.all( styles )
 }
 
+// TODO: Deprecated this (actual code is no longer used - need to double check)
 export const Style = memo( props => {
 	const {
 		breakTablet = 1024,
@@ -354,6 +363,7 @@ export const Style = memo( props => {
 	return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
 } )
 
+// TODO: Deprecated this (actual code is no longer used - need to double check)
 Style.Content = props => {
 	const {
 		breakTablet = 1024,
@@ -376,3 +386,5 @@ export const mergeStyles = ( styles, important = true ) => {
 	const _styles = deepmerge.all( styles )
 	return important ? doImportant( _styles ) : _styles
 }
+
+Style.addAttributes = addAttributes
