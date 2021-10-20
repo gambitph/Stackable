@@ -270,6 +270,8 @@ const Image = memo( props => {
 								heightUnit={ props.heightUnit }
 								widthUnit={ props.widthUnit }
 								allowReset={ props.allowReset }
+								defaultWidth={ props.defaultWidth }
+								defaultHeight={ props.defaultHeight }
 								onChangeHeight={ ( { value, unit } ) => {
 									const size = {}
 									if ( typeof value !== 'undefined' ) {
@@ -417,6 +419,9 @@ ImageResponsive.defaultProps = {
 	onChangeSizeDesktop: () => {},
 	onChangeSizeTablet: () => {},
 	onChangeSizeMobile: () => {},
+
+	defaultWidth: '',
+	defaultHeight: '',
 }
 
 const ImageContent = props => {
