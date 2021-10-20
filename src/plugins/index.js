@@ -4,6 +4,7 @@
 import './global-settings'
 import './premium-notice'
 import './design-library-button'
+import './v2-migration-popup'
 import { BlockLinking } from './block-linking'
 import { BlockHoverState } from './block-hover-state'
 import { ContentAlign } from './content-align'
