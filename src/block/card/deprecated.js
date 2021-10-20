@@ -15,53 +15,54 @@ import compareVersions from 'compare-versions'
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { addFilter } from '@wordpress/hooks'
+import { getAlignmentClasses } from '~stackable/block-components'
 
 // Version 3.0.2 Deprecations
-addFilter( 'stackable.card.save.container-div.content', 'stackable/3.0.2', ( output, version, innerClassNames ) => {
-	if ( compareVersions( version, '3.0.2' ) < 1 ) {
-		return (
-			<div className={ innerClassNames }>
-				<InnerBlocks.Content />
-			</div>
-		)
+addFilter( 'stackable.card.save.container-div.content', 'stackable/3.0.2', ( output, props, innerClassNames ) => {
+	if ( compareVersions( props.version, '3.0.2' ) === 1 ) {
+		return output
 	}
 
-	return output
+	return (
+		<div className={ innerClassNames }>
+			<InnerBlocks.Content />
+		</div>
+	)
 } )
 
-addFilter( 'stackable.card.save.contentClassNames', 'stackable/3.0.2', ( output, version ) => {
-	if ( compareVersions( version, '3.0.2' ) < 1 ) {
-		return {
-			// `stk-block-card__content` is the first class, so we put it before the other classes.
-			'stk-block-card__content': true,
-			...output,
-		}
+addFilter( 'stackable.card.save.contentClassNames', 'stackable/3.0.2', ( output, props ) => {
+	if ( compareVersions( props.version, '3.0.2' ) === 1 ) {
+		return output
 	}
 
-	return output
+	return {
+		// `stk-block-card__content` is the first class, so we put it before the other classes.
+		'stk-block-card__content': true,
+		'stk--no-padding': true,
+	}
 } )
 
-addFilter( 'stackable.card.save.wrapperClassNames', 'stackable/3.0.2', ( output, version ) => {
-	if ( compareVersions( version, '3.0.2' ) < 1 ) {
-		return {
-			...output,
-			'stk-container-padding': undefined,
-			'stk-block-card__content': undefined,
-		}
+addFilter( 'stackable.card.save.wrapperClassNames', 'stackable/3.0.2', ( output, props ) => {
+	if ( compareVersions( props.version, '3.0.2' ) === 1 ) {
+		return output
 	}
 
-	return output
+	return {}
 } )
 
-addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.0.2', ( output, version, attributes ) => {
-	if ( compareVersions( version, '3.0.2' ) < 1 ) {
-		return {
-			...output,
-			'stk-container-padding': attributes.hasContainer,
-		}
+addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.0.2', ( output, props ) => {
+	if ( compareVersions( props.version, '3.0.2' ) === 1 ) {
+		return output
 	}
 
-	return output
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+
+	return {
+		'stk-block-content': true,
+		'stk-inner-blocks': true,
+		[ blockAlignmentClass ]: blockAlignmentClass,
+		'stk-container-padding': props.attributes.hasContainer,
+	}
 } )
 
 const deprecated = [

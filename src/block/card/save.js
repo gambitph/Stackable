@@ -43,24 +43,25 @@ export const Save = props => {
 		responsiveClass,
 	] )
 
-	const contentClassNames = classnames( {
-		...applyFilters( 'stackable.card.save.contentClassNames', {
+	const contentClassNames = classnames(
+		applyFilters( 'stackable.card.save.contentClassNames', {
 			'stk--no-padding': true,
-		}, props.version ),
-	} )
+		}, props ) )
 
-	const wrapperClassNames = classnames( {
-		'stk-container-padding': hasContainer,
-		'stk-block-card__content': true,
-		...applyFilters( 'stackable.card.save.wrapperClassNames', {}, props.version ),
-	} )
+	const wrapperClassNames = classnames(
+		applyFilters( 'stackable.card.save.wrapperClassNames', {
+			'stk-container-padding': hasContainer,
+			'stk-block-card__content': true,
+		}, props )
+	)
 
-	const innerClassNames = classnames( {
-		'stk-block-content': true,
-		'stk-inner-blocks': true,
-		[ blockAlignmentClass ]: blockAlignmentClass,
-		...applyFilters( 'stackable.card.save.innerClassNames', {}, props.version, props.attributes ),
-	} )
+	const innerClassNames = classnames(
+		applyFilters( 'stackable.card.save.innerClassNames', {
+			'stk-block-content': true,
+			'stk-inner-blocks': true,
+			[ blockAlignmentClass ]: blockAlignmentClass,
+
+		}, props ) )
 
 	return (
 		<BlockDiv.Content
@@ -85,7 +86,7 @@ export const Save = props => {
 							<InnerBlocks.Content />
 						</div>
 					</div>
-				), props.version, innerClassNames ) }
+				), props, innerClassNames ) }
 				<BlockLink.Content attributes={ attributes } />
 			</ContainerDiv.Content>
 		</BlockDiv.Content>
