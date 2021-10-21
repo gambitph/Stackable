@@ -239,14 +239,18 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 3.0.3 =
 * New: Added a modal popup to help with the migration process to version 3
 * New: Shadow options can now be styled on hover
+* Fixed: Block widths when nested
+* Fixed: Column content widths sometimes didn't apply especially when nested
 * Fixed: Layout styles of the Blog Posts and Card block
+* Fixed: The image cannot be selected some Card block layouts
 * Fixed: Posts Block title tag can't be changed
 * Fixed: Remove unwanted bottom margin in columns
+* Fixed: Content Vertical Align did not apply
 * Fixed: Icon Label block icon gap showing incorrectly in the backend when you have multiple icon labels
 * Fixed: PHP warning for themes using theme.json
-* Fixed: Feature block is corrected to be horizontal
-* Fixed: Feature block's Content Width option not being applied
-* Fixed: Image placeholder height shows correctly
+* Fixed: Feature block horizontal layout didn't show as horizontal
+* Fixed: Image Box block layouts were not aligned correctly
+* Fixed: Image placeholder height now shows correctly
 * Fixed: Blocks can be linked together if creating multiple columns at once
 * Fixed: Compatibility with wide/full align when Kadence blocks is enabled
 * Fixed: Fixed typo in the wizard text
