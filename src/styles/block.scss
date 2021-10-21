@@ -121,7 +121,7 @@
 	}
 }
 .stk-inner-blocks {
-	flex: inherit;
+	flex: 1;
 	&:not(.stk-row) {
 		// Make sure the inner blocks are top aligned.
 		display: flex;
