@@ -91,28 +91,27 @@
 }
 
 // For wide/full width blocks, but with their contents center aligned.
-:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks:not(.alignwide):not(.alignfull) {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks:not(.alignwide):not(.alignfull)) {
 	// --stk-block-default-width is a Stackable setting
 	// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 	// --stk-block-width-default-detected is from the fallback autodetected value.
 	max-width: var(--stk-block-default-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px))) !important;
 }
 // :is(.stk-preview-device-desktop, .stk-preview-device-tablet) .is-root-container > [data-type^="stackable/"][data-align="wide"], // Wide blocks show up as full-width (with blank sides), resize wide blocks correctly.
-:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks.alignwide {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks.alignwide) {
 	// --stk-block-default-width is a Stackable setting
 	// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 	// --stk-block-width-default-detected is from the fallback autodetected value.
 	max-width: var(--stk-block-wide-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, calc(80vw - 280px)))) !important; // Make way for the inspector
 }
 // If the main container is wide and the Content Width is wide too, don't set a max width so it occupies the whole space.
-:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align="wide"] > .stk-block > .stk-inner-blocks.alignwide {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align="wide"] > .stk-block > .stk-inner-blocks.alignwide) {
 	max-width: none !important;
 }
 // :is(.stk-preview-device-desktop, .stk-preview-device-tablet) .is-root-container > [data-type^="stackable/"][data-align="full"],
-:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks.alignfull {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks.alignfull) {
 	max-width: none !important;
 }
-
 
 // Some themes add margins when alignwide and alignfull are used.
 .editor-styles-wrapper {
