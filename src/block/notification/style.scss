@@ -15,6 +15,12 @@
 	&.stk--is-dismissible .stk-container {
 		padding-inline-end: var(--stk-notification-padding-end, 60px);
 	}
+
+	// Make sure that the close button follows the relative
+	// position of the container.
+	&__content {
+		position: relative;
+	}
 }
 
 .stk-block-notification__close-button {
