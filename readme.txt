@@ -236,6 +236,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.0.4 =
+* New: Added note at the bottom of the Style tab in some blocks about how to style inner blocks.
+* Change: Renamed Columns block to "Columns / Container" block
+
 = 3.0.3 =
 * New: Added a modal popup to help with the migration process to version 3
 * New: Shadow options can now be styled on hover

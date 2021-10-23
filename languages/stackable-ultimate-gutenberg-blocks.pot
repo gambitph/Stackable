@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-20T09:31:22+00:00\n"
+"POT-Creation-Date: 2021-10-21T10:26:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -1819,9 +1819,9 @@ msgstr ""
 #: pro__premium_only/src/block/hero/index.js:101
 #: pro__premium_only/src/block/hero/index.js:134
 #: pro__premium_only/src/block/image-box/index.js:62
-#: pro__premium_only/src/block/image-box/index.js:117
-#: pro__premium_only/src/block/image-box/index.js:171
-#: pro__premium_only/src/block/image-box/index.js:227
+#: pro__premium_only/src/block/image-box/index.js:114
+#: pro__premium_only/src/block/image-box/index.js:168
+#: pro__premium_only/src/block/image-box/index.js:228
 #: pro__premium_only/src/block/notification/index.js:93
 #: pro__premium_only/src/block/notification/index.js:143
 #: pro__premium_only/src/block/notification/index.js:188
@@ -1841,8 +1841,8 @@ msgstr ""
 #: src/block/feature/variations.js:76
 #: src/block/hero/variations.js:42
 #: src/block/hero/variations.js:81
-#: src/block/image-box/variations.js:50
-#: src/block/image-box/variations.js:104
+#: src/block/image-box/variations.js:53
+#: src/block/image-box/variations.js:107
 #: src/block/notification/variations.js:45
 #: src/block/notification/variations.js:90
 #: src/block/pricing-box/variations.js:40
@@ -1862,7 +1862,7 @@ msgstr ""
 #: pro__premium_only/src/block/call-to-action/index.js:71
 #: pro__premium_only/src/block/card/index.js:26
 #: pro__premium_only/src/block/card/index.js:40
-#: pro__premium_only/src/block/card/index.js:56
+#: pro__premium_only/src/block/card/index.js:57
 #: pro__premium_only/src/block/feature-grid/index.js:38
 #: pro__premium_only/src/block/feature-grid/index.js:61
 #: pro__premium_only/src/block/feature-grid/index.js:91
@@ -1923,17 +1923,17 @@ msgstr ""
 
 #: pro__premium_only/src/block/card/index.js:25
 #: pro__premium_only/src/block/card/index.js:39
-#: pro__premium_only/src/block/card/index.js:55
+#: pro__premium_only/src/block/card/index.js:56
 #: pro__premium_only/src/block/image-box/index.js:50
-#: pro__premium_only/src/block/image-box/index.js:109
-#: pro__premium_only/src/block/image-box/index.js:162
-#: pro__premium_only/src/block/image-box/index.js:215
+#: pro__premium_only/src/block/image-box/index.js:106
+#: pro__premium_only/src/block/image-box/index.js:159
+#: pro__premium_only/src/block/image-box/index.js:216
 #: pro__premium_only/src/block/pricing-box/index.js:53
 #: pro__premium_only/src/block/pricing-box/index.js:119
 #: pro__premium_only/src/block/pricing-box/index.js:174
 #: src/block/card/variations.js:42
-#: src/block/image-box/variations.js:42
-#: src/block/image-box/variations.js:96
+#: src/block/image-box/variations.js:45
+#: src/block/image-box/variations.js:99
 #: src/block/pricing-box/variations.js:43
 #: src/block/pricing-box/variations.js:74
 msgctxt "Subtitle placeholder"
@@ -1942,7 +1942,7 @@ msgstr ""
 
 #: pro__premium_only/src/block/card/index.js:28
 #: pro__premium_only/src/block/card/index.js:42
-#: pro__premium_only/src/block/card/index.js:58
+#: pro__premium_only/src/block/card/index.js:59
 #: pro__premium_only/src/block/feature-grid/index.js:41
 #: pro__premium_only/src/block/feature-grid/index.js:64
 #: pro__premium_only/src/block/feature-grid/index.js:94
@@ -2067,11 +2067,11 @@ msgid "Title"
 msgstr ""
 
 #: pro__premium_only/src/block/image-box/index.js:70
-#: pro__premium_only/src/block/image-box/index.js:123
-#: pro__premium_only/src/block/image-box/index.js:181
-#: pro__premium_only/src/block/image-box/index.js:239
-#: src/block/image-box/variations.js:56
-#: src/block/image-box/variations.js:112
+#: pro__premium_only/src/block/image-box/index.js:120
+#: pro__premium_only/src/block/image-box/index.js:178
+#: pro__premium_only/src/block/image-box/index.js:240
+#: src/block/image-box/variations.js:59
+#: src/block/image-box/variations.js:115
 msgctxt "Text placeholder"
 msgid "Text for This Block"
 msgstr ""
@@ -2970,7 +2970,7 @@ msgstr ""
 #: src/block-components/image/edit.js:332
 #: src/components/image-background-controls/index.js:26
 #: src/components/image-controls/index.js:47
-#: src/components/resizer-tooltip/index.js:277
+#: src/components/resizer-tooltip/index.js:279
 #: src/deprecated/v2/block/blog-posts/edit.js:405
 #: src/deprecated/v2/block/card/edit.js:284
 #: src/deprecated/v2/block/card/edit.js:360
@@ -3277,7 +3277,7 @@ msgstr ""
 #: src/block-components/typography/edit.js:312
 #: src/components/icon-controls/index.js:191
 #: src/components/image-controls/index.js:223
-#: src/components/shadow-control/index.js:289
+#: src/components/shadow-control/index.js:290
 #: src/deprecated/v2/block/accordion/edit.js:214
 #: src/deprecated/v2/block/blockquote/edit.js:190
 #: src/deprecated/v2/block/blog-posts/edit.js:227
@@ -4638,7 +4638,7 @@ msgstr ""
 #: src/block/heading/edit.js:171
 #: src/block/separator/edit.js:81
 #: src/block/spacer/edit.js:103
-#: src/components/resizer-tooltip/index.js:148
+#: src/components/resizer-tooltip/index.js:149
 #: src/deprecated/v2/block/columns/edit.js:329
 #: src/deprecated/v2/block/container/edit.js:151
 #: src/deprecated/v2/block/divider/edit.js:116
@@ -4998,11 +4998,11 @@ msgstr ""
 #: src/block/hero/variations.js:115
 #: src/block/hero/variations.js:123
 #: src/block/image-box/variations.js:35
-#: src/block/image-box/variations.js:80
-#: src/block/image-box/variations.js:133
-#: src/block/image-box/variations.js:141
-#: src/block/image-box/variations.js:149
-#: src/block/image-box/variations.js:157
+#: src/block/image-box/variations.js:83
+#: src/block/image-box/variations.js:136
+#: src/block/image-box/variations.js:144
+#: src/block/image-box/variations.js:152
+#: src/block/image-box/variations.js:160
 #: src/block/notification/variations.js:35
 #: src/block/notification/variations.js:70
 #: src/block/notification/variations.js:118
@@ -5041,8 +5041,8 @@ msgstr ""
 #: src/block/accordion/variations.js:65
 #: src/block/button/block-styles.js:83
 #: src/block/icon-button/block-styles.js:89
-#: src/block/image-box/variations.js:79
-#: src/block/image-box/variations.js:80
+#: src/block/image-box/variations.js:82
+#: src/block/image-box/variations.js:83
 #: src/block/notification/variations.js:69
 #: src/block/notification/variations.js:70
 #: src/block/team-member/variations.js:83
@@ -5671,26 +5671,26 @@ msgstr ""
 msgid "Accessibility"
 msgstr ""
 
-#: src/block/image-box/variations.js:132
-#: src/block/image-box/variations.js:133
+#: src/block/image-box/variations.js:135
+#: src/block/image-box/variations.js:136
 #: src/deprecated/v2/block/image-box/edit.js:80
 msgid "Box"
 msgstr ""
 
-#: src/block/image-box/variations.js:140
-#: src/block/image-box/variations.js:141
+#: src/block/image-box/variations.js:143
+#: src/block/image-box/variations.js:144
 #: src/deprecated/v2/block/image-box/edit.js:83
 msgid "Captioned"
 msgstr ""
 
-#: src/block/image-box/variations.js:148
-#: src/block/image-box/variations.js:149
+#: src/block/image-box/variations.js:151
+#: src/block/image-box/variations.js:152
 #: src/deprecated/v2/block/image-box/edit.js:86
 msgid "Fade"
 msgstr ""
 
-#: src/block/image-box/variations.js:156
-#: src/block/image-box/variations.js:157
+#: src/block/image-box/variations.js:159
+#: src/block/image-box/variations.js:160
 #: src/deprecated/v2/block/image-box/edit.js:89
 #: src/deprecated/v2/block/image-box/edit.js:286
 #: src/deprecated/v2/block/image-box/edit.js:438
@@ -6716,11 +6716,11 @@ msgstr ""
 msgid "%s Width"
 msgstr ""
 
-#: src/components/resizer-tooltip/index.js:148
+#: src/components/resizer-tooltip/index.js:149
 msgid "%s Height"
 msgstr ""
 
-#: src/components/resizer-tooltip/index.js:225
+#: src/components/resizer-tooltip/index.js:227
 msgid "%s Size"
 msgstr ""
 
@@ -6740,7 +6740,7 @@ msgstr ""
 msgid "Advanced Shadow Options"
 msgstr ""
 
-#: src/components/shadow-control/index.js:269
+#: src/components/shadow-control/index.js:270
 msgid "Shadow Settings"
 msgstr ""
 
@@ -8538,7 +8538,7 @@ msgid "Adjusts the width of the text and button container"
 msgstr ""
 
 #: src/help/videos.js:633
-msgid "Adjusts the relative arrangement of the image and the text and button contianer"
+msgid "Adjusts the relative arrangement of the image and the text and button container"
 msgstr ""
 
 #: src/help/videos.js:637
@@ -8889,7 +8889,7 @@ msgid "Hello! 👋"
 msgstr ""
 
 #: src/plugins/v2-migration-popup/migration-popover.js:68
-msgid "We noticed that the page you are editing contians old Stackable version 2 blocks. Starting Stackable version 3, old v2 blocks are not anymore loaded in the editor. This means that you would not be able to edit the old v2 blocks in the editor and any old v2 block would show a block error in the editor."
+msgid "We noticed that the page you are editing contains old Stackable version 2 blocks. Starting Stackable version 3, old v2 blocks are not anymore loaded in the editor. This means that you would not be able to edit the old v2 blocks in the editor and any old v2 block would show a block error in the editor."
 msgstr ""
 
 #: src/plugins/v2-migration-popup/migration-popover.js:69
