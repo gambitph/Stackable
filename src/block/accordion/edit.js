@@ -10,7 +10,12 @@ import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
 import { nth } from 'lodash'
 import {
-	AdvancedToggleControl, IconControl, InspectorStyleControls, InspectorTabs, PanelAdvancedSettings,
+	AdvancedToggleControl,
+	IconControl,
+	InspectorBottomTip,
+	InspectorStyleControls,
+	InspectorTabs,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -134,7 +139,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<InspectorStyleControls>
-				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+				<InspectorBottomTip />
 			</InspectorStyleControls>
 
 			<BlockStyles version={ VERSION } />

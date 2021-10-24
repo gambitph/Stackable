@@ -8,9 +8,9 @@ import variations from './variations'
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import {
-	ColumnInnerBlocks, InspectorStyleControls, InspectorTabs,
+	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -89,7 +89,7 @@ const Edit = props => {
 			<ContentAlign.InspectorControls hasColumnCount={ true } />
 
 			<InspectorStyleControls>
-				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+				<InspectorBottomTip />
 			</InspectorStyleControls>
 
 			<BlockStyles version={ VERSION } />

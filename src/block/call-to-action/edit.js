@@ -7,10 +7,11 @@ import variations from './variations'
 /**
  * External dependencies
  */
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import classnames from 'classnames'
 import {
+	InspectorBottomTip,
 	InspectorStyleControls,
 	InspectorTabs,
 } from '~stackable/components'
@@ -100,7 +101,7 @@ const Edit = props => {
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<InspectorStyleControls>
-				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+				<InspectorBottomTip />
 			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

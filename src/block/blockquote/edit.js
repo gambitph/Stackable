@@ -13,6 +13,7 @@ import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	AdvancedToolbarControl,
+	InspectorBottomTip,
 	InspectorStyleControls,
 	InspectorTabs,
 } from '~stackable/components'
@@ -91,7 +92,7 @@ const Edit = props => {
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<InspectorStyleControls>
-				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+				<InspectorBottomTip />
 			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

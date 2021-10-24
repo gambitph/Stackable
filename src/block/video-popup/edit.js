@@ -14,6 +14,7 @@ import {
 	PanelAdvancedSettings,
 	ImageControl2,
 	AdvancedTextControl,
+	InspectorBottomTip,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -130,7 +131,7 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 
 			<InspectorStyleControls>
-				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+				<InspectorBottomTip />
 			</InspectorStyleControls>
 
 			<IconLabelStyles version={ VERSION } />

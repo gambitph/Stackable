@@ -9,9 +9,10 @@ import variations from './variations'
  */
 import classnames from 'classnames'
 import { last } from 'lodash'
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import {
 	InspectorBlockControls,
+	InspectorBottomTip,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -107,7 +108,7 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 
 			<InspectorBlockControls>
-				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+				<InspectorBottomTip />
 			</InspectorBlockControls>
 
 			<ImageBoxStyles version={ VERSION } />
