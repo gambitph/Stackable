@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.3\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-21T10:26:57+00:00\n"
+"POT-Creation-Date: 2021-10-24T12:41:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -518,21 +518,25 @@ msgstr ""
 msgid "Continue reading"
 msgstr ""
 
-#: src/deprecated/v2/init.php:61
+#: src/deprecated/v2/init.php:67
 msgid "Load version 2 frontend styles and scripts"
 msgstr ""
 
-#: src/deprecated/v2/init.php:76
+#: src/deprecated/v2/init.php:82
 #: src/welcome/admin.js:513
 msgid "Load version 2 blocks in the editor"
 msgstr ""
 
-#: src/deprecated/v2/init.php:90
+#: src/deprecated/v2/init.php:96
 msgid "Load version 2 blocks when old blocks are used"
 msgstr ""
 
-#: src/deprecated/v2/init.php:104
+#: src/deprecated/v2/init.php:110
 msgid "This disables the v2 block detected in the editor"
+msgstr ""
+
+#: src/deprecated/v2/init.php:124
+msgid "This disables the v2 block detected in the frontend"
 msgstr ""
 
 #: src/deprecated/v2/optimization-settings.php:53
@@ -1486,7 +1490,7 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:132
 #: src/block-components/button/edit.js:179
 #: src/block-components/icon/edit.js:36
-#: src/block/notification/edit.js:151
+#: src/block/notification/edit.js:152
 #: src/components/icon-controls/index.js:107
 #: src/deprecated/v2/block/icon-list/edit.js:143
 #: src/deprecated/v2/block/notification/edit.js:384
@@ -2086,17 +2090,17 @@ msgstr ""
 #: pro__premium_only/src/block/pagination/edit.js:72
 #: src/block-components/advanced/edit.js:53
 #: src/block-components/content-align/edit.js:120
-#: src/block/accordion/edit.js:120
+#: src/block/accordion/edit.js:125
 #: src/block/button-group/edit.js:94
 #: src/block/divider/edit.js:71
-#: src/block/icon-label/edit.js:81
+#: src/block/icon-label/edit.js:82
 #: src/block/icon-list/edit.js:199
-#: src/block/notification/edit.js:106
+#: src/block/notification/edit.js:107
 #: src/block/posts/edit.js:159
 #: src/block/separator/edit.js:76
 #: src/block/spacer/edit.js:98
 #: src/block/text/edit.js:102
-#: src/block/video-popup/edit.js:87
+#: src/block/video-popup/edit.js:88
 #: src/deprecated/v2/block/accordion/edit.js:135
 #: src/deprecated/v2/block/blockquote/edit.js:124
 #: src/deprecated/v2/block/blog-posts/edit.js:200
@@ -4339,7 +4343,7 @@ msgid "Background Image"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:164
-#: src/block/video-popup/edit.js:94
+#: src/block/video-popup/edit.js:95
 #: src/components/background-controls/index.js:171
 #: src/components/background-controls/index.js:182
 #: src/components/background-controls/index.js:193
@@ -4558,7 +4562,7 @@ msgid "Liven up your icons with gradient fills, multiple colors and background s
 msgstr ""
 
 #: src/block-components/icon/edit.js:145
-#: src/block/notification/edit.js:143
+#: src/block/notification/edit.js:144
 #: src/components/button-controls/index.js:414
 #: src/components/icon-controls/index.js:226
 #: src/components/icon-controls/index.js:236
@@ -4581,7 +4585,7 @@ msgid "Icon Position"
 msgstr ""
 
 #: src/block-components/icon/edit.js:189
-#: src/block/icon-label/edit.js:86
+#: src/block/icon-label/edit.js:87
 #: src/block/icon-list/edit.js:222
 msgid "Icon Gap"
 msgstr ""
@@ -4935,22 +4939,22 @@ msgstr ""
 msgid "Text Color #%s"
 msgstr ""
 
-#: src/block/accordion/edit.js:125
+#: src/block/accordion/edit.js:130
 #: src/deprecated/v2/block/accordion/edit.js:145
 msgid "Open at the start"
 msgstr ""
 
-#: src/block/accordion/edit.js:129
+#: src/block/accordion/edit.js:134
 #: src/deprecated/v2/block/accordion/edit.js:139
 #: src/help/videos.js:592
 msgid "Close adjacent on open"
 msgstr ""
 
-#: src/block/accordion/edit.js:189
+#: src/block/accordion/edit.js:198
 msgid "Open Icon"
 msgstr ""
 
-#: src/block/accordion/edit.js:192
+#: src/block/accordion/edit.js:201
 msgid "The open icon will appear when the accordion is opened"
 msgstr ""
 
@@ -5085,11 +5089,11 @@ msgstr ""
 msgid "Plus"
 msgstr ""
 
-#: src/block/blockquote/edit.js:122
+#: src/block/blockquote/edit.js:128
 msgid "Quotation Mark Icons"
 msgstr ""
 
-#: src/block/blockquote/edit.js:138
+#: src/block/blockquote/edit.js:144
 msgid "Pick another icon"
 msgstr ""
 
@@ -5409,36 +5413,36 @@ msgstr ""
 msgid "Height / Size"
 msgstr ""
 
-#: src/block/expand/edit.js:38
+#: src/block/expand/edit.js:40
 #: src/deprecated/v2/block/expand/edit.js:259
 #: src/deprecated/v2/block/expand/edit.js:283
 msgid "Some short text that can be expanded to show more details."
 msgstr ""
 
-#: src/block/expand/edit.js:43
+#: src/block/expand/edit.js:45
 #: src/deprecated/v2/block/expand/deprecated.js:30
 #: src/deprecated/v2/block/expand/edit.js:269
 #: src/deprecated/v2/block/expand/schema.js:59
 msgid "Show more"
 msgstr ""
 
-#: src/block/expand/edit.js:49
+#: src/block/expand/edit.js:51
 msgid "Some long text that will be expanded when the show more button is clicked by the visitor."
 msgstr ""
 
-#: src/block/expand/edit.js:54
+#: src/block/expand/edit.js:56
 #: src/deprecated/v2/block/expand/deprecated.js:35
 #: src/deprecated/v2/block/expand/edit.js:295
 #: src/deprecated/v2/block/expand/schema.js:64
 msgid "Show less"
 msgstr ""
 
-#: src/block/expand/edit.js:103
+#: src/block/expand/edit.js:109
 #: src/deprecated/v2/block/expand/edit.js:253
 msgid "Less text"
 msgstr ""
 
-#: src/block/expand/edit.js:104
+#: src/block/expand/edit.js:110
 #: src/deprecated/v2/block/expand/edit.js:275
 msgid "More text"
 msgstr ""
@@ -5598,7 +5602,7 @@ msgstr ""
 msgid "Half Layout"
 msgstr ""
 
-#: src/block/icon-box/edit.js:48
+#: src/block/icon-box/edit.js:50
 msgid "Icon Box"
 msgstr ""
 
@@ -5606,7 +5610,7 @@ msgstr ""
 msgid "Pill"
 msgstr ""
 
-#: src/block/icon-label/edit.js:47
+#: src/block/icon-label/edit.js:48
 #: src/block/icon/edit.js:78
 msgid "Icon Label"
 msgstr ""
@@ -5697,32 +5701,32 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: src/block/notification/edit.js:112
+#: src/block/notification/edit.js:113
 #: src/deprecated/v2/block/notification/edit.js:161
 msgid "Notification Type"
 msgstr ""
 
-#: src/block/notification/edit.js:116
+#: src/block/notification/edit.js:117
 #: src/deprecated/v2/block/notification/edit.js:75
 msgid "Success"
 msgstr ""
 
-#: src/block/notification/edit.js:120
+#: src/block/notification/edit.js:121
 #: src/deprecated/v2/block/notification/edit.js:76
 msgid "Error"
 msgstr ""
 
-#: src/block/notification/edit.js:124
+#: src/block/notification/edit.js:125
 #: src/deprecated/v2/block/notification/edit.js:77
 msgid "Warning"
 msgstr ""
 
-#: src/block/notification/edit.js:128
+#: src/block/notification/edit.js:129
 #: src/deprecated/v2/block/notification/edit.js:78
 msgid "Information"
 msgstr ""
 
-#: src/block/notification/edit.js:135
+#: src/block/notification/edit.js:136
 #: src/deprecated/v2/block/notification/edit.js:357
 #: src/help/videos.js:652
 msgid "Dismissible"
@@ -6011,17 +6015,17 @@ msgstr ""
 msgid "Inverted Vertical"
 msgstr ""
 
-#: src/block/video-popup/edit.js:93
+#: src/block/video-popup/edit.js:94
 #: src/deprecated/v2/block/video-popup/edit.js:79
 msgid "Popup Option #1: Upload Video"
 msgstr ""
 
-#: src/block/video-popup/edit.js:110
+#: src/block/video-popup/edit.js:111
 #: src/deprecated/v2/block/video-popup/edit.js:96
 msgid "Popup Option #2: Video URL"
 msgstr ""
 
-#: src/block/video-popup/edit.js:111
+#: src/block/video-popup/edit.js:112
 #: src/deprecated/v2/block/video-popup/edit.js:97
 msgid "Paste a Youtube / Vimeo URL"
 msgstr ""
@@ -6547,6 +6551,15 @@ msgstr ""
 #: src/components/image-shape-control/index.js:44
 #: src/deprecated/v2/block/number-box/edit.js:344
 msgid "Circle"
+msgstr ""
+
+#: src/components/inspector-bottom-tip/index.js:27
+msgid "Click on any inner block in the editor to style it."
+msgstr ""
+
+#. translators: %s will wrap the word in a link that opens the List View
+#: src/components/inspector-bottom-tip/index.js:32
+msgid "Tip: Open the %sList View%s to better see the blocks."
 msgstr ""
 
 #: src/components/modal-design-library/block-list.js:72
@@ -7611,7 +7624,6 @@ msgid "Card"
 msgstr ""
 
 #: src/deprecated/v2/welcome/blocks.js:40
-#: src/block/columns/block.json
 msgctxt "block title"
 msgid "Columns"
 msgstr ""
@@ -9249,6 +9261,11 @@ msgstr ""
 #: src/deprecated/v2/block/columns/block.json
 msgctxt "block keyword"
 msgid "Section rows"
+msgstr ""
+
+#: src/block/columns/block.json
+msgctxt "block title"
+msgid "Columns / Container"
 msgstr ""
 
 #: src/block/columns/block.json
