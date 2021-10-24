@@ -155,6 +155,10 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
+			<InspectorStyleControls>
+				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+			</InspectorStyleControls>
+
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-notification" />

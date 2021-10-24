@@ -8,8 +8,10 @@ import variations from './variations'
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
-import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
+import { i18n, version as VERSION } from 'stackable'
+import {
+	ColumnInnerBlocks, InspectorStyleControls, InspectorTabs,
+} from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -85,6 +87,10 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 			<ContentAlign.InspectorControls hasColumnCount={ true } />
+
+			<InspectorStyleControls>
+				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+			</InspectorStyleControls>
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature-grid" />

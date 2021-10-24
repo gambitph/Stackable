@@ -6,10 +6,11 @@ import { ContainerStyles } from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import classnames from 'classnames'
 import {
+	InspectorStyleControls,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -98,6 +99,10 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+
+			<InspectorStyleControls>
+				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />

@@ -7,9 +7,11 @@ import BlockStyles from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import classnames from 'classnames'
-import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
+import {
+	ColumnInnerBlocks, InspectorStyleControls, InspectorTabs,
+} from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -85,6 +87,10 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+			</InspectorStyleControls>
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature" />

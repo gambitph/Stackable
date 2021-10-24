@@ -133,6 +133,10 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
+			<InspectorStyleControls>
+				<p className="stk-inspector-tab__footnote">{ __( 'Click on any inner block in the editor to style it.', i18n ) }</p>
+			</InspectorStyleControls>
+
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-accordion" />
 
