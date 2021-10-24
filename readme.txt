@@ -241,6 +241,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Added tip to open the List View
 * Change: Renamed Columns block to "Columns / Container" block
 * Fixed: Added another failsafe in case the frontend migration doesn't get automatically enabled when v2 blocks are present.
+* Fixed: Separator now preserve aspect ratio correctly in mobile
 
 = 3.0.3 =
 * New: Added a modal popup to help with the migration process to version 3

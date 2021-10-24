@@ -1,3 +1,5 @@
+@import "common";
+
 .ugb-panel--top-separator .ugb-design-panel-item__image {
 	transform: scaleY(-1);
 }
@@ -10,3 +12,14 @@
 	padding-bottom: 200px;
 }
 
+@include mobile {
+	[data-type^="stackable"] .stk-block.stk-has-top-separator {
+		padding-top: 78px;
+	}
+	[data-type^="stackable"] .stk-block.stk-has-bottom-separator {
+		padding-bottom: 78px;
+	}
+	[data-type^="stackable"] .stk-block .stk-separator__wrapper {
+		height: 78px;
+	}
+}

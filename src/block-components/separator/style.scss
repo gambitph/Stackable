@@ -1,3 +1,5 @@
+@import "common";
+
 .stk-block {
 	&:is(.stk-has-top-separator, .stk-has-bottom-separator) {
 		.stk-inner-blocks {
@@ -63,5 +65,20 @@
 
 	&.stk-has-bottom-separator {
 		padding-bottom: 200px;
+	}
+}
+
+@include mobile {
+	.entry-content .stk-block {
+		&.stk-has-top-separator {
+			padding-top: 23vw;
+		}
+
+		&.stk-has-bottom-separator {
+			padding-bottom: 23vw;
+		}
+		.stk-separator__wrapper {
+			height: 23vw;
+		}
 	}
 }
