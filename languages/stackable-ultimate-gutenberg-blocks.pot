@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.4\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-24T12:41:20+00:00\n"
+"POT-Creation-Date: 2021-10-25T17:05:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -437,7 +437,7 @@ msgstr ""
 #: src/block/posts/index.php:70
 #: src/deprecated/v2/block/blog-posts/index.php:247
 #: src/block/posts/util.js:159
-#: src/deprecated/v2/block/blog-posts/edit.js:1034
+#: src/deprecated/v2/block/blog-posts/edit.js:1038
 msgid "(Untitled)"
 msgstr ""
 
@@ -514,7 +514,7 @@ msgid "« Previous"
 msgstr ""
 
 #: src/deprecated/v2/block/blog-posts/index.php:312
-#: src/deprecated/v2/block/blog-posts/edit.js:1065
+#: src/deprecated/v2/block/blog-posts/edit.js:1069
 msgid "Continue reading"
 msgstr ""
 
@@ -1830,8 +1830,8 @@ msgstr ""
 #: pro__premium_only/src/block/notification/index.js:143
 #: pro__premium_only/src/block/notification/index.js:188
 #: pro__premium_only/src/block/pricing-box/index.js:50
-#: pro__premium_only/src/block/pricing-box/index.js:90
-#: pro__premium_only/src/block/pricing-box/index.js:165
+#: pro__premium_only/src/block/pricing-box/index.js:89
+#: pro__premium_only/src/block/pricing-box/index.js:163
 #: src/block/accordion/variations.js:46
 #: src/block/accordion/variations.js:84
 #: src/block/call-to-action/variations.js:41
@@ -1933,8 +1933,8 @@ msgstr ""
 #: pro__premium_only/src/block/image-box/index.js:159
 #: pro__premium_only/src/block/image-box/index.js:216
 #: pro__premium_only/src/block/pricing-box/index.js:53
-#: pro__premium_only/src/block/pricing-box/index.js:119
-#: pro__premium_only/src/block/pricing-box/index.js:174
+#: pro__premium_only/src/block/pricing-box/index.js:118
+#: pro__premium_only/src/block/pricing-box/index.js:172
 #: src/block/card/variations.js:42
 #: src/block/image-box/variations.js:45
 #: src/block/image-box/variations.js:99
@@ -1976,8 +1976,8 @@ msgstr ""
 #: pro__premium_only/src/block/notification/index.js:154
 #: pro__premium_only/src/block/notification/index.js:195
 #: pro__premium_only/src/block/pricing-box/index.js:59
-#: pro__premium_only/src/block/pricing-box/index.js:125
-#: pro__premium_only/src/block/pricing-box/index.js:205
+#: pro__premium_only/src/block/pricing-box/index.js:124
+#: pro__premium_only/src/block/pricing-box/index.js:203
 #: src/block/card/variations.js:45
 #: src/block/card/variations.js:76
 #: src/block/feature-grid/variations.js:52
@@ -2199,32 +2199,32 @@ msgid "Sale"
 msgstr ""
 
 #: pro__premium_only/src/block/pricing-box/index.js:55
-#: pro__premium_only/src/block/pricing-box/index.js:132
-#: pro__premium_only/src/block/pricing-box/index.js:194
+#: pro__premium_only/src/block/pricing-box/index.js:131
+#: pro__premium_only/src/block/pricing-box/index.js:192
 #: src/block/pricing-box/variations.js:45
 #: src/block/pricing-box/variations.js:83
 msgid "one"
 msgstr ""
 
 #: pro__premium_only/src/block/pricing-box/index.js:55
-#: pro__premium_only/src/block/pricing-box/index.js:132
-#: pro__premium_only/src/block/pricing-box/index.js:194
+#: pro__premium_only/src/block/pricing-box/index.js:131
+#: pro__premium_only/src/block/pricing-box/index.js:192
 #: src/block/pricing-box/variations.js:45
 #: src/block/pricing-box/variations.js:83
 msgid "two"
 msgstr ""
 
 #: pro__premium_only/src/block/pricing-box/index.js:55
-#: pro__premium_only/src/block/pricing-box/index.js:132
-#: pro__premium_only/src/block/pricing-box/index.js:194
+#: pro__premium_only/src/block/pricing-box/index.js:131
+#: pro__premium_only/src/block/pricing-box/index.js:192
 #: src/block/pricing-box/variations.js:45
 #: src/block/pricing-box/variations.js:83
 msgid "three"
 msgstr ""
 
 #: pro__premium_only/src/block/pricing-box/index.js:55
-#: pro__premium_only/src/block/pricing-box/index.js:132
-#: pro__premium_only/src/block/pricing-box/index.js:194
+#: pro__premium_only/src/block/pricing-box/index.js:131
+#: pro__premium_only/src/block/pricing-box/index.js:192
 #: src/block/pricing-box/variations.js:45
 #: src/block/pricing-box/variations.js:83
 msgid "Package inclusion %s"
@@ -5851,12 +5851,12 @@ msgid "Read More Link"
 msgstr ""
 
 #: src/block/posts/edit.js:392
-#: src/deprecated/v2/block/blog-posts/edit.js:1004
+#: src/deprecated/v2/block/blog-posts/edit.js:1008
 msgid "Posts"
 msgstr ""
 
 #: src/block/posts/edit.js:397
-#: src/deprecated/v2/block/blog-posts/edit.js:1009
+#: src/deprecated/v2/block/blog-posts/edit.js:1013
 msgid "No posts found."
 msgstr ""
 
@@ -5926,7 +5926,7 @@ msgid "Read More Button"
 msgstr ""
 
 #: src/block/posts/util.js:135
-#: src/deprecated/v2/block/blog-posts/edit.js:1023
+#: src/deprecated/v2/block/blog-posts/edit.js:1027
 msgid "featured"
 msgstr ""
 
