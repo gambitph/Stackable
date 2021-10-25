@@ -13,6 +13,8 @@ import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	AdvancedToolbarControl,
+	InspectorBottomTip,
+	InspectorStyleControls,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -88,6 +90,10 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />

@@ -18,6 +18,7 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	AdvancedSelectControl,
+	InspectorBottomTip,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -154,6 +155,10 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />

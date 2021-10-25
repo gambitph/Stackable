@@ -10,6 +10,7 @@ import { memo } from '@wordpress/element'
 import { createSlotFill } from '@wordpress/components'
 import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
 import { useGlobalState } from '~stackable/util/global-state'
+import { __ } from '@wordpress/i18n'
 
 const { Slot: PreInspectorTabSlot, Fill: PreInspectorTabFill } = createSlotFill( 'StackablePreInspectorTab' )
 const { Slot: BlockInspectorTabSlot, Fill: BlockInspectorTabFill } = createSlotFill( 'StackableBlockInspectorTab' )
@@ -35,7 +36,9 @@ const InspectorStyleControls = ( { children } ) => {
 		return null
 	}
 
-	return <StyleInspectorTabFill>{ children }</StyleInspectorTabFill>
+	return (
+		<StyleInspectorTabFill>{ children }</StyleInspectorTabFill>
+	)
 }
 
 const InspectorAdvancedControls = ( { children } ) => {

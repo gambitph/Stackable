@@ -14,6 +14,7 @@ import {
 	PanelAdvancedSettings,
 	ImageControl2,
 	AdvancedTextControl,
+	InspectorBottomTip,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -128,6 +129,10 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-video-popup" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<IconLabelStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-video-popup" />

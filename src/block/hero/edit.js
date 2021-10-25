@@ -11,6 +11,8 @@ import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import classnames from 'classnames'
 import {
+	InspectorBottomTip,
+	InspectorStyleControls,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -96,6 +98,10 @@ const Edit = props => {
 
 			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />

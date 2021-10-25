@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.6.5
 Tested up to: 5.8.1
 Requires PHP: 5.6
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,6 +235,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.0.4 =
+* New: Added note at the bottom of the Style tab in some blocks about how to style inner blocks.
+* New: Added tip to open the List View
+* Change: Renamed Columns block to "Columns / Container" block
+* Fixed: Added another failsafe in case the frontend migration doesn't get automatically enabled when v2 blocks are present.
+* Fixed: Removed small gap between full width blocks in the editor so they look merged together
+* Fixed: Separator now preserve aspect ratio correctly in mobile
 
 = 3.0.3 =
 * New: Added a modal popup to help with the migration process to version 3

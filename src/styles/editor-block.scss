@@ -27,7 +27,7 @@
 
 // Add small margin between blocks so that placing your mouse between blocks
 // will make the block appender appear.
-.is-root-container > [data-block][data-type^="stackable/"]:not([data-type^="stackable/image"]) ~ [data-block][data-type^="stackable/"]:not([data-type^="stackable/image"]) {
+.is-root-container > [data-block][data-type^="stackable/"]:not([data-type^="stackable/image"], [data-align="full"]) ~ [data-block][data-type^="stackable/"]:not([data-type^="stackable/image"], [data-align="full"]) {
 	margin-top: 8px;
 }
 // Add small margin between blocks so that placing your mouse between blocks

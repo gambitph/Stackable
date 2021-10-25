@@ -11,6 +11,8 @@ import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import {
+	InspectorBottomTip,
+	InspectorStyleControls,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -43,6 +45,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import {
 	Fragment, useMemo,
 } from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
@@ -115,6 +118,10 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<CardStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-card" />

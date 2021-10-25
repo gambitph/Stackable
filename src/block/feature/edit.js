@@ -9,7 +9,9 @@ import BlockStyles from './style'
  */
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
-import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
+import {
+	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
+} from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -85,6 +87,10 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature" />

@@ -13,6 +13,7 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
+	InspectorBottomTip,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -100,6 +101,10 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<IconLabelStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-icon-label" />

@@ -9,7 +9,9 @@ import variations from './variations'
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
-import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
+import {
+	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
+} from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -89,6 +91,10 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />

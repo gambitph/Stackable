@@ -16331,6 +16331,30 @@
     ]
   },
   {
+    "family": "Zen Antique",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "japanese",
+      "latin"
+    ]
+  },
+  {
+    "family": "Zen Antique Soft",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "japanese",
+      "latin"
+    ]
+  },
+  {
     "family": "Zen Dots",
     "variants": [
       "regular"
@@ -16338,6 +16362,48 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Zen Kaku Gothic Antique",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "700",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin"
+    ]
+  },
+  {
+    "family": "Zen Kaku Gothic New",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "700",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin"
+    ]
+  },
+  {
+    "family": "Zen Kurenaido",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "japanese",
+      "latin"
     ]
   },
   {
@@ -16349,6 +16415,36 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Zen Maru Gothic",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "700",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "japanese",
+      "latin"
+    ]
+  },
+  {
+    "family": "Zen Old Mincho",
+    "variants": [
+      "regular",
+      "700",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "japanese",
+      "latin"
     ]
   },
   {
