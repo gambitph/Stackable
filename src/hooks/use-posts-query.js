@@ -7,7 +7,7 @@ import {
 /**
  * WordPress dependencies
  */
-import { useSelect, select } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 
@@ -85,11 +85,13 @@ export const usePostsQuery = attributes => {
 		] )
 	}, [ postQuery ] )
 
+	const getEntityRecords = useSelect( select => select( 'core' ).getEntityRecords )
 	const posts = useMemo( () => {
-		const posts = select( 'core' ).getEntityRecords( 'postType', type, postQuery )
+		const posts = getEntityRecords( 'postType', type, postQuery )
 		return ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' )
 	},
 	[
+		getEntityRecords,
 		isRequesting,
 		postQuery,
 	] )
