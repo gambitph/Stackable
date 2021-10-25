@@ -10,3 +10,8 @@
 .ugb-blog-posts__item::after {
 	pointer-events: none;
 }
+
+// Remove extra meta separators inside the editor.
+.ugb-blog-posts__meta > *::after {
+	content: none !important;
+}

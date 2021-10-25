@@ -18,6 +18,12 @@
 	}
 }
 
+[data-type="stackable/columns"] {
+	// Fixes alignment if using Blocksy theme.
+	// @see https://github.com/gambitph/Stackable/issues/1948
+	justify-content: center;
+}
+
 .stk--fit-content > * > * > [data-type="stackable/column"] {
 	width: fit-content !important;
 	flex: 0 1 auto !important;

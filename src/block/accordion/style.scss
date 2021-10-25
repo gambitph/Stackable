@@ -50,7 +50,7 @@
 			@include transition();
 		}
 	}
-	&[open] summary {
+	&[open] > summary {
 		.stk--svg-wrapper:not(.stk--has-icon2) {
 			transform: rotate(180deg);
 		}
@@ -58,7 +58,7 @@
 
 	// If another icon was used, don't rotate the icon, show the other icon when
 	// the accordion opens.
-	&[open] summary {
+	&[open] > summary {
 		.stk--svg-wrapper.stk--has-icon2 {
 			.stk--inner-svg {
 				display: none;
