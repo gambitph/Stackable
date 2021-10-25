@@ -239,7 +239,6 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 3.0.5 =
 * Fixed: PublishPress compatibility - Stackable blocks won't load
 * Fixed: Posts block can affect the display of other Posts block in the editor
-* Fixed: Blocksy compatibility - some columns are not centered
 * Fixed: Accordion block affects the icon of nested accordion blocks
 * Fixed: Pricing box alignment in some layouts
 * Fixed: Notification block close button can go out of the container
