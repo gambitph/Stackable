@@ -35,6 +35,12 @@
 		right: 0;
 		bottom: 0;
 	}
+	.ugb-image-box__image { // Push back a bit to prevent any white gaps.
+		top: -0.3px;
+		left: -0.3px;
+		right: -0.3px;
+		bottom: -0.3px;
+	}
 	.ugb-image-box__image-wrapper {
 		height: auto;
 		z-index: 1;
