@@ -12,6 +12,6 @@
 }
 
 // Remove extra meta separators inside the editor.
-.entry-meta > *::after {
+.ugb-blog-posts__meta > *::after {
 	content: none !important;
 }
