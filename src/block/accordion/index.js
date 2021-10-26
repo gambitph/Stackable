@@ -14,7 +14,6 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
-import variations from './variations'
 import example from './example'
 
 /**
@@ -34,7 +33,6 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	//  styles: blockStyles,
 
 	// deprecated,
-	variations,
 	edit,
 	save,
 } )

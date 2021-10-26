@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import BlockStyles from './style'
+import { blockStyles, defaultIcon } from './block-styles'
 
 /**
  * External dependencies
@@ -30,6 +31,7 @@ import {
 	ConditionalDisplay,
 	MarginBottom,
 	Transform,
+	BlockStyle,
 } from '~stackable/block-components'
 import {
 	useAttributeEditHandlers, useBlockHoverClass, useBlockContext,
@@ -37,21 +39,36 @@ import {
 import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
- * Internal dependencies
- */
-import variations from './variations'
-
-/**
  * WordPress dependencies
  */
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
 import { useState, useEffect } from '@wordpress/element'
 import { addFilter } from '@wordpress/hooks'
 
 // Use the default template from the block variations.
-const TEMPLATE = variations[ 0 ].innerBlocks
+const TEMPLATE = [
+	[ 'stackable/column', {
+		templateLock: 'insert', hasContainer: true, htmlTag: 'summary',
+		className: 'stk--container-small stk-block-accordion__heading',
+	}, [
+		[ 'stackable/icon-label', {}, [
+			[ 'stackable/heading', {
+				text: _x( 'Title for This Block', 'Heading placeholder', i18n ), hasP: true, textTag: 'h4',
+			} ],
+			[ 'stackable/icon', {
+				icon: defaultIcon,
+				linkHasLink: false,
+			} ],
+		] ],
+	] ],
+	[ 'stackable/column', { templateLock: false, className: 'stk-block-accordion__content' }, [
+		[ 'stackable/text', {
+			text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ),
+		} ],
+	] ],
+]
 
 const Edit = props => {
 	const {
@@ -120,6 +137,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
@@ -145,7 +163,7 @@ const Edit = props => {
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-accordion" />
 
-			<BlockDiv className={ blockClassNames } renderHtmlTag={ false } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames } renderHtmlTag={ false }>
 				<InnerBlocks
 					template={ TEMPLATE }
 					templateLock="insert"

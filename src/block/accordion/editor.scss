@@ -36,7 +36,7 @@
 			@include transition();
 		}
 	}
-	&.stk--is-open .stk-block-accordion__heading {
+	&.stk--is-open > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block]:first-child .stk-block-accordion__heading {
 		.stk--svg-wrapper:not(.stk--has-icon2) {
 			transform: rotate(180deg);
 		}
@@ -44,7 +44,7 @@
 
 	// If another icon was used, don't rotate the icon, show the other icon when
 	// the accordion opens.
-	&.stk--is-open .stk-block-accordion__heading {
+	&.stk--is-open > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block]:first-child .stk-block-accordion__heading {
 		.stk--svg-wrapper.stk--has-icon2 {
 			.stk--inner-svg {
 				display: none;

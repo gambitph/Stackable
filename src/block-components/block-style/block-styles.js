@@ -54,7 +54,9 @@ const BlockStyles = props => {
 		return getBlockStyle( styles, className )
 	}, [ styles, className ] )
 
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
+	const {
+		updateBlockAttributes, replaceBlock,
+	} = useDispatch( 'core/block-editor' )
 
 	const onSelect = useCallback( style => {
 		const styleClassName = replaceActiveStyle(
@@ -65,7 +67,13 @@ const BlockStyles = props => {
 
 		// Selecting a new style can update other attributes too.
 		const block = select( 'core/block-editor' ).getBlock( clientId )
-		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( block.attributes )
+		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( block.attributes, block.innerBlocks )
+
+		if ( updatedAttributes.clientId && updatedAttributes.attributes ) {
+			updatedAttributes.attributes.className = styleClassName
+			replaceBlock( clientId, updatedAttributes )
+			return
+		}
 
 		updateBlockAttributes( clientId, {
 			...updatedAttributes,
