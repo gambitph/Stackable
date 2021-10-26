@@ -32,7 +32,7 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 
 		if ( ! empty( $featured_image_id ) ) {
 			$featured_image_urls = Stackable_Posts_Block::get_featured_image_urls_from_attachment_id( $featured_image_id );
-			$featured_image_src = $featured_image_urls[ $image_size ];
+			$featured_image_src = array_key_exists( $image_size, $featured_image_urls ) ? $featured_image_urls[ $image_size ] : $featured_image_urls['full'];
 			if ( ! empty( $featured_image_src ) ) {
 				$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
 				$thumbnail = get_the_post_thumbnail(
@@ -138,13 +138,13 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 	 * Query generator for 'stackable/posts' block.
 	 *
 	 * @since 3.0.0
-	 * @param WP_Query | array $blockOrAttribute
+	 * @param WP_Query | array $block_or_attribute
 	 * @param string | number $page
 	 *
 	 * @return array post query which will be used for WP_Query.
 	 */
-	function generate_post_query_from_stackable_posts_block( $blockOrAttribute ) {
-		$is_wp_block = ! is_array( $blockOrAttribute ) && get_class( $blockOrAttribute ) === 'WP_Block';
+	function generate_post_query_from_stackable_posts_block( $block_or_attribute ) {
+		$is_wp_block = ! is_array( $block_or_attribute ) && get_class( $block_or_attribute ) === 'WP_Block';
 		/**
 		 * If the passed object is an instance of
 		 * WP_Block, it is assumed that the block
@@ -154,7 +154,7 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 		 * is a posts block, and the passed object is
 		 * an attribute object.
 		 */
-		$context = Stackable_Posts_Block::generate_defaults( $is_wp_block ? $blockOrAttribute->context : $blockOrAttribute );
+		$context = Stackable_Posts_Block::generate_defaults( $is_wp_block ? $block_or_attribute->context : $block_or_attribute );
 		$post_query = array(
 				'post_type' => $context['type'],
 				'post_status' => 'publish',
@@ -423,9 +423,8 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			$sizes = get_intermediate_image_sizes();
 
 			$image_sizes = array( 'full' => is_array( $image ) ? $image : '' );
-
 			foreach ( $sizes as $size ) {
-			$imageSizes[ $size ] = is_array( $image ) ? wp_get_attachment_image_src( $attachment_id, $size, false ) : '';
+				$image_sizes[ $size ] = is_array( $image ) ? wp_get_attachment_image_src( $attachment_id, $size, false ) : '';
 			}
 
 			return $image_sizes;
