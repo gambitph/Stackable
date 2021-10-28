@@ -285,8 +285,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Check the theme.json file if we have any block sizes set.
 			// @see https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-json/#styles
-			if ( class_exists( 'WP_Theme_JSON_Resolver_Gutenberg' ) ) {
-				$settings = WP_Theme_JSON_Resolver_Gutenberg::get_merged_data()->get_settings();
+			if ( class_exists( 'WP_Theme_JSON_Resolver' ) ) {
+				$settings = WP_Theme_JSON_Resolver::get_merged_data()->get_settings();
 				if ( ! empty( $settings ) && array_key_exists( 'layout', $settings ) ) {
 					$layout = $settings['layout'];
 					if ( ! empty( $layout ) ) {

@@ -3,6 +3,7 @@
  */
 import classnames from 'classnames'
 import { getBlockStyle } from '~stackable/hooks'
+import { cloneDeep } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -15,6 +16,7 @@ import {
 } from '@wordpress/data'
 import TokenList from '@wordpress/token-list'
 import { ENTER, SPACE } from '@wordpress/keycodes'
+import { cloneBlock } from '@wordpress/blocks'
 
 /**
  * Replaces the active style in the block's className.
@@ -39,10 +41,31 @@ export function replaceActiveStyle( className, activeStyle, newStyle ) {
 	return list.value
 }
 
+/**
+ * @typedef {Object} BlockStyleMigrateObject
+ *
+ * @property {Record<string, any>} attributes - the cached attributes of the selected block.
+ * @property {Array<string, any>} innerBlocks - array of considered `innerBlocks` of the next block style transformation
+ * @property {any} options - extra arguments.
+ */
+
+/**
+ * Block Migration Cache.
+ *
+ * This cache stores all block styles migration objects.
+ * The property name is the clientId of the block.
+ *
+ * @type {Record<string, BlockStyleMigrateObject>}
+ */
+
+window.__STK_BLOCK_MIGRATIONS_CACHE = {}
+
 const BlockStyles = props => {
 	const { clientId, styles } = props
 
-	const { className, blockName } = useSelect( select => {
+	const {
+		className, blockName,
+	} = useSelect( select => {
 		const block = select( 'core/block-editor' ).getBlock( clientId )
 		return {
 			className: block?.attributes?.className || '',
@@ -67,11 +90,48 @@ const BlockStyles = props => {
 
 		// Selecting a new style can update other attributes too.
 		const block = select( 'core/block-editor' ).getBlock( clientId )
-		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( block.attributes, block.innerBlocks )
+		/**
+		 * @type {BlockStyleMigrateObject}
+		 */
+		let migration = {
+			attributes: block.attributes, innerBlocks: block.innerBlocks, options: {},
+		}
 
-		if ( updatedAttributes.clientId && updatedAttributes.attributes ) {
+		/**
+		 * Access the migration cache if
+		 * the block has not yet modified.
+		 */
+		if ( window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ] ) {
+			migration = window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ]
+		} else {
+			/**
+			 * Otherwise, call the `migration` function of the previous block style against the current
+			 * block's attributes, innerBlocks, and options.
+			 */
+			const oldStyleMigration = styles.find( ( { name } ) => name === activeStyle?.name )?.migrate
+			if ( oldStyleMigration ) {
+				migration = oldStyleMigration( migration.attributes, migration.innerBlocks, migration.options )
+			}
+		}
+
+		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( migration.attributes, migration.innerBlocks, migration.options )
+		const isReturnTypeABlock = updatedAttributes.clientId && updatedAttributes.attributes
+
+		if ( isReturnTypeABlock ) {
 			updatedAttributes.attributes.className = styleClassName
-			replaceBlock( clientId, updatedAttributes )
+			const newBlock = cloneBlock( updatedAttributes )
+			replaceBlock( clientId, newBlock )
+
+			/**
+			 * Calling the `replaceBlock` function will change
+			 * the clientId of the block. Let's delete the current cache and
+			 * store it with the new clientId.
+			 */
+			if ( window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ] ) {
+				delete window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ]
+			}
+
+			window.__STK_BLOCK_MIGRATIONS_CACHE[ newBlock.clientId ] = cloneDeep( migration )
 			return
 		}
 
@@ -79,7 +139,7 @@ const BlockStyles = props => {
 			...updatedAttributes,
 			className: styleClassName,
 		} )
-	}, [ clientId, activeStyle, className ] )
+	}, [ clientId, activeStyle, className, styles ] )
 
 	return (
 		<div className="block-editor-block-styles">

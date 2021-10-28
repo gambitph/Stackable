@@ -2,13 +2,13 @@
  * Internal dependencies
  */
 import { CardStyles } from './style'
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import { last } from 'lodash'
 import {
 	InspectorBottomTip,
@@ -36,6 +36,7 @@ import {
 	ConditionalDisplay,
 	Transform,
 	MarginBottom,
+	BlockStyle,
 } from '~stackable/block-components'
 
 /**
@@ -45,9 +46,16 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import {
 	Fragment, useMemo,
 } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 
-const TEMPLATE = variations[ 0 ].innerBlocks
+const TEMPLATE = [
+	[ 'stackable/heading', {} ],
+	[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle Placeholder', i18n ) } ],
+	[ 'stackable/text', { text: _x( 'Description for this block. You can use this space for describing your block.', 'Content Placeholder', i18n ) } ],
+	[ 'stackable/button-group', {}, [
+		[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
+	] ],
+]
 
 const widthUnit = [ 'px' ]
 const heightUnit = [ 'px' ]
@@ -67,7 +75,7 @@ const Edit = props => {
 
 	const { blockOrientation } = useAlignment()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockStyle = useBlockStyle( variations )
+	const blockStyle = useBlockStyle( blockStyles )
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
@@ -102,6 +110,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<BlockLink.InspectorControls />
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
@@ -126,7 +135,7 @@ const Edit = props => {
 			<CardStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-card" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames }>
 				<ContainerDiv className={ contentClassNames }>
 					<Image
 						className="stk-block-card__image"

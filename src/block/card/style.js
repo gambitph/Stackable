@@ -1,6 +1,6 @@
 /** Internal dependencies
  */
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -40,7 +40,7 @@ export const CardStyles = props => {
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
-	const blockStyle = useMemo( () => getBlockStyle( variations, attributes.className ), [ attributes.className ] )
+	const blockStyle = useMemo( () => getBlockStyle( blockStyles, attributes.className ), [ attributes.className ] )
 	const imageOptions = useMemo( () => {
 		return {
 			enableWidth: blockStyle === 'horizontal',
@@ -83,7 +83,7 @@ CardStyles.Content = props => {
 	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const blockStyle = getBlockStyle( variations, props.attributes.className )
+	const blockStyle = getBlockStyle( blockStyles, props.attributes.className )
 
 	const styles = (
 		<Fragment>

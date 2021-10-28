@@ -4,7 +4,7 @@
 import { ContainerStyles } from './style'
 import SVGDefaultQuote from './images/round-thin.svg'
 import { QUOTE_ICONS } from './quotes'
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -31,6 +31,7 @@ import {
 	Advanced,
 	MarginBottom,
 	Transform,
+	BlockStyle,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -43,12 +44,17 @@ import { withQueryLoopContext } from '~stackable/higher-order'
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { renderToString } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
 export const defaultIcon = renderToString( <SVGDefaultQuote /> )
 
-const TEMPLATE = variations[ 0 ].innerBlocks
+const TEMPLATE = [
+	[ 'stackable/icon', { icon: defaultIcon, linkHasLink: false } ],
+	[ 'stackable/text', {
+		text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ),
+	} ],
+]
 
 const Edit = props => {
 	const {
@@ -89,13 +95,14 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 			<InspectorStyleControls>
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-blockquote" />
 

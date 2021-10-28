@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import './block-styles'
 import './global-settings'
 import './premium-notice'
 import './design-library-button'
