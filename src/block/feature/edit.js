@@ -1,13 +1,13 @@
 /**
  * Internal dependencies
  */
-import variations from './variations'
+import { blockStyles } from './block-styles'
 import BlockStyles from './style'
 
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
@@ -31,6 +31,7 @@ import {
 	ContentAlign,
 	useContentAlignmentClasses,
 	ContainerDiv,
+	BlockStyle,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
@@ -38,9 +39,20 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 
-const TEMPLATE = variations[ 0 ].innerBlocks
+const TEMPLATE = [
+	[ 'stackable/column', { columnAlign: 'center' }, [
+		[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ) } ],
+		[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
+		[ 'stackable/button-group', {}, [
+			[ 'stackable/button', { text: _x( 'Button', 'Button placeholder', i18n ) } ],
+		] ],
+	] ],
+	[ 'stackable/column', { templateLock: 'insert', columnAlign: 'center' }, [
+		[ 'stackable/image', {} ],
+	] ],
+]
 
 const Edit = props => {
 	const {
@@ -77,6 +89,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls />
 			<Separator.InspectorControls />
@@ -95,7 +108,7 @@ const Edit = props => {
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames }>
 				<Separator>
 					<ContainerDiv className={ contentClassNames }>
 						<ColumnInnerBlocks
