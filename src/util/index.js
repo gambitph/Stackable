@@ -428,3 +428,23 @@ export const sanitizeIdAttr = str => {
 		.trim()
 		.toLowerCase()
 }
+
+/**
+ * Given a columns block, extract all its column's innerBlocks
+ *
+ * @param {Object} columnsBlock
+ *
+ * @return {Array} inner blocks
+ */
+export const extractInnerBlocksFromColumnsBlock = columnsBlock => {
+	if ( columnsBlock.name !== 'stackable/columns' ) {
+		return false
+	}
+
+	const newInnerBlocks = []
+	columnsBlock.innerBlocks.forEach( columnBlock => {
+		newInnerBlocks.push( ...columnBlock.innerBlocks )
+	} )
+
+	return newInnerBlocks
+}

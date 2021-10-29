@@ -2,13 +2,13 @@
  * Internal dependencies
  */
 import BlockStyles from './style'
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import {
 	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
 } from '~stackable/components'
@@ -30,6 +30,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	BlockStyle,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
@@ -37,10 +38,25 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 
 const ALLOWED_BLOCKS = [ 'stackable/column' ]
-const TEMPLATE = variations[ 0 ].innerBlocks
+const TEMPLATE = Array( 3 ).fill(
+	[ 'stackable/column', { hasContainer: true }, [
+		[ 'stackable/image' ],
+		[ 'stackable/heading', {
+			text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+		} ],
+		[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
+		[ 'stackable/button-group', {}, [
+			[ 'stackable/button', {
+				text: _x( 'Button', 'Button placeholder', i18n ),
+				buttonBackgroundColor: 'transparent',
+				className: 'is-style-plain',
+			} ],
+		] ],
+	] ]
+)
 
 const Edit = props => {
 	const {
@@ -86,6 +102,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<ContentAlign.InspectorControls hasColumnCount={ true } />
 
 			<InspectorStyleControls>
@@ -95,7 +112,7 @@ const Edit = props => {
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature-grid" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames }>
 				<Separator>
 					<div className={ contentClassNames }>
 						<ColumnInnerBlocks
