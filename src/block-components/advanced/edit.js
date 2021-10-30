@@ -54,7 +54,7 @@ export const Edit = () => {
 					id="general"
 				>
 					<AdvancedSelectControl
-						label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Block', i18n ) ) }
+						label={ sprintf( _x( '%s HTML Tag', 'component', i18n ), __( 'Block', i18n ) ) }
 						attribute="htmlTag"
 						options={ HTML_TAG_OPTIONS }
 					/>

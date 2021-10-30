@@ -15,6 +15,7 @@ const autoprefixer = require( 'autoprefixer' ),
 	mqpacker = require( 'css-mqpacker' ),
 	path = require( 'path' ),
 	postcss = require( 'gulp-postcss' ),
+	removeDuplicateLines = require( 'gulp-remove-duplicate-lines' ),
 	rename = require( 'gulp-rename' ),
 	replace = require( 'gulp-replace' ),
 	sass = require( 'gulp-sass' ),
@@ -83,6 +84,45 @@ gulp.task( 'generate-indexphp', function() {
 	} )
 	return g
 } )
+
+gulp.task( 'generate-translations', gulp.series(
+	function gatherAllGetTextFuncs() {
+		return gulp.src( [ path.resolve( __dirname, './src/**/*.js' ), path.resolve( __dirname, './*.php' ), path.resolve( __dirname, './src/**/*.js' ), path.resolve( __dirname, './pro__premium_only/src/**/*.js' ), path.resolve( __dirname, './pro__premium_only/**/*.php' ), '!' + path.resolve( __dirname, './**/__test__/*.js' ) ] )
+			// Extract all gettext calls.
+			.pipe( collect( {
+				file: 'dist/translation-strings.php',
+				regex: /(\/\/ translators:(.*)?[\s\n](.*)?)?_.\((.*?)\s?(i18n|STACKABLE_I18N)\s?\)/g,
+			} ) )
+	},
+	function cleanupTranslationFile() {
+		return gulp.src( [ 'dist/translation-strings.php' ] )
+			.pipe( replace( /((i18n|STACKABLE_I18N)\s?\))/g, '$1;\n' ) ) // Separate translation into lines.
+			.pipe( replace( /i18n(\s?\))/g, 'STACKABLE_I18N$1' ) ) // Replace i18n with STACKABLE_I18N.
+			.pipe( replace( /STACKABLE_I18N/g, '\'stackable-ultimate-gutenberg-blocks\'' ) ) // Replace i18n with STACKABLE_I18N.
+
+			// To lessen filesize, remove tabs, and other code like variable
+			// assignments before the translation function.
+			.pipe( replace( /^(.*?)(_.\()/gm, '$2' ) )
+
+			// Put the translators comment on the end of the translation, since
+			// we will be removing duplicates, and the comment might get
+			// jumbled.
+			.pipe( replace( /(\/\/ translators:(.*?))\n(_.\((.*?);)/g, '$3 $1' ) )
+			.pipe( removeDuplicateLines( {
+				include: '^_.', // Only remove duplicate lines on gettext calls.
+			} ) ) // Remove duplicate lines.
+			.pipe( header( `<?php
+/**
+ * Auto-generated translation file.
+ */
+
+// Exit if accessed
+exit;
+
+` ) )
+			.pipe( gulp.dest( 'dist/' ) )
+	}
+) )
 
 gulp.task( 'style-editor', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/**/editor.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/editor.scss' ) ] )
@@ -203,7 +243,7 @@ gulp.task( 'style-deprecated', gulp.parallel(
  * END deprecated build styles, we still build these
  ********************************************************************/
 
-gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated' ) )
+gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated', 'generate-translations' ) )
 
 gulp.task( 'build', gulp.series( 'build-process' ) )
 

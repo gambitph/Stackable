@@ -42,7 +42,7 @@ const variations = applyFilters(
 				[ 'stackable/price', {} ],
 				[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],
 				[ 'stackable/icon-list', {
-					text: sprintf( '<li>%s</li><li>%s</li><li>%s</li>', ...[ __( 'one', i18n ), __( 'two', i18n ), __( 'three' ) ].map( v => sprintf( __( 'Package inclusion %s', i18n ), v ) ) ),
+					text: sprintf( '<li>%s</li><li>%s</li><li>%s</li>', ...[ __( 'one', i18n ), __( 'two', i18n ), __( 'three', i18n ) ].map( v => sprintf( __( 'Package inclusion %s', i18n ), v ) ) ),
 				} ],
 				[ 'stackable/button-group', {}, [
 					[ 'stackable/button', {
@@ -80,7 +80,7 @@ const variations = applyFilters(
 					] ],
 				] ],
 				[ 'stackable/icon-list', {
-					text: sprintf( '<li>%s</li><li>%s</li><li>%s</li>', ...[ __( 'one', i18n ), __( 'two', i18n ), __( 'three' ) ].map( v => sprintf( __( 'Package inclusion %s', i18n ), v ) ) ),
+					text: sprintf( '<li>%s</li><li>%s</li><li>%s</li>', ...[ __( 'one', i18n ), __( 'two', i18n ), __( 'three', i18n ) ].map( v => sprintf( __( 'Package inclusion %s', i18n ), v ) ) ),
 				} ],
 			],
 			scope: [ 'block' ],
