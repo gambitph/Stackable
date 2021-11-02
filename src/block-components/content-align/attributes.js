@@ -15,6 +15,11 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
+			rowGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
 			innerBlockContentAlign: {
 				type: 'string',
 				default: '',

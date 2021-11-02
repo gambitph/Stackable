@@ -28,6 +28,22 @@ const getStyleParams = () => {
 		{
 			renderIn: 'save',
 			selector: '.%s-column',
+			styleRule: 'rowGap',
+			attrName: 'rowGap',
+			format: '%spx',
+			responsive: 'all',
+		},
+		{
+			renderIn: 'edit',
+			selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
+			styleRule: 'rowGap',
+			attrName: 'rowGap',
+			format: '%spx',
+			responsive: 'all',
+		},
+		{
+			renderIn: 'save',
+			selector: '.%s-column',
 			styleRule: 'justifyContent',
 			attrName: 'columnFitAlign',
 			responsive: 'all',
