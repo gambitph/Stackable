@@ -2,9 +2,9 @@ name: Unit Tests / PHP (v8.0.0)
 
 on:
   push:
-    branches: [ v3 ]
+    branches: [ master ]
   pull_request:
-    branches: [ v3 ]
+    branches: [ master ]
 
 jobs:
   build:

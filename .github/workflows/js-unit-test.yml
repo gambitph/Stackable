@@ -1,9 +1,9 @@
 name: Unit Tests / JS
 on:
   push:
-    branches: [ v3 ]
+    branches: [ master ]
   pull_request:
-    branches: [ v3 ]
+    branches: [ master ]
 
 jobs:
   build:
