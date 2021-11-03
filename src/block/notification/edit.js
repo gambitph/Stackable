@@ -2,8 +2,8 @@
  * Internal dependencies
  */
 import { ContainerStyles } from './style'
+import { blockStyles } from './block-styles'
 import SVGCloseIcon from './images/close-icon.svg'
-import variations from './variations'
 
 /**
  * External dependencies
@@ -37,6 +37,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	BlockStyle,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -49,9 +50,40 @@ import { withQueryLoopContext } from '~stackable/higher-order'
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 
-const TEMPLATE = variations[ 0 ].innerBlocks
+const TEMPLATE = [
+	[ 'stackable/icon', {
+		icon: '<svg data-prefix="fas" data-icon="exclamation-triangle" class="svg-inline--fa fa-exclamation-triangle fa-w-18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true" width="32" height="32"><path fill="currentColor" d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg>',
+		iconColor1: '#FFFFFF',
+	} ],
+	[ 'stackable/heading', {
+		text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+		textColorClass: 'has-white-color',
+		textColor1: '#FFFFFF',
+	} ],
+	[ 'stackable/text', {
+		textColorClass: 'has-white-color',
+		textColor1: '#FFFFFF',
+		text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ),
+	} ],
+	[ 'stackable/button-group', {}, [
+		[ 'stackable/button', {
+			text: _x( 'Button', 'Button placeholder', i18n ),
+			buttonBackgroundColor: 'transparent',
+			buttonBorderType: 'solid',
+			buttonBorderColor: '#FFFFFF',
+			textColorClass: 'has-white-color',
+			textColor1: '#FFFFFF',
+			buttonBorderWidth: {
+				top: 1,
+				right: 1,
+				bottom: 1,
+				left: 1,
+			},
+		} ],
+	] ],
+]
 
 const Edit = props => {
 	const {
@@ -102,6 +134,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General', i18n ) }
@@ -160,7 +193,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-notification" />
 
