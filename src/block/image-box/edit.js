@@ -2,14 +2,14 @@
  * Internal dependencies
  */
 import { ImageBoxStyles } from './style'
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
 import { last } from 'lodash'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import {
 	InspectorBlockControls,
 	InspectorBottomTip,
@@ -35,6 +35,7 @@ import {
 	getRowClasses,
 	MarginBottom,
 	Transform,
+	BlockStyle,
 } from '~stackable/block-components'
 
 /**
@@ -44,10 +45,49 @@ import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import {
 	Fragment, useMemo,
 } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-export const TEMPLATE = variations[ 0 ].innerBlocks
+export const TEMPLATE = [
+	[ 'stackable/image', { imageHeight: 350, imageFilterParentHover: 'brightness(0.3)' } ],
+	[ 'stackable/column', {
+		templateLock: false,
+		blockVerticalAlign: 'center',
+	}, [
+		[ 'stackable/subtitle', {
+			text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ),
+			blockMargin: { bottom: 8 },
+			opacity: 0,
+			textColorClass: 'has-white-color',
+			textColor1: '#FFFFFF',
+			opacityParentHover: 1,
+		} ],
+		[ 'stackable/heading', {
+			text: _x( 'Title for This Block', 'Heading placeholder', i18n ),
+			textTag: 'h4',
+			textColorClass: 'has-white-color',
+			textColor1: '#FFFFFF',
+		} ],
+		[ 'stackable/text', {
+			text: _x( 'Text for This Block', 'Text placeholder', i18n ),
+			opacity: 0,
+			transform: 'translateY(-24px)',
+			opacityParentHover: 1,
+			transformParentHover: 'translateY(0px)',
+			textColorClass: 'has-white-color',
+			textColor1: '#FFFFFF',
+		} ],
+		[ 'stackable/icon', {
+			blockMargin: { top: 56 },
+			opacity: 0,
+			transform: 'translateY(24px)',
+			icon: '<svg data-prefix="fas" data-icon="arrow-right" class="svg-inline--fa fa-arrow-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg>',
+			opacityParentHover: 1,
+			transformParentHover: 'translateY(0px)',
+			iconColor1: '#FFFFFF',
+		} ],
+	] ],
+]
 
 const ALLOWED_BLOCKS = [
 	'stackable/subtitle',
@@ -55,8 +95,6 @@ const ALLOWED_BLOCKS = [
 	'stackable/text',
 	'stackable/icon',
 ]
-
-const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
@@ -94,7 +132,7 @@ const Edit = props => {
 	return (
 		<Fragment>
 
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
@@ -111,10 +149,12 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorBlockControls>
 
+			<BlockStyle.InspectorControls styles={ blockStyles } />
+
 			<ImageBoxStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-image-box" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames }>
 				<div className={ contentClassNames }>
 					<InnerBlocks
 						templateLock="insert"

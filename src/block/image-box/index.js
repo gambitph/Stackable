@@ -13,7 +13,6 @@ import { ImageBoxIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
-import variations from './variations'
 import metadata from './block.json'
 import example from './example'
 import { applyFilters } from '@wordpress/hooks'
@@ -29,7 +28,6 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	attributes: schema,
 	example,
 
-	variations,
 	edit,
 	save,
 } )
