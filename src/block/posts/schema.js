@@ -248,6 +248,7 @@ export const attributes = ( version = VERSION ) => {
 			hasContainer: false,
 			imageWidth: 100,
 			imageWidthUnit: '%',
+			imageHeight: 350,
 			className: 'is-style-default',
 			readmoreText: __( 'Continue Reading', i18n ),
 			commentsShow: true,
