@@ -97,21 +97,20 @@ const BlockStyles = props => {
 			attributes: block.attributes, innerBlocks: block.innerBlocks, options: {},
 		}
 
+		let cached = false
+
 		/**
 		 * Access the migration cache if
 		 * the block has not yet modified.
 		 */
 		if ( window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ] ) {
 			migration = window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ]
-		} else {
-			/**
-			 * Otherwise, call the `migration` function of the previous block style against the current
-			 * block's attributes, innerBlocks, and options.
-			 */
-			const oldStyleMigration = styles.find( ( { name } ) => name === activeStyle?.name )?.migrate
-			if ( oldStyleMigration ) {
-				migration = oldStyleMigration( migration.attributes, migration.innerBlocks, migration.options )
-			}
+			cached = true
+		}
+
+		const oldStyleMigration = styles.find( ( { name } ) => name === activeStyle?.name )?.migrate
+		if ( oldStyleMigration ) {
+			migration = oldStyleMigration( migration.attributes, migration.innerBlocks, migration.options )
 		}
 
 		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( migration.attributes, migration.innerBlocks, migration.options )
@@ -127,11 +126,12 @@ const BlockStyles = props => {
 			 * the clientId of the block. Let's delete the current cache and
 			 * store it with the new clientId.
 			 */
+			const oldCache = cloneDeep( window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ] )
 			if ( window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ] ) {
 				delete window.__STK_BLOCK_MIGRATIONS_CACHE[ clientId ]
 			}
 
-			window.__STK_BLOCK_MIGRATIONS_CACHE[ newBlock.clientId ] = cloneDeep( migration )
+			window.__STK_BLOCK_MIGRATIONS_CACHE[ newBlock.clientId ] = cached ? oldCache : cloneDeep( migration )
 			return
 		}
 

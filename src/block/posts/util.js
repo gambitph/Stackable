@@ -24,7 +24,7 @@ import { applyFilters } from '@wordpress/hooks'
 /**
  * Internal dependencies
  */
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 export const META_SEPARATORS = {
 	dot: '·',
@@ -80,7 +80,7 @@ export const generateRenderPostItem = attributes => {
 		contentOrder = [],
 	} = attributes
 
-	const style = getBlockStyle( variations, className )
+	const style = getBlockStyle( blockStyles, className )
 
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',
@@ -287,7 +287,7 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 		contentOrder = [],
 	} = attributes
 
-	const style = getBlockStyle( variations, className )
+	const style = getBlockStyle( blockStyles, className )
 
 	const itemClassNames = classnames( [
 		'stk-block-posts__item',

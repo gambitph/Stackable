@@ -1,15 +1,17 @@
 /**
- * Internal dependencies
+ * External dependencies
  */
 import { i18n, isPro } from 'stackable'
+import { defaultsDeep } from 'lodash'
 
 /**
  * WordPress dependencies
  */
 import {
-	__, _x, sprintf,
+	__, _x,
 } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { createBlock } from '@wordpress/blocks'
 
 /**
  * Internal dependencies
@@ -20,11 +22,7 @@ import ImageHorizontal from './images/horizontal.svg'
 import ImageHorizontal2 from './images/horizontal-2.svg'
 import ImageCover from './images/cover.svg'
 
-/**
- * Template option choices for predefined columns layouts.
- *
- * @type {WPBlockVariation[]}
- */ const buttonGroupInnerBlocks = [
+export const buttonGroupInnerBlocks = [
 	[ 'stackable/icon-button', {
 		icon: '<svg data-prefix="fab" data-icon="facebook-square" class="svg-inline--fa fa-facebook-square fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"></path></svg>',
 		buttonBackgroundColor: '#3b5998',
@@ -53,76 +51,92 @@ import ImageCover from './images/cover.svg'
 	],
 ]
 
-const variations = applyFilters(
-	'stackable.team-member.variations',
+const withDefault = ( migrate = {} ) => defaultsDeep( {
+	attributes: {},
+	innerBlocks: [],
+	options: {
+		coverAttributes: {},
+	},
+}, migrate )
+
+export const blockStyles = applyFilters(
+	'stackable.team-member.block-styles',
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: ImageDefault,
-			attributes: { className: 'is-style-default' },
+			label: __( 'Default', i18n ),
 			isDefault: true,
-			innerBlocks: [
-				[ 'stackable/image', {
-					imageHeight: 150, imageWidth: 150, imageWidthUnit: 'px', imageShape: 'circle',
-				} ],
-				[ 'stackable/heading', {
-					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-				} ],
-				[ 'stackable/subtitle', {
-					text: __( 'Position', i18n ),
-				} ],
-				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
-				[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
-			],
-			scope: [ 'block' ],
+			icon: ImageDefault,
+			onSelect: ( attributes, innerBlocks ) => {
+				return createBlock( 'stackable/team-member', attributes, innerBlocks )
+			},
 		},
 		{
 			name: 'plain',
-			title: __( 'Plain', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
+			label: __( 'Plain', i18n ),
 			icon: ImagePlain,
-			attributes: {
-				className: 'is-style-plain', hasContainer: false, contentAlign: 'left',
+			migrate: ( attributes, innerBlocks, options ) => {
+				return withDefault( {
+					attributes,
+					innerBlocks: innerBlocks.map( innerBlock => {
+						if ( innerBlock.name === 'stackable/image' ) {
+							return {
+								...innerBlock,
+								attributes: {
+									...innerBlock.attributes,
+									imageHeight: 150,
+									imageWidth: 150,
+									imageWidthUnit: 'px',
+									imageShape: 'circle',
+								},
+							}
+						}
+
+						return innerBlock
+					} ),
+					options,
+				} )
 			},
-			innerBlocks: [
-				[ 'stackable/image', {} ],
-				[ 'stackable/heading', {
-					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
-				} ],
-				[ 'stackable/subtitle', {
-					text: __( 'Position', i18n ),
-				} ],
-				[ 'stackable/button-group', {}, buttonGroupInnerBlocks ],
-			],
-			scope: [ 'block' ],
+			onSelect: ( attributes, innerBlocks ) => {
+				return createBlock( 'stackable/team-member', {
+					...attributes, hasContainer: false,
+					contentAlign: 'left',
+				}, innerBlocks.map( innerBlock => {
+					if ( innerBlock.name === 'stackable/image' ) {
+						return {
+							...innerBlock,
+							attributes: {
+								...innerBlock.attributes,
+								imageHeight: '',
+								imageWidth: '',
+								imageWidthUnit: '%',
+								imageShape: '',
+							},
+						}
+					}
+
+					return innerBlock
+				} ) )
+			},
 		},
 		{
 			name: 'horizontal',
-			title: __( 'Horizontal', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			label: __( 'Horizontal', i18n ),
 			icon: ImageHorizontal,
 			isPremium: ! isPro,
-			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal-2',
-			title: __( 'Horizontal 2', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
+			label: __( 'Horizontal 2', i18n ),
 			icon: ImageHorizontal2,
 			isPremium: ! isPro,
-			scope: [ 'block' ],
 		},
 		{
 			name: 'cover',
-			title: __( 'Cover', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Cover', i18n ) ),
+			label: __( 'Cover', i18n ),
 			icon: ImageCover,
 			isPremium: ! isPro,
-			scope: [ 'block' ],
 		},
-	]
+	],
+	withDefault
 )
-
-export default variations

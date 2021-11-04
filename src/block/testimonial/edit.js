@@ -2,12 +2,12 @@
  * Internal dependencies
  */
 import { ContainerStyles } from './style'
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import { last } from 'lodash'
 import classnames from 'classnames'
 import {
@@ -32,6 +32,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	BlockStyle,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -44,9 +45,20 @@ import { withQueryLoopContext } from '~stackable/higher-order'
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 
-const TEMPLATE = variations[ 0 ].innerBlocks
+const TEMPLATE = [
+	[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
+	[ 'stackable/image', {
+		imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageShape: 'circle',
+	} ],
+	[ 'stackable/heading', {
+		text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+	} ],
+	[ 'stackable/subtitle', {
+		text: __( 'Position', i18n ),
+	} ],
+]
 
 const Edit = props => {
 	const {
@@ -92,6 +104,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
@@ -99,7 +112,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-testimonial" />
 

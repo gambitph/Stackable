@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -316,7 +316,7 @@ export const PostsStyles = props => {
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
-	const blockStyle = useBlockStyle( variations )
+	const blockStyle = useBlockStyle( blockStyles )
 	const postsStyles = useStyles( attributes, getStyleParams() )
 	const imageOptions = useMemo( () => ( {
 		..._imageOptions,
@@ -364,7 +364,7 @@ PostsStyles.Content = props => {
 	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const blockStyle = getBlockStyle( variations, propsToPass.attributes.className )
+	const blockStyle = getBlockStyle( blockStyles, propsToPass.attributes.className )
 	const postsStyles = getStyles( propsToPass.attributes, getStyleParams( { blockStyle: blockStyle?.name } ) )
 	const imageOptions = {
 		..._imageOptions,

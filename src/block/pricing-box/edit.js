@@ -1,13 +1,13 @@
 /** Internal dependencies
  */
 import BlockStyles from './style'
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import { last } from 'lodash'
 import {
 	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
@@ -29,6 +29,7 @@ import {
 	BlockLink,
 	ContentAlign,
 	useContentAlignmentClasses,
+	BlockStyle,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -39,11 +40,27 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { useMemo } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 
-const TEMPLATE = variations[ 0 ].innerBlocks
+const TEMPLATE = [
+	[ 'stackable/heading', {
+		text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+	} ],
+	[ 'stackable/price', {} ],
+	[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],
+	[ 'stackable/icon-list', {
+		text: sprintf( '<li>%s</li><li>%s</li><li>%s</li>', ...[ __( 'one', i18n ), __( 'two', i18n ), __( 'three' ) ].map( v => sprintf( __( 'Package inclusion %s', i18n ), v ) ) ),
+	} ],
+	[ 'stackable/button-group', {}, [
+		[ 'stackable/button', {
+			text: _x( 'Button', 'Button placeholder', i18n ),
+		} ],
+	] ],
+]
 
 const Edit = props => {
 	const {
@@ -89,6 +106,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<ContentAlign.InspectorControls />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
@@ -99,7 +117,7 @@ const Edit = props => {
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv className={ blockClassNames }>
 				<ContainerDiv className={ contentClassNames }>
 					<ColumnInnerBlocks
 						template={ TEMPLATE }

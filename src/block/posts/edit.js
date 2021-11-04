@@ -5,7 +5,7 @@ import { PostsStyles } from './style'
 import {
 	generateRenderPostItem, CONTENTS,
 } from './util'
-import variations from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -49,6 +49,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	BlockStyle,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -99,7 +100,7 @@ const Edit = props => {
 
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const blockStyle = useBlockStyle( variations )
+	const blockStyle = useBlockStyle( blockStyles )
 
 	const {
 		posts, isRequesting, hasPosts,
@@ -154,6 +155,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'General' ) }
@@ -398,7 +400,7 @@ const Edit = props => {
 					) }
 				</Placeholder>
 			) : (
-				<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+				<BlockDiv className={ blockClassNames }>
 					<div className={ wrapperClassNames }>
 						<div className={ contentClassNames }>
 							{ ( posts || [] ).map( editorPostItems ) }
