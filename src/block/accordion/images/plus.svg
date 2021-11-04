@@ -1,4 +1,6 @@
-<svg width="48" height="48" viewBox="0 0 48 48"  xmlns="http://www.w3.org/2000/svg">
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M35.5 12H19.5V14H35.5V12ZM39 20H9V22H39V20ZM9 25H39V27H9V25ZM39 30H9V32H39V30Z" />
 <path fill-rule="evenodd" clip-rule="evenodd" d="M13 10H11V12H9V14H11V16H13V14H15V12H13V10Z" />
 </svg>
