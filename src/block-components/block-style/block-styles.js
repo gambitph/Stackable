@@ -4,12 +4,16 @@
 import classnames from 'classnames'
 import { getBlockStyle } from '~stackable/hooks'
 import { cloneDeep } from 'lodash'
+import {
+	isPro, showProNotice, i18n,
+} from 'stackable'
+import { ProControl } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import {
-	memo, useMemo, useCallback,
+	useMemo, useCallback,
 } from '@wordpress/element'
 import {
 	select, useSelect, useDispatch,
@@ -17,6 +21,7 @@ import {
 import TokenList from '@wordpress/token-list'
 import { ENTER, SPACE } from '@wordpress/keycodes'
 import { cloneBlock } from '@wordpress/blocks'
+import { __ } from '@wordpress/i18n'
 
 /**
  * Replaces the active style in the block's className.
@@ -141,25 +146,35 @@ const BlockStyles = props => {
 		} )
 	}, [ clientId, activeStyle, className, styles ] )
 
+	const hasPremium = styles.some( style => style.isPremium )
+
 	return (
-		<div className="block-editor-block-styles">
-			{ styles.map( style => {
-				return (
-					<BlockStyleItem
-						className={ className }
-						isActive={ activeStyle === style }
-						key={ style.name }
-						onSelect={ onSelect }
-						style={ style }
-						blockName={ blockName }
-					/>
-				)
-			} ) }
-		</div>
+		<>
+			<div className="block-editor-block-styles stk-block-styles">
+				{ styles.map( style => {
+					return (
+						<BlockStyleItem
+							className={ className }
+							isActive={ activeStyle === style }
+							key={ style.name }
+							onSelect={ onSelect }
+							style={ style }
+							blockName={ blockName }
+						/>
+					)
+				} ) }
+			</div>
+			{ ! isPro && showProNotice && hasPremium && (
+				<ProControl
+					title={ __( 'Upgrade to Premium to get more block styles', i18n ) }
+					description={ __( 'Unlock more styles for this block. This feature is only available on Stackable Premium', i18n ) }
+				/>
+			) }
+		</>
 	)
 }
 
-const BlockStyleItem = memo( props => {
+const BlockStyleItem = props => {
 	const {
 		style,
 		isActive,
@@ -179,6 +194,7 @@ const BlockStyleItem = memo( props => {
 		<div
 			className={ classnames( 'block-editor-block-styles__item', {
 				'is-active': isActive,
+				disabled: ( ! isPro && style.isPremium ),
 			} ) }
 			onClick={ () => onSelect( style ) }
 			onKeyDown={ event => {
@@ -203,7 +219,7 @@ const BlockStyleItem = memo( props => {
 			</div>
 		</div>
 	)
-} )
+}
 
 export default BlockStyles
 
