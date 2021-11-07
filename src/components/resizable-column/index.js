@@ -105,6 +105,9 @@ const ResizableColumn = props => {
 		'stk-column-resizeable',
 		props.className,
 	] )
+	const {
+		columnGap, columnGapTablet, columnGapMobile,
+	} = parentBlock.attributes
 
 	const enable = useMemo( () => ( {
 		top: false,
@@ -120,11 +123,21 @@ const ResizableColumn = props => {
 	const onResizeStart = useCallback( ( _event, _direction ) => {
 		// toggleSelection( false )
 
+		// Get the column gap amounts, we need these to calculate percentages when resizing columns.
+		const parentColumnGaps = {
+			desktop: columnGap || 0,
+			tablet: columnGapTablet || columnGap || 0,
+			mobile: columnGapMobile || columnGapTablet || columnGap || 0,
+		}
+
 		// In desktop, get all the column widths.
 		if ( isDesktop ) {
+			// In desktop, the column gaps will affect the width of the parent column, take it into account.
+			const totalColumnGap = parentColumnGaps.desktop * ( adjacentBlocks.length - 1 )
+
 			// Get the current pixel width of the columns.
 			const parentEl = document.querySelector( `[data-block="${ parentBlock.clientId }"]` )
-			const parentWidth = parentEl.clientWidth
+			const parentWidth = parentEl.clientWidth - totalColumnGap
 			const isFirstResize = adjacentBlocks.every( ( { attributes } ) => ! attributes.columnWidth )
 			const columnWidths = adjacentBlocks.map( ( { clientId, attributes } ) => {
 				// If columns haven't been resized yet, create default values.
@@ -161,7 +174,7 @@ const ResizableColumn = props => {
 		}
 
 		setIsTooltipOver( true )
-	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId ] )
+	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId, columnGap, columnGapTablet, columnGapMobile ] )
 
 	const onResize = useCallback( ( _event, _direction, elt, delta ) => {
 		let columnPercentages = []
