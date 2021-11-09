@@ -12,7 +12,7 @@ const getStyleParams = () => {
 		{
 			renderIn: 'save',
 			selector: '.%s-column',
-			styleRule: 'columnGap',
+			styleRule: '--stk-column-gap',
 			attrName: 'columnGap',
 			format: '%spx',
 			responsive: 'all',
@@ -20,7 +20,7 @@ const getStyleParams = () => {
 		{
 			renderIn: 'edit',
 			selector: '.%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout',
-			styleRule: 'columnGap',
+			styleRule: '--stk-column-gap',
 			attrName: 'columnGap',
 			format: '%spx',
 			responsive: 'all',
