@@ -14,7 +14,7 @@ const getStyleParams = ( options = {} ) => {
 	return [
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `[data-block="${ getAttribute( 'clientId' ) }"]`,
+			selectorCallback: getAttribute => `.wp-block[data-block="${ getAttribute( 'clientId' ) }"]`,
 			styleRule: 'flex',
 			attrName: 'columnWidth',
 			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
@@ -36,7 +36,7 @@ const getStyleParams = ( options = {} ) => {
 		// resizes to a larger size.
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `[data-block="${ getAttribute( 'clientId' ) }"]`,
+			selectorCallback: getAttribute => `.wp-block[data-block="${ getAttribute( 'clientId' ) }"]`,
 			styleRule: 'maxWidth',
 			attrName: 'columnWidth',
 			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
