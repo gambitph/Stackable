@@ -18,8 +18,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'flex',
 			attrName: 'columnWidth',
 			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
-			// format: '0 1 calc(%s% - var(--stk-column-gap, 0px))',
-			format: '0 1 %s%',
+			format: '1 1 %s%',
 			dependencies: [ 'columnAdjacentCount' ],
 			valueCallback: ( value, getAttribute, device ) => {
 				if ( device === 'desktop' ) {
@@ -60,9 +59,20 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'flex',
 			attrName: 'columnWidth',
 			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
-			format: '0 1 %s%',
+			format: '1 1 %s%',
 			dependencies: [ 'columnAdjacentCount' ],
-			valueCallback: ( value, getAttribute, device ) => {
+			valueCallback: ( _value, getAttribute, device ) => {
+				// Flex grow should be turned on in desktop, so negative margins
+				// can make the columns expand. (e.g. 50% 50% then -200px margin
+				// left on 2nd column).
+				//
+				// In tablet/mobile, don't allow expanding since columns would
+				// always expand to the available space (so you can't do a 30%
+				// 30% columns in tablet/mobile, they will expand to 50% 50%)
+				//
+				// No need to do this in the editor since it already does this.
+				const value = device === 'desktop' ? _value : _value.replace( /^1 1/, '0 1' )
+
 				if ( device === 'desktop' ) {
 					return value
 				}
@@ -75,53 +85,6 @@ const getStyleParams = ( options = {} ) => {
 			},
 		},
 	]
-}
-
-const _getStyles = ( attributes, options = {} ) => {
-	const {
-		selector = '',
-	} = options
-	const getValue = __getValue( attributes )
-
-	return {
-		editor: {
-			custom: {
-				[ `.stk-preview-device-desktop :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"],
-				.stk-preview-device-tablet :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
-					flex: getValue( 'columnWidth', '0 1 calc(%s% - var(--stk-column-gap, 0px))' ),
-					// maxWidth: getValue( 'columnWidth', '%s%' ),
-				},
-				[ `.stk-preview-device-tablet :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
-					flex: getValue( 'columnWidthTablet', '0 1 calc(%s% - var(--stk-column-gap, 0px))' ),
-					// maxWidth: getValue( 'columnWidthTablet', '%s%' ),
-				},
-				[ `.stk-preview-device-mobile :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
-					flex: getValue( 'columnWidthMobile', '0 1 calc(%s% - var(--stk-column-gap, 0px))' ),
-					// maxWidth: getValue( 'columnWidthMobile', '%s%' ),
-				},
-			},
-		},
-		saveOnly: {
-			desktopTablet: {
-				[ selector ]: {
-					flex: getValue( 'columnWidth', '0 1 calc(%s% - var(--stk-column-gap, 0px))' ),
-					// maxWidth: getValue( 'columnWidth', '%s%' ),
-				},
-			},
-			tabletOnly: {
-				[ selector ]: {
-					flex: getValue( 'columnWidthTablet', '0 1 calc(%s% - var(--stk-column-gap, 0px))' ),
-					// maxWidth: getValue( 'columnWidthTablet', '%s%' ),
-				},
-			},
-			mobile: {
-				[ selector ]: {
-					flex: getValue( 'columnWidthMobile', '0 1 calc(%s% - var(--stk-column-gap, 0px))' ),
-					// maxWidth: getValue( 'columnWidthMobile', '%s%' ),
-				},
-			},
-		},
-	}
 }
 
 export const Style = props => {
