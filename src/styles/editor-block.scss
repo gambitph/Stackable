@@ -306,3 +306,9 @@
 	justify-content: var(--stk-alignment-justify-content);
 }
 
+
+// Default text direction, we need to add this for RTL support.
+.editor-styles-wrapper [data-block] .stk-block > * {
+	text-align: start;
+	justify-content: var(--stk-alignment-justify-content);
+}
