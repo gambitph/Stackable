@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-25T17:05:47+00:00\n"
+"POT-Creation-Date: 2021-10-30T10:35:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -118,7 +118,7 @@ msgid "The field type provided is not valid."
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:244
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:266
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:279
 #: pro__premium_only/src/dynamic-content/api.js:98
 #: pro__premium_only/src/dynamic-content/store/selectors.js:134
 msgid "%s Placeholder"
@@ -150,62 +150,129 @@ msgstr ""
 msgid "Latest Post"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:51
-msgid "Nth Latest Post"
-msgstr ""
-
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:52
-msgid "1st Latest Post"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:94
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:212
-msgid "1st Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:98
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:213
-msgid "2nd Latest %s"
-msgstr ""
-
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:97
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:102
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:214
-msgid "3rd Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:106
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:215
-msgid "4th Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:110
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:216
-msgid "5th Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:114
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:217
-msgid "6th Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:118
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:218
-msgid "7th Latest %s"
-msgstr ""
-
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:107
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:112
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:117
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:122
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:219
-msgid "8th Latest %s"
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:127
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:132
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:137
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:142
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:225
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:226
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:227
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:228
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:229
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:230
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:231
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:232
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:233
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:234
+msgid "%s Latest %s"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:126
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:220
-msgid "9th Latest %s"
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:52
+msgid "Nth"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:130
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:221
-msgid "10th Latest %s"
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:52
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:152
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:156
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:161
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:165
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:169
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:173
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:177
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:181
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:185
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:189
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:193
+msgid "Post"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:97
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:225
+msgid "1st"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:102
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:226
+msgid "2nd"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:107
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:227
+msgid "3rd"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:112
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:228
+msgid "4th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:117
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:229
+msgid "5th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:122
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:230
+msgid "6th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:127
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:231
+msgid "7th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:132
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:232
+msgid "8th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:137
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:233
+msgid "9th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:142
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:234
+msgid "10th"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:27
@@ -227,20 +294,6 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:151
 msgid "Post Title"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:152
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:156
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:161
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:165
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:169
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:173
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:177
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:181
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:185
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:189
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:193
-msgid "Post"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:155
@@ -442,7 +495,7 @@ msgid "(Untitled)"
 msgstr ""
 
 #: src/block/posts/index.php:103
-#: src/block/posts/index.php:547
+#: src/block/posts/index.php:546
 #: src/deprecated/v2/block/blog-posts/index.php:285
 #: src/deprecated/v2/block/blog-posts/index.php:540
 msgid "%d comment"
@@ -481,7 +534,7 @@ msgstr ""
 msgid "Continue Reading"
 msgstr ""
 
-#: src/block/posts/index.php:503
+#: src/block/posts/index.php:502
 #: src/deprecated/v2/block/blog-posts/index.php:261
 #: src/deprecated/v2/block/blog-posts/index.php:551
 msgid ", "
@@ -1165,31 +1218,31 @@ msgstr ""
 msgid "No conditions yet. Add your first condition."
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:120
+#: pro__premium_only/src/block-components/conditional-display/index.js:123
 msgid "OR"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:120
+#: pro__premium_only/src/block-components/conditional-display/index.js:125
 msgid "AND"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:147
+#: pro__premium_only/src/block-components/conditional-display/index.js:153
 msgid "Trigger if ANY condition matches"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:148
+#: pro__premium_only/src/block-components/conditional-display/index.js:154
 msgid "Trigger if ALL conditions match"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:161
+#: pro__premium_only/src/block-components/conditional-display/index.js:167
 msgid "Add New"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:165
+#: pro__premium_only/src/block-components/conditional-display/index.js:171
 msgid "Add New Condition"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:175
+#: pro__premium_only/src/block-components/conditional-display/index.js:181
 msgid "Learn more about Conditional Display"
 msgstr ""
 

@@ -70,6 +70,7 @@
 		"gulp-footer": "^2.0.2",
 		"gulp-header": "^2.0.9",
 		"gulp-postcss": "^9.0.0",
+		"gulp-remove-duplicate-lines": "^1.0.0",
 		"gulp-rename": "^1.4.0",
 		"gulp-replace": "^1.1.3",
 		"gulp-sass": "^4.1.0",
