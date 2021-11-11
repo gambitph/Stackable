@@ -88,7 +88,7 @@ const BlockStyles = props => {
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } options={ {
-				columnAlignSelectorCallback: getAttribute => `.wp-block[data-block="${ getAttribute( 'clientId' ) }"]`,
+				columnAlignSelectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
 			} } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />

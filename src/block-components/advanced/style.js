@@ -94,7 +94,7 @@ const getStyleParams = ( options = {} ) => {
 		// We need to implement z-index on the block itself or else it won't look correct in the editor.
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.wp-block[data-block="${ getAttribute( 'clientId' ) }"]`,
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
 			styleRule: 'zIndex',
 			attrName: 'zIndex',
 			responsive: 'all',
