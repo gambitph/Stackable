@@ -35,6 +35,9 @@ if ( ! function_exists( 'stackable_allow_safe_style_css' ) ) {
 			'opacity',
 			'justify-content',
 			'display',
+			// SVG gradients use this.
+			'stop-opacity',
+			'stop-color',
 		) );
 	}
 	add_filter( 'safe_style_css', 'stackable_allow_safe_style_css' );
@@ -73,6 +76,7 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'role' => true,
 			'height' => true,
 			'width' => true,
+			'style' => true,
 		);
 		$tags['path'] = array(
 			'class' => true,
@@ -96,13 +100,14 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'in' => true,
 		);
 		// SVG gradients.
+		$tags['defs'] = array();
 		$tags['stop'] = array(
 			'offset' => true,
 			'style' => true,
 			'stop-color' => true,
 			'stop-opacity' => true,
 		);
-		$tags['linearGradient'] = array(
+		$tags['lineargradient'] = array(
 			'id' => true,
 			'x1' => true,
 			'x2' => true,
