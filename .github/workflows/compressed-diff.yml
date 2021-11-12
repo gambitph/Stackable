@@ -2,7 +2,7 @@ name: Compressed Size
 
 on:
   pull_request:
-    branches: [ v3 ]
+    branches: [ master, develop ]
 
 jobs:
   build:
