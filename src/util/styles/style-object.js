@@ -101,8 +101,8 @@ class StyleObject {
 				} )
 			}
 
-			const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.includes( 'tablet' ) )
-			const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.includes( 'mobile' ) )
+			const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
+			const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
 
 			const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
 			const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
@@ -156,11 +156,14 @@ class StyleObject {
 		return this.queryLoopInstance
 	}
 
-	appendToSelector( selector, rule, value, device = 'desktop', renderIn = '', vendorPrefixes = [] ) {
+	appendToSelector( selector, rule, value, _device = 'desktop', renderIn = '', vendorPrefixes = [] ) {
 		// Add instance id to classes. ( e.g. `stk-abc123` -> `stk-abc123-2`, where 2 is `this.queryLoopInstance`. )
 		if ( this.queryLoopInstance ) {
 			selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ this.queryLoopInstance }$2` )
 		}
+
+		// Device name can be `desktopTablet` or `tabletOnly`, for the editor, extract the specific device name.
+		const device = renderIn !== 'edit' ? _device : _device.match( /^(desktop|tablet|mobile)/g )
 
 		const styles = renderIn === '' ? this.styles
 			: this.styles[ renderIn ]
@@ -173,27 +176,16 @@ class StyleObject {
 			vendorPrefixes.forEach( vendorPrefix => {
 				styles[ selector ][ `${ vendorPrefix }${ rule }` ] = value
 			} )
-		} else if ( device === 'tablet' ) {
-			if ( typeof styles.tablet === 'undefined' ) {
-				styles.tablet = {}
+		} else {
+			if ( typeof styles[ device ] === 'undefined' ) {
+				styles[ device ] = {}
 			}
-			if ( typeof styles.tablet[ selector ] === 'undefined' ) {
-				styles.tablet[ selector ] = {}
+			if ( typeof styles[ device ][ selector ] === 'undefined' ) {
+				styles[ device ][ selector ] = {}
 			}
-			styles.tablet[ selector ][ rule ] = value
+			styles[ device ][ selector ][ rule ] = value
 			vendorPrefixes.forEach( vendorPrefix => {
-				styles.tablet[ selector ][ `${ vendorPrefix }${ rule }` ] = value
-			} )
-		} else if ( device === 'mobile' ) {
-			if ( typeof styles.mobile === 'undefined' ) {
-				styles.mobile = {}
-			}
-			if ( typeof styles.mobile[ selector ] === 'undefined' ) {
-				styles.mobile[ selector ] = {}
-			}
-			styles.mobile[ selector ][ rule ] = value
-			vendorPrefixes.forEach( vendorPrefix => {
-				styles.mobile[ selector ][ `${ vendorPrefix }${ rule }` ] = value
+				styles[ device ][ selector ][ `${ vendorPrefix }${ rule }` ] = value
 			} )
 		}
 	}
@@ -327,7 +319,7 @@ class StyleObject {
 			}
 			if ( format !== '%s' && format !== '' ) {
 				value = sprintf(
-					format.replace( /%$/, '%%' ), // If the format ends with %, that means it's a percentage sign.
+					format.replace( /%([sd])%/, '%$1%%' ), // If the format ends with %, that means it's a percentage sign.
 					value
 				)
 			}
@@ -340,8 +332,12 @@ class StyleObject {
 			return value
 		}
 
-		const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.includes( 'tablet' ) )
-		const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.includes( 'mobile' ) )
+		const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
+		const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
+
+		const desktopQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'desktop' ) ) : 'desktop' ) || 'desktop'
+		const tabletQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'tablet' ) ) : 'tablet' ) || 'tablet'
+		const mobileQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'mobile' ) ) : 'mobile' ) || 'mobile'
 
 		const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
@@ -371,40 +367,40 @@ class StyleObject {
 			: prependClass( selector, '.%s:hover', '.%s.stk--is-hovered', 'hover' )
 		selector = prependClass( selector )
 
-		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), 'desktop', renderIn, vendorPrefixes )
+		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), desktopQuery, renderIn, vendorPrefixes )
 		if ( hasHover ) {
-			this.appendToSelector( hoverSelector, styleRule, getValue( attrName, 'desktop', 'hover' ), 'desktop', renderIn, vendorPrefixes )
+			this.appendToSelector( hoverSelector, styleRule, getValue( attrName, 'desktop', 'hover' ), desktopQuery, renderIn, vendorPrefixes )
 		}
 		if ( hasParentHover ) {
-			this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'desktop', 'parent-hover' ), 'desktop', renderIn, vendorPrefixes )
+			this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'desktop', 'parent-hover' ), desktopQuery, renderIn, vendorPrefixes )
 		}
 		if ( hasCollapsed ) {
-			this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'desktop', 'collapsed' ), 'desktop', renderIn, vendorPrefixes )
+			this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'desktop', 'collapsed' ), desktopQuery, renderIn, vendorPrefixes )
 		}
 
 		if ( hasTablet ) {
-			this.appendToSelector( selector, styleRule, getValue( attrName, 'tablet', 'normal' ), 'tablet', renderIn, vendorPrefixes )
+			this.appendToSelector( selector, styleRule, getValue( attrName, 'tablet', 'normal' ), tabletQuery, renderIn, vendorPrefixes )
 			if ( hasHover ) {
-				this.appendToSelector( hoverSelector, styleRule, getValue( attrName, 'tablet', 'hover' ), 'tablet', renderIn, vendorPrefixes )
+				this.appendToSelector( hoverSelector, styleRule, getValue( attrName, 'tablet', 'hover' ), tabletQuery, renderIn, vendorPrefixes )
 			}
 			if ( hasParentHover ) {
-				this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'tablet', 'parent-hover' ), 'tablet', renderIn, vendorPrefixes )
+				this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'tablet', 'parent-hover' ), tabletQuery, renderIn, vendorPrefixes )
 			}
 			if ( hasCollapsed ) {
-				this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'tablet', 'collapsed' ), 'desktop', renderIn, vendorPrefixes )
+				this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'tablet', 'collapsed' ), desktopQuery, renderIn, vendorPrefixes )
 			}
 		}
 
 		if ( hasMobile ) {
-			this.appendToSelector( selector, styleRule, getValue( attrName, 'mobile', 'normal' ), 'mobile', renderIn, vendorPrefixes )
+			this.appendToSelector( selector, styleRule, getValue( attrName, 'mobile', 'normal' ), mobileQuery, renderIn, vendorPrefixes )
 			if ( hasHover ) {
-				this.appendToSelector( hoverSelector, styleRule, getValue( attrName, 'mobile', 'hover' ), 'mobile', renderIn, vendorPrefixes )
+				this.appendToSelector( hoverSelector, styleRule, getValue( attrName, 'mobile', 'hover' ), mobileQuery, renderIn, vendorPrefixes )
 			}
 			if ( hasParentHover ) {
-				this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'mobile', 'parent-hover' ), 'mobile', renderIn, vendorPrefixes )
+				this.appendToSelector( parentHoverSelector, styleRule, getValue( attrName, 'mobile', 'parent-hover' ), mobileQuery, renderIn, vendorPrefixes )
 			}
 			if ( hasCollapsed ) {
-				this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'mobile', 'collapsed' ), 'desktop', renderIn, vendorPrefixes )
+				this.appendToSelector( collapsedSelector, styleRule, getValue( attrName, 'mobile', 'collapsed' ), desktopQuery, renderIn, vendorPrefixes )
 			}
 		}
 	}
