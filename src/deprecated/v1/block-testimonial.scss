@@ -8,7 +8,7 @@
 	@include baseBlock();
 	display: flex;
 	flex-wrap: wrap;
-	margin: 0 (-$box-hori-padding / 2);
+	margin: 0 (-$box-hori-padding * 0.5);
 	.testimonial-image {
 		height: 75px;
 		width: 75px;
@@ -28,7 +28,7 @@
 		&,
 		&:first-child,
 		&:last-child {
-			margin: ($box-hori-padding / 2) !important;
+			margin: ($box-hori-padding * 0.5) !important;
 		}
 	}
 	h4 {

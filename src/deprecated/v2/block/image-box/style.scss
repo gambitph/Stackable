@@ -4,6 +4,8 @@
  * Enqueued in the editor & frontend.
  */
 
+@use "sass:math";
+
 @import "common";
 
 .ugb-image-box.ugb-image-box--v4 {
@@ -96,7 +98,7 @@
 	}
 	.ugb-image-box__subtitle {
 		font-size: 0.8em;
-		margin-bottom: #{ $text-margin-bottom / 3 };
+		margin-bottom: #{ math.div($text-margin-bottom, 3) };
 	}
 	.ugb-image-box__box {
 		border-radius: 12px;
