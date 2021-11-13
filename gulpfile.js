@@ -86,6 +86,14 @@ gulp.task( 'generate-indexphp', function() {
 } )
 
 gulp.task( 'generate-translations', gulp.series(
+	// The collect function has an issue where it will not continue if the
+	// folder will it writes to doesn't exist, create it to prevent an error.
+	function translationsEnsureDistDir( cb ) {
+		if ( ! fs.existsSync( './dist' ) ) {
+			fs.mkdirSync( './dist' )
+		}
+		cb()
+	},
 	function gatherAllGetTextFuncs() {
 		return gulp.src( [ path.resolve( __dirname, './src/**/*.js' ), path.resolve( __dirname, './*.php' ), path.resolve( __dirname, './src/**/*.js' ), path.resolve( __dirname, './pro__premium_only/src/**/*.js' ), path.resolve( __dirname, './pro__premium_only/**/*.php' ), '!' + path.resolve( __dirname, './**/__test__/*.js' ) ] )
 			// Extract all gettext calls.
