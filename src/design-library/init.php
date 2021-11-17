@@ -143,6 +143,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 		public function get_design( $request ) {
 			$design_id = $request->get_param( 'design' );
+			// We don't do anything with this one yet.
+			$library_version = $request->get_param( 'version' );
 
 			$design = get_transient( 'stackable_get_design_' . $design_id );
 
