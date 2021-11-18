@@ -56,8 +56,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 			// For the options page, load our options script.
 			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable-settings' ) !== false ) {
-				// Add translations.
-				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
 
 				wp_enqueue_script( 'wp-i18n' );
 				wp_enqueue_script( 'wp-element' );
@@ -69,6 +67,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				do_action( 'stackable_settings_admin_enqueue_scripts' );
 
 				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor' ) );
+
+				// Add translations.
+				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
 
 				$args = apply_filters( 'stackable_localize_settings_script', array(
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),

@@ -102,7 +102,15 @@ gulp.task( 'generate-translations', gulp.series(
 				regex: /(\/\/ translators:(.*)?[\s\n](.*)?)?_.\((.*?)\s?(i18n|STACKABLE_I18N)\s?\)/g,
 			} ) )
 	},
-	function cleanupTranslationFile() {
+	function gatherJSGetTextFuncs() {
+		return gulp.src( [ path.resolve( __dirname, './pro__premium_only/src/**/*.js' ), '!' + path.resolve( __dirname, './**/__test__/*.js' ) ] )
+			// Extract all gettext calls.
+			.pipe( collect( {
+				file: 'dist/translation-strings.js',
+				regex: /(\/\/ translators:(.*)?[\s\n](.*)?)?_.\((.*?)\s?(i18n|STACKABLE_I18N)\s?\)/g,
+			} ) )
+	},
+	function cleanupPHPTranslationFile() {
 		return gulp.src( [ 'dist/translation-strings.php' ] )
 			.pipe( replace( /((i18n|STACKABLE_I18N)\s?\))/g, '$1;\n' ) ) // Separate translation into lines.
 			.pipe( replace( /i18n(\s?\))/g, 'STACKABLE_I18N$1' ) ) // Replace i18n with STACKABLE_I18N.
@@ -126,6 +134,30 @@ gulp.task( 'generate-translations', gulp.series(
 
 // Exit if accessed
 exit;
+
+` ) )
+			.pipe( gulp.dest( 'dist/' ) )
+	},
+	function cleanupJSTranslationFile() {
+		return gulp.src( [ 'dist/translation-strings.js' ] )
+			.pipe( replace( /((i18n|STACKABLE_I18N)\s?\))/g, '$1;\n' ) ) // Separate translation into lines.
+			.pipe( replace( /i18n(\s?\))/g, 'STACKABLE_I18N$1' ) ) // Replace i18n with STACKABLE_I18N.
+			.pipe( replace( /STACKABLE_I18N/g, '\'stackable-ultimate-gutenberg-blocks\'' ) ) // Replace i18n with STACKABLE_I18N.
+
+			// To lessen filesize, remove tabs, and other code like variable
+			// assignments before the translation function.
+			.pipe( replace( /^(.*?)(_.\()/gm, '$2' ) )
+
+			// Put the translators comment on the end of the translation, since
+			// we will be removing duplicates, and the comment might get
+			// jumbled.
+			.pipe( replace( /(\/\/ translators:(.*?))\n(_.\((.*?);)/g, '$3 $1' ) )
+			.pipe( removeDuplicateLines( {
+				include: '^_.', // Only remove duplicate lines on gettext calls.
+			} ) ) // Remove duplicate lines.
+			.pipe( header( `/**
+ * Auto-generated translation file.
+ */
 
 ` ) )
 			.pipe( gulp.dest( 'dist/' ) )
