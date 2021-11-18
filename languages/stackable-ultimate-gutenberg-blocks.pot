@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.5\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-30T10:35:00+00:00\n"
+"POT-Creation-Date: 2021-11-18T03:37:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -1612,7 +1612,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:155
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:103
 #: src/block-components/separator/edit.js:93
-#: src/block/separator/edit.js:89
+#: src/block/separator/edit.js:90
 #: src/deprecated/v2/block/separator/edit.js:124
 #: src/deprecated/v2/block/separator/edit.js:183
 #: src/deprecated/v2/modules/block-separators/index.js:121
@@ -2142,7 +2142,7 @@ msgstr ""
 #: pro__premium_only/src/block/load-more/edit.js:81
 #: pro__premium_only/src/block/pagination/edit.js:72
 #: src/block-components/advanced/edit.js:53
-#: src/block-components/content-align/edit.js:120
+#: src/block-components/content-align/edit.js:128
 #: src/block/accordion/edit.js:125
 #: src/block/button-group/edit.js:94
 #: src/block/divider/edit.js:71
@@ -2150,7 +2150,7 @@ msgstr ""
 #: src/block/icon-list/edit.js:199
 #: src/block/notification/edit.js:107
 #: src/block/posts/edit.js:159
-#: src/block/separator/edit.js:76
+#: src/block/separator/edit.js:77
 #: src/block/spacer/edit.js:98
 #: src/block/text/edit.js:102
 #: src/block/video-popup/edit.js:88
@@ -3012,6 +3012,7 @@ msgid "Column Gap"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/columns/index.js:141
+#: src/block-components/content-align/edit.js:106
 #: src/block-components/helpers/flex-gap/edit.js:24
 msgid "Row Gap"
 msgstr ""
@@ -3087,7 +3088,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:72
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:100
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:71
-#: src/components/resizable-column/index.js:477
+#: src/components/resizable-column/index.js:527
 msgid "Column"
 msgstr ""
 
@@ -3968,9 +3969,9 @@ msgstr ""
 #: src/components/background-controls/index.js:381
 #: src/components/background-controls/index.js:396
 #: src/components/image-background-controls/index.js:106
-#: src/components/resizable-column/index.js:399
-#: src/components/resizable-column/index.js:411
-#: src/components/resizable-column/index.js:421
+#: src/components/resizable-column/index.js:449
+#: src/components/resizable-column/index.js:461
+#: src/components/resizable-column/index.js:471
 msgid "Auto"
 msgstr ""
 
@@ -4693,7 +4694,7 @@ msgstr ""
 #: src/block-components/separator/edit.js:67
 #: src/block/heading/edit.js:125
 #: src/block/heading/edit.js:171
-#: src/block/separator/edit.js:81
+#: src/block/separator/edit.js:82
 #: src/block/spacer/edit.js:103
 #: src/components/resizer-tooltip/index.js:149
 #: src/deprecated/v2/block/columns/edit.js:329
@@ -4846,7 +4847,7 @@ msgid "Invert Design"
 msgstr ""
 
 #: src/block-components/separator/edit.js:98
-#: src/block/separator/edit.js:93
+#: src/block/separator/edit.js:94
 #: src/deprecated/v2/block/separator/edit.js:178
 #: src/deprecated/v2/modules/block-separators/index.js:126
 #: src/deprecated/v2/modules/block-separators/index.js:226
@@ -5939,7 +5940,7 @@ msgid "Show Comments"
 msgstr ""
 
 #: src/block/posts/edit.js:520
-#: src/block/separator/edit.js:98
+#: src/block/separator/edit.js:99
 #: src/deprecated/v2/block/blog-posts/edit.js:764
 #: src/deprecated/v2/block/separator/edit.js:103
 msgid "Separator"

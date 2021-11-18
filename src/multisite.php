@@ -107,7 +107,7 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'stop-color' => true,
 			'stop-opacity' => true,
 		);
-		$tags['lineargradient'] = array(
+		$tags['lineargradient'] = array( // Intentionally made this lowercase since tags do not recognize caps.
 			'id' => true,
 			'x1' => true,
 			'x2' => true,
