@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.6.5
-Tested up to: 5.8.1
+Tested up to: 5.8.2
 Requires PHP: 5.6
-Stable tag: 3.0.5
+Stable tag: 3.0.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,6 +235,22 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.0.6 =
+* New: Dynamic Content can now be used for link titles
+* New: Added Row Gap option for the Columns block
+* Fixed: Design Library won't load designs in some server configurations
+* Fixed: Column collapsing in tablet and mobile now takes into account the column gap
+* Fixed: Resizing columns is jumpy when there is a column gap
+* Fixed: In some themes alignfull does not work properly
+* Fixed: Icon Button block styles get applied to the button instead of the background
+* Fixed: Prevent Column block from being added as a reusable block
+* Fixed: Added transform panel in the Separator block
+* Fixed: Error when saving an Icon block while having a non-administrator role in multisite
+* Fixed: Load more button now gets removed properly when all posts have loaded
+* Fixed: Added missing translations
+* Fixed: Updated FontAwesome script to use CDN
+* Fixed: Some WordPress 5.7 and 5.6 compatibility issues
 
 = 3.0.5 =
 * Fixed: Design library infinite loading spinner and fails to load design

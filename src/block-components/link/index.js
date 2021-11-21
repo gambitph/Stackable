@@ -54,7 +54,7 @@ export const Link = props => {
 				setIsOpen( false )
 			}
 		}
-	} )
+	}, [ popoverEl.current ] )
 
 	// Assign the outside click listener.
 	useEffect( () => {
