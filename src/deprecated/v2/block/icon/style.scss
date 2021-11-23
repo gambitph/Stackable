@@ -62,7 +62,7 @@
 			white-space: nowrap;
 			min-width: fit-content;
 			flex-shrink: 0;
-			margin: $text-margin-bottom #{$box-hori-padding / 2};
+			margin: $text-margin-bottom #{$box-hori-padding * 0.5};
 		}
 		// Prevent the white-space nowrap from the parent from affecting the title.
 		.ugb-icon__title {

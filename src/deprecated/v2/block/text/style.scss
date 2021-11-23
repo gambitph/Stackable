@@ -149,7 +149,7 @@
 
 .ugb-text {
 	.ugb-text__title {
-		margin: 0 0 #{ $text-margin-bottom / 2 } 0;
+		margin: 0 0 #{ $text-margin-bottom * 0.5 } 0;
 	}
 	.ugb-text__subtitle {
 		margin: 0 0 $text-margin-bottom 0;
