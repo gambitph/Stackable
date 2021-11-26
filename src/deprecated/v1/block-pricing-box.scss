@@ -106,7 +106,7 @@
 	@include baseBlock();
 	display: flex;
 	flex-wrap: wrap;
-	margin: 0 (-$box-hori-padding / 2);
+	margin: 0 (-$box-hori-padding * 0.5);
 	> div {
 		text-align: center;
 		@include baseBlock();
@@ -116,7 +116,7 @@
 		&,
 		&:first-child,
 		&:last-child {
-			margin: ($box-hori-padding / 2) !important;
+			margin: ($box-hori-padding * 0.5) !important;
 		}
 	}
 	h3 {

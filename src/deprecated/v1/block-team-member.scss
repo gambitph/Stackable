@@ -85,7 +85,7 @@
 	@include baseBlock();
 	display: flex;
 	flex-wrap: wrap;
-	margin: 0 (-$box-hori-padding / 2);
+	margin: 0 (-$box-hori-padding * 0.5);
 
 	.team-member-image {
 		width: 300px;
@@ -120,7 +120,7 @@
 		&,
 		&:first-child,
 		&:last-child {
-			margin: ($box-hori-padding / 2) !important;
+			margin: ($box-hori-padding * 0.5) !important;
 		}
 	}
 	.ugb-team-member-position {

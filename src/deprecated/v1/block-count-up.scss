@@ -73,7 +73,7 @@
 	.ugb-countup-item {
 		@include baseBlock();
 		flex: 1;
-		margin: 0 ($box-hori-padding / 2) !important;
+		margin: 0 ($box-hori-padding * 0.5) !important;
 	}
 }
 
@@ -91,8 +91,8 @@
 // Backward compatibility. < 1.10 when we didn't have a "plain" design.
 .ugb-countup.ugb-countup-v2 {
 	&:not(.ugb-has-background):not(.alignwide) {
-		margin-left: (- $box-hori-padding / 2);
-		margin-right: (- $box-hori-padding / 2);
+		margin-left: (- $box-hori-padding * 0.5);
+		margin-right: (- $box-hori-padding * 0.5);
 	}
 }
 

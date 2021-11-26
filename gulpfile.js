@@ -18,7 +18,7 @@ const autoprefixer = require( 'autoprefixer' ),
 	removeDuplicateLines = require( 'gulp-remove-duplicate-lines' ),
 	rename = require( 'gulp-rename' ),
 	replace = require( 'gulp-replace' ),
-	sass = require( 'gulp-sass' ),
+	sass = require( 'gulp-sass' )( require( 'sass' ) ),
 	zip = require( 'gulp-zip' )
 
 // These files are the ones which will be included in the `package` task.

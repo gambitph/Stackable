@@ -5,7 +5,7 @@
  */
 
 const path = require( 'path' )
-const request = require( 'request' )
+const got = require( 'got' )
 const jsonfile = require( 'jsonfile' )
 
 const file = './google-fonts.json'
@@ -18,21 +18,22 @@ const createFontEntry = fontData => {
 	}
 }
 
-request( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDS1XfK5O1n2KXV3a1sonEffs966tQt54g',
-	{ json: true },
-	( err, res, body ) => {
-		if ( err ) {
-			return console.log( err ) // eslint-disable-line
-		}
+( async () => {
+	try {
+		const response = await got( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDS1XfK5O1n2KXV3a1sonEffs966tQt54g', {
+			responseType: 'json',
+		} )
 
-		const fonts = body.items.map( createFontEntry )
+		const fonts = response.body.items.map( createFontEntry )
 		const fullPath = path.resolve( __dirname, file )
 		jsonfile.writeFile( fullPath, fonts, { spaces: 2, EOL: '\r\n' }, err => {
 			if ( err ) {
-				console.error( err ) // eslint-disable-line
+					console.error( err ) // eslint-disable-line
 			}
 		} )
 
 		console.log( `✔️  Sucessfully writen ${ file.match( /[^\/]+.json/ ) }` ) // eslint-disable-line
+	} catch ( error ) {
+		console.error( error.response.body ) // eslint-disable-line
 	}
-)
+} )()

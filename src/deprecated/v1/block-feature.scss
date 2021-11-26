@@ -10,14 +10,14 @@
 	.ugb-feature-wrapper { // Old class.
 		display: flex;
 		flex-wrap: nowrap;
-		margin: 0 (-$box-hori-padding / 2);
+		margin: 0 (-$box-hori-padding * 0.5);
 		> div {
 			justify-content: center;
 			display: flex;
 			flex-direction: column;
 			flex: 1;
 			@include baseBlock();
-			margin: 0 ($box-hori-padding / 2);
+			margin: 0 ($box-hori-padding * 0.5);
 		}
 	}
 	&.ugb-feature--invert .ugb-content-wrapper,

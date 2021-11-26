@@ -1648,30 +1648,6 @@
     ]
   },
   {
-    "family": "Be Vietnam",
-    "variants": [
-      "100",
-      "100italic",
-      "300",
-      "300italic",
-      "regular",
-      "italic",
-      "500",
-      "500italic",
-      "600",
-      "600italic",
-      "700",
-      "700italic",
-      "800",
-      "800italic"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Be Vietnam Pro",
     "variants": [
       "100",
@@ -3463,20 +3439,6 @@
       "latin",
       "latin-ext",
       "vietnamese"
-    ]
-  },
-  {
-    "family": "Crimson Text",
-    "variants": [
-      "regular",
-      "italic",
-      "600",
-      "600italic",
-      "700",
-      "700italic"
-    ],
-    "subsets": [
-      "latin"
     ]
   },
   {
@@ -9666,11 +9628,15 @@
   {
     "family": "Nokora",
     "variants": [
+      "100",
+      "300",
       "regular",
-      "700"
+      "700",
+      "900"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin"
     ]
   },
   {
@@ -14534,17 +14500,6 @@
       "cyrillic-ext",
       "latin",
       "latin-ext"
-    ]
-  },
-  {
-    "family": "Scheherazade",
-    "variants": [
-      "regular",
-      "700"
-    ],
-    "subsets": [
-      "arabic",
-      "latin"
     ]
   },
   {
