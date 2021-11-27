@@ -110,7 +110,11 @@ class BlockToggler extends Component {
 						// const blockNameTrim = blockName.replace( /\w+\//, '' )
 						return (
 							<div key={ i + 1 } className={ mainClasses }>
-								<h4>{ block.title } <span className="s-tag-v2">(V2)</span></h4>
+								<h4>
+									{ __( block.title, i18n ) /* eslint-disable-line @wordpress/i18n-no-variables */ }
+									&nbsp;
+									<span className="s-tag-v2">(V2)</span>
+								</h4>
 								<button
 									className="s-toggle-button"
 									onClick={ () => this.toggleBlock( blockName ) }
