@@ -111,7 +111,9 @@ class BlockToggler extends Component {
 						return (
 							<div key={ i + 1 } className={ mainClasses }>
 								<h4>
-									{ __( block.title, i18n ) /* eslint-disable-line @wordpress/i18n-no-variables */ }
+									{ // We need to run the title through the translation function, we have translations ready for this.
+										__( block.title, i18n ) /* eslint-disable-line @wordpress/i18n-no-variables */
+									}
 									&nbsp;
 									<span className="s-tag-v2">(V2)</span>
 								</h4>
