@@ -70,6 +70,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 				// Add translations.
 				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
+				stackable_load_js_translations(); // This is needed for the translation strings to be loaded.
 
 				$args = apply_filters( 'stackable_localize_settings_script', array(
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),

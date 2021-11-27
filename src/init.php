@@ -216,6 +216,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Add translations.
 			wp_set_script_translations( 'ugb-block-js', STACKABLE_I18N );
+			stackable_load_js_translations(); // This is needed for the translation strings to be loaded.
 
 			// Backend editor only styles.
 			wp_register_style(
@@ -364,4 +365,21 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 	}
 
 	new Stackable_init();
+}
+
+if ( ! function_exists( 'stackable_load_js_translations' ) ) {
+	/**
+	 * Loads the translation strings used by our JS scripts. This should be
+	 * called when a JS script is enqueued in the admin.
+	 *
+	 * The translation-strings.js file is an automatically generated file
+	 * containing translatable strings located in all our block.json files
+	 * (since this is not yet done by WordPress) and our other JS files.
+	 *
+	 * @return void
+	 */
+	function stackable_load_js_translations() {
+		wp_enqueue_script( 'stackable-strings', plugins_url( 'dist/translation-strings.js', STACKABLE_FILE ), array() );
+		wp_set_script_translations( 'stackable-strings', STACKABLE_I18N );
+	}
 }
