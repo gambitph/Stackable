@@ -87,6 +87,14 @@ gulp.task( 'generate-indexphp', function() {
 } )
 
 gulp.task( 'generate-translations-js', gulp.series(
+	// The collect function has an issue where it will not continue if the
+	// folder will it writes to doesn't exist, create it to prevent an error.
+	function translationsEnsureDistDir( cb ) {
+		if ( ! fs.existsSync( path.resolve( __dirname, './dist' ) ) ) {
+			fs.mkdirSync( path.resolve( __dirname, './dist' ) )
+		}
+		cb()
+	},
 	function gatherJSGetTextFuncs() {
 		return gulp.src( [
 			// Premium files aren't included in the json translation files, add
