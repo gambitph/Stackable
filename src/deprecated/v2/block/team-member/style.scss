@@ -61,7 +61,7 @@
 		margin: 0 0 $text-margin-bottom 0;
 	}
 	.ugb-team-member__name {
-		margin-bottom: #{ $text-margin-bottom / 2 };
+		margin-bottom: #{ $text-margin-bottom * 0.5 };
 	}
 	.ugb-team-member__position {
 		color: #aaa;

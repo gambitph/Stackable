@@ -7,13 +7,13 @@
 	@include baseBlock();
 	display: flex;
 	flex-wrap: nowrap;
-	margin: 0 (-$box-hori-padding / 2);
+	margin: 0 (-$box-hori-padding * 0.5);
 	> div {
 		flex: 1;
 		&,
 		&:first-child,
 		&:last-child {
-			margin: ($box-hori-padding / 2) !important;
+			margin: ($box-hori-padding * 0.5) !important;
 		}
 	}
 	.ugb-feature-grid__item {
@@ -51,8 +51,8 @@
 		@media screen and (max-width: $break-small) {
 			padding-left: 0;
 			padding-right: 0;
-			padding-top: #{($box-hori-padding / 2)};
-			padding-bottom: #{($box-hori-padding / 2)};
+			padding-top: #{($box-hori-padding * 0.5)};
+			padding-bottom: #{($box-hori-padding * 0.5)};
 		}
 	}
 }

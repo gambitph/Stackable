@@ -209,24 +209,24 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							</ButtonIconPopoverControl>
 
 							{ show.border &&
-							<BorderControlsHelper
-								attrNameTemplate="column%s"
-								setAttributes={ setAttributes }
-								blockAttributes={ props.attributes }
-							/>
+								<BorderControlsHelper
+									attrNameTemplate="column%s"
+									setAttributes={ setAttributes }
+									blockAttributes={ props.attributes }
+								/>
 							}
 
 							{ show.borderRadius &&
-							<AdvancedRangeControl
-								label={ __( 'Border Radius', i18n ) }
-								value={ borderRadius }
-								onChange={ borderRadius => setAttributes( { borderRadius } ) }
-								min={ 0 }
-								max={ 50 }
-								allowReset={ true }
-								placeholder="12"
-								className="ugb--help-tip-general-border-radius"
-							/>
+								<AdvancedRangeControl
+									label={ __( 'Border Radius', i18n ) }
+									value={ borderRadius }
+									onChange={ borderRadius => setAttributes( { borderRadius } ) }
+									min={ 0 }
+									max={ 50 }
+									allowReset={ true }
+									placeholder="12"
+									className="ugb--help-tip-general-border-radius"
+								/>
 							}
 
 							{ show.shadow &&
@@ -419,7 +419,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 				toggleAttributeName="showName"
 			>
 				<HeadingButtonsControl
-					label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Name', i18n ) ) }
+					label={ sprintf( _x( '%s HTML Tag', 'component', i18n ), __( 'Name', i18n ) ) }
 					value={ nameTag || 'h4' }
 					defaultValue="h4"
 					onChange={ nameTag => setAttributes( { nameTag } ) }

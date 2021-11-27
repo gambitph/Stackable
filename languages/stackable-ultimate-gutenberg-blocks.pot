@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.5\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-25T17:05:47+00:00\n"
+"POT-Creation-Date: 2021-11-18T07:19:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -118,7 +118,7 @@ msgid "The field type provided is not valid."
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:244
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:266
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:279
 #: pro__premium_only/src/dynamic-content/api.js:98
 #: pro__premium_only/src/dynamic-content/store/selectors.js:134
 msgid "%s Placeholder"
@@ -150,62 +150,129 @@ msgstr ""
 msgid "Latest Post"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:51
-msgid "Nth Latest Post"
-msgstr ""
-
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:52
-msgid "1st Latest Post"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:94
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:212
-msgid "1st Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:98
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:213
-msgid "2nd Latest %s"
-msgstr ""
-
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:97
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:102
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:214
-msgid "3rd Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:106
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:215
-msgid "4th Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:110
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:216
-msgid "5th Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:114
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:217
-msgid "6th Latest %s"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:118
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:218
-msgid "7th Latest %s"
-msgstr ""
-
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:107
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:112
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:117
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:122
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:219
-msgid "8th Latest %s"
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:127
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:132
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:137
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:142
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:225
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:226
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:227
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:228
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:229
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:230
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:231
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:232
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:233
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:234
+msgid "%s Latest %s"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:126
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:220
-msgid "9th Latest %s"
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:52
+msgid "Nth"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:130
-#: pro__premium_only/src/dynamic-content/sources/latest-post.php:221
-msgid "10th Latest %s"
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:52
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:152
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:156
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:161
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:165
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:169
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:173
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:177
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:181
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:185
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:189
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:193
+msgid "Post"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:97
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:225
+msgid "1st"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:102
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:226
+msgid "2nd"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:107
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:227
+msgid "3rd"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:112
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:228
+msgid "4th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:117
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:229
+msgid "5th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:122
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:230
+msgid "6th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:127
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:231
+msgid "7th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:132
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:232
+msgid "8th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:137
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:233
+msgid "9th"
+msgstr ""
+
+#. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:142
+#: pro__premium_only/src/dynamic-content/sources/latest-post.php:234
+msgid "10th"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:27
@@ -227,20 +294,6 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:151
 msgid "Post Title"
-msgstr ""
-
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:152
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:156
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:161
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:165
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:169
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:173
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:177
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:181
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:185
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:189
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:193
-msgid "Post"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:155
@@ -397,7 +450,7 @@ msgid "Fields"
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/custom-fields.php:138
-#: src/welcome/index.php:195
+#: src/welcome/index.php:196
 msgid "📋 Custom Fields"
 msgstr ""
 
@@ -406,18 +459,18 @@ msgid "You can add small pieces of content here which you can use across your we
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/custom-fields.php:152
-#: src/welcome/index.php:172
-#: src/welcome/index.php:190
-#: src/welcome/index.php:201
+#: src/welcome/index.php:173
+#: src/welcome/index.php:191
+#: src/welcome/index.php:202
 msgid "This is only available in Stackable Premium."
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/custom-fields.php:152
-#: src/welcome/index.php:127
-#: src/welcome/index.php:172
-#: src/welcome/index.php:190
-#: src/welcome/index.php:201
-#: src/welcome/index.php:484
+#: src/welcome/index.php:128
+#: src/welcome/index.php:173
+#: src/welcome/index.php:191
+#: src/welcome/index.php:202
+#: src/welcome/index.php:485
 #: src/components/design-library-list/design-library-list-item.js:82
 msgid "Go Premium"
 msgstr ""
@@ -442,7 +495,7 @@ msgid "(Untitled)"
 msgstr ""
 
 #: src/block/posts/index.php:103
-#: src/block/posts/index.php:547
+#: src/block/posts/index.php:546
 #: src/deprecated/v2/block/blog-posts/index.php:285
 #: src/deprecated/v2/block/blog-posts/index.php:540
 msgid "%d comment"
@@ -481,7 +534,7 @@ msgstr ""
 msgid "Continue Reading"
 msgstr ""
 
-#: src/block/posts/index.php:503
+#: src/block/posts/index.php:502
 #: src/deprecated/v2/block/blog-posts/index.php:261
 #: src/deprecated/v2/block/blog-posts/index.php:551
 msgid ", "
@@ -492,7 +545,7 @@ msgid "Load version 1 styles for backward compatibility"
 msgstr ""
 
 #: src/deprecated/v2/admin.php:39
-#: src/welcome/index.php:215
+#: src/welcome/index.php:216
 msgid "🎛 Enable & Disable Blocks"
 msgstr ""
 
@@ -674,13 +727,13 @@ msgid "Become an Affiliate"
 msgstr ""
 
 #: src/welcome/freemius.php:51
-#: src/welcome/index.php:122
+#: src/welcome/index.php:123
 msgid "Contact Us"
 msgstr ""
 
 #: src/welcome/index.php:29
 #: src/welcome/index.php:30
-#: src/welcome/index.php:147
+#: src/welcome/index.php:148
 #: src/blocks.js:31
 #: src/deprecated/v2/blocks.js:31
 msgid "Stackable"
@@ -692,75 +745,75 @@ msgstr ""
 msgid "Get Started"
 msgstr ""
 
-#: src/welcome/index.php:96
+#: src/welcome/index.php:97
 msgid "Getting Started"
 msgstr ""
 
-#: src/welcome/index.php:101
-#: src/welcome/index.php:472
+#: src/welcome/index.php:102
+#: src/welcome/index.php:473
 #: src/block-components/content-align/column-settings-button.js:79
 #: src/components/panel-advanced-settings/index.js:150
 msgid "Settings"
 msgstr ""
 
-#: src/welcome/index.php:107
+#: src/welcome/index.php:108
 msgid "Account"
 msgstr ""
 
-#: src/welcome/index.php:114
+#: src/welcome/index.php:115
 msgid "Affiliation"
 msgstr ""
 
-#: src/welcome/index.php:118
-#: src/welcome/index.php:419
+#: src/welcome/index.php:119
+#: src/welcome/index.php:420
 msgid "Documentation"
 msgstr ""
 
-#: src/welcome/index.php:135
+#: src/welcome/index.php:136
 #: src/welcome/wizard.js:259
 #: src/welcome/wizard.js:268
 #: src/welcome/wizard.js:357
 msgid "Custom Fields"
 msgstr ""
 
-#: src/welcome/index.php:157
+#: src/welcome/index.php:158
 #: src/plugins/global-settings/index.js:98
 msgid "Stackable Settings"
 msgstr ""
 
-#: src/welcome/index.php:164
+#: src/welcome/index.php:165
 msgid "🧰 Icon Library Settings"
 msgstr ""
 
-#: src/welcome/index.php:166
+#: src/welcome/index.php:167
 #: src/welcome/wizard.js:220
 msgid "If you have %sFont Awesome Pro%s, you can use your Pro icons by inputting your Pro Kit code below."
 msgstr ""
 
-#: src/welcome/index.php:168
+#: src/welcome/index.php:169
 msgid "%sFont Awesome Pro%s Integration is available by inputting your Pro Kit code. %sLearn more%s."
 msgstr ""
 
-#: src/welcome/index.php:176
+#: src/welcome/index.php:177
 msgid "🎛 Editor Settings"
 msgstr ""
 
-#: src/welcome/index.php:177
+#: src/welcome/index.php:178
 msgid "You can customize some of the features and behavior of Stackable in the editor here. %sLearn more%s."
 msgstr ""
 
-#: src/welcome/index.php:181
+#: src/welcome/index.php:182
 msgid "📰 Role Manager"
 msgstr ""
 
-#: src/welcome/index.php:183
-#: src/welcome/index.php:186
+#: src/welcome/index.php:184
+#: src/welcome/index.php:187
 msgid "Lock the Block Editor's inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks."
 msgstr ""
 
-#: src/welcome/index.php:183
-#: src/welcome/index.php:186
-#: src/welcome/index.php:447
+#: src/welcome/index.php:184
+#: src/welcome/index.php:187
+#: src/welcome/index.php:448
 #: pro__premium_only/src/block-components/icon/multicolor-controls.js:38
 #: pro__premium_only/src/features/icon-controls/index.js:123
 #: src/components/base-control2/hover-state-toggle.js:63
@@ -772,97 +825,97 @@ msgstr ""
 msgid "Learn more"
 msgstr ""
 
-#: src/welcome/index.php:198
+#: src/welcome/index.php:199
 msgid "Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. %sLearn more%s."
 msgstr ""
 
-#: src/welcome/index.php:205
+#: src/welcome/index.php:206
 msgid "📱 Responsive Breakpoints"
 msgstr ""
 
-#: src/welcome/index.php:206
+#: src/welcome/index.php:207
 msgid "Blocks can be styles differently for tablet and mobile screens, and some styles adjust to make them fit better in smaller screens. You can change the widths when tablet and mobile views are triggered. %sLearn more%s."
 msgstr ""
 
-#: src/welcome/index.php:210
+#: src/welcome/index.php:211
 msgid "🌏 Global Settings"
 msgstr ""
 
-#: src/welcome/index.php:211
+#: src/welcome/index.php:212
 msgid "Each WordPress theme is unique, so if your global settings are not working correctly with your theme, here are a few options you can tweak to make them work. %sLearn more%s."
 msgstr ""
 
-#: src/welcome/index.php:216
+#: src/welcome/index.php:217
 msgid "We have a lot of awesome blocks. But if you're overwhelmed with awesomeness, you can hide some of them."
 msgstr ""
 
-#: src/welcome/index.php:216
+#: src/welcome/index.php:217
 msgid "(If your post contains a disabled block, it will still continue to work. You won't just be able to add the disabled blocks.)"
 msgstr ""
 
-#: src/welcome/index.php:223
+#: src/welcome/index.php:224
 msgid "🔩 Other Settings"
 msgstr ""
 
-#: src/welcome/index.php:230
+#: src/welcome/index.php:231
 msgid "🚀 Stackable Premium"
 msgstr ""
 
-#: src/welcome/index.php:231
+#: src/welcome/index.php:232
 msgid "If you are ready for even more, upgrade to Premium and get:"
 msgstr ""
 
-#: src/welcome/index.php:233
+#: src/welcome/index.php:234
 msgid "54+ Additional Block Layouts"
 msgstr ""
 
-#: src/welcome/index.php:234
+#: src/welcome/index.php:235
 msgid "230+ Additional Library Designs"
 msgstr ""
 
-#: src/welcome/index.php:235
+#: src/welcome/index.php:236
 #: pro__premium_only/src/format-types/dynamic-content/index.js:146
 msgid "Dynamic Content"
 msgstr ""
 
-#: src/welcome/index.php:236
+#: src/welcome/index.php:237
 #: src/block-components/effects-animations/edit.js:29
 msgid "Motion Effects"
 msgstr ""
 
-#: src/welcome/index.php:237
+#: src/welcome/index.php:238
 msgid "Conditionally Display Blocks"
 msgstr ""
 
-#: src/welcome/index.php:238
+#: src/welcome/index.php:239
 msgid "User Role Manager"
 msgstr ""
 
-#: src/welcome/index.php:239
+#: src/welcome/index.php:240
 msgid "Font Awesome Pro Integration"
 msgstr ""
 
-#: src/welcome/index.php:240
+#: src/welcome/index.php:241
 msgid "Custom Block CSS"
 msgstr ""
 
-#: src/welcome/index.php:241
+#: src/welcome/index.php:242
 msgid "1 Year of Updates"
 msgstr ""
 
-#: src/welcome/index.php:242
+#: src/welcome/index.php:243
 msgid "1 Year of Support"
 msgstr ""
 
-#: src/welcome/index.php:243
+#: src/welcome/index.php:244
 msgid "No Ads"
 msgstr ""
 
-#: src/welcome/index.php:247
+#: src/welcome/index.php:248
 msgid "Get Stackable Premium"
 msgstr ""
 
-#: src/welcome/index.php:250
+#: src/welcome/index.php:251
 #: src/components/pro-control/index.js:23
 #: src/components/pro-control/index.js:28
 #: src/components/pro-control/index.js:33
@@ -876,201 +929,201 @@ msgstr ""
 msgid "Learn More"
 msgstr ""
 
-#: src/welcome/index.php:255
+#: src/welcome/index.php:256
 msgid "🎉 Join the Community"
 msgstr ""
 
-#: src/welcome/index.php:256
+#: src/welcome/index.php:257
 msgid "Join the very active Stackable Community in Facebook, join thousands of like-minded people who are also building their websites and crafting beautiful and impactful web pages."
 msgstr ""
 
-#: src/welcome/index.php:257
+#: src/welcome/index.php:258
 msgid "Join Facebook Community"
 msgstr ""
 
-#: src/welcome/index.php:260
+#: src/welcome/index.php:261
 msgid "🗞 Stackable Blog"
 msgstr ""
 
-#: src/welcome/index.php:262
+#: src/welcome/index.php:263
 msgid "Keep up to date by subscribing to our newsletter."
 msgstr ""
 
-#: src/welcome/index.php:263
+#: src/welcome/index.php:264
 msgid "Subscribe"
 msgstr ""
 
-#: src/welcome/index.php:295
+#: src/welcome/index.php:296
 msgid "How to start using Stackable"
 msgstr ""
 
-#: src/welcome/index.php:296
+#: src/welcome/index.php:297
 msgid "There's a lot you can achieve using Stackable. Here's a quick guide to start you off."
 msgstr ""
 
-#: src/welcome/index.php:301
+#: src/welcome/index.php:302
 msgid "Adding Blocks"
 msgstr ""
 
-#: src/welcome/index.php:302
+#: src/welcome/index.php:303
 msgid "There are 2 ways to start using Stackable:"
 msgstr ""
 
-#: src/welcome/index.php:305
+#: src/welcome/index.php:306
 msgid "Add a block by <strong>Block Type</strong>"
 msgstr ""
 
-#: src/welcome/index.php:308
+#: src/welcome/index.php:309
 msgid "Add a block from the <strong>Design Library</strong>"
 msgstr ""
 
-#: src/welcome/index.php:319
+#: src/welcome/index.php:320
 msgid "Adding by Block Type"
 msgstr ""
 
-#: src/welcome/index.php:320
+#: src/welcome/index.php:321
 msgid "Click the <strong>(+) icon</strong> then scroll to the <strong>Stackable Blocks area</strong> to add a block."
 msgstr ""
 
-#: src/welcome/index.php:329
+#: src/welcome/index.php:330
 msgid "Adding from the Design Library"
 msgstr ""
 
-#: src/welcome/index.php:330
+#: src/welcome/index.php:331
 msgid "You can also launch the Design Library, and choose from <strong>ready-made UI Kits & Block Designs</strong>."
 msgstr ""
 
-#: src/welcome/index.php:332
+#: src/welcome/index.php:333
 #: src/components/modal-design-library/block-list.js:151
 #: src/deprecated/v2/components/modal-design-library/block-list.js:155
 msgid "UI Kits"
 msgstr ""
 
-#: src/welcome/index.php:333
+#: src/welcome/index.php:334
 msgid "Choose blocks from different pre-made templates that can be used to build an entire website."
 msgstr ""
 
-#: src/welcome/index.php:334
+#: src/welcome/index.php:335
 #: src/deprecated/v2/components/modal-design-library/block-list.js:159
 msgid "Block Designs"
 msgstr ""
 
-#: src/welcome/index.php:335
+#: src/welcome/index.php:336
 msgid "Choose from different individual designs. Mix and match block designs to build your site."
 msgstr ""
 
-#: src/welcome/index.php:343
+#: src/welcome/index.php:344
 msgid "Styling Blocks"
 msgstr ""
 
-#: src/welcome/index.php:344
+#: src/welcome/index.php:345
 msgid "Style your blocks using 3 tool areas."
 msgstr ""
 
-#: src/welcome/index.php:349
+#: src/welcome/index.php:350
 msgid "1. Inspector"
 msgstr ""
 
-#: src/welcome/index.php:350
+#: src/welcome/index.php:351
 msgid "The Inspector is the main styling area consisting of Block, Style and Advanced tabs."
 msgstr ""
 
-#: src/welcome/index.php:354
-#: src/welcome/index.php:371
+#: src/welcome/index.php:355
+#: src/welcome/index.php:372
 msgid "Tip"
 msgstr ""
 
-#: src/welcome/index.php:355
+#: src/welcome/index.php:356
 msgid "Hover over the names or info icons in the options to preview a tooltip that will guide you on what an option does."
 msgstr ""
 
-#: src/welcome/index.php:366
+#: src/welcome/index.php:367
 msgid "2. Toolbar"
 msgstr ""
 
-#: src/welcome/index.php:367
+#: src/welcome/index.php:368
 msgid "Use the Toolbar to edit your block's formatting specs."
 msgstr ""
 
-#: src/welcome/index.php:372
+#: src/welcome/index.php:373
 msgid "<strong>Dynamic content</strong> and <strong>copy and paste</strong> buttons are only available in %sStackable Premium%s."
 msgstr ""
 
-#: src/welcome/index.php:383
+#: src/welcome/index.php:384
 msgid "3. Global Settings Panel"
 msgstr ""
 
-#: src/welcome/index.php:384
+#: src/welcome/index.php:385
 msgid "Define and edit site-wide typography and color palettes in one place."
 msgstr ""
 
-#: src/welcome/index.php:393
+#: src/welcome/index.php:394
 msgid "Ready to make your website?"
 msgstr ""
 
-#: src/welcome/index.php:394
+#: src/welcome/index.php:395
 msgid "Start creating your site or check out our full guide to Stackable."
 msgstr ""
 
-#: src/welcome/index.php:396
+#: src/welcome/index.php:397
 msgid "Create New Page"
 msgstr ""
 
-#: src/welcome/index.php:397
+#: src/welcome/index.php:398
 msgid "Read Full Guide"
 msgstr ""
 
-#: src/welcome/index.php:403
+#: src/welcome/index.php:404
 msgid "More Resources"
 msgstr ""
 
-#: src/welcome/index.php:410
+#: src/welcome/index.php:411
 msgid "Community"
 msgstr ""
 
-#: src/welcome/index.php:411
+#: src/welcome/index.php:412
 msgid "Join like-minded people who help each other do amazing things"
 msgstr ""
 
-#: src/welcome/index.php:413
+#: src/welcome/index.php:414
 msgid "Join Now"
 msgstr ""
 
-#: src/welcome/index.php:420
+#: src/welcome/index.php:421
 msgid "Learn how to use Stackable's powerful page building tools"
 msgstr ""
 
-#: src/welcome/index.php:422
+#: src/welcome/index.php:423
 msgid "Visit Docs"
 msgstr ""
 
-#: src/welcome/index.php:428
+#: src/welcome/index.php:429
 msgid "Blog"
 msgstr ""
 
-#: src/welcome/index.php:429
+#: src/welcome/index.php:430
 msgid "Browse through our articles and find what you're looking for"
 msgstr ""
 
-#: src/welcome/index.php:431
+#: src/welcome/index.php:432
 #: src/deprecated/v2/block/blog-posts/edit.js:485
 msgid "Read More"
 msgstr ""
 
-#: src/welcome/index.php:438
-#: src/welcome/index.php:444
+#: src/welcome/index.php:439
+#: src/welcome/index.php:445
 msgid "Get Support"
 msgstr ""
 
-#: src/welcome/index.php:439
+#: src/welcome/index.php:440
 msgid "Stuck with something? Email us and we'll help you out"
 msgstr ""
 
-#: src/welcome/index.php:441
+#: src/welcome/index.php:442
 msgid "Contact Support"
 msgstr ""
 
-#: src/welcome/index.php:445
+#: src/welcome/index.php:446
 msgid "Upgrade to Premium and our support team can help you out."
 msgstr ""
 
@@ -1165,31 +1218,31 @@ msgstr ""
 msgid "No conditions yet. Add your first condition."
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:120
+#: pro__premium_only/src/block-components/conditional-display/index.js:123
 msgid "OR"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:120
+#: pro__premium_only/src/block-components/conditional-display/index.js:125
 msgid "AND"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:147
+#: pro__premium_only/src/block-components/conditional-display/index.js:153
 msgid "Trigger if ANY condition matches"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:148
+#: pro__premium_only/src/block-components/conditional-display/index.js:154
 msgid "Trigger if ALL conditions match"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:161
+#: pro__premium_only/src/block-components/conditional-display/index.js:167
 msgid "Add New"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:165
+#: pro__premium_only/src/block-components/conditional-display/index.js:171
 msgid "Add New Condition"
 msgstr ""
 
-#: pro__premium_only/src/block-components/conditional-display/index.js:175
+#: pro__premium_only/src/block-components/conditional-display/index.js:181
 msgid "Learn more about Conditional Display"
 msgstr ""
 
@@ -1559,7 +1612,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:155
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:103
 #: src/block-components/separator/edit.js:93
-#: src/block/separator/edit.js:89
+#: src/block/separator/edit.js:90
 #: src/deprecated/v2/block/separator/edit.js:124
 #: src/deprecated/v2/block/separator/edit.js:183
 #: src/deprecated/v2/modules/block-separators/index.js:121
@@ -2089,7 +2142,7 @@ msgstr ""
 #: pro__premium_only/src/block/load-more/edit.js:81
 #: pro__premium_only/src/block/pagination/edit.js:72
 #: src/block-components/advanced/edit.js:53
-#: src/block-components/content-align/edit.js:120
+#: src/block-components/content-align/edit.js:128
 #: src/block/accordion/edit.js:125
 #: src/block/button-group/edit.js:94
 #: src/block/divider/edit.js:71
@@ -2097,7 +2150,7 @@ msgstr ""
 #: src/block/icon-list/edit.js:199
 #: src/block/notification/edit.js:107
 #: src/block/posts/edit.js:159
-#: src/block/separator/edit.js:76
+#: src/block/separator/edit.js:77
 #: src/block/spacer/edit.js:98
 #: src/block/text/edit.js:102
 #: src/block/video-popup/edit.js:88
@@ -2959,6 +3012,7 @@ msgid "Column Gap"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/columns/index.js:141
+#: src/block-components/content-align/edit.js:106
 #: src/block-components/helpers/flex-gap/edit.js:24
 msgid "Row Gap"
 msgstr ""
@@ -3034,7 +3088,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:72
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:100
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:71
-#: src/components/resizable-column/index.js:477
+#: src/components/resizable-column/index.js:527
 msgid "Column"
 msgstr ""
 
@@ -3915,9 +3969,9 @@ msgstr ""
 #: src/components/background-controls/index.js:381
 #: src/components/background-controls/index.js:396
 #: src/components/image-background-controls/index.js:106
-#: src/components/resizable-column/index.js:399
-#: src/components/resizable-column/index.js:411
-#: src/components/resizable-column/index.js:421
+#: src/components/resizable-column/index.js:449
+#: src/components/resizable-column/index.js:461
+#: src/components/resizable-column/index.js:471
 msgid "Auto"
 msgstr ""
 
@@ -4640,7 +4694,7 @@ msgstr ""
 #: src/block-components/separator/edit.js:67
 #: src/block/heading/edit.js:125
 #: src/block/heading/edit.js:171
-#: src/block/separator/edit.js:81
+#: src/block/separator/edit.js:82
 #: src/block/spacer/edit.js:103
 #: src/components/resizer-tooltip/index.js:149
 #: src/deprecated/v2/block/columns/edit.js:329
@@ -4793,7 +4847,7 @@ msgid "Invert Design"
 msgstr ""
 
 #: src/block-components/separator/edit.js:98
-#: src/block/separator/edit.js:93
+#: src/block/separator/edit.js:94
 #: src/deprecated/v2/block/separator/edit.js:178
 #: src/deprecated/v2/modules/block-separators/index.js:126
 #: src/deprecated/v2/modules/block-separators/index.js:226
@@ -5886,7 +5940,7 @@ msgid "Show Comments"
 msgstr ""
 
 #: src/block/posts/edit.js:520
-#: src/block/separator/edit.js:98
+#: src/block/separator/edit.js:99
 #: src/deprecated/v2/block/blog-posts/edit.js:764
 #: src/deprecated/v2/block/separator/edit.js:103
 msgid "Separator"

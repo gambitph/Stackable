@@ -21,8 +21,8 @@ const DEFAULT_STATE = {
 
 const STORE_ACTIONS = {
 	updateSelectedBlock: clientId => {
-		// We need to specify `.edit-post-visual-editor__content-area` to avoid targeting the navigation list view.
-		const blockEl = document.querySelector( `.edit-post-visual-editor__content-area [data-block="${ clientId }"]` )
+		// We need to specify `.editor-styles-wrapper` to avoid targeting the navigation list view.
+		const blockEl = document.querySelector( `.editor-styles-wrapper [data-block="${ clientId }"]` )
 
 		// Get the currently parent-hovered block if there is one.
 		const parentHoverEl = blockEl?.closest( '.stk-hover-parent' )?.closest( '[data-block]' )
