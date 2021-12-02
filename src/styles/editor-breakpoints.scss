@@ -19,6 +19,12 @@
 		@content;
 	}
 }
+@mixin tablet-mobile {
+	.stk-preview-device-tablet,
+	.stk-preview-device-mobile {
+		@content;
+	}
+}
 @mixin mobile {
 	.stk-preview-device-mobile {
 		@content;
