@@ -10,10 +10,16 @@ import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
 import { nth } from 'lodash'
 import {
-	AdvancedToggleControl, IconControl, InspectorStyleControls, InspectorTabs, PanelAdvancedSettings,
+	AdvancedToggleControl,
+	IconControl,
+	InspectorBottomTip,
+	InspectorStyleControls,
+	InspectorTabs,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -52,6 +58,8 @@ const Edit = props => {
 		clientId,
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const [ isOpen, setIsOpen ] = useState( true )
 	const { hasInnerBlocks } = useBlockContext()
@@ -128,6 +136,10 @@ const Edit = props => {
 						className="ugb--help-tip-accordion-adjacent-open"
 					/>
 				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
 			</InspectorStyleControls>
 
 			<BlockStyles version={ VERSION } />

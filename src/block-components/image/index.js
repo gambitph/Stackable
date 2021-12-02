@@ -33,7 +33,7 @@ export const Image = props => {
 
 	const { setImage } = useImage()
 
-	const defaultHeight = _defaultHeight === 'auto' ? 'auto' : 300
+	const defaultHeight = _defaultHeight === 'auto' ? 'auto' : _defaultHeight !== undefined ? _defaultHeight : ''
 
 	const enableHandlers = applyFilters( 'stackable.image.enable-handlers', true, parentBlock )
 
@@ -81,6 +81,9 @@ export const Image = props => {
 		shape={ attributes.imageShape }
 		shapeStretch={ attributes.imageShapeStretch }
 		shadow={ attributes.imageShadow }
+
+		defaultWidth={ props.defaultWidth }
+		defaultHeight={ props.defaultHeight }
 
 		{ ...pickBy( propsToPass, v => v !== undefined ) }
 	/>

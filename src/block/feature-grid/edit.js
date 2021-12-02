@@ -9,9 +9,12 @@ import variations from './variations'
  */
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
-import { ColumnInnerBlocks, InspectorTabs } from '~stackable/components'
+import {
+	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
+} from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -43,6 +46,8 @@ const Edit = props => {
 	const {
 		className,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const { hasInnerBlocks } = useBlockContext()
 	const rowClass = getRowClasses( props.attributes )
@@ -82,6 +87,10 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 			<ContentAlign.InspectorControls hasColumnCount={ true } />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-feature-grid" />

@@ -37,7 +37,7 @@ import {
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const itemSelector = ' .stk-block-posts__item'
+const itemSelector = ' .%s-container'
 
 const hoverSelectorCallback = append => getAttribute =>
 	getAttribute( 'hoverStateInContainer' )
@@ -117,7 +117,11 @@ const advancedOptions = {
 	positionSelector: itemSelector,
 }
 
-const getStyleParams = () => {
+const getStyleParams = ( options = {} ) => {
+	const {
+		blockStyle,
+	} = options
+
 	return [
 		{
 			selector: '',
@@ -280,6 +284,22 @@ const getStyleParams = () => {
 			format: '%spx',
 			responsive: 'all',
 		},
+
+		{
+			renderIn: 'save',
+			selector: `.stk-container-padding`,
+			styleRule: 'width',
+			attrName: 'imageWidth',
+			responsive: 'all',
+			valueCallback: ( value, getAttribute, device ) => {
+				if ( getAttribute( 'imageWidthUnit', device ) === '%' && value !== undefined && value !== '' ) {
+					return ( 100 - parseInt( value ) ) + '%'
+				}
+
+				return undefined
+			},
+			enabledCallback: () => blockStyle === 'list',
+		},
 	]
 }
 
@@ -301,7 +321,7 @@ export const PostsStyles = props => {
 	const imageOptions = useMemo( () => ( {
 		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle ),
-	} ), [ blockStyle ] )
+	} ), [ blockStyle, attributes.imageHasLink ] )
 
 	return (
 		<>
@@ -339,12 +359,17 @@ PostsStyles.Content = props => {
 		...propsToPass
 	} = props
 
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
+
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const blockStyle = getBlockStyle( variations, propsToPass.attributes.className )
-	const postsStyles = getStyles( propsToPass.attributes, getStyleParams() )
+	const postsStyles = getStyles( propsToPass.attributes, getStyleParams( { blockStyle: blockStyle?.name } ) )
 	const imageOptions = {
 		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
+		...( [ 'list' ].includes( blockStyle?.name ) && props.attributes.imageHasLink ? { selector: `${ itemSelector } .stk-block-posts__image-link`, widthStyleRule: 'flexBasis' } : {} ),
 	}
 
 	const styles = (

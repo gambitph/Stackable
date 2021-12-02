@@ -13,7 +13,7 @@
 }
 .ugb-accordion:not([class*="ugb-accordion--v"]) .ugb-accordion__heading {
 	@include box();
-	padding: ($box-hori-padding / 2) $box-hori-padding;
+	padding: ($box-hori-padding * 0.5) $box-hori-padding;
 	margin: 0 !important;
 	display: flex;
 	align-items: center;

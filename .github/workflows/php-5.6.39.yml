@@ -2,9 +2,9 @@ name: Unit Tests / PHP (v5.6.39)
 
 on:
   push:
-    branches: [ v3 ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ v3 ]
+    branches: [ master, develop ]
 
 jobs:
   build:

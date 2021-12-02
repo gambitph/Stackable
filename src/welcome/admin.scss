@@ -27,7 +27,7 @@ body[class*="page_stk-"] {
 	padding-bottom: 80px;
 	h1 {
 		padding: 0;
-		display: flex;
+		display: flex !important;
 		align-items: center;
 		// Admin notices should appear a little bit below the title.
 		+ div.fs-notice,

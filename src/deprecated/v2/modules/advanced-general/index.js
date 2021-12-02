@@ -42,7 +42,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.general.before`, null, props ) }
 				{ options.blockTag &&
 					<AdvancedSelectControl
-						label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Block', i18n ) ) }
+						label={ sprintf( _x( '%s HTML Tag', 'component', i18n ), __( 'Block', i18n ) ) }
 						value={ blockTag }
 						options={ [
 							{ value: '', label: __( 'Default', i18n ) },

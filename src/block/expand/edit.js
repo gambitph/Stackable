@@ -8,9 +8,12 @@ import BlockStyles from './style'
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import { InspectorTabs } from '~stackable/components'
+import {
+	InspectorBlockControls, InspectorBottomTip, InspectorTabs,
+} from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	Advanced,
@@ -64,6 +67,8 @@ const Edit = props => {
 		className,
 	} = props
 
+	useGeneratedCss( props.attributes )
+
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
@@ -93,6 +98,10 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-expand" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+
+			<InspectorBlockControls>
+				<InspectorBottomTip />
+			</InspectorBlockControls>
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-expand" />

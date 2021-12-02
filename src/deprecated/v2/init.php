@@ -11,6 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Max number of times to check the frontend for v2 blocks if backward
+// compatibility is not enabled - this is to ensure the frontend always looks
+// okay after updating.
+defined( 'STACKABLE_FRONTEND_V2_DETECTOR_LIMIT' ) || define( 'STACKABLE_FRONTEND_V2_DETECTOR_LIMIT', 10 );
+
 if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 
 	/**
@@ -22,13 +27,14 @@ if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 		if ( ! empty( $old_version ) && version_compare( $old_version, "3.0", "<" ) ) {
 			// Only do this if we have never set the compatibility options before.
 			if ( get_option( 'stackable_v2_editor_compatibility' ) === false &&
-				get_option( 'stackable_v2_editor_compatibility_usage' ) === false &&
-				get_option( 'stackable_v2_frontend_compatibility' ) === false
+				get_option( 'stackable_v2_editor_compatibility_usage' ) === false
 			) {
 				update_option( 'stackable_v2_editor_compatibility_usage', '1' ); // Load version 2 blocks in the editor
-				update_option( 'stackable_v2_frontend_compatibility', '1' ); // Load version 2 blocks in the editor
 				update_option( 'stackable_v2_disabled_blocks', get_option( 'stackable_disabled_blocks' ) ); // Migrate the disabled blocks.
 			}
+
+			// Always enable frontend compatibility when updating so that the frontend will always look okay.
+			update_option( 'stackable_v2_frontend_compatibility', '1' ); // Load version 2 blocks in the editor
 		}
 	}
 	add_action( 'stackable_version_upgraded', 'stackable_auto_compatibility_v2', 10, 2 );
@@ -88,6 +94,34 @@ if ( ! function_exists( 'stackable_v2_compatibility_option' ) ) {
 			array(
 				'type' => 'string',
 				'description' => __( 'Load version 2 blocks when old blocks are used', STACKABLE_I18N ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest' => true,
+				'default' => '',
+			)
+		);
+
+		// The auto-detect for v2 blocks is always present, but it will not be
+		// checked anymore if this is set
+		register_setting(
+			'stackable_v2_compatibility',
+			'stackable_v2_block_detector_disabled',
+			array(
+				'type' => 'string',
+				'description' => __( 'This disables the v2 block detected in the editor', STACKABLE_I18N ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest' => true,
+				'default' => '',
+			)
+		);
+
+		// Auto-detect v2 blocks in the frontend, this is a counter, and if it
+		// reaches a certain amount, the auto-detect stops.
+		register_setting(
+			'stackable_v2_compatibility',
+			'stackable_v2_frontend_detector_counter',
+			array(
+				'type' => 'number',
+				'description' => __( 'This disables the v2 block detected in the frontend', STACKABLE_I18N ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '',
@@ -275,29 +309,26 @@ if ( ! function_exists( 'stackable_add_required_block_styles_v2' ) ) {
  * try and load add the required frontend styles when the blocks are used.
  */
 if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
-	global $stackable_v2_is_script_loaded;
-	$stackable_v2_is_script_loaded = false;
 
 	function load_frontend_scripts_conditionally_v2( $block_content, $block ) {
-		global $stackable_v2_is_script_loaded;
-		if ( ! $stackable_v2_is_script_loaded ) {
-			if ( ! is_admin() ) {
-				if (
-					stripos( $block['blockName'], 'ugb/' ) === 0 ||
-					stripos( $block_content, '<!-- wp:ugb/' ) !==  false
-				) {
-					stackable_block_enqueue_frontend_assets_v2();
-					stackable_add_required_block_styles_v2();
-					$stackable_v2_is_script_loaded = true;
-				}
-			}
+		if (
+			stripos( $block['blockName'], 'ugb/' ) === 0 ||
+			stripos( $block_content, '<!-- wp:ugb/' ) !==  false
+		) {
+			stackable_block_enqueue_frontend_assets_v2();
+			stackable_add_required_block_styles_v2();
+
+			// Don't do this again.
+			remove_filter( 'render_block', 'load_frontend_scripts_conditionally_v2', 10, 2 );
 		}
 
 		return $block_content;
 	}
 
 	if ( has_stackable_v2_frontend_compatibility() && ! has_stackable_v2_editor_compatibility() ) {
-		add_filter( 'render_block', 'load_frontend_scripts_conditionally_v2', 10, 2 );
+		if ( ! is_admin() ) {
+			add_filter( 'render_block', 'load_frontend_scripts_conditionally_v2', 10, 2 );
+		}
 	}
 }
 
@@ -318,5 +349,84 @@ if ( ! function_exists( 'register_frontend_blog_posts_block_compatibility_v2' ) 
 
 	if ( ! is_admin() && has_stackable_v2_frontend_compatibility() && ! has_stackable_v2_editor_compatibility() ) {
 		add_action( 'init', 'register_frontend_blog_posts_block_compatibility_v2' );
+	}
+}
+
+if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
+	/**
+	 * Check each rendered block whether there are any v2 blocks loaded so we
+	 * can enable frontend compatibility.
+	 *
+	 * @param string $block_content
+	 * @param Array $block
+	 * @return string The block content
+	 */
+	function stackable_frontend_v2_try_migration( $block_content, $block ) {
+		if (
+			stripos( $block['blockName'], 'ugb/' ) === 0 ||
+			stripos( $block_content, '<!-- wp:ugb/' ) !==  false
+		) {
+			stackable_frontend_v2_try_migration_detected();
+		}
+
+		return $block_content;
+	}
+
+	/**
+	 * Check each the content in the frontend whether there are any v2 blocks
+	 * loaded so we can enable frontend compatibility. (This may not detect all
+	 * blocks, so we need to do the render_block also)
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	function stackable_frontend_v2_try_migration_content( $content ) {
+		if ( stripos( $content, '<!-- wp:ugb/' ) !==  false ) {
+			stackable_frontend_v2_try_migration_detected();
+		}
+
+		return $content;
+	}
+
+	/**
+	 * When a V2 block is detected, enable frontend compatibility, and stop
+	 * further checking.
+	 *
+	 * @return void
+	 */
+	function stackable_frontend_v2_try_migration_detected() {
+		stackable_block_enqueue_frontend_assets_v2();
+		stackable_add_required_block_styles_v2();
+		register_frontend_blog_posts_block_compatibility_v2();
+
+		// Enable frontend compatibility.
+		update_option( 'stackable_v2_frontend_compatibility', '1' );
+
+		// This forces our checker to not do this again.
+		update_option( 'stackable_v2_frontend_detector_counter', STACKABLE_FRONTEND_V2_DETECTOR_LIMIT );
+
+		// Don't do the checks again.
+		remove_filter( 'render_block', 'stackable_frontend_v2_try_migration', 9, 2 );
+		remove_filter( 'the_content', 'stackable_frontend_v2_try_migration_content', 1 );
+	}
+
+	/**
+	 * Check for v2 blocks in the frontend and enable frontend compatibility if
+	 * any are detected. Do this check a few times only.
+	 */
+	if ( ! is_admin() ) {
+		$detector_counter = get_option( 'stackable_v2_frontend_detector_counter' );
+		$detector_counter = empty( $detector_counter ) ? 0 : (int) $detector_counter;
+
+		if ( $detector_counter < STACKABLE_FRONTEND_V2_DETECTOR_LIMIT && ! has_stackable_v2_frontend_compatibility() ) {
+			// Try and check if we need to perform v2 frontend migration.
+			add_filter( 'render_block', 'stackable_frontend_v2_try_migration', 9, 2 );
+			// Need to also do this in the_content, since catching a v2 blog
+			// posts block here allows it to be loaded correctly.
+			add_filter( 'the_content', 'stackable_frontend_v2_try_migration_content', 1 );
+
+			// Increment our detector counter.
+			update_option( 'stackable_v2_frontend_detector_counter', $detector_counter + 1 );
+		}
 	}
 }

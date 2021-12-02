@@ -39,9 +39,9 @@ export const ColumnsControl = () => {
 		// Duplicate the last column.
 		} else if ( numColumns > numInnerBlocks ) {
 			const lastColumnBlock = last( innerBlocks )
-			const block = getBlockFromExample( 'stackable/column', pick( lastColumnBlock, [ 'attributes', 'innerBlocks' ] ) )
 			const numToAdd = numColumns - numInnerBlocks
 			for ( let i = 0; i < numToAdd; i++ ) {
+				const block = getBlockFromExample( 'stackable/column', pick( lastColumnBlock, [ 'attributes', 'innerBlocks' ] ) )
 				insertBlock( block, numInnerBlocks + i + 1, clientId, false )
 			}
 		}

@@ -15,6 +15,7 @@ import {
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	Icon,
 	getAlignmentClasses,
 	Alignment,
@@ -41,6 +42,8 @@ import { useBlockProps } from '@wordpress/block-editor'
 
 const Edit = props => {
 	const { className, attributes } = props
+
+	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const blockHoverClass = useBlockHoverClass()

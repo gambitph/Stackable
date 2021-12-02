@@ -18,12 +18,8 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	useEffect, useState, useRef, forwardRef, useMemo,
+	useEffect, useState, forwardRef, useMemo,
 } from '@wordpress/element'
-import { useMergeRefs as _useMergeRefs } from '@wordpress/compose'
-
-// WP 5.6 Compatibility
-const useMergeRefs = _useMergeRefs || ( () => {} )
 
 export const Typography = forwardRef( ( props, ref ) => {
 	const {
@@ -50,8 +46,6 @@ export const Typography = forwardRef( ( props, ref ) => {
 	}, [ _onChange, updateAttribute ] )
 
 	const [ debouncedText, setDebouncedText ] = useState( value )
-	const richTextRef = useRef( null )
-	const mergedRef = useMergeRefs( [ ref, richTextRef ] )
 
 	// Load any Google Fonts used.
 	useFontLoader( getAttribute( 'fontFamily' ) )
@@ -87,7 +81,7 @@ export const Typography = forwardRef( ( props, ref ) => {
 			tagName={ TagName }
 			value={ dynamicContentText }
 			onChange={ setDebouncedText }
-			ref={ mergedRef }
+			ref={ ref }
 			{ ...propsToPass }
 		>
 			{ children }

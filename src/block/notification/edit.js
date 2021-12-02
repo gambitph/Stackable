@@ -18,9 +18,11 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	AdvancedSelectControl,
+	InspectorBottomTip,
 } from '~stackable/components'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	ContainerDiv,
 	ConditionalDisplay,
 	Alignment,
@@ -57,6 +59,8 @@ const Edit = props => {
 		attributes,
 		setAttributes,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -151,6 +155,10 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+
+			<InspectorStyleControls>
+				<InspectorBottomTip />
+			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
 				<ContainerStyles version={ VERSION } />

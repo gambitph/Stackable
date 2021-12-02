@@ -11,6 +11,8 @@ import classnames from 'classnames'
 import { last } from 'lodash'
 import { version as VERSION } from 'stackable'
 import {
+	InspectorBlockControls,
+	InspectorBottomTip,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -19,6 +21,7 @@ import {
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
 	useAlignment,
@@ -62,6 +65,8 @@ const Edit = props => {
 		className,
 	} = props
 
+	useGeneratedCss( props.attributes )
+
 	const { blockOrientation } = useAlignment()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
@@ -101,6 +106,10 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+
+			<InspectorBlockControls>
+				<InspectorBottomTip />
+			</InspectorBlockControls>
 
 			<ImageBoxStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-image-box" />

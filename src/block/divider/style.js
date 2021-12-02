@@ -170,6 +170,10 @@ DividerStyles.Content = props => {
 		...propsToPass
 	} = props
 
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
+
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const dividerStyles = getStyles( propsToPass.attributes, getStyleParams() )
 

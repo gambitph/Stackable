@@ -15,6 +15,7 @@ import {
 	Image,
 	Responsive,
 	Transform,
+	Style,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -35,6 +36,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
+	Style.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {

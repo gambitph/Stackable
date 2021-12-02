@@ -9,6 +9,7 @@ import {
  */
 import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
+import { useMemo } from '@wordpress/element'
 
 /**
  * Custom hook for getting posts
@@ -31,10 +32,7 @@ export const usePostsQuery = attributes => {
 		excludeCurrentPost,
 	} = attributes
 
-	return useSelect( select => {
-		const { getEntityRecords } = select( 'core' )
-		const { isResolving } = select( 'core/data' )
-
+	const postQuery = useMemo( () => {
 		const postQuery = pickBy( {
 			...applyFilters( 'stackable.posts.postQuery', {
 				order,
@@ -63,18 +61,7 @@ export const usePostsQuery = attributes => {
 			}
 		}
 
-		let posts = getEntityRecords( 'postType', type, postQuery )
-		posts = ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' )
-
-		return {
-			posts,
-			hasPosts: !! ( Array.isArray( posts ) && posts.length ),
-			isRequesting: isResolving( 'core', 'getEntityRecords', [
-				'postType',
-				type,
-				postQuery,
-			] ),
-		}
+		return postQuery
 	}, [
 		type,
 		orderBy,
@@ -88,4 +75,30 @@ export const usePostsQuery = attributes => {
 		numberOfItems,
 		excludeCurrentPost,
 	] )
+
+	// Only subscribe to resolution changes. This will avoid unneccessary rerenders.
+	const isRequesting = useSelect( select => {
+		return ! select( 'core' ).hasFinishedResolution( 'getEntityRecords', [
+			'postType',
+			type,
+			postQuery,
+		] )
+	}, [ postQuery ] )
+
+	const getEntityRecords = useSelect( select => select( 'core' ).getEntityRecords )
+	const posts = useMemo( () => {
+		const posts = getEntityRecords( 'postType', type, postQuery )
+		return ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' )
+	},
+	[
+		getEntityRecords,
+		isRequesting,
+		postQuery,
+	] )
+
+	return {
+		posts,
+		hasPosts: Array.isArray( posts ) && !! posts.length,
+		isRequesting,
+	}
 }

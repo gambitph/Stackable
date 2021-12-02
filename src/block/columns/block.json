@@ -1,9 +1,13 @@
 {
 	"name": "stackable/columns",
-	"title": "Columns",
+	"title": "Columns / Container",
 	"description": "Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.",
 	"category": "layout",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId"
+	],
 	"keywords": [
 		"Section rows",
 		"Container"

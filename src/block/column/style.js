@@ -88,7 +88,7 @@ const BlockStyles = props => {
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } options={ {
-				columnAlignSelectorCallback: getAttribute => `[data-block="${ getAttribute( 'clientId' ) }"]`,
+				columnAlignSelectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
 			} } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
@@ -114,6 +114,10 @@ BlockStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
+
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const styles = getStyles( props.attributes, getStyleParams( props.options ) )

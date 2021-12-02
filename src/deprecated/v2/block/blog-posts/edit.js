@@ -69,7 +69,7 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { dateI18n, format } from '@wordpress/date'
 import {
 	Placeholder,
@@ -80,7 +80,7 @@ import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
 import { decodeEntities } from '@wordpress/html-entities'
-import { useSelect } from '@wordpress/data'
+import { useSelect, select } from '@wordpress/data'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 
@@ -899,19 +899,14 @@ const Edit = props => {
 		numberOfItems = 6,
 	} = attributes
 
-	const {
-		posts, isRequesting,
-	} = useSelect( select => {
+	const postQuery = useMemo( () => {
 		const {
-			postType = 'post',
 			orderBy = 'date',
 			order = 'desc',
 			taxonomyType = '',
 			taxonomy = '',
 			taxonomyFilterType = '__in',
 		} = props.attributes
-		const { getEntityRecords } = select( 'core' )
-		const { isResolving } = select( 'core/data' )
 
 		const postQuery = pickBy( {
 			...applyFilters( 'stackable.blog-posts.postQuery', {
@@ -941,16 +936,7 @@ const Edit = props => {
 			}
 		}
 
-		const posts = getEntityRecords( 'postType', postType, postQuery )
-
-		return {
-			posts: ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' ),
-			isRequesting: isResolving( 'core', 'getEntityRecords', [
-				'postType',
-				postType,
-				postQuery,
-			] ),
-		}
+		return postQuery
 	}, [
 		attributes.postType,
 		attributes.orderBy,
@@ -962,6 +948,24 @@ const Edit = props => {
 		attributes.postExclude,
 		attributes.postInclude,
 		attributes.numberOfItems,
+	] )
+
+	// Only subscribe to resolution changes. This will avoid unneccessary rerenders.
+	const isRequesting = useSelect( select => {
+		return ! select( 'core' ).hasFinishedResolution( 'getEntityRecords', [
+			'postType',
+			attributes.postType,
+			postQuery,
+		] )
+	}, [ postQuery ] )
+
+	const posts = useMemo( () => {
+		const posts = select( 'core' ).getEntityRecords( 'postType', attributes.postType, postQuery )
+		return ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' )
+	},
+	[
+		isRequesting,
+		postQuery,
 	] )
 
 	const {

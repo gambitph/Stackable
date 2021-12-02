@@ -1,6 +1,8 @@
 /**
  * Core Block Styles
  */
+@use "sass:math";
+
 @import "breakpoints";
 @import "block-transitions";
 @import "block-compat";
@@ -20,7 +22,7 @@
 }
 
 // IMPORTANT: This fixes wide and full block widths and tame them in the frontend.
-:is(.entry-content, .site-content) .stk-block > .stk-inner-blocks {
+:is(.entry-content, .site-content) .stk-block > .stk-content-align {
 	margin-left: auto;
 	margin-right: auto;
 	width: auto;
@@ -46,20 +48,38 @@
 }
 
 @include desktop-tablet {
-	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-inner-blocks:not(.alignwide):not(.alignfull) {
+	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align:not(.alignwide):not(.alignfull),
+	.stk-block .stk-block.aligncenter {
 		// --stk-block-default-width is a Stackable setting
 		// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 		// --stk-block-width-default-detected is from the fallback autodetected value.
 		max-width: var(--stk-block-default-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px)));
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
 	}
 }
 @include desktop-tablet {
-	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-inner-blocks.alignwide {
+	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align.alignwide,
+	.stk-block .stk-block.alignwide {
 		// --stk-block-default-width is a Stackable setting
 		// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 		// --stk-block-width-default-detected is from the fallback autodetected value.
 		max-width: var(--stk-block-wide-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, 80vw)));
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
 	}
+}
+@include mobile {
+	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align:not(.alignwide):not(.alignfull),
+	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align.alignwide,
+	.stk-block .stk-block:is(.aligncenter, .alignwide) {
+		width: 100%;
+	}
+}
+.stk-block .stk-block.alignfull {
+	width: 100%;
 }
 
 /**
@@ -88,8 +108,8 @@
 	@for $i from 2 through 10 {
 		.stk-row.stk-columns-#{ $i } {
 			> .stk-column {
-				flex: 1 1 #{ 100% / $i };
-				max-width: #{ 100% / $i };
+				flex: 1 1 #{ math.div(100%, $i) };
+				max-width: #{ math.div(100%, $i) };
 			}
 		}
 	}

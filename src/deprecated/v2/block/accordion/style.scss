@@ -14,7 +14,7 @@
 	&.ugb-accordion.ugb-accordion--design-basic {
 		.ugb-accordion__heading {
 			@include box();
-			padding: ($box-hori-padding / 2) $box-hori-padding;
+			padding: ($box-hori-padding * 0.5) $box-hori-padding;
 		}
 	}
 
@@ -40,7 +40,7 @@
 		// This is a make-shift gap.
 		&::after {
 			content: "";
-			width: #{ $box-hori-padding * 3/4 };
+			width: #{ $box-hori-padding * 3*0.25 };
 			display: block;
 			order: 2;
 			flex-shrink: 0;

@@ -4,6 +4,7 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+@use "sass:math";
 
 // Most used breakpoints
 $break-huge: 1440px;
@@ -38,14 +39,14 @@ $box-vert-padding: 60px;
 	--box-padding-vert: #{$box-vert-padding};
 	--box-padding-hori: #{$box-hori-padding};
 	@media screen and (max-width: $break-medium) {
-		padding: ($box-vert-padding * 2/3) ($box-hori-padding * 2/3);
-		--box-padding-vert: #{($box-vert-padding * 2/3)};
-		--box-padding-hori: #{($box-hori-padding * 2/3)};
+		padding: math.div($box-vert-padding * 2, 3) math.div($box-hori-padding * 2, 3);
+		--box-padding-vert: #{math.div($box-vert-padding * 2, 3)};
+		--box-padding-hori: #{math.div($box-hori-padding * 2, 3)};
 	}
 	@media screen and (max-width: $break-small) {
-		padding: $box-hori-padding ($box-hori-padding / 2);
+		padding: $box-hori-padding ($box-hori-padding * 0.5);
 		--box-padding-vert: #{$box-hori-padding};
-		--box-padding-hori: #{($box-hori-padding / 2)};
+		--box-padding-hori: #{($box-hori-padding * 0.5)};
 	}
 }
 

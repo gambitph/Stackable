@@ -52,7 +52,8 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 			if ( apply_filters( 'stackable_load_font_awesome_kit', true ) ) {
 				wp_enqueue_script(
 					'ugb-font-awesome-kit',
-					'https://kit.fontawesome.com/9664e939d9.js', // Our free kit https://fontawesome.com/kits/9664e939d9/settings
+					// 'https://kit.fontawesome.com/9664e939d9.js', // This is our free kit.
+					'https://use.fontawesome.com/releases/v5.15.4/js/all.js',
 					null,
 					null,
 					true

@@ -48,11 +48,14 @@ const FRACTION_WIDTHS_TENS = SNAP_WIDTHS_TENS.map( n => n * 100 )
 export const fixFractionWidths = ( columnWidths, isShiftKey = false ) => {
 	const widths = ! isShiftKey ? FRACTION_WIDTHS : FRACTION_WIDTHS_TENS
 	return columnWidths.map( width => {
-		if ( widths.includes( width - 0.1 ) ) {
-			return width - 0.1
-		} else if ( widths.includes( width + 0.1 ) ) {
-			return width + 0.1
-		}
-		return width
+		let newWidth = width
+		widths.some( snapWidth => {
+			if ( Math.abs( width - snapWidth ) < 0.2 ) {
+				newWidth = snapWidth
+				return true
+			}
+			return false
+		} )
+		return newWidth
 	} )
 }

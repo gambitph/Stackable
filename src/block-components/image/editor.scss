@@ -21,6 +21,9 @@
 		margin-left: auto;
 		margin-right: auto;
 
+		// Add default height to image placeholders in case the default height is `auto`.
+		height: 300px !important;
+
 		img {
 			display: none !important;
 		}

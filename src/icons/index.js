@@ -47,7 +47,7 @@ import SVGUngroupContainerIcon from './images/ungroup-container-icon.svg'
 import { cloneElement, render } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 
-export const colorizeIcon = SvgIcon => {
+export function colorizeIcon( SvgIcon ) {
 	return cloneElement( SvgIcon, {
 		fill: 'url(#stackable-gradient)',
 		className: `stk-stackable-icon-gradient ${ SvgIcon.props.className || '' }`,
@@ -83,172 +83,174 @@ domReady( () => {
 	)
 } )
 
-export const SVGStackableCategoryIcon = () => {
+export function SVGStackableCategoryIcon() {
 	return colorizeIcon( <SVGStackableIconTextured width="20" height="20" className="components-panel__icon" /> )
 }
 
-export const SVGStackableIcon = ( { className } ) => {
+export function SVGStackableIcon( { className } ) {
 	return <SVGStackableIconTextured className={ className } width="20" height="20" />
 }
 
-export const StackableIcon = () => {
+export function StackableIcon() {
 	return colorizeIcon( <SVGStackableIconTextured width="20" height="20" /> )
 }
 
-export const AccordionIcon = () => {
+export function AccordionIcon() {
 	return colorizeIcon( <SVGAccordionIcon width="20" height="20" /> )
 }
 
-export const BlockquoteIcon = () => {
+export function BlockquoteIcon() {
 	return colorizeIcon( <SVGBlockquoteIcon width="20" height="20" /> )
 }
 
-export const BlogPostsIcon = () => {
+export function BlogPostsIcon() {
 	return colorizeIcon( <SVGBlogPostsIcon width="20" height="20" /> )
 }
 
-export const ButtonIcon = () => {
+export function ButtonIcon() {
 	return colorizeIcon( <SVGButtonIcon width="16" height="16" /> )
 }
 
-export const ButtonGroupIcon = () => {
+export function ButtonGroupIcon() {
 	return colorizeIcon( <SVGButtonGroupIcon width="16" height="16" /> )
 }
 
-export const CardIcon = () => {
+export function CardIcon() {
 	return colorizeIcon( <SVGCardIcon width="20" height="20" /> )
 }
 
-export const ColumnsIcon = () => {
+export function ColumnsIcon() {
 	return colorizeIcon( <SVGColumnsIcon width="20" height="20" /> )
 }
 
-export const ColumnIcon = () => {
+export function ColumnIcon() {
 	return colorizeIcon( <SVGColumnIcon width="20" height="20" /> )
 }
 
-export const ContainerIcon = () => {
+export function ContainerIcon() {
 	return colorizeIcon( <SVGContainerIcon width="20" height="20" /> )
 }
 
-export const CountUpIcon = () => {
+export function CountUpIcon() {
 	return colorizeIcon( <SVGCountUpIcon width="20" height="20" /> )
 }
 
-export const CTAIcon = () => {
+export function CTAIcon() {
 	return colorizeIcon( <SVGCTAIcon width="20" height="20" /> )
 }
 
-export const DividerIcon = () => {
+export function DividerIcon() {
 	return colorizeIcon( <SVGDividerIcon width="20" height="20" /> )
 }
 
-export const ExpandIcon = () => {
+export function ExpandIcon() {
 	return colorizeIcon( <SVGExpandIcon width="20" height="20" /> )
 }
 
-export const FeatureGridIcon = () => {
+export function FeatureGridIcon() {
 	return colorizeIcon( <SVGFeatureGridIcon width="20" height="20" /> )
 }
 
-export const FeatureIcon = () => {
+export function FeatureIcon() {
 	return colorizeIcon( <SVGFeatureIcon width="20" height="20" /> )
 }
 
-export const HeroIcon = () => {
+export function HeroIcon() {
 	return colorizeIcon( <SVGHeroIcon width="20" height="20" /> )
 }
 
-export const HeadingIcon = () => {
+export function HeadingIcon() {
 	return colorizeIcon( <SVGHeadingIcon width="20" height="20" /> )
 }
 
-export const GroupContainerIcon = () => {
+export function GroupContainerIcon() {
 	return colorizeIcon( <SVGContainerIcon width="20" height="20" className="components-menu-items__item-icon" /> )
 }
 
-export const IconIcon = () => {
+export function IconIcon() {
 	return colorizeIcon( <SVGIconIcon width="20" height="20" /> )
 }
 
-export const IconButtonIcon = () => {
+export function IconButtonIcon() {
 	return colorizeIcon( <SVGIconButtonIcon width="16" height="16" /> )
 }
 
-export const IconButtonsIcon = () => {
+export function IconButtonsIcon() {
 	return colorizeIcon( <SVGIconButtonsIcon width="16" height="16" /> )
 }
 
-export const IconBoxIcon = () => {
+export function IconBoxIcon() {
 	return colorizeIcon( <SVGIconBoxIcon width="16" height="16" /> )
 }
 
-export const IconListIcon = () => {
+export function IconListIcon() {
 	return colorizeIcon( <SVGIconListIcon width="20" height="20" /> )
 }
 
-export const IconLabelIcon = () => {
+export function IconLabelIcon() {
 	return colorizeIcon( <SVGIconLabelIcon width="16" height="16" /> )
 }
 
-export const ImageIcon = () => {
+export function ImageIcon() {
 	return colorizeIcon( <SVGImageIcon width="20" height="20" /> )
 }
 
-export const ImageBoxIcon = () => {
+export function ImageBoxIcon() {
 	return colorizeIcon( <SVGImageBoxIcon width="20" height="20" /> )
 }
 
-export const LoadMoreIcon = () => {
+export function LoadMoreIcon() {
 	return colorizeIcon( <SVGLoadMoreIcon width="16" height="16" /> )
 }
 
-export const NotificationIcon = () => {
+export function NotificationIcon() {
 	return colorizeIcon( <SVGNotificationIcon width="20" height="20" /> )
 }
 
-export const NumberBoxIcon = () => {
+export function NumberBoxIcon() {
 	return colorizeIcon( <SVGNumberBoxIcon width="20" height="20" /> )
 }
 
-export const PaginationIcon = () => {
+export function PaginationIcon() {
 	return colorizeIcon( <SVGPaginationIcon width="16" height="16" /> )
 }
 
-export const PricingBoxIcon = () => {
+export function PricingBoxIcon() {
 	return colorizeIcon( <SVGPricingBoxIcon width="20" height="20" /> )
 }
 
-export const SeparatorIcon = () => {
+export function SeparatorIcon() {
 	return colorizeIcon( <SVGSeparatorIcon width="20" height="20" /> )
 }
 
-export const SocialButtonsIcon = () => {
+export function SocialButtonsIcon() {
 	return colorizeIcon( <SVGSocialButtonsIcon width="16" height="16" /> )
 }
 
-export const SpacerIcon = () => {
+export function SpacerIcon() {
 	return colorizeIcon( <SVGSpacerIcon width="20" height="20" /> )
 }
 
-export const TeamMemberIcon = () => {
+export function TeamMemberIcon() {
 	return colorizeIcon( <SVGTeamMemberIcon width="20" height="20" /> )
 }
 
-export const TestimonialIcon = () => {
+export function TestimonialIcon() {
 	return colorizeIcon( <SVGTestimonialIcon width="20" height="20" /> )
 }
 
-export const TextIcon = () => {
+export function TextIcon() {
 	return colorizeIcon( <SVGTextIcon width="20" height="20" /> )
 }
 
-export const VideoPopupIcon = () => {
+export function VideoPopupIcon() {
 	return colorizeIcon( <SVGVideoPopupIcon width="20" height="20" /> )
 }
 
-export const UngroupContainerIcon = () => {
+export function UngroupContainerIcon() {
 	return colorizeIcon( <SVGUngroupContainerIcon width="20" height="20" className="components-menu-items__item-icon" /> )
 }
 
-export const GhostButtonIcon = () => <ButtonIcon />
+export function GhostButtonIcon() {
+	return <ButtonIcon />
+}

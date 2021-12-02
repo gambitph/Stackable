@@ -1,6 +1,7 @@
 import {
 	Advanced,
 	BlockDiv,
+	Style,
 	CustomAttributes,
 	CustomCSS,
 	EffectsAnimations,
@@ -89,6 +90,7 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	Transform.addAttributes( attrObject )
 	BlockDiv.addAttributes( attrObject )
+	Style.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )

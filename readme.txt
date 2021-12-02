@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.6.5
-Tested up to: 5.8.1
+Tested up to: 5.8.2
 Requires PHP: 5.6
-Stable tag: 3.0.2
+Stable tag: 3.0.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,6 +235,61 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.0.6 =
+* New: Dynamic Content can now be used for link titles
+* New: Added Row Gap option for the Columns block
+* Fixed: Design Library won't load designs in some server configurations
+* Fixed: Column collapsing in tablet and mobile now takes into account the column gap
+* Fixed: Resizing columns is jumpy when there is a column gap
+* Fixed: In some themes alignfull does not work properly
+* Fixed: Icon Button block styles get applied to the button instead of the background
+* Fixed: Prevent Column block from being added as a reusable block
+* Fixed: Added transform panel in the Separator block
+* Fixed: Error when saving an Icon block while having a non-administrator role in multisite
+* Fixed: Load more button now gets removed properly when all posts have loaded
+* Fixed: Added missing translations
+* Fixed: Updated FontAwesome script to use CDN
+* Fixed: Some WordPress 5.7 and 5.6 compatibility issues
+
+= 3.0.5 =
+* Fixed: Design library infinite loading spinner and fails to load design
+* Fixed: PublishPress workaround - Stackable blocks won't load
+* Fixed: Posts block can affect the display of other Posts block in the editor
+* Fixed: Posts block won't show featured image if size is not full
+* Fixed: Icon list columns flexbox issue
+* Fixed: Accordion block affects the icon of nested accordion blocks
+* Fixed: Pricing box alignment in some layouts
+* Fixed: Notification block close button can go out of the container
+* Fixed: Kadence compatibility - dots added to the blog posts meta (v2 block)
+* Fixed: Image box can have a small white gap if the container size has fractions in its widt (v2 block)
+
+= 3.0.4 =
+* New: Added note at the bottom of the Style tab in some blocks about how to style inner blocks.
+* New: Added tip to open the List View
+* Change: Renamed Columns block to "Columns / Container" block
+* Fixed: Added another failsafe in case the frontend migration doesn't get automatically enabled when v2 blocks are present.
+* Fixed: Removed small gap between full width blocks in the editor so they look merged together
+* Fixed: Separator now preserve aspect ratio correctly in mobile
+
+= 3.0.3 =
+* New: Added a modal popup to help with the migration process to version 3
+* New: Shadow options can now be styled on hover
+* Fixed: Block widths when nested
+* Fixed: Column content widths sometimes didn't apply especially when nested
+* Fixed: Layout styles of the Blog Posts and Card block
+* Fixed: The image cannot be selected some Card block layouts
+* Fixed: Posts Block title tag can't be changed
+* Fixed: Remove unwanted bottom margin in columns
+* Fixed: Content Vertical Align did not apply
+* Fixed: Icon Label block icon gap showing incorrectly in the backend when you have multiple icon labels
+* Fixed: PHP warning for themes using theme.json
+* Fixed: Feature block horizontal layout didn't show as horizontal
+* Fixed: Image Box block layouts were not aligned correctly
+* Fixed: Image placeholder height now shows correctly
+* Fixed: Blocks can be linked together if creating multiple columns at once
+* Fixed: Compatibility with wide/full align when Kadence blocks is enabled
+* Fixed: Fixed typo in the wizard text
 
 = 3.0.2 =
 * Fixed: Compatibility with some plugins when backward compatibility with v2 blocks is enabled

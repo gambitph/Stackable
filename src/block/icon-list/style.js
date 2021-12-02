@@ -171,11 +171,11 @@ const getStyleParams = options => {
 			format: '%sem',
 		},
 		{
-			selector: [ 'ul', 'ol' ],
-			styleRule: 'alignItems',
+			selector: [ 'li' ],
+			styleRule: 'marginInline',
 			attrName: 'listAlignment',
 			responsive: 'all',
-			valueCallback: value => value === 'right' ? 'flex-end' : value === 'left' ? 'flex-start' : value,
+			valueCallback: value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '',
 		},
 	]
 }
@@ -224,6 +224,10 @@ IconListStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
+
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 	const options = { attributes: propsToPass.attributes }

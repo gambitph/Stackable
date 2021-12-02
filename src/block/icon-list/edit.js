@@ -26,6 +26,7 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	Typography,
 	BlockDiv,
+	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -82,6 +83,7 @@ const listTypeOptions = [
 
 const Edit = props => {
 	const textRef = useRef()
+	const typographyWrapperRef = useRef()
 	const [ isOpenIconSearch, setIsOpenIconSearch ] = useState( false )
 	const [ iconSearchAnchor, setIconSearchAnchor ] = useState( null )
 	const [ selectedIconCSSSelector, setSelectedIconCSSSelector ] = useState( null )
@@ -163,6 +165,8 @@ const Edit = props => {
 		onRemove,
 		mergeBlocks,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const { ordered } = attributes
 	const tagName = ordered ? 'ol' : 'ul'
@@ -318,21 +322,22 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				{ /* eslint-disable-next-line */ }
-				<div onClick={ e => {
-					if (
-						e.target.closest( '.rich-text' ) !== textRef.current &&
-						document.activeElement !== textRef.current // eslint-disable-line
-					) {
-						textRef.current.focus()
-						const range = document.createRange()
-						range.selectNodeContents( textRef.current )
-						range.collapse( false )
+				<div
+					ref={ typographyWrapperRef }
+					onClick={ e => {
+						// When the div wrapper is clicked, pass the focus to the list.
+						if ( e.target === typographyWrapperRef.current ) {
+							textRef.current.focus()
+							const range = document.createRange()
+							range.selectNodeContents( textRef.current )
+							range.collapse( false )
 
-						const selection = window.getSelection() // eslint-disable-line
-						selection.removeAllRanges()
-						selection.addRange( range )
-					}
-				} }>
+							const selection = window.getSelection() // eslint-disable-line
+							selection.removeAllRanges()
+							selection.addRange( range )
+						}
+					} }
+				>
 					<Typography
 						tagName={ tagName }
 						multiline="li"

@@ -22,6 +22,7 @@ import {
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -30,6 +31,7 @@ import {
 	ConditionalDisplay,
 	Separator,
 	MarginBottom,
+	Transform,
 } from '~stackable/block-components'
 
 /**
@@ -43,6 +45,8 @@ const Edit = props => {
 		className,
 		attributes,
 	} = props
+
+	useGeneratedCss( props.attributes )
 
 	const {
 		separatorDesign,
@@ -101,6 +105,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-separator" />

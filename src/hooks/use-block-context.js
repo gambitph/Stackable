@@ -31,7 +31,7 @@ const useBlockContext = ( blockClientId = null ) => {
 			// Check if a column block isn't used as a row. If not, then don't
 			// use row-like properties (column resizers, etc).
 			if ( hasParent && block.name === 'stackable/column' ) {
-				const isRow = document.querySelector( `[data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
+				const isRow = document.querySelector( `.editor-styles-wrapper [data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
 				if ( ! isRow ) {
 					return {
 						blockIndex: index,

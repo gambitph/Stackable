@@ -5,6 +5,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	Style,
 	ConditionalDisplay,
 	ContainerDiv,
 	CustomAttributes,
@@ -197,6 +198,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	Style.addAttributes( attrObject )
 	ContainerDiv.addAttributes( attrObject )
 	Image.addAttributes( attrObject, { imageWidthUnitDefault: 'px' } )
 	Alignment.addAttributes( attrObject )

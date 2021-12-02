@@ -5,6 +5,7 @@ import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
+	Style,
 	CustomCSS,
 	Responsive,
 	Advanced,
@@ -24,6 +25,7 @@ export const attributes = ( version = VERSION ) => {
 
 	Alignment.addAttributes( attrObject )
 	BlockDiv.addAttributes( attrObject )
+	Style.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
