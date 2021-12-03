@@ -70,9 +70,7 @@ export const Link = props => {
 	// Assign the outside click listener.
 	useEffect( () => {
 		document.body.addEventListener( 'click', clickOutsideListener )
-		return () => {
-			document.body.removeEventListener( 'click', clickOutsideListener )
-		}
+		return () => document.body.removeEventListener( 'click', clickOutsideListener )
 	}, [ clickOutsideListener ] )
 
 	// Allow parent blocks to prevent the link popup to open.
