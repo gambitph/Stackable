@@ -87,9 +87,7 @@ export const Icon = props => {
 	// Assign the outside click listener.
 	useEffect( () => {
 		document.body.addEventListener( 'click', clickOutsideListener )
-		return () => {
-			document.body.removeEventListener( 'click', clickOutsideListener )
-		}
+		return () => document.body.removeEventListener( 'click', clickOutsideListener )
 	}, [ clickOutsideListener ] )
 
 	// Enable editing of the icon only when the current block that implements
