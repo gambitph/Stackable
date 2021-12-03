@@ -5,7 +5,7 @@ import SVGStateNormal from './images/state-normal.svg'
 import SVGStateHover from './images/state-hover.svg'
 import SVGStateParentHover from './images/state-parent-hover.svg'
 import ControlIconToggle from '../control-icon-toggle'
-import { useBlockHoverState } from '~stackable/hooks'
+import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 
 /**
  * External dependencies
@@ -17,8 +17,9 @@ import { i18n } from 'stackable'
  */
 import { useMemo } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
+import { getAttributeName, isEmptyAttribute } from '~stackable/util'
 
-const HOVER_OPTIONS = [
+export const HOVER_OPTIONS = [
 	{
 		label: __( 'Normal', i18n ),
 		value: 'normal',
@@ -44,7 +45,11 @@ const HOVER_OPTIONS = [
 const HoverStateToggle = props => {
 	const [ currentHoverState, setCurrentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
 
-	const stateOptions = useMemo( () => {
+	// Device type is the current preview unless the control/option doesn't support it.
+	const _deviceType = useDeviceType()
+	const deviceType = ( props.screens || [] ).includes( _deviceType.toLowerCase() ) ? _deviceType : 'desktop'
+
+	const _stateOptions = useMemo( () => {
 		const hover = props.hover === 'all' ? [ 'normal', 'hover', 'parent-hovered', 'collapsed' ] : props.hover
 		return HOVER_OPTIONS.filter( ( { value } ) => {
 			if ( ! hasCollapsedState && value === 'collapsed' && ! isCollapsedBlock ) {
@@ -69,6 +74,19 @@ const HoverStateToggle = props => {
 		} )
 	}, [ props.hover, hasParentHoverState ] )
 
+	// Add the hasValue option if the hover state is styled.
+	const stateOptions = _stateOptions.map( option => {
+		if ( props.attribute && props.attributes ) {
+			const value = props.attributes[ getAttributeName( props.attribute, deviceType, option.value ) ]
+			return {
+				...option,
+				hasValue: ! isEmptyAttribute( value ),
+			}
+		}
+
+		return option
+	} )
+
 	return (
 		<ControlIconToggle
 			value={ currentHoverState }
@@ -81,6 +99,7 @@ const HoverStateToggle = props => {
 
 HoverStateToggle.defaultProps = {
 	hover: false,
+	screens: [], // Used to check if the control is available on different device sizes.
 }
 
 export default HoverStateToggle

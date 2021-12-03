@@ -37,8 +37,27 @@
 			box-shadow: none !important;
 		}
 	}
-	+ .stk-label-unit-toggle {
-		margin-left: 0;
+
+	&:not(:hover) {
+		border-radius: 3px;
+	}
+
+	// Use a different color for the toggle when there's a value assigned to the hover or responsive states.
+	&.stk--toggle-highlighted[aria-expanded="false"] {
+		button {
+			background: #ef9856 !important;
+		}
+		svg {
+			fill: #fff;
+		}
+	}
+	// When the icon toggle is open, if there's a value on the active icon, make the background orange.
+	&[aria-expanded="true"] .stk--has-value.is-active:not([data-value="desktop"], [data-value="normal"]) {
+		background: #ef9856 !important;
+	}
+	// When the icon toggle is open, if there's a value on an inactive icon, make the icon orange.
+	&[aria-expanded="true"] .stk--has-value:not(.is-active):not([data-value="desktop"], [data-value="normal"]) svg {
+		fill: #ef9856;
 	}
 }
 .stk-label-unit-toggle__wrapper {

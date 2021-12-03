@@ -60,8 +60,21 @@ export const BaseControl = props => {
 			<div className={ labelClassName }>
 				<div className="components-base-control__label">{ label }</div>
 				<div className="stk-control-label__toggles">
-					{ hasRepsonsive && <ResponsiveToggle screens={ responsive } /> }
-					{ hasHover && <HoverStateToggle hover={ props.hover } /> }
+					{ hasRepsonsive && (
+						<ResponsiveToggle
+							screens={ responsive }
+							attribute={ props.attribute }
+							attributes={ props.attributes }
+						/>
+					) }
+					{ hasHover && (
+						<HoverStateToggle
+							screens={ responsive }
+							hover={ props.hover }
+							attribute={ props.attribute }
+							attributes={ props.attributes }
+						/>
+					) }
 				</div>
 				<div className="stk-control-label__after">
 					{ hasUnits &&
@@ -113,11 +126,10 @@ const AdvancedControl = props => {
 	const unit = props.unit ? props.unit : attributes ? attributes[ unitAttrName ] : ''
 	const onChangeUnit = useCallback( unit => updateBlockAttributes( clientId, { [ unitAttrName ]: unit } ), [ unitAttrName ] )
 
-	const propsToPass = omit( props, [ 'attribute' ] )
-
 	return (
 		<BaseControl
-			{ ...propsToPass }
+			{ ...props }
+			attributes={ attributes } // Attributes are used here to check whether the responsive/hover has values (for showing a visual indicator)
 			unit={ unit }
 			onChangeUnit={ props.onChangeUnit || onChangeUnit }
 		/>

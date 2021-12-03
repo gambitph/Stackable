@@ -51,11 +51,16 @@ const ControlIconToggle = props => {
 		return null
 	}
 
+	const hasInsideValue = options.some( ( option, i ) => {
+		return i === 0 ? false : option.hasValue
+	} )
+
 	const className = classnames( [
 		props.className,
 		'stk-label-unit-toggle',
 	], {
 		'stk-label-unit-toggle__colored': props.hasColors,
+		'stk--toggle-highlighted': hasInsideValue,
 	} )
 
 	return (
@@ -74,6 +79,12 @@ const ControlIconToggle = props => {
 						const tooltip = ! isOpen
 							? props.buttonLabel || label
 							: ( props.hasLabels ? label : '' )
+
+						const optionClasses = classnames( [
+							value === option.value ? 'is-active' : '',
+							option.hasValue ? 'stk--has-value' : '',
+						] )
+
 						return (
 							<div
 								key={ i }
@@ -85,7 +96,7 @@ const ControlIconToggle = props => {
 								} }
 							>
 								<Button
-									className={ value === option.value ? 'is-active' : '' }
+									className={ optionClasses }
 									data-index={ i }
 									data-value={ option.value }
 									disabled={ option.disabled }
