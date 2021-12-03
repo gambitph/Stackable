@@ -401,7 +401,7 @@
 	}
 }
 
-@include tablet {
+@include tablet-mobile {
 	.has-text-align-center-tablet {
 		@include align-center-styles;
 	}

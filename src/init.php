@@ -41,6 +41,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Checks if a Stackable block is rendered in the frontend, then loads our scripts.
 			add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
+			add_action( 'template_redirect', array( $this, 'load_frontend_scripts_conditionally_head' ) );
 
 			// Load our editor scripts.
 			add_action( 'init', array( $this, 'register_block_editor_assets' ) );
@@ -130,6 +131,58 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// }
 		}
 
+		/**
+		 * This is an earlier conditional css loader in the frontend so that we
+		 * can load the frontend styles in the head. This is to prevent CLS.
+		 *
+		 * This is a newer implementation of the
+		 * load_frontend_scripts_conditionally function. We don't remove the old
+		 * one to keep it as a fallback.
+		 *
+		 * @return void
+		 *
+		 * @since 3.0.7
+		 */
+		public function load_frontend_scripts_conditionally_head() {
+			// Only do this in the frontend.
+			if ( $this->is_main_script_loaded || is_admin() ) {
+				return;
+			}
+
+			// Only do this for singular posts.
+			$post_id = get_the_ID();
+			if ( is_singular() && ! empty( $post_id ) ) {
+				global $post;
+				if ( ! empty( $post ) && ! empty( $post->post_content ) ) {
+					// Check if we have a stackable block in the content.
+					if (
+						stripos( $post->post_content, '<!-- wp:stackable/' ) !==  false ||
+						stripos( $post->post_content, 'stk-highlight' ) !==  false
+					) {
+						// Enqueue our main css.
+						$this->register_frontend_assets();
+						wp_enqueue_style( 'ugb-style-css' );
+					}
+				}
+			}
+		}
+
+		/**
+		 * This is the original implementation of the conditional css loading in
+		 * the frontend. This checks each block to see whether it's a Stackable
+		 * block or a feature, then loads the CSS and JS conditionally.
+		 *
+		 * This works, but it also loads the CSS inside the body tag and
+		 * introduces CLS.
+		 *
+		 * $this->load_frontend_scripts_conditionally_head was created to
+		 * address the CLS issue.
+		 *
+		 * @param string $block_content The block content.
+		 * @param Array $block The block object.
+		 *
+		 * @return string output block
+		 */
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
 			// Load our main frontend scripts if there's a Stackable block loaded in the
 			// frontend.

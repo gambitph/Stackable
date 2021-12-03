@@ -16,6 +16,11 @@ $tablet-width: 768px;
 		@content;
 	}
 }
+@mixin tablet-mobile {
+	@media only screen and (max-width: #{$desktop-width - 1px}) {
+		@content;
+	}
+}
 @mixin mobile {
 	@media only screen and (max-width: #{$tablet-width - 1px}) {
 		@content;

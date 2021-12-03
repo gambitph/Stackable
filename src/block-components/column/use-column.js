@@ -21,7 +21,10 @@ export const useColumn = () => {
 			if ( adjacentBlocks.length ) {
 				widths.forEach( ( width, i ) => {
 				// TODO: When Gutenberg 10.1 comes out, update this to just one updateBlockAttributes call for all client Ids
-					updateBlockAttributes( adjacentBlocks[ i ].clientId, { columnWidth: width } )
+					updateBlockAttributes( adjacentBlocks[ i ].clientId, {
+						columnWidth: width,
+						columnAdjacentCount: widths.length,
+					} )
 				} )
 			}
 		},
