@@ -43,9 +43,6 @@ const getStyleParams = ( options = {} ) => {
 			format: '%s%',
 			dependencies: [ 'columnAdjacentCount' ],
 			valueCallback: ( value, getAttribute, device ) => {
-				if ( device === 'desktop' ) {
-					return value
-				}
 				const adjacentCount = getAttribute( 'columnAdjacentCount', device )
 				if ( adjacentCount ) {
 					return value.replace( /([\d\.]+%)$/, `calc($1 - var(--stk-column-gap, 0px) * ${ adjacentCount - 1 } / ${ adjacentCount } )` )
@@ -72,10 +69,6 @@ const getStyleParams = ( options = {} ) => {
 				//
 				// No need to do this in the editor since it already does this.
 				const value = device === 'desktop' ? _value : _value.replace( /^1 1/, '0 1' )
-
-				if ( device === 'desktop' ) {
-					return value
-				}
 
 				const adjacentCount = getAttribute( 'columnAdjacentCount', device )
 				if ( adjacentCount ) {
