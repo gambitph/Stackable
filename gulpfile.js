@@ -107,7 +107,7 @@ gulp.task( 'generate-translations-js', gulp.series(
 			// Extract all gettext calls.
 			.pipe( collect( {
 				file: path.resolve( __dirname, './dist/translation-strings.js' ),
-				regex: /(\/\/ translators:(.*)?[\s\n](.*)?)?_.\((.*?)\s?(i18n|STACKABLE_I18N)\s?\)/g,
+				regex: /(\/\/ translators:(.*)?[\s\n](.*)?)?_.\(\s*['"](.*?)\s?(i18n|STACKABLE_I18N)\s?\)/g,
 			} ) )
 	},
 	function gatherBlockJsonStrings( cb ) {
@@ -189,7 +189,7 @@ gulp.task( 'generate-translations-php', gulp.series(
 			// Extract all gettext calls.
 			.pipe( collect( {
 				file: 'dist/translation-strings.php',
-				regex: /(\/\/ translators:(.*)?[\s\n](.*)?)?_.\((.*?)\s?(i18n|STACKABLE_I18N)\s?\)/g,
+				regex: /(\/\/ translators:(.*)?[\s\n](.*)?)?_.\(\s*['"](.*?)\s?(i18n|STACKABLE_I18N)\s?\)/g,
 			} ) )
 	},
 	function cleanupPHPTranslationFile() {
