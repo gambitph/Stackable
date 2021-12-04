@@ -159,9 +159,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 						stripos( $post->post_content, '<!-- wp:stackable/' ) !==  false ||
 						stripos( $post->post_content, 'stk-highlight' ) !==  false
 					) {
-						// Enqueue our main css.
-						$this->register_frontend_assets();
-						wp_enqueue_style( 'ugb-style-css' );
+						// Enqueue our main scripts and styles.
+						$this->block_enqueue_frontend_assets();
+						$this->is_main_script_loaded = true;
 					}
 				}
 			}
