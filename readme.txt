@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.6.5
 Tested up to: 5.8.2
 Requires PHP: 5.6
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -235,6 +235,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.0.7 =
+* Fixed: Button link popover is hard to close
+* Fixed: Less Content Layout Shift (CLS)
+* Fixed: Memory usage optimization (10% memory savings)
+* Fixed: Aligning content in tablet doesn't inherit correctly in mobile
+* Fixed: Column gap in desktop collapses columns in tablet
+* Fixed: Unwanted delay when icons change color on hover
+* Fixed: Translations are now properly applied across the plugin
 
 = 3.0.6 =
 * New: Dynamic Content can now be used for link titles
