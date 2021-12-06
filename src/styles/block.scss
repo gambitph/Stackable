@@ -389,6 +389,14 @@
 	justify-content: var(--stk-alignment-justify-content);
 }
 
+// Ensure that our alignments are applied to text.
+.stk-block {
+	&[class*="has-text-align-"],
+	[class*="has-text-align-"] {
+		text-align: var(--stk-alignment-text-align, start);
+	}
+}
+
 .has-text-align {
 	&-center {
 		@include align-center-styles;
