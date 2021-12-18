@@ -10,7 +10,6 @@
  * External dependencies
  */
 import { sortBy } from 'lodash'
-import { AdvancedToolbarControl } from '..'
 import { fetchDesignLibrary } from '~stackable/design-library'
 import { isPro, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -24,12 +23,14 @@ import {
 import { __ } from '@wordpress/i18n'
 import { useLocalStorage } from '~stackable/util'
 
+const isWireframe = design => design.uikit.toLowerCase() === 'wireframes'
+
 const BlockList = props => {
 	const [ uiKitList, setUiKitList ] = useState( [] )
 	const [ categoryList, setCategoryList ] = useState( [] )
+	const [ wireframeList, setWireframeList ] = useState( [] )
 	const [ selected, setSelected ] = useLocalStorage( 'stk__design_library__block-list__selected', '' )
-	const [ viewBy, setViewBy ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'uikit' )
-	const { apiVersion } = props
+	const { viewBy, apiVersion } = props
 
 	// Create our block list.
 	useEffect( () => {
@@ -38,7 +39,8 @@ const BlockList = props => {
 				const design = designs[ name ]
 				const { categories, uikit } = design
 
-				if ( typeof output.uikits[ uikit ] === 'undefined' ) {
+				// Get all UI Kits. Don't include the Wireframe UI Kit.
+				if ( typeof output.uikits[ uikit ] === 'undefined' && ! isWireframe( design ) ) {
 					output.uikits[ uikit ] = {
 						id: uikit,
 						label: design.uikit,
@@ -47,18 +49,36 @@ const BlockList = props => {
 					}
 				}
 
-				categories.forEach( category => {
-					if ( typeof output.categories[ category ] === 'undefined' ) {
-						output.categories[ category ] = {
-							id: category,
-							label: category,
-							count: 0,
+				// Get all wireframe categories.
+				if ( isWireframe( design ) ) {
+					categories.forEach( category => {
+						if ( typeof output.wireframes[ category ] === 'undefined' ) {
+							output.wireframes[ category ] = {
+								id: category,
+								label: category,
+								count: 0,
+							}
 						}
-					}
-				} )
+					} )
+				} else {
+					// Get all block design categories.
+					categories.forEach( category => {
+						if ( typeof output.categories[ category ] === 'undefined' ) {
+							output.categories[ category ] = {
+								id: category,
+								label: category,
+								count: 0,
+							}
+						}
+					} )
+				}
 
 				return output
-			}, { uikits: {}, categories: {} } )
+			}, {
+				uikits: {},
+				categories: {},
+				wireframes: {},
+			} )
 
 			let uikitSort = [ 'label' ]
 			if ( ! isPro ) {
@@ -72,16 +92,23 @@ const BlockList = props => {
 				label: __( 'All', i18n ),
 				count: 0,
 			} )
+			const wireframes = sortBy( Object.values( designList.wireframes ), 'label' )
+			wireframes.unshift( {
+				id: 'all',
+				label: __( 'All', i18n ),
+				count: 0,
+			} )
 
 			setUiKitList( uikits )
 			setCategoryList( categories )
+			setWireframeList( wireframes )
 		} )
 	}, [ apiVersion ] )
 
 	// Update the counts of the designs, but don't update the list, only the counts.
 	useEffect( () => {
 		// If these are empty, then our component hasn't finished initializing.
-		if ( ! uiKitList.length || ! categoryList.length ) {
+		if ( ! uiKitList.length || ! categoryList.length || ! wireframeList.length ) {
 			return
 		}
 
@@ -99,11 +126,31 @@ const BlockList = props => {
 			}
 			return categories
 		}, {} )
+		const newWireframes = wireframeList.reduce( ( categories, category ) => {
+			categories[ category.id ] = {
+				...category,
+				count: 0,
+			}
+			return categories
+		}, {} )
 
 		props.designs.forEach( design => {
+			// Gather all wireframe designs.
+			if ( isWireframe( design ) ) {
+				design.categories.forEach( category => {
+					if ( category && newWireframes[ category ] ) {
+						newWireframes[ category ].count++
+					}
+				} )
+				return
+			}
+
+			// Gather all ui kit designs.
 			if ( design.uikit && newUiKits[ design.uikit ] ) {
 				newUiKits[ design.uikit ].count++
 			}
+
+			// Gather all block design categories.
 			design.categories.forEach( category => {
 				if ( category && newCategories[ category ] ) {
 					newCategories[ category ].count++
@@ -119,7 +166,7 @@ const BlockList = props => {
 
 		// Sort the categories so that the "All" is first.
 		if ( newCategories.all ) {
-			newCategories.all.count = props.designs.length
+			newCategories.all.count = props.designs.filter( design => ! isWireframe( design ) ).length
 			newCategories.all.label = '    ' // Spaces so we will be first when sorting.
 		}
 		const sorted = sortBy( Object.values( newCategories ), 'label' )
@@ -127,11 +174,22 @@ const BlockList = props => {
 			sorted[ 0 ].label = __( 'All', i18n )
 		}
 		setCategoryList( sorted )
-	}, [ props.designs.length, JSON.stringify( uiKitList ), JSON.stringify( categoryList ) ] )
+
+		// Sort the wireframes so that the "All" is first.
+		if ( newWireframes.all ) {
+			newWireframes.all.count = props.designs.filter( isWireframe ).length
+			newWireframes.all.label = '    ' // Spaces so we will be first when sorting.
+		}
+		const sortedWireframes = sortBy( Object.values( newWireframes ), 'label' )
+		if ( sortedWireframes[ 0 ] ) {
+			sortedWireframes[ 0 ].label = __( 'All', i18n )
+		}
+		setWireframeList( sortedWireframes )
+	}, [ props.designs.length, JSON.stringify( uiKitList ), JSON.stringify( categoryList ), JSON.stringify( wireframeList ) ] )
 
 	useEffect( () => {
 		// If these are empty, then our component hasn't finished initializing.
-		if ( ! uiKitList.length || ! categoryList.length ) {
+		if ( ! uiKitList.length || ! categoryList.length || ! wireframeList.length ) {
 			return
 		}
 
@@ -139,30 +197,16 @@ const BlockList = props => {
 	}, [ viewBy ] )
 
 	useEffect( () => {
-		props.onSelect( { id: selected, type: viewBy } )
+		props.onSelect( selected )
 	}, [ selected ] )
+
+	const list = viewBy === 'uikit'
+		? uiKitList : viewBy === 'category'
+			? categoryList : wireframeList
 
 	return (
 		<ul className="ugb-block-list">
-			<AdvancedToolbarControl
-				controls={ [
-					{
-						value: 'uikit',
-						title: __( 'UI Kits', i18n ),
-					},
-					{
-						value: 'category',
-						title: __( 'Categories', i18n ),
-					},
-				] }
-				value={ viewBy }
-				onChange={ setViewBy }
-				isSmall={ true }
-				fullwidth={ false }
-				isToggleOnly={ true }
-				allowReset={ false }
-			/>
-			{ ( viewBy === 'uikit' ? uiKitList : categoryList ).reduce( ( list, itemData ) => {
+			{ list.reduce( ( list, itemData ) => {
 				const {
 					id,
 					label,

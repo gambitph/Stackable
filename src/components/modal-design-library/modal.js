@@ -33,7 +33,7 @@ export const ModalDesignLibrary = props => {
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ doReset, setDoReset ] = useState( false )
 	const [ selectedId, setSelectedId ] = useState( '' )
-	const [ selectedType, setSelectedType ] = useState( '' )
+	const [ selectedType, setSelectedType ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'uikit' )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 	// The sidebar designs are used to update the list of blocks in the sidebar.
 	const [ sidebarDesigns, setSidebarDesigns ] = useState( [] )
@@ -85,8 +85,8 @@ export const ModalDesignLibrary = props => {
 		getDesigns( {
 			apiVersion: props.apiVersion,
 			search: searchDebounced,
-			uikit: selectedType === 'uikit' ? selectedId : '',
-			categories: selectedType === 'category' && selectedId !== 'all' ? [ selectedId ] : [],
+			uikit: selectedType === 'wireframe' ? 'Wireframes' : ( selectedType === 'uikit' ? selectedId : '' ),
+			categories: [ 'category', 'wireframe' ].includes( selectedType ) && selectedId !== 'all' ? [ selectedId ] : [],
 		} ).then( designs => {
 			setDisplayDesigns( designs )
 		} ).finally( () => {
@@ -99,6 +99,28 @@ export const ModalDesignLibrary = props => {
 			title={ (
 				<>
 					{ __( 'Stackable Design Library', i18n ) }
+					<AdvancedToolbarControl
+						className="stk-design-library-tabs"
+						controls={ [
+							{
+								value: 'category',
+								title: __( 'Block Designs', i18n ),
+							},
+							{
+								value: 'uikit',
+								title: __( 'UI Kits', i18n ),
+							},
+							{
+								value: 'wireframe',
+								title: __( 'Wireframes', i18n ),
+							},
+						] }
+						value={ selectedType }
+						onChange={ setSelectedType }
+						fullwidth={ false }
+						isToggleOnly={ true }
+						allowReset={ false }
+					/>
 					{ props.hasVersionSwitcher && (
 						<AdvancedToolbarControl
 							controls={ [
@@ -138,12 +160,8 @@ export const ModalDesignLibrary = props => {
 						<BlockList
 							apiVersion={ props.apiVersion }
 							designs={ sidebarDesigns }
-							onSelect={ ( {
-								id, type,
-							} ) => {
-								setSelectedId( id )
-								setSelectedType( type )
-							} }
+							viewBy={ selectedType }
+							onSelect={ id => setSelectedId( id ) }
 						/>
 					</div>
 				</aside>
@@ -192,6 +210,7 @@ export const ModalDesignLibrary = props => {
 
 				<div className="ugb-modal-design-library__designs">
 					<DesignLibraryList
+						className={ `stk-design-library__item-${ selectedType }` }
 						columns={ columns }
 						onSelect={ props.onSelect }
 						isBusy={ isBusy }
