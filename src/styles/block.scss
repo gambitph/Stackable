@@ -282,6 +282,7 @@
 }
 
 @include mobile {
+	.stk-button-group:is(.stk--collapse-on-tablet),
 	.stk-button-group:is(.stk--collapse-on-mobile) {
 		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
 			margin-inline-start: var(--stk-alignment-margin-left);
