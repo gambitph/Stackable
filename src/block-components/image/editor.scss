@@ -222,11 +222,24 @@
 		}
 	}
 
-	.stk-img-resizer-wrapper::after {
+	.stk-img-resizer-wrapper::after,
+	&.stk-img--gradient-overlay .stk-img-resizer-wrapper::before {
 		content: "";
 		position: absolute;
 		inset: 0;
-		opacity: 0.3;
+		opacity: var(--stk-gradient-overlay, 0.3);
+		z-index: 1;
+	}
+}
+
+// Don't do the hover effect when adjusting the hover effect.
+.stk-block:not(.stk--is-hovered) > .stk-img-wrapper {
+	// If not hovered, hide the overlay hover state.
+	&.stk-img--gradient-overlay:not(:hover) .stk-img-resizer-wrapper::before {
+		opacity: 0 !important;
+	}
+	&.stk-img--gradient-overlay:hover .stk-img-resizer-wrapper::after {
+		opacity: 0 !important;
 	}
 	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
 	&.stk-image--shape-stretch .stk-img-resizer-wrapper {

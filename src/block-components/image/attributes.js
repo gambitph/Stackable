@@ -46,7 +46,17 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				type: 'number',
 				default: '',
 			},
+
+			imageOverlayColorType: {
+				type: 'string',
+				default: '',
+			},
 			imageOverlayColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			imageOverlayColor2: {
 				type: 'string',
 				default: '',
 				stkHover: true,
@@ -56,6 +66,26 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				default: '',
 				stkHover: true,
 			},
+			imageOverlayBlendMode: {
+				type: 'string',
+				default: '',
+			},
+			imageOverlayGradientDirection: {
+				type: 'number',
+				default: '',
+				stkHover: true,
+			},
+			imageOverlayGradientLocation1: {
+				type: 'number',
+				default: '',
+				stkHover: true,
+			},
+			imageOverlayGradientLocation2: {
+				type: 'number',
+				default: '',
+				stkHover: true,
+			},
+
 			imageFocalPoint: {
 				stkResponsive: true,
 				stkHover: true,

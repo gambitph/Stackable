@@ -8,7 +8,9 @@ import { getShapeCSS } from './get-shape-css'
  */
 import { toNumber } from 'lodash'
 import { Style as StyleComponent } from '~stackable/components'
-import { getStyles, useStyles } from '~stackable/util'
+import {
+	getStyles, hexToRgba, useStyles,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -201,22 +203,91 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'backgroundColor',
 			attrName: 'imageOverlayColor',
 			hover: 'all',
+			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient',
 		},
 		{
 			renderIn: 'save',
 			selector: `${ selector }::after`,
-			styleRule: 'opacity',
+			hoverSelector: `${ selector }::before`,
+			styleRule: 'backgroundImage',
+			attrName: 'imageOverlayColor',
+			hover: 'all',
+			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient',
+			valueCallback: ( value, getAttribute, device, state ) => {
+				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
+				const defaultColor1 = hexToRgba( getAttribute( 'imageOverlayColor2', 'desktop', state ) || '#ffffff', 0 )
+				const defaultColor2 = hexToRgba( getAttribute( 'imageOverlayColor', 'desktop', state ) || '#ffffff', 0 )
+
+				// Gradient location.
+				const color1Location = `${ getAttribute( 'imageOverlayGradientLocation1', 'desktop', state ) || '0' }%`
+				const color2Location = `${ getAttribute( 'imageOverlayGradientLocation2', 'desktop', state ) || '100' }%`
+
+				let angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', state )
+				if ( angle === '' ) {
+					angle = '90'
+				}
+				angle = `${ angle }deg`
+
+				return `linear-gradient(${ angle }, ${ getAttribute( 'imageOverlayColor', 'desktop', state ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'imageOverlayColor2', 'desktop', state ) || defaultColor2 } ${ color2Location })`
+			},
+			dependencies: [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection' ],
+		},
+		{
+			renderIn: 'edit',
+			selector: `${ selector } .stk-img-resizer-wrapper::after`,
+			hoverSelector: `${ selector } .stk-img-resizer-wrapper::before`,
+			hoverSelectorCallback,
+			styleRule: 'backgroundImage',
+			attrName: 'imageOverlayColor',
+			hover: 'all',
+			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient',
+			valueCallback: ( value, getAttribute, device, state ) => {
+				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
+				const defaultColor1 = hexToRgba( getAttribute( 'imageOverlayColor2', 'desktop', state ) || '#ffffff', 0 )
+				const defaultColor2 = hexToRgba( getAttribute( 'imageOverlayColor', 'desktop', state ) || '#ffffff', 0 )
+
+				// Gradient location.
+				const color1Location = `${ getAttribute( 'imageOverlayGradientLocation1', 'desktop', state ) || '0' }%`
+				const color2Location = `${ getAttribute( 'imageOverlayGradientLocation2', 'desktop', state ) || '100' }%`
+
+				let angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', state )
+				if ( angle === '' ) {
+					angle = '90'
+				}
+				angle = `${ angle }deg`
+
+				return `linear-gradient(${ angle }, ${ getAttribute( 'imageOverlayColor', 'desktop', state ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'imageOverlayColor2', 'desktop', state ) || defaultColor2 } ${ color2Location })`
+			},
+			dependencies: [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection' ],
+		},
+		{
+			renderIn: 'save',
+			selector: `${ selector }`,
+			hoverSelector: `${ selector }::before`,
+			styleRule: '--stk-gradient-overlay',
 			attrName: 'imageOverlayOpacity',
 			hover: 'all',
 		},
 		{
 			renderIn: 'edit',
-			selector: `${ selector } .stk-img-resizer-wrapper::after`,
-			hoverSelector: `${ hoverSelector } .stk-img-resizer-wrapper::after`,
-			hoverSelectorCallback,
-			styleRule: 'opacity',
+			selector: `${ selector } .stk-img-resizer-wrapper`,
+			hoverSelector: `${ selector } .stk-img-resizer-wrapper::before`,
+			styleRule: '--stk-gradient-overlay',
 			attrName: 'imageOverlayOpacity',
 			hover: 'all',
+		},
+		{
+			renderIn: 'save',
+			selector: `${ selector }::after, ${ selector }::before`,
+			styleRule: 'mix-blend-mode',
+			attrName: 'imageOverlayBlendMode',
+		},
+		{
+			renderIn: 'edit',
+			selector: `${ selector } .stk-img-resizer-wrapper::after, ${ selector } .stk-img-resizer-wrapper::before`,
+			hoverSelectorCallback,
+			styleRule: 'mix-blend-mode',
+			attrName: 'imageOverlayBlendMode',
 		},
 	]
 }

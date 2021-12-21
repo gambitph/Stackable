@@ -6,11 +6,22 @@
 	display: block;
 	overflow: hidden; // This is needed for zooming the image.
 
-	&::after {
+	&::after,
+	&.stk-img--gradient-overlay::before {
 		content: "";
 		position: absolute;
 		inset: 0;
-		opacity: 0.3;
+		opacity: var(--stk-gradient-overlay, 0.3);
+		z-index: 1;
+	}
+	&.stk-img--gradient-overlay {
+		// If not hovered, hide the overlay hover state.
+		&:not(:hover)::before {
+			opacity: 0 !important;
+		}
+		&:hover::after {
+			opacity: 0 !important;
+		}
 	}
 
 	img {

@@ -45,6 +45,8 @@ const getImageWrapperClasses = props => {
 
 		// Shadow is only available when there is no shape.
 		[ `stk--shadow-${ props.shadow }` ]: ! props.shape && props.shadow,
+
+		'stk-img--gradient-overlay': props.hasGradientOverlay,
 	} )
 }
 
@@ -350,6 +352,7 @@ Image.defaultProps = {
 	heightResizePosition: 'bottom',
 	allowReset: true,
 
+	hasGradientOverlay: false,
 	hasRemove: true,
 	hasTooltip: true,
 	onChange: () => {},
@@ -476,6 +479,8 @@ ImageContent.defaultProps = {
 	shape: '',
 	shapeStretch: false,
 	shadow: '',
+
+	hasGradientOverlay: false,
 }
 
 ImageResponsive.Content = ImageContent
