@@ -1,16 +1,18 @@
 .ugb-design-library-items {
 	page-break-inside: avoid;
 	break-inside: avoid;
-	column-count: 1;
 	column-gap: 38px;
+	display: grid;
+	grid-template-columns: 1fr;
+	align-items: center;
 	&.ugb-design-library-items--columns-2 {
-		column-count: 2;
+		grid-template-columns: 1fr 1fr;
 	}
 	&.ugb-design-library-items--columns-3 {
-		column-count: 3;
+		grid-template-columns: 1fr 1fr 1fr;
 	}
 	&.ugb-design-library-items--columns-4 {
-		column-count: 4;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 
 	.components-base-control__help {
