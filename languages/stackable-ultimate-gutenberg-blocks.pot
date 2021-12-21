@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.0.7\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-04T06:58:03+00:00\n"
+"POT-Creation-Date: 2021-12-21T12:59:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -604,6 +604,10 @@ msgstr ""
 msgid "Here are some settings that you can tweak to optimize Stackable. %sLearn more%s."
 msgstr ""
 
+#: src/design-library/init.php:43
+msgid "%s must be a boolean."
+msgstr ""
+
 #: src/dynamic-breakpoints.php:72
 msgid "Custom dynamic breakpoints"
 msgstr ""
@@ -994,7 +998,7 @@ msgid "You can also launch the Design Library, and choose from <strong>ready-mad
 msgstr ""
 
 #: src/welcome/index.php:334
-#: src/components/modal-design-library/block-list.js:151
+#: src/components/modal-design-library/modal.js:111
 #: src/deprecated/v2/components/modal-design-library/block-list.js:155
 msgid "UI Kits"
 msgstr ""
@@ -1004,6 +1008,7 @@ msgid "Choose blocks from different pre-made templates that can be used to build
 msgstr ""
 
 #: src/welcome/index.php:336
+#: src/components/modal-design-library/modal.js:107
 #: src/deprecated/v2/components/modal-design-library/block-list.js:159
 msgid "Block Designs"
 msgstr ""
@@ -6375,7 +6380,7 @@ msgstr ""
 msgid "There is an error in your custom attribute"
 msgstr ""
 
-#: src/components/design-library-list/index.js:52
+#: src/components/design-library-list/index.js:57
 msgid "No designs found"
 msgstr ""
 
@@ -6616,48 +6621,50 @@ msgstr ""
 msgid "Tip: Open the %sList View%s to better see the blocks."
 msgstr ""
 
-#: src/components/modal-design-library/block-list.js:72
-#: src/components/modal-design-library/block-list.js:127
+#: src/components/modal-design-library/block-list.js:92
+#: src/components/modal-design-library/block-list.js:98
+#: src/components/modal-design-library/block-list.js:174
+#: src/components/modal-design-library/block-list.js:185
 #: src/deprecated/v2/components/design-library-control/index.js:72
 msgid "All"
 msgstr ""
 
-#: src/components/modal-design-library/block-list.js:155
-msgid "Categories"
+#: src/components/modal-design-library/modal.js:115
+msgid "Wireframes"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:107
+#: src/components/modal-design-library/modal.js:129
 #: src/deprecated/v2/components/modal-design-library/index.js:129
 msgid "Latest Design Library"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:111
+#: src/components/modal-design-library/modal.js:133
 #: src/deprecated/v2/components/modal-design-library/index.js:133
 msgid "V2 Design Library"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:131
+#: src/components/modal-design-library/modal.js:153
 #: src/deprecated/v2/components/design-library-control/index.js:63
 #: src/deprecated/v2/components/modal-design-library/index.js:152
 msgid "E.g. light, dark, red, minimalist…"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:168
+#: src/components/modal-design-library/modal.js:186
 #: src/deprecated/v2/components/modal-design-library/index.js:194
 msgid "Refresh Library"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:176
+#: src/components/modal-design-library/modal.js:194
 #: src/deprecated/v2/components/modal-design-library/index.js:202
 msgid "Large preview"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:182
+#: src/components/modal-design-library/modal.js:200
 #: src/deprecated/v2/components/modal-design-library/index.js:208
 msgid "Medium preview"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:188
+#: src/components/modal-design-library/modal.js:206
 #: src/deprecated/v2/components/modal-design-library/index.js:214
 msgid "Small preview"
 msgstr ""
