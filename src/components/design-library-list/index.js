@@ -17,11 +17,16 @@ import { __ } from '@wordpress/i18n'
 
 const DesignLibraryList = props => {
 	const {
-		designs, isBusy, onSelect, apiVersion,
+		className = '',
+		designs,
+		isBusy,
+		onSelect,
+		apiVersion,
 	} = props
 
 	const listClasses = classnames( [
 		'ugb-design-library-items',
+		className,
 	], {
 		[ `ugb-design-library-items--columns-${ props.columns }` ]: ! isBusy && props.columns,
 	} )

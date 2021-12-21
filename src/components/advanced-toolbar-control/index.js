@@ -119,7 +119,7 @@ const AdvancedToolbarControl = props => {
 	return (
 		<AdvancedControl
 			{ ...controlProps }
-			className={ classnames( 'ugb-advanced-toolbar-control', className ) }
+			className={ classnames( 'ugb-advanced-toolbar-control', className, controlProps.className ) }
 		>
 			<ButtonGroup
 				children={
