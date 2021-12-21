@@ -243,7 +243,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 * New: Added Wireframes in the Design Library
 * Change: Removed plugin deactivation feedback
-* Fixed: Block alignments no inherited properly in tablet and mobile
+* Fixed: Block alignments not inherited properly in tablet and mobile
 * Fixed: Text in post block not aligning in tablet and mobile
 * Fixed: Shadows in the design library are cut when viewing only a few designs
 
