@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.6.5
 Tested up to: 5.8.2
 Requires PHP: 5.6
-Stable tag: 3.0.7
+Stable tag: 3.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -143,6 +143,8 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.1 Introducing: Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.0 How To Shift From Version 2 to Version 3](https://wpstackable.com/blog/how-to-shift-from-version-2-to-version-3/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.17 Custom Attributes and Optimization](https://wpstackable.com/blog/custom-attributes-and-optimization/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.16 Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.15 Introducing Dynamic Content](https://wpstackable.com/blog/introducing-dynamic-content/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -236,6 +238,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.1.0 =
+[Introducing: Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Added Wireframes in the Design Library
+* Change: Removed plugin deactivation feedback
+* Fixed: Block alignments not inherited properly in tablet and mobile
+* Fixed: Text in post block not aligning in tablet and mobile
+* Fixed: Shadows in the design library are cut when viewing only a few designs
+
 = 3.0.7 =
 * Fixed: Button link popover is hard to close
 * Fixed: Less Content Layout Shift (CLS)
@@ -310,6 +321,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Auto-updating to v3 doesn't perform the migration process immediately
 
 = 3.0.0 =
+[How To Shift From Version 2 to Version 3](https://wpstackable.com/blog/how-to-shift-from-version-2-to-version-3/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: New version 3 blocks (old version 2 blocks will still be available)
 * New: Completely new way to use Stackable blocks
 * New: Now very lightweight
