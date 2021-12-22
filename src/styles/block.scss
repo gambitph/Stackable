@@ -193,16 +193,19 @@
 
 // Responsive hiding.
 @include desktop {
+	.stk--hide-desktop.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-desktop {
 		display: none !important;
 	}
 }
 @include tablet {
+	.stk--hide-tablet.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-tablet {
 		display: none !important;
 	}
 }
 @include mobile {
+	.stk--hide-mobile.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-mobile {
 		display: none !important;
 	}
