@@ -9,11 +9,6 @@ import BlockStyles from './style'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
-
-/**
- * WordPress dependencies
- */
-import { InnerBlocks } from '@wordpress/block-editor'
 import {
 	BlockDiv,
 	CustomCSS,
@@ -24,6 +19,12 @@ import {
 	getSeparatorClasses,
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
+
+/**
+ * WordPress dependencies
+ */
+import { InnerBlocks } from '@wordpress/block-editor'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -42,12 +43,15 @@ export const Save = props => {
 		separatorClass,
 	] )
 
-	const contentClassNames = classnames( [
-		rowClass,
-		'stk-inner-blocks',
-		blockAlignmentClass,
-		'stk-block-content',
-	], getContentAlignmentClasses( props.attributes ) )
+	const contentClassNames = classnames( applyFilters( 'stackable.columns.save.contentClassNames', [
+		[
+			rowClass,
+			'stk-inner-blocks',
+			blockAlignmentClass,
+			'stk-block-content',
+		],
+		getContentAlignmentClasses( props.attributes ),
+	], props ) )
 
 	return (
 		<BlockDiv.Content
