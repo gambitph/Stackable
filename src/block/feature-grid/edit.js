@@ -59,6 +59,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-feature-grid',
+		'stk-block-columns', // We need to add the columns class to make fit all and column gap to work properly.
 		rowClass,
 		blockHoverClass,
 		separatorClass,
