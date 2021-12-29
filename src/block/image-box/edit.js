@@ -158,3 +158,8 @@ export default withQueryLoopContext( Edit )
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/image-box', ( enabled, parentBlock ) => {
 	return parentBlock?.name === 'stackable/image-box' ? false : enabled
 } )
+
+// Disable links for image block.
+addFilter( 'stackable.edit.image.enable-link', 'stackable/image-box', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/image-box' ? false : enabled
+} )

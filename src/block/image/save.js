@@ -15,6 +15,7 @@ import {
 	getResponsiveClasses,
 	getAlignmentClasses,
 	Image,
+	Link,
 } from '~stackable/block-components'
 
 /**
@@ -48,6 +49,12 @@ export const Save = props => {
 			{ props.attributes.imageUrl &&
 				<Image.Content
 					attributes={ attributes }
+					customWrapper={ props.attributes.linkUrl && ( props => (
+						<Link.Content
+							attributes={ attributes }
+							{ ...props }
+						/>
+					) ) }
 				/>
 			}
 			<BlockLink.Content attributes={ attributes } />
