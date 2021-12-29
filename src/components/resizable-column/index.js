@@ -105,7 +105,7 @@ const ResizableColumn = props => {
 	] )
 	const {
 		columnGap, columnGapTablet, columnGapMobile,
-	} = parentBlock.attributes
+	} = ( parentBlock?.attributes || {} )
 
 	const enable = useMemo( () => ( {
 		top: false,
