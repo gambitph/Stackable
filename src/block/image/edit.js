@@ -11,7 +11,7 @@ import { version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
+import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -34,11 +34,13 @@ import { withQueryLoopContext } from '~stackable/higher-order'
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 const heightUnit = [ 'px', 'vh', '%' ]
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
@@ -46,6 +48,12 @@ const Edit = props => {
 
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const { parentBlock } = useBlockContext( clientId )
+
+	// Allow special or layout blocks to disable the link for the image block,
+	// e.g. image box doesn't need the image to have a link since it has it's
+	// own link.
+	const enableLink = applyFilters( 'stackable.edit.image.enable-link', true, parentBlock )
 
 	const blockClassNames = classnames( [
 		className,
@@ -67,7 +75,7 @@ const Edit = props => {
 				initialOpen={ true }
 				heightUnits={ heightUnit }
 			/>
-			<Link.InspectorControls hasTitle={ true } />
+			{ enableLink && <Link.InspectorControls hasTitle={ true } /> }
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
