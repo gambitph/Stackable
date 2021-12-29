@@ -43,7 +43,8 @@ const SortControl = memo( props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
-	let values = typeof props.values === 'undefined' ? _value : [ ...props.values ]
+	let values = typeof props.values === 'undefined' ? _value
+		: Array.isArray( props.values ) ? [ ...props.values ] : _value
 	values = values ? values.splice( 0, props.num ) : range( props.num ).map( i => i + 1 )
 	// If a number was added outside our sorter.
 	while ( values.length < props.num ) {
