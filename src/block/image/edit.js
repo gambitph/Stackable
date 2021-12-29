@@ -26,6 +26,7 @@ import {
 	MarginBottom,
 	Transform,
 	getAlignmentClasses,
+	Link,
 } from '~stackable/block-components'
 import { withQueryLoopContext } from '~stackable/higher-order'
 
@@ -66,6 +67,7 @@ const Edit = props => {
 				initialOpen={ true }
 				heightUnits={ heightUnit }
 			/>
+			<Link.InspectorControls hasTitle={ true } />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
