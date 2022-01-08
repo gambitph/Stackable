@@ -68,6 +68,9 @@ class PanelTabs extends Component {
 		this.select = this.select.bind( this )
 		this.containerDiv = createRef()
 
+		// Auto-closing panels also re-triggers click listeners, this flag prevents that.
+		this.suspendClickListener = false
+
 		this.props.onTabFirstOpen( this.state.activeTab )
 	}
 
@@ -116,8 +119,16 @@ class PanelTabs extends Component {
 			return
 		}
 
+		// Prevent re-triggering of this click listener when closing other panels below.
+		if ( this.suspendClickListener ) {
+			return
+		}
+		this.suspendClickListener = true
+
 		closeAllOpenPanels( toggle )
-		this.props.onClickPanel( toggle.closest( '.components-panel__body' ) )
+
+		// Resume click handler.
+		this.suspendClickListener = false
 	}
 
 	select( tab ) {
