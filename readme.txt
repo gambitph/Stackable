@@ -241,6 +241,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 3.1.1 =
 * New: Added back ability to change the column order when columns collapse in mobile
 * New: Added Post Taxonomies in dynamic content
+* New: Added link option to the Image Block
 * Fixed: Trigger when all display conditions are met is not triggering properly
 * Fixed: Entrance animation speeds and delay do not take effect correctly
 * Fixed: Column gap and fit columns options now work in Feature Grid block
