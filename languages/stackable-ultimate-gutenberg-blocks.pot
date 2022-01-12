@@ -1,15 +1,15 @@
-# Copyright (C) 2021 Gambit Technologies, Inc
+# Copyright (C) 2022 Gambit Technologies, Inc
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.1.0\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-21T12:59:48+00:00\n"
+"POT-Creation-Date: 2022-01-12T07:59:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -112,7 +112,7 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/acf.php:196
 #: pro__premium_only/src/dynamic-content/sources/acf.php:224
 #: pro__premium_only/src/dynamic-content/sources/custom-fields.php:92
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:88
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:89
 #: pro__premium_only/src/dynamic-content/sources/site.php:72
 msgid "The field type provided is not valid."
 msgstr ""
@@ -126,8 +126,8 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:315
 #: pro__premium_only/src/dynamic-content/sources/acf.php:494
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:293
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:489
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:298
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:527
 #: pro__premium_only/src/dynamic-content/sources/site.php:129
 msgid "Text input is empty"
 msgstr ""
@@ -197,17 +197,18 @@ msgstr ""
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:52
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:152
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:156
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:161
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:165
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:169
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:173
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:177
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:181
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:185
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:189
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:193
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:153
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:157
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:162
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:166
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:170
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:174
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:178
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:182
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:186
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:190
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:194
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:198
 msgid "Post"
 msgstr ""
 
@@ -217,6 +218,7 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:97
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:225
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:39
 msgid "1st"
 msgstr ""
 
@@ -224,54 +226,63 @@ msgstr ""
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:102
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:226
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:43
 msgid "2nd"
 msgstr ""
 
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:107
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:227
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:47
 msgid "3rd"
 msgstr ""
 
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:112
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:228
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:51
 msgid "4th"
 msgstr ""
 
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:117
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:229
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:55
 msgid "5th"
 msgstr ""
 
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:122
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:230
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:59
 msgid "6th"
 msgstr ""
 
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:127
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:231
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:63
 msgid "7th"
 msgstr ""
 
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:132
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:232
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:67
 msgid "8th"
 msgstr ""
 
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:137
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:233
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:71
 msgid "9th"
 msgstr ""
 
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:142
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:234
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:75
 msgid "10th"
 msgstr ""
 
@@ -287,117 +298,122 @@ msgstr ""
 msgid "Search for posts/pages"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:102
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:114
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:103
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:115
 msgid "Detected Custom Fields"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:151
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:152
 msgid "Post Title"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:155
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:156
 msgid "Post URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:160
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:161
 msgid "Post ID"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:164
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:165
 msgid "Post Slug"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:168
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:169
+#: pro__premium_only/src/conditional-display/condition-types.js:23
+msgid "Post Taxonomy"
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:173
 msgid "Post Excerpt"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:172
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:177
 msgid "Post Date"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:176
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:181
 msgid "Post Date GMT"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:180
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:185
 msgid "Post Modified"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:184
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:189
 msgid "Post Modified GMT"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:188
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:193
 #: pro__premium_only/src/conditional-display/condition-types.js:22
 #: src/components/taxonomy-control/index.js:139
 msgid "Post Type"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:192
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:197
 msgid "Post Status"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:197
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:202
 msgid "Author Name"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:198
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:202
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:206
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:203
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:207
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:211
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:216
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:220
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:224
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:221
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:225
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:229
 msgid "Author"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:201
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:206
 msgid "Author ID"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:205
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:210
 msgid "Author Posts URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:210
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:215
 msgid "Author Profile Picture URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:215
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:220
 msgid "Author Posts"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:219
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:224
 msgid "Author First Name"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:223
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:228
 msgid "Author Last Name"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:228
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:233
 msgid "Comment Number"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:229
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:233
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:234
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:238
 msgid "Comment"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:232
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:237
 msgid "Comment Status"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:237
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:242
 msgid "Featured Image URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:238
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:243
 msgid "Media"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:339
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:377
 msgid "Post not found."
 msgstr ""
 
@@ -2055,6 +2071,10 @@ msgctxt "Button placeholder"
 msgid "Button"
 msgstr ""
 
+#: pro__premium_only/src/block/columns/index.js:27
+msgid "Mobile Column Arrangement"
+msgstr ""
+
 #: pro__premium_only/src/block/feature-grid/index.js:36
 #: pro__premium_only/src/block/feature-grid/index.js:59
 #: src/block/feature-grid/variations.js:118
@@ -2450,7 +2470,6 @@ msgstr ""
 #: src/components/base-control/index.js:59
 #: src/components/base-control2/reset-button.js:23
 #: src/components/columns-width-control/index.js:210
-#: src/components/sort-control/index.js:57
 #: src/plugins/global-settings/colors/color-picker.js:141
 #: src/plugins/global-settings/colors/color-picker.js:165
 msgid "Reset"
@@ -2551,10 +2570,6 @@ msgstr ""
 
 #: pro__premium_only/src/conditional-display/condition-types.js:21
 msgid "Post IDs"
-msgstr ""
-
-#: pro__premium_only/src/conditional-display/condition-types.js:23
-msgid "Post Taxonomy"
 msgstr ""
 
 #: pro__premium_only/src/conditional-display/conditional-tag.js:20
@@ -3493,7 +3508,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/components/excerpt-control.js:16
+#: pro__premium_only/src/dynamic-content/components/excerpt-control.js:15
 #: src/block/posts/edit.js:485
 #: src/deprecated/v2/block/blog-posts/edit.js:688
 msgid "Excerpt Length"
@@ -3514,6 +3529,35 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/components/new-tab-control.js:17
 #: src/block-components/helpers/link/edit.js:36
 msgid "Open in new tab"
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:23
+msgid "Taxonomy Type"
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:30
+msgid "Display Option"
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:35
+msgid "All values"
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:39
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:43
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:47
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:51
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:55
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:59
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:63
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:67
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:71
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:75
+msgid "%s value"
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:83
+msgid "Delimiter"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/true-false-option.js:18
@@ -4778,22 +4822,22 @@ msgstr ""
 msgid "Learn more about linking"
 msgstr ""
 
-#: src/block-components/responsive/edit.js:34
+#: src/block-components/responsive/edit.js:35
 #: src/deprecated/v2/modules/advanced-responsive/index.js:28
 msgid "Responsive"
 msgstr ""
 
-#: src/block-components/responsive/edit.js:38
+#: src/block-components/responsive/edit.js:39
 #: src/deprecated/v2/modules/advanced-responsive/index.js:33
 msgid "Hide on Desktop"
 msgstr ""
 
-#: src/block-components/responsive/edit.js:43
+#: src/block-components/responsive/edit.js:44
 #: src/deprecated/v2/modules/advanced-responsive/index.js:38
 msgid "Hide on Tablet"
 msgstr ""
 
-#: src/block-components/responsive/edit.js:48
+#: src/block-components/responsive/edit.js:49
 #: src/deprecated/v2/modules/advanced-responsive/index.js:43
 msgid "Hide on Mobile"
 msgstr ""
@@ -5376,6 +5420,16 @@ msgstr ""
 msgid "Spacing"
 msgstr ""
 
+#: src/block/columns/edit.js:144
+#: src/deprecated/v2/block/columns/edit.js:446
+msgid "Say Hello to More Responsive Options 👋"
+msgstr ""
+
+#: src/block/columns/edit.js:145
+#: src/deprecated/v2/block/columns/edit.js:447
+msgid "Adjust the arrangement of your columns when collapsed on mobile. This feature is only available on Stackable Premium"
+msgstr ""
+
 #: src/block/columns/variations.js:25
 msgid "100"
 msgstr ""
@@ -5695,7 +5749,7 @@ msgid "Uppercase Letters"
 msgstr ""
 
 #: src/block/icon-list/edit.js:230
-msgid "Indendation"
+msgid "Indentation"
 msgstr ""
 
 #: src/block/icon-list/edit.js:238
@@ -6823,7 +6877,7 @@ msgctxt "name"
 msgid "%s Link"
 msgstr ""
 
-#: src/components/sort-control/index.js:98
+#: src/components/sort-control/index.js:107
 msgid "Column Arrangement"
 msgstr ""
 
@@ -7116,14 +7170,6 @@ msgstr ""
 
 #: src/deprecated/v2/block/columns/edit.js:407
 msgid "Swap columns and adjust column gaps. This feature is only available on Stackable Premium"
-msgstr ""
-
-#: src/deprecated/v2/block/columns/edit.js:446
-msgid "Say Hello to More Responsive Options 👋"
-msgstr ""
-
-#: src/deprecated/v2/block/columns/edit.js:447
-msgid "Adjust the arrangement of your columns when collapsed on mobile. This feature is only available on Stackable Premium"
 msgstr ""
 
 #: src/deprecated/v2/block/container/edit.js:153

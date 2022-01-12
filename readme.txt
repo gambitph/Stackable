@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.6.5
 Tested up to: 5.8.2
 Requires PHP: 5.6
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -237,6 +237,18 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.1.1 =
+* New: Added back ability to change the column order when columns collapse in mobile
+* New: Added Post Taxonomies in dynamic content
+* Fixed: Trigger when all display conditions are met is not triggering properly
+* Fixed: Entrance animation speeds and delay do not take effect correctly
+* Fixed: Column gap and fit columns options now work in Feature Grid block
+* Fixed: Display conditions: post meta & site option true & false condition now works if the value is ''
+* Fixed: Display conditions: Post meta & site option contains & does-not-contain condition now works if the string matched is at the start of the string
+* Fixed: Content Vertical Align option prevents the responsive display options from being applied
+* Fixed: Top and bottom lines in Heading block not left aligning
+* Fixed: Icon block custom CSS not showing correctly in the editor
 
 = 3.1.0 =
 [Introducing: Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

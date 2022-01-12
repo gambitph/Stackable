@@ -9306,22 +9306,22 @@
     "family": "Montserrat",
     "variants": [
       "100",
-      "100italic",
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -9694,6 +9694,17 @@
     "subsets": [
       "korean",
       "latin"
+    ]
+  },
+  {
+    "family": "Neonderthaw",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -13497,16 +13508,6 @@
   },
   {
     "family": "Purple Purse",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
-    "family": "Pushster",
     "variants": [
       "regular"
     ],
