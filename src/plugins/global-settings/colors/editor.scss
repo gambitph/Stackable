@@ -19,6 +19,7 @@
 }
 
 .ugb-global-settings-color-picker__add-icon {
+	margin: 5px 5px 0px 5px;
 	min-width: 30px !important;
 	width: 30px;
 	height: 30px;
@@ -61,3 +62,6 @@
 	}
 }
 
+.components-circular-option-picker__option-wrapper {
+	margin: 5px 5px 0px 5px;
+}
