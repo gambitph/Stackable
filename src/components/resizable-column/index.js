@@ -12,6 +12,7 @@ import { ColumnShowTooltipContext } from '../column-inner-blocks'
 import {
 	useBlockContext,
 	useDeviceType,
+	useEditorDom,
 	useWithShift,
 } from '~stackable/hooks'
 import { clamp, isEqual } from 'lodash'
@@ -40,6 +41,7 @@ const MIN_COLUMN_WIDTH_PERCENTAGE = {
 const ResizableColumn = props => {
 	const { clientId } = useBlockEditContext()
 	const blockContext = useBlockContext()
+	const editorDom = useEditorDom()
 
 	const {
 		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlocks, blockIndex, parentBlock,
@@ -134,7 +136,7 @@ const ResizableColumn = props => {
 			const totalColumnGap = parentColumnGaps.desktop * ( adjacentBlocks.length - 1 )
 
 			// Get the current pixel width of the columns.
-			const parentEl = document.querySelector( `.editor-styles-wrapper [data-block="${ parentBlock.clientId }"]` )
+			const parentEl = editorDom.querySelector( `[data-block="${ parentBlock.clientId }"]` )
 			const parentWidth = parentEl.clientWidth - totalColumnGap
 			const isFirstResize = adjacentBlocks.every( ( { attributes } ) => ! attributes.columnWidth )
 			const columnWidths = adjacentBlocks.map( ( { clientId, attributes } ) => {
@@ -146,7 +148,7 @@ const ResizableColumn = props => {
 				if ( attributes.columnWidth ) {
 					return parentWidth * attributes.columnWidth / 100
 				}
-				const blockEl = document.querySelector( `.editor-styles-wrapper [data-block="${ clientId }"]` )
+				const blockEl = editorDom.querySelector( `[data-block="${ clientId }"]` )
 				return blockEl?.clientWidth || 0
 			} )
 			setCurrentWidths( columnWidths )
@@ -167,18 +169,18 @@ const ResizableColumn = props => {
 			setCurrentWidths( columnWidths )
 
 			// Get the current pixel width of the columns.
-			const blockEl = document.querySelector( `.editor-styles-wrapper [data-block="${ clientId }"]` )
+			const blockEl = editorDom.querySelector( `[data-block="${ clientId }"]` )
 			const columnWidth = blockEl?.clientWidth || 0
 			setCurrentWidth( columnWidth )
 
 			// The maximum width is the total width of the row.
-			const parentEl = document.querySelector( `.editor-styles-wrapper [data-block="${ parentBlock.clientId }"]` )
+			const parentEl = editorDom.querySelector( `[data-block="${ parentBlock.clientId }"]` )
 			const maxWidth = parentEl?.clientWidth || 0
 			setMaxWidth( maxWidth )
 		}
 
 		setIsTooltipOver( true )
-	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId, columnGap, columnGapTablet, columnGapMobile ] )
+	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId, columnGap, columnGapTablet, columnGapMobile, editorDom ] )
 
 	const onResize = useCallback( ( _event, _direction, elt, delta ) => {
 		let columnPercentages = []
