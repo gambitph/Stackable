@@ -27,11 +27,15 @@ import { BaseControl } from '..'
 // Keep the instance ID.
 let buttonInstance = 1
 
+// Keep track of whether popovers are open or closed, so when the editor
+// abruptly unmounts/mounts, then we can bring back the popover status.
+const instancesStatus = {}
+
 class ButtonIconPopoverControl extends Component {
 	constructor() {
 		super( ...arguments )
 		this.state = {
-			open: false,
+			open: instancesStatus[ this.props.label ] || false,
 			isMouseOutside: false,
 			showResetPopover: false,
 		}
@@ -95,6 +99,15 @@ class ButtonIconPopoverControl extends Component {
 	}
 
 	componentWillUnmount() {
+		// Keep track of whether the popover is open or not when unmounting.
+		instancesStatus[ this.props.label ] = this.state.open
+		// Don't hold on to this value for too long, we only need this because
+		// in WP 5.9, the blocks become unmounted when previewing from desktop
+		// to tablet/mobile and back.
+		setTimeout( () => {
+			delete instancesStatus[ this.props.label ]
+		}, 500 )
+
 		removeFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }` )
 
 		// Remove event listener for moousedown
@@ -204,7 +217,6 @@ class ButtonIconPopoverControl extends Component {
 						<Popover
 							className="ugb-button-icon-control__popover"
 							focusOnMount="container"
-							anchorRef={ this.buttonRef.current }
 							onMouseLeave={ this.handleMouseLeave }
 							onMouseEnter={ this.handleMouseEnter }
 						>
