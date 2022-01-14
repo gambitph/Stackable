@@ -391,7 +391,7 @@ const ResizableColumn = props => {
 		<ResizableBox
 			enable={ enable }
 			minWidth="30" // Need to use String here or else ResizableBox will not snap properly when coming from the minimum width.
-			minHeight="100"
+			minHeight="30"
 			maxWidth={ maxWidth }
 			className={ className }
 			showHandle={ allowResize ? props.showHandle : false }
