@@ -18,7 +18,9 @@ class StackableExpand {
 			visibles.forEach( el => el.setAttribute( 'aria-hidden', 'true' ) )
 
 			// Refocus on the hide/show button.
-			el.querySelector( `.stk-button[aria-hidden="false"]` ).focus()
+			el.querySelector( `.stk-button[aria-hidden="false"]` ).focus( {
+				preventScroll: true,
+			} )
 
 			event.preventDefault()
 		}
