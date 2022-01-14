@@ -39,11 +39,15 @@
 
 // Adjust the location of the dynamic and reset buttons since our control is taller.
 .stk-link-control {
-	.stk-link-control__input + .stk-dynamic-content-control__button {
+	.block-editor-link-control__field {
+		margin: auto;
+	}
+	.stk-dynamic-content-control__button {
 		margin-top: 6px;
+		margin-left: 3px;
 	}
 	&.stk--has-value .stk-link-control__input + .stk-dynamic-content-control__button {
-		margin-top: 3px;
+		margin-top: 6px;
 	}
 	.stk-control__reset-button {
 		top: 6px;
