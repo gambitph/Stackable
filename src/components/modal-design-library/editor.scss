@@ -186,3 +186,18 @@
 .stk-design-library__sidebar-item:focus {
 	outline: 1px dashed #777;
 }
+
+// Design library top tabs, switch between block categories, ui kit and wireframe.
+.stk-design-library-tabs .components-button {
+	height: 60px;
+	border: none !important;
+	border-left: 1px solid #ddd !important;
+	box-shadow: none !important;
+	padding: 0 24px;
+	background: transparent;
+	&:hover,
+	&.is-primary {
+		color: #f00069 !important;
+		background: rgba(229, 67, 118, 0.1) !important;
+	}
+}

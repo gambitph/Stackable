@@ -449,8 +449,12 @@ const ImageContent = props => {
 		propsToPass.title = title
 	}
 
+	// Allow a custom wrapper, mostly used to turn the image into an anchor
+	// link.
+	const Wrapper = props.customWrapper || 'figure'
+
 	return (
-		<figure className={ imageWrapperClasses }>
+		<Wrapper className={ imageWrapperClasses }>
 			<img // eslint-disable-line jsx-a11y/alt-text
 				className={ imageClasses }
 				src={ props.src || undefined }
@@ -459,7 +463,7 @@ const ImageContent = props => {
 				{ ...propsToPass }
 			/>
 			{ props.children }
-		</figure>
+		</Wrapper>
 	)
 }
 
@@ -481,6 +485,7 @@ ImageContent.defaultProps = {
 	shadow: '',
 
 	hasGradientOverlay: false,
+	customWrapper: null,
 }
 
 ImageResponsive.Content = ImageContent

@@ -193,16 +193,19 @@
 
 // Responsive hiding.
 @include desktop {
+	.stk--hide-desktop.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-desktop {
 		display: none !important;
 	}
 }
 @include tablet {
+	.stk--hide-tablet.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-tablet {
 		display: none !important;
 	}
 }
 @include mobile {
+	.stk--hide-mobile.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-mobile {
 		display: none !important;
 	}
@@ -282,6 +285,7 @@
 }
 
 @include mobile {
+	.stk-button-group:is(.stk--collapse-on-tablet),
 	.stk-button-group:is(.stk--collapse-on-mobile) {
 		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
 			margin-inline-start: var(--stk-alignment-margin-left);
@@ -387,6 +391,14 @@
 .stk-block {
 	text-align: start;
 	justify-content: var(--stk-alignment-justify-content);
+}
+
+// Ensure that our alignments are applied to text.
+.stk-block {
+	&[class*="has-text-align-"],
+	[class*="has-text-align-"] {
+		text-align: var(--stk-alignment-text-align, start);
+	}
 }
 
 .has-text-align {

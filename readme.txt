@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.6.5
 Tested up to: 5.8.2
 Requires PHP: 5.6
-Stable tag: 3.0.6
+Stable tag: 3.1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -143,6 +143,8 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.1 Introducing: Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.0 How To Shift From Version 2 to Version 3](https://wpstackable.com/blog/how-to-shift-from-version-2-to-version-3/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.17 Custom Attributes and Optimization](https://wpstackable.com/blog/custom-attributes-and-optimization/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.16 Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.15 Introducing Dynamic Content](https://wpstackable.com/blog/introducing-dynamic-content/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -236,6 +238,37 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.1.1 =
+* New: Added link option to the Image Block
+* New: Added back ability to change the column order when columns collapse in mobile (premium)
+* New: Added Post Taxonomies in dynamic content (premium)
+* Fixed: Trigger when all display conditions are met is not triggering properly
+* Fixed: Entrance animation speeds and delay do not take effect correctly
+* Fixed: Column gap and fit columns options now work in Feature Grid block
+* Fixed: Display conditions: post meta & site option true & false condition now works if the value is ''
+* Fixed: Display conditions: Post meta & site option contains & does-not-contain condition now works if the string matched is at the start of the string
+* Fixed: Content Vertical Align option prevents the responsive display options from being applied
+* Fixed: Top and bottom lines in Heading block not left aligning
+* Fixed: Icon block custom CSS not showing correctly in the editor
+
+= 3.1.0 =
+[Introducing: Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Added Wireframes in the Design Library
+* Change: Removed plugin deactivation feedback
+* Fixed: Block alignments not inherited properly in tablet and mobile
+* Fixed: Text in post block not aligning in tablet and mobile
+* Fixed: Shadows in the design library are cut when viewing only a few designs
+
+= 3.0.7 =
+* Fixed: Button link popover is hard to close
+* Fixed: Less Content Layout Shift (CLS)
+* Fixed: Memory usage optimization (10% memory savings)
+* Fixed: Aligning content in tablet doesn't inherit correctly in mobile
+* Fixed: Column gap in desktop collapses columns in tablet
+* Fixed: Unwanted delay when icons change color on hover
+* Fixed: Translations are now properly applied across the plugin
+
 = 3.0.6 =
 * New: Dynamic Content can now be used for link titles
 * New: Added Row Gap option for the Columns block
@@ -301,6 +334,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Auto-updating to v3 doesn't perform the migration process immediately
 
 = 3.0.0 =
+[How To Shift From Version 2 to Version 3](https://wpstackable.com/blog/how-to-shift-from-version-2-to-version-3/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: New version 3 blocks (old version 2 blocks will still be available)
 * New: Completely new way to use Stackable blocks
 * New: Now very lightweight

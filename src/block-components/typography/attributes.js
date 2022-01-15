@@ -58,6 +58,7 @@ const typographyAttributes = {
 		default: '',
 	},
 	textAlign: {
+		stkResponsive: true,
 		type: 'string',
 		default: '',
 	},

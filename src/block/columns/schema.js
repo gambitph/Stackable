@@ -41,6 +41,11 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			columnArrangement: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
