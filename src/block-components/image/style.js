@@ -159,6 +159,7 @@ const getStyleParams = ( options = {} ) => {
 			selector: [
 				`${ selector } .stk-img-resizer-wrapper img`,
 				`${ selector } .stk-img-resizer-wrapper::after`,
+				`${ selector } .stk-img-resizer-wrapper::before`,
 			],
 			styleRule: 'mask-image',
 			vendorPrefixes: [ '-webkit-' ],
@@ -175,6 +176,7 @@ const getStyleParams = ( options = {} ) => {
 			selector: [
 				`${ selector } img`,
 				`${ selector }::after`,
+				`${ selector }::before`,
 			],
 			styleRule: 'mask-image',
 			vendorPrefixes: [ '-webkit-' ],
@@ -194,6 +196,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'backgroundColor',
 			attrName: 'imageOverlayColor',
 			hover: 'all',
+			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient',
 		},
 		{
 			renderIn: 'edit',
@@ -213,24 +216,64 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'imageOverlayColor',
 			hover: 'all',
 			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( state !== 'normal' ) {
+					if ( getAttribute( 'imageOverlayColor2', 'desktop', 'normal' ) || getAttribute( 'imageOverlayColor', 'desktop', 'normal' ) ) {
+						return '1'
+					}
+				}
+				return value
+			},
 			valueCallback: ( value, getAttribute, device, state ) => {
 				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
-				const defaultColor1 = hexToRgba( getAttribute( 'imageOverlayColor2', 'desktop', state ) || '#ffffff', 0 )
-				const defaultColor2 = hexToRgba( getAttribute( 'imageOverlayColor', 'desktop', state ) || '#ffffff', 0 )
+				let defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', state )
+				if ( state !== 'normal' && ! defaultColor1 ) { // For hover state, use the default if not set.
+					defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', 'normal' )
+				}
+				defaultColor1 = hexToRgba( defaultColor1 || '#ffffff', 0 )
+
+				let defaultColor2 = getAttribute( 'imageOverlayColor', 'desktop', state )
+				if ( state !== 'normal' && ! defaultColor2 ) { // For hover state, use the default if not set.
+					defaultColor2 = getAttribute( 'imageOverlayColor', 'desktop', 'normal' )
+				}
+				defaultColor2 = hexToRgba( defaultColor2 || '#ffffff', 0 )
 
 				// Gradient location.
-				const color1Location = `${ getAttribute( 'imageOverlayGradientLocation1', 'desktop', state ) || '0' }%`
-				const color2Location = `${ getAttribute( 'imageOverlayGradientLocation2', 'desktop', state ) || '100' }%`
+				let color1Location = getAttribute( 'imageOverlayGradientLocation1', 'desktop', state )
+				if ( state !== 'normal' && color1Location === '' ) {
+					color1Location = getAttribute( 'imageOverlayGradientLocation1', 'desktop', 'normal' )
+				}
+				color1Location = `${ color1Location || '0' }%`
+
+				let color2Location = getAttribute( 'imageOverlayGradientLocation2', 'desktop', state )
+				if ( state !== 'normal' && color2Location === '' ) {
+					color2Location = getAttribute( 'imageOverlayGradientLocation2', 'desktop', 'normal' )
+				}
+				color2Location = `${ color2Location || '100' }%`
 
 				let angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', state )
+				// For hover state, use the default if not set.
+				if ( state !== 'normal' && angle === '' ) {
+					angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', 'normal' )
+				}
+
 				if ( angle === '' ) {
 					angle = '90'
 				}
 				angle = `${ angle }deg`
 
-				return `linear-gradient(${ angle }, ${ getAttribute( 'imageOverlayColor', 'desktop', state ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'imageOverlayColor2', 'desktop', state ) || defaultColor2 } ${ color2Location })`
+				let color1 = getAttribute( 'imageOverlayColor', 'desktop', state )
+				if ( state !== 'normal' && ! color1 ) { // For hover state, use the default if not set.
+					color1 = getAttribute( 'imageOverlayColor', 'desktop', 'normal' )
+				}
+				let color2 = getAttribute( 'imageOverlayColor2', 'desktop', state )
+				if ( state !== 'normal' && ! color2 ) { // For hover state, use the default if not set.
+					color2 = getAttribute( 'imageOverlayColor2', 'desktop', 'normal' )
+				}
+
+				return `linear-gradient(${ angle }, ${ color1 || defaultColor1 } ${ color1Location }, ${ color2 || defaultColor2 } ${ color2Location })`
 			},
-			dependencies: [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection' ],
+			dependencies: [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection', 'imageOverlayOpacity' ],
 		},
 		{
 			renderIn: 'edit',
@@ -241,24 +284,64 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'imageOverlayColor',
 			hover: 'all',
 			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( state !== 'normal' ) {
+					if ( getAttribute( 'imageOverlayColor2', 'desktop', 'normal' ) || getAttribute( 'imageOverlayColor', 'desktop', 'normal' ) ) {
+						return '1'
+					}
+				}
+				return value
+			},
 			valueCallback: ( value, getAttribute, device, state ) => {
 				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
-				const defaultColor1 = hexToRgba( getAttribute( 'imageOverlayColor2', 'desktop', state ) || '#ffffff', 0 )
-				const defaultColor2 = hexToRgba( getAttribute( 'imageOverlayColor', 'desktop', state ) || '#ffffff', 0 )
+				let defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', state )
+				if ( state !== 'normal' && ! defaultColor1 ) { // For hover state, use the default if not set.
+					defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', 'normal' )
+				}
+				defaultColor1 = hexToRgba( defaultColor1 || '#ffffff', 0 )
+
+				let defaultColor2 = getAttribute( 'imageOverlayColor', 'desktop', state )
+				if ( state !== 'normal' && ! defaultColor2 ) { // For hover state, use the default if not set.
+					defaultColor2 = getAttribute( 'imageOverlayColor', 'desktop', 'normal' )
+				}
+				defaultColor2 = hexToRgba( defaultColor2 || '#ffffff', 0 )
 
 				// Gradient location.
-				const color1Location = `${ getAttribute( 'imageOverlayGradientLocation1', 'desktop', state ) || '0' }%`
-				const color2Location = `${ getAttribute( 'imageOverlayGradientLocation2', 'desktop', state ) || '100' }%`
+				let color1Location = getAttribute( 'imageOverlayGradientLocation1', 'desktop', state )
+				if ( state !== 'normal' && color1Location === '' ) {
+					color1Location = getAttribute( 'imageOverlayGradientLocation1', 'desktop', 'normal' )
+				}
+				color1Location = `${ color1Location || '0' }%`
+
+				let color2Location = getAttribute( 'imageOverlayGradientLocation2', 'desktop', state )
+				if ( state !== 'normal' && color2Location === '' ) {
+					color2Location = getAttribute( 'imageOverlayGradientLocation2', 'desktop', 'normal' )
+				}
+				color2Location = `${ color2Location || '100' }%`
 
 				let angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', state )
+				// For hover state, use the default if not set.
+				if ( state !== 'normal' && angle === '' ) {
+					angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', 'normal' )
+				}
+
 				if ( angle === '' ) {
 					angle = '90'
 				}
 				angle = `${ angle }deg`
 
-				return `linear-gradient(${ angle }, ${ getAttribute( 'imageOverlayColor', 'desktop', state ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'imageOverlayColor2', 'desktop', state ) || defaultColor2 } ${ color2Location })`
+				let color1 = getAttribute( 'imageOverlayColor', 'desktop', state )
+				if ( state !== 'normal' && ! color1 ) { // For hover state, use the default if not set.
+					color1 = getAttribute( 'imageOverlayColor', 'desktop', 'normal' )
+				}
+				let color2 = getAttribute( 'imageOverlayColor2', 'desktop', state )
+				if ( state !== 'normal' && ! color2 ) { // For hover state, use the default if not set.
+					color2 = getAttribute( 'imageOverlayColor2', 'desktop', 'normal' )
+				}
+
+				return `linear-gradient(${ angle }, ${ color1 || defaultColor1 } ${ color1Location }, ${ color2 || defaultColor2 } ${ color2Location })`
 			},
-			dependencies: [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection' ],
+			dependencies: [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection', 'imageOverlayOpacity' ],
 		},
 		{
 			renderIn: 'save',

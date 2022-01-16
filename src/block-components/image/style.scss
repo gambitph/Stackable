@@ -34,7 +34,8 @@
 
 	// Shapes.
 	&.stk-img--shape {
-		&:is(::after),
+		&::after,
+		&::before,
 		img {
 			mask-mode: alpha;
 			mask-repeat: no-repeat;
@@ -46,7 +47,8 @@
 	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
 	&.stk-image--shape-stretch {
 		&,
-		&::after {
+		&::after,
+		&::before {
 			mask-size: 100% 100%;
 		}
 	}
