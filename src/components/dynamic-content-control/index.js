@@ -56,7 +56,6 @@ export const useDynamicContentControlProps = props => {
 		if ( isPopoverOpen ) {
 			if (
 				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
-				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
 				! event.target.closest( '.stk-dynamic-content-control__button' )
 			) {
 				setIsPopoverOpen( false )
@@ -65,7 +64,7 @@ export const useDynamicContentControlProps = props => {
 	} )
 
 	useEffect( () => {
-		document.body.addEventListener( 'click', clickOutsideListener )
+		document.body.addEventListener( 'mousedown', clickOutsideListener )
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
 	}, [ clickOutsideListener ] )
 
