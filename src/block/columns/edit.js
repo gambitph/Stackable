@@ -6,12 +6,15 @@ import BlockStyles from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import {
+	i18n, isPro, showProNotice, version as VERSION,
+} from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInnerBlocks,
 	GroupPlaceholder,
 	InspectorTabs,
+	ProControlButton,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -32,13 +35,15 @@ import {
 	ContentAlign,
 	useContentAlignmentClasses,
 } from '~stackable/block-components'
+import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
 import { __ } from '@wordpress/i18n'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
@@ -124,3 +129,25 @@ const Edit = props => {
 }
 
 export default withQueryLoopContext( Edit )
+
+addFilter( 'stackable.block-components.responsive.control', 'stackable/premium', output => {
+	const { name } = useBlockEditContext()
+
+	// Only do mobile column arrangement for the Columns block.
+	if ( name !== 'stackable/columns' ) {
+		return output
+	}
+
+	if ( showProNotice && ! isPro ) {
+		return (
+			<ProControlButton
+				title={ __( 'Say Hello to More Responsive Options 👋', i18n ) }
+				description={ __( 'Adjust the arrangement of your columns when collapsed on mobile. This feature is only available on Stackable Premium', i18n ) }
+			/>
+		)
+	} else if ( isPro ) {
+		return applyFilters( 'stackable.block.columns.column-arrangement', output )
+	}
+
+	return output
+} )

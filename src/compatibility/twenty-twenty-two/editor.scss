@@ -1,0 +1,4 @@
+// Remove top margins of our blocks.
+[data-type^="stackable/"] {
+	--wp--style--block-gap: 0;
+}

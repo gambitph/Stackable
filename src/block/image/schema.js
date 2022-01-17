@@ -10,6 +10,7 @@ import {
 	Image,
 	Responsive,
 	Transform,
+	Link,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -21,6 +22,7 @@ export const attributes = ( version = VERSION ) => {
 	BlockDiv.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
 	Image.addAttributes( attrObject )
+	Link.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Transform.addAttributes( attrObject )

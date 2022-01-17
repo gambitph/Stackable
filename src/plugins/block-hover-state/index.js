@@ -1,3 +1,4 @@
+import { useEditorDom } from '~stackable/hooks'
 import { dispatch, useSelect } from '@wordpress/data'
 import { useEffect } from '@wordpress/element'
 
@@ -12,6 +13,8 @@ import { useEffect } from '@wordpress/element'
  * @return {Object} Null, nothing is rendered
  */
 export const BlockHoverState = () => {
+	const editorDom = useEditorDom()
+
 	const {
 		selectedClientId,
 		hoverStateClientId,
@@ -26,7 +29,7 @@ export const BlockHoverState = () => {
 	useEffect( () => {
 		if ( hoverStateClientId !== selectedClientId ) {
 			if ( selectedClientId ) {
-				dispatch( 'stackable/hover-state' ).updateSelectedBlock( selectedClientId )
+				dispatch( 'stackable/hover-state' ).updateSelectedBlock( selectedClientId, editorDom )
 			} else {
 				// If there's no selected block, clear the hover states.
 				dispatch( 'stackable/hover-state' ).clearSelectedBlock()

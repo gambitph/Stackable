@@ -68,6 +68,9 @@ class PanelTabs extends Component {
 		this.select = this.select.bind( this )
 		this.containerDiv = createRef()
 
+		// Auto-closing panels also re-triggers click listeners, this flag prevents that.
+		this.suspendClickListener = false
+
 		this.props.onTabFirstOpen( this.state.activeTab )
 	}
 
@@ -77,7 +80,7 @@ class PanelTabs extends Component {
 			setTimeout( () => {
 				if ( sidebarPanel ) {
 					sidebarPanel.setAttribute( 'data-ugb-tab', tab )
-					sidebarPanel.closest( '.edit-post-sidebar, .edit-widgets-sidebar' )?.classList.add( 'ugb--has-panel-tabs' )
+					sidebarPanel.closest( '.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area' )?.classList.add( 'ugb--has-panel-tabs' )
 				}
 			}, 1 )
 		}
@@ -96,7 +99,7 @@ class PanelTabs extends Component {
 		const sidebarPanel = document.querySelector( '[data-ugb-tab]' )
 		if ( sidebarPanel ) {
 			sidebarPanel.removeAttribute( 'data-ugb-tab' )
-			sidebarPanel.closest( '.edit-post-sidebar, .edit-widgets-sidebar' ).classList.remove( 'ugb--has-panel-tabs' )
+			sidebarPanel.closest( '.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area' ).classList.remove( 'ugb--has-panel-tabs' )
 		}
 
 		// Remove listener to panel closes
@@ -116,8 +119,16 @@ class PanelTabs extends Component {
 			return
 		}
 
+		// Prevent re-triggering of this click listener when closing other panels below.
+		if ( this.suspendClickListener ) {
+			return
+		}
+		this.suspendClickListener = true
+
 		closeAllOpenPanels( toggle )
-		this.props.onClickPanel( toggle.closest( '.components-panel__body' ) )
+
+		// Resume click handler.
+		this.suspendClickListener = false
 	}
 
 	select( tab ) {

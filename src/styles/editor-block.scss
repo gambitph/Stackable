@@ -24,6 +24,10 @@
 	margin-bottom: 0;
 	z-index: 1;
 }
+// The block contents may go out of bounds in tablet/mobile editor preview.
+.stk-block-content {
+	box-sizing: border-box;
+}
 
 // Add small margin between blocks so that placing your mouse between blocks
 // will make the block appender appear.
@@ -284,6 +288,7 @@
 }
 
 @include mobile {
+	.stk-button-group:is(.stk--collapse-on-tablet) > .block-editor-inner-blocks > .block-editor-block-list__layout,
 	.stk-button-group:is(.stk--collapse-on-mobile) > .block-editor-inner-blocks > .block-editor-block-list__layout {
 		> [data-block] {
 			margin-inline-start: var(--stk-alignment-margin-left);

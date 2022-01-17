@@ -1,13 +1,15 @@
-import { useSelect } from '@wordpress/data'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { useEditorDom } from '.'
 import {
 	first, last, indexOf, nth,
 } from 'lodash'
+import { useSelect } from '@wordpress/data'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const useBlockContext = ( blockClientId = null ) => {
 	// If nothing is provided, use the current block.
 	const blockProps = useBlockEditContext()
 	const clientId = blockClientId || blockProps.clientId
+	const editorDom = useEditorDom()
 
 	const blockInfo = useSelect(
 		select => {
@@ -31,7 +33,8 @@ const useBlockContext = ( blockClientId = null ) => {
 			// Check if a column block isn't used as a row. If not, then don't
 			// use row-like properties (column resizers, etc).
 			if ( hasParent && block.name === 'stackable/column' ) {
-				const isRow = document.querySelector( `.editor-styles-wrapper [data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
+				const isRow = editorDom?.querySelector( `[data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
+
 				if ( ! isRow ) {
 					return {
 						blockIndex: index,
@@ -63,7 +66,7 @@ const useBlockContext = ( blockClientId = null ) => {
 				innerBlocks: block?.innerBlocks,
 			}
 		},
-		[ clientId ]
+		[ clientId, editorDom ]
 	)
 
 	return blockInfo

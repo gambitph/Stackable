@@ -341,7 +341,8 @@
     "subsets": [
       "cyrillic",
       "cyrillic-ext",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -1299,6 +1300,16 @@
     ]
   },
   {
+    "family": "Bakbak One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Ballet",
     "variants": [
       "regular"
@@ -1336,6 +1347,22 @@
     ],
     "subsets": [
       "gujarati",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Baloo Bhaijaan 2",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "arabic",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -1824,7 +1851,8 @@
   {
     "family": "Bevan",
     "variants": [
-      "regular"
+      "regular",
+      "italic"
     ],
     "subsets": [
       "latin",
@@ -3211,6 +3239,18 @@
     ]
   },
   {
+    "family": "Corinthia",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Cormorant",
     "variants": [
       "300",
@@ -4351,16 +4391,17 @@
     "family": "Expletus Sans",
     "variants": [
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -4946,6 +4987,18 @@
     "family": "Fuggles",
     "variants": [
       "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Fuzzy Bubbles",
+    "variants": [
+      "regular",
+      "700"
     ],
     "subsets": [
       "latin",
@@ -5643,6 +5696,18 @@
     ]
   },
   {
+    "family": "Gwendolyn",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Habibi",
     "variants": [
       "regular"
@@ -6337,6 +6402,17 @@
     ]
   },
   {
+    "family": "Imperial Script",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Imprima",
     "variants": [
       "regular"
@@ -6442,6 +6518,17 @@
     ]
   },
   {
+    "family": "Inspiration",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Inter",
     "variants": [
       "100",
@@ -6471,6 +6558,17 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Island Moments",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -7262,6 +7360,17 @@
     ]
   },
   {
+    "family": "Kolker Brush",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Kosugi",
     "variants": [
       "regular"
@@ -7914,6 +8023,17 @@
     ]
   },
   {
+    "family": "Licorice",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Life Savers",
     "variants": [
       "regular",
@@ -8126,6 +8246,17 @@
     ]
   },
   {
+    "family": "Love Light",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Love Ya Like A Sister",
     "variants": [
       "regular"
@@ -8180,6 +8311,28 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Luxurious Roman",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Luxurious Script",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -8679,6 +8832,17 @@
     ]
   },
   {
+    "family": "Mea Culpa",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Meddon",
     "variants": [
       "regular"
@@ -8733,6 +8897,17 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Meow Script",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9131,22 +9306,22 @@
     "family": "Montserrat",
     "variants": [
       "100",
-      "100italic",
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -9195,6 +9370,28 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Moo Lah Lah",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Moon Dance",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9384,6 +9581,28 @@
     ]
   },
   {
+    "family": "Murecho",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "MuseoModerno",
     "variants": [
       "100",
@@ -9475,6 +9694,17 @@
     "subsets": [
       "korean",
       "latin"
+    ]
+  },
+  {
+    "family": "Neonderthaw",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -11974,18 +12204,20 @@
     "family": "Nunito",
     "variants": [
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
+      "500",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -12056,9 +12288,12 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "greek",
       "latin",
       "latin-ext",
+      "tamil",
       "vietnamese"
     ]
   },
@@ -12088,6 +12323,17 @@
     ]
   },
   {
+    "family": "Ole",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Oleo Script",
     "variants": [
       "regular",
@@ -12107,6 +12353,17 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Oooh Baby",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -13363,6 +13620,18 @@
     ]
   },
   {
+    "family": "Qwitcher Grypen",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Racing Sans One",
     "variants": [
       "regular"
@@ -13576,6 +13845,23 @@
     ]
   },
   {
+    "family": "Readex Pro",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Recursive",
     "variants": [
       "300",
@@ -13667,6 +13953,28 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Redacted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Redacted Script",
+    "variants": [
+      "300",
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -13886,6 +14194,16 @@
       "regular"
     ],
     "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Rock 3D",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
       "latin"
     ]
   },
@@ -14732,6 +15050,16 @@
     ]
   },
   {
+    "family": "Shizuru",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin"
+    ]
+  },
+  {
     "family": "Shojumaru",
     "variants": [
       "regular"
@@ -14912,6 +15240,17 @@
     ]
   },
   {
+    "family": "Smooch",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Smythe",
     "variants": [
       "regular"
@@ -15033,24 +15372,57 @@
     "family": "Source Code Pro",
     "variants": [
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic",
+      "800",
       "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
       "cyrillic",
       "cyrillic-ext",
       "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Source Sans 3",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -15077,6 +15449,35 @@
       "cyrillic-ext",
       "greek",
       "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Source Serif 4",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -15239,6 +15640,20 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Spline Sans",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15773,6 +16188,18 @@
     ]
   },
   {
+    "family": "The Nautigal",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Tienne",
     "variants": [
       "regular",
@@ -16052,6 +16479,17 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Twinkle Star",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -16437,6 +16875,17 @@
     ]
   },
   {
+    "family": "Vujahday Script",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Waiting for the Sunrise",
     "variants": [
       "regular"
@@ -16471,6 +16920,17 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Waterfall",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -16695,6 +17155,28 @@
     ],
     "subsets": [
       "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Yuji Hentaigana Akari",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Yuji Hentaigana Akebono",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
       "japanese",
       "latin",
       "latin-ext"

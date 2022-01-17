@@ -227,7 +227,7 @@ const Edit = props => {
 					/>
 
 					<AdvancedRangeControl
-						label={ __( 'Indendation', i18n ) }
+						label={ __( 'Indentation', i18n ) }
 						attribute="indentation"
 						min="0"
 						sliderMax="50"

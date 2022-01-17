@@ -156,3 +156,8 @@ export default withQueryLoopContext( Edit )
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/video-popup', ( enabled, parentBlock ) => {
 	return parentBlock?.name === 'stackable/video-popup' ? false : enabled
 } )
+
+// Disable links for image block.
+addFilter( 'stackable.edit.image.enable-link', 'stackable/video-popup', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/video-popup' ? false : enabled
+} )
