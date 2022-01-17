@@ -243,6 +243,20 @@ const ShadowControl = props => {
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const [ propsToPass ] = extractControlProps( _props )
 
+	const clickOutsideListener = useCallback( event => {
+		if ( isPopoverOpen ) {
+			if ( ! event.target.closest( '.shadow-control__popover' ) &&
+			! event.target.closest( '.stk-shadow-control__more-button' ) ) {
+				setIsPopoverOpen( false )
+			}
+		}
+	} )
+
+	useEffect( () => {
+		document.body.addEventListener( 'mousedown', clickOutsideListener )
+		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
+	}, [ clickOutsideListener ] )
+
 	useEffect( () => {
 		if ( isPopoverOpen ) {
 		}
