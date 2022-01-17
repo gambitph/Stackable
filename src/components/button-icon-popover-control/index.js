@@ -152,13 +152,8 @@ class ButtonIconPopoverControl extends Component {
 			return
 		}
 
-		// If the click isn't from our button, close the popup.
-		if ( this.state.isMouseOutside && (
-			ev.target.closest( 'button' ) !== this.buttonRef.current &&
-			ev.target.closest( 'button' ) !== this.buttonRefColorPreview.current &&
-			ev.target.closest( 'button' ) !== this.buttonRefImagePreview.current
-		) ) {
-			if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) ) {
+		if ( this.state.open ) {
+			if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) && ! ev.target.closest( '.ugb-button-icon-control__edit' ) ) {
 				this.handleClose()
 			}
 		}
