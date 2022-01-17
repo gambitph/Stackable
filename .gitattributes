@@ -1,6 +1,0 @@
-# Set all end of lines to be LF (unix) for consistency when checking out the code.
-* text eol=lf
-*.jpg binary
-*.png binary
-*.gif binary
-*.mp4 binary
