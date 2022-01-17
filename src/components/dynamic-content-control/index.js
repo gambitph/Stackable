@@ -54,10 +54,18 @@ export const useDynamicContentControlProps = props => {
 
 	const clickOutsideListener = useCallback( event => {
 		if ( isPopoverOpen ) {
+			/*
+			 * Unfortunately, `event.target.closest( '.stackable-dynamic-content__popover' )`
+			 * returns `null` if the target element gets removed from the DOM
+			 * which is the case for the reset button and the items in the
+			 * suggestion list. We need to whitelist those cases too.
+			 */
 			if (
 				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
-				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
-				! event.target.closest( '.stk-dynamic-content-control__button' )
+				! event.target.closest( '.stk-dynamic-content-control__button' ) &&
+				! event.target.closest( '.stk-inspector-control__reset-button' ) &&
+				! ( event.target.classList.contains( 'ugb-autosuggest-option' ) ||
+				event.target.classList.contains( 'react-autosuggest__suggestion' ) )
 			) {
 				setIsPopoverOpen( false )
 			}
