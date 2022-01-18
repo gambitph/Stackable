@@ -118,17 +118,19 @@ const HighlightButton = props => {
 
 	// Close the window if the user clicks outside.
 	const clickOutsideListener = useCallback( event => {
-		if ( isOpen ) {
-			if ( ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
-				setIsOpen( false )
-			}
+		const outside = ! isElementDescendant( popoverEl.current, event.target )
+		const icon = event.target.closest(
+			'.stackable-components-toolbar__highlight'
+		)
+		if ( isOpen && outside && ! icon ) {
+			setIsOpen( false )
 		}
 	} )
 
 	// Assign the outside click listener.
 	useEffect( () => {
-		document.body.addEventListener( 'click', clickOutsideListener )
-		return () => document.body.removeEventListener( 'click', clickOutsideListener )
+		document.body.addEventListener( 'mousedown', clickOutsideListener )
+		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
 	}, [ clickOutsideListener ] )
 
 	const {
@@ -167,7 +169,7 @@ const HighlightButton = props => {
 			<Toolbar className="stackable-components-toolbar">
 				<Button
 					label={ __( 'Color & Highlight', i18n ) }
-					className="components-button components-icon-button components-toolbar__control"
+					className="components-button components-icon-button components-toolbar__control stackable-components-toolbar__highlight"
 					icon="editor-textcolor"
 					aria-haspopup="true"
 					tooltip={ __( 'Color & Highlight', i18n ) }
@@ -181,7 +183,7 @@ const HighlightButton = props => {
 						position="bottom center"
 						className="components-stackable-highlight__popover"
 						focusOnMount="container"
-						useRef={ popoverEl }
+						ref={ popoverEl }
 						isAlternate
 					>
 						<div className="components-stackable-highlight__inner">
