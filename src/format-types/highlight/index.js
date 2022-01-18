@@ -120,10 +120,8 @@ const HighlightButton = props => {
 	// Close the window if the user clicks outside.
 	const clickOutsideListener = useCallback( event => {
 		const outside = ! isElementDescendant( popoverEl.current, event.target )
-		const icon = event.target.closest(
-			'.stackable-components-toolbar__highlight'
-		)
-		if ( isOpen && outside && ! icon ) {
+		const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
+		if ( isOpen && outside && ! isToolbarButton ) {
 			setIsOpen( false )
 		}
 	} )
@@ -177,7 +175,7 @@ const HighlightButton = props => {
 			<Toolbar className="stackable-components-toolbar">
 				<Button
 					label={ __( 'Color & Highlight', i18n ) }
-					className="components-toolbar__control stk-toolbar-button stackable-components-toolbar__highlight"
+					className="components-toolbar__control stk-toolbar-button stk-components-toolbar__highlight"
 					icon="editor-textcolor"
 					aria-haspopup="true"
 					tooltip={ __( 'Color & Highlight', i18n ) }
