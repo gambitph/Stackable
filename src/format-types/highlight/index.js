@@ -115,6 +115,7 @@ export const extractColors = styleString => {
 const HighlightButton = props => {
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
+	const [ colorType, setColorType ] = useState( null )
 
 	// Close the window if the user clicks outside.
 	const clickOutsideListener = useCallback( event => {
@@ -141,6 +142,15 @@ const HighlightButton = props => {
 	// Backward compatibility for ugb/highlight.
 	let isActive = _isActive
 	let highlightStyles = activeAttributes?.style
+
+	// Open the popup according to the highlight type.
+	useEffect( () => {
+		const {
+			colorType = '',
+		} = isActive ? extractColors( highlightStyles ) : {}
+		setColorType( colorType )
+	}, [ isOpen ] )
+
 	if ( value ) {
 		( value.activeFormats || [] ).some( format => {
 			if ( format?.type === 'ugb/highlight' ) {
@@ -156,9 +166,7 @@ const HighlightButton = props => {
 	const {
 		textColor = '',
 		highlightColor = '',
-		colorType = '',
 	} = isActive ? extractColors( highlightStyles ) : {}
-
 	// If highlighted, show the highlight color, otherwise show the text color.
 	const displayIconColor = ( colorType !== '' ? highlightColor : textColor ) || textColor
 
@@ -171,7 +179,9 @@ const HighlightButton = props => {
 					icon="editor-textcolor"
 					aria-haspopup="true"
 					tooltip={ __( 'Color & Highlight', i18n ) }
-					onClick={ () => setIsOpen( ! isOpen ) }
+					onClick={ () => {
+						setIsOpen( ! isOpen )
+					} }
 					isPressed={ isActive }
 				>
 					<span className="components-stackable-highlight-color__indicator" style={ { backgroundColor: displayIconColor } } />
@@ -181,7 +191,7 @@ const HighlightButton = props => {
 						position="bottom center"
 						className="components-stackable-highlight__popover"
 						focusOnMount="container"
-						useRef={ popoverEl }
+						ref={ popoverEl }
 						isAlternate
 					>
 						<div className="components-stackable-highlight__inner">
@@ -210,6 +220,7 @@ const HighlightButton = props => {
 											: highlightColor || textColor || ''
 
 									onChange( createApplyFormat( value, colorType, defaultTextColor, defaultHighlightColor ), { withoutHistory: true } )
+									setColorType( colorType )
 								} }
 								isSmall
 							/>
