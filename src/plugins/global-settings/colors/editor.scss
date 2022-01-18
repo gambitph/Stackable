@@ -19,10 +19,9 @@
 }
 
 .ugb-global-settings-color-picker__add-icon {
-	margin: 0px 12px 12px 0px;
-	min-width: 30px !important;
-	width: 30px;
-	height: 30px;
+	min-width: 28px !important;
+	width: 28px;
+	height: 28px;
 	border-radius: 50%;
 	svg {
 		width: 20px;
@@ -62,6 +61,7 @@
 	}
 }
 
+.ugb-global-settings-color-picker__add-icon,
 .ugb-global-settings-color-picker .components-circular-option-picker__option-wrapper {
 	margin: 0px 12px 12px 0px;
 }
