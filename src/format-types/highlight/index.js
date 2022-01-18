@@ -175,7 +175,7 @@ const HighlightButton = props => {
 			<Toolbar className="stackable-components-toolbar">
 				<Button
 					label={ __( 'Color & Highlight', i18n ) }
-					className="components-button components-icon-button components-toolbar__control"
+					className="components-toolbar__control stk-toolbar-button"
 					icon="editor-textcolor"
 					aria-haspopup="true"
 					tooltip={ __( 'Color & Highlight', i18n ) }
