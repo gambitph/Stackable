@@ -169,7 +169,7 @@ export const Icon = props => {
 			{ getAttribute( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
 			{ isOpen && (
 				<IconSearchPopover
-					useRef={ popoverEl }
+					ref={ popoverEl }
 					onChange={ icon => {
 						updateAttributeHandler( 'icon' )( icon )
 						setIsOpen( false )
