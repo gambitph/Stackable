@@ -128,8 +128,8 @@ const HighlightButton = props => {
 
 	// Assign the outside click listener.
 	useEffect( () => {
-		document.body.addEventListener( 'click', clickOutsideListener )
-		return () => document.body.removeEventListener( 'click', clickOutsideListener )
+		document.body.addEventListener( 'mousedown', clickOutsideListener )
+		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
 	}, [ clickOutsideListener ] )
 
 	const {
