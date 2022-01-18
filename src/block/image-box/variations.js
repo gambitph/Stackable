@@ -36,7 +36,11 @@ const variations = applyFilters(
 			icon: ImageDefault,
 			attributes: { className: 'is-style-default' },
 			innerBlocks: [
-				[ 'stackable/image', { imageHeight: 350, imageFilterParentHover: 'brightness(0.3)' } ],
+				[ 'stackable/image', {
+					imageHeight: 350,
+					imageOverlayColorParentHover: '#000000',
+					imageOverlayOpacityParentHover: 0.7,
+				} ],
 				[ 'stackable/column', {
 					templateLock: false,
 					blockVerticalAlign: 'center',
@@ -86,7 +90,8 @@ const variations = applyFilters(
 			innerBlocks: [
 				[ 'stackable/image', {
 					imageHeight: 350,
-					imageFilterParentHover: 'brightness(0.3)',
+					imageOverlayColorParentHover: '#000000',
+					imageOverlayOpacityParentHover: 0.7,
 				} ],
 				[ 'stackable/column', {
 					containerPadding: {

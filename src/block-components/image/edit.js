@@ -16,17 +16,24 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	ShadowControl,
+	ColorPaletteControl,
+	AdvancedToolbarControl,
+	BlendModeControl,
+	ControlSeparator,
 } from '~stackable/components'
 import {
-	useBlockAttributes,
+	useBlockAttributes, useBlockHoverState,
 } from '~stackable/hooks'
+import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch, useSelect } from '@wordpress/data'
-import { __ } from '@wordpress/i18n'
+import {
+	sprintf, _x, __,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 
@@ -49,6 +56,7 @@ const Controls = props => {
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const attributes = useBlockAttributes( clientId )
+	const [ state ] = useBlockHoverState()
 
 	// Get the image size urls.
 	const { imageData } = useSelect( select => {
@@ -203,6 +211,127 @@ const Controls = props => {
 					className="ugb--help-tip-general-border-radius"
 				/>
 			}
+
+			<ControlSeparator />
+
+			<AdvancedToolbarControl
+				controls={ [
+					{
+						value: '',
+						title: __( 'Single', i18n ),
+					},
+					{
+						value: 'gradient',
+						title: __( 'Gradient', i18n ),
+					},
+				] }
+				attribute="imageOverlayColorType"
+				fullwidth={ false }
+				isSmall={ true }
+			/>
+
+			<ColorPaletteControl
+				label={
+					attributes.imageOverlayColorType === 'gradient'
+						? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Overlay Color', i18n ), 1 )
+						: __( 'Overlay Color', i18n )
+				}
+				attribute="imageOverlayColor"
+				hover="all"
+				hasTransparent={ attributes.imageOverlayColorType === 'gradient' }
+			/>
+			{ attributes.imageOverlayColorType === 'gradient' && (
+				<ColorPaletteControl
+					label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Overlay Color', i18n ), 2 ) }
+					attribute="imageOverlayColor2"
+					hover="all"
+					hasTransparent={ true }
+				/>
+			) }
+
+			<AdvancedRangeControl
+				label={ __( 'Overlay Opacity', i18n ) }
+				attribute="imageOverlayOpacity"
+				hover="all"
+				min={ 0 }
+				max={ 1 }
+				step={ 0.1 }
+				placeholder="0.3"
+			/>
+
+			<BlendModeControl
+				label={ __( 'Overlay Blend Mode', i18n ) }
+				attribute="imageOverlayBlendMode"
+				className="ugb--help-tip-background-blend-mode"
+			/>
+
+			{ attributes.imageOverlayColorType === 'gradient' && (
+				<ButtonIconPopoverControl
+					label={ __( 'Gradient Overlay Settings', i18n ) }
+					onReset={ () => {
+						updateBlockAttributes( clientId, {
+							[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', state ) ]: '',
+						} )
+					} }
+					allowReset={
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', state ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', state ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', state ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', state ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', state ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', state ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', state ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', state ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', state ) ]
+					}
+				>
+					<AdvancedRangeControl
+						label={ __( 'Gradient Direction (degrees)', i18n ) }
+						attribute="imageOverlayGradientDirection"
+						hover="all"
+						min={ 0 }
+						max={ 360 }
+						step={ 10 }
+						allowReset={ true }
+						placeholder="90"
+						className="ugb--help-tip-gradient-direction"
+					/>
+
+					<AdvancedRangeControl
+						label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
+						attribute="imageOverlayGradientLocation1"
+						hover="all"
+						sliderMin={ 0 }
+						max={ 100 }
+						step={ 1 }
+						allowReset={ true }
+						placeholder="0"
+						className="ugb--help-tip-gradient-location"
+					/>
+
+					<AdvancedRangeControl
+						label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
+						attribute="imageOverlayGradientLocation2"
+						hover="all"
+						sliderMin={ 0 }
+						max={ 100 }
+						step={ 1 }
+						allowReset={ true }
+						placeholder="100"
+						className="ugb--help-tip-gradient-location"
+					/>
+				</ButtonIconPopoverControl>
+			) }
+
+			<ControlSeparator />
 
 			<AdvancedFocalPointControl
 				attribute="imageFocalPoint"

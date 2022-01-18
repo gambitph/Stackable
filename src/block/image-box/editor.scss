@@ -26,7 +26,7 @@
 .editor-styles-wrapper .stk-block-image-box {
 	.stk-block,
 	.stk-img-wrapper img {
-		transition-duration: 0.32s;
+		transition-duration: var(--stk-transition-duration, 0.32s);
 	}
 }
 

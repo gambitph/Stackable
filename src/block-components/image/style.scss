@@ -1,9 +1,28 @@
 .stk-img-wrapper {
+	position: relative;
 	width: 100%;
 	// max-width: 100%;
 	margin: 0 auto;
 	display: block;
 	overflow: hidden; // This is needed for zooming the image.
+
+	&::after,
+	&.stk-img--gradient-overlay::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		opacity: var(--stk-gradient-overlay, 0.3);
+		z-index: 1;
+	}
+	&.stk-img--gradient-overlay {
+		// If not hovered, hide the overlay hover state.
+		&:not(:hover)::before {
+			opacity: 0 !important;
+		}
+		&:hover::after {
+			opacity: 0 !important;
+		}
+	}
 
 	img {
 		object-fit: cover;
@@ -15,6 +34,8 @@
 
 	// Shapes.
 	&.stk-img--shape {
+		&::after,
+		&::before,
 		img {
 			mask-mode: alpha;
 			mask-repeat: no-repeat;
@@ -25,7 +46,11 @@
 	}
 	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
 	&.stk-image--shape-stretch {
-		mask-size: 100% 100%;
+		&,
+		&::after,
+		&::before {
+			mask-size: 100% 100%;
+		}
 	}
 }
 
