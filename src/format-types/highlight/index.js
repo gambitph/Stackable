@@ -119,9 +119,9 @@ const HighlightButton = props => {
 
 	// Close the window if the user clicks outside.
 	const clickOutsideListener = useCallback( event => {
-		const outside = ! isElementDescendant( popoverEl.current, event.target )
+		const isOutside = ! isElementDescendant( popoverEl.current, event.target )
 		const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
-		if ( isOpen && outside && ! isToolbarButton ) {
+		if ( isOpen && isOutside && ! isToolbarButton ) {
 			setIsOpen( false )
 		}
 	} )
