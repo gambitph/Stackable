@@ -160,7 +160,7 @@ const IconSearchPopover = props => {
 			onClickOutside={ props.onClickOutside }
 			position={ props.position }
 			anchorRef={ props.anchorRef }
-			useRef={ props.useRef }
+			ref={ props.useRef }
 		>
 			<PanelBody>
 				<FileDrop
