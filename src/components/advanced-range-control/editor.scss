@@ -4,9 +4,9 @@
 	&.ugb-range-control--blank {
 		.components-range-control__track {
 			width: var(--ugb-advanced-range-control--width) !important;
-		}
-		[class*="ThumbWrapper"] {
-			left: var(--ugb-advanced-range-control--width) !important;
+			+ span {
+				left: var(--ugb-advanced-range-control--width) !important;
+			}
 		}
 	}
 }

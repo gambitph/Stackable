@@ -24,6 +24,10 @@
 	margin-bottom: 0;
 	z-index: 1;
 }
+// The block contents may go out of bounds in tablet/mobile editor preview.
+.stk-block-content {
+	box-sizing: border-box;
+}
 
 // Add small margin between blocks so that placing your mouse between blocks
 // will make the block appender appear.

@@ -4,7 +4,18 @@
 	> .block-editor-link-control {
 		min-width: auto;
 		width: 100%;
+
+		.block-editor-link-control__field {
+			margin: 0;
+		}
+
+		.block-editor-link-control__search-item-header {
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
 	}
+
 	.block-editor-url-input__input {
 		margin: 0 !important;
 		width: 100% !important;
@@ -28,11 +39,15 @@
 
 // Adjust the location of the dynamic and reset buttons since our control is taller.
 .stk-link-control {
-	.stk-link-control__input + .stk-dynamic-content-control__button {
+	.block-editor-link-control__field {
+		margin: auto;
+	}
+	.stk-dynamic-content-control__button {
 		margin-top: 6px;
+		margin-left: 3px;
 	}
 	&.stk--has-value .stk-link-control__input + .stk-dynamic-content-control__button {
-		margin-top: 3px;
+		margin-top: 6px;
 	}
 	.stk-control__reset-button {
 		top: 6px;

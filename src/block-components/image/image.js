@@ -45,6 +45,8 @@ const getImageWrapperClasses = props => {
 
 		// Shadow is only available when there is no shape.
 		[ `stk--shadow-${ props.shadow }` ]: ! props.shape && props.shadow,
+
+		'stk-img--gradient-overlay': props.hasGradientOverlay,
 	} )
 }
 
@@ -164,7 +166,8 @@ const Image = memo( props => {
 							if ( props.enableClickToEdit ) {
 								if ( event.target?.classList?.contains( 'stk-img' ) ||
 									event.target?.classList?.contains( 'stk-img-placeholder' ) ||
-									event.target?.classList?.contains( 'stk-img-resizer-wrapper' )
+									event.target?.classList?.contains( 'stk-img-resizer-wrapper' ) ||
+									event.target?.classList?.contains( 'stk-img-resizer' )
 								) {
 									obj.open()
 								}
@@ -350,6 +353,7 @@ Image.defaultProps = {
 	heightResizePosition: 'bottom',
 	allowReset: true,
 
+	hasGradientOverlay: false,
 	hasRemove: true,
 	hasTooltip: true,
 	onChange: () => {},
@@ -481,6 +485,7 @@ ImageContent.defaultProps = {
 	shapeStretch: false,
 	shadow: '',
 
+	hasGradientOverlay: false,
 	customWrapper: null,
 }
 

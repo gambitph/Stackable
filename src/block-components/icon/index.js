@@ -71,7 +71,7 @@ export const Icon = props => {
 			if ( event.target.closest( '.stk--inner-svg' ) ) {
 				event.stopPropagation()
 			}
-			if ( ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
+			if ( ! event.target.closest( '.stk--inner-svg' ) && ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
 				setIsOpen( false )
 			}
 		}

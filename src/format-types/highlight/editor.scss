@@ -1,13 +1,8 @@
-.stackable-components-toolbar {
-	border-top: none !important;
-	border-bottom: none !important;
-	border-left: 1px solid #000 !important;
-	border-right: 1px solid #000 !important;
-	.components-icon-button {
-		justify-content: center;
-		svg {
-			margin: 0 !important;
-		}
+.block-editor-block-toolbar .stk-toolbar-button {
+	padding: 6px 12px !important;
+	&::before {
+		left: 8px !important;
+		right: 8px !important;
 	}
 }
 .components-stackable-highlight__popover .components-popover__content {
@@ -26,10 +21,11 @@
 	background: #000;
 	height: 3px;
 	width: 20px;
-	left: auto;
+	left: 50%;
 	right: auto;
 	top: 50%;
 	margin: 9px 0 0;
+	transform: translateX(-50%);
 }
 .ugb-advanced-toolbar-control .components-base-control__field {
 	margin-bottom: 24px;
