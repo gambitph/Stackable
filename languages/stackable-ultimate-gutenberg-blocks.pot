@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.1.1\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-01-12T08:13:03+00:00\n"
+"POT-Creation-Date: 2022-01-19T02:07:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -126,8 +126,8 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:315
 #: pro__premium_only/src/dynamic-content/sources/acf.php:494
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:298
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:527
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:305
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:534
 #: pro__premium_only/src/dynamic-content/sources/site.php:129
 msgid "Text input is empty"
 msgstr ""
@@ -197,18 +197,18 @@ msgstr ""
 #. translators: first %s is an ordinal number (e.g. 1st, 2nd), second %s is the name of the entity (e.g. Post, Page)
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:52
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:54
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:153
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:157
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:162
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:166
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:170
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:174
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:178
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:182
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:186
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:190
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:194
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:198
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:160
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:164
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:169
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:173
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:177
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:181
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:185
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:189
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:193
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:197
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:201
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:205
 msgid "Post"
 msgstr ""
 
@@ -298,122 +298,122 @@ msgstr ""
 msgid "Search for posts/pages"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:103
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:115
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:110
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:122
 msgid "Detected Custom Fields"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:152
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:159
 msgid "Post Title"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:156
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:163
 msgid "Post URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:161
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:168
 msgid "Post ID"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:165
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:172
 msgid "Post Slug"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:169
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:176
 #: pro__premium_only/src/conditional-display/condition-types.js:23
 msgid "Post Taxonomy"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:173
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:180
 msgid "Post Excerpt"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:177
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:184
 msgid "Post Date"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:181
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:188
 msgid "Post Date GMT"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:185
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:192
 msgid "Post Modified"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:189
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:196
 msgid "Post Modified GMT"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:193
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:200
 #: pro__premium_only/src/conditional-display/condition-types.js:22
 #: src/components/taxonomy-control/index.js:139
 msgid "Post Type"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:197
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:204
 msgid "Post Status"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:202
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:209
 msgid "Author Name"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:203
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:207
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:211
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:216
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:221
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:225
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:229
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:210
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:214
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:218
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:223
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:228
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:232
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:236
 msgid "Author"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:206
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:213
 msgid "Author ID"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:210
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:217
 msgid "Author Posts URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:215
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:222
 msgid "Author Profile Picture URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:220
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:227
 msgid "Author Posts"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:224
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:231
 msgid "Author First Name"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:228
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:235
 msgid "Author Last Name"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:233
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:240
 msgid "Comment Number"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:234
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:238
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:241
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:245
 msgid "Comment"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:237
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:244
 msgid "Comment Status"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:242
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:249
 msgid "Featured Image URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:243
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:250
 msgid "Media"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:377
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:384
 msgid "Post not found."
 msgstr ""
 
@@ -894,7 +894,7 @@ msgid "230+ Additional Library Designs"
 msgstr ""
 
 #: src/welcome/index.php:237
-#: pro__premium_only/src/format-types/dynamic-content/index.js:146
+#: pro__premium_only/src/format-types/dynamic-content/index.js:179
 msgid "Dynamic Content"
 msgstr ""
 
@@ -1208,7 +1208,7 @@ msgstr ""
 #: src/block-components/advanced/edit.js:81
 #: src/block-components/button/edit.js:55
 #: src/block-components/helpers/borders/edit.js:25
-#: src/block-components/image/edit.js:223
+#: src/block-components/image/edit.js:352
 #: src/block-components/typography/edit.js:199
 #: src/components/blend-mode-control/index.js:23
 #: src/components/border-controls/index.js:26
@@ -1343,7 +1343,7 @@ msgstr ""
 #: src/components/typography-control/index.js:116
 #: src/deprecated/v2/block/columns/edit.js:331
 #: src/deprecated/v2/block/container/edit.js:154
-#: src/format-types/highlight/index.js:192
+#: src/format-types/highlight/index.js:202
 msgid "Normal"
 msgstr ""
 
@@ -1487,6 +1487,7 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:225
 #: src/block-components/button/edit.js:148
 #: src/block-components/helpers/backgrounds/edit.js:115
+#: src/block-components/image/edit.js:297
 #: src/block-components/typography/edit.js:296
 #: src/components/background-controls/index.js:111
 #: src/components/button-controls/index.js:171
@@ -1500,6 +1501,7 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:192
 #: src/block-components/button/edit.js:123
 #: src/block-components/helpers/backgrounds/edit.js:59
+#: src/block-components/image/edit.js:225
 #: src/block-components/typography/edit.js:259
 #: src/components/background-controls/index.js:53
 #: src/components/button-controls/index.js:138
@@ -1658,7 +1660,7 @@ msgstr ""
 #: src/block-components/helpers/backgrounds/edit.js:228
 #: src/block-components/helpers/backgrounds/edit.js:247
 #: src/block-components/helpers/backgrounds/edit.js:261
-#: src/block-components/image/edit.js:219
+#: src/block-components/image/edit.js:348
 #: src/block-components/typography/edit.js:186
 #: src/block-components/typography/edit.js:195
 #: src/block-components/typography/edit.js:206
@@ -1896,10 +1898,10 @@ msgstr ""
 #: pro__premium_only/src/block/hero/index.js:66
 #: pro__premium_only/src/block/hero/index.js:101
 #: pro__premium_only/src/block/hero/index.js:134
-#: pro__premium_only/src/block/image-box/index.js:62
-#: pro__premium_only/src/block/image-box/index.js:114
-#: pro__premium_only/src/block/image-box/index.js:168
-#: pro__premium_only/src/block/image-box/index.js:228
+#: pro__premium_only/src/block/image-box/index.js:63
+#: pro__premium_only/src/block/image-box/index.js:116
+#: pro__premium_only/src/block/image-box/index.js:171
+#: pro__premium_only/src/block/image-box/index.js:232
 #: pro__premium_only/src/block/notification/index.js:93
 #: pro__premium_only/src/block/notification/index.js:143
 #: pro__premium_only/src/block/notification/index.js:188
@@ -1919,8 +1921,8 @@ msgstr ""
 #: src/block/feature/variations.js:76
 #: src/block/hero/variations.js:42
 #: src/block/hero/variations.js:81
-#: src/block/image-box/variations.js:53
-#: src/block/image-box/variations.js:107
+#: src/block/image-box/variations.js:57
+#: src/block/image-box/variations.js:112
 #: src/block/notification/variations.js:45
 #: src/block/notification/variations.js:90
 #: src/block/pricing-box/variations.js:40
@@ -2002,16 +2004,16 @@ msgstr ""
 #: pro__premium_only/src/block/card/index.js:25
 #: pro__premium_only/src/block/card/index.js:39
 #: pro__premium_only/src/block/card/index.js:56
-#: pro__premium_only/src/block/image-box/index.js:50
-#: pro__premium_only/src/block/image-box/index.js:106
-#: pro__premium_only/src/block/image-box/index.js:159
-#: pro__premium_only/src/block/image-box/index.js:216
+#: pro__premium_only/src/block/image-box/index.js:51
+#: pro__premium_only/src/block/image-box/index.js:108
+#: pro__premium_only/src/block/image-box/index.js:162
+#: pro__premium_only/src/block/image-box/index.js:220
 #: pro__premium_only/src/block/pricing-box/index.js:53
 #: pro__premium_only/src/block/pricing-box/index.js:118
 #: pro__premium_only/src/block/pricing-box/index.js:172
 #: src/block/card/variations.js:42
-#: src/block/image-box/variations.js:45
-#: src/block/image-box/variations.js:99
+#: src/block/image-box/variations.js:49
+#: src/block/image-box/variations.js:104
 #: src/block/pricing-box/variations.js:43
 #: src/block/pricing-box/variations.js:74
 msgctxt "Subtitle placeholder"
@@ -2148,12 +2150,12 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: pro__premium_only/src/block/image-box/index.js:70
-#: pro__premium_only/src/block/image-box/index.js:120
-#: pro__premium_only/src/block/image-box/index.js:178
-#: pro__premium_only/src/block/image-box/index.js:240
-#: src/block/image-box/variations.js:59
-#: src/block/image-box/variations.js:115
+#: pro__premium_only/src/block/image-box/index.js:71
+#: pro__premium_only/src/block/image-box/index.js:122
+#: pro__premium_only/src/block/image-box/index.js:181
+#: pro__premium_only/src/block/image-box/index.js:244
+#: src/block/image-box/variations.js:63
+#: src/block/image-box/variations.js:120
 msgctxt "Text placeholder"
 msgid "Text for This Block"
 msgstr ""
@@ -3045,7 +3047,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:88
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:133
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:194
-#: src/block-components/image/edit.js:332
+#: src/block-components/image/edit.js:461
 #: src/components/image-background-controls/index.js:26
 #: src/components/image-controls/index.js:47
 #: src/components/resizer-tooltip/index.js:279
@@ -3108,7 +3110,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:72
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:100
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:71
-#: src/components/resizable-column/index.js:527
+#: src/components/resizable-column/index.js:529
 msgid "Column"
 msgstr ""
 
@@ -3233,7 +3235,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:172
 #: pro__premium_only/src/dynamic-content/components/image-size-control.js:17
 #: src/block-components/helpers/backgrounds/edit.js:258
-#: src/block-components/image/edit.js:176
+#: src/block-components/image/edit.js:184
 #: src/block/posts/edit.js:553
 #: src/components/background-controls/index.js:363
 #: src/components/background-controls/index.js:378
@@ -3318,7 +3320,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:49
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:52
 #: src/block-components/helpers/borders/edit.js:84
-#: src/block-components/image/edit.js:196
+#: src/block-components/image/edit.js:204
 #: src/components/button-controls/index.js:321
 #: src/components/image-controls/index.js:210
 #: src/deprecated/v2/block/accordion/edit.js:195
@@ -3355,7 +3357,7 @@ msgstr ""
 #: src/block-components/typography/edit.js:312
 #: src/components/icon-controls/index.js:191
 #: src/components/image-controls/index.js:223
-#: src/components/shadow-control/index.js:290
+#: src/components/shadow-control/index.js:305
 #: src/deprecated/v2/block/accordion/edit.js:214
 #: src/deprecated/v2/block/blockquote/edit.js:190
 #: src/deprecated/v2/block/blog-posts/edit.js:227
@@ -3462,6 +3464,7 @@ msgstr ""
 #: src/components/background-controls/index.js:384
 #: src/components/background-controls/index.js:399
 #: src/components/image-background-controls/index.js:109
+#: src/components/shadow-control/index.js:277
 msgid "Custom"
 msgstr ""
 
@@ -3482,7 +3485,7 @@ msgid "Learn more about date formats"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/dynamic-content-fields.js:255
-#: pro__premium_only/src/format-types/dynamic-content/index.js:97
+#: pro__premium_only/src/format-types/dynamic-content/index.js:120
 #: src/components/dynamic-content-control/index.js:289
 msgid "Dynamic Fields"
 msgstr ""
@@ -3587,6 +3590,7 @@ msgstr ""
 #: src/block-components/helpers/backgrounds/edit.js:55
 #: src/block-components/icon/edit.js:32
 #: src/block-components/icon/edit.js:48
+#: src/block-components/image/edit.js:221
 #: src/block-components/typography/edit.js:255
 #: src/components/background-controls/index.js:49
 #: src/components/button-controls/index.js:134
@@ -4018,9 +4022,9 @@ msgstr ""
 #: src/components/background-controls/index.js:381
 #: src/components/background-controls/index.js:396
 #: src/components/image-background-controls/index.js:106
-#: src/components/resizable-column/index.js:449
-#: src/components/resizable-column/index.js:461
-#: src/components/resizable-column/index.js:471
+#: src/components/resizable-column/index.js:451
+#: src/components/resizable-column/index.js:463
+#: src/components/resizable-column/index.js:473
 msgid "Auto"
 msgstr ""
 
@@ -4246,7 +4250,7 @@ msgstr ""
 #: src/deprecated/v2/block/pricing-box/edit.js:556
 #: src/deprecated/v2/block/testimonial/edit.js:471
 #: src/deprecated/v2/block/text/edit.js:247
-#: src/format-types/highlight/index.js:218
+#: src/format-types/highlight/index.js:229
 msgid "Text Color"
 msgstr ""
 
@@ -4394,6 +4398,8 @@ msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:70
 #: src/block-components/helpers/backgrounds/edit.js:92
+#: src/block-components/image/edit.js:236
+#: src/block-components/image/edit.js:245
 msgctxt "option title"
 msgid "%s #%d"
 msgstr ""
@@ -4421,6 +4427,8 @@ msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:126
 #: src/block-components/helpers/backgrounds/edit.js:137
+#: src/block-components/image/edit.js:309
+#: src/block-components/image/edit.js:321
 #: src/components/background-controls/index.js:125
 #: src/components/background-controls/index.js:139
 msgid "Color %d Location"
@@ -4520,7 +4528,7 @@ msgid "Repeat-Y"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:263
-#: src/block-components/image/edit.js:221
+#: src/block-components/image/edit.js:350
 #: src/block/team-member/variations.js:119
 #: src/block/team-member/variations.js:120
 #: src/components/background-controls/index.js:367
@@ -4531,7 +4539,7 @@ msgid "Cover"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:264
-#: src/block-components/image/edit.js:220
+#: src/block-components/image/edit.js:349
 #: src/components/background-controls/index.js:368
 #: src/components/background-controls/index.js:383
 #: src/components/background-controls/index.js:398
@@ -4717,11 +4725,11 @@ msgstr ""
 msgid "Say Hello to Background Shapes 👋"
 msgstr ""
 
-#: src/block-components/image/edit.js:83
+#: src/block-components/image/edit.js:91
 msgid "Select Image"
 msgstr ""
 
-#: src/block-components/image/edit.js:119
+#: src/block-components/image/edit.js:127
 #: src/block-components/separator/edit.js:75
 #: src/block/divider/edit.js:87
 #: src/block/heading/edit.js:116
@@ -4739,7 +4747,7 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
-#: src/block-components/image/edit.js:134
+#: src/block-components/image/edit.js:142
 #: src/block-components/separator/edit.js:67
 #: src/block/heading/edit.js:125
 #: src/block/heading/edit.js:171
@@ -4766,51 +4774,73 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
-#: src/block-components/image/edit.js:148
+#: src/block-components/image/edit.js:156
 msgid "Image Alt"
 msgstr ""
 
-#: src/block-components/image/edit.js:155
+#: src/block-components/image/edit.js:163
 msgid "Zoom"
 msgstr ""
 
-#: src/block-components/image/edit.js:209
-msgid "Focal point"
-msgstr ""
-
-#: src/block-components/image/edit.js:216
-msgid "Image Fit"
-msgstr ""
-
-#: src/block-components/image/edit.js:222
-msgid "Fill"
-msgstr ""
-
-#: src/block-components/image/edit.js:224
-msgid "Scale Down"
-msgstr ""
-
-#: src/block-components/image/edit.js:232
-msgid "Image Shape"
+#: src/block-components/image/edit.js:236
+#: src/block-components/image/edit.js:237
+#: src/block-components/image/edit.js:245
+#: src/deprecated/v2/block/image-box/edit.js:350
+#: src/deprecated/v2/block/image-box/edit.js:365
+#: src/deprecated/v2/block/image-box/edit.js:399
+#: src/help/videos.js:732
+msgid "Overlay Color"
 msgstr ""
 
 #: src/block-components/image/edit.js:253
+msgid "Overlay Opacity"
+msgstr ""
+
+#: src/block-components/image/edit.js:263
+msgid "Overlay Blend Mode"
+msgstr ""
+
+#: src/block-components/image/edit.js:270
+msgid "Gradient Overlay Settings"
+msgstr ""
+
+#: src/block-components/image/edit.js:338
+msgid "Focal point"
+msgstr ""
+
+#: src/block-components/image/edit.js:345
+msgid "Image Fit"
+msgstr ""
+
+#: src/block-components/image/edit.js:351
+msgid "Fill"
+msgstr ""
+
+#: src/block-components/image/edit.js:353
+msgid "Scale Down"
+msgstr ""
+
+#: src/block-components/image/edit.js:361
+msgid "Image Shape"
+msgstr ""
+
+#: src/block-components/image/edit.js:382
 #: src/components/image-shape-controls/index.js:32
 msgid "Flip Shape Horizontally"
 msgstr ""
 
-#: src/block-components/image/edit.js:257
+#: src/block-components/image/edit.js:386
 #: src/components/image-shape-controls/index.js:40
 msgid "Flip Shape Vertically"
 msgstr ""
 
-#: src/block-components/image/edit.js:261
+#: src/block-components/image/edit.js:390
 #: src/components/image-shape-controls/index.js:48
 msgid "Stretch Shape Mask"
 msgstr ""
 
-#: src/block-components/image/edit.js:269
-#: src/block-components/image/edit.js:277
+#: src/block-components/image/edit.js:398
+#: src/block-components/image/edit.js:406
 msgid "Image Filter"
 msgstr ""
 
@@ -5105,11 +5135,11 @@ msgstr ""
 #: src/block/hero/variations.js:115
 #: src/block/hero/variations.js:123
 #: src/block/image-box/variations.js:35
-#: src/block/image-box/variations.js:83
-#: src/block/image-box/variations.js:136
-#: src/block/image-box/variations.js:144
-#: src/block/image-box/variations.js:152
-#: src/block/image-box/variations.js:160
+#: src/block/image-box/variations.js:87
+#: src/block/image-box/variations.js:141
+#: src/block/image-box/variations.js:149
+#: src/block/image-box/variations.js:157
+#: src/block/image-box/variations.js:165
 #: src/block/notification/variations.js:35
 #: src/block/notification/variations.js:70
 #: src/block/notification/variations.js:118
@@ -5148,8 +5178,8 @@ msgstr ""
 #: src/block/accordion/variations.js:65
 #: src/block/button/block-styles.js:83
 #: src/block/icon-button/block-styles.js:89
-#: src/block/image-box/variations.js:82
-#: src/block/image-box/variations.js:83
+#: src/block/image-box/variations.js:86
+#: src/block/image-box/variations.js:87
 #: src/block/notification/variations.js:69
 #: src/block/notification/variations.js:70
 #: src/block/team-member/variations.js:83
@@ -5503,7 +5533,7 @@ msgstr ""
 #: src/block/design-library/edit.js:74
 #: src/deprecated/v2/components/design-library-control/index.js:57
 #: src/deprecated/v2/components/design-library-control/index.js:61
-#: src/plugins/design-library-button/design-library-button.js:32
+#: src/plugins/design-library-button/design-library-button.js:38
 msgid "Open Design Library"
 msgstr ""
 
@@ -5788,26 +5818,26 @@ msgstr ""
 msgid "Accessibility"
 msgstr ""
 
-#: src/block/image-box/variations.js:135
-#: src/block/image-box/variations.js:136
+#: src/block/image-box/variations.js:140
+#: src/block/image-box/variations.js:141
 #: src/deprecated/v2/block/image-box/edit.js:80
 msgid "Box"
 msgstr ""
 
-#: src/block/image-box/variations.js:143
-#: src/block/image-box/variations.js:144
+#: src/block/image-box/variations.js:148
+#: src/block/image-box/variations.js:149
 #: src/deprecated/v2/block/image-box/edit.js:83
 msgid "Captioned"
 msgstr ""
 
-#: src/block/image-box/variations.js:151
-#: src/block/image-box/variations.js:152
+#: src/block/image-box/variations.js:156
+#: src/block/image-box/variations.js:157
 #: src/deprecated/v2/block/image-box/edit.js:86
 msgid "Fade"
 msgstr ""
 
-#: src/block/image-box/variations.js:159
-#: src/block/image-box/variations.js:160
+#: src/block/image-box/variations.js:164
+#: src/block/image-box/variations.js:165
 #: src/deprecated/v2/block/image-box/edit.js:89
 #: src/deprecated/v2/block/image-box/edit.js:286
 #: src/deprecated/v2/block/image-box/edit.js:438
@@ -5979,7 +6009,7 @@ msgid "Apply hover effect when container is hovered"
 msgstr ""
 
 #: src/block/posts/edit.js:462
-#: src/format-types/highlight/index.js:228
+#: src/format-types/highlight/index.js:239
 msgid "Highlight Color"
 msgstr ""
 
@@ -6384,7 +6414,7 @@ msgstr ""
 msgid "Selected image"
 msgstr ""
 
-#: src/components/button-icon-popover-control/index.js:197
+#: src/components/button-icon-popover-control/index.js:205
 msgid "Edit"
 msgstr ""
 
@@ -6868,7 +6898,7 @@ msgstr ""
 msgid "Advanced Shadow Options"
 msgstr ""
 
-#: src/components/shadow-control/index.js:270
+#: src/components/shadow-control/index.js:285
 msgid "Shadow Settings"
 msgstr ""
 
@@ -6992,7 +7022,7 @@ msgid "Border"
 msgstr ""
 
 #: src/deprecated/v2/block/blockquote/edit.js:75
-#: src/format-types/highlight/index.js:196
+#: src/format-types/highlight/index.js:206
 msgid "Highlight"
 msgstr ""
 
@@ -7305,13 +7335,6 @@ msgstr ""
 
 #: src/deprecated/v2/block/icon/edit.js:181
 msgid "Title on Top"
-msgstr ""
-
-#: src/deprecated/v2/block/image-box/edit.js:350
-#: src/deprecated/v2/block/image-box/edit.js:365
-#: src/deprecated/v2/block/image-box/edit.js:399
-#: src/help/videos.js:732
-msgid "Overlay Color"
 msgstr ""
 
 #: src/deprecated/v2/block/image-box/edit.js:364
@@ -7986,17 +8009,17 @@ msgstr ""
 msgid "Please enable the option below"
 msgstr ""
 
-#: src/format-types/highlight/index.js:169
-#: src/format-types/highlight/index.js:173
+#: src/format-types/highlight/index.js:177
+#: src/format-types/highlight/index.js:181
 msgid "Color & Highlight"
 msgstr ""
 
-#: src/format-types/highlight/index.js:200
+#: src/format-types/highlight/index.js:210
 msgid "Low"
 msgstr ""
 
-#: src/format-types/highlight/index.js:246
-#: src/format-types/highlight/index.js:259
+#: src/format-types/highlight/index.js:257
+#: src/format-types/highlight/index.js:270
 msgid "Highlight Text"
 msgstr ""
 
@@ -8875,7 +8898,7 @@ msgstr ""
 msgid "Rearrange and move columns around by dragging each handle"
 msgstr ""
 
-#: src/plugins/design-library-button/design-library-button.js:34
+#: src/plugins/design-library-button/design-library-button.js:40
 #: src/welcome/admin.js:267
 msgid "Design Library"
 msgstr ""
