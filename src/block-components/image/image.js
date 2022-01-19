@@ -166,7 +166,8 @@ const Image = memo( props => {
 							if ( props.enableClickToEdit ) {
 								if ( event.target?.classList?.contains( 'stk-img' ) ||
 									event.target?.classList?.contains( 'stk-img-placeholder' ) ||
-									event.target?.classList?.contains( 'stk-img-resizer-wrapper' )
+									event.target?.classList?.contains( 'stk-img-resizer-wrapper' ) ||
+									event.target?.classList?.contains( 'stk-img-resizer' )
 								) {
 									obj.open()
 								}
