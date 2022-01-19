@@ -1,8 +1,8 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 5.6.5
-Tested up to: 5.8.2
+Requires at least: 5.8.2
+Tested up to: 5.9
 Requires PHP: 5.6
 Stable tag: 3.1.2
 License: GPLv3
@@ -237,6 +237,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.1.2 =
+* New: WordPress 5.9 compatibility & FSE compatibility
+* New: Added Overlay Colors to the Image block - now you can add solid or gradient colored overlays!
+* Fixed: Clicking the expand block link scrolls the screen down
+* Fixed: Inspector tabs went behind the visible area when scrolling down
+* Fixed: Clearing a text highlight color, resets the highlight type.
+* Fixed: Possible PHP error when a custom post used in Dynamic Content becomes unavailable
 
 = 3.1.1 =
 * New: Added link option to the Image Block
