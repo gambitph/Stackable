@@ -24,26 +24,31 @@ import {
 export const useEditorDom = () => {
 	const deviceType = useDeviceType()
 	const [ iframeForceUpdate, setIframeForceUpdate ] = useState( 0 )
+	const [ timeoutCache, setTimeoutCache ] = useState( null )
 
 	useEffect( () => {
 		if ( deviceType === 'Desktop' ) {
 			// Need to force an update because it takes some time for the iframe to disappear.
-			setTimeout( () => {
+			clearTimeout( timeoutCache )
+			const timeout = setTimeout( () => {
 				setIframeForceUpdate( iframeForceUpdate + 1 )
 			}, 200 )
+			setTimeoutCache( timeout )
 		} else { // Tablet or Mobile.
 			const iframeEl = document.querySelector( `iframe[name="editor-canvas"]` )
 			if ( iframeEl ) {
 				if ( iframeEl.contentDocument.body ) {
 					setIframeForceUpdate( iframeForceUpdate + 1 )
 				} else {
+					clearTimeout( timeoutCache )
 					const timeout = setTimeout( () => {
 						if ( iframeEl.contentDocument.body ) {
 							setIframeForceUpdate( iframeForceUpdate + 1 )
 						}
 					}, 200 )
+					setTimeoutCache( timeout )
 					iframeEl.onload = () => {
-						clearTimeout( timeout )
+						clearTimeout( timeoutCache )
 						setIframeForceUpdate( iframeForceUpdate + 1 )
 					}
 				}
