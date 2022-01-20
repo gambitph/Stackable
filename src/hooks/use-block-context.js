@@ -15,15 +15,15 @@ import {
  */
 import { useSelect } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useMemo } from '@wordpress/element'
 
 const useBlockContext = ( blockClientId = null ) => {
 	// If nothing is provided, use the current block.
 	const blockProps = useBlockEditContext()
 	const clientId = blockClientId || blockProps.clientId
-	const editorDom = useEditorDom()
 
 	const { getBlock, getBlockParents } = useSelect( 'core/block-editor' )
+	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
+
 	const block = getBlock( clientId )
 	const parentClientId = last( getBlockParents( clientId ) )
 
@@ -44,7 +44,7 @@ const useBlockContext = ( blockClientId = null ) => {
 	// Check if a column block isn't used as a row. If not, then don't
 	// use row-like properties (column resizers, etc).
 	if ( hasParent && block.name === 'stackable/column' ) {
-		const isRow = editorDom?.querySelector( `[data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
+		const isRow = getEditorDom()?.querySelector( `[data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
 		if ( ! isRow ) {
 			return {
 				blockIndex: index,
