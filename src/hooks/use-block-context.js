@@ -30,14 +30,6 @@ const useBlockContext = ( blockClientId = null ) => {
 	const hasParent = parentClientId && parentClientId !== clientId
 	const parent = hasParent ? getBlock( parentClientId ) : null
 
-	// Check if a column block isn't used as a row.
-	const isRow = useMemo( () => {
-		if ( ! hasParent ) {
-			return false
-		}
-		return editorDom?.querySelector( `[data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
-	}, [ editorDom, hasParent, parent?.clientId ] )
-
 	if ( ! hasParent ) {
 		return {
 			numInnerBlocks: block?.innerBlocks?.length,
@@ -52,6 +44,7 @@ const useBlockContext = ( blockClientId = null ) => {
 	// Check if a column block isn't used as a row. If not, then don't
 	// use row-like properties (column resizers, etc).
 	if ( hasParent && block.name === 'stackable/column' ) {
+		const isRow = editorDom?.querySelector( `[data-block="${ parent.clientId }"] .stk-block` )?.classList.contains( 'stk-row' )
 		if ( ! isRow ) {
 			return {
 				blockIndex: index,
