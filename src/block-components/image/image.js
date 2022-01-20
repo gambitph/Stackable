@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * This component is meant to replace the ImageUploadPlaceholder and Image
  */
