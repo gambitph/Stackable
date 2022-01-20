@@ -8,7 +8,9 @@
 import ControlIconToggle from '../control-icon-toggle'
 import ResponsiveToggle from '../responsive-toggle'
 import HoverStateToggle from './hover-state-toggle'
-import { useAttributeName, useBlockAttributes } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers, useAttributeName,
+} from '~stackable/hooks'
 
 /**
  * External dependencies
@@ -22,8 +24,6 @@ import { pick, omit } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { useDispatch } from '@wordpress/data'
 import { useMemo, useCallback } from '@wordpress/element'
 
 export const BaseControl = props => {
@@ -103,15 +103,13 @@ BaseControl.defaultProps = {
 }
 
 const AdvancedControl = props => {
-	const { clientId } = useBlockEditContext()
-
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	const attributes = useBlockAttributes( clientId )
+	const { getAttributes, updateAttributes } = useAttributeEditHandlers()
+	const attributes = getAttributes()
 
 	// Unit handles
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 	const unit = props.unit ? props.unit : attributes ? attributes[ unitAttrName ] : ''
-	const onChangeUnit = useCallback( unit => updateBlockAttributes( clientId, { [ unitAttrName ]: unit } ), [ unitAttrName ] )
+	const onChangeUnit = useCallback( unit => updateAttributes( { [ unitAttrName ]: unit } ), [ unitAttrName ] )
 
 	const propsToPass = omit( props, [ 'attribute' ] )
 

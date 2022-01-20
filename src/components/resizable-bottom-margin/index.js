@@ -6,6 +6,7 @@ import { range } from 'lodash'
 import {
 	useBlockAttributes, useDeviceType, useWithShift,
 } from '~stackable/hooks'
+import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -16,8 +17,7 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useControlHandlers } from '../base-control2/hooks'
-import { getAttributeName } from '~stackable/util'
+import { useDispatch } from '@wordpress/data'
 
 const DEFAULT_BOTTOM_MARGINS = {
 	Desktop: 24,
@@ -146,6 +146,7 @@ const ResizableBottomMargin = memo( props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 	const device = useDeviceType()
+	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const valueCallback = useCallback( _value => {
 		let value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
@@ -174,13 +175,11 @@ const ResizableBottomMargin = memo( props => {
 		return value
 	}, [ props.attribute, attributes, device ] )
 
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, false, valueCallback, changeCallback )
-
 	return (
 		<ResizableBottomMarginSingle
 			previewSelector={ props.previewSelector }
-			value={ value }
-			onChange={ onChange }
+			value={ valueCallback( attributes[ getAttributeName( props.attribute, device ) ] ) }
+			onChange={ value => updateBlockAttributes( clientId, { [ getAttributeName( props.attribute, device ) ]: changeCallback( value, attributes[ getAttributeName( props.attribute, device ) ] ) } ) }
 		/>
 	)
 } )
