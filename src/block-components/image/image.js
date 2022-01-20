@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * This component is meant to replace the ImageUploadPlaceholder and Image
  */
@@ -19,7 +20,7 @@ import { ResizerTooltip } from '~stackable/components'
 import { MediaUpload } from '@wordpress/block-editor'
 import { Dashicon, ResizableBox } from '@wordpress/components'
 import {
-	useState, useEffect, memo, useRef,
+	useState, useEffect, memo, useRef, useCallback,
 } from '@wordpress/element'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
@@ -67,6 +68,7 @@ const Image = memo( props => {
 	const [ parentHeight, setParentHeight ] = useState()
 	const [ parentWidth, setParentWidth ] = useState()
 	const [ hasImageError, setHasImageError ] = useState( false )
+	const [ isResizerPopupOpen, setIsResizerPopupOpen ] = useState( false )
 
 	const [ currentHeight, setCurrentHeight ] = useState()
 	const [ currentWidth, setCurrentWidth ] = useState()
@@ -96,6 +98,14 @@ const Image = memo( props => {
 		'stk--too-small': imageWidthIsTooSmall,
 	} )
 
+	// Closes resizer popup when user clicks outside.
+	const clickOutsideListener = useCallback( event => {
+		const isResizerPopupButton = ! event.target.closest( '.stk-resizer-tooltip' )
+		if ( isResizerPopupOpen && isResizerPopupButton ) {
+			setIsResizerPopupOpen( false )
+		}
+	} )
+
 	// Observe the size of the image, if it's too small, we shouldn't show the
 	// size tooltip.
 	useEffect( () => {
@@ -109,6 +119,12 @@ const Image = memo( props => {
 			return () => resizeObserver.disconnect()
 		}
 	}, [ imageRef.current ] )
+
+	//Assign click event when resizer popup opens.
+	useEffect( () => {
+		document.body.addEventListener( 'click', clickOutsideListener )
+		return document.body.removeEventListener( 'click', clickOutsideListener )
+	}, [ isResizerPopupOpen ] )
 
 	const imageClasses = getImageClasses( props )
 
@@ -174,7 +190,7 @@ const Image = memo( props => {
 							}
 						} }
 						onKeyDown={ event => {
-							if ( event.keyCode === 13 ) {
+							if ( event.keyCode === 13 && ! isResizerPopupOpen ) { //Prevents media picker from opening if resizer popup is open.
 								obj.open()
 							}
 						} }
@@ -295,6 +311,7 @@ const Image = memo( props => {
 									}
 									props.onChangeSize( size )
 								} }
+								onClick={ setIsResizerPopupOpen( true ) }
 							/>
 						) }
 						<div className="stk-img-resizer-wrapper">
