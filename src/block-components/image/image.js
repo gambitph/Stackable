@@ -188,8 +188,10 @@ const Image = memo( props => {
 								}
 							}
 						} }
+
+						//Prevents media picker from opening if resizer popup is open.
 						onKeyDown={ event => {
-							if ( event.keyCode === 13 && ! isResizerPopupOpen ) { //Prevents media picker from opening if resizer popup is open.
+							if ( event.keyCode === 13 && ! isResizerPopupOpen ) {
 								obj.open()
 							}
 						} }
