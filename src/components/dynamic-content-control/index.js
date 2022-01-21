@@ -18,7 +18,7 @@ import {
 	Button, Popover, TextControl,
 } from '@wordpress/components'
 import {
-	useState, Fragment, useCallback, useEffect, useContext,
+	useState, Fragment, useCallback, useEffect, useContext, memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
@@ -61,7 +61,7 @@ export const useDynamicContentControlProps = props => {
 				setIsPopoverOpen( false )
 			}
 		}
-	} )
+	}, [ isPopoverOpen ] )
 
 	useEffect( () => {
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
@@ -122,14 +122,26 @@ export const useDynamicContentControlProps = props => {
 		setIsPopoverOpen( false )
 	}, [ props.isFormatType, props.onChange ] )
 
+	const onClick = useCallback( () => {
+		setIsPopoverOpen( ! isPopoverOpen )
+	}, [ isPopoverOpen ] )
+
+	const onClose = useCallback( () => {
+		setIsPopoverOpen( false )
+	}, [] )
+
+	const onReset = useCallback( () => {
+		props.onChange( '' )
+	}, [ props.onChange ] )
+
 	return {
-		onClick: () => setIsPopoverOpen( ! isPopoverOpen ),
+		onClick,
 		isPressed,
 		isPopoverOpen,
 		value,
 		placeholder,
-		onClose: () => setIsPopoverOpen( false ),
-		onReset: () => props.onChange( '' ),
+		onClose,
+		onReset,
 		onChange,
 		activeAttribute,
 	}
@@ -275,7 +287,9 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 
 export const DynamicContentFields = applyFilters( 'stackable.dynamic-content.component' ) || Fragment
 
-export const DynamicContentButton = props => {
+const dynamicContent = <SVGDatabaseIcon />
+
+export const DynamicContentButton = memo( props => {
 	if ( ! isPro && ! showProNotice ) {
 		return null
 	}
@@ -284,7 +298,7 @@ export const DynamicContentButton = props => {
 		<Fragment>
 			<Button
 				className="stk-dynamic-content-control__button"
-				icon={ <SVGDatabaseIcon /> }
+				icon={ dynamicContent }
 				aria-haspopup="true"
 				label={ __( 'Dynamic Fields', i18n ) }
 				isSmall
@@ -317,7 +331,7 @@ export const DynamicContentButton = props => {
 			) }
 		</Fragment>
 	)
-}
+} )
 
 const DynamicContentControl = ( {
 	children, enable, ...otherProps
