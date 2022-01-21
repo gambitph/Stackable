@@ -21,11 +21,16 @@ const useBlockContext = ( blockClientId = null ) => {
 	const blockProps = useBlockEditContext()
 	const clientId = blockClientId || blockProps.clientId
 
-	const { getBlock, getBlockParents } = useSelect( 'core/block-editor' )
+	// Do this because the block isn't getting updated as expected.
+	const { getBlock, block, parentClientId } = useSelect( select => {
+		const { getBlock, getBlockParents } = select( 'core/block-editor' )
+		return {
+			getBlock,
+			block: getBlock( clientId ),
+			parentClientId: last( getBlockParents( clientId ) ),
+		}
+	}, [] )
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
-
-	const block = getBlock( clientId )
-	const parentClientId = last( getBlockParents( clientId ) )
 
 	const hasParent = parentClientId && parentClientId !== clientId
 	const parent = hasParent ? getBlock( parentClientId ) : null
