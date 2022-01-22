@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { useEditorDom } from '.'
-
-/**
  * External dependencies
  */
 import {
@@ -22,7 +17,11 @@ const useBlockContext = ( blockClientId = null ) => {
 	const clientId = blockClientId || blockProps.clientId
 
 	// Do this because the block isn't getting updated as expected.
-	const { getBlock, block, parentClientId } = useSelect( select => {
+	const {
+		getBlock,
+		block,
+		parentClientId
+	} = useSelect( select => {
 		const { getBlock, getBlockParents } = select( 'core/block-editor' )
 		return {
 			getBlock,
