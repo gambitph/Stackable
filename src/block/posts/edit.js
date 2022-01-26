@@ -79,6 +79,7 @@ const Edit = props => {
 	const deviceType = useDeviceType()
 
 	const {
+		clientId,
 		stkQueryId,
 		imageSize,
 		type = 'post',
@@ -399,11 +400,11 @@ const Edit = props => {
 				</Placeholder>
 			) : (
 				<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
-					<div className={ wrapperClassNames }>
-						<div className={ contentClassNames }>
+					<div className={ wrapperClassNames } key={ `posts-wrapper-${ clientId }` }>
+						<div className={ contentClassNames } key={ `posts-content-${ clientId }` }>
 							{ ( posts || [] ).map( editorPostItems ) }
 						</div>
-						<div className={ innerClassNames }>
+						<div className={ innerClassNames } key={ `posts-inner-${ clientId }` }>
 							<InnerBlocks
 								allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							/>
