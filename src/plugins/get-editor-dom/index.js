@@ -42,19 +42,28 @@ export const EditorDom = () => {
 		} else { // Tablet or Mobile.
 			const iframeEl = document.querySelector( `iframe[name="editor-canvas"]` )
 			if ( iframeEl ) {
-				if ( iframeEl.contentDocument.body ) {
+				const body = iframeEl.contentDocument.body
+				if ( body && body.querySelector( '.block-editor-block-list__layout' ) ) {
 					setIframeForceUpdate( iframeForceUpdate + 1 )
 				} else {
 					clearTimeout( timeoutCache )
 					const timeout = setTimeout( () => {
-						if ( iframeEl.contentDocument.body ) {
+						const body = iframeEl.contentDocument.body
+						if ( body && body.querySelector( '.block-editor-block-list__layout' ) ) {
 							setIframeForceUpdate( iframeForceUpdate + 1 )
 						}
 					}, 200 )
 					setTimeoutCache( timeout )
 					iframeEl.onload = () => {
 						clearTimeout( timeoutCache )
-						setIframeForceUpdate( iframeForceUpdate + 1 )
+						const body = iframeEl.contentDocument.body
+						if ( body && body.querySelector( '.block-editor-block-list__layout' ) ) {
+							setIframeForceUpdate( iframeForceUpdate + 1 )
+						} else {
+							setTimeout( () => {
+								setIframeForceUpdate( iframeForceUpdate + 1 )
+							}, 200 )
+						}
 					}
 				}
 			}
