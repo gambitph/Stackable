@@ -24,6 +24,7 @@ import {
 export const useEditorDom = () => {
 	const deviceType = useDeviceType()
 	const [ iframeForceUpdate, setIframeForceUpdate ] = useState( 0 )
+	const [ timeoutCache, setTimeoutCache ] = useState( null )
 
 	useEffect( () => {
 		if ( deviceType === 'Desktop' ) {
@@ -32,19 +33,45 @@ export const useEditorDom = () => {
 				setIframeForceUpdate( iframeForceUpdate + 1 )
 			}, 200 )
 		} else { // Tablet or Mobile.
-			const iframeEl = document.querySelector( `iframe[name="editor-canvas"]` )
+			const iframeEl = document.querySelector(
+				`iframe[name="editor-canvas"]`
+			)
 			if ( iframeEl ) {
-				if ( iframeEl.contentDocument.body ) {
+				const body = iframeEl.contentDocument.body
+				if (
+					body &&
+					body.querySelector( '.block-editor-block-list__layout' )
+				) {
 					setIframeForceUpdate( iframeForceUpdate + 1 )
 				} else {
+					clearTimeout( timeoutCache )
 					const timeout = setTimeout( () => {
-						if ( iframeEl.contentDocument.body ) {
+						const body = iframeEl.contentDocument.body
+						if (
+							body &&
+							body.querySelector(
+								'.block-editor-block-list__layout'
+							)
+						) {
 							setIframeForceUpdate( iframeForceUpdate + 1 )
 						}
 					}, 200 )
+					setTimeoutCache( timeout )
 					iframeEl.onload = () => {
-						clearTimeout( timeout )
-						setIframeForceUpdate( iframeForceUpdate + 1 )
+						clearTimeout( timeoutCache )
+						const body = iframeEl.contentDocument.body
+						if (
+							body &&
+							body.querySelector(
+								'.block-editor-block-list__layout'
+							)
+						) {
+							setIframeForceUpdate( iframeForceUpdate + 1 )
+						} else {
+							setTimeout( () => {
+								setIframeForceUpdate( iframeForceUpdate + 1 )
+							}, 200 )
+						}
 					}
 				}
 			}
