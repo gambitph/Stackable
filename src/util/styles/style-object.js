@@ -288,7 +288,7 @@ class StyleObject {
 			const unitAttrName = getAttributeName( `${ attrName }Unit`, device, state )
 			const actualAttrName = getAttributeName( attrName, device, state )
 
-			const unit = hasUnits ? ( attributes[ unitAttrName ] || hasUnits ) : ''
+			const unit = hasUnits ? ( getAttribute( unitAttrName, device, state, true ) || hasUnits ) : ''
 			let value = attributes[ actualAttrName ]
 
 			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
