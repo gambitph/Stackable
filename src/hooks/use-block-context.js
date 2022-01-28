@@ -20,7 +20,7 @@ const useBlockContext = ( blockClientId = null ) => {
 	const {
 		getBlock,
 		block,
-		parentClientId
+		parentClientId,
 	} = useSelect( select => {
 		const { getBlock, getBlockParents } = select( 'core/block-editor' )
 		return {
