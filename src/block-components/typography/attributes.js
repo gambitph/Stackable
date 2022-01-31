@@ -8,7 +8,7 @@ const typographyAttributes = {
 		 * By leaving this empty the responsive settings will be correctly
 		 * inherited in the order: desktop -> tablet -> mobile
 		 */
-		stkUnits: '',
+		stkUnits: 'px',
 	},
 	lineHeight: {
 		stkResponsive: true,
