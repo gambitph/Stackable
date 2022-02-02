@@ -61,14 +61,14 @@ const getStyleParams = () => {
 			styleRule: 'marginLeft',
 			attrName: 'topLineAlign',
 			responsive: 'all',
-			valueCallback: value => value === 'center' || value === 'right' ? 'auto' : undefined,
+			valueCallback: value => value === 'center' || value === 'right' ? 'auto' : '0',
 		},
 		{
 			selector: '.stk-block-heading__top-line',
 			styleRule: 'marginRight',
 			attrName: 'topLineAlign',
 			responsive: 'all',
-			valueCallback: value => value === 'center' || value === 'left' ? 'auto' : undefined,
+			valueCallback: value => value === 'center' || value === 'left' ? 'auto' : '0',
 		},
 		{
 			selector: '.stk-block-heading__bottom-line',
