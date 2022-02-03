@@ -56,7 +56,8 @@ export const useDynamicContentControlProps = props => {
 		if ( isPopoverOpen ) {
 			if (
 				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
-				! event.target.closest( '.stk-dynamic-content-control__button' )
+				! event.target.closest( '.stk-dynamic-content-control__button' ) &&
+				! event.target.closest( '.components-color-picker' )
 			) {
 				setIsPopoverOpen( false )
 			}
