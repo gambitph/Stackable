@@ -126,8 +126,8 @@ export const generateRenderPostItem = attributes => {
 
 		const featuredImgSrc = featuredImageUrls?.[ imageSize || 'full' ]?.[ 0 ]
 
-		const enableHeight = ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( style?.name )
-		const enableWidth = [ 'list', 'horizontal' ].includes( style?.name )
+		const enableHeight = ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( style?.name )
+		const enableWidth = [ 'list', 'horizontal', 'horizontal-2' ].includes( style?.name )
 
 		const featuredImage = !! featuredImgSrc && (
 			<Image
@@ -138,9 +138,10 @@ export const generateRenderPostItem = attributes => {
 				defaultWidth={ 100 }
 				defaultHeight="auto"
 				enableWidth={ enableWidth }
-				widthResizePosition={ style?.name === 'horizontal'
-					? 'left'
-					: 'right' }
+				widthResizePosition={
+					( style?.name === 'horizontal' || style?.name === 'horizontal-2' )
+						? 'left'
+						: 'right' }
 				enableDiagonal={ style?.name === 'list' }
 				enableHeight={ enableHeight }
 				hasTooltip={ enableHeight }
@@ -418,13 +419,13 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 
 	return (
 		<>
-			{ '<!–- /stk-start:posts/template –->' }
+			{ '<!-- /stk-start:posts/template -->' }
 			<div className={ itemClassNames }>
 				<ContainerDiv.Content attributes={ attributes }>
 					{ output }
 				</ContainerDiv.Content>
 			</div>
-			{ '<!–- /stk-end:post/template –->' }
+			{ '<!-- /stk-end:post/template -->' }
 		</>
 	)
 }
