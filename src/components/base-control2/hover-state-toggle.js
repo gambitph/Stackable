@@ -15,7 +15,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { useMemo } from '@wordpress/element'
+import { useMemo, memo } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 
 const HOVER_OPTIONS = [
@@ -41,11 +41,13 @@ const HOVER_OPTIONS = [
 	},
 ]
 
+const ALL_HOVER = [ 'normal', 'hover', 'parent-hovered', 'collapsed' ]
+
 const HoverStateToggle = props => {
 	const [ currentHoverState, setCurrentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
 
 	const stateOptions = useMemo( () => {
-		const hover = props.hover === 'all' ? [ 'normal', 'hover', 'parent-hovered', 'collapsed' ] : props.hover
+		const hover = props.hover === 'all' ? ALL_HOVER : props.hover
 		return HOVER_OPTIONS.filter( ( { value } ) => {
 			if ( ! hasCollapsedState && value === 'collapsed' && ! isCollapsedBlock ) {
 				return false
@@ -83,4 +85,4 @@ HoverStateToggle.defaultProps = {
 	hover: false,
 }
 
-export default HoverStateToggle
+export default memo( HoverStateToggle )

@@ -121,7 +121,8 @@ const HighlightButton = props => {
 	const clickOutsideListener = useCallback( event => {
 		const isOutside = ! isElementDescendant( popoverEl.current, event.target )
 		const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
-		if ( isOpen && isOutside && ! isToolbarButton ) {
+		const isColorPicker = event.target.closest( '.components-color-picker' )
+		if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker ) {
 			setIsOpen( false )
 		}
 	} )
