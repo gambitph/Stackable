@@ -54,6 +54,14 @@ export const Image = props => {
 		return () => clearTimeout( t )
 	}, [ isSelected ] )
 
+	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
+		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
+		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
+		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover ||
+		attributes.imageOverlayGradientLocation1Hover || attributes.imageOverlayGradientLocation1ParentHover ||
+		attributes.imageOverlayGradientLocation2Hover || attributes.imageOverlayGradientLocation2ParentHover ||
+		attributes.imageOverlayGradientDirectionHover || attributes.imageOverlayGradientDirectionParentHover )
+
 	return <Image_
 		{ ...setImage }
 		enableClickToEdit={ debouncedIsSelected }
@@ -82,6 +90,8 @@ export const Image = props => {
 		shapeStretch={ attributes.imageShapeStretch }
 		shadow={ attributes.imageShadow }
 
+		hasGradientOverlay={ hasHoverOverlay }
+
 		defaultWidth={ props.defaultWidth }
 		defaultHeight={ props.defaultHeight }
 
@@ -108,6 +118,14 @@ Image.Content = props => {
 
 	const defaultHeight = _defaultHeight === 'auto' && attributes.imageUrl ? 'auto' : 300
 
+	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
+		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
+		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
+		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover ||
+		attributes.imageOverlayGradientLocation1Hover || attributes.imageOverlayGradientLocation1ParentHover ||
+		attributes.imageOverlayGradientLocation2Hover || attributes.imageOverlayGradientLocation2ParentHover ||
+		attributes.imageOverlayGradientDirectionHover || attributes.imageOverlayGradientDirectionParentHover )
+
 	return <Image_.Content
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
@@ -121,6 +139,8 @@ Image.Content = props => {
 		shape={ attributes.imageShape }
 		shapeStretch={ attributes.imageShapeStretch }
 		shadow={ attributes.imageShadow }
+
+		hasGradientOverlay={ hasHoverOverlay }
 
 		{ ...propsToPass }
 	/>

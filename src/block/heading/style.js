@@ -61,14 +61,14 @@ const getStyleParams = () => {
 			styleRule: 'marginLeft',
 			attrName: 'topLineAlign',
 			responsive: 'all',
-			valueCallback: () => 'auto',
+			valueCallback: value => value === 'center' || value === 'right' ? 'auto' : '0',
 		},
 		{
 			selector: '.stk-block-heading__top-line',
 			styleRule: 'marginRight',
 			attrName: 'topLineAlign',
 			responsive: 'all',
-			valueCallback: value => value === 'center' ? 'auto' : undefined,
+			valueCallback: value => value === 'center' || value === 'left' ? 'auto' : '0',
 		},
 		{
 			selector: '.stk-block-heading__bottom-line',
@@ -107,14 +107,14 @@ const getStyleParams = () => {
 			styleRule: 'marginLeft',
 			attrName: 'bottomLineAlign',
 			responsive: 'all',
-			valueCallback: () => 'auto',
+			valueCallback: value => value === 'center' || value === 'right' ? 'auto' : undefined,
 		},
 		{
 			selector: '.stk-block-heading__bottom-line',
 			styleRule: 'marginRight',
 			attrName: 'bottomLineAlign',
 			responsive: 'all',
-			valueCallback: value => value === 'center' ? 'auto' : undefined,
+			valueCallback: value => value === 'center' || value === 'left' ? 'auto' : undefined,
 		},
 	]
 }

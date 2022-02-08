@@ -154,7 +154,7 @@ export const appendImportant = ( rule, doImportant = true ) => {
 export const __getValue = ( attributes, attrNameCallback = null, defaultValue_ = undefined ) => ( attrName, format = '', defaultValue = defaultValue_ ) => {
 	const attrNameFunc = attrNameCallback !== null ? attrNameCallback : ( s => lowerFirst( s ) )
 	const value = typeof attributes[ attrNameFunc( attrName ) ] === 'undefined' ? '' : attributes[ attrNameFunc( attrName ) ]
-	return value !== '' ? ( format ? sprintf( format.replace( /%$/, '%%' ), value ) : value ) : defaultValue
+	return value !== '' ? ( format ? sprintf( format.replace( /%([sd])%/, '%$1%%' ), value ) : value ) : defaultValue
 }
 
 /**

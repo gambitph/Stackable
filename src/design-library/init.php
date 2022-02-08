@@ -38,6 +38,13 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			return true;
 		}
 
+		public static function validate_boolean( $value, $request, $param ) {
+			if ( ! is_bool( $value ) ) {
+				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a boolean.', STACKABLE_I18N ), $param ) );
+			}
+			return true;
+		}
+
 		/**
 		 * Register Rest API routes for the design library.
 		 */
@@ -79,7 +86,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				},
 				'args' => array(
 					'devmode' => array(
-						'validate_callback' => 'is_boolean'
+						'validate_callback' => __CLASS__ . '::validate_boolean'
 					),
 				),
 			) );
@@ -143,6 +150,8 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 		public function get_design( $request ) {
 			$design_id = $request->get_param( 'design' );
+			// We don't do anything with this one yet.
+			$library_version = $request->get_param( 'version' );
 
 			$design = get_transient( 'stackable_get_design_' . $design_id );
 

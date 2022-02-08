@@ -1,7 +1,5 @@
 import { useBlockEditContext } from '@wordpress/block-editor'
-import {
-	registerStore, dispatch, useSelect,
-} from '@wordpress/data'
+import { registerStore, useSelect, useDispatch } from '@wordpress/data'
 import { useCallback } from '@wordpress/element'
 
 // Include all the stored state.
@@ -20,9 +18,9 @@ const DEFAULT_STATE = {
 }
 
 const STORE_ACTIONS = {
-	updateSelectedBlock: clientId => {
-		// We need to specify `.edit-post-visual-editor__content-area` to avoid targeting the navigation list view.
-		const blockEl = document.querySelector( `.edit-post-visual-editor__content-area [data-block="${ clientId }"]` )
+	updateSelectedBlock: ( clientId, editorDom ) => {
+		// We need to specify `.editor-styles-wrapper` to avoid targeting the navigation list view.
+		const blockEl = editorDom?.querySelector( `[data-block="${ clientId }"]` )
 
 		// Get the currently parent-hovered block if there is one.
 		const parentHoverEl = blockEl?.closest( '.stk-hover-parent' )?.closest( '[data-block]' )
@@ -117,37 +115,36 @@ registerStore( 'stackable/hover-state', {
 
 export const useBlockHoverState = () => {
 	const { clientId } = useBlockEditContext()
-	const {
-		hoverStateClientId,
-		hoverState,
-		parentHoverClientId,
-		parentHoverChildrenClientIds,
-		hoverChildrenClientIds,
-		hasParentHoverState,
 
-		hasCollapsedState,
-		collapsedClientId,
-		collapsedChildrenClientIds,
-	} = useSelect( select => {
-		return {
-			selectedClientId: select( 'core/block-editor' ).getSelectedBlockClientId(),
-			hoverStateClientId: select( 'stackable/hover-state' ).getSelectedBlock(),
-			hoverState: select( 'stackable/hover-state' ).getHoverState(),
-			parentHoverClientId: select( 'stackable/hover-state' ).getSelectedParentHoverBlock(),
-			parentHoverChildrenClientIds: select( 'stackable/hover-state' ).getSelectedParentHoverBlockChildren(),
-			hoverChildrenClientIds: select( 'stackable/hover-state' ).getSelectedHoverChildren(),
-			hasParentHoverState: select( 'stackable/hover-state' ).getHasParentHoverState(),
-
-			// Accordion collapsed state.
-			hasCollapsedState: select( 'stackable/hover-state' ).getHasCollapsedState(),
-			collapsedClientId: select( 'stackable/hover-state' ).getSelectedCollapsedBlock(),
-			collapsedChildrenClientIds: select( 'stackable/hover-state' ).getSelectedCollapsedBlockChildren(),
-		}
-	}, [] )
-
+	const { updateHoverState } = useDispatch( 'stackable/hover-state' )
 	const setHoverState = useCallback( state => {
-		dispatch( 'stackable/hover-state' ).updateHoverState( state )
+		updateHoverState( state )
 	}, [] )
+
+	const hoverState = useSelect(
+		select => select( 'stackable/hover-state' ).getHoverState(),
+		[]
+	)
+
+	const {
+		getSelectedBlock,
+		getSelectedParentHoverBlock,
+		getSelectedParentHoverBlockChildren,
+		getSelectedHoverChildren,
+		getHasParentHoverState,
+		getHasCollapsedState,
+		getSelectedCollapsedBlock,
+		getSelectedCollapsedBlockChildren,
+	} = useSelect( 'stackable/hover-state' )
+
+	const hoverStateClientId = getSelectedBlock()
+	const parentHoverClientId = getSelectedParentHoverBlock()
+	const parentHoverChildrenClientIds = getSelectedParentHoverBlockChildren()
+	const hoverChildrenClientIds = getSelectedHoverChildren()
+	const hasParentHoverState = getHasParentHoverState()
+	const hasCollapsedState = getHasCollapsedState()
+	const collapsedClientId = getSelectedCollapsedBlock()
+	const collapsedChildrenClientIds = getSelectedCollapsedBlockChildren()
 
 	const isBlockSelected = clientId === hoverStateClientId
 	const isParentHoverBlock = clientId === parentHoverClientId

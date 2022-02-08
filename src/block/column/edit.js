@@ -72,9 +72,8 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
-	const ALLOWED_INNER_BLOCKS = useSelect( select => {
-		return applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, select )
-	} )
+	const { getBlock, getBlockParents } = useSelect( 'core/block-editor' )
+	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, { getBlock, getBlockParents } )
 
 	const blockClassNames = classnames( [
 		className,

@@ -16,8 +16,50 @@ $tablet-width: 768px;
 		@content;
 	}
 }
+@mixin tablet-mobile {
+	@media only screen and (max-width: #{$desktop-width - 1px}) {
+		@content;
+	}
+}
 @mixin mobile {
 	@media only screen and (max-width: #{$tablet-width - 1px}) {
 		@content;
+	}
+}
+
+/**
+ * The media query combiner we're using arranges the media queries in the wrong
+ * order. These dummy media queries below will force mqpacker to sort our media
+ * queries correctly from desktop to mobile (so that tablet and mobile media
+ * queries would override styles in the correct order).
+ *
+ * @see https://www.npmjs.com/package/mqpacker#the-first-win-algorithm
+ *
+ * These dummy styles are removed by gulpfile.js in the `style-editor` and
+ * `style` tasks.
+ */
+@include desktop {
+	.z {
+		opacity: 1;
+	}
+}
+@include desktop-tablet {
+	.z {
+		opacity: 1;
+	}
+}
+@include tablet {
+	.z {
+		opacity: 1;
+	}
+}
+@include tablet-mobile {
+	.z {
+		opacity: 1;
+	}
+}
+@include mobile {
+	.z {
+		opacity: 1;
 	}
 }

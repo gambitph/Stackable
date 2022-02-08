@@ -47,6 +47,8 @@ export const LinkControls = props => {
 					label={ __( 'Link Title', i18n ) }
 					value={ getAttribute( 'title' ) }
 					onChange={ updateAttributeHandler( 'title' ) }
+					isDynamic={ true }
+					isFormatType={ false }
 				/>
 			) }
 		</>

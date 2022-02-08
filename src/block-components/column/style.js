@@ -2,71 +2,91 @@
  * External dependencies
  */
 import {
-	__getValue,
+	__getValue, useStyles, getStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
-import { useMemo } from '@wordpress/element'
 
-const getStyles = ( attributes, options = {} ) => {
+const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 	} = options
-	const getValue = __getValue( attributes )
 
-	return {
-		editor: {
-			custom: {
-				[ `.stk-preview-device-desktop :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"],
-				.stk-preview-device-tablet :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
-					flex: getValue( 'columnWidth', '1 1 %s%' ),
-					maxWidth: getValue( 'columnWidth', '%s%' ),
-				},
-				[ `.stk-preview-device-tablet :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
-					flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
-					maxWidth: getValue( 'columnWidthTablet', '%s%' ),
-				},
-				[ `.stk-preview-device-mobile :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
-					flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
-					maxWidth: getValue( 'columnWidthMobile', '%s%' ),
-				},
+	return [
+		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			styleRule: 'flex',
+			attrName: 'columnWidth',
+			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
+			format: '1 1 %s%',
+			dependencies: [ 'columnAdjacentCount' ],
+			valueCallback: ( value, getAttribute, device ) => {
+				if ( device === 'desktop' ) {
+					return value
+				}
+				const adjacentCount = getAttribute( 'columnAdjacentCount', device )
+				if ( adjacentCount ) {
+					return value.replace( /([\d\.]+%)$/, `calc($1 - var(--stk-column-gap, 0px) * ${ adjacentCount - 1 } / ${ adjacentCount } )` )
+				}
+				return value
 			},
 		},
-		saveOnly: {
-			desktopTablet: {
-				[ selector ]: {
-					flex: getValue( 'columnWidth', '1 1 %s%' ),
-					maxWidth: getValue( 'columnWidth', '%s%' ),
-				},
-			},
-			tabletOnly: {
-				[ selector ]: {
-					flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
-					maxWidth: getValue( 'columnWidthTablet', '%s%' ),
-				},
-			},
-			mobile: {
-				[ selector ]: {
-					flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
-					maxWidth: getValue( 'columnWidthMobile', '%s%' ),
-				},
+		// We need to add a maxWidth in the editor since the re-resizable box
+		// can mess up the snapping if the column width is too small, then
+		// resizes to a larger size.
+		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			styleRule: 'maxWidth',
+			attrName: 'columnWidth',
+			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
+			format: '%s%',
+			dependencies: [ 'columnAdjacentCount' ],
+			valueCallback: ( value, getAttribute, device ) => {
+				const adjacentCount = getAttribute( 'columnAdjacentCount', device )
+				if ( adjacentCount ) {
+					return value.replace( /([\d\.]+%)$/, `calc($1 - var(--stk-column-gap, 0px) * ${ adjacentCount - 1 } / ${ adjacentCount } )` )
+				}
+				return value
 			},
 		},
-	}
+		{
+			renderIn: 'save',
+			selector,
+			styleRule: 'flex',
+			attrName: 'columnWidth',
+			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
+			format: '1 1 %s%',
+			dependencies: [ 'columnAdjacentCount' ],
+			valueCallback: ( _value, getAttribute, device ) => {
+				// Flex grow should be turned on in desktop, so negative margins
+				// can make the columns expand. (e.g. 50% 50% then -200px margin
+				// left on 2nd column).
+				//
+				// In tablet/mobile, don't allow expanding since columns would
+				// always expand to the available space (so you can't do a 30%
+				// 30% columns in tablet/mobile, they will expand to 50% 50%)
+				//
+				// No need to do this in the editor since it already does this.
+				const value = device === 'desktop' ? _value : _value.replace( /^1 1/, '0 1' )
+
+				const adjacentCount = getAttribute( 'columnAdjacentCount', device )
+				if ( adjacentCount ) {
+					return value.replace( /([\d\.]+%)$/, `calc($1 - var(--stk-column-gap, 0px) * ${ adjacentCount - 1 } / ${ adjacentCount } )` )
+				}
+				return value
+			},
+		},
+	]
 }
 
 export const Style = props => {
 	const {
 		attributes,
-		options = {},
 		...propsToPass
 	} = props
 
-	const getValue = __getValue( attributes )
-
-	const styles = useMemo(
-		() => getStyles( attributes, options ),
-		[ getValue( 'columnWidth' ), getValue( 'columnWidthTablet' ), getValue( 'columnWidthMobile' ), attributes.clientId ]
-	)
+	const styles = useStyles( attributes, getStyleParams() )
 
 	return (
 		<StyleComponent
@@ -80,12 +100,14 @@ export const Style = props => {
 
 Style.Content = props => {
 	const {
-		attributes,
-		options = {},
 		...propsToPass
 	} = props
 
-	const styles = getStyles( attributes, options )
+	if ( props.attributes.generatedCss ) {
+		return <style>{ props.attributes.generatedCss }</style>
+	}
+
+	const styles = getStyles( propsToPass.attributes, getStyleParams() )
 
 	return (
 		<StyleComponent.Content

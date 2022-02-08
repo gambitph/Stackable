@@ -223,7 +223,8 @@ const BlockToggler = () => {
 								return (
 									<BlockToggle
 										key={ i + 1 }
-										label={ block.title }
+										// We need to run the title through the translation function, we have translations ready for this.
+										label={ __( block.title, i18n ) } // eslint-disable-line @wordpress/i18n-no-variables
 										value={ block.name }
 										className={ mainClasses }
 										demo={ block[ 'stk-demo' ] }

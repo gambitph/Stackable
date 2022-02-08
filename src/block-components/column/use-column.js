@@ -7,6 +7,7 @@ import { useDispatch, select } from '@wordpress/data'
 import { useCallback } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import classnames from 'classnames'
+import { getRowsFromColumns } from './util'
 
 export const useColumn = () => {
 	const { clientId } = useBlockEditContext()
@@ -20,7 +21,10 @@ export const useColumn = () => {
 			if ( adjacentBlocks.length ) {
 				widths.forEach( ( width, i ) => {
 				// TODO: When Gutenberg 10.1 comes out, update this to just one updateBlockAttributes call for all client Ids
-					updateBlockAttributes( adjacentBlocks[ i ].clientId, { columnWidth: width } )
+					updateBlockAttributes( adjacentBlocks[ i ].clientId, {
+						columnWidth: width,
+						columnAdjacentCount: widths.length,
+					} )
 				} )
 			}
 		},
@@ -28,15 +32,45 @@ export const useColumn = () => {
 	)
 
 	const onChangeTablet = useCallback(
-		width => {
+		( width, widths ) => {
 			updateBlockAttributes( clientId, { columnWidthTablet: width } )
+
+			const parentClientId = last( select( 'core/block-editor' ).getBlockParents( clientId ) )
+			const adjacentBlocks = select( 'core/block-editor' ).getBlock( parentClientId )?.innerBlocks || []
+
+			if ( adjacentBlocks.length ) {
+				const columnRows = getRowsFromColumns( widths )
+
+				widths.forEach( ( width, i ) => {
+					// TODO: When Gutenberg 10.1 comes out, update this to just one updateBlockAttributes call for all client Ids
+					updateBlockAttributes( adjacentBlocks[ i ].clientId, {
+						columnWidthTablet: widths[ i ],
+						columnAdjacentCountTablet: columnRows.filter( n => n === columnRows[ i ] ).length,
+					} )
+				} )
+			}
 		},
 		[ clientId, updateBlockAttributes ]
 	)
 
 	const onChangeMobile = useCallback(
-		width => {
+		( width, widths ) => {
 			updateBlockAttributes( clientId, { columnWidthMobile: width } )
+
+			const parentClientId = last( select( 'core/block-editor' ).getBlockParents( clientId ) )
+			const adjacentBlocks = select( 'core/block-editor' ).getBlock( parentClientId )?.innerBlocks || []
+
+			if ( adjacentBlocks.length ) {
+				const columnRows = getRowsFromColumns( widths )
+
+				widths.forEach( ( width, i ) => {
+					// TODO: When Gutenberg 10.1 comes out, update this to just one updateBlockAttributes call for all client Ids
+					updateBlockAttributes( adjacentBlocks[ i ].clientId, {
+						columnWidthMobile: widths[ i ],
+						columnAdjacentCountMobile: columnRows.filter( n => n === columnRows[ i ] ).length,
+					} )
+				} )
+			}
 		},
 		[ clientId, updateBlockAttributes ]
 	)

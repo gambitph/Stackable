@@ -1,6 +1,8 @@
 /**
  * Core Block Styles
  */
+@use "sass:math";
+
 @import "breakpoints";
 @import "block-transitions";
 @import "block-compat";
@@ -76,7 +78,7 @@
 		width: 100%;
 	}
 }
-.stk-block.alignfull {
+.stk-block .stk-block.alignfull {
 	width: 100%;
 }
 
@@ -106,8 +108,8 @@
 	@for $i from 2 through 10 {
 		.stk-row.stk-columns-#{ $i } {
 			> .stk-column {
-				flex: 1 1 #{ 100% / $i };
-				max-width: #{ 100% / $i };
+				flex: 1 1 #{ math.div(100%, $i) };
+				max-width: #{ math.div(100%, $i) };
 			}
 		}
 	}
@@ -191,16 +193,19 @@
 
 // Responsive hiding.
 @include desktop {
+	.stk--hide-desktop.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-desktop {
 		display: none !important;
 	}
 }
 @include tablet {
+	.stk--hide-tablet.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-tablet {
 		display: none !important;
 	}
 }
 @include mobile {
+	.stk--hide-mobile.stk-block, // Other attributes like the content vertical align can interfere with responsive hiding.
 	.stk--hide-mobile {
 		display: none !important;
 	}
@@ -280,6 +285,7 @@
 }
 
 @include mobile {
+	.stk-button-group:is(.stk--collapse-on-tablet),
 	.stk-button-group:is(.stk--collapse-on-mobile) {
 		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
 			margin-inline-start: var(--stk-alignment-margin-left);
@@ -387,6 +393,14 @@
 	justify-content: var(--stk-alignment-justify-content);
 }
 
+// Ensure that our alignments are applied to text.
+.stk-block {
+	&[class*="has-text-align-"],
+	[class*="has-text-align-"] {
+		text-align: var(--stk-alignment-text-align, start);
+	}
+}
+
 .has-text-align {
 	&-center {
 		@include align-center-styles;
@@ -399,7 +413,7 @@
 	}
 }
 
-@include tablet {
+@include tablet-mobile {
 	.has-text-align-center-tablet {
 		@include align-center-styles;
 	}

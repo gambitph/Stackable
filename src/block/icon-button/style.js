@@ -57,7 +57,6 @@ IconButtonStyles.defaultProps = {
 
 IconButtonStyles.Content = props => {
 	const {
-		options = {},
 		...propsToPass
 	} = props
 
@@ -66,13 +65,6 @@ IconButtonStyles.Content = props => {
 	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( propsToPass.attributes.uniqueId )
-	propsToPass.options = {
-		...options,
-		selector: '.stk-button',
-		hoverSelector: '.stk-button:hover',
-		textSelector: '.stk-button__inner-text',
-		textHoverSelector: '.stk-button:hover .stk-button__inner-text',
-	}
 
 	const styles = (
 		<>

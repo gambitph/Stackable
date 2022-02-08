@@ -87,7 +87,7 @@
 	@include baseBlock();
 	display: flex;
 	flex-wrap: wrap;
-	margin: 0 (-$box-hori-padding / 2);
+	margin: 0 (-$box-hori-padding * 0.5);
 	span, // Old
 	.blocks-rich-text span { // Old
 		background-color: var(--s-primary-color, #ddd);
@@ -112,7 +112,7 @@
 		&,
 		&:first-child,
 		&:last-child {
-			margin: ($box-hori-padding / 2) !important;
+			margin: ($box-hori-padding * 0.5) !important;
 		}
 		p {
 			text-align: center;

@@ -48,13 +48,24 @@ export const Link = props => {
 		return () => clearTimeout( t )
 	}, [ isSelected ] )
 
+	// If the block is unselected, make sure that the opopver is closed.
+	useEffect( () => {
+		if ( ! isSelected && isOpen ) {
+			setIsOpen( false )
+		}
+	}, [ isSelected, isOpen ] )
+
 	const clickOutsideListener = useCallback( event => {
 		if ( isOpen ) {
+			// If the button text is clicked, don't re-open the popover, just close it.
+			if ( event.target.closest( '.stk-button' ) && event.target.closest( props.linkTrigger || '.rich-text' ) ) {
+				event.stopPropagation()
+			}
 			if ( ! isElementDescendant( popoverEl.curent, event.target ) && ! event.target.closest( '.components-popover' ) ) {
 				setIsOpen( false )
 			}
 		}
-	} )
+	}, [ popoverEl.current, isOpen ] )
 
 	// Assign the outside click listener.
 	useEffect( () => {
@@ -78,8 +89,8 @@ export const Link = props => {
 				onClick={ e => {
 					if ( debouncedIsSelected ) {
 						const ref = e.target.closest( props.linkTrigger || '.rich-text' )
-						if ( ref ) {
-						// Only trigger the setIsOpen when the rich text is selected.
+						if ( ref && ! isOpen ) {
+							// Only trigger the setIsOpen when the rich text is selected.
 							setPopoverRef( ref )
 							setIsOpen( ! isOpen )
 						}

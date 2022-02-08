@@ -130,7 +130,7 @@ const Edit = props => {
 }
 
 addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box', ( allowedBlocks, select ) => {
-	const { getBlock, getBlockParents } = select( 'core/block-editor' )
+	const { getBlock, getBlockParents } = select
 	const { clientId } = useBlockEditContext()
 	const parentClientId = last( getBlockParents( clientId ) )
 	const hasParent = parentClientId && parentClientId !== clientId
@@ -142,19 +142,26 @@ addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box',
 	const parentBlock = hasParent ? getBlock( parentClientId ) : null
 	const innerBlocks = getBlock( clientId ).innerBlocks
 
-	if ( parentBlock.name !== 'stackable/image-box' ) {
-		return allowedBlocks
-	}
+	return useMemo( () => {
+		if ( parentBlock.name !== 'stackable/image-box' ) {
+			return allowedBlocks
+		}
 
-	const currentInnerBlocks = innerBlocks?.map( ( { name } ) => name ) || []
-	const allowedInnerBlocks = ALLOWED_BLOCKS.filter( allowedBlock => ! currentInnerBlocks.includes( allowedBlock ) )
+		const currentInnerBlocks = innerBlocks?.map( ( { name } ) => name ) || []
+		const allowedInnerBlocks = ALLOWED_BLOCKS.filter( allowedBlock => ! currentInnerBlocks.includes( allowedBlock ) )
 
-	return ! allowedInnerBlocks.length ? [] : allowedInnerBlocks
+		return ! allowedInnerBlocks.length ? [] : allowedInnerBlocks
+	}, [ clientId, parentBlock.name, innerBlocks.map( block => block.name ) ] )
 } )
 
 export default withQueryLoopContext( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/image-box', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/image-box' ? false : enabled
+} )
+
+// Disable links for image block.
+addFilter( 'stackable.edit.image.enable-link', 'stackable/image-box', ( enabled, parentBlock ) => {
 	return parentBlock?.name === 'stackable/image-box' ? false : enabled
 } )

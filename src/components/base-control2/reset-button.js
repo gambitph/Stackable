@@ -9,11 +9,18 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import { Dashicon } from '@wordpress/components'
+import { useCallback, memo } from '@wordpress/element'
 
-export const ResetButton = props => {
+const icon = <Dashicon icon="image-rotate" />
+
+export const ResetButton = memo( props => {
 	const showReset = props.showReset !== null
 		? props.showReset
 		: ( typeof props.value !== 'undefined' && props.value !== props.default && props.value !== props.placeholder )
+
+	const onChange = useCallback( () => {
+		props.onChange( typeof props.default === 'undefined' ? '' : props.default )
+	}, [ props.onChange, props.default ] )
 
 	return ( props.allowReset && showReset &&
 		<Button
@@ -21,11 +28,11 @@ export const ResetButton = props => {
 			isSmall
 			isTertiary
 			aria-label={ __( 'Reset', i18n ) }
-			onClick={ () => props.onChange( typeof props.default === 'undefined' ? '' : props.default ) }
-			icon={ <Dashicon icon="image-rotate" /> }
+			onClick={ onChange }
+			icon={ icon }
 		/>
 	)
-}
+} )
 
 ResetButton.defaultProps = {
 	allowReset: true,

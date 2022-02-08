@@ -102,6 +102,14 @@ export const Controls = props => {
 						sliderMax={ 100 }
 						placeholder="0"
 					/>
+					<AdvancedRangeControl
+						label={ __( 'Row Gap', i18n ) }
+						attribute="rowGap"
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder="0"
+					/>
 				</>
 			) }
 

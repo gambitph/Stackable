@@ -15,10 +15,16 @@ import {
 	useBlockAttributes, useDeviceType,
 } from '~stackable/hooks'
 import {
-	getUniqueBlockClass,
+	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
+import { Style as StyleComponent } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { applyFilters } from '@wordpress/hooks'
 
 const alignmentOptions = {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
@@ -40,6 +46,12 @@ const BlockStyles = props => {
 		...propsToPass.options,
 	}
 
+	const columnStyleOptions = {
+		numColumns: ( propsToPass.attributes.columnArrangementMobile || '' ).split( ',' ).length,
+	}
+
+	const columnsStyles = useStyles( attributes, applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
+
 	return (
 		<>
 			<Alignment.Style { ...propsToPass } options={ alignmentOptions } />
@@ -50,6 +62,12 @@ const BlockStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<Separator.Style { ...propsToPass } />
 			<ContentAlign.Style { ...propsToPass } />
+			<StyleComponent
+				styles={ columnsStyles }
+				versionAdded="3.1.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</>
 	)
 }
@@ -72,6 +90,12 @@ BlockStyles.Content = props => {
 		...propsToPass.options,
 	}
 
+	const columnStyleOptions = {
+		numColumns: ( props.attributes.columnArrangementMobile || '' ).split( ',' ).length,
+	}
+
+	const columnsStyles = getStyles( props.attributes, applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
+
 	const stylesToRender = (
 		<>
 			<Alignment.Style.Content { ...propsToPass } options={ alignmentOptions } />
@@ -82,6 +106,12 @@ BlockStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Separator.Style.Content { ...propsToPass } />
 			<ContentAlign.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ columnsStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</>
 	)
 

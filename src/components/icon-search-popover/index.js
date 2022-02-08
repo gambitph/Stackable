@@ -160,7 +160,7 @@ const IconSearchPopover = props => {
 			onClickOutside={ props.onClickOutside }
 			position={ props.position }
 			anchorRef={ props.anchorRef }
-			useRef={ props.useRef }
+			ref={ props.useRef }
 		>
 			<PanelBody>
 				<FileDrop
@@ -255,7 +255,7 @@ const IconSearchPopover = props => {
 							</button>
 						} ) }
 						{ ! isBusy && ! results.length &&
-						<p className="components-base-control__help">{ __( 'No matches found', i18n ) }</p>
+							<p className="components-base-control__help">{ __( 'No matches found', i18n ) }</p>
 						}
 					</div>
 					{ allowSVGUpload && isDropping &&

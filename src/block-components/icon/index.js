@@ -61,24 +61,34 @@ export const Icon = props => {
 		hasLinearGradient = true,
 	} = props
 
+	const { clientId, isSelected } = useBlockEditContext()
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
 
 	const clickOutsideListener = useCallback( event => {
 		if ( isOpen ) {
-			if ( ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
+			// If the icon is clicked, just close the popover.
+			if ( event.target.closest( '.stk--inner-svg' ) ) {
+				event.stopPropagation()
+			}
+			if ( ! event.target.closest( '.stk--inner-svg' ) && ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
 				setIsOpen( false )
 			}
 		}
-	} )
+	}, [ popoverEl.current, isOpen ] )
+
+	// When the block is unselected, make sure that the popover is closed.
+	useEffect( () => {
+		if ( ! isSelected && isOpen ) {
+			setIsOpen( false )
+		}
+	}, [ isSelected, isOpen ] )
 
 	// Assign the outside click listener.
 	useEffect( () => {
 		document.body.addEventListener( 'click', clickOutsideListener )
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
 	}, [ clickOutsideListener ] )
-
-	const { clientId, isSelected } = useBlockEditContext()
 
 	// Enable editing of the icon only when the current block that implements
 	// it is selected. We need to use setTimeout since the isSelected is
@@ -141,7 +151,7 @@ export const Icon = props => {
 			onClick={ event => {
 				if ( debouncedIsSelected ) {
 					// Only register a click to .stk--inner-svg.
-					if ( event.target.closest( '.stk--inner-svg' ) ) {
+					if ( event.target.closest( '.stk--inner-svg' ) && ! isOpen ) {
 						setIsOpen( ! isOpen )
 					}
 				}

@@ -6,6 +6,12 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
+			// This is used to set the amount of column gap to compute for flex basis.
+			columnAdjacentCount: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

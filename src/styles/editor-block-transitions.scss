@@ -24,13 +24,19 @@
 	.stk--has-background-overlay::before, // Image background overlays
 	.stk-block .stk-button::before, // For button animations
 	.stk-block .stk-button::after, // For button animations
+	.stk-img-resizer-wrapper::after, // Image block overlay.
+	.stk-img-resizer-wrapper::before, // Image block hover ovelay.
 	.stk-block li::marker { // For icon list marker
-		transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95), margin 0s;
+		transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), margin 0s, flex 0s, max-width 0s; // Don't include flex & max-width since column widths would animate.
 		border-width: 1px;
 		border-style: none;
 	}
 	.stk--svg-wrapper :is(.stk--shape-icon, .stk--inner-svg, .stk--inner-svg *) {
-		transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+		transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95);
+	}
+	// Icons can have a delay in transitions. It's more apparent when transitioning fill, removing it seems to fix this.
+	.stk--svg-wrapper .stk--inner-svg svg:last-child {
+		transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), fill 0s;
 	}
 }
 
