@@ -288,8 +288,25 @@ class StyleObject {
 			const unitAttrName = getAttributeName( `${ attrName }Unit`, device, state )
 			const actualAttrName = getAttributeName( attrName, device, state )
 
-			const unit = hasUnits ? ( attributes[ unitAttrName ] || hasUnits ) : ''
+			let unit = hasUnits ? ( getAttribute( unitAttrName, device, state, true ) || hasUnits ) : ''
 			let value = attributes[ actualAttrName ]
+
+			/* Allow unspecified fontSizeUnit to be set based on the desktop/tablet
+			 * unit if value for fontSize is empty. */
+			if ( ( value === '' || typeof value === 'undefined' ) && ( 0 === unitAttrName.indexOf( 'fontSizeUnit' ) ) ) {
+				const desktopUnit = attributes[ getAttributeName( `${ attrName }Unit`, 'desktop', state ) ]
+				const tabletUnit = attributes[ getAttributeName( `${ attrName }Unit`, 'tablet', state ) ]
+				const tabletValue = attributes[ getAttributeName( attrName, 'tablet', state ) ]
+				if ( device === 'mobile' ) {
+					if ( tabletValue !== '' && typeof tabletValue !== 'undefined' ) {
+						unit = tabletUnit
+					} else {
+						unit = desktopUnit
+					}
+				} else if ( device === 'tablet' ) {
+					unit = desktopUnit
+				}
+			}
 
 			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
 			if ( clampCallback && responsive ) {
