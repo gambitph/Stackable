@@ -3,11 +3,6 @@ const typographyAttributes = {
 		stkResponsive: true,
 		type: 'number',
 		default: '',
-		/**
-		 * Setting a unit here makes it the default value for all device types.
-		 * By leaving this empty the responsive settings will be correctly
-		 * inherited in the order: desktop -> tablet -> mobile
-		 */
 		stkUnits: 'px',
 	},
 	lineHeight: {
