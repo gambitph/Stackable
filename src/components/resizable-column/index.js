@@ -12,7 +12,6 @@ import { ColumnShowTooltipContext } from '../column-inner-blocks'
 import {
 	useBlockContext,
 	useDeviceType,
-	useEditorDom,
 	useWithShift,
 } from '~stackable/hooks'
 import { clamp, isEqual } from 'lodash'
@@ -25,6 +24,7 @@ import { getRowsFromColumns } from '~stackable/block-components/column/util'
  */
 import { __ } from '@wordpress/i18n'
 import { ResizableBox, Popover } from '@wordpress/components'
+import { useSelect } from '@wordpress/data'
 import {
 	Fragment, useState, useEffect, useRef, useCallback, useMemo, memo, useContext,
 } from '@wordpress/element'
@@ -41,7 +41,7 @@ const MIN_COLUMN_WIDTH_PERCENTAGE = {
 const ResizableColumn = props => {
 	const { clientId } = useBlockEditContext()
 	const blockContext = useBlockContext()
-	const editorDom = useEditorDom()
+	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
 	const {
 		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlocks, blockIndex, parentBlock,
@@ -130,6 +130,8 @@ const ResizableColumn = props => {
 			mobile: columnGapMobile || columnGapTablet || columnGap || 0,
 		}
 
+		const editorDom = getEditorDom()
+
 		// In desktop, get all the column widths.
 		if ( isDesktop ) {
 			// In desktop, the column gaps will affect the width of the parent column, take it into account.
@@ -180,7 +182,7 @@ const ResizableColumn = props => {
 		}
 
 		setIsTooltipOver( true )
-	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId, columnGap, columnGapTablet, columnGapMobile, editorDom ] )
+	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId, columnGap, columnGapTablet, columnGapMobile, getEditorDom ] )
 
 	const onResize = useCallback( ( _event, _direction, elt, delta ) => {
 		let columnPercentages = []

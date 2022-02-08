@@ -47,16 +47,18 @@ const ImageControl = props => {
 
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
+	const onChangeReset = useCallback( url => {
+		return onChange( {
+			url,
+			id: '',
+			width: '',
+			height: '',
+			alt: '',
+		} )
+	}, [ onChange ] )
+
 	const dynamicContentProps = useDynamicContentControlProps( {
-		onChange: url => {
-			return onChange( {
-				url,
-				id: '',
-				width: '',
-				height: '',
-				alt: '',
-			} )
-		},
+		onChange: onChangeReset,
 		value: attributes[ attrNameUrl ],
 	} )
 

@@ -8,10 +8,10 @@ import { isInvalid } from './is-invalid'
 
 // Add some styles to hide the flash of errored blocks.
 const disableBlockWarnings = () => {
-	const warningStyle = document.createElement( 'style' )
-	warningStyle.setAttribute( 'id', 'ugb-disable-block-warnings' )
-	warningStyle.innerHTML = '.has-warning[data-type^="ugb/"] { opacity: 0 !important; }'
-	document.body.appendChild( warningStyle )
+	// const warningStyle = document.createElement( 'style' )
+	// warningStyle.setAttribute( 'id', 'ugb-disable-block-warnings' )
+	// warningStyle.innerHTML = '.has-warning[data-type^="ugb/"] { opacity: 0 !important; }'
+	// document.body.appendChild( warningStyle )
 }
 
 // Remove the styles that hides the flash of errored blocks.
