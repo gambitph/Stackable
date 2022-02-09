@@ -40,7 +40,7 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 			$version = intval( $matches[2] );
 		 }
 
-		if ( isset( $name ) && isset( $version) ) {
+		if ( isset( $name ) && isset( $version ) ) {
 
 			if (
 				( 'Edge'   === $name && $version < 79 ) ||
