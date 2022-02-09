@@ -81,6 +81,11 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+	rowGap: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
 }
 
 export const attributes = ( version = VERSION ) => {
