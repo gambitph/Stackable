@@ -27,7 +27,7 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 	 */
 	function stackable_load_accordion_frontend_polyfill_script() {
 
-		 $user_agent = ! empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		 $user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
 		 if ( ! $user_agent ) {
 			 return;
