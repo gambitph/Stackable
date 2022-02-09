@@ -219,6 +219,14 @@ const Edit = props => {
 					/>
 
 					<AdvancedRangeControl
+						label={ __( 'Row Gap', i18n ) }
+						attribute="rowGap"
+						min="0"
+						sliderMax="50"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
 						label={ __( 'Icon Gap', i18n ) }
 						attribute="iconGap"
 						min="0"
