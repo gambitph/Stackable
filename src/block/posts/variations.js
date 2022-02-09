@@ -20,7 +20,6 @@ import ImagePortfolio from './images/portfolio.svg'
 import ImagePortfolio2 from './images/portfolio-2.svg'
 import ImageVerticalCard from './images/vertical-card.svg'
 import ImageHorizontalCard from './images/horizontal-card.svg'
-import ImageHorizontalCard2 from './images/horizontal-card-2.svg'
 import ImageVerticalCard2 from './images/vertical-card-2.svg'
 import ImageImageCard from './images/image-card.svg'
 
@@ -74,14 +73,6 @@ const variations = applyFilters(
 			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
 			icon: ImageHorizontalCard,
-			isPremium: ! isPro,
-			scope: [ 'block' ],
-		},
-		{
-			name: 'horizontal-2',
-			title: __( 'Horizontal 2', i18n ),
-			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
-			icon: ImageHorizontalCard2,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
