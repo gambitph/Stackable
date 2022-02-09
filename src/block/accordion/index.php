@@ -20,7 +20,6 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_script' ) ) {
 }
 
 if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) {
-	require_once( ABSPATH . 'wp-admin/includes/dashboard.php' );
 	/**
 	 * Adds polyfill for summary/details element that are * used in accordion blocks.
 	 *
@@ -28,11 +27,20 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 	 */
 	function stackable_load_accordion_frontend_polyfill_script() {
 
-		$browser_version = wp_check_browser_version();
+		 $user_agent = ! empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
-		if ( is_array( $browser_version ) ) {
-			$name = $browser_version['name'];
-			$version = intval( $browser_version['version'] );
+		 if ( ! $user_agent ) {
+			 return;
+		 }
+
+		 $matches = array();
+
+		 if ( preg_match('/(Edge|Chrome|Safari)\/(\d+)/', $user_agent, $matches) ) {
+			$name    = $matches[1];
+			$version = intval($matches[2]);
+		 }
+
+		if ( isset( $name ) && isset( $version) ) {
 
 			if (
 				( 'Edge'   === $name && $version < 79 ) ||
