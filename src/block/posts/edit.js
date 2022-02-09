@@ -324,10 +324,10 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<Image.InspectorControls
 				label={ __( 'Featured Image', i18n ) }
-				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( blockStyle ) }
-				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( blockStyle ) }
+				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
+				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
 				hasShape={ false }
-				hasWidth={ [ 'list', 'horizontal' ].includes( blockStyle ) }
+				hasWidth={ [ 'list', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
 				hasAlt={ false }
 				hasSelector={ false }
 				src={ focalPointPlaceholder }
