@@ -27,7 +27,7 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 	 */
 	function stackable_load_accordion_frontend_polyfill_script() {
 
-		 $user_agent = ! empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		 $user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
 		 if ( ! $user_agent ) {
 			 return;
@@ -35,12 +35,12 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 
 		 $matches = array();
 
-		 if ( preg_match('/(Edge|Chrome|Safari)\/(\d+)/', $user_agent, $matches) ) {
+		 if ( preg_match( '/(Edge|Chrome|Safari)\/(\d+)/', $user_agent, $matches ) ) {
 			$name    = $matches[1];
-			$version = intval($matches[2]);
+			$version = intval( $matches[2] );
 		 }
 
-		if ( isset( $name ) && isset( $version) ) {
+		if ( isset( $name ) && isset( $version ) ) {
 
 			if (
 				( 'Edge'   === $name && $version < 79 ) ||
