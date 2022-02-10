@@ -90,11 +90,10 @@
 	}
 
 	function addStyle() {
-		const
-			head = document.getElementsByTagName( 'head' )[ 0 ],
-			key =
-				style.innerText === undefined ? 'textContent' : 'innerText',
-			style = document.createElement( 'style' )
+		const style = document.createElement( 'style' )
+		const head = document.getElementsByTagName( 'head' )[ 0 ]
+		style.innerText === undefined ? 'textContent' : 'innerText'
+		const key = style.innerText === undefined ? 'textContent' : 'innerText'
 
 		const rules = [
 			'details{display: block;}',
@@ -110,8 +109,9 @@
 		head.insertBefore( style, head.firstChild )
 	}
 
-	const details = document.querySelectAll( '.stk-block-accordion' )
-	const label = document.createElement( '.stk-block-accordion .stk-block-accordion__heading' )
+	const details = document.querySelectorAll( '.stk-block-accordion' )
+	const label = document.createElement( 'div' )
+	label.className = 'stk-block-accordion stk-block-accordion__heading'
 	let first = null,
 		i = details.length,
 		j, wrapper
