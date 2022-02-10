@@ -243,7 +243,7 @@ const getStyleParams = ( options = {} ) => {
 
 		// Spacing
 		{
-			selector: `${ itemSelector } .stk-img-wrapper`,
+			selector: `${ itemSelector } .stk-block-posts__image-link`,
 			styleRule: 'marginBottom',
 			attrName: 'imageSpacing',
 			format: '%spx',
