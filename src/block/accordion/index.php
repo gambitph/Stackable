@@ -33,33 +33,34 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 			return;
 		}
 
-		$matches = array();
+		$load_polyfill = false;
 
-		if ( preg_match( '/(Edge?|Chrome|Safari|Trident)\/(\d+)/', $user_agent, $matches ) ) {
-			$name    = $matches[1];
-			$version = intval( $matches[2] );
+		if (
+			// Safari 13.1.3
+			( stripos( $user_agent, 'Version/13.' ) !== false && stripos( $user_agent, 'Safari/' ) !== false ) ||
+			// Adnroid 7.0 Samsung Galaxy J5
+			( stripos( $user_agent, 'Android 7.' ) !== false && stripos( $user_agent, 'Chrome/' ) !== false ) ||
+			// IE 11
+			stripos( $user_agent, 'Trident/7.0; rv:11.0' ) !== false
+		) {
+			$load_polyfill = true;
+		} else if ( stripos( $user_agent, ' Edge/' ) !== false || stripos( $user_agent, ' Edg/' ) !== false ) {
+			$matches = array();
+			if ( preg_match( '/(Edge?)\/(\d+)/', $user_agent, $matches ) ) {
+				$version = intval( $matches[2] );
+				if ( $version < 79 ) {
+					$load_polyfill = true;
+				}
+			}
 		}
 
-		if ( isset( $name ) && isset( $version ) ) {
-			if (
-				// Safari 13.1.3
-				( stripos( $user_agent, 'Version/13.' ) !== false && stripos( $user_agent, 'Safari/' ) !== false ) ||
-				// Adnroid 7.0 Samsung Galaxy J5
-				( stripos( $user_agent, 'Android 7.' ) !== false && stripos( $user_agent, 'Chrome/' ) !== false ) ||
-				// Edge < 79
-				( ( 'Edge' === $name || 'Edg' === $name ) && $version < 79 ) ||
-				// Chrome < 49
-				( 'Chrome' === $name && $version < 49 ) ||
-				// IE 11
-				stripos( $user_agent, 'Trident/7.0; rv:11.0' ) !== false
-			) {
-				wp_enqueue_script(
-					'stk-frontend-accordion-polyfill',
-					plugins_url( 'dist/frontend_block_accordion_polyfill.js', STACKABLE_FILE ),
-					array(),
-					STACKABLE_VERSION
-				);
-			}
+		if ( $load_polyfill ) {
+			wp_enqueue_script(
+				'stk-frontend-accordion-polyfill',
+				plugins_url( 'dist/frontend_block_accordion_polyfill.js', STACKABLE_FILE ),
+				array(),
+				STACKABLE_VERSION
+			);
 		}
 	}
 	add_action( 'wp_footer', 'stackable_load_accordion_frontend_polyfill_script' );
