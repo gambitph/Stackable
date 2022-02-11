@@ -148,6 +148,7 @@ export const generateRenderPostItem = attributes => {
 					? 'top'
 					: 'bottom'
 				}
+				className="stk-block-posts__image-link"
 			/>
 		)
 
