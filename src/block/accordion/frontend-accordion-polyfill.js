@@ -105,7 +105,7 @@
 		]
 		i = rules.length
 
-		style[ key ] = rules.join( '\n' )
+		style[ key ] = rules.join( '' )
 		head.insertBefore( style, head.firstChild )
 	}
 
