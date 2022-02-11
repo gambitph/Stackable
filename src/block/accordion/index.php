@@ -27,25 +27,31 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 	 */
 	function stackable_load_accordion_frontend_polyfill_script() {
 
-		 $user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
-		 if ( ! $user_agent ) {
-			 return;
-		 }
+		if ( ! $user_agent ) {
+			return;
+		}
 
-		 $matches = array();
+		$matches = array();
 
-		 if ( preg_match( '/(Edge|Chrome|Safari)\/(\d+)/', $user_agent, $matches ) ) {
+		if ( preg_match( '/(Edge?|Chrome|Safari|Trident)\/(\d+)/', $user_agent, $matches ) ) {
 			$name    = $matches[1];
 			$version = intval( $matches[2] );
-		 }
+		}
 
 		if ( isset( $name ) && isset( $version ) ) {
-
 			if (
-				( 'Edge'   === $name && $version < 79 ) ||
+				// Safari 13.1.3
+				( stripos( $user_agent, 'Version/13.' ) !== false && stripos( $user_agent, 'Safari/' ) !== false ) ||
+				// Adnroid 7.0 Samsung Galaxy J5
+				( stripos( $user_agent, 'Android 7.' ) !== false && stripos( $user_agent, 'Chrome/' ) !== false ) ||
+				// Edge < 79
+				( ( 'Edge' === $name || 'Edg' === $name ) && $version < 79 ) ||
+				// Chrome < 49
 				( 'Chrome' === $name && $version < 49 ) ||
-				( 'Safari' === $name && $version < 6  )
+				// IE 11
+				stripos( $user_agent, 'Trident/7.0; rv:11.0' ) !== false
 			) {
 				wp_enqueue_script(
 					'stk-frontend-accordion-polyfill',
