@@ -126,8 +126,8 @@ export const generateRenderPostItem = attributes => {
 
 		const featuredImgSrc = featuredImageUrls?.[ imageSize || 'full' ]?.[ 0 ]
 
-		const enableHeight = ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( style?.name )
-		const enableWidth = [ 'list', 'horizontal' ].includes( style?.name )
+		const enableHeight = ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( style?.name )
+		const enableWidth = [ 'list', 'horizontal', 'horizontal-2' ].includes( style?.name )
 
 		const featuredImage = !! featuredImgSrc && (
 			<Image
