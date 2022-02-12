@@ -7,3 +7,13 @@
 .editor-styles-wrapper .stk-column-wrapper > .block-editor-inner-blocks {
 	width: 100%;
 }
+
+.components-resizable-box__container.has-show-handle {
+	.components-resizable-box__handle {
+		display: none;
+	}
+}
+
+.components-resizable-box__container.has-show-handle > div > div> div > div > div[data-type="stackable/columns"] > div > div > div > div > div[data-type="stackable/column"] > div > div > div > div.components-resizable-box__side-handle {
+	display: block;
+}
