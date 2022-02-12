@@ -8,12 +8,12 @@
 	width: 100%;
 }
 
+// Ensure that only directly hovered columns will show their resizer. Nested
+// columns should not show their resizer if they are not directly hovered.
 .components-resizable-box__container.has-show-handle {
-	.components-resizable-box__handle {
-		display: none;
+	.components-resizable-box__container:not(.has-show-handle) {
+		.components-resizable-box__handle {
+			display: none !important;
+		}
 	}
-}
-
-.components-resizable-box__container.has-show-handle > div > div> div > div > div[data-type="stackable/columns"] > div > div > div > div > div[data-type="stackable/column"] > div > div > div > div.components-resizable-box__side-handle {
-	display: block;
 }
