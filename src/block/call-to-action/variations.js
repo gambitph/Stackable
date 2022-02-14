@@ -30,13 +30,15 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			isDefault: true,
-			icon: ImageDefault,
 			attributes: {
+				className: 'is-style-default',
 				hasContainer: true,
 			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
 			innerBlocks: [
 				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3' } ],
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
@@ -48,9 +50,7 @@ const variations = applyFilters(
 		},
 		{
 			name: 'horizontal',
-			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			icon: ImageHorizontal,
 			attributes: {
 				className: 'is-style-horizontal',
 				hasContainer: true,
@@ -59,6 +59,9 @@ const variations = applyFilters(
 				innerBlockVerticalAlign: 'center',
 				align: 'wide',
 			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Horizontal', i18n ),
+			pickerIcon: ImageHorizontal,
 			innerBlocks: [
 				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3' } ],
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
@@ -70,25 +73,28 @@ const variations = applyFilters(
 		},
 		{
 			name: 'horizontal-2',
-			title: __( 'Horizontal 2', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
-			icon: ImageHorizontal2,
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Horizontal 2', i18n ),
+			pickerIcon: ImageHorizontal2,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal-3',
-			title: __( 'Horizontal 3', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 3', i18n ) ),
-			icon: ImageHorizontal3,
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Horizontal 3', i18n ),
+			pickerIcon: ImageHorizontal3,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'split-centered',
-			title: __( 'Split Centered', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Split Centered', i18n ) ),
-			icon: ImageSplitCentered,
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Split Centered', i18n ),
+			pickerIcon: ImageSplitCentered,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

@@ -41,7 +41,9 @@ const Style = memo( props => {
 
 	const output = useDynamicContent( css.join( '' ) )
 
-	if ( ! doRender || ! css ) {
+	// If the block doesn't have a unique className (based on the uniqueId), it
+	// means that the user is still picking a layout.
+	if ( ! doRender || ! css || ! props.blockUniqueClassName ) {
 		return null
 	}
 
@@ -66,6 +68,12 @@ Style.Content = props => {
 	const {
 		version, versionAdded, versionDeprecated, styles, blockUniqueClassName, breakTablet, breakMobile,
 	} = props
+
+	// If the block doesn't have a unique className (based on the uniqueId), it
+	// means that the user is still picking a layout.
+	if ( ! props.blockUniqueClassName ) {
+		return null
+	}
 
 	const doRender = ( () => {
 		// If no version was given, just get everything that's not yet deprecated.
