@@ -34,6 +34,8 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			attributes: {
 				className: 'is-style-default',
+				hasContainer: true,
+				contentAlign: 'center',
 			},
 			isDefault: true,
 			pickerTitle: __( 'Default', i18n ),

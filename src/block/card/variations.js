@@ -34,6 +34,7 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			attributes: {
 				className: 'is-style-default',
+				hasContainer: true,
 			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Default', i18n ),
@@ -54,6 +55,7 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default 2', i18n ) ),
 			attributes: {
 				className: 'is-style-default-2',
+				hasContainer: true,
 			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Default 2', i18n ),

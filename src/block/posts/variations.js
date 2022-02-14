@@ -38,6 +38,13 @@ const variations = applyFilters(
 			isDefault: true,
 			attributes: {
 				className: 'is-style-default',
+				contentOrder: [
+					'title',
+					'meta',
+					'category',
+					'excerpt',
+					'readmore',
+				],
 				hasContainer: false,
 				imageWidth: 100,
 				imageWidthUnit: '%',
@@ -52,6 +59,13 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'List', i18n ) ),
 			attributes: {
 				imageWidth: 35,
+				contentOrder: [
+					'title',
+					'meta',
+					'category',
+					'excerpt',
+					'readmore',
+				],
 				imageWidthUnit: '%',
 				imageHeightUnit: 'px',
 				hasContainer: false,
