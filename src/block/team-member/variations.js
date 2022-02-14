@@ -58,11 +58,12 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: ImageDefault,
 			attributes: { className: 'is-style-default' },
 			isDefault: true,
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/image', {
 					imageHeight: 150, imageWidth: 150, imageWidthUnit: 'px', imageShape: 'circle',
@@ -80,12 +81,13 @@ const variations = applyFilters(
 		},
 		{
 			name: 'plain',
-			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			icon: ImagePlain,
 			attributes: {
 				className: 'is-style-plain', hasContainer: false, contentAlign: 'left',
 			},
+			pickerTitle: __( 'Plain', i18n ),
+			pickerIcon: ImagePlain,
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/image', {} ],
 				[ 'stackable/heading', {
@@ -100,25 +102,28 @@ const variations = applyFilters(
 		},
 		{
 			name: 'horizontal',
-			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			icon: ImageHorizontal,
+			pickerTitle: __( 'Horizontal', i18n ),
+			pickerIcon: ImageHorizontal,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal-2',
-			title: __( 'Horizontal 2', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
-			icon: ImageHorizontal2,
+			pickerTitle: __( 'Horizontal 2', i18n ),
+			pickerIcon: ImageHorizontal2,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'cover',
-			title: __( 'Cover', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Cover', i18n ) ),
-			icon: ImageCover,
+			pickerTitle: __( 'Cover', i18n ),
+			pickerIcon: ImageCover,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

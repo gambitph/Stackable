@@ -31,11 +31,12 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: ImageDefault,
 			attributes: { className: 'is-style-default' },
 			isDefault: true,
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/icon', {
 					icon: '<svg data-prefix="fas" data-icon="exclamation-triangle" class="svg-inline--fa fa-exclamation-triangle fa-w-18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true" width="32" height="32"><path fill="currentColor" d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg>',
@@ -66,9 +67,7 @@ const variations = applyFilters(
 		},
 		{
 			name: 'plain',
-			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			icon: ImagePlain,
 			attributes: {
 				className: 'is-style-plain',
 				blockShadow: '0px 2px 20px rgba(153, 153, 153, 0.2)',
@@ -81,6 +80,9 @@ const variations = applyFilters(
 				},
 				dismissibleColor: 'var(--stk-container-background-color, #40ba7b)',
 			},
+			pickerTitle: __( 'Plain', i18n ),
+			pickerIcon: ImagePlain,
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/icon', {
 					icon: '<svg data-prefix="fas" data-icon="exclamation-triangle" class="svg-inline--fa fa-exclamation-triangle fa-w-18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true" width="32" height="32"><path fill="currentColor" d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg>',
@@ -114,33 +116,37 @@ const variations = applyFilters(
 		},
 		{
 			name: 'side',
-			title: __( 'Side', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side', i18n ) ),
-			icon: ImageSide,
+			pickerTitle: __( 'Side', i18n ),
+			pickerIcon: ImageSide,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'bordered',
-			title: __( 'Bordered', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Bordered', i18n ) ),
-			icon: ImageBordered,
+			pickerTitle: __( 'Bordered', i18n ),
+			pickerIcon: ImageBordered,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'outlined',
-			title: __( 'Outlined', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Outlined', i18n ) ),
-			icon: ImageOutlined,
+			pickerTitle: __( 'Outlined', i18n ),
+			pickerIcon: ImageOutlined,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'large-icon',
-			title: __( 'Large Icon', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Icon', i18n ) ),
-			icon: ImageLargeIcon,
+			pickerTitle: __( 'Large Icon', i18n ),
+			pickerIcon: ImageLargeIcon,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

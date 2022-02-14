@@ -48,21 +48,21 @@ const VariationPicker = props => {
 						<li key={ variation.name }>
 							<Button
 								variant="secondary"
-								icon={ variation.icon }
+								icon={ variation.pickerIcon || variation.icon }
 								iconSize={ 48 }
 								isSecondary
 								onClick={ () => onSelect( variation ) }
 								className={ classnames( 'block-editor-block-variation-picker__variation', {
 									'is-premium': variation.isPremium,
 								} ) }
-								label={ variation.description || variation.title }
+								label={ variation.description || variation.pickerTitle || variation.title }
 								disabled={ ! isPro && variation.isPremium }
 							/>
 							<span
 								className="block-editor-block-variation-picker__variation-label"
 								role="presentation"
 							>
-								{ variation.title }
+								{ variation.pickerTitle || variation.title }
 							</span>
 						</li>
 					) ) }

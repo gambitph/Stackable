@@ -31,14 +31,15 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			attributes: {
 				className: 'is-style-default',
 				innerBlockContentAlign: 'alignwide',
 				align: 'full',
 			},
-			icon: ImageDefault,
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
 			isDefault: true,
 			innerBlocks: [
 				[ 'stackable/column', { hasContainer: true }, [
@@ -88,31 +89,30 @@ const variations = applyFilters(
 		},
 		{
 			name: 'float',
-			title: __( 'Float', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Float', i18n ) ),
-			icon: ImageFloat,
 			attributes: {
 				innerBlockContentAlign: 'alignwide',
 				className: 'is-style-horizontal',
 				align: 'full',
 			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Float', i18n ),
+			pickerIcon: ImageFloat,
 			innerBlocks: [
 				[ 'stackable/column', {
 					contentAlign: 'left',
-					containerPaddingUnit: '%',
 					containerPadding: {
-						left: 32,
+						left: 80,
 					},
 				}, [
 					[ 'stackable/image', {
 						imageShape: 'circle',
-						imageHeight: 250,
-						imageWidth: 250,
-						positionNum: {
-							right: 60,
+						imageHeight: 150,
+						imageWidth: 150,
+						blockMargin: {
+							top: '', right: '', bottom: '', left: -80,
 						},
 						imageWidthUnit: 'px',
-						positionNumUnit: '%',
 					} ],
 					[ 'stackable/heading', {
 						text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
@@ -131,20 +131,18 @@ const variations = applyFilters(
 				] ],
 				[ 'stackable/column', {
 					contentAlign: 'left',
-					containerPaddingUnit: '%',
 					containerPadding: {
-						left: 32,
+						left: 80,
 					},
 				}, [
 					[ 'stackable/image', {
 						imageShape: 'circle',
-						imageHeight: 250,
-						imageWidth: 250,
-						positionNum: {
-							right: 60,
+						imageHeight: 150,
+						imageWidth: 150,
+						blockMargin: {
+							top: '', right: '', bottom: '', left: -80,
 						},
 						imageWidthUnit: 'px',
-						positionNumUnit: '%',
 					} ],
 					[ 'stackable/heading', {
 						text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
@@ -166,33 +164,37 @@ const variations = applyFilters(
 		},
 		{
 			name: 'horizontal',
-			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			icon: ImageHorizontal,
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Horizontal', i18n ),
+			pickerIcon: ImageHorizontal,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'large-mid',
-			title: __( 'Large Mid', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Mid', i18n ) ),
-			icon: ImageLargeMid,
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Large Mid', i18n ),
+			pickerIcon: ImageLargeMid,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'offset',
-			title: __( 'Offset', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Offset', i18n ) ),
-			icon: ImageOffset,
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Offset', i18n ),
+			pickerIcon: ImageOffset,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'zigzag',
-			title: __( 'Zigzag', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Zizag', i18n ) ),
-			icon: ImageZigZag,
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Zigzag', i18n ),
+			pickerIcon: ImageZigZag,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
