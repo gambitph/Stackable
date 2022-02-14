@@ -127,6 +127,10 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 					const innerBlocks = createBlocksFromInnerBlocksTemplate( nextVariation.innerBlocks )
 					recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
 
+					// TODO: Known issue, if you have multiple text blocks
+					// scattered across different columns, changing the layout
+					// can jumble those text blocks.
+
 					// If the user is switching layouts, there might be inner
 					// blocks already present. Copy over the contents of the old
 					// inner blocks to the next variation counterpart.
@@ -158,6 +162,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 											}
 
 											lastBlock.parent.innerBlocks.push( newBlock )
+											nextVariationBlockTypes[ blockName ].push( lastBlock )
 										}
 
 									// For root text blocks that surpass what the variation has, add them to the end of the existing text.
@@ -181,6 +186,8 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 												innerBlocks.splice( textIndex + 1, 0, newBlock )
 											}
 										}
+
+										nextVariationBlockTypes[ blockName ].push( lastBlock )
 									}
 								}
 							} )

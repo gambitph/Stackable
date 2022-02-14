@@ -35,6 +35,7 @@ const variations = applyFilters(
 			isDefault: true,
 			attributes: {
 				className: 'is-style-default',
+				contentAlign: 'center',
 				hasContainer: true,
 			},
 			isActive: [ 'className' ],
