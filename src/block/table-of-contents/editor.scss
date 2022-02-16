@@ -1,0 +1,16 @@
+// Show a cursor pointer when hovering over the bullet icons
+.stk-block-table-of-contents {
+	li {
+		position: relative;
+	}
+
+	li > a {
+		display: block;
+	}
+}
+
+// Alignments when the icon list is aligned.
+[data-type="stackable/table-of-contents"] .stk-block-table-of-contents :is(ul, ol) {
+	margin-left: var(--stk-alignment-margin-left);
+	margin-right: var(--stk-alignment-margin-right);
+}

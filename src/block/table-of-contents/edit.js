@@ -1,0 +1,313 @@
+/**
+ * Internal dependencies
+ */
+import { TableOfContentsStyles } from './style'
+
+/***
+ * External dependencies
+ */
+import classnames from 'classnames'
+import isEqual from 'lodash/isEqual'
+import { i18n, version as VERSION } from 'stackable'
+import {
+	InspectorTabs,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	AdvancedRangeControl,
+	AdvancedToggleControl,
+	IconControl,
+	ColorPaletteControl,
+	AdvancedSelectControl,
+	AlignButtonsControl,
+} from '~stackable/components'
+import {
+	useBlockHoverClass,
+} from '~stackable/hooks'
+import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	Typography,
+	BlockDiv,
+	useGeneratedCss,
+	Advanced,
+	CustomCSS,
+	Responsive,
+	CustomAttributes,
+	EffectsAnimations,
+	getTypographyClasses,
+	ConditionalDisplay,
+	MarginBottom,
+	Alignment,
+	getAlignmentClasses,
+	Transform,
+} from '~stackable/block-components'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	useSelect,
+} from '@wordpress/data'
+import {
+	Fragment, useEffect, useState,
+} from '@wordpress/element'
+import {
+	__,
+} from '@wordpress/i18n'
+
+import {
+	getHeadingsFromContent,
+	linearToNestedHeadingList,
+} from './util'
+
+import TableOfContentsList from './table-of-contents-list'
+
+const listTypeOptions = [
+	{
+		label: __( 'Number', i18n ),
+		value: 'decimal',
+	},
+	{
+		label: __( 'Padded Number', i18n ),
+		value: 'decimal-leading-zero',
+	},
+	{
+		label: __( 'Lowercase Roman', i18n ),
+		value: 'lower-roman',
+	},
+	{
+		label: __( 'Uppercase Roman', i18n ),
+		value: 'upper-roman',
+	},
+	{
+		label: __( 'Lowercase Letters', i18n ),
+		value: 'lower-alpha',
+	},
+	{
+		label: __( 'Uppercase Letters', i18n ),
+		value: 'upper-alpha',
+	},
+	{
+		label: __( 'None', i18n ),
+		value: 'none',
+	},
+]
+
+const HeadingsControls = () => (
+	[ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ].map( heading =>
+		<AdvancedToggleControl
+			key={ heading }
+			label={ `Include ${ heading }` }
+			attribute={ `include${ heading }` }
+			defaultValue={ true }
+		/>
+	)
+)
+
+const Edit = props => {
+	const [ headings, setHeadings ] = useState( [] )
+	const [ exclude, setExclude ] = useState( [] )
+
+	const {
+		postContent,
+	} = useSelect( select => ( {
+		postContent: select( 'core/editor' ).getEditedPostContent(),
+	} ) )
+	const latestHeadings = getHeadingsFromContent( postContent, props.attributes )
+
+	useEffect( () => {
+		if ( ! isEqual( headings, latestHeadings ) ) {
+			setHeadings( latestHeadings )
+			setAttributes( { headings } )
+		}
+	}, [ latestHeadings ] )
+
+	const {
+		attributes,
+		setAttributes,
+		className,
+		isSelected,
+	} = props
+
+	useGeneratedCss( props.attributes )
+
+	const { ordered } = attributes
+	const tagName = ordered ? 'ol' : 'ul'
+
+	const blockHoverClass = useBlockHoverClass()
+	const textClasses = getTypographyClasses( attributes )
+	const blockAlignmentClass = getAlignmentClasses( attributes )
+
+	const blockClassNames = classnames( [
+		className,
+		'stk-table-of-contents',
+		blockAlignmentClass,
+		blockHoverClass,
+		textClasses,
+	] )
+
+	return (
+		<Fragment>
+			<InspectorTabs />
+
+			<Alignment.InspectorControls />
+			<BlockDiv.InspectorControls />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					initialOpen={ true }
+					id="general"
+				>
+					<HeadingsControls />
+
+					<AdvancedRangeControl
+						label={ __( 'Row Gap', i18n ) }
+						attribute="rowGap"
+						min="0"
+						sliderMax="50"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Icon Gap', i18n ) }
+						attribute="iconGap"
+						min="0"
+						sliderMax="20"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Indentation', i18n ) }
+						attribute="indentation"
+						min="0"
+						sliderMax="50"
+						responsive="all"
+						placeholder=""
+					/>
+					<AlignButtonsControl
+						label={ __( 'List Alignment', i18n ) }
+						attribute="listAlignment"
+						responsive="all"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Icons & Numbers', i18n ) }
+					initialOpen={ false }
+					id="icon-and-markers"
+				>
+					<AdvancedToggleControl
+						label={ __( 'Use ordered list', i18n ) }
+						attribute="ordered"
+					/>
+
+					{ ! ordered && (
+						<IconControl
+							label={ __( 'Icon', i18n ) }
+							value={ attributes.icon }
+							onChange={ icon => {
+								// Reset custom individual icons.
+								setAttributes( { icon, icons: [] } )
+							} }
+						/>
+					) }
+
+					{ ordered && (
+						<AdvancedSelectControl
+							label={ __( 'List Type', i18n ) }
+							attribute="listType"
+							options={ listTypeOptions }
+						/>
+					) }
+
+					<ColorPaletteControl
+						label={ __( 'Color', i18n ) }
+						attribute="markerColor"
+						hover="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Icon / Number Size', i18n ) }
+						attribute="iconSize"
+						min={ 0 }
+						max={ 5 }
+						step={ 0.1 }
+						allowReset={ true }
+						responsive="all"
+						placeholder="1"
+					/>
+
+					{ ! ordered && (
+						<AdvancedRangeControl
+							label={ __( 'Icon Opacity', i18n ) }
+							attribute="iconOpacity"
+							min={ 0 }
+							max={ 1 }
+							step={ 0.1 }
+							allowReset={ true }
+							placeholder="1.0"
+							hover="all"
+						/>
+					) }
+
+					{ ! ordered && (
+						<AdvancedRangeControl
+							label={ __( 'Icon Rotation', i18n ) }
+							attribute="iconRotation"
+							min={ 0 }
+							max={ 360 }
+							allowReset={ true }
+							placeholder="0"
+						/>
+					) }
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<Typography.InspectorControls
+				isMultiline={ true }
+				initialOpen={ false }
+				hasTextTag={ false }
+				hasTextContent={ false }
+			/>
+
+			<Advanced.InspectorControls />
+			<Transform.InspectorControls />
+			<EffectsAnimations.InspectorControls />
+			<CustomAttributes.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-table-of-contents" />
+			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
+
+			<TableOfContentsStyles version={ VERSION } />
+			<CustomCSS mainBlockClass="stk-table-of-contents" />
+
+			<BlockDiv className={ blockClassNames }>
+				<div className="stk-table-of-contents__title">
+					Table of Contents
+				</div>
+				<TableOfContentsList
+					nestedHeadingList={ linearToNestedHeadingList( headings ) }
+					isSelected={ isSelected }
+					exclude={ exclude }
+					setExclude={ setExclude }
+					listTag={ tagName }
+				/>
+				{ headings.length === 0 && (
+					<div className="stk-table-of-contents__placeholder">
+						<p><em>
+							{ __(
+								'Adding Heading blocks to add entries.',
+								'stackable-ultimate-gutenberg-blocks'
+							) }
+						</em></p>
+					</div>
+				) }
+			</BlockDiv>
+			<MarginBottom />
+		</Fragment>
+	)
+}
+
+export default withQueryLoopContext( Edit )
