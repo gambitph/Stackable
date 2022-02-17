@@ -109,6 +109,9 @@ const variations = applyFilters(
 		{
 			name: 'half-overlay',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Half Overlay', i18n ) ),
+			attributes: {
+				className: 'is-style-half-overlay',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Half Overlay', i18n ),
 			pickerIcon: ImageHalfOverlay,
@@ -118,6 +121,9 @@ const variations = applyFilters(
 		{
 			name: 'center-overlay',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Center Overlay', i18n ) ),
+			attributes: {
+				className: 'is-style-center-overlay',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Center Overlay', i18n ),
 			pickerIcon: ImageCenterOverlay,
@@ -127,6 +133,9 @@ const variations = applyFilters(
 		{
 			name: 'side-overlay',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side Overlay', i18n ) ),
+			attributes: {
+				className: 'is-style-side-overlay',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Side Overlay', i18n ),
 			pickerIcon: ImageSideOverlay,
@@ -136,6 +145,9 @@ const variations = applyFilters(
 		{
 			name: 'half',
 			description: __( 'Half Layout', i18n ),
+			attributes: {
+				className: 'is-style-half',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Half', i18n ),
 			pickerIcon: ImageHalf,

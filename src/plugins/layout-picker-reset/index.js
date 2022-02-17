@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	i18n, isPro, isContentOnlyMode,
+	i18n, isContentOnlyMode,
 } from 'stackable'
 import Button from '~stackable/components/button'
 
@@ -40,7 +40,7 @@ LayoutPickerButton.defaultProps = {
 	disabled: false,
 }
 
-if ( isPro && ! isContentOnlyMode ) {
+if ( ! isContentOnlyMode ) {
 	const withLayoutPicker = createHigherOrderComponent( BlockEdit => {
 		return props => {
 			const { getBlockVariations, getBlockSupport } = useSelect( 'core/blocks' )
