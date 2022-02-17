@@ -92,7 +92,7 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Float', i18n ) ),
 			attributes: {
 				innerBlockContentAlign: 'alignwide',
-				className: 'is-style-horizontal',
+				className: 'is-style-float',
 				align: 'full',
 			},
 			isActive: [ 'className' ],
