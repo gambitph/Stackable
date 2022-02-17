@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.1.3\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.1.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-02-15T12:00:21+00:00\n"
+"POT-Creation-Date: 2022-02-17T09:31:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -2237,8 +2237,8 @@ msgstr ""
 
 #: pro__premium_only/src/block/posts/index.js:220
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:49
-#: src/block/feature-grid/variations.js:185
-#: src/block/feature-grid/variations.js:187
+#: src/block/feature-grid/variations.js:191
+#: src/block/feature-grid/variations.js:196
 msgid "Offset"
 msgstr ""
 
@@ -2377,7 +2377,7 @@ msgstr ""
 
 #: pro__premium_only/src/components/effects-settings/index.js:40
 #: src/block/accordion/variations.js:114
-#: src/block/accordion/variations.js:116
+#: src/block/accordion/variations.js:119
 #: src/components/button-controls/index.js:372
 #: src/deprecated/v2/block/separator/edit.js:129
 #: src/deprecated/v2/modules/block-separators/index.js:131
@@ -4096,19 +4096,19 @@ msgstr ""
 #: src/block/call-to-action/variations.js:53
 #: src/block/call-to-action/variations.js:63
 #: src/block/card/variations.js:124
-#: src/block/card/variations.js:125
+#: src/block/card/variations.js:128
 #: src/block/feature-grid/variations.js:167
-#: src/block/feature-grid/variations.js:169
+#: src/block/feature-grid/variations.js:172
 #: src/block/feature/variations.js:62
 #: src/block/feature/variations.js:69
 #: src/block/hero/variations.js:55
 #: src/block/hero/variations.js:71
-#: src/block/posts/variations.js:92
-#: src/block/posts/variations.js:93
+#: src/block/posts/variations.js:95
+#: src/block/posts/variations.js:99
 #: src/block/team-member/variations.js:107
-#: src/block/team-member/variations.js:108
+#: src/block/team-member/variations.js:111
 #: src/block/testimonial/variations.js:94
-#: src/block/testimonial/variations.js:95
+#: src/block/testimonial/variations.js:98
 #: src/deprecated/v2/block/call-to-action/edit.js:78
 #: src/deprecated/v2/block/call-to-action/edit.js:81
 #: src/deprecated/v2/block/call-to-action/edit.js:84
@@ -4119,8 +4119,8 @@ msgid "Horizontal"
 msgstr ""
 
 #: src/block-components/alignment/edit.js:75
-#: src/block/testimonial/variations.js:112
-#: src/block/testimonial/variations.js:113
+#: src/block/testimonial/variations.js:118
+#: src/block/testimonial/variations.js:122
 #: src/deprecated/v2/block/testimonial/edit.js:92
 msgid "Vertical"
 msgstr ""
@@ -4530,8 +4530,8 @@ msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:263
 #: src/block-components/image/edit.js:350
-#: src/block/team-member/variations.js:125
-#: src/block/team-member/variations.js:126
+#: src/block/team-member/variations.js:131
+#: src/block/team-member/variations.js:135
 #: src/components/background-controls/index.js:367
 #: src/components/background-controls/index.js:382
 #: src/components/background-controls/index.js:397
@@ -5095,83 +5095,83 @@ msgstr ""
 #: src/block/accordion/variations.js:36
 #: src/block/accordion/variations.js:68
 #: src/block/accordion/variations.js:114
-#: src/block/accordion/variations.js:123
-#: src/block/accordion/variations.js:132
+#: src/block/accordion/variations.js:126
+#: src/block/accordion/variations.js:138
 #: src/block/blockquote/variations.js:35
 #: src/block/blockquote/variations.js:55
 #: src/block/blockquote/variations.js:82
-#: src/block/blockquote/variations.js:91
-#: src/block/blockquote/variations.js:100
+#: src/block/blockquote/variations.js:94
+#: src/block/blockquote/variations.js:106
 #: src/block/call-to-action/variations.js:33
 #: src/block/call-to-action/variations.js:53
 #: src/block/call-to-action/variations.js:76
-#: src/block/call-to-action/variations.js:85
-#: src/block/call-to-action/variations.js:94
+#: src/block/call-to-action/variations.js:88
+#: src/block/call-to-action/variations.js:100
 #: src/block/card/variations.js:34
 #: src/block/card/variations.js:55
 #: src/block/card/variations.js:124
-#: src/block/card/variations.js:133
-#: src/block/card/variations.js:142
+#: src/block/card/variations.js:136
+#: src/block/card/variations.js:148
 #: src/block/feature-grid/variations.js:34
 #: src/block/feature-grid/variations.js:92
 #: src/block/feature-grid/variations.js:167
-#: src/block/feature-grid/variations.js:176
-#: src/block/feature-grid/variations.js:185
-#: src/block/feature-grid/variations.js:194
+#: src/block/feature-grid/variations.js:179
+#: src/block/feature-grid/variations.js:191
+#: src/block/feature-grid/variations.js:203
 #: src/block/feature/variations.js:40
 #: src/block/feature/variations.js:62
 #: src/block/feature/variations.js:96
-#: src/block/feature/variations.js:105
-#: src/block/feature/variations.js:114
-#: src/block/feature/variations.js:123
+#: src/block/feature/variations.js:108
+#: src/block/feature/variations.js:120
 #: src/block/feature/variations.js:132
-#: src/block/feature/variations.js:141
-#: src/block/feature/variations.js:150
-#: src/block/feature/variations.js:159
+#: src/block/feature/variations.js:144
+#: src/block/feature/variations.js:156
 #: src/block/feature/variations.js:168
-#: src/block/feature/variations.js:177
+#: src/block/feature/variations.js:180
+#: src/block/feature/variations.js:192
+#: src/block/feature/variations.js:204
 #: src/block/hero/variations.js:34
 #: src/block/hero/variations.js:55
 #: src/block/hero/variations.js:111
-#: src/block/hero/variations.js:120
-#: src/block/hero/variations.js:129
+#: src/block/hero/variations.js:123
+#: src/block/hero/variations.js:135
 #: src/block/image-box/variations.js:34
 #: src/block/image-box/variations.js:87
 #: src/block/image-box/variations.js:142
-#: src/block/image-box/variations.js:151
-#: src/block/image-box/variations.js:160
-#: src/block/image-box/variations.js:169
+#: src/block/image-box/variations.js:154
+#: src/block/image-box/variations.js:166
+#: src/block/image-box/variations.js:178
 #: src/block/notification/variations.js:34
 #: src/block/notification/variations.js:70
 #: src/block/notification/variations.js:119
-#: src/block/notification/variations.js:128
-#: src/block/notification/variations.js:137
-#: src/block/notification/variations.js:146
+#: src/block/notification/variations.js:131
+#: src/block/notification/variations.js:143
+#: src/block/notification/variations.js:155
 #: src/block/posts/variations.js:37
 #: src/block/posts/variations.js:59
 #: src/block/posts/variations.js:83
-#: src/block/posts/variations.js:92
-#: src/block/posts/variations.js:101
-#: src/block/posts/variations.js:110
+#: src/block/posts/variations.js:95
+#: src/block/posts/variations.js:107
 #: src/block/posts/variations.js:119
-#: src/block/posts/variations.js:128
-#: src/block/posts/variations.js:137
+#: src/block/posts/variations.js:131
+#: src/block/posts/variations.js:143
+#: src/block/posts/variations.js:155
 #: src/block/pricing-box/variations.js:33
 #: src/block/pricing-box/variations.js:58
 #: src/block/pricing-box/variations.js:92
-#: src/block/pricing-box/variations.js:101
-#: src/block/pricing-box/variations.js:110
+#: src/block/pricing-box/variations.js:104
+#: src/block/pricing-box/variations.js:116
 #: src/block/team-member/variations.js:61
 #: src/block/team-member/variations.js:86
 #: src/block/team-member/variations.js:107
-#: src/block/team-member/variations.js:116
-#: src/block/team-member/variations.js:125
+#: src/block/team-member/variations.js:119
+#: src/block/team-member/variations.js:131
 #: src/block/testimonial/variations.js:34
 #: src/block/testimonial/variations.js:60
 #: src/block/testimonial/variations.js:94
-#: src/block/testimonial/variations.js:103
-#: src/block/testimonial/variations.js:112
-#: src/block/testimonial/variations.js:121
+#: src/block/testimonial/variations.js:106
+#: src/block/testimonial/variations.js:118
+#: src/block/testimonial/variations.js:130
 msgctxt "Block layout name"
 msgid "%s Layout"
 msgstr ""
@@ -5210,16 +5210,16 @@ msgstr ""
 msgid "Plain"
 msgstr ""
 
-#: src/block/accordion/variations.js:123
-#: src/block/accordion/variations.js:125
-#: src/block/pricing-box/variations.js:102
+#: src/block/accordion/variations.js:126
+#: src/block/accordion/variations.js:131
+#: src/block/pricing-box/variations.js:108
 #: src/deprecated/v2/block/accordion/edit.js:74
 #: src/deprecated/v2/block/pricing-box/edit.js:88
 msgid "Colored"
 msgstr ""
 
-#: src/block/accordion/variations.js:132
-#: src/block/accordion/variations.js:134
+#: src/block/accordion/variations.js:138
+#: src/block/accordion/variations.js:143
 #: src/deprecated/v2/block/icon-list/deprecated/util.js:48
 msgid "Plus"
 msgstr ""
@@ -5286,21 +5286,21 @@ msgid "Simple"
 msgstr ""
 
 #: src/block/blockquote/variations.js:82
-#: src/block/blockquote/variations.js:84
+#: src/block/blockquote/variations.js:87
 #: src/block/posts/edit.js:458
 #: src/deprecated/v2/block/blog-posts/edit.js:601
 msgid "Highlighted"
 msgstr ""
 
-#: src/block/blockquote/variations.js:91
-#: src/block/blockquote/variations.js:93
+#: src/block/blockquote/variations.js:94
+#: src/block/blockquote/variations.js:99
 #: src/deprecated/v2/block/blockquote/edit.js:72
 #: src/deprecated/v2/block/header/edit.js:92
 msgid "Huge"
 msgstr ""
 
-#: src/block/blockquote/variations.js:100
-#: src/block/blockquote/variations.js:102
+#: src/block/blockquote/variations.js:106
+#: src/block/blockquote/variations.js:111
 #: src/deprecated/v2/block/blockquote/edit.js:69
 msgid "Centered Quote"
 msgstr ""
@@ -5404,21 +5404,21 @@ msgid "Button text"
 msgstr ""
 
 #: src/block/call-to-action/variations.js:76
-#: src/block/call-to-action/variations.js:78
-#: src/block/posts/variations.js:101
-#: src/block/posts/variations.js:102
-#: src/block/team-member/variations.js:116
-#: src/block/team-member/variations.js:117
+#: src/block/call-to-action/variations.js:81
+#: src/block/posts/variations.js:107
+#: src/block/posts/variations.js:111
+#: src/block/team-member/variations.js:119
+#: src/block/team-member/variations.js:123
 msgid "Horizontal 2"
 msgstr ""
 
-#: src/block/call-to-action/variations.js:85
-#: src/block/call-to-action/variations.js:87
+#: src/block/call-to-action/variations.js:88
+#: src/block/call-to-action/variations.js:93
 msgid "Horizontal 3"
 msgstr ""
 
-#: src/block/call-to-action/variations.js:94
-#: src/block/call-to-action/variations.js:96
+#: src/block/call-to-action/variations.js:100
+#: src/block/call-to-action/variations.js:105
 #: src/deprecated/v2/block/call-to-action/edit.js:87
 msgid "Split Centered"
 msgstr ""
@@ -5428,14 +5428,14 @@ msgstr ""
 msgid "Default 2"
 msgstr ""
 
-#: src/block/card/variations.js:133
-#: src/block/card/variations.js:134
+#: src/block/card/variations.js:136
+#: src/block/card/variations.js:140
 #: src/deprecated/v2/block/card/edit.js:88
 msgid "Full"
 msgstr ""
 
-#: src/block/card/variations.js:142
-#: src/block/card/variations.js:143
+#: src/block/card/variations.js:148
+#: src/block/card/variations.js:152
 #: src/deprecated/v2/block/card/edit.js:91
 #: src/deprecated/v2/block/number-box/edit.js:85
 msgid "Faded"
@@ -5599,17 +5599,17 @@ msgstr ""
 msgid "Float"
 msgstr ""
 
-#: src/block/feature-grid/variations.js:176
-#: src/block/feature-grid/variations.js:178
+#: src/block/feature-grid/variations.js:179
+#: src/block/feature-grid/variations.js:184
 #: src/deprecated/v2/block/feature-grid/edit.js:85
 msgid "Large Mid"
 msgstr ""
 
-#: src/block/feature-grid/variations.js:194
+#: src/block/feature-grid/variations.js:203
 msgid "Zizag"
 msgstr ""
 
-#: src/block/feature-grid/variations.js:196
+#: src/block/feature-grid/variations.js:208
 #: src/deprecated/v2/block/feature-grid/edit.js:88
 msgid "Zigzag"
 msgstr ""
@@ -5621,52 +5621,52 @@ msgid "Description for this block. Use this space for describing your block."
 msgstr ""
 
 #: src/block/feature/variations.js:96
-#: src/block/feature/variations.js:98
+#: src/block/feature/variations.js:101
 msgid "Overlap Shape 1"
 msgstr ""
 
-#: src/block/feature/variations.js:105
-#: src/block/feature/variations.js:107
+#: src/block/feature/variations.js:108
+#: src/block/feature/variations.js:113
 msgid "Overlap Shape 2"
 msgstr ""
 
-#: src/block/feature/variations.js:114
-#: src/block/feature/variations.js:116
+#: src/block/feature/variations.js:120
+#: src/block/feature/variations.js:125
 msgid "Overlap Shape 3"
 msgstr ""
 
-#: src/block/feature/variations.js:123
-#: src/block/feature/variations.js:125
+#: src/block/feature/variations.js:132
+#: src/block/feature/variations.js:137
 msgid "Overlap Shape 4"
 msgstr ""
 
-#: src/block/feature/variations.js:132
-#: src/block/feature/variations.js:134
+#: src/block/feature/variations.js:144
+#: src/block/feature/variations.js:149
 msgid "Overlap Shape 5"
 msgstr ""
 
-#: src/block/feature/variations.js:141
-#: src/block/feature/variations.js:143
+#: src/block/feature/variations.js:156
+#: src/block/feature/variations.js:161
 msgid "Overlap Background 1"
 msgstr ""
 
-#: src/block/feature/variations.js:150
-#: src/block/feature/variations.js:152
+#: src/block/feature/variations.js:168
+#: src/block/feature/variations.js:173
 msgid "Overlap Background 2"
 msgstr ""
 
-#: src/block/feature/variations.js:159
-#: src/block/feature/variations.js:161
+#: src/block/feature/variations.js:180
+#: src/block/feature/variations.js:185
 msgid "Overlap Background 3"
 msgstr ""
 
-#: src/block/feature/variations.js:168
-#: src/block/feature/variations.js:170
+#: src/block/feature/variations.js:192
+#: src/block/feature/variations.js:197
 msgid "Overlap Background 4"
 msgstr ""
 
-#: src/block/feature/variations.js:177
-#: src/block/feature/variations.js:179
+#: src/block/feature/variations.js:204
+#: src/block/feature/variations.js:209
 msgid "Overlap Background 5"
 msgstr ""
 
@@ -5722,28 +5722,28 @@ msgid "Title for This Block"
 msgstr ""
 
 #: src/block/hero/variations.js:111
-#: src/block/hero/variations.js:113
+#: src/block/hero/variations.js:116
 #: src/deprecated/v2/block/header/edit.js:80
 msgid "Half Overlay"
 msgstr ""
 
-#: src/block/hero/variations.js:120
-#: src/block/hero/variations.js:122
+#: src/block/hero/variations.js:123
+#: src/block/hero/variations.js:128
 #: src/deprecated/v2/block/header/edit.js:83
 msgid "Center Overlay"
 msgstr ""
 
-#: src/block/hero/variations.js:129
-#: src/block/hero/variations.js:131
+#: src/block/hero/variations.js:135
+#: src/block/hero/variations.js:140
 #: src/deprecated/v2/block/header/edit.js:86
 msgid "Side Overlay"
 msgstr ""
 
-#: src/block/hero/variations.js:138
+#: src/block/hero/variations.js:147
 msgid "Half Layout"
 msgstr ""
 
-#: src/block/hero/variations.js:140
+#: src/block/hero/variations.js:152
 #: src/deprecated/v2/block/header/edit.js:89
 #: src/deprecated/v2/block/team-member/edit.js:98
 msgid "Half"
@@ -5823,25 +5823,25 @@ msgid "Accessibility"
 msgstr ""
 
 #: src/block/image-box/variations.js:142
-#: src/block/image-box/variations.js:143
+#: src/block/image-box/variations.js:146
 #: src/deprecated/v2/block/image-box/edit.js:80
 msgid "Box"
 msgstr ""
 
-#: src/block/image-box/variations.js:151
-#: src/block/image-box/variations.js:152
+#: src/block/image-box/variations.js:154
+#: src/block/image-box/variations.js:158
 #: src/deprecated/v2/block/image-box/edit.js:83
 msgid "Captioned"
 msgstr ""
 
-#: src/block/image-box/variations.js:160
-#: src/block/image-box/variations.js:161
+#: src/block/image-box/variations.js:166
+#: src/block/image-box/variations.js:170
 #: src/deprecated/v2/block/image-box/edit.js:86
 msgid "Fade"
 msgstr ""
 
-#: src/block/image-box/variations.js:169
-#: src/block/image-box/variations.js:170
+#: src/block/image-box/variations.js:178
+#: src/block/image-box/variations.js:182
 #: src/deprecated/v2/block/image-box/edit.js:89
 #: src/deprecated/v2/block/image-box/edit.js:286
 #: src/deprecated/v2/block/image-box/edit.js:438
@@ -5880,26 +5880,26 @@ msgid "Dismissible"
 msgstr ""
 
 #: src/block/notification/variations.js:119
-#: src/block/notification/variations.js:120
+#: src/block/notification/variations.js:123
 #: src/deprecated/v2/block/count-up/edit.js:75
 msgid "Side"
 msgstr ""
 
-#: src/block/notification/variations.js:128
-#: src/block/notification/variations.js:129
+#: src/block/notification/variations.js:131
+#: src/block/notification/variations.js:135
 #: src/deprecated/v2/block/notification/edit.js:90
 msgid "Bordered"
 msgstr ""
 
-#: src/block/notification/variations.js:137
-#: src/block/notification/variations.js:138
+#: src/block/notification/variations.js:143
+#: src/block/notification/variations.js:147
 #: src/components/icon-controls/index.js:58
 #: src/deprecated/v2/block/notification/edit.js:93
 msgid "Outlined"
 msgstr ""
 
-#: src/block/notification/variations.js:146
-#: src/block/notification/variations.js:147
+#: src/block/notification/variations.js:155
+#: src/block/notification/variations.js:159
 #: src/deprecated/v2/block/notification/edit.js:96
 msgid "Large Icon"
 msgstr ""
@@ -6084,32 +6084,32 @@ msgid "List"
 msgstr ""
 
 #: src/block/posts/variations.js:83
-#: src/block/posts/variations.js:84
+#: src/block/posts/variations.js:87
 #: src/deprecated/v2/block/blog-posts/edit.js:119
 msgid "Image Card"
 msgstr ""
 
-#: src/block/posts/variations.js:110
-#: src/block/posts/variations.js:111
+#: src/block/posts/variations.js:119
+#: src/block/posts/variations.js:123
 #: src/deprecated/v2/block/blog-posts/edit.js:104
 #: src/deprecated/v2/block/blog-posts/edit.js:107
 msgid "Portfolio"
 msgstr ""
 
-#: src/block/posts/variations.js:119
-#: src/block/posts/variations.js:120
+#: src/block/posts/variations.js:131
+#: src/block/posts/variations.js:135
 msgid "Portfolio 2"
 msgstr ""
 
-#: src/block/posts/variations.js:128
-#: src/block/posts/variations.js:129
+#: src/block/posts/variations.js:143
+#: src/block/posts/variations.js:147
 #: src/deprecated/v2/block/blog-posts/edit.js:110
 #: src/deprecated/v2/block/blog-posts/edit.js:116
 msgid "Vertical Card"
 msgstr ""
 
-#: src/block/posts/variations.js:137
-#: src/block/posts/variations.js:138
+#: src/block/posts/variations.js:155
+#: src/block/posts/variations.js:159
 msgid "Vertical Card 2"
 msgstr ""
 
@@ -6125,19 +6125,19 @@ msgstr ""
 msgid "Banner Layout"
 msgstr ""
 
-#: src/block/pricing-box/variations.js:93
+#: src/block/pricing-box/variations.js:96
 msgid "Banner"
 msgstr ""
 
-#: src/block/pricing-box/variations.js:101
+#: src/block/pricing-box/variations.js:104
 msgid "Colored Layout"
 msgstr ""
 
-#: src/block/pricing-box/variations.js:110
+#: src/block/pricing-box/variations.js:116
 msgid "Sectioned Layout"
 msgstr ""
 
-#: src/block/pricing-box/variations.js:111
+#: src/block/pricing-box/variations.js:120
 #: src/deprecated/v2/block/pricing-box/edit.js:91
 msgid "Sectioned"
 msgstr ""
@@ -6151,14 +6151,14 @@ msgstr ""
 msgid "Type / to choose a block"
 msgstr ""
 
-#: src/block/testimonial/variations.js:103
-#: src/block/testimonial/variations.js:104
+#: src/block/testimonial/variations.js:106
+#: src/block/testimonial/variations.js:110
 #: src/deprecated/v2/block/testimonial/edit.js:86
 msgid "Bubble"
 msgstr ""
 
-#: src/block/testimonial/variations.js:121
-#: src/block/testimonial/variations.js:122
+#: src/block/testimonial/variations.js:130
+#: src/block/testimonial/variations.js:134
 msgid "Inverted Vertical"
 msgstr ""
 
