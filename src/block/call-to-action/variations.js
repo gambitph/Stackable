@@ -74,6 +74,9 @@ const variations = applyFilters(
 		{
 			name: 'horizontal-2',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
+			attributes: {
+				className: 'is-style-horizontal-2',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Horizontal 2', i18n ),
 			pickerIcon: ImageHorizontal2,
@@ -83,6 +86,9 @@ const variations = applyFilters(
 		{
 			name: 'horizontal-3',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 3', i18n ) ),
+			attributes: {
+				className: 'is-style-horizontal-3',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Horizontal 3', i18n ),
 			pickerIcon: ImageHorizontal3,
@@ -92,6 +98,9 @@ const variations = applyFilters(
 		{
 			name: 'split-centered',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Split Centered', i18n ) ),
+			attributes: {
+				className: 'is-style-split-centered',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Split Centered', i18n ),
 			pickerIcon: ImageSplitCentered,
