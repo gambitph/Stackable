@@ -129,7 +129,7 @@ const variations = applyFilters(
 			name: 'inverted-vertical',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Inverted Vertical', i18n ) ),
 			attributes: {
-				className: 'is-style-vertical',
+				className: 'is-style-inverted-vertical',
 			},
 			pickerTitle: __( 'Inverted Vertical', i18n ),
 			pickerIcon: ImageInvertedVertical,
