@@ -92,6 +92,9 @@ const variations = applyFilters(
 		{
 			name: 'horizontal',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			attributes: {
+				className: 'is-style-horizontal',
+			},
 			pickerTitle: __( 'Horizontal', i18n ),
 			pickerIcon: ImageHorizontal,
 			isActive: [ 'className' ],
@@ -101,6 +104,9 @@ const variations = applyFilters(
 		{
 			name: 'bubble',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Bubble', i18n ) ),
+			attributes: {
+				className: 'is-style-bubble',
+			},
 			pickerTitle: __( 'Bubble', i18n ),
 			pickerIcon: ImageBubble,
 			isActive: [ 'className' ],
@@ -110,6 +116,9 @@ const variations = applyFilters(
 		{
 			name: 'vertical',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical', i18n ) ),
+			attributes: {
+				className: 'is-style-vertical',
+			},
 			pickerTitle: __( 'Vertical', i18n ),
 			pickerIcon: ImageVertical,
 			isActive: [ 'className' ],
@@ -119,6 +128,9 @@ const variations = applyFilters(
 		{
 			name: 'inverted-vertical',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Inverted Vertical', i18n ) ),
+			attributes: {
+				className: 'is-style-vertical',
+			},
 			pickerTitle: __( 'Inverted Vertical', i18n ),
 			pickerIcon: ImageInvertedVertical,
 			isActive: [ 'className' ],

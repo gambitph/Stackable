@@ -39,7 +39,7 @@ export const BlockDiv = props => {
 	const variationPicker = useVariationPicker( clientId, attributes.uniqueId )
 	if ( variationPicker && enableVariationPicker ) {
 		return variationPicker
-	}
+	 }
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
