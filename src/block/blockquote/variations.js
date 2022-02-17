@@ -93,7 +93,7 @@ const variations = applyFilters(
 			name: 'huge',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Huge', i18n ) ),
 			attributes: {
-				className: 'is-style-hug',
+				className: 'is-style-huge',
 			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Huge', i18n ),
