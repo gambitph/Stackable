@@ -1,6 +1,6 @@
 /**
- * This store keeps the height and open state of the list view so that it can be
- * shared across all list views.
+ * This store keeps the height and open state of the navigation view so that it can be
+ * shared across all navigation views.
  */
 
 /**
@@ -10,13 +10,13 @@ import { registerStore } from '@wordpress/data'
 
 const DEFAULT_HEIGHT = 220
 
-let height = window.localStorage.getItem( 'stk__list_view_height' )
+let height = window.localStorage.getItem( 'stk__navigation_view_height' )
 height = height ? JSON.parse( height ) : DEFAULT_HEIGHT
 if ( height > 1000 ) {
 	height = 1000
 }
 
-let isOpen = window.localStorage.getItem( 'stk__list_view_is_open' )
+let isOpen = window.localStorage.getItem( 'stk__navigation_view_is_open' )
 isOpen = isOpen ? JSON.parse( isOpen ) : true
 
 // Include all the stored state.
@@ -27,16 +27,16 @@ const DEFAULT_STATE = {
 
 const STORE_ACTIONS = {
 	updateHeight: height => {
-		window.localStorage.setItem( 'stk__list_view_height', height )
+		window.localStorage.setItem( 'stk__navigation_view_height', height )
 		return {
-			type: 'UPDATE_LIST_VIEW_HEIGHT',
+			type: 'UPDATE_NAVIGATION_VIEW_HEIGHT',
 			height,
 		}
 	},
 	updateIsOpen: isOpen => {
-		window.localStorage.setItem( 'stk__list_view_is_open', isOpen )
+		window.localStorage.setItem( 'stk__navigation_view_is_open', isOpen )
 		return {
-			type: 'UPDATE_LIST_VIEW_ISOPEN',
+			type: 'UPDATE_NAVIGATION_VIEW_ISOPEN',
 			isOpen,
 		}
 	},
@@ -49,13 +49,13 @@ const STORE_SELECTORS = {
 
 const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 	switch ( action.type ) {
-		case 'UPDATE_LIST_VIEW_HEIGHT': {
+		case 'UPDATE_NAVIGATION_VIEW_HEIGHT': {
 			return {
 				...state,
 				height: action.height,
 			}
 		}
-		case 'UPDATE_LIST_VIEW_ISOPEN': {
+		case 'UPDATE_NAVIGATION_VIEW_ISOPEN': {
 			return {
 				...state,
 				isOpen: action.isOpen,
@@ -65,7 +65,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 	return state
 }
 
-registerStore( 'stackable/list-view', {
+registerStore( 'stackable/navigation-view', {
 	reducer: STORE_REDUCER,
 	actions: STORE_ACTIONS,
 	selectors: STORE_SELECTORS,

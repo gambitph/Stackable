@@ -30,16 +30,15 @@ const MIN_HEIGHT = 38
 export const Edit = () => {
 	const { clientId, isSelected } = useBlockEditContext()
 	const [ isResizing, setIsResizing ] = useState( false )
-	// const { getHeight, getIsOpen } = useSelect( 'stackable/list-view' )
-	const { updateHeight, updateIsOpen } = useDispatch( 'stackable/list-view' )
+	const { updateHeight, updateIsOpen } = useDispatch( 'stackable/navigation-view' )
 
 	const {
 		height,
 		isOpen,
 	} = useSelect( select => {
 		return {
-			height: select( 'stackable/list-view' ).getHeight(),
-			isOpen: select( 'stackable/list-view' ).getIsOpen(),
+			height: select( 'stackable/navigation-view' ).getHeight(),
+			isOpen: select( 'stackable/navigation-view' ).getIsOpen(),
 		}
 	} )
 
@@ -67,7 +66,7 @@ export const Edit = () => {
 	}
 
 	const classNames = classnames( [
-		'stk-list-view__wrapper',
+		'stk-navigation-view__wrapper',
 		'edit-post-sidebar', // So that we can get the width of the sidebar.
 	], {
 		'stk--is-resizing': isResizing,
@@ -78,7 +77,7 @@ export const Edit = () => {
 			{ /** This adds the styling necessary for the inspector to allot some space for the list view. */ }
 			<style>
 				{ ! isResizing ? `:is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area) {
-					--stk-inspector-list-view: ${ height }px;
+					--stk-inspector-navigation-view: ${ height }px;
 				}` : '' }
 			</style>
 			<ResizableBox
@@ -100,11 +99,11 @@ export const Edit = () => {
 			>
 				<PanelAdvancedSettings
 					title={ __( 'Navigation', i18n ) }
-					id="list-view"
+					id="navigation-view"
 					isOpen={ isOpen }
 					onToggle={ () => updateIsOpen( ! isOpen ) }
 				>
-					<div className="stk-panel--list-view__wrapper">
+					<div className="stk-panel--navigation-view__wrapper">
 						<ListView
 							blocks={ blocks }
 							showOnlyCurrentHierarchy
@@ -126,8 +125,8 @@ Edit.defaultProps = {
 }
 
 // Don't include the list view from auto-closing.
-addFilter( 'stackable.panel.tabs.panel-auto-close', 'stackable/list-view', ( doToggle, toggle ) => {
-	if ( toggle.closest( '.ugb-panel--list-view' ) ) {
+addFilter( 'stackable.panel.tabs.panel-auto-close', 'stackable/navigation-view', ( doToggle, toggle ) => {
+	if ( toggle.closest( '.ugb-panel--navigation-view' ) ) {
 		return false
 	}
 	return doToggle

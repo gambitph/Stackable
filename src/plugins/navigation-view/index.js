@@ -1,12 +1,12 @@
 /**
  * Internal dependencies
  */
-import { ListView } from '~stackable/block-components'
+import { NavigationView } from '~stackable/block-components'
 
 /**
  * External dependencies
  */
-import { isContentOnlyMode } from 'stackable'
+import { settings, isContentOnlyMode } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -14,8 +14,8 @@ import { isContentOnlyMode } from 'stackable'
 import { addFilter } from '@wordpress/hooks'
 import { createHigherOrderComponent } from '@wordpress/compose'
 
-if ( ! isContentOnlyMode ) {
-	const withListView = createHigherOrderComponent( BlockEdit => {
+if ( ! isContentOnlyMode && settings.stackable_enable_navigation_panel ) {
+	const withNavigationView = createHigherOrderComponent( BlockEdit => {
 		return props => {
 			const isStackableBlock = props.name.startsWith( 'stackable/' )
 
@@ -26,15 +26,15 @@ if ( ! isContentOnlyMode ) {
 			return (
 				<>
 					<BlockEdit { ...props } />
-					<ListView.InspectorControls { ...props } />
+					<NavigationView.InspectorControls { ...props } />
 				</>
 			)
 		}
-	}, 'withListView' )
+	}, 'withNavigationView' )
 
 	addFilter(
 		'editor.BlockEdit',
-		'stackable/list-view',
-		withListView
+		'stackable/navigation-view',
+		withNavigationView
 	)
 }

@@ -1,21 +1,21 @@
 :is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area) {
-	--stk-inspector-list-view: 290px;
+	--stk-inspector-navigation-view: 290px;
 }
 
 
-.stk-list-view__wrapper {
+.stk-navigation-view__wrapper {
 	position: fixed !important;
 	bottom: 26px;
 	width: 280px !important;
 	z-index: 9;
 	background: #fafafa;
-	.ugb-panel--list-view {
+	.ugb-panel--navigation-view {
 		padding: 0 !important;
 	}
 	&:not(.stk--is-resizing) {
 		height: auto !important;
-		.ugb-panel--list-view.is-opened {
-			height: var(--stk-inspector-list-view);
+		.ugb-panel--navigation-view.is-opened {
+			height: var(--stk-inspector-navigation-view);
 		}
 	}
 
@@ -39,13 +39,13 @@
 	}
 
 	// Fixing the scrollbar.
-	.ugb-panel--list-view {
+	.ugb-panel--navigation-view {
 		display: flex;
 		flex-direction: column;
 		> .components-panel__body-title {
 			margin-bottom: 0 !important;
 		}
-		.stk-panel--list-view__wrapper {
+		.stk-panel--navigation-view__wrapper {
 			flex-shrink: 1;
 			overflow: auto;
 			padding: 8px;
@@ -63,7 +63,7 @@
 }
 
 :is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area).ugb--has-panel-tabs {
-	padding-bottom: var(--stk-inspector-list-view);
+	padding-bottom: var(--stk-inspector-navigation-view);
 	> .components-panel {
 		height: 100%;
 		> .block-editor-block-inspector {
@@ -73,7 +73,7 @@
 }
 
 // Lessen the amount of indentation of the list view in the navigation since we have a smaller area.
-.stk-panel--list-view__wrapper {
+.stk-panel--navigation-view__wrapper {
 	@for $i from 1 through 20 {
 		.block-editor-list-view-leaf[aria-level="#{ $i }"] .block-editor-list-view__expander {
 			margin-left: 16px * ($i - 1);
