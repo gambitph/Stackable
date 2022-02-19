@@ -88,25 +88,39 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '', styles = {} )
  */
 
 /**
- * Extracts text, anchor, and level from a list of heading elements.
+ * Extracts text, anchor, exclusion, and level from a list of heading blocks.
  *
- * @param {NodeList} headingElements The list of heading elements.
- *
- * @return {WPHeadingData[]} The list of heading parameters.
+ * @param {NodeList} headingBlocks The list of heading blocks.
+ * @param headings
+ * @return {Array} The list of heading parameters.
  */
-export function getHeadingsFromHeadingElements( headingElements ) {
-	return [ ...headingElements ].map( heading => {
+export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
+	return [ ...headingBlocks ].map( headingBlock => {
 		let anchor = ''
 
-		if ( heading.hasAttribute( 'id' ) ) {
-			// The id attribute may contain many ids, so just use the first.
-			const firstId = heading
-				.getAttribute( 'id' )
-				.trim()
-				.split( ' ' )[ 0 ]
+		const isStkHeading = ! headingBlock.classList.contains( 'wp-block-heading' )
 
-			anchor = `#${ firstId }`
+		const heading = isStkHeading
+			? headingBlock.querySelector( ':scope > .stk-block > .stk-block-heading__text' )
+			: headingBlock
+
+		let firstId
+		if ( isStkHeading ) {
+			const wrapper = headingBlock.querySelector( ':scope > .stk-block-heading' )
+			firstId = wrapper
+				.getAttribute( 'id' )
+				?.trim()
+				.split( ' ' )[ 0 ]
+		} else if ( heading.hasAttribute( 'id' ) ) {
+			firstId = heading
+				.getAttribute( 'id' )
+				?.trim()
+				.split( ' ' )[ 0 ]
 		}
+		anchor = `#${ firstId }`
+
+		const blockId = isStkHeading ? headingBlock.dataset?.block : heading.dataset?.block
+		console.log( 'BLOCKID', blockId )
 
 		let level
 
@@ -131,59 +145,70 @@ export function getHeadingsFromHeadingElements( headingElements ) {
 				break
 		}
 
+		const matchingHeading = headings.find( heading => heading.blockId === blockId )
+		const isExcluded = matchingHeading ? matchingHeading.isExcluded : false
+
 		return {
-			anchor, content: heading.textContent, level,
+			anchor, content: heading.textContent, level, blockId, isExcluded,
 		}
 	} )
 }
 
 /**
- * Extracts heading data from the provided content.
+ * Extracts heading data from the provided editorDom.
  *
- * @param {string} content The content to extract heading data from.
- * @param attributes
- * @return {WPHeadingData[]} The list of heading parameters.
+ * @param {string} editorDom The editorDom to extract heading data from.
+ * @param {Array} attributes
+ * @return {Array} The list of heading parameters.
  */
-export function getHeadingsFromContent( content, attributes ) {
-	// Create a temporary container to put the post content into, so we can
-	// use the DOM to find all the headings.
-	const tempPostContentDOM = document.createElement( 'div' )
-	tempPostContentDOM.innerHTML = content
-
+export function getHeadingsFromEditorDom( editorDom, attributes ) {
 	// Remove template elements so that headings inside them aren't counted.
 	// This is only needed for IE11, which doesn't recognize the element and
 	// treats it like a div.
-	for ( const template of tempPostContentDOM.querySelectorAll(
+	for ( const template of editorDom.querySelectorAll(
 		'template'
 	) ) {
-		tempPostContentDOM.removeChild( template )
+		editorDom.removeChild( template )
 	}
-	let queryArray = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ]
+
+	let allowedHeadings = [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ]
 	if ( attributes ) {
-		queryArray = []
+		allowedHeadings = []
 		if ( attributes.includeH1 ) {
-			queryArray.push( 'h1' )
+			allowedHeadings.push( 'H1' )
 		}
 		if ( attributes.includeH2 ) {
-			queryArray.push( 'h2' )
+			allowedHeadings.push( 'H2' )
 		}
 		if ( attributes.includeH3 ) {
-			queryArray.push( 'h3' )
+			allowedHeadings.push( 'H3' )
 		}
 		if ( attributes.includeH4 ) {
-			queryArray.push( 'h4' )
+			allowedHeadings.push( 'H4' )
 		}
 		if ( attributes.includeH5 ) {
-			queryArray.push( 'h5' )
+			allowedHeadings.push( 'H5' )
 		}
 		if ( attributes.includeH6 ) {
-			queryArray.push( 'h6' )
+			allowedHeadings.push( 'H6' )
 		}
 	}
-	const queryString = queryArray.toString()
-	if ( queryString ) {
-		const headingElements = tempPostContentDOM.querySelectorAll( queryString )
-		return getHeadingsFromHeadingElements( headingElements )
+
+	if ( allowedHeadings.length > 0 ) {
+		const headingBlocks = editorDom.querySelectorAll(
+			'.wp-block[data-type="stackable/heading"], .wp-block-heading[data-type="core/heading"]'
+		)
+
+		const allowedHeadingBlocks = [ ...headingBlocks ].filter( block => {
+			const heading = ! block.classList.contains( 'wp-block-heading' )
+				? block.querySelector( ':scope > .stk-block > .stk-block-heading__text' )
+				: block
+
+			return allowedHeadings.includes( heading.nodeName )
+		} )
+
+		console.log( 'FROM DOM', attributes.headings )
+		return getHeadingsFromHeadingBlocks( allowedHeadingBlocks, attributes.headings )
 	}
 	return []
 }
@@ -206,7 +231,6 @@ export function getHeadingsFromContent( content, attributes ) {
  *
  * @param {WPHeadingData[]} headingList The flat list of headings to nest.
  * @param {number} index       The current list index.
- * @param child
  * @return {WPNestedHeadingData[]} The nested list of headings.
  */
 export function linearToNestedHeadingList( headingList, index = 0 ) {

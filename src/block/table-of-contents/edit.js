@@ -7,7 +7,7 @@ import { TableOfContentsStyles } from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import isEqual from 'lodash/isEqual'
+import { isEqual, debounce } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
@@ -48,14 +48,14 @@ import {
 	useSelect,
 } from '@wordpress/data'
 import {
-	Fragment, useEffect, useState,
+	Fragment, useEffect, useState, useCallback,
 } from '@wordpress/element'
 import {
 	__,
 } from '@wordpress/i18n'
 
 import {
-	getHeadingsFromContent,
+	getHeadingsFromEditorDom,
 	linearToNestedHeadingList,
 } from './util'
 
@@ -104,29 +104,38 @@ const HeadingsControls = () => (
 )
 
 const Edit = props => {
-	const [ headings, setHeadings ] = useState( [] )
-	const [ exclude, setExclude ] = useState( [] )
-
-	const {
-		postContent,
-	} = useSelect( select => ( {
-		postContent: select( 'core/editor' ).getEditedPostContent(),
-	} ) )
-	const latestHeadings = getHeadingsFromContent( postContent, props.attributes )
-
-	useEffect( () => {
-		if ( ! isEqual( headings, latestHeadings ) ) {
-			setHeadings( latestHeadings )
-			setAttributes( { headings } )
-		}
-	}, [ latestHeadings ] )
-
 	const {
 		attributes,
 		setAttributes,
 		className,
 		isSelected,
 	} = props
+
+	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
+	// const [ headings, setHeadings ] = useState( attributes.headings )
+	const { headings } = attributes
+
+	const toggleItemVisibility = blockId => {
+		const updatedHeadings = headings.map( heading => ( { ...heading, isExcluded: heading.blockId === blockId ? ! heading.isExcluded : heading.isExcluded } ) )
+		setAttributes( { headings: updatedHeadings } )
+	 }
+
+	useEffect( () => {
+		const editorDom = getEditorDom()
+		if ( editorDom ) {
+			const latestHeadings = getHeadingsFromEditorDom( editorDom, attributes )
+			console.log( 'ATTR/LATEST HEADINGS', attributes.headings, latestHeadings )
+			// if ( ! isEqual( headings, latestHeadings ) ) {
+			// 	setAttributes( { headings: latestHeadings } )
+			// }
+		}
+	} )
+
+	// useEffect( () => {
+	// 	// setTimeout( () => setAttributes( { headings } ), 0 )
+	// }, [ headings ] )
+	// 	return () => unsubscribe()
+	//  }, [ headings, attributes ] )
 
 	useGeneratedCss( props.attributes )
 
@@ -284,15 +293,11 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div className="stk-table-of-contents__title">
-					Table of Contents
-				</div>
 				<TableOfContentsList
 					nestedHeadingList={ linearToNestedHeadingList( headings ) }
 					isSelected={ isSelected }
-					exclude={ exclude }
-					setExclude={ setExclude }
 					listTag={ tagName }
+					toggleItemVisibility={ toggleItemVisibility }
 				/>
 				{ headings.length === 0 && (
 					<div className="stk-table-of-contents__placeholder">

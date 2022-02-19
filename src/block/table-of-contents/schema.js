@@ -85,27 +85,22 @@ export const tableofContentsAttributes = {
 		type: 'boolean',
 		default: true,
 	},
-
 	includeH2: {
 		type: 'boolean',
 		default: true,
 	},
-
 	includeH3: {
 		type: 'boolean',
 		default: true,
 	},
-
 	includeH4: {
 		type: 'boolean',
 		default: true,
 	},
-
 	includeH5: {
 		type: 'boolean',
 		default: true,
 	},
-
 	includeH6: {
 		type: 'boolean',
 		default: true,

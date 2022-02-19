@@ -1,15 +1,20 @@
+import { isArray } from 'lodash'
+
 const TableOfContentsList = ( {
 	nestedHeadingList,
-	isSelected,
-	wrapList = true,
 	listTag = 'ul',
+	isSelected,
+	toggleItemVisibility,
 } ) => {
 	if ( nestedHeadingList ) {
 		const ListTag = listTag
 		const childNodes = nestedHeadingList.map( ( childNode, index ) => {
-			const { anchor, content } = childNode.heading
+			const {
+				anchor, content, blockId, isExcluded,
+			} = childNode.heading
 
 			const entry = anchor ? (
+				// TODO: rich text
 				<a className="stk-block-table-of-contents__link" href={ anchor }>
 					{ content }
 				</a>
@@ -19,27 +24,31 @@ const TableOfContentsList = ( {
 				</a>
 			)
 
+			const visibility = (
+				isSelected ? <button onClick={ () => toggleItemVisibility( blockId ) }>{ isExcluded ? 'include' : 'exclude' }</button>
+						   : null
+			)
+
 			return (
 				<li key={ index } className="stk-block-table-of-contents__list-item">
-					{ entry }
+					{ entry } { visibility }
 					{ childNode.children ? (
 						<TableOfContentsList
 							nestedHeadingList={ childNode.children }
-							isSelected={ isSelected }
 							wrapList={ true }
 							listTag={ listTag }
+							toggleItemVisibility={ toggleItemVisibility }
+							isSelected={ isSelected }
 						/>
 					) : null }
 				</li>
 			)
 		} )
 
-		return wrapList ? (
+		return (
 			<ListTag className="stk-block-table-of-contents__sub-list">
 				{ childNodes }
 			</ListTag>
-		) : (
-			childNodes
 		)
 	}
 }
