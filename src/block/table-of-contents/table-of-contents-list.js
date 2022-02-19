@@ -1,5 +1,3 @@
-import { isArray } from 'lodash'
-
 const TableOfContentsList = ( {
 	nestedHeadingList,
 	listTag = 'ul',
@@ -25,9 +23,16 @@ const TableOfContentsList = ( {
 			)
 
 			const visibility = (
-				isSelected ? <button onClick={ () => toggleItemVisibility( blockId ) }>{ isExcluded ? 'include' : 'exclude' }</button>
+				isSelected ? <button className="stk-block-table-of-contents__button" onClick={ () => toggleItemVisibility( blockId ) }>{ isExcluded ? 'include' : 'exclude' }</button>
 						   : null
 			)
+
+			if ( isSelected ) {
+				const style = {
+					display: isExcluded ? 'none' : 'auto',
+				}
+			} else {
+			}
 
 			return (
 				<li key={ index } className="stk-block-table-of-contents__list-item">

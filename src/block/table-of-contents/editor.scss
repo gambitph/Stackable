@@ -4,8 +4,11 @@
 		position: relative;
 	}
 
-	li > a {
-		display: block;
+	.stk-block-table-of-contents__button {
+		display: none;
+		&:hover {
+			display: block;
+		}
 	}
 }
 

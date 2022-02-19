@@ -17,6 +17,17 @@ import { version as VERSION } from 'stackable'
 import { DEFAULT_SVG } from './util'
 
 export const tableofContentsAttributes = {
+	// Columns.
+	columns: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	columnGap: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
 	ordered: {
 		type: 'boolean',
 		default: false,
@@ -77,6 +88,7 @@ export const tableofContentsAttributes = {
 	},
 
 	// Headings
+	// { level, text, isExcluded, text }
 	headings: {
 		type: 'array',
 		default: [],

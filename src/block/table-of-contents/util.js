@@ -14,6 +14,14 @@ import {
 // The default icon list SVG.
 export const DEFAULT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190"><polygon points="173.8,28.4 60.4,141.8 15.7,97.2 5.1,107.8 60.4,163 184.4,39 173.8,28.4"/></svg>'
 
+export const getUpdatedHeadings = ( getEditorDom, attributes ) => {
+	const editorDom = getEditorDom()
+	if ( editorDom ) {
+		return getHeadingsFromEditorDom( editorDom, attributes )
+	}
+	return attributes.headings
+}
+
 /**
  * Convert SVG tag to base64 string
  *
@@ -120,7 +128,6 @@ export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
 		anchor = `#${ firstId }`
 
 		const blockId = isStkHeading ? headingBlock.dataset?.block : heading.dataset?.block
-		console.log( 'BLOCKID', blockId )
 
 		let level
 
@@ -147,7 +154,6 @@ export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
 
 		const content = heading.textContent
 		const matchingHeading = headings.find( heading => heading.content === content && heading.level === level )
-		console.log( 'MATCH?', matchingHeading )
 		const isExcluded = matchingHeading ? matchingHeading.isExcluded : false
 
 		return {
@@ -209,7 +215,6 @@ export function getHeadingsFromEditorDom( editorDom, attributes ) {
 			return allowedHeadings.includes( heading.nodeName )
 		} )
 
-		console.log( 'FROM DOM', attributes.headings )
 		return getHeadingsFromHeadingBlocks( allowedHeadingBlocks, attributes.headings )
 	}
 	return []

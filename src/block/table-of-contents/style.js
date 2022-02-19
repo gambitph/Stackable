@@ -60,9 +60,8 @@ const getStyleParams = () => {
 			format: '%spx',
 		},
 		{
-			// FIXME: this doesn't work
-			selector: 'li > a',
-			styleRule: 'marginBottom',
+			selector: 'li > ul',
+			styleRule: 'marginTop',
 			attrName: 'rowGap',
 			responsive: 'all',
 			format: '%spx',
