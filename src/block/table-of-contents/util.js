@@ -145,11 +145,13 @@ export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
 				break
 		}
 
-		const matchingHeading = headings.find( heading => heading.blockId === blockId )
+		const content = heading.textContent
+		const matchingHeading = headings.find( heading => heading.content === content && heading.level === level )
+		console.log( 'MATCH?', matchingHeading )
 		const isExcluded = matchingHeading ? matchingHeading.isExcluded : false
 
 		return {
-			anchor, content: heading.textContent, level, blockId, isExcluded,
+			anchor, content, level, blockId, isExcluded,
 		}
 	} )
 }

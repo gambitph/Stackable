@@ -60,6 +60,7 @@ import {
 } from './util'
 
 import TableOfContentsList from './table-of-contents-list'
+import wpApiStub from '~stackable/test/wp-api-stub'
 
 const listTypeOptions = [
 	{
@@ -112,8 +113,10 @@ const Edit = props => {
 	} = props
 
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
-	// const [ headings, setHeadings ] = useState( attributes.headings )
 	const { headings } = attributes
+	// const [ headings, setHeadings ] = useState( attributes.headings )
+	// const [ excluded, setExcluded ] = useState( attributes.headings )
+	// const { headings } = attributes
 
 	const toggleItemVisibility = blockId => {
 		const updatedHeadings = headings.map( heading => ( { ...heading, isExcluded: heading.blockId === blockId ? ! heading.isExcluded : heading.isExcluded } ) )
@@ -121,15 +124,24 @@ const Edit = props => {
 	 }
 
 	useEffect( () => {
-		const editorDom = getEditorDom()
-		if ( editorDom ) {
-			const latestHeadings = getHeadingsFromEditorDom( editorDom, attributes )
-			console.log( 'ATTR/LATEST HEADINGS', attributes.headings, latestHeadings )
-			// if ( ! isEqual( headings, latestHeadings ) ) {
-			// 	setAttributes( { headings: latestHeadings } )
-			// }
+		const updatedHeadings = () => {
+			const editorDom = getEditorDom()
+			if ( editorDom ) {
+				const latestHeadings = getHeadingsFromEditorDom( editorDom, attributes )
+				if (
+					! isEqual( headings.map( h => ( {
+						level: h.level, content: h.content,
+					} ) ), latestHeadings.map( h => ( {
+						level: h.level, content: h.content,
+					} ) ) )
+				) {
+					setAttributes( { headings: latestHeadings } )
+				}
+			}
 		}
-	} )
+		const unsubscribe = wp.data.subscribe( debounce( updatedHeadings ) )
+		return () => unsubscribe()
+	}, [] )
 
 	// useEffect( () => {
 	// 	// setTimeout( () => setAttributes( { headings } ), 0 )
