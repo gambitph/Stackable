@@ -1,3 +1,5 @@
+import classnames from 'classnames'
+
 const TableOfContentsList = ( {
 	nestedHeadingList,
 	listTag = 'ul',
@@ -12,7 +14,7 @@ const TableOfContentsList = ( {
 			} = childNode.heading
 
 			const entry = anchor ? (
-				// TODO: rich text
+				// TODO: rich text. How do we identify which heading is which?
 				<a className="stk-block-table-of-contents__link" href={ anchor }>
 					{ content }
 				</a>
@@ -27,15 +29,13 @@ const TableOfContentsList = ( {
 						   : null
 			)
 
-			if ( isSelected ) {
-				const style = {
-					display: isExcluded ? 'none' : 'auto',
-				}
-			} else {
-			}
+			const className = classnames( 'stk-block-table-of-contents__list-item', {
+				'stk-block-table-of-contents__list-item__excluded': isExcluded && isSelected,
+				'stk-block-table-of-contents__list-item__hidden': isExcluded && ! isSelected,
+			} )
 
 			return (
-				<li key={ index } className="stk-block-table-of-contents__list-item">
+				<li key={ index } className={ className }>
 					{ entry } { visibility }
 					{ childNode.children ? (
 						<TableOfContentsList

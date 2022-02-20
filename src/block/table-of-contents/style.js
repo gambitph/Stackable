@@ -53,6 +53,19 @@ const getStyleParams = () => {
 			attrName: 'listType',
 		},
 		{
+			selector: '',
+			styleRule: 'columnCount',
+			attrName: 'columns',
+			responsive: 'all',
+		},
+		{
+			selector: '',
+			styleRule: 'columnGap',
+			attrName: 'columnGap',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
 			selector: 'li',
 			styleRule: 'marginBottom',
 			attrName: 'rowGap',

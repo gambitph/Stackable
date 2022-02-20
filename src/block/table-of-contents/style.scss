@@ -1,5 +1,5 @@
 // Important, we can't use flex since it causes issues with columns.
-.stk-block-icon-list {
+.stk-block-table-of-contents {
 	:is(ul, ol) {
 		width: fit-content;
 		text-align: start;

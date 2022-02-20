@@ -4,11 +4,8 @@
 		position: relative;
 	}
 
-	.stk-block-table-of-contents__button {
-		display: none;
-		&:hover {
-			display: block;
-		}
+	.stk-block-table-of-contents__list-item:is(.stk-block-table-of-contents__list-item__excluded) {
+		opacity: 0.3;
 	}
 }
 

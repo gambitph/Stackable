@@ -11,13 +11,14 @@ import {
 	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses,
 } from '~stackable/block-components'
 import { withVersion } from '~stackable/higher-order'
-import { version as VERSION } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import TableOfContentsList from './table-of-contents-list'
 import { linearToNestedHeadingList } from './util'
 
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 
 export const Save = props => {
@@ -48,7 +49,7 @@ export const Save = props => {
 		>
 			<TableOfContentsStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<div className="stk-table-of-contents__title">Table of Contents</div>
+			<div className="stk-table-of-contents__title">{ __( 'Table of Contents', i18n ) }</div>
 			<TableOfContentsList.Content
 				nestedHeadingList={ linearToNestedHeadingList( headings ) }
 				listTag={ tagName }

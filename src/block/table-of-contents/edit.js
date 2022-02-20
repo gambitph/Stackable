@@ -179,7 +179,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-table-of-contents',
+		'stk-block-table-of-contents',
 		blockAlignmentClass,
 		blockHoverClass,
 		textClasses,
@@ -199,6 +199,24 @@ const Edit = props => {
 					id="general"
 				>
 					<HeadingsControls />
+
+					<AdvancedRangeControl
+						label={ __( 'Columns', i18n ) }
+						attribute="columns"
+						min="1"
+						sliderMax="3"
+						step="1"
+						placeholder="1"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Column Gap', i18n ) }
+						attribute="columnGap"
+						min="0"
+						sliderMax="50"
+						responsive="all"
+					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
