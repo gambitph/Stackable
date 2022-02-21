@@ -253,6 +253,7 @@ const EditorSettings = () => {
 			settings.fetch().then( response => {
 				setSettings( pick( response, [
 					'stackable_enable_design_library',
+					'stackable_enable_navigation_panel',
 					'stackable_block_default_width',
 					'stackable_block_wide_width',
 					'stackable_auto_collapse_panels',
@@ -276,6 +277,22 @@ const EditorSettings = () => {
 				} )
 			} }
 			help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
+			disabled={ __( 'Disable feature', i18n ) }
+			enabled={ __( 'Enable feature', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Navigation Panel', i18n ) }
+			value={ settings.stackable_enable_navigation_panel }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_navigation_panel: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_navigation_panel: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'A block Navigation panel that floats at the bottom of the inspector that helps with adjusting the different blocks in your column layout.', i18n ) }
 			disabled={ __( 'Disable feature', i18n ) }
 			enabled={ __( 'Enable feature', i18n ) }
 		/>

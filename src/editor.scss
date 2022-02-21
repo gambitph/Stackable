@@ -140,3 +140,10 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 :is(#{ $block-joined })::after { // Make sure that all the blue highlighted blocks don't have gray outlines.
 	outline: none !important;
 }
+
+// Make highlighted block icons white in the list view.
+.block-editor-list-view-leaf.is-selected {
+	svg.stk-stackable-icon-gradient {
+		fill: #fff !important;
+	}
+}
