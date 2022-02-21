@@ -92,7 +92,7 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Float', i18n ) ),
 			attributes: {
 				innerBlockContentAlign: 'alignwide',
-				className: 'is-style-horizontal',
+				className: 'is-style-float',
 				align: 'full',
 			},
 			isActive: [ 'className' ],
@@ -165,6 +165,9 @@ const variations = applyFilters(
 		{
 			name: 'horizontal',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
+			attributes: {
+				className: 'is-style-horizontal',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Horizontal', i18n ),
 			pickerIcon: ImageHorizontal,
@@ -174,6 +177,9 @@ const variations = applyFilters(
 		{
 			name: 'large-mid',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Mid', i18n ) ),
+			attributes: {
+				className: 'is-style-large-mid',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Large Mid', i18n ),
 			pickerIcon: ImageLargeMid,
@@ -183,6 +189,9 @@ const variations = applyFilters(
 		{
 			name: 'offset',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Offset', i18n ) ),
+			attributes: {
+				className: 'is-style-offset',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Offset', i18n ),
 			pickerIcon: ImageOffset,
@@ -192,6 +201,9 @@ const variations = applyFilters(
 		{
 			name: 'zigzag',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Zizag', i18n ) ),
+			attributes: {
+				className: 'is-style-zigzag',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Zigzag', i18n ),
 			pickerIcon: ImageZigZag,

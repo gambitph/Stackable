@@ -83,6 +83,9 @@ const PanelAdvancedSettings = props => {
 	const onToggle = useCallback( () => {
 		setIsOpen( ! isOpen )
 		setInitialOpen( ! isOpen )
+		if ( props.onToggle ) {
+			props.onToggle( ! isOpen )
+		}
 	}, [ isOpen ] )
 	const onAdvancedToggle = useCallback( () => setShowAdvanced( ! showAdvanced ), [ showAdvanced ] )
 
@@ -129,7 +132,7 @@ const PanelAdvancedSettings = props => {
 			className={ mainClasses }
 			initialOpen={ initialOpen }
 			onToggle={ onToggle }
-			opened={ isOpen }
+			opened={ props.isOpen !== null ? props.isOpen : isOpen }
 			title={ title }
 		>
 			{ props.children }
@@ -154,7 +157,8 @@ PanelAdvancedSettings.defaultProps = {
 	hasToggle: true,
 	initialAdvanced: false,
 	advancedChildren: null,
-	// onToggle: () => {},
+	onToggle: () => {},
+	isOpen: null,
 	// Deprecated on v3:
 	toggleOnSetAttributes: [],
 	toggleAttributeName: '',

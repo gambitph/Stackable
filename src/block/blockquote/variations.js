@@ -80,6 +80,9 @@ const variations = applyFilters(
 		{
 			name: 'highlighted',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Highlighted', i18n ) ),
+			attributes: {
+				className: 'is-style-highlighted',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Highlighted', i18n ),
 			pickerIcon: ImageHighlighted,
@@ -89,6 +92,9 @@ const variations = applyFilters(
 		{
 			name: 'huge',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Huge', i18n ) ),
+			attributes: {
+				className: 'is-style-huge',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Huge', i18n ),
 			pickerIcon: ImageHuge,
@@ -98,6 +104,9 @@ const variations = applyFilters(
 		{
 			name: 'centered-quote',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Centered Quote', i18n ) ),
+			attributes: {
+				className: 'is-style-centered-quote',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Centered Quote', i18n ),
 			pickerIcon: ImageCenteredQuote,

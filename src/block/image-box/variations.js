@@ -140,6 +140,9 @@ const variations = applyFilters(
 		{
 			name: 'box',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Box', i18n ) ),
+			attributes: {
+				className: 'is-style-box',
+			},
 			pickerTitle: __( 'Box', i18n ),
 			pickerIcon: ImageBox,
 			isActive: [ 'className' ],
@@ -149,6 +152,9 @@ const variations = applyFilters(
 		{
 			name: 'captioned',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Captioned', i18n ) ),
+			attributes: {
+				className: 'is-style-captioned',
+			},
 			pickerTitle: __( 'Captioned', i18n ),
 			pickerIcon: ImageCaptioned,
 			isActive: [ 'className' ],
@@ -158,6 +164,9 @@ const variations = applyFilters(
 		{
 			name: 'fade',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Fade', i18n ) ),
+			attributes: {
+				className: 'is-style-fade',
+			},
 			pickerTitle: __( 'Fade', i18n ),
 			pickerIcon: ImageFade,
 			isActive: [ 'className' ],
@@ -167,6 +176,9 @@ const variations = applyFilters(
 		{
 			name: 'line',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Line', i18n ) ),
+			attributes: {
+				className: 'is-style-line',
+			},
 			pickerTitle: __( 'Line', i18n ),
 			pickerIcon: ImageLine,
 			isActive: [ 'className' ],

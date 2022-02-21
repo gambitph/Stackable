@@ -94,6 +94,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-shape-1',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 1', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-shape-1',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Shape 1', i18n ),
 			pickerIcon: ImageOverlapShape1,
@@ -103,6 +106,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-shape-2',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 2', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-shape-2',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Shape 2', i18n ),
 			pickerIcon: ImageOverlapShape2,
@@ -112,6 +118,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-shape-3',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 3', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-shape-3',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Shape 3', i18n ),
 			pickerIcon: ImageOverlapShape3,
@@ -121,6 +130,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-shape-4',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 4', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-shape-4',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Shape 4', i18n ),
 			pickerIcon: ImageOverlapShape4,
@@ -130,6 +142,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-shape-5',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Shape 5', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-shape-5',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Shape 5', i18n ),
 			pickerIcon: ImageOverlapShape5,
@@ -139,6 +154,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-background-1',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 1', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-background-1',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Background 1', i18n ),
 			pickerIcon: ImageOverlapBg1,
@@ -148,6 +166,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-background-2',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 2', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-background-2',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Background 2', i18n ),
 			pickerIcon: ImageOverlapBg2,
@@ -157,6 +178,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-background-3',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 3', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-background-3',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Background 3', i18n ),
 			pickerIcon: ImageOverlapBg3,
@@ -166,6 +190,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-background-4',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 4', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-background-4',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Background 4', i18n ),
 			pickerIcon: ImageOverlapBg4,
@@ -175,6 +202,9 @@ const variations = applyFilters(
 		{
 			name: 'overlap-background-5',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Overlap Background 5', i18n ) ),
+			attributes: {
+				className: 'is-style-overlap-background-5',
+			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Overlap Background 5', i18n ),
 			pickerIcon: ImageOverlapBg5,

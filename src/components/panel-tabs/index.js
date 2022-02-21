@@ -47,7 +47,10 @@ export const closeAllOpenPanels = clickedEl => {
 		}
 		if ( el.parentElement.parentElement.classList.contains( 'is-opened' ) ) {
 			if ( clickedEl !== el ) {
-				el.click()
+				// Allow other panels to override the auto-closing behavior.
+				if ( applyFilters( 'stackable.panel.tabs.panel-auto-close', true, el ) ) {
+					el.click()
+				}
 			}
 		}
 	} )
@@ -111,6 +114,11 @@ class PanelTabs extends Component {
 	onButtonPanelClick( ev ) {
 		const toggle = ev.target.closest( '.components-panel__body-toggle' )
 		if ( ! toggle ) {
+			return
+		}
+
+		// Allow other panels to override the auto-closing behavior.
+		if ( ! applyFilters( 'stackable.panel.tabs.panel-auto-close', true, toggle ) ) {
 			return
 		}
 

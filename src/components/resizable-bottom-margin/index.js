@@ -176,6 +176,11 @@ const ResizableBottomMargin = memo( props => {
 
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, false, valueCallback, changeCallback )
 
+	// Don't show margin bottom handler if the user is picking a layout.
+	if ( ! attributes.uniqueId ) {
+		return null
+	}
+
 	return (
 		<ResizableBottomMarginSingle
 			previewSelector={ props.previewSelector }

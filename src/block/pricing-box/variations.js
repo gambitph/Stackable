@@ -90,6 +90,9 @@ const variations = applyFilters(
 		{
 			name: 'banner',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Banner Layout', i18n ) ),
+			attributes: {
+				className: 'is-style-banner',
+			},
 			pickerTitle: __( 'Banner', i18n ),
 			pickerIcon: ImageBanner,
 			isActive: [ 'className' ],
@@ -99,6 +102,9 @@ const variations = applyFilters(
 		{
 			name: 'colored',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored Layout', i18n ) ),
+			attributes: {
+				className: 'is-style-colored',
+			},
 			pickerTitle: __( 'Colored', i18n ),
 			pickerIcon: ImageColored,
 			isActive: [ 'className' ],
@@ -108,6 +114,9 @@ const variations = applyFilters(
 		{
 			name: 'sectioned',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Sectioned Layout', i18n ) ),
+			attributes: {
+				className: 'is-style-sectioned',
+			},
 			pickerTitle: __( 'Sectioned', i18n ),
 			pickerIcon: ImageSectioned,
 			isActive: [ 'className' ],

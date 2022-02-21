@@ -117,6 +117,9 @@ const variations = applyFilters(
 		{
 			name: 'side',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side', i18n ) ),
+			attributes: {
+				className: 'is-style-side',
+			},
 			pickerTitle: __( 'Side', i18n ),
 			pickerIcon: ImageSide,
 			isActive: [ 'className' ],
@@ -126,6 +129,9 @@ const variations = applyFilters(
 		{
 			name: 'bordered',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Bordered', i18n ) ),
+			attributes: {
+				className: 'is-style-bordered',
+			},
 			pickerTitle: __( 'Bordered', i18n ),
 			pickerIcon: ImageBordered,
 			isActive: [ 'className' ],
@@ -135,6 +141,9 @@ const variations = applyFilters(
 		{
 			name: 'outlined',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Outlined', i18n ) ),
+			attributes: {
+				className: 'is-style-outlined',
+			},
 			pickerTitle: __( 'Outlined', i18n ),
 			pickerIcon: ImageOutlined,
 			isActive: [ 'className' ],
@@ -144,6 +153,9 @@ const variations = applyFilters(
 		{
 			name: 'large-icon',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Large Icon', i18n ) ),
+			attributes: {
+				className: 'is-style-large-icon',
+			},
 			pickerTitle: __( 'Large Icon', i18n ),
 			pickerIcon: ImageLargeIcon,
 			isActive: [ 'className' ],
