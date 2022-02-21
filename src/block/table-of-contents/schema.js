@@ -88,7 +88,7 @@ export const tableofContentsAttributes = {
 	},
 
 	// Headings
-	// { level, text, isExcluded, text }
+	// { level, customText, isExcluded }
 	headings: {
 		type: 'array',
 		default: [],
