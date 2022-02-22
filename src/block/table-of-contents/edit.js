@@ -115,18 +115,24 @@ const Edit = props => {
 	const { headings } = attributes
 	const { getEditedPostContent } = useSelect( 'core/editor' )
 
-	const toggleItemVisibility = blockId => {
-		const updatedHeadings = headings.map( heading => ( { ...heading, isExcluded: heading.blockId === blockId ? ! heading.isExcluded : heading.isExcluded } ) )
+	const toggleItemVisibility = anchor => {
+		const updatedHeadings = headings.map( heading => ( { ...heading, isExcluded: heading.anchor === anchor ? ! heading.isExcluded : heading.isExcluded } ) )
 		setAttributes( { headings: updatedHeadings } )
-	 }
+	}
 
+	// Watch for any heading block changes, update the heading text, level and anchor.
 	useEffect( () => {
 		let postContent = getEditedPostContent()
 		const unsubscribe = wp.data.subscribe( debounce( () => {
 			const newPostContent = getEditedPostContent()
 			if ( ! isSelected && ! isEqual( postContent, newPostContent ) ) {
-				const headings = getUpdatedHeadings( getEditorDom, attributes )
-				setAttributes( { headings } )
+				const editorHeadings = getUpdatedHeadings( getEditorDom, attributes ).map( ( heading, i ) => {
+					return {
+						...headings[ i ],
+						...heading,
+					}
+				} )
+				setAttributes( { headings: editorHeadings } ) // TODO: change this to silently update the attribute
 			}
 			postContent = newPostContent
 		}, 300 ) )
@@ -134,13 +140,18 @@ const Edit = props => {
 		return () => unsubscribe()
 	}, [ isSelected ] )
 
-	 useEffect( () => {
-		const headings = getUpdatedHeadings( getEditorDom, attributes )
-
-		if ( ! isEqual( attributes.headings, headings ) ) {
-			setAttributes( { headings } )
+	// Populate the table of contents on first addition of the toc block.
+	useEffect( () => {
+		if ( getEditorDom && ! headings.length ) {
+			const headings = getUpdatedHeadings( getEditorDom, attributes ).map( heading => {
+				return {
+					...heading,
+					isExcluded: false,
+				}
+			} )
+			setAttributes( { headings } ) // TODO: change this to silently update the attribute
 		}
-	 }, [ attributes, getEditorDom ] )
+	 }, [ getEditorDom, headings.length ] )
 
 	// useEffect( () => {
 	// 	const updateHeadings = () => {
@@ -347,6 +358,12 @@ const Edit = props => {
 					isSelected={ isSelected }
 					listTag={ tagName }
 					toggleItemVisibility={ toggleItemVisibility }
+					h1={ attributes.includeH1 }
+					h2={ attributes.includeH2 }
+					h3={ attributes.includeH3 }
+					h4={ attributes.includeH4 }
+					h5={ attributes.includeH5 }
+					h6={ attributes.includeH6 }
 				/>
 				{ headings.length === 0 && (
 					<div className="stk-table-of-contents__placeholder">

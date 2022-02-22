@@ -1,31 +1,33 @@
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 
-const TableOfContentsList = ( {
-	nestedHeadingList,
-	listTag = 'ul',
-	isSelected,
-	toggleItemVisibility,
-} ) => {
+import { __ } from '@wordpress/i18n'
+import { Button } from '@wordpress/components'
+import { RichText } from '@wordpress/block-editor'
+
+const TableOfContentsList = props => {
+	const {
+		nestedHeadingList,
+		listTag = 'ul',
+		isSelected,
+		toggleItemVisibility,
+		isEdit = true,
+	} = props
+
 	if ( nestedHeadingList ) {
 		const ListTag = listTag
 		const childNodes = nestedHeadingList.map( ( childNode, index ) => {
 			const {
-				anchor, content, blockId, isExcluded,
+				anchor, level, content, isExcluded,
 			} = childNode.heading
 
-			const entry = anchor ? (
-				// TODO: rich text. How do we identify which heading is which?
-				<a className="stk-block-table-of-contents__link" href={ anchor }>
-					{ content }
-				</a>
-			) : (
-				<a className="stk-block-table-of-contents__link" href="#placeholder">
-					{ content }
-				</a>
-			)
+			// Check if included in render
+			if ( ! props[ `h${ level }` ] ) {
+				return null
+			}
 
 			const visibility = (
-				isSelected ? <button className="stk-block-table-of-contents__button" onClick={ () => toggleItemVisibility( blockId ) }>{ isExcluded ? 'include' : 'exclude' }</button>
+				isSelected ? <Button icon="visibility" onClick={ () => toggleItemVisibility( anchor ) }>{ isExcluded ? 'include' : 'exclude' }</Button>
 						   : null
 			)
 
@@ -36,9 +38,29 @@ const TableOfContentsList = ( {
 
 			return (
 				<li key={ index } className={ className }>
-					{ entry } { visibility }
+					{ isEdit ? (
+						<RichText
+							tagName="a"
+							className="stk-block-table-of-contents__link"
+							//href={ anchor }
+							onChange={ value => {
+								console.log( value )
+							} }
+							placeholder={ __( 'Heading', i18n ) }
+							value={ content }
+						/>
+					) : (
+						<RichText.Content
+							tagName="a"
+							className="stk-block-table-of-contents__link"
+							href={ `#${ anchor }` }
+							value={ content }
+						/>
+					) }
+					{ visibility }
 					{ childNode.children ? (
 						<TableOfContentsList
+							{ ...props }
 							nestedHeadingList={ childNode.children }
 							wrapList={ true }
 							listTag={ listTag }
@@ -58,34 +80,37 @@ const TableOfContentsList = ( {
 	}
 }
 
-TableOfContentsList.Content = ( {
-	nestedHeadingList,
-	wrapList = true,
-	listTag = 'ul',
-} ) => {
+TableOfContentsList.Content = props => {
+	const {
+		nestedHeadingList,
+		wrapList = true,
+		listTag = 'ul',
+	} = props
+
 	if ( nestedHeadingList ) {
 		const ListTag = listTag
 		const childNodes = nestedHeadingList.map( ( childNode, index ) => {
-			const { anchor, content } = childNode.heading
+			const {
+				anchor, level, content,
+			} = childNode.heading
 
-			const entry = anchor ? (
-				<a className="stk-block-table-of-contents__link" href={ anchor }>
-					{ content }
-				</a>
-			) : (
-				<a className="stk-block-table-of-contents__link" href="#placeholder">
-					{ content }
-				</a>
-			)
+			// Check if included in render
+			if ( ! props[ `h${ level }` ] ) {
+				return null
+			}
 
 			return (
 				<li key={ index } className="stk-block-table-of-contents__list-item">
-					{ entry }
+					<a className="stk-block-table-of-contents__link" href={ anchor }>
+						{ content }
+					</a>
 					{ childNode.children ? (
 						<TableOfContentsList
+							{ ...props }
 							nestedHeadingList={ childNode.children }
 							wrapList={ true }
 							listTag={ listTag }
+							isEdit={ false }
 						/>
 					) : null }
 				</li>

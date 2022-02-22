@@ -10,6 +10,31 @@ import { kebabCase } from 'lodash'
 import {
 	__, _x,
 } from '@wordpress/i18n'
+import { select } from '@wordpress/data'
+import { applyFilters } from '@wordpress/hooks'
+
+const convertBlockToHeadingObject = block => {
+	if ( block.name === 'stackable/heading' ) {
+		// If block is a stackable/heading block, and it doesn't have an anchor, silently update it and add an anchor.
+		// For backward compatibility.
+		if ( ! block.attributes.anchor ) {
+			block.attributes.anchor = kebabCase( block.attributes.text )
+		}
+
+		return {
+			content: block.attributes.text,
+			level: parseInt( block.attributes.textTag.substr( 1 ), 10 ),
+			anchor: block.attributes.anchor,
+		}
+	}
+
+	return applyFilters( 'stackable.block.table-of-contents.convert-block', null, block ) || { // Allow other plugins to add their own heading block.
+		// Native core/heading
+		content: block.attributes.content,
+		level: block.attributes.level,
+		anchor: block.attributes.anchor,
+	}
+}
 
 // The default icon list SVG.
 export const DEFAULT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190"><polygon points="173.8,28.4 60.4,141.8 15.7,97.2 5.1,107.8 60.4,163 184.4,39 173.8,28.4"/></svg>'
@@ -179,26 +204,26 @@ export function getHeadingsFromEditorDom( editorDom, attributes ) {
 		editorDom.removeChild( template )
 	}
 
-	let allowedHeadings = [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ]
+	let allowedHeadings = [ 1, 2, 3, 4, 5, 6 ]
 	if ( attributes ) {
 		allowedHeadings = []
 		if ( attributes.includeH1 ) {
-			allowedHeadings.push( 'H1' )
+			allowedHeadings.push( 1 )
 		}
 		if ( attributes.includeH2 ) {
-			allowedHeadings.push( 'H2' )
+			allowedHeadings.push( 2 )
 		}
 		if ( attributes.includeH3 ) {
-			allowedHeadings.push( 'H3' )
+			allowedHeadings.push( 3 )
 		}
 		if ( attributes.includeH4 ) {
-			allowedHeadings.push( 'H4' )
+			allowedHeadings.push( 4 )
 		}
 		if ( attributes.includeH5 ) {
-			allowedHeadings.push( 'H5' )
+			allowedHeadings.push( 5 )
 		}
 		if ( attributes.includeH6 ) {
-			allowedHeadings.push( 'H6' )
+			allowedHeadings.push( 6 )
 		}
 	}
 
@@ -207,15 +232,22 @@ export function getHeadingsFromEditorDom( editorDom, attributes ) {
 			'.wp-block[data-type="stackable/heading"], .wp-block-heading[data-type="core/heading"]'
 		)
 
-		const allowedHeadingBlocks = [ ...headingBlocks ].filter( block => {
-			const heading = ! block.classList.contains( 'wp-block-heading' )
-				? block.querySelector( ':scope > .stk-block > .stk-block-heading__text' )
-				: block
-
-			return allowedHeadings.includes( heading.nodeName )
+		return [ ...headingBlocks ].map( heading => {
+			const clientId = heading.getAttribute( 'data-block' )
+			const block = select( 'core/block-editor' ).getBlock( clientId )
+			return convertBlockToHeadingObject( block )
 		} )
 
-		return getHeadingsFromHeadingBlocks( allowedHeadingBlocks, attributes.headings )
+		// const allowedHeadingBlocks = [ ...headingBlocks ].filter( block => {
+		// 	// Find the heading DOM element
+		// 	const headingEl = ! block.classList.contains( 'wp-block-heading' )
+		// 		? block.querySelector( '.stk-block-heading__text' )
+		// 		: block
+
+		// 	return allowedHeadings.includes( headingEl.nodeName )
+		// } )
+
+		// return getHeadingsFromHeadingBlocks( allowedHeadingBlocks, attributes.headings )
 	}
 	return []
 }

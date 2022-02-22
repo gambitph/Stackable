@@ -141,7 +141,7 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: tableofContentsAttributes,
-		versionAdded: '3.0.0',
+		versionAdded: '3.2.0',
 		versionDeprecated: '',
 	} )
 
