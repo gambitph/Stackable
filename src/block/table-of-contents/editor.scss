@@ -7,6 +7,17 @@
 	.stk-block-table-of-contents__list-item:is(.stk-block-table-of-contents__list-item__excluded) {
 		opacity: 0.3;
 	}
+
+	.stk-block-table-of-contents__list-item-inner {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-items: flex-start;
+	}
+
+	.stk-block-table-of-contents__visibility-icon {
+		margin: 0 0.5rem;
+	}
 }
 
 // Alignments when the icon list is aligned.
