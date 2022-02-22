@@ -15,7 +15,6 @@ import {
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 	AdvancedToggleControl,
-	IconControl,
 	ColorPaletteControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
@@ -86,17 +85,13 @@ const listTypeOptions = [
 		label: __( 'Uppercase Letters', i18n ),
 		value: 'upper-alpha',
 	},
-	{
-		label: __( 'None', i18n ),
-		value: 'none',
-	},
 ]
 
 const HeadingsControls = () => (
 	[ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ].map( heading =>
 		<AdvancedToggleControl
 			key={ heading }
-			label={ `Include ${ heading }` }
+			label={ `${ __( `Include`, i18n ) } ${ heading }` }
 			attribute={ `include${ heading }` }
 			defaultValue={ true }
 		/>
@@ -117,6 +112,11 @@ const Edit = props => {
 
 	const toggleItemVisibility = anchor => {
 		const updatedHeadings = headings.map( heading => ( { ...heading, isExcluded: heading.anchor === anchor ? ! heading.isExcluded : heading.isExcluded } ) )
+		setAttributes( { headings: updatedHeadings } )
+	}
+
+	const updateContent = ( anchor, customContent ) => {
+		const updatedHeadings = headings.map( heading => ( { ...heading, customContent: heading.anchor === anchor ? customContent : heading.customContent } ) )
 		setAttributes( { headings: updatedHeadings } )
 	}
 
@@ -153,32 +153,6 @@ const Edit = props => {
 		}
 	 }, [ getEditorDom, headings.length ] )
 
-	// useEffect( () => {
-	// 	const updateHeadings = () => {
-	// 		const editorDom = getEditorDom()
-	// 		if ( editorDom ) {
-	// 			const latestHeadings = getHeadingsFromEditorDom( editorDom, attributes )
-	// 			if (
-	// 				! isEqual( headings.map( h => ( {
-	// 					level: h.level, content: h.content,
-	// 				} ) ), latestHeadings.map( h => ( {
-	// 					level: h.level, content: h.content,
-	// 				} ) ) )
-	// 			) {
-	// 				setAttributes( { headings: latestHeadings } )
-	// 			}
-	// 		}
-	// 	}
-	// 	const unsubscribe = wp.data.subscribe( debounce( updateHeadings ) )
-	// 	return () => unsubscribe()
-	// }, [ attributes.headings, attributes ] )
-
-	// useEffect( () => {
-	// 	// setTimeout( () => setAttributes( { headings } ), 0 )
-	// }, [ headings ] )
-	// 	return () => unsubscribe()
-	//  }, [ headings, attributes ] )
-
 	useGeneratedCss( props.attributes )
 
 	const { ordered } = attributes
@@ -195,6 +169,13 @@ const Edit = props => {
 		blockHoverClass,
 		textClasses,
 	] )
+
+	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
+		n => attributes[ `includeH${ n }` ]
+	)
+	const filteredHeadlingList = headings.filter( heading => allowedLevels.includes( heading.level ) )
+
+	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
 
 	return (
 		<Fragment>
@@ -273,13 +254,10 @@ const Edit = props => {
 					/>
 
 					{ ! ordered && (
-						<IconControl
-							label={ __( 'Icon', i18n ) }
-							value={ attributes.icon }
-							onChange={ icon => {
-								// Reset custom individual icons.
-								setAttributes( { icon, icons: [] } )
-							} }
+						<AdvancedToggleControl
+							label={ __( 'Show Icons', i18n ) }
+							attribute="showIcons"
+							defaultValue={ true }
 						/>
 					) }
 
@@ -354,16 +332,11 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<TableOfContentsList
-					nestedHeadingList={ linearToNestedHeadingList( headings ) }
+					nestedHeadingList={ nestedHeadingList }
 					isSelected={ isSelected }
 					listTag={ tagName }
 					toggleItemVisibility={ toggleItemVisibility }
-					h1={ attributes.includeH1 }
-					h2={ attributes.includeH2 }
-					h3={ attributes.includeH3 }
-					h4={ attributes.includeH4 }
-					h5={ attributes.includeH5 }
-					h6={ attributes.includeH6 }
+					updateContent={ updateContent }
 				/>
 				{ headings.length === 0 && (
 					<div className="stk-table-of-contents__placeholder">

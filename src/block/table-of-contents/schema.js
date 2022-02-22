@@ -14,7 +14,6 @@ import {
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
-import { DEFAULT_SVG } from './util'
 
 export const tableofContentsAttributes = {
 	// Columns.
@@ -43,14 +42,14 @@ export const tableofContentsAttributes = {
 	},
 
 	// Icon.
-	icon: {
-		type: 'string',
-		default: DEFAULT_SVG,
-	},
 	markerColor: {
 		type: 'string',
 		default: '',
 		stkHover: true,
+	},
+	showIcons: {
+		type: 'boolean',
+		default: true,
 	},
 	icons: {
 		type: 'object',

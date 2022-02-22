@@ -124,7 +124,7 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '', styles = {} )
  * Extracts text, anchor, exclusion, and level from a list of heading blocks.
  *
  * @param {NodeList} headingBlocks The list of heading blocks.
- * @param headings
+ * @param {Array} headings
  * @return {Array} The list of heading parameters.
  */
 export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
@@ -152,8 +152,6 @@ export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
 		}
 		anchor = `#${ firstId }`
 
-		const blockId = isStkHeading ? headingBlock.dataset?.block : heading.dataset?.block
-
 		let level
 
 		switch ( heading.tagName ) {
@@ -180,9 +178,10 @@ export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
 		const content = heading.textContent
 		const matchingHeading = headings.find( heading => heading.content === content && heading.level === level )
 		const isExcluded = matchingHeading ? matchingHeading.isExcluded : false
+		const customContent = matchingHeading ? matchingHeading.customContent : ''
 
 		return {
-			anchor, content, level, blockId, isExcluded,
+			anchor, content, customContent, isExcluded,
 		}
 	} )
 }

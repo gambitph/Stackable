@@ -29,17 +29,24 @@ import {
 
 const typographyOptions = {
 	selector: [
-		'ul li',
-		'ol li',
+		'ul li a',
+		'ol li a',
 	],
 	hoverSelector: [
-		'.%s:hover ul li',
-		'.%s:hover ol li',
+		'.%s:hover ul li a',
+		'.%s:hover ol li a',
 	],
 }
 
 const getStyleParams = () => {
 	return [
+		{
+			selector: 'ul li::marker',
+			styleRule: 'color',
+			attrName: 'showIcons',
+			responsive: 'all',
+			valueCallback: show => ! show ? 'rgba(0, 0, 0, 0)' : 'auto',
+		},
 		{
 			selector: 'li',
 			styleRule: 'paddingInlineStart',
@@ -117,6 +124,12 @@ const getStyleParams = () => {
 			hoverSelector: '.%s:hover li::marker',
 			styleRule: 'color',
 			attrName: 'markerColor',
+		},
+		{
+			selector: 'li > a',
+			hover: 'all',
+			styleRule: 'color',
+			attrName: 'color',
 		},
 		{
 			selector: 'li::marker',

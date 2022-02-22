@@ -42,6 +42,13 @@ export const Save = props => {
 		textClasses,
 	] )
 
+	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
+		n => attributes[ `includeH${ n }` ]
+	)
+	const filteredHeadlingList = headings.filter( heading => allowedLevels.includes( heading.level ) )
+
+	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
+
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
@@ -50,7 +57,7 @@ export const Save = props => {
 			<TableOfContentsStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<TableOfContentsList.Content
-				nestedHeadingList={ linearToNestedHeadingList( headings ) }
+				nestedHeadingList={ nestedHeadingList }
 				listTag={ tagName }
 				h1={ attributes.includeH1 }
 				h2={ attributes.includeH2 }

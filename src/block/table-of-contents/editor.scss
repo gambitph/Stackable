@@ -1,22 +1,32 @@
 // Show a cursor pointer when hovering over the bullet icons
 .stk-block-table-of-contents {
+
 	li {
 		position: relative;
 	}
 
-	.stk-block-table-of-contents__list-item:is(.stk-block-table-of-contents__list-item__excluded) {
-		opacity: 0.3;
-	}
-
 	.stk-block-table-of-contents__list-item-inner {
 		display: flex;
-		flex-wrap: nowrap;
 		align-items: center;
-		justify-items: flex-start;
+		justify-content: flex-start;
+		flex-wrap: nowrap;
 	}
 
-	.stk-block-table-of-contents__visibility-icon {
-		margin: 0 0.5rem;
+	.stk-block-table-of-contents__list-item__excluded {
+		opacity: 0.5;
+	}
+
+	.stk-block-table-of-contents__list-item__hidden {
+		display: none;
+	}
+
+	.stk-block-table-of-contents__link {
+		text-decoration: underline;
+	}
+
+	button.components-button.has-text.has-icon {
+		height: unset;
+		padding: 0;
 	}
 }
 
