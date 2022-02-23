@@ -59,6 +59,7 @@ import {
 } from './util'
 
 import TableOfContentsList from './table-of-contents-list'
+import { Button } from '@wordpress/components'
 
 const listTypeOptions = [
 	{
@@ -176,6 +177,8 @@ const Edit = props => {
 	const filteredHeadlingList = headings.filter( heading => allowedLevels.includes( heading.level ) )
 
 	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
+
+	const hasEmptyAnchor = headings.some( heading => ! heading.anchor )
 
 	return (
 		<Fragment>
@@ -331,6 +334,20 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
 			<BlockDiv className={ blockClassNames }>
+				{ !! headings.length && hasEmptyAnchor && (
+					<div className="stk-table-of-contents__empty-anchor">
+						<span>{ __( 'You have one or more headings without an anchor id. Anchor ids are required for the Table of Contents block to work.', i18n ) }</span>
+						<br />
+						<Button
+							isSecondary
+							onClick={ () => {
+								console.log( 'Generating now' ) // eslint-disable-line no-console
+							} }
+						>
+							{ __( 'Auto-generate missing anchor ids', i18n ) }
+						</Button>
+					</div>
+				) }
 				<TableOfContentsList
 					nestedHeadingList={ nestedHeadingList }
 					isSelected={ isSelected }

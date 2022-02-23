@@ -15,12 +15,6 @@ import { applyFilters } from '@wordpress/hooks'
 
 const convertBlockToHeadingObject = block => {
 	if ( block.name === 'stackable/heading' ) {
-		// If block is a stackable/heading block, and it doesn't have an anchor, silently update it and add an anchor.
-		// For backward compatibility.
-		if ( ! block.attributes.anchor ) {
-			block.attributes.anchor = kebabCase( block.attributes.text )
-		}
-
 		return {
 			content: block.attributes.text,
 			level: parseInt( block.attributes.textTag.substr( 1 ), 10 ),
