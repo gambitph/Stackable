@@ -20,13 +20,10 @@
 		display: none;
 	}
 
-	.stk-block-table-of-contents__link {
-		text-decoration: underline;
-	}
-
 	button.components-button.has-text.has-icon {
-		height: unset;
+		height: 0;
 		padding: 0;
+		margin-left: 16px;
 	}
 }
 
