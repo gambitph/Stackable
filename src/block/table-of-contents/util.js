@@ -19,6 +19,7 @@ const convertBlockToHeadingObject = block => {
 			content: block.attributes.text,
 			level: parseInt( block.attributes.textTag.substr( 1 ), 10 ),
 			anchor: block.attributes.anchor,
+			clientId: block.clientId,
 		}
 	}
 
@@ -27,6 +28,7 @@ const convertBlockToHeadingObject = block => {
 		content: block.attributes.content,
 		level: block.attributes.level,
 		anchor: block.attributes.anchor,
+		clientId: block.clientId,
 	}
 }
 

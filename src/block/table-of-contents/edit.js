@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { TableOfContentsStyles } from './style'
+import { generateAnchor, setAnchor } from './autogenerate-anchors'
 
 /***
  * External dependencies
@@ -44,10 +45,14 @@ import {
  * WordPress dependencies
  */
 import {
-	useSelect,
+	Card,
+	CardBody,
+} from '@wordpress/components'
+import {
+	useSelect, useDispatch,
 } from '@wordpress/data'
 import {
-	Fragment, useEffect, useState,
+	Fragment, useEffect, useState, useCallback,
 } from '@wordpress/element'
 import {
 	__,
@@ -59,7 +64,7 @@ import {
 } from './util'
 
 import TableOfContentsList from './table-of-contents-list'
-import { Button } from '@wordpress/components'
+import Notice from './notice'
 
 const listTypeOptions = [
 	{
@@ -88,6 +93,18 @@ const listTypeOptions = [
 	},
 ]
 
+const Placeholder = () => (
+	<Card className="stk-table-of-contents__placeholder">
+		<CardBody>
+			{
+				__(
+					'Start adding Heading blocks to create a table of contents. Supported heading blocks will be linked here.',
+					i18n
+				) }
+		</CardBody>
+	</Card>
+)
+
 const HeadingsControls = () => (
 	[ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ].map( heading =>
 		<AdvancedToggleControl
@@ -108,8 +125,11 @@ const Edit = props => {
 	} = props
 
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
-	const { getEditedPostContent } = useSelect( 'core/editor' )
+	const { isSmoothScroll } = attributes
 	const [ headings, setHeadings ] = useState( attributes.headings )
+	const { getEditedPostContent } = useSelect( 'core/editor' )
+	const { getBlocks } = useSelect( 'core/block-editor' )
+	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 
 	const toggleItemVisibility = anchor => {
 		const updatedHeadings = headings.map( heading => ( { ...heading, isExcluded: heading.anchor === anchor ? ! heading.isExcluded : heading.isExcluded } ) )
@@ -157,6 +177,7 @@ const Edit = props => {
 	// Update headings attribute when the headings state changes
 	useEffect( debounce( () => {
 		if ( ! isEqual( attributes.headings, headings ) ) {
+			__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { headings } )
 		}
 	}, 301 ), [ headings ] )
@@ -186,6 +207,30 @@ const Edit = props => {
 	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
 
 	const hasEmptyAnchor = headings.some( heading => ! heading.anchor )
+
+	const autoGenerateAnchors = useCallback( () => {
+		// This side-effect should not create an undo level.
+		__unstableMarkNextChangeAsNotPersistent()
+		const blocks = getBlocks()
+			.filter( block => 'core/heading' === block.name )
+
+		blocks.map( block => {
+			const { clientId, attributes: { anchor, content } } = block
+			if ( ! anchor && content ) {
+				const anchor = generateAnchor( clientId, content )
+				block.attributes.anchor = anchor
+				setAnchor( clientId, anchor )
+			}
+			return block
+		} )
+		const editorHeadings = getUpdatedHeadings( getEditorDom, attributes ).map( ( heading, i ) => {
+			return {
+				...headings[ i ],
+				...heading,
+			}
+		} )
+		setHeadings( editorHeadings )
+	}, [ getEditorDom, attributes ] )
 
 	return (
 		<Fragment>
@@ -254,6 +299,20 @@ const Edit = props => {
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
+					title={ __( 'Scrolling', i18n ) }
+					initialOpen={ false }
+					id="icon-and-markers"
+				>
+					<AdvancedToggleControl
+						label={ __( 'Use smooth scroll', i18n ) }
+						attribute="isSmoothScroll"
+						defaultValue={ false }
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
 					title={ __( 'Icons & Numbers', i18n ) }
 					initialOpen={ false }
 					id="icon-and-markers"
@@ -308,17 +367,6 @@ const Edit = props => {
 							hover="all"
 						/>
 					) }
-
-					{ ! ordered && (
-						<AdvancedRangeControl
-							label={ __( 'Icon Rotation', i18n ) }
-							attribute="iconRotation"
-							min={ 0 }
-							max={ 360 }
-							allowReset={ true }
-							placeholder="0"
-						/>
-					) }
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
@@ -342,35 +390,18 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				{ !! headings.length && hasEmptyAnchor && (
-					<div className="stk-table-of-contents__empty-anchor">
-						<span>{ __( 'You have one or more headings without an anchor id. Anchor ids are required for the Table of Contents block to work.', i18n ) }</span>
-						<br />
-						<Button
-							isSecondary
-							onClick={ () => {
-								console.log( 'Generating now' ) // eslint-disable-line no-console
-							} }
-						>
-							{ __( 'Auto-generate missing anchor ids', i18n ) }
-						</Button>
-					</div>
+					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
 				) }
 				<TableOfContentsList
 					nestedHeadingList={ nestedHeadingList }
 					isSelected={ isSelected }
+					isSmoothScroll={ isSmoothScroll }
 					listTag={ tagName }
 					toggleItemVisibility={ toggleItemVisibility }
 					updateContent={ updateContent }
 				/>
 				{ headings.length === 0 && (
-					<div className="stk-table-of-contents__placeholder">
-						<p><em>
-							{ __(
-								'Adding Heading blocks to add entries.',
-								'stackable-ultimate-gutenberg-blocks'
-							) }
-						</em></p>
-					</div>
+					<Placeholder />
 				) }
 			</BlockDiv>
 			<MarginBottom />

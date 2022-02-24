@@ -167,6 +167,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/notification/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block/table-of-contents/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/video-popup/index.php' );
 
 /**
