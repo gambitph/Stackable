@@ -13,17 +13,37 @@
 	}
 
 	.stk-block-table-of-contents__list-item__excluded {
-		opacity: 0.5;
+		a,
+		.dashicon {
+			opacity: 0.4;
+		}
 	}
 
 	.stk-block-table-of-contents__list-item__hidden {
 		display: none;
 	}
 
-	button.components-button.has-text.has-icon {
-		height: 0;
-		padding: 0;
+	.stk-block-table-of-contents__link-wrapper {
+		position: relative;
+		padding-right: 52px;
+	}
+	.stk-block-table-of-contents__list-item__exclude-button {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
 		margin-left: 16px;
+	}
+}
+
+// Fade hidden entries.
+[data-type="stackable/table-of-contents"]:not(.is-selected) {
+	.stk-block-table-of-contents__list-item__exclude-button {
+		opacity: 0;
+	}
+	.stk-block-table-of-contents__link-wrapper:hover {
+		.stk-block-table-of-contents__list-item__exclude-button {
+			opacity: 1;
+		}
 	}
 }
 

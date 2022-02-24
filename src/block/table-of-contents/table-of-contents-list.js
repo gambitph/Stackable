@@ -22,39 +22,35 @@ const TableOfContentsList = props => {
 				anchor, content, customContent, isExcluded,
 			} = childNode.heading
 
-			const btnText = <span className="screen-reader-text">
-				{ isExcluded ? 'include' : 'exclude' }
-			</span>
-
-			const btnIcon = ! isExcluded ? 'visibility' : 'hidden'
-
-			const visibility = isSelected ? <Button
-				icon={ btnIcon }
-				onClick={ () => toggleItemVisibility( anchor )
-				}>{ btnText }</Button>
-				: null
+			const visibility = <Button
+				className="stk-block-table-of-contents__list-item__exclude-button"
+				icon={ ! isExcluded ? 'visibility' : 'hidden' }
+				onClick={ () => toggleItemVisibility( anchor ) }
+				isSmall
+				label={ isExcluded ? __( 'Include heading', i18n ) : __( 'Exclude heading', i18n ) }
+				showTooltip
+				tooltipPosition="right middle"
+			/>
 
 			const className = classnames( 'stk-block-table-of-contents__list-item', {
 				'stk-block-table-of-contents__list-item__hidden': isExcluded && ! isSelected,
+				'stk-block-table-of-contents__list-item__excluded': isExcluded,
 			} )
 
 			return (
 				<li key={ index } className={ className }>
 					{ isEdit ? (
 						<div className="stk-block-table-of-contents__list-item-inner">
-							<RichText
-								tagName="a"
-								className={ classnames(
-									'stk-block-table-of-contents__link',
-									{
-										'stk-block-table-of-contents__list-item__excluded': isExcluded && isSelected,
-									}
-								) }
-								onChange={ value => updateContent( anchor, value ) }
-								placeholder={ __( 'Heading', i18n ) }
-								value={ ! isEmpty( customContent ) ? customContent : content }
-							/>
-							{ visibility }
+							<span className="stk-block-table-of-contents__link-wrapper">
+								<RichText
+									tagName="a"
+									className="stk-block-table-of-contents__link"
+									onChange={ value => updateContent( anchor, value ) }
+									placeholder={ __( 'Heading', i18n ) }
+									value={ ! isEmpty( customContent ) ? customContent : content }
+								/>
+								{ visibility }
+							</span>
 						</div>
 					) : (
 						<RichText.Content

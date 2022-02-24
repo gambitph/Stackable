@@ -47,7 +47,7 @@ import {
 	useSelect,
 } from '@wordpress/data'
 import {
-	Fragment, useEffect,
+	Fragment, useEffect, useState,
 } from '@wordpress/element'
 import {
 	__,
@@ -108,17 +108,17 @@ const Edit = props => {
 	} = props
 
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
-	const { headings } = attributes
 	const { getEditedPostContent } = useSelect( 'core/editor' )
+	const [ headings, setHeadings ] = useState( attributes.headings )
 
 	const toggleItemVisibility = anchor => {
 		const updatedHeadings = headings.map( heading => ( { ...heading, isExcluded: heading.anchor === anchor ? ! heading.isExcluded : heading.isExcluded } ) )
-		setAttributes( { headings: updatedHeadings } )
+		setHeadings( updatedHeadings )
 	}
 
 	const updateContent = ( anchor, customContent ) => {
 		const updatedHeadings = headings.map( heading => ( { ...heading, customContent: heading.anchor === anchor ? customContent : heading.customContent } ) )
-		setAttributes( { headings: updatedHeadings } )
+		setHeadings( updatedHeadings )
 	}
 
 	// Watch for any heading block changes, update the heading text, level and anchor.
@@ -133,7 +133,7 @@ const Edit = props => {
 						...heading,
 					}
 				} )
-				setAttributes( { headings: editorHeadings } ) // TODO: change this to silently update the attribute
+				setHeadings( editorHeadings ) // TODO: change this to silently update the attribute
 			}
 			postContent = newPostContent
 		}, 300 ) )
@@ -150,9 +150,16 @@ const Edit = props => {
 					isExcluded: false,
 				}
 			} )
-			setAttributes( { headings } ) // TODO: change this to silently update the attribute
+			setHeadings( headings ) // TODO: change this to silently update the attribute
 		}
-	 }, [ getEditorDom, headings.length ] )
+	}, [ getEditorDom, headings.length ] )
+
+	// Update headings attribute when the headings state changes
+	useEffect( debounce( () => {
+		if ( ! isEqual( attributes.headings, headings ) ) {
+			setAttributes( { headings } )
+		}
+	}, 301 ), [ headings ] )
 
 	useGeneratedCss( props.attributes )
 
