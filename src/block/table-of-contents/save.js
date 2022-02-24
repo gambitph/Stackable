@@ -30,7 +30,7 @@ export const Save = props => {
 	const responsiveClass = getResponsiveClasses( attributes )
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const { headings } = attributes
+	const { headings, isSmoothScroll } = attributes
 
 	const tagName = attributes.ordered ? 'ol' : 'ul'
 
@@ -58,6 +58,7 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			<TableOfContentsList.Content
 				nestedHeadingList={ nestedHeadingList }
+				isSmoothScroll={ isSmoothScroll }
 				listTag={ tagName }
 				h1={ attributes.includeH1 }
 				h2={ attributes.includeH2 }

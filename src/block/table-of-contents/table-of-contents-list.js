@@ -13,13 +13,14 @@ const TableOfContentsList = props => {
 		toggleItemVisibility,
 		isEdit = true,
 		updateContent,
+		isSmoothScroll,
 	} = props
 
 	if ( nestedHeadingList ) {
 		const ListTag = listTag
-		const childNodes = nestedHeadingList.map( ( childNode, index ) => {
+		const childNodes = nestedHeadingList.map( childNode => {
 			const {
-				anchor, content, customContent, isExcluded,
+				anchor, content, customContent, isExcluded, clientId,
 			} = childNode.heading
 
 			const btnText = <span className="screen-reader-text">
@@ -39,7 +40,7 @@ const TableOfContentsList = props => {
 			} )
 
 			return (
-				<li key={ index } className={ className }>
+				<li key={ clientId } className={ className }>
 					{ isEdit ? (
 						<div className="stk-block-table-of-contents__list-item-inner">
 							<RichText
@@ -68,11 +69,11 @@ const TableOfContentsList = props => {
 						<TableOfContentsList
 							{ ...props }
 							nestedHeadingList={ childNode.children }
-							wrapList={ true }
 							listTag={ listTag }
 							toggleItemVisibility={ toggleItemVisibility }
 							updateContent={ updateContent }
 							isSelected={ isSelected }
+							isSmoothScroll={ isSmoothScroll }
 						/>
 					) : null }
 				</li>
@@ -80,9 +81,11 @@ const TableOfContentsList = props => {
 		} )
 
 		return (
-			<ListTag className="stk-block-table-of-contents__sub-list">
-				{ childNodes }
-			</ListTag>
+			<nav className="stk-block-table-of-contents__navigation" data-is-smooth-scroll={ isSmoothScroll } >
+				<ListTag className="stk-block-table-of-contents__sub-list">
+					{ childNodes }
+				</ListTag>
+			</nav>
 		)
 	}
 }
@@ -90,15 +93,15 @@ const TableOfContentsList = props => {
 TableOfContentsList.Content = props => {
 	const {
 		nestedHeadingList,
-		wrapList = true,
 		listTag = 'ul',
+		isSmoothScroll,
 	} = props
 
 	if ( nestedHeadingList ) {
 		const ListTag = listTag
-		const childNodes = nestedHeadingList.map( ( childNode, index ) => {
+		const childNodes = nestedHeadingList.map( childNode => {
 			const {
-				anchor, level, content, isExcluded,
+				anchor, level, content, customContent, isExcluded, clientId,
 			} = childNode.heading
 
 			// Check if included in render
@@ -111,15 +114,14 @@ TableOfContentsList.Content = props => {
 			}
 
 			return (
-				<li key={ index } className="stk-block-table-of-contents__list-item">
+				<li key={ clientId } className="stk-block-table-of-contents__list-item">
 					<a className="stk-block-table-of-contents__link" href={ `#${ anchor }` }>
-						{ content }
+						{ ! isEmpty( customContent ) ? customContent : content }
 					</a>
 					{ childNode.children ? (
 						<TableOfContentsList
 							{ ...props }
 							nestedHeadingList={ childNode.children }
-							wrapList={ true }
 							listTag={ listTag }
 							isEdit={ false }
 						/>
@@ -128,12 +130,12 @@ TableOfContentsList.Content = props => {
 			)
 		} )
 
-		return wrapList ? (
-			<ListTag className="stk-block-table-of-contents__sub-list">
-				{ childNodes }
-			</ListTag>
-		) : (
-			childNodes
+		return (
+			<nav className="stk-block-table-of-contents__navigation" data-is-smooth-scroll={ isSmoothScroll } >
+				<ListTag>
+					{ childNodes }
+				</ListTag>
+			</nav>
 		)
 	}
 }

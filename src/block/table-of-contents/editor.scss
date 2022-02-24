@@ -24,6 +24,9 @@
 		height: 0;
 		padding: 0;
 		margin-left: 16px;
+		&:focus {
+			box-shadow: none;
+		}
 	}
 }
 
