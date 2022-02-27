@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { TableOfContentsStyles } from './style'
-import { generateAnchor, setAnchor } from './autogenerate-anchors'
+import { generateAnchor } from './autogenerate-anchors'
 
 /***
  * External dependencies
@@ -45,6 +45,7 @@ import {
  * WordPress dependencies
  */
 import {
+	Button,
 	Card,
 	CardBody,
 } from '@wordpress/components'
@@ -64,7 +65,6 @@ import {
 } from './util'
 
 import TableOfContentsList from './table-of-contents-list'
-import Notice from './notice'
 
 const listTypeOptions = [
 	{
@@ -94,7 +94,7 @@ const listTypeOptions = [
 ]
 
 const Placeholder = () => (
-	<Card className="stk-table-of-contents__placeholder">
+	<Card>
 		<CardBody>
 			{
 				__(
@@ -115,6 +115,27 @@ const HeadingsControls = () => (
 		/>
 	)
 )
+
+const Notice = ( { autoGenerateAnchors } ) => {
+	return (
+		<Card className="stk-table-of-contents__empty-anchor">
+			<CardBody isShady>
+				{ __(
+					'You have one or more headings without an anchor id. Anchor ids are required for the Table of Contents block to work.',
+					i18n
+				) }
+				<br />
+				<br />
+				<Button
+					isPrimary
+					onClick={ autoGenerateAnchors }
+				>
+					{ __( 'Auto-generate missing anchor ids', i18n ) }
+				</Button>
+			</CardBody>
+		</Card>
+	)
+}
 
 const Edit = props => {
 	const {
@@ -215,11 +236,10 @@ const Edit = props => {
 			.filter( block => 'core/heading' === block.name )
 
 		blocks.map( block => {
-			const { clientId, attributes: { anchor, content } } = block
+			const { attributes: { anchor, content } } = block
 			if ( ! anchor && content ) {
-				const anchor = generateAnchor( clientId, content )
-				block.attributes.anchor = anchor
-				setAnchor( clientId, anchor )
+				const anchor = generateAnchor( content, blocks )
+				block.attributes.anchor = anchor !== null ? anchor : ''
 			}
 			return block
 		} )
@@ -308,6 +328,16 @@ const Edit = props => {
 						attribute="isSmoothScroll"
 						defaultValue={ false }
 					/>
+					<AdvancedRangeControl
+						label={ __( 'Scroll Top Offset ', i18n ) }
+						attribute="scrollTopOffset"
+						min={ 0 }
+						max={ 200 }
+						step={ 1 }
+						allowReset={ true }
+						responsive="all"
+						placeholder="0"
+					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
@@ -354,19 +384,6 @@ const Edit = props => {
 						responsive="all"
 						placeholder="1"
 					/>
-
-					{ ! ordered && (
-						<AdvancedRangeControl
-							label={ __( 'Icon Opacity', i18n ) }
-							attribute="iconOpacity"
-							min={ 0 }
-							max={ 1 }
-							step={ 0.1 }
-							allowReset={ true }
-							placeholder="1.0"
-							hover="all"
-						/>
-					) }
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 

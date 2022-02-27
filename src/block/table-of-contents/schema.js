@@ -17,12 +17,9 @@ import { version as VERSION } from 'stackable'
 
 export const tableofContentsAttributes = {
 	// Columns.
-	isSmoothScroll: {
-		default: false,
-		type: 'boolean',
-		source: 'attribute',
-		selector: 'nav',
-		attribute: 'data-is-smooth-scroll',
+	smoothScroll: {
+		default: 'auto',
+		type: 'string',
 	},
 	columns: {
 		stkResponsive: true,
@@ -58,21 +55,6 @@ export const tableofContentsAttributes = {
 		type: 'boolean',
 		default: true,
 	},
-	icons: {
-		type: 'object',
-		default: {},
-	},
-	iconSize: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	iconOpacity: {
-		stkHover: true,
-		type: 'number',
-		default: '',
-	},
-
 	// Numbers.
 	listType: {
 		type: 'string',

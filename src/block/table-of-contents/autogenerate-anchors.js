@@ -4,11 +4,9 @@
 import { deburr, trim } from 'lodash'
 
 /**
- * Object map tracking anchors.
- *
- * @type {Record<string, string | null>}
+ * WordPress dependencies
  */
-const anchors = {}
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * Returns the text without markup.
@@ -43,39 +41,29 @@ const getSlug = content => {
 /**
  * Generate the anchor for a heading.
  *
- * @param {string} clientId The block ID.
- * @param {string} content  The block content.
+ * @param {string} content The content we are generate the element ID from.
+ * @param {Array} blocks An array of matching blocks we generate IDs for.
  *
  * @return {string|null} Return the heading anchor.
  */
-export const generateAnchor = ( clientId, content ) => {
-	const slug = getSlug( content )
+export const generateAnchor = ( content, blocks ) => {
+	const baseSlug = getSlug( content )
+
 	// If slug is empty, then return null.
 	// Returning null instead of an empty string allows us to check again when the content changes.
-	if ( '' === slug ) {
+	if ( '' === baseSlug ) {
 		return null
 	}
 
-	delete anchors[ clientId ]
-
-	let anchor = slug
-	let i = 0
-
-	// If the anchor already exists in another heading, append -i.
-	while ( Object.values( anchors ).includes( anchor ) ) {
-		i += 1
-		anchor = slug + '-' + i
+	if ( ! blocks.some( blocks => blocks.attributes.anchor === baseSlug ) ) {
+		return baseSlug
 	}
 
-	return anchor
-}
+	let i = 1
+	let slug = `${ baseSlug }-${ i }`
+	while ( blocks.some( blocks => blocks.attributes.anchor === slug ) ) {
+		slug = `${ baseSlug }-${ i++ }`
+	}
 
-/**
- * Set the anchor for a heading.
- *
- * @param {string}      clientId The block ID.
- * @param {string|null} anchor   The block anchor.
- */
-export const setAnchor = ( clientId, anchor ) => {
-	anchors[ clientId ] = anchor
+	return applyFilters( 'stackable.block.table-of-contents.generate-anchor', null, slug ) || slug
 }

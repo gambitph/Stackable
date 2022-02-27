@@ -77,7 +77,7 @@ const TableOfContentsList = props => {
 		} )
 
 		return (
-			<nav className="stk-block-table-of-contents__navigation" data-is-smooth-scroll={ isSmoothScroll } >
+			<nav className="stk-block-table-of-contents__navigation">
 				<ListTag className="stk-block-table-of-contents__sub-list">
 					{ childNodes }
 				</ListTag>

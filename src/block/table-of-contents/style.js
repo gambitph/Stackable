@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { convertSVGStringToBase64 } from './util'
-
-/**
  * External dependencies
  */
 import {
@@ -45,7 +40,7 @@ const getStyleParams = () => {
 			styleRule: 'color',
 			attrName: 'showIcons',
 			responsive: 'all',
-			valueCallback: show => ! show ? 'rgba(0, 0, 0, 0)' : 'auto',
+			valueCallback: show => ( ! show ? 'rgba(0, 0, 0, 0)' : 'auto' ),
 		},
 		{
 			selector: 'li',
@@ -94,31 +89,6 @@ const getStyleParams = () => {
 			format: '%spx',
 		},
 		{
-			selector: 'ul li',
-			hover: 'all',
-			hoverSelector: '.%s:hover li',
-			styleRule: 'listStyleImage',
-			attrName: 'markerColor',
-			valuePreCallback: ( value, getAttribute, device, state ) => {
-				const iconSVG = getAttribute( 'icon' )
-				const iconRotation = getAttribute( 'iconRotation' )
-				const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
-				if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
-					return undefined
-				}
-
-				if ( ! iconSVG ) {
-					return undefined
-				}
-
-				const transform = `rotate(${ iconRotation + 'deg' })`
-
-				const iconWithColor = convertSVGStringToBase64( iconSVG, value || '#000', { transform, opacity: iconOpacity } )
-				return `url('data:image/svg+xml;base64,${ iconWithColor }')`
-			},
-			dependencies: [ 'icon', 'iconRotation', 'iconOpacity' ],
-		},
-		{
 			selector: 'li::marker',
 			hover: 'all',
 			hoverSelector: '.%s:hover li::marker',
@@ -139,21 +109,25 @@ const getStyleParams = () => {
 			format: '%sem',
 		},
 		{
-			// For calculating the approximate clickable area for
-			// icon picker.
-			renderIn: 'edit',
-			selector: '',
-			styleRule: '--stk-icon-height',
-			attrName: 'iconSize',
-			responsive: 'all',
-			format: '%sem',
-		},
-		{
 			selector: [ 'li' ],
 			styleRule: 'marginInline',
 			attrName: 'listAlignment',
 			responsive: 'all',
 			valueCallback: value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '',
+		},
+		{
+			selector: 'html',
+			styleRule: 'scroll-behavior',
+			attrName: 'isSmoothScroll',
+			responsive: 'all',
+			valueCallback: value => ( value === true ? 'smooth' : 'auto' ),
+		},
+		{
+			selector: 'html',
+			styleRule: 'scroll-padding-top',
+			attrName: 'scrollTopOffset',
+			responsive: 'all',
+			format: '%spx',
 		},
 	]
 }
