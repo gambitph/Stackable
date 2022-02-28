@@ -40,6 +40,7 @@ const variations = applyFilters(
 				className: 'is-style-default',
 				contentOrder: [
 					'title',
+					'featured-image',
 					'meta',
 					'category',
 					'excerpt',
@@ -94,6 +95,13 @@ const variations = applyFilters(
 			name: 'horizontal',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
 			attributes: {
+				contentOrder: [
+					'title',
+					'meta',
+					'category',
+					'excerpt',
+					'readmore',
+				],
 				className: 'is-style-horizontal',
 			},
 			pickerTitle: __( 'Horizontal', i18n ),
@@ -106,6 +114,13 @@ const variations = applyFilters(
 			name: 'horizontal-2',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
 			attributes: {
+				contentOrder: [
+					'title',
+					'meta',
+					'category',
+					'excerpt',
+					'readmore',
+				],
 				className: 'is-style-horizontal-2',
 			},
 			pickerTitle: __( 'Horizontal 2', i18n ),
@@ -143,6 +158,13 @@ const variations = applyFilters(
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical Card', i18n ) ),
 			attributes: {
 				className: 'is-style-vertical-card',
+				contentOrder: [
+					'title',
+					'meta',
+					'category',
+					'excerpt',
+					'readmore',
+				],
 			},
 			pickerTitle: __( 'Vertical Card', i18n ),
 			pickerIcon: ImageVerticalCard,
@@ -154,6 +176,13 @@ const variations = applyFilters(
 			name: 'vertical-card-2',
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical Card 2', i18n ) ),
 			attributes: {
+				contentOrder: [
+					'title',
+					'meta',
+					'category',
+					'excerpt',
+					'readmore',
+				],
 				className: 'is-style-vertical-card-2',
 			},
 			pickerTitle: __( 'Vertical Card 2', i18n ),
