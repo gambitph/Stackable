@@ -217,7 +217,8 @@ const Edit = props => {
 						label={ __( 'Content Arrangement', i18n ) }
 						axis="y"
 						values={ contentOrderOptions }
-						num={ CONTENTS.length }
+						num={ contentOrderOptions.length }
+						allowReset={ false }
 						onChange={ order => {
 							if ( order ) {
 								setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
