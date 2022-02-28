@@ -67,6 +67,15 @@ const ALLOWED_INNER_BLOCKS = [
 	'stackable/pagination',
 ]
 
+const DEFAULT_ORDER = [
+	'title',
+	'featured-image',
+	'meta',
+	'category',
+	'excerpt',
+	'readmore',
+]
+
 const Edit = props => {
 	const {
 		attributes,
@@ -88,13 +97,7 @@ const Edit = props => {
 		taxonomyType = 'category',
 		taxonomy = '',
 		taxonomyFilterType = '__in',
-		contentOrder = [
-			'title',
-			'meta',
-			'category',
-			'excerpt',
-			'readmore',
-		],
+		contentOrder = DEFAULT_ORDER,
 		uniqueId,
 	} = attributes
 
@@ -216,7 +219,11 @@ const Edit = props => {
 						values={ contentOrderOptions }
 						num={ CONTENTS.length }
 						onChange={ order => {
-							setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
+							if ( order ) {
+								setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
+							} else {
+								setAttributes( { contentOrder: DEFAULT_ORDER } )
+							}
 						} }
 					/>
 				</PanelAdvancedSettings>
