@@ -1,12 +1,7 @@
 /**
  * External dependencies
  */
-import { deburr, trim } from 'lodash'
-
-/**
- * WordPress dependencies
- */
-import { applyFilters } from '@wordpress/hooks'
+import { kebabCase } from 'lodash'
 
 /**
  * Returns the text without markup.
@@ -29,13 +24,7 @@ const getTextWithoutMarkup = text => {
  * @return {string} Returns the slug.
  */
 const getSlug = content => {
-	// Get the slug.
-	return trim(
-		deburr( getTextWithoutMarkup( content ) )
-			.replace( /[^\p{L}\p{N}]+/gu, '-' )
-			.toLowerCase(),
-		'-'
-	)
+	return kebabCase( getTextWithoutMarkup( content ) )
 }
 
 /**
@@ -65,5 +54,5 @@ export const generateAnchor = ( content, blocks ) => {
 		slug = `${ baseSlug }-${ i++ }`
 	}
 
-	return applyFilters( 'stackable.block.table-of-contents.generate-anchor', null, slug ) || slug
+	return slug
 }

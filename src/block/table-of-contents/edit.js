@@ -65,6 +65,7 @@ import {
 } from './util'
 
 import TableOfContentsList from './table-of-contents-list'
+import { applyFilters } from '@wordpress/hooks'
 
 const listTypeOptions = [
 	{
@@ -230,27 +231,27 @@ const Edit = props => {
 	const hasEmptyAnchor = headings.some( heading => ! heading.anchor )
 
 	const autoGenerateAnchors = useCallback( () => {
-		// This side-effect should not create an undo level.
-		__unstableMarkNextChangeAsNotPersistent()
+		const BLOCK_ANCHOR_CONTENT = applyFilters( 'stackable.table-of-contents.block-anchor-content', {
+			'core/heading': 'content',
+			'stackable/heading': 'text',
+		} )
+
+		const supportedBlocks = Object.keys( BLOCK_ANCHOR_CONTENT )
+		// TODO: find all blocks even the nested ones.
 		const blocks = getBlocks()
-			.filter( block => 'core/heading' === block.name )
+			.filter( block => supportedBlocks.includes( block.name ) )
 
 		blocks.map( block => {
-			const { attributes: { anchor, content } } = block
+			const content = block.attributes[ BLOCK_ANCHOR_CONTENT[ block.name ] ]
+			const { anchor } = block.attributes
 			if ( ! anchor && content ) {
 				const anchor = generateAnchor( content, blocks )
+				// This side-effect should not create an undo level.
 				block.attributes.anchor = anchor !== null ? anchor : ''
 			}
 			return block
 		} )
-		const editorHeadings = getUpdatedHeadings( getEditorDom, attributes ).map( ( heading, i ) => {
-			return {
-				...headings[ i ],
-				...heading,
-			}
-		} )
-		setHeadings( editorHeadings )
-	}, [ getEditorDom, attributes ] )
+	}, [] )
 
 	return (
 		<Fragment>
@@ -405,10 +406,10 @@ const Edit = props => {
 			<TableOfContentsStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
+			{ !! headings.length && hasEmptyAnchor && (
+				<Notice autoGenerateAnchors={ autoGenerateAnchors } />
+			) }
 			<BlockDiv className={ blockClassNames }>
-				{ !! headings.length && hasEmptyAnchor && (
-					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
-				) }
 				<TableOfContentsList
 					nestedHeadingList={ nestedHeadingList }
 					isSelected={ isSelected }
