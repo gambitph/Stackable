@@ -40,6 +40,7 @@ const variations = applyFilters(
 				className: 'is-style-default',
 				contentOrder: [
 					'title',
+					'featured-image',
 					'meta',
 					'category',
 					'excerpt',
