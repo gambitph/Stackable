@@ -13,7 +13,9 @@ import compareVersions from 'compare-versions'
 /**
  * WordPress dependencies
  */
+import { createHigherOrderComponent } from '@wordpress/compose'
 import { addFilter } from '@wordpress/hooks'
+import { select } from '@wordpress/data'
 
 // Version 3.0.2 Deprecations
 const addUndefinedAttributes = ( attributes, version ) => {
@@ -36,3 +38,28 @@ const deprecated = [
 ]
 
 export default deprecated
+
+// Backward compatibility: In v3.1.4 the Default layout didn't show the featured
+// image because "featured-image" was missing in the contentOrder attribute.
+// This silently adds the missing value to contentOrder.
+const withFeaturedImageFix = createHigherOrderComponent( BlockEdit => {
+	return props => {
+		if ( props.name === 'stackable/posts' ) {
+			const { name, attributes } = props
+			const activeVariation = select( 'core/blocks' ).getActiveBlockVariation( name, attributes )
+			if ( activeVariation?.name === 'default' ) {
+				if ( attributes.contentOrder.indexOf( 'featured-image' ) === -1 ) {
+					attributes.contentOrder.splice( 1, 0, 'featured-image' )
+				}
+			}
+		}
+
+		return <BlockEdit { ...props } />
+	}
+}, 'withFeaturedImageFix' )
+
+addFilter(
+	'editor.BlockEdit',
+	'stackable/posts-block-featured-image-fix',
+	withFeaturedImageFix
+)

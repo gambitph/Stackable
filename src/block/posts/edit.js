@@ -68,7 +68,7 @@ const ALLOWED_INNER_BLOCKS = [
 	'stackable/pagination',
 ]
 
-const DEFAULT_ORDER = [
+export const DEFAULT_ORDER = [
 	'title',
 	'featured-image',
 	'meta',
