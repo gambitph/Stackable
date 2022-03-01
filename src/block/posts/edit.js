@@ -12,7 +12,7 @@ import variations from './variations'
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import { first } from 'lodash'
+import { first, isEqual } from 'lodash'
 import {
 	InspectorTabs,
 	InspectorStyleControls,
@@ -60,6 +60,7 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo, useEffect } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 import { useInstanceId } from '@wordpress/compose'
 
 const ALLOWED_INNER_BLOCKS = [
@@ -79,6 +80,7 @@ const DEFAULT_ORDER = [
 const Edit = props => {
 	const {
 		attributes,
+		name,
 		className,
 		setAttributes,
 	} = props
@@ -104,6 +106,7 @@ const Edit = props => {
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const blockStyle = useBlockStyle( variations )
+	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
 	const {
 		posts, isRequesting, hasPosts,
@@ -149,6 +152,9 @@ const Edit = props => {
 			setAttributes( { stkQueryId: instanceId } )
 		}
 	}, [ stkQueryId, instanceId ] )
+
+	const activeVariation = getActiveBlockVariation( name, attributes )
+	const defaultContentOrder = activeVariation?.attributes?.contentOrder || DEFAULT_ORDER
 
 	return (
 		<>
@@ -218,12 +224,12 @@ const Edit = props => {
 						axis="y"
 						values={ contentOrderOptions }
 						num={ contentOrderOptions.length }
-						allowReset={ false }
+						allowReset={ ! isEqual( contentOrder, defaultContentOrder ) }
 						onChange={ order => {
 							if ( order ) {
 								setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
 							} else {
-								setAttributes( { contentOrder: DEFAULT_ORDER } )
+								setAttributes( { contentOrder: defaultContentOrder } )
 							}
 						} }
 					/>
