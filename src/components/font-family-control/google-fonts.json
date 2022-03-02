@@ -12463,23 +12463,6 @@
     ]
   },
   {
-    "family": "Open Sans Condensed",
-    "variants": [
-      "300",
-      "300italic",
-      "700"
-    ],
-    "subsets": [
-      "cyrillic",
-      "cyrillic-ext",
-      "greek",
-      "greek-ext",
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Oranienbaum",
     "variants": [
       "regular"
