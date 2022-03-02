@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
 Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 3.1.2
+Stable tag: 3.1.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -238,7 +238,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.1.4 =
+* Fixed: Blocks with variations couldn't be added (free only)
+* Fixed: Layout switcher button doesn't show
+
 = 3.1.3 =
+* New: You can now change the Layout after adding a block
 * New: Added Row Gap option in Icon List block
 * New: Added Horizontal 2 layout for the Posts block (inverse of Horizontal layout)
 * Fixed: Editor performance improvements
