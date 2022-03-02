@@ -36,6 +36,14 @@
 			box-shadow: none;
 		}
 	}
+
+	.stk-block-table-of-contents__list-item__exclude-button {
+		visibility: hidden;
+	}
+
+	.stk-block-table-of-contents__link-wrapper:hover > .stk-block-table-of-contents__list-item__exclude-button {
+		visibility: visible;
+	}
 }
 
 // Fade hidden entries.

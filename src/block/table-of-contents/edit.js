@@ -8,7 +8,9 @@ import { generateAnchor } from './autogenerate-anchors'
  * External dependencies
  */
 import classnames from 'classnames'
-import { isEqual, debounce } from 'lodash'
+import {
+	isEqual, debounce, uniqueId, isEmpty,
+} from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
@@ -60,6 +62,7 @@ import {
 } from '@wordpress/i18n'
 
 import {
+	getAllBlocks,
 	getUpdatedHeadings,
 	linearToNestedHeadingList,
 } from './util'
@@ -230,6 +233,11 @@ const Edit = props => {
 
 	const hasEmptyAnchor = headings.some( heading => ! heading.anchor )
 
+	const hasEmptyContent = headings.some( heading => {
+		const { content } = heading
+		return isEmpty( content )
+	} )
+
 	const autoGenerateAnchors = useCallback( () => {
 		const BLOCK_ANCHOR_CONTENT = applyFilters( 'stackable.table-of-contents.block-anchor-content', {
 			'core/heading': 'content',
@@ -237,9 +245,7 @@ const Edit = props => {
 		} )
 
 		const supportedBlocks = Object.keys( BLOCK_ANCHOR_CONTENT )
-		// TODO: find all blocks even the nested ones.
-		const blocks = getBlocks()
-			.filter( block => supportedBlocks.includes( block.name ) )
+		const blocks = getAllBlocks( getBlocks ).filter( block => supportedBlocks.includes( block.name ) )
 
 		blocks.map( block => {
 			const content = block.attributes[ BLOCK_ANCHOR_CONTENT[ block.name ] ]
@@ -247,7 +253,7 @@ const Edit = props => {
 			if ( ! anchor && content ) {
 				const anchor = generateAnchor( content, blocks )
 				// This side-effect should not create an undo level.
-				block.attributes.anchor = anchor !== null ? anchor : ''
+				block.attributes.anchor = anchor !== null ? anchor : uniqueId( 'stk-' )
 			}
 			return block
 		} )
@@ -406,10 +412,10 @@ const Edit = props => {
 			<TableOfContentsStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
-			{ !! headings.length && hasEmptyAnchor && (
-				<Notice autoGenerateAnchors={ autoGenerateAnchors } />
-			) }
 			<BlockDiv className={ blockClassNames }>
+				{ !! headings.length && hasEmptyAnchor && ! hasEmptyContent && (
+					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
+				) }
 				<TableOfContentsList
 					nestedHeadingList={ nestedHeadingList }
 					isSelected={ isSelected }
