@@ -7,3 +7,13 @@
 .editor-styles-wrapper .stk-column-wrapper > .block-editor-inner-blocks {
 	width: 100%;
 }
+
+// Ensure that only directly hovered columns will show their resizer. Nested
+// columns should not show their resizer if they are not directly hovered.
+.components-resizable-box__container.has-show-handle {
+	.components-resizable-box__container:not(.has-show-handle) {
+		.components-resizable-box__handle {
+			display: none !important;
+		}
+	}
+}

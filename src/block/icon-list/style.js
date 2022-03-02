@@ -115,6 +115,13 @@ const getStyleParams = options => {
 			format: '%spx',
 		},
 		{
+			selector: 'li',
+			styleRule: 'marginBottom',
+			attrName: 'rowGap',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
 			selector: [ 'ul', 'ol' ],
 			styleRule: 'paddingLeft',
 			attrName: 'indentation',

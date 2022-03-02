@@ -288,8 +288,29 @@ class StyleObject {
 			const unitAttrName = getAttributeName( `${ attrName }Unit`, device, state )
 			const actualAttrName = getAttributeName( attrName, device, state )
 
-			const unit = hasUnits ? ( attributes[ unitAttrName ] || hasUnits ) : ''
+			let unit = hasUnits ? ( attributes[ unitAttrName ] || hasUnits ) : ''
 			let value = attributes[ actualAttrName ]
+
+			/**
+			 * Allow unspecified units to be set based on the larger used
+			 * unitdesktop/tablet unit if value is empty. For example in `rem`,
+			 * any mobile value that's automatically applied should also show
+			 * `rem`
+			 */
+			if ( value === '' && ( device === 'tablet' || device === 'mobile' ) ) {
+				const desktopUnit = attributes[ getAttributeName( `${ attrName }Unit`, 'desktop', state ) ]
+				const tabletUnit = attributes[ getAttributeName( `${ attrName }Unit`, 'tablet', state ) ]
+				if ( device === 'tablet' ) {
+					unit = desktopUnit
+				} else if ( device === 'mobile' ) {
+					const tabletValue = attributes[ getAttributeName( attrName, 'tablet', state ) ]
+					if ( tabletValue !== '' ) {
+						unit = tabletUnit
+					} else {
+						unit = desktopUnit
+					}
+				}
+			}
 
 			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
 			if ( clampCallback && responsive ) {

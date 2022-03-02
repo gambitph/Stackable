@@ -1,6 +1,7 @@
 import { useEffect } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 import { throttle } from 'lodash'
-import { useDeviceType, useEditorDom } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 
 const addDeviceTypeClass = throttle( ( previewDeviceType = '', editorEl ) => {
 	if ( editorEl && ! editorEl.classList.contains( `stk-preview-device-${ previewDeviceType.toLowerCase() }` ) ) {
@@ -11,8 +12,9 @@ const addDeviceTypeClass = throttle( ( previewDeviceType = '', editorEl ) => {
 
 export const useDeviceEditorClasses = () => {
 	const deviceType = useDeviceType()
-	const editorDom = useEditorDom()
+	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
+
 	useEffect( () => {
-		addDeviceTypeClass( deviceType, editorDom )
-	}, [ deviceType, editorDom ] )
+		addDeviceTypeClass( deviceType, getEditorDom() )
+	}, [ deviceType, getEditorDom ] )
 }

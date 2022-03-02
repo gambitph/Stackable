@@ -110,7 +110,7 @@ BlockDiv.Content = props => {
 		{ ...customAttributes }
 		className={ classNames }
 		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
-		data-block-id={ attributes.uniqueId }
+		data-block-id={ attributes.uniqueId || undefined }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }

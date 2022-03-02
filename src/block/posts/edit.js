@@ -12,7 +12,7 @@ import variations from './variations'
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import { first } from 'lodash'
+import { first, isEqual } from 'lodash'
 import {
 	InspectorTabs,
 	InspectorStyleControls,
@@ -60,6 +60,7 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo, useEffect } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 import { useInstanceId } from '@wordpress/compose'
 
 const ALLOWED_INNER_BLOCKS = [
@@ -67,9 +68,19 @@ const ALLOWED_INNER_BLOCKS = [
 	'stackable/pagination',
 ]
 
+export const DEFAULT_ORDER = [
+	'title',
+	'featured-image',
+	'meta',
+	'category',
+	'excerpt',
+	'readmore',
+]
+
 const Edit = props => {
 	const {
 		attributes,
+		name,
 		className,
 		setAttributes,
 	} = props
@@ -79,6 +90,7 @@ const Edit = props => {
 	const deviceType = useDeviceType()
 
 	const {
+		clientId,
 		stkQueryId,
 		imageSize,
 		type = 'post',
@@ -87,19 +99,14 @@ const Edit = props => {
 		taxonomyType = 'category',
 		taxonomy = '',
 		taxonomyFilterType = '__in',
-		contentOrder = [
-			'title',
-			'meta',
-			'category',
-			'excerpt',
-			'readmore',
-		],
+		contentOrder = DEFAULT_ORDER,
 		uniqueId,
 	} = attributes
 
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const blockStyle = useBlockStyle( variations )
+	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
 	const {
 		posts, isRequesting, hasPosts,
@@ -145,6 +152,9 @@ const Edit = props => {
 			setAttributes( { stkQueryId: instanceId } )
 		}
 	}, [ stkQueryId, instanceId ] )
+
+	const activeVariation = getActiveBlockVariation( name, attributes )
+	const defaultContentOrder = activeVariation?.attributes?.contentOrder || DEFAULT_ORDER
 
 	return (
 		<>
@@ -213,9 +223,14 @@ const Edit = props => {
 						label={ __( 'Content Arrangement', i18n ) }
 						axis="y"
 						values={ contentOrderOptions }
-						num={ CONTENTS.length }
+						num={ contentOrderOptions.length }
+						allowReset={ ! isEqual( contentOrder, defaultContentOrder ) }
 						onChange={ order => {
-							setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
+							if ( order ) {
+								setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
+							} else {
+								setAttributes( { contentOrder: defaultContentOrder } )
+							}
 						} }
 					/>
 				</PanelAdvancedSettings>
@@ -324,10 +339,10 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<Image.InspectorControls
 				label={ __( 'Featured Image', i18n ) }
-				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( blockStyle ) }
-				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal' ].includes( blockStyle ) }
+				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
+				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
 				hasShape={ false }
-				hasWidth={ [ 'list', 'horizontal' ].includes( blockStyle ) }
+				hasWidth={ [ 'list', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
 				hasAlt={ false }
 				hasSelector={ false }
 				src={ focalPointPlaceholder }
@@ -399,11 +414,11 @@ const Edit = props => {
 				</Placeholder>
 			) : (
 				<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
-					<div className={ wrapperClassNames }>
-						<div className={ contentClassNames }>
+					<div className={ wrapperClassNames } key={ `posts-wrapper-${ clientId }` }>
+						<div className={ contentClassNames } key={ `posts-content-${ clientId }` }>
 							{ ( posts || [] ).map( editorPostItems ) }
 						</div>
-						<div className={ innerClassNames }>
+						<div className={ innerClassNames } key={ `posts-inner-${ clientId }` }>
 							<InnerBlocks
 								allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							/>

@@ -4,10 +4,13 @@
 import './global-settings'
 import './premium-notice'
 import './design-library-button'
+import './layout-picker-reset'
 import './v2-migration-popup'
+import './navigation-view'
 import { BlockLinking } from './block-linking'
 import { BlockHoverState } from './block-hover-state'
 import { ContentAlign } from './content-align'
+import { EditorDom } from './get-editor-dom'
 
 /**
  * WordPress dependencies
@@ -24,6 +27,7 @@ import { devMode } from 'stackable'
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
 registerPlugin( 'stackable-block-hover-state', { render: BlockHoverState } )
 registerPlugin( 'stackable-content-align', { render: ContentAlign } )
+registerPlugin( 'stackable-editor-dom', { render: EditorDom } )
 
 if ( devMode ) {
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )

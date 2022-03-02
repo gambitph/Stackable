@@ -80,11 +80,19 @@ const Edit = props => {
 				setIsOpen( ! isOpen )
 			}
 		}
-		headerEl.addEventListener( 'click', onClick )
+		headerEl?.addEventListener( 'click', onClick )
 		return () => {
-			headerEl.removeEventListener( 'click', onClick )
+			headerEl?.removeEventListener( 'click', onClick )
 		}
 	}, [ clientId, isOpen, setIsOpen, hasInitClickHandler ] )
+
+	// If the className changes (e.g. layout switch), we need to re-apply the
+	// Accordion open/close click handler.
+	useEffect( () => {
+		if ( hasInitClickHandler ) {
+			setHasInitClickHandler( false )
+		}
+	}, [ props.className ] )
 
 	// When first adding an accordion, the inner blocks may not be rendered yet, wait for it.
 	if ( ! hasInitClickHandler ) {

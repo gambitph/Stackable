@@ -246,7 +246,8 @@ const ShadowControl = props => {
 	const clickOutsideListener = useCallback( event => {
 		if ( isPopoverOpen ) {
 			if ( ! event.target.closest( '.shadow-control__popover' ) &&
-			! event.target.closest( '.stk-shadow-control__more-button' ) ) {
+				 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
+				 ! event.target.closest( '.components-color-picker' ) ) {
 				setIsPopoverOpen( false )
 			}
 		}

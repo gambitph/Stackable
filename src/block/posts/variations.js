@@ -20,6 +20,7 @@ import ImagePortfolio from './images/portfolio.svg'
 import ImagePortfolio2 from './images/portfolio-2.svg'
 import ImageVerticalCard from './images/vertical-card.svg'
 import ImageHorizontalCard from './images/horizontal-card.svg'
+import ImageHorizontalCard2 from './images/horizontal-card-2.svg'
 import ImageVerticalCard2 from './images/vertical-card-2.svg'
 import ImageImageCard from './images/image-card.svg'
 
@@ -33,24 +34,39 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: ImageDefault,
 			isDefault: true,
 			attributes: {
+				className: 'is-style-default',
+				contentOrder: [
+					'title',
+					'featured-image',
+					'meta',
+					'category',
+					'excerpt',
+					'readmore',
+				],
 				hasContainer: false,
 				imageWidth: 100,
 				imageWidthUnit: '%',
 			},
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
+			isActive: [ 'className' ],
 			scope: [ 'block' ],
 		},
 		{
 			name: 'list',
-			title: __( 'List', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'List', i18n ) ),
-			icon: ImageList,
 			attributes: {
 				imageWidth: 35,
+				contentOrder: [
+					'title',
+					'meta',
+					'category',
+					'excerpt',
+					'readmore',
+				],
 				imageWidthUnit: '%',
 				imageHeightUnit: 'px',
 				hasContainer: false,
@@ -58,53 +74,92 @@ const variations = applyFilters(
 				innerBlockContentAlign: 'alignwide',
 				align: 'wide',
 			},
+			pickerTitle: __( 'List', i18n ),
+			pickerIcon: ImageList,
+			isActive: [ 'className' ],
 			scope: [ 'block' ],
 		},
 		{
 			name: 'image-card',
-			title: __( 'Image Card', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Image Card', i18n ) ),
-			icon: ImageImageCard,
+			attributes: {
+				className: 'is-style-image-card',
+			},
+			pickerTitle: __( 'Image Card', i18n ),
+			pickerIcon: ImageImageCard,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'horizontal',
-			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			icon: ImageHorizontalCard,
+			attributes: {
+				className: 'is-style-horizontal',
+			},
+			pickerTitle: __( 'Horizontal', i18n ),
+			pickerIcon: ImageHorizontalCard,
+			isActive: [ 'className' ],
+			isPremium: ! isPro,
+			scope: [ 'block' ],
+		},
+		{
+			name: 'horizontal-2',
+			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal 2', i18n ) ),
+			attributes: {
+				className: 'is-style-horizontal-2',
+			},
+			pickerTitle: __( 'Horizontal 2', i18n ),
+			pickerIcon: ImageHorizontalCard2,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'portfolio',
-			title: __( 'Portfolio', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Portfolio', i18n ) ),
-			icon: ImagePortfolio,
+			attributes: {
+				className: 'is-style-portfolio',
+			},
+			pickerTitle: __( 'Portfolio', i18n ),
+			pickerIcon: ImagePortfolio,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'portfolio-2',
-			title: __( 'Portfolio 2', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Portfolio 2', i18n ) ),
-			icon: ImagePortfolio2,
+			attributes: {
+				className: 'is-style-portfolio-2',
+			},
+			pickerTitle: __( 'Portfolio 2', i18n ),
+			pickerIcon: ImagePortfolio2,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'vertical-card',
-			title: __( 'Vertical Card', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical Card', i18n ) ),
-			icon: ImageVerticalCard,
+			attributes: {
+				className: 'is-style-vertical-card',
+			},
+			pickerTitle: __( 'Vertical Card', i18n ),
+			pickerIcon: ImageVerticalCard,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'vertical-card-2',
-			title: __( 'Vertical Card 2', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical Card 2', i18n ) ),
-			icon: ImageVerticalCard2,
+			attributes: {
+				className: 'is-style-vertical-card-2',
+			},
+			pickerTitle: __( 'Vertical Card 2', i18n ),
+			pickerIcon: ImageVerticalCard2,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

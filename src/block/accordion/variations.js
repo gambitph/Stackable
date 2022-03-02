@@ -32,10 +32,14 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
-			icon: ImageDefault,
 			isDefault: true,
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
+			attributes: {
+				className: 'is-style-default',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
 			innerBlocks: [
 				[ 'stackable/column', {
 					templateLock: 'insert', hasContainer: true, htmlTag: 'summary',
@@ -61,10 +65,9 @@ const variations = applyFilters(
 		},
 		{
 			name: 'plain',
-			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			icon: ImagePlain,
 			attributes: {
+				className: 'is-style-plain',
 				blockBorderType: 'solid',
 				blockBorderColor: '#dfdad1',
 				blockBorderWidth: {
@@ -74,6 +77,9 @@ const variations = applyFilters(
 					top: '', right: '', bottom: 24, left: '',
 				},
 			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Plain', i18n ),
+			pickerIcon: ImagePlain,
 			innerBlocks: [
 				[ 'stackable/column', {
 					templateLock: 'insert', htmlTag: 'summary',
@@ -105,25 +111,37 @@ const variations = applyFilters(
 		},
 		{
 			name: 'shadow',
-			title: __( 'Shadow', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Shadow', i18n ) ),
-			icon: ImageShadow,
+			attributes: {
+				className: 'is-style-shadow',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Shadow', i18n ),
+			pickerIcon: ImageShadow,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'colored',
-			title: __( 'Colored', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored', i18n ) ),
-			icon: ImageColored,
+			attributes: {
+				className: 'is-style-colored',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Colored', i18n ),
+			pickerIcon: ImageColored,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'plus',
-			title: __( 'Plus', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plus', i18n ) ),
-			icon: ImagePlus,
+			attributes: {
+				className: 'is-style-plus',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Plus', i18n ),
+			pickerIcon: ImagePlus,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

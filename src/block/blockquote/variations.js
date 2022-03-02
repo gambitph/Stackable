@@ -32,13 +32,16 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
 			isDefault: true,
-			icon: ImageDefault,
 			attributes: {
+				className: 'is-style-default',
 				hasContainer: true,
+				contentAlign: 'left',
 			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
 			innerBlocks: [
 				[ 'stackable/icon', { icon: renderToString( <SVGDefaultQuote /> ), linkHasLink: false } ],
 				[ 'stackable/text', {
@@ -49,9 +52,14 @@ const variations = applyFilters(
 		},
 		{
 			name: 'simple',
-			title: __( 'Simple', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Simple', i18n ) ),
-			icon: ImageSimple,
+			attributes: {
+				className: 'is-style-simple',
+				contentAlign: 'left',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Simple', i18n ),
+			pickerIcon: ImageSimple,
 			innerBlocks: [
 				[ 'stackable/icon', {
 					icon: renderToString( <SVGDefaultQuote /> ),
@@ -71,25 +79,37 @@ const variations = applyFilters(
 		},
 		{
 			name: 'highlighted',
-			title: __( 'Highlighted', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Highlighted', i18n ) ),
-			icon: ImageHighlighted,
+			attributes: {
+				className: 'is-style-highlighted',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Highlighted', i18n ),
+			pickerIcon: ImageHighlighted,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'huge',
-			title: __( 'Huge', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Huge', i18n ) ),
-			icon: ImageHuge,
+			attributes: {
+				className: 'is-style-huge',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Huge', i18n ),
+			pickerIcon: ImageHuge,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'centered-quote',
-			title: __( 'Centered Quote', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Centered Quote', i18n ) ),
-			icon: ImageCenteredQuote,
+			attributes: {
+				className: 'is-style-centered-quote',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Centered Quote', i18n ),
+			pickerIcon: ImageCenteredQuote,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

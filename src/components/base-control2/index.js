@@ -26,6 +26,8 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch } from '@wordpress/data'
 import { useMemo, useCallback } from '@wordpress/element'
 
+const ALL_SCREENS = [ 'desktop', 'tablet', 'mobile' ]
+
 export const BaseControl = props => {
 	const className = classnames( [
 		'stk-control',
@@ -36,7 +38,7 @@ export const BaseControl = props => {
 	const hasHover = !! props.hover?.length
 	const hasUnits = !! props.units?.length
 
-	const responsive = props.responsive === 'all' ? [ 'desktop', 'tablet', 'mobile' ] : props.responsive
+	const responsive = props.responsive === 'all' ? ALL_SCREENS : props.responsive
 
 	const units = useMemo( () => (
 		props.units && props.units?.map( unit => {

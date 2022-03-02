@@ -153,7 +153,9 @@ class ButtonIconPopoverControl extends Component {
 		}
 
 		if ( this.state.open ) {
-			if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) && ! ev.target.closest( '.ugb-button-icon-control__edit' ) ) {
+			if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) &&
+			     ! ev.target.closest( '.ugb-button-icon-control__edit' ) &&
+				 ! ev.target.closest( '.components-color-picker' ) ) {
 				this.handleClose()
 			}
 		}

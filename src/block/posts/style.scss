@@ -76,6 +76,7 @@
 	// Remove theme text decoration on links.
 	&__title a,
 	&__category a {
+		display: inline-block;
 		text-decoration: none;
 	}
 
@@ -111,5 +112,6 @@
 
 	.stk-container-padding {
 		flex: 1;
+		box-sizing: border-box;
 	}
 }

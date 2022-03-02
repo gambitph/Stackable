@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
 Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 3.1.2
+Stable tag: 3.1.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -237,6 +237,32 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.1.4 =
+* Fixed: Blocks with variations couldn't be added (free only)
+* Fixed: Layout switcher button doesn't show
+
+= 3.1.3 =
+* New: You can now change the Layout after adding a block
+* New: Added Row Gap option in Icon List block
+* New: Added Horizontal 2 layout for the Posts block (inverse of Horizontal layout)
+* Fixed: Editor performance improvements
+* Fixed: Accordion block support for some older browsers
+* Fixed: Featured Image bottom margin can now be changed in the Posts block
+* Fixed: Sometimes line-height won't get applied to the post titles in the Posts block
+* Fixed: Column resizer handlers now show correctly for nested column blocks
+* Fixed: Text and heading blocks now appear when in Content Editing Mode
+* Fixed: Added center, wide and fullwidth to the Header block
+* Fixed: Posts block Horizontal layout doesn't collapse correctly in mobile
+* Fixed: Some Posts block content go past their containers in mobile
+* Fixed: Using custom color pickers can close the current popover
+* Fixed: Using rem font size shows the font size differently in mobile
+* Fixed: The button appender button is now on the right side of the block
+* Fixed: Alignment of the top & bottom lines of the header block now work in tablet/mobile correctly if there's a desktop alignment provided
+* Fixed: Multiple copy and paste notifications won't anymore fill up the screen
+* Fixed: Column styles can affect inner blocks in the editor
+* Fixed: Jetpack form goes side-by-side in the editor
+* Fixed: Hitting return while editing image dimensions in the size popover opens the Media Library
 
 = 3.1.2 =
 * New: WordPress 5.9 compatibility & FSE compatibility

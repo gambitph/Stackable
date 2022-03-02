@@ -4,18 +4,17 @@
 import { i18n, settings } from 'stackable'
 import { SVGStackableIcon } from '~stackable/icons'
 import { Button } from '~stackable/components'
-import { useEditorDom } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { createBlock } from '@wordpress/blocks'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { useCallback } from '@wordpress/element'
 
 const DesignLibraryButton = () => {
-	const editorDom = useEditorDom()
+	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
 	const onClick = useCallback( () => {
 		// Insert a design library block.
@@ -23,13 +22,13 @@ const DesignLibraryButton = () => {
 
 		dispatch( 'core/block-editor' ).insertBlocks( block )
 			.then( () => {
-				const button = editorDom.querySelector( `[data-block="${ block.clientId }"] button` )
+				const button = getEditorDom()?.querySelector( `[data-block="${ block.clientId }"] button` )
 				// Open the design library.
 				if ( button ) {
 					button.click()
 				}
 			} )
-	}, [ editorDom ] )
+	}, [ getEditorDom ] )
 
 	return ( settings.stackable_enable_design_library &&
 		<Button

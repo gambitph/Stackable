@@ -31,10 +31,11 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: ImageDefault,
-			attributes: { className: 'is-style-default' },
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
+			attributes: { contentAlign: 'center', className: 'is-style-default' },
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/image', {
 					imageHeight: 350,
@@ -83,10 +84,11 @@ const variations = applyFilters(
 		},
 		{
 			name: 'plain',
-			title: __( 'Plain', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Plain', i18n ) ),
-			icon: ImagePlain,
+			pickerTitle: __( 'Plain', i18n ),
+			pickerIcon: ImagePlain,
 			attributes: { contentAlign: 'left', className: 'is-style-plain' },
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/image', {
 					imageHeight: 350,
@@ -137,33 +139,49 @@ const variations = applyFilters(
 		},
 		{
 			name: 'box',
-			title: __( 'Box', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Box', i18n ) ),
-			icon: ImageBox,
+			attributes: {
+				className: 'is-style-box',
+			},
+			pickerTitle: __( 'Box', i18n ),
+			pickerIcon: ImageBox,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'captioned',
-			title: __( 'Captioned', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Captioned', i18n ) ),
-			icon: ImageCaptioned,
+			attributes: {
+				className: 'is-style-captioned',
+			},
+			pickerTitle: __( 'Captioned', i18n ),
+			pickerIcon: ImageCaptioned,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'fade',
-			title: __( 'Fade', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Fade', i18n ) ),
-			icon: ImageFade,
+			attributes: {
+				className: 'is-style-fade',
+			},
+			pickerTitle: __( 'Fade', i18n ),
+			pickerIcon: ImageFade,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'line',
-			title: __( 'Line', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Line', i18n ) ),
-			icon: ImageLine,
+			attributes: {
+				className: 'is-style-line',
+			},
+			pickerTitle: __( 'Line', i18n ),
+			pickerIcon: ImageLine,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

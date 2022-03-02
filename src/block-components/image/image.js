@@ -173,11 +173,6 @@ const Image = memo( props => {
 								}
 							}
 						} }
-						onKeyDown={ event => {
-							if ( event.keyCode === 13 ) {
-								obj.open()
-							}
-						} }
 
 						role="button"
 						tabIndex={ 0 }

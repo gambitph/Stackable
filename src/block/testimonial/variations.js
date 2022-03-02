@@ -31,13 +31,16 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: ImageDefault,
 			attributes: {
 				className: 'is-style-default',
+				hasContainer: true,
+				contentAlign: 'center',
 			},
 			isDefault: true,
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/image', {
@@ -54,14 +57,15 @@ const variations = applyFilters(
 		},
 		{
 			name: 'compact',
-			title: __( 'Compact', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Compact', i18n ) ),
-			icon: ImageCompact,
 			attributes: {
 				className: 'is-style-compact',
 				hasContainer: false,
 				contentAlign: '',
 			},
+			pickerTitle: __( 'Compact', i18n ),
+			pickerIcon: ImageCompact,
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/columns', { columnFit: true }, [
@@ -87,33 +91,49 @@ const variations = applyFilters(
 		},
 		{
 			name: 'horizontal',
-			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			icon: ImageHorizontal,
+			attributes: {
+				className: 'is-style-horizontal',
+			},
+			pickerTitle: __( 'Horizontal', i18n ),
+			pickerIcon: ImageHorizontal,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'bubble',
-			title: __( 'Bubble', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Bubble', i18n ) ),
-			icon: ImageBubble,
+			attributes: {
+				className: 'is-style-bubble',
+			},
+			pickerTitle: __( 'Bubble', i18n ),
+			pickerIcon: ImageBubble,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'vertical',
-			title: __( 'Vertical', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Vertical', i18n ) ),
-			icon: ImageVertical,
+			attributes: {
+				className: 'is-style-vertical',
+			},
+			pickerTitle: __( 'Vertical', i18n ),
+			pickerIcon: ImageVertical,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'inverted-vertical',
-			title: __( 'Inverted Vertical', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Inverted Vertical', i18n ) ),
-			icon: ImageInvertedVertical,
+			attributes: {
+				className: 'is-style-inverted-vertical',
+			},
+			pickerTitle: __( 'Inverted Vertical', i18n ),
+			pickerIcon: ImageInvertedVertical,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
