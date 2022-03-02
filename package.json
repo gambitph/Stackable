@@ -83,7 +83,7 @@
 		"jsonfile": "^5.0.0",
 		"lint-staged": "^9.5.0",
 		"lodash": "^4.17.21",
-		"node-fetch": "^2.6.6",
+		"node-fetch": "^2.6.7",
 		"onchange": "^7.1.0",
 		"postcss": "^8.3.11",
 		"prettier": "^1.17.1",
