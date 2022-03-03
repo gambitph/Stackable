@@ -57,9 +57,9 @@ class ButtonEdit extends Component {
 	}
 
 	outsideClickHandler( event ) {
-		if ( ( ! event.target.closest( `.ugb-button-container-${ this.buttonInstanceId }` ) &&
+		if ( ! event.target.closest( `.ugb-button-container-${ this.buttonInstanceId }` ) &&
 			! event.target.closest( '.ugb-url-input-popover' ) &&
-			! event.target.closest( '.components-popover' ) ) &&
+			! event.target.closest( '.components-popover' ) &&
 			! event.target.closest( '.components-button' ) ) {
 			this.hideUrlPopup()
 		} else if ( this.props.iconButton && event.target.closest( '.ugb-svg-icon-placeholder__button' ) ) {
