@@ -5,6 +5,7 @@ import {
 	getFontFamily, clampInheritedStyle, useStyles, getStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
+import { isEmpty } from 'lodash'
 
 const getStyleParams = ( options = {} ) => {
 	const {
@@ -109,8 +110,7 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: ( value, getAttribute ) => {
 				if (
 					getAttribute( 'textColorType', 'desktop', 'normal' ) !== 'gradient' ||
-					getAttribute( 'textColor1', 'desktop', 'normal' ) === '' ||
-					getAttribute( 'textColor2', 'desktop', 'normal' ) === ''
+					getAttribute( 'textColor1', 'desktop', 'normal' ) === ''
 				) {
 					return undefined
 				}
@@ -121,7 +121,7 @@ const getStyleParams = ( options = {} ) => {
 				const textColor2 = getAttribute( 'textColor2', 'desktop', 'normal' )
 				const textGradientDirection = getAttribute( 'textGradientDirection', 'desktop', 'normal' )
 
-				return `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`
+				 return `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ isEmpty( textColor2 ) ? textColor1 : textColor2 })`
 			},
 			dependencies: [ 'textColorType', 'textColor1', 'textColor2', 'textGradientDirection', ...dependencies ],
 		},
