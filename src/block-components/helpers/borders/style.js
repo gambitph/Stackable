@@ -11,6 +11,7 @@ import { Fragment } from '@wordpress/element'
 
 const getStyleParams = ( options = {} ) => {
 	const {
+		addBorderRadiusOverflow = true,
 		selector = '',
 		attrNameTemplate = '%s',
 		hoverSelector,
@@ -29,6 +30,7 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector: borderRadiusSelector ? undefined : hoverSelector,
 		},
 		// Adding a border radius should append `overflow: hidden`.
+		// This is to prevent gradient background from overflowing.
 		{
 			selector: borderRadiusSelector || selector,
 			styleRule: 'overflow',
@@ -37,6 +39,7 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			hoverSelector: borderRadiusSelector ? undefined : hoverSelector,
+			enabledCallback: () => addBorderRadiusOverflow,
 			valueCallback: () => 'hidden',
 		},
 		{
