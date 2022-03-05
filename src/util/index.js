@@ -307,8 +307,8 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 		.map( s => {
 			let newSelector = ''
 			if ( s.includes( '[data-block=' ) ||
-					s === 'html' ||
-					s === 'body'
+			     s === 'html' ||
+			     s === 'body'
 			) {
 				newSelector = s
 			} else if ( s.includes( '%s' ) ) {
