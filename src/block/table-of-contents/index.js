@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { IconListIcon } from '~stackable/icons'
+import { TableOfContentsIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -20,7 +20,7 @@ import { applyFilters } from '@wordpress/hooks'
 
 export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
-	icon: IconListIcon,
+	icon: TableOfContentsIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
