@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
-Tested up to: 5.9
+Tested up to: 5.9.1
 Requires PHP: 5.6
-Stable tag: 3.1.4
+Stable tag: 3.1.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -182,7 +182,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 = Minimum Requirements =
 
-You'll need WordPress version 5.6 or higher for this to work.
+You'll need WordPress version 5.8.2 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -237,6 +237,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.1.5 =
+* New: Navigation Panel
+* Fixed: Missing Featured Image in the Default Posts block variation
+* Fixed: Content order issues in the Posts block
+* Fixed: Content order Posts block always shows the reset button
+* Fixed: A block can show an error when saving without picking a layout
+* Fixed: The margin bottom resizer can be visible when picking a layout
+* Fixed: Security fixes
 
 = 3.1.4 =
 * Fixed: Blocks with variations couldn't be added (free only)
