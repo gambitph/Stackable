@@ -2,18 +2,18 @@
  * Internal dependencies
  */
 import { TableOfContentsStyles } from './style'
-
-/**
- * External dependencies
- */
-import classnames from 'classnames'
+import TableOfContentsList from './table-of-contents-list'
+import { linearToNestedHeadingList } from './util'
 import {
 	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses,
 } from '~stackable/block-components'
 import { withVersion } from '~stackable/higher-order'
+
+/**
+ * External dependencies
+ */
 import { version as VERSION } from 'stackable'
-import TableOfContentsList from './table-of-contents-list'
-import { linearToNestedHeadingList } from './util'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -30,7 +30,9 @@ export const Save = props => {
 	const responsiveClass = getResponsiveClasses( attributes )
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const { headings, isSmoothScroll } = attributes
+	const {
+		headings, isSmoothScroll,
+	} = attributes
 
 	const tagName = attributes.ordered ? 'ol' : 'ul'
 

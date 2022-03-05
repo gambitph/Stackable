@@ -3,6 +3,12 @@
  */
 import { TableOfContentsStyles } from './style'
 import { generateAnchor } from './autogenerate-anchors'
+import TableOfContentsList from './table-of-contents-list'
+import {
+	getAllBlocks,
+	getUpdatedHeadings,
+	linearToNestedHeadingList,
+} from './util'
 
 /***
  * External dependencies
@@ -22,9 +28,7 @@ import {
 	AdvancedSelectControl,
 	AlignButtonsControl,
 } from '~stackable/components'
-import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
+import { useBlockHoverClass } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	Typography,
@@ -51,23 +55,12 @@ import {
 	Card,
 	CardBody,
 } from '@wordpress/components'
-import {
-	useSelect, useDispatch,
-} from '@wordpress/data'
+import { useSelect, useDispatch } from '@wordpress/data'
 import {
 	Fragment, useEffect, useState, useCallback,
 } from '@wordpress/element'
-import {
-	__,
-} from '@wordpress/i18n'
-
-import {
-	getAllBlocks,
-	getUpdatedHeadings,
-	linearToNestedHeadingList,
-} from './util'
-
-import TableOfContentsList from './table-of-contents-list'
+import { __ } from '@wordpress/i18n'
+import { RichText } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 
 const listTypeOptions = [
@@ -157,12 +150,16 @@ const Edit = props => {
 	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 
 	const toggleItemVisibility = anchor => {
-		const updatedHeadings = headings.map( heading => ( { ...heading, isExcluded: heading.anchor === anchor ? ! heading.isExcluded : heading.isExcluded } ) )
+		const updatedHeadings = headings.map( heading => ( {
+			...heading, isExcluded: heading.anchor === anchor ? ! heading.isExcluded : heading.isExcluded,
+		} ) )
 		setHeadings( updatedHeadings )
 	}
 
 	const updateContent = ( anchor, customContent ) => {
-		const updatedHeadings = headings.map( heading => ( { ...heading, customContent: heading.anchor === anchor ? customContent : heading.customContent } ) )
+		const updatedHeadings = headings.map( heading => ( {
+			...heading, customContent: heading.anchor === anchor ? customContent : heading.customContent,
+		} ) )
 		setHeadings( updatedHeadings )
 	}
 
@@ -258,6 +255,18 @@ const Edit = props => {
 			return block
 		} )
 	}, [] )
+
+	// When generating an example block preview, just show a list of headings.
+	// @see example.js
+	if ( props.attributes.example ) {
+		return (
+			<RichText
+				tagName="ul"
+				multiline="li"
+				value={ props.attributes.example }
+			/>
+		)
+	}
 
 	return (
 		<Fragment>

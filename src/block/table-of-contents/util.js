@@ -1,9 +1,7 @@
 /**
  * WordPress dependencies
  */
-import {
-	__, _x,
-} from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 import { select } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 

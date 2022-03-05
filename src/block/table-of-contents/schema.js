@@ -16,6 +16,12 @@ import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 
 export const tableofContentsAttributes = {
+	// Used to generate a simple example
+	// @see example.js
+	example: {
+		type: 'html',
+	},
+
 	// Columns.
 	smoothScroll: {
 		default: 'auto',
