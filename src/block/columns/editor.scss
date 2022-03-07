@@ -28,3 +28,7 @@
 .stk-block-columns .block-editor-inner-blocks > .block-editor-block-list__layout {
 	column-gap: var(--stk-column-gap, 0px);
 }
+
+[data-type="stackable/columns"] > .stk-block-columns {
+	width: 100%;
+}
