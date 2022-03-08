@@ -45,11 +45,6 @@ export const tableofContentsAttributes = {
 		type: 'number',
 		default: '',
 	},
-	listAlignment: {
-		stkResponsive: true,
-		type: 'string',
-		default: '',
-	},
 
 	// Icon.
 	markerColor: {

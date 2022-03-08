@@ -26,7 +26,6 @@ import {
 	AdvancedToggleControl,
 	ColorPaletteControl,
 	AdvancedSelectControl,
-	AlignButtonsControl,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
@@ -340,11 +339,6 @@ const Edit = props => {
 						sliderMax="50"
 						responsive="all"
 						placeholder=""
-					/>
-					<AlignButtonsControl
-						label={ __( 'List Alignment', i18n ) }
-						attribute="listAlignment"
-						responsive="all"
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
