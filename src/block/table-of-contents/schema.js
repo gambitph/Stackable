@@ -23,9 +23,9 @@ export const tableofContentsAttributes = {
 	},
 
 	// Columns.
-	smoothScroll: {
-		default: 'auto',
-		type: 'string',
+	isSmoothScroll: {
+		type: 'boolean',
+		default: '',
 	},
 	columns: {
 		stkResponsive: true,
@@ -39,7 +39,7 @@ export const tableofContentsAttributes = {
 	},
 	ordered: {
 		type: 'boolean',
-		default: false,
+		default: '',
 	},
 	indentation: {
 		type: 'number',
@@ -131,6 +131,14 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: tableofContentsAttributes,
+		versionAdded: '3.2.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.addDefaultValues( {
+		attributes: {
+			htmlTag: 'nav',
+		},
 		versionAdded: '3.2.0',
 		versionDeprecated: '',
 	} )

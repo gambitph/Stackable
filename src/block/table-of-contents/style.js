@@ -4,23 +4,17 @@
 import {
 	Typography, MarginBottom, BlockDiv, Advanced, EffectsAnimations, Alignment, Transform,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import {
-	Style as StyleComponent,
-} from '~stackable/components'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
-import {
-	Fragment, renderToString,
-} from '@wordpress/element'
+import { Fragment, renderToString } from '@wordpress/element'
 
 const typographyOptions = {
 	selector: [
@@ -55,13 +49,13 @@ const getStyleParams = () => {
 			attrName: 'listType',
 		},
 		{
-			selector: '',
+			selector: '.stk-table-of-contents__table',
 			styleRule: 'columnCount',
 			attrName: 'columns',
 			responsive: 'all',
 		},
 		{
-			selector: '',
+			selector: '.stk-table-of-contents__table',
 			styleRule: 'columnGap',
 			attrName: 'columnGap',
 			responsive: 'all',
@@ -75,7 +69,7 @@ const getStyleParams = () => {
 			format: '%spx',
 		},
 		{
-			selector: 'li > ul',
+			selector: '.stk-table-of-contents__table ul',
 			styleRule: 'marginTop',
 			attrName: 'rowGap',
 			responsive: 'all',
@@ -96,7 +90,7 @@ const getStyleParams = () => {
 			attrName: 'markerColor',
 		},
 		{
-			selector: 'li > a',
+			selector: 'li a',
 			hover: 'all',
 			styleRule: 'color',
 			attrName: 'color',
@@ -119,8 +113,7 @@ const getStyleParams = () => {
 			selector: 'html',
 			styleRule: 'scroll-behavior',
 			attrName: 'isSmoothScroll',
-			responsive: 'all',
-			valueCallback: value => ( value === true ? 'smooth' : 'auto' ),
+			valueCallback: value => value ? 'smooth' : undefined,
 		},
 		{
 			selector: 'html',
@@ -143,7 +136,9 @@ export const TableOfContentsStyles = props => {
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
+	propsToPass.attributes = {
+		...attributes, clientId,
+	}
 	const options = { attributes: propsToPass.attributes }
 
 	const iconStyles = useStyles( attributes, getStyleParams( options ) )

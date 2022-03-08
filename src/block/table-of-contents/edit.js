@@ -15,7 +15,7 @@ import {
  */
 import classnames from 'classnames'
 import {
-	isEqual, debounce, uniqueId, isEmpty,
+	isEqual, debounce, uniqueId,
 } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
@@ -59,7 +59,9 @@ import { useSelect, useDispatch } from '@wordpress/data'
 import {
 	Fragment, useEffect, useState, useCallback,
 } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { RichText } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -106,7 +108,7 @@ const HeadingsControls = () => (
 	[ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ].map( heading =>
 		<AdvancedToggleControl
 			key={ heading }
-			label={ `${ __( `Include`, i18n ) } ${ heading }` }
+			label={ sprintf( _x( 'Include %s', '%s is a heading level, e.g. H1', i18n ), heading ) }
 			attribute={ `include${ heading }` }
 			defaultValue={ true }
 		/>
@@ -143,17 +145,23 @@ const Edit = props => {
 	} = props
 
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
-	const { isSmoothScroll } = attributes
 	const [ headings, setHeadings ] = useState( attributes.headings )
 	const { getEditedPostContent } = useSelect( 'core/editor' )
 	const { getBlocks } = useSelect( 'core/block-editor' )
 	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
+	// This is used by the generate anchors button to force the update of heading data.
+	const [ forceUpdateHeadings, setForceUpdateHeadings ] = useState( 0 )
 
 	const toggleItemVisibility = anchor => {
 		const updatedHeadings = headings.map( heading => ( {
 			...heading, isExcluded: heading.anchor === anchor ? ! heading.isExcluded : heading.isExcluded,
 		} ) )
 		setHeadings( updatedHeadings )
+
+		// Also set our heading attribute to the updated headings, we need to do
+		// a setAttributes here or else editor can't be saved/updated if
+		// visibility toggle is the only change.
+		setAttributes( { headings: updatedHeadings } )
 	}
 
 	const updateContent = ( anchor, customContent ) => {
@@ -196,6 +204,16 @@ const Edit = props => {
 		}
 	}, [ getEditorDom, headings.length ] )
 
+	// Update headings when generate anchors button is clicked.
+	useEffect( () => {
+		if ( getEditorDom && forceUpdateHeadings ) {
+			const headings = getUpdatedHeadings( getEditorDom, attributes ).map( heading => {
+				return { ...heading }
+			} )
+			setHeadings( headings ) // TODO: change this to silently update the attribute
+		}
+	}, [ getEditorDom, forceUpdateHeadings ] )
+
 	// Update headings attribute when the headings state changes
 	useEffect( debounce( () => {
 		if ( ! isEqual( attributes.headings, headings ) ) {
@@ -230,11 +248,6 @@ const Edit = props => {
 
 	const hasEmptyAnchor = headings.some( heading => ! heading.anchor )
 
-	const hasEmptyContent = headings.some( heading => {
-		const { content } = heading
-		return isEmpty( content )
-	} )
-
 	const autoGenerateAnchors = useCallback( () => {
 		const BLOCK_ANCHOR_CONTENT = applyFilters( 'stackable.table-of-contents.block-anchor-content', {
 			'core/heading': 'content',
@@ -254,6 +267,9 @@ const Edit = props => {
 			}
 			return block
 		} )
+
+		// Sometimes this doesn't trigger the headings to be updated.
+		setForceUpdateHeadings( forceUpdateHeadings + 1 )
 	}, [] )
 
 	// When generating an example block preview, just show a list of headings.
@@ -342,7 +358,6 @@ const Edit = props => {
 					<AdvancedToggleControl
 						label={ __( 'Use smooth scroll', i18n ) }
 						attribute="isSmoothScroll"
-						defaultValue={ false }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Scroll Top Offset ', i18n ) }
@@ -350,7 +365,6 @@ const Edit = props => {
 						min={ 0 }
 						max={ 200 }
 						step={ 1 }
-						allowReset={ true }
 						responsive="all"
 						placeholder="0"
 					/>
@@ -422,13 +436,13 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
 			<BlockDiv className={ blockClassNames }>
-				{ !! headings.length && hasEmptyAnchor && ! hasEmptyContent && (
+				{ !! headings.length && hasEmptyAnchor && (
 					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
 				) }
 				<TableOfContentsList
+					className="stk-table-of-contents__table"
 					nestedHeadingList={ nestedHeadingList }
 					isSelected={ isSelected }
-					isSmoothScroll={ isSmoothScroll }
 					listTag={ tagName }
 					toggleItemVisibility={ toggleItemVisibility }
 					updateContent={ updateContent }

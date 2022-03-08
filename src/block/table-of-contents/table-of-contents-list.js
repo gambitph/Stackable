@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { isEmpty } from 'lodash'
+import { isEmpty, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { Button } from '@wordpress/components'
 import { RichText } from '@wordpress/block-editor'
@@ -13,7 +13,6 @@ const TableOfContentsList = props => {
 		toggleItemVisibility,
 		isEdit = true,
 		updateContent,
-		isSmoothScroll,
 	} = props
 
 	if ( nestedHeadingList ) {
@@ -33,7 +32,7 @@ const TableOfContentsList = props => {
 				tooltipPosition="right middle"
 			/>
 
-			const className = classnames( 'stk-block-table-of-contents__list-item', {
+			const className = classnames( {
 				'stk-block-table-of-contents__list-item__hidden': isExcluded && ! isSelected,
 				'stk-block-table-of-contents__list-item__excluded': isExcluded,
 			} )
@@ -45,7 +44,6 @@ const TableOfContentsList = props => {
 							<span className="stk-block-table-of-contents__link-wrapper">
 								<RichText
 									tagName="a"
-									className="stk-block-table-of-contents__link"
 									onChange={ value => updateContent( anchor, value ) }
 									placeholder={ __( 'Heading', i18n ) }
 									value={ ! isEmpty( customContent ) ? customContent : content }
@@ -56,20 +54,18 @@ const TableOfContentsList = props => {
 					) : (
 						<RichText.Content
 							tagName="a"
-							className="stk-block-table-of-contents__link"
 							href={ `#${ anchor }` }
 							value={ ! isEmpty( customContent ) ? customContent : content }
 						/>
 					) }
 					{ childNode.children ? (
 						<TableOfContentsList
-							{ ...props }
+							{ ...omit( props, [ 'className' ] ) }
 							nestedHeadingList={ childNode.children }
 							listTag={ listTag }
 							toggleItemVisibility={ toggleItemVisibility }
 							updateContent={ updateContent }
 							isSelected={ isSelected }
-							isSmoothScroll={ isSmoothScroll }
 						/>
 					) : null }
 				</li>
@@ -77,11 +73,9 @@ const TableOfContentsList = props => {
 		} )
 
 		return (
-			<nav className="stk-block-table-of-contents__navigation">
-				<ListTag className="stk-block-table-of-contents__sub-list">
-					{ childNodes }
-				</ListTag>
-			</nav>
+			<ListTag className={ props.className }>
+				{ childNodes }
+			</ListTag>
 		)
 	}
 }
@@ -90,7 +84,6 @@ TableOfContentsList.Content = props => {
 	const {
 		nestedHeadingList,
 		listTag = 'ul',
-		isSmoothScroll,
 	} = props
 
 	if ( nestedHeadingList ) {
@@ -110,13 +103,13 @@ TableOfContentsList.Content = props => {
 			}
 
 			return (
-				<li key={ clientId } className="stk-block-table-of-contents__list-item">
-					<a className="stk-block-table-of-contents__link" href={ `#${ anchor }` }>
+				<li key={ clientId }>
+					<a href={ `#${ anchor }` }>
 						{ ! isEmpty( customContent ) ? customContent : content }
 					</a>
 					{ childNode.children ? (
-						<TableOfContentsList
-							{ ...props }
+						<TableOfContentsList.Content
+							{ ...omit( props, [ 'className' ] ) }
 							nestedHeadingList={ childNode.children }
 							listTag={ listTag }
 							isEdit={ false }
@@ -127,11 +120,9 @@ TableOfContentsList.Content = props => {
 		} )
 
 		return (
-			<nav className="stk-block-table-of-contents__navigation" data-is-smooth-scroll={ isSmoothScroll } >
-				<ListTag>
-					{ childNodes }
-				</ListTag>
-			</nav>
+			<ListTag className={ props.className }>
+				{ childNodes }
+			</ListTag>
 		)
 	}
 }

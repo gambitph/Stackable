@@ -30,9 +30,7 @@ export const Save = props => {
 	const responsiveClass = getResponsiveClasses( attributes )
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const {
-		headings, isSmoothScroll,
-	} = attributes
+	const { headings } = attributes
 
 	const tagName = attributes.ordered ? 'ol' : 'ul'
 
@@ -47,7 +45,10 @@ export const Save = props => {
 	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
 		n => attributes[ `includeH${ n }` ]
 	)
-	const filteredHeadlingList = headings.filter( heading => allowedLevels.includes( heading.level ) )
+	const filteredHeadlingList = headings.filter( heading =>
+		allowedLevels.includes( heading.level ) &&
+		! heading.isExcluded
+	)
 
 	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
 
@@ -59,8 +60,8 @@ export const Save = props => {
 			<TableOfContentsStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<TableOfContentsList.Content
+				className="stk-table-of-contents__table"
 				nestedHeadingList={ nestedHeadingList }
-				isSmoothScroll={ isSmoothScroll }
 				listTag={ tagName }
 				h1={ attributes.includeH1 }
 				h2={ attributes.includeH2 }

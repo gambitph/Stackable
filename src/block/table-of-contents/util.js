@@ -60,7 +60,7 @@ export const getAllBlocks = getBlocks => {
  * @param {Array} headings
  * @return {Array} The list of heading parameters.
  */
-export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
+export const getHeadingsFromHeadingBlocks = ( headingBlocks, headings ) => {
 	return [ ...headingBlocks ].map( headingBlock => {
 		let anchor = ''
 
@@ -123,54 +123,21 @@ export function getHeadingsFromHeadingBlocks( headingBlocks, headings ) {
  * Extracts heading data from the provided editorDom.
  *
  * @param {string} editorDom The editorDom to extract heading data from.
- * @param {Array} attributes
  * @return {Array} The list of heading parameters.
  */
-export function getHeadingsFromEditorDom( editorDom, attributes ) {
-	// Remove template elements so that headings inside them aren't counted.
-	// This is only needed for IE11, which doesn't recognize the element and
-	// treats it like a div.
-	for ( const template of editorDom.querySelectorAll(
-		'template'
-	) ) {
-		editorDom.removeChild( template )
-	}
+export const getHeadingsFromEditorDom = editorDom => {
+	const allowedHeadingBlocks = applyFilters( 'stackable.block.table-of-contents.allowed-headings', [
+		'core/heading',
+		'stackable/heading',
+	] )
+	const query = allowedHeadingBlocks.map( name => `.wp-block[data-type="${ name }"]` ).join( ', ' )
+	const headingBlocks = editorDom.querySelectorAll( query )
 
-	let allowedHeadings = [ 1, 2, 3, 4, 5, 6 ]
-	if ( attributes ) {
-		allowedHeadings = []
-		if ( attributes.includeH1 ) {
-			allowedHeadings.push( 1 )
-		}
-		if ( attributes.includeH2 ) {
-			allowedHeadings.push( 2 )
-		}
-		if ( attributes.includeH3 ) {
-			allowedHeadings.push( 3 )
-		}
-		if ( attributes.includeH4 ) {
-			allowedHeadings.push( 4 )
-		}
-		if ( attributes.includeH5 ) {
-			allowedHeadings.push( 5 )
-		}
-		if ( attributes.includeH6 ) {
-			allowedHeadings.push( 6 )
-		}
-	}
-
-	if ( allowedHeadings.length > 0 ) {
-		const headingBlocks = editorDom.querySelectorAll(
-			'.wp-block[data-type="stackable/heading"], .wp-block-heading[data-type="core/heading"]'
-		)
-
-		return [ ...headingBlocks ].map( heading => {
-			const clientId = heading.getAttribute( 'data-block' )
-			const block = select( 'core/block-editor' ).getBlock( clientId )
-			return convertBlockToHeadingObject( block )
-		} )
-	}
-	return []
+	return [ ...headingBlocks ].map( heading => {
+		const clientId = heading.getAttribute( 'data-block' )
+		const block = select( 'core/block-editor' ).getBlock( clientId )
+		return convertBlockToHeadingObject( block )
+	} )
 }
 
 /**
@@ -183,7 +150,7 @@ export function getHeadingsFromEditorDom( editorDom, attributes ) {
  * @param {number} index       The current list index.
  * @return {Array} The nested list of headings.
  */
-export function linearToNestedHeadingList( headingList, index = 0 ) {
+export const linearToNestedHeadingList = ( headingList, index = 0 ) => {
 	const nestedHeadingList = []
 	headingList.forEach( ( heading, key ) => {
 		// if ( heading.content === '' ) {
