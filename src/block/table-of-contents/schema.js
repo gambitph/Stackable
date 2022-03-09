@@ -46,17 +46,7 @@ export const tableofContentsAttributes = {
 		default: '',
 	},
 
-	// Icon.
-	markerColor: {
-		type: 'string',
-		default: '',
-		stkHover: true,
-	},
-	showIcons: {
-		type: 'boolean',
-		default: true,
-	},
-	// Numbers.
+	// Bullets and Numbers.
 	listType: {
 		type: 'string',
 		default: '',

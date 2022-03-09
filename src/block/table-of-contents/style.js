@@ -1,12 +1,16 @@
 /**
  * External dependencies
  */
+import { isEmpty } from 'lodash'
 import {
 	Typography, MarginBottom, BlockDiv, Advanced, EffectsAnimations, Alignment, Transform,
 } from '~stackable/block-components'
 import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
-	getUniqueBlockClass, useStyles, getStyles,
+	clampInheritedStyle,
+	getStyles,
+	getUniqueBlockClass,
+	useStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
@@ -27,15 +31,14 @@ const typographyOptions = {
 	],
 }
 
-const getStyleParams = () => {
+const getStyleParams = ( options = {} ) => {
+	const {
+		inherit = true,
+		inheritMin,
+		inheritMax = 50,
+		dependencies = [],
+	 } = options
 	return [
-		{
-			selector: 'ul li::marker',
-			styleRule: 'color',
-			attrName: 'showIcons',
-			responsive: 'all',
-			valueCallback: show => ( ! show ? 'rgba(0, 0, 0, 0)' : 'auto' ),
-		},
 		{
 			selector: 'li',
 			styleRule: 'paddingInlineStart',
@@ -44,9 +47,19 @@ const getStyleParams = () => {
 			format: '%spx',
 		},
 		{
+			selector: 'ul',
+			styleRule: 'listStyleType',
+			attrName: 'listType',
+			valueCallback: value => ( value === 'none' ? 'none' : undefined ),
+		},
+		{
 			selector: 'ol',
 			styleRule: 'listStyleType',
 			attrName: 'listType',
+			valueCallback: value =>
+				isEmpty( value ) || value === 'none' || value === 'unordererd'
+					? undefined
+					: value,
 		},
 		{
 			selector: '.stk-table-of-contents__table',
@@ -83,37 +96,30 @@ const getStyleParams = () => {
 			format: '%spx',
 		},
 		{
-			selector: 'li::marker',
-			hover: 'all',
-			hoverSelector: '.%s:hover li::marker',
-			styleRule: 'color',
-			attrName: 'markerColor',
-		},
-		{
 			selector: 'li a',
 			hover: 'all',
 			styleRule: 'color',
 			attrName: 'color',
 		},
 		{
-			selector: 'li::marker',
-			styleRule: 'fontSize',
-			attrName: 'iconSize',
-			responsive: 'all',
-			format: '%sem',
-		},
-		{
 			selector: [ 'li' ],
 			styleRule: 'marginInline',
 			attrName: 'listAlignment',
 			responsive: 'all',
-			valueCallback: value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '',
+			valueCallback: value =>
+				value === 'center'
+					? 'auto'
+					: value === 'right'
+						? 'auto 0'
+						: value === 'left'
+							? '0 auto'
+							: '',
 		},
 		{
 			selector: 'html',
 			styleRule: 'scroll-behavior',
 			attrName: 'isSmoothScroll',
-			valueCallback: value => value ? 'smooth' : undefined,
+			valueCallback: value => ( value ? 'smooth' : undefined ),
 		},
 		{
 			selector: 'html',
@@ -121,6 +127,50 @@ const getStyleParams = () => {
 			attrName: 'scrollTopOffset',
 			responsive: 'all',
 			format: '%spx',
+		},
+		{
+			selector: '.stk-block-table-of-contents__list-item',
+			styleRule: 'fontSize',
+			attrName: 'fontSize',
+			hasUnits: 'px',
+			responsive: 'all',
+			clampCallback: ( _value, getAttribute, device, state ) => {
+				const currentValue = getAttribute( 'fontSize', device, state )
+				const isMobile = device === 'mobile'
+
+				let value = _value
+				const clampedValue = inherit && clampInheritedStyle(
+					_value,
+					{
+						min: inheritMin, max: inheritMax,
+					}
+				)
+
+				/**
+				 * When clamping values in mobile, make sure to get the
+				 * clamped desktop value first before checking the clamped
+				 * tablet value.
+				 *
+				 * When the tablet is already clamped, the fallback value should
+				 * be undefined already to avoid generating 2 identical styles.
+				 */
+				if ( isMobile ) {
+					const clampedDesktopValue = inherit && clampInheritedStyle(
+						getAttribute( 'fontSize', 'desktop', state ),
+						{
+							min: inheritMin, max: inheritMax,
+						}
+					)
+					value = clampedDesktopValue ? clampedDesktopValue : value
+				}
+
+				value = clampedValue ? clampedValue : value
+				value = typeof currentValue !== 'undefined' && currentValue !== ''
+					? currentValue
+					: isMobile ? undefined : value
+				return value
+			},
+			dependencies: [ 'fontSizeUnit', 'fontSize', ...dependencies ],
 		},
 	]
 }

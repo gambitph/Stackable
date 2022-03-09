@@ -64,3 +64,7 @@
 	margin-left: var(--stk-alignment-margin-left);
 	margin-right: var(--stk-alignment-margin-right);
 }
+
+[data-type="stackable/table-of-contents"] nav {
+	width: 100%;
+}

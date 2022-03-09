@@ -32,10 +32,11 @@ const TableOfContentsList = props => {
 				tooltipPosition="right middle"
 			/>
 
-			const className = classnames( {
-				'stk-block-table-of-contents__list-item__hidden': isExcluded && ! isSelected,
-				'stk-block-table-of-contents__list-item__excluded': isExcluded,
-			} )
+			const className = classnames(
+				'stk-block-table-of-contents__list-item', {
+					'stk-block-table-of-contents__list-item__hidden': isExcluded && ! isSelected,
+					'stk-block-table-of-contents__list-item__excluded': isExcluded,
+				} )
 
 			return (
 				<li key={ clientId } className={ className }>

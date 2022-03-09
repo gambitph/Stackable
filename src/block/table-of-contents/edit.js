@@ -15,7 +15,7 @@ import {
  */
 import classnames from 'classnames'
 import {
-	isEqual, debounce, uniqueId,
+	isEqual, debounce, uniqueId, isEmpty,
 } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
@@ -24,7 +24,6 @@ import {
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 	AdvancedToggleControl,
-	ColorPaletteControl,
 	AdvancedSelectControl,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
@@ -41,7 +40,6 @@ import {
 	getTypographyClasses,
 	ConditionalDisplay,
 	MarginBottom,
-	Alignment,
 	getAlignmentClasses,
 	Transform,
 } from '~stackable/block-components'
@@ -65,6 +63,14 @@ import { RichText } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 
 const listTypeOptions = [
+	{
+		label: __( 'Unordered', i18n ),
+		value: 'unordered',
+	},
+	{
+		label: __( 'None', i18n ),
+		value: 'none',
+	},
 	{
 		label: __( 'Number', i18n ),
 		value: 'decimal',
@@ -223,8 +229,8 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const { ordered } = attributes
-	const tagName = ordered ? 'ol' : 'ul'
+	const { listType } = attributes
+	const tagName = isEmpty( listType ) || listType === 'unordered' || listType === 'none' ? 'ul' : 'ol'
 
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( attributes )
@@ -287,7 +293,6 @@ const Edit = props => {
 		<Fragment>
 			<InspectorTabs />
 
-			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 
 			<InspectorStyleControls>
@@ -312,6 +317,7 @@ const Edit = props => {
 						label={ __( 'Column Gap', i18n ) }
 						attribute="columnGap"
 						min="0"
+						default="32"
 						sliderMax="50"
 						responsive="all"
 					/>
@@ -347,7 +353,7 @@ const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'Scrolling', i18n ) }
 					initialOpen={ false }
-					id="icon-and-markers"
+					id="bullets-and-numbers"
 				>
 					<AdvancedToggleControl
 						label={ __( 'Use smooth scroll', i18n ) }
@@ -367,47 +373,16 @@ const Edit = props => {
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
-					title={ __( 'Icons & Numbers', i18n ) }
+					title={ __( 'Bullets & Numbers', i18n ) }
 					initialOpen={ false }
-					id="icon-and-markers"
+					id="bullets-and-numbers"
 				>
-					<AdvancedToggleControl
-						label={ __( 'Use ordered list', i18n ) }
-						attribute="ordered"
+					<AdvancedSelectControl
+						label={ __( 'List Type', i18n ) }
+						attribute="listType"
+						options={ listTypeOptions }
 					/>
 
-					{ ! ordered && (
-						<AdvancedToggleControl
-							label={ __( 'Show Icons', i18n ) }
-							attribute="showIcons"
-							defaultValue={ true }
-						/>
-					) }
-
-					{ ordered && (
-						<AdvancedSelectControl
-							label={ __( 'List Type', i18n ) }
-							attribute="listType"
-							options={ listTypeOptions }
-						/>
-					) }
-
-					<ColorPaletteControl
-						label={ __( 'Color', i18n ) }
-						attribute="markerColor"
-						hover="all"
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Icon / Number Size', i18n ) }
-						attribute="iconSize"
-						min={ 0 }
-						max={ 5 }
-						step={ 0.1 }
-						allowReset={ true }
-						responsive="all"
-						placeholder="1"
-					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
