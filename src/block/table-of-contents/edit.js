@@ -250,7 +250,7 @@ const Edit = props => {
 
 	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
 
-	const hasEmptyAnchor = headings.some( heading => ! heading.anchor )
+	const hasEmptyAnchor = headings.some( heading => heading.content && ! heading.anchor )
 
 	const autoGenerateAnchors = useCallback( () => {
 		const BLOCK_ANCHOR_CONTENT = applyFilters( 'stackable.table-of-contents.block-anchor-content', {
