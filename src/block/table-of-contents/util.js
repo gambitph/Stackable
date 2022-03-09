@@ -133,10 +133,26 @@ export const getHeadingsFromEditorDom = editorDom => {
 	const query = allowedHeadingBlocks.map( name => `.wp-block[data-type="${ name }"]` ).join( ', ' )
 	const headingBlocks = editorDom.querySelectorAll( query )
 
-	return [ ...headingBlocks ].map( heading => {
+	const headingObjects = [ ...headingBlocks ].map( heading => {
 		const clientId = heading.getAttribute( 'data-block' )
 		const block = select( 'core/block-editor' ).getBlock( clientId )
 		return convertBlockToHeadingObject( block )
+	} )
+
+	return headingObjects.map( ( heading, i ) => {
+		// Keep note of the heading tag level
+		heading.tag = heading.level
+
+		// Ensure higher levels do not skip a level.
+		if ( i > 0 ) {
+			const prevLevel = headingObjects[ i - 1 ].level
+			const currLevel = heading.level
+
+			if ( currLevel > prevLevel ) {
+				heading.level = prevLevel + 1
+			}
+		}
+		return heading
 	} )
 }
 

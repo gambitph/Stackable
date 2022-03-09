@@ -21,11 +21,12 @@ const TableOfContentsList = props => {
 			const {
 				anchor, content, customContent, isExcluded, clientId,
 			} = childNode.heading
+			const { index } = childNode
 
 			const visibility = <Button
 				className="stk-block-table-of-contents__list-item__exclude-button"
 				icon={ ! isExcluded ? 'visibility' : 'hidden' }
-				onClick={ () => toggleItemVisibility( anchor ) }
+				onClick={ () => toggleItemVisibility( index ) }
 				isSmall
 				label={ isExcluded ? __( 'Include heading', i18n ) : __( 'Exclude heading', i18n ) }
 				showTooltip

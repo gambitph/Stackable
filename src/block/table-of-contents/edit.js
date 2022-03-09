@@ -15,7 +15,7 @@ import {
  */
 import classnames from 'classnames'
 import {
-	isEqual, debounce, uniqueId, isEmpty,
+	isEqual, debounce, uniqueId, isEmpty, cloneDeep,
 } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
@@ -157,10 +157,9 @@ const Edit = props => {
 	// This is used by the generate anchors button to force the update of heading data.
 	const [ forceUpdateHeadings, setForceUpdateHeadings ] = useState( 0 )
 
-	const toggleItemVisibility = anchor => {
-		const updatedHeadings = headings.map( heading => ( {
-			...heading, isExcluded: heading.anchor === anchor ? ! heading.isExcluded : heading.isExcluded,
-		} ) )
+	const toggleItemVisibility = index => {
+		const updatedHeadings = cloneDeep( headings )
+		updatedHeadings[ index ].isExcluded = ! updatedHeadings[ index ].isExcluded
 		setHeadings( updatedHeadings )
 
 		// Also set our heading attribute to the updated headings, we need to do
@@ -247,7 +246,7 @@ const Edit = props => {
 	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
 		n => attributes[ `includeH${ n }` ]
 	)
-	const filteredHeadlingList = headings.filter( heading => allowedLevels.includes( heading.level ) )
+	const filteredHeadlingList = headings.filter( heading => allowedLevels.includes( heading.tag ) )
 
 	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
 

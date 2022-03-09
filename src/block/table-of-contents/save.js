@@ -45,10 +45,7 @@ export const Save = props => {
 	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
 		n => attributes[ `includeH${ n }` ]
 	)
-	const filteredHeadlingList = headings.filter( heading =>
-		allowedLevels.includes( heading.level ) &&
-		! heading.isExcluded
-	)
+	const filteredHeadlingList = headings.filter( heading => allowedLevels.includes( heading.tag ) )
 
 	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
 
