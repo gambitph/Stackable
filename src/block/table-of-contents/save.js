@@ -12,6 +12,8 @@ import { withVersion } from '~stackable/higher-order'
 /**
  * External dependencies
  */
+
+import { isEmpty } from 'lodash'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 
@@ -32,7 +34,8 @@ export const Save = props => {
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const { headings } = attributes
 
-	const tagName = attributes.ordered ? 'ol' : 'ul'
+	const { listType } = attributes
+	const tagName = isEmpty( listType ) || listType === 'unordered' || listType === 'none' ? 'ul' : 'ol'
 
 	const blockClassNames = classnames( [
 		className,

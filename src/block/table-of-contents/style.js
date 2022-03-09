@@ -7,7 +7,6 @@ import {
 } from '~stackable/block-components'
 import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
-	clampInheritedStyle,
 	getStyles,
 	getUniqueBlockClass,
 	useStyles,
@@ -22,22 +21,18 @@ import { Fragment, renderToString } from '@wordpress/element'
 
 const typographyOptions = {
 	selector: [
+		'.stk-block-table-of-contents__list-item',
 		'ul li a',
 		'ol li a',
 	],
 	hoverSelector: [
+		'.%s:hover .stk-block-table-of-contents__list-item',
 		'.%s:hover ul li a',
 		'.%s:hover ol li a',
 	],
 }
 
-const getStyleParams = ( options = {} ) => {
-	const {
-		inherit = true,
-		inheritMin,
-		inheritMax = 50,
-		dependencies = [],
-	 } = options
+const getStyleParams = () => {
 	return [
 		{
 			selector: 'li',
@@ -127,50 +122,6 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'scrollTopOffset',
 			responsive: 'all',
 			format: '%spx',
-		},
-		{
-			selector: '.stk-block-table-of-contents__list-item',
-			styleRule: 'fontSize',
-			attrName: 'fontSize',
-			hasUnits: 'px',
-			responsive: 'all',
-			clampCallback: ( _value, getAttribute, device, state ) => {
-				const currentValue = getAttribute( 'fontSize', device, state )
-				const isMobile = device === 'mobile'
-
-				let value = _value
-				const clampedValue = inherit && clampInheritedStyle(
-					_value,
-					{
-						min: inheritMin, max: inheritMax,
-					}
-				)
-
-				/**
-				 * When clamping values in mobile, make sure to get the
-				 * clamped desktop value first before checking the clamped
-				 * tablet value.
-				 *
-				 * When the tablet is already clamped, the fallback value should
-				 * be undefined already to avoid generating 2 identical styles.
-				 */
-				if ( isMobile ) {
-					const clampedDesktopValue = inherit && clampInheritedStyle(
-						getAttribute( 'fontSize', 'desktop', state ),
-						{
-							min: inheritMin, max: inheritMax,
-						}
-					)
-					value = clampedDesktopValue ? clampedDesktopValue : value
-				}
-
-				value = clampedValue ? clampedValue : value
-				value = typeof currentValue !== 'undefined' && currentValue !== ''
-					? currentValue
-					: isMobile ? undefined : value
-				return value
-			},
-			dependencies: [ 'fontSizeUnit', 'fontSize', ...dependencies ],
 		},
 	]
 }

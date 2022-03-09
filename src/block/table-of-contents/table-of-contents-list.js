@@ -105,7 +105,7 @@ TableOfContentsList.Content = props => {
 			}
 
 			return (
-				<li key={ clientId }>
+				<li key={ clientId } className="stk-block-table-of-contents__list-item">
 					<a href={ `#${ anchor }` }>
 						{ ! isEmpty( customContent ) ? customContent : content }
 					</a>

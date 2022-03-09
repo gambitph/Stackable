@@ -1,5 +1,15 @@
-// Show a cursor pointer when hovering over the bullet icons
 .stk-block-table-of-contents {
+	&:is(.stk--is-gradient) {
+		// This prevents the text in the card component from going blank.
+		.stk-table-of-contents__empty-anchor,
+		// This prevents the eye icon from going blank.
+		.stk-block-table-of-contents__list-item__exclude-button span {
+			-webkit-text-fill-color: initial;
+			-moz-text-fill-color: initial;
+			-o-text-fill-color: initial;
+		}
+
+	}
 
 	li {
 		position: relative;
