@@ -70,7 +70,7 @@ export const tableofContentsAttributes = {
 	},
 	includeH1: {
 		type: 'boolean',
-		default: true,
+		default: false,
 	},
 	includeH2: {
 		type: 'boolean',
