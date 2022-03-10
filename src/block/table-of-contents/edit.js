@@ -115,7 +115,7 @@ const HeadingsControls = () => (
 			key={ heading }
 			label={ sprintf( _x( 'Include %s', '%s is a heading level, e.g. H1', i18n ), heading ) }
 			attribute={ `include${ heading }` }
-			defaultValue={ true }
+			defaultValue={ 'H1' !== heading }
 		/>
 	)
 )
