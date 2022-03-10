@@ -13,6 +13,10 @@
 
 	}
 
+	&:is(.stk-block-background) {
+		background-clip: unset;
+	}
+
 	li {
 		position: relative;
 	}
