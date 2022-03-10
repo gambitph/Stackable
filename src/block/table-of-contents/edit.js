@@ -345,6 +345,11 @@ const Edit = props => {
 						responsive="all"
 						placeholder=""
 					/>
+					<AdvancedSelectControl
+						label={ __( 'List Type', i18n ) }
+						attribute="listType"
+						options={ listTypeOptions }
+					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
@@ -371,18 +376,6 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'Bullets & Numbers', i18n ) }
-					initialOpen={ false }
-					id="bullets-and-numbers"
-				>
-					<AdvancedSelectControl
-						label={ __( 'List Type', i18n ) }
-						attribute="listType"
-						options={ listTypeOptions }
-					/>
-
-				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
 			<Typography.InspectorControls

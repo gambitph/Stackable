@@ -8,3 +8,11 @@
 		padding-inline-start: 1em;
 	}
 }
+
+:is(.stk--is-gradient) {
+	.stk-block-table-of-contents__list-item {
+		-webkit-text-fill-color: initial;
+		-moz-text-fill-color: initial;
+		-o-text-fill-color: initial;
+	}
+}

@@ -23,7 +23,11 @@ const TableOfContentsList = props => {
 			} = childNode.heading
 			const { index } = childNode
 
-			const visibility = <Button
+			// Only render the visiblitiy icons when the block isSelected.
+			// This makes it appear that there is no such interactive element
+			// in the resulting toc.
+
+			const visibility = isSelected ? <Button
 				className="stk-block-table-of-contents__list-item__exclude-button"
 				icon={ ! isExcluded ? 'visibility' : 'hidden' }
 				onClick={ () => toggleItemVisibility( index ) }
@@ -31,7 +35,7 @@ const TableOfContentsList = props => {
 				label={ isExcluded ? __( 'Include heading', i18n ) : __( 'Exclude heading', i18n ) }
 				showTooltip
 				tooltipPosition="right middle"
-			/>
+			/> : null
 
 			const className = classnames(
 				'stk-block-table-of-contents__list-item', {

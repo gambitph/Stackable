@@ -52,7 +52,7 @@ const getStyleParams = () => {
 			styleRule: 'listStyleType',
 			attrName: 'listType',
 			valueCallback: value =>
-				isEmpty( value ) || value === 'none' || value === 'unordererd'
+				isEmpty( value ) || value === 'none' || value === 'unordered'
 					? undefined
 					: value,
 		},
