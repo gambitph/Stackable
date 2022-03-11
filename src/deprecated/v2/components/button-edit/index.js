@@ -188,7 +188,6 @@ class ButtonEdit extends Component {
 							onChangeSponsored={ onChangeSponsored }
 							onChangeUgc={ onChangeUgc }
 							disableSuggestions={ this.props.disableSuggestions }
-
 						/>
 					}
 				</a>
