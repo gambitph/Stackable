@@ -1,7 +1,11 @@
 .stk-block-table-of-contents {
+	.components-card {
+		margin-bottom: 18px;
+	}
+
 	&:is(.stk--is-gradient) {
 		// This prevents the text in the card component from going blank.
-		.stk-block-table-of-contents__list-item,
+		li,
 		// This prevents the text in the card component from going blank.
 		.stk-table-of-contents__empty-anchor,
 		// This prevents the eye icon from going blank.

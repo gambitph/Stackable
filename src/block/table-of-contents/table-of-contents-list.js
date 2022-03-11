@@ -37,11 +37,10 @@ const TableOfContentsList = props => {
 				tooltipPosition="right middle"
 			/> : null
 
-			const className = classnames(
-				'stk-block-table-of-contents__list-item', {
-					'stk-block-table-of-contents__list-item__hidden': isExcluded && ! isSelected,
-					'stk-block-table-of-contents__list-item__excluded': isExcluded,
-				} )
+			const className = classnames( {
+				'stk-block-table-of-contents__list-item__hidden': isExcluded && ! isSelected,
+				'stk-block-table-of-contents__list-item__excluded': isExcluded,
+			} )
 
 			return (
 				<li key={ clientId } className={ className }>
@@ -110,7 +109,7 @@ TableOfContentsList.Content = props => {
 			}
 
 			return (
-				<li key={ clientId } className="stk-block-table-of-contents__list-item">
+				<li key={ clientId }>
 					<a href={ `#${ anchor }` }>
 						{ ! isEmpty( customContent ) ? customContent : content }
 					</a>

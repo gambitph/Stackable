@@ -21,12 +21,12 @@ import { Fragment, renderToString } from '@wordpress/element'
 
 const typographyOptions = {
 	selector: [
-		'.stk-block-table-of-contents__list-item',
+		'li',
 		'ul li a',
 		'ol li a',
 	],
 	hoverSelector: [
-		'.%s:hover .stk-block-table-of-contents__list-item',
+		'.%s:hover li',
 		'.%s:hover ul li a',
 		'.%s:hover ol li a',
 	],

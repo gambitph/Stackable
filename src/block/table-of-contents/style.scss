@@ -15,12 +15,10 @@
 	}
 
 	// Prevents icons from going transparent.
-	&:is(.stk--is-gradient) {
-		.stk-block-table-of-contents__list-item {
-			-webkit-text-fill-color: initial;
-			-moz-text-fill-color: initial;
-			-o-text-fill-color: initial;
-		}
+	&:is(.stk--is-gradient) li {
+		-webkit-text-fill-color: initial;
+		-moz-text-fill-color: initial;
+		-o-text-fill-color: initial;
 	}
 
 	// Prevents block background from going transparent.

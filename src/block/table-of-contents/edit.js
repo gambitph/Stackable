@@ -206,7 +206,7 @@ const Edit = props => {
 			if ( ! isSelected && ! isEqual( postContent, newPostContent ) ) {
 				const editorHeadings = getUpdatedHeadings( getEditorDom, attributes ).map( ( heading, i ) => {
 					// Removed any blank customContent so a heading won't show up as blank.
-					if ( headings[ i ].customContent === '' ) {
+					if ( headings[ i ] && headings[ i ].customContent === '' && typeof headings[ i ].customContent !== 'undefined' ) {
 						delete headings[ i ].customContent
 					}
 
@@ -231,7 +231,7 @@ const Edit = props => {
 			let didUpdate = false
 			updatedHeadings.forEach( ( heading, i ) => {
 				// Removed any blank customContent so a heading won't show up as blank.
-				if ( heading.customContent === '' ) {
+				if ( updatedHeadings[ i ] && heading.customContent === '' && typeof updatedHeadings[ i ].customContent !== 'undefined' ) {
 					delete updatedHeadings[ i ].customContent
 					didUpdate = true
 				}
