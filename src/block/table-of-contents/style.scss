@@ -4,6 +4,11 @@
 		column-gap: 32px;
 	}
 
+	// Needed by margin bottom / row gap.
+	a {
+		display: inline-block;
+	}
+
 	:is(ul, ol) {
 		padding-inline-start: 1em;
 	}

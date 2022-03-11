@@ -157,31 +157,45 @@ const Edit = props => {
 	// This is used by the generate anchors button to force the update of heading data.
 	const [ forceUpdateHeadings, setForceUpdateHeadings ] = useState( 0 )
 
-	const toggleItemVisibility = index => {
+	const getClonedHeadings = () => {
 		const updatedHeadings = cloneDeep( headings )
 
 		const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
 			n => attributes[ `includeH${ n }` ]
 		)
-		const filteredHeadlingList = updatedHeadings.filter( heading =>
+		return updatedHeadings.filter( heading =>
 			allowedLevels.includes( heading.tag )
 		)
+	}
 
-		filteredHeadlingList[ index ].isExcluded = ! filteredHeadlingList[ index ]
-			.isExcluded
-		setHeadings( filteredHeadlingList )
+	const toggleItemVisibility = index => {
+		const updatedHeadings = getClonedHeadings()
+
+		updatedHeadings[ index ].isExcluded = ! updatedHeadings[ index ].isExcluded
+		setHeadings( updatedHeadings )
 
 		// Also set our heading attribute to the updated headings, we need to do
 		// a setAttributes here or else editor can't be saved/updated if
 		// visibility toggle is the only change.
-		setAttributes( { headings: filteredHeadlingList } )
+		setAttributes( { headings: updatedHeadings } )
 	}
 
-	const updateContent = ( anchor, customContent ) => {
-		const updatedHeadings = headings.map( heading => ( {
-			...heading, customContent: heading.anchor === anchor ? customContent : heading.customContent,
-		} ) )
+	// Custom text update handler, if the custom text equals the heading text,
+	// then remove the custom text.
+	const updateContent = ( index, customContent ) => {
+		const updatedHeadings = getClonedHeadings()
+		if ( updatedHeadings[ index ].content === customContent ) {
+			delete updatedHeadings[ index ].customContent
+		} else {
+			updatedHeadings[ index ].customContent = customContent
+		}
+
 		setHeadings( updatedHeadings )
+
+		// Also set our heading attribute to the updated headings, we need to do
+		// a setAttributes here or else editor can't be saved/updated if
+		// visibility toggle is the only change.
+		setAttributes( { headings: updatedHeadings } )
 	}
 
 	// Watch for any heading block changes, update the heading text, level and anchor.
@@ -191,17 +205,42 @@ const Edit = props => {
 			const newPostContent = getEditedPostContent()
 			if ( ! isSelected && ! isEqual( postContent, newPostContent ) ) {
 				const editorHeadings = getUpdatedHeadings( getEditorDom, attributes ).map( ( heading, i ) => {
+					// Removed any blank customContent so a heading won't show up as blank.
+					if ( headings[ i ].customContent === '' ) {
+						delete headings[ i ].customContent
+					}
+
 					return {
 						...headings[ i ],
 						...heading,
 					}
 				} )
-				setHeadings( editorHeadings ) // TODO: change this to silently update the attribute
+				setHeadings( editorHeadings )
 			}
 			postContent = newPostContent
 		}, 300 ) )
 
 		return () => unsubscribe()
+	}, [ isSelected ] )
+
+	// After adjusting some custom heading text, remove blank ones and set them to the default.
+	useEffect( () => {
+		if ( ! isSelected ) {
+			const updatedHeadings = getClonedHeadings()
+
+			let didUpdate = false
+			updatedHeadings.forEach( ( heading, i ) => {
+				// Removed any blank customContent so a heading won't show up as blank.
+				if ( heading.customContent === '' ) {
+					delete updatedHeadings[ i ].customContent
+					didUpdate = true
+				}
+			} )
+
+			if ( didUpdate ) {
+				setHeadings( updatedHeadings )
+			}
+		}
 	}, [ isSelected ] )
 
 	// Populate the table of contents on first addition of the toc block.
@@ -213,7 +252,7 @@ const Edit = props => {
 					isExcluded: false,
 				}
 			} )
-			setHeadings( headings ) // TODO: change this to silently update the attribute
+			setHeadings( headings )
 		}
 	}, [ getEditorDom, headings.length ] )
 
@@ -223,7 +262,7 @@ const Edit = props => {
 			const headings = getUpdatedHeadings( getEditorDom, attributes ).map( heading => {
 				return { ...heading }
 			} )
-			setHeadings( headings ) // TODO: change this to silently update the attribute
+			setHeadings( headings )
 		}
 	}, [ getEditorDom, forceUpdateHeadings ] )
 
@@ -311,6 +350,12 @@ const Edit = props => {
 				>
 					<HeadingsControls />
 
+					<AdvancedSelectControl
+						label={ __( 'List Type', i18n ) }
+						attribute="listType"
+						options={ listTypeOptions }
+					/>
+
 					<AdvancedRangeControl
 						label={ __( 'Columns', i18n ) }
 						attribute="columns"
@@ -354,11 +399,6 @@ const Edit = props => {
 						responsive="all"
 						placeholder=""
 					/>
-					<AdvancedSelectControl
-						label={ __( 'List Type', i18n ) }
-						attribute="listType"
-						options={ listTypeOptions }
-					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
@@ -366,7 +406,7 @@ const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'Scrolling', i18n ) }
 					initialOpen={ false }
-					id="bullets-and-numbers"
+					id="scrolling"
 				>
 					<AdvancedToggleControl
 						label={ __( 'Use smooth scroll', i18n ) }

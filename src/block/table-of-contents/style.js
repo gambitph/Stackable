@@ -70,7 +70,16 @@ const getStyleParams = () => {
 			format: '%spx',
 		},
 		{
-			selector: 'li',
+			renderIn: 'save',
+			selector: 'a',
+			styleRule: 'marginBottom',
+			attrName: 'rowGap',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
+			renderIn: 'edit',
+			selector: '.stk-block-table-of-contents__list-item-inner',
 			styleRule: 'marginBottom',
 			attrName: 'rowGap',
 			responsive: 'all',

@@ -50,9 +50,11 @@ const TableOfContentsList = props => {
 							<span className="stk-block-table-of-contents__link-wrapper">
 								<RichText
 									tagName="a"
-									onChange={ value => updateContent( anchor, value ) }
+									onChange={ value => updateContent( index, value ) }
 									placeholder={ __( 'Heading', i18n ) }
-									value={ ! isEmpty( customContent ) ? customContent : content }
+									value={ typeof customContent !== 'undefined' ? customContent : content }
+									withoutInteractiveFormatting
+									allowedFormats={ [] }
 								/>
 								{ visibility }
 							</span>
@@ -61,7 +63,7 @@ const TableOfContentsList = props => {
 						<RichText.Content
 							tagName="a"
 							href={ `#${ anchor }` }
-							value={ ! isEmpty( customContent ) ? customContent : content }
+							value={ customContent || content }
 						/>
 					) }
 					{ childNode.children ? (

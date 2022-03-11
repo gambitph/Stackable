@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import striptags from 'striptags'
+
+/**
  * WordPress dependencies
  */
 import { __, _x } from '@wordpress/i18n'
@@ -6,22 +11,29 @@ import { select } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 
 const convertBlockToHeadingObject = block => {
+	let heading = {}
 	if ( block.name === 'stackable/heading' ) {
-		return {
+		heading = {
 			content: block.attributes.text,
 			level: parseInt( block.attributes.textTag.substr( 1 ), 10 ),
 			anchor: block.attributes.anchor,
 			clientId: block.clientId,
 		}
+	} else {
+		heading = applyFilters( 'stackable.block.table-of-contents.convert-block', null, block ) || { // Allow other plugins to add their own heading block.
+			// Native core/heading
+			content: block.attributes.content,
+			level: block.attributes.level,
+			anchor: block.attributes.anchor,
+			clientId: block.clientId,
+		}
 	}
 
-	return applyFilters( 'stackable.block.table-of-contents.convert-block', null, block ) || { // Allow other plugins to add their own heading block.
-		// Native core/heading
-		content: block.attributes.content,
-		level: block.attributes.level,
-		anchor: block.attributes.anchor,
-		clientId: block.clientId,
-	}
+	// Fix things.
+	heading.tag = heading.level
+	heading.content = striptags( heading.content )
+
+	return heading
 }
 
 export const getUpdatedHeadings = ( getEditorDom, attributes ) => {
@@ -133,16 +145,10 @@ export const getHeadingsFromEditorDom = editorDom => {
 	const query = allowedHeadingBlocks.map( name => `.wp-block[data-type="${ name }"]` ).join( ', ' )
 	const headingBlocks = editorDom.querySelectorAll( query )
 
-	const headingObjects = [ ...headingBlocks ].map( heading => {
+	return [ ...headingBlocks ].map( heading => {
 		const clientId = heading.getAttribute( 'data-block' )
 		const block = select( 'core/block-editor' ).getBlock( clientId )
 		return convertBlockToHeadingObject( block )
-	} )
-
-	// Keep note of the heading tag level
-	return headingObjects.map( heading => {
-		heading.tag = heading.level
-		return heading
 	} )
 }
 
