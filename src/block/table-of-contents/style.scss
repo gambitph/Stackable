@@ -1,6 +1,7 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-table-of-contents {
 	.stk-table-of-contents__table {
+		margin: 0;
 		column-gap: 32px;
 	}
 

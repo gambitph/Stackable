@@ -80,6 +80,10 @@ const TableOfContentsList = props => {
 			)
 		} )
 
+		if ( isEmpty( childNodes ) ) {
+			return null
+		}
+
 		return (
 			<ListTag className={ props.className }>
 				{ childNodes }
@@ -121,6 +125,10 @@ TableOfContentsList.Content = props => {
 				</li>
 			)
 		} )
+
+		if ( isEmpty( childNodes ) ) {
+			return null
+		}
 
 		return (
 			<ListTag className={ props.className }>
