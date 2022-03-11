@@ -159,13 +159,22 @@ const Edit = props => {
 
 	const toggleItemVisibility = index => {
 		const updatedHeadings = cloneDeep( headings )
-		updatedHeadings[ index ].isExcluded = ! updatedHeadings[ index ].isExcluded
-		setHeadings( updatedHeadings )
+
+		const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
+			n => attributes[ `includeH${ n }` ]
+		)
+		const filteredHeadlingList = updatedHeadings.filter( heading =>
+			allowedLevels.includes( heading.tag )
+		)
+
+		filteredHeadlingList[ index ].isExcluded = ! filteredHeadlingList[ index ]
+			.isExcluded
+		setHeadings( filteredHeadlingList )
 
 		// Also set our heading attribute to the updated headings, we need to do
 		// a setAttributes here or else editor can't be saved/updated if
 		// visibility toggle is the only change.
-		setAttributes( { headings: updatedHeadings } )
+		setAttributes( { headings: filteredHeadlingList } )
 	}
 
 	const updateContent = ( anchor, customContent ) => {
