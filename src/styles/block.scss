@@ -252,7 +252,7 @@
 }
 
 // Typography Classes.
-:is(.stk--is-gradient, .stk--is-gradient li, .stk--is-gradient span) {
+:is(.stk--is-gradient, .stk--is-gradient li, .stk--is-gradient span, .stk--is-gradient a) {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-moz-background-clip: text;

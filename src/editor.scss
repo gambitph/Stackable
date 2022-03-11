@@ -147,3 +147,8 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 		fill: #fff !important;
 	}
 }
+
+// Small card notice fonts so they look like help comments from the inspector.
+.stk-block .components-card__body {
+	font-size: 12px;
+}
