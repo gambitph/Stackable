@@ -96,13 +96,8 @@ TableOfContentsList.Content = props => {
 		const ListTag = listTag
 		const childNodes = nestedHeadingList.map( childNode => {
 			const {
-				anchor, level, content, customContent, isExcluded, clientId,
+				anchor, content, customContent, isExcluded, clientId,
 			} = childNode.heading
-
-			// Check if included in render
-			if ( ! props[ `h${ level }` ] ) {
-				return null
-			}
 
 			if ( isExcluded ) {
 				return null
