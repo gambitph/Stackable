@@ -45,42 +45,44 @@ const ButtonControls = props => {
 
 	return (
 		<Fragment>
-			{ props.onChangeUrl && (
-				<URLInputControl
-					label={ __( 'Link / URL', i18n ) }
-					value={ props.url }
-					onChange={ props.onChangeUrl }
-					placeholder="http://"
-				/>
-			) }
-			{ props.onChangeUrl && props.onChangeNewTab && (
-				<AdvancedToggleControl
-					label={ __( 'Open link in new tab', i18n ) }
-					checked={ props.newTab }
-					onChange={ props.onChangeNewTab }
-				/>
-			) }
-			{ props.onChangeUrl && props.onChangeNoFollow && (
-				<AdvancedToggleControl
-					label={ __( 'Nofollow link', i18n ) }
-					checked={ props.noFollow }
-					onChange={ props.onChangeNoFollow }
-				/>
-			) }
-			{ props.onChangeUrl && props.onChangeSponsored && (
-				<AdvancedToggleControl
-					label={ __( 'Sponsored', i18n ) }
-					checked={ props.sponsored }
-					onChange={ props.onChangeSponsored }
-				/>
-			) }
-			{ props.onChangeUrl && props.onChangeUgc && (
-				<AdvancedToggleControl
-					label={ __( 'UGC', i18n ) }
-					checked={ props.ugc }
-					onChange={ props.onChangeUgc }
-				/>
-			) }
+			<div className="stk-button-controls__wrapper">
+				{ props.onChangeUrl && (
+					<URLInputControl
+						label={ __( 'Link / URL', i18n ) }
+						value={ props.url }
+						onChange={ props.onChangeUrl }
+						placeholder="http://"
+					/>
+				) }
+				{ props.onChangeUrl && props.onChangeNewTab && (
+					<AdvancedToggleControl
+						label={ __( 'Open link in new tab', i18n ) }
+						checked={ props.newTab }
+						onChange={ props.onChangeNewTab }
+					/>
+				) }
+				{ props.onChangeUrl && props.onChangeNoFollow && (
+					<AdvancedToggleControl
+						label={ __( 'Nofollow link', i18n ) }
+						checked={ props.noFollow }
+						onChange={ props.onChangeNoFollow }
+					/>
+				) }
+				{ props.onChangeUrl && props.onChangeSponsored && (
+					<AdvancedToggleControl
+						label={ __( 'Sponsored', i18n ) }
+						checked={ props.sponsored }
+						onChange={ props.onChangeSponsored }
+					/>
+				) }
+				{ props.onChangeUrl && props.onChangeUgc && (
+					<AdvancedToggleControl
+						label={ __( 'UGC', i18n ) }
+						checked={ props.ugc }
+						onChange={ props.onChangeUgc }
+					/>
+				) }
+			</div>
 
 			{ props.onChangeUrl && <ControlSeparator /> }
 
@@ -312,6 +314,7 @@ const ButtonControls = props => {
 					] }
 					onChange={ props.onChangeSize }
 					defaultValue="normal"
+					allowReset={ props.size !== 'normal' && props.size !== '' }
 					className="ugb--help-tip-button-size"
 				/>
 			}
