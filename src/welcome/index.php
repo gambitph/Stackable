@@ -79,7 +79,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
 					'isPro' => sugb_fs()->can_use_premium_code(),
 					'showProNotice' => stackable_should_show_pro_notices(),
-					'pricingURL' => sugb_fs()->get_upgrade_url(),
+					'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 					'contactURL' => ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '',
 					'planName' => sugb_fs()->get_plan_name(),
 					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
@@ -126,7 +126,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 				<?php if ( ! sugb_fs()->is_whitelabeled() ) { ?>
 					<?php if ( ! sugb_fs()->can_use_premium_code() ) { ?>
-						<a class="s-tab s-tab-premium" href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
+						<a class="s-tab s-tab-premium" href="https://wpstackable.com/premium/?utm_source=wp-settings-tabs&utm_campaign=gopremium&utm_medium=wp-dashboard"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
 					<?php } ?>
 				<?php } ?>
 
@@ -246,7 +246,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								</ul>
 							</p>
 							<p>
-								<a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
+								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=gopremium&utm_medium=wp-dashboard" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
 							</p>
 							<p>
 								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=learnmore&utm_medium=wp-dashboard" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?> →</a>

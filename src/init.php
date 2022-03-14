@@ -326,7 +326,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				// Premium related variables.
 				'isPro' => sugb_fs()->can_use_premium_code(),
 				'showProNotice' => stackable_should_show_pro_notices(),
-				'pricingURL' => sugb_fs()->get_upgrade_url(),
+				'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 				'planName' => sugb_fs()->is_plan( 'starter', true ) ? 'starter' :
 							( sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business' ),
 
