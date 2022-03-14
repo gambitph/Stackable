@@ -120,8 +120,17 @@ const getStyleParams = ( options = {} ) => {
 			valueCallback: ( value, getAttribute ) => {
 				let textColor1 = getAttribute( 'textColor1', 'desktop', 'normal' )
 				let textColor2 = getAttribute( 'textColor2', 'desktop', 'normal' )
-				textColor1 = textColor1 || textColor2
-				textColor2 = textColor2 || textColor1
+
+				// If one of the colors is transparent, use black in the other one.
+				if ( textColor1 === 'transparent' && ! textColor2 ) {
+					textColor2 = '#000'
+				} else if ( textColor2 === 'transparent' && ! textColor1 ) {
+					textColor1 = '#000'
+				// If only one color is selected, use it for both.
+				} else {
+					textColor1 = textColor1 || textColor2
+					textColor2 = textColor2 || textColor1
+				}
 
 				// If gradient and no colors are given, set it to black to it won't be transparent.
 				if ( isEmpty( textColor1 ) && isEmpty( textColor2 ) ) {

@@ -24,12 +24,12 @@ module.exports = {
 		'object-curly-newline': [ 'error', {
 			ObjectExpression: {
 				multiline: true,
-				minProperties: 2,
+				minProperties: 3,
 				consistent: true,
 			},
 			ObjectPattern: {
 				multiline: true,
-				minProperties: 2,
+				minProperties: 3,
 				consistent: true,
 			},
 			// Force strict formatting on import/export
