@@ -27,7 +27,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			add_submenu_page(
 				'options-general.php', // Parent slug.
 				__( 'Stackable', STACKABLE_I18N ), // Page title.
-				__( 'Stackable', STACKABLE_I18N ), // Menu title.
+				__( 'Stackable', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu title.
 				'manage_options', // Capability.
 				'stackable', // Menu slug.
 				array( $this, 'stackable_settings_content' ), // Callback function.
