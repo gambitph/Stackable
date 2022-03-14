@@ -126,7 +126,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 				<?php if ( ! sugb_fs()->is_whitelabeled() ) { ?>
 					<?php if ( ! sugb_fs()->can_use_premium_code() ) { ?>
-						<a class="s-tab s-tab-premium" href="https://wpstackable.com/premium/?utm_source=wp-settings-tabs&utm_campaign=gopremium&utm_medium=wp-dashboard"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
+						<a class="s-tab s-tab-premium" href="https://wpstackable.com/premium/?utm_source=wp-settings-tabs&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_new"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
 					<?php } ?>
 				<?php } ?>
 
@@ -246,7 +246,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								</ul>
 							</p>
 							<p>
-								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=gopremium&utm_medium=wp-dashboard" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
+								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=gopremium&utm_medium=wp-dashboard" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>" target="_new"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
 							</p>
 							<p>
 								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=learnmore&utm_medium=wp-dashboard" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?> →</a>
