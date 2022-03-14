@@ -5,7 +5,6 @@ import {
 	getFontFamily, clampInheritedStyle, useStyles, getStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
-import { isEmpty } from 'lodash'
 
 const getStyleParams = ( options = {} ) => {
 	const {
@@ -133,7 +132,7 @@ const getStyleParams = ( options = {} ) => {
 				}
 
 				// If gradient and no colors are given, set it to black to it won't be transparent.
-				if ( isEmpty( textColor1 ) && isEmpty( textColor2 ) ) {
+				if ( ! textColor1 && ! textColor2 ) {
 					return 'linear-gradient(0deg, #000, #000)'
 				}
 
