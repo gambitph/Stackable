@@ -13,9 +13,7 @@ import {
 import {
 	useBlockAttributes, useDeviceType, getBlockStyle,
 } from '~stackable/hooks'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
+import { getUniqueBlockClass } from '~stackable/util'
 import {
 	Fragment, renderToString, useMemo,
 } from '@wordpress/element'
@@ -38,13 +36,15 @@ export const CardStyles = props => {
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
+	propsToPass.attributes = {
+		...attributes,
+		clientId,
+	}
 
 	const blockStyle = useMemo( () => getBlockStyle( variations, attributes.className ), [ attributes.className ] )
 	const imageOptions = useMemo( () => {
 		return {
 			enableWidth: blockStyle === 'horizontal',
-			enableHeight: blockStyle !== 'horizontal',
 			selector: '.stk-block-card__image',
 		}
 	}, [ blockStyle ] )
@@ -101,7 +101,6 @@ CardStyles.Content = props => {
 				{ ...propsToPass }
 				options={ {
 					enableWidth: blockStyle.name === 'horizontal',
-					enableHeight: blockStyle.name !== 'horizontal',
 					selector: '.stk-block-card__image',
 				} }
 			/>
