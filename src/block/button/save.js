@@ -12,6 +12,7 @@ import {
 	Typography,
 	getResponsiveClasses,
 	CustomAttributes,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -35,10 +36,12 @@ export const Save = props => {
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-button',
+		blockAlignmentClass,
 		responsiveClass,
 	] )
 
