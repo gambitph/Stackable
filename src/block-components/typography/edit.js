@@ -282,7 +282,7 @@ export const Controls = props => {
 							: __( 'Text Color', i18n ) }
 						attribute={ attributeName( 'textColor1' ) }
 						hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
-						hasTransparent={ hasGradient }
+						hasTransparent={ getAttribute( 'textColorType' ) === 'gradient' }
 					/>
 					{ getAttribute( 'textColorType' ) === 'gradient' && hasGradient && (
 						<>
