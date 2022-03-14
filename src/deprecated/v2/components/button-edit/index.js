@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	UrlInputPopover,
-} from '~stackable/components'
+import { UrlInputPopover } from '~stackable/components'
 import striptags from 'striptags'
 
 /**
@@ -59,7 +57,9 @@ class ButtonEdit extends Component {
 	outsideClickHandler( event ) {
 		if ( ! event.target.closest( `.ugb-button-container-${ this.buttonInstanceId }` ) &&
 			! event.target.closest( '.ugb-url-input-popover' ) &&
-			! event.target.closest( '.components-popover' ) ) {
+			! event.target.closest( '.components-popover:not(.block-editor-block-list__block-popover)' ) && // Don't close if the popover is clicked (note that the toolbar is a popover).
+			! event.target.closest( '.block-editor-link-control__search-item-top' ) && // Prevent popover from closing when clicking on the link button.
+			! event.target.closest( '.stk-button-controls__wrapper' ) ) { // Prevent popover from closing when clicking on the toggle label.
 			this.hideUrlPopup()
 		} else if ( this.props.iconButton && event.target.closest( '.ugb-svg-icon-placeholder__button' ) ) {
 			// If this is an icon button, don't close the url popover if the icon is clicked.

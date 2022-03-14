@@ -27,7 +27,7 @@ const Link = forwardRef( ( props, ref ) => {
 		<TagName
 			ref={ ref }
 			className={ classNames }
-			href="#0" // Disallow links in the editor
+			href={ tagName === 'a' ? 'javascript:void(0)' : undefined } // Disallow links in the editor
 			{ ...propsToPass }
 		>
 			{ children }

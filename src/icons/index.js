@@ -35,6 +35,7 @@ import SVGPricingBoxIcon from './images/pricing-box-icon.svg'
 import SVGSeparatorIcon from './images/separator-icon.svg'
 import SVGSocialButtonsIcon from './images/social-buttons.svg'
 import SVGSpacerIcon from './images/spacer-icon.svg'
+import SVGTableOfContentsIcon from './images/table-of-contents.svg'
 import SVGTeamMemberIcon from './images/team-member-icon.svg'
 import SVGTestimonialIcon from './images/testimonial-icon.svg'
 import SVGTextIcon from './images/text-icon.svg'
@@ -229,6 +230,10 @@ export function SocialButtonsIcon() {
 
 export function SpacerIcon() {
 	return colorizeIcon( <SVGSpacerIcon width="20" height="20" /> )
+}
+
+export function TableOfContentsIcon() {
+	return colorizeIcon( <SVGTableOfContentsIcon width="20" height="20" /> )
 }
 
 export function TeamMemberIcon() {

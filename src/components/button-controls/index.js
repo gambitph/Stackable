@@ -27,9 +27,7 @@ import ImageDesignPlain from './images/plain.png'
 /**
  * WordPress dependencies
  */
-import {
-	BaseControl,
-} from '@wordpress/components'
+import { BaseControl } from '@wordpress/components'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
@@ -45,42 +43,44 @@ const ButtonControls = props => {
 
 	return (
 		<Fragment>
-			{ props.onChangeUrl && (
-				<URLInputControl
-					label={ __( 'Link / URL', i18n ) }
-					value={ props.url }
-					onChange={ props.onChangeUrl }
-					placeholder="http://"
-				/>
-			) }
-			{ props.onChangeUrl && props.onChangeNewTab && (
-				<AdvancedToggleControl
-					label={ __( 'Open link in new tab', i18n ) }
-					checked={ props.newTab }
-					onChange={ props.onChangeNewTab }
-				/>
-			) }
-			{ props.onChangeUrl && props.onChangeNoFollow && (
-				<AdvancedToggleControl
-					label={ __( 'Nofollow link', i18n ) }
-					checked={ props.noFollow }
-					onChange={ props.onChangeNoFollow }
-				/>
-			) }
-			{ props.onChangeUrl && props.onChangeSponsored && (
-				<AdvancedToggleControl
-					label={ __( 'Sponsored', i18n ) }
-					checked={ props.sponsored }
-					onChange={ props.onChangeSponsored }
-				/>
-			) }
-			{ props.onChangeUrl && props.onChangeUgc && (
-				<AdvancedToggleControl
-					label={ __( 'UGC', i18n ) }
-					checked={ props.ugc }
-					onChange={ props.onChangeUgc }
-				/>
-			) }
+			<div className="stk-button-controls__wrapper">
+				{ props.onChangeUrl && (
+					<URLInputControl
+						label={ __( 'Link / URL', i18n ) }
+						value={ props.url }
+						onChange={ props.onChangeUrl }
+						placeholder="http://"
+					/>
+				) }
+				{ props.onChangeUrl && props.onChangeNewTab && (
+					<AdvancedToggleControl
+						label={ __( 'Open link in new tab', i18n ) }
+						checked={ props.newTab }
+						onChange={ props.onChangeNewTab }
+					/>
+				) }
+				{ props.onChangeUrl && props.onChangeNoFollow && (
+					<AdvancedToggleControl
+						label={ __( 'Nofollow link', i18n ) }
+						checked={ props.noFollow }
+						onChange={ props.onChangeNoFollow }
+					/>
+				) }
+				{ props.onChangeUrl && props.onChangeSponsored && (
+					<AdvancedToggleControl
+						label={ __( 'Sponsored', i18n ) }
+						checked={ props.sponsored }
+						onChange={ props.onChangeSponsored }
+					/>
+				) }
+				{ props.onChangeUrl && props.onChangeUgc && (
+					<AdvancedToggleControl
+						label={ __( 'UGC', i18n ) }
+						checked={ props.ugc }
+						onChange={ props.onChangeUgc }
+					/>
+				) }
+			</div>
 
 			{ props.onChangeUrl && <ControlSeparator /> }
 
@@ -206,12 +206,24 @@ const ButtonControls = props => {
 					value={ props.hoverEffect }
 					onChange={ props.onChangeHoverEffect }
 					options={ [
-						{ value: '', label: __( 'None', i18n ) },
-						{ value: 'lift', label: __( 'Lift', i18n ) },
-						{ value: 'scale', label: __( 'Scale', i18n ) },
-						{ value: 'lift-scale', label: __( 'Lift & Scale', i18n ) },
-						{ value: 'scale-more', label: __( 'Scale More', i18n ) },
-						{ value: 'lift-scale-more', label: __( 'Lift & Scale More', i18n ) },
+						{
+							value: '', label: __( 'None', i18n ),
+						},
+						{
+							value: 'lift', label: __( 'Lift', i18n ),
+						},
+						{
+							value: 'scale', label: __( 'Scale', i18n ),
+						},
+						{
+							value: 'lift-scale', label: __( 'Lift & Scale', i18n ),
+						},
+						{
+							value: 'scale-more', label: __( 'Scale More', i18n ),
+						},
+						{
+							value: 'lift-scale-more', label: __( 'Lift & Scale More', i18n ),
+						},
 					] }
 					className="ugb--help-tip-button-hover-effect"
 				/>
@@ -304,14 +316,25 @@ const ButtonControls = props => {
 					label={ __( 'Button Size', i18n ) }
 					value={ size }
 					options={ [
-						{ value: 'tiny', label: __( 'Tiny', i18n ) },
-						{ value: 'small', label: __( 'Small', i18n ) },
-						{ value: 'normal', label: __( 'Normal', i18n ) },
-						{ value: 'medium', label: __( 'Medium', i18n ) },
-						{ value: 'large', label: __( 'Large', i18n ) },
+						{
+							value: 'tiny', label: __( 'Tiny', i18n ),
+						},
+						{
+							value: 'small', label: __( 'Small', i18n ),
+						},
+						{
+							value: 'normal', label: __( 'Normal', i18n ),
+						},
+						{
+							value: 'medium', label: __( 'Medium', i18n ),
+						},
+						{
+							value: 'large', label: __( 'Large', i18n ),
+						},
 					] }
 					onChange={ props.onChangeSize }
 					defaultValue="normal"
+					allowReset={ props.size !== 'normal' && props.size !== '' }
 					className="ugb--help-tip-button-size"
 				/>
 			}
@@ -425,8 +448,12 @@ const ButtonControls = props => {
 							label={ __( 'Icon Position', i18n ) }
 							value={ props.iconPosition }
 							options={ [
-								{ value: '', label: __( 'Left', i18n ) },
-								{ value: 'right', label: __( 'Right', i18n ) },
+								{
+									value: '', label: __( 'Left', i18n ),
+								},
+								{
+									value: 'right', label: __( 'Right', i18n ),
+								},
 							] }
 							onChange={ props.onChangeIconPosition }
 						/>

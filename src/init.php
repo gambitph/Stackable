@@ -45,6 +45,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Load our editor scripts.
 			add_action( 'init', array( $this, 'register_block_editor_assets' ) );
+			add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_assets_admin' ) );
 
 			add_filter( 'init', array( $this, 'register_frontend_assets_nodep' ) );
 
@@ -230,6 +231,29 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		}
 
 		/**
+		 * Enqueue CodeMirror separately. This originally was enqueued in
+		 * `register_block_editor_assets`, but we want to enqueue this only when
+		 * Gutenberg is loaded. Other plugins may use CodeMirror in other parts
+		 * of the admin, and us enqueuing it may interfere with how their plugin
+		 * works.
+		 *
+		 * @since 3.2.0
+		 */
+		public function register_block_editor_assets_admin() {
+			$current_screen = get_current_screen();
+			if ( $current_screen->is_block_editor() ) {
+				// Enqueue CodeMirror for Custom CSS.
+				wp_enqueue_code_editor( array(
+					'type' => 'text/css', // @see https://developer.wordpress.org/reference/functions/wp_get_code_editor_settings/
+					'codemirror' => array(
+						'indentUnit' => 2,
+						'tabSize' => 2,
+					),
+				) );
+			}
+		}
+
+		/**
 		 * Enqueue block assets for backend editor.
 		 *
 		 * @since 0.1
@@ -238,15 +262,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			if ( ! is_admin() ) {
 				return;
 			}
-
-			// Enqueue CodeMirror for Custom CSS.
-			wp_enqueue_code_editor( array(
-				'type' => 'text/css', // @see https://developer.wordpress.org/reference/functions/wp_get_code_editor_settings/
-				'codemirror' => array(
-					'indentUnit' => 2,
-					'tabSize' => 2,
-				),
-			) );
 
 			// Backend editor scripts: common vendor files.
 			wp_register_script(

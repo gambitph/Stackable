@@ -1,0 +1,14 @@
+{
+	"name": "stackable/table-of-contents",
+	"title": "Table of Contents",
+	"description": "Automatically generated table of contents based on Heading blocks.",
+	"category": "common",
+	"keywords": [
+		"ToC",
+		"Index",
+		"Outline"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/table-of-contents-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+}

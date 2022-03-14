@@ -22,9 +22,27 @@ module.exports = {
 
 		// Force destructuring assignments to be multiline if they have lots of variables.
 		'object-curly-newline': [ 'error', {
-			multiline: true,
-			minProperties: 3,
-			consistent: true,
+			ObjectExpression: {
+				multiline: true,
+				minProperties: 2,
+				consistent: true,
+			},
+			ObjectPattern: {
+				multiline: true,
+				minProperties: 2,
+				consistent: true,
+			},
+			// Force strict formatting on import/export
+			ImportDeclaration: {
+				multiline: true,
+				minProperties: 3,
+				consistent: false,
+			},
+			ExportDeclaration: {
+				multiline: true,
+				minProperties: 3,
+				consistent: false,
+			},
 		} ],
 
 		// Allow assigning same named variables (mainly for function arguments) in inside code-blocks.
