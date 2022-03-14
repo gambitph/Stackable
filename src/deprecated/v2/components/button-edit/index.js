@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	UrlInputPopover,
-} from '~stackable/components'
+import { UrlInputPopover } from '~stackable/components'
 import striptags from 'striptags'
 
 /**

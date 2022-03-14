@@ -10,9 +10,7 @@ import {
 	FlexGapStyles,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
@@ -85,7 +83,9 @@ export const ButtonGroupStyles = props => {
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
+	propsToPass.attributes = {
+		...attributes, clientId,
+	}
 
 	const buttonGroupStyles = useStyles( attributes, getStyleParams() )
 

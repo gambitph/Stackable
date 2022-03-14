@@ -45,7 +45,9 @@ const getStyleParams = ( options = {} ) => {
 				let value = _value
 				const clampedValue = inherit && clampInheritedStyle(
 					_value,
-					{ min: inheritMin, max: inheritMax }
+					{
+						min: inheritMin, max: inheritMax,
+					}
 				)
 
 				/**
@@ -59,7 +61,9 @@ const getStyleParams = ( options = {} ) => {
 				if ( isMobile ) {
 					const clampedDesktopValue = inherit && clampInheritedStyle(
 						getAttribute( 'fontSize', 'desktop', state ),
-						{ min: inheritMin, max: inheritMax }
+						{
+							min: inheritMin, max: inheritMax,
+						}
 					)
 					value = clampedDesktopValue ? clampedDesktopValue : value
 				}
@@ -107,20 +111,32 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'backgroundImage',
 			attrName: 'textColor1',
 			valuePreCallback: ( value, getAttribute ) => {
-				if (
-					getAttribute( 'textColorType', 'desktop', 'normal' ) !== 'gradient' ||
-					getAttribute( 'textColor1', 'desktop', 'normal' ) === '' ||
-					getAttribute( 'textColor2', 'desktop', 'normal' ) === ''
-				) {
+				if ( getAttribute( 'textColorType', 'desktop', 'normal' ) !== 'gradient' ) {
 					return undefined
 				}
-				return value
+				return '1' // Return a dummy value force the style to be generated, this will be replaced by the valueCallback.
 			},
 			valueCallback: ( value, getAttribute ) => {
-				const textColor1 = getAttribute( 'textColor1', 'desktop', 'normal' )
-				const textColor2 = getAttribute( 'textColor2', 'desktop', 'normal' )
-				const textGradientDirection = getAttribute( 'textGradientDirection', 'desktop', 'normal' )
+				let textColor1 = getAttribute( 'textColor1', 'desktop', 'normal' )
+				let textColor2 = getAttribute( 'textColor2', 'desktop', 'normal' )
 
+				// If one of the colors is transparent, use black in the other one.
+				if ( textColor1 === 'transparent' && ! textColor2 ) {
+					textColor2 = '#000'
+				} else if ( textColor2 === 'transparent' && ! textColor1 ) {
+					textColor1 = '#000'
+				// If only one color is selected, use it for both.
+				} else {
+					textColor1 = textColor1 || textColor2
+					textColor2 = textColor2 || textColor1
+				}
+
+				// If gradient and no colors are given, set it to black to it won't be transparent.
+				if ( ! textColor1 && ! textColor2 ) {
+					return 'linear-gradient(0deg, #000, #000)'
+				}
+
+				const textGradientDirection = getAttribute( 'textGradientDirection', 'desktop', 'normal' )
 				return `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`
 			},
 			dependencies: [ 'textColorType', 'textColor1', 'textColor2', 'textGradientDirection', ...dependencies ],

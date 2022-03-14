@@ -3,9 +3,7 @@
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import {
-	InspectorTabs,
-} from '~stackable/components'
+import { InspectorTabs } from '~stackable/components'
 import {
 	getTypographyClasses,
 	BlockDiv,
@@ -22,9 +20,7 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-import {
-	useBlockHoverClass, useBlockStyle,
-} from '~stackable/hooks'
+import { useBlockHoverClass, useBlockStyle } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
@@ -140,7 +136,9 @@ const Edit = props => {
 							onReplace={ onReplace }
 							onSplit={ value => createBlock(
 								'stackable/button',
-								{ ...props.attributes, text: value }
+								{
+									...props.attributes, text: value,
+								}
 							) }
 						/>
 					</Button>

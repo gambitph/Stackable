@@ -3,9 +3,7 @@
  */
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
-import {
-	useAttributeEditHandlers, useBlockHoverState,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers, useBlockHoverState } from '~stackable/hooks'
 import {
 	AlignButtonsControl,
 	AdvancedRangeControl,
@@ -284,12 +282,14 @@ export const Controls = props => {
 							: __( 'Text Color', i18n ) }
 						attribute={ attributeName( 'textColor1' ) }
 						hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
+						hasTransparent={ getAttribute( 'textColorType' ) === 'gradient' }
 					/>
 					{ getAttribute( 'textColorType' ) === 'gradient' && hasGradient && (
 						<>
 							<ColorPaletteControl
 								label={ sprintf( __( 'Text Color #%s', i18n ), 2 ) }
 								attribute={ attributeName( 'textColor2' ) }
+								hasTransparent={ true }
 							/>
 
 							<AdvancedRangeControl
