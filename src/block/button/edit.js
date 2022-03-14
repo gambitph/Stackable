@@ -20,6 +20,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 import {
 	useBlockHoverClass, useBlockStyle,
@@ -31,7 +32,9 @@ import { withQueryLoopContext } from '~stackable/higher-order'
  */
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
-import { useBlockProps } from '@wordpress/block-editor'
+import {
+	AlignmentToolbar, BlockControls, useBlockProps,
+} from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
@@ -44,6 +47,7 @@ const Edit = props => {
 		className,
 		onReplace,
 		attributes,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -58,12 +62,14 @@ const Edit = props => {
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockStyle = useBlockStyle( blockStyles )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-button',
+		blockAlignmentClass,
 		blockHoverClass,
 		// We need to add the blockStyle here to append the class alongside `.stk-block`
 		// Only in the editor.
@@ -79,6 +85,12 @@ const Edit = props => {
 
 	return (
 		<>
+			<BlockControls>
+				<AlignmentToolbar
+					value={ attributes.contentAlign }
+					onChange={ contentAlign => setAttributes( { contentAlign } ) }
+				/>
+			</BlockControls>
 
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />

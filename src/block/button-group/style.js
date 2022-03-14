@@ -47,6 +47,9 @@ const getStyleParams = () => {
 			styleRule: 'flexWrap',
 			attrName: 'flexWrap',
 			responsive: 'all',
+			valuePreCallback: value => {
+				return value || 'nowrap'
+			},
 		},
 		{
 			renderIn: 'save',

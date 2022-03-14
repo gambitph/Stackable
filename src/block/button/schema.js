@@ -37,6 +37,18 @@ export const attributes = ( version = VERSION ) => {
 		hasColor: false,
 	} )
 
+	attrObject.add( {
+		attributes: {
+			contentAlign: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 
