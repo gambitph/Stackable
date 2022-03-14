@@ -71,7 +71,7 @@ const getStyleParams = () => {
 		},
 		{
 			renderIn: 'save',
-			selector: 'a',
+			selector: 'li',
 			styleRule: 'marginBottom',
 			attrName: 'rowGap',
 			responsive: 'all',
