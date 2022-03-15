@@ -15,12 +15,8 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import {
-	useBlockContext, useBlockHoverClass,
-} from '~stackable/hooks'
-import {
-	withIsHovered, withQueryLoopContext,
-} from '~stackable/higher-order'
+import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
+import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
 import {
 	Column,
 	getColumnClasses,
@@ -46,9 +42,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import {
-	Fragment, useMemo,
-} from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'

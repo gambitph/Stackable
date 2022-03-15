@@ -26,10 +26,11 @@
 	}
 
 	.stk-block-table-of-contents__list-item-inner {
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
-		flex-wrap: nowrap;
+		display: block;
+	}
+
+	.stk-block-table-of-contents__list-item__exclude-button {
+		display: inline-block;
 	}
 
 	.stk-block-table-of-contents__list-item__excluded {
@@ -45,14 +46,10 @@
 
 	// For the visibility toggle styles.
 	.stk-block-table-of-contents__link-wrapper {
-		position: relative;
-		padding-right: 52px;
+		display: block;
 	}
+
 	.stk-block-table-of-contents__list-item__exclude-button {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		margin-left: 16px;
 		&:focus {
 			box-shadow: none;
 		}
