@@ -20,7 +20,6 @@ import {
 	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
-	Alignment,
 	getAlignmentClasses,
 	Advanced,
 	CustomCSS,
@@ -74,8 +73,6 @@ const Edit = props => {
 	return (
 		<Fragment>
 			<InspectorTabs />
-
-			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
