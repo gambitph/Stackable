@@ -19,4 +19,8 @@
 	.stk-row {
 		flex-wrap: nowrap;
 	}
+	// Inherit the width of the container
+	.wp-block-stackable-heading.stk-block-heading {
+		width: inherit;
+	}
 }
