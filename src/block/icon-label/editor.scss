@@ -11,6 +11,6 @@
 // Heading container width is not limited anymore.
 .wp-block-stackable-icon-label.stk-block-icon-label {
 	.stk-inner-blocks.stk-block-content {
-		width: unset !important;
+		max-width: unset !important;
 	}
 }
