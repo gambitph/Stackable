@@ -6,7 +6,8 @@
  * External dependencies
  */
 import {
-	createTypographyStyles, loadGoogleFont,
+	createTypographyStyles,
+	loadGoogleFont,
 } from '~stackable/util'
 import { generateStyles } from '~stackable/block-components'
 import deepmerge from 'deepmerge'
@@ -17,7 +18,8 @@ import { head } from 'lodash'
  */
 import { loadPromise, models } from '@wordpress/api'
 import {
-	useEffect, useState,
+	useEffect,
+	useState,
 } from '@wordpress/element'
 import {
 	addAction, removeAction, applyFilters, doAction,

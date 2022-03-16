@@ -533,6 +533,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$selectors[] = $tag . '[class*="wp-block-"]';
 			}
 
+			// Fixes columns issue with Native Posts block.
+			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2);
+
 			return apply_filters( 'stackable_global_typography_selectors', $selectors, $tag );
 		}
 
@@ -814,6 +817,15 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				return substr_replace( $subject, $replace, $pos, strlen( $search ) );
 			}
 			return $subject;
+		}
+
+		public function posts_block_columns_fix( $selectors, $tag ) {
+			if ( $tag === 'li' ) {
+				$index = array_search('[data-block-type="core"] li', $selectors);
+				$selectors[$index] = '[data-block-type="core"] li:not(.wp-block-post)';
+			}
+
+			return $selectors;
 		}
 	}
 
