@@ -27,7 +27,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			add_submenu_page(
 				'options-general.php', // Parent slug.
 				__( 'Stackable', STACKABLE_I18N ), // Page title.
-				__( 'Stackable', STACKABLE_I18N ), // Menu title.
+				__( 'Stackable', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu title.
 				'manage_options', // Capability.
 				'stackable', // Menu slug.
 				array( $this, 'stackable_settings_content' ), // Callback function.
@@ -79,7 +79,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
 					'isPro' => sugb_fs()->can_use_premium_code(),
 					'showProNotice' => stackable_should_show_pro_notices(),
-					'pricingURL' => sugb_fs()->get_upgrade_url(),
+					'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 					'contactURL' => ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '',
 					'planName' => sugb_fs()->get_plan_name(),
 					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
@@ -126,7 +126,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 				<?php if ( ! sugb_fs()->is_whitelabeled() ) { ?>
 					<?php if ( ! sugb_fs()->can_use_premium_code() ) { ?>
-						<a class="s-tab s-tab-premium" href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
+						<a class="s-tab s-tab-premium" href="https://wpstackable.com/premium/?utm_source=wp-settings-tabs&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_new"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
 					<?php } ?>
 				<?php } ?>
 
@@ -246,7 +246,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								</ul>
 							</p>
 							<p>
-								<a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
+								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=gopremium&utm_medium=wp-dashboard" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>" target="_new"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
 							</p>
 							<p>
 								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=learnmore&utm_medium=wp-dashboard" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?> →</a>
@@ -256,13 +256,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                         <aside class="s-box s-left-align">
                             <h3><?php _e( '🎉 Join the Community', STACKABLE_I18N ) ?></h3>
                             <p><?php _e( 'Join the very active Stackable Community in Facebook, join thousands of like-minded people who are also building their websites and crafting beautiful and impactful web pages.', STACKABLE_I18N ) ?></p>
-							<p><a href="https://rebrand.ly/join-fb-community" class="s-button" target="_new" title="<?php esc_attr_e( 'Join Facebook Community', STACKABLE_I18N ) ?>"><?php _e( 'Join Facebook Community', STACKABLE_I18N ) ?></a></p>
+							<p><a href="https://www.facebook.com/groups/wpstackable" class="s-button" target="_new" title="<?php esc_attr_e( 'Join Facebook Community', STACKABLE_I18N ) ?>"><?php _e( 'Join Facebook Community', STACKABLE_I18N ) ?></a></p>
                         </aside>
                         <aside class="s-box s-news-box s-left-align">
 							<h3><?php _e( '🗞 Stackable Blog', STACKABLE_I18N ) ?></h3>
 							<div class="s-news-box-content"><?php stackable_news_feed_links_cached() ?></div>
 							<p><?php _e( 'Keep up to date by subscribing to our newsletter.', STACKABLE_I18N ) ?></p>
-							<p><a href="https://rebrand.ly/plugin-welcome-subscribe" class="s-button" target="_new" title="<?php esc_attr_e( 'Subscribe', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe', STACKABLE_I18N ) ?></a></p>
+							<p><a href="http://eepurl.com/dJY9xI" class="s-button" target="_new" title="<?php esc_attr_e( 'Subscribe', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe', STACKABLE_I18N ) ?></a></p>
                         </aside>
                     </div>
                 </section>

@@ -252,7 +252,7 @@
 }
 
 // Typography Classes.
-:is(.stk--is-gradient, .stk--is-gradient li, .stk--is-gradient span) {
+:is(.stk--is-gradient, .stk--is-gradient li, .stk--is-gradient span, .stk--is-gradient a) {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-moz-background-clip: text;
@@ -303,9 +303,6 @@
 }
 
 // Buttons.
-.stk-button {
-	width: max-content;
-}
 :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination, .stk-block-load-more, .stk-block-posts) {
 	&:not(.is-style-link) {
 		.stk-button {

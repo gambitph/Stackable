@@ -16,7 +16,7 @@ import {
 	InspectorTabs,
 } from '~stackable/components'
 import {
-	useBlockContext, useBlockHoverClass, useBlockStyle,
+	useBlockContext, useBlockHoverClass, useBlockStyle, useDeviceType,
 } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
@@ -43,9 +43,7 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import {
-	Fragment, useMemo,
-} from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -54,7 +52,9 @@ const widthUnit = [ 'px' ]
 const heightUnit = [ 'px' ]
 
 const Edit = props => {
-	const { hasInnerBlocks, innerBlocks } = useBlockContext()
+	const {
+		hasInnerBlocks, innerBlocks,
+	} = useBlockContext()
 
 	const {
 		hasContainer,
@@ -94,6 +94,13 @@ const Edit = props => {
 		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 	}, [ hasInnerBlocks, innerBlocks ] )
 
+	let hasHeight = [ 'default', 'default-2' ].includes( blockStyle )
+	const deviceType = useDeviceType()
+	// In horizontal layout, show height if in mobile view.
+	if ( blockStyle === 'horizontal' && deviceType === 'Mobile' ) {
+		hasHeight = true
+	}
+
 	return (
 		<Fragment>
 
@@ -106,7 +113,7 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
-				hasHeight={ [ 'default', 'default-2' ].includes( blockStyle ) }
+				hasHeight={ hasHeight }
 				widthUnits={ widthUnit }
 				heightUnits={ heightUnit }
 				hasBorderRadius={ false }

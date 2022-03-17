@@ -1,0 +1,90 @@
+.stk-block-table-of-contents {
+	.components-card {
+		margin-bottom: 18px;
+	}
+
+	&:is(.stk--is-gradient) {
+		// This prevents the text in the card component from going blank.
+		li,
+		// This prevents the text in the card component from going blank.
+		.stk-table-of-contents__empty-anchor,
+		// This prevents the eye icon from going blank.
+		.stk-block-table-of-contents__list-item__exclude-button span {
+			-webkit-text-fill-color: initial;
+			-moz-text-fill-color: initial;
+			-o-text-fill-color: initial;
+		}
+
+	}
+
+	&:is(.stk-block-background) {
+		background-clip: unset;
+	}
+
+	li {
+		position: relative;
+	}
+
+	.stk-block-table-of-contents__list-item-inner {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		flex-wrap: nowrap;
+	}
+
+	.stk-block-table-of-contents__list-item__excluded {
+		a,
+		.dashicon {
+			opacity: 0.4;
+		}
+	}
+
+	.stk-block-table-of-contents__list-item__hidden {
+		display: none;
+	}
+
+	// For the visibility toggle styles.
+	.stk-block-table-of-contents__link-wrapper {
+		position: relative;
+		padding-right: 52px;
+	}
+	.stk-block-table-of-contents__list-item__exclude-button {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		margin-left: 16px;
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
+	.stk-block-table-of-contents__list-item__exclude-button {
+		visibility: hidden;
+	}
+
+	.stk-block-table-of-contents__link-wrapper:hover > .stk-block-table-of-contents__list-item__exclude-button {
+		visibility: visible;
+	}
+}
+
+// Fade hidden entries.
+[data-type="stackable/table-of-contents"]:not(.is-selected) {
+	.stk-block-table-of-contents__list-item__exclude-button {
+		opacity: 0;
+	}
+	.stk-block-table-of-contents__link-wrapper:hover {
+		.stk-block-table-of-contents__list-item__exclude-button {
+			opacity: 1;
+		}
+	}
+}
+
+// Alignments when the icon list is aligned.
+[data-type="stackable/table-of-contents"] .stk-block-table-of-contents :is(ul, ol) {
+	margin-left: var(--stk-alignment-margin-left);
+	margin-right: var(--stk-alignment-margin-right);
+}
+
+[data-type="stackable/table-of-contents"] nav {
+	width: 100%;
+}

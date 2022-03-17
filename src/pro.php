@@ -131,7 +131,7 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
 		public function show_notification() {
 			stackable_add_welcome_notification( 'premium', sprintf( __( 'We hope you\'re enjoying Stackable. If you want more, you may want to check out %sStackable Premium%s. Ready to upgrade and do more? %sGo premium now%s', STACKABLE_I18N ),
 				'<a href="https://wpstackable.com/premium/?utm_source=wp-settings-notification&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_blank">', '</a>',
-				'<a href="' . esc_url( sugb_fs()->get_upgrade_url() ) . '">', '</a>'
+				'<a href="https://wpstackable.com/premium/?utm_source=wp-settings-notification&utm_campaign=gopremium&utm_medium=wp-dashboard">', '</a>'
 			) );
 		}
     }

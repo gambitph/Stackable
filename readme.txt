@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
-Tested up to: 5.9
+Tested up to: 5.9.2
 Requires PHP: 5.6
-Stable tag: 3.1.2
+Stable tag: 3.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -35,7 +35,7 @@ Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to j
 
 ## Powerful Custom Blocks
 
-Get 35 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 36 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 You can choose which of these blocks you need, depending on your workflow.
 
@@ -50,6 +50,7 @@ Essential Blocks
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 Special Blocks
+- Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -143,7 +144,8 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
-- [v3.1 Introducing: Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.1 Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.0 How To Shift From Version 2 to Version 3](https://wpstackable.com/blog/how-to-shift-from-version-2-to-version-3/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.17 Custom Attributes and Optimization](https://wpstackable.com/blog/custom-attributes-and-optimization/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.16 Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -182,7 +184,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 = Minimum Requirements =
 
-You'll need WordPress version 5.6 or higher for this to work.
+You'll need WordPress version 5.8.2 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -237,6 +239,57 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.2.0 =
+[Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Table of Contents block
+* Fixed: Button shadows don't show when the button has a border radius
+* Fixed: Added button text alignment button
+* Fixed: Buttons do not wrap text
+* Fixed: Buttons and links get followed when previewing in tablet or mobile
+* Fixed: Using a video background with a top/bottom separator now shows the content correctly
+* Fixed: Card block Horizontal layout mobile collapse issue
+* Fixed: Image now clickable in the image card variation in the Posts block
+* Fixed: When changing typography color type to gradient for the first time, the text becomes transparent
+* Fixed: Enqueue CodeMirror only in Gutenberg, it might interfere with other plugins that use it
+* Fixed: Changing the block's HTML tag now shows the block in the correct width in the editor
+* Fixed: Button block popover closes when clicking edit (v2)
+
+= 3.1.5 =
+* New: Navigation Panel
+* Fixed: Missing Featured Image in the Default Posts block variation
+* Fixed: Content order issues in the Posts block
+* Fixed: Content order Posts block always shows the reset button
+* Fixed: A block can show an error when saving without picking a layout
+* Fixed: The margin bottom resizer can be visible when picking a layout
+* Fixed: Security fixes
+
+= 3.1.4 =
+* Fixed: Blocks with variations couldn't be added (free only)
+* Fixed: Layout switcher button doesn't show
+
+= 3.1.3 =
+* New: You can now change the Layout after adding a block
+* New: Added Row Gap option in Icon List block
+* New: Added Horizontal 2 layout for the Posts block (inverse of Horizontal layout)
+* Fixed: Editor performance improvements
+* Fixed: Accordion block support for some older browsers
+* Fixed: Featured Image bottom margin can now be changed in the Posts block
+* Fixed: Sometimes line-height won't get applied to the post titles in the Posts block
+* Fixed: Column resizer handlers now show correctly for nested column blocks
+* Fixed: Text and heading blocks now appear when in Content Editing Mode
+* Fixed: Added center, wide and fullwidth to the Header block
+* Fixed: Posts block Horizontal layout doesn't collapse correctly in mobile
+* Fixed: Some Posts block content go past their containers in mobile
+* Fixed: Using custom color pickers can close the current popover
+* Fixed: Using rem font size shows the font size differently in mobile
+* Fixed: The button appender button is now on the right side of the block
+* Fixed: Alignment of the top & bottom lines of the header block now work in tablet/mobile correctly if there's a desktop alignment provided
+* Fixed: Multiple copy and paste notifications won't anymore fill up the screen
+* Fixed: Column styles can affect inner blocks in the editor
+* Fixed: Jetpack form goes side-by-side in the editor
+* Fixed: Hitting return while editing image dimensions in the size popover opens the Media Library
 
 = 3.1.2 =
 * New: WordPress 5.9 compatibility & FSE compatibility

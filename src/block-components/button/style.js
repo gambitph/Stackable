@@ -178,6 +178,10 @@ export const Style = props => {
 					options: {
 						...propsToPass.options,
 						selector: propsToPass.options.selector + ':before',
+						// Adding border radius clips button's shadow.
+						// This prevents this from happening.
+						// @see src/block-components/borders/style.js
+						addBorderRadiusOverflow: false,
 						hoverSelector: propsToPass.options.selector + ':hover:before',
 						borderRadiusSelector: propsToPass.options.selector,
 						attrNameTemplate: sprintf( 'button%s', propsToPass.options?.attrNameTemplate || '%s' ),
@@ -216,6 +220,10 @@ Style.Content = props => {
 					options: {
 						...propsToPass.options,
 						selector: propsToPass.options.selector + ':before',
+						// Adding border radius clips button's shadow.
+						// This prevents this from happening.
+						// @see src/block-components/borders/style.js
+						addBorderRadiusOverflow: false,
 						hoverSelector: propsToPass.options.selector + ':hover:before',
 						borderRadiusSelector: propsToPass.options.selector,
 						attrNameTemplate: sprintf( 'button%s', propsToPass.options?.attrNameTemplate || '%s' ),

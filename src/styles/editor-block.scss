@@ -82,7 +82,7 @@
 [data-type^="stackable/"] {
 	display: flex;
 }
-[data-type^="stackable/"] > div {
+[data-type^="stackable/"] > * { // Match all elements since this can be modified by the user.
 	width: 100%;
 }
 

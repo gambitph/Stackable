@@ -1305,6 +1305,7 @@
       "regular"
     ],
     "subsets": [
+      "devanagari",
       "latin",
       "latin-ext"
     ]
@@ -1861,6 +1862,17 @@
     ]
   },
   {
+    "family": "BhuTuka Expanded One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "gurmukhi",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Big Shoulders Display",
     "variants": [
       "100",
@@ -2258,7 +2270,8 @@
   {
     "family": "Brawler",
     "variants": [
-      "regular"
+      "regular",
+      "700"
     ],
     "subsets": [
       "latin"
@@ -4927,6 +4940,21 @@
     ]
   },
   {
+    "family": "Fredoka",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Fredoka One",
     "variants": [
       "regular"
@@ -6028,6 +6056,17 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Hubballi",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "kannada",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -7680,12 +7719,42 @@
     ]
   },
   {
+    "family": "League Gothic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "League Script",
     "variants": [
       "regular"
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "League Spartan",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -12394,23 +12463,6 @@
     ]
   },
   {
-    "family": "Open Sans Condensed",
-    "variants": [
-      "300",
-      "300italic",
-      "700"
-    ],
-    "subsets": [
-      "cyrillic",
-      "cyrillic-ext",
-      "greek",
-      "greek-ext",
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Oranienbaum",
     "variants": [
       "regular"
@@ -14166,6 +14218,34 @@
     ]
   },
   {
+    "family": "Roboto Serif",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Roboto Slab",
     "variants": [
       "100",
@@ -15243,6 +15323,25 @@
     "family": "Smooch",
     "variants": [
       "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Smooch Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",

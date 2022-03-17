@@ -61,6 +61,7 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 		'separator',
 		'spacer',
 		'subtitle',
+		'table-of-contents',
 		'text',
 	);
 
@@ -156,7 +157,7 @@ if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks' ) ) {
 		}
 
 		$allowed_stackable_wrapper_blocks = array();
-		$blocks_metadata = stackable_get_stk_wrapper_block_folders_metadata(); 
+		$blocks_metadata = stackable_get_stk_wrapper_block_folders_metadata();
 
 		foreach ( $blocks_metadata as $metadata ) {
 			array_push( $allowed_stackable_wrapper_blocks, $metadata['name'] );

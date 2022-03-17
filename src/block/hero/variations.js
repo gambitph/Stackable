@@ -31,13 +31,16 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: ImageDefault,
 			isDefault: true,
 			attributes: {
+				className: 'is-style-default',
+				contentAlign: 'center',
 				hasContainer: true,
 			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
 			innerBlocks: [
 				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ) } ],
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
@@ -49,10 +52,9 @@ const variations = applyFilters(
 		},
 		{
 			name: 'horizontal',
-			title: __( 'Horizontal', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Horizontal', i18n ) ),
-			icon: ImageHorizontal,
 			attributes: {
+				className: 'is-style-horizontal',
 				hasBackground: true,
 				blockBackgroundColor: '#FFFFFF',
 				blockPadding: {
@@ -65,6 +67,9 @@ const variations = applyFilters(
 				innerBlockContentAlign: 'alignfull',
 				align: 'full',
 			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Horizontal', i18n ),
+			pickerIcon: ImageHorizontal,
 			innerBlocks: [
 				[ 'stackable/columns', {
 					innerBlockContentAlign: 'alignfull',
@@ -103,33 +108,49 @@ const variations = applyFilters(
 		},
 		{
 			name: 'half-overlay',
-			title: __( 'Half Overlay', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Half Overlay', i18n ) ),
-			icon: ImageHalfOverlay,
+			attributes: {
+				className: 'is-style-half-overlay',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Half Overlay', i18n ),
+			pickerIcon: ImageHalfOverlay,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'center-overlay',
-			title: __( 'Center Overlay', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Center Overlay', i18n ) ),
-			icon: ImageCenterOverlay,
+			attributes: {
+				className: 'is-style-center-overlay',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Center Overlay', i18n ),
+			pickerIcon: ImageCenterOverlay,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'side-overlay',
-			title: __( 'Side Overlay', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Side Overlay', i18n ) ),
-			icon: ImageSideOverlay,
+			attributes: {
+				className: 'is-style-side-overlay',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Side Overlay', i18n ),
+			pickerIcon: ImageSideOverlay,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'half',
-			title: __( 'Half', i18n ),
 			description: __( 'Half Layout', i18n ),
-			icon: ImageHalf,
+			attributes: {
+				className: 'is-style-half',
+			},
+			isActive: [ 'className' ],
+			pickerTitle: __( 'Half', i18n ),
+			pickerIcon: ImageHalf,
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

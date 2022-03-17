@@ -30,11 +30,12 @@ const variations = applyFilters(
 	[
 		{
 			name: 'default',
-			title: __( 'Default', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Default', i18n ) ),
-			icon: ImageDefault,
 			attributes: { className: 'is-style-basic' },
 			isDefault: true,
+			pickerTitle: __( 'Default', i18n ),
+			pickerIcon: ImageDefault,
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/heading', {
 					text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
@@ -54,10 +55,11 @@ const variations = applyFilters(
 		},
 		{
 			name: 'compact',
-			title: __( 'Compact', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Compact', i18n ) ),
-			icon: ImageCompact,
 			attributes: { className: 'is-style-compact' },
+			pickerTitle: __( 'Compact', i18n ),
+			pickerIcon: ImageCompact,
+			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/columns', {}, [
 					[ 'stackable/column', {}, [
@@ -87,25 +89,37 @@ const variations = applyFilters(
 		},
 		{
 			name: 'banner',
-			title: __( 'Banner', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Banner Layout', i18n ) ),
-			icon: ImageBanner,
+			attributes: {
+				className: 'is-style-banner',
+			},
+			pickerTitle: __( 'Banner', i18n ),
+			pickerIcon: ImageBanner,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'colored',
-			title: __( 'Colored', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Colored Layout', i18n ) ),
-			icon: ImageColored,
+			attributes: {
+				className: 'is-style-colored',
+			},
+			pickerTitle: __( 'Colored', i18n ),
+			pickerIcon: ImageColored,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},
 		{
 			name: 'sectioned',
-			title: __( 'Sectioned', i18n ),
 			description: sprintf( _x( '%s Layout', 'Block layout name', i18n ), __( 'Sectioned Layout', i18n ) ),
-			icon: ImageSectioned,
+			attributes: {
+				className: 'is-style-sectioned',
+			},
+			pickerTitle: __( 'Sectioned', i18n ),
+			pickerIcon: ImageSectioned,
+			isActive: [ 'className' ],
 			isPremium: ! isPro,
 			scope: [ 'block' ],
 		},

@@ -71,7 +71,7 @@ if ( ! function_exists( 'stackable_notification_count' ) ) {
         global $stackable_notifications;
         $num_notifiations = count( $stackable_notifications );
         if ( $num_notifiations ) {
-            return sprintf( '<span class="update-plugins count-%s"><span class="plugin-count" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></span>',
+            return sprintf( '<span class="update-plugins stk-update-plugins count-%s"><span class="plugin-count" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></span>',
                 $num_notifiations,
                 $num_notifiations,
                 sprintf( _n( '%s notification', '%s notifications', $num_notifiations, STACKABLE_I18N ), $num_notifiations )
@@ -114,7 +114,7 @@ if ( ! function_exists( 'stackable_welcome_notification' ) ) {
                         }
 
                         // Decrement the menu indicators.
-						jQuery( 'li.toplevel_page_stackable .update-plugins' ).each( function( i, el ) {
+						jQuery( '.stk-update-plugins' ).each( function( i, el ) {
 							var indicator = jQuery( el )
 							var n = parseInt( indicator.attr( 'class' ).match( /count-(\d*)/ )[1], 10 );
 							// Decrement the class.

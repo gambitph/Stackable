@@ -26,6 +26,7 @@ import {
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
+import { kebabCase } from 'lodash'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, ColorPaletteControl, AdvancedRangeControl, AlignButtonsControl,
 } from '~stackable/components'
@@ -36,9 +37,12 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
+import {
+	Fragment, useEffect, useState,
+} from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
+import { useDispatch } from '@wordpress/data'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 /**
@@ -82,6 +86,19 @@ const Edit = props => {
 	] )
 
 	useUniqueId( true, true )
+
+	// Auto-generate anchors in Stackable headings.
+	const [ prevText, setPrevText ] = useState( props.attributes.text )
+	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
+
+	useEffect( () => {
+		const cleanAnchorValue = kebabCase( props.attributes.anchor )
+		if ( cleanAnchorValue === kebabCase( prevText ) || ! props.attributes.anchor ) {
+			__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { anchor: kebabCase( props.attributes.text ) } )
+		}
+		setPrevText( props.attributes.text )
+	}, [ props.attributes.anchor, props.attributes.text ] )
 
 	return (
 		<Fragment>
