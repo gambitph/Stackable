@@ -534,7 +534,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			// Fixes columns issue with Native Posts block.
-			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2);
+			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
 
 			return apply_filters( 'stackable_global_typography_selectors', $selectors, $tag );
 		}
@@ -821,8 +821,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 		public function posts_block_columns_fix( $selectors, $tag ) {
 			if ( $tag === 'li' ) {
-				$index = array_search('[data-block-type="core"] li', $selectors);
-				$selectors[$index] = '[data-block-type="core"] li:not(.wp-block-post)';
+				$index = array_search( '[data-block-type="core"] li', $selectors );
+				$selectors[ $index ] = '[data-block-type="core"] li:not(.wp-block-post)';
 			}
 
 			return $selectors;
