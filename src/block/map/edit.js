@@ -7,13 +7,20 @@ import BlockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
-import { InspectorTabs } from '~stackable/components'
-import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
+import { isEmpty } from 'lodash'
+import { i18n, version as VERSION } from 'stackable'
+import {
+	AdvancedRangeControl,
+	InspectorStyleControls,
+	AdvancedTextControl,
+	AdvancedToggleControl,
+	InspectorTabs,
+	PanelAdvancedSettings,
+} from '~stackable/components'
+// import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
-	Image,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -23,61 +30,37 @@ import {
 	MarginBottom,
 	Transform,
 	getAlignmentClasses,
-	Link,
 } from '~stackable/block-components'
 import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { _x, __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-import { applyFilters } from '@wordpress/hooks'
-import { SandBox, Disabled } from '@wordpress/components'
-// import { useSelect } from '@wordpress/data'
+// import { applyFilters } from '@wordpress/hooks'
+import { Placeholder, SandBox } from '@wordpress/components'
 
-const heightUnit = [ 'px', 'vh', '%' ]
+// const heightUnit = [ 'px', 'vh', '%' ]
 
 const Edit = props => {
 	const {
-		clientId,
+		// clientId,
 		className,
-		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
-	const styles = []
-	// const styles = useSelect( select => {
-	// 	// Default styles used to unset some of the styles
-	// 	// that might be inherited from the editor style.
-	// 	const defaultStyles = `
-	// 		html,body,:root {
-	// 			margin: 0 !important;
-	// 			padding: 0 !important;
-	// 			overflow: visible !important;
-	// 			min-height: auto !important;
-	// 		}
-	// 	`
-
-	// 	return [
-	// 		defaultStyles,
-	// 		...transformStyles( select( blockEditorStore ).getSettings().styles ),
-	// 	]
-	// }, [] )
-
-	const blockHoverClass = useBlockHoverClass()
+	// const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { parentBlock } = useBlockContext( clientId )
 
-	// Allow special or layout blocks to disable the link for the image block,
-	// e.g. image box doesn't need the image to have a link since it has it's
-	// own link.
-	const enableLink = applyFilters( 'stackable.edit.image.enable-link', true, parentBlock )
+	// FIXME
+	const styles = []
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-image',
-		blockHoverClass,
+		'stk-block-map',
+		// blockHoverClass,
 		blockAlignmentClass,
 	] )
 
@@ -95,30 +78,90 @@ const Edit = props => {
 
 	return (
 		<Fragment>
+
 			<InspectorTabs />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					initialOpen={ true }
+					id="general"
+				>
+					<AdvancedTextControl
+						label={ __( 'Location', i18n ) }
+						attribute="mapLocation"
+						placeholder={ __( 'Coordindates or address', i18n ) }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Width', i18n ) }
+						attribute="mapWidth"
+						units={ props.widthUnits }
+						min={ props.widthMin }
+						sliderMax={ props.widthMax }
+						step={ props.widthStep }
+						initialPosition={ 100 }
+						allowReset={ true }
+						placeholder="250" // TODO: This should be referenced somewher instead of just a static number
+						responsive="all"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Height', i18n ) }
+						attribute="mapHeight"
+						units={ props.heightUnits }
+						min={ props.heightMin }
+						sliderMax={ props.heightMax }
+						step={ props.heightStep }
+						allowReset={ true }
+						placeholder=""
+						responsive="all"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Zoom', i18n ) }
+						attribute="mapZoom"
+						min={ 1 }
+						sliderMax={ 10 }
+						step={ 1 }
+						allowReset={ true }
+						placeholder=""
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Allow Fullscreen', i18n ) }
+						attribute="mapAllowFullscreen"
+						allowReset={ true }
+						placeholder=""
+					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Map Style', i18n ) }
+					initialOpen={ true }
+					id="map-style"
+				>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Map Marker', i18n ) }
+					initialOpen={ true }
+					id="map-marker"
+				>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
 
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
-			<Image.InspectorControls
-				initialOpen={ true }
-				heightUnits={ heightUnit }
-			/>
-			{ enableLink && <Link.InspectorControls hasTitle={ true } /> }
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-map" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<BlockStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-block-image" />
+			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv className={ blockClassNames }>
-				<SandBox
-					html={ content }
-					styles={ styles }
-				/>
+				{ isEmpty( content )
+					? <Placeholder />
+					: <SandBox html={ content } styles={ styles } />
+				}
 			</BlockDiv>
 			<MarginBottom />
 		</Fragment>

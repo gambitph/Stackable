@@ -1,8 +1,9 @@
 {
 	"name": "stackable/map",
 	"title": "Map",
-	"description": "An embedded Google Map with advanced controls.",
+	"description": "Embedded Google Map with advanced controls.",
 	"category": "common",
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"keywords": [ "location", "address" ],
 	"stk-type": "special"
 }
