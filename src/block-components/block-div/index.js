@@ -1,5 +1,5 @@
 import { addAttributes } from './attributes'
-import { useUniqueId } from './use-unique-id'
+import { createUniqueClass, useUniqueId } from './use-unique-id'
 import { Style } from './style'
 import { Edit } from './edit'
 
@@ -30,8 +30,12 @@ export const BlockDiv = props => {
 	const attributes = useBlockAttributes( clientId )
 
 	useUniqueId( ! enableVariationPicker )
-	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
-	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
+
+	// If there's no uniqueId yet, generate one so at least we can have styles
+	// applied to the block correctly.
+	const tempUniqueId = createUniqueClass( clientId )
+	const instanceId = useQueryLoopInstanceId( attributes.uniqueId || tempUniqueId )
+	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId || tempUniqueId )
 	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass
 
 	// Variation picker will show up if there's no uniqueId yet (which will be
@@ -62,7 +66,7 @@ export const BlockDiv = props => {
 		{ ...customAttributes }
 		className={ classNames }
 		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
-		data-block-id={ attributes.uniqueId }
+		data-block-id={ attributes.uniqueId || tempUniqueId }
 		blockTag={ renderHtmlTag ? htmlTag : 'div' }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }

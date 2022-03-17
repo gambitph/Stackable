@@ -3,7 +3,7 @@
  */
 import { get, pick } from 'lodash'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
-import { recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
+import { CONTENT_ATTRIBUTES, recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -11,32 +11,6 @@ import { recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
 import { useSelect, useDispatch } from '@wordpress/data'
 import { VariationPicker } from '~stackable/components'
 import { createBlocksFromInnerBlocksTemplate, cloneBlock } from '@wordpress/blocks'
-
-// Common content attributes across all Stackable blocks that should be preserved.
-const CONTENT_ATTRIBUTES = [
-	// Image attributes
-	'imageUrl',
-	'imageId',
-	'imageAlt',
-	// Text
-	'text',
-	// Icon
-	'icon',
-	// Link
-	'linkHasLink',
-	'linkUrl',
-	'linkNewTab',
-	'linkRel',
-	'linkHasTitle',
-	'linkTitle',
-	// Block-level link
-	'blockLinkHasLink',
-	'blockLinkUrl',
-	'blockLinkNewTab',
-	'blockLinkRel',
-	'blockLinkHasTitle',
-	'blockLinkTitle',
-]
 
 /**
  * The variation picker will automatically show up when the block doesn't have a
