@@ -7,7 +7,6 @@ import BlockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { isEmpty } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
 	AdvancedRangeControl,
@@ -16,8 +15,9 @@ import {
 	AdvancedToggleControl,
 	InspectorTabs,
 	PanelAdvancedSettings,
+	ResizerTooltip,
 } from '~stackable/components'
-// import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
+import { useBlockHoverClass, useDeviceType } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -29,52 +29,89 @@ import {
 	ConditionalDisplay,
 	MarginBottom,
 	Transform,
-	getAlignmentClasses,
 } from '~stackable/block-components'
 import { withQueryLoopContext } from '~stackable/higher-order'
+import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { _x, __ } from '@wordpress/i18n'
-import { Fragment } from '@wordpress/element'
+import {
+	Fragment, useRef, useMemo, useState,
+} from '@wordpress/element'
 // import { applyFilters } from '@wordpress/hooks'
-import { Placeholder, SandBox } from '@wordpress/components'
+import { SandBox, ResizableBox } from '@wordpress/components'
 
 // const heightUnit = [ 'px', 'vh', '%' ]
+const getSnapYBetween = ( value, snapDiff = 50 ) => {
+	return [
+		Math.floor( value / snapDiff ) * snapDiff,
+		Math.ceil( value / snapDiff ) * snapDiff,
+	]
+}
+
+const isDefined = ( value = '' ) => {
+	return value !== '' && value !== undefined
+}
 
 const Edit = props => {
 	const {
-		// clientId,
+		setAttributes,
+		attributes,
 		className,
+		isHovered,
+		isSelected,
 	} = props
 
-	useGeneratedCss( props.attributes )
+	const {
+		location, allowFullScreen, zoom,
+	} = attributes
 
-	// const blockHoverClass = useBlockHoverClass()
-	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-
-	// FIXME
-	const styles = []
-
+	const deviceType = useDeviceType()
+	const blockHoverClass = useBlockHoverClass()
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-map',
-		// blockHoverClass,
-		blockAlignmentClass,
+		blockHoverClass,
+		'stk--no-padding',
 	] )
 
-	const content = `<iframe
-				title="test"
-				src="https://maps.google.com/maps?q=14.633600461871746, 121.04300214414138&t=&z=12&ie=UTF8&iwloc=&output=embed"
-				className="stk-map"
-				height="300"
-				frameBorder="0"
-				style="border:0;width: 100%; max-width: none;"
-				allowFullScreen=""
+	const heightAttrName = getAttributeName( 'height', deviceType )
+	const height = attributes[ heightAttrName ]
+	// Set default min height based on device type
+	const defaultMinHeight = useMemo( () =>
+		deviceType === 'Tablet'
+			? isDefined( attributes[ getAttributeName( 'height' ) ] )
+				? attributes[ getAttributeName( 'height' ) ]
+				: 50
+			: deviceType === 'Mobile'
+				? isDefined( attributes[ getAttributeName( 'height', 'tablet' ) ] )
+					? attributes[ getAttributeName( 'height', 'tablet' ) ]
+					: isDefined( attributes[ getAttributeName( 'height' ) ] )
+						? attributes[ getAttributeName( 'height' ) ] : 50
+				: 50
+	, [ deviceType ] )
+
+	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
+
+	const resizableRef = useRef()
+
+	useGeneratedCss( props.attributes )
+
+	const defaultLocation = '14.633600461871746, 121.04300214414138'
+
+	const content = (
+		`<iframe
+				title="${ __( 'Google Map showing the location:', i18n ) } ${ location }"
+				src="https://maps.google.com/maps?q=${ location || defaultLocation }&t=&z=${ zoom || 12 }&ie=UTF8&iwloc=&output=embed"
+				class="stk-map__embedded"
+				style="border:0;width:100%;max-width:none;height:${ isDefined( height ) ? height : 300 }px;"
+				${ isDefined( allowFullScreen ) ? 'allow="allowfullscreen"' : '' }
 				aria-hidden="false"
 				tabIndex="0"
 			></iframe>`
+	)
 
 	return (
 		<Fragment>
@@ -89,27 +126,15 @@ const Edit = props => {
 				>
 					<AdvancedTextControl
 						label={ __( 'Location', i18n ) }
-						attribute="mapLocation"
+						attribute="location"
 						placeholder={ __( 'Coordindates or address', i18n ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Width', i18n ) }
-						attribute="mapWidth"
-						units={ props.widthUnits }
-						min={ props.widthMin }
-						sliderMax={ props.widthMax }
-						step={ props.widthStep }
-						initialPosition={ 100 }
-						allowReset={ true }
-						placeholder="250" // TODO: This should be referenced somewher instead of just a static number
-						responsive="all"
-					/>
-					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
-						attribute="mapHeight"
+						attribute="height"
 						units={ props.heightUnits }
 						min={ props.heightMin }
-						sliderMax={ props.heightMax }
+						sliderMax={ props.heightMax || 600 }
 						step={ props.heightStep }
 						allowReset={ true }
 						placeholder=""
@@ -117,16 +142,16 @@ const Edit = props => {
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Zoom', i18n ) }
-						attribute="mapZoom"
+						attribute="zoom"
 						min={ 1 }
-						sliderMax={ 10 }
+						sliderMax={ 25 }
 						step={ 1 }
 						allowReset={ true }
-						placeholder=""
+						placeholder="12"
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Allow Fullscreen', i18n ) }
-						attribute="mapAllowFullscreen"
+						attribute="allowFullScreen"
 						allowReset={ true }
 						placeholder=""
 					/>
@@ -158,14 +183,61 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv className={ blockClassNames }>
-				{ isEmpty( content )
-					? <Placeholder />
-					: <SandBox html={ content } styles={ styles } />
-				}
+				<ResizableBox
+					ref={ resizableRef }
+					showHandle={ isHovered || isSelected }
+					size={ {
+						height: height === '' ? defaultMinHeight : height,
+					} }
+					minHeight="0"
+					enable={ { bottom: true } }
+					onResize={ ( event, direction, elt, delta ) => {
+						let _height = height
+						if ( _height === '' || _height === undefined ) {
+							_height = defaultMinHeight
+						}
+						setSnapY( getSnapYBetween( parseInt( _height ) + delta.height ) )
+					} }
+					onResizeStop={ ( event, direction, elt, delta ) => {
+						let _height = height
+						if ( _height === '' || _height === undefined ) {
+							_height = defaultMinHeight
+						}
+						setAttributes( { [ heightAttrName ]: parseInt( _height ) + delta.height } )
+					} }
+					snap={ {
+						y: snapY,
+					} }
+					snapGap={ 10 }
+				>
+					{ isHovered && (
+						<ResizerTooltip
+							label={ __( 'Spacer', i18n ) }
+							enableWidth={ false }
+							height={ resizableRef.current?.state?.isResizing
+								? resizableRef.current?.state?.height
+								: ( height === '' || height === undefined )
+									? ''
+									: height
+							}
+							heightUnits={ [ 'px' ] }
+							onChangeHeight={ ( { value } ) => {
+								setAttributes( { [ heightAttrName ]: value } )
+							} }
+							defaultHeight=""
+							heightPlaceholder={ defaultMinHeight }
+						/>
+					) }
+					<SandBox html={ content } />
+				</ResizableBox>
 			</BlockDiv>
 			<MarginBottom />
 		</Fragment>
 	)
 }
+
+// Edit.defaultProps = {
+// 	zoom: 12
+// }
 
 export default withQueryLoopContext( Edit )

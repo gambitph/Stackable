@@ -26,26 +26,26 @@ export const mapAttributes = {
 		type: 'string',
 		default: '',
 	},
-	// Google Map search query
-	mapZoom: {
-		type: 'number',
-		default: '',
-	},
-	mapAllowFullscreen: {
-		type: 'boolean',
-		default: false,
-	},
-	mapLocation: {
+	// Google Map search query. This can be an address or lat,long coords.
+	location: {
 		type: 'string',
 		default: '',
 	},
-	mapWidth: {
+	zoom: {
 		type: 'number',
 		default: '',
 	},
-	mapHeight: {
+	allowFullScreen: {
+		type: 'boolean',
+		default: false,
+	},
+	theme: {
+		type: 'string',
+		defautl: '',
+	},
+	height: {
 		type: 'number',
-		default: '',
+		default: 300,
 	},
 }
 
