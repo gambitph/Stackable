@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import { useSelect, useDispatch } from '@wordpress/data'
-import { MenuItem, MenuGroup } from '@wordpress/components'
+import { MenuItem } from '@wordpress/components'
 import { applyFilters } from '@wordpress/hooks'
 import { BlockSettingsMenuControls } from '@wordpress/block-editor'
 
@@ -82,30 +82,28 @@ const SaveMenu = ( { clientId } ) => {
 			<BlockSettingsMenuControls>
 				{ ( { onClose } ) => (
 					<>
-						<MenuGroup label="Stackable">
+						<MenuItem
+							icon="sticky"
+							onClick={ () => {
+								const attributes = getBlockAttributes()
+								const innerBlocks = getBlockInnerBlocks()
+								updateBlockDefaultStyle( blockName, attributes, innerBlocks )
+								onClose()
+							} }
+						>
+							{ __( 'Save as Default Block Style', i18n ) }
+						</MenuItem>
+						{ hasDefaultBlockStyle() && (
 							<MenuItem
-								icon="sticky"
+								icon="editor-removeformatting"
 								onClick={ () => {
-									const attributes = getBlockAttributes()
-									const innerBlocks = getBlockInnerBlocks()
-									updateBlockDefaultStyle( blockName, attributes, innerBlocks )
+									deleteBlockDefaultStyle( blockName )
 									onClose()
 								} }
 							>
-								{ __( 'Save as Default Block Style', i18n ) }
+								{ __( 'Reset Default Block Style', i18n ) }
 							</MenuItem>
-							{ hasDefaultBlockStyle() && (
-								<MenuItem
-									icon="editor-removeformatting"
-									onClick={ () => {
-										deleteBlockDefaultStyle( blockName )
-										onClose()
-									} }
-								>
-									{ __( 'Reset Default Block Style', i18n ) }
-								</MenuItem>
-							) }
-						</MenuGroup>
+						) }
 					</>
 				) }
 			</BlockSettingsMenuControls>
