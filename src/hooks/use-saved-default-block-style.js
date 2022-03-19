@@ -1,4 +1,10 @@
 /**
+ * Internal dependencies
+ */
+import { getDefinedBlockStyles } from './use-block-style'
+import { CONTENT_ATTRIBUTES, recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
+
+/**
  * External dependencies
  */
 import { find, omit } from 'lodash'
@@ -9,10 +15,9 @@ import { find, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { useSelect, useDispatch } from '@wordpress/data'
 import { useState } from '@wordpress/element'
-import { CONTENT_ATTRIBUTES, recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
 import { createBlocksFromInnerBlocksTemplate, getBlockVariations } from '@wordpress/blocks'
 
-export const useSavedDefaultBlockStyle = ( blockProps, blockStyles = {} ) => {
+export const useSavedDefaultBlockStyle = blockProps => {
 	const {
 		clientId, name, attributes,
 	} = blockProps
@@ -20,6 +25,11 @@ export const useSavedDefaultBlockStyle = ( blockProps, blockStyles = {} ) => {
 
 	const { getDefaultBlockStyle } = useSelect( 'stackable/block-styles' )
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' )
+
+	// Only do this for Stackable blocks.
+	if ( ! name.startsWith( 'stackable/' ) ) {
+		return
+	}
 
 	// Apply the default saved styles to the block.
 	if ( ! isApplied && ! attributes.uniqueId ) {
@@ -42,6 +52,7 @@ export const useSavedDefaultBlockStyle = ( blockProps, blockStyles = {} ) => {
 			if ( attributes.className?.includes( 'is-style-' ) ) {
 				let potentialStyleName = attributes.className.match( /is-style-([^\s]+)/ )
 				potentialStyleName = potentialStyleName ? potentialStyleName[ 1 ] : ''
+				const blockStyles = getDefinedBlockStyles( name )
 				const blockStyle = find( blockStyles, { name: potentialStyleName } )
 
 				if ( blockStyle ) {
