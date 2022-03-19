@@ -74,7 +74,8 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 				const nextVariation = applyFilters( 'stackable.variation-picker.variation-selected', _nextVariation, block.name )
 
 				const attributes = getBlockAttributes( clientId )
-				const activeVariation = getActiveBlockVariation( block.name, attributes )
+				const _activeVariation = getActiveBlockVariation( block.name, attributes )
+				const activeVariation = applyFilters( 'stackable.variation-picker.variation-selected', _activeVariation, block.name )
 
 				let newAttributes = {}
 
