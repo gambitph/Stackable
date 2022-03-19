@@ -8,49 +8,67 @@ import { find, omit } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import { useSelect, useDispatch } from '@wordpress/data'
+import { useState } from '@wordpress/element'
 import { CONTENT_ATTRIBUTES, recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
-import { createBlocksFromInnerBlocksTemplate, cloneBlock } from '@wordpress/blocks'
+import { createBlocksFromInnerBlocksTemplate, getBlockVariations } from '@wordpress/blocks'
 
 export const useSavedDefaultBlockStyle = ( blockProps, blockStyles = {} ) => {
-	const { clientId, name, attributes } = blockProps
+	const {
+		clientId, name, attributes,
+	} = blockProps
+	const [ isApplied, setIsApplied ] = useState( false )
+
 	const { getDefaultBlockStyle } = useSelect( 'stackable/block-styles' )
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' )
-	// console.log('blockProps', blockProps)
 
 	// Apply the default saved styles to the block.
-	if ( ! attributes.uniqueId ) {
-		// Get the default block styles.
-		// Filter out content attributes.
-		const blockStyle = getDefaultBlockStyle( name )
-		if ( ! blockStyle ) {
-			return
-		}
-		console.log('blockStyle', window.blockStyle = blockStyle)
-		const blockData = JSON.parse( blockStyle.data )
-		let newAttributes = omit( blockData.attributes, CONTENT_ATTRIBUTES, 'uniqueId' )
+	if ( ! isApplied && ! attributes.uniqueId ) {
+		// If there is a variation, it means there is a variation/layout picker, in
+		// this case the variation picker will do the job.
+		const hasVariations = getBlockVariations( name ).length > 0
+		if ( ! hasVariations ) {
+			// Get the default block styles.
+			const blockStyle = getDefaultBlockStyle( name )
+			if ( ! blockStyle ) {
+				return
+			}
+			const blockData = JSON.parse( blockStyle.data )
+			// Filter out content attributes.
+			let newAttributes = omit( blockData.attributes, CONTENT_ATTRIBUTES, 'uniqueId' )
 
-		// TODO: this works, but only to those without a variation. If there's a layout picker, we shouldn't use this!
-		if ( attributes.className?.startsWith( 'is-style-' ) ) {
-			// const styleName = attributes.className.
-			const potentialStyleName = attributes.className.substring( 9 )
-			const blockStyle = find( blockStyles, { name: potentialStyleName } )
-			if ( blockStyle ) {
-				newAttributes = {
-					...newAttributes,
-					...blockStyle.onSelect( newAttributes ),
+			// Check if there are any block styles added in the block, if there
+			// are, the default attributes may not work properly, we may need to
+			// call the onSelect to apply the style.
+			if ( attributes.className?.includes( 'is-style-' ) ) {
+				let potentialStyleName = attributes.className.match( /is-style-([^\s]+)/ )
+				potentialStyleName = potentialStyleName ? potentialStyleName[ 1 ] : ''
+				const blockStyle = find( blockStyles, { name: potentialStyleName } )
+
+				if ( blockStyle ) {
+					newAttributes = {
+						...newAttributes,
+						...blockStyle.onSelect( newAttributes ),
+					}
 				}
 			}
+
+			// Apply the saved attributes to the block.
+			Object.keys( newAttributes ).forEach( attrName => {
+				attributes[ attrName ] = newAttributes[ attrName ]
+			} )
+
+			// Create and apply the innerBlocks.
+			const innerBlocks = createBlocksFromInnerBlocksTemplate( blockData.innerBlocks )
+			// We need to add unique Ids to prevent the default styles from getting applied.
+			recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
+			replaceInnerBlocks(
+				clientId,
+				innerBlocks,
+				false,
+			)
+
+			// This can repeat because of nested blocks, ens
+			setIsApplied( true )
 		}
-
-		console.log('newAttributes', newAttributes)
-		// Apply the attributes to the block.
-		Object.keys( newAttributes ).forEach( attrName => {
-			attributes[ attrName ] = newAttributes[ attrName ]
-		} )
-
-		console.log('name')
 	}
-
-	// TODO: what if the block is a card, would the above work? how about the inner blocks?
-	// TODO: if there's a variation, apply the block style only if the default variation is used.
 }

@@ -54,6 +54,7 @@ const STORE_SELECTORS = {
 	getBlockStyles: ( state, blockName ) => state.blockStyles.find( blockStyles => blockStyles.block === blockName ),
 	getAllBlockStyles: state => state.blockStyles,
 	getDefaultBlockStyle: ( state, blockName ) => state.blockStyles.find( blockStyles => blockStyles.block === blockName )?.styles.find( style => style.slug === 'default' ),
+	getBlockStyle: ( state, blockName, styleSlug ) => state.blockStyles.find( blockStyles => blockStyles.block === blockName )?.styles.find( style => style.slug === styleSlug ),
 }
 
 const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {

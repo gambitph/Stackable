@@ -1,4 +1,5 @@
 import './store'
+import './variation-picker'
 
 /**
  * External dependencies
