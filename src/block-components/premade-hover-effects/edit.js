@@ -6,15 +6,11 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-// import { useBlockAttributes } from '~stackable/hooks'
-// import { useDeviceEditorClasses } from '~stackable/components/resizable-column/use-device-editor-classes'
 
 /**
  * WordPress dependencies
  */
-import {
-	__, //_x, sprintf,
-} from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { useDispatch } from '@wordpress/data'
 import {
 	Fragment, useCallback, useMemo,
@@ -22,33 +18,23 @@ import {
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { ENTER, SPACE } from '@wordpress/keycodes'
 import { applyFilters } from '@wordpress/hooks'
+import { EFFECTS } from './list'
 
-const EFFECTS = [
+const BLOCKS = [
 	{
-		value: '',
-		label: __( 'None', i18n ),
+		type: 'container',
+		blockNames: [
+			'stackable/card',
+			'stackable/feature',
+		],
 	},
 	{
-		value: 'shadow',
-		label: __( 'Shadow', i18n ),
-		attributes: {
-			containerShadow: 'none',
-			containerShadowHover: '0px 10px 60px rgba(0, 0, 0, 0.1)',
-		},
-	},
-	{
-		value: 'lift',
-		label: __( 'Lift', i18n ),
-		attributes: {
-			transformHover: 'translateY(-20px)',
-		},
-	},
-	{
-		value: 'lift-more',
-		label: __( 'Lift More', i18n ),
-		attributes: {
-			transformHover: 'translateY(-50px)',
-		},
+		type: 'text',
+		blockNames: [
+			'stackable/heading',
+			'stackable/text',
+			'stackable/subtitle',
+		],
 	},
 ]
 
@@ -56,21 +42,31 @@ export const Edit = () => {
 	const { clientId, name: blockName } = useBlockEditContext()
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
-	const applyEffect = useCallback( value => {
-		// Remove all existing hover effects.
+	const effectsList = useMemo( () => {
+		const block = BLOCKS.find( item => item.blockNames.includes( blockName ) ? item.type : null )
+		const effectsSet = EFFECTS.find( ( { effectsType: e } ) => e === block.type )
+		return applyFilters( 'stackable.hover-effects.list', effectsSet.effects )
+	}, [] )
 
-		// If None, then just remove all hover effects.
-		if ( value === '' ) {
-			return
+	const applyEffect = useCallback( value => {
+		// Remove existing hover effects
+		const arr = {}
+		const prevEffect = effectsList.filter( ( { value: v } ) => value !== v && v !== '' )
+		prevEffect.forEach( ( item => {
+			Object.keys( item?.attributes ).forEach( attr => arr[ attr ] = '' )
+		} ) )
+		updateBlockAttributes( clientId, arr )
+		if ( prevEffect.removeEffect ) {
+			prevEffect.removeEffect( clientId )
 		}
 
 		// Apply the hover effect.
-		updateBlockAttributes( clientId, EFFECTS.find( ( { value: v } ) => v === value ).attributes )
-	}, [] )
-
-	const effectsList = useMemo( () => {
-		return applyFilters( 'stackable.hover-effects.list', EFFECTS )
-	}, [] )
+		const newEffect = effectsList.find( ( { value: v } ) => v === value )
+		updateBlockAttributes( clientId, newEffect.attributes )
+		if ( newEffect.onApplyEffect ) {
+			newEffect.onApplyEffect( clientId )
+		}
+	}, [ effectsList ] )
 
 	return (
 		<Fragment>
