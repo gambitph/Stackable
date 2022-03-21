@@ -39,13 +39,21 @@ export const mapAttributes = {
 		type: 'boolean',
 		default: false,
 	},
-	theme: {
-		type: 'string',
-		defautl: '',
-	},
 	height: {
 		type: 'number',
 		default: 300,
+	},
+	mapStyle: {
+		type: 'string',
+		default: '',
+	},
+	address: {
+		type: 'string',
+		default: '',
+	},
+	placeID: {
+		type: 'string',
+		default: '',
 	},
 }
 

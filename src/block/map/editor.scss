@@ -1,0 +1,24 @@
+.stk-block-map-extra-options__is-disabled {
+	filter: opacity(0.3);
+	pointer-events: none;
+}
+
+.stk-block-map-extra-options {
+	.stk-block-map-extra-options__style__is-selected {
+		pointer-events: none;
+	}
+}
+
+.stk-block-map-extra-options__style-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 2px solid #d6d6d6;
+	border-radius: 3px
+}
+
+.stk-block-map-extra-options__style__is-selected {
+	.stk-block-map-extra-options__style-image {
+		border-color:#0073aa;
+	}
+}
