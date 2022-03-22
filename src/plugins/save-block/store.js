@@ -26,7 +26,7 @@ const STORE_ACTIONS = {
 		type: 'UPDATE_BLOCK_STYLES',
 		blockStyles,
 	} ),
-	updateBlockDefaultStyle: ( blockName, attributes, innerBlocks ) => {
+	updateBlockDefaultStyle: ( blockName, attributes, innerBlocks, message ) => {
 		const blockData = JSON.stringify( {
 			attributes,
 			innerBlocks,
@@ -39,14 +39,14 @@ const STORE_ACTIONS = {
 			name: 'Default',
 			blockName,
 			blockData,
-			successMessage: __( 'Block Default Style Saved!', i18n ),
+			successMessage: message,
 		}
 	},
-	deleteBlockDefaultStyle: blockName => ( {
+	deleteBlockDefaultStyle: ( blockName, message ) => ( {
 		type: 'DELETE_BLOCK_STYLE',
 		slug: 'default',
 		blockName,
-		successMessage: __( 'Block Default Style Deleted!', i18n ),
+		successMessage: message,
 	} ),
 }
 
@@ -91,7 +91,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 					slug: action.slug,
 				},
 			} ).then( response => {
-				if ( response ) {
+				if ( response && action.successMessage ) {
 					dispatch( 'core/notices' ).createNotice(
 						'success',
 						action.successMessage,
@@ -145,7 +145,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 					slug: action.slug,
 				},
 			} ).then( response => {
-				if ( response ) {
+				if ( response && action.successMessage ) {
 					dispatch( 'core/notices' ).createNotice(
 						'success',
 						action.successMessage,

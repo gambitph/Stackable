@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { useSelect, useDispatch } from '@wordpress/data'
 import { MenuItem } from '@wordpress/components'
 import { applyFilters } from '@wordpress/hooks'
@@ -18,6 +18,7 @@ const SaveMenu = ( { clientId } ) => {
 
 	const {
 		blockName,
+		blockTitle,
 		hasDefaultBlockStyle,
 		getBlockAttributes,
 		getBlockInnerBlocks,
@@ -25,7 +26,8 @@ const SaveMenu = ( { clientId } ) => {
 		const blockName = select( 'core/block-editor' ).getBlockName( clientId )
 
 		return {
-			blockName: select( 'core/block-editor' ).getBlockName( clientId ),
+			blockName,
+			blockTitle: select( 'core/blocks' ).getBlockType( blockName )?.title || '',
 			hasDefaultBlockStyle: () => {
 				return blockName ? !! select( 'stackable/block-styles' ).getDefaultBlockStyle( blockName ) : false
 			},
@@ -87,21 +89,21 @@ const SaveMenu = ( { clientId } ) => {
 							onClick={ () => {
 								const attributes = getBlockAttributes()
 								const innerBlocks = getBlockInnerBlocks()
-								updateBlockDefaultStyle( blockName, attributes, innerBlocks )
+								updateBlockDefaultStyle( blockName, attributes, innerBlocks, sprintf( __( 'Default %s Block Saved!', i18n ), blockTitle ) )
 								onClose()
 							} }
 						>
-							{ __( 'Save as Default Block Style', i18n ) }
+							{ sprintf( __( 'Save as Default %s Block', i18n ), blockTitle ) }
 						</MenuItem>
 						{ hasDefaultBlockStyle() && (
 							<MenuItem
 								icon="editor-removeformatting"
 								onClick={ () => {
-									deleteBlockDefaultStyle( blockName )
+									deleteBlockDefaultStyle( blockName, sprintf( __( 'Default %s Block Deleted!', i18n ), blockTitle ) )
 									onClose()
 								} }
 							>
-								{ __( 'Reset Default Block Style', i18n ) }
+								{ sprintf( __( 'Reset Default %s Block', i18n ), blockTitle ) }
 							</MenuItem>
 						) }
 					</>
