@@ -33,7 +33,7 @@ export const mapAttributes = {
 	},
 	zoom: {
 		type: 'number',
-		default: '',
+		default: 12,
 	},
 	allowFullScreen: {
 		type: 'boolean',

@@ -28,13 +28,11 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	icon: MapIcon,
 	attributes: schema,
 	supports: {
-		anchor: true,
-		align: true,
+		align: [ 'full', 'wide', 'center' ],
 	},
 	example,
 	transforms,
 
-	// deprecated,
 	edit,
 	save,
 } )

@@ -17,8 +17,25 @@
 	border-radius: 3px
 }
 
-.stk-block-map-extra-options__style__is-selected {
+.stk-block-map-extra-options__style-options {
+	.stk-block-map-extra-options__style-button {
+		padding: 0;
+		margin: 0;
+		border: 0;
+		background: none;
+	}
+
 	.stk-block-map-extra-options__style-image {
-		border-color:#0073aa;
+		border: 3px solid #ccc;
+		border-radius: 3px;
+	}
+}
+
+.stk-block-map-extra-options__style__active {
+	.stk-block-map-extra-options__style-image {
+		border-color: blue;
+	}
+	.stk-block-map-extra-options__style-name {
+		font-weight: 700;
 	}
 }

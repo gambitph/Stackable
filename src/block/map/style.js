@@ -1,25 +1,37 @@
 /**
- * Internal dependencies
- */
-// import { blockStyles } from './block-styles'
-
-/**
  * External dependencies
  */
 import {
 	Advanced,
-	Alignment,
 	BlockDiv,
 	EffectsAnimations,
-	Image,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
-import { getUniqueBlockClass } from '~stackable/util'
-import { Fragment, renderToString } from '@wordpress/element'
+import {
+	getUniqueBlockClass, useStyles, getStyles,
+} from '~stackable/util'
+import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+import { Style as StyleComponent } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
+import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const BlockStyles = props => {
+const getStyleParams = () => {
+	return [
+		{
+			selector: 'stk-block-map__canvas',
+			styleRule: 'height',
+			attrName: 'height',
+			responsive: 'all',
+			format: '%spx',
+		},
+	]
+}
+
+export const MapStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -28,27 +40,35 @@ const BlockStyles = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
+	const mapStyles = useStyles( propsToPass.attributes, getStyleParams() )
+
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
 	return (
-		<Fragment>
-			<Alignment.Style { ...propsToPass } />
+		<>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Transform.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
-			<Image.Style { ...propsToPass } />
-		</Fragment>
+			<StyleComponent
+				styles={ mapStyles }
+				versionAdded="3.2.1"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+		</>
 	)
 }
 
-BlockStyles.defaultProps = {
+MapStyles.defaultProps = {
 	isEditor: false,
+	attributes: {},
+	options: {},
 }
 
-BlockStyles.Content = props => {
+MapStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
@@ -57,24 +77,24 @@ BlockStyles.Content = props => {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( propsToPass.attributes.uniqueId )
+	const mapStyles = getStyles( propsToPass.attributes, getStyleParams() )
 
 	const styles = (
-		<Fragment>
-			<Alignment.Style.Content { ...propsToPass } />
+		<>
 			<BlockDiv.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
-			<Image.Style.Content { ...propsToPass } />
-		</Fragment>
+			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ mapStyles }
+				versionAdded="3.2.1"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+		</>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
-BlockStyles.Content.defaultProps = {
-	attributes: {},
-}
-
-export default BlockStyles

@@ -2,3 +2,13 @@
 	margin-left: var(--stk-alignment-margin-left, auto);
 	margin-right: var(--stk-alignment-margin-right, auto);
 }
+
+.stk-block-map iframe {
+	border: 0;
+	width: 100%;
+	max-width: none;
+}
+
+.stk-block-map__canvas {
+	width: 100%,
+}

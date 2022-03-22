@@ -3,9 +3,13 @@
  */
 import BlockStyles from './style'
 import mapStyles from './map-styles'
+import {
+	initMapLibrary, isDefined, latLngToString,
+} from './util'
 /**
  * External dependencies
  */
+import { MapIcon } from '~stackable/icons'
 import classnames from 'classnames'
 import {
 	i18n, settings, version as VERSION,
@@ -30,6 +34,7 @@ import {
 	ConditionalDisplay,
 	MarginBottom,
 	Transform,
+	Icon,
 } from '~stackable/block-components'
 import { withQueryLoopContext } from '~stackable/higher-order'
 import { getAttributeName } from '~stackable/util'
@@ -37,7 +42,7 @@ import { getAttributeName } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { _x, __ } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import {
 	Fragment, useEffect, useRef, useMemo, useState,
 } from '@wordpress/element'
@@ -55,10 +60,6 @@ const getSnapYBetween = ( value, snapDiff = 50 ) => {
 	]
 }
 
-const isDefined = ( value = '' ) => {
-	return value !== '' && value !== undefined
-}
-
 const Edit = props => {
 	const {
 		setAttributes,
@@ -69,7 +70,7 @@ const Edit = props => {
 	} = props
 
 	const {
-		placeID, mapStyle, location, allowFullScreen, zoom,
+		placeID, mapStyle, location, allowFullScreen, zoom, icon,
 	} = attributes
 
 	const deviceType = useDeviceType()
@@ -78,7 +79,6 @@ const Edit = props => {
 		className,
 		'stk-block-map',
 		blockHoverClass,
-		'stk--no-padding',
 	] )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
@@ -106,14 +106,14 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	// TODO: Hardcoded values to default props.
-	const defaultLocation = '14.633600461871746, 121.04300214414138'
+	const defaultLocation = { lat: 14.633600461871746, lng: 121.04300214414138 }
 
 	const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
 
 	const content = (
 		`<iframe
 				title="${ iframeTitle }"
-				src="https://maps.google.com/maps?q=${ location || defaultLocation }&t=&z=${ zoom || 12 }&ie=UTF8&output=embed"
+				src="https://maps.google.com/maps?q=${ location || latLngToString( defaultLocation ) }&t=&z=${ zoom || 12 }&ie=UTF8&output=embed"
 				style="border:0;width:100%;max-width:none;height:${ isDefined( height ) ? height : 300 }px;"
 				${ isDefined( allowFullScreen ) ? `allow="allowfullscreen 'src'"` : '' }
 				aria-hidden="false"
@@ -128,46 +128,18 @@ const Edit = props => {
 	const settingsUrl =
 		'/wp-admin/options-general.php?page=stackable#editor-settings'
 	const apiKey = settings.stackable_google_maps_api_key
-
-	// const setMapStyle = ( style, currentStyle ) => {
-	// 	console.log( style, currentStyle )
-	// }
-	const initMapLibrary = apiKey => {
-		if ( apiKey ) {
-			const apiURL = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places&callback=initMap`
-			window.initMap = initMap
-			// eslint-disable-next-line no-undef
-			if ( typeof google === 'object' && typeof google.maps === 'object' ) {
-				// initMap()
-				// initSearchBox()
-			} else {
-				loadScriptAsync( apiURL ).then( () => {
-					// initMap()
-					// initSearchBox()
-				} )
-			}
-		}
-	}
-
-	const loadScriptAsync = src => {
-		return new Promise( ( resolve, reject ) => {
-			const tag = document.createElement( 'script' )
-			tag.id = 'stackable-google-map'
-			tag.src = src
-			tag.async = true
-			tag.onload = () => {
-				resolve()
-			}
-			const firstScriptTag = document.getElementsByTagName( 'script' )[ 0 ]
-			firstScriptTag.parentNode.insertBefore( tag, firstScriptTag )
-		} )
-	}
+	// TODO: Add marker visiblity attrib?
+	const showMarker = true
 
 	// const initSearchBox = () => {
 	// 	const { attributes, setAttributes } = props
 	// 	const { address } = attributes
 	// 	// Create the search box and link it to the UI element.
 	// 	const input = addressInput.current
+	// 	if ( typeof input === 'undefined' ) {
+	// 		return
+	// 	}
+	// 	// eslint-disable-next-line no-undef
 	// 	const autocomplete = new google.maps.places.Autocomplete( input )
 	// 	autocomplete.setFields( [ 'place_id', 'geometry', 'formatted_address' ] )
 	// 	autocomplete.addListener( 'place_changed', () => {
@@ -187,7 +159,7 @@ const Edit = props => {
 		const mapCanvas = stackableGoogleMap.current
 		const styles = mapStyles.find( style => style.value === mapStyle )?.json
 		const mapOptions = {
-			center: { lat: 14.633600461871746, lng: 121.04300214414138 },
+			center: defaultLocation,
 			zoom: parseInt( zoom, 10 ),
 			fullscreenControl: allowFullScreen,
 			styles: styles || [],
@@ -215,21 +187,20 @@ const Edit = props => {
 					}
 
 					const markerOption = { map }
-					if ( iconPointer ) {
-						markerOption.icon = iconPointer
+					if ( icon ) {
+						markerOption.icon.path = MapIcon
 					}
+					// eslint-disable-next-line no-undef
 					const marker = new google.maps.Marker( markerOption )
 					// Set the position of the marker using the place ID and location.
-					marker.setPlace( {
-						placeId: place.place_id,
-						location: place.geometry.location,
-					} )
+					marker.setPlace( defaultLocation )
 					marker.setVisible( showMarker )
 
 					const contentString = '<div class="stackable-gmap-marker-window"><div class="stackable-gmap-marker-place">' + place.name + '</div><div class="stackable-gmap-marker-address">' +
-                        place.adr_address + '</div>' +
-                        '<div class="stackable-gmap-marker-url"><a href="' + place.website + '" target="_blank">' + place.website + '</a></div></div>'
+					place.adr_address + '</div>' +
+					'<div class="stackable-gmap-marker-url"><a href="' + place.website + '" target="_blank">' + place.website + '</a></div></div>'
 
+					// eslint-disable-next-line no-undef
 					const infowindow = new google.maps.InfoWindow( {
 						content: contentString,
 					} )
@@ -248,21 +219,22 @@ const Edit = props => {
 	}
 
 	useEffect( () => {
-		const {
-			setAttributes,
-			clientId,
-			attributes: { uniqueId },
-		} = props
-		const _client = clientId.substr( 0, 6 )
-
-		if ( ! uniqueId ) {
-			setAttributes( { uniqueId: _client } )
-		} else if ( uniqueId && uniqueId !== _client ) {
-			setAttributes( { uniqueId: _client } )
-		}
-
-		initMapLibrary( apiKey )
+		initMapLibrary( apiKey, initMap )
+		// TODO: Do I need to clean up here?
+		// Remember: there could be other maps using the library.
+		// Remember: loading the google maps library more that once could result in bugs
 	}, [] )
+
+	// useEffect( () => {
+	// 	initSearchBox()
+	// }, [ addressInput.current ] )
+
+	useEffect( () => {
+		// eslint-disable-next-line no-undef
+		if ( typeof google === 'object' && typeof google.maps === 'object' ) {
+			initMap()
+		}
+	}, [ zoom, location, mapStyle ] )
 
 	return (
 		<Fragment>
@@ -292,6 +264,13 @@ const Edit = props => {
 						attribute="location"
 						placeholder={ __( 'Coordinates or address', i18n ) }
 					/>
+					{ /* <TextControl
+						ref={ addressInput }
+						label={ __( 'Location', i18n ) }
+						attribute="location"
+						placeholder={ __( 'Coordinates or address', i18n ) }
+						onChange={ debounce( e => setAttributes( { location: e.value } ) ) }
+					/> */ }
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="height"
@@ -313,31 +292,56 @@ const Edit = props => {
 						placeholder="12"
 					/>
 				</PanelAdvancedSettings>
-				<div className={
-					classnames( 'stk-block-map-extra-options', {
-						'stk-block-map-extra-options__is-disabled': ! isDefined( apiKey ),
-					} ) } >
+				<div
+					className={ classnames( 'stk-block-map-extra-options', {
+						'stk-block-map-extra-options__is-disabled': ! isDefined(
+							apiKey
+						),
+					} ) }
+				>
 					<PanelAdvancedSettings
 						title={ __( 'Map Style', i18n ) }
 						initialOpen={ false }
 						id="map-style"
 					>
-						<div className="stk-block-map-extra-options__styles">
-							{
-								mapStyles.map( style => (
-									<div key={ style.value } className="stk-block-map-extra-options__image-button-wrap">
-										<img onClick={ () => setStyle( value, mapStyle ) } src={ style.image } alt={ style.value } className="stk-block-map-extra-options__style-image" />
-										<p className="stk-block-map-extra-options__style-name">{ style.label }</p>
-									</div>
-								) )
-							}
+						<div className="stk-block-map-extra-options__style-options">
+							{ mapStyles.map( style => (
+								<div
+									className={
+										classnames( 'stk-block-map-extra-options__style', {
+											'stk-block-map-extra-options__style__active': style.value === mapStyle || ( mapStyle === '' && style.value === 'default' ),
+										} )
+									}
+									key={ style.value }
+								>
+									<button
+										disabled={ style.value === mapStyle }
+										className="stk-block-map-extra-options__style-button"
+										onClick={ () =>
+											setStyle( style.value, mapStyle )
+										}
+										onKeyUp={ e => ( e.key === 'Enter' || e.keycode === 13 ) && setStyle( style.value, mapStyle ) }
+									>
+										<img
+											src={ style.image }
+											alt={ style.value }
+											className="stk-block-map-extra-options__style-image"
+										/>
+									</button>
+									<p className="stk-block-map-extra-options__style-name">
+										{ style.label }
+									</p>
+								</div>
+							) ) }
 						</div>
 					</PanelAdvancedSettings>
 					<PanelAdvancedSettings
 						title={ __( 'Map Marker', i18n ) }
 						initialOpen={ false }
 						id="map-marker"
-					></PanelAdvancedSettings>
+					>
+						<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
+					</PanelAdvancedSettings>
 				</div>
 			</InspectorStyleControls>
 
@@ -404,7 +408,17 @@ const Edit = props => {
 							heightPlaceholder={ defaultMinHeight }
 						/>
 					) }
-					{ apiKey ? <div ref={ stackableGoogleMap } /> : <SandBox html={ content } /> }
+					{ apiKey ? (
+						<div
+							ref={ stackableGoogleMap }
+							style={ {
+								height: parseInt( height, 10 ) + 'px',
+								width: '100%',
+							} }
+						/>
+					) : (
+						<SandBox html={ content } />
+					) }
 				</ResizableBox>
 			</BlockDiv>
 			<MarginBottom />
