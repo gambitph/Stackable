@@ -62,14 +62,23 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 
 			// This triggers our blocks to render very early in the page load so
 			// we can start gathering styles for the head.
-			add_filter( 'wp_head', array( $this, 'trigger_early_render' ), 1 );
+			add_filter( 'wp', array( $this, 'trigger_early_render' ) );
 
-			// The print our optimized block styles.
+			// The print our optimized block styles in the head. As failsafe, if
+			// the head fails (due to theme inner workings), do this in the
+			// opening body tag or the footer to ensure that our styles are
+			// printed out. If one of these fails, the next one tries to do it.
+			// It's imperative that at least one of these work because our
+			// blocks will all look like default blocks if styles aren't printed
+			// out.
 			add_filter( 'wp_head', array( $this, 'print_styles' ) );
+			add_filter( 'wp_body_open', array( $this, 'print_styles' ), 1 );
+			add_filter( 'wp_footer', array( $this, 'print_styles' ), 1 );
 		}
 
 		/**
-		 * Triggers the early render of our blocks.
+		 * Triggers the early render of our blocks so we can gather styles for
+		 * the head.
 		 *
 		 * @return void
 		 */
@@ -79,14 +88,16 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			// Go through all the posts detected.
 			global $wp_query;
 			if ( ! empty( $wp_query ) && property_exists( $wp_query, 'posts' ) ) {
-				foreach ( $wp_query->posts as $post ) {
-					// Trigger all our blocks to render once, this will force
-					// our render_block filter to trigger, caching all the CSS
-					// we used.
-					$blocks = parse_blocks( $post->post_content );
-					foreach ( $blocks as $block ) {
-						if ( stripos( $block['blockName'], 'stackable/' ) !== false ) {
-							render_block( $block );
+				if ( count( $wp_query->posts ) === 1 ) {
+					foreach ( $wp_query->posts as $post ) {
+						// Trigger all our blocks to render once, this will force
+						// our render_block filter to trigger, caching all the CSS
+						// we used.
+						$blocks = parse_blocks( $post->post_content );
+						foreach ( $blocks as $block ) {
+							if ( stripos( $block['blockName'], 'stackable/' ) !== false ) {
+								render_block( $block );
+							}
 						}
 					}
 				}
@@ -94,7 +105,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 
 			$this->doing_head_styles = false;
 
-			remove_filter( 'wp_head', array( $this, 'trigger_early_render' ) );
+			remove_filter( 'wp', array( $this, 'trigger_early_render' ) );
 		}
 
 		/**
