@@ -216,7 +216,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-heading" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-			<PremadeHoverEffects.InspectorControls />
+			<PremadeHoverEffects.InspectorControls effects={ [ 'text' ] } />
 
 			<HeadingStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-heading" />
