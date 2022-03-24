@@ -6,10 +6,6 @@ export const EFFECTS = [
 		effectsType: 'container',
 		effects: [
 			{
-				value: '',
-				label: __( 'None', i18n ),
-			},
-			{
 				value: 'shadow',
 				label: __( 'Shadow', i18n ),
 				attributes: {
@@ -20,27 +16,6 @@ export const EFFECTS = [
 				removeEffect: block => {},
 				isPremium: false,
 			},
-			{
-				value: 'lift',
-				label: __( 'Lift', i18n ),
-				attributes: {
-					transformHover: 'translateY(-20px)',
-				},
-			},
-			{
-				value: 'lift-more',
-				label: __( 'Lift More', i18n ),
-				attributes: {
-					transformHover: 'translateY(-50px)',
-				},
-			},
-			{
-				value: 'background-disappear',
-				label: __( 'Transparent Background', i18n ),
-				attributes: {
-					containerBackgroundColorOpacityHover: '0',
-				},
-			},
 		],
 	},
 	{
@@ -50,8 +25,8 @@ export const EFFECTS = [
 				value: 'shadow',
 				label: __( 'Shadow', i18n ),
 				attributes: {
-					typographyShadow: 'none',
-					typographyShadowHover: '0px 10px 60px rgba(0, 0, 0, 0.1)',
+					textShadow: 'none',
+					textShadowHover: '12px 4px 2px rgba(0, 0, 0, 0.5)',
 				},
 			},
 		],

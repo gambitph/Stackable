@@ -19,34 +19,29 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { ENTER, SPACE } from '@wordpress/keycodes'
 import { applyFilters } from '@wordpress/hooks'
 import { EFFECTS } from './list'
+// stackable/card: [  ]
 
-const BLOCKS = [
-	{
-		type: 'container',
-		blockNames: [
-			'stackable/card',
-			'stackable/feature',
-		],
-	},
-	{
-		type: 'text',
-		blockNames: [
-			'stackable/heading',
-			'stackable/text',
-			'stackable/subtitle',
-		],
-	},
-]
-
-export const Edit = () => {
-	const { clientId, name: blockName } = useBlockEditContext()
+export const Edit = props => {
+	const { clientId } = useBlockEditContext()
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
-	const effectsList = useMemo( () => {
-		const block = BLOCKS.find( item => item.blockNames.includes( blockName ) ? item.type : null )
-		const effectsSet = EFFECTS.find( ( { effectsType: e } ) => e === block.type )
-		return applyFilters( 'stackable.hover-effects.list', effectsSet.effects )
+	const effects = useMemo( () => {
+		const blockEffects = applyFilters( 'stackable.hover-effects.list', EFFECTS )
+		return blockEffects.filter( ( { effectsType: e } ) => props.effects.includes( e ) )
 	}, [] )
+
+	const effectsList = [
+		{
+			value: '',
+			label: __( 'None', i18n ),
+		},
+	]
+
+	effects.forEach( x =>
+		x.effects.forEach( effect => {
+			effectsList.push( effect )
+		} )
+	)
 
 	const applyEffect = useCallback( value => {
 		// Remove existing hover effects
