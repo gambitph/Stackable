@@ -17,15 +17,6 @@ import { version as VERSION } from 'stackable'
 import { BlockLink } from '~stackable/block-components/block-link'
 
 export const mapAttributes = {
-	// Used to generate a simple example
-	// @see example.js
-	example: {
-		type: 'html',
-	},
-	content: {
-		type: 'string',
-		default: '',
-	},
 	// Google Map search query. This can be an address or lat,long coords.
 	location: {
 		type: 'string',
@@ -33,15 +24,12 @@ export const mapAttributes = {
 	},
 	zoom: {
 		type: 'number',
-		default: 12,
-	},
-	allowFullScreen: {
-		type: 'boolean',
-		default: false,
+		default: '',
 	},
 	height: {
 		type: 'number',
-		default: 300,
+		default: '',
+		stkResponsive: true,
 	},
 	mapStyle: {
 		type: 'string',
@@ -51,9 +39,33 @@ export const mapAttributes = {
 		type: 'string',
 		default: '',
 	},
-	placeID: {
+	placeId: {
 		type: 'string',
 		default: '',
+	},
+	showMarker: {
+		type: 'boolean',
+		default: true,
+	},
+	showZoomButtons: {
+		type: 'boolean',
+		default: true,
+	},
+	showMapTypeButtons: {
+		type: 'boolean',
+		default: true,
+	},
+	showStreetViewButton: {
+		type: 'boolean',
+		default: true,
+	},
+	showFullScreenButton: {
+		type: 'boolean',
+		default: true,
+	},
+	isDraggable: {
+		type: 'boolean',
+		default: true,
 	},
 }
 

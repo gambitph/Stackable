@@ -1,22 +1,21 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './style'
-import { latLngToString } from './util'
+import {
+	isDefined, getMapStyles, getLocation, getIframe, getZoom,
+} from './util'
+import { MapStyles } from './style'
 
 /**
  * External dependencies
  */
-import classnames from 'classnames'
 import { withVersion } from '~stackable/higher-order'
-import {
-	i18n, settings, version as VERSION,
-} from 'stackable'
+import classnames from 'classnames'
+import { settings, version as VERSION } from 'stackable'
 import {
 	BlockDiv,
 	CustomCSS,
 	getResponsiveClasses,
-	getAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -28,55 +27,61 @@ import { RawHTML } from '@wordpress/element'
 
 export const Save = props => {
 	const {
-		uniqueId,
 		attributes,
+		...propsToPass
 	} = props
 
 	const {
-		zoom,
-		location,
+		icon,
+		isDraggable,
+		placeId,
+		showFullScreenButton,
+		showMapTypeButtons,
+		showMarker,
+		showStreetViewButton,
+		showZoomButtons,
 	} = attributes
 
 	const apiKey = settings.stackable_google_maps_api_key
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
-	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
-		props.className,
+		propsToPass.className,
 		'stk-block-map',
 		responsiveClass,
-		blockAlignmentClass,
 	] )
 
-	const defaultLocation = { lat: 14.633600461871746, lng: 121.04300214414138 }
+	const dataAttributes = {
+		'data-icon': icon,
+		'data-is-draggable': isDraggable,
+		'data-location': JSON.stringify( getLocation( attributes ) ),
+		'data-map-style': JSON.stringify( getMapStyles( attributes ) ),
+		'data-place-id': placeId,
+		'data-show-full-screen-button': showFullScreenButton,
+		'data-show-map-type-buttons': showMapTypeButtons,
+		'data-show-marker': showMarker,
+		'data-show-street-view-button': showStreetViewButton,
+		'data-show-zoom-buttons': showZoomButtons,
+		'data-zoom': getZoom( attributes ),
+	}
 
-	const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
-
-	//${ isDefined( allowFullScreen ) ? `allow="allowfullscreen 'src'"` : '' }
-	const content = (
-		`<iframe
-				title="${ iframeTitle }"
-				src="https://maps.google.com/maps?q=${ location || latLngToString( defaultLocation ) }&t=&z=${ zoom || 12 }&ie=UTF8&output=embed"
-				aria-hidden="false"
-				tabIndex="0"
-			></iframe>`
-	)
+	console.log( dataAttributes )
 
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<BlockStyles.Content version={ props.version } attributes={ attributes } />
+			<MapStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ apiKey ? (
+			{ isDefined( apiKey ) ? (
 				<div
+					{ ...dataAttributes }
 					className="stk-block-map__canvas"
-					id={ uniqueId }
 				/>
 			) : (
-				<RawHTML>{ content }</RawHTML>
+				<RawHTML>{ getIframe( attributes ) }</RawHTML>
 			) }
 		</BlockDiv.Content>
 	)
@@ -85,3 +90,4 @@ export const Save = props => {
 export default compose(
 	withVersion( VERSION )
 )( Save )
+

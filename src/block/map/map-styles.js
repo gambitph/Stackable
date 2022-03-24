@@ -7,7 +7,7 @@ import { __ } from '@wordpress/i18n'
 
 const base = srcUrl + '/src/block/map/images/'
 
-const mapStyles = [
+const mapStyleOptions = [
 	{
 		value: 'default',
 		label: __( 'Default', i18n ),
@@ -996,4 +996,4 @@ const mapStyles = [
 	},
 ]
 
-export default mapStyles
+export default mapStyleOptions

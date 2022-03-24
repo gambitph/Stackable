@@ -113,9 +113,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
 			}
 
-			wp_localize_script( 'ugb-block-frontend-js', 'stackable', array(
+			$args = apply_filters( 'stackable_localize_frontend_script', array(
 				'restUrl' => get_rest_url(),
 			) );
+			wp_localize_script( 'ugb-block-frontend-js', 'stackable', $args );
 
 			// Frontend only scripts.
 			// if ( ! is_admin() ) {

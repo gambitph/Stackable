@@ -1,26 +1,101 @@
-const isDefined = ( value = '' ) => {
+import { __ } from '@wordpress/i18n'
+import { i18n } from 'stackable'
+import mapStyleOptions from './map-styles'
+
+export const DEFAULT_HEIGHT = 300
+export const DEFAULT_ZOOM = 10
+export const DEFAULT_LOCATION = { lat: 14.584696402657487, lng: 120.9817962698239 }
+
+export const isDefined = ( value = '' ) => {
 	return value !== '' && value !== undefined
 }
 
-const latLngToString = latLng => `${ latLng.lat }, ${ latLng.lng }`
+export const latLngToString = latLng => `${ latLng.lat },${ latLng.lng }`
 
-const initMapLibrary = ( apiKey, callback ) => {
+export const isLatLng = value => {
+	// @see https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+	if ( typeof value === 'object' ) {
+		value = latLngToString( value )
+	}
+	return value.trim().match( /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/ )
+}
+
+export const getSnapYBetween = ( value, snapDiff = 50 ) => {
+	return [
+		Math.floor( value / snapDiff ) * snapDiff,
+		Math.ceil( value / snapDiff ) * snapDiff,
+	]
+}
+
+export const getMapStyles = ( { mapStyle } ) => {
+	try {
+		return JSON.parse( mapStyle )
+	} catch ( e ) {
+		// Silence is golden.
+	}
+	return mapStyleOptions.find( style => style.value === mapStyle )?.json || []
+}
+
+export const getMapOptions = ( attributes, mode = 'edit' ) => {
+	const {
+		isDraggable,
+		showFullScreenButton,
+		showMapTypeButtons,
+		showStreetViewButton,
+		showZoomButtons,
+	} = attributes
+
+	return {
+		center: getLocation( attributes ),
+		zoom: getZoom( attributes ),
+		fullscreenControl: showFullScreenButton,
+		styles: getMapStyles( attributes ),
+		zoomControl: showZoomButtons,
+		mapTypeControl: showMapTypeButtons,
+		streetViewControl: showStreetViewButton,
+		draggable: mode === 'edit' ? false : isDraggable,
+	}
+}
+
+export const getIframe = ( attributes, mode = 'edit' ) => {
+	const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
+	const location = getLocation( attributes )
+	const src = `https://maps.google.com/maps?q=${ typeof location === 'string' ? location : latLngToString( location ) }&t=&z=${ getZoom( attributes ) }&ie=UTF8&output=embed`
+	return (
+		`<iframe
+				title="${ iframeTitle }"
+				src="${ src }"
+				style="pointer-events:${ mode === 'edit' ? 'none' : 'auto' };border:0;width:100%;max-width:none;height:${ getHeight( attributes ) }px;"
+				aria-hidden="false"
+				tabIndex="0"
+				allowfullscreen
+				loading="lazy"
+			></iframe>`
+	)
+}
+
+export const getHeight = ( { height } ) => isDefined( height ) ? height : DEFAULT_HEIGHT
+
+export const getZoom = ( { zoom } ) => isDefined( zoom ) ? zoom : DEFAULT_ZOOM
+
+export const getLocation = ( { location } ) => isDefined( location ) ? location : DEFAULT_LOCATION
+
+export const initMapLibrary = ( apiKey, callback ) => {
 	if ( apiKey ) {
-		const apiURL = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places&callback=initMap`
-		window.initMap = callback
+		const apiURL = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places`
 		// eslint-disable-next-line no-undef
 		if ( typeof google === 'object' && typeof google.maps === 'object' ) {
-			window.initMap()
+			callback()
 		} else {
 			loadScriptAsync( apiURL ).then( () => {
-				window.initMap()
+				callback()
 			} )
 		}
 	}
 }
 
 const loadScriptAsync = src => {
-	return new Promise( ( resolve, reject ) => {
+	return new Promise( resolve => {
 		const tag = document.createElement( 'script' )
 		tag.id = 'stackable-google-map'
 		tag.src = src
@@ -31,8 +106,4 @@ const loadScriptAsync = src => {
 		const firstScriptTag = document.getElementsByTagName( 'script' )[ 0 ]
 		firstScriptTag.parentNode.insertBefore( tag, firstScriptTag )
 	} )
-}
-
-export {
-	initMapLibrary, isDefined, latLngToString,
 }

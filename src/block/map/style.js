@@ -22,11 +22,11 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const getStyleParams = () => {
 	return [
 		{
-			selector: 'stk-block-map__canvas',
+			selector: '.stk-block-map__canvas',
 			styleRule: 'height',
 			attrName: 'height',
-			responsive: 'all',
 			format: '%spx',
+			responsive: 'all',
 		},
 	]
 }
@@ -54,7 +54,7 @@ export const MapStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<StyleComponent
 				styles={ mapStyles }
-				versionAdded="3.2.1"
+				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
 			/>
@@ -88,7 +88,7 @@ MapStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
 				styles={ mapStyles }
-				versionAdded="3.2.1"
+				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
 			/>
