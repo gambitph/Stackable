@@ -91,7 +91,8 @@ const BlockStyles = props => {
 	)
 }
 
-const BlockStyleItem = memo( props => {
+// TODO: Make this a separate block component.
+export const BlockStyleItem = memo( props => {
 	const {
 		style,
 		isActive,
@@ -128,7 +129,7 @@ const BlockStyleItem = memo( props => {
 				data-block={ blockName }
 				data-style={ style.name }
 			>
-				{ Image && <Image className="block-editor-block-styles__icon" /> }
+				{ style.image || ( Image && <Image className="block-editor-block-styles__icon" /> ) }
 			</div>
 			<div className="block-editor-block-styles__item-label">
 				{ style.label || style.name }

@@ -5,6 +5,12 @@ import { MapStyles } from './style'
 import mapStyleOptions from './map-styles'
 import {
 	DEFAULT_HEIGHT,
+	DEFAULT_ICON_SIZE,
+	DEFAULT_ICON_COLOR,
+	DEFAULT_ICON_ANCHOR_POSITION_X,
+	DEFAULT_ICON_ANCHOR_POSITION_Y,
+	DEFAULT_ICON_OPACITY,
+	DEFAULT_ICON_ROTATION,
 	DEFAULT_ZOOM,
 	getHeight,
 	initMapLibrary,
@@ -13,15 +19,15 @@ import {
 	getIframe,
 	isLatLng,
 	getMapOptions,
+	getLocation,
+	getPathFromSvg,
 } from './util'
 /**
  * External dependencies
  */
-import { debounce } from 'lodash'
-import { MapIcon } from '~stackable/icons'
 import classnames from 'classnames'
 import {
-	i18n, settings, version as VERSION,
+	settingsUrl, i18n, settings, version as VERSION,
 } from 'stackable'
 import {
 	AdvancedToggleControl,
@@ -37,6 +43,7 @@ import {
 	BlockDiv,
 	Advanced,
 	CustomCSS,
+	Icon,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -44,6 +51,9 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
+
+import { BlockStyleItem } from '~stackable/block-components/block-style/block-styles'
+
 import { withQueryLoopContext } from '~stackable/higher-order'
 import { getAttributeName } from '~stackable/util'
 
@@ -68,32 +78,91 @@ const AdvOptions = ( { children, apiKey } ) => (
 	>{ children }</div>
 )
 
+const LocationControl = props => {
+	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
+
+	useEffect( () => {
+		const interval = setInterval( () => {
+			if ( window.google && window.google.maps ) {
+				clearInterval( interval )
+				setWaitForGoogle( waitForGoogle + 1 )
+			}
+		}, 250 )
+		if ( window.google && window.google.maps ) {
+			clearInterval( interval )
+		}
+		return () => clearInterval( interval )
+	}, [] )
+
+	const ref = useRef()
+	useEffect( () => {
+		if ( ref.current && window.google && window.google.maps ) {
+			// eslint-disable-next-line no-undef
+			const autocomplete = new google.maps.places.Autocomplete(
+				ref.current
+			)
+			autocomplete.setFields( [
+				'place_id',
+				'geometry',
+				'formatted_address',
+			] )
+			autocomplete.addListener( 'place_changed', () => {
+				const place = autocomplete.getPlace()
+				if ( ! place.geometry ) {
+					return
+				}
+				// const address = place.formatted_address
+				props.onPlaceChange( place )
+			} )
+		}
+	}, [ ref.current, waitForGoogle ] )
+
+	return (
+		<TextControl
+			ref={ ref }
+			value={ props.value }
+			onChange={ props.onTextChange }
+		/>
+	)
+}
+
+LocationControl.defaultProps = {
+	onChange: null,
+	value: '',
+}
+
 const Edit = props => {
 	const {
 		clientId,
 		attributes,
 		className,
-		isHovered,
+		isHovered, // FIXME: Why is this always undefined?
 		isSelected,
 		setAttributes,
-		address,
 	} = props
 
 	const {
+		address,
 		icon,
-		isDraggable,
+		iconAnchorPositionX,
+		iconAnchorPositionY,
+		iconColor1,
+		iconOpacity,
+		iconRotation,
+		iconSize,
 		location,
 		mapStyle,
-		placeId,
+		customMapStyle,
+		isDraggable,
 		showFullScreenButton,
 		showMapTypeButtons,
 		showMarker,
 		showStreetViewButton,
 		showZoomButtons,
-		uniqueId,
 		zoom,
 	} = attributes
 
+	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 	const deviceType = useDeviceType()
 	const blockHoverClass = useBlockHoverClass()
 	const blockClassNames = classnames( [
@@ -121,115 +190,123 @@ const Edit = props => {
 
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 
-	const stackableGoogleMap = useRef()
-	const addressInput = useRef()
+	const mapRef = useRef()
+	const markerRef = useRef()
+	const canvasRef = useRef()
 	const resizableRef = useRef()
 
 	// TODO: check if user is allowed to update the API key.
-	// TODO: Check if API keys has been entered and show notification.
 	const canUpdateAPIKey = true
-	// TODO: How do I prepend get_admin_url here?
-	const settingsUrl =
-		'/wp-admin/options-general.php?page=stackable#editor-settings'
 	const apiKey = settings.stackable_google_maps_api_key
 
-	const initSearchBox = () => {
-		// eslint-disable-next-line no-undef
-		if ( typeof google !== 'object' || typeof google.maps !== 'object' ) {
-			return
-		}
+	const updateMarker = () => {
+		const marker = markerRef.current
+		const map = mapRef.current
 
-		const { attributes, setAttributes } = props
-		const { address } = attributes
+		if ( marker ) {
+			marker.setMap( showMarker ? map : null )
 
-		const input = document.getElementById( `address-search-${ uniqueId }` )
-		if ( ! ( input instanceof HTMLInputElement ) ) {
-			return
-		}
-		// eslint-disable-next-line no-undef
-		const autocomplete = new google.maps.places.Autocomplete( input )
-		autocomplete.setFields( [ 'place_id', 'geometry', 'formatted_address' ] )
-		autocomplete.addListener( 'place_changed', () => {
-			const place = autocomplete.getPlace()
-			if ( ! place.geometry ) {
-				return
+			const path = getPathFromSvg( icon )
+
+			if ( path ) {
+				marker.setIcon( {
+					path,
+					fillColor: iconColor1 || DEFAULT_ICON_COLOR,
+					fillOpacity: parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
+					strokeWeight: 0,
+					rotation: parseInt( iconRotation, 10 ) || DEFAULT_ICON_ROTATION,
+					scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
+					// eslint-disable-next-line no-undef
+					anchor: new google.maps.Point(
+						parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
+						parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
+					),
+				} )
+			} else {
+				marker.setIcon( null )
 			}
-			const address = place.formatted_address
-			setAttributes( { placeId: place.place_id } )
-			setAttributes( { address } )
-			input.value = address
-		} )
-		input.value = address
+		}
+	}
+
+	const initMarker = () => {
+		if ( showMarker && mapRef.current ) {
+			const markerOption = {
+				title: address,
+				map: mapRef.current,
+				position: getLocation( attributes ),
+				clickable: false,
+			}
+			if ( isDefined( icon ) ) {
+				markerOption.icon = {
+					path: getPathFromSvg( icon ),
+					fillColor: iconColor1 || 'black',
+					fillOpacity: parseFloat( iconOpacity, 10 ) || 1.0,
+					strokeWeight: 0,
+					rotation: parseInt( iconRotation, 10 ) || 0,
+					scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
+					// eslint-disable-next-line no-undef
+					anchor: new google.maps.Point(
+						parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
+						parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
+					),
+				}
+			}
+
+			// eslint-disable-next-line no-undef
+			markerRef.current = new google.maps.Marker( markerOption )
+		} else if ( markerRef.current ) {
+			markerRef.current.map = null
+		}
 	}
 
 	const initMap = () => {
-		const mapCanvas = stackableGoogleMap.current
+		const mapCanvas = canvasRef.current
 		const mapOptions = getMapOptions( attributes, 'edit' )
 		// eslint-disable-next-line no-undef
-		const map = new google.maps.Map( mapCanvas, mapOptions )
+		const map = mapRef.current = new google.maps.Map( mapCanvas, mapOptions )
 
 		// eslint-disable-next-line no-undef
-		google.maps.event.addListener( map, 'zoom_changed', function() {
+		google.maps.event.addListener( map, 'zoom_changed', () => {
 			const zoom = map.getZoom()
 			setAttributes( { zoom } )
 		} )
 
-		if ( placeId ) {
-			const request = {
-				placeId,
-				fields: [ 'place_id', 'geometry', 'name', 'formatted_address', 'adr_address', 'website' ],
-			}
-
-			// eslint-disable-next-line no-undef
-			const service = new google.maps.places.PlacesService( map )
-			service.getDetails( request, ( place, status ) => {
-				// eslint-disable-next-line no-undef
-				if ( status === google.maps.places.PlacesServiceStatus.OK ) {
-					map.setCenter( place.geometry.location )
-					setAttributes( { location: place.geometry.location } )
-
-					const markerOption = { map }
-					if ( icon ) {
-						markerOption.icon.path = MapIcon
-					}
-					// eslint-disable-next-line no-undef
-					const marker = new google.maps.Marker( markerOption )
-					marker.setPlace( place )
-					marker.setVisible( true )
-
-					const contentString = '<div class="stackable-gmap-marker-window"><div class="stackable-gmap-marker-place">' + place.name + '</div><div class="stackable-gmap-marker-address">' +
-					place.adr_address + '</div>' +
-					'<div class="stackable-gmap-marker-url"><a href="' + place.website + '" target="_blank">' + place.website + '</a></div></div>'
-
-					// eslint-disable-next-line no-undef
-					const infowindow = new google.maps.InfoWindow( {
-						content: contentString,
-					} )
-					marker.addListener( 'click', function() {
-						infowindow.open( map, marker )
-					} )
-				}
-			} )
-		}
+		initMarker()
 	}
 
-	const setStyle = ( mapStyle, currentMapStyle ) => {
-		if ( mapStyle !== currentMapStyle ) {
-			setAttributes( { mapStyle } )
-		}
-	}
+	useEffect( () => {
+		__unstableMarkNextChangeAsNotPersistent()
+		setAttributes( { usesApiKey: isDefined( apiKey ) } )
+	}, [] ),
 
 	useEffect( () => {
 		initMapLibrary( apiKey, initMap )
-		// TODO: Do I need to clean up here?
-		// Remember: there could be other maps using the library.
-		// Remember: loading the google maps library more that once could result in bugs
 	}, [] )
 
 	useEffect( () => {
-		const timeout = setTimeout( initSearchBox, 300 )
-		return () => clearTimeout( timeout )
-	}, [ isSelected ] )
+		const map = mapRef.current
+
+		if ( map ) {
+			map.setZoom( zoom || DEFAULT_ZOOM )
+		}
+	}, [ zoom, mapRef.current ] )
+
+	useEffect( () => {
+		if ( mapRef.current && markerRef.current ) {
+			updateMarker()
+		}
+	}, [
+		iconSize,
+		iconAnchorPositionX,
+		iconAnchorPositionY,
+		iconColor1,
+		iconOpacity,
+		iconRotation,
+		mapRef.current,
+		markerRef.current,
+		showMarker,
+		icon,
+	] )
 
 	useEffect( () => {
 		// eslint-disable-next-line no-undef
@@ -237,17 +314,16 @@ const Edit = props => {
 			initMap()
 		}
 	}, [
-		 height,
-		 isDraggable,
-		 location,
-		 mapStyle,
-		 placeId,
-		 showFullScreenButton,
-		 showMapTypeButtons,
-		 showMarker,
-		 showStreetViewButton,
-		 showZoomButtons,
-		 zoom,
+		deviceType,
+		height,
+		location,
+		mapStyle,
+		customMapStyle,
+		isDraggable,
+		showFullScreenButton,
+		showMapTypeButtons,
+		showStreetViewButton,
+		showZoomButtons,
 	 ] )
 
 	return (
@@ -266,17 +342,29 @@ const Edit = props => {
 							{ __( 'Some features require a Google Map API Key.' ) },{ ' ' }
 							<a
 								target="_blank"
-								href={ settingsUrl }
+								href={ settingsUrl + '#editor-settings' }
 								rel="noreferrer"
 							>
 								{ __( 'Add API key here', i18n ) }
 							</a>
 						</Notice>
 					) }
-					{ ! isDefined( apiKey )
-						? <AdvancedTextControl label={ __( 'Location', i18n ) } attribute="location" placeholder={ __( 'Enter a location', i18n ) } />
-						: <TextControl value={ address } id={ `address-search-${ uniqueId }` } ref={ addressInput } label={ __( 'Location', i18n ) } />
-					}
+					{ ! isDefined( apiKey ) ? (
+						<AdvancedTextControl
+							label={ __( 'Location', i18n ) }
+							attribute="location"
+							placeholder={ __( 'Enter a location', i18n ) }
+						/>
+					) : (
+						<LocationControl
+							value={ address }
+							onTextChange={ address => setAttributes( { address } ) }
+							onPlaceChange={ place => {
+								setAttributes( { address: place.formatted_address } )
+								setAttributes( { location: place.geometry.location } )
+							 } }
+						/>
+					) }
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="height"
@@ -291,12 +379,17 @@ const Edit = props => {
 						label={ __( 'Zoom', i18n ) }
 						attribute="zoom"
 						min={ 1 }
-						sliderMax={ 22 }
+						sliderMax={ 24 }
 						step={ 1 }
 						allowReset={ true }
 						placeholder={ DEFAULT_ZOOM }
 					/>
-					 <AdvOptions apiKey={ apiKey }>
+					<AdvOptions apiKey={ apiKey }>
+						<AdvancedToggleControl
+							label={ __( 'Enable Dragging', i18n ) }
+							attribute="isDraggable"
+							defaultValue={ true }
+						/>
 						<AdvancedToggleControl
 							label={ __( 'Full Screen Button', i18n ) }
 							attribute="showFullScreenButton"
@@ -324,48 +417,78 @@ const Edit = props => {
 					initialOpen={ false }
 					id="map-style"
 				>
-					<AdvOptions apiKey={ apiKey } >
-						<div className="stk-block-map-extra-options__style-options">
+					<AdvOptions apiKey={ apiKey }>
+						<div className="block-editor-block-styles">
 							{ mapStyleOptions.map( style => (
-								<div
-									className={
-										classnames( 'stk-block-map-extra-options__style', {
-											'stk-block-map-extra-options__style__active': style.value === mapStyle || ( mapStyle === '' && style.value === 'default' ),
-										} )
-									}
+								<BlockStyleItem
+									blockName={ style.value }
+									className={ `stk-block-map-${ style.value }` }
+									isActive={ mapStyle === style.value }
 									key={ style.value }
-								>
-									<button
-										disabled={ style.value === mapStyle }
-										className="stk-block-map-extra-options__style-button"
-										onClick={ () =>
-											setStyle( style.value, mapStyle )
-										}
-										onKeyUp={ e => ( e.key === 'Enter' || e.keycode === 13 ) && setStyle( style.value, mapStyle ) }
-									>
-										<img
-											src={ style.image }
-											alt={ style.value }
-											className="stk-block-map-extra-options__style-image"
-										/>
-									</button>
-									<p className="stk-block-map-extra-options__style-name">
-										{ style.label }
-									</p>
-								</div>
+									onSelect={ style => {
+										setAttributes( { mapStyle: style.value } )
+										setAttributes( { customMapStyle: '' } )
+									} }
+									style={ {
+										image: (
+											<img
+												src={ style.image }
+												alt={ style.value }
+											/>
+										),
+										value: style.value,
+										label: style.label,
+									} }
+								/>
 							) ) }
 						</div>
+						<AdvancedTextControl
+							label={ __( 'Custom Map Styles', i18n ) }
+							isMultiline
+							attribute="customMapStyle"
+							onChange={ value => {
+								setAttributes( { customMapStyle: value } )
+								setAttributes( { mapStyle: '' } )
+							} }
+						/>
+						<small>Generate custom style code using the <a href="https://mapstyle.withgoogle.com/" rel="noreferrer" target="_blank">Map Style Wizard</a>.</small>
 					</AdvOptions>
 				</PanelAdvancedSettings>
-				<AdvOptions apiKey={ apiKey } >
+				<AdvOptions apiKey={ apiKey }>
 					<PanelAdvancedSettings
 						title={ __( 'Map Marker', i18n ) }
 						initialOpen={ false }
-						checked={ isDefined( apiKey ) ? showMarker : location === '' ? true : isLatLng( location ) }
-						onChange={ showMarker => updateBlockAttributes( clientId, { showMarker } ) }
+						checked={
+							isDefined( apiKey )
+								? showMarker
+								: location === ''
+									? true
+									: isLatLng( location )
+						}
+						onChange={ showMarker =>
+							updateBlockAttributes( clientId, { showMarker } )
+						}
 						id="map-marker"
 					>
-						<p>Marker Options here</p>
+						<Icon.InspectorControls hasShape={ false } wrapInPanels={ false } responsive="" hover="" />
+						<AdvancedRangeControl
+							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
+							attribute="iconAnchorPositionX"
+							min={ -1000 }
+							sliderMax={ 1000 }
+							step={ 10 }
+							allowReset={ true }
+							placeholder={ DEFAULT_ICON_ANCHOR_POSITION_X }
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Vertical Icon Anchor Point', i18n ) }
+							attribute="iconAnchorPositionY"
+							min={ -1000 }
+							sliderMax={ 1000 }
+							step={ 10 }
+							allowReset={ true }
+							placeholder={ DEFAULT_ICON_ANCHOR_POSITION_Y }
+						/>
 					</PanelAdvancedSettings>
 				</AdvOptions>
 			</InspectorStyleControls>
@@ -432,10 +555,17 @@ const Edit = props => {
 							heightPlaceholder={ defaultMinHeight }
 						/>
 					) }
-					{ isDefined( apiKey )
-						? <div ref={ stackableGoogleMap } style={ { height: `${ getHeight( attributes ) }px`, width: '100%' } } />
-						: <SandBox html={ getIframe( attributes ) } />
-					 }
+					{ isDefined( apiKey ) ? (
+						<div
+							ref={ canvasRef }
+							style={ {
+								height: `${ getHeight( attributes ) }px`,
+								width: '100%',
+							} }
+						/>
+					) : (
+						<SandBox html={ getIframe( attributes ) } />
+					) }
 				</ResizableBox>
 			</BlockDiv>
 			<MarginBottom />

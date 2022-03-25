@@ -36,11 +36,17 @@ class StackableMap {
 	initMap = () => {
 		[].forEach.call( document.querySelectorAll( '.stk-block-map__canvas' ), mapCanvas => {
 			const {
-				icon,
+				markerTitle,
+				iconPath,
+				iconColor,
+				iconScale,
+				iconOpacity,
+				iconAnchorPositionX,
+				iconAnchorPositionY,
+				iconRotation,
 				isDraggable,
 				location,
 				mapStyle,
-				placeId,
 				showFullScreenButton,
 				showMapTypeButtons,
 				showMarker,
@@ -60,24 +66,12 @@ class StackableMap {
 			try {
 				parsedStyles = JSON.parse( mapStyle )
 			} catch ( e ) {
-				parsedStyles = mapStyle
+				parsedStyles = []
 			}
 
-			console.log( {
-				icon,
-				isDraggable,
-				location,
-				mapStyle,
-				placeId,
-				showFullScreenButton,
-				showMapTypeButtons,
-				showMarker,
-				showStreetViewButton,
-				showZoomButtons,
-				zoom,
-			} )
 			const mapOptions = {
 				center: parsedLocation,
+				isDraggable: isDraggable === 'true',
 				fullscreenControl: showFullScreenButton === 'true',
 				styles: parsedStyles,
 				zoomControl: showZoomButtons === 'true',
@@ -87,12 +81,34 @@ class StackableMap {
 				zoom: parseInt( zoom, 10 ),
 			}
 
-			console.log( mapOptions )
 			// eslint-disable-next-line no-undef
 			const map = new google.maps.Map( mapCanvas, mapOptions )
 			if ( showMarker === 'true' ) {
-				console.log( map )
-				// TODO: add marker
+				const markerOption = {
+					title: markerTitle,
+					map,
+					position: parsedLocation,
+					clickable: false,
+				}
+
+				// eslint-disable-next-line no-undef
+				const marker = new google.maps.Marker( markerOption )
+				if ( iconPath ) {
+					const icon = {
+						path: iconPath,
+						fillColor: iconColor,
+						fillOpacity: parseFloat( iconOpacity, 10 ),
+						strokeWeight: 0,
+						rotation: parseInt( iconRotation, 10 ),
+						scale: parseFloat( iconScale, 10 ),
+						// eslint-disable-next-line no-undef
+						anchor: new google.maps.Point(
+							parseInt( iconAnchorPositionX, 10 ),
+							parseInt( iconAnchorPositionY, 10 )
+						),
+					}
+					marker.setIcon( icon )
+				}
 			}
 		} )
 	};

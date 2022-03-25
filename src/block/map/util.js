@@ -5,6 +5,12 @@ import mapStyleOptions from './map-styles'
 export const DEFAULT_HEIGHT = 300
 export const DEFAULT_ZOOM = 10
 export const DEFAULT_LOCATION = { lat: 14.584696402657487, lng: 120.9817962698239 }
+export const DEFAULT_ICON_SIZE = 10
+export const DEFAULT_ICON_OPACITY = 1.0
+export const DEFAULT_ICON_COLOR = 'black'
+export const DEFAULT_ICON_ROTATION = 0
+export const DEFAULT_ICON_ANCHOR_POSITION_X = 0
+export const DEFAULT_ICON_ANCHOR_POSITION_Y = 0
 
 export const isDefined = ( value = '' ) => {
 	return value !== '' && value !== undefined
@@ -27,13 +33,18 @@ export const getSnapYBetween = ( value, snapDiff = 50 ) => {
 	]
 }
 
-export const getMapStyles = ( { mapStyle } ) => {
-	try {
-		return JSON.parse( mapStyle )
-	} catch ( e ) {
-		// Silence is golden.
+export const getMapStyles = ( { mapStyle, customMapStyle } ) => {
+	let styleJSON
+	if ( customMapStyle !== '' ) {
+		try {
+			styleJSON = JSON.parse( customMapStyle )
+		} catch ( e ) {
+			styleJSON = []
+		}
+	} else {
+		styleJSON = mapStyleOptions.find( style => style.value === mapStyle )?.json || []
 	}
-	return mapStyleOptions.find( style => style.value === mapStyle )?.json || []
+	return styleJSON
 }
 
 export const getMapOptions = ( attributes, mode = 'edit' ) => {
@@ -106,4 +117,14 @@ const loadScriptAsync = src => {
 		const firstScriptTag = document.getElementsByTagName( 'script' )[ 0 ]
 		firstScriptTag.parentNode.insertBefore( tag, firstScriptTag )
 	} )
+}
+
+export const getPathFromSvg = svg => {
+	const div = document.createElement( 'div' )
+	div.innerHTML = svg
+	try {
+		return div.firstChild.firstChild.getAttribute( 'd' )
+	} catch ( e ) {
+		return ''
+	}
 }

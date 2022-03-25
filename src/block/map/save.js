@@ -2,7 +2,17 @@
  * Internal dependencies
  */
 import {
-	isDefined, getMapStyles, getLocation, getIframe, getZoom,
+	DEFAULT_ICON_ANCHOR_POSITION_X,
+	DEFAULT_ICON_ANCHOR_POSITION_Y,
+	DEFAULT_ICON_OPACITY,
+	DEFAULT_ICON_ROTATION,
+	DEFAULT_ICON_SIZE,
+	DEFAULT_ICON_COLOR,
+	getIframe,
+	getLocation,
+	getMapStyles,
+	getPathFromSvg,
+	getZoom,
 } from './util'
 import { MapStyles } from './style'
 
@@ -11,7 +21,7 @@ import { MapStyles } from './style'
  */
 import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
-import { settings, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
 	CustomCSS,
@@ -32,17 +42,22 @@ export const Save = props => {
 	} = props
 
 	const {
+		address,
 		icon,
+		iconAnchorPositionX,
+		iconAnchorPositionY,
+		iconColor1,
+		iconOpacity,
+		iconRotation,
+		iconSize,
 		isDraggable,
-		placeId,
 		showFullScreenButton,
 		showMapTypeButtons,
 		showMarker,
 		showStreetViewButton,
 		showZoomButtons,
+		usesApiKey,
 	} = attributes
-
-	const apiKey = settings.stackable_google_maps_api_key
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
@@ -53,20 +68,25 @@ export const Save = props => {
 	] )
 
 	const dataAttributes = {
-		'data-icon': icon,
+		'data-value-zero': 0,
+		'data-icon-path': getPathFromSvg( icon ),
+		'data-icon-scale': ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
+		'data-icon-color': iconColor1 || DEFAULT_ICON_COLOR,
+		'data-icon-anchor-position-x': parseInt( iconAnchorPositionX, 10 ) || DEFAULT_ICON_ANCHOR_POSITION_X,
+		'data-icon-anchor-position-y': parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y,
+		'data-icon-opacity': parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
+		'data-icon-rotation': parseInt( iconRotation ) || DEFAULT_ICON_ROTATION,
 		'data-is-draggable': isDraggable,
 		'data-location': JSON.stringify( getLocation( attributes ) ),
 		'data-map-style': JSON.stringify( getMapStyles( attributes ) ),
-		'data-place-id': placeId,
 		'data-show-full-screen-button': showFullScreenButton,
 		'data-show-map-type-buttons': showMapTypeButtons,
 		'data-show-marker': showMarker,
+		'data-marker-title': address,
 		'data-show-street-view-button': showStreetViewButton,
 		'data-show-zoom-buttons': showZoomButtons,
 		'data-zoom': getZoom( attributes ),
 	}
-
-	console.log( dataAttributes )
 
 	return (
 		<BlockDiv.Content
@@ -75,7 +95,7 @@ export const Save = props => {
 		>
 			<MapStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ isDefined( apiKey ) ? (
+			{ usesApiKey ? (
 				<div
 					{ ...dataAttributes }
 					className="stk-block-map__canvas"

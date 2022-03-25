@@ -7,6 +7,7 @@ import {
 	CustomAttributes,
 	CustomCSS,
 	EffectsAnimations,
+	Icon,
 	Image,
 	Responsive,
 	Transform,
@@ -18,6 +19,10 @@ import { BlockLink } from '~stackable/block-components/block-link'
 
 export const mapAttributes = {
 	// Google Map search query. This can be an address or lat,long coords.
+	usesApiKey: {
+		type: 'boolean',
+		default: false,
+	},
 	location: {
 		type: 'string',
 		default: '',
@@ -35,11 +40,11 @@ export const mapAttributes = {
 		type: 'string',
 		default: '',
 	},
-	address: {
+	customMapStyle: {
 		type: 'string',
 		default: '',
 	},
-	placeId: {
+	address: {
 		type: 'string',
 		default: '',
 	},
@@ -67,6 +72,14 @@ export const mapAttributes = {
 		type: 'boolean',
 		default: true,
 	},
+	iconAnchorPositionX: {
+		type: 'number',
+		default: '',
+	},
+	iconAnchorPositionY: {
+		type: 'number',
+		default: '',
+	},
 }
 
 export const attributes = ( version = VERSION ) => {
@@ -85,6 +98,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
+	Icon.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: mapAttributes,

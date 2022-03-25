@@ -55,7 +55,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'description' => __( 'Enables additional customization options for the Map Block.', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
-					'default' => true,
+					'default' => '',
 				)
 			);
 

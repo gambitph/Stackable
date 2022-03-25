@@ -15,9 +15,7 @@ import {
 import {
 	i18n, showProNotice, isPro,
 } from 'stackable'
-import {
-	useAttributeEditHandlers,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -67,6 +65,9 @@ export const Edit = props => {
 		initialOpen,
 		hasMultiColor,
 		hasGradient,
+		wrapInPanels = true,
+		responsive = 'all',
+		hover = 'all',
 	} = props
 
 	const {
@@ -109,165 +110,173 @@ export const Edit = props => {
 	const filteredColorTypes = useMemo( () => colorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, colorTypes, props ] )
 	const filteredShapeColorTypes = useMemo( () => shapeColorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, shapeColorTypes, props ] )
 
-	return (
-		<InspectorStyleControls>
-			<PanelAdvancedSettings
-				title={ __( 'Icon', i18n ) }
-				id="icon"
-				initialOpen={ initialOpen }
-			>
+	const iconControls = (
+		<>
+			<IconControl
+				label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
+				value={ getAttribute( 'icon' ) }
+				onChange={ updateAttributeHandler( 'icon' ) }
+			/>
 
-				<IconControl
-					label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
-					value={ getAttribute( 'icon' ) }
-					onChange={ updateAttributeHandler( 'icon' ) }
+			{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton
+				title={ __( 'Say Hello to Gorgeous Icons 👋', i18n ) }
+				description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
+			/> }
+
+			{ applyFilters( 'stackable.block-component.icon.after', null ) }
+
+			{ filteredColorTypes.length > 1 && (
+				<AdvancedToolbarControl
+					controls={ filteredColorTypes }
+					isSmall={ true }
+					fullwidth={ false }
+					attribute="iconColorType"
 				/>
+			) }
 
-				{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton
-					title={ __( 'Say Hello to Gorgeous Icons 👋', i18n ) }
-					description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
-				/> }
+			{ colorControls }
 
-				{ applyFilters( 'stackable.block-component.icon.after', null ) }
+			<AdvancedRangeControl
+				label={ __( 'Icon Size', i18n ) }
+				attribute="iconSize"
+				min={ 0 }
+				sliderMax={ 100 }
+				step={ 1 }
+				allowReset={ true }
+				placeholder=""
+				responsive={ responsive }
+			/>
 
-				{ filteredColorTypes.length > 1 && (
-					<AdvancedToolbarControl
-						controls={ filteredColorTypes }
-						isSmall={ true }
-						fullwidth={ false }
-						attribute="iconColorType"
-					/>
-				) }
+			<AdvancedRangeControl
+				label={ __( 'Icon Opacity', i18n ) }
+				attribute="iconOpacity"
+				min={ 0 }
+				max={ 1 }
+				step={ 0.1 }
+				allowReset={ true }
+				placeholder="1.0"
+				hover={ hover }
+			/>
 
-				{ colorControls }
+			<AdvancedRangeControl
+				label={ __( 'Icon Rotation', i18n ) }
+				attribute="iconRotation"
+				min={ 0 }
+				max={ 360 }
+				allowReset={ true }
+				placeholder="0"
+				hover={ hover }
+			/>
 
-				<AdvancedRangeControl
-					label={ __( 'Icon Size', i18n ) }
-					attribute="iconSize"
-					min={ 0 }
-					sliderMax={ 100 }
-					step={ 1 }
-					allowReset={ true }
-					placeholder=""
-					responsive="all"
+			{ hasIconPosition && (
+				<AdvancedSelectControl
+					label={ __( 'Icon Position', i18n ) }
+					attribute="iconPosition"
+					options={ [
+						{ value: '', label: __( 'Left', i18n ) },
+						{ value: 'right', label: __( 'Right', i18n ) },
+					] }
 				/>
+			) }
 
+			{ hasIconGap && (
 				<AdvancedRangeControl
-					label={ __( 'Icon Opacity', i18n ) }
-					attribute="iconOpacity"
+					label={ __( 'Icon Gap', i18n ) }
+					attribute="iconGap"
 					min={ 0 }
-					max={ 1 }
-					step={ 0.1 }
-					allowReset={ true }
-					placeholder="1.0"
-					hover="all"
-				/>
-
-				<AdvancedRangeControl
-					label={ __( 'Icon Rotation', i18n ) }
-					attribute="iconRotation"
-					min={ 0 }
-					max={ 360 }
+					sliderMax={ 50 }
 					allowReset={ true }
 					placeholder="0"
-					hover="all"
 				/>
+			) }
+		</>
+	)
 
-				{ hasIconPosition && (
-					<AdvancedSelectControl
-						label={ __( 'Icon Position', i18n ) }
-						attribute="iconPosition"
-						options={ [
-							{ value: '', label: __( 'Left', i18n ) },
-							{ value: 'right', label: __( 'Right', i18n ) },
-						] }
-					/>
-				) }
+	const iconShapeControls = (
+		<>
+			{ filteredShapeColorTypes.length > 1 && (
+				<AdvancedToolbarControl
+					controls={ filteredShapeColorTypes }
+					isSmall={ true }
+					fullwidth={ false }
+					attribute="shapeColorType"
+				/>
+			) }
 
-				{ hasIconGap && (
-					<AdvancedRangeControl
-						label={ __( 'Icon Gap', i18n ) }
-						attribute="iconGap"
-						min={ 0 }
-						sliderMax={ 50 }
-						allowReset={ true }
-						placeholder="0"
-					/>
-				) }
+			{ shapeColorControls }
 
-			</PanelAdvancedSettings>
-			{ hasShape && (
-				<PanelAdvancedSettings
-					title={ __( 'Icon Shape', i18n ) }
-					id="icon-shape"
-				>
+			<AdvancedRangeControl
+				label={ __( 'Shape Border Radius', i18n ) }
+				attribute="shapeBorderRadius"
+				hover="all"
+				min={ 0 }
+				sliderMax={ 100 }
+				step={ 1 }
+				allowReset={ true }
+				placeholder={ 50 }
+			/>
 
-					{ filteredShapeColorTypes.length > 1 && (
-						<AdvancedToolbarControl
-							controls={ filteredShapeColorTypes }
-							isSmall={ true }
-							fullwidth={ false }
-							attribute="shapeColorType"
-						/>
-					) }
+			<AdvancedRangeControl
+				label={ __( 'Shape Padding', i18n ) }
+				attribute="shapePadding"
+				min={ 0 }
+				sliderMax={ 150 }
+				step={ 1 }
+				allowReset={ true }
+				placeholder={ 20 }
+			/>
 
-					{ shapeColorControls }
+			<FourRangeControl
+				label={ __( 'Shape Outline Width' ) }
+				units={ [ 'px' ] }
+				min={ 0 }
+				step={ 1 }
+				sliderMax={ 20 }
+				defaultLocked={ true }
+				attribute="shapeOutlineWidth"
+				responsive="all"
+				default="1"
+			/>
 
-					<AdvancedRangeControl
-						label={ __( 'Shape Border Radius', i18n ) }
-						attribute="shapeBorderRadius"
-						hover="all"
-						min={ 0 }
-						sliderMax={ 100 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder={ 50 }
-					/>
+			<ColorPaletteControl
+				label={ __( 'Shape Outline Color', i18n ) }
+				attribute="shapeOutlineColor"
+				hasTransparent={ true }
+				hover="all"
+			/>
+		</>
+	)
 
-					<AdvancedRangeControl
-						label={ __( 'Shape Padding', i18n ) }
-						attribute="shapePadding"
-						min={ 0 }
-						sliderMax={ 150 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder={ 20 }
-					/>
+	const iconBackgroundShapeControls = (
+		<ProControl
+			title={ __( 'Say Hello to Background Shapes 👋', i18n ) }
+			description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
+		/>
+	)
 
-					<FourRangeControl
-						label={ __( 'Shape Outline Width' ) }
-						units={ [ 'px' ] }
-						min={ 0 }
-						step={ 1 }
-						sliderMax={ 20 }
-						defaultLocked={ true }
-						attribute="shapeOutlineWidth"
-						responsive="all"
-						default="1"
-					/>
+	const Wrapper = ( { children } ) => (
+		wrapInPanels
+			? <InspectorStyleControls>{ children }</InspectorStyleControls>
+			: <>{ children }</>
+	)
 
-					<ColorPaletteControl
-						label={ __( 'Shape Outline Color', i18n ) }
-						attribute="shapeOutlineColor"
-						hasTransparent={ true }
-						hover="all"
-					/>
-
-				</PanelAdvancedSettings>
+	return (
+		<Wrapper>
+			{ wrapInPanels
+				? <PanelAdvancedSettings title={ __( 'Icon', i18n ) } id="icon" initialOpen={ initialOpen } isOpen={ true } >{ iconControls }</PanelAdvancedSettings>
+				: iconControls
+			}
+			{ hasShape && ( wrapInPanels
+				? <PanelAdvancedSettings title={ __( 'Icon Shape', i18n ) } id="icon-shape" >{ iconShapeControls }
+				</PanelAdvancedSettings> : iconShapeControls
 			) }
 
 			{ props.hasBackgroundShape &&
 				<>
 					{ showProNotice && ! isPro && (
-						<PanelAdvancedSettings
-							title={ __( 'Background Shape', i18n ) }
-							id="icon-background-shape"
-						>
-							<ProControl
-								title={ __( 'Say Hello to Background Shapes 👋', i18n ) }
-								description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
-							/>
-						</PanelAdvancedSettings>
+						wrapInPanels
+							? <PanelAdvancedSettings title={ __( 'Background Shape', i18n ) } id="icon-background-shape" > { iconBackgroundShapeControls }</PanelAdvancedSettings>
+							: iconBackgroundShapeControls
 					) }
 
 					{ isPro && applyFilters( 'stackable.block-component.icon.edit.background-shape', null, {
@@ -275,7 +284,7 @@ export const Edit = props => {
 					} ) }
 				</>
 			}
-		</InspectorStyleControls>
+		</Wrapper>
 	)
 }
 
