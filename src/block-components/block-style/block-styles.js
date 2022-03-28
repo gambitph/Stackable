@@ -1,20 +1,17 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames'
 import { getBlockStyle } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import {
-	memo, useMemo, useCallback,
-} from '@wordpress/element'
+import { useMemo, useCallback } from '@wordpress/element'
 import {
 	select, useSelect, useDispatch,
 } from '@wordpress/data'
 import TokenList from '@wordpress/token-list'
-import { ENTER, SPACE } from '@wordpress/keycodes'
+import { StyleControl } from '~stackable/components'
 
 /**
  * Replaces the active style in the block's className.
@@ -42,11 +39,10 @@ export function replaceActiveStyle( className, activeStyle, newStyle ) {
 const BlockStyles = props => {
 	const { clientId, styles } = props
 
-	const { className, blockName } = useSelect( select => {
+	const { className } = useSelect( select => {
 		const block = select( 'core/block-editor' ).getBlock( clientId )
 		return {
 			className: block?.attributes?.className || '',
-			blockName: block?.name,
 		}
 	}, [ clientId ] )
 
@@ -74,69 +70,14 @@ const BlockStyles = props => {
 	}, [ clientId, activeStyle, className ] )
 
 	return (
-		<div className="block-editor-block-styles">
-			{ styles.map( style => {
-				return (
-					<BlockStyleItem
-						className={ className }
-						isActive={ activeStyle === style }
-						key={ style.name }
-						onSelect={ onSelect }
-						style={ style }
-						blockName={ blockName }
-					/>
-				)
-			} ) }
-		</div>
+		<StyleControl
+			options={ styles }
+			onSelect={ onSelect }
+			value={ activeStyle.name }
+			activeProperty="name"
+		/>
 	)
 }
-
-// TODO: Make this a separate block component.
-export const BlockStyleItem = memo( props => {
-	const {
-		style,
-		isActive,
-		onSelect: _onSelect,
-		blockName,
-	} = props
-
-	const onSelect = value => {
-		if ( ! isActive ) {
-			_onSelect( value )
-		}
-	}
-
-	const Image = style.icon
-
-	return (
-		<div
-			className={ classnames( 'block-editor-block-styles__item', {
-				'is-active': isActive,
-			} ) }
-			onClick={ () => onSelect( style ) }
-			onKeyDown={ event => {
-				if ( ENTER === event.keyCode || SPACE === event.keyCode ) {
-					event.preventDefault()
-					onSelect( style )
-				}
-			} }
-			role="button"
-			tabIndex="0"
-			aria-label={ style.label || style.name }
-		>
-			<div
-				className="block-editor-block-styles__item-preview stk-block-styles-preview"
-				data-block={ blockName }
-				data-style={ style.name }
-			>
-				{ style.image || ( Image && <Image className="block-editor-block-styles__icon" /> ) }
-			</div>
-			<div className="block-editor-block-styles__item-label">
-				{ style.label || style.name }
-			</div>
-		</div>
-	)
-} )
 
 export default BlockStyles
 
