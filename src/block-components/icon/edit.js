@@ -21,7 +21,7 @@ import { useAttributeEditHandlers } from '~stackable/hooks'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useMemo } from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 const colorTypes = applyFilters( 'stackable.block-component.icon.color-type', [
@@ -254,11 +254,7 @@ export const Edit = props => {
 		/>
 	)
 
-	const Wrapper = ( { children } ) => (
-		wrapInPanels
-			? <InspectorStyleControls>{ children }</InspectorStyleControls>
-			: <>{ children }</>
-	)
+	const Wrapper = wrapInPanels ? InspectorStyleControls : Fragment
 
 	return (
 		<Wrapper>
@@ -267,8 +263,8 @@ export const Edit = props => {
 				: iconControls
 			}
 			{ hasShape && ( wrapInPanels
-				? <PanelAdvancedSettings title={ __( 'Icon Shape', i18n ) } id="icon-shape" >{ iconShapeControls }
-				</PanelAdvancedSettings> : iconShapeControls
+				? <PanelAdvancedSettings title={ __( 'Icon Shape', i18n ) } id="icon-shape" >{ iconShapeControls }</PanelAdvancedSettings>
+				: iconShapeControls
 			) }
 
 			{ props.hasBackgroundShape &&
