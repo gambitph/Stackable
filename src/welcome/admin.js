@@ -293,10 +293,10 @@ const EditorSettings = () => {
 							i18n
 						) }
 						&nbsp;
-						 <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" rel="noreferrer">Generate API key</a>
+						<a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" rel="noreferrer">{ __( 'Generate API key', i18n ) }</a>
 					</>
 				 }
-			></AdminTextSetting>
+			/>
 			<AdminToggleSetting
 				label={ __( 'Design Library', i18n ) }
 				value={ settings.stackable_enable_design_library }
@@ -363,7 +363,7 @@ const EditorSettings = () => {
 					'The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.',
 					i18n
 				) }
-			></AdminTextSetting>
+			/>
 			<AdminTextSetting
 				label={ __( 'Nested Wide Block Width', i18n ) }
 				value={ settings.stackable_block_wide_width }
@@ -388,7 +388,7 @@ const EditorSettings = () => {
 					'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.',
 					i18n
 				) }
-			></AdminTextSetting>
+			/>
 			<AdminToggleSetting
 				label={ __( 'Auto-Collapse Panels', i18n ) }
 				value={ settings.stackable_auto_collapse_panels }
