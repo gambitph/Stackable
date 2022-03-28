@@ -470,7 +470,7 @@ const Edit = props => {
 						}
 						id="map-marker"
 					>
-						<Icon.InspectorControls hasShape={ false } wrapInPanels={ false } responsive="" hover="" />
+						<Icon.InspectorControls hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" />
 						<AdvancedRangeControl
 							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
 							attribute="iconAnchorPositionX"
