@@ -443,7 +443,7 @@ const Edit = props => {
 					}
 					id="map-marker"
 				>
-					{ isDefined( apiKey ) && <Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ true } /> }
+					{ isDefined( apiKey ) && <Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ false } /> }
 					{ icon && <AdvancedRangeControl
 						label={ __( 'Horizontal Icon Anchor Point', i18n ) }
 						attribute="iconAnchorPositionX"
