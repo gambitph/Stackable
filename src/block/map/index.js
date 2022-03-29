@@ -1,5 +1,5 @@
 /**
- * BLOCK: Card Block.
+ * BLOCK: Map Block.
  */
 
 /**
@@ -15,7 +15,6 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import example from './example'
-import transforms from './transforms'
 
 /**
  * WordPress dependencies
@@ -31,7 +30,6 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		align: [ 'full', 'wide', 'center' ],
 	},
 	example,
-	transforms,
 
 	edit,
 	save,
