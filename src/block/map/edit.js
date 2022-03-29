@@ -69,14 +69,6 @@ import {
 } from '@wordpress/components'
 import { useDispatch } from '@wordpress/data'
 
-const AdvOptions = ( { children, apiKey } ) => (
-	<div
-		className={ classnames( 'stk-block-map-extra-options', {
-			'stk-block-map-extra-options__is-disabled': ! isDefined( apiKey ),
-		} ) }
-	>{ children }</div>
-)
-
 const LocationControl = props => {
 	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
 
@@ -118,6 +110,7 @@ const LocationControl = props => {
 
 	return (
 		<TextControl
+			label={ __( 'Location', i18n ) }
 			ref={ ref }
 			value={ props.value }
 			onChange={ props.onTextChange }
@@ -228,7 +221,7 @@ const Edit = props => {
 	}
 
 	const initMarker = () => {
-		if ( showMarker && mapRef.current ) {
+		if ( mapRef.current ) {
 			const markerOption = {
 				title: address,
 				map: mapRef.current,
@@ -253,8 +246,9 @@ const Edit = props => {
 
 			// eslint-disable-next-line no-undef
 			markerRef.current = new google.maps.Marker( markerOption )
-		} else if ( markerRef.current ) {
-			markerRef.current.map = null
+			if ( markerRef.current ) {
+				markerRef.current.map = showMarker ? mapRef.current : null
+			}
 		}
 	}
 
@@ -383,97 +377,92 @@ const Edit = props => {
 						allowReset={ true }
 						placeholder={ DEFAULT_ZOOM }
 					/>
-					<AdvOptions apiKey={ apiKey }>
-						<AdvancedToggleControl
-							label={ __( 'Enable Dragging', i18n ) }
-							attribute="isDraggable"
-							defaultValue={ true }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Full Screen Button', i18n ) }
-							attribute="showFullScreenButton"
-							defaultValue={ true }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Map Type Buttons', i18n ) }
-							attribute="showMapTypeButtons"
-							defaultValue={ true }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Street View Button', i18n ) }
-							attribute="showStreetViewButton"
-							defaultValue={ true }
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Zoom Buttons', i18n ) }
-							attribute="showZoomButtons"
-							defaultValue={ true }
-						/>
-					</AdvOptions>
+					<AdvancedToggleControl
+						label={ __( 'Enable Dragging', i18n ) }
+						attribute="isDraggable"
+						defaultValue={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Full Screen Button', i18n ) }
+						attribute="showFullScreenButton"
+						defaultValue={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Map Type Buttons', i18n ) }
+						attribute="showMapTypeButtons"
+						defaultValue={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Street View Button', i18n ) }
+						attribute="showStreetViewButton"
+						defaultValue={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Zoom Buttons', i18n ) }
+						attribute="showZoomButtons"
+						defaultValue={ true }
+					/>
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					title={ __( 'Map Style', i18n ) }
 					initialOpen={ false }
 					id="map-style"
 				>
-					<AdvOptions apiKey={ apiKey }>
-						<StyleControl
-							options={ mapStyleOptions }
-							value={ mapStyle }
-							onSelect={ style => {
-								setAttributes( { mapStyle: style.value } )
-								setAttributes( { customMapStyle: '' } )
-							} }
-						/>
-						<AdvancedTextControl
-							label={ __( 'Custom Map Styles', i18n ) }
-							isMultiline
-							attribute="customMapStyle"
-							onChange={ value => {
-								setAttributes( { customMapStyle: value } )
-								setAttributes( { mapStyle: '' } )
-							} }
-						/>
-						<small>Generate custom style code using the <a href="https://mapstyle.withgoogle.com/" rel="noreferrer" target="_blank">Map Style Wizard</a>.</small>
-					</AdvOptions>
+					<StyleControl
+						options={ mapStyleOptions }
+						value={ mapStyle }
+						onSelect={ style => {
+							setAttributes( { mapStyle: style.value } )
+							setAttributes( { customMapStyle: '' } )
+						} }
+					/>
+					<AdvancedTextControl
+						label={ __( 'Custom Map Style (Paste JSON here)', i18n ) }
+						isMultiline
+						attribute="customMapStyle"
+						onChange={ value => {
+							setAttributes( { customMapStyle: value } )
+							setAttributes( { mapStyle: '' } )
+						} }
+					/>
+					<small>Learn how to use <a href="#0">Custom Map styles</a>.</small>
 				</PanelAdvancedSettings>
-				<AdvOptions apiKey={ apiKey }>
-					<PanelAdvancedSettings
-						title={ __( 'Map Marker', i18n ) }
-						initialOpen={ false }
-						checked={
-							isDefined( apiKey )
-								? showMarker
-								: location === ''
-									? true
-									: isLatLng( location )
-						}
-						onChange={ showMarker =>
-							updateBlockAttributes( clientId, { showMarker } )
-						}
-						id="map-marker"
-					>
-						<Icon.InspectorControls hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" />
-						<AdvancedRangeControl
-							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
-							attribute="iconAnchorPositionX"
-							min={ -1000 }
-							sliderMax={ 1000 }
-							step={ 10 }
-							allowReset={ true }
-							placeholder={ DEFAULT_ICON_ANCHOR_POSITION_X }
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Vertical Icon Anchor Point', i18n ) }
-							attribute="iconAnchorPositionY"
-							min={ -1000 }
-							sliderMax={ 1000 }
-							step={ 10 }
-							allowReset={ true }
-							placeholder={ DEFAULT_ICON_ANCHOR_POSITION_Y }
-						/>
-					</PanelAdvancedSettings>
-				</AdvOptions>
+				<PanelAdvancedSettings
+					title={ __( 'Map Marker', i18n ) }
+					initialOpen={ false }
+					disabled={ ! isDefined( apiKey ) }
+					checked={
+						isDefined( apiKey )
+							? showMarker
+							: location === ''
+								? false
+								: isLatLng( location )
+					}
+					onChange={ showMarker =>
+						updateBlockAttributes( clientId, { showMarker } )
+					}
+					id="map-marker"
+				>
+					{ isDefined( apiKey ) && <Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ true } /> }
+					{ icon && <AdvancedRangeControl
+						label={ __( 'Horizontal Icon Anchor Point', i18n ) }
+						attribute="iconAnchorPositionX"
+						min={ -1000 }
+						sliderMax={ 1000 }
+						step={ 10 }
+						allowReset={ true }
+						placeholder={ DEFAULT_ICON_ANCHOR_POSITION_X }
+					/> }
+					{ icon && <AdvancedRangeControl
+						label={ __( 'Vertical Icon Anchor Point', i18n ) }
+						attribute="iconAnchorPositionY"
+						min={ -1000 }
+						sliderMax={ 1000 }
+						step={ 10 }
+						allowReset={ true }
+						placeholder={ DEFAULT_ICON_ANCHOR_POSITION_Y }
+					/> }
+				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
 			<Advanced.InspectorControls />

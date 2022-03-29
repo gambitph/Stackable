@@ -50,7 +50,7 @@ export const mapAttributes = {
 	},
 	showMarker: {
 		type: 'boolean',
-		default: true,
+		default: false,
 	},
 	showZoomButtons: {
 		type: 'boolean',

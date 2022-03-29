@@ -62,6 +62,7 @@ export const Edit = props => {
 		hasShape,
 		hasIconGap,
 		hasIconPosition,
+		hideControlsIfIconIsNotSet = false,
 		initialOpen,
 		hasMultiColor,
 		hasGradient,
@@ -109,6 +110,7 @@ export const Edit = props => {
 
 	const filteredColorTypes = useMemo( () => colorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, colorTypes, props ] )
 	const filteredShapeColorTypes = useMemo( () => shapeColorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, shapeColorTypes, props ] )
+	const showIconControl = !! getAttribute( 'icon' ) && hideControlsIfIconIsNotSet
 
 	const iconControls = (
 		<>
@@ -134,9 +136,9 @@ export const Edit = props => {
 				/>
 			) }
 
-			{ colorControls }
+			{ showIconControl && colorControls }
 
-			<AdvancedRangeControl
+			{ showIconControl && <AdvancedRangeControl
 				label={ __( 'Icon Size', i18n ) }
 				attribute="iconSize"
 				min={ 0 }
@@ -145,9 +147,9 @@ export const Edit = props => {
 				allowReset={ true }
 				placeholder=""
 				responsive={ responsive }
-			/>
+			/> }
 
-			<AdvancedRangeControl
+			{ showIconControl && <AdvancedRangeControl
 				label={ __( 'Icon Opacity', i18n ) }
 				attribute="iconOpacity"
 				min={ 0 }
@@ -156,9 +158,9 @@ export const Edit = props => {
 				allowReset={ true }
 				placeholder="1.0"
 				hover={ hover }
-			/>
+			/> }
 
-			<AdvancedRangeControl
+			{ showIconControl && <AdvancedRangeControl
 				label={ __( 'Icon Rotation', i18n ) }
 				attribute="iconRotation"
 				min={ 0 }
@@ -166,7 +168,7 @@ export const Edit = props => {
 				allowReset={ true }
 				placeholder="0"
 				hover={ hover }
-			/>
+			/> }
 
 			{ hasIconPosition && (
 				<AdvancedSelectControl
@@ -208,7 +210,7 @@ export const Edit = props => {
 			<AdvancedRangeControl
 				label={ __( 'Shape Border Radius', i18n ) }
 				attribute="shapeBorderRadius"
-				hover="all"
+				hover={ hover }
 				min={ 0 }
 				sliderMax={ 100 }
 				step={ 1 }
@@ -234,7 +236,7 @@ export const Edit = props => {
 				sliderMax={ 20 }
 				defaultLocked={ true }
 				attribute="shapeOutlineWidth"
-				responsive="all"
+				responsive={ responsive }
 				default="1"
 			/>
 
@@ -242,7 +244,7 @@ export const Edit = props => {
 				label={ __( 'Shape Outline Color', i18n ) }
 				attribute="shapeOutlineColor"
 				hasTransparent={ true }
-				hover="all"
+				hover={ hover }
 			/>
 		</>
 	)
