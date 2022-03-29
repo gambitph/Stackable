@@ -5,19 +5,26 @@ import {
 
 import { __ } from '@wordpress/i18n'
 
-const base = srcUrl + '/src/block/map/images/'
+import aubergineImage from './images/aubergine.png'
+import darkImage from './images/dark.png'
+import defaultImage from './images/default.png'
+import nightImage from './images/night.png'
+import retroImage from './images/retro.png'
+import silverImage from './images/silver.png'
+
+const prependBaseUrl = src => `${ srcUrl }/${ src }`
 
 const mapStyleOptions = [
 	{
 		value: 'default',
 		label: __( 'Default', i18n ),
-		image: <img src={ base + 'default.png' } alt={ __( 'Default', i18n ) } />,
+		image: <img src={ prependBaseUrl( defaultImage ) } alt={ __( 'Default', i18n ) } />,
 		json: [],
 	},
 	{
 		value: 'silver',
 		label: __( 'Silver', i18n ),
-		image: <img src={ base + 'silver.png' } alt={ __( 'Silver', i18n ) } />,
+		image: <img src={ prependBaseUrl( silverImage ) } alt={ __( 'Silver', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
@@ -182,7 +189,7 @@ const mapStyleOptions = [
 	{
 		value: 'retro',
 		label: __( 'Retro', i18n ),
-		image: <img src={ base + 'retro.png' } alt={ __( 'Retro', i18n ) } />,
+		image: <img src={ prependBaseUrl( retroImage ) } alt={ __( 'Retro', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
@@ -402,7 +409,7 @@ const mapStyleOptions = [
 	{
 		value: 'dark',
 		label: __( 'Dark', i18n ),
-		image: <img src={ base + 'dark.png' } alt={ __( 'Dark', i18n ) } />,
+		image: <img src={ prependBaseUrl( darkImage ) } alt={ __( 'Dark', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
@@ -593,7 +600,7 @@ const mapStyleOptions = [
 	{
 		value: 'night',
 		label: __( 'Night', i18n ),
-		image: <img src={ base + 'night.png' } alt={ __( 'Night', i18n ) } />,
+		image: <img src={ prependBaseUrl( nightImage ) } alt={ __( 'Night', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
@@ -759,7 +766,7 @@ const mapStyleOptions = [
 	{
 		value: 'aubergine',
 		label: __( 'Aubergine', i18n ),
-		image: <img src={ base + 'aubergine.png' } alt={ __( 'Aubergine', i18n ) } />,
+		image: <img src={ prependBaseUrl( aubergineImage ) } alt={ __( 'Aubergine', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
