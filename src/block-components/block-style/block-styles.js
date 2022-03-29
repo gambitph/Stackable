@@ -43,7 +43,6 @@ const BlockStyles = props => {
 		const block = select( 'core/block-editor' ).getBlock( clientId )
 		return {
 			className: block?.attributes?.className || '',
-			blockName: block?.name,
 		}
 	}, [ clientId ] )
 

@@ -11,13 +11,13 @@ const mapStyleOptions = [
 	{
 		value: 'default',
 		label: __( 'Default', i18n ),
-		image: base + 'default.png',
+		image: <img src={ base + 'default.png' } alt={ __( 'Default', i18n ) } />,
 		json: [],
 	},
 	{
 		value: 'silver',
 		label: __( 'Silver', i18n ),
-		image: base + 'silver.png',
+		image: <img src={ base + 'silver.png' } alt={ __( 'Silver', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
@@ -182,7 +182,7 @@ const mapStyleOptions = [
 	{
 		value: 'retro',
 		label: __( 'Retro', i18n ),
-		image: base + 'retro.png',
+		image: <img src={ base + 'retro.png' } alt={ __( 'Retro', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
@@ -402,7 +402,7 @@ const mapStyleOptions = [
 	{
 		value: 'dark',
 		label: __( 'Dark', i18n ),
-		image: base + 'dark.png',
+		image: <img src={ base + 'dark.png' } alt={ __( 'Dark', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
@@ -593,7 +593,7 @@ const mapStyleOptions = [
 	{
 		value: 'night',
 		label: __( 'Night', i18n ),
-		image: base + 'night.png',
+		image: <img src={ base + 'night.png' } alt={ __( 'Night', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',
@@ -759,7 +759,7 @@ const mapStyleOptions = [
 	{
 		value: 'aubergine',
 		label: __( 'Aubergine', i18n ),
-		image: base + 'aubergine.png',
+		image: <img src={ base + 'aubergine.png' } alt={ __( 'Aubergine', i18n ) } />,
 		json: [
 			{
 				elementType: 'geometry',

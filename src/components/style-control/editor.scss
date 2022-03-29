@@ -1,14 +1,14 @@
-.stk-block-styles-preview {
+.stk-style-control__image {
 	width: 100%;
 	height: 80px;
 	border: 2px solid transparent;
 	margin: 0;
 }
-.block-editor-block-styles__icon {
+.stk-style-control__image__icon {
 	fill: var(--wp-admin-theme-color);
 }
-.block-editor-block-styles__item:hover {
-	.block-editor-block-styles__icon {
+.stk-style-control__option:hover {
+	.stk-style-control__image__icon {
 		fill: var(--wp-admin-theme-color-darker-10);
 	}
 }

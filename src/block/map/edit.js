@@ -37,6 +37,7 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	ResizerTooltip,
+	StyleControl,
 } from '~stackable/components'
 import { useBlockHoverClass, useDeviceType } from '~stackable/hooks'
 import {
@@ -51,8 +52,6 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-
-import { BlockStyleItem } from '~stackable/block-components/block-style/block-styles'
 
 import { withQueryLoopContext } from '~stackable/higher-order'
 import { getAttributeName } from '~stackable/util'
@@ -418,30 +417,14 @@ const Edit = props => {
 					id="map-style"
 				>
 					<AdvOptions apiKey={ apiKey }>
-						<div className="block-editor-block-styles">
-							{ mapStyleOptions.map( style => (
-								<BlockStyleItem
-									blockName={ style.value }
-									className={ `stk-block-map-${ style.value }` }
-									isActive={ mapStyle === style.value }
-									key={ style.value }
-									onSelect={ style => {
-										setAttributes( { mapStyle: style.value } )
-										setAttributes( { customMapStyle: '' } )
-									} }
-									style={ {
-										image: (
-											<img
-												src={ style.image }
-												alt={ style.value }
-											/>
-										),
-										value: style.value,
-										label: style.label,
-									} }
-								/>
-							) ) }
-						</div>
+						<StyleControl
+							options={ mapStyleOptions }
+							value={ mapStyle }
+							onSelect={ style => {
+								setAttributes( { mapStyle: style.value } )
+								setAttributes( { customMapStyle: '' } )
+							} }
+						/>
 						<AdvancedTextControl
 							label={ __( 'Custom Map Styles', i18n ) }
 							isMultiline
