@@ -24,7 +24,7 @@ export const mapAttributes = {
 		default: false,
 	},
 	location: {
-		type: 'string',
+		type: 'object',
 		default: '',
 	},
 	zoom: {

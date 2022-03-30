@@ -151,6 +151,7 @@ const Edit = props => {
 		showMarker,
 		showStreetViewButton,
 		showZoomButtons,
+		usesApiKey,
 		zoom,
 	} = attributes
 
@@ -191,40 +192,10 @@ const Edit = props => {
 	const canUpdateAPIKey = true
 	const apiKey = settings.stackable_google_maps_api_key
 
-	const updateMarker = () => {
-		const marker = markerRef.current
-		const map = mapRef.current
-
-		if ( marker ) {
-			marker.setMap( showMarker ? map : null )
-
-			const path = getPathFromSvg( icon )
-
-			if ( path ) {
-				marker.setIcon( {
-					path,
-					fillColor: iconColor1 || DEFAULT_ICON_COLOR,
-					fillOpacity: parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
-					strokeWeight: 0,
-					rotation: parseInt( iconRotation, 10 ) || DEFAULT_ICON_ROTATION,
-					scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
-					// eslint-disable-next-line no-undef
-					anchor: new google.maps.Point(
-						parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
-						parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
-					),
-				} )
-			} else {
-				marker.setIcon( null )
-			}
-		}
-	}
-
 	const initMarker = () => {
 		if ( mapRef.current ) {
 			const markerOption = {
 				title: address,
-				map: mapRef.current,
 				position: getLocation( attributes ),
 				clickable: false,
 			}
@@ -246,8 +217,8 @@ const Edit = props => {
 
 			// eslint-disable-next-line no-undef
 			markerRef.current = new google.maps.Marker( markerOption )
-			if ( markerRef.current ) {
-				markerRef.current.map = showMarker ? mapRef.current : null
+			if ( markerRef.current && mapRef.current ) {
+				markerRef.current.setMap( ( showMarker && isDefined( location ) ) ? mapRef.current : null )
 			}
 		}
 	}
@@ -285,6 +256,35 @@ const Edit = props => {
 	}, [ zoom, mapRef.current ] )
 
 	useEffect( () => {
+		const updateMarker = () => {
+			const marker = markerRef.current
+			const map = mapRef.current
+
+			if ( marker ) {
+				marker.setMap( showMarker ? map : null )
+
+				const path = getPathFromSvg( icon )
+
+				if ( path ) {
+					marker.setIcon( {
+						path,
+						fillColor: iconColor1 || DEFAULT_ICON_COLOR,
+						fillOpacity: parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
+						strokeWeight: 0,
+						rotation: parseInt( iconRotation, 10 ) || DEFAULT_ICON_ROTATION,
+						scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
+						// eslint-disable-next-line no-undef
+						anchor: new google.maps.Point(
+							parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
+							parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
+						),
+					} )
+				} else {
+					marker.setIcon( null )
+				}
+			}
+		}
+
 		if ( mapRef.current && markerRef.current ) {
 			updateMarker()
 		}
@@ -307,6 +307,7 @@ const Edit = props => {
 			initMap()
 		}
 	}, [
+		address,
 		deviceType,
 		height,
 		location,
@@ -317,10 +318,11 @@ const Edit = props => {
 		showMapTypeButtons,
 		showStreetViewButton,
 		showZoomButtons,
+		usesApiKey,
 	 ] )
 
 	return (
-		<Fragment>
+		<>
 			<InspectorTabs />
 			<BlockDiv.InspectorControls hasSizeSpacing={ false } />
 
@@ -345,16 +347,20 @@ const Edit = props => {
 					{ ! isDefined( apiKey ) ? (
 						<AdvancedTextControl
 							label={ __( 'Location', i18n ) }
-							attribute="location"
+							attribute="address"
 							placeholder={ __( 'Enter a location', i18n ) }
 						/>
 					) : (
 						<LocationControl
 							value={ address }
-							onTextChange={ address => setAttributes( { address } ) }
+							onTextChange={ address => {
+								setAttributes( { address } )
+								setAttributes( { location: '' } )
+							} }
 							onPlaceChange={ place => {
 								setAttributes( { address: place.formatted_address } )
-								setAttributes( { location: place.geometry.location } )
+								const location = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }
+								setAttributes( { location } )
 							 } }
 						/>
 					) }
@@ -541,7 +547,7 @@ const Edit = props => {
 				</ResizableBox>
 			</BlockDiv>
 			<MarginBottom />
-		</Fragment>
+		</>
 	)
 }
 
