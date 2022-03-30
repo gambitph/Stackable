@@ -17,7 +17,6 @@ import {
 	isDefined,
 	getSnapYBetween,
 	getIframe,
-	isLatLng,
 	getMapOptions,
 	getLocation,
 	getPathFromSvg,
@@ -53,12 +52,13 @@ import {
 	Transform,
 } from '~stackable/block-components'
 
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
 import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import {
 	Fragment, useEffect, useRef, useMemo, useState,
@@ -68,6 +68,7 @@ import {
 	TextControl, SandBox, ResizableBox, Notice,
 } from '@wordpress/components'
 import { useDispatch } from '@wordpress/data'
+import { isEmpty } from 'lodash'
 
 const LocationControl = props => {
 	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
@@ -244,7 +245,18 @@ const Edit = props => {
 	useEffect( () => {
 		__unstableMarkNextChangeAsNotPersistent()
 		setAttributes( { usesApiKey: isDefined( apiKey ) } )
-	}, [] ),
+		if ( usesApiKey ) {
+			if ( ! isEmpty( address ) && isEmpty( location ) ) {
+				setAttributes( { address: '' } )
+			}
+		}
+	}, [ usesApiKey, apiKey ] ),
+
+	useEffect( () => {
+		// Location will be set when user picks from the Google Places auto
+		// complete field.
+		setAttributes( { location: undefined } )
+	}, [ address ] )
 
 	useEffect( () => {
 		initMapLibrary( apiKey, initMap )
@@ -443,11 +455,11 @@ const Edit = props => {
 					initialOpen={ false }
 					disabled={ ! isDefined( apiKey ) }
 					checked={
-						isDefined( apiKey )
+						usesApiKey
 							? showMarker
-							: location === ''
+							: isDefined( location )
 								? false
-								: isLatLng( location )
+								: true
 					}
 					onChange={ showMarker =>
 						updateBlockAttributes( clientId, { showMarker } )
@@ -521,7 +533,7 @@ const Edit = props => {
 				>
 					{ isHovered && (
 						<ResizerTooltip
-							label={ __( 'Map Height', i18n ) }
+							label={ __( 'Map', i18n ) }
 							enableWidth={ false }
 							height={
 								resizableRef.current?.state?.isResizing
@@ -556,4 +568,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withIsHovered,
+	withQueryLoopContext,
+)( Edit )
+
