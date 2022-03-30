@@ -183,6 +183,7 @@ const Edit = props => {
 
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 
+	const iFrameRef = useRef()
 	const mapRef = useRef()
 	const markerRef = useRef()
 	const canvasRef = useRef()
@@ -237,6 +238,8 @@ const Edit = props => {
 
 		initMarker()
 	}
+
+	const html = getIframe( attributes, iFrameRef )
 
 	useEffect( () => {
 		__unstableMarkNextChangeAsNotPersistent()
@@ -345,11 +348,13 @@ const Edit = props => {
 						</Notice>
 					) }
 					{ ! isDefined( apiKey ) ? (
-						<AdvancedTextControl
-							label={ __( 'Location', i18n ) }
-							attribute="address"
-							placeholder={ __( 'Enter a location', i18n ) }
-						/>
+						<>
+							<AdvancedTextControl
+								label={ __( 'Location', i18n ) }
+								attribute="address"
+								placeholder={ __( 'Enter an address or location', i18n ) }
+							/>
+						</>
 					) : (
 						<LocationControl
 							value={ address }
@@ -542,7 +547,7 @@ const Edit = props => {
 							} }
 						/>
 					) : (
-						<SandBox html={ getIframe( attributes ) } />
+						<SandBox html={ html } />
 					) }
 				</ResizableBox>
 			</BlockDiv>

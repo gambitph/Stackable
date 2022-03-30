@@ -69,9 +69,9 @@ export const getMapOptions = ( attributes, mode = 'edit' ) => {
 }
 
 export const getIframe = ( attributes, mode = 'edit' ) => {
+	const { address } = attributes
 	const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
-	const location = getLocation( attributes )
-	const src = `https://maps.google.com/maps?q=${ typeof location === 'string' ? location : latLngToString( location ) }&t=&z=${ getZoom( attributes ) }&ie=UTF8&output=embed`
+	const src = `https://maps.google.com/maps?q=${ address }&t=&z=${ getZoom( attributes ) }&ie=UTF8&output=embed`
 	return (
 		`<iframe
 				title="${ iframeTitle }"
