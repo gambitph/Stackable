@@ -38,9 +38,12 @@ import {
 	ResizerTooltip,
 	StyleControl,
 } from '~stackable/components'
-import { useBlockHoverClass, useDeviceType } from '~stackable/hooks'
+import {
+	useBlockHoverClass, useBlockContext, useDeviceType,
+} from '~stackable/hooks'
 import {
 	BlockDiv,
+	useGeneratedCss,
 	Advanced,
 	CustomCSS,
 	Icon,
@@ -50,6 +53,7 @@ import {
 	ConditionalDisplay,
 	MarginBottom,
 	Transform,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 
 import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
@@ -124,6 +128,8 @@ LocationControl.defaultProps = {
 	value: '',
 }
 
+const heightUnit = [ 'px', 'vh', '%' ]
+
 const Edit = props => {
 	const {
 		clientId,
@@ -156,18 +162,30 @@ const Edit = props => {
 		zoom,
 	} = attributes
 
+	useGeneratedCss( attributes )
+
 	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 	const deviceType = useDeviceType()
 	const blockHoverClass = useBlockHoverClass()
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const { parentBlock } = useBlockContext( clientId )
+
+	// TODO: Allow special or layout blocks to disable the link for the image block,
+	// e.g. image box doesn't need the image to have a link since it has it's
+	// own link.
+	// const enableLink = applyFilters( 'stackable.edit.image.enable-link', true, parentBlock )
+
 	const blockClassNames = classnames( [
 		className,
-		blockHoverClass,
 		'stk-block-map',
+		blockHoverClass,
+		blockAlignmentClass,
 	] )
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
+	console.log( 'height:', height, 'heightAttName:', heightAttrName )
 	// Set default min height based on device type
 	const defaultMinHeight = useMemo( () =>
 		deviceType === 'Tablet'
@@ -255,7 +273,9 @@ const Edit = props => {
 	useEffect( () => {
 		// Location will be set when user picks from the Google Places auto
 		// complete field.
-		setAttributes( { location: undefined } )
+		if ( isEmpty( address ) ) {
+			setAttributes( { location: '' } )
+		}
 	}, [ address ] )
 
 	useEffect( () => {

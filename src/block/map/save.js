@@ -26,6 +26,7 @@ import {
 	BlockDiv,
 	CustomCSS,
 	getResponsiveClasses,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -38,7 +39,6 @@ import { RawHTML } from '@wordpress/element'
 export const Save = props => {
 	const {
 		attributes,
-		...propsToPass
 	} = props
 
 	const {
@@ -60,11 +60,13 @@ export const Save = props => {
 	} = attributes
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
-		propsToPass.className,
+		props.className,
 		'stk-block-map',
 		responsiveClass,
+		blockAlignmentClass,
 	] )
 
 	const dataAttributes = {

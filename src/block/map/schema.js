@@ -18,7 +18,6 @@ import { version as VERSION } from 'stackable'
 import { BlockLink } from '~stackable/block-components/block-link'
 
 export const mapAttributes = {
-	// Google Map search query. This can be an address or lat,long coords.
 	usesApiKey: {
 		type: 'boolean',
 		default: false,
@@ -44,6 +43,7 @@ export const mapAttributes = {
 		type: 'string',
 		default: '',
 	},
+	// Google Map search query. This can be an address or lat,long coords.
 	address: {
 		type: 'string',
 		default: '',
@@ -87,7 +87,6 @@ export const attributes = ( version = VERSION ) => {
 
 	BlockDiv.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
-	Image.addAttributes( attrObject )
 	Link.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
