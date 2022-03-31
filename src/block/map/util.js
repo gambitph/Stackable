@@ -65,7 +65,7 @@ export const getMapOptions = ( attributes, mode = 'edit' ) => {
 		zoomControl: showZoomButtons,
 		mapTypeControl: showMapTypeButtons,
 		streetViewControl: showStreetViewButton,
-		draggable: mode === 'edit' ? false : isDraggable,
+		draggable: isDraggable,
 	}
 }
 

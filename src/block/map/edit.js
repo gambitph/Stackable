@@ -285,8 +285,8 @@ const Edit = props => {
 	useEffect( () => {
 		const map = mapRef.current
 
-		if ( map ) {
-			map.setZoom( zoom || DEFAULT_ZOOM )
+		if ( map && isDefined( zoom ) ) {
+			map.setZoom( zoom )
 		}
 	}, [ zoom, mapRef.current ] )
 
@@ -404,11 +404,10 @@ const Edit = props => {
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="height"
-						min={ defaultMinHeight }
-						sliderMax={ 600 }
+						min={ 0 }
 						step={ 1 }
 						allowReset={ true }
-						placeholder={ DEFAULT_HEIGHT }
+						placeholder=""
 						responsive="all"
 					/>
 					<AdvancedRangeControl
@@ -418,7 +417,7 @@ const Edit = props => {
 						sliderMax={ 24 }
 						step={ 1 }
 						allowReset={ true }
-						placeholder={ DEFAULT_ZOOM }
+						placeholder=""
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Enable Dragging', i18n ) }
@@ -494,7 +493,7 @@ const Edit = props => {
 						sliderMax={ 1000 }
 						step={ 10 }
 						allowReset={ true }
-						placeholder={ DEFAULT_ICON_ANCHOR_POSITION_X }
+						placeholder=""
 					/> }
 					{ icon && <AdvancedRangeControl
 						label={ __( 'Vertical Icon Anchor Point', i18n ) }
@@ -503,7 +502,7 @@ const Edit = props => {
 						sliderMax={ 1000 }
 						step={ 10 }
 						allowReset={ true }
-						placeholder={ DEFAULT_ICON_ANCHOR_POSITION_Y }
+						placeholder=""
 					/> }
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
@@ -520,71 +519,68 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv className={ blockClassNames }>
-				<ResizableBox
-					ref={ resizableRef }
-					showHandle={ isHovered || isSelected }
-					size={ {
-						height: isDefined( height ) ? height : DEFAULT_HEIGHT,
-					} }
-					minHeight={ defaultMinHeight }
-					enable={ { bottom: true } }
-					onResize={ ( event, direction, elt, delta ) => {
-						let _height = height
-						if ( _height === '' || _height === undefined ) {
-							_height = defaultMinHeight
-						}
-						setSnapY(
-							getSnapYBetween( parseInt( _height ) + delta.height )
-						)
-					} }
-					onResizeStop={ ( event, direction, elt, delta ) => {
-						let _height = height
-						if ( _height === '' || _height === undefined ) {
-							_height = defaultMinHeight
-						}
-						setAttributes( {
-							[ heightAttrName ]: parseInt( _height ) + delta.height,
-						} )
-					} }
-					snap={ {
-						y: snapY,
-					} }
-					snapGap={ 10 }
-				>
-					{ isHovered && (
-						<ResizerTooltip
-							label={ __( 'Map', i18n ) }
-							enableWidth={ false }
-							height={
-								resizableRef.current?.state?.isResizing
-									? resizableRef.current?.state?.height
-									: isDefined( height )
-										? height
-										: DEFAULT_HEIGHT
+				<div className="stk-map-resizable-box-wrapper">
+					<ResizableBox
+						ref={ resizableRef }
+						showHandle={ isHovered || isSelected }
+						size={ {
+							height: isDefined( height ) ? height : DEFAULT_HEIGHT,
+						} }
+						minHeight={ defaultMinHeight }
+						enable={ { bottom: true } }
+						onResize={ ( event, direction, elt, delta ) => {
+							let _height = height
+							if ( _height === '' || _height === undefined ) {
+								_height = defaultMinHeight
 							}
-							heightUnits={ [ 'px' ] }
-							onChangeHeight={ ( { value } ) => {
-								setAttributes( { [ heightAttrName ]: value } )
-							} }
-							defaultHeight={ DEFAULT_HEIGHT }
-							heightPlaceholder={ defaultMinHeight }
-						/>
-					) }
-					<div className="stk-map-resizer-wrapper">
+							setSnapY(
+								getSnapYBetween( parseInt( _height ) + delta.height )
+							)
+						} }
+						onResizeStop={ ( event, direction, elt, delta ) => {
+							let _height = height
+							if ( _height === '' || _height === undefined ) {
+								_height = defaultMinHeight
+							}
+							setAttributes( {
+								[ heightAttrName ]: parseInt( _height ) + delta.height,
+							} )
+						} }
+						snap={ {
+							y: snapY,
+						} }
+						snapGap={ 10 }
+					>
+						{ isHovered && (
+							<ResizerTooltip
+								label={ __( 'Map', i18n ) }
+								enableWidth={ false }
+								height={
+									resizableRef.current?.state?.isResizing
+										? resizableRef.current?.state?.height
+										: isDefined( height )
+											? height
+											: DEFAULT_HEIGHT
+								}
+								heightUnits={ [ 'px' ] }
+								onChangeHeight={ ( { value } ) => {
+									setAttributes( { [ heightAttrName ]: value } )
+								} }
+								defaultHeight={ DEFAULT_HEIGHT }
+								heightPlaceholder={ defaultMinHeight }
+							/>
+						) }
 						{ isDefined( apiKey ) ? (
 							<div
+								className="stk-block-map__canvas"
 								ref={ canvasRef }
-								style={ {
-									height: `${ getHeight( attributes ) }px`,
-									width: '100%',
-								} }
 							/>
 						) : (
 							<SandBox html={ html } />
 						) }
-					</div>
-					<MarginBottom />
-				</ResizableBox>
+					</ResizableBox>
+				</div>
+				<MarginBottom />
 			</BlockDiv>
 		</>
 	)
