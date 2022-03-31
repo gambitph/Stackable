@@ -5,6 +5,7 @@ import { MapStyles } from './style'
 import mapStyleOptions from './map-styles'
 import {
 	DEFAULT_HEIGHT,
+	DEFAULT_MIN_HEIGHT,
 	DEFAULT_ICON_SIZE,
 	DEFAULT_ICON_COLOR,
 	DEFAULT_ICON_ANCHOR_POSITION_X,
@@ -18,6 +19,7 @@ import {
 	getMapOptions,
 	getLocation,
 	getPathFromSvg,
+	DEFAULT_ZOOM,
 } from './util'
 /**
  * External dependencies
@@ -190,13 +192,13 @@ const Edit = props => {
 		deviceType === 'Tablet'
 			? isDefined( attributes[ getAttributeName( 'height' ) ] )
 				? attributes[ getAttributeName( 'height' ) ]
-				: DEFAULT_HEIGHT
+				: DEFAULT_MIN_HEIGHT
 			: deviceType === 'Mobile'
 				? isDefined( attributes[ getAttributeName( 'height', 'tablet' ) ] )
 					? attributes[ getAttributeName( 'height', 'tablet' ) ]
 					: isDefined( attributes[ getAttributeName( 'height' ) ] )
-						? attributes[ getAttributeName( 'height' ) ] : DEFAULT_HEIGHT
-				: DEFAULT_HEIGHT
+						? attributes[ getAttributeName( 'height' ) ] : DEFAULT_MIN_HEIGHT
+				: DEFAULT_MIN_HEIGHT
 	, [ deviceType ] )
 
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
@@ -259,6 +261,26 @@ const Edit = props => {
 
 	const html = getIframe( attributes, iFrameRef )
 
+	useEffect( () => {
+		console.log( 'height change' )
+		const getIframe = () => {
+			const { address, zoom } = attributes
+			const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
+			const src = `https://maps.google.com/maps?q=${ address || 'Philippines' }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
+			return (
+				`<iframe
+						title="${ iframeTitle }"
+						src="${ src }"
+						style="border:0;width:100%;max-width:none;height:100%;max-height:none;}"
+						aria-hidden="false"
+						tabIndex="0"
+						allowfullscreen
+						loading="lazy"
+					></iframe>`
+			)
+		}
+		getIframe()
+	}, [ height ] )
 	useEffect( () => {
 		__unstableMarkNextChangeAsNotPersistent()
 		setAttributes( { usesApiKey: isDefined( apiKey ) } )
@@ -368,7 +390,7 @@ const Edit = props => {
 					id="general"
 				>
 					{ canUpdateAPIKey && ! isDefined( apiKey ) && (
-						<Notice status="info" isDismissible={ false }>
+						<Notice className="stk-block-map__api-key-notice" status="info" isDismissible={ false }>
 							{ __( 'Some features require a Google Map API Key.' ) },{ ' ' }
 							<a
 								target="_blank"
@@ -404,7 +426,8 @@ const Edit = props => {
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="height"
-						min={ 0 }
+						min={ 200 }
+						max={ 1000 }
 						step={ 1 }
 						allowReset={ true }
 						placeholder=""
@@ -476,44 +499,44 @@ const Edit = props => {
 					</div>
 					<small>Learn how to use <a href="#0">Custom Map styles</a>.</small>
 				</PanelAdvancedSettings>
-				<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
-					<PanelAdvancedSettings
-						title={ __( 'Map Marker', i18n ) }
-						initialOpen={ false }
-						disabled={ ! isDefined( apiKey ) }
-						checked={
-							usesApiKey
-								? showMarker
-								: isDefined( location )
-									? false
-									: true
-						}
-						onChange={ showMarker =>
-							updateBlockAttributes( clientId, { showMarker } )
-						}
-						id="map-marker"
-					>
-						{ isDefined( apiKey ) && <Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ false } /> }
-						{ icon && <AdvancedRangeControl
-							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
-							attribute="iconAnchorPositionX"
-							min={ -1000 }
-							sliderMax={ 1000 }
-							step={ 10 }
-							allowReset={ true }
-							placeholder=""
-						/> }
-						{ icon && <AdvancedRangeControl
-							label={ __( 'Vertical Icon Anchor Point', i18n ) }
-							attribute="iconAnchorPositionY"
-							min={ -1000 }
-							sliderMax={ 1000 }
-							step={ 10 }
-							allowReset={ true }
-							placeholder=""
-						/> }
-					</PanelAdvancedSettings>
-				</div>
+				<PanelAdvancedSettings
+					title={ __( 'Map Marker', i18n ) }
+					initialOpen={ false }
+					disabled={ ! usesApiKey }
+					checked={
+						usesApiKey
+							? showMarker
+							: isDefined( location )
+								? false
+								: true
+					}
+					onChange={ showMarker =>
+						updateBlockAttributes( clientId, { showMarker } )
+					}
+					id="map-marker"
+				>
+					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
+						<Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ false } />
+					</div>
+					{ icon && <AdvancedRangeControl
+						label={ __( 'Horizontal Icon Anchor Point', i18n ) }
+						attribute="iconAnchorPositionX"
+						min={ -1000 }
+						sliderMax={ 1000 }
+						step={ 10 }
+						allowReset={ true }
+						placeholder=""
+					/> }
+					{ icon && <AdvancedRangeControl
+						label={ __( 'Vertical Icon Anchor Point', i18n ) }
+						attribute="iconAnchorPositionY"
+						min={ -1000 }
+						sliderMax={ 1000 }
+						step={ 10 }
+						allowReset={ true }
+						placeholder=""
+					/> }
+				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
 			<Advanced.InspectorControls />
@@ -588,7 +611,6 @@ const Edit = props => {
 					) }
 				</ResizableBox>
 			</BlockDiv>
-			<MarginBottom />
 		</>
 	)
 }

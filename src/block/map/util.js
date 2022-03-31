@@ -3,7 +3,8 @@ import { i18n } from 'stackable'
 import mapStyleOptions from './map-styles'
 
 export const DEFAULT_HEIGHT = 200
-export const DEFAULT_ZOOM = 10
+export const DEFAULT_MIN_HEIGHT = 0
+export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
 export const DEFAULT_LOCATION = { lat: 14.584696402657487, lng: 120.9817962698239 }
 export const DEFAULT_ICON_SIZE = 10
@@ -77,7 +78,7 @@ export const getIframe = attributes => {
 		`<iframe
 				title="${ iframeTitle }"
 				src="${ src }"
-				style="border:0;width:100%;max-width:none;height:${ getHeight( attributes ) }px;"
+				style="border:0;width:100%;max-width:none;height:100%;max-height:none;}"
 				aria-hidden="false"
 				tabIndex="0"
 				allowfullscreen
