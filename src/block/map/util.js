@@ -4,6 +4,7 @@ import mapStyleOptions from './map-styles'
 
 export const DEFAULT_HEIGHT = 300
 export const DEFAULT_ZOOM = 10
+export const DEFAULT_ADDRESS = 'Quezon City'
 export const DEFAULT_LOCATION = { lat: 14.584696402657487, lng: 120.9817962698239 }
 export const DEFAULT_ICON_SIZE = 10
 export const DEFAULT_ICON_OPACITY = 1.0
@@ -68,15 +69,15 @@ export const getMapOptions = ( attributes, mode = 'edit' ) => {
 	}
 }
 
-export const getIframe = ( attributes, mode = 'edit' ) => {
+export const getIframe = attributes => {
 	const { address } = attributes
 	const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
-	const src = `https://maps.google.com/maps?q=${ address }&t=&z=${ getZoom( attributes ) }&ie=UTF8&output=embed`
+	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ getZoom( attributes ) }&ie=UTF8&output=embed`
 	return (
 		`<iframe
 				title="${ iframeTitle }"
 				src="${ src }"
-				style="pointer-events:${ mode === 'edit' ? 'none' : 'auto' };border:0;width:100%;max-width:none;height:${ getHeight( attributes ) }px;"
+				style="border:0;width:100%;max-width:none;height:${ getHeight( attributes ) }px;"
 				aria-hidden="false"
 				tabIndex="0"
 				allowfullscreen

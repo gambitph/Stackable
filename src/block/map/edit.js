@@ -129,7 +129,7 @@ const Edit = props => {
 		clientId,
 		attributes,
 		className,
-		isHovered, // FIXME: Why is this always undefined?
+		isHovered,
 		isSelected,
 		setAttributes,
 	} = props
@@ -550,20 +550,22 @@ const Edit = props => {
 							heightPlaceholder={ defaultMinHeight }
 						/>
 					) }
-					{ isDefined( apiKey ) ? (
-						<div
-							ref={ canvasRef }
-							style={ {
-								height: `${ getHeight( attributes ) }px`,
-								width: '100%',
-							} }
-						/>
-					) : (
-						<SandBox html={ html } />
-					) }
+					<div className="stk-map-resizer-wrapper">
+						{ isDefined( apiKey ) ? (
+							<div
+								ref={ canvasRef }
+								style={ {
+									height: `${ getHeight( attributes ) }px`,
+									width: '100%',
+								} }
+							/>
+						) : (
+							<SandBox html={ html } />
+						) }
+					</div>
+					<MarginBottom />
 				</ResizableBox>
 			</BlockDiv>
-			<MarginBottom />
 		</>
 	)
 }
