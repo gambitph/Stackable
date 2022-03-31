@@ -11,8 +11,6 @@ import {
 	DEFAULT_ICON_ANCHOR_POSITION_Y,
 	DEFAULT_ICON_OPACITY,
 	DEFAULT_ICON_ROTATION,
-	DEFAULT_ZOOM,
-	getHeight,
 	initMapLibrary,
 	isDefined,
 	getSnapYBetween,
@@ -160,6 +158,7 @@ const Edit = props => {
 		showZoomButtons,
 		usesApiKey,
 		zoom,
+		htmlTag,
 	} = attributes
 
 	useGeneratedCss( attributes )
@@ -345,6 +344,7 @@ const Edit = props => {
 		address,
 		deviceType,
 		height,
+		htmlTag,
 		location,
 		mapStyle,
 		customMapStyle,
@@ -419,92 +419,101 @@ const Edit = props => {
 						allowReset={ true }
 						placeholder=""
 					/>
-					<AdvancedToggleControl
-						label={ __( 'Enable Dragging', i18n ) }
-						attribute="isDraggable"
-						defaultValue={ true }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Full Screen Button', i18n ) }
-						attribute="showFullScreenButton"
-						defaultValue={ true }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Map Type Buttons', i18n ) }
-						attribute="showMapTypeButtons"
-						defaultValue={ true }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Street View Button', i18n ) }
-						attribute="showStreetViewButton"
-						defaultValue={ true }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Zoom Buttons', i18n ) }
-						attribute="showZoomButtons"
-						defaultValue={ true }
-					/>
+					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
+						<AdvancedToggleControl
+							label={ __( 'Enable Dragging', i18n ) }
+							attribute="isDraggable"
+							defaultValue={ true }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Full Screen Button', i18n ) }
+							attribute="showFullScreenButton"
+							defaultValue={ true }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Map Type Buttons', i18n ) }
+							attribute="showMapTypeButtons"
+							defaultValue={ true }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Street View Button', i18n ) }
+							attribute="showStreetViewButton"
+							defaultValue={ true }
+							className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Zoom Buttons', i18n ) }
+							attribute="showZoomButtons"
+							defaultValue={ true }
+						/>
+					</div>
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					title={ __( 'Map Style', i18n ) }
 					initialOpen={ false }
 					id="map-style"
 				>
-					<StyleControl
-						options={ mapStyleOptions }
-						value={ mapStyle }
-						onSelect={ style => {
-							setAttributes( { mapStyle: style.value } )
-							setAttributes( { customMapStyle: '' } )
-						} }
-					/>
-					<AdvancedTextControl
-						label={ __( 'Custom Map Style (Paste JSON here)', i18n ) }
-						isMultiline
-						attribute="customMapStyle"
-						onChange={ value => {
-							setAttributes( { customMapStyle: value } )
-							setAttributes( { mapStyle: '' } )
-						} }
-					/>
+					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
+						<StyleControl
+							options={ mapStyleOptions }
+							value={ mapStyle }
+							onSelect={ style => {
+								setAttributes( { mapStyle: style.value } )
+								setAttributes( { customMapStyle: '' } )
+							} }
+						/>
+					</div>
+					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
+						<AdvancedTextControl
+							label={ __( 'Custom Map Style (Paste JSON here)', i18n ) }
+							isMultiline
+							attribute="customMapStyle"
+							onChange={ value => {
+								setAttributes( { customMapStyle: value } )
+								setAttributes( { mapStyle: '' } )
+							} }
+						/>
+					</div>
 					<small>Learn how to use <a href="#0">Custom Map styles</a>.</small>
 				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					title={ __( 'Map Marker', i18n ) }
-					initialOpen={ false }
-					disabled={ ! isDefined( apiKey ) }
-					checked={
-						usesApiKey
-							? showMarker
-							: isDefined( location )
-								? false
-								: true
-					}
-					onChange={ showMarker =>
-						updateBlockAttributes( clientId, { showMarker } )
-					}
-					id="map-marker"
-				>
-					{ isDefined( apiKey ) && <Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ false } /> }
-					{ icon && <AdvancedRangeControl
-						label={ __( 'Horizontal Icon Anchor Point', i18n ) }
-						attribute="iconAnchorPositionX"
-						min={ -1000 }
-						sliderMax={ 1000 }
-						step={ 10 }
-						allowReset={ true }
-						placeholder=""
-					/> }
-					{ icon && <AdvancedRangeControl
-						label={ __( 'Vertical Icon Anchor Point', i18n ) }
-						attribute="iconAnchorPositionY"
-						min={ -1000 }
-						sliderMax={ 1000 }
-						step={ 10 }
-						allowReset={ true }
-						placeholder=""
-					/> }
-				</PanelAdvancedSettings>
+				<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
+					<PanelAdvancedSettings
+						title={ __( 'Map Marker', i18n ) }
+						initialOpen={ false }
+						disabled={ ! isDefined( apiKey ) }
+						checked={
+							usesApiKey
+								? showMarker
+								: isDefined( location )
+									? false
+									: true
+						}
+						onChange={ showMarker =>
+							updateBlockAttributes( clientId, { showMarker } )
+						}
+						id="map-marker"
+					>
+						{ isDefined( apiKey ) && <Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ false } /> }
+						{ icon && <AdvancedRangeControl
+							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
+							attribute="iconAnchorPositionX"
+							min={ -1000 }
+							sliderMax={ 1000 }
+							step={ 10 }
+							allowReset={ true }
+							placeholder=""
+						/> }
+						{ icon && <AdvancedRangeControl
+							label={ __( 'Vertical Icon Anchor Point', i18n ) }
+							attribute="iconAnchorPositionY"
+							min={ -1000 }
+							sliderMax={ 1000 }
+							step={ 10 }
+							allowReset={ true }
+							placeholder=""
+						/> }
+					</PanelAdvancedSettings>
+				</div>
 			</InspectorStyleControls>
 
 			<Advanced.InspectorControls />
@@ -519,69 +528,67 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv className={ blockClassNames }>
-				<div className="stk-map-resizable-box-wrapper">
-					<ResizableBox
-						ref={ resizableRef }
-						showHandle={ isHovered || isSelected }
-						size={ {
-							height: isDefined( height ) ? height : DEFAULT_HEIGHT,
-						} }
-						minHeight={ defaultMinHeight }
-						enable={ { bottom: true } }
-						onResize={ ( event, direction, elt, delta ) => {
-							let _height = height
-							if ( _height === '' || _height === undefined ) {
-								_height = defaultMinHeight
+				<ResizableBox
+					ref={ resizableRef }
+					showHandle={ isHovered || isSelected }
+					size={ {
+						height: isDefined( height ) ? height : DEFAULT_HEIGHT,
+					} }
+					minHeight={ defaultMinHeight }
+					enable={ { bottom: true } }
+					onResize={ ( event, direction, elt, delta ) => {
+						let _height = height
+						if ( _height === '' || _height === undefined ) {
+							_height = defaultMinHeight
+						}
+						setSnapY(
+							getSnapYBetween( parseInt( _height ) + delta.height )
+						)
+					} }
+					onResizeStop={ ( event, direction, elt, delta ) => {
+						let _height = height
+						if ( _height === '' || _height === undefined ) {
+							_height = defaultMinHeight
+						}
+						setAttributes( {
+							[ heightAttrName ]: parseInt( _height ) + delta.height,
+						} )
+					} }
+					snap={ {
+						y: snapY,
+					} }
+					snapGap={ 10 }
+				>
+					{ isHovered && (
+						<ResizerTooltip
+							label={ __( 'Map', i18n ) }
+							enableWidth={ false }
+							height={
+								resizableRef.current?.state?.isResizing
+									? resizableRef.current?.state?.height
+									: isDefined( height )
+										? height
+										: DEFAULT_HEIGHT
 							}
-							setSnapY(
-								getSnapYBetween( parseInt( _height ) + delta.height )
-							)
-						} }
-						onResizeStop={ ( event, direction, elt, delta ) => {
-							let _height = height
-							if ( _height === '' || _height === undefined ) {
-								_height = defaultMinHeight
-							}
-							setAttributes( {
-								[ heightAttrName ]: parseInt( _height ) + delta.height,
-							} )
-						} }
-						snap={ {
-							y: snapY,
-						} }
-						snapGap={ 10 }
-					>
-						{ isHovered && (
-							<ResizerTooltip
-								label={ __( 'Map', i18n ) }
-								enableWidth={ false }
-								height={
-									resizableRef.current?.state?.isResizing
-										? resizableRef.current?.state?.height
-										: isDefined( height )
-											? height
-											: DEFAULT_HEIGHT
-								}
-								heightUnits={ [ 'px' ] }
-								onChangeHeight={ ( { value } ) => {
-									setAttributes( { [ heightAttrName ]: value } )
-								} }
-								defaultHeight={ DEFAULT_HEIGHT }
-								heightPlaceholder={ defaultMinHeight }
-							/>
-						) }
-						{ isDefined( apiKey ) ? (
-							<div
-								className="stk-block-map__canvas"
-								ref={ canvasRef }
-							/>
-						) : (
-							<SandBox html={ html } />
-						) }
-					</ResizableBox>
-				</div>
-				<MarginBottom />
+							heightUnits={ [ 'px' ] }
+							onChangeHeight={ ( { value } ) => {
+								setAttributes( { [ heightAttrName ]: value } )
+							} }
+							defaultHeight={ DEFAULT_HEIGHT }
+							heightPlaceholder={ defaultMinHeight }
+						/>
+					) }
+					{ isDefined( apiKey ) ? (
+						<div
+							className="stk-block-map__canvas"
+							ref={ canvasRef }
+						/>
+					) : (
+						<SandBox html={ html } />
+					) }
+				</ResizableBox>
 			</BlockDiv>
+			<MarginBottom />
 		</>
 	)
 }

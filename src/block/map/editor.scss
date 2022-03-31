@@ -4,3 +4,7 @@
 	display: block !important;
 }
 
+.stk-block-map__adv-option:is(.stk-block-map__adv-option__disabled) {
+	opacity: 0.3;
+	pointer-events: none;
+}

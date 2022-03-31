@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import mapStyleOptions from './map-styles'
 
-export const DEFAULT_HEIGHT = 300
+export const DEFAULT_HEIGHT = 200
 export const DEFAULT_ZOOM = 10
 export const DEFAULT_ADDRESS = 'Quezon City'
 export const DEFAULT_LOCATION = { lat: 14.584696402657487, lng: 120.9817962698239 }
@@ -48,7 +48,7 @@ export const getMapStyles = ( { mapStyle, customMapStyle } ) => {
 	return styleJSON
 }
 
-export const getMapOptions = ( attributes, mode = 'edit' ) => {
+export const getMapOptions = attributes => {
 	const {
 		isDraggable,
 		showFullScreenButton,

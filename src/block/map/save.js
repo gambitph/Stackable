@@ -70,7 +70,6 @@ export const Save = props => {
 	] )
 
 	const dataAttributes = {
-		'data-value-zero': 0,
 		'data-icon-path': getPathFromSvg( icon ),
 		'data-icon-scale': ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
 		'data-icon-color': iconColor1 || DEFAULT_ICON_COLOR,
@@ -98,10 +97,12 @@ export const Save = props => {
 			<MapStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			{ usesApiKey ? (
-				<div
-					{ ...dataAttributes }
-					className="stk-block-map__canvas"
-				/>
+				<div className="stk-block-map__canvas-wrapper">
+					<div
+						{ ...dataAttributes }
+						className="stk-block-map__canvas"
+					/>
+				</div>
 			) : (
 				<RawHTML>{ getIframe( attributes ) }</RawHTML>
 			) }
