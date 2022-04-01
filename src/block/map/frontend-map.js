@@ -6,7 +6,6 @@ import domReady from '@wordpress/dom-ready'
 class StackableMap {
 	init = () => {
 		const apiKey = window.stackable.googleApiKey
-
 		if ( apiKey ) {
 			const apiURL = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places`
 			// eslint-disable-next-line no-undef
@@ -15,8 +14,10 @@ class StackableMap {
 			} else {
 				this.loadScriptAsync( apiURL ).then( this.initMap )
 			}
+		} else {
+			this.removeCanvas()
 		}
-	};
+	}
 
 	loadScriptAsync = src => {
 		return new Promise( resolve => {
@@ -51,6 +52,7 @@ class StackableMap {
 				showMarker,
 				showStreetViewButton,
 				showZoomButtons,
+				uniqueId,
 				zoom,
 			} = mapCanvas.dataset
 
@@ -68,8 +70,10 @@ class StackableMap {
 				parsedStyles = []
 			}
 
+			this.removeIframe( uniqueId )
+
 			const mapOptions = {
-				center: undefined,
+				center: parsedLocation,
 				isDraggable: isDraggable === 'true',
 				fullscreenControl: showFullScreenButton === 'true',
 				styles: parsedStyles,
@@ -110,9 +114,15 @@ class StackableMap {
 				}
 			}
 		} )
+	}
 
-		// Clean up the iframes if we are using the API.
-		;[].forEach.call( document.querySelectorAll( '.stk-block-map__iframe-wrapper' ), wrapper => {
+	removeCanvas = () => {
+		[].forEach.call( document.querySelectorAll( `.stk-block-map__canvas-wrapper` ), wrapper => {
+			wrapper.remove()
+		} )
+	}
+	removeIframe = uniqueId => {
+		[].forEach.call( document.querySelectorAll( `.stk-block-map__embedded-map-${ uniqueId }` ), wrapper => {
 			wrapper.remove()
 		} )
 	}

@@ -4,6 +4,7 @@
 import { MapStyles } from './style'
 import mapStyleOptions from './map-styles'
 import {
+	DEFAULT_ADDRESS,
 	DEFAULT_HEIGHT,
 	DEFAULT_ICON_ANCHOR_POSITION_X,
 	DEFAULT_ICON_ANCHOR_POSITION_Y,
@@ -13,7 +14,6 @@ import {
 	DEFAULT_ICON_SIZE,
 	DEFAULT_MIN_HEIGHT,
 	DEFAULT_ZOOM,
-	getIframe,
 	getLocation,
 	getMapOptions,
 	getPathFromSvg,
@@ -64,7 +64,6 @@ import {
 	ExternalLink,
 	Notice,
 	ResizableBox,
-	SandBox,
 	TextControl,
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalSpacer as Spacer,
@@ -164,6 +163,9 @@ const Edit = props => {
 		htmlTag,
 	} = attributes
 
+	// How do I rename the destructured property bottom?
+	// const { bottom: blockMarginBottom = 24 } = blockMargin
+
 	useGeneratedCss( attributes )
 
 	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
@@ -202,7 +204,6 @@ const Edit = props => {
 
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 
-	const iFrameRef = useRef()
 	const mapRef = useRef()
 	const markerRef = useRef()
 	const canvasRef = useRef()
@@ -211,6 +212,8 @@ const Edit = props => {
 	// TODO: check if user is allowed to update the API key.
 	const canUpdateAPIKey = true
 	const apiKey = settings.stackable_google_maps_api_key
+
+	// console.log( 'BOTTOM MARGIN:', blockMargin, 'HEIGHT:', height, 'SUM:', parseInt( blockMarginBottom, 10 ) + parseInt( blockMarginBottom, 10 ) )
 
 	const initMarker = () => {
 		if ( mapRef.current ) {
@@ -258,27 +261,31 @@ const Edit = props => {
 		initMarker()
 	}
 
-	const html = getIframe( attributes, iFrameRef )
+	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
 
-	useEffect( () => {
-		const getIframe = () => {
-			const { address, zoom } = attributes
-			const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
-			const src = `https://maps.google.com/maps?q=${ address || 'Philippines' }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
-			return (
-				`<iframe
-						title="${ iframeTitle }"
-						src="${ src }"
-						style="border:0;width:100%;max-width:none;height:100%;max-height:none;}"
-						aria-hidden="false"
-						tabIndex="0"
-						allowfullscreen
-						loading="lazy"
-					></iframe>`
-			)
-		}
-		getIframe()
-	}, [ height ] )
+	// useEffect( () => {
+	// 	const updateIframe = () => {
+	// 		console.log( 'HEIGHT ----> ', height )
+	// 		const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
+	// 		const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
+	// 		return (
+	// 			`<iframe
+	// 					title="${ iframeTitle }"
+	// 					src="${ src }"
+	// 					style="border:0;width:100%;max-width:none;height:100%;max-height:none;}"
+	// 					aria-hidden="false"
+	// 					tabIndex="0"
+	// 					allowfullscreen
+	// 					loading="lazy"
+	// 				></iframe>`
+	// 		)
+	// 	}
+
+	// 	console.log( sandBoxRef.current )
+	// 	if ( sandBoxRef.current ) {
+	// 		updateIframe()
+	// 	}
+	// }, [ address, zoom, height, deviceType, sandBoxRef.current ] )
 	useEffect( () => {
 		__unstableMarkNextChangeAsNotPersistent()
 		setAttributes( { usesApiKey: isDefined( apiKey ) } )
@@ -501,7 +508,7 @@ const Edit = props => {
 							help={
 								<Fragment>
 									<ExternalLink href="#0">
-										{ __( 'Learn how to use Custom Map style', i18n ) }
+										{ __( 'Learn how to use Custom Map Style', i18n ) }
 									</ExternalLink>
 								</Fragment>
 							}
@@ -513,11 +520,9 @@ const Edit = props => {
 					title={ __( 'Map Marker', i18n ) }
 					initialOpen={ false }
 					checked={
-						usesApiKey
+						usesApiKey && isDefined( apiKey )
 							? showMarker
-							: isDefined( location )
-								? false
-								: true
+							: false
 					}
 					onChange={ showMarker =>
 						updateBlockAttributes( clientId, { showMarker } )
@@ -527,24 +532,26 @@ const Edit = props => {
 					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
 						<Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ false } />
 					</div>
-					{ icon && <AdvancedRangeControl
-						label={ __( 'Horizontal Icon Anchor Point', i18n ) }
-						attribute="iconAnchorPositionX"
-						min={ -1000 }
-						sliderMax={ 1000 }
-						step={ 10 }
-						allowReset={ true }
-						placeholder=""
-					/> }
-					{ icon && <AdvancedRangeControl
-						label={ __( 'Vertical Icon Anchor Point', i18n ) }
-						attribute="iconAnchorPositionY"
-						min={ -1000 }
-						sliderMax={ 1000 }
-						step={ 10 }
-						allowReset={ true }
-						placeholder=""
-					/> }
+					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
+						{ icon && <AdvancedRangeControl
+							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
+							attribute="iconAnchorPositionX"
+							min={ -1000 }
+							sliderMax={ 1000 }
+							step={ 10 }
+							allowReset={ true }
+							placeholder=""
+						/> }
+						{ icon && <AdvancedRangeControl
+							label={ __( 'Vertical Icon Anchor Point', i18n ) }
+							attribute="iconAnchorPositionY"
+							min={ -1000 }
+							sliderMax={ 1000 }
+							step={ 10 }
+							allowReset={ true }
+							placeholder=""
+						/> }
+					</div>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
@@ -564,7 +571,7 @@ const Edit = props => {
 					ref={ resizableRef }
 					showHandle={ isHovered || isSelected }
 					size={ {
-						height: isDefined( height ) ? height : DEFAULT_HEIGHT,
+						height: parseInt( height, 10 ) || DEFAULT_HEIGHT,
 					} }
 					minHeight={ defaultMinHeight }
 					enable={ { bottom: true } }
@@ -611,12 +618,19 @@ const Edit = props => {
 						/>
 					) }
 					{ isDefined( apiKey ) ? (
-						<div
-							className="stk-block-map__canvas"
-							ref={ canvasRef }
-						/>
+						<div className="stk-block-map__canvas-wrapper">
+							<div
+								className="stk-block-map__canvas"
+								ref={ canvasRef }
+							/>
+						</div>
 					) : (
-						<SandBox className="stk-block-map__sand-box" html={ html } />
+						<iframe
+							title={ __( 'Embedded content from Google Map Platform.', i18n ) }
+							src={ src }
+							className="stk-block-map__embedded-map"
+							frameBorder="0"
+						/>
 					) }
 				</ResizableBox>
 			</BlockDiv>

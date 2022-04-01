@@ -22,6 +22,13 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const getStyleParams = () => {
 	return [
 		{
+			selector: '.stk-block-map__embedded-map',
+			styleRule: 'height',
+			attrName: 'height',
+			format: '%spx',
+			responsive: 'all',
+		},
+		{
 			selector: '.stk-block-map__canvas-wrapper',
 			styleRule: 'height',
 			attrName: 'height',

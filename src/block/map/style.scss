@@ -3,13 +3,9 @@
 	margin-right: var(--stk-alignment-margin-right, auto);
 }
 
-.stk-block-map iframe {
-	border: 0;
-	width: 100%;
-	max-width: none;
-}
-
-.stk-block-map__canvas-wrapper, .stk-block-map__canvas {
+.stk-block-map__canvas-wrapper,
+.stk-block-map__canvas,
+.stk-block-map__embedded-map {
 	width: 100%;
 	height: 100%;
 }

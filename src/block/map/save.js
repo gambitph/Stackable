@@ -13,6 +13,7 @@ import {
 	getMapStyles,
 	getPathFromSvg,
 	getZoom,
+	DEFAULT_HEIGHT,
 } from './util'
 import { MapStyles } from './style'
 
@@ -57,6 +58,7 @@ export const Save = props => {
 		showStreetViewButton,
 		showZoomButtons,
 		usesApiKey,
+		uniqueId,
 	} = attributes
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
@@ -87,6 +89,7 @@ export const Save = props => {
 		'data-show-street-view-button': showStreetViewButton,
 		'data-show-zoom-buttons': showZoomButtons,
 		'data-uses-api-key': usesApiKey,
+		'data-unique-id': uniqueId,
 		'data-zoom': getZoom( attributes ),
 	}
 
@@ -97,15 +100,20 @@ export const Save = props => {
 		>
 			<MapStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ usesApiKey &&
-				<div
-					{ ...dataAttributes }
-					className="stk-block-map__canvas"
-				/>
+			{ usesApiKey
+				? <>
+					<div
+						style={ { height: DEFAULT_HEIGHT } }
+						className={ `stk-block-map__canvas-wrapper stk-block-map__canvas-wrapper-${ uniqueId }` }>
+						<div
+							{ ...dataAttributes }
+							className="stk-block-map__canvas"
+						/>
+					</div>
+					<RawHTML>{ getIframe( attributes ) }</RawHTML>
+				</>
+				:	<RawHTML>{ getIframe( attributes ) }</RawHTML>
 			}
-			<div className="stk-block-map__iframe-wrapper">
-				<RawHTML>{ getIframe( attributes ) }</RawHTML>
-			</div>
 
 		</BlockDiv.Content>
 	)

@@ -2,11 +2,13 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import mapStyleOptions from './map-styles'
 
-export const DEFAULT_HEIGHT = 300
-export const DEFAULT_MIN_HEIGHT = 0
+export const DEFAULT_HEIGHT = 200
+// This is a magic number that prevents scrollbars and other weirdness.
+// Is this the width of the scrollbar?
+export const DEFAULT_MIN_HEIGHT = 21
 export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
-export const DEFAULT_LOCATION = { lat: 14.584696402657487, lng: 120.9817962698239 }
+export const DEFAULT_LOCATION = { lat: 14.680936247180512, lng: 121.04845461073226 }
 export const DEFAULT_ICON_SIZE = 10
 export const DEFAULT_ICON_OPACITY = 1.0
 export const DEFAULT_ICON_COLOR = '#000000'
@@ -71,18 +73,20 @@ export const getMapOptions = attributes => {
 }
 
 export const getIframe = attributes => {
-	const { address, height } = attributes
-	const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
+	const { address, uniqueId } = attributes
+	const iframeTitle = __( 'Embedded content from Google Maps Platform.', i18n )
 	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ getZoom( attributes ) }&ie=UTF8&output=embed`
 	return (
 		`<iframe
 				title="${ iframeTitle }"
 				src="${ src }"
-				style="border:0;width:100%;max-width:none;max-height:none;height:${ height || DEFAULT_HEIGHT }px;"
+				style="border:0;width:100%;max-width:none;max-height:none;height:100%;"
 				aria-hidden="false"
 				tabIndex="0"
 				allowfullscreen
 				loading="lazy"
+				class="stk-block-map__embedded-map-${ uniqueId } stk-block-map__embedded-map"
+				frameBorder="0"
 			></iframe>`
 	)
 }
