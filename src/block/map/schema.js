@@ -8,7 +8,6 @@ import {
 	CustomCSS,
 	EffectsAnimations,
 	Icon,
-	Image,
 	Responsive,
 	Transform,
 	Link,

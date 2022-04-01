@@ -2,14 +2,14 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import mapStyleOptions from './map-styles'
 
-export const DEFAULT_HEIGHT = 200
+export const DEFAULT_HEIGHT = 300
 export const DEFAULT_MIN_HEIGHT = 0
 export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
 export const DEFAULT_LOCATION = { lat: 14.584696402657487, lng: 120.9817962698239 }
 export const DEFAULT_ICON_SIZE = 10
 export const DEFAULT_ICON_OPACITY = 1.0
-export const DEFAULT_ICON_COLOR = 'black'
+export const DEFAULT_ICON_COLOR = '#000000'
 export const DEFAULT_ICON_ROTATION = 0
 export const DEFAULT_ICON_ANCHOR_POSITION_X = 0
 export const DEFAULT_ICON_ANCHOR_POSITION_Y = 0
@@ -71,14 +71,14 @@ export const getMapOptions = attributes => {
 }
 
 export const getIframe = attributes => {
-	const { address } = attributes
+	const { address, height } = attributes
 	const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
 	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ getZoom( attributes ) }&ie=UTF8&output=embed`
 	return (
 		`<iframe
 				title="${ iframeTitle }"
 				src="${ src }"
-				style="border:0;width:100%;max-width:none;height:100%;max-height:none;}"
+				style="border:0;width:100%;max-width:none;max-height:none;height:${ height || DEFAULT_HEIGHT }px;"
 				aria-hidden="false"
 				tabIndex="0"
 				allowfullscreen
@@ -86,8 +86,6 @@ export const getIframe = attributes => {
 			></iframe>`
 	)
 }
-
-export const getHeight = ( { height } ) => isDefined( height ) ? height : DEFAULT_HEIGHT
 
 export const getZoom = ( { zoom } ) => isDefined( zoom ) ? zoom : DEFAULT_ZOOM
 

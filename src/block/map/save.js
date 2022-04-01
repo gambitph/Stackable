@@ -86,6 +86,7 @@ export const Save = props => {
 		'data-marker-title': address,
 		'data-show-street-view-button': showStreetViewButton,
 		'data-show-zoom-buttons': showZoomButtons,
+		'data-uses-api-key': usesApiKey,
 		'data-zoom': getZoom( attributes ),
 	}
 
@@ -96,16 +97,16 @@ export const Save = props => {
 		>
 			<MapStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ usesApiKey ? (
-				<div className="stk-block-map__canvas-wrapper">
-					<div
-						{ ...dataAttributes }
-						className="stk-block-map__canvas"
-					/>
-				</div>
-			) : (
+			{ usesApiKey &&
+				<div
+					{ ...dataAttributes }
+					className="stk-block-map__canvas"
+				/>
+			}
+			<div className="stk-block-map__iframe-wrapper">
 				<RawHTML>{ getIframe( attributes ) }</RawHTML>
-			) }
+			</div>
+
 		</BlockDiv.Content>
 	)
 }

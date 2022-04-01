@@ -5,21 +5,21 @@ import { MapStyles } from './style'
 import mapStyleOptions from './map-styles'
 import {
 	DEFAULT_HEIGHT,
-	DEFAULT_MIN_HEIGHT,
-	DEFAULT_ICON_SIZE,
-	DEFAULT_ICON_COLOR,
 	DEFAULT_ICON_ANCHOR_POSITION_X,
 	DEFAULT_ICON_ANCHOR_POSITION_Y,
+	DEFAULT_ICON_COLOR,
 	DEFAULT_ICON_OPACITY,
 	DEFAULT_ICON_ROTATION,
+	DEFAULT_ICON_SIZE,
+	DEFAULT_MIN_HEIGHT,
+	DEFAULT_ZOOM,
+	getIframe,
+	getLocation,
+	getMapOptions,
+	getPathFromSvg,
+	getSnapYBetween,
 	initMapLibrary,
 	isDefined,
-	getSnapYBetween,
-	getIframe,
-	getMapOptions,
-	getLocation,
-	getPathFromSvg,
-	DEFAULT_ZOOM,
 } from './util'
 /**
  * External dependencies
@@ -29,18 +29,16 @@ import {
 	settingsUrl, i18n, settings, version as VERSION,
 } from 'stackable'
 import {
-	AdvancedToggleControl,
 	AdvancedRangeControl,
-	InspectorStyleControls,
 	AdvancedTextControl,
+	AdvancedToggleControl,
+	InspectorStyleControls,
 	InspectorTabs,
 	PanelAdvancedSettings,
 	ResizerTooltip,
 	StyleControl,
 } from '~stackable/components'
-import {
-	useBlockHoverClass, useBlockContext, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockHoverClass, useDeviceType } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -62,15 +60,20 @@ import { getAttributeName } from '~stackable/util'
 /**
  * WordPress dependencies
  */
+import {
+	ExternalLink,
+	Notice,
+	ResizableBox,
+	SandBox,
+	TextControl,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	__experimentalSpacer as Spacer,
+} from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import {
 	Fragment, useEffect, useRef, useMemo, useState,
 } from '@wordpress/element'
-// import { applyFilters } from '@wordpress/hooks'
-import {
-	TextControl, SandBox, ResizableBox, Notice,
-} from '@wordpress/components'
 import { useDispatch } from '@wordpress/data'
 import { isEmpty } from 'lodash'
 
@@ -128,8 +131,6 @@ LocationControl.defaultProps = {
 	value: '',
 }
 
-const heightUnit = [ 'px', 'vh', '%' ]
-
 const Edit = props => {
 	const {
 		clientId,
@@ -169,7 +170,6 @@ const Edit = props => {
 	const deviceType = useDeviceType()
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { parentBlock } = useBlockContext( clientId )
 
 	// TODO: Allow special or layout blocks to disable the link for the image block,
 	// e.g. image box doesn't need the image to have a link since it has it's
@@ -186,7 +186,6 @@ const Edit = props => {
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
-	console.log( 'height:', height, 'heightAttName:', heightAttrName )
 	// Set default min height based on device type
 	const defaultMinHeight = useMemo( () =>
 		deviceType === 'Tablet'
@@ -262,7 +261,6 @@ const Edit = props => {
 	const html = getIframe( attributes, iFrameRef )
 
 	useEffect( () => {
-		console.log( 'height change' )
 		const getIframe = () => {
 			const { address, zoom } = attributes
 			const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
@@ -390,17 +388,23 @@ const Edit = props => {
 					id="general"
 				>
 					{ canUpdateAPIKey && ! isDefined( apiKey ) && (
-						<Notice className="stk-block-map__api-key-notice" status="info" isDismissible={ false }>
-							{ __( 'Some features require a Google Map API Key.' ) },{ ' ' }
-							<a
-								target="_blank"
-								href={ settingsUrl + '#editor-settings' }
-								rel="noreferrer"
-							>
-								{ __( 'Add API key here', i18n ) }
-							</a>
-						</Notice>
+						<>
+							<Notice className="stk-block-map__api-key-notice" status="info" isDismissible={ false }>
+								{ __( 'Some features require a Google API Key.' ) }{ ' ' }
+								<ExternalLink
+									type="link"
+									href={ settingsUrl + '#editor-settings' }
+									rel="next"
+								>
+									{ __( 'Add API key here.', i18n ) }
+								</ExternalLink>
+							</Notice>
+							<ExternalLink href="https://developers.google.com/maps/documentation/javascript/get-api-key">
+								{ __( 'Learn more about Google API Keys', i18n ) }
+							</ExternalLink>
+						</>
 					) }
+					<Spacer />
 					{ ! isDefined( apiKey ) ? (
 						<>
 							<AdvancedTextControl
@@ -462,7 +466,6 @@ const Edit = props => {
 							label={ __( 'Street View Button', i18n ) }
 							attribute="showStreetViewButton"
 							defaultValue={ true }
-							className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) }
 						/>
 						<AdvancedToggleControl
 							label={ __( 'Zoom Buttons', i18n ) }
@@ -495,14 +498,20 @@ const Edit = props => {
 								setAttributes( { customMapStyle: value } )
 								setAttributes( { mapStyle: '' } )
 							} }
+							help={
+								<Fragment>
+									<ExternalLink href="#0">
+										{ __( 'Learn how to use Custom Map style', i18n ) }
+									</ExternalLink>
+								</Fragment>
+							}
 						/>
 					</div>
-					<small>Learn how to use <a href="#0">Custom Map styles</a>.</small>
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
+					className={ classnames( 'stk-block-map__map-marker', { 'stk-block-map__map-marker__disabled': ! usesApiKey } ) }
 					title={ __( 'Map Marker', i18n ) }
 					initialOpen={ false }
-					disabled={ ! usesApiKey }
 					checked={
 						usesApiKey
 							? showMarker
@@ -607,10 +616,11 @@ const Edit = props => {
 							ref={ canvasRef }
 						/>
 					) : (
-						<SandBox html={ html } />
+						<SandBox className="stk-block-map__sand-box" html={ html } />
 					) }
 				</ResizableBox>
 			</BlockDiv>
+			<MarginBottom />
 		</>
 	)
 }

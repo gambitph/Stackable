@@ -40,7 +40,6 @@ export const MapStyles = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
-	console.log( getStyleParams() )
 	const mapStyles = useStyles( propsToPass.attributes, getStyleParams() )
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )

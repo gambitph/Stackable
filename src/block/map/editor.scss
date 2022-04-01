@@ -1,7 +1,20 @@
-// Fixes Google Map displaying blank on the editor due to display flex applied
-// on [data^=stackable/].
 [data-type="stackable/map"] {
+	// Fixes Google Map displaying blank on the editor due to display flex applied
+	// on [data^=stackable/].
 	display: block !important;
+
+	// Prevents the iframe wrapper from clipping the map.
+	& > div {
+		overflow: auto;
+	}
+
+}
+
+.stk-block-map__map-marker:is(.stk-block-map__map-marker__disabled) {
+	.editor-panel-toggle-settings__panel-title {
+		opacity: 0.3;
+		pointer-events: none;
+	}
 }
 
 .stk-block-map__adv-option:is(.stk-block-map__adv-option__disabled) {
@@ -12,3 +25,5 @@
 .stk-block-map__api-key-notice {
 	margin: 0 0 16px;
 }
+
+

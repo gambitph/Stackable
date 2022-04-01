@@ -3,7 +3,6 @@
  */
 import domReady from '@wordpress/dom-ready'
 
-const DEFAULT_LOCATION = { lat: 14.584696402657487, lng: 120.9817962698239 }
 class StackableMap {
 	init = () => {
 		const apiKey = window.stackable.googleApiKey
@@ -59,7 +58,7 @@ class StackableMap {
 			try {
 				parsedLocation = JSON.parse( location )
 			} catch ( e ) {
-				parsedLocation = DEFAULT_LOCATION
+				parsedLocation = undefined
 			}
 
 			let parsedStyles
@@ -70,7 +69,7 @@ class StackableMap {
 			}
 
 			const mapOptions = {
-				center: parsedLocation,
+				center: undefined,
 				isDraggable: isDraggable === 'true',
 				fullscreenControl: showFullScreenButton === 'true',
 				styles: parsedStyles,
@@ -111,7 +110,12 @@ class StackableMap {
 				}
 			}
 		} )
-	};
+
+		// Clean up the iframes if we are using the API.
+		;[].forEach.call( document.querySelectorAll( '.stk-block-map__iframe-wrapper' ), wrapper => {
+			wrapper.remove()
+		} )
+	}
 }
 
 window.stackableMap = new StackableMap()
