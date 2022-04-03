@@ -16,25 +16,46 @@ export const EFFECTS = [
 				removeEffect: block => {},
 				isPremium: false,
 			},
-		],
-	},
-	{
-		effectsType: 'text',
-		effects: [
 			{
-				value: 'shadow',
-				label: __( 'Shadow', i18n ),
+				value: 'background-color',
+				label: __( 'Background Color', i18n ),
 				attributes: {
-					textShadow: 'none',
-					textShadowHover: '12px 4px 2px rgba(0, 0, 0, 0.5)',
+
 				},
+				onApplyEffect: block => {},
+				removeEffect: block => {},
+				isPremium: false,
+			},
+			{
+				value: 'border',
+				label: __( 'Border', i18n ),
+				attributes: {
+					containerBorderColorHover: 'var(--stk-global-color-20226, #008de4)',
+				},
+				onApplyEffect: block => {},
+				removeEffect: block => {},
+				isPremium: false,
 			},
 		],
 	},
 	{
-		effectsType: 'button',
+		effectsType: 'image',
 		effects: [
-			{},
+			{
+				value: 'image-zoom',
+				label: __( 'Image Zoom', i18n ),
+				attributes: {
+					imageZoomHover: '1.25',
+				},
+			},
+			{
+				value: 'image-greyscale',
+				label: __( 'Greyscale Image', i18n ),
+				attributes: {
+					imageFilter: 'grayscale(1)',
+					imageFilterHover: 'grayscale(0)',
+				},
+			},
 		],
 	},
 ]

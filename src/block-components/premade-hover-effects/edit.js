@@ -27,6 +27,9 @@ export const Edit = props => {
 
 	const effects = useMemo( () => {
 		const blockEffects = applyFilters( 'stackable.hover-effects.list', EFFECTS )
+		if ( isPro ) {
+			return blockEffects.filter( ( { effectsType: e } ) => props.effects.includes( e ) || e === 'transform' )
+		}
 		return blockEffects.filter( ( { effectsType: e } ) => props.effects.includes( e ) )
 	}, [] )
 
