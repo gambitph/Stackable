@@ -108,7 +108,6 @@ const LocationControl = props => {
 				if ( ! place.geometry ) {
 					return
 				}
-				// const address = place.formatted_address
 				props.onPlaceChange( place )
 			} )
 		}
@@ -162,20 +161,12 @@ const Edit = props => {
 		htmlTag,
 	} = attributes
 
-	// How do I rename the destructured property bottom?
-	// const { bottom: blockMarginBottom = 24 } = blockMargin
-
 	useGeneratedCss( attributes )
 
 	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 	const deviceType = useDeviceType()
 	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-
-	// TODO: Allow special or layout blocks to disable the link for the image block,
-	// e.g. image box doesn't need the image to have a link since it has it's
-	// own link.
-	// const enableLink = applyFilters( 'stackable.edit.image.enable-link', true, parentBlock )
 
 	const blockClassNames = classnames( [
 		className,
@@ -187,7 +178,6 @@ const Edit = props => {
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
-	// Set default min height based on device type
 	const defaultMinHeight = DEFAULT_MIN_HEIGHT
 
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
@@ -200,8 +190,6 @@ const Edit = props => {
 	// TODO: check if user is allowed to update the API key.
 	const canUpdateAPIKey = true
 	const apiKey = settings.stackable_google_maps_api_key
-
-	// console.log( 'BOTTOM MARGIN:', blockMargin, 'HEIGHT:', height, 'SUM:', parseInt( blockMarginBottom, 10 ) + parseInt( blockMarginBottom, 10 ) )
 
 	const initMap = () => {
 		const mapCanvas = canvasRef.current
@@ -242,8 +230,6 @@ const Edit = props => {
 				scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
 				// eslint-disable-next-line no-undef
 				anchor: new google.maps.Point(
-					// 100,
-					// ( parseInt( height, 10 ) / 2 ) || DEFAULT_HEIGHT,
 					parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
 					parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
 				),
@@ -255,29 +241,6 @@ const Edit = props => {
 
 	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
 
-	// useEffect( () => {
-	// 	const updateIframe = () => {
-	// 		console.log( 'HEIGHT ----> ', height )
-	// 		const iframeTitle = __( 'Embedded content from Google Maps.', i18n )
-	// 		const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
-	// 		return (
-	// 			`<iframe
-	// 					title="${ iframeTitle }"
-	// 					src="${ src }"
-	// 					style="border:0;width:100%;max-width:none;height:100%;max-height:none;}"
-	// 					aria-hidden="false"
-	// 					tabIndex="0"
-	// 					allowfullscreen
-	// 					loading="lazy"
-	// 				></iframe>`
-	// 		)
-	// 	}
-
-	// 	console.log( sandBoxRef.current )
-	// 	if ( sandBoxRef.current ) {
-	// 		updateIframe()
-	// 	}
-	// }, [ address, zoom, height, deviceType, sandBoxRef.current ] )
 	useEffect( () => {
 		__unstableMarkNextChangeAsNotPersistent()
 		setAttributes( { usesApiKey: isDefined( apiKey ) } )
@@ -289,8 +252,9 @@ const Edit = props => {
 	}, [ usesApiKey, apiKey ] ),
 
 	useEffect( () => {
-		// Location will be set when user picks from the Google Places auto
-		// complete field.
+		/* Location will be set when user picks from the Google Places auto
+		 * complete field.
+		 */
 		if ( isEmpty( address ) ) {
 			setAttributes( { location: '' } )
 		}
