@@ -13,8 +13,8 @@ export const DEFAULT_ICON_SIZE = 10
 export const DEFAULT_ICON_OPACITY = 1.0
 export const DEFAULT_ICON_COLOR = '#000000'
 export const DEFAULT_ICON_ROTATION = 0
-export const DEFAULT_ICON_ANCHOR_POSITION_X = 0
-export const DEFAULT_ICON_ANCHOR_POSITION_Y = 0
+export const DEFAULT_ICON_ANCHOR_POSITION_X = 100
+export const DEFAULT_ICON_ANCHOR_POSITION_Y = 500
 
 export const isDefined = ( value = '' ) => {
 	return value !== '' && value !== undefined

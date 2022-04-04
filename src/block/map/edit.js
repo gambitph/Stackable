@@ -14,7 +14,6 @@ import {
 	DEFAULT_ICON_SIZE,
 	DEFAULT_MIN_HEIGHT,
 	DEFAULT_ZOOM,
-	getLocation,
 	getMapOptions,
 	getPathFromSvg,
 	getSnapYBetween,
@@ -71,7 +70,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import {
-	Fragment, useEffect, useRef, useMemo, useState,
+	Fragment, useEffect, useRef, useState,
 } from '@wordpress/element'
 import { useDispatch } from '@wordpress/data'
 import { isEmpty } from 'lodash'
@@ -189,18 +188,7 @@ const Edit = props => {
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
 	// Set default min height based on device type
-	const defaultMinHeight = useMemo( () =>
-		deviceType === 'Tablet'
-			? isDefined( attributes[ getAttributeName( 'height' ) ] )
-				? attributes[ getAttributeName( 'height' ) ]
-				: DEFAULT_MIN_HEIGHT
-			: deviceType === 'Mobile'
-				? isDefined( attributes[ getAttributeName( 'height', 'tablet' ) ] )
-					? attributes[ getAttributeName( 'height', 'tablet' ) ]
-					: isDefined( attributes[ getAttributeName( 'height' ) ] )
-						? attributes[ getAttributeName( 'height' ) ] : DEFAULT_MIN_HEIGHT
-				: DEFAULT_MIN_HEIGHT
-	, [ deviceType ] )
+	const defaultMinHeight = DEFAULT_MIN_HEIGHT
 
 	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 
@@ -215,50 +203,54 @@ const Edit = props => {
 
 	// console.log( 'BOTTOM MARGIN:', blockMargin, 'HEIGHT:', height, 'SUM:', parseInt( blockMarginBottom, 10 ) + parseInt( blockMarginBottom, 10 ) )
 
-	const initMarker = () => {
-		if ( mapRef.current ) {
-			const markerOption = {
-				title: address,
-				position: getLocation( attributes ),
-				clickable: false,
-			}
-			if ( isDefined( icon ) ) {
-				markerOption.icon = {
-					path: getPathFromSvg( icon ),
-					fillColor: iconColor1 || 'black',
-					fillOpacity: parseFloat( iconOpacity, 10 ) || 1.0,
-					strokeWeight: 0,
-					rotation: parseInt( iconRotation, 10 ) || 0,
-					scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
-					// eslint-disable-next-line no-undef
-					anchor: new google.maps.Point(
-						parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
-						parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
-					),
-				}
-			}
-
-			// eslint-disable-next-line no-undef
-			markerRef.current = new google.maps.Marker( markerOption )
-			if ( markerRef.current && mapRef.current ) {
-				markerRef.current.setMap( ( showMarker && isDefined( location ) ) ? mapRef.current : null )
-			}
-		}
-	}
-
 	const initMap = () => {
 		const mapCanvas = canvasRef.current
 		const mapOptions = getMapOptions( attributes, 'edit' )
 		// eslint-disable-next-line no-undef
 		const map = mapRef.current = new google.maps.Map( mapCanvas, mapOptions )
+		// eslint-disable-next-line no-undef
+		const marker = new google.maps.Marker( {
+			position: map.getCenter(),
+		} )
+
+		markerRef.current = marker
+
+		updateMarker()
 
 		// eslint-disable-next-line no-undef
 		google.maps.event.addListener( map, 'zoom_changed', () => {
 			const zoom = map.getZoom()
 			setAttributes( { zoom } )
 		} )
+	}
 
-		initMarker()
+	const updateMarker = () => {
+		const marker = markerRef.current
+		const map = mapRef.current
+
+		marker.setMap( showMarker ? map : null )
+
+		const path = getPathFromSvg( icon )
+
+		if ( path ) {
+			marker.setIcon( {
+				path,
+				fillColor: iconColor1 || DEFAULT_ICON_COLOR,
+				fillOpacity: parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
+				strokeWeight: 0,
+				rotation: parseInt( iconRotation, 10 ) || DEFAULT_ICON_ROTATION,
+				scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
+				// eslint-disable-next-line no-undef
+				anchor: new google.maps.Point(
+					// 100,
+					// ( parseInt( height, 10 ) / 2 ) || DEFAULT_HEIGHT,
+					parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
+					parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
+				),
+			} )
+		} else {
+			marker.setIcon( null )
+		}
 	}
 
 	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
@@ -317,35 +309,6 @@ const Edit = props => {
 	}, [ zoom, mapRef.current ] )
 
 	useEffect( () => {
-		const updateMarker = () => {
-			const marker = markerRef.current
-			const map = mapRef.current
-
-			if ( marker ) {
-				marker.setMap( showMarker ? map : null )
-
-				const path = getPathFromSvg( icon )
-
-				if ( path ) {
-					marker.setIcon( {
-						path,
-						fillColor: iconColor1 || DEFAULT_ICON_COLOR,
-						fillOpacity: parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
-						strokeWeight: 0,
-						rotation: parseInt( iconRotation, 10 ) || DEFAULT_ICON_ROTATION,
-						scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
-						// eslint-disable-next-line no-undef
-						anchor: new google.maps.Point(
-							parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
-							parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
-						),
-					} )
-				} else {
-					marker.setIcon( null )
-				}
-			}
-		}
-
 		if ( mapRef.current && markerRef.current ) {
 			updateMarker()
 		}
@@ -536,18 +499,18 @@ const Edit = props => {
 						{ icon && <AdvancedRangeControl
 							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
 							attribute="iconAnchorPositionX"
-							min={ -1000 }
+							min={ -500 }
 							sliderMax={ 1000 }
-							step={ 10 }
+							step={ 1 }
 							allowReset={ true }
 							placeholder=""
 						/> }
 						{ icon && <AdvancedRangeControl
 							label={ __( 'Vertical Icon Anchor Point', i18n ) }
 							attribute="iconAnchorPositionY"
-							min={ -1000 }
+							min={ -500 }
 							sliderMax={ 1000 }
-							step={ 10 }
+							step={ 1 }
 							allowReset={ true }
 							placeholder=""
 						/> }
