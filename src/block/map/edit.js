@@ -16,7 +16,6 @@ import {
 	DEFAULT_ZOOM,
 	getMapOptions,
 	getPathFromSvg,
-	getSnapYBetween,
 	initMapLibrary,
 	isDefined,
 } from './util'
@@ -179,8 +178,6 @@ const Edit = props => {
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
 	const defaultMinHeight = DEFAULT_MIN_HEIGHT
-
-	const [ snapY, setSnapY ] = useState( getSnapYBetween( parseInt( height === undefined ? defaultMinHeight : attributes[ heightAttrName ] ) ) )
 
 	const mapRef = useRef()
 	const markerRef = useRef()
@@ -502,28 +499,15 @@ const Edit = props => {
 					} }
 					minHeight={ defaultMinHeight }
 					enable={ { bottom: true } }
-					onResize={ ( event, direction, elt, delta ) => {
-						let _height = height
-						if ( _height === '' || _height === undefined ) {
-							_height = defaultMinHeight
-						}
-						setSnapY(
-							getSnapYBetween( parseInt( _height ) + delta.height )
-						)
-					} }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						let _height = height
 						if ( _height === '' || _height === undefined ) {
-							_height = defaultMinHeight
+							_height = DEFAULT_HEIGHT
 						}
 						setAttributes( {
 							[ heightAttrName ]: parseInt( _height ) + delta.height,
 						} )
 					} }
-					snap={ {
-						y: snapY,
-					} }
-					snapGap={ 10 }
 				>
 					{ isHovered && (
 						<ResizerTooltip
