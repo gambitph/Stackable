@@ -22,11 +22,11 @@ const DEFAULT_STATE = {
 }
 
 const STORE_ACTIONS = {
-	updateBlockStyles: blockStyles => ( {
+	updateBlockStylesStore: blockStyles => ( {
 		type: 'UPDATE_BLOCK_STYLES',
 		blockStyles,
 	} ),
-	updateBlockDefaultStyle: ( blockName, attributes, innerBlocks, message ) => {
+	updateBlockDefaultStyle: ( blockName, attributes, innerBlocks, blockSave, message ) => {
 		const blockData = JSON.stringify( {
 			attributes,
 			innerBlocks,
@@ -39,6 +39,24 @@ const STORE_ACTIONS = {
 			name: 'Default',
 			blockName,
 			blockData,
+			blockSave,
+			successMessage: message,
+		}
+	},
+	updateBlockStyle: ( blockName, attributes, innerBlocks, blockSave, styleName, styleSlug, message ) => {
+		const blockData = JSON.stringify( {
+			attributes,
+			innerBlocks,
+		} )
+
+		// Update settings.
+		return {
+			type: 'UPDATE_BLOCK_STYLE',
+			slug: styleSlug,
+			name: styleName,
+			blockName,
+			blockData,
+			blockSave,
 			successMessage: message,
 		}
 	},
@@ -51,10 +69,10 @@ const STORE_ACTIONS = {
 }
 
 const STORE_SELECTORS = {
-	getBlockStyles: ( state, blockName ) => state.blockStyles.find( blockStyles => blockStyles.block === blockName ),
+	getBlockStyles: ( state, blockName ) => ( state.blockStyles || [] ).find( blockStyles => blockStyles.block === blockName ),
 	getAllBlockStyles: state => state.blockStyles,
-	getDefaultBlockStyle: ( state, blockName ) => state.blockStyles.find( blockStyles => blockStyles.block === blockName )?.styles.find( style => style.slug === 'default' ),
-	getBlockStyle: ( state, blockName, styleSlug ) => state.blockStyles.find( blockStyles => blockStyles.block === blockName )?.styles.find( style => style.slug === styleSlug ),
+	getDefaultBlockStyle: ( state, blockName ) => ( state.blockStyles || [] ).find( blockStyles => blockStyles.block === blockName )?.styles.find( style => style.slug === 'default' ),
+	getBlockStyle: ( state, blockName, styleSlug ) => ( state.blockStyles || [] ).find( blockStyles => blockStyles.block === blockName )?.styles.find( style => style.slug === styleSlug ),
 }
 
 const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
@@ -143,6 +161,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 					name: action.name,
 					data: action.blockData,
 					slug: action.slug,
+					save: action.blockSave,
 				},
 			} ).then( response => {
 				if ( response && action.successMessage ) {
@@ -187,7 +206,7 @@ domReady( () => {
 				stackable_block_styles: blockStyles,
 			} = response
 
-			dispatch( 'stackable/block-styles' ).updateBlockStyles( {
+			dispatch( 'stackable/block-styles' ).updateBlockStylesStore( {
 				blockStyles,
 			} )
 		} )

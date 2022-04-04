@@ -83,9 +83,12 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 * @return void
 		 */
 		public function generate_optimied_css_for_post( $post_id, $post, $update ) {
-			if ( $post->post_type === 'revision' || // Don't do this when previewing a post.
+			if ( $post->post_type === 'attachment' ||
+			     $post->post_type === 'revision' || // Don't do this when previewing a post.
+			     $post->post_type === 'nav_menu_item' ||
 			     $post->post_type === 'wp_template' || // DEV NOTE: This should work for FSE as well, but disallow this for now while we don't support it yet.
-			     $post->post_type === 'wp_template_part' ) { // DEV NOTE: This should work for FSE as well, but disallow this for now while we don't support it yet.
+			     $post->post_type === 'wp_template_part' || // DEV NOTE: This should work for FSE as well, but disallow this for now while we don't support it yet.
+				 $post->post_type === 'stackable_temp_post' ) { // Temporary post type used by Stackable for editing default blocks or UI Kits.
 				return;
 			}
 

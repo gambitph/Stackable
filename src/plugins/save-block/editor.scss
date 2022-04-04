@@ -1,0 +1,10 @@
+// Hide some of the controls in the editor when editing a block style.
+.post-type-stackable_temp_post {
+
+	// Remove switch to draft button.
+	.editor-post-switch-to-draft,
+	// Remove trash and privacy buttons.
+	.edit-post-post-status .components-panel__row:not(.edit-post-post-schedule) {
+		display: none !important;
+	}
+}
