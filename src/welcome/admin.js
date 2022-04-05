@@ -253,6 +253,7 @@ const EditorSettings = () => {
 			settings.fetch().then( response => {
 				setSettings( pick( response, [
 					'stackable_enable_design_library',
+					'stackable_optimize_inline_css',
 					'stackable_enable_navigation_panel',
 					'stackable_block_default_width',
 					'stackable_block_wide_width',
@@ -277,6 +278,26 @@ const EditorSettings = () => {
 				} )
 			} }
 			help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
+			disabled={ __( 'Disable feature', i18n ) }
+			enabled={ __( 'Enable feature', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Optimize Inline CSS', i18n ) }
+			value={ settings.stackable_optimize_inline_css }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_optimize_inline_css: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_optimize_inline_css: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ <>
+				{ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
+				&nbsp;
+				<a target="_docs" href="https://docs.wpstackable.com/article/481-how-to-use-optimize-inline-css?utm_source=wp-settings-migrating&utm_campaign=learnmore&utm_medium=wp-dashboard">{ __( 'Learn more', i18n ) }</a>
+			</> }
 			disabled={ __( 'Disable feature', i18n ) }
 			enabled={ __( 'Enable feature', i18n ) }
 		/>

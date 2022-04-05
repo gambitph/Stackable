@@ -61,6 +61,18 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 			register_setting(
 				'stackable_editor_settings',
+				'stackable_optimize_inline_css',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Optimizes inlined CSS styles, combines together similar selectors', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
 				'stackable_enable_navigation_panel',
 				array(
 					'type' => 'boolean',
@@ -133,6 +145,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		public function add_settings( $settings ) {
 			$settings['stackable_disabled_blocks'] = get_option( 'stackable_disabled_blocks' );
 			$settings['stackable_enable_design_library'] = get_option( 'stackable_enable_design_library' );
+			$settings['stackable_optimize_inline_css'] = get_option( 'stackable_optimize_inline_css' );
 			$settings['stackable_enable_navigation_panel'] = get_option( 'stackable_enable_navigation_panel' );
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );

@@ -65,11 +65,14 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			// When a post is saved, generate an optimized version of the styles used.
 			add_action( 'save_post', array( $this, 'generate_optimied_css_for_post' ), 10, 3 );
 
-			// Load the optimized CSS in the head of posts.
-			add_action( 'wp', array( $this, 'load_cached_css_for_post' ) );
+			// Only do this when inline style optimization is enabled.
+			if ( get_option( 'stackable_optimize_inline_css' ) ) {
+				// Load the optimized CSS in the head of posts.
+				add_action( 'wp', array( $this, 'load_cached_css_for_post' ) );
 
-			// If the optimized CSS was loaded, then strip out the styles which were in the CSS.
-			add_filter( 'render_block', array( $this, 'strip_optimized_block_styles' ), 10, 2 );
+				// If the optimized CSS was loaded, then strip out the styles which were in the CSS.
+				add_filter( 'render_block', array( $this, 'strip_optimized_block_styles' ), 10, 2 );
+			}
 		}
 
 		/**
