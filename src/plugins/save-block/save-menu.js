@@ -18,6 +18,7 @@ import { BlockSettingsMenuControls } from '@wordpress/block-editor'
 
 const SaveMenu = ( { clientId } ) => {
 	const { getBlockName } = useSelect( 'core/block-editor' )
+	const { getBlockSupport } = useSelect( 'core/blocks' )
 
 	const {
 		getBlockTitle,
@@ -47,6 +48,11 @@ const SaveMenu = ( { clientId } ) => {
 
 	// Only do this if the block is ours.
 	if ( ! clientId || ! getBlockName( clientId )?.startsWith( 'stackable/' ) ) {
+		return null
+	}
+
+	// Don't show the menu if the block doesn't support this feature.
+	if ( getBlockSupport( getBlockName( clientId ), 'stkSaveBlockStyle' ) === false ) {
 		return null
 	}
 

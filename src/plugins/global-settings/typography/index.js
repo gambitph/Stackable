@@ -20,9 +20,7 @@ import {
 	Fragment, useEffect, useState,
 } from '@wordpress/element'
 import { loadPromise, models } from '@wordpress/api'
-import {
-	addFilter, doAction,
-} from '@wordpress/hooks'
+import { addFilter, doAction } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 
 export { GlobalTypographyStyles }
@@ -147,7 +145,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Typography', i18n ) }
-				initialOpen={ true }
 			>
 				<p className="components-base-control__help">
 					{ __( 'Change the typography of your headings for all your blocks in your site.', i18n ) }

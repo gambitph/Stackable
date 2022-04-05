@@ -198,7 +198,7 @@ registerStore( 'stackable/block-styles', {
 
 // Load all our settings into our store.
 domReady( () => {
-	loadPromise.then( () => {
+	const updateBlockStyles = () => {
 		const settings = new models.Settings()
 
 		settings.fetch().then( response => {
@@ -210,5 +210,16 @@ domReady( () => {
 				blockStyles,
 			} )
 		} )
+	}
+
+	loadPromise.then( updateBlockStyles )
+
+	// When the settings are updated from another tab, update the store.
+	// Editing a block style opens a new tab, so if the user goes back to this
+	// tab, then there's a chance the styles are now up to date.
+	window?.addEventListener( 'visibilitychange', () => { // eslint-disable-line @wordpress/no-global-event-listener
+		if ( ! document.hidden ) {
+			updateBlockStyles()
+		}
 	} )
 } )

@@ -255,6 +255,15 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 				}
 			}
 
+			// Also delete the associated post for editing the block style.
+			$style_post_ids = get_option( 'stackable_block_edit_posts', array() );
+			if ( array_key_exists( $block . '-' . $slug, $style_post_ids ) ) {
+				$style_post_id = $style_post_ids[ $block . '-' . $slug ];
+				wp_delete_post( $style_post_id, true );
+				unset( $style_post_ids[ $block . '-' . $slug ] );
+				update_option( 'stackable_block_edit_posts', $style_post_ids );
+			}
+
 			return rest_ensure_response( true );
 		}
 
@@ -287,10 +296,6 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 						'editor',
 						'custom-fields', // This is needed for our post meta below to be used in the editor.
 					),
-					// 'template' => array(
-					// 	array( 'stackable/heading', array() ),
-					// ),
-					// 'template_lock' => 'all',
 				)
 			);
 
@@ -378,30 +383,36 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 			$block_styles = get_option( 'stackable_block_styles', array() );
 
 			$block_index = false;
+			$style_index = false;
+
 			foreach ( $block_styles as $i => $block_style ) {
 				if ( $block_style->block === $block_name ) {
 					$block_index = $i;
 					break;
 				}
 			}
-			if ( $block_index === false ) {
-				return false;
-			}
-
-			// Find the style if it exists.
-			$style_index = false;
-			foreach ( $block_styles[ $block_index ]->styles as $k => $style ) {
-				if ( $style->slug === $style_slug ) {
-					$style_index = $k;
-					break;
+			if ( $block_index !== false ) {
+				// Find the style if it exists.
+				foreach ( $block_styles[ $block_index ]->styles as $k => $style ) {
+					if ( $style->slug === $style_slug ) {
+						$style_index = $k;
+						break;
+					}
 				}
 			}
-			if ( $style_index === false ) {
+
+			// If the block/style doesn't exist and we're editing the default
+			// block style, continue on with creating the temporary post which
+			// will be used to edit the block style.
+			if ( $style_slug === 'default' && $style_index === false ) {
+				$style = new stdClass();
+				$style->save = '';
+			} else if ( $style_index !== false ) {
+				// The matching style.
+				$style = $block_styles[ $block_index ]->styles[ $style_index ];
+			} else {
 				return false;
 			}
-
-			// The matching style.
-			$style = $block_styles[ $block_index ]->styles[ $style_index ];
 
 			// This variable holds all the existing post IDs for styles edited.
 			$style_post_ids = get_option( 'stackable_block_edit_posts', array() );

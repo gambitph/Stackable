@@ -19,9 +19,24 @@ import {
 	select, subscribe, dispatch,
 } from '@wordpress/data'
 import { __, sprintf } from '@wordpress/i18n'
+import { getBlockFromExample, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
 
 // Saving can be triggered multiple times by the editor, throttle to the first trigger only.
 let isSaving = false
+
+// Gets the first block that has a block name.
+const findBlock = ( blockName, blocks ) => {
+	const block = blocks.find( block => block.name === blockName )
+	if ( block ) {
+		return block
+	}
+	let foundBlock = null
+	blocks.some( block => {
+		foundBlock = findBlock( blockName, block.innerBlocks )
+		return !! foundBlock
+	} )
+	return foundBlock
+}
 
 // Listen to editor updates when editing a 'stackable_temp_post'
 subscribe( () => {
@@ -48,7 +63,7 @@ subscribe( () => {
 
 		// The user can have multiple blocks, just pick the first one that we're really editing.
 		const blocks = select( 'core/block-editor' ).getBlocks()
-		const blockToSave = blocks.find( block => block.name === blockName )
+		const blockToSave = findBlock( blockName, blocks )
 
 		// If there is no block, error.
 		if ( ! blockToSave ) {
@@ -104,5 +119,73 @@ subscribe( () => {
 					)
 				}, 100 )
 			} )
+	}
+} )
+
+let isInitialized = false
+
+// Initializes our block style editor, adds the default state of the block to be edited.
+subscribe( () => {
+	const postType = select( 'core/editor' )?.getCurrentPostType()
+	if ( postType && postType === 'stackable_temp_post' ) {
+		if ( isInitialized ) {
+			return
+		}
+		isInitialized = true
+
+		setTimeout( () => {
+			// Disable autosaving.
+			dispatch( 'core/editor' ).updateEditorSettings( {
+				autosaveInterval: 99999,
+			} )
+
+			// Close the global panel and open the inspector.
+			dispatch( 'core/edit-post' ).openGeneralSidebar( 'edit-post/block' )
+
+			// If there is no content, then add the default state of a block.
+			const { stk_block_name: blockName } = select( 'core/editor' ).getEditedPostAttribute( 'meta' )
+			if ( ! select( 'core/editor' ).getEditedPostContent() ) {
+				if ( blockName ) {
+					const { insertBlock } = dispatch( 'core/block-editor' )
+					const { getBlockSupport, getBlockType } = select( 'core/blocks' )
+
+					if ( getBlockType( blockName ).parent ) {
+						delete getBlockType( blockName ).parent
+					}
+
+					// Allow stkSaveBlockStyle definition to define the blocks
+					// that will be added to the style editor.
+					const blockEditorBlocks = getBlockSupport( blockName, 'stkSaveBlockStyle' )
+					let blocks
+					if ( blockEditorBlocks ) {
+						blocks = blockEditorBlocks
+						if ( ! Array.isArray( blockEditorBlocks ) ) {
+							blocks = [ blockEditorBlocks ]
+						}
+						blocks = createBlocksFromInnerBlocksTemplate( blocks )
+					} else {
+						blocks = [ getBlockFromExample( blockName, {} ) ]
+					}
+
+					// Insert blocks one by one, we need to do it this way so
+					// that some block functionality would work. e.g. ToC
+					// heading block detection
+					blocks.forEach( ( block, i ) => {
+						insertBlock( block, i, '', false )
+					} )
+				}
+			}
+
+			// Select the our main block, do this after some delay since we are rapidly inserting blocks.
+			setTimeout( () => {
+				const { getBlocks } = select( 'core/block-editor' )
+				const { selectBlock } = dispatch( 'core/block-editor' )
+
+				const block = findBlock( blockName, getBlocks() )
+				if ( block ) {
+					selectBlock( block.clientId )
+				}
+			} )
+		} )
 	}
 } )

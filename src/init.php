@@ -316,6 +316,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 				'version' => array_shift( $version_parts ),
 				'wpVersion' => $wp_version,
+				'adminUrl' => admin_url(),
 
 				// Fonts.
 				'locale' => get_locale(),

@@ -3,6 +3,7 @@
  */
 import { GlobalColorStyles } from './colors'
 import { GlobalTypographyStyles } from './typography'
+import './block-defaults'
 
 /**
  * External dependencies
@@ -22,9 +23,7 @@ import {
 // @see https://github.com/WordPress/gutenberg/pull/34460
 // import { PluginSidebar } from '@wordpress/edit-post'
 import { __ } from '@wordpress/i18n'
-import {
-	applyFilters, addAction,
-} from '@wordpress/hooks'
+import { applyFilters, addAction } from '@wordpress/hooks'
 import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
