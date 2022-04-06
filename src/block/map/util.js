@@ -72,6 +72,14 @@ export const getMapOptions = attributes => {
 	}
 }
 
+export const getFillColor = iconColor1 => {
+	const match = typeof iconColor1 === 'string' && iconColor1.match( /^var\(--stk-global-color-\d+, (#[0-9A-Fa-f]{6})\)/ )
+	if ( match ) {
+		return match[ 1 ]
+	}
+	return iconColor1
+}
+
 export const getIframe = attributes => {
 	const { address, uniqueId } = attributes
 	const iframeTitle = __( 'Embedded content from Google Maps Platform.', i18n )

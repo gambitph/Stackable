@@ -19,6 +19,14 @@ class StackableMap {
 		}
 	}
 
+	getFillColor = iconColor1 => {
+		const match = typeof iconColor1 === 'string' && iconColor1.match( /^var\(--stk-global-color-\d+, (#[0-9A-Fa-f]{6})\)/ )
+		if ( match ) {
+			return match[ 1 ]
+		}
+		return iconColor1
+	}
+
 	loadScriptAsync = src => {
 		return new Promise( resolve => {
 			const tag = document.createElement( 'script' )
@@ -99,7 +107,7 @@ class StackableMap {
 				if ( iconPath ) {
 					const icon = {
 						path: iconPath,
-						fillColor: iconColor,
+						fillColor: this.getFillColor( iconColor ),
 						fillOpacity: parseFloat( iconOpacity, 10 ),
 						strokeWeight: 0,
 						rotation: parseInt( iconRotation, 10 ),

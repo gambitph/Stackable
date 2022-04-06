@@ -14,6 +14,7 @@ import {
 	DEFAULT_ICON_SIZE,
 	DEFAULT_MIN_HEIGHT,
 	DEFAULT_ZOOM,
+	getFillColor,
 	getMapOptions,
 	getPathFromSvg,
 	initMapLibrary,
@@ -160,6 +161,7 @@ const Edit = props => {
 		htmlTag,
 	} = attributes
 
+	// TODO: What is this for?
 	useGeneratedCss( attributes )
 
 	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
@@ -217,10 +219,12 @@ const Edit = props => {
 
 		const path = getPathFromSvg( icon )
 
+		const fillColor = getFillColor( iconColor1 )
+
 		if ( path ) {
 			marker.setIcon( {
 				path,
-				fillColor: iconColor1 || DEFAULT_ICON_COLOR,
+				fillColor: fillColor || DEFAULT_ICON_COLOR,
 				fillOpacity: parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
 				strokeWeight: 0,
 				rotation: parseInt( iconRotation, 10 ) || DEFAULT_ICON_ROTATION,
