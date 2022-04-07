@@ -213,3 +213,11 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 	}
 	return output
 } )
+
+// Prevent the icon label from being being styled with a saved default style.
+addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/icon-label', ( enabled, block, parentBlockNames ) => {
+	if ( block.name === 'stackable/icon-label' && parentBlockNames.length >= 2 && parentBlockNames[ parentBlockNames.length - 2 ] === 'stackable/accordion' ) {
+		return false
+	}
+	return enabled
+} )

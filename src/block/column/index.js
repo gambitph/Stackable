@@ -29,6 +29,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		anchor: true,
 		reusable: false,
 		stkBlockLinking: true,
+		stkSaveBlockStyle: false,
 	},
 	//  styles: blockStyles,
 

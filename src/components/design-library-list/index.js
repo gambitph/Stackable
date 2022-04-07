@@ -45,7 +45,7 @@ const DesignLibraryList = props => {
 					label={ design.label }
 					apiVersion={ apiVersion }
 					onClick={ designData => {
-						onSelect( designData )
+						onSelect( designData, design )
 					} }
 				/>
 			)

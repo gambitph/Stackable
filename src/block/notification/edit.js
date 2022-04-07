@@ -50,6 +50,7 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { addFilter } from '@wordpress/hooks'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
@@ -190,3 +191,11 @@ const Edit = props => {
 }
 
 export default withQueryLoopContext( Edit )
+
+// Prevent the text from being being styled with a saved default style.
+addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/notification', ( enabled, block, parentBlockNames ) => {
+	if ( block.name === 'stackable/icon' && parentBlockNames.length >= 1 && parentBlockNames[ parentBlockNames.length - 1 ] === 'stackable/notification' ) {
+		return false
+	}
+	return enabled
+} )

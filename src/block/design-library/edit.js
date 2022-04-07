@@ -15,7 +15,7 @@ import { SVGStackableIcon } from '~stackable/icons'
 import { __ } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
 import {
-	createBlock, parse, createBlocksFromInnerBlocksTemplate,
+	createBlock, parse, createBlocksFromInnerBlocksTemplate, getBlockVariations,
 } from '@wordpress/blocks'
 import { useState, useCallback } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
@@ -30,8 +30,37 @@ const Edit = props => {
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false )
 
 	// Replaces the current block with a block made out of attributes.
-	const replaceBlockWithAttributes = useCallback( ( blockName, attributes, innerBlocks ) => {
+	const replaceBlockWithAttributes = useCallback( ( blockName, attributes, innerBlocks, design ) => {
 		const { replaceBlock } = dispatch( 'core/block-editor' )
+
+		// For wireframes, we'll need to apply any default block attributes to
+		// the blocks. We do this by ensuring that all uniqueIds are removed,
+		// this prompts the block to generate a new one and give itself a
+		// default styling.
+		if ( design.uikit === 'Wireframes' ) {
+			const hasVariations = getBlockVariations( blockName ).length > 0
+			if ( ! hasVariations ) {
+				attributes.uniqueId = ''
+			}
+
+			// Recursively remove all uniqueIds from all inner blocks.
+			const removeUniqueId = blocks => {
+				blocks.forEach( block => {
+					const blockName = block[ 0 ]
+
+					// For blocks with varitions, do not remove the uniqueId
+					// since that will prompt the layout picker to show.
+					const hasVariations = getBlockVariations( blockName ).length > 0
+					if ( ! hasVariations && block[ 1 ].uniqueId ) {
+						delete block[ 1 ].uniqueId
+					}
+
+					removeUniqueId( block[ 2 ] )
+				} )
+			}
+
+			removeUniqueId( innerBlocks )
+		}
 
 		const shortBlockName = blockName.replace( /^\w+\//g, '' )
 		const blockAttributes = applyFilters( `stackable.${ shortBlockName }.design.filtered-block-attributes`, attributes )
@@ -79,13 +108,13 @@ const Edit = props => {
 					onClose={ () => {
 						setIsLibraryOpen( false )
 					} }
-					onSelect={ designData => {
+					onSelect={ ( designData, design ) => {
 						const {
 							name, attributes, innerBlocks, serialized,
 						} = designData
 
 						if ( name && attributes ) {
-							replaceBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [] )
+							replaceBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [], design )
 						} else if ( serialized ) {
 							replaceBlocWithContent( serialized )
 						} else {
