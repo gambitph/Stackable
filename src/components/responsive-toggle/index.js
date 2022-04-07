@@ -16,9 +16,7 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import {
-	useCallback, memo, useMemo,
-} from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 
 const DEVICE_TYPES = {
@@ -45,27 +43,22 @@ const DEVICE_OPTIONS = [
 	},
 ]
 
+// @TODO check if dispatch('core/edit-post') and __experimentalSet... not null
 const ResponsiveToggle = props => {
 	const deviceType = useDeviceType()
 
-	const changeScreen = useCallback( screen => {
-		const {
-			__experimentalSetPreviewDeviceType: setPreviewDeviceType,
-		} = dispatch( 'core/edit-post' )
-
-		setPreviewDeviceType( DEVICE_TYPES[ screen ] )
-	}, [] )
-
-	const screens = useMemo( () => {
-		return DEVICE_OPTIONS.filter( ( { value } ) => props.screens?.includes( value ) )
-	}, [ props.screens ] )
-
-	if ( screens <= 1 ) {
-		return null
+	const changeScreen = screen => {
+		if ( dispatch( 'core/edit-post' ) ) {
+			const {
+				__experimentalSetPreviewDeviceType: setPreviewDeviceType,
+			} = dispatch( 'core/edit-post' )
+			return setPreviewDeviceType( DEVICE_TYPES[ screen ] )
+		}
 	}
 
-	// In the Widget editor, the device type is always set to desktop.
-	if ( ! deviceType ) {
+	const screens = DEVICE_OPTIONS.filter( ( { value } ) => props.screens?.includes( value ) )
+
+	if ( screens <= 1 ) {
 		return null
 	}
 
@@ -74,7 +67,7 @@ const ResponsiveToggle = props => {
 			className="stk-control-responsive-toggle"
 			value={ deviceType.toLowerCase() }
 			options={ screens }
-			onChange={ screen => changeScreen( screen ) }
+			onChange={ changeScreen }
 		/>
 	)
 }
