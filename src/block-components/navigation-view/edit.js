@@ -80,6 +80,7 @@ export const Edit = () => {
 					--stk-inspector-navigation-view: ${ height }px;
 				}` : '' }
 			</style>
+			{ /** ListView is not available in WP 5.8.4 anmd below */ }
 			{ ListView && <ResizableBox
 				className={ classNames }
 				showHandle={ isOpen }
