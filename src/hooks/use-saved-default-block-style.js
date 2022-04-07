@@ -15,6 +15,7 @@ import { find, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { useSelect, useDispatch } from '@wordpress/data'
 import { useState } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 import { createBlocksFromInnerBlocksTemplate, getBlockVariations } from '@wordpress/blocks'
 
 export const useSavedDefaultBlockStyle = blockProps => {
@@ -24,10 +25,20 @@ export const useSavedDefaultBlockStyle = blockProps => {
 	const [ isApplied, setIsApplied ] = useState( false )
 
 	const { getDefaultBlockStyle } = useSelect( 'stackable/block-styles' )
+	const { getBlockParents, getBlockName } = useSelect( 'core/block-editor' )
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' )
 
 	// Only do this for Stackable blocks.
 	if ( ! name.startsWith( 'stackable/' ) ) {
+		return
+	}
+
+	// Let others prevent default block styles to be added depending on the
+	// parent (e.g. helpful for preventing the Accordion block from getting the
+	// default saved styles of the Icon Label block)
+	const parentBlocks = getBlockParents( clientId ).map( clientId => getBlockName( clientId ) )
+	const enable = applyFilters( 'stackable.block-default-styles.use-saved-style', true, blockProps, parentBlocks )
+	if ( ! enable ) {
 		return
 	}
 

@@ -293,11 +293,7 @@ const EditorSettings = () => {
 					stackable_optimize_inline_css: value, // eslint-disable-line camelcase
 				} )
 			} }
-			help={ <>
-				{ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
-				&nbsp;
-				<a target="_docs" href="https://docs.wpstackable.com/article/481-how-to-use-optimize-inline-css?utm_source=wp-settings-migrating&utm_campaign=learnmore&utm_medium=wp-dashboard">{ __( 'Learn more', i18n ) }</a>
-			</> }
+			help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
 			disabled={ __( 'Disable feature', i18n ) }
 			enabled={ __( 'Enable feature', i18n ) }
 		/>
