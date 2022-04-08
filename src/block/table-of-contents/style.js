@@ -132,6 +132,15 @@ const getStyleParams = () => {
 			responsive: 'all',
 			format: '%spx',
 		},
+		// This fixes the issue where the bullet becomes small when a global font size is set.
+		{
+			renderIn: 'edit',
+			selector: '.%s.%s li',
+			styleRule: 'fontSize',
+			attrName: 'fontSize',
+			responsive: 'all',
+			format: '%spx',
+		},
 	]
 }
 
