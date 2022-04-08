@@ -5,10 +5,11 @@
 
 .stk-navigation-view__wrapper {
 	position: fixed !important;
-	bottom: 26px;
+	bottom: 25px;
 	width: 280px !important;
 	z-index: 9;
 	background: #fafafa;
+	top: revert !important; // Prevents Learndash's styles from conflicting with the mini nav component.
 	.ugb-panel--navigation-view {
 		padding: 0 !important;
 	}
