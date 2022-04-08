@@ -85,7 +85,7 @@ export const Edit = () => {
 					--stk-inspector-navigation-view: ${ height }px;
 				}` : '' }
 			</style>
-			{ <ResizableBox
+			<ResizableBox
 				className={ classNames }
 				showHandle={ isOpen }
 				enable={ { top: true } }
@@ -120,7 +120,7 @@ export const Edit = () => {
 						/>
 					</div>
 				</PanelAdvancedSettings>
-			</ResizableBox> }
+			</ResizableBox>
 		</InspectorControls>
 	)
 }
