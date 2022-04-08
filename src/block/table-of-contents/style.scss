@@ -5,6 +5,17 @@
 		column-gap: 32px;
 	}
 
+	// This fixes columns breaking if a line has long text.
+	li {
+		/* autoprefixer: ignore next */
+		-webkit-column-break-inside: avoid;
+		/* autoprefixer: ignore next */
+		-moz-column-break-inside: avoid;
+		-o-column-break-inside: avoid;
+		-ms-column-break-inside: avoid;
+		column-break-inside: avoid;
+	}
+
 	:is(ul, ol) {
 		padding-inline-start: 1em;
 	}
