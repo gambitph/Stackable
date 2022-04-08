@@ -3,6 +3,12 @@ module.exports = {
 	plugins: [
 		"stylelint-no-unsupported-browser-features"
 	],
+	overrides: [
+		{
+			files: ["**/*.scss"],
+			customSyntax: "postcss-scss"
+		}
+	],
 	rules: {
 		"plugin/no-unsupported-browser-features": [
 			true,
