@@ -1,40 +1,18 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import mapStyleOptions from './map-styles'
+import { clamp } from 'lodash'
 
 export const DEFAULT_HEIGHT = 200
-// This is a magic number that prevents scrollbars and other weirdness.
-// Is this the width of the scrollbar?
+// TODO: Find out why this is a magic number that prevents scrollbars and other
+// weirdness. Is this the width of the scrollbar?
 export const DEFAULT_MIN_HEIGHT = 21
 export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
 export const DEFAULT_LOCATION = { lat: 14.680936247180512, lng: 121.04845461073226 }
-export const DEFAULT_ICON_SIZE = 10
-export const DEFAULT_ICON_OPACITY = 1.0
-export const DEFAULT_ICON_COLOR = '#000000'
-export const DEFAULT_ICON_ROTATION = 0
-export const DEFAULT_ICON_ANCHOR_POSITION_X = 100
-export const DEFAULT_ICON_ANCHOR_POSITION_Y = 500
 
 export const isDefined = ( value = '' ) => {
 	return value !== '' && value !== undefined
-}
-
-export const latLngToString = latLng => `${ latLng.lat },${ latLng.lng }`
-
-export const isLatLng = value => {
-	// @see https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
-	if ( typeof value === 'object' ) {
-		value = latLngToString( value )
-	}
-	return value.trim().match( /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/ )
-}
-
-export const getSnapYBetween = ( value, snapDiff = 50 ) => {
-	return [
-		Math.floor( value / snapDiff ) * snapDiff,
-		Math.ceil( value / snapDiff ) * snapDiff,
-	]
 }
 
 export const getMapStyles = ( { mapStyle, customMapStyle } ) => {
@@ -72,14 +50,6 @@ export const getMapOptions = attributes => {
 	}
 }
 
-export const getFillColor = iconColor1 => {
-	const match = typeof iconColor1 === 'string' && iconColor1.match( /^var\(--stk-global-color-\d+, (#[0-9A-Fa-f]{6})\)/ )
-	if ( match ) {
-		return match[ 1 ]
-	}
-	return iconColor1
-}
-
 export const getIframe = attributes => {
 	const { address, uniqueId } = attributes
 	const iframeTitle = __( 'Embedded content from Google Maps Platform.', i18n )
@@ -99,7 +69,7 @@ export const getIframe = attributes => {
 	)
 }
 
-export const getZoom = ( { zoom } ) => isDefined( zoom ) ? zoom : DEFAULT_ZOOM
+export const getZoom = ( { zoom } ) => clamp( parseInt( zoom, 10 ) || DEFAULT_ZOOM, 1, 22 )
 
 export const getLocation = ( { location } ) => isDefined( location ) ? location : DEFAULT_LOCATION
 
@@ -129,14 +99,4 @@ const loadScriptAsync = src => {
 		const firstScriptTag = document.getElementsByTagName( 'script' )[ 0 ]
 		firstScriptTag.parentNode.insertBefore( tag, firstScriptTag )
 	} )
-}
-
-export const getPathFromSvg = svg => {
-	const div = document.createElement( 'div' )
-	div.innerHTML = svg
-	try {
-		return div.firstChild.firstChild.getAttribute( 'd' )
-	} catch ( e ) {
-		return ''
-	}
 }

@@ -7,7 +7,6 @@ import {
 	CustomAttributes,
 	CustomCSS,
 	EffectsAnimations,
-	Icon,
 	Responsive,
 	Transform,
 	Link,
@@ -71,14 +70,6 @@ export const mapAttributes = {
 		type: 'boolean',
 		default: true,
 	},
-	iconAnchorPositionX: {
-		type: 'number',
-		default: '',
-	},
-	iconAnchorPositionY: {
-		type: 'number',
-		default: '',
-	},
 }
 
 export const attributes = ( version = VERSION ) => {
@@ -96,7 +87,6 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
-	Icon.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: mapAttributes,

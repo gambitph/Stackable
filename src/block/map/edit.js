@@ -6,17 +6,10 @@ import mapStyleOptions from './map-styles'
 import {
 	DEFAULT_ADDRESS,
 	DEFAULT_HEIGHT,
-	DEFAULT_ICON_ANCHOR_POSITION_X,
-	DEFAULT_ICON_ANCHOR_POSITION_Y,
-	DEFAULT_ICON_COLOR,
-	DEFAULT_ICON_OPACITY,
-	DEFAULT_ICON_ROTATION,
-	DEFAULT_ICON_SIZE,
 	DEFAULT_MIN_HEIGHT,
 	DEFAULT_ZOOM,
-	getFillColor,
 	getMapOptions,
-	getPathFromSvg,
+	getZoom,
 	initMapLibrary,
 	isDefined,
 } from './util'
@@ -43,7 +36,6 @@ import {
 	useGeneratedCss,
 	Advanced,
 	CustomCSS,
-	Icon,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
@@ -130,7 +122,6 @@ LocationControl.defaultProps = {
 
 const Edit = props => {
 	const {
-		clientId,
 		attributes,
 		className,
 		isHovered,
@@ -140,13 +131,6 @@ const Edit = props => {
 
 	const {
 		address,
-		icon,
-		iconAnchorPositionX,
-		iconAnchorPositionY,
-		iconColor1,
-		iconOpacity,
-		iconRotation,
-		iconSize,
 		location,
 		mapStyle,
 		customMapStyle,
@@ -175,7 +159,6 @@ const Edit = props => {
 		blockHoverClass,
 		blockAlignmentClass,
 	] )
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
@@ -192,23 +175,33 @@ const Edit = props => {
 
 	const initMap = () => {
 		const mapCanvas = canvasRef.current
-		const mapOptions = getMapOptions( attributes, 'edit' )
+		const mapOptions = getMapOptions( attributes )
 		// eslint-disable-next-line no-undef
 		const map = mapRef.current = new google.maps.Map( mapCanvas, mapOptions )
+		window.map = map
 		// eslint-disable-next-line no-undef
 		const marker = new google.maps.Marker( {
+			/* NB: I set this to false because click interaction with the marker
+			   is not consistent across the non-API/API renders of the map. */
+			clickable: false,
 			position: map.getCenter(),
 		} )
 
 		markerRef.current = marker
+		window.marker = marker
 
 		updateMarker()
 
+		/* FIXME: The following causes the Zoom AdvRangeControl's reset button to be non-functional
+		 * However, without this, zooming on the map will not reflect on the slider.
+		 * i.e. user can play around with the zoom level on the map and the zoom value
+		 * in the slider won't change.
+		 */
 		// eslint-disable-next-line no-undef
-		google.maps.event.addListener( map, 'zoom_changed', () => {
-			const zoom = map.getZoom()
-			setAttributes( { zoom } )
-		} )
+		// google.maps.event.addListener( map, 'zoom_changed', () => {
+		// 	const zoom = map.getZoom()
+		// 	setAttributes( { zoom } )
+		// } )
 	}
 
 	const updateMarker = () => {
@@ -216,28 +209,6 @@ const Edit = props => {
 		const map = mapRef.current
 
 		marker.setMap( showMarker ? map : null )
-
-		const path = getPathFromSvg( icon )
-
-		const fillColor = getFillColor( iconColor1 )
-
-		if ( path ) {
-			marker.setIcon( {
-				path,
-				fillColor: fillColor || DEFAULT_ICON_COLOR,
-				fillOpacity: parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
-				strokeWeight: 0,
-				rotation: parseInt( iconRotation, 10 ) || DEFAULT_ICON_ROTATION,
-				scale: ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
-				// eslint-disable-next-line no-undef
-				anchor: new google.maps.Point(
-					parseInt( iconAnchorPositionX ) || DEFAULT_ICON_ANCHOR_POSITION_X,
-					parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y
-				),
-			} )
-		} else {
-			marker.setIcon( null )
-		}
 	}
 
 	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
@@ -268,9 +239,12 @@ const Edit = props => {
 	useEffect( () => {
 		const map = mapRef.current
 
-		if ( map && isDefined( zoom ) ) {
-			map.setZoom( zoom )
+		if ( isEmpty( map ) ) {
+			return
 		}
+
+		const value = getZoom( attributes )
+		map.setZoom( value )
 	}, [ zoom, mapRef.current ] )
 
 	useEffect( () => {
@@ -278,16 +252,9 @@ const Edit = props => {
 			updateMarker()
 		}
 	}, [
-		iconSize,
-		iconAnchorPositionX,
-		iconAnchorPositionY,
-		iconColor1,
-		iconOpacity,
-		iconRotation,
 		mapRef.current,
 		markerRef.current,
 		showMarker,
-		icon,
 	] )
 
 	useEffect( () => {
@@ -365,8 +332,8 @@ const Edit = props => {
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="height"
-						min={ 200 }
-						max={ 1000 }
+						sliderMin={ 200 }
+						sliderMax={ 1000 }
 						step={ 1 }
 						allowReset={ true }
 						placeholder=""
@@ -376,12 +343,23 @@ const Edit = props => {
 						label={ __( 'Zoom', i18n ) }
 						attribute="zoom"
 						min={ 1 }
-						sliderMax={ 24 }
+						max={ 22 }
 						step={ 1 }
 						allowReset={ true }
 						placeholder=""
 					/>
 					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
+						<AdvancedToggleControl
+							checked={
+								usesApiKey && isDefined( apiKey )
+									? showMarker
+									: false
+							}
+							className={ classnames( 'stk-block-map__map-marker', { 'stk-block-map__map-marker__disabled': ! usesApiKey } ) }
+							label={ __( 'Show Marker', i18n ) }
+							attribute="showMarker"
+							defaultValue={ false }
+						/>
 						<AdvancedToggleControl
 							label={ __( 'Enable Dragging', i18n ) }
 							attribute="isDraggable"
@@ -435,50 +413,12 @@ const Edit = props => {
 							} }
 							help={
 								<Fragment>
-									<ExternalLink href="#0">
+									<ExternalLink href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block">
 										{ __( 'Learn how to use Custom Map Style', i18n ) }
 									</ExternalLink>
 								</Fragment>
 							}
 						/>
-					</div>
-				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					className={ classnames( 'stk-block-map__map-marker', { 'stk-block-map__map-marker__disabled': ! usesApiKey } ) }
-					title={ __( 'Map Marker', i18n ) }
-					initialOpen={ false }
-					checked={
-						usesApiKey && isDefined( apiKey )
-							? showMarker
-							: false
-					}
-					onChange={ showMarker =>
-						updateBlockAttributes( clientId, { showMarker } )
-					}
-					id="map-marker"
-				>
-					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
-						<Icon.InspectorControls hideControlsIfIconIsNotSet={ true } hasShape={ false } wrapInPanels={ false } hasBackgroundShape={ false } responsive="" hover="" hasGradient={ false } />
-					</div>
-					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
-						{ icon && <AdvancedRangeControl
-							label={ __( 'Horizontal Icon Anchor Point', i18n ) }
-							attribute="iconAnchorPositionX"
-							min={ -500 }
-							sliderMax={ 1000 }
-							step={ 1 }
-							allowReset={ true }
-							placeholder=""
-						/> }
-						{ icon && <AdvancedRangeControl
-							label={ __( 'Vertical Icon Anchor Point', i18n ) }
-							attribute="iconAnchorPositionY"
-							min={ -500 }
-							sliderMax={ 1000 }
-							step={ 1 }
-							allowReset={ true }
-							placeholder=""
-						/> }
 					</div>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
