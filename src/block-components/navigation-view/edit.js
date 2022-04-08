@@ -60,6 +60,11 @@ export const Edit = () => {
 		}
 	} )
 
+	// ListView is not available in WP 5.8.4 and below, don't show it if it's not available.
+	if ( ! ListView ) {
+		return null
+	}
+
 	// Don't show if this is the only block.
 	if ( ! isSelected || isOnlyBlock ) {
 		return null
@@ -80,8 +85,7 @@ export const Edit = () => {
 					--stk-inspector-navigation-view: ${ height }px;
 				}` : '' }
 			</style>
-			{ /** ListView is not available in WP 5.8.4 anmd below */ }
-			{ ListView && <ResizableBox
+			{ <ResizableBox
 				className={ classNames }
 				showHandle={ isOpen }
 				enable={ { top: true } }
