@@ -31,7 +31,7 @@ import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { Button } from '~stackable/components'
 import {
-	useAttributeName, useBlockAttributes, useDeviceType,
+	useAttributeName, useBlockAttributes, useDeviceType, usePlaceholder,
 } from '~stackable/hooks'
 
 const FourRangeControl = props => {
@@ -41,6 +41,13 @@ const FourRangeControl = props => {
 	let value = _value || {
 		top: props.defaultTop, right: props.defaultRight, bottom: props.defaultBottom, left: props.defaultLeft,
 	}
+
+	const placeholders = usePlaceholder( [
+		`${ props.attribute }Top`,
+		`${ props.attribute }Right`,
+		`${ props.attribute }Bottom`,
+		`${ props.attribute }Left`,
+	] )
 
 	// You can specify the values in this way. This is how this is done in v2
 	const hasOldValues = typeof props.top !== 'undefined' || typeof props.right !== 'undefined' || typeof props.bottom !== 'undefined' || typeof props.left !== 'undefined'
@@ -178,6 +185,11 @@ const FourRangeControl = props => {
 		} )
 	} )
 
+	const placeholderTop = typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : placeholders[ `${ props.attribute }Top` ]
+	const placeholderRight = typeof props.placeholderRight === 'undefined' ? propsToPass.placeholder : placeholders[ `${ props.attribute }Right` ]
+	const placeholderBottom = typeof props.placeholderBottom === 'undefined' ? propsToPass.placeholder : placeholders[ `${ props.attribute }Bottom` ]
+	const placeholderLeft = typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : placeholders[ `${ props.attribute }Left` ]
+
 	return (
 		<AdvancedControl { ...controlProps }>
 			{ isLocked && (
@@ -187,6 +199,7 @@ const FourRangeControl = props => {
 						value={ firstValue }
 						onChange={ onChangeAll }
 						allowReset={ false }
+						placeholder={ placeholderTop }
 					/>
 					<ResetButton
 						allowReset={ props.allowReset }
@@ -208,7 +221,7 @@ const FourRangeControl = props => {
 								value={ value.top }
 								onChange={ onChangeTop }
 								allowReset={ false }
-								placeholder={ typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop }
+								placeholder={ placeholderTop }
 							/>
 							<ResetButton
 								allowReset={ props.allowReset }
@@ -228,7 +241,7 @@ const FourRangeControl = props => {
 								value={ value.right }
 								onChange={ onChangeRight }
 								allowReset={ false }
-								placeholder={ typeof props.placeholderRight === 'undefined' ? propsToPass.placeholder : props.placeholderRight }
+								placeholder={ placeholderRight }
 							/>
 							<ResetButton
 								allowReset={ props.allowReset }
@@ -248,7 +261,7 @@ const FourRangeControl = props => {
 								value={ value.bottom }
 								onChange={ onChangeBottom }
 								allowReset={ false }
-								placeholder={ typeof props.placeholderBottom === 'undefined' ? propsToPass.placeholder : props.placeholderBottom }
+								placeholder={ placeholderBottom }
 							/>
 							<ResetButton
 								allowReset={ props.allowReset }
@@ -268,7 +281,7 @@ const FourRangeControl = props => {
 								value={ value.left }
 								onChange={ onChangeLeft }
 								allowReset={ false }
-								placeholder={ typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft }
+								placeholder={ placeholderLeft }
 							/>
 							<ResetButton
 								allowReset={ props.allowReset }
