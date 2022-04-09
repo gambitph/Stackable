@@ -43,7 +43,6 @@ const DEVICE_OPTIONS = [
 	},
 ]
 
-// @TODO check if dispatch('core/edit-post') and __experimentalSet... not null
 const ResponsiveToggle = props => {
 	const deviceType = useDeviceType()
 
