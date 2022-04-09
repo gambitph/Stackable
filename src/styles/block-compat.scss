@@ -13,6 +13,11 @@ body.stk--is-blocksy-theme .stk-block { // Need to add .stk-block here, this doe
 // Wide block width - used for Content Width of column-type blocks.
 body.stk--is-astra-theme {
 	--stk-block-width-wide-detected: calc(var(--stk-block-width-default-detected) + 200px);
+	// The inner width is not centered.
+	.entry-content :is(.alignfull, .alignwide) > .alignwide {
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
 // Neve theme
