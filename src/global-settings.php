@@ -68,6 +68,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			// For some native blocks, add a note that they're core blocks.
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
 
+			// Fixes columns issue with Native Posts block.
+			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
+
 			// Add our global typography styles in the frontend only.
 			if ( ! is_admin() ) {
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
@@ -533,9 +536,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$selectors[] = $tag . '[class*="wp-block-"]';
 			}
 
-			// Fixes columns issue with Native Posts block.
-			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
-
 			return apply_filters( 'stackable_global_typography_selectors', $selectors, $tag );
 		}
 
@@ -820,6 +820,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		}
 
 		public function posts_block_columns_fix( $selectors, $tag ) {
+			// Prevent global settings from affecting hte native wp block post.
 			if ( $tag === 'li' ) {
 				$index = array_search( '[data-block-type="core"] li', $selectors );
 				$selectors[ $index ] = '[data-block-type="core"] li:not(.wp-block-post)';
