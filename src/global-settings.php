@@ -829,7 +829,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return void
 		 */
 		public function posts_block_columns_fix( $selectors, $tag ) {
-			// Prevent global settings from affecting hte native wp block post.
+			// Prevent global settings from affecting the native wp block post.
 			if ( $tag === 'li' ) {
 				$index = array_search( '[data-block-type="core"] li', $selectors );
 				if ( ! is_bool( $index ) ) {
