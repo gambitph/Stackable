@@ -832,7 +832,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			// Prevent global settings from affecting the native wp block post.
 			if ( $tag === 'li' ) {
 				$index = array_search( '[data-block-type="core"] li', $selectors );
-				if ( ! is_bool( $index ) ) {
+				if ( $index !== false ) {
 					$selectors[ $index ] = '[data-block-type="core"] li:not(.wp-block-post)';
 				}
 			}
