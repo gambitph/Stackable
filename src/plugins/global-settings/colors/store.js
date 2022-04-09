@@ -128,7 +128,7 @@ domReady( () => {
 					 * We need to clone and add only the colors we need because the
 					 * object may have other properties.
 					 */
-					const experimentalFeatures = cloneDeep( select( 'core/block-editor' ).getSettings().__experimentalFeatures )
+					const experimentalFeatures = cloneDeep( select( 'core/block-editor' ).getSettings().__experimentalFeatures || {} )
 					if ( typeof experimentalFeatures.color === 'undefined' ) {
 						experimentalFeatures.color = {}
 					}
