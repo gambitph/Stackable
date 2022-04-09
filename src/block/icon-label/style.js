@@ -63,6 +63,7 @@ export const IconLabelStyles = props => {
 
 	return (
 		<>
+			{ /* Alignment has been removed in 3.3.0, but retained here to prevent block errors */ }
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
@@ -97,6 +98,7 @@ IconLabelStyles.Content = props => {
 
 	const stylesToRender = (
 		<>
+			{ /* Alignment has been removed in 3.3.0, but retained here to prevent block errors */ }
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Column.Style.Content { ...propsToPass } />
