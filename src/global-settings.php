@@ -69,7 +69,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
 
 			// Fixes columns issue with Native Posts block.
-			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
+			add_filter( 'stackable_global_typography_tag_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
 
 			// Add our global typography styles in the frontend only.
 			if ( ! is_admin() ) {
@@ -514,7 +514,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			$selectors[] = $selector . '[class*="wp-block-"]';
 			$selectors[] = $selector . '[class*="wp-block-"] ';
 
-			return apply_filters( 'stackable_global_typography_selectors', $selectors, $selector );
+			return apply_filters( 'stackable_global_typography_class_selectors', $selectors, $selector );
 		}
 
 		public function form_tag_selector( $tag ) {
@@ -536,7 +536,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$selectors[] = $tag . '[class*="wp-block-"]';
 			}
 
-			return apply_filters( 'stackable_global_typography_selectors', $selectors, $tag );
+			return apply_filters( 'stackable_global_typography_tag_selectors', $selectors, $tag );
 		}
 
 		public function form_paragraph_selector() {
@@ -819,6 +819,15 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			return $subject;
 		}
 
+		/**
+		 * Prevent global settings from affecting the styles of the native Post
+		 * block. This fixes the issue where the last column of the native Posts
+		 * block incorrectly wraps below and leaves a gap.
+		 *
+		 * @param array $selectors
+		 * @param string $tag
+		 * @return void
+		 */
 		public function posts_block_columns_fix( $selectors, $tag ) {
 			// Prevent global settings from affecting hte native wp block post.
 			if ( $tag === 'li' ) {
