@@ -158,6 +158,8 @@ export const formParagraphSelectors = applyTo => {
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] p`,
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] li`,
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] td`,
+		// Apply the font styles to the content placeholder text when the post is blank.
+		'.block-editor-default-block-appender.has-visible-prompt',
 	], '' )
 }
 
