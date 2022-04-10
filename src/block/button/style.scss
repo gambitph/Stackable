@@ -8,3 +8,8 @@
 .stk-block.stk-block-button {
 	width: auto;
 }
+
+// Prevent fullwidth buttons from going past their container.
+.stk-button {
+	box-sizing: border-box;
+}
