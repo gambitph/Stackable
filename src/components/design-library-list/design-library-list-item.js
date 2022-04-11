@@ -15,7 +15,15 @@ import { __ } from '@wordpress/i18n'
 
 const DesignLibraryListItem = props => {
 	const {
-		designId, image, label, onClick, plan, isPro, apiVersion,
+		designId,
+		image,
+		label,
+		onClick,
+		plan,
+		isPro,
+		apiVersion,
+		isMultiSelectMode = false,
+		selectedNum = false,
 	} = props
 
 	const [ isBusy, setIsBusy ] = useState( false )
@@ -27,6 +35,8 @@ const DesignLibraryListItem = props => {
 	], {
 		'ugb--is-busy': isBusy,
 		[ `ugb--is-${ plan }` ]: ! isPro && plan !== 'free',
+		'ugb-design-library-item--toggle': isMultiSelectMode,
+		'ugb--is-toggled': isMultiSelectMode && selectedNum,
 	} )
 
 	return (
@@ -34,6 +44,8 @@ const DesignLibraryListItem = props => {
 			className={ mainClasses }
 			onMouseEnter={ () => setIsHovered( true ) }
 			onMouseLeave={ () => setIsHovered( false ) }
+			// Add the number if isToggle is a number, signifying an order instead of just an on/off.
+			data-selected-num={ isMultiSelectMode ? selectedNum : undefined }
 		>
 			{ isBusy && <span className="ugb-design-library-item__spinner" data-testid="spinner"><Spinner /></span> }
 			{ ! isPro && plan !== 'free' && <span className="ugb-design-library-item__premium" data-testid="premium-tag">{ plan }</span> }
@@ -41,6 +53,10 @@ const DesignLibraryListItem = props => {
 				className="ugb-design-library-item__image"
 				onClick={ () => {
 					if ( ! isPro && plan !== 'free' ) {
+						return
+					}
+					if ( isMultiSelectMode ) {
+						onClick( designId )
 						return
 					}
 					setIsBusy( true )

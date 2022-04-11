@@ -7,31 +7,35 @@ import SVGViewFew from './images/view-few.svg'
 import BlockList from './block-list'
 import Button from '../button'
 import AdvancedToolbarControl from '../advanced-toolbar-control'
+import DesignLibraryList from '~stackable/components/design-library-list'
+import {
+	getDesign, getDesigns, setDevModeDesignLibrary,
+} from '~stackable/design-library'
 
 /**
  * External deprendencies
  */
-import DesignLibraryList from '~stackable/components/design-library-list'
-import { getDesigns, setDevModeDesignLibrary } from '~stackable/design-library'
 import { i18n, devMode } from 'stackable'
+import classnames from 'classnames'
 import { useLocalStorage } from '~stackable/util'
 
 /**
  * WordPress deprendencies
  */
 import {
-	Modal, TextControl, ToggleControl,
+	Modal, Spinner, TextControl, ToggleControl,
 } from '@wordpress/components'
-import {
-	useEffect, useState,
-} from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { useEffect, useState } from '@wordpress/element'
+import { sprintf, __ } from '@wordpress/i18n'
 
 export const ModalDesignLibrary = props => {
 	const [ search, setSearch ] = useState( props.search )
 	const [ columns, setColumns ] = useState( 3 )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ doReset, setDoReset ] = useState( false )
+	const [ isMultiSelectMode, setIsMultiSelectMode ] = useState( false )
+	const [ selectedDesignIds, setSelectedDesignIds ] = useState( [] )
+	const [ isMultiSelectBusy, setIsMultiSelectBusy ] = useState( false )
 	const [ selectedId, setSelectedId ] = useState( '' )
 	const [ selectedType, setSelectedType ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'uikit' )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
@@ -143,7 +147,7 @@ export const ModalDesignLibrary = props => {
 					) }
 				</>
 			) }
-			className="ugb-modal-design-library"
+			className={ classnames( 'ugb-modal-design-library', { 'ugb-modal-design-library--is-multiselect': isMultiSelectMode } ) }
 			onRequestClose={ props.onClose }
 		>
 			<div className="ugb-modal-design-library__wrapper">
@@ -167,6 +171,30 @@ export const ModalDesignLibrary = props => {
 				</aside>
 
 				<aside className="ugb-modal-design-library__topbar">
+
+					<Button
+						label={ __( 'Select Multiple', i18n ) }
+						className={
+							classnames(
+								'ugb-modal-design-library__select',
+								'stk-circular-button',
+								{ 'stk--is-active': isMultiSelectMode }
+							)
+						}
+						onClick={ () => setIsMultiSelectMode( ! isMultiSelectMode ) }
+					>
+						{ __( 'Select', i18n ) }
+					</Button>
+
+					{ isMultiSelectMode && <Button
+						label={ __( 'Deselect All', i18n ) }
+						className="ugb-modal-design-library__deselect stk-circular-button"
+						disabled={ ! selectedDesignIds.length }
+						onClick={ () => setSelectedDesignIds( [] ) }
+					>
+						{ __( 'Deselect All', i18n ) }
+					</Button> }
+
 					{ devMode &&
 						<ToggleControl
 							className="ugb-modal-design-library__dev-mode"
@@ -216,8 +244,45 @@ export const ModalDesignLibrary = props => {
 						isBusy={ isBusy }
 						designs={ displayDesigns }
 						apiVersion={ props.apiVersion }
+						isMultiSelectMode={ isMultiSelectMode }
+						selectedDesigns={ selectedDesignIds }
+						onSelectMulti={ designId => {
+							const newSelectedDesigns = [ ...selectedDesignIds ]
+							if ( newSelectedDesigns.includes( designId ) ) {
+								newSelectedDesigns.splice( newSelectedDesigns.indexOf( designId ), 1 )
+								setSelectedDesignIds( newSelectedDesigns )
+							} else {
+								newSelectedDesigns.push( designId )
+								setSelectedDesignIds( newSelectedDesigns )
+							}
+						} }
 					/>
 				</div>
+
+				{ isMultiSelectMode && <aside className="ugb-modal-design-library__footer">
+					<div>{ sprintf( __( `(%d) Selected`, i18n ), selectedDesignIds.length ) }</div>
+					<Button
+						label={ __( 'Add Designs', i18n ) }
+						className="ugb-modal-design-library__add-multi"
+						disabled={ ! selectedDesignIds.length || isMultiSelectBusy }
+						onClick={ () => {
+							setIsMultiSelectBusy( true )
+							const designs = selectedDesignIds.map( designId => {
+								return displayDesigns.find( design => design.id === designId )
+							} )
+							const promises = selectedDesignIds.map( designId => {
+								return getDesign( designId, props.apiVersion )
+							} )
+							Promise.all( promises ).then( designData => {
+								props.onSelect( designData, designs )
+								setIsMultiSelectBusy( false )
+							} )
+						} }
+					>
+						{ __( 'Add Designs', i18n ) }
+						{ isMultiSelectBusy && <Spinner /> }
+					</Button>
+				</aside> }
 			</div>
 		</Modal>
 	)

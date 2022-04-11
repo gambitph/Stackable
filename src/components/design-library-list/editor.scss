@@ -106,6 +106,37 @@
 			}
 		}
 	}
+
+	// Toggle mode
+	&.ugb-design-library-item--toggle {
+		position: relative;
+		&::after {
+			content: "";
+			position: absolute;
+			top: 16px;
+			left: 16px;
+			height: 24px;
+			width: 24px;
+			background: #fff;
+			border: 1px solid #777;
+		}
+
+		&.ugb--is-toggled {
+			&::after {
+				content: attr(data-selected-num);
+				height: 24px;
+				width: 24px;
+				background: #f00069;
+				color: #fff;
+				font-size: 14px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: none;
+				font-weight: bold;
+			}
+		}
+	}
 }
 .ugb-design-library-item__image {
 	padding: 0 !important;
