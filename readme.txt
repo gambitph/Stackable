@@ -145,6 +145,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.1 Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.0 How To Shift From Version 2 to Version 3](https://wpstackable.com/blog/how-to-shift-from-version-2-to-version-3/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -242,6 +243,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.3.0 =
+[Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: You can now Save Block Defaults (Check out the Block Defaults panel in the Stackable sidebar)
 * New: Inline CSS Optimization
