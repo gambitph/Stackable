@@ -15,6 +15,7 @@ import {
 	Advanced,
 	MarginBottom,
 	Transform,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -35,6 +36,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
+	PremadeHoverEffects.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }

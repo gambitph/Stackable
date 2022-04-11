@@ -11,6 +11,7 @@ import {
 	Responsive,
 	Transform,
 	Link,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -32,6 +33,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
+	PremadeHoverEffects.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }

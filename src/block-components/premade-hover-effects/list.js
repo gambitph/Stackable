@@ -2,15 +2,6 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
 
-const typesOfBlocks = {
-	'stackable/heading': 'text',
-	'stackable/text': 'text',
-	'stackable/subtitle': 'text',
-	'stackable/button-group': 'container',
-	'stackable/button': 'button',
-	'stacklable/icon': 'icon',
-}
-
 const innerBlockColors = [
 	{
 		hoverEffect: 'background-color',
@@ -20,7 +11,7 @@ const innerBlockColors = [
 		},
 	},
 	{
-		hoverEffect: 'inner-block-color',
+		hoverEffect: 'inner-blocks-color',
 		attributes: {
 			textColor1ParentHover: '#ffffff',
 			iconColor1ParentHover: '#ffffff',
@@ -32,11 +23,10 @@ const updateInnerBlocks = ( innerBlocks, remove = false, value ) => {
 	const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = dispatch( 'core/block-editor' )
 	const innerBlockAttr = innerBlockColors.find( ( { hoverEffect: hoverEffect } ) => value === hoverEffect )
 	const emptyAttribute = { textColor1ParentHover: '', iconColor1ParentHover: '' }
-
 	innerBlocks.forEach( childBlock => {
 		__unstableMarkNextChangeAsNotPersistent()
 		if ( childBlock.innerBlocks.length > 0 ) {
-			return updateInnerBlocks( childBlock.innerBlocks )
+			return updateInnerBlocks( childBlock.innerBlocks, remove, value )
 		}
 		if ( childBlock.name === 'stackable/button' ) {
 			if ( value.includes( 'background-color' ) ) {
@@ -69,13 +59,15 @@ export const EFFECTS = [
 				label: __( 'Background Color', i18n ),
 				attributes: {
 					containerBackgroundColorHover: '#008de4',
+					hasContainer: 'true',
 				},
 				onApplyEffect: innerBlocks => {
+					console.log( innerBlocks )
 					const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = dispatch( 'core/block-editor' )
 					innerBlocks.forEach( childBlock => {
 						__unstableMarkNextChangeAsNotPersistent()
 						if ( childBlock.innerBlocks.length > 0 ) {
-							updateInnerBlocks( childBlock.innerBlocks )
+							updateInnerBlocks( childBlock.innerBlocks, undefined, 'background-color' )
 						}
 						updateBlockAttributes( childBlock.clientId, { textColor1ParentHover: '#ffffff', iconColor1ParentHover: '#ffffff' } )
 					} )
@@ -105,7 +97,7 @@ export const EFFECTS = [
 					innerBlocks.forEach( childBlock => {
 						__unstableMarkNextChangeAsNotPersistent()
 						if ( childBlock.innerBlocks.length > 0 ) {
-							updateInnerBlocks( childBlock.innerBlocks )
+							updateInnerBlocks( childBlock.innerBlocks, undefined, 'background-color-shadow' )
 						}
 						updateBlockAttributes( childBlock.clientId, { textColor1ParentHover: '#ffffff', iconColor1ParentHover: '#ffffff' } )
 					} )
@@ -133,7 +125,7 @@ export const EFFECTS = [
 					innerBlocks.forEach( childBlock => {
 						__unstableMarkNextChangeAsNotPersistent()
 						if ( childBlock.innerBlocks.length > 0 ) {
-							updateInnerBlocks( childBlock.innerBlocks )
+							updateInnerBlocks( childBlock.innerBlocks, undefined, 'inner-blocks-color' )
 						}
 						updateBlockAttributes( childBlock.clientId, { textColor1ParentHover: '#008de4', iconColor1ParentHover: '#008de4' } )
 					} )
@@ -156,8 +148,6 @@ export const EFFECTS = [
 				attributes: {
 					containerBorderColorHover: 'var(--stk-global-color-20226, #008de4)',
 				},
-				onApplyEffect: block => {},
-				removeEffect: block => {},
 				isPremium: false,
 			},
 		],
@@ -178,6 +168,43 @@ export const EFFECTS = [
 				attributes: {
 					imageFilter: 'grayscale(1)',
 					imageFilterHover: 'grayscale(0)',
+				},
+			},
+		],
+	},
+	{
+		effectsType: 'button',
+		effects: [
+			{
+				value: 'basic-shadow',
+				label: __( 'Basic Shadow', i18n ),
+				attributes: {
+					buttonShadowHover: '0 5px 30px -10px rgba(18, 63, 82, 0.3)',
+				},
+			},
+			{
+				value: 'solid-shadow',
+				label: __( 'Solid Shadow', i18n ),
+				attributes: {
+					buttonShadowHover: '6px 6px 0px 0px rgba(var(--stk-global-color-56986-rgba, 17, 17, 17), 1)',
+				},
+			},
+			{
+				value: 'color-hover',
+				label: __( 'Color on Hover', i18n ),
+				attributes: {
+					buttonBackgroundColor: 'transparent',
+					buttonBorderType: 'solid',
+					buttonBackgroundColorHover: 'var(--stk-global-color-20226, #008de4)',
+					buttonBackgroundColorParentHover: 'transparent',
+					textColor1Hover: 'var(--stk-global-color-58834, #ffffff)',
+				},
+			},
+			{
+				value: 'opacity',
+				label: __( 'Opacity', i18n ),
+				attributes: {
+					opacityHover: '0.8',
 				},
 			},
 		],

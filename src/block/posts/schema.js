@@ -17,6 +17,7 @@ import {
 	addFlexGapAttributes,
 	Transform,
 	ContentAlign,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION, i18n } from 'stackable'
@@ -234,6 +235,7 @@ export const attributes = ( version = VERSION ) => {
 	} )
 	Transform.addAttributes( attrObject )
 	ContentAlign.addAttributes( attrObject )
+	PremadeHoverEffects.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: postsAttributes,

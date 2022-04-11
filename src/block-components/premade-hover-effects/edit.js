@@ -15,12 +15,9 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { useDispatch } from '@wordpress/data'
 import {
-	useDispatch,
-	select,
-} from '@wordpress/data'
-import {
-	Fragment, useCallback, useMemo, useState,
+	Fragment, useCallback, useMemo,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { ENTER, SPACE } from '@wordpress/keycodes'
@@ -35,7 +32,6 @@ export const Edit = props => {
 	} = useAttributeEditHandlers()
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const { innerBlocks } = useBlockContext()
-	const [ prevHoverEffect, setPrevHoverEffect ] = useState( null )
 
 	const effects = useMemo( () => {
 		const blockEffects = applyFilters( 'stackable.hover-effects.list', EFFECTS )
@@ -63,7 +59,6 @@ export const Edit = props => {
 		// Remove existing hover effects
 		const tempAttr = {}
 		const prevEffect = effectsList.find( ( { value: v } ) => attrHoverEffect === v && v !== '' )
-		console.log( prevEffect )
 		if ( prevEffect ) {
 			Object.keys( prevEffect.attributes ).forEach( attrName => {
 				tempAttr[ attrName ] = ''

@@ -12,6 +12,7 @@ import {
 	Separator,
 	Transform,
 	ContentAlign,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -32,6 +33,7 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Separator.addAttributes( attrObject )
 	ContentAlign.addAttributes( attrObject )
+	PremadeHoverEffects.addAttributes( attrObject )
 
 	attrObject.addDefaultValues( {
 		attributes: {

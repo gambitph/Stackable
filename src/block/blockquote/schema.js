@@ -14,6 +14,7 @@ import {
 	Advanced,
 	MarginBottom,
 	Transform,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -33,6 +34,7 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
+	PremadeHoverEffects.addAttributes( attrObject )
 
 	attrObject.addDefaultValues( {
 		attributes: {

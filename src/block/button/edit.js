@@ -19,6 +19,7 @@ import {
 	ConditionalDisplay,
 	Transform,
 	getAlignmentClasses,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockStyle } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
@@ -111,6 +112,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<PremadeHoverEffects.InspectorControls effects={ [ 'button' ] } />
 
 			<div { ...blockProps }>
 				<ButtonStyles version={ VERSION } />
