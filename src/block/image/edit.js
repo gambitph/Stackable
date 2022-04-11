@@ -27,6 +27,7 @@ import {
 	Transform,
 	getAlignmentClasses,
 	Link,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { withQueryLoopContext } from '~stackable/higher-order'
 
@@ -81,6 +82,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<PremadeHoverEffects.InspectorControls effects={ [ 'image' ] } />
 
 			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-image" />

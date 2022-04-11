@@ -49,6 +49,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -392,6 +393,7 @@ const Edit = props => {
 				initialOpen={ false }
 			/>
 			<ContainerDiv.InspectorControls />
+			<PremadeHoverEffects.InspectorControls effects={ [ 'container', 'image' ] } />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-posts" />

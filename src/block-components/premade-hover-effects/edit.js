@@ -6,14 +6,21 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
+import {
+	useBlockContext,
+	useAttributeEditHandlers,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useDispatch } from '@wordpress/data'
 import {
-	Fragment, useCallback, useMemo,
+	useDispatch,
+	select,
+} from '@wordpress/data'
+import {
+	Fragment, useCallback, useMemo, useState,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { ENTER, SPACE } from '@wordpress/keycodes'
@@ -23,7 +30,12 @@ import { EFFECTS } from './list'
 
 export const Edit = props => {
 	const { clientId } = useBlockEditContext()
+	const {
+		getAttribute,
+	} = useAttributeEditHandlers()
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
+	const { innerBlocks } = useBlockContext()
+	const [ prevHoverEffect, setPrevHoverEffect ] = useState( null )
 
 	const effects = useMemo( () => {
 		const blockEffects = applyFilters( 'stackable.hover-effects.list', EFFECTS )
@@ -47,23 +59,28 @@ export const Edit = props => {
 	)
 
 	const applyEffect = useCallback( value => {
+		const attrHoverEffect = getAttribute( 'premadeHoverEffect' )
 		// Remove existing hover effects
-		const arr = {}
-		const prevEffect = effectsList.filter( ( { value: v } ) => value !== v && v !== '' )
-		prevEffect.forEach( ( item => {
-			Object.keys( item?.attributes ).forEach( attr => arr[ attr ] = '' )
-		} ) )
-		updateBlockAttributes( clientId, arr )
-		if ( prevEffect.removeEffect ) {
-			prevEffect.removeEffect( clientId )
+		const tempAttr = {}
+		const prevEffect = effectsList.find( ( { value: v } ) => attrHoverEffect === v && v !== '' )
+		console.log( prevEffect )
+		if ( prevEffect ) {
+			Object.keys( prevEffect.attributes ).forEach( attrName => {
+				tempAttr[ attrName ] = ''
+			} )
+			updateBlockAttributes( clientId, tempAttr )
+			if ( prevEffect.removeEffect ) {
+				prevEffect.removeEffect( innerBlocks )
+			}
 		}
 
 		// Apply the hover effect.
 		const newEffect = effectsList.find( ( { value: v } ) => v === value )
 		updateBlockAttributes( clientId, newEffect.attributes )
 		if ( newEffect.onApplyEffect ) {
-			newEffect.onApplyEffect( clientId )
+			newEffect.onApplyEffect( innerBlocks )
 		}
+		updateBlockAttributes( clientId, { premadeHoverEffect: value } )
 	}, [ effectsList ] )
 
 	return (
