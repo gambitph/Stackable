@@ -28,12 +28,12 @@ const colorTypes = applyFilters( 'stackable.block-component.icon.color-type', [
 	{
 		value: '',
 		title: __( 'Single', i18n ),
-		controls: () => {
+		controls: ( { hover } ) => {
 			return (
 				<ColorPaletteControl
 					label={ __( 'Icon Color', i18n ) }
 					attribute="iconColor1"
-					hover="all"
+					hover={ hover }
 				/>
 			)
 		},

@@ -17,6 +17,7 @@ import {
 	getFillColor,
 	getMapOptions,
 	getPathFromSvg,
+	getZoom,
 	initMapLibrary,
 	isDefined,
 } from './util'
@@ -192,7 +193,7 @@ const Edit = props => {
 
 	const initMap = () => {
 		const mapCanvas = canvasRef.current
-		const mapOptions = getMapOptions( attributes, 'edit' )
+		const mapOptions = getMapOptions( attributes )
 		// eslint-disable-next-line no-undef
 		const map = mapRef.current = new google.maps.Map( mapCanvas, mapOptions )
 		// eslint-disable-next-line no-undef
@@ -204,11 +205,16 @@ const Edit = props => {
 
 		updateMarker()
 
+		/* FIXME: The following causes the Zoom AdvRangeControl's reset button to be non-functional
+		 * However, without this, zooming on the map will not reflect on the slider.
+		 * i.e. user can play around with the zoom level on the map and the zoom value
+		 * in the slider won't change.
+		 */
 		// eslint-disable-next-line no-undef
-		google.maps.event.addListener( map, 'zoom_changed', () => {
-			const zoom = map.getZoom()
-			setAttributes( { zoom } )
-		} )
+		// google.maps.event.addListener( map, 'zoom_changed', () => {
+		// 	const zoom = map.getZoom()
+		// 	setAttributes( { zoom } )
+		// } )
 	}
 
 	const updateMarker = () => {
@@ -268,9 +274,11 @@ const Edit = props => {
 	useEffect( () => {
 		const map = mapRef.current
 
-		if ( map && isDefined( zoom ) ) {
-			map.setZoom( zoom )
+		if ( isEmpty( map ) ) {
+			return
 		}
+		const value = getZoom( attributes )
+		map.setZoom( value )
 	}, [ zoom, mapRef.current ] )
 
 	useEffect( () => {
@@ -365,8 +373,8 @@ const Edit = props => {
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="height"
-						min={ 200 }
-						max={ 1000 }
+						sliderMin={ 200 }
+						sliderMax={ 1000 }
 						step={ 1 }
 						allowReset={ true }
 						placeholder=""
@@ -376,7 +384,7 @@ const Edit = props => {
 						label={ __( 'Zoom', i18n ) }
 						attribute="zoom"
 						min={ 1 }
-						sliderMax={ 24 }
+						max={ 24 }
 						step={ 1 }
 						allowReset={ true }
 						placeholder=""
@@ -435,7 +443,7 @@ const Edit = props => {
 							} }
 							help={
 								<Fragment>
-									<ExternalLink href="#0">
+									<ExternalLink href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block">
 										{ __( 'Learn how to use Custom Map Style', i18n ) }
 									</ExternalLink>
 								</Fragment>

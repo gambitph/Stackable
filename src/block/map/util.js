@@ -1,10 +1,11 @@
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import mapStyleOptions from './map-styles'
+import { clamp } from 'lodash'
 
 export const DEFAULT_HEIGHT = 200
-// This is a magic number that prevents scrollbars and other weirdness.
-// Is this the width of the scrollbar?
+// TODO: Find out why this is a magic number that prevents scrollbars and other
+// weirdness. Is this the width of the scrollbar?
 export const DEFAULT_MIN_HEIGHT = 21
 export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
@@ -99,7 +100,7 @@ export const getIframe = attributes => {
 	)
 }
 
-export const getZoom = ( { zoom } ) => isDefined( zoom ) ? zoom : DEFAULT_ZOOM
+export const getZoom = ( { zoom } ) => clamp( parseInt( zoom, 10 ) || DEFAULT_ZOOM, 1, 24 )
 
 export const getLocation = ( { location } ) => isDefined( location ) ? location : DEFAULT_LOCATION
 
