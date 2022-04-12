@@ -63,6 +63,7 @@ export const Edit = props => {
 		hasIconGap,
 		hasIconPosition,
 		hideControlsIfIconIsNotSet = false,
+		iconSizeProps = {},
 		initialOpen,
 		hasMultiColor,
 		hasGradient,
@@ -147,6 +148,7 @@ export const Edit = props => {
 				allowReset={ true }
 				placeholder=""
 				responsive={ responsive }
+				{ ...iconSizeProps }
 			/> }
 
 			{ showIconControl && <AdvancedRangeControl

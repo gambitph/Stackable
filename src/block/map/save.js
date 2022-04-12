@@ -2,16 +2,10 @@
  * Internal dependencies
  */
 import {
-	DEFAULT_ICON_ANCHOR_POSITION_X,
-	DEFAULT_ICON_ANCHOR_POSITION_Y,
-	DEFAULT_ICON_OPACITY,
-	DEFAULT_ICON_ROTATION,
-	DEFAULT_ICON_SIZE,
-	DEFAULT_ICON_COLOR,
 	getIframe,
 	getLocation,
 	getMapStyles,
-	getPathFromSvg,
+	getIconOptions,
 	getZoom,
 	DEFAULT_HEIGHT,
 } from './util'
@@ -44,13 +38,6 @@ export const Save = props => {
 
 	const {
 		address,
-		icon,
-		iconAnchorPositionX,
-		iconAnchorPositionY,
-		iconColor1,
-		iconOpacity,
-		iconRotation,
-		iconSize,
 		isDraggable,
 		showFullScreenButton,
 		showMapTypeButtons,
@@ -72,13 +59,7 @@ export const Save = props => {
 	] )
 
 	const dataAttributes = {
-		'data-icon-path': getPathFromSvg( icon ),
-		'data-icon-scale': ( parseInt( iconSize, 10 ) / 100 ) || ( DEFAULT_ICON_SIZE / 100 ),
-		'data-icon-color': iconColor1 || DEFAULT_ICON_COLOR,
-		'data-icon-anchor-position-x': parseInt( iconAnchorPositionX, 10 ) || DEFAULT_ICON_ANCHOR_POSITION_X,
-		'data-icon-anchor-position-y': parseInt( iconAnchorPositionY ) || DEFAULT_ICON_ANCHOR_POSITION_Y,
-		'data-icon-opacity': parseFloat( iconOpacity, 10 ) || DEFAULT_ICON_OPACITY,
-		'data-icon-rotation': parseInt( iconRotation ) || DEFAULT_ICON_ROTATION,
+		'data-icon-options': JSON.stringify( getIconOptions( attributes ) ),
 		'data-is-draggable': isDraggable,
 		'data-location': JSON.stringify( getLocation( attributes ) ),
 		'data-map-style': JSON.stringify( getMapStyles( attributes ) ),

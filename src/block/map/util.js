@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import mapStyleOptions from './map-styles'
 import { clamp } from 'lodash'
+import { createElementFromHTMLString } from '~stackable/util'
 
 export const DEFAULT_HEIGHT = 200
 // TODO: Find out why this is a magic number that prevents scrollbars and other
@@ -10,25 +11,15 @@ export const DEFAULT_MIN_HEIGHT = 21
 export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
 export const DEFAULT_LOCATION = { lat: 14.680936247180512, lng: 121.04845461073226 }
-export const DEFAULT_ICON_SIZE = 10
+export const DEFAULT_ICON_SIZE = 100
 export const DEFAULT_ICON_OPACITY = 1.0
 export const DEFAULT_ICON_COLOR = '#000000'
 export const DEFAULT_ICON_ROTATION = 0
-export const DEFAULT_ICON_ANCHOR_POSITION_X = 100
-export const DEFAULT_ICON_ANCHOR_POSITION_Y = 500
+export const DEFAULT_ICON_ANCHOR_POSITION_X = 0
+export const DEFAULT_ICON_ANCHOR_POSITION_Y = 0
 
 export const isDefined = ( value = '' ) => {
 	return value !== '' && value !== undefined
-}
-
-export const latLngToString = latLng => `${ latLng.lat },${ latLng.lng }`
-
-export const isLatLng = value => {
-	// @see https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
-	if ( typeof value === 'object' ) {
-		value = latLngToString( value )
-	}
-	return value.trim().match( /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/ )
 }
 
 export const getSnapYBetween = ( value, snapDiff = 50 ) => {
@@ -73,12 +64,52 @@ export const getMapOptions = attributes => {
 	}
 }
 
-export const getFillColor = iconColor1 => {
-	const match = typeof iconColor1 === 'string' && iconColor1.match( /^var\(--stk-global-color-\d+, (#[0-9A-Fa-f]{6})\)/ )
-	if ( match ) {
-		return match[ 1 ]
-	}
-	return iconColor1
+export const getFillColor = ( { iconColor1 } ) => {
+	return isDefined( iconColor1 ) ? iconColor1 : DEFAULT_ICON_COLOR
+}
+
+export const getIconOptions = attributes => {
+	const {
+		icon,
+		iconSize,
+		iconRotation,
+		iconOpacity,
+		iconAnchorPositionX,
+		iconAnchorPositionY,
+	} = attributes
+
+	const svgEl = createElementFromHTMLString( icon )
+
+	if ( ! svgEl ) {
+		// If we can't use the generated SVG element for any reason we
+		// display the default icon.
+		return null
+	 }
+
+	// TODO: Add notice saying color filling uploaded SVG is not supported.
+	svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
+	const svgIconSize = isDefined( iconSize ) ? parseInt( iconSize, 10 ) : DEFAULT_ICON_SIZE
+	svgEl.setAttribute( 'height', svgIconSize )
+	svgEl.setAttribute( 'width', svgIconSize )
+	svgEl.setAttribute( 'style', `color: ${ getFillColor( attributes ) }; opacity: ${ isDefined( iconOpacity ) ? parseFloat( iconOpacity, 10 ) : DEFAULT_ICON_OPACITY }` )
+	svgEl.setAttribute( 'transform', `rotate(${ isDefined( iconRotation ) ? parseInt( iconRotation, 10 ) : DEFAULT_ICON_ROTATION })` )
+
+	const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
+	const iconUrl = `data:image/svg+xml;base64,${ window.btoa( serializedString ) }`
+	const iconOptions = { url: iconUrl }
+	const iconXPos = (
+		isDefined( iconAnchorPositionX )
+			? parseInt( iconAnchorPositionX, 10 )
+			: DEFAULT_ICON_ANCHOR_POSITION_X
+	) + ( svgIconSize / 2 )
+	const iconYPos = (
+		isDefined( iconAnchorPositionY )
+			? parseInt( iconAnchorPositionY, 10 )
+			: DEFAULT_ICON_ANCHOR_POSITION_Y
+	) + svgIconSize
+
+	iconOptions.anchor = { x: iconXPos, y: iconYPos }
+	return iconOptions
 }
 
 export const getIframe = attributes => {

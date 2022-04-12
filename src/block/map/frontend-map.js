@@ -19,14 +19,6 @@ class StackableMap {
 		}
 	}
 
-	getFillColor = iconColor1 => {
-		const match = typeof iconColor1 === 'string' && iconColor1.match( /^var\(--stk-global-color-\d+, (#[0-9A-Fa-f]{6})\)/ )
-		if ( match ) {
-			return match[ 1 ]
-		}
-		return iconColor1
-	}
-
 	loadScriptAsync = src => {
 		return new Promise( resolve => {
 			const tag = document.createElement( 'script' )
@@ -45,13 +37,7 @@ class StackableMap {
 		[].forEach.call( document.querySelectorAll( '.stk-block-map__canvas' ), mapCanvas => {
 			const {
 				markerTitle,
-				iconPath,
-				iconColor,
-				iconScale,
-				iconOpacity,
-				iconAnchorPositionX,
-				iconAnchorPositionY,
-				iconRotation,
+				iconOptions,
 				isDraggable,
 				location,
 				mapStyle,
@@ -78,6 +64,13 @@ class StackableMap {
 				parsedStyles = []
 			}
 
+			let parsedIconOptions
+			try {
+				parsedIconOptions = JSON.parse( iconOptions )
+			} catch ( e ) {
+				parsedIconOptions = null
+			}
+
 			this.removeIframe( uniqueId )
 
 			const mapOptions = {
@@ -95,7 +88,7 @@ class StackableMap {
 			// eslint-disable-next-line no-undef
 			const map = new google.maps.Map( mapCanvas, mapOptions )
 			if ( showMarker === 'true' ) {
-				const markerOption = {
+				const markerOptions = {
 					title: markerTitle,
 					map,
 					position: parsedLocation,
@@ -103,23 +96,9 @@ class StackableMap {
 				}
 
 				// eslint-disable-next-line no-undef
-				const marker = new google.maps.Marker( markerOption )
-				if ( iconPath ) {
-					const icon = {
-						path: iconPath,
-						fillColor: this.getFillColor( iconColor ),
-						fillOpacity: parseFloat( iconOpacity, 10 ),
-						strokeWeight: 0,
-						rotation: parseInt( iconRotation, 10 ),
-						scale: parseFloat( iconScale, 10 ),
-						// eslint-disable-next-line no-undef
-						anchor: new google.maps.Point(
-							parseInt( iconAnchorPositionX, 10 ),
-							parseInt( iconAnchorPositionY, 10 )
-						),
-					}
-					marker.setIcon( icon )
-				}
+				const marker = new google.maps.Marker( markerOptions )
+
+				marker.setIcon( parsedIconOptions )
 			}
 		} )
 	}
