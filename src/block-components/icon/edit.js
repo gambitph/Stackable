@@ -64,6 +64,7 @@ export const Edit = props => {
 		hasIconPosition,
 		hideControlsIfIconIsNotSet = false,
 		iconSizeProps = {},
+		iconControlHelp,
 		initialOpen,
 		hasMultiColor,
 		hasGradient,
@@ -119,6 +120,7 @@ export const Edit = props => {
 				label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
 				value={ getAttribute( 'icon' ) }
 				onChange={ updateAttributeHandler( 'icon' ) }
+				help={ iconControlHelp }
 			/>
 
 			{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton

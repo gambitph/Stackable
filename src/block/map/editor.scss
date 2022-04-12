@@ -4,8 +4,12 @@
 	display: block !important;
 
 	// Prevents the iframe wrapper from clipping the map.
-	& > div {
+	> div {
 		overflow: auto;
+	}
+
+	.stk-resizer-tooltip {
+		top: 75%;
 	}
 
 }
@@ -25,5 +29,3 @@
 .stk-block-map__api-key-notice {
 	margin: 0 0 16px;
 }
-
-

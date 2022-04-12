@@ -155,6 +155,21 @@ const Edit = props => {
 		htmlTag,
 	} = attributes
 
+	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
+
+	useEffect( () => {
+		const interval = setInterval( () => {
+			if ( window.google && window.google.maps ) {
+				clearInterval( interval )
+				setWaitForGoogle( waitForGoogle + 1 )
+			}
+		}, 250 )
+		if ( window.google && window.google.maps ) {
+			clearInterval( interval )
+		}
+		return () => clearInterval( interval )
+	}, [] )
+
 	// TODO: What is this for?
 	useGeneratedCss( attributes )
 
@@ -186,6 +201,7 @@ const Edit = props => {
 
 	const initMap = () => {
 		const mapCanvas = canvasRef.current
+
 		const mapOptions = getMapOptions( attributes )
 		// eslint-disable-next-line no-undef
 		const map = mapRef.current = new google.maps.Map( mapCanvas, mapOptions )
@@ -215,28 +231,6 @@ const Edit = props => {
 		const map = mapRef.current
 
 		marker.setMap( showMarker ? map : null )
-		// TODO: Add return here no need to do the rest.
-
-		// const path = getPathFromSvg( icon )
-
-		// const fillColor = getFillColor( iconColor1 )
-
-		// TODO: @see convertSVGStringToBase64
-		/**
-		 * Process:
-		 * - convert to element
-		 * - add fill & style color
-		 * - remove / specify width & height
-		 * - convert element to string and add as icon url
-		 */
-		//  const icon = `<?xml version="1.0" encoding="UTF-8"?><svg style="color: ${ iconColor1 }" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="map-marker-alt" className="svg-inline--fa fa-map-marker-alt fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"></path></svg>`
-		//  const icon = `<?xml version="1.0" encoding="UTF-8"?>
-		//  <svg version="1.1" width="${ iconSize }" height="${ iconSize }" style="color:${ iconColor1 };" viewBox="0 0 752 752" xmlns="http://www.w3.org/2000/svg">
-		//   <g fill="currentColor">
-		//    <path d="m413.11 432.12-7.1406 11.387c35.93 3.5039 61.387 12.16 61.387 22.289 0 13.238-43.41 23.98-96.941 23.98-53.539 0-96.941-10.738-96.941-23.98 0-10.062 25.051-18.652 60.543-22.223l-7.1562-11.406c-43.043 5.3477-73.48 18.375-73.48 33.629 0 20.012 52.316 36.23 116.85 36.23 64.539 0 116.84-16.219 116.84-36.23 0.007813-15.309-30.66-28.371-73.957-33.676z"/>
-		//    <path d="m369.51 227.61c-44.258 0-80.129 37.812-80.129 84.445 0 20.008 6.6406 37.023 17.57 52.922l62.312 99.363 0.003906 0.13281 0.046875-0.042968 0.21094 0.34766 0.078124-0.84375 61.07-97.395c11.293-15.934 18.965-33.703 18.965-54.484 0-46.633-35.875-84.445-80.129-84.445zm-0.003906 112.64c-19.734 0-35.738-15.996-35.738-35.73 0-19.738 16.008-35.738 35.738-35.738 19.738 0 35.73 16 35.73 35.738-0.003906 19.734-15.992 35.73-35.73 35.73z"/>
-		//   </g>
-		//  </svg>`
 		const iconOptions = getIconOptions( attributes )
 		marker.setOptions( { icon: iconOptions } )
 	}
@@ -264,7 +258,7 @@ const Edit = props => {
 
 	useEffect( () => {
 		initMapLibrary( apiKey, initMap )
-	}, [] )
+	}, [ waitForGoogle ] )
 
 	useEffect( () => {
 		const map = mapRef.current
@@ -312,6 +306,7 @@ const Edit = props => {
 		showStreetViewButton,
 		showZoomButtons,
 		usesApiKey,
+		waitForGoogle,
 	 ] )
 
 	return (
@@ -473,6 +468,7 @@ const Edit = props => {
 								sliderMin: 50,
 								sliderMax: 300,
 							} }
+							iconControlHelp={ __( 'Uploaded Icon and Icon Color settings are not fully compatible.', i18n ) }
 						/>
 					</div>
 					<div className={ classnames( 'stk-block-map__adv-option', { 'stk-block-map__adv-option__disabled': ! usesApiKey } ) } >
