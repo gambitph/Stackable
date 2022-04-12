@@ -1,12 +1,21 @@
-import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
+/**
+ * Internal dependencies
+ */
 import mapStyleOptions from './map-styles'
+
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
 import { clamp } from 'lodash'
 import { createElementFromHTMLString } from '~stackable/util'
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
 export const DEFAULT_HEIGHT = 200
-// TODO: Find out why this is a magic number that prevents scrollbars and other
-// weirdness. Is this the width of the scrollbar?
 export const DEFAULT_MIN_HEIGHT = 21
 export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
@@ -20,13 +29,6 @@ export const DEFAULT_ICON_ANCHOR_POSITION_Y = 0
 
 export const isDefined = ( value = '' ) => {
 	return value !== '' && value !== undefined
-}
-
-export const getSnapYBetween = ( value, snapDiff = 50 ) => {
-	return [
-		Math.floor( value / snapDiff ) * snapDiff,
-		Math.ceil( value / snapDiff ) * snapDiff,
-	]
 }
 
 export const getMapStyles = ( { mapStyle, customMapStyle } ) => {
@@ -86,7 +88,6 @@ export const getIconOptions = attributes => {
 		return null
 	 }
 
-	// TODO: Add notice saying color filling uploaded SVG is not supported.
 	svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
 	const svgIconSize = isDefined( iconSize ) ? parseInt( iconSize, 10 ) : DEFAULT_ICON_SIZE
 	svgEl.setAttribute( 'height', svgIconSize )
@@ -161,14 +162,4 @@ const loadScriptAsync = src => {
 		const firstScriptTag = document.getElementsByTagName( 'script' )[ 0 ]
 		firstScriptTag.parentNode.insertBefore( tag, firstScriptTag )
 	} )
-}
-
-export const getPathFromSvg = svg => {
-	const div = document.createElement( 'div' )
-	div.innerHTML = svg
-	try {
-		return div.firstChild.firstChild.getAttribute( 'd' )
-	} catch ( e ) {
-		return ''
-	}
 }

@@ -170,7 +170,6 @@ const Edit = props => {
 		return () => clearInterval( interval )
 	}, [] )
 
-	// TODO: What is this for?
 	useGeneratedCss( attributes )
 
 	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
