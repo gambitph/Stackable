@@ -66,7 +66,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			add_action( 'save_post', array( $this, 'generate_optimied_css_for_post' ), 10, 3 );
 
 			// Only do this when inline style optimization is enabled.
-			if ( get_option( 'stackable_optimize_inline_css' ) ) {
+			// If stackable_optimize_inline_css === false (or option isn't
+			// present), that's the default value (true) for the option.
+			if ( get_option( 'stackable_optimize_inline_css' ) !== '' ) {
 				// Load the optimized CSS in the head of posts.
 				add_action( 'wp', array( $this, 'load_cached_css_for_post' ) );
 
