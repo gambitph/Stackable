@@ -20,7 +20,6 @@ import {
 	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
-	Alignment,
 	getAlignmentClasses,
 	Advanced,
 	CustomCSS,
@@ -35,9 +34,7 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 /**
  * WordPress dependencies
  */
-import {
-	InnerBlocks,
-} from '@wordpress/block-editor'
+import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
@@ -74,8 +71,6 @@ const Edit = props => {
 	return (
 		<Fragment>
 			<InspectorTabs />
-
-			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings

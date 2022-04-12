@@ -23,7 +23,9 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 			default: false,
 		},
 	},
-	supports: {},
+	supports: {
+		stkSaveBlockStyle: false,
+	},
 	example: {
 		attributes: {
 			previewMode: true,

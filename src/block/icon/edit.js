@@ -5,13 +5,12 @@ import { IconStyles } from './style'
  * External dependencies
  */
 import classnames from 'classnames'
+import { omit } from 'lodash'
 import { version as VERSION, i18n } from 'stackable'
 import {
 	InspectorTabs, InspectorAdvancedControls, PanelAdvancedSettings, AdvancedTextControl,
 } from '~stackable/components'
-import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
+import { useBlockHoverClass } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -29,15 +28,14 @@ import {
 	Link,
 	Transform,
 } from '~stackable/block-components'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
+import { getUniqueBlockClass } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { addFilter } from '@wordpress/hooks'
 import { useBlockProps } from '@wordpress/block-editor'
 
 const Edit = props => {
@@ -104,3 +102,8 @@ const Edit = props => {
 }
 
 export default withQueryLoopContext( Edit )
+
+// When saving block styles, don't save the icons used by the block.
+addFilter( 'stackable.icon.design.filtered-block-attributes', 'stackable/table-of-contents', attributes => {
+	return omit( attributes, [ 'icon', 'icon2' ] )
+} )

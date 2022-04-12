@@ -185,3 +185,29 @@ export const getAttributeName = ( attrName, deviceType = 'desktop', hoverState =
 
 	return `${ attrName }${ deviceAttrName }${ hoverAttrName }`
 }
+
+// Common content attributes across all Stackable blocks that should be preserved.
+export const CONTENT_ATTRIBUTES = [
+	// Image attributes
+	'imageUrl',
+	'imageId',
+	'imageAlt',
+	// Text
+	'text',
+	// Icon
+	'icon',
+	// Link
+	'linkHasLink',
+	'linkUrl',
+	'linkNewTab',
+	'linkRel',
+	'linkHasTitle',
+	'linkTitle',
+	// Block-level link
+	'blockLinkHasLink',
+	'blockLinkUrl',
+	'blockLinkNewTab',
+	'blockLinkRel',
+	'blockLinkHasTitle',
+	'blockLinkTitle',
+]

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	omit, compact, head, isPlainObject,
+	omit, compact, head, isPlainObject, cloneDeep,
 } from 'lodash'
 
 /**
@@ -121,7 +121,23 @@ domReady( () => {
 			 */
 			if ( useStackableColorsOnly ) {
 				setTimeout( () => {
-					dispatch( 'core/block-editor' ).updateSettings( { __experimentalFeatures: { colors: { palette: { theme: [] } } } } )
+					/**
+					 * withColorContext (our color picker uses this) now gets the colors
+					 * from the __experimentalFeatures object
+					 *
+					 * We need to clone and add only the colors we need because the
+					 * object may have other properties.
+					 */
+					const experimentalFeatures = cloneDeep( select( 'core/block-editor' ).getSettings().__experimentalFeatures || {} )
+					if ( typeof experimentalFeatures.color === 'undefined' ) {
+						experimentalFeatures.color = {}
+					}
+					if ( typeof experimentalFeatures.color.palette === 'undefined' ) {
+						experimentalFeatures.color.palette = {}
+					}
+					experimentalFeatures.color.palette.theme = []
+
+					dispatch( 'core/block-editor' ).updateSettings( { __experimentalFeatures: experimentalFeatures } )
 				}, 300 )
 			}
 		} )

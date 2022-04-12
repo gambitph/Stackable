@@ -32,6 +32,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		align: [ 'center', 'wide', 'full' ],
 		stkAlign: true,
 		stkLayoutReset: false,
+		stkSaveBlockStyle: false,
 	},
 	example,
 

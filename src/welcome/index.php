@@ -176,7 +176,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						</article>
 						<article class="s-box" id="editor-settings">
 							<h2><?php _e( '🎛 Editor Settings', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php printf( __( 'You can customize some of the features and behavior of Stackable in the editor here. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/361-how-to-use-global-settings?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<p class="s-settings-subtitle"><?php _e( 'You can customize some of the features and behavior of Stackable in the editor here.' , STACKABLE_I18N ) ?></em></p>
 							<div class="s-editor-settings"></div>
 						</article>
 						<article class="s-box" id="role-manager">

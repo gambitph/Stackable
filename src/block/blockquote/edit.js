@@ -145,3 +145,11 @@ addFilter( 'stackable.block-component.icon.label', 'stackable/blockquote', label
 	}
 	return label
 } )
+
+// Prevent the icon from being being styled with a saved default style.
+addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/blockquote', ( enabled, block, parentBlockNames ) => {
+	if ( block.name === 'stackable/icon' && parentBlockNames.length >= 1 && parentBlockNames[ parentBlockNames.length - 1 ] === 'stackable/blockquote' ) {
+		return false
+	}
+	return enabled
+} )

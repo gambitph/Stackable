@@ -61,6 +61,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Add theme classes for compatibility detection.
 			add_action( 'body_class', array( $this, 'add_body_class_theme_compatibility' ) );
+			add_action( 'admin_body_class', array( $this, 'add_body_class_theme_compatibility' ) );
 		}
 
 		/**
@@ -316,6 +317,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 				'version' => array_shift( $version_parts ),
 				'wpVersion' => $wp_version,
+				'adminUrl' => admin_url(),
 
 				// Fonts.
 				'locale' => get_locale(),
@@ -398,6 +400,13 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * make our blocks look better.
 		 */
 		public function add_body_class_theme_compatibility( $classes ) {
+			// admin_body_class provides a space-separated-string, body_class
+			// provides an array. Let's support both.
+			$convert_to_string = is_string( $classes );
+			if ( $convert_to_string ) {
+				$classes = explode( ' ', $classes );
+			}
+
 			if ( defined( 'ASTRA_THEME_VERSION' ) ) {
 				$classes[] = 'stk--is-astra-theme';
 			} else if ( class_exists( 'Blocksy_Translations_Manager' ) ) {
@@ -408,8 +417,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-kadence-theme';
 			} else if ( class_exists( 'Storefront' ) ) {
 				$classes[] = 'stk--is-storefront-theme';
+			} else if ( function_exists( 'twentytwentytwo_support' ) ) {
+				$classes[] = 'stk--is-twentytwentytwo-theme';
 			}
-			return $classes;
+
+			return $convert_to_string ? implode( ' ', $classes ) : $classes;
 		}
 
 		/**

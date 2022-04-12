@@ -8,15 +8,27 @@
  * WordPress dependencies
  */
 import {
-	dispatch, useSelect,
+	dispatch, useSelect, select,
 } from '@wordpress/data'
-import { useEffect } from '@wordpress/element'
+import { useEffect, useRef } from '@wordpress/element'
 import { registerPlugin } from '@wordpress/plugins'
 
 /**
  * External dependencies
  */
-import { isEqual } from 'lodash'
+import { cloneDeep, isEqual } from 'lodash'
+
+// Debounce useEffect.
+const useDebounce = ( callback, timeout, deps ) => {
+	const timeoutId = useRef()
+
+	useEffect( () => {
+		clearTimeout( timeoutId.current )
+		timeoutId.current = setTimeout( callback, timeout )
+
+		return () => clearTimeout( timeoutId.current )
+	}, deps )
+}
 
 /**
  * Dispatch the color palette from the settings when the preview mode
@@ -24,19 +36,25 @@ import { isEqual } from 'lodash'
  */
 const GlobalColorPaletteUpdater = () => {
 	const {
-		useStackableColorsOnly, stackableColors, defaultColors, isInitializing, colors,
-	} = useSelect(
-		select => ( {
-			useStackableColorsOnly: select( 'stackable/global-colors' ).getSettings().useStackableColorsOnly,
-			stackableColors: select( 'stackable/global-colors' ).getSettings().stackableColors,
-			defaultColors: select( 'stackable/global-colors' ).getSettings().defaultColors,
-			isInitializing: select( 'stackable/global-colors' ).getSettings().isInitializing,
+		useStackableColorsOnly,
+		stackableColors,
+		defaultColors,
+		isInitializing,
+		colors,
+	} = useSelect( select => {
+		const stkSettings = select( 'stackable/global-colors' ).getSettings()
+		return {
+			useStackableColorsOnly: stkSettings.useStackableColorsOnly,
+			stackableColors: stkSettings.stackableColors,
+			defaultColors: stkSettings.defaultColors,
+			isInitializing: stkSettings.isInitializing,
 			colors: select( 'core/block-editor' ).getSettings().colors,
-		} ),
-		[]
-	)
+		}
+	} )
 
-	useEffect( () => {
+	// This should be debounced since the colors can be changed rapidly (e.g.
+	// when dragging the custom color picker handle)
+	useDebounce( () => {
 		if ( isInitializing ) {
 			return
 		}
@@ -45,19 +63,29 @@ const GlobalColorPaletteUpdater = () => {
 
 		// When the colors change, update the color picker.
 		if ( ! isEqual( colors, newColors ) ) {
+			/**
+			 * withColorContext (our color picker uses this) now gets the colors
+			 * from the __experimentalFeatures object
+			 *
+			 * We need to clone and add only the colors we need because the
+			 * object may have other properties.
+			 */
+			const experimentalFeatures = cloneDeep( select( 'core/block-editor' ).getSettings().__experimentalFeatures || {} )
+			if ( typeof experimentalFeatures.color === 'undefined' ) {
+				experimentalFeatures.color = {}
+			}
+			if ( typeof experimentalFeatures.color.palette === 'undefined' ) {
+				experimentalFeatures.color.palette = {}
+			}
+			experimentalFeatures.color.palette.theme = [ ...newColors ]
+
+			// Update the colors.
 			dispatch( 'core/block-editor' ).updateSettings( {
 				colors: newColors,
-
-				/**
-				 * withColorContext now gets the colors from features object.
-				 *
-				 * @since v2.7.2
-				 */
-				__experimentalFeatures: { colors: { palette: { theme: [ ...newColors ] } } },
-
+				__experimentalFeatures: experimentalFeatures,
 			} )
 		}
-	}, [ JSON.stringify( colors ), JSON.stringify( defaultColors ), JSON.stringify( stackableColors ), useStackableColorsOnly, isInitializing ] )
+	}, 200, [ colors, defaultColors, stackableColors, useStackableColorsOnly, isInitializing ] )
 
 	// We don't want to render anything here.
 	return null

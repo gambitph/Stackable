@@ -46,6 +46,10 @@
 		top: 0;
 		right: 0;
 	}
+	// Themes may cut the preview of the heading text.
+	> .editor-styles-wrapper {
+		width: auto !important;
+	}
 }
 .ugb-global-typography-preview__label {
 	margin: 0 !important;

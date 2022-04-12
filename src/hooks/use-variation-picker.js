@@ -3,40 +3,15 @@
  */
 import { get, pick } from 'lodash'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
-import { recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
+import { CONTENT_ATTRIBUTES, recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
+import { VariationPicker } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { useSelect, useDispatch } from '@wordpress/data'
-import { VariationPicker } from '~stackable/components'
+import { applyFilters } from '@wordpress/hooks'
 import { createBlocksFromInnerBlocksTemplate, cloneBlock } from '@wordpress/blocks'
-
-// Common content attributes across all Stackable blocks that should be preserved.
-const CONTENT_ATTRIBUTES = [
-	// Image attributes
-	'imageUrl',
-	'imageId',
-	'imageAlt',
-	// Text
-	'text',
-	// Icon
-	'icon',
-	// Link
-	'linkHasLink',
-	'linkUrl',
-	'linkNewTab',
-	'linkRel',
-	'linkHasTitle',
-	'linkTitle',
-	// Block-level link
-	'blockLinkHasLink',
-	'blockLinkUrl',
-	'blockLinkNewTab',
-	'blockLinkRel',
-	'blockLinkHasTitle',
-	'blockLinkTitle',
-]
 
 /**
  * The variation picker will automatically show up when the block doesn't have a
@@ -91,10 +66,16 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 			icon={ get( blockType, [ 'icon', 'src' ] ) }
 			label={ get( blockType, [ 'title' ] ) }
 			variations={ variations || [] }
-			onSelect={ ( nextVariation = defaultVariation ) => {
+			onSelect={ ( _nextVariation = defaultVariation ) => {
 				const block = getBlock( clientId )
+
+				// Allow others to change the variation being applied. e.g. if a
+				// variation was modified or added by the user.
+				const nextVariation = applyFilters( 'stackable.variation-picker.variation-selected', _nextVariation, block.name )
+
 				const attributes = getBlockAttributes( clientId )
-				const activeVariation = getActiveBlockVariation( block.name, attributes )
+				const _activeVariation = getActiveBlockVariation( block.name, attributes )
+				const activeVariation = applyFilters( 'stackable.variation-picker.variation-selected', _activeVariation, block.name )
 
 				let newAttributes = {}
 
