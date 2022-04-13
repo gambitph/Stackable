@@ -71,7 +71,7 @@ export const Edit = props => {
 
 		// Apply the hover effect.
 		const newEffect = effectsList.find( ( { value: v } ) => v === value )
-		updateBlockAttributes( clientId, newEffect.attributes )
+		updateBlockAttributes( clientId, { ...newEffect.attributes } )
 		if ( newEffect.onApplyEffect ) {
 			newEffect.onApplyEffect( innerBlocks )
 		}
