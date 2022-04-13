@@ -22,12 +22,28 @@ const getStyleParams = ( options = {} ) => {
 			hover: 'all',
 			hasUnits: 'px',
 			valuePreCallback: ( value, getAttribute, device ) => {
-				if ( value && value.top === '' ) {
-					const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
-					if ( isSticky ) {
-						return 0
+				const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
+
+				if ( isSticky && ( ! value || value.top === '' ) ) {
+					const hoveredValue = getAttribute( 'top', device, 'hover' )
+					const normalValue = getAttribute( 'top', device, 'normal' )
+
+					/*
+					 * This prevents the block from jumping around when hovered
+					 * when only the normal state is given a value.
+					 */
+					if (
+						( typeof normalValue !== 'undefined' ||
+							normalValue !== '' ) &&
+						( typeof hoveredValue === 'undefined' ||
+							hoveredValue === '' )
+					) {
+						return normalValue
 					}
+
+					return 0
 				}
+
 				return value?.top
 			},
 		},
