@@ -19,7 +19,8 @@ if ( ! function_exists( 'stackable_load_map_frontend_script' ) ) {
 				'stk-frontend-map',
 				plugins_url( 'dist/frontend_block_map.js', STACKABLE_FILE ),
 				array(),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true
 			);
 		}
 	}
