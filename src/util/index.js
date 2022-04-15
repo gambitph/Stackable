@@ -29,6 +29,7 @@ import striptags from 'striptags'
 import rgba from 'color-rgba'
 import { inRange } from 'lodash'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import { getBlockVariations } from '@wordpress/blocks'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
@@ -384,9 +385,14 @@ export const recursivelyAddUniqueIdToInnerBlocks = ( innerBlocks = [] ) => {
 
 	innerBlocks.forEach( innerBlock => {
 		if ( innerBlock.name.startsWith( 'stackable/' ) ) {
-			innerBlock.attributes = {
-				...innerBlock.attributes,
-				uniqueId: createUniqueClass( innerBlock.clientId ),
+			// Only do this for blocks with variations, because if a block
+			// doesn't have a uniqueId it will show the layout picker.
+			const hasVariations = getBlockVariations( innerBlock.name ).length > 0
+			if ( hasVariations ) {
+				innerBlock.attributes = {
+					...innerBlock.attributes,
+					uniqueId: createUniqueClass( innerBlock.clientId ),
+				}
 			}
 		}
 

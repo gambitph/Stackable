@@ -4,9 +4,17 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 import { useBlockAttributes } from './use-block-attributes'
 
+// Keeps a list of all blockStyles encountered.
+const blockStyles = {}
+
 export const useBlockStyle = styles => {
-	const { clientId } = useBlockEditContext()
+	const { clientId, name: blockName } = useBlockEditContext()
 	const { className } = useBlockAttributes( clientId )
+
+	// Keep note of all block styles defined for all blocks. This is used by the
+	// getDefinedBlockStyles so other functions can check what block styles are
+	// defined.
+	blockStyles[ blockName ] = styles
 
 	const currentStyle = useMemo( () => {
 		let currentStyle = ''
@@ -48,4 +56,8 @@ export const getBlockStyle = ( styles, className ) => {
 	}
 
 	return find( styles, 'isDefault' )
+}
+
+export const getDefinedBlockStyles = blockName => {
+	return blockStyles[ blockName ] || []
 }

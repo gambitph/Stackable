@@ -23,6 +23,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	supports: {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
+		stkSaveBlockStyle: false,
 	},
 	example,
 

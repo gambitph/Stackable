@@ -16,9 +16,7 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import {
-	useCallback, memo, useMemo,
-} from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 
 const DEVICE_TYPES = {
@@ -48,17 +46,17 @@ const DEVICE_OPTIONS = [
 const ResponsiveToggle = props => {
 	const deviceType = useDeviceType()
 
-	const changeScreen = useCallback( screen => {
-		const {
-			__experimentalSetPreviewDeviceType: setPreviewDeviceType,
-		} = dispatch( 'core/edit-post' )
+	const changeScreen = screen => {
+		// In some editors, there is no edit-post / preview device type. If that
+		// happens, we just set our own internal device type.
+		if ( dispatch( 'core/edit-post' ) ) {
+			dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType( DEVICE_TYPES[ screen ] )
+		} else {
+			dispatch( 'stackable/device-type' ).setDeviceType( DEVICE_TYPES[ screen ] )
+		}
+	}
 
-		setPreviewDeviceType( DEVICE_TYPES[ screen ] )
-	}, [] )
-
-	const screens = useMemo( () => {
-		return DEVICE_OPTIONS.filter( ( { value } ) => props.screens?.includes( value ) )
-	}, [ props.screens ] )
+	const screens = DEVICE_OPTIONS.filter( ( { value } ) => props.screens?.includes( value ) )
 
 	if ( screens <= 1 ) {
 		return null
@@ -74,7 +72,7 @@ const ResponsiveToggle = props => {
 			className="stk-control-responsive-toggle"
 			value={ deviceType.toLowerCase() }
 			options={ screens }
-			onChange={ screen => changeScreen( screen ) }
+			onChange={ changeScreen }
 		/>
 	)
 }

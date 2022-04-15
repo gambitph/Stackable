@@ -2,17 +2,28 @@ import compareVersions from 'compare-versions'
 import { getEditorStylesOnly, generateStyles } from '~stackable/block-components/style'
 import { useDynamicContent } from '../dynamic-content-control'
 import {
-	appendImportant, minifyCSS, useQueryLoopInstanceId,
+	appendImportant, getUniqueBlockClass, minifyCSS, useQueryLoopInstanceId,
 } from '~stackable/util'
 import {
 	Fragment, memo, useMemo,
 } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
 
 const Style = memo( props => {
 	const {
 		version, versionAdded, versionDeprecated,
-		styles, deviceType, blockUniqueClassName: _blockUniqueClassName, breakTablet, breakMobile,
+		styles, deviceType, blockUniqueClassName: __blockUniqueClassName, breakTablet, breakMobile,
 	} = props
+
+	// If there's no blockUniqueClassName supplied, create one based from the
+	// clientId so that we can still generate some styles.
+	const { clientId } = useBlockEditContext()
+	let _blockUniqueClassName = __blockUniqueClassName
+	if ( ! __blockUniqueClassName ) {
+		const tempUniqueId = createUniqueClass( clientId )
+		_blockUniqueClassName = getUniqueBlockClass( tempUniqueId )
+	}
 
 	const uniqueId = _blockUniqueClassName?.replace( 'stk-', '' ) || ''
 	const instanceId = useQueryLoopInstanceId( uniqueId )
@@ -43,7 +54,7 @@ const Style = memo( props => {
 
 	// If the block doesn't have a unique className (based on the uniqueId), it
 	// means that the user is still picking a layout.
-	if ( ! doRender || ! css || ! props.blockUniqueClassName ) {
+	if ( ! doRender || ! css || ! blockUniqueClassName ) {
 		return null
 	}
 

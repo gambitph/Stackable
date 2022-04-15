@@ -8,3 +8,9 @@
 .stk-preview-device-mobile .stk-block-icon-label .block-editor-block-list__layout [data-type="stackable/heading"] {
 	flex: 1 1 0;
 }
+// Heading container width is not limited anymore.
+.wp-block-stackable-icon-label.stk-block-icon-label {
+	.stk-inner-blocks.stk-block-content {
+		max-width: unset !important;
+	}
+}

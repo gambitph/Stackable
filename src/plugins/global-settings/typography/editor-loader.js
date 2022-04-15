@@ -6,7 +6,8 @@
  * External dependencies
  */
 import {
-	createTypographyStyles, loadGoogleFont,
+	createTypographyStyles,
+	loadGoogleFont,
 } from '~stackable/util'
 import { generateStyles } from '~stackable/block-components'
 import deepmerge from 'deepmerge'
@@ -17,10 +18,11 @@ import { head } from 'lodash'
  */
 import { loadPromise, models } from '@wordpress/api'
 import {
-	useEffect, useState,
+	useEffect,
+	useState,
 } from '@wordpress/element'
 import {
-	addAction, removeAction, applyFilters, doAction,
+	addAction, removeAction, applyFilters, doAction, addFilter,
 } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 
@@ -149,12 +151,25 @@ export const formClassOrTagSelectors = ( selector, applyTo ) => {
 }
 
 export const formParagraphSelectors = applyTo => {
-	return [
+	return applyFilters( 'stackable.global-settings.typography-selectors', [
 		...formClassOrTagSelectors( 'p', applyTo ),
 		...formClassOrTagSelectors( 'li', applyTo ),
 		`.editor-styles-wrapper p.block-editor-block-list__block[data-type^="core/"]`,
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] p`,
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] li`,
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] td`,
-	]
+		// Apply the font styles to the content placeholder text when the post is blank.
+		'.block-editor-default-block-appender.has-visible-prompt',
+	], '' )
 }
+
+// Make sure that this isn't applied to the native query loop block, otherwise
+// it will wrap the last column of the block.
+addFilter( 'stackable.global-settings.typography-selectors', 'stackable/native-posts-block', selectors => {
+	return selectors.map( selector => {
+		return selector.replace(
+			'[data-type^="core/"] li',
+			'[data-type^="core/"]:not([data-type="core/post-template"], [data-type="core/query"]) li'
+		)
+	} )
+} )

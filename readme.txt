@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
-Tested up to: 5.9.2
+Tested up to: 5.9.3
 Requires PHP: 5.6
-Stable tag: 3.2.0
+Stable tag: 3.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -86,6 +86,7 @@ Section Blocks
 Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
 
 - Multiple Block Layouts
+- Save Block Defaults
 - Animate Blocks on Hover
 - Block Background and Image Color Settings
 - Block Typography Settings
@@ -144,6 +145,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.1 Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.0 How To Shift From Version 2 to Version 3](https://wpstackable.com/blog/how-to-shift-from-version-2-to-version-3/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -239,6 +241,25 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.3.0 =
+[Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: You can now Save Block Defaults (Check out the Block Defaults panel in the Stackable sidebar)
+* New: Inline CSS Optimization
+* Fixed: Issues with Block Themes such as fullwidth & options missing
+* Fixed: Astra compatibility, some Gutenberg options are missing and fixed spacing
+* Fixed: LearnDash compatibility, Inspector shows blank when navigation panel is enabled
+* Fixed: WordPress 5.8.x compatibility, prevents block errors
+* Fixed: Fullwidth buttons no longer go past their containers
+* Fixed: Multiple Posts block with Load More buttons now work correctly
+* Fixed: Responsive toggles now work in the widgets editor, you can now edit tablet and mobile styles
+* Fixed: Posts Block Card variation was not showing the post title
+* Fixed: The last column of the native Posts block wraps sometimes when Global Typography is used
+* Fixed: Removed alignment option of the Icon Label block
+* Fixed: Block inserter doesn't appear if the last block is a text block
+* Fixed: Hide button overlaps with long text in the table of contents block
+* Fixed: Long text in table of contents block gets cut when using columns
 
 = 3.2.0 =
 [Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

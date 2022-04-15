@@ -68,6 +68,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			// For some native blocks, add a note that they're core blocks.
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
 
+			// Fixes columns issue with Native Posts block.
+			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
+
 			// Add our global typography styles in the frontend only.
 			if ( ! is_admin() ) {
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
@@ -814,6 +817,27 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				return substr_replace( $subject, $replace, $pos, strlen( $search ) );
 			}
 			return $subject;
+		}
+
+		/**
+		 * Prevent global settings from affecting the styles of the native Post
+		 * block. This fixes the issue where the last column of the native Posts
+		 * block incorrectly wraps below and leaves a gap.
+		 *
+		 * @param array $selectors
+		 * @param string $tag
+		 * @return void
+		 */
+		public function posts_block_columns_fix( $selectors, $tag ) {
+			// Prevent global settings from affecting the native wp block post.
+			if ( $tag === 'li' ) {
+				$index = array_search( '[data-block-type="core"] li', $selectors );
+				if ( $index !== false ) {
+					$selectors[ $index ] = '[data-block-type="core"] li:not(.wp-block-post)';
+				}
+			}
+
+			return $selectors;
 		}
 	}
 

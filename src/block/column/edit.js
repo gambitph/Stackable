@@ -7,7 +7,6 @@ import BlockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { last } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
 	FourRangeControl,
@@ -15,12 +14,8 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import {
-	useBlockContext, useBlockHoverClass,
-} from '~stackable/hooks'
-import {
-	withIsHovered, withQueryLoopContext,
-} from '~stackable/higher-order'
+import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
+import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
 import {
 	Column,
 	getColumnClasses,
@@ -46,9 +41,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import {
-	Fragment, useMemo,
-} from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
@@ -92,7 +85,10 @@ const Edit = props => {
 	] )
 
 	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+		if ( ! hasInnerBlocks ) {
+			return InnerBlocks.ButtonBlockAppender
+		}
+		return InnerBlocks.DefaultBlockAppender
 	}, [ hasInnerBlocks, innerBlocks ] )
 
 	return (

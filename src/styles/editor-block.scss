@@ -53,6 +53,9 @@
 	> .wp-block[data-align] {
 		width: 100%;
 	}
+	> .wp-block[data-align="wide"] {
+		max-width: none;
+	}
 }
 // When full alignment, remove the sides.
 .is-root-container > [data-type^="stackable/"][data-align="full"] {
@@ -61,6 +64,8 @@
 	> .wp-block[data-align="full"] {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
+		max-width: none;
+		width: 100%;
 	}
 }
 // Make sure by default, all our inner blocks are center aligned.

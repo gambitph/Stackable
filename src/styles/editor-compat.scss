@@ -14,3 +14,25 @@
 	--stk-block-width-default-detected: var(--has-wide, var(--block-max-width));
 	--stk-block-width-wide-detected: var(--has-wide, var(--wide-block-max-width));
 }
+
+/**
+ * Twenty Twenty Two full width support.
+ */
+.stk--is-twentytwentytwo-theme {
+	// We can have a gap on the sides.
+	.is-root-container > [data-type^="stackable/"][data-align="full"] {
+		margin-left: calc(-1 * var(--wp--custom--spacing--outer)) !important;
+		margin-right: calc(-1 * var(--wp--custom--spacing--outer)) !important;
+	}
+}
+
+/**
+ * Astra
+ */
+.stk--is-astra-theme {
+	// The inner width is not centered.
+	[data-type^="stackable/"]:is([data-align="full"], [data-align="wide"]) .stk-block-content.alignwide {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

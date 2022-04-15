@@ -15,9 +15,7 @@ import {
 	InspectorBottomTip,
 	InspectorTabs,
 } from '~stackable/components'
-import {
-	useBlockContext, useBlockHoverClass,
-} from '~stackable/hooks'
+import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -41,9 +39,7 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
-import {
-	Fragment, useMemo,
-} from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
@@ -164,4 +160,12 @@ addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/image-box'
 // Disable links for image block.
 addFilter( 'stackable.edit.image.enable-link', 'stackable/image-box', ( enabled, parentBlock ) => {
 	return parentBlock?.name === 'stackable/image-box' ? false : enabled
+} )
+
+// Prevent the text from being being styled with a saved default style.
+addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/image-box', ( enabled, block, parentBlockNames ) => {
+	if ( [ 'stackable/heading', 'stackable/subtitle', 'stackable/text' ].includes( block.name ) && parentBlockNames.length >= 2 && parentBlockNames[ parentBlockNames.length - 2 ] === 'stackable/image-box' ) {
+		return false
+	}
+	return enabled
 } )
