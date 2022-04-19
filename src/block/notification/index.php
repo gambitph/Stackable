@@ -12,7 +12,8 @@ if ( ! function_exists( 'stackable_load_notification_frontend_script' ) ) {
 				'stk-frontend-notification',
 				plugins_url( 'dist/frontend_block_notification.js', STACKABLE_FILE ),
 				array(),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true
 			);
 		}
 	}

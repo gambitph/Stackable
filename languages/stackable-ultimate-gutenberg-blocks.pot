@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.0\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-12T13:00:01+00:00\n"
+"POT-Creation-Date: 2022-04-18T18:42:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -487,7 +487,7 @@ msgstr ""
 #: src/welcome/index.php:174
 #: src/welcome/index.php:192
 #: src/welcome/index.php:203
-#: src/welcome/index.php:486
+#: src/welcome/index.php:492
 #: src/components/design-library-list/design-library-list-item.js:82
 msgid "Go Premium"
 msgstr ""
@@ -618,7 +618,7 @@ msgid "Load version 2 frontend styles and scripts"
 msgstr ""
 
 #: src/deprecated/v2/init.php:82
-#: src/welcome/admin.js:548
+#: src/welcome/admin.js:576
 msgid "Load version 2 blocks in the editor"
 msgstr ""
 
@@ -675,12 +675,12 @@ msgid "The width used when a Columns block has its Content Width set to wide."
 msgstr ""
 
 #: src/editor-settings.php:115
-#: src/welcome/admin.js:364
+#: src/welcome/admin.js:392
 msgid "Collapse other inspector panels when opening another, keeping only one open at a time."
 msgstr ""
 
 #: src/editor-settings.php:127
-#: src/welcome/admin.js:382
+#: src/welcome/admin.js:410
 msgid "Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns."
 msgstr ""
 
@@ -800,7 +800,7 @@ msgid "Getting Started"
 msgstr ""
 
 #: src/welcome/index.php:103
-#: src/welcome/index.php:474
+#: src/welcome/index.php:480
 #: src/block-components/content-align/column-settings-button.js:79
 #: src/components/panel-advanced-settings/index.js:153
 msgid "Settings"
@@ -815,7 +815,7 @@ msgid "Affiliation"
 msgstr ""
 
 #: src/welcome/index.php:120
-#: src/welcome/index.php:421
+#: src/welcome/index.php:427
 msgid "Documentation"
 msgstr ""
 
@@ -863,13 +863,13 @@ msgstr ""
 
 #: src/welcome/index.php:185
 #: src/welcome/index.php:188
-#: src/welcome/index.php:449
+#: src/welcome/index.php:455
 #: pro__premium_only/src/block-components/icon/multicolor-controls.js:38
 #: pro__premium_only/src/features/icon-controls/index.js:123
 #: src/components/base-control2/hover-state-toggle.js:65
 #: src/components/variation-picker/index.js:75
 #: src/help/help-tooltip.js:106
-#: src/welcome/admin.js:384
+#: src/welcome/admin.js:412
 #: src/welcome/wizard.js:239
 #: src/welcome/wizard.js:264
 msgid "Learn more"
@@ -1004,177 +1004,185 @@ msgid "Subscribe"
 msgstr ""
 
 #: src/welcome/index.php:297
-msgid "How to start using Stackable"
+msgid "Stackable Blocks"
 msgstr ""
 
 #: src/welcome/index.php:298
-msgid "There's a lot you can achieve using Stackable. Here's a quick guide to start you off."
+msgid "Here's a list of all the amazing blocks Stackable provides."
 msgstr ""
 
 #: src/welcome/index.php:303
-msgid "Adding Blocks"
+msgid "How to start using Stackable"
 msgstr ""
 
 #: src/welcome/index.php:304
-msgid "There are 2 ways to start using Stackable:"
+msgid "There's a lot you can achieve using Stackable. Here's a quick guide to start you off."
 msgstr ""
 
-#: src/welcome/index.php:307
-msgid "Add a block by <strong>Block Type</strong>"
+#: src/welcome/index.php:309
+msgid "Adding Blocks"
 msgstr ""
 
 #: src/welcome/index.php:310
+msgid "There are 2 ways to start using Stackable:"
+msgstr ""
+
+#: src/welcome/index.php:313
+msgid "Add a block by <strong>Block Type</strong>"
+msgstr ""
+
+#: src/welcome/index.php:316
 msgid "Add a block from the <strong>Design Library</strong>"
 msgstr ""
 
-#: src/welcome/index.php:321
+#: src/welcome/index.php:327
 msgid "Adding by Block Type"
 msgstr ""
 
-#: src/welcome/index.php:322
+#: src/welcome/index.php:328
 msgid "Click the <strong>(+) icon</strong> then scroll to the <strong>Stackable Blocks area</strong> to add a block."
 msgstr ""
 
-#: src/welcome/index.php:331
+#: src/welcome/index.php:337
 msgid "Adding from the Design Library"
 msgstr ""
 
-#: src/welcome/index.php:332
+#: src/welcome/index.php:338
 msgid "You can also launch the Design Library, and choose from <strong>ready-made UI Kits & Block Designs</strong>."
 msgstr ""
 
-#: src/welcome/index.php:334
+#: src/welcome/index.php:340
 #: src/components/modal-design-library/modal.js:111
 #: src/deprecated/v2/components/modal-design-library/block-list.js:155
 msgid "UI Kits"
 msgstr ""
 
-#: src/welcome/index.php:335
+#: src/welcome/index.php:341
 msgid "Choose blocks from different pre-made templates that can be used to build an entire website."
 msgstr ""
 
-#: src/welcome/index.php:336
+#: src/welcome/index.php:342
 #: src/components/modal-design-library/modal.js:107
 #: src/deprecated/v2/components/modal-design-library/block-list.js:159
 msgid "Block Designs"
 msgstr ""
 
-#: src/welcome/index.php:337
+#: src/welcome/index.php:343
 msgid "Choose from different individual designs. Mix and match block designs to build your site."
 msgstr ""
 
-#: src/welcome/index.php:345
+#: src/welcome/index.php:351
 msgid "Styling Blocks"
 msgstr ""
 
-#: src/welcome/index.php:346
+#: src/welcome/index.php:352
 msgid "Style your blocks using 3 tool areas."
 msgstr ""
 
-#: src/welcome/index.php:351
+#: src/welcome/index.php:357
 msgid "1. Inspector"
 msgstr ""
 
-#: src/welcome/index.php:352
+#: src/welcome/index.php:358
 msgid "The Inspector is the main styling area consisting of Block, Style and Advanced tabs."
 msgstr ""
 
-#: src/welcome/index.php:356
-#: src/welcome/index.php:373
+#: src/welcome/index.php:362
+#: src/welcome/index.php:379
 msgid "Tip"
 msgstr ""
 
-#: src/welcome/index.php:357
+#: src/welcome/index.php:363
 msgid "Hover over the names or info icons in the options to preview a tooltip that will guide you on what an option does."
 msgstr ""
 
-#: src/welcome/index.php:368
+#: src/welcome/index.php:374
 msgid "2. Toolbar"
 msgstr ""
 
-#: src/welcome/index.php:369
+#: src/welcome/index.php:375
 msgid "Use the Toolbar to edit your block's formatting specs."
 msgstr ""
 
-#: src/welcome/index.php:374
+#: src/welcome/index.php:380
 msgid "<strong>Dynamic content</strong> and <strong>copy and paste</strong> buttons are only available in %sStackable Premium%s."
 msgstr ""
 
-#: src/welcome/index.php:385
+#: src/welcome/index.php:391
 msgid "3. Global Settings Panel"
 msgstr ""
 
-#: src/welcome/index.php:386
+#: src/welcome/index.php:392
 msgid "Define and edit site-wide typography and color palettes in one place."
 msgstr ""
 
-#: src/welcome/index.php:395
+#: src/welcome/index.php:401
 msgid "Ready to make your website?"
 msgstr ""
 
-#: src/welcome/index.php:396
+#: src/welcome/index.php:402
 msgid "Start creating your site or check out our full guide to Stackable."
 msgstr ""
 
-#: src/welcome/index.php:398
+#: src/welcome/index.php:404
 msgid "Create New Page"
 msgstr ""
 
-#: src/welcome/index.php:399
+#: src/welcome/index.php:405
 msgid "Read Full Guide"
 msgstr ""
 
-#: src/welcome/index.php:405
+#: src/welcome/index.php:411
 msgid "More Resources"
 msgstr ""
 
-#: src/welcome/index.php:412
+#: src/welcome/index.php:418
 msgid "Community"
 msgstr ""
 
-#: src/welcome/index.php:413
+#: src/welcome/index.php:419
 msgid "Join like-minded people who help each other do amazing things"
 msgstr ""
 
-#: src/welcome/index.php:415
+#: src/welcome/index.php:421
 msgid "Join Now"
 msgstr ""
 
-#: src/welcome/index.php:422
+#: src/welcome/index.php:428
 msgid "Learn how to use Stackable's powerful page building tools"
 msgstr ""
 
-#: src/welcome/index.php:424
+#: src/welcome/index.php:430
 msgid "Visit Docs"
 msgstr ""
 
-#: src/welcome/index.php:430
+#: src/welcome/index.php:436
 msgid "Blog"
 msgstr ""
 
-#: src/welcome/index.php:431
+#: src/welcome/index.php:437
 msgid "Browse through our articles and find what you're looking for"
 msgstr ""
 
-#: src/welcome/index.php:433
+#: src/welcome/index.php:439
 #: src/deprecated/v2/block/blog-posts/edit.js:485
 msgid "Read More"
 msgstr ""
 
-#: src/welcome/index.php:440
 #: src/welcome/index.php:446
+#: src/welcome/index.php:452
 msgid "Get Support"
 msgstr ""
 
-#: src/welcome/index.php:441
+#: src/welcome/index.php:447
 msgid "Stuck with something? Email us and we'll help you out"
 msgstr ""
 
-#: src/welcome/index.php:443
+#: src/welcome/index.php:449
 msgid "Contact Support"
 msgstr ""
 
-#: src/welcome/index.php:447
+#: src/welcome/index.php:453
 msgid "Upgrade to Premium and our support team can help you out."
 msgstr ""
 
@@ -7800,12 +7808,12 @@ msgid "Further tweak this block by adding guided custom CSS rules. This feature 
 msgstr ""
 
 #: src/deprecated/v2/welcome/admin.js:91
-#: src/welcome/admin.js:211
+#: src/welcome/admin.js:239
 msgid "Enable All"
 msgstr ""
 
 #: src/deprecated/v2/welcome/admin.js:92
-#: src/welcome/admin.js:212
+#: src/welcome/admin.js:240
 msgid "Disable All"
 msgstr ""
 
@@ -9022,7 +9030,7 @@ msgid "Rearrange and move columns around by dragging each handle"
 msgstr ""
 
 #: src/plugins/design-library-button/design-library-button.js:39
-#: src/welcome/admin.js:269
+#: src/welcome/admin.js:297
 msgid "Design Library"
 msgstr ""
 
@@ -9280,115 +9288,119 @@ msgstr ""
 msgid "view demo"
 msgstr ""
 
-#: src/welcome/admin.js:280
+#: src/welcome/admin.js:157
+msgid "See example"
+msgstr ""
+
+#: src/welcome/admin.js:308
 msgid "Adds a button on the top of the editor which gives access to a collection of pre-made block designs."
 msgstr ""
 
-#: src/welcome/admin.js:281
-#: src/welcome/admin.js:297
-#: src/welcome/admin.js:313
-#: src/welcome/admin.js:365
-#: src/welcome/admin.js:387
+#: src/welcome/admin.js:309
+#: src/welcome/admin.js:325
+#: src/welcome/admin.js:341
+#: src/welcome/admin.js:393
+#: src/welcome/admin.js:415
 msgid "Disable feature"
 msgstr ""
 
-#: src/welcome/admin.js:282
-#: src/welcome/admin.js:298
-#: src/welcome/admin.js:314
-#: src/welcome/admin.js:366
-#: src/welcome/admin.js:388
+#: src/welcome/admin.js:310
+#: src/welcome/admin.js:326
+#: src/welcome/admin.js:342
+#: src/welcome/admin.js:394
+#: src/welcome/admin.js:416
 msgid "Enable feature"
 msgstr ""
 
-#: src/welcome/admin.js:285
+#: src/welcome/admin.js:313
 msgid "Optimize Inline CSS"
 msgstr ""
 
-#: src/welcome/admin.js:296
+#: src/welcome/admin.js:324
 msgid "Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults."
 msgstr ""
 
-#: src/welcome/admin.js:301
+#: src/welcome/admin.js:329
 msgid "Navigation Panel"
 msgstr ""
 
-#: src/welcome/admin.js:312
+#: src/welcome/admin.js:340
 msgid "A block Navigation panel that floats at the bottom of the inspector that helps with adjusting the different blocks in your column layout."
 msgstr ""
 
-#: src/welcome/admin.js:317
+#: src/welcome/admin.js:345
 msgid "Nested Block Width"
 msgstr ""
 
-#: src/welcome/admin.js:332
+#: src/welcome/admin.js:360
 msgid "The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula."
 msgstr ""
 
-#: src/welcome/admin.js:335
+#: src/welcome/admin.js:363
 msgid "Nested Wide Block Width"
 msgstr ""
 
-#: src/welcome/admin.js:350
+#: src/welcome/admin.js:378
 msgid "The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula."
 msgstr ""
 
-#: src/welcome/admin.js:353
+#: src/welcome/admin.js:381
 msgid "Auto-Collapse Panels"
 msgstr ""
 
-#: src/welcome/admin.js:369
+#: src/welcome/admin.js:397
 msgid "Block Linking (Beta)"
 msgstr ""
 
-#: src/welcome/admin.js:439
+#: src/welcome/admin.js:467
 msgid "Tablet Breakpoint"
 msgstr ""
 
-#: src/welcome/admin.js:446
+#: src/welcome/admin.js:474
 msgid "Mobile Breakpoint"
 msgstr ""
 
-#: src/welcome/admin.js:481
+#: src/welcome/admin.js:509
 msgid "Force Typography Styles"
 msgstr ""
 
-#: src/welcome/admin.js:484
+#: src/welcome/admin.js:512
 msgid "Not forced"
 msgstr ""
 
-#: src/welcome/admin.js:485
+#: src/welcome/admin.js:513
 msgid "Force styles"
 msgstr ""
 
-#: src/welcome/admin.js:525
+#: src/welcome/admin.js:553
 msgid "Show \"Go premium\" notices"
 msgstr ""
 
-#: src/welcome/admin.js:534
+#: src/welcome/admin.js:562
 msgid "Don't show help video tooltips"
 msgstr ""
 
-#: src/welcome/admin.js:541
+#: src/welcome/admin.js:569
 msgid "🏠 Migration Settings"
 msgstr ""
 
-#: src/welcome/admin.js:543
+#: src/welcome/admin.js:571
 msgid "Migrating from version 2 to version 3?"
 msgstr ""
 
-#: src/welcome/admin.js:545
+#: src/welcome/admin.js:573
 msgid "Learn more about migration and the settings below"
 msgstr ""
 
-#: src/welcome/admin.js:561
+#: src/welcome/admin.js:589
 msgid "Load version 2 blocks in the editor only when the page was using version 2 blocks"
 msgstr ""
 
-#: src/welcome/admin.js:575
+#: src/welcome/admin.js:603
 msgid "Load version 2 frontend block stylesheet and scripts for backward compatibility"
 msgstr ""
 
-#: src/welcome/admin.js:583
+#: src/welcome/admin.js:611
 msgid "Load version 1 block stylesheet for backward compatibility"
 msgstr ""
 
@@ -9730,6 +9742,11 @@ msgstr ""
 #: src/block/icon-label/block.json
 msgctxt "block title"
 msgid "Icon Label"
+msgstr ""
+
+#: src/block/icon-label/block.json
+msgctxt "block description"
+msgid "An Icon and Heading paired together."
 msgstr ""
 
 #: src/block/icon-label/block.json

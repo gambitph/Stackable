@@ -12,7 +12,8 @@ if ( ! function_exists( 'stackable_load_videopopup_frontend_script' ) ) {
 				'stk-frontend-video-popup',
 				plugins_url( 'dist/frontend_block_video_popup.js', STACKABLE_FILE ),
 				array(),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true
 			);
 		}
 	}
