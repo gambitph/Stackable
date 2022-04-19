@@ -106,8 +106,7 @@ const Edit = props => {
 					onClose={ () => {
 						setIsLibraryOpen( false )
 					} }
-					onSelect={ ( _designData, _design ) => {
-						// TODO: doesn't work if you select 1 from ui kit tab and 1 from block tab.
+					onSelect={ ( _designData, _design, callback = null ) => {
 						const designData = ! Array.isArray( _designData ) ? [ _designData ] : _designData
 						const designs = ! Array.isArray( _design ) ? [ _design ] : _design
 
@@ -118,22 +117,20 @@ const Edit = props => {
 							} = designData
 							if ( name && attributes ) {
 								const block = createBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), innerBlocks || [], design )
-								return [
-									...blocks,
-									block,
-								]
+								blocks.push( block )
 							} else if ( serialized ) {
-								return [
-									...blocks,
-									...createBlockWithContent( serialized ),
-								]
+								blocks.push( createBlockWithContent( serialized ) )
+							} else {
+								console.error( 'Design library selection failed: No block data found' ) // eslint-disable-line no-console
 							}
-							console.error( 'Design library selection failed: No block data found' ) // eslint-disable-line no-console
 							return blocks
 						}, [] )
 
 						if ( blocks.length ) {
 							replaceBlocks( clientId, blocks )
+							if ( callback ) {
+								callback()
+							}
 						}
 					} }
 				/>

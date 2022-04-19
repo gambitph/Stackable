@@ -50,11 +50,11 @@ const DesignLibraryList = props => {
 					apiVersion={ apiVersion }
 					isMultiSelectMode={ isMultiSelectMode }
 					selectedNum={ selectedNum }
-					onClick={ designData => {
+					onClick={ ( designData, callback = null ) => {
 						if ( ! isMultiSelectMode ) {
-							onSelect( designData, design )
+							onSelect( designData, design, callback )
 						} else if ( onSelectMulti ) {
-							onSelectMulti( designData )
+							onSelectMulti( designData, callback )
 						}
 					} }
 				/>

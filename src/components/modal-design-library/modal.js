@@ -35,6 +35,7 @@ export const ModalDesignLibrary = props => {
 	const [ doReset, setDoReset ] = useState( false )
 	const [ isMultiSelectMode, setIsMultiSelectMode ] = useState( false )
 	const [ selectedDesignIds, setSelectedDesignIds ] = useState( [] )
+	const [ selectedDesignData, setSelectedDesignData ] = useState( [] )
 	const [ isMultiSelectBusy, setIsMultiSelectBusy ] = useState( false )
 	const [ selectedId, setSelectedId ] = useState( '' )
 	const [ selectedType, setSelectedType ] = useLocalStorage( 'stk__design_library__block-list__view_by', 'uikit' )
@@ -248,12 +249,29 @@ export const ModalDesignLibrary = props => {
 						selectedDesigns={ selectedDesignIds }
 						onSelectMulti={ designId => {
 							const newSelectedDesigns = [ ...selectedDesignIds ]
+							// We also get the design data from displayDesigns
+							// already instead of after clicking the "Add
+							// Designs" button since displayDesigns can change
+							// when the user is switching tabs (block/ui
+							// kits/wireframes) and the data can be lost.
+							const newSelectedDesignData = [ ...selectedDesignData ]
+
 							if ( newSelectedDesigns.includes( designId ) ) {
-								newSelectedDesigns.splice( newSelectedDesigns.indexOf( designId ), 1 )
+								const i = newSelectedDesigns.indexOf( designId )
+								newSelectedDesigns.splice( i, 1 )
 								setSelectedDesignIds( newSelectedDesigns )
+								newSelectedDesignData.splice( i, 1 )
+								setSelectedDesignData( newSelectedDesignData )
 							} else {
 								newSelectedDesigns.push( designId )
 								setSelectedDesignIds( newSelectedDesigns )
+								newSelectedDesignData.push( displayDesigns.find( design => design.id === designId ) )
+								setSelectedDesignData( newSelectedDesignData )
+
+								// Pre-cache the selected design so that when
+								// the user decides to add it, it won't take too
+								// long to get.
+								getDesign( designId, props.apiVersion )
 							}
 						} }
 					/>
@@ -267,15 +285,15 @@ export const ModalDesignLibrary = props => {
 						disabled={ ! selectedDesignIds.length || isMultiSelectBusy }
 						onClick={ () => {
 							setIsMultiSelectBusy( true )
-							const designs = selectedDesignIds.map( designId => {
-								return displayDesigns.find( design => design.id === designId )
-							} )
 							const promises = selectedDesignIds.map( designId => {
 								return getDesign( designId, props.apiVersion )
 							} )
 							Promise.all( promises ).then( designData => {
-								props.onSelect( designData, designs )
-								setIsMultiSelectBusy( false )
+								// Put this in another thread so the UI doesn't freeze.
+								setTimeout( () => {
+									const cb = () => setIsMultiSelectBusy( false )
+									props.onSelect( designData, selectedDesignData, cb )
+								} )
 							} )
 						} }
 					>
