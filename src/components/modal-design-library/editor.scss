@@ -8,6 +8,13 @@
 	--wp-admin-theme-color-darker-10: #{ darken(#f00069, 10%) };
 	--wp-admin-theme-color-darker-20: #{ darken(#f00069, 20%) };
 
+	> .components-modal__content {
+		&::before,
+		&::after {
+			display: none;
+		}
+	}
+
 	.components-modal__content {
 		padding: 0;
 		display: flex;
@@ -19,7 +26,7 @@
 	.ugb-modal-design-library__wrapper {
 		display: grid;
 		grid-template-columns: 300px auto;
-		grid-template-rows: 50px auto;
+		grid-template-rows: 80px auto;
 		flex: 1;
 	}
 	.ugb-modal-design-library__sidebar {
@@ -30,6 +37,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+		z-index: 1;
 
 		.ugb-control-separator {
 			margin: 8px 0 !important;
@@ -40,10 +48,12 @@
 		display: flex;
 		justify-content: flex-end;
 		padding: 0 24px;
-		height: 50px;
+		height: 80px;
 		align-items: center;
 		grid-column: 2 / 3;
 		grid-row: 1 / 2;
+		background: #fff;
+		border-bottom: 1px solid #eee;
 	}
 	.ugb-modal-design-library__designs {
 		padding: 24px;
@@ -79,6 +89,63 @@
 	.ugb-modal-design-library__filters {
 		overflow-y: auto;
 		padding: 24px;
+	}
+
+	/**
+	 * Multi-select mode
+	 */
+	// Multi-select buttons
+	.stk-circular-button {
+		background: #efefef;
+		border-radius: 60px;
+		padding-inline: 18px;
+		margin-right: 8px;
+		&.stk--is-active {
+			background: #313131;
+			color: #fff;
+		}
+	}
+	// Push the select buttons to the left.
+	.ugb-modal-design-library__refresh {
+		margin-left: auto;
+	}
+	.ugb-modal-design-library__footer {
+		padding: 0 24px;
+		grid-column: 2 / 3;
+		grid-row: 3 / 4;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: #fff;
+		border-top: 1px solid #eee;
+	}
+	// Make room for the footer buttons.
+	&.ugb-modal-design-library--is-multiselect {
+		.ugb-modal-design-library__wrapper {
+			grid-template-rows: 80px auto 80px;
+		}
+		.ugb-modal-design-library__sidebar {
+			grid-row: 1 / 4;
+		}
+	}
+
+	.ugb-modal-design-library__add-multi {
+		padding: 12px 18px;
+		text-transform: uppercase;
+		&[disabled] {
+			background: #efefef;
+			opacity: 1;
+		}
+		&:not([disabled]) {
+			background: linear-gradient(131.34deg, #ee006b -0.77%, #b300be 94.57%);
+			color: #fff;
+			&:hover {
+				filter: brightness(1.1);
+			}
+		}
+		.components-spinner {
+			margin: 0 0 0 18px !important;
+		}
 	}
 }
 
