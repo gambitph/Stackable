@@ -55,7 +55,8 @@
 		height: 100%;
 		background-size: cover;
 		background-position: center;
-		will-change: filter, transform;
+		// Remove this since it's causing images to not show up in Chrome 100.
+		// will-change: filter, transform;
 	}
 	.ugb-image-box__overlay,
 	.ugb-image-box__overlay-hover {

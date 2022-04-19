@@ -3,7 +3,12 @@
 	"title": "Subtitle",
 	"description": "Subtitle text that you can add custom styling to from the global settings.",
 	"category": "common",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId"
+	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special"
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/subtitle-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

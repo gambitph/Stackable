@@ -3,10 +3,15 @@
 	"title": "Hero",
 	"description": "A large hero area. Typically used at the very top of a page.",
 	"category": "layout",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId"
+	],
 	"keywords": [
 		"Header"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "section"
+	"stk-type": "section",
+	"stk-demo": "https://wpstackable.com/hero-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }
