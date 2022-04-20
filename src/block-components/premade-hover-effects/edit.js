@@ -33,6 +33,10 @@ export const Edit = props => {
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const { innerBlocks } = useBlockContext()
 
+	const container = useMemo( () => {
+		return getAttribute( 'hasContainer' )
+	}, [] )
+
 	const effects = useMemo( () => {
 		const blockEffects = applyFilters( 'stackable.hover-effects.list', EFFECTS )
 		if ( isPro ) {
@@ -56,12 +60,15 @@ export const Edit = props => {
 
 	const applyEffect = useCallback( value => {
 		const attrHoverEffect = getAttribute( 'premadeHoverEffect' )
-		// Remove existing hover effects
 		const tempAttr = {}
 		const prevEffect = effectsList.find( ( { value: v } ) => attrHoverEffect === v && v !== '' )
 		if ( prevEffect ) {
 			Object.keys( prevEffect.attributes ).forEach( attrName => {
-				tempAttr[ attrName ] = ''
+				if ( container && attrName === 'hasContainer' ) {
+
+				} else {
+					tempAttr[ attrName ] = ''
+				}
 			} )
 			updateBlockAttributes( clientId, tempAttr )
 			if ( prevEffect.removeEffect ) {
