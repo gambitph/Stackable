@@ -89,9 +89,8 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-blockquote" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-			<PremadeHoverEffects.InspectorControls effects={ [ 'container' ] } />
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-
+			<PremadeHoverEffects.InspectorControls effects={ [ 'container' ] } />
 			<InspectorStyleControls>
 				<InspectorBottomTip />
 			</InspectorStyleControls>
