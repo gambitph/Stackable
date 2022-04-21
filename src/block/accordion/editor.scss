@@ -54,4 +54,12 @@
 			display: block !important;
 		}
 	}
+
+	// This is so that the accordion opens in the editor
+	// since open attribute is not present
+	&.stk--is-open .stk-block-accordion__content {
+		max-height: unset;
+		transform: translateY(-25px);
+		opacity: 1;
+	}
 }
