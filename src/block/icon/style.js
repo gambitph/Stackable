@@ -1,5 +1,5 @@
 /**
- * External dependencies
+ * Internal dependencies
  */
 import {
 	Icon,
@@ -9,15 +9,14 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
-import {
-	Fragment, renderToString,
-} from '@wordpress/element'
+import { withGeneratedCss } from '~stackable/higher-order'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
+import { getUniqueBlockClass } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
+import { Fragment, renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const iconStyleOptions = {
@@ -25,7 +24,7 @@ const iconStyleOptions = {
 	hoverSelector: '.stk--svg-wrapper:hover',
 }
 
-export const IconStyles = props => {
+export const IconStyles = withGeneratedCss( props => {
 	const {
 		...propsToPass
 	} = props
@@ -48,7 +47,7 @@ export const IconStyles = props => {
 			<Icon.Style { ...propsToPass } options={ iconStyleOptions } />
 		</Fragment>
 	)
-}
+} )
 
 IconStyles.defaultProps = {
 	isEditor: false,

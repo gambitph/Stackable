@@ -21,6 +21,7 @@ import { Style as StyleComponent } from '~stackable/components'
  */
 import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { withGeneratedCss } from '~stackable/higher-order'
 
 const flexGapOptionsEdit = {
 	selector: '.block-editor-block-list__layout',
@@ -72,7 +73,7 @@ const getStyleParams = () => {
 	]
 }
 
-export const ButtonGroupStyles = props => {
+export const ButtonGroupStyles = withGeneratedCss( props => {
 	const {
 		...propsToPass
 	} = props
@@ -106,7 +107,7 @@ export const ButtonGroupStyles = props => {
 			/>
 		</>
 	)
-}
+} )
 
 ButtonGroupStyles.defaultProps = {
 	isEditor: false,

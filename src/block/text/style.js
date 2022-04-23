@@ -21,6 +21,7 @@ import { Style as StyleComponent } from '~stackable/components'
  */
 import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { withGeneratedCss } from '~stackable/higher-order'
 
 const typographyOptions = {
 	selector: '.stk-block-text__text',
@@ -45,7 +46,7 @@ const getStyleParams = () => {
 	]
 }
 
-export const TextStyles = props => {
+export const TextStyles = withGeneratedCss( props => {
 	const {
 		...propsToPass
 	} = props
@@ -76,7 +77,7 @@ export const TextStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 		</>
 	)
-}
+} )
 
 TextStyles.defaultProps = {
 	isEditor: false,

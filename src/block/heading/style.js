@@ -21,6 +21,7 @@ import { Style as StyleComponent } from '~stackable/components'
  */
 import { Fragment, renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { withGeneratedCss } from '~stackable/higher-order'
 
 const getStyleParams = () => {
 	return [
@@ -119,7 +120,7 @@ const getStyleParams = () => {
 	]
 }
 
-export const HeadingStyles = props => {
+export const HeadingStyles = withGeneratedCss( props => {
 	const {
 		...propsToPass
 	} = props
@@ -162,7 +163,7 @@ export const HeadingStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
-}
+} )
 
 HeadingStyles.defaultProps = {
 	isEditor: false,
