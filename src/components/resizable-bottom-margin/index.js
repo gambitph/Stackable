@@ -1,10 +1,16 @@
 /**
+ * Internal dependencies
+ */
+import { useControlHandlers } from '../base-control2/hooks'
+import { getAttributeName } from '~stackable/util'
+
+/**
  * External dependencies
  */
 import classnames from 'classnames'
 import { range } from 'lodash'
 import {
-	useBlockAttributes, useDeviceType, useWithShift,
+	useBlockAttributes, useDeviceType, useUpdateEvent, useWithShift,
 } from '~stackable/hooks'
 
 /**
@@ -16,8 +22,7 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useControlHandlers } from '../base-control2/hooks'
-import { getAttributeName } from '~stackable/util'
+import { getBlockVariations } from '@wordpress/blocks'
 
 const DEFAULT_BOTTOM_MARGINS = {
 	Desktop: 24,
@@ -45,8 +50,8 @@ const ENABLE = {
 }
 
 const ResizableBottomMarginSingle = props => {
-	const [ initialHeight, setInitialHeight ] = useState( 0 )
-	const [ currentHeight, setCurrentHeight ] = useState( null )
+	const [ preResizeHeight, setPreResizeHeight ] = useState( 0 )
+	const [ resizingHeight, setResizingHeight ] = useState( null )
 	const [ isResizing, setIsResizing ] = useState( false )
 
 	const [ snapWidths, setSnapWidths ] = useState( SNAP_HEIGHTS )
@@ -58,35 +63,21 @@ const ResizableBottomMarginSingle = props => {
 	// Allow other developers to override the default bottom margin value.
 	const deviceType = useDeviceType()
 	const defaultBottomMargin = applyFilters( 'stackable.resizable-bottom-margin.default', DEFAULT_BOTTOM_MARGINS[ deviceType ] )
+	// Allow this component to be rerendered externalls (e.g. by setting the bottom margin in the design system)
+	useUpdateEvent( 'stackable.resizable-bottom-margin' )
 
 	const classNames = classnames( [
 		'stk-resizable-bottom-margin',
 	], {
-		'stk--is-resizing': currentHeight !== null,
+		'stk--is-resizing': isResizing,
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
-	const getInitialHeight = useCallback( () => {
-		let currentMargin = props.value ? parseFloat( props.value ) : 0
-		if ( ! props.value && props.previewSelector ) {
-			const el = document.querySelector( props.previewSelector )
-			if ( el ) {
-				currentMargin = parseFloat( window.getComputedStyle( el ).marginBottom )
-			}
-		}
-		setInitialHeight( currentMargin || 0 )
-		return currentMargin || 0
-	}, [ props.value, props.previewSelector ] )
-
-	useEffect( () => {
-		getInitialHeight()
-	}, [ props.previewSelector ] )
+	const currentHeight = props.value || props.value === 0 ? props.value : defaultBottomMargin
 
 	const size = useMemo( () => {
-		return {
-			height: props.value || props.value === 0 ? props.value : initialHeight || defaultBottomMargin,
-		}
-	}, [ props.value, initialHeight, defaultBottomMargin ] )
+		return { height: currentHeight }
+	}, [ currentHeight ] )
 
 	return (
 		<ResizableBox
@@ -98,12 +89,12 @@ const ResizableBottomMarginSingle = props => {
 			snap={ snapWidths }
 			snapGap={ 5 }
 			onResizeStart={ () => {
-				const currentHeight = getInitialHeight()
-				setCurrentHeight( currentHeight )
+				setPreResizeHeight( currentHeight )
+				setResizingHeight( currentHeight )
 				setIsResizing( true )
 			} }
 			onResize={ ( _event, _direction, elt, delta ) => {
-				setCurrentHeight( initialHeight + delta.height )
+				setResizingHeight( preResizeHeight + delta.height )
 
 				// Set snap widths. We need to do this here not on
 				// ResizeStart or it won't be used at first drag.
@@ -112,18 +103,16 @@ const ResizableBottomMarginSingle = props => {
 				}
 			} }
 			onResizeStop={ () => {
-				props.onChange( currentHeight === defaultBottomMargin ? '' : currentHeight )
-				setInitialHeight( 0 )
-				setCurrentHeight( null )
+				props.onChange( resizingHeight === defaultBottomMargin ? '' : resizingHeight )
 				setIsResizing( false )
 			} }
 		>
 			{ props.previewSelector && isResizing &&
 				// .editor-styles-wrapper so that our styles will override the currently set margin.
-				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ currentHeight }px !important; }` }</style>
+				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ resizingHeight }px !important; }` }</style>
 			}
 			<span className="stk-resizable-bottom-margin__label">
-				{ `${ isResizing ? currentHeight : ( props.value !== '' ? props.value : ( initialHeight || defaultBottomMargin ) ) }px` }
+				{ `${ isResizing ? resizingHeight : currentHeight }px` }
 			</span>
 		</ResizableBox>
 	)
@@ -143,7 +132,7 @@ const changeCallback = ( value, originalValue ) => {
 }
 
 const ResizableBottomMargin = memo( props => {
-	const { clientId } = useBlockEditContext()
+	const { clientId, name } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 	const device = useDeviceType()
 
@@ -177,7 +166,8 @@ const ResizableBottomMargin = memo( props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, false, valueCallback, changeCallback )
 
 	// Don't show margin bottom handler if the user is picking a layout.
-	if ( ! attributes.uniqueId ) {
+	const hasVariations = getBlockVariations( name ).length > 0
+	if ( ! attributes.uniqueId && hasVariations ) {
 		return null
 	}
 

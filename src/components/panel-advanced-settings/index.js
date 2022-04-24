@@ -95,6 +95,7 @@ const PanelAdvancedSettings = props => {
 	], {
 		'ugb-toggle-panel-body--advanced': showAdvanced,
 		[ `ugb-panel--${ props.id }` ]: props.id,
+		'ugb-toggle-panel-body--alt': props.isAlt,
 	} )
 
 	const title = useMemo( () => {
@@ -159,6 +160,7 @@ PanelAdvancedSettings.defaultProps = {
 	advancedChildren: null,
 	onToggle: () => {},
 	isOpen: null,
+	isAlt: false, // Alternative smaller look.
 	// Deprecated on v3:
 	toggleOnSetAttributes: [],
 	toggleAttributeName: '',

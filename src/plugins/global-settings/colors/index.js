@@ -20,9 +20,7 @@ import rgba from 'color-rgba'
 import { addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import {
-	dispatch, useSelect,
-} from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
 
@@ -107,7 +105,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
-} )
+}, 5 )
 
 // Convert hex colors to global colors in Stackable blocks.
 addFilter( 'stackable.color-palette-control.change', 'stackable/global-colors', ( value, colorObject ) => {

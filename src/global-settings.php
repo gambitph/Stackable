@@ -75,6 +75,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( ! is_admin() ) {
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
 			}
+
+			/**
+			 * Block Design System
+			 */
 		}
 
 		/**
@@ -230,6 +234,41 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 									'p' => $stackable_global_typography_schema,
 									'.stk-subtitle' => $stackable_global_typography_schema,
 								)
+							)
+						)
+					),
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_design_system',
+				array(
+					'type' => 'object',
+					'description' => __( 'Stackable block design system', STACKABLE_I18N ),
+					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
+					'show_in_rest' => array(
+						'schema' => array(
+							'properties' => array(
+								// The individual style values.
+								'styles' => array(
+									'type' => 'string',
+								),
+								// This is the generated CSS for the design system for the frontend.
+								'css' => array(
+									'type' => 'string',
+								),
+								// These are the generated CSS for the design system for the backend.
+								'cssDesktop' => array(
+									'type' => 'string',
+								),
+								'cssTablet' => array(
+									'type' => 'string',
+								),
+								'cssMobile' => array(
+									'type' => 'string',
+								),
 							)
 						)
 					),
