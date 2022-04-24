@@ -12,7 +12,8 @@ import Button from '../button'
  * WordPress dependencies
  */
 import {
-	RangeControl, __experimentalNumberControl as NumberControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
+	RangeControl,
+	__experimentalNumberControl as NumberControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
 import {
 	useState, useLayoutEffect, useEffect, useCallback, memo, useRef,
@@ -114,8 +115,8 @@ const StackableRangeControl = memo( props => {
 	const initialPosition = props.initialPosition !== null ? props.initialPosition : ( props.placeholder || props.sliderMin || props.min )
 	const percentageValue = getPercentageValue(
 		isReset ? initialPosition : value,
-		props.sliderMin || props.min || 0,
-		props.sliderMax || props.max || 100
+		props.sliderMin !== null ? props.sliderMin : ( props.min || 0 ),
+		props.sliderMax !== null ? props.sliderMax : ( props.max || 100 )
 	)
 
 	// This makes sure that dynamic placeholders can be recomputed after other
