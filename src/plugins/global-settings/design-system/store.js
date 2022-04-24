@@ -21,7 +21,7 @@ import { debounce } from 'lodash'
 import { registerStore, dispatch } from '@wordpress/data'
 import { loadPromise, models } from '@wordpress/api'
 import domReady from '@wordpress/dom-ready'
-import { doAction } from '@wordpress/hooks/build-types'
+import { doAction } from '@wordpress/hooks'
 
 const saveDesignSystem = debounce( data => {
 	const settings = new models.Settings( {
