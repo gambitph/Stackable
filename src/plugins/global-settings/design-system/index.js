@@ -70,10 +70,17 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 				{ isPro &&
 					applyFilters( 'stackable.design-system.controls', null )
 				}
+				{ /* <PanelAdvancedSettings
+					title={ __( 'Typography', i18n ) }
+					isAlt={ true }
+					id="typography"
+				>
+					Move stuff from Global Typography to here.
+				</PanelAdvancedSettings> */ }
 				<PanelAdvancedSettings
 					title={ __( 'Blocks', i18n ) }
 					isAlt={ true }
-					id="design-system"
+					id="blocks"
 				>
 					<AdvancedRangeControl
 						label={ __( 'Bottom Margin', i18n ) }
@@ -113,7 +120,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 				<PanelAdvancedSettings
 					title={ __( 'Columns', i18n ) }
 					isAlt={ true }
-					id="design-system"
+					id="columns"
 				>
 					<FourRangeControl
 						label={ __( 'Column Inner Spacing', i18n ) }
@@ -132,7 +139,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 				<PanelAdvancedSettings
 					title={ __( 'Containers', i18n ) }
 					isAlt={ true }
-					id="design-system"
+					id="containers"
 				>
 					<ColorPaletteControl
 						label={ __( 'Background Color', i18n ) }
@@ -182,7 +189,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 				<PanelAdvancedSettings
 					title={ __( 'Buttons', i18n ) }
 					isAlt={ true }
-					id="design-system"
+					id="buttons"
 				>
 					{ /** TODO: hover button color .stk-button:hover:after */ }
 					{ /** TODO: to implement hover button styles, maybe refer to src/block-components/button/style.js */ }
@@ -249,7 +256,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 				<PanelAdvancedSettings
 					title={ __( 'Icons', i18n ) }
 					isAlt={ true }
-					id="design-system"
+					id="icons"
 				>
 					<ColorPaletteControl
 						label={ __( 'Icon Color', i18n ) }
