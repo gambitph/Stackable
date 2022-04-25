@@ -2,7 +2,11 @@
  * Internal dependencies
  */
 import {
-	AdvancedRangeControl, ColorPaletteControl, FourRangeControl, PanelAdvancedSettings, ProControl, ShadowControl,
+	AdvancedRangeControl,
+	ColorPaletteControl,
+	FourRangeControl,
+	PanelAdvancedSettings,
+	ShadowControl,
 } from '~stackable/components'
 import { DesignSystem } from './editor-loader'
 import './store'
@@ -11,26 +15,19 @@ import './margin-bottom'
 /**
  * External dependencies
  */
-import {
-	i18n, isPro, showProNotice,
-} from 'stackable'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+import { addFilter } from '@wordpress/hooks'
 import { useSelect, useDispatch } from '@wordpress/data'
 import { useAttributeName } from '~stackable/hooks'
 import { dispatchUpdateEvent } from '~stackable/hooks/use-update-event'
 export { DesignSystem }
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', output => {
-	if ( ! showProNotice && ! isPro ) {
-		return output
-	}
-
-	// const { deviceType } = useDeviceType()
 	const styles = useSelect( select => {
 		return select( 'stackable/design-system' ).getStyles()
 	} )
@@ -52,24 +49,13 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 				title={ __( 'Block Design System', i18n ) }
 				id="design-system"
 			>
-				{ ! isPro &&
-					<ProControl
-						title={ __( 'Say Hello to Design Systems 👋', i18n ) }
-						description={ __( 'Change the timing of your CSS transitions, change the X and Y position, scale or rotate your blocks, perfect for hover animations. This feature is only available on Stackable Premium', i18n ) }
-					/>
-				}
-				{ isPro &&
-					<p className="components-base-control__help">
-						{ __( 'These are design rules which apply to all Stackable blocks, adjusting these will affect all blocks in your entire site.', i18n ) }
-						&nbsp;
-						<a href="https://docs.wpstackable.com/article/362-how-to-use-global-colors?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-							{ __( 'Learn more about Design System', i18n ) }
-						</a>
-					</p>
-				}
-				{ isPro &&
-					applyFilters( 'stackable.design-system.controls', null )
-				}
+				<p className="components-base-control__help">
+					{ __( 'These are design rules which apply to all Stackable blocks, adjusting these will affect all blocks in your entire site.', i18n ) }
+					&nbsp;
+					<a href="https://docs.wpstackable.com/article/362-how-to-use-global-colors?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+						{ __( 'Learn more about Design System', i18n ) }
+					</a>
+				</p>
 				{ /* <PanelAdvancedSettings
 					title={ __( 'Typography', i18n ) }
 					isAlt={ true }
