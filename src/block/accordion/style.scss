@@ -80,6 +80,7 @@
 		}
 	}
 
+	// Accordion content shows up in the front end.
 	&:not([open]) .stk-block-accordion__content {
 		max-height: 0;
 		transform: translateY(25px);
