@@ -37,6 +37,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 	const { updateStyle } = useDispatch( 'stackable/design-system' )
 
 	const marginBottomName = useAttributeName( 'marginBottom', 'all', false )
+	const blockBackgroundPaddingName = useAttributeName( 'blockBackgroundPadding', 'all', false )
+	const columnMarginName = useAttributeName( 'columnMargin', 'all', false )
+	const buttonPaddingName = useAttributeName( 'buttonPadding', 'all', false )
+	const iconButtonPaddingName = useAttributeName( 'iconButtonPadding', 'all', false )
+	const buttonGhostBorderWidthName = useAttributeName( 'buttonGhostBorderWidth', 'all', false )
 
 	return (
 		<>
@@ -85,15 +90,24 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 					/>
 					<ColorPaletteControl
 						label={ __( 'Block Background Color', i18n ) }
+						value={ styles.blockBackgroundColor }
+						onChange={ value => {
+							updateStyle( 'blockBackgroundColor', value )
+						} }
 					/>
-					<AdvancedRangeControl
+					<FourRangeControl
 						label={ __( 'Block Background Padding', i18n ) }
 						responsive="all"
-						sliderMin={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
-						value=""
-						onChange={ v => console.log( v ) }
+						units={ [ 'px' ] }
+						defaultLocked={ true }
+						min={ [ 0 ] }
+						sliderMax={ [ 100 ] }
+						placeholder={ [ 24 ] }
+						className="ugb--help-tip-advanced-block-paddings"
+						value={ styles[ blockBackgroundPaddingName ] }
+						onChange={ value => {
+							updateStyle( blockBackgroundPaddingName, value )
+						} }
 					/>
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
@@ -101,66 +115,95 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 					isAlt={ true }
 					id="design-system"
 				>
-					{ /* <AdvancedRangeControl
-						label={ __( 'Column Inner Spacing', i18n ) }
-						responsive="all"
-						sliderMin={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
-						value=""
-						onChange={ v => console.log( v ) }
-					/> */ }
 					<FourRangeControl
 						label={ __( 'Column Inner Spacing', i18n ) }
 						responsive="all"
-						units={ [ 'px', 'em' ] }
+						units={ [ 'px' ] }
 						defaultLocked={ true }
-						min={ [ 0, 0 ] }
-						sliderMax={ [ 200, 30 ] }
-						// placeholder={ isOnlyBlock ? '0' : '12' }
-						className="ugb--help-tip-advanced-block-paddings"
+						min={ [ 0 ] }
+						sliderMax={ [ 200 ] }
+						placeholder="12"
+						value={ styles[ columnMarginName ] }
+						onChange={ value => {
+							updateStyle( columnMarginName, value )
+						} }
 					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Containers', i18n ) }
+					isAlt={ true }
+					id="design-system"
+				>
+					test
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					title={ __( 'Buttons', i18n ) }
 					isAlt={ true }
 					id="design-system"
 				>
+					{ /** TODO: hover button color .stk-button:hover:after */ }
+					{ /** TODO: to implement hover button styles, maybe refer to src/block-components/button/style.js */ }
 					<ColorPaletteControl
-						label={ __( 'Button Background Color', i18n ) }
+						label={ __( 'Button Color', i18n ) }
+						value={ styles.buttonBackgroundColor }
+						onChange={ value => {
+							updateStyle( 'buttonBackgroundColor', value )
+						} }
+						hover="all"
+					/>
+					<ColorPaletteControl
+						label={ __( 'Button Text Color', i18n ) }
+						value={ styles.buttonTextColor }
+						onChange={ value => {
+							updateStyle( 'buttonTextColor', value )
+						} }
 					/>
 					<FourRangeControl
-						label={ __( 'Vertical Padding', i18n ) }
-						units={ [ 'px', '%' ] }
+						label={ __( 'Button Padding', i18n ) }
+						units={ [ 'px' ] }
 						responsive="all"
 						defaultLocked={ true }
-						sliderMin={ [ 0, 0 ] }
-						sliderMax={ [ 40, 100 ] }
-						enableLeft={ false }
-						enableRight={ false }
+						sliderMin={ [ 0 ] }
+						sliderMax={ [ 40 ] }
+						value={ styles[ buttonPaddingName ] }
+						onChange={ value => {
+							updateStyle( buttonPaddingName, value )
+						} }
 					/>
-					<FourRangeControl
-						label={ __( 'Horizontal Padding', i18n ) }
-						units={ [ 'px', '%' ] }
-						responsive="all"
-						defaultLocked={ true }
-						sliderMin={ [ 0, 0 ] }
-						sliderMax={ [ 40, 100 ] }
-						enableTop={ false }
-						enableBottom={ false }
-					/>
+					{ /* <AdvancedRangeControl
+						label={ __( 'Button Icon Gap', i18n ) }
+						sliderMin={ 0 }
+						sliderMax={ 50 }
+						placeholder="12"
+						value={ styles.buttonGap }
+						onChange={ value => {
+							updateStyle( 'buttonGap', value )
+						} }
+					/> */ }
 					<AdvancedRangeControl
-						label={ __( 'Icon Padding', i18n ) }
+						label={ __( 'Icon Button Padding', i18n ) }
 						responsive="all"
 						sliderMin={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
-						value=""
-						onChange={ v => console.log( v ) }
+						sliderMax={ 40 }
+						placeholder="12"
+						value={ styles[ iconButtonPaddingName ] }
+						onChange={ value => {
+							updateStyle( iconButtonPaddingName, value )
+						} }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Button Ghost Border Width', i18n ) }
+						sliderMin={ 0 }
+						sliderMax={ 5 }
+						placeholder="2"
+						value={ styles[ buttonGhostBorderWidthName ] }
+						onChange={ value => {
+							updateStyle( buttonGhostBorderWidthName, value )
+						} }
 					/>
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
-					title={ __( 'Containers', i18n ) }
+					title={ __( 'Icons', i18n ) }
 					isAlt={ true }
 					id="design-system"
 				>

@@ -79,6 +79,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			/**
 			 * Block Design System
 			 */
+			if ( ! is_admin() ) {
+				add_filter( 'stackable_inline_styles_nodep', array( $this, 'design_system_add_styles' ) );
+			}
 		}
 
 		/**
@@ -877,6 +880,19 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			return $selectors;
+		}
+
+		/**-----------------------------------------------------------------------------
+		 * Design System functions
+		 *-----------------------------------------------------------------------------*/
+		public function design_system_add_styles( $css ) {
+			$design_system = get_option( 'stackable_design_system' );
+			if ( ! empty( $design_system ) ) {
+				if ( is_array( $design_system ) && array_key_exists( 'css', $design_system ) ) {
+					return $css . $design_system['css'];
+				}
+			}
+			return $css;
 		}
 	}
 

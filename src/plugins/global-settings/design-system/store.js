@@ -7,7 +7,7 @@
  * Internal dependencies
  */
 import { getStyleParams } from './styles'
-import { getStyles } from '~stackable/util'
+import { getStyles, minifyCSS } from '~stackable/util'
 import { generateStyles, getEditorStylesOnly } from '~stackable/block-components/style'
 
 /**
@@ -22,11 +22,14 @@ import { registerStore, dispatch } from '@wordpress/data'
 import { loadPromise, models } from '@wordpress/api'
 import domReady from '@wordpress/dom-ready'
 import { doAction } from '@wordpress/hooks'
+import { doImportant } from '~stackable/components/style'
 
-const saveDesignSystem = debounce( data => {
+const saveDesignSystem = debounce( ( data, frontendCss ) => {
 	const settings = new models.Settings( {
 		stackable_design_system: { // eslint-disable-line camelcase
 			...data,
+			// The CSS for the frontend will need to be compressed / minified.
+			css: minifyCSS( frontendCss ),
 			// We need to stringify the styles.
 			styles: JSON.stringify( data.styles ),
 		},
@@ -80,7 +83,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 
 			// Generate the CSS for the frontend.
 			const styles = getStyles( newStyles, getStyleParams() )
-			const css = generateStyles( styles, '', 1024, 768 ).join( '' ).trim()
+			const frontendCss = generateStyles( doImportant( styles ), '', 1024, 768 ).join( '' ).trim()
 
 			// Generate the CSS of the other devices for the editor.
 			const stylesToRenderDesktop = getEditorStylesOnly( styles, 'Desktop' )
@@ -94,14 +97,14 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 
 			const data = {
 				styles: newStyles,
-				css,
+				css: frontendCss,
 				cssDesktop,
 				cssTablet,
 				cssMobile,
 			}
 
 			// Update the database.
-			saveDesignSystem( data )
+			saveDesignSystem( data, frontendCss )
 
 			return {
 				...state,
