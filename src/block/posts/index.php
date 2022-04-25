@@ -115,7 +115,8 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			} else {
 				$excerpt = implode( ' ', $excerpt );
 			}
-
+			// Trim the excerpt differently if there are chinese characters.
+			$excerpt = filter_cjk_characters( $excerpt, $trim_to_length );
 			$excerpt = wp_kses_post( $excerpt );
 			$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
 		} else {
@@ -130,6 +131,25 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 		$new_template = str_replace( '!#readmoreText!#', esc_html( $readmore_text ), $new_template );
 
 		return $new_template;
+	}
+
+	/**
+	 * Checks if there are cjk characters in the string
+	 * and cuts it based on character count.
+	 *
+	 * @since 3.3.2
+	 * @param string | string $excerpt
+	 * @param int | int $trim_to_length
+	 *
+	 * @return string trimmed excerpt if it contains a cjk character, original excerpt if not.
+	 */
+	function filter_cjk_characters( $excerpt, $trim_to_length ) {
+		$chinese_excerpt = preg_match_all("/\p{Han}+/u", $excerpt, $matches);
+		if($chinese_excerpt) {
+			$sample = mb_substr( $excerpt, 0, $trim_to_length ) . '...';
+			return $sample;
+		}
+		return $excerpt;
 	}
 }
 

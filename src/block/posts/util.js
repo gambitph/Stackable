@@ -26,6 +26,16 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import variations from './variations'
 
+// Check if there are east asian characters. Trim with regards to each char length rather than word count.
+const trimCJKCharacters = ( excerpt, excerptLength ) => {
+	const regexCJK = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/
+	if ( excerpt.match( regexCJK ) ) {
+		const outputExcerpt = excerpt.substring( 0, excerptLength ) + '...'
+		return outputExcerpt
+	}
+	return excerpt
+}
+
 export const META_SEPARATORS = {
 	dot: '·',
 	space: ' ',
@@ -204,6 +214,9 @@ export const generateRenderPostItem = attributes => {
 		} else {
 			excerptString = post.post_excerpt_stackable
 		}
+
+		// Trim the excerpt differently if there are cjk characters.
+		excerptString = trimCJKCharacters( excerptString, excerptLength )
 
 		const excerpt = excerptString && (
 			<div
