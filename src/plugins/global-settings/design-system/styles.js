@@ -24,6 +24,37 @@ export const getStyleParams = () => {
 		},
 		{
 			selector: ':root',
+			styleRule: '--stk-container-background-color',
+			attrName: 'containerBackgroundColor',
+		},
+		{
+			selector: ':root',
+			styleRule: '--stk-container-color',
+			attrName: 'containerColor',
+		},
+		{
+			selector: ':root',
+			styleRule: '--stk-container-padding',
+			attrName: 'containerPadding',
+			responsive: 'all',
+			valuePreCallback: value => {
+				const getValue = value => value === 0 ? value : ( value || 32 )
+				return getValue( value?.top ) + 'px ' + getValue( value?.right ) + 'px ' + getValue( value?.bottom ) + 'px ' + getValue( value?.left ) + 'px'
+			},
+		},
+		{
+			selector: ':root',
+			styleRule: '--stk-container-border-radius',
+			attrName: 'containerBorderRadius',
+			format: '%spx',
+		},
+		{
+			selector: ':root',
+			styleRule: '--stk-container-box-shadow',
+			attrName: 'containerBoxShadow',
+		},
+		{
+			selector: ':root',
 			styleRule: '--stk-column-margin',
 			attrName: 'columnMargin',
 			responsive: 'all',
@@ -72,5 +103,22 @@ export const getStyleParams = () => {
 			format: '%spx',
 			responsive: 'all',
 		},
+		{
+			selector: ':root',
+			styleRule: '--stk-icon-color',
+			attrName: 'iconColor',
+		},
+		{
+			selector: ':root',
+			styleRule: '--stk-icon-size',
+			attrName: 'iconSize',
+			format: '%spx',
+			responsive: 'all',
+		},
+		// {
+		// 	selector: ':root',
+		// 	styleRule: '--stk-icon-shape-color',
+		// 	attrName: 'iconShapeColor',
+		// },
 	]
 }

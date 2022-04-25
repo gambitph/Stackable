@@ -3,9 +3,7 @@
  */
 import { i18n } from 'stackable'
 import { compact, isNumber } from 'lodash'
-import {
-	AdvancedRangeControl, ColorPaletteControl,
-} from '~stackable/components'
+import { AdvancedRangeControl, ColorPaletteControl } from '~stackable/components'
 import { hexToRgba } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
@@ -13,9 +11,7 @@ import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 /**
  * WordPress dependencies
  */
-import {
-	__, sprintf,
-} from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import {
 	useCallback, useMemo, useState, useRef, useEffect,
 } from '@wordpress/element'
@@ -155,8 +151,11 @@ const filterToValue = ( props, filters ) => {
 const ShadowFilterControl = props => {
 	const [ filters, setFilters ] = useState( {} )
 
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ _, controlProps ] = extractControlProps( props )
+
+	const value = typeof props.value === 'undefined' ? _value : props.value
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
 	useEffect( () => {
 		if ( value ) {
@@ -236,11 +235,11 @@ const ShadowControl = props => {
 	}, [ shadows ] )
 
 	const changeCallback = useCallback( index => {
-		return index !== '' ? shadows[ index ] : index
+		return index !== '' && typeof index === 'number' ? shadows[ index ] : index
 	}, [ shadows ] )
 
 	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
-	const value = typeof props.value === 'undefined' ? _value : props.value
+	const value = typeof props.value === 'undefined' ? _value : valueCallback( props.value )
 	const [ propsToPass ] = extractControlProps( _props )
 
 	const clickOutsideListener = useCallback( event => {
@@ -263,13 +262,18 @@ const ShadowControl = props => {
 		}
 	}, [ value, isPopoverOpen ] )
 
+	// If props.onChange is passed, pass the shadow value to the onChange function instead of the index.
+	const passedOnChange = useCallback( value => {
+		props.onChange( changeCallback( value ) )
+	} )
+
 	return (
 		<>
 			<AdvancedRangeControl
 				{ ...propsToPass }
 				label={ label }
 				value={ value }
-				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				onChange={ typeof props.onChange === 'undefined' ? onChange : passedOnChange }
 				min={ 0 }
 				max={ shadows.length - 1 }
 				allowReset={ true }
@@ -296,6 +300,8 @@ const ShadowControl = props => {
 					responsive={ props.responsive }
 					hover={ props.hover }
 					parentProps={ props }
+					value={ props.value }
+					onChange={ props.onChange }
 				/>
 			) }
 		</>

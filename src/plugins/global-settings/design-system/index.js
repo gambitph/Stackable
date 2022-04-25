@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import {
-	AdvancedRangeControl, ColorPaletteControl, FourRangeControl, PanelAdvancedSettings, ProControl,
+	AdvancedRangeControl, ColorPaletteControl, FourRangeControl, PanelAdvancedSettings, ProControl, ShadowControl,
 } from '~stackable/components'
 import { DesignSystem } from './editor-loader'
 import './store'
@@ -39,9 +39,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 	const marginBottomName = useAttributeName( 'marginBottom', 'all', false )
 	const blockBackgroundPaddingName = useAttributeName( 'blockBackgroundPadding', 'all', false )
 	const columnMarginName = useAttributeName( 'columnMargin', 'all', false )
+	const containerPaddingName = useAttributeName( 'containerPadding', 'all', false )
 	const buttonPaddingName = useAttributeName( 'buttonPadding', 'all', false )
 	const iconButtonPaddingName = useAttributeName( 'iconButtonPadding', 'all', false )
 	const buttonGhostBorderWidthName = useAttributeName( 'buttonGhostBorderWidth', 'all', false )
+	const iconSizeName = useAttributeName( 'iconSize', 'all', false )
 
 	return (
 		<>
@@ -76,11 +78,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 					<AdvancedRangeControl
 						label={ __( 'Bottom Margin', i18n ) }
 						responsive="all"
-						attribute="height"
 						sliderMin={ 0 }
 						sliderMax={ 100 }
 						placeholder="24"
-						initialPosition={ 24 }
 						value={ styles[ marginBottomName ] }
 						onChange={ value => {
 							updateStyle( marginBottomName, value )
@@ -134,7 +134,50 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 					isAlt={ true }
 					id="design-system"
 				>
-					test
+					<ColorPaletteControl
+						label={ __( 'Background Color', i18n ) }
+						value={ styles.containerBackgroundColor }
+						onChange={ value => {
+							updateStyle( 'containerBackgroundColor', value )
+						} }
+					/>
+					<ColorPaletteControl
+						label={ __( 'Text Color', i18n ) }
+						value={ styles.containerColor }
+						onChange={ value => {
+							updateStyle( 'containerColor', value )
+						} }
+					/>
+					<FourRangeControl
+						label={ __( 'Container Padding', i18n ) }
+						responsive="all"
+						units={ [ 'px' ] }
+						defaultLocked={ true }
+						min={ [ 0 ] }
+						sliderMax={ [ 200 ] }
+						placeholder="32"
+						value={ styles[ containerPaddingName ] }
+						onChange={ value => {
+							updateStyle( containerPaddingName, value )
+						} }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Border Radius', i18n ) }
+						sliderMin={ 0 }
+						sliderMax={ 50 }
+						placeholder="0"
+						value={ styles.containerBorderRadius }
+						onChange={ value => {
+							updateStyle( 'containerBorderRadius', value )
+						} }
+					/>
+					<ShadowControl
+						label={ __( 'Shadow / Outline', i18n ) }
+						value={ styles.containerBoxShadow }
+						onChange={ value => {
+							updateStyle( 'containerBoxShadow', value )
+						} }
+					/>
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					title={ __( 'Buttons', i18n ) }
@@ -149,7 +192,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 						onChange={ value => {
 							updateStyle( 'buttonBackgroundColor', value )
 						} }
-						hover="all"
+						// hover="all"
 					/>
 					<ColorPaletteControl
 						label={ __( 'Button Text Color', i18n ) }
@@ -158,6 +201,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 							updateStyle( 'buttonTextColor', value )
 						} }
 					/>
+					{ /** TODO: Missing border radius */ }
 					<FourRangeControl
 						label={ __( 'Button Padding', i18n ) }
 						units={ [ 'px' ] }
@@ -207,7 +251,31 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/design-system', out
 					isAlt={ true }
 					id="design-system"
 				>
-					test
+					<ColorPaletteControl
+						label={ __( 'Icon Color', i18n ) }
+						value={ styles.iconColor }
+						onChange={ value => {
+							updateStyle( 'iconColor', value )
+						} }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Icon Size', i18n ) }
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder="36"
+						value={ styles[ iconSizeName ] }
+						onChange={ value => {
+							updateStyle( iconSizeName, value )
+						} }
+					/>
+					{ /* <ColorPaletteControl
+						label={ __( 'Icon Shape Color', i18n ) }
+						value={ styles.iconShapeColor }
+						onChange={ value => {
+							updateStyle( 'iconShapeColor', value )
+						} }
+					/> */ }
 				</PanelAdvancedSettings>
 			</PanelAdvancedSettings>
 		</>

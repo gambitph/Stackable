@@ -37,6 +37,8 @@ const saveDesignSystem = debounce( ( data, frontendCss ) => {
 	settings.save()
 }, 500 )
 
+let updateCssTimeout = null
+
 // Include all the stored state.
 const DEFAULT_STATE = {
 	styles: {},
@@ -54,6 +56,10 @@ const STORE_ACTIONS = {
 	updateStyle: ( styleName, value ) => ( {
 		type: 'UPDATE_STYLE',
 		payload: { styleName, value },
+	} ),
+	updateCss: styles => ( {
+		type: 'UPDATE_CSS',
+		payload: { styles },
 	} ),
 }
 
@@ -81,8 +87,20 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 				[ action.payload.styleName ]: action.payload.value,
 			}
 
+			// Update the CSS.
+			clearTimeout( updateCssTimeout )
+			updateCssTimeout = setTimeout( () => {
+				dispatch( 'stackable/design-system' ).updateCss( newStyles )
+			}, 100 )
+
+			return {
+				...state,
+				styles: newStyles,
+			}
+		}
+		case 'UPDATE_CSS': {
 			// Generate the CSS for the frontend.
-			const styles = getStyles( newStyles, getStyleParams() )
+			const styles = getStyles( action.payload.styles, getStyleParams() )
 			const frontendCss = generateStyles( doImportant( styles ), '', 1024, 768 ).join( '' ).trim()
 
 			// Generate the CSS of the other devices for the editor.
@@ -96,7 +114,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 			const cssMobile = generateStyles( stylesToRenderMobile, '', 1024, 768 ).join( '' ).trim()
 
 			const data = {
-				styles: newStyles,
+				styles: action.payload.styles, // We need to save the styles.
 				css: frontendCss,
 				cssDesktop,
 				cssTablet,

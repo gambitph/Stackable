@@ -50,4 +50,13 @@
 		border-right: 1px solid #ccc;
 		border-left: 1px solid #ccc;
 	}
+	.components-panel__body-title {
+		z-index: 4 !important;
+	}
+}
+// Sticky.
+.ugb-global-settings__inspector.components-panel .ugb-toggle-panel-body--alt {
+	.components-panel__body-title {
+		top: 97px;
+	}
 }
