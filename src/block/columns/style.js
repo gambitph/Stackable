@@ -11,9 +11,7 @@ import {
 	Transform,
 	ContentAlign,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
@@ -25,12 +23,13 @@ import { Style as StyleComponent } from '~stackable/components'
 import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
+import { withGeneratedCss } from '~stackable/higher-order'
 
 const alignmentOptions = {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 }
 
-const BlockStyles = props => {
+const BlockStyles = withGeneratedCss( props => {
 	const {
 		...propsToPass
 	} = props
@@ -70,7 +69,7 @@ const BlockStyles = props => {
 			/>
 		</>
 	)
-}
+} )
 
 BlockStyles.defaultProps = {
 	isEditor: false,

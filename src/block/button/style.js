@@ -18,6 +18,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
  * WordPress dependencies
  */
 import { renderToString } from '@wordpress/element'
+import { withGeneratedCss } from '~stackable/higher-order'
 
 const buttonOptions = {
 	selector: '.stk-button',
@@ -28,7 +29,7 @@ const typographyOptions = {
 	hoverSelector: '.stk-button:hover .stk-button__inner-text',
 }
 
-export const ButtonStyles = props => {
+export const ButtonStyles = withGeneratedCss( props => {
 	const {
 		...propsToPass
 	} = props
@@ -51,7 +52,7 @@ export const ButtonStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 		</>
 	)
-}
+} )
 
 ButtonStyles.defaultProps = {
 	isEditor: false,

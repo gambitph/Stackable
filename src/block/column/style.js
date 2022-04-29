@@ -14,19 +14,16 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getUniqueBlockClass,
 	getStyles,
 	useStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
-import {
-	Fragment, renderToString,
-} from '@wordpress/element'
+import { Fragment, renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { withGeneratedCss } from '~stackable/higher-order'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-column__content',
@@ -70,7 +67,7 @@ const getStyleParams = () => {
 	]
 }
 
-const BlockStyles = props => {
+const BlockStyles = withGeneratedCss( props => {
 	const {
 		...propsToPass
 	} = props
@@ -104,7 +101,7 @@ const BlockStyles = props => {
 			/>
 		</Fragment>
 	)
-}
+} )
 
 BlockStyles.defaultProps = {
 	isEditor: false,
