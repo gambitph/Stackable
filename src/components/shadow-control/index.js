@@ -3,9 +3,7 @@
  */
 import { i18n } from 'stackable'
 import { compact, isNumber } from 'lodash'
-import {
-	AdvancedRangeControl, ColorPaletteControl,
-} from '~stackable/components'
+import { AdvancedRangeControl, ColorPaletteControl } from '~stackable/components'
 import { hexToRgba } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
@@ -13,9 +11,7 @@ import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 /**
  * WordPress dependencies
  */
-import {
-	__, sprintf,
-} from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import {
 	useCallback, useMemo, useState, useRef, useEffect,
 } from '@wordpress/element'
@@ -104,6 +100,13 @@ const FILTERS = [
 
 			if ( color?.startsWith( 'rgb(' ) ) {
 				return color?.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) || ''
+			}
+
+			// Parse blocksy colors
+			if ( color?.startsWith( 'var(--paletteColor' ) ) {
+				const hexColorIndex = color.search( /#[a-zA-Z0-9]{6}/g )
+				const hexColor = color.substring( hexColorIndex, hexColorIndex + 7 )
+				return hexToRgba( hexColor )
 			}
 
 			const rgba = hexToRgba( color )
