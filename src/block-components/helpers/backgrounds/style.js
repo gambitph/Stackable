@@ -41,9 +41,14 @@ const getStyleParams = ( options = {} ) => {
 					getAttribute( 'backgroundMediaUrl', 'mobile' )
 
 				if ( ! backgroundColorType && backgroundColorOpacity !== '' && ! hasBackground ) {
+					// Checks if color comes from Blocksy color pallete.
+					if ( value?.startsWith( 'var(--paletteColor' ) ) {
+						const hexColorIndex = value.search( /#[a-zA-Z0-9]{6}/g )
+						const hexColor = value.substring( hexColorIndex, hexColorIndex + 7 )
+						return `${ hexToRgba( hexColor || '#ffffff', backgroundColorOpacity || 0 ) }`
+					}
 					return `${ hexToRgba( value || '#ffffff', backgroundColorOpacity || 0 ) }`
 				}
-
 				return value
 			},
 			valuePreCallback: ( _value, getAttribute, device, state ) => {
