@@ -35,3 +35,12 @@
 	margin-left: var(--stk-alignment-margin-left);
 	margin-right: var(--stk-alignment-margin-right);
 }
+
+//Suggestion from blocksy, prevents.
+.wp-block-stackable-icon-list ul {
+	margin-bottom: 0;
+}
+
+.wp-block-stackable-icon-list ul li:last-child {
+	margin-bottom: 0;
+}
