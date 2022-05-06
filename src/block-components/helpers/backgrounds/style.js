@@ -6,6 +6,7 @@ import {
 	__getValue,
 	getStyles,
 	useStyles,
+	extractColor,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
@@ -41,13 +42,9 @@ const getStyleParams = ( options = {} ) => {
 					getAttribute( 'backgroundMediaUrl', 'mobile' )
 
 				if ( ! backgroundColorType && backgroundColorOpacity !== '' && ! hasBackground ) {
-					// Checks if color comes from Blocksy color pallete.
-					if ( value?.startsWith( 'var(--paletteColor' ) ) {
-						const hexColorIndex = value.search( /#[a-zA-Z0-9]{6}/g )
-						const hexColor = value.substring( hexColorIndex, hexColorIndex + 7 )
-						return `${ hexToRgba( hexColor || '#ffffff', backgroundColorOpacity || 0 ) }`
-					}
-					return `${ hexToRgba( value || '#ffffff', backgroundColorOpacity || 0 ) }`
+					// Checks if color comes from Non-stackable color palette.
+					const hexColor = extractColor( value )
+					return `${ hexToRgba( hexColor || '#ffffff', backgroundColorOpacity || 0 ) }`
 				}
 				return value
 			},

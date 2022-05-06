@@ -437,3 +437,19 @@ export const sanitizeIdAttr = str => {
 		.trim()
 		.toLowerCase()
 }
+
+/**
+ * Extract the hexadecimal value of the color from a non-stackable color.
+ *
+ * @param {string} value Non-stackable color
+ * @return {string} Hexadecimal value of the color
+ */
+export const extractColor = value => {
+	const color = value
+	if ( color?.startsWith( 'var(--' ) ) {
+		if ( color.match( /(#[^\)]*)/g ) ) {
+			return color.match( /(#[^\)]*)/g )[ 0 ]
+		}
+	}
+	return color
+}
