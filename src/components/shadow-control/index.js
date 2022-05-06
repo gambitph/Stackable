@@ -4,7 +4,7 @@
 import { i18n } from 'stackable'
 import { compact, isNumber } from 'lodash'
 import { AdvancedRangeControl, ColorPaletteControl } from '~stackable/components'
-import { hexToRgba } from '~stackable/util'
+import { hexToRgba, extractColor } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 
@@ -102,12 +102,8 @@ const FILTERS = [
 				return color?.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) || ''
 			}
 
-			// Parse blocksy colors
-			if ( color?.startsWith( 'var(--paletteColor' ) ) {
-				const hexColorIndex = color.search( /#[a-zA-Z0-9]{6}/g )
-				const hexColor = color.substring( hexColorIndex, hexColorIndex + 7 )
-				return hexToRgba( hexColor )
-			}
+			// Checks if color is from Non-stackable color palette.
+			color = extractColor( color )
 
 			const rgba = hexToRgba( color )
 
