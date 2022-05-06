@@ -26,16 +26,6 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import variations from './variations'
 
-// Check if there are east asian characters. Trim with regards to each char length rather than word count.
-const trimCJKCharacters = ( excerpt, excerptLength ) => {
-	const regexCJK = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/
-	if ( excerpt.match( regexCJK ) ) {
-		const outputExcerpt = excerpt.substring( 0, excerptLength ) + '...'
-		return outputExcerpt
-	}
-	return excerpt
-}
-
 export const META_SEPARATORS = {
 	dot: '·',
 	space: ' ',
@@ -209,14 +199,26 @@ export const generateRenderPostItem = attributes => {
 
 		// Trim the excerpt.
 		let excerptString = postExcerptStackable.split( ' ' )
-		if ( excerptString.length > ( excerptLength || 55 ) ) {
+
+		//Checks if there are CJK characters present
+		const regexCJK = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/
+		if ( postExcerptStackable.match( regexCJK ) ) {
+			if ( postExcerptStackable.length > excerptLength || 55 ) {
+				if ( excerptLength === 1 ) {
+					excerptString = postExcerptStackable.substring( 3, 4 ) + '...'
+				} else {
+					excerptString = postExcerptStackable.substring( 3, excerptLength === '' ? 55 : excerptLength + 3 ) + '...'
+				}
+				// Outerconditional is always true even though postExcerptStackable.length < 55.
+				if ( postExcerptStackable.length < 55 && excerptLength === '' ) {
+					excerptString = postExcerptStackable
+				}
+			}
+		} else if ( excerptString.length > ( excerptLength || 55 ) ) {
 			excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'
 		} else {
 			excerptString = post.post_excerpt_stackable
 		}
-
-		// Trim the excerpt differently if there are cjk characters.
-		excerptString = trimCJKCharacters( excerptString, excerptLength )
 
 		const excerpt = excerptString && (
 			<div

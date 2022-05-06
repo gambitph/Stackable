@@ -108,15 +108,20 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 
 		// Trim the excerpt.
 		if ( ! empty( $excerpt ) ) {
+			$untrimmed_excerpt = $excerpt;
 			$excerpt = explode( ' ', $excerpt );
 			$trim_to_length = (int) $excerpt_length;
-			if ( count( $excerpt ) > $trim_to_length ) {
+			// $excerpt = filter_cjk_characters( $excerpt, $trim_to_length );
+			if ( preg_match_all("/\p{Han}+/u", $untrimmed_excerpt, $matches) ) {
+				if( strlen( $untrimmed_excerpt ) > $trim_to_length ) {
+					$excerpt = mb_substr( $untrimmed_excerpt, 0, $trim_to_length ) . '...';
+				}
+				$excerpt = $untrimmed_excerpt;
+			} elseif ( count( $excerpt ) > $trim_to_length ) {
 				$excerpt = implode( ' ', array_slice( $excerpt, 0, $trim_to_length ) ) . '...';
 			} else {
 				$excerpt = implode( ' ', $excerpt );
 			}
-			// Trim the excerpt differently if there are chinese characters.
-			$excerpt = filter_cjk_characters( $excerpt, $trim_to_length );
 			$excerpt = wp_kses_post( $excerpt );
 			$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
 		} else {
