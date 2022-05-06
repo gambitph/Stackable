@@ -19,7 +19,9 @@ import {
 	PanelAdvancedSettings,
 	ShadowControl,
 } from '~stackable/components'
-import { getAttributeName, getAttrNameFunction } from '~stackable/util'
+import {
+	getAttributeName, getAttrNameFunction, extractColor,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -273,7 +275,7 @@ export const Controls = props => {
 							if ( state !== 'normal' ) {
 								return _value
 							}
-							const value = _value?.startsWith( 'var(--stk-global-color' ) ? _value.match( /(#[^\)]*)/g )[ 0 ] : _value
+							const value = extractColor( _value )
 							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
 							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
 							return _value
