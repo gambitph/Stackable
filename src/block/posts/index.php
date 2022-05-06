@@ -116,9 +116,10 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			if ( preg_match_all("/\p{Han}+/u", $untrimmed_excerpt, $matches) ) {
 				if( strlen( $untrimmed_excerpt ) > $trim_to_length ) {
 					// Trim according to string length.
-					$excerpt = mb_substr( $untrimmed_excerpt, 0, $trim_to_length ) . '...';
+					$excerpt = mb_substr( $untrimmed_excerpt, 3, $trim_to_length ) . '...';
+				} else {
+					$excerpt = $untrimmed_excerpt;
 				}
-				$excerpt = $untrimmed_excerpt;
 			} elseif ( count( $excerpt ) > $trim_to_length ) {
 				$excerpt = implode( ' ', array_slice( $excerpt, 0, $trim_to_length ) ) . '...';
 			} else {
