@@ -6,7 +6,7 @@
 	}
 }
 .components-stackable-highlight__popover .components-popover__content {
-	overflow: hidden;
+	overflow-y: scroll;
 	padding: 16px;
 	width: 280px;
 }
