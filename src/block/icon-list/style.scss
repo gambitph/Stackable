@@ -36,11 +36,11 @@
 	margin-right: var(--stk-alignment-margin-right);
 }
 
-//Suggestion from blocksy, prevents.
-.wp-block-stackable-icon-list ul {
+// Prevents theme's css from affecting the list block.
+.stk-block-icon-list :is(ul, ol) {
 	margin-bottom: 0;
-}
 
-.wp-block-stackable-icon-list ul li:last-child {
-	margin-bottom: 0;
+	li:last-child {
+		margin-bottom: 0;
+	}
 }
