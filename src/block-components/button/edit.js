@@ -15,6 +15,7 @@ import { i18n } from 'stackable'
 import {
 	useAttributeEditHandlers, useBlockContext, useBlockHoverState,
 } from '~stackable/hooks'
+import { extractColor } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -162,7 +163,7 @@ export const Colors = props => {
 							if ( state !== 'normal' ) {
 								return _value
 							}
-							const value = _value?.startsWith( 'var(--stk-global-color' ) ? _value.match( /(#[^\)]*)/g )[ 0 ] : _value
+							const value = extractColor( _value )
 							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
 							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
 
