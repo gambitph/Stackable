@@ -36,7 +36,7 @@
 	margin-right: var(--stk-alignment-margin-right);
 }
 
-// Prevents theme's css from affecting the list block.
+// Prevents theme's css from affecting the icon list.
 .stk-block-icon-list :is(ul, ol) {
 	margin-bottom: 0;
 
