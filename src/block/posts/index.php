@@ -113,8 +113,8 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			$trim_to_length = (int) $excerpt_length;
 
 			// Check if there are CJK characters.
-			if ( preg_match_all("/\p{Han}+/u", $untrimmed_excerpt, $matches) ) {
-				if( strlen( $untrimmed_excerpt ) > $trim_to_length ) {
+			if ( function_exists( 'mb_substr' ) && preg_match_all( "/\p{Han}+/u", $untrimmed_excerpt, $matches ) ) {
+				if ( strlen( $untrimmed_excerpt ) > $trim_to_length ) {
 					// Trim according to string length.
 					$excerpt = mb_substr( $untrimmed_excerpt, 3, $trim_to_length ) . '...';
 				} else {
@@ -123,7 +123,7 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			} elseif ( count( $excerpt ) > $trim_to_length ) {
 				$excerpt = implode( ' ', array_slice( $excerpt, 0, $trim_to_length ) ) . '...';
 			} else {
-				$excerpt = implode( ' ', $excerpt );
+				$excerpt = $untrimmed_excerpt;
 			}
 			$excerpt = wp_kses_post( $excerpt );
 			$new_template = str_replace( '!#excerpt!#', $excerpt, $new_template );
