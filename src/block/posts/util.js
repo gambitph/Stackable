@@ -203,16 +203,13 @@ export const generateRenderPostItem = attributes => {
 		//Checks if there are CJK characters present
 		const regexCJK = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/
 		if ( postExcerptStackable.match( regexCJK ) ) {
-			if ( postExcerptStackable.length > excerptLength || 55 ) {
-				if ( excerptLength === 1 ) {
-					excerptString = postExcerptStackable.substring( 3, 4 ) + '...'
-				} else {
-					excerptString = postExcerptStackable.substring( 3, excerptLength === '' ? 55 : excerptLength + 3 ) + '...'
-				}
-				// Outerconditional is always true even though postExcerptStackable.length < 55.
-				if ( postExcerptStackable.length < 55 && excerptLength === '' ) {
-					excerptString = postExcerptStackable
-				}
+			// Extract the string inbetween the tags and newline.
+			const tempExcerptString = postExcerptStackable.match( '<p>(.*)<\/p>\\n' )
+
+			if ( tempExcerptString[ 1 ].length > ( excerptLength || 55 ) ) {
+				excerptString = tempExcerptString[ 1 ].substring( 0, excerptLength === '' ? 55 : excerptLength ) + '...'
+			} else {
+				excerptString = tempExcerptString[ 1 ]
 			}
 		} else if ( excerptString.length > ( excerptLength || 55 ) ) {
 			excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'
