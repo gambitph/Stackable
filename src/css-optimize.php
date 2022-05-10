@@ -59,6 +59,18 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		public $css_raw = array();
 
 		/**
+		 * This should be the order of the media queries to prevent wrong overrides.
+		 */
+		public const MEDIA_QUERY_ORDER = array(
+			'', // All screens,
+			'@media screen and (min-width:1024px)', // Desktop only.
+			'@media screen and (min-width:768px)', // Desktop & tablet.
+			'@media screen and (min-width:768px) and (max-width:1023px)', // Tablet.
+			'@media screen and (max-width:1023px)', // Tablet & mobile.
+			'@media screen and (max-width:767px)', // Mobile.
+		);
+
+		/**
 		 * Initialize
 		 */
 		function __construct() {
@@ -203,7 +215,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			if ( ! empty( $this->optimized_css ) ) {
 				echo "\n";
 				echo '<style class="stk-block-styles">';
-				echo $this->optimized_css;
+				echo apply_filters( 'stackable_frontend_css', $this->optimized_css );
 				echo '</style>';
 			}
 		}
@@ -330,7 +342,23 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 
 			// Organize the styles.
 			$css = '';
-			foreach ( $all_style_rules as $media_query => $styles ) {
+			$media_queries = self::MEDIA_QUERY_ORDER;
+
+			// This will also include other media queries that we do not support, but just add those at the end of our CSS.
+			foreach ( array_keys( $all_style_rules ) as $mediq_query ) {
+				if ( ! in_array( $mediq_query, $media_queries ) ) {
+					$media_queries[] = $media_query;
+				}
+			}
+
+			// Go through each media query.
+			foreach ( $media_queries as $media_query ) {
+				if ( ! array_key_exists( $media_query, $all_style_rules ) ) {
+					continue;
+				}
+
+				$styles = $all_style_rules[ $media_query ];
+
 				if ( ! empty( $media_query ) ) {
 					$css .= $media_query . '{';
 				}

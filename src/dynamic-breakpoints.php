@@ -38,7 +38,8 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				add_action( 'stackable_block_enqueue_frontend_assets', array( $this, 'enqueue_adjusted_responsive_css' ) );
 
 				// Adjust the styles outputted by Stackable blocks.
-				add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 10, 2 );
+				// 11 Priority, do this last because changing style can affect inline css optimization.
+				add_filter( 'render_block', array( $this, 'adjust_block_styles' ), 11, 2 );
 			}
 		}
 
