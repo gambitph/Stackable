@@ -63,11 +63,10 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
  * @return {string} Hexadecimal value of the color
  */
 export const extractColor = value => {
-	const color = value
-	if ( color?.startsWith( 'var(--' ) ) {
-		if ( color.match( /(#[^\)]*)/g ) ) {
-			return color.match( /(#[^\)]*)/g )[ 0 ]
+	if ( value?.startsWith( 'var(--' ) ) {
+		if ( value.match( /(#[^\)]*)/g ) ) {
+			return value.match( /(#[^\)]*)/g )[ 0 ]
 		}
 	}
-	return color
+	return value
 }
