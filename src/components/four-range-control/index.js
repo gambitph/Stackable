@@ -15,9 +15,7 @@ import { useControlHandlers } from '../base-control2/hooks'
 /**
  * WordPress dependencies
  */
-import {
-	Tooltip,
-} from '@wordpress/components'
+import { Tooltip } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
@@ -300,6 +298,7 @@ FourRangeControl.defaultProps = {
 	placeholderRight: '',
 	placeholderBottom: '',
 	placeholderLeft: '',
+	initialPosition: '',
 
 	allowReset: true,
 	default: '',
