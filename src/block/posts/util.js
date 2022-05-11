@@ -200,16 +200,17 @@ export const generateRenderPostItem = attributes => {
 		// Trim the excerpt.
 		let excerptString = postExcerptStackable.split( ' ' )
 
-		//Checks if there are CJK characters present
+		//Checks if there are CJK characters present.
 		const regexCJK = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/
-		if ( postExcerptStackable.match( regexCJK ) ) {
-			// Extract the string inbetween the tags and newline.
-			const tempExcerptString = postExcerptStackable.match( '<p>(.*)<\/p>\\n' )
 
-			if ( tempExcerptString[ 1 ].length > ( excerptLength || 55 ) ) {
-				excerptString = tempExcerptString[ 1 ].substring( 0, excerptLength === '' ? 55 : excerptLength ) + '...'
+		if ( postExcerptStackable.match( regexCJK ) ) {
+			// Remove the <p> tags.
+			const tempExcerptString = postExcerptStackable.substring( 3, postExcerptStackable.length - 5 )
+
+			if ( tempExcerptString.length > ( excerptLength || 55 ) ) {
+				excerptString = tempExcerptString.substring( 0, excerptLength === '' ? 55 : excerptLength ) + '...'
 			} else {
-				excerptString = tempExcerptString[ 1 ]
+				excerptString = tempExcerptString
 			}
 		} else if ( excerptString.length > ( excerptLength || 55 ) ) {
 			excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'

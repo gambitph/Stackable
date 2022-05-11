@@ -111,12 +111,14 @@ if ( ! function_exists( 'generate_render_item_from_stackable_posts_block' ) ) {
 			$untrimmed_excerpt = $excerpt;
 			$excerpt = explode( ' ', $excerpt );
 			$trim_to_length = (int) $excerpt_length;
-
 			// Check if there are CJK characters.
 			if ( function_exists( 'mb_substr' ) && preg_match_all( "/\p{Han}+/u", $untrimmed_excerpt, $matches ) ) {
+				// Remove the <p> tags.
+				$untrimmed_excerpt = substr( $untrimmed_excerpt, 3, strlen( $untrimmed_excerpt ) - 8 );
+
 				if ( strlen( $untrimmed_excerpt ) > $trim_to_length ) {
 					// Trim according to string length.
-					$excerpt = mb_substr( $untrimmed_excerpt, 3, $trim_to_length ) . '...';
+					$excerpt = mb_substr( $untrimmed_excerpt, 0, $trim_to_length ) . '...';
 				} else {
 					$excerpt = $untrimmed_excerpt;
 				}
