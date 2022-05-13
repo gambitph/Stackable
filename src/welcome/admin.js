@@ -102,7 +102,7 @@ const BlockToggle = props => {
 			{ ...propsToPass }
 		>
 			<h4>{ label }</h4>
-			{ false && demo && ( // TODO: Remove view demo when we have demos for all our blocks.
+			{ demo && (
 				<span className="s-block-demo">
 					<a
 						href={ demo }
@@ -136,6 +136,34 @@ BlockToggle.defaultProps = {
 	value: '',
 	onChange: () => {},
 	demo: '',
+}
+
+const BlockList = () => {
+	return (
+		<>
+			{ BLOCK_CATEROGIES.map( ( { id, label } ) => {
+				return (
+					<div className="s-getting-started-blocks-wrapper" key={ id }>
+						<h3>{ label }</h3>
+						<div className="s-getting-started-blocks">
+							{ BLOCKS[ id ].map( ( block, i ) => {
+								return (
+									<div
+										key={ i }
+										className="s-box"
+									>
+										<h4>{ block.title }</h4>
+										<p>{ block.description }</p>
+										{ block[ 'stk-demo' ] && <a href={ block[ 'stk-demo' ] } target="_example">{ __( 'See example', i18n ) }</a> }
+									</div>
+								)
+							} ) }
+						</div>
+					</div>
+				)
+			} ) }
+		</>
+	)
 }
 
 const BlockToggler = () => {
@@ -634,6 +662,15 @@ AdditionalOptions.defaultProps = {
 
 // Load all the options into the UI.
 domReady( () => {
+	// This is for the getting started block list.
+	if ( document.querySelector( '.s-getting-started__block-list' ) ) {
+		render(
+			<BlockList />,
+			document.querySelector( '.s-getting-started__block-list' )
+		)
+	}
+
+	// All these below are for the settings page.
 	if ( document.querySelector( '.s-settings-wrapper' ) ) {
 		render(
 			<BlockToggler />,
