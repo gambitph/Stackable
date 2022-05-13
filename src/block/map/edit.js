@@ -7,8 +7,8 @@ import LocationControl from './location-control'
 import {
 	DEFAULT_ADDRESS,
 	DEFAULT_HEIGHT,
-	DEFAULT_MIN_HEIGHT,
 	DEFAULT_ZOOM,
+	DEFAULT_ICON_SIZE,
 	getIconOptions,
 	getMapOptions,
 	getZoom,
@@ -149,7 +149,6 @@ const Edit = props => {
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
-	const defaultMinHeight = DEFAULT_MIN_HEIGHT
 
 	const mapRef = useRef()
 	const markerRef = useRef()
@@ -314,11 +313,12 @@ const Edit = props => {
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="height"
+						min={ 0 }
 						sliderMin={ 200 }
-						sliderMax={ 1000 }
+						sliderMax={ 500 }
 						step={ 1 }
 						allowReset={ true }
-						placeholder=""
+						placeholder={ DEFAULT_HEIGHT }
 						responsive="all"
 					/>
 					<AdvancedRangeControl
@@ -328,7 +328,7 @@ const Edit = props => {
 						max={ 24 }
 						step={ 1 }
 						allowReset={ true }
-						placeholder=""
+						placeholder={ DEFAULT_ZOOM }
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Enable Dragging', i18n ) }
@@ -414,8 +414,9 @@ const Edit = props => {
 							hover=""
 							hasGradient={ false }
 							iconSizeProps={ {
-								sliderMin: 50,
-								sliderMax: 300,
+								sliderMin: 20,
+								sliderMax: 100,
+								placeholder: DEFAULT_ICON_SIZE,
 							} }
 							iconControlHelp={ __( 'Uploaded Icon and Icon Color settings are not fully compatible.', i18n ) }
 						/>
@@ -461,7 +462,7 @@ const Edit = props => {
 					size={ {
 						height: parseInt( height, 10 ) || DEFAULT_HEIGHT,
 					} }
-					minHeight={ defaultMinHeight }
+					minHeight={ 50 }
 					enable={ { bottom: true } }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						let _height = height
@@ -489,7 +490,7 @@ const Edit = props => {
 								setAttributes( { [ heightAttrName ]: value } )
 							} }
 							defaultHeight={ DEFAULT_HEIGHT }
-							heightPlaceholder={ defaultMinHeight }
+							heightPlaceholder={ DEFAULT_HEIGHT }
 						/>
 					) }
 					{ isDefined( apiKey ) ? (

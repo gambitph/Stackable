@@ -15,12 +15,11 @@ import { createElementFromHTMLString } from '~stackable/util'
  */
 import { __ } from '@wordpress/i18n'
 
-export const DEFAULT_HEIGHT = 200
-export const DEFAULT_MIN_HEIGHT = 21
+export const DEFAULT_HEIGHT = 250
 export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
 export const DEFAULT_LOCATION = { lat: 14.680936247180512, lng: 121.04845461073226 }
-export const DEFAULT_ICON_SIZE = 100
+export const DEFAULT_ICON_SIZE = 40
 export const DEFAULT_ICON_OPACITY = 1.0
 export const DEFAULT_ICON_COLOR = '#000000'
 export const DEFAULT_ICON_ROTATION = 0
