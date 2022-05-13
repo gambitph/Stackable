@@ -1120,7 +1120,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -8407,6 +8408,24 @@
     ]
   },
   {
+    "family": "Libre Bodoni",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Libre Caslon Display",
     "variants": [
       "regular"
@@ -10375,6 +10394,19 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Noto Emoji",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "emoji"
     ]
   },
   {
@@ -14120,6 +14152,21 @@
     ]
   },
   {
+    "family": "Radio Canada",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Radley",
     "variants": [
       "regular",
@@ -14617,6 +14664,20 @@
     ]
   },
   {
+    "family": "Roboto Flex",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Roboto Mono",
     "variants": [
       "100",
@@ -14666,6 +14727,7 @@
       "900italic"
     ],
     "subsets": [
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -16639,6 +16701,17 @@
     ]
   },
   {
+    "family": "Tapestry",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Taprom",
     "variants": [
       "regular"
@@ -17558,6 +17631,17 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Water Brush",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
