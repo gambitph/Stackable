@@ -5,15 +5,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function stackable_load_google_api_key( $args ) {
-	$args[ 'googleApiKey' ] = get_option( 'stackable_google_maps_api_key', '' );
-	return $args;
+if ( ! function_exists( 'stackable_load_google_api_key' ) ) {
+	function stackable_load_google_api_key( $args ) {
+		$args[ 'googleApiKey' ] = get_option( 'stackable_google_maps_api_key', '' );
+		return $args;
+	}
+	add_filter( 'stackable_localize_frontend_script', 'stackable_load_google_api_key' );
 }
-add_filter( 'stackable_localize_frontend_script', 'stackable_load_google_api_key' );
 
 if ( ! function_exists( 'stackable_load_map_frontend_script' ) ) {
 	function stackable_load_map_frontend_script() {
-		$apiKey = get_option( 'stackable_google_maps_api_key' );
 		if ( ! is_admin() ) {
 			wp_enqueue_script(
 				'stk-frontend-map',

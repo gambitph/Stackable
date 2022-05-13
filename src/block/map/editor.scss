@@ -12,6 +12,11 @@
 		top: 75%;
 	}
 
+	// Clicking on the map doesn't select the block.
+	.stk-block-map__embedded-map,
+	.stk-block-map__canvas {
+		pointer-events: none;
+	}
 }
 
 .stk-block-map__map-marker:is(.stk-block-map__map-marker__disabled) {

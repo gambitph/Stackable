@@ -3,6 +3,7 @@
  */
 import { MapStyles } from './style'
 import mapStyleOptions from './map-styles'
+import LocationControl from './lcoation-control'
 import {
 	DEFAULT_ADDRESS,
 	DEFAULT_HEIGHT,
@@ -14,13 +15,6 @@ import {
 	initMapLibrary,
 	isDefined,
 } from './util'
-/**
- * External dependencies
- */
-import classnames from 'classnames'
-import {
-	settingsUrl, i18n, settings, version as VERSION,
-} from 'stackable'
 import {
 	AdvancedRangeControl,
 	AdvancedTextControl,
@@ -46,9 +40,17 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-
 import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
 import { getAttributeName } from '~stackable/util'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import {
+	settingsUrl, i18n, settings, version as VERSION,
+} from 'stackable'
+import { isEmpty } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -57,9 +59,6 @@ import {
 	ExternalLink,
 	Notice,
 	ResizableBox,
-	TextControl,
-	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
-	__experimentalSpacer as Spacer,
 } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
@@ -67,60 +66,6 @@ import {
 	Fragment, useEffect, useRef, useState,
 } from '@wordpress/element'
 import { useDispatch } from '@wordpress/data'
-import { isEmpty } from 'lodash'
-
-const LocationControl = props => {
-	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
-
-	useEffect( () => {
-		const interval = setInterval( () => {
-			if ( window.google && window.google.maps ) {
-				clearInterval( interval )
-				setWaitForGoogle( waitForGoogle + 1 )
-			}
-		}, 250 )
-		if ( window.google && window.google.maps ) {
-			clearInterval( interval )
-		}
-		return () => clearInterval( interval )
-	}, [] )
-
-	const ref = useRef()
-	useEffect( () => {
-		if ( ref.current && window.google && window.google.maps ) {
-			// eslint-disable-next-line no-undef
-			const autocomplete = new google.maps.places.Autocomplete(
-				ref.current
-			)
-			autocomplete.setFields( [
-				'place_id',
-				'geometry',
-				'formatted_address',
-			] )
-			autocomplete.addListener( 'place_changed', () => {
-				const place = autocomplete.getPlace()
-				if ( ! place.geometry ) {
-					return
-				}
-				props.onPlaceChange( place )
-			} )
-		}
-	}, [ ref.current, waitForGoogle ] )
-
-	return (
-		<TextControl
-			label={ __( 'Location', i18n ) }
-			ref={ ref }
-			value={ props.value }
-			onChange={ props.onTextChange }
-		/>
-	)
-}
-
-LocationControl.defaultProps = {
-	onChange: null,
-	value: '',
-}
 
 const Edit = props => {
 	const {
@@ -286,6 +231,20 @@ const Edit = props => {
 		icon,
 	] )
 
+	// Adjust the map options when changed.
+	useEffect( () => {
+		if ( mapRef.current ) {
+			mapRef.current.setOptions( {
+				fullscreenControl: showFullScreenButton,
+				// styles: parsedStyles,
+				zoomControl: showZoomButtons,
+				mapTypeControl: showMapTypeButtons,
+				streetViewControl: showStreetViewButton,
+				draggable: isDraggable,
+			} )
+		}
+	}, [ isDraggable, showFullScreenButton, showZoomButtons, showMapTypeButtons, showStreetViewButton ] )
+
 	useEffect( () => {
 		// eslint-disable-next-line no-undef
 		if ( typeof google === 'object' && typeof google.maps === 'object' ) {
@@ -299,11 +258,6 @@ const Edit = props => {
 		location,
 		mapStyle,
 		customMapStyle,
-		isDraggable,
-		showFullScreenButton,
-		showMapTypeButtons,
-		showStreetViewButton,
-		showZoomButtons,
 		usesApiKey,
 		waitForGoogle,
 	 ] )
@@ -320,23 +274,18 @@ const Edit = props => {
 					id="general"
 				>
 					{ canUpdateAPIKey && ! isDefined( apiKey ) && (
-						<>
-							<Notice className="stk-block-map__api-key-notice" status="info" isDismissible={ false }>
-								{ __( 'Some features require a Google API Key.' ) }{ ' ' }
-								<ExternalLink
-									type="link"
-									href={ settingsUrl + '#editor-settings' }
-									rel="next"
-								>
-									{ __( 'Add API key here.', i18n ) }
-								</ExternalLink>
-							</Notice>
-							<ExternalLink href="https://developers.google.com/maps/documentation/javascript/get-api-key">
-								{ __( 'Learn more about Google API Keys', i18n ) }
+						<Notice className="stk-block-map__api-key-notice" status="info" isDismissible={ false }>
+							{ __( 'Some features require a Google API Key.' ) }
+							&nbsp;
+							<ExternalLink
+								type="link"
+								href={ settingsUrl + '#editor-settings' }
+								rel="next"
+							>
+								{ __( 'Add API key here.', i18n ) }
 							</ExternalLink>
-						</>
+						</Notice>
 					) }
-					<Spacer />
 					{ ! isDefined( apiKey ) ? (
 						<>
 							<AdvancedTextControl
