@@ -69,7 +69,6 @@ export const Save = props => {
 		'data-marker-title': address,
 		'data-show-street-view-button': showStreetViewButton,
 		'data-show-zoom-buttons': showZoomButtons,
-		'data-uses-api-key': usesApiKey,
 		'data-unique-id': uniqueId,
 		'data-zoom': getZoom( attributes ),
 	}

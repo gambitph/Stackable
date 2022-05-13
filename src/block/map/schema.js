@@ -17,10 +17,14 @@ import { version as VERSION } from 'stackable'
 import { BlockLink } from '~stackable/block-components/block-link'
 
 export const mapAttributes = {
+	// We need to keep note whether the block used a Google API Key when it was
+	// last saved, need this so that the map won't error when the api key is
+	// added/removed.
 	usesApiKey: {
 		type: 'boolean',
 		default: false,
 	},
+
 	location: {
 		type: 'object',
 		default: '',

@@ -19,16 +19,15 @@
 	}
 }
 
-.stk-block-map__map-marker:is(.stk-block-map__map-marker__disabled) {
+.components-panel__body:not(.stk--uses-api-key) .stk--needs-api-key {
+	opacity: 0.3;
+	pointer-events: none;
+}
+.components-panel__body.stk--needs-api-key:not(.stk--uses-api-key) {
 	.editor-panel-toggle-settings__panel-title {
 		opacity: 0.3;
 		pointer-events: none;
 	}
-}
-
-.stk-block-map__adv-option:is(.stk-block-map__adv-option__disabled) {
-	opacity: 0.3;
-	pointer-events: none;
 }
 
 .stk-block-map__api-key-notice {

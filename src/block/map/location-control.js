@@ -21,7 +21,7 @@ const LocationControl = props => {
 	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
 
 	useEffect( () => {
-		if ( ! window.google && ! window.google.maps ) {
+		if ( ! window?.google?.maps ) {
 			const interval = setInterval( () => {
 				if ( window.google && window.google.maps ) {
 					clearInterval( interval )
