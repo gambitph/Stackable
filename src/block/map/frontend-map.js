@@ -6,35 +6,34 @@ import domReady from '@wordpress/dom-ready'
 class StackableMap {
 	init = () => {
 		const apiKey = window.stackable.googleApiKey
+		// TODO: If no apiKey is found, but the block used an apiKey, display a note that the map is missing the api key.
 		if ( apiKey ) {
-			const apiURL = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places`
 			// eslint-disable-next-line no-undef
 			if ( typeof google === 'object' && typeof google.maps === 'object' ) {
 				this.initMap()
 			} else {
-				this.loadScriptAsync( apiURL ).then( this.initMap )
+				this.loadScriptAsync( apiKey ).then( this.initMap )
 			}
-		} else {
-			this.removeCanvas()
 		}
 	}
 
-	loadScriptAsync = src => {
+	loadScriptAsync = apiKey => {
 		return new Promise( resolve => {
-			const tag = document.createElement( 'script' )
-			tag.id = 'stackable-google-map'
-			tag.src = src
-			tag.async = true
-			tag.onload = () => {
-				resolve()
-			}
-			const firstScriptTag = document.getElementsByTagName( 'script' )[ 0 ]
-			firstScriptTag.parentNode.insertBefore( tag, firstScriptTag )
+			const script = document.createElement( 'script' )
+			script.id = 'stackable-google-map'
+			script.src = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places`
+			script.type = 'text/javascript'
+			script.async = true
+			script.onload = resolve
+			document.body.appendChild( script )
 		} )
 	}
 
 	initMap = () => {
 		[].forEach.call( document.querySelectorAll( '.stk-block-map__canvas' ), mapCanvas => {
+			// TODO: change this from lots of data-* attributes to just one
+			// data-map-options attribute that's a JSON, so we don't need to parse it in
+			// the frontend
 			const {
 				markerTitle,
 				iconOptions,
@@ -46,7 +45,6 @@ class StackableMap {
 				showMarker,
 				showStreetViewButton,
 				showZoomButtons,
-				uniqueId,
 				zoom,
 			} = mapCanvas.dataset
 
@@ -70,8 +68,6 @@ class StackableMap {
 			} catch ( e ) {
 				parsedIconOptions = null
 			}
-
-			this.removeIframe( uniqueId )
 
 			const mapOptions = {
 				center: parsedLocation,
@@ -100,17 +96,6 @@ class StackableMap {
 
 				marker.setIcon( parsedIconOptions )
 			}
-		} )
-	}
-
-	removeCanvas = () => {
-		[].forEach.call( document.querySelectorAll( `.stk-block-map__canvas-wrapper` ), wrapper => {
-			wrapper.remove()
-		} )
-	}
-	removeIframe = uniqueId => {
-		[].forEach.call( document.querySelectorAll( `.stk-block-map__embedded-map-${ uniqueId }` ), wrapper => {
-			wrapper.remove()
 		} )
 	}
 }

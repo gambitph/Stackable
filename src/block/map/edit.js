@@ -10,10 +10,10 @@ import {
 	DEFAULT_ZOOM,
 	DEFAULT_ICON_SIZE,
 	getIconOptions,
-	getMapOptions,
-	getZoom,
 	initMapLibrary,
 	isDefined,
+	DEFAULT_LOCATION,
+	getMapStyles,
 } from './util'
 import {
 	AdvancedRangeControl,
@@ -158,7 +158,16 @@ const Edit = props => {
 	const initMap = () => {
 		const mapCanvas = canvasRef.current
 
-		const mapOptions = getMapOptions( attributes )
+		const mapOptions = {
+			center: location || DEFAULT_LOCATION,
+			zoom: zoom || DEFAULT_ZOOM,
+			fullscreenControl: showFullScreenButton,
+			styles: getMapStyles( attributes ),
+			zoomControl: showZoomButtons,
+			mapTypeControl: showMapTypeButtons,
+			streetViewControl: showStreetViewButton,
+			draggable: isDraggable,
+		}
 		// eslint-disable-next-line no-undef
 		const map = mapRef.current = new google.maps.Map( mapCanvas, mapOptions )
 		// eslint-disable-next-line no-undef
@@ -205,16 +214,6 @@ const Edit = props => {
 	useEffect( () => {
 		initMapLibrary( apiKey, initMap )
 	}, [ waitForGoogle ] )
-
-	useEffect( () => {
-		const map = mapRef.current
-
-		if ( isEmpty( map ) ) {
-			return
-		}
-		const value = getZoom( attributes )
-		map.setZoom( value )
-	}, [ zoom, mapRef.current ] )
 
 	useEffect( () => {
 		if ( mapRef.current && markerRef.current ) {
@@ -329,6 +328,10 @@ const Edit = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder={ DEFAULT_ZOOM }
+						onChange={ zoom => {
+							setAttributes( { zoom: zoom || DEFAULT_ZOOM } )
+							mapRef.current.setZoom( zoom || DEFAULT_ZOOM )
+						} }
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Enable Dragging', i18n ) }

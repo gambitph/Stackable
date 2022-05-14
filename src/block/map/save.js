@@ -3,11 +3,11 @@
  */
 import {
 	getIframe,
-	getLocation,
 	getMapStyles,
 	getIconOptions,
-	getZoom,
 	DEFAULT_HEIGHT,
+	DEFAULT_ZOOM,
+	DEFAULT_LOCATION,
 } from './util'
 import { MapStyles } from './style'
 
@@ -38,6 +38,7 @@ export const Save = props => {
 
 	const {
 		address,
+		location,
 		isDraggable,
 		showFullScreenButton,
 		showMapTypeButtons,
@@ -45,7 +46,7 @@ export const Save = props => {
 		showStreetViewButton,
 		showZoomButtons,
 		usesApiKey,
-		uniqueId,
+		zoom,
 	} = attributes
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
@@ -58,10 +59,13 @@ export const Save = props => {
 		blockAlignmentClass,
 	] )
 
+	// TODO: change this from lots of data-* attributes to just one
+	// data-map-options attribute that's a JSON, so we don't need to parse it in
+	// the frontend
 	const dataAttributes = {
 		'data-icon-options': JSON.stringify( getIconOptions( attributes ) ),
 		'data-is-draggable': isDraggable,
-		'data-location': JSON.stringify( getLocation( attributes ) ),
+		'data-location': JSON.stringify( location || DEFAULT_LOCATION ),
 		'data-map-style': JSON.stringify( getMapStyles( attributes ) ),
 		'data-show-full-screen-button': showFullScreenButton,
 		'data-show-map-type-buttons': showMapTypeButtons,
@@ -69,8 +73,7 @@ export const Save = props => {
 		'data-marker-title': address,
 		'data-show-street-view-button': showStreetViewButton,
 		'data-show-zoom-buttons': showZoomButtons,
-		'data-unique-id': uniqueId,
-		'data-zoom': getZoom( attributes ),
+		'data-zoom': zoom || DEFAULT_ZOOM,
 	}
 
 	return (
@@ -81,18 +84,17 @@ export const Save = props => {
 			<MapStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			{ usesApiKey
-				? <>
+				? (
 					<div
 						style={ { height: DEFAULT_HEIGHT } }
-						className={ `stk-block-map__canvas-wrapper stk-block-map__canvas-wrapper-${ uniqueId }` }>
+						className={ `stk-block-map__canvas-wrapper` }>
 						<div
 							{ ...dataAttributes }
 							className="stk-block-map__canvas"
 						/>
 					</div>
-					<RawHTML>{ getIframe( attributes ) }</RawHTML>
-				</>
-				:	<RawHTML>{ getIframe( attributes ) }</RawHTML>
+				)
+				: <RawHTML>{ getIframe( attributes ) }</RawHTML>
 			}
 
 		</BlockDiv.Content>

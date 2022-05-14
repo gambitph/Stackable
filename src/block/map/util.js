@@ -7,7 +7,6 @@ import mapStyleOptions from './map-styles'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { clamp } from 'lodash'
 import { createElementFromHTMLString } from '~stackable/util'
 
 /**
@@ -42,27 +41,6 @@ export const getMapStyles = ( { mapStyle, customMapStyle } ) => {
 		styleJSON = mapStyleOptions.find( style => style.value === mapStyle )?.json || []
 	}
 	return styleJSON
-}
-
-export const getMapOptions = attributes => {
-	const {
-		isDraggable,
-		showFullScreenButton,
-		showMapTypeButtons,
-		showStreetViewButton,
-		showZoomButtons,
-	} = attributes
-
-	return {
-		center: getLocation( attributes ),
-		zoom: getZoom( attributes ),
-		fullscreenControl: showFullScreenButton,
-		styles: getMapStyles( attributes ),
-		zoomControl: showZoomButtons,
-		mapTypeControl: showMapTypeButtons,
-		streetViewControl: showStreetViewButton,
-		draggable: isDraggable,
-	}
 }
 
 export const getFillColor = ( { iconColor1 } ) => {
@@ -113,27 +91,22 @@ export const getIconOptions = attributes => {
 }
 
 export const getIframe = attributes => {
-	const { address, uniqueId } = attributes
+	const { address, zoom } = attributes
 	const iframeTitle = __( 'Embedded content from Google Maps Platform.', i18n )
-	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ getZoom( attributes ) }&ie=UTF8&output=embed`
+	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ zoom || DEFAULT_ZOOM }&ie=UTF8&output=embed`
 	return (
 		`<iframe
-				title="${ iframeTitle }"
-				src="${ src }"
-				style="border:0;width:100%;max-width:none;max-height:none;height:100%;"
-				aria-hidden="false"
-				tabIndex="0"
-				allowfullscreen
-				loading="lazy"
-				class="stk-block-map__embedded-map-${ uniqueId } stk-block-map__embedded-map"
-				frameBorder="0"
-			></iframe>`
+			title="${ iframeTitle }"
+			src="${ src }"
+			style="border:0;width:100%;max-width:none;max-height:none;height:100%;"
+			aria-hidden="false"
+			tabIndex="0"
+			allowfullscreen
+			loading="lazy"
+			frameBorder="0"
+		></iframe>`
 	)
 }
-
-export const getZoom = ( { zoom } ) => clamp( parseInt( zoom, 10 ) || DEFAULT_ZOOM, 1, 24 )
-
-export const getLocation = ( { location } ) => isDefined( location ) ? location : DEFAULT_LOCATION
 
 export const initMapLibrary = ( apiKey, callback ) => {
 	if ( apiKey ) {
