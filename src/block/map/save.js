@@ -2,27 +2,27 @@
  * Internal dependencies
  */
 import {
-	getIframe,
 	getMapStyles,
 	getIconOptions,
 	DEFAULT_HEIGHT,
 	DEFAULT_ZOOM,
 	DEFAULT_LOCATION,
+	DEFAULT_ADDRESS,
 } from './util'
 import { MapStyles } from './style'
-
-/**
- * External dependencies
- */
 import { withVersion } from '~stackable/higher-order'
-import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
 	CustomCSS,
 	getResponsiveClasses,
 	getAlignmentClasses,
 } from '~stackable/block-components'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { i18n, version as VERSION } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -57,7 +57,9 @@ export const Save = props => {
 		'stk-block-map',
 		responsiveClass,
 		blockAlignmentClass,
-	] )
+	], {
+		'stk--uses-api-key': usesApiKey,
+	} )
 
 	// TODO: change this from lots of data-* attributes to just one
 	// data-map-options attribute that's a JSON, so we don't need to parse it in
@@ -94,7 +96,18 @@ export const Save = props => {
 						/>
 					</div>
 				)
-				: <RawHTML>{ getIframe( attributes ) }</RawHTML>
+				: <RawHTML>{
+					`<iframe
+						title="${ __( 'Embedded content from Google Maps Platform.', i18n ) }"
+						src="https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ zoom || DEFAULT_ZOOM }&ie=UTF8&output=embed"
+						style="border:0;width:100%;max-width:none;max-height:none;height:100%;"
+						aria-hidden="false"
+						tabIndex="0"
+						allowfullscreen
+						loading="lazy"
+						frameBorder="0"
+					></iframe>`
+				}</RawHTML>
 			}
 
 		</BlockDiv.Content>

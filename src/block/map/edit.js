@@ -11,7 +11,6 @@ import {
 	DEFAULT_ICON_SIZE,
 	getIconOptions,
 	initMapLibrary,
-	isDefined,
 	DEFAULT_LOCATION,
 	getMapStyles,
 } from './util'
@@ -99,28 +98,18 @@ const Edit = props => {
 		htmlTag,
 	} = attributes
 
-	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
-
-	useGeneratedCss( attributes )
-
-	// Wait for the Google Map Api to load.
-	useEffect( () => {
-		const interval = setInterval( () => {
-			if ( window.google && window.google.maps ) {
-				clearInterval( interval )
-				setWaitForGoogle( waitForGoogle + 1 )
-			}
-		}, 250 )
-		if ( window.google && window.google.maps ) {
-			clearInterval( interval )
-		}
-		return () => clearInterval( interval )
-	}, [] )
-
 	const { stackable_google_maps_api_key: apiKey } = settings
 	const userCanManageApiKey = useMemo( () => {
 		currentUserHasCapability( 'manage_options' )
 	}, [] )
+
+	// Initialize Google API.
+	const [ isMapLoaded, setIsMapLoaded ] = useState( false )
+	useEffect( () => {
+		initMapLibrary( apiKey, initMap )
+	}, [] )
+
+	useGeneratedCss( attributes )
 
 	// Always keep note whether this block uses the Google API Key.
 	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
@@ -177,6 +166,10 @@ const Edit = props => {
 
 		markerRef.current = marker
 
+		if ( ! isMapLoaded ) {
+			setIsMapLoaded( true )
+		}
+
 		updateMarker()
 
 		/* FIXME: The following causes the Zoom AdvRangeControl's reset button to be non-functional
@@ -200,8 +193,6 @@ const Edit = props => {
 		marker.setOptions( { icon: iconOptions } )
 	}
 
-	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ parseInt( zoom, 10 ) || DEFAULT_ZOOM }&ie=UTF8&output=embed`
-
 	useEffect( () => {
 		/* Location will be set when user picks from the Google Places auto
 		 * complete field.
@@ -210,10 +201,6 @@ const Edit = props => {
 			setAttributes( { location: '' } )
 		}
 	}, [ address ] )
-
-	useEffect( () => {
-		initMapLibrary( apiKey, initMap )
-	}, [ waitForGoogle ] )
 
 	useEffect( () => {
 		if ( mapRef.current && markerRef.current ) {
@@ -236,30 +223,36 @@ const Edit = props => {
 	useEffect( () => {
 		if ( mapRef.current ) {
 			mapRef.current.setOptions( {
+				center: location || DEFAULT_LOCATION,
+				zoom: zoom || DEFAULT_ZOOM,
 				fullscreenControl: showFullScreenButton,
-				// styles: parsedStyles,
+				styles: getMapStyles( attributes ),
 				zoomControl: showZoomButtons,
 				mapTypeControl: showMapTypeButtons,
 				streetViewControl: showStreetViewButton,
 				draggable: isDraggable,
 			} )
 		}
-	}, [ isDraggable, showFullScreenButton, showZoomButtons, showMapTypeButtons, showStreetViewButton ] )
+	}, [
+		location,
+		zoom,
+		isDraggable,
+		showFullScreenButton,
+		showZoomButtons,
+		showMapTypeButtons,
+		showStreetViewButton,
+		mapStyle,
+		customMapStyle,
+	] )
 
 	useEffect( () => {
-		// eslint-disable-next-line no-undef
-		if ( typeof google === 'object' && typeof google.maps === 'object' ) {
+		if ( isMapLoaded ) {
 			initMap()
 		}
 	}, [
-		address,
-		deviceType,
-		height,
+		// address,
 		htmlTag,
-		location,
-		mapStyle,
-		customMapStyle,
-		waitForGoogle,
+		// location,
 	 ] )
 
 	return (
@@ -328,10 +321,10 @@ const Edit = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder={ DEFAULT_ZOOM }
-						onChange={ zoom => {
-							setAttributes( { zoom: zoom || DEFAULT_ZOOM } )
-							mapRef.current.setZoom( zoom || DEFAULT_ZOOM )
-						} }
+						// onChange={ zoom => {
+						// 	setAttributes( { zoom: zoom || DEFAULT_ZOOM } )
+						// 	mapRef.current.setZoom( zoom || DEFAULT_ZOOM )
+						// } }
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Enable Dragging', i18n ) }
@@ -375,8 +368,10 @@ const Edit = props => {
 						options={ mapStyleOptions }
 						value={ mapStyle }
 						onSelect={ style => {
-							setAttributes( { mapStyle: style.value } )
-							setAttributes( { customMapStyle: '' } )
+							setAttributes( {
+								mapStyle: style.value,
+								customMapStyle: '',
+							} )
 						} }
 					/>
 					<AdvancedTextControl
@@ -385,8 +380,10 @@ const Edit = props => {
 						isMultiline
 						attribute="customMapStyle"
 						onChange={ value => {
-							setAttributes( { customMapStyle: value } )
-							setAttributes( { mapStyle: '' } )
+							setAttributes( {
+								mapStyle: '',
+								customMapStyle: value,
+							} )
 						} }
 						help={
 							<Fragment>
@@ -484,9 +481,7 @@ const Edit = props => {
 							height={
 								resizableRef.current?.state?.isResizing
 									? resizableRef.current?.state?.height
-									: isDefined( height )
-										? height
-										: DEFAULT_HEIGHT
+									: ( height || DEFAULT_HEIGHT )
 							}
 							heightUnits={ [ 'px' ] }
 							onChangeHeight={ ( { value } ) => {
@@ -496,7 +491,7 @@ const Edit = props => {
 							heightPlaceholder={ DEFAULT_HEIGHT }
 						/>
 					) }
-					{ isDefined( apiKey ) ? (
+					{ apiKey ? (
 						<div className="stk-block-map__canvas-wrapper">
 							<div
 								className="stk-block-map__canvas"
@@ -506,7 +501,7 @@ const Edit = props => {
 					) : (
 						<iframe
 							title={ __( 'Embedded content from Google Map Platform.', i18n ) }
-							src={ src }
+							src={ `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ zoom || DEFAULT_ZOOM }&ie=UTF8&output=embed` }
 							className="stk-block-map__embedded-map"
 							frameBorder="0"
 						/>

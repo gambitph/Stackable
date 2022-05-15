@@ -7,7 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'stackable_load_google_api_key' ) ) {
 	function stackable_load_google_api_key( $args ) {
-		$args[ 'googleApiKey' ] = get_option( 'stackable_google_maps_api_key', '' );
+		$args['googleApiKey'] = get_option( 'stackable_google_maps_api_key', '' );
+		$args['i18n']['missingMapApiKey'] = __( 'This map block uses settings that require a Google Maps API key, but it is missing. Please enter your Google Maps API key in the Stackable settings, or edit this map block.', STACKABLE_I18N );
 		return $args;
 	}
 	add_filter( 'stackable_localize_frontend_script', 'stackable_load_google_api_key' );

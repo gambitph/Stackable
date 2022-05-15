@@ -6,7 +6,6 @@ import mapStyleOptions from './map-styles'
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
 import { createElementFromHTMLString } from '~stackable/util'
 
 /**
@@ -25,13 +24,9 @@ export const DEFAULT_ICON_ROTATION = 0
 export const DEFAULT_ICON_ANCHOR_POSITION_X = 0
 export const DEFAULT_ICON_ANCHOR_POSITION_Y = 0
 
-export const isDefined = ( value = '' ) => {
-	return value !== '' && value !== undefined
-}
-
 export const getMapStyles = ( { mapStyle, customMapStyle } ) => {
 	let styleJSON
-	if ( customMapStyle !== '' ) {
+	if ( customMapStyle ) {
 		try {
 			styleJSON = JSON.parse( customMapStyle )
 		} catch ( e ) {
@@ -43,13 +38,10 @@ export const getMapStyles = ( { mapStyle, customMapStyle } ) => {
 	return styleJSON
 }
 
-export const getFillColor = ( { iconColor1 } ) => {
-	return isDefined( iconColor1 ) ? iconColor1 : DEFAULT_ICON_COLOR
-}
-
 export const getIconOptions = attributes => {
 	const {
 		icon,
+		iconColor1,
 		iconSize,
 		iconRotation,
 		iconOpacity,
@@ -66,22 +58,22 @@ export const getIconOptions = attributes => {
 	 }
 
 	svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
-	const svgIconSize = isDefined( iconSize ) ? parseInt( iconSize, 10 ) : DEFAULT_ICON_SIZE
+	const svgIconSize = iconSize ? parseInt( iconSize, 10 ) : DEFAULT_ICON_SIZE
 	svgEl.setAttribute( 'height', svgIconSize )
 	svgEl.setAttribute( 'width', svgIconSize )
-	svgEl.setAttribute( 'style', `color: ${ getFillColor( attributes ) }; opacity: ${ isDefined( iconOpacity ) ? parseFloat( iconOpacity, 10 ) : DEFAULT_ICON_OPACITY }` )
-	svgEl.setAttribute( 'transform', `rotate(${ isDefined( iconRotation ) ? parseInt( iconRotation, 10 ) : DEFAULT_ICON_ROTATION })` )
+	svgEl.setAttribute( 'style', `color: ${ iconColor1 || DEFAULT_ICON_COLOR }; opacity: ${ iconOpacity || iconOpacity === 0 ? parseFloat( iconOpacity, 10 ) : DEFAULT_ICON_OPACITY }` )
+	svgEl.setAttribute( 'transform', `rotate(${ iconRotation || iconRotation === 0 ? parseInt( iconRotation, 10 ) : DEFAULT_ICON_ROTATION })` )
 
 	const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
 	const iconUrl = `data:image/svg+xml;base64,${ window.btoa( serializedString ) }`
 	const iconOptions = { url: iconUrl }
 	const iconXPos = (
-		isDefined( iconAnchorPositionX )
+		iconAnchorPositionX || iconAnchorPositionX === 0
 			? parseInt( iconAnchorPositionX, 10 )
 			: DEFAULT_ICON_ANCHOR_POSITION_X
 	) + ( svgIconSize / 2 )
 	const iconYPos = (
-		isDefined( iconAnchorPositionY )
+		iconAnchorPositionY || iconAnchorPositionY === 0
 			? parseInt( iconAnchorPositionY, 10 )
 			: DEFAULT_ICON_ANCHOR_POSITION_Y
 	) + svgIconSize
@@ -90,48 +82,34 @@ export const getIconOptions = attributes => {
 	return iconOptions
 }
 
-export const getIframe = attributes => {
-	const { address, zoom } = attributes
-	const iframeTitle = __( 'Embedded content from Google Maps Platform.', i18n )
-	const src = `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ zoom || DEFAULT_ZOOM }&ie=UTF8&output=embed`
-	return (
-		`<iframe
-			title="${ iframeTitle }"
-			src="${ src }"
-			style="border:0;width:100%;max-width:none;max-height:none;height:100%;"
-			aria-hidden="false"
-			tabIndex="0"
-			allowfullscreen
-			loading="lazy"
-			frameBorder="0"
-		></iframe>`
-	)
-}
+let loaderPromise = null
 
 export const initMapLibrary = ( apiKey, callback ) => {
 	if ( apiKey ) {
-		const apiURL = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places`
-		// eslint-disable-next-line no-undef
-		if ( typeof google === 'object' && typeof google.maps === 'object' ) {
+		// If the Google Map API has already loaded.
+		if ( typeof window?.google === 'object' && typeof window?.google.maps === 'object' ) {
 			callback()
+		// If the Google Map API hasn't yet loaded, but we already loaded the script and are waiting for it to load.
+		} else if ( loaderPromise ) {
+			loaderPromise.then( callback )
 		} else {
-			loadScriptAsync( apiURL ).then( () => {
-				callback()
-			} )
+			loaderPromise = loadScriptAsync( apiKey ).then( callback )
 		}
 	}
 }
 
-const loadScriptAsync = src => {
+const loadScriptAsync = apiKey => {
 	return new Promise( resolve => {
-		const tag = document.createElement( 'script' )
-		tag.id = 'stackable-google-map'
-		tag.src = src
-		tag.async = true
-		tag.onload = () => {
+		if ( document.querySelector( 'script#stackable-google-map' ) ) {
 			resolve()
+			return
 		}
-		const firstScriptTag = document.getElementsByTagName( 'script' )[ 0 ]
-		firstScriptTag.parentNode.insertBefore( tag, firstScriptTag )
+		const script = document.createElement( 'script' )
+		script.id = 'stackable-google-map'
+		script.src = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places`
+		script.type = 'text/javascript'
+		script.async = true
+		script.onload = resolve
+		document.body.appendChild( script )
 	} )
 }
