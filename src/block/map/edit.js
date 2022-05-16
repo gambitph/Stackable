@@ -49,7 +49,7 @@ import classnames from 'classnames'
 import {
 	settingsUrl, i18n, settings, version as VERSION,
 } from 'stackable'
-import { isEmpty } from 'lodash'
+import { debounce } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -62,7 +62,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import {
-	Fragment, useEffect, useRef, useState, useMemo,
+	Fragment, useEffect, useRef, useState, useMemo, useCallback,
 } from '@wordpress/element'
 import { useDispatch } from '@wordpress/data'
 
@@ -116,12 +116,6 @@ const Edit = props => {
 	useEffect( () => {
 		__unstableMarkNextChangeAsNotPersistent()
 		setAttributes( { usesApiKey: !! apiKey } )
-		// TODO: what is this for??
-		if ( apiKey ) {
-			if ( ! isEmpty( address ) && isEmpty( location ) ) {
-				setAttributes( { address: '' } )
-			}
-		}
 	}, [ apiKey ] )
 
 	const deviceType = useDeviceType()
@@ -143,10 +137,10 @@ const Edit = props => {
 	const markerRef = useRef()
 	const canvasRef = useRef()
 	const resizableRef = useRef()
+	const geocoderRef = useRef()
 
 	const initMap = () => {
 		const mapCanvas = canvasRef.current
-
 		const mapOptions = {
 			center: location || DEFAULT_LOCATION,
 			zoom: zoom || DEFAULT_ZOOM,
@@ -157,31 +151,23 @@ const Edit = props => {
 			streetViewControl: showStreetViewButton,
 			draggable: isDraggable,
 		}
+
 		// eslint-disable-next-line no-undef
 		const map = mapRef.current = new google.maps.Map( mapCanvas, mapOptions )
+
 		// eslint-disable-next-line no-undef
-		const marker = new google.maps.Marker( {
+		markerRef.current = new google.maps.Marker( {
 			position: map.getCenter(),
 		} )
 
-		markerRef.current = marker
+		// eslint-disable-next-line no-undef
+		geocoderRef.current = new google.maps.Geocoder()
+
+		updateMarker()
 
 		if ( ! isMapLoaded ) {
 			setIsMapLoaded( true )
 		}
-
-		updateMarker()
-
-		/* FIXME: The following causes the Zoom AdvRangeControl's reset button to be non-functional
-		 * However, without this, zooming on the map will not reflect on the slider.
-		 * i.e. user can play around with the zoom level on the map and the zoom value
-		 * in the slider won't change.
-		 */
-		// eslint-disable-next-line no-undef
-		// google.maps.event.addListener( map, 'zoom_changed', () => {
-		// 	const zoom = map.getZoom()
-		// 	setAttributes( { zoom } )
-		// } )
 	}
 
 	const updateMarker = () => {
@@ -190,31 +176,24 @@ const Edit = props => {
 
 		marker.setMap( showMarker ? map : null )
 		const iconOptions = getIconOptions( attributes )
-		marker.setOptions( { icon: iconOptions } )
+		marker.setOptions( {
+			icon: iconOptions,
+		} )
+		marker.setPosition( location || DEFAULT_LOCATION )
 	}
 
 	useEffect( () => {
-		/* Location will be set when user picks from the Google Places auto
-		 * complete field.
-		 */
-		if ( isEmpty( address ) ) {
-			setAttributes( { location: '' } )
-		}
-	}, [ address ] )
-
-	useEffect( () => {
-		if ( mapRef.current && markerRef.current ) {
+		if ( isMapLoaded ) {
 			updateMarker()
 		}
 	}, [
+		location,
 		iconSize,
 		iconAnchorPositionX,
 		iconAnchorPositionY,
 		iconColor1,
 		iconOpacity,
 		iconRotation,
-		mapRef.current,
-		markerRef.current,
 		showMarker,
 		icon,
 	] )
@@ -253,7 +232,26 @@ const Edit = props => {
 		// address,
 		htmlTag,
 		// location,
-	 ] )
+	] )
+
+	// Try geocoding the address.
+	const [ useGeocoding, setUseGeocoding ] = useState( true )
+	const geocodeAddress = useCallback( debounce( address => {
+		if ( useGeocoding ) {
+			geocoderRef.current.geocode( {
+				address,
+			}, function( results, status ) {
+				if ( status === 'OK' ) {
+					setAttributes( {
+						location: results[ 0 ].geometry.location,
+					} )
+				// If we don't have access to geocoding, don't try it again.
+				} else if ( status === 'REQUEST_DENIED' ) {
+					setUseGeocoding( false )
+				}
+			} )
+		}
+	}, 400 ), [ geocoderRef.current, setAttributes, useGeocoding ] )
 
 	return (
 		<>
@@ -292,13 +290,32 @@ const Edit = props => {
 						<LocationControl
 							value={ address }
 							onTextChange={ address => {
-								setAttributes( { address } )
-								setAttributes( { location: '' } )
+								if ( ! address ) {
+									return setAttributes( { address } )
+								}
+
+								// If the typed in value is a lat lng string, split it and set the lat and lng values.
+								let	 location = ''
+								if ( address.match( /^\s*[-\d.]+(.*?)[, ][-\d.]+/ ) ) { // Check if there's a number comma/space number.
+									const [ , lat, , lng ] = address.match( /^\s*([-\d.]+)(.*?)([-\d.]+)/ )
+									location = {
+										lat: parseFloat( lat ),
+										lng: parseFloat( lng ),
+									}
+								} else {
+									// Try Geocoding.
+									geocodeAddress( address )
+								}
+								setAttributes( {
+									address,
+									location,
+								} )
 							} }
 							onPlaceChange={ place => {
-								setAttributes( { address: place.formatted_address } )
-								const location = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }
-								setAttributes( { location } )
+								setAttributes( {
+									address: place.formatted_address,
+									location: { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() },
+								} )
 							 } }
 						/>
 					) }
@@ -518,3 +535,6 @@ export default compose(
 	withQueryLoopContext,
 )( Edit )
 
+// api key AIzaSyDAU72go6ci8LkbrOcEnlxL-s0WDZfVKhw
+
+// AIzaSyAdc7rKJDLYZr3cWNfwsFuPOfdWXyNceP8

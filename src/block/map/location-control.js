@@ -33,12 +33,11 @@ const LocationControl = props => {
 	}, [] )
 
 	const ref = useRef()
+	const autocompleteRef = useRef()
 	useEffect( () => {
 		if ( ref.current && window.google && window.google.maps ) {
 			// eslint-disable-next-line no-undef
-			const autocomplete = new google.maps.places.Autocomplete(
-				ref.current
-			)
+			const autocomplete = autocompleteRef.current = new google.maps.places.Autocomplete( ref.current )
 			autocomplete.setFields( [
 				'place_id',
 				'geometry',
@@ -46,11 +45,13 @@ const LocationControl = props => {
 			] )
 			autocomplete.addListener( 'place_changed', () => {
 				const place = autocomplete.getPlace()
-				if ( ! place.geometry ) {
-					return
+				if ( place.geometry ) {
+					props.onPlaceChange( place )
 				}
-				props.onPlaceChange( place )
 			} )
+
+			// If we encounter errors, get rid of the error popup from Google.
+			removeGoogleApiKeyError( autocompleteRef.current )
 		}
 	}, [ ref.current, waitForGoogle ] )
 
@@ -59,7 +60,16 @@ const LocationControl = props => {
 			label={ __( 'Location', i18n ) }
 			ref={ ref }
 			value={ props.value }
-			onChange={ props.onTextChange }
+			help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geolocation API and Places API enabled.', i18n ) }
+			onChange={ value => {
+				// If we encounter errors, get rid of the error popup from Google.
+				removeGoogleApiKeyError( autocompleteRef.current )
+				props.onTextChange( value )
+			} }
+			onFocus={ () => {
+				// If we encounter errors, get rid of the error popup from Google.
+				removeGoogleApiKeyError( autocompleteRef.current )
+			} }
 		/>
 	)
 }
@@ -70,3 +80,11 @@ LocationControl.defaultProps = {
 }
 
 export default LocationControl
+
+// If the API Key provided doesn't have the Places API enabled, Google will show an ugly popup error, get rid of it.
+const removeGoogleApiKeyError = autocompleteRef => {
+	if ( document.querySelector( '.pac-container' ) ) {
+		window?.google?.maps?.event?.clearInstanceListeners( autocompleteRef )
+		document.querySelectorAll( '.pac-container' ).forEach( el => el.remove() )
+	}
+}

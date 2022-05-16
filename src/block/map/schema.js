@@ -25,6 +25,16 @@ export const mapAttributes = {
 		default: false,
 	},
 
+	// This is the text field that the user types into. This is used if no
+	// Google API Key is used. If there's an API Key used, this is only for the
+	// text field.
+	address: {
+		type: 'string',
+		default: '',
+	},
+	// This holds the search query from the Google places API or the actual
+	// lat/lng object where the map is centered. Used if there's a Google API
+	// Key.
 	location: {
 		type: 'object',
 		default: '',
@@ -43,11 +53,6 @@ export const mapAttributes = {
 		default: '',
 	},
 	customMapStyle: {
-		type: 'string',
-		default: '',
-	},
-	// Google Map search query. This can be an address or lat,long coords.
-	address: {
 		type: 'string',
 		default: '',
 	},
