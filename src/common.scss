@@ -21,8 +21,8 @@
 
 // Fix for iOS fixed background attachments do not convert to scroll.
 @supports (-webkit-touch-callout: inherit) {
-	.stk-block,
-	.stk-container {
+	.stk-block.stk-block,
+	.stk-container.stk-container {
 		background-attachment: scroll !important;
 	}
 }
