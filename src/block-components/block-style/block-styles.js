@@ -74,7 +74,7 @@ const BlockStyles = props => {
 	}, [ clientId, activeStyle, className ] )
 
 	return (
-		<div className="block-editor-block-styles">
+		<div className="stk-block-editor-block-styles">
 			{ styles.map( style => {
 				return (
 					<BlockStyleItem
@@ -109,7 +109,7 @@ const BlockStyleItem = memo( props => {
 
 	return (
 		<div
-			className={ classnames( 'block-editor-block-styles__item', {
+			className={ classnames( 'stk-block-editor-block-styles__item', {
 				'is-active': isActive,
 			} ) }
 			onClick={ () => onSelect( style ) }
@@ -124,13 +124,13 @@ const BlockStyleItem = memo( props => {
 			aria-label={ style.label || style.name }
 		>
 			<div
-				className="block-editor-block-styles__item-preview stk-block-styles-preview"
+				className="stk-block-editor-block-styles__item-preview stk-block-styles-preview"
 				data-block={ blockName }
 				data-style={ style.name }
 			>
-				{ Image && <Image className="block-editor-block-styles__icon" /> }
+				{ Image && <Image className="stk-block-editor-block-styles__icon" /> }
 			</div>
-			<div className="block-editor-block-styles__item-label">
+			<div className="stk-block-editor-block-styles__item-label">
 				{ style.label || style.name }
 			</div>
 		</div>
