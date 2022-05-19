@@ -4,12 +4,11 @@
 import {
 	getMapStyles,
 	getIconOptions,
-	DEFAULT_HEIGHT,
 	DEFAULT_ZOOM,
 	DEFAULT_LOCATION,
 	DEFAULT_ADDRESS,
 } from './util'
-import { MapStyles } from './style'
+import BlockStyles from './style'
 import { withVersion } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -61,40 +60,38 @@ export const Save = props => {
 		'stk--uses-api-key': usesApiKey,
 	} )
 
-	// TODO: change this from lots of data-* attributes to just one
-	// data-map-options attribute that's a JSON, so we don't need to parse it in
-	// the frontend
-	const dataAttributes = {
-		'data-icon-options': JSON.stringify( getIconOptions( attributes ) ),
-		'data-is-draggable': isDraggable,
-		'data-location': JSON.stringify( location || DEFAULT_LOCATION ),
-		'data-map-style': JSON.stringify( getMapStyles( attributes ) ),
-		'data-show-full-screen-button': showFullScreenButton,
-		'data-show-map-type-buttons': showMapTypeButtons,
-		'data-show-marker': showMarker,
-		'data-marker-title': address,
-		'data-show-street-view-button': showStreetViewButton,
-		'data-show-zoom-buttons': showZoomButtons,
-		'data-zoom': zoom || DEFAULT_ZOOM,
+	const styles = getMapStyles( attributes )
+	const mapOptions = {
+		center: location || DEFAULT_LOCATION,
+		zoom: zoom || DEFAULT_ZOOM,
+		styles: styles.length ? styles : undefined,
+		gestureHandling: isDraggable ? undefined : 'none',
+		fullscreenControl: showFullScreenButton,
+		mapTypeControl: showMapTypeButtons,
+		streetViewControl: showStreetViewButton,
+		zoomControl: showZoomButtons,
 	}
+
+	const markerOptions = showMarker ? {
+		position: location || DEFAULT_LOCATION,
+		title: address || undefined,
+	} : false
 
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<MapStyles.Content version={ props.version } attributes={ attributes } />
+			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			{ usesApiKey
 				? (
 					<div
-						style={ { height: DEFAULT_HEIGHT } }
-						className={ `stk-block-map__canvas-wrapper` }>
-						<div
-							{ ...dataAttributes }
-							className="stk-block-map__canvas"
-						/>
-					</div>
+						data-map-options={ JSON.stringify( mapOptions ) }
+						data-marker-options={ JSON.stringify( markerOptions ) }
+						data-icon-options={ JSON.stringify( getIconOptions( attributes ) ) }
+						className="stk-block-map__canvas"
+					/>
 				)
 				: <RawHTML>{
 					`<iframe

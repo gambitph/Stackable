@@ -1,15 +1,16 @@
+.stk-block-map {
+	height: 350px;
+}
 .stk-block-map .stk-map-wrapper {
 	margin-left: var(--stk-alignment-margin-left, auto);
 	margin-right: var(--stk-alignment-margin-right, auto);
 }
 
-.stk-block-map__canvas-wrapper,
-.stk-block-map__canvas,
-.stk-block-map__embedded-map {
-	width: 100%;
+.stk-block-map__canvas {
 	height: 100%;
 }
 
+// Notice when the API Key was removed.
 .stk-block-map.stk--uses-api-key.stk--missing-api-key .stk-block-map__canvas {
 	display: flex;
 	justify-content: center;

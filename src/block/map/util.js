@@ -13,7 +13,7 @@ import { createElementFromHTMLString } from '~stackable/util'
  */
 import { __ } from '@wordpress/i18n'
 
-export const DEFAULT_HEIGHT = 250
+export const DEFAULT_HEIGHT = 350
 export const DEFAULT_ZOOM = 12
 export const DEFAULT_ADDRESS = 'Quezon City'
 export const DEFAULT_LOCATION = { lat: 14.680936247180512, lng: 121.04845461073226 }

@@ -22,14 +22,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const getStyleParams = () => {
 	return [
 		{
-			selector: '.stk-block-map__embedded-map',
-			styleRule: 'height',
-			attrName: 'height',
-			format: '%spx',
-			responsive: 'all',
-		},
-		{
-			selector: '.stk-block-map__canvas-wrapper',
+			selector: '',
 			styleRule: 'height',
 			attrName: 'height',
 			format: '%spx',
@@ -38,7 +31,7 @@ const getStyleParams = () => {
 	]
 }
 
-export const MapStyles = props => {
+const BlockStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -47,7 +40,7 @@ export const MapStyles = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
-	const mapStyles = useStyles( propsToPass.attributes, getStyleParams() )
+	const mapStyles = useStyles( attributes, getStyleParams() )
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
@@ -69,13 +62,13 @@ export const MapStyles = props => {
 	)
 }
 
-MapStyles.defaultProps = {
+BlockStyles.defaultProps = {
 	isEditor: false,
 	attributes: {},
 	options: {},
 }
 
-MapStyles.Content = props => {
+BlockStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
@@ -105,3 +98,4 @@ MapStyles.Content = props => {
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
+export default BlockStyles

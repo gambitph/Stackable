@@ -1,22 +1,27 @@
 [data-type="stackable/map"] {
 	// Fixes Google Map displaying blank on the editor due to display flex applied
 	// on [data^=stackable/].
-	display: block !important;
+	// display: block !important;
 
-	// Prevents the iframe wrapper from clipping the map.
-	> div {
-		overflow: auto;
+	// Move resizer down a bit.
+	.stk-resizer-tooltip {
+		top: calc(50% + 40px);
 	}
 
-	.stk-resizer-tooltip {
-		top: 75%;
+	iframe {
+		height: 100%;
 	}
 
 	// Clicking on the map doesn't select the block.
-	.stk-block-map__embedded-map,
-	.stk-block-map__canvas {
+	.stk-block-map__canvas,
+	iframe {
 		pointer-events: none;
 	}
+}
+
+// This fixes first time height handler dragging.
+.stk-block-map {
+	height: 100%;
 }
 
 .components-panel__body:not(.stk--uses-api-key) .stk--needs-api-key {

@@ -36,70 +36,19 @@ class StackableMap {
 
 	initMap = () => {
 		[].forEach.call( document.querySelectorAll( '.stk-block-map__canvas' ), mapCanvas => {
-			// TODO: change this from lots of data-* attributes to just one
-			// data-map-options attribute that's a JSON, so we don't need to parse it in
-			// the frontend
-			const {
-				markerTitle,
-				iconOptions,
-				isDraggable,
-				location,
-				mapStyle,
-				showFullScreenButton,
-				showMapTypeButtons,
-				showMarker,
-				showStreetViewButton,
-				showZoomButtons,
-				zoom,
-			} = mapCanvas.dataset
-
-			let parsedLocation
-			try {
-				parsedLocation = JSON.parse( location )
-			} catch ( e ) {
-				parsedLocation = undefined
-			}
-
-			let parsedStyles
-			try {
-				parsedStyles = JSON.parse( mapStyle )
-			} catch ( e ) {
-				parsedStyles = []
-			}
-
-			let parsedIconOptions
-			try {
-				parsedIconOptions = JSON.parse( iconOptions )
-			} catch ( e ) {
-				parsedIconOptions = null
-			}
-
-			const mapOptions = {
-				center: parsedLocation,
-				isDraggable: isDraggable === 'true',
-				fullscreenControl: showFullScreenButton === 'true',
-				styles: parsedStyles,
-				zoomControl: showZoomButtons === 'true',
-				mapTypeControl: showMapTypeButtons === 'true',
-				streetViewControl: showStreetViewButton === 'true',
-				draggable: isDraggable === 'true',
-				zoom: parseInt( zoom, 10 ),
-			}
+			const mapOptions = JSON.parse( mapCanvas.dataset.mapOptions || '{}' )
+			const markerOptions = JSON.parse( mapCanvas.dataset.markerOptions || 'false' )
+			const markerIconOptions = JSON.parse( mapCanvas.dataset.iconOptions || '{}' )
 
 			// eslint-disable-next-line no-undef
 			const map = new google.maps.Map( mapCanvas, mapOptions )
-			if ( showMarker === 'true' ) {
-				const markerOptions = {
-					title: markerTitle,
-					map,
-					position: parsedLocation,
-					clickable: false,
-				}
+			if ( markerOptions ) {
+				markerOptions.map = map
+				markerOptions.clickable = false
 
 				// eslint-disable-next-line no-undef
 				const marker = new google.maps.Marker( markerOptions )
-
-				marker.setIcon( parsedIconOptions )
+				marker.setIcon( markerIconOptions )
 			}
 		} )
 	}

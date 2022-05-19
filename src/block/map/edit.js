@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { MapStyles } from './style'
+import BlockStyles from './style'
 import mapStyleOptions from './map-styles'
 import LocationControl from './location-control'
 import {
@@ -116,6 +116,13 @@ const Edit = props => {
 	useEffect( () => {
 		__unstableMarkNextChangeAsNotPersistent()
 		setAttributes( { usesApiKey: !! apiKey } )
+
+		// If the API Key was removed, ensure that our map is still centered on the previous location.
+		if ( ! apiKey ) {
+			if ( address && location && location.lat && location.lng ) {
+				setAttributes( { address: location.lat + ',' + location.lng } )
+			}
+		}
 	}, [ apiKey ] )
 
 	const deviceType = useDeviceType()
@@ -229,9 +236,7 @@ const Edit = props => {
 			initMap()
 		}
 	}, [
-		// address,
 		htmlTag,
-		// location,
 	] )
 
 	// Try geocoding the address.
@@ -338,10 +343,6 @@ const Edit = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder={ DEFAULT_ZOOM }
-						// onChange={ zoom => {
-						// 	setAttributes( { zoom: zoom || DEFAULT_ZOOM } )
-						// 	mapRef.current.setZoom( zoom || DEFAULT_ZOOM )
-						// } }
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Enable Dragging', i18n ) }
@@ -405,7 +406,7 @@ const Edit = props => {
 						help={
 							<Fragment>
 								<ExternalLink href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block">
-									{ __( 'Learn how to use Custom Map Style', i18n ) }
+									{ __( 'Learn how to use Custom Map Styles', i18n ) }
 								</ExternalLink>
 							</Fragment>
 						}
@@ -469,7 +470,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<MapStyles version={ VERSION } />
+			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv className={ blockClassNames }>
@@ -481,6 +482,7 @@ const Edit = props => {
 					} }
 					minHeight={ 50 }
 					enable={ { bottom: true } }
+					// onResizeStart={ () => setIsResizing( true ) }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						let _height = height
 						if ( _height === '' || _height === undefined ) {
@@ -508,18 +510,18 @@ const Edit = props => {
 							heightPlaceholder={ DEFAULT_HEIGHT }
 						/>
 					) }
+					{ resizableRef.current?.state?.isResizing && (
+						<style>{ `.stk-block.stk-${ attributes.uniqueId } { height: auto !important; }` }</style>
+					) }
 					{ apiKey ? (
-						<div className="stk-block-map__canvas-wrapper">
-							<div
-								className="stk-block-map__canvas"
-								ref={ canvasRef }
-							/>
-						</div>
+						<div
+							className="stk-block-map__canvas"
+							ref={ canvasRef }
+						/>
 					) : (
 						<iframe
 							title={ __( 'Embedded content from Google Map Platform.', i18n ) }
 							src={ `https://maps.google.com/maps?q=${ address || DEFAULT_ADDRESS }&t=&z=${ zoom || DEFAULT_ZOOM }&ie=UTF8&output=embed` }
-							className="stk-block-map__embedded-map"
 							frameBorder="0"
 						/>
 					) }
