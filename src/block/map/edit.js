@@ -482,7 +482,6 @@ const Edit = props => {
 					} }
 					minHeight={ 50 }
 					enable={ { bottom: true } }
-					// onResizeStart={ () => setIsResizing( true ) }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						let _height = height
 						if ( _height === '' || _height === undefined ) {
