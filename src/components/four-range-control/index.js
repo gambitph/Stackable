@@ -299,6 +299,7 @@ FourRangeControl.defaultProps = {
 	placeholderRight: '',
 	placeholderBottom: '',
 	placeholderLeft: '',
+	initialPosition: '',
 
 	allowReset: true,
 	default: '',

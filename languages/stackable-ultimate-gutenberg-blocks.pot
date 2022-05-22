@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.1\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-18T18:42:08+00:00\n"
+"POT-Creation-Date: 2022-05-20T18:33:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -488,7 +488,7 @@ msgstr ""
 #: src/welcome/index.php:192
 #: src/welcome/index.php:203
 #: src/welcome/index.php:492
-#: src/components/design-library-list/design-library-list-item.js:82
+#: src/components/design-library-list/design-library-list-item.js:98
 msgid "Go Premium"
 msgstr ""
 
@@ -646,7 +646,7 @@ msgstr ""
 msgid "Here are some settings that you can tweak to optimize Stackable. %sLearn more%s."
 msgstr ""
 
-#: src/dynamic-breakpoints.php:72
+#: src/dynamic-breakpoints.php:73
 msgid "Custom dynamic breakpoints"
 msgstr ""
 
@@ -924,7 +924,7 @@ msgid "230+ Additional Library Designs"
 msgstr ""
 
 #: src/welcome/index.php:237
-#: pro__premium_only/src/format-types/dynamic-content/index.js:179
+#: pro__premium_only/src/format-types/dynamic-content/index.js:204
 msgid "Dynamic Content"
 msgstr ""
 
@@ -1052,7 +1052,7 @@ msgid "You can also launch the Design Library, and choose from <strong>ready-mad
 msgstr ""
 
 #: src/welcome/index.php:340
-#: src/components/modal-design-library/modal.js:111
+#: src/components/modal-design-library/modal.js:116
 #: src/deprecated/v2/components/modal-design-library/block-list.js:155
 msgid "UI Kits"
 msgstr ""
@@ -1062,7 +1062,7 @@ msgid "Choose blocks from different pre-made templates that can be used to build
 msgstr ""
 
 #: src/welcome/index.php:342
-#: src/components/modal-design-library/modal.js:107
+#: src/components/modal-design-library/modal.js:112
 #: src/deprecated/v2/components/modal-design-library/block-list.js:159
 msgid "Block Designs"
 msgstr ""
@@ -1244,10 +1244,10 @@ msgstr ""
 #: pro__premium_only/src/conditional-display/post-meta.js:29
 #: pro__premium_only/src/conditional-display/site-option.js:29
 #: src/block-components/advanced/edit.js:81
-#: src/block-components/button/edit.js:55
+#: src/block-components/button/edit.js:56
 #: src/block-components/helpers/borders/edit.js:25
 #: src/block-components/image/edit.js:352
-#: src/block-components/typography/edit.js:197
+#: src/block-components/typography/edit.js:199
 #: src/block/table-of-contents/edit.js:71
 #: src/components/blend-mode-control/index.js:23
 #: src/components/border-controls/index.js:26
@@ -1337,7 +1337,7 @@ msgstr ""
 #: pro__premium_only/src/block-components/transform/transform-control.js:47
 #: pro__premium_only/src/components/effects-settings/index.js:46
 #: pro__premium_only/src/components/effects-settings/index.js:47
-#: src/block-components/button/edit.js:67
+#: src/block-components/button/edit.js:68
 #: src/components/button-controls/index.js:216
 msgid "Scale"
 msgstr ""
@@ -1374,8 +1374,8 @@ msgid "Slow"
 msgstr ""
 
 #: pro__premium_only/src/block-components/effects-animations/index.js:56
-#: src/block-components/typography/edit.js:185
-#: src/block-components/typography/edit.js:205
+#: src/block-components/typography/edit.js:187
+#: src/block-components/typography/edit.js:207
 #: src/components/base-control2/hover-state-toggle.js:23
 #: src/components/blend-mode-control/index.js:24
 #: src/components/button-controls/index.js:326
@@ -1461,7 +1461,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:89
 #: src/components/image-filter-control/index.js:23
-#: src/components/shadow-control/index.js:71
+#: src/components/shadow-control/index.js:67
 msgid "Blur"
 msgstr ""
 
@@ -1506,13 +1506,13 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:65
 #: pro__premium_only/src/features/icon-controls/index.js:303
-#: src/components/shadow-control/index.js:47
+#: src/components/shadow-control/index.js:43
 msgid "Horizontal Offset"
 msgstr ""
 
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:75
 #: pro__premium_only/src/features/icon-controls/index.js:316
-#: src/components/shadow-control/index.js:59
+#: src/components/shadow-control/index.js:55
 msgid "Vertical Offset"
 msgstr ""
 
@@ -1524,10 +1524,10 @@ msgstr ""
 #: pro__premium_only/src/block-components/icon/gradient-controls.js:31
 #: pro__premium_only/src/features/icon-controls/index.js:105
 #: pro__premium_only/src/features/icon-controls/index.js:225
-#: src/block-components/button/edit.js:148
+#: src/block-components/button/edit.js:149
 #: src/block-components/helpers/backgrounds/edit.js:115
 #: src/block-components/image/edit.js:297
-#: src/block-components/typography/edit.js:296
+#: src/block-components/typography/edit.js:298
 #: src/components/background-controls/index.js:111
 #: src/components/button-controls/index.js:171
 #: src/components/button-controls/index.js:279
@@ -1538,10 +1538,10 @@ msgstr ""
 #: pro__premium_only/src/block-components/icon/index.js:45
 #: pro__premium_only/src/features/icon-controls/index.js:67
 #: pro__premium_only/src/features/icon-controls/index.js:192
-#: src/block-components/button/edit.js:123
+#: src/block-components/button/edit.js:124
 #: src/block-components/helpers/backgrounds/edit.js:59
 #: src/block-components/image/edit.js:225
-#: src/block-components/typography/edit.js:257
+#: src/block-components/typography/edit.js:259
 #: src/components/background-controls/index.js:53
 #: src/components/button-controls/index.js:138
 #: src/components/icon-controls/index.js:84
@@ -1603,7 +1603,7 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:88
 #: pro__premium_only/src/features/icon-controls/index.js:97
 #: pro__premium_only/src/features/icon-controls/index.js:132
-#: src/block-components/button/edit.js:179
+#: src/block-components/button/edit.js:180
 #: src/block-components/icon/edit.js:36
 #: src/block/notification/edit.js:153
 #: src/components/icon-controls/index.js:107
@@ -1700,9 +1700,9 @@ msgstr ""
 #: src/block-components/helpers/backgrounds/edit.js:247
 #: src/block-components/helpers/backgrounds/edit.js:261
 #: src/block-components/image/edit.js:348
-#: src/block-components/typography/edit.js:184
-#: src/block-components/typography/edit.js:193
-#: src/block-components/typography/edit.js:204
+#: src/block-components/typography/edit.js:186
+#: src/block-components/typography/edit.js:195
+#: src/block-components/typography/edit.js:206
 #: src/block/accordion/variations.js:36
 #: src/block/accordion/variations.js:41
 #: src/block/blockquote/variations.js:35
@@ -1810,7 +1810,7 @@ msgid "Ease In Out Back"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:62
-#: src/block-components/typography/edit.js:191
+#: src/block-components/typography/edit.js:193
 #: src/components/typography-control/index.js:126
 #: src/help/videos.js:241
 msgid "Transform"
@@ -2429,7 +2429,7 @@ msgstr ""
 
 #: pro__premium_only/src/components/effects-settings/index.js:41
 #: pro__premium_only/src/components/effects-settings/index.js:42
-#: src/block-components/button/edit.js:63
+#: src/block-components/button/edit.js:64
 #: src/components/button-controls/index.js:213
 msgid "Lift"
 msgstr ""
@@ -2466,7 +2466,7 @@ msgid "Grayscale Hover Effect"
 msgstr ""
 
 #: pro__premium_only/src/components/effects-settings/index.js:82
-#: src/block-components/button/edit.js:91
+#: src/block-components/button/edit.js:92
 #: src/components/button-controls/index.js:205
 msgid "Hover Effect"
 msgstr ""
@@ -2509,7 +2509,7 @@ msgstr ""
 #: pro__premium_only/src/components/panel-design-user-library/index.js:313
 #: pro__premium_only/src/components/panel-design-user-library/modal-design-manage.js:131
 #: pro__premium_only/src/conditional-display/date-time.js:74
-#: src/components/advanced-range-control/range-control.js:180
+#: src/components/advanced-range-control/range-control.js:182
 #: src/components/base-control/index.js:59
 #: src/components/base-control2/reset-button.js:30
 #: src/components/columns-width-control/index.js:210
@@ -2966,7 +2966,7 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:130
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:185
-#: src/block-components/typography/edit.js:322
+#: src/block-components/typography/edit.js:324
 #: src/block/heading/edit.js:158
 #: src/block/heading/edit.js:204
 #: src/components/align-buttons-control/index.js:58
@@ -3228,7 +3228,7 @@ msgstr ""
 #: src/block-components/icon/edit.js:181
 #: src/components/button-controls/index.js:452
 #: src/components/four-number-control/index.js:205
-#: src/components/four-range-control/index.js:263
+#: src/components/four-range-control/index.js:261
 msgid "Left"
 msgstr ""
 
@@ -3237,7 +3237,7 @@ msgstr ""
 #: src/block-components/icon/edit.js:182
 #: src/components/button-controls/index.js:455
 #: src/components/four-number-control/index.js:181
-#: src/components/four-range-control/index.js:223
+#: src/components/four-range-control/index.js:221
 msgid "Right"
 msgstr ""
 
@@ -3398,10 +3398,10 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:63
 #: src/block-components/helpers/borders/edit.js:94
 #: src/block-components/separator/edit.js:83
-#: src/block-components/typography/edit.js:312
+#: src/block-components/typography/edit.js:314
 #: src/components/icon-controls/index.js:191
 #: src/components/image-controls/index.js:223
-#: src/components/shadow-control/index.js:306
+#: src/components/shadow-control/index.js:304
 #: src/deprecated/v2/block/accordion/edit.js:214
 #: src/deprecated/v2/block/blockquote/edit.js:190
 #: src/deprecated/v2/block/blog-posts/edit.js:227
@@ -3508,7 +3508,7 @@ msgstr ""
 #: src/components/background-controls/index.js:384
 #: src/components/background-controls/index.js:399
 #: src/components/image-background-controls/index.js:109
-#: src/components/shadow-control/index.js:278
+#: src/components/shadow-control/index.js:276
 msgid "Custom"
 msgstr ""
 
@@ -3529,7 +3529,7 @@ msgid "Learn more about date formats"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/dynamic-content-fields.js:255
-#: pro__premium_only/src/format-types/dynamic-content/index.js:120
+#: pro__premium_only/src/format-types/dynamic-content/index.js:145
 #: src/components/dynamic-content-control/index.js:304
 msgid "Dynamic Fields"
 msgstr ""
@@ -3630,12 +3630,12 @@ msgstr ""
 
 #: pro__premium_only/src/features/icon-controls/index.js:63
 #: pro__premium_only/src/features/icon-controls/index.js:188
-#: src/block-components/button/edit.js:119
+#: src/block-components/button/edit.js:120
 #: src/block-components/helpers/backgrounds/edit.js:55
 #: src/block-components/icon/edit.js:32
 #: src/block-components/icon/edit.js:48
 #: src/block-components/image/edit.js:221
-#: src/block-components/typography/edit.js:253
+#: src/block-components/typography/edit.js:255
 #: src/components/background-controls/index.js:49
 #: src/components/button-controls/index.js:134
 #: src/components/icon-controls/index.js:80
@@ -3707,33 +3707,33 @@ msgstr ""
 msgid "Blob %s"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:259
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:261
 msgid "Style copied successfully!"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:337
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:339
 msgid "Style pasted successfully!"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:360
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:408
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:364
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:413
 msgid "Copy Styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:374
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:420
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:378
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:425
 msgid "Paste Styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:391
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:396
 msgid "Copy & paste styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:457
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:462
 msgid "Used to copy core/stackable block styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:468
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:473
 msgid "Used to paste core/stackable block styles"
 msgstr ""
 
@@ -4230,39 +4230,39 @@ msgstr ""
 msgid "Styles"
 msgstr ""
 
-#: src/block-components/button/edit.js:59
+#: src/block-components/button/edit.js:60
 #: src/components/blend-mode-control/index.js:28
 msgid "Darken"
 msgstr ""
 
-#: src/block-components/button/edit.js:71
+#: src/block-components/button/edit.js:72
 #: src/components/button-controls/index.js:219
 msgid "Lift & Scale"
 msgstr ""
 
-#: src/block-components/button/edit.js:75
+#: src/block-components/button/edit.js:76
 msgid "Lift More"
 msgstr ""
 
-#: src/block-components/button/edit.js:79
+#: src/block-components/button/edit.js:80
 #: src/components/button-controls/index.js:222
 msgid "Scale More"
 msgstr ""
 
-#: src/block-components/button/edit.js:83
+#: src/block-components/button/edit.js:84
 #: src/components/button-controls/index.js:225
 msgid "Lift & Scale More"
 msgstr ""
 
-#: src/block-components/button/edit.js:112
+#: src/block-components/button/edit.js:113
 msgid "Button Colors"
 msgstr ""
 
-#: src/block-components/button/edit.js:132
+#: src/block-components/button/edit.js:133
 msgid "Button Color #%s"
 msgstr ""
 
-#: src/block-components/button/edit.js:133
+#: src/block-components/button/edit.js:134
 #: src/components/button-controls/index.js:153
 #: src/components/button-controls/index.js:154
 #: src/components/button-controls/index.js:163
@@ -4272,12 +4272,12 @@ msgstr ""
 msgid "Button Color"
 msgstr ""
 
-#: src/block-components/button/edit.js:142
+#: src/block-components/button/edit.js:143
 msgid "Button Color #2"
 msgstr ""
 
-#: src/block-components/button/edit.js:171
-#: src/block-components/typography/edit.js:282
+#: src/block-components/button/edit.js:172
+#: src/block-components/typography/edit.js:284
 #: src/components/button-controls/index.js:185
 #: src/components/button-controls/index.js:292
 #: src/deprecated/v2/block/blockquote/edit.js:305
@@ -4299,34 +4299,34 @@ msgstr ""
 msgid "Text Color"
 msgstr ""
 
-#: src/block-components/button/edit.js:198
+#: src/block-components/button/edit.js:199
 msgid "Button Size & Spacing"
 msgstr ""
 
-#: src/block-components/button/edit.js:203
+#: src/block-components/button/edit.js:204
 #: src/deprecated/v2/block/button/edit.js:58
 msgid "Full Width"
 msgstr ""
 
-#: src/block-components/button/edit.js:208
+#: src/block-components/button/edit.js:209
 msgid "Min. Button Height"
 msgstr ""
 
-#: src/block-components/button/edit.js:216
+#: src/block-components/button/edit.js:217
 msgid "Button Width"
 msgstr ""
 
-#: src/block-components/button/edit.js:225
+#: src/block-components/button/edit.js:226
 #: src/components/button-controls/index.js:357
 msgid "Vertical Padding"
 msgstr ""
 
-#: src/block-components/button/edit.js:236
+#: src/block-components/button/edit.js:237
 #: src/components/button-controls/index.js:369
 msgid "Horizontal Padding"
 msgstr ""
 
-#: src/block-components/button/edit.js:260
+#: src/block-components/button/edit.js:261
 msgid "Button Borders & Shadows"
 msgstr ""
 
@@ -5029,78 +5029,78 @@ msgstr ""
 msgid "Change the timing of your CSS transitions, change the X and Y position, scale or rotate your blocks, perfect for hover animations. This feature is only available on Stackable Premium"
 msgstr ""
 
-#: src/block-components/typography/edit.js:110
+#: src/block-components/typography/edit.js:112
 msgid "Content"
 msgstr ""
 
-#: src/block-components/typography/edit.js:124
+#: src/block-components/typography/edit.js:126
 msgid "Remove extra text margins"
 msgstr ""
 
-#: src/block-components/typography/edit.js:138
-#: src/block-components/typography/edit.js:139
-#: src/block-components/typography/edit.js:401
+#: src/block-components/typography/edit.js:140
+#: src/block-components/typography/edit.js:141
+#: src/block-components/typography/edit.js:403
 #: src/components/typography-control/index.js:255
 #: src/help/videos.js:221
 msgid "Typography"
 msgstr ""
 
-#: src/block-components/typography/edit.js:168
+#: src/block-components/typography/edit.js:170
 #: src/components/font-family-control/index.js:67
 #: src/components/typography-control/index.js:55
 msgid "Font Family"
 msgstr ""
 
-#: src/block-components/typography/edit.js:173
+#: src/block-components/typography/edit.js:175
 #: src/components/typography-control/index.js:104
 msgid "Weight"
 msgstr ""
 
-#: src/block-components/typography/edit.js:186
+#: src/block-components/typography/edit.js:188
 #: src/components/typography-control/index.js:117
 msgid "Bold"
 msgstr ""
 
-#: src/block-components/typography/edit.js:194
+#: src/block-components/typography/edit.js:196
 #: src/components/typography-control/index.js:129
 msgid "Uppercase"
 msgstr ""
 
-#: src/block-components/typography/edit.js:195
+#: src/block-components/typography/edit.js:197
 #: src/components/typography-control/index.js:130
 msgid "Lowercase"
 msgstr ""
 
-#: src/block-components/typography/edit.js:196
+#: src/block-components/typography/edit.js:198
 #: src/components/typography-control/index.js:131
 msgid "Capitalize"
 msgstr ""
 
-#: src/block-components/typography/edit.js:202
+#: src/block-components/typography/edit.js:204
 msgid "Font Style"
 msgstr ""
 
-#: src/block-components/typography/edit.js:206
+#: src/block-components/typography/edit.js:208
 msgid "Italic"
 msgstr ""
 
-#: src/block-components/typography/edit.js:207
+#: src/block-components/typography/edit.js:209
 msgid "Oblique"
 msgstr ""
 
-#: src/block-components/typography/edit.js:212
+#: src/block-components/typography/edit.js:214
 #: src/components/typography-control/index.js:143
 #: src/components/typography-control/index.js:160
 #: src/components/typography-control/index.js:177
 msgid "Line-Height"
 msgstr ""
 
-#: src/block-components/typography/edit.js:224
+#: src/block-components/typography/edit.js:226
 #: src/components/typography-control/index.js:196
 msgid "Letter Spacing"
 msgstr ""
 
-#: src/block-components/typography/edit.js:235
+#: src/block-components/typography/edit.js:237
 #: src/block/number-box/edit.js:96
 #: src/components/typography-control/index.js:65
 #: src/components/typography-control/index.js:78
@@ -5118,8 +5118,8 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: src/block-components/typography/edit.js:281
-#: src/block-components/typography/edit.js:290
+#: src/block-components/typography/edit.js:283
+#: src/block-components/typography/edit.js:292
 msgid "Text Color #%s"
 msgstr ""
 
@@ -5574,17 +5574,17 @@ msgstr ""
 msgid "1,234.56"
 msgstr ""
 
-#: src/block/design-library/edit.js:94
-#: src/components/modal-design-library/modal.js:101
+#: src/block/design-library/edit.js:92
+#: src/components/modal-design-library/modal.js:106
 #: src/deprecated/v2/components/modal-design-library/index.js:124
 msgid "Stackable Design Library"
 msgstr ""
 
-#: src/block/design-library/edit.js:95
+#: src/block/design-library/edit.js:93
 msgid "Open the Design Library and select a pre-designed block or layout."
 msgstr ""
 
-#: src/block/design-library/edit.js:103
+#: src/block/design-library/edit.js:101
 #: src/deprecated/v2/components/design-library-control/index.js:57
 #: src/deprecated/v2/components/design-library-control/index.js:61
 #: src/plugins/design-library-button/design-library-button.js:37
@@ -6606,7 +6606,7 @@ msgstr ""
 msgid "There is an error in your custom attribute"
 msgstr ""
 
-#: src/components/design-library-list/index.js:57
+#: src/components/design-library-list/index.js:67
 msgid "No designs found"
 msgstr ""
 
@@ -6655,7 +6655,7 @@ msgstr ""
 
 #: src/components/four-number-control/index.js:164
 #: src/components/four-number-control/index.js:169
-#: src/components/four-range-control/index.js:203
+#: src/components/four-range-control/index.js:201
 msgid "Top"
 msgstr ""
 
@@ -6667,15 +6667,15 @@ msgid "auto"
 msgstr ""
 
 #: src/components/four-number-control/index.js:193
-#: src/components/four-range-control/index.js:243
+#: src/components/four-range-control/index.js:241
 msgid "Bottom"
 msgstr ""
 
-#: src/components/four-range-control/index.js:89
+#: src/components/four-range-control/index.js:87
 msgid "Individual sides"
 msgstr ""
 
-#: src/components/four-range-control/index.js:89
+#: src/components/four-range-control/index.js:87
 msgid "All sides"
 msgstr ""
 
@@ -6844,44 +6844,66 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:115
+#: src/components/modal-design-library/modal.js:120
 msgid "Wireframes"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:129
+#: src/components/modal-design-library/modal.js:134
 #: src/deprecated/v2/components/modal-design-library/index.js:129
 msgid "Latest Design Library"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:133
+#: src/components/modal-design-library/modal.js:138
 #: src/deprecated/v2/components/modal-design-library/index.js:133
 msgid "V2 Design Library"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:153
+#: src/components/modal-design-library/modal.js:158
 #: src/deprecated/v2/components/design-library-control/index.js:63
 #: src/deprecated/v2/components/modal-design-library/index.js:152
 msgid "E.g. light, dark, red, minimalist…"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:186
+#: src/components/modal-design-library/modal.js:177
+msgid "Select Multiple"
+msgstr ""
+
+#: src/components/modal-design-library/modal.js:187
+msgid "Select"
+msgstr ""
+
+#: src/components/modal-design-library/modal.js:191
+#: src/components/modal-design-library/modal.js:196
+msgid "Deselect All"
+msgstr ""
+
+#: src/components/modal-design-library/modal.js:215
 #: src/deprecated/v2/components/modal-design-library/index.js:194
 msgid "Refresh Library"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:194
+#: src/components/modal-design-library/modal.js:223
 #: src/deprecated/v2/components/modal-design-library/index.js:202
 msgid "Large preview"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:200
+#: src/components/modal-design-library/modal.js:229
 #: src/deprecated/v2/components/modal-design-library/index.js:208
 msgid "Medium preview"
 msgstr ""
 
-#: src/components/modal-design-library/modal.js:206
+#: src/components/modal-design-library/modal.js:235
 #: src/deprecated/v2/components/modal-design-library/index.js:214
 msgid "Small preview"
+msgstr ""
+
+#: src/components/modal-design-library/modal.js:281
+msgid "(%d) Selected"
+msgstr ""
+
+#: src/components/modal-design-library/modal.js:283
+#: src/components/modal-design-library/modal.js:300
+msgid "Add Designs"
 msgstr ""
 
 #: src/components/modal-welcome-tutorial/index.js:13
@@ -7013,23 +7035,23 @@ msgstr ""
 msgid "%s Size"
 msgstr ""
 
-#: src/components/shadow-control/index.js:83
+#: src/components/shadow-control/index.js:79
 msgid "Shadow Spread"
 msgstr ""
 
-#: src/components/shadow-control/index.js:96
+#: src/components/shadow-control/index.js:92
 msgid "Shadow Color"
 msgstr ""
 
-#: src/components/shadow-control/index.js:118
+#: src/components/shadow-control/index.js:116
 msgid "Shadow Opacity"
 msgstr ""
 
-#: src/components/shadow-control/index.js:193
+#: src/components/shadow-control/index.js:191
 msgid "Advanced Shadow Options"
 msgstr ""
 
-#: src/components/shadow-control/index.js:286
+#: src/components/shadow-control/index.js:284
 msgid "Shadow Settings"
 msgstr ""
 
@@ -9236,11 +9258,11 @@ msgstr ""
 msgid "No, don't load V2 blocks in the editor"
 msgstr ""
 
-#: src/util/index.js:118
+#: src/util/index.js:117
 msgid "Description for this block. You can use this space for describing your block."
 msgstr ""
 
-#: src/util/index.js:124
+#: src/util/index.js:123
 msgid "Description for this block. Use this space for describing your block. Any text will do."
 msgstr ""
 

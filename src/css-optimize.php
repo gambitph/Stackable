@@ -59,6 +59,18 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		public $css_raw = array();
 
 		/**
+		 * This should be the order of the media queries to prevent wrong overrides.
+		 */
+		const MEDIA_QUERY_ORDER = array(
+			'', // All screens,
+			'@media screen and (min-width:1024px)', // Desktop only.
+			'@media screen and (min-width:768px)', // Desktop & tablet.
+			'@media screen and (min-width:768px) and (max-width:1023px)', // Tablet.
+			'@media screen and (max-width:1023px)', // Tablet & mobile.
+			'@media screen and (max-width:767px)', // Mobile.
+		);
+
+		/**
 		 * Initialize
 		 */
 		function __construct() {
@@ -203,7 +215,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			if ( ! empty( $this->optimized_css ) ) {
 				echo "\n";
 				echo '<style class="stk-block-styles">';
-				echo $this->optimized_css;
+				echo apply_filters( 'stackable_frontend_css', $this->optimized_css );
 				echo '</style>';
 			}
 		}
@@ -274,6 +286,54 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		}
 
 		/**
+		 * Combines similar class selectors in a single :is()
+		 *
+		 * @param Array $selectors
+		 * @return Array Combined selectors
+		 */
+		public function combine_selectors( $selectors ) {
+			$new_selectors = array();
+			$classes_to_combine = array();
+			foreach( $selectors as $selector ) {
+				$selector = trim( $selector );
+				// Find all the unique id classes of the form ".stk-123bcd"
+				preg_match( '/(.stk-[a-f0-9-]{7})(?=\s|$)/', $selector, $matches );
+
+				// If it doesn't have a block selector that we can combine, just add it.
+				if ( ! count( $matches ) ) {
+					$new_selectors[] = $selector;
+					continue;
+				}
+
+				$match = $matches[1];
+
+				// Don't do this if the selector is only the unique id.
+				if ( $selector === $match ) {
+					$new_selectors[] = $match;
+					continue;
+				}
+
+				// Collect all the selectors we can combine.
+				$selector = str_replace( $match, '%s', $selector );
+				if ( ! array_key_exists( $selector, $classes_to_combine ) ) {
+					$classes_to_combine[ $selector ] = array();
+				}
+				$classes_to_combine[ $selector ][] = $match;
+			}
+
+			// Combine the selectors into a single :is() selector.
+			foreach ( $classes_to_combine as $selector => $classes ) {
+				if ( count( $classes ) === 1 ) {
+					$new_selectors[] = sprintf( $selector, $classes[0] );
+				} else {
+					$new_selectors[] = sprintf( $selector, ':is(' . implode( ', ', $classes ) . ')' );
+				}
+			}
+
+			return $new_selectors;
+		}
+
+		/**
 		 * Generates an optimized version of an array of CSS strings.
 		 *
 		 * @param Array An array of CSS strings.
@@ -319,8 +379,11 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 						$all_style_rules[ $media_query ][ $style_rule ] = array();
 					}
 
-					// We can have multiple selectors for the same rule.
-					$selectors = explode( ',', $selector );
+					// We can have multiple selectors for the same rule.  This
+					// explodes by commas but doesn't do it for strings inside
+					// parenthesis. This handles selectors like
+					// ":is(g,rect,circle)"
+					$selectors = preg_split( '#,(?![^(]+\))#', $selector );
 
 					foreach ( $selectors as $selector ) {
 						$all_style_rules[ $media_query ][ $style_rule ][] = trim( $selector );
@@ -330,7 +393,23 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 
 			// Organize the styles.
 			$css = '';
-			foreach ( $all_style_rules as $media_query => $styles ) {
+			$media_queries = self::MEDIA_QUERY_ORDER;
+
+			// This will also include other media queries that we do not support, but just add those at the end of our CSS.
+			foreach ( array_keys( $all_style_rules ) as $mediq_query ) {
+				if ( ! in_array( $mediq_query, $media_queries ) ) {
+					$media_queries[] = $media_query;
+				}
+			}
+
+			// Go through each media query.
+			foreach ( $media_queries as $media_query ) {
+				if ( ! array_key_exists( $media_query, $all_style_rules ) ) {
+					continue;
+				}
+
+				$styles = $all_style_rules[ $media_query ];
+
 				if ( ! empty( $media_query ) ) {
 					$css .= $media_query . '{';
 				}
@@ -339,15 +418,15 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				// styles are put last.
 				uksort( $styles, array( $this, 'selector_sort' ) );
 
-				// Just combine the selectors.  Note: One possible optimization
-				// here is instead of simply combining all selectors with a
-				// comma, you can combine them using :is(), this will lessen the
-				// selectors.
+				// Combine the selectors.
 				foreach ( $styles as $style_rules => $selector_arr ) {
 
 					// HOVER STYLES HACK (4/4): Remove the placeholder we used
 					// to move the hover styles to the end.
 					$style_rules = str_replace( '/* */', '', $style_rules );
+
+					// Optimize selectors by combining similar ones.
+					$selector_arr = $this->combine_selectors( $selector_arr );
 
 					$css .= implode( ',', $selector_arr ) . $style_rules;
 				}

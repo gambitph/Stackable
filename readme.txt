@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
-Tested up to: 5.9.3
-Requires PHP: 5.6
-Stable tag: 3.3.1
+Tested up to: 6.0.0
+Requires PHP: 5.7
+Stable tag: 3.3.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -241,6 +241,27 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.3.3 =
+* New: WordPress 6.0 compatibility
+* New: Optimized selectors when combining CSS, this results in 40% less generated CSS size!
+* Fixed: Possible PHP 5.6 error
+* Fixed: Fixed background are now correctly forced to scroll and show up in iOS devices
+* Fixed: Some editor optimizations
+
+= 3.3.2 =
+* New: You can now select multiple designs in the Design Library
+* Fixed: Custom breakpoints do not work with Optimize Inline CSS
+* Fixed: Some overriding issues with Optimize Inline CSS and responsive styles
+* Fixed: The dynamic content popover can get hidden behind the editor's sides / inspector / admin menu
+* Fixed: The contents of text highlight and dynamic content popovers go past their bounds
+* Fixed: Some slider controls now show the correct slider position at default
+* Fixed: Accordion block now opens on Windows if 'Show Animations on Windows' is turned off
+* Fixed: Column gap option also affects Icon Label block in the editor
+* Fixed: Sometimes theme colors do not show up in shadows and other color pickers
+* Fixed: Hovering your mouse over the corner of the column size indicator makes it flicker
+* Fixed: Icon list block bottom margin will not conflict with theme styles
+* Fixed: Overflow can sometimes not be followed when there is a border radius on a block
 
 = 3.3.1 =
 * New: Added block list in the getting started page

@@ -4,7 +4,7 @@
 import { i18n } from 'stackable'
 import { compact, isNumber } from 'lodash'
 import { AdvancedRangeControl, ColorPaletteControl } from '~stackable/components'
-import { hexToRgba } from '~stackable/util'
+import { hexToRgba, extractColor } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 
@@ -101,6 +101,8 @@ const FILTERS = [
 			if ( color?.startsWith( 'rgb(' ) ) {
 				return color?.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) || ''
 			}
+
+			color = extractColor( color )
 
 			const rgba = hexToRgba( color )
 

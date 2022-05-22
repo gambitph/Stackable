@@ -43,6 +43,10 @@
 // 	}
 // }
 .stk-resizable-column__size-tooltip {
+	// Prevents ::before pseudo element from overflowing and causing
+	// the size indicators to flicker.
+	overflow: auto;
+
 	&::before {
 		content: "";
 		height: 0;
