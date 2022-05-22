@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.2\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-11T17:28:37+00:00\n"
+"POT-Creation-Date: 2022-05-20T18:33:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -3707,33 +3707,33 @@ msgstr ""
 msgid "Blob %s"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:259
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:261
 msgid "Style copied successfully!"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:337
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:339
 msgid "Style pasted successfully!"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:360
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:408
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:364
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:413
 msgid "Copy Styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:374
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:420
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:378
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:425
 msgid "Paste Styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:391
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:396
 msgid "Copy & paste styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:457
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:462
 msgid "Used to copy core/stackable block styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:468
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:473
 msgid "Used to paste core/stackable block styles"
 msgstr ""
 
