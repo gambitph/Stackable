@@ -13,7 +13,7 @@ const StyleControl = props => {
 	const { options, value } = props
 
 	return (
-		<div className={ classnames( props.className, 'block-editor-block-styles' ) }>
+		<div className={ classnames( props.className, 'stk-block-editor-block-styles' ) }>
 			{ options.map( ( option, i ) => {
 				return (
 					<StyleControlOption
@@ -53,7 +53,7 @@ export const StyleControlOption = memo( props => {
 
 	return (
 		<div
-			className={ classnames( 'stk-style-control__option', 'block-editor-block-styles__item', {
+			className={ classnames( 'stk-style-control__option', 'stk-block-editor-block-styles__item', {
 				'is-active': isActive,
 			} ) }
 			onClick={ () => onSelect( option ) }
@@ -67,11 +67,11 @@ export const StyleControlOption = memo( props => {
 			tabIndex="0"
 			aria-label={ option.label || '' }
 		>
-			<div className="block-editor-block-styles__item-preview stk-style-control__image">
+			<div className="stk-block-editor-block-styles__item-preview stk-style-control__image">
 				{ option.image || ( Image && <Image className="stk-style-control__image__icon" /> ) }
 			</div>
 			{ option.label && (
-				<div className="block-editor-block-styles__item-label">
+				<div className="stk-block-editor-block-styles__item-label">
 					{ option.label }
 				</div>
 			) }

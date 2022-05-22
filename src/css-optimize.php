@@ -61,7 +61,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		/**
 		 * This should be the order of the media queries to prevent wrong overrides.
 		 */
-		public const MEDIA_QUERY_ORDER = array(
+		const MEDIA_QUERY_ORDER = array(
 			'', // All screens,
 			'@media screen and (min-width:1024px)', // Desktop only.
 			'@media screen and (min-width:768px)', // Desktop & tablet.
