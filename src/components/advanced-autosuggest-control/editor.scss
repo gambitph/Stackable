@@ -22,6 +22,12 @@
 			box-shadow: 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2), 0 5px 30px -10px rgba(18, 63, 82, 0.3);
 		}
 		// border: 1px solid #eee;
+
+		// The dropdown options gets cut off when used inside a popover.
+		position: fixed;
+		top: auto;
+		left: auto;
+		width: inherit;
 	}
 	.react-autosuggest__suggestions-list {
 		margin: 0;
