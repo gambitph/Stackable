@@ -90,7 +90,7 @@ const Edit = props => {
 			<div { ...useBlockProps( { className: wrapperClassNames } ) }>
 				<IconStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-icon" hasChildMainBlockClass={ true } />
-				<BlockDiv className={ blockClassNames } withUniqueClass={ false }>
+				<BlockDiv className={ blockClassNames } >
 					<Link linkTrigger=".stk--inner-svg">
 						<Icon />
 					</Link>
