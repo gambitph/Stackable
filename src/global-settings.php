@@ -75,6 +75,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( ! is_admin() ) {
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
 			}
+
+			/**
+			 * Block Design System
+			 */
+			if ( ! is_admin() ) {
+				add_filter( 'stackable_inline_styles_nodep', array( $this, 'design_system_add_styles' ) );
+			}
 		}
 
 		/**
@@ -230,6 +237,41 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 									'p' => $stackable_global_typography_schema,
 									'.stk-subtitle' => $stackable_global_typography_schema,
 								)
+							)
+						)
+					),
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_design_system',
+				array(
+					'type' => 'object',
+					'description' => __( 'Stackable block design system', STACKABLE_I18N ),
+					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
+					'show_in_rest' => array(
+						'schema' => array(
+							'properties' => array(
+								// The individual style values.
+								'styles' => array(
+									'type' => 'string',
+								),
+								// This is the generated CSS for the design system for the frontend.
+								'css' => array(
+									'type' => 'string',
+								),
+								// These are the generated CSS for the design system for the backend.
+								'cssDesktop' => array(
+									'type' => 'string',
+								),
+								'cssTablet' => array(
+									'type' => 'string',
+								),
+								'cssMobile' => array(
+									'type' => 'string',
+								),
 							)
 						)
 					),
@@ -838,6 +880,19 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			return $selectors;
+		}
+
+		/**-----------------------------------------------------------------------------
+		 * Design System functions
+		 *-----------------------------------------------------------------------------*/
+		public function design_system_add_styles( $css ) {
+			$design_system = get_option( 'stackable_design_system' );
+			if ( ! empty( $design_system ) ) {
+				if ( is_array( $design_system ) && array_key_exists( 'css', $design_system ) ) {
+					return $css . $design_system['css'];
+				}
+			}
+			return $css;
 		}
 	}
 

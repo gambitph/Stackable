@@ -39,6 +39,7 @@ const FourRangeControl = props => {
 	let value = _value || {
 		top: props.defaultTop, right: props.defaultRight, bottom: props.defaultBottom, left: props.defaultLeft,
 	}
+	value = typeof props.value === 'undefined' ? value : props.value
 
 	// You can specify the values in this way. This is how this is done in v2
 	const hasOldValues = typeof props.top !== 'undefined' || typeof props.right !== 'undefined' || typeof props.bottom !== 'undefined' || typeof props.left !== 'undefined'
@@ -128,7 +129,7 @@ const FourRangeControl = props => {
 	const deviceType = useDeviceType()
 	if ( deviceType !== 'Desktop' ) {
 		propsToPass.initialPosition = ''
-		propsToPass.placeholder = props.placeholder
+		propsToPass.placeholder = ''
 	}
 
 	const onChangeAll = useCallback( newValue => {

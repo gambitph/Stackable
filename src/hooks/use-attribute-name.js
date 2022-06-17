@@ -1,6 +1,4 @@
-import {
-	useBlockHoverState, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
 
 export const useAttributeName = ( attrName, responsive = 'all', hover = 'all' ) => {
