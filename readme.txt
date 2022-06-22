@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
 Tested up to: 6.0.0
 Requires PHP: 5.7
-Stable tag: 3.3.3
+Stable tag: 3.3.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -124,6 +124,7 @@ Cater to more clients effectively and efficiently with our Agency Tools, which w
 Make your page building experience more well-rounded by using other popular tools. We've seamlessly integrated with these essential third-party plugins and tools:
 
 - ACF **
+- Metabox **
 - WPML
 - Blocksy
 - Toolset
@@ -241,6 +242,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.3.4 =
+* New: Metabox plugin integration with Stackable Dynamic Content
+* Fixed: Margin bottom indicators won't show up when inside a native Row Block
+* Fixed: Dynamic Content field dropdown gets cut when inside a popover
+* Fixed: Icon block styles now work correctly when used inside a Query Loop block
+* Fixed: Block widths now collapse as expected when used in a Row Block
 
 = 3.3.3 =
 * New: WordPress 6.0 compatibility

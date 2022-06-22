@@ -633,7 +633,10 @@
   {
     "family": "Andika",
     "variants": [
-      "regular"
+      "regular",
+      "italic",
+      "700",
+      "700italic"
     ],
     "subsets": [
       "cyrillic",
@@ -2468,6 +2471,28 @@
     ]
   },
   {
+    "family": "Blaka",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Blaka Hollow",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Blinker",
     "variants": [
       "100",
@@ -3141,6 +3166,22 @@
     ]
   },
   {
+    "family": "Charis SIL",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Charm",
     "variants": [
       "regular",
@@ -3800,6 +3841,22 @@
       "700italic",
       "800italic",
       "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Crimson Text",
+    "variants": [
+      "regular",
+      "italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic"
     ],
     "subsets": [
       "latin",
@@ -5563,6 +5620,24 @@
     ]
   },
   {
+    "family": "Gentium Plus",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Geo",
     "variants": [
       "regular",
@@ -7082,6 +7157,16 @@
     ]
   },
   {
+    "family": "Joan",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Jockey One",
     "variants": [
       "regular"
@@ -7554,6 +7639,17 @@
     ],
     "subsets": [
       "khmer"
+    ]
+  },
+  {
+    "family": "Kdam Thmor Pro",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "khmer",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12757,6 +12853,17 @@
     ]
   },
   {
+    "family": "Nuosu SIL",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "yi"
+    ]
+  },
+  {
     "family": "Odibee Sans",
     "variants": [
       "regular"
@@ -13302,7 +13409,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -13990,7 +14098,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -14158,7 +14267,12 @@
       "regular",
       "500",
       "600",
-      "700"
+      "700",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
     ],
     "subsets": [
       "latin",
@@ -16315,6 +16429,20 @@
     ]
   },
   {
+    "family": "Spline Sans Mono",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Squada One",
     "variants": [
       "regular"
@@ -16675,6 +16803,19 @@
     ]
   },
   {
+    "family": "Tai Heritage Pro",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tai-viet",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Tajawal",
     "variants": [
       "200",
@@ -16933,6 +17074,102 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Tiro Bangla",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "bengali",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Tiro Devanagari Hindi",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Tiro Devanagari Marathi",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Tiro Devanagari Sanskrit",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Tiro Gurmukhi",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "gurmukhi",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Tiro Kannada",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "kannada",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Tiro Tamil",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tamil"
+    ]
+  },
+  {
+    "family": "Tiro Telugu",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "telugu"
     ]
   },
   {
