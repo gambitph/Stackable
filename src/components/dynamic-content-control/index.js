@@ -4,9 +4,7 @@
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
-import {
-	isString, first,
-} from 'lodash'
+import { isString, first } from 'lodash'
 import classnames from 'classnames'
 import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
 
@@ -57,7 +55,8 @@ export const useDynamicContentControlProps = props => {
 			if (
 				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
 				! event.target.closest( '.stk-dynamic-content-control__button' ) &&
-				! event.target.closest( '.components-color-picker' )
+				! event.target.closest( '.components-color-picker' ) &&
+				! event.target.closest( '.react-autosuggest__suggestions-container' )
 			) {
 				setIsPopoverOpen( false )
 			}
