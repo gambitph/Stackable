@@ -232,14 +232,16 @@ class AdvancedAutosuggestControl extends Component {
 			>
 				<div className="ugb-advanced-autosuggest-control__select" ref={ this.autosuggestDiv }>
 					{ /** This style is used to update the suggestion dropdown location,
-							 * we use :root because the suggestion dropdown is attached to the
-							 * document.body and outside the scope of our control. */ }
-					<style>
-						{ `:root {
-							--container-left: ${ this.state.containerRect?.left }px;
-							--container-bottom: ${ this.state.containerRect?.bottom }px;
-						}` }
-					</style>
+					   * we use :root because the suggestion dropdown is attached to the
+					   * document.body and outside the scope of our control. */ }
+					{ this.state.isShowingSuggestions && (
+						<style>
+							{ `:root {
+								--container-left: ${ this.state.containerRect?.left }px;
+								--container-bottom: ${ this.state.containerRect?.bottom }px;
+							}` }
+						</style>
+					) }
 					<Autosuggest
 						multiSection={ isGroupedOptions( this.props.options ) }
 						suggestions={ suggestions }
