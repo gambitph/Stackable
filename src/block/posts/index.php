@@ -372,8 +372,10 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @param string new content.
 		 */
 		public function render_callback( $attributes, $content, $block = null ) {
-			preg_match( '/\&lt;.*?stk-start:posts\/template [^>]*>(.*)\&lt;.*?stk-end:post\/template[^>]*>/', $content, $match );
-			if ( ! isset( $match[ 1 ] ) ) {
+			// We have the odd "–" string here because we have incorrectly used this in previous versions.
+			// Sometimes the "<" & ">" characters get converted into "&lt;" & "&gt;"
+			preg_match( '/(\&lt;|<)[!–\-\s\/]+stk-start:posts\/template[^>;]+(\&gt;|>)(.*?)(\&lt;|<)[!–\-\s\/]+stk-end:post\/template[^>;]+(\&gt;|>)/', $content, $match );
+			if ( ! isset( $match[ 3 ] ) ) {
 				return $content;
 			}
 
