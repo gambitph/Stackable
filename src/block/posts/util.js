@@ -419,13 +419,13 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 
 	return (
 		<>
-			{ '<!–- /stk-start:posts/template –->' }
+			{ '<!-- /stk-start:posts/template -->' }
 			<div className={ itemClassNames }>
 				<ContainerDiv.Content attributes={ attributes }>
 					{ output }
 				</ContainerDiv.Content>
 			</div>
-			{ '<!–- /stk-end:post/template –->' }
+			{ '<!-- /stk-end:post/template -->' }
 		</>
 	)
 }
