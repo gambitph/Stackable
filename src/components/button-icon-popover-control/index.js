@@ -11,9 +11,7 @@ import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
 	Popover, ToggleControl, PanelBody,
 } from '@wordpress/components'
-import {
-	Component, createRef,
-} from '@wordpress/element'
+import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -155,7 +153,8 @@ class ButtonIconPopoverControl extends Component {
 		if ( this.state.open ) {
 			if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) &&
 			     ! ev.target.closest( '.ugb-button-icon-control__edit' ) &&
-				 ! ev.target.closest( '.components-color-picker' ) ) {
+				 ! ev.target.closest( '.components-color-picker' ) &&
+				 ! ev.target.closest( '.react-autosuggest__suggestions-container' ) ) {
 				this.handleClose()
 			}
 		}

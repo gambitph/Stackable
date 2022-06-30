@@ -10,9 +10,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import {
-	Toolbar, Popover,
-} from '@wordpress/components'
+import { Toolbar, Popover } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
 } from '@wordpress/rich-text'
@@ -122,7 +120,8 @@ const HighlightButton = props => {
 		const isOutside = ! isElementDescendant( popoverEl.current, event.target )
 		const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
 		const isColorPicker = event.target.closest( '.components-color-picker' )
-		if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker ) {
+		const isSuggestion = event.target.closest( '.react-autosuggest__suggestions-container' )
+		if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker && ! isSuggestion ) {
 			setIsOpen( false )
 		}
 	} )
