@@ -1075,6 +1075,27 @@
     ]
   },
   {
+    "family": "Arima",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "malayalam",
+      "tamil",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Arima Madurai",
     "variants": [
       "100",
@@ -3621,14 +3642,14 @@
     "family": "Cormorant",
     "variants": [
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -5005,6 +5026,25 @@
     ]
   },
   {
+    "family": "Finlandica",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Fira Code",
     "variants": [
       "300",
@@ -5518,6 +5558,33 @@
     ]
   },
   {
+    "family": "Gantari",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Gayathri",
     "variants": [
       "100",
@@ -5617,6 +5684,24 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Gentium Book Plus",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -6119,6 +6204,17 @@
     "subsets": [
       "korean",
       "latin"
+    ]
+  },
+  {
+    "family": "Gulzar",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -7537,6 +7633,30 @@
     ],
     "subsets": [
       "khmer"
+    ]
+  },
+  {
+    "family": "Kantumruy Pro",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "khmer",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -9610,6 +9730,17 @@
       "bengali",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Mingzat",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "lepcha"
     ]
   },
   {
@@ -13089,17 +13220,6 @@
     ]
   },
   {
-    "family": "Otomanopee One",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "japanese",
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
     "family": "Outfit",
     "variants": [
       "100",
@@ -13378,16 +13498,6 @@
       "devanagari",
       "latin",
       "latin-ext"
-    ]
-  },
-  {
-    "family": "Palette Mosaic",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "japanese",
-      "latin"
     ]
   },
   {
@@ -14880,16 +14990,6 @@
     ]
   },
   {
-    "family": "Rock 3D",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "japanese",
-      "latin"
-    ]
-  },
-  {
     "family": "Rock Salt",
     "variants": [
       "regular"
@@ -15821,16 +15921,6 @@
     ]
   },
   {
-    "family": "Shizuru",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "japanese",
-      "latin"
-    ]
-  },
-  {
     "family": "Shojumaru",
     "variants": [
       "regular"
@@ -16415,6 +16505,17 @@
     ]
   },
   {
+    "family": "Splash",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Spline Sans",
     "variants": [
       "300",
@@ -16435,7 +16536,12 @@
       "regular",
       "500",
       "600",
-      "700"
+      "700",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
     ],
     "subsets": [
       "latin",
@@ -18125,28 +18231,6 @@
     ],
     "subsets": [
       "cyrillic",
-      "japanese",
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
-    "family": "Yuji Hentaigana Akari",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "japanese",
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
-    "family": "Yuji Hentaigana Akebono",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
       "japanese",
       "latin",
       "latin-ext"
