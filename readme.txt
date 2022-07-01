@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
 Tested up to: 6.0.0
 Requires PHP: 5.7
-Stable tag: 3.3.4
+Stable tag: 3.3.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -242,6 +242,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.3.5 =
+* New: Updated Stackable logos to the new one
+* Fixed: Font family picker cannot be clicked
+* Fixed: Posts block sometimes do not render correctly in the frontend
+* Fixed: In some servers the Posts Block won't display columns side by side
 
 = 3.3.4 =
 * New: Metabox plugin integration with Stackable Dynamic Content
