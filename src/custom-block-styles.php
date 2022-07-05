@@ -447,7 +447,10 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 			update_option( 'stackable_block_edit_posts', $style_post_ids );
 
 			// Redirect to the edit page.
-			wp_redirect( get_edit_post_link( $style_post_id, 'url' ) );
+			$url = get_edit_post_link( $style_post_id, 'url' );
+			// When the Classic Editor plugin is enabled, force it to use the classic editor.
+			$url = add_query_arg( 'classic-editor__forget', '', $url );
+			wp_redirect( $url );
 			die();
 		}
 	}

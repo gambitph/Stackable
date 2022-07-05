@@ -10,6 +10,7 @@
 
 	iframe {
 		height: 100%;
+		width: 100%;
 	}
 
 	// Clicking on the map doesn't select the block.
@@ -21,7 +22,8 @@
 
 // This fixes first time height handler dragging.
 .stk-block-map {
-	height: 100%;
+	height: auto;
+	box-sizing: content-box;
 }
 
 .components-panel__body:not(.stk--uses-api-key) .stk--needs-api-key {
@@ -37,4 +39,18 @@
 
 .stk-block-map__api-key-notice {
 	margin: 0 0 16px;
+}
+
+// Hide Google API errors that show up in the LocationControl dropdown when an
+// API is not available from the provided API Key.
+.pac-container > :not(.pac-item) {
+	display: none !important;
+}
+
+// When inside a row block.
+.editor-styles-wrapper [data-type="core/group"] > [data-type="stackable/map"] {
+	.stk-block-map__canvas,
+	iframe {
+		width: 400px;
+	}
 }

@@ -22,7 +22,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const getStyleParams = () => {
 	return [
 		{
-			selector: '',
+			selector: '.stk-block-map__canvas, iframe',
 			styleRule: 'height',
 			attrName: 'height',
 			format: '%spx',

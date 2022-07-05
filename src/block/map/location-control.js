@@ -49,9 +49,7 @@ const LocationControl = props => {
 					props.onPlaceChange( place )
 				}
 			} )
-
-			// If we encounter errors, get rid of the error popup from Google.
-			removeGoogleApiKeyError( autocompleteRef.current )
+			window.autocomplete = autocomplete
 		}
 	}, [ ref.current, waitForGoogle ] )
 
@@ -60,15 +58,9 @@ const LocationControl = props => {
 			label={ __( 'Location', i18n ) }
 			ref={ ref }
 			value={ props.value }
-			help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geolocation API and Places API enabled.', i18n ) }
+			help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n ) }
 			onChange={ value => {
-				// If we encounter errors, get rid of the error popup from Google.
-				removeGoogleApiKeyError( autocompleteRef.current )
 				props.onTextChange( value )
-			} }
-			onFocus={ () => {
-				// If we encounter errors, get rid of the error popup from Google.
-				removeGoogleApiKeyError( autocompleteRef.current )
 			} }
 		/>
 	)
@@ -80,11 +72,3 @@ LocationControl.defaultProps = {
 }
 
 export default LocationControl
-
-// If the API Key provided doesn't have the Places API enabled, Google will show an ugly popup error, get rid of it.
-const removeGoogleApiKeyError = autocompleteRef => {
-	if ( document.querySelector( '.pac-container' ) ) {
-		window?.google?.maps?.event?.clearInstanceListeners( autocompleteRef )
-		document.querySelectorAll( '.pac-container' ).forEach( el => el.remove() )
-	}
-}

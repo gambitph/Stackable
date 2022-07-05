@@ -99,9 +99,10 @@ const Edit = props => {
 	} = attributes
 
 	const { stackable_google_maps_api_key: apiKey } = settings
-	const userCanManageApiKey = useMemo( () => {
-		currentUserHasCapability( 'manage_options' )
-	}, [] )
+	const userCanManageApiKey = useMemo( () => currentUserHasCapability( 'manage_options' ), [] )
+
+	// This just forces the tooltip to update.
+	const [ , setResizingHeight ] = useState( '' )
 
 	// Initialize Google API.
 	const [ isMapLoaded, setIsMapLoaded ] = useState( false )
@@ -482,6 +483,9 @@ const Edit = props => {
 					} }
 					minHeight={ 50 }
 					enable={ { bottom: true } }
+					onResize={ ( event, direction, elt, delta ) => {
+						setResizingHeight( delta.height ) // This forces the tooltip height to update.
+					} }
 					onResizeStop={ ( event, direction, elt, delta ) => {
 						let _height = height
 						if ( _height === '' || _height === undefined ) {
@@ -510,7 +514,8 @@ const Edit = props => {
 						/>
 					) }
 					{ resizableRef.current?.state?.isResizing && (
-						<style>{ `.stk-block.stk-${ attributes.uniqueId } { height: auto !important; }` }</style>
+						<style>{ `.stk-block.stk-${ attributes.uniqueId } { height: auto !important; }
+							.stk-block.stk-${ attributes.uniqueId } .stk-block-map__canvas { height: 100% !important; }` }</style>
 					) }
 					{ apiKey ? (
 						<div

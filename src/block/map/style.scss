@@ -1,13 +1,12 @@
 .stk-block-map {
-	height: 350px;
+	.stk-block-map__canvas,
+	iframe {
+		height: 350px;
+	}
 }
 .stk-block-map .stk-map-wrapper {
 	margin-left: var(--stk-alignment-margin-left, auto);
 	margin-right: var(--stk-alignment-margin-right, auto);
-}
-
-.stk-block-map__canvas {
-	height: 100%;
 }
 
 // Notice when the API Key was removed.
@@ -18,4 +17,9 @@
 	background: #ddd;
 	color: #000;
 	text-align: center;
+}
+
+// When inside a row block.
+.wp-block-group > .stk-block-map {
+	width: 400px;
 }
