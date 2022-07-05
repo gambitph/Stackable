@@ -245,7 +245,8 @@ const ShadowControl = props => {
 		if ( isPopoverOpen ) {
 			if ( ! event.target.closest( '.shadow-control__popover' ) &&
 				 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
-				 ! event.target.closest( '.components-color-picker' ) ) {
+				 ! event.target.closest( '.components-color-picker' ) &&
+				 ! event.target.closest( '.react-autosuggest__suggestions-container' ) ) {
 				setIsPopoverOpen( false )
 			}
 		}

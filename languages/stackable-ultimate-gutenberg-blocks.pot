@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.3\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-20T18:33:31+00:00\n"
+"POT-Creation-Date: 2022-06-30T18:36:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -113,6 +113,7 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/acf.php:196
 #: pro__premium_only/src/dynamic-content/sources/acf.php:224
 #: pro__premium_only/src/dynamic-content/sources/custom-fields.php:92
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:234
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:89
 #: pro__premium_only/src/dynamic-content/sources/site.php:72
 msgid "The field type provided is not valid."
@@ -120,6 +121,7 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:244
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:279
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:255
 #: pro__premium_only/src/dynamic-content/api.js:98
 #: pro__premium_only/src/dynamic-content/store/selectors.js:134
 msgid "%s Placeholder"
@@ -127,6 +129,9 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:315
 #: pro__premium_only/src/dynamic-content/sources/acf.php:494
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:302
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:468
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:515
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:305
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:534
 #: pro__premium_only/src/dynamic-content/sources/site.php:129
@@ -134,6 +139,7 @@ msgid "Text input is empty"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:362
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:349
 msgid "`whenTrueText` and `whenFalseText` arguments are required."
 msgstr ""
 
@@ -285,6 +291,22 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:234
 #: pro__premium_only/src/dynamic-content/components/taxonomy-control.js:75
 msgid "10th"
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:61
+msgid "Meta Box"
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:158
+msgid "Multiple select not supported in this field."
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:503
+msgid "You have not selected an image."
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:536
+msgid "Text fields are empty"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:27
@@ -512,7 +534,7 @@ msgid "(Untitled)"
 msgstr ""
 
 #: src/block/posts/index.php:103
-#: src/block/posts/index.php:546
+#: src/block/posts/index.php:547
 #: src/deprecated/v2/block/blog-posts/index.php:285
 #: src/deprecated/v2/block/blog-posts/index.php:540
 msgid "%d comment"
@@ -551,7 +573,7 @@ msgstr ""
 msgid "Continue Reading"
 msgstr ""
 
-#: src/block/posts/index.php:502
+#: src/block/posts/index.php:503
 #: src/deprecated/v2/block/blog-posts/index.php:261
 #: src/deprecated/v2/block/blog-posts/index.php:551
 msgid ", "
@@ -924,7 +946,7 @@ msgid "230+ Additional Library Designs"
 msgstr ""
 
 #: src/welcome/index.php:237
-#: pro__premium_only/src/format-types/dynamic-content/index.js:204
+#: pro__premium_only/src/format-types/dynamic-content/index.js:205
 msgid "Dynamic Content"
 msgstr ""
 
@@ -1382,7 +1404,7 @@ msgstr ""
 #: src/components/typography-control/index.js:116
 #: src/deprecated/v2/block/columns/edit.js:331
 #: src/deprecated/v2/block/container/edit.js:154
-#: src/format-types/highlight/index.js:203
+#: src/format-types/highlight/index.js:202
 msgid "Normal"
 msgstr ""
 
@@ -3401,7 +3423,7 @@ msgstr ""
 #: src/block-components/typography/edit.js:314
 #: src/components/icon-controls/index.js:191
 #: src/components/image-controls/index.js:223
-#: src/components/shadow-control/index.js:304
+#: src/components/shadow-control/index.js:305
 #: src/deprecated/v2/block/accordion/edit.js:214
 #: src/deprecated/v2/block/blockquote/edit.js:190
 #: src/deprecated/v2/block/blog-posts/edit.js:227
@@ -3508,7 +3530,7 @@ msgstr ""
 #: src/components/background-controls/index.js:384
 #: src/components/background-controls/index.js:399
 #: src/components/image-background-controls/index.js:109
-#: src/components/shadow-control/index.js:276
+#: src/components/shadow-control/index.js:277
 msgid "Custom"
 msgstr ""
 
@@ -3529,8 +3551,8 @@ msgid "Learn more about date formats"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/dynamic-content-fields.js:255
-#: pro__premium_only/src/format-types/dynamic-content/index.js:145
-#: src/components/dynamic-content-control/index.js:304
+#: pro__premium_only/src/format-types/dynamic-content/index.js:146
+#: src/components/dynamic-content-control/index.js:303
 msgid "Dynamic Fields"
 msgstr ""
 
@@ -3571,6 +3593,10 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/format-control.js:27
 msgid "Add your custom format by adding %s."
+msgstr ""
+
+#: pro__premium_only/src/dynamic-content/components/metabox-fieldset.js:38
+msgid "Text Field"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/new-tab-control.js:17
@@ -3707,34 +3733,34 @@ msgstr ""
 msgid "Blob %s"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:261
+#: pro__premium_only/src/plugins/copy-paste-styles/copy-paste.js:98
 msgid "Style copied successfully!"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:339
+#: pro__premium_only/src/plugins/copy-paste-styles/copy-paste.js:181
 msgid "Style pasted successfully!"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:364
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:413
-msgid "Copy Styles"
-msgstr ""
-
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:378
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:425
-msgid "Paste Styles"
-msgstr ""
-
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:396
-msgid "Copy & paste styles"
-msgstr ""
-
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:462
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:33
 msgid "Used to copy core/stackable block styles"
 msgstr ""
 
-#: pro__premium_only/src/plugins/copy-paste-styles/index.js:473
+#: pro__premium_only/src/plugins/copy-paste-styles/index.js:44
 msgid "Used to paste core/stackable block styles"
+msgstr ""
+
+#: pro__premium_only/src/plugins/copy-paste-styles/multiple-dropdown.js:76
+#: pro__premium_only/src/plugins/copy-paste-styles/toolbar-button.js:105
+msgid "Copy Styles"
+msgstr ""
+
+#: pro__premium_only/src/plugins/copy-paste-styles/multiple-dropdown.js:90
+#: pro__premium_only/src/plugins/copy-paste-styles/toolbar-button.js:121
+msgid "Paste Styles"
+msgstr ""
+
+#: pro__premium_only/src/plugins/copy-paste-styles/toolbar-button.js:88
+msgid "Copy & paste styles"
 msgstr ""
 
 #: pro__premium_only/src/plugins/editor-mode/disable-remove-block.js:35
@@ -4295,7 +4321,7 @@ msgstr ""
 #: src/deprecated/v2/block/pricing-box/edit.js:556
 #: src/deprecated/v2/block/testimonial/edit.js:471
 #: src/deprecated/v2/block/text/edit.js:247
-#: src/format-types/highlight/index.js:230
+#: src/format-types/highlight/index.js:229
 msgid "Text Color"
 msgstr ""
 
@@ -6071,7 +6097,7 @@ msgid "Apply hover effect when container is hovered"
 msgstr ""
 
 #: src/block/posts/edit.js:477
-#: src/format-types/highlight/index.js:240
+#: src/format-types/highlight/index.js:239
 msgid "Highlight Color"
 msgstr ""
 
@@ -6318,7 +6344,7 @@ msgstr ""
 msgid "Play Video"
 msgstr ""
 
-#: src/components/advanced-autosuggest-control/index.js:256
+#: src/components/advanced-autosuggest-control/index.js:323
 #: src/components/icon-search-popover/index.js:258
 msgid "No matches found"
 msgstr ""
@@ -6555,7 +6581,7 @@ msgstr ""
 msgid "Selected image"
 msgstr ""
 
-#: src/components/button-icon-popover-control/index.js:207
+#: src/components/button-icon-popover-control/index.js:206
 #: src/plugins/global-settings/block-defaults/index.js:91
 msgid "Edit"
 msgstr ""
@@ -6617,11 +6643,11 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: src/components/dynamic-content-control/index.js:317
+#: src/components/dynamic-content-control/index.js:316
 msgid "Say Hello to Dynamic Attributes 👋"
 msgstr ""
 
-#: src/components/dynamic-content-control/index.js:318
+#: src/components/dynamic-content-control/index.js:317
 msgid "Add dynamic values to your Stackable blocks. This feature is only available on Stackable Premium."
 msgstr ""
 
@@ -7051,7 +7077,7 @@ msgstr ""
 msgid "Advanced Shadow Options"
 msgstr ""
 
-#: src/components/shadow-control/index.js:284
+#: src/components/shadow-control/index.js:285
 msgid "Shadow Settings"
 msgstr ""
 
@@ -7175,7 +7201,7 @@ msgid "Border"
 msgstr ""
 
 #: src/deprecated/v2/block/blockquote/edit.js:75
-#: src/format-types/highlight/index.js:207
+#: src/format-types/highlight/index.js:206
 msgid "Highlight"
 msgstr ""
 
@@ -8162,17 +8188,17 @@ msgstr ""
 msgid "Please enable the option below"
 msgstr ""
 
-#: src/format-types/highlight/index.js:178
-#: src/format-types/highlight/index.js:182
+#: src/format-types/highlight/index.js:177
+#: src/format-types/highlight/index.js:181
 msgid "Color & Highlight"
 msgstr ""
 
-#: src/format-types/highlight/index.js:211
+#: src/format-types/highlight/index.js:210
 msgid "Low"
 msgstr ""
 
-#: src/format-types/highlight/index.js:258
-#: src/format-types/highlight/index.js:271
+#: src/format-types/highlight/index.js:257
+#: src/format-types/highlight/index.js:270
 msgid "Highlight Text"
 msgstr ""
 

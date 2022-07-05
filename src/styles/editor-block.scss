@@ -16,6 +16,11 @@
 		margin-inline: auto;
 	}
 }
+// Stackable blocks inside a Row block stretch the whole width.
+.editor-styles-wrapper [data-type="core/group"] > [data-type^="stackable/"] {
+	width: revert;
+	margin-inline: revert;
+}
 
 // Blocks
 .editor-styles-wrapper [data-block][data-type^="stackable/"],
