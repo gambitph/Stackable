@@ -1,7 +1,11 @@
 .stk-block-map {
-	.stk-block-map__canvas,
-	iframe {
+	.stk-block-map__canvas {
 		height: 350px;
+	}
+	iframe {
+		// Need to set important here to override the default of the embedded iframe
+		// if there's no API Key provided.
+		height: 350px !important;
 	}
 }
 .stk-block-map .stk-map-wrapper {
