@@ -112,7 +112,7 @@ export const Edit = props => {
 
 	const filteredColorTypes = useMemo( () => colorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, colorTypes, props ] )
 	const filteredShapeColorTypes = useMemo( () => shapeColorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, shapeColorTypes, props ] )
-	const showIconControl = !! getAttribute( 'icon' ) && hideControlsIfIconIsNotSet
+	const showIconControl = hideControlsIfIconIsNotSet ? !! getAttribute( 'icon' ) : true
 
 	const iconControls = (
 		<>
