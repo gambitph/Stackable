@@ -280,6 +280,7 @@ const EditorSettings = () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
 				setSettings( pick( response, [
+					'stackable_google_maps_api_key',
 					'stackable_enable_design_library',
 					'stackable_optimize_inline_css',
 					'stackable_enable_navigation_panel',
@@ -293,6 +294,37 @@ const EditorSettings = () => {
 	}, [] )
 
 	return <>
+		<AdminTextSetting
+			label={ __( 'Google Maps API Key', i18n ) }
+			value={ settings.stackable_google_maps_api_key }
+			type="text"
+			onChange={ value => {
+				clearTimeout( saveTimeout )
+				setSettings( {
+					...settings,
+					stackable_google_maps_api_key: value, // eslint-disable-line camelcase
+				} )
+				setSaveTimeout(
+					setTimeout( () => {
+						setIsBusy( true )
+						const model = new models.Settings( {
+							stackable_google_maps_api_key: value, // eslint-disable-line camelcase
+						} )
+						model.save().then( () => setIsBusy( false ) )
+					}, 400 )
+				)
+			} }
+			help={
+				<>
+					{ __(
+						'Enables additional features of the Stackable Map Block.',
+						i18n
+					) }
+						&nbsp;
+					<a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" rel="noreferrer">Generate API key</a>
+				</>
+				 }
+		></AdminTextSetting>
 		<AdminToggleSetting
 			label={ __( 'Design Library', i18n ) }
 			value={ settings.stackable_enable_design_library }
@@ -676,3 +708,4 @@ domReady( () => {
 		)
 	}
 } )
+

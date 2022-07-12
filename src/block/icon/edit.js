@@ -104,6 +104,12 @@ const Edit = props => {
 export default withQueryLoopContext( Edit )
 
 // When saving block styles, don't save the icons used by the block.
+//
+// We need to prevent this because the saved default icon also gets applied to
+// other blocks such as the blockquote block and the accordion block.
+//
+// TODO: if we can ensure that the icon block's default icon doesn't get applied
+// to those other blocks, then we can remove this.
 addFilter( 'stackable.icon.design.filtered-block-attributes', 'stackable/table-of-contents', attributes => {
 	return omit( attributes, [ 'icon', 'icon2' ] )
 } )

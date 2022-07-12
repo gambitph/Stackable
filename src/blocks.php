@@ -58,6 +58,7 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 		'icon',
 		'image',
 		'number-box',
+		'map',
 		'separator',
 		'spacer',
 		'subtitle',

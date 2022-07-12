@@ -19,9 +19,7 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useBlockHoverClass, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockHoverClass, useDeviceType } from '~stackable/hooks'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, ResizerTooltip,
 } from '~stackable/components'

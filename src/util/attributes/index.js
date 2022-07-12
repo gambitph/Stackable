@@ -195,7 +195,7 @@ export const CONTENT_ATTRIBUTES = [
 	// Text
 	'text',
 	// Icon
-	'icon',
+	// 'icon',
 	// Link
 	'linkHasLink',
 	'linkUrl',

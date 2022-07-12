@@ -243,6 +243,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= new =
+* Fixed: Editing Default Blocks now work when the Classic Editor plugin is activated
+
 = 3.3.5 =
 * New: Updated Stackable logos to the new one
 * Fixed: Font family picker cannot be clicked
