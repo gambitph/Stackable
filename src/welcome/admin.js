@@ -317,11 +317,11 @@ const EditorSettings = () => {
 			help={
 				<>
 					{ __(
-						'Enables additional features of the Stackable Map Block.',
+						'Adding a Google API Key enables additional features of the Stackable Map Block.',
 						i18n
 					) }
 						&nbsp;
-					<a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" rel="noreferrer">Generate API key</a>
+					<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">Learn more</a>
 				</>
 				 }
 		></AdminTextSetting>

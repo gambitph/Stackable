@@ -406,7 +406,7 @@ const Edit = props => {
 						} }
 						help={
 							<Fragment>
-								<ExternalLink href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block">
+								<ExternalLink href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#style">
 									{ __( 'Learn how to use Custom Map Styles', i18n ) }
 								</ExternalLink>
 							</Fragment>
