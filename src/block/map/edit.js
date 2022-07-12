@@ -540,7 +540,3 @@ export default compose(
 	withIsHovered,
 	withQueryLoopContext,
 )( Edit )
-
-// api key AIzaSyDAU72go6ci8LkbrOcEnlxL-s0WDZfVKhw
-
-// AIzaSyAdc7rKJDLYZr3cWNfwsFuPOfdWXyNceP8
