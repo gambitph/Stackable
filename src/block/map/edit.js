@@ -273,7 +273,7 @@ const Edit = props => {
 				>
 					{ userCanManageApiKey && ! apiKey && (
 						<Notice className="stk-block-map__api-key-notice" status="info" isDismissible={ false }>
-							{ __( 'Some map features require a Google API Key.' ) }
+							{ __( 'Some map features require a Google API Key.', i18n ) }
 							&nbsp;
 							<ExternalLink
 								type="link"
