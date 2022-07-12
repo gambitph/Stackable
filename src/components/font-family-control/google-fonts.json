@@ -187,6 +187,33 @@
     ]
   },
   {
+    "family": "Albert Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Aldrich",
     "variants": [
       "regular"
@@ -4431,6 +4458,66 @@
       "greek-ext",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Edu NSW ACT Foundation",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Edu QLD Beginner",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Edu SA Beginner",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Edu TAS Beginner",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Edu VIC WA NT Beginner",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
     ]
   },
   {
