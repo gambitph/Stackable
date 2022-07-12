@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-07-12T07:55:58+00:00\n"
+"POT-Creation-Date: 2022-07-12T15:49:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -9468,7 +9468,7 @@ msgid "Google Maps API Key"
 msgstr ""
 
 #: src/welcome/admin.js:319
-msgid "Enables additional features of the Stackable Map Block."
+msgid "Adding a Google API Key enables additional features of the Stackable Map Block."
 msgstr ""
 
 #: src/welcome/admin.js:340
