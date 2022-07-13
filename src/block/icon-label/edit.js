@@ -42,7 +42,7 @@ import { addFilter } from '@wordpress/hooks'
 export const TEMPLATE = [
 	[ 'stackable/icon', { contentAlign: 'left' } ],
 	[ 'stackable/heading', {
-		text: __( 'Icon Label' ), hasP: true, textTag: 'h4',
+		text: __( 'Icon Label', i18n ), hasP: true, textTag: 'h4',
 	} ],
 ]
 
