@@ -79,7 +79,7 @@ const Edit = props => {
 					initialOpen={ true }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Icon Gap' ) }
+						label={ __( 'Icon Gap', i18n ) }
 						attribute="iconGap"
 						responsive="all"
 						min={ 0 }
