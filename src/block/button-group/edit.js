@@ -97,7 +97,7 @@ const Edit = props => {
 				>
 					<FlexGapControls />
 					<AdvancedSelectControl
-						label={ __( 'Flex Wrap' ) }
+						label={ __( 'Flex Wrap', i18n ) }
 						attribute="flexWrap"
 						options={ [
 							{
