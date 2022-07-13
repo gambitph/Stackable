@@ -1,0 +1,10 @@
+{
+	"name": "stackable/map",
+	"title": "Map",
+	"description": "Embedded Google Map with advanced controls.",
+	"category": "common",
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"keywords": [ "location", "address" ],
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/map-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+}

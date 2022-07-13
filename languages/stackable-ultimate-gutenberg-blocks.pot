@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.3.5\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-30T18:36:24+00:00\n"
+"POT-Creation-Date: 2022-07-12T15:49:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -526,6 +526,10 @@ msgstr ""
 msgid "Font Awesome icon version to server"
 msgstr ""
 
+#: src/block/map/index.php:11
+msgid "This map block uses settings that require a Google Maps API key, but it is missing. Please enter your Google Maps API key in the Stackable settings, or edit this map block."
+msgstr ""
+
 #: src/block/posts/index.php:70
 #: src/deprecated/v2/block/blog-posts/index.php:247
 #: src/block/posts/util.js:160
@@ -640,7 +644,7 @@ msgid "Load version 2 frontend styles and scripts"
 msgstr ""
 
 #: src/deprecated/v2/init.php:82
-#: src/welcome/admin.js:576
+#: src/welcome/admin.js:608
 msgid "Load version 2 blocks in the editor"
 msgstr ""
 
@@ -677,32 +681,36 @@ msgid "Blocks that should be hidden in the block editor"
 msgstr ""
 
 #: src/editor-settings.php:55
-msgid "Hides the Stackable Design Library button on the top of the editor"
+msgid "Enables additional customization options for the Map Block."
 msgstr ""
 
 #: src/editor-settings.php:67
-msgid "Optimizes inlined CSS styles, combines together similar selectors"
+msgid "Hides the Stackable Design Library button on the top of the editor"
 msgstr ""
 
 #: src/editor-settings.php:79
-msgid "Adds a persistent Navigation panel across all Stackable blocks"
+msgid "Optimizes inlined CSS styles, combines together similar selectors"
 msgstr ""
 
 #: src/editor-settings.php:91
-msgid "The width used when a Columns block has its Content Width set to center."
+msgid "Adds a persistent Navigation panel across all Stackable blocks"
 msgstr ""
 
 #: src/editor-settings.php:103
-msgid "The width used when a Columns block has its Content Width set to wide."
+msgid "The width used when a Columns block has its Content Width set to center."
 msgstr ""
 
 #: src/editor-settings.php:115
-#: src/welcome/admin.js:392
-msgid "Collapse other inspector panels when opening another, keeping only one open at a time."
+msgid "The width used when a Columns block has its Content Width set to wide."
 msgstr ""
 
 #: src/editor-settings.php:127
-#: src/welcome/admin.js:410
+#: src/welcome/admin.js:424
+msgid "Collapse other inspector panels when opening another, keeping only one open at a time."
+msgstr ""
+
+#: src/editor-settings.php:139
+#: src/welcome/admin.js:442
 msgid "Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns."
 msgstr ""
 
@@ -891,7 +899,7 @@ msgstr ""
 #: src/components/base-control2/hover-state-toggle.js:65
 #: src/components/variation-picker/index.js:75
 #: src/help/help-tooltip.js:106
-#: src/welcome/admin.js:412
+#: src/welcome/admin.js:444
 #: src/welcome/wizard.js:239
 #: src/welcome/wizard.js:264
 msgid "Learn more"
@@ -1497,7 +1505,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:25
 #: pro__premium_only/src/features/icon-controls/index.js:250
-#: src/block-components/icon/edit.js:263
+#: src/block-components/icon/edit.js:280
 msgid "Background Shape"
 msgstr ""
 
@@ -1511,7 +1519,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:38
 #: pro__premium_only/src/features/icon-controls/index.js:269
-#: src/block-components/icon/edit.js:52
+#: src/block-components/icon/edit.js:50
 msgid "Shape Color"
 msgstr ""
 
@@ -1626,7 +1634,7 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:97
 #: pro__premium_only/src/features/icon-controls/index.js:132
 #: src/block-components/button/edit.js:180
-#: src/block-components/icon/edit.js:36
+#: src/block-components/icon/edit.js:34
 #: src/block/notification/edit.js:153
 #: src/components/icon-controls/index.js:107
 #: src/deprecated/v2/block/icon-list/edit.js:143
@@ -1636,7 +1644,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/icon/multicolor-controls.js:55
 #: pro__premium_only/src/features/icon-controls/index.js:145
-#: src/block-components/icon/edit.js:156
+#: src/block-components/icon/edit.js:157
 #: src/block/icon-list/edit.js:292
 #: src/components/icon-controls/index.js:259
 #: src/deprecated/v2/block/icon-list/edit.js:162
@@ -1744,6 +1752,8 @@ msgstr ""
 #: src/block/icon-button/block-styles.js:48
 #: src/block/image-box/variations.js:34
 #: src/block/image-box/variations.js:35
+#: src/block/map/map-styles.js:23
+#: src/block/map/map-styles.js:24
 #: src/block/notification/variations.js:34
 #: src/block/notification/variations.js:37
 #: src/block/posts/variations.js:37
@@ -2237,10 +2247,11 @@ msgstr ""
 #: src/block/divider/edit.js:71
 #: src/block/icon-label/edit.js:77
 #: src/block/icon-list/edit.js:199
+#: src/block/map/edit.js:269
 #: src/block/notification/edit.js:108
 #: src/block/posts/edit.js:169
 #: src/block/separator/edit.js:77
-#: src/block/spacer/edit.js:98
+#: src/block/spacer/edit.js:96
 #: src/block/table-of-contents/edit.js:347
 #: src/block/text/edit.js:102
 #: src/block/video-popup/edit.js:88
@@ -3209,9 +3220,9 @@ msgid "Column Background"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/count-up/index.js:60
-#: src/block-components/icon/edit.js:115
-#: src/block-components/icon/edit.js:121
-#: src/block-components/icon/edit.js:283
+#: src/block-components/icon/edit.js:120
+#: src/block-components/icon/edit.js:268
+#: src/block-components/icon/edit.js:294
 #: src/block/icon-list/edit.js:260
 #: src/components/button-controls/index.js:423
 #: src/components/icon-control/index.js:82
@@ -3247,7 +3258,7 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/image-box/index.js:32
 #: src/block-components/advanced/edit.js:78
-#: src/block-components/icon/edit.js:181
+#: src/block-components/icon/edit.js:182
 #: src/components/button-controls/index.js:452
 #: src/components/four-number-control/index.js:205
 #: src/components/four-range-control/index.js:261
@@ -3256,7 +3267,7 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/image-box/index.js:33
 #: src/block-components/advanced/edit.js:79
-#: src/block-components/icon/edit.js:182
+#: src/block-components/icon/edit.js:183
 #: src/components/button-controls/index.js:455
 #: src/components/four-number-control/index.js:181
 #: src/components/four-range-control/index.js:221
@@ -3658,8 +3669,8 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:188
 #: src/block-components/button/edit.js:120
 #: src/block-components/helpers/backgrounds/edit.js:55
-#: src/block-components/icon/edit.js:32
-#: src/block-components/icon/edit.js:48
+#: src/block-components/icon/edit.js:30
+#: src/block-components/icon/edit.js:46
 #: src/block-components/image/edit.js:221
 #: src/block-components/typography/edit.js:255
 #: src/components/background-controls/index.js:49
@@ -4739,7 +4750,7 @@ msgid "Say Hello to Gorgeous Icons 👋"
 msgstr ""
 
 #: src/block-components/icon/edit.js:128
-#: src/block-components/icon/edit.js:268
+#: src/block-components/icon/edit.js:259
 #: src/components/icon-controls/index.js:68
 msgid "Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium"
 msgstr ""
@@ -4755,47 +4766,47 @@ msgstr ""
 msgid "Icon Size"
 msgstr ""
 
-#: src/block-components/icon/edit.js:167
+#: src/block-components/icon/edit.js:168
 #: src/block/icon-list/edit.js:303
 #: src/components/icon-controls/index.js:272
 #: src/deprecated/v2/block/icon-list/edit.js:172
 msgid "Icon Rotation"
 msgstr ""
 
-#: src/block-components/icon/edit.js:178
+#: src/block-components/icon/edit.js:179
 #: src/components/button-controls/index.js:448
 msgid "Icon Position"
 msgstr ""
 
-#: src/block-components/icon/edit.js:189
+#: src/block-components/icon/edit.js:190
 #: src/block/icon-label/edit.js:82
 #: src/block/icon-list/edit.js:230
 #: src/block/table-of-contents/edit.js:387
 msgid "Icon Gap"
 msgstr ""
 
-#: src/block-components/icon/edit.js:201
-msgid "Icon Shape"
-msgstr ""
-
-#: src/block-components/icon/edit.js:217
+#: src/block-components/icon/edit.js:215
 msgid "Shape Border Radius"
 msgstr ""
 
-#: src/block-components/icon/edit.js:228
+#: src/block-components/icon/edit.js:226
 msgid "Shape Padding"
 msgstr ""
 
-#: src/block-components/icon/edit.js:238
+#: src/block-components/icon/edit.js:236
 msgid "Shape Outline Width"
 msgstr ""
 
-#: src/block-components/icon/edit.js:250
+#: src/block-components/icon/edit.js:248
 msgid "Shape Outline Color"
 msgstr ""
 
-#: src/block-components/icon/edit.js:267
+#: src/block-components/icon/edit.js:258
 msgid "Say Hello to Background Shapes 👋"
+msgstr ""
+
+#: src/block-components/icon/edit.js:272
+msgid "Icon Shape"
 msgstr ""
 
 #: src/block-components/image/edit.js:91
@@ -4824,8 +4835,9 @@ msgstr ""
 #: src/block-components/separator/edit.js:67
 #: src/block/heading/edit.js:142
 #: src/block/heading/edit.js:188
+#: src/block/map/edit.js:329
 #: src/block/separator/edit.js:82
-#: src/block/spacer/edit.js:103
+#: src/block/spacer/edit.js:101
 #: src/components/resizer-tooltip/index.js:149
 #: src/deprecated/v2/block/columns/edit.js:329
 #: src/deprecated/v2/block/container/edit.js:151
@@ -4852,6 +4864,7 @@ msgid "Image Alt"
 msgstr ""
 
 #: src/block-components/image/edit.js:163
+#: src/block/map/edit.js:340
 msgid "Zoom"
 msgstr ""
 
@@ -5932,6 +5945,116 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
+#: src/block/map/edit.js:276
+msgid "Some map features require a Google API Key."
+msgstr ""
+
+#: src/block/map/edit.js:283
+msgid "Add API key here."
+msgstr ""
+
+#: src/block/map/edit.js:290
+#: src/block/map/location-control.js:58
+msgid "Location"
+msgstr ""
+
+#: src/block/map/edit.js:292
+msgid "Enter an address or location"
+msgstr ""
+
+#: src/block/map/edit.js:349
+msgid "Enable Dragging"
+msgstr ""
+
+#: src/block/map/edit.js:355
+msgid "Full Screen Button"
+msgstr ""
+
+#: src/block/map/edit.js:361
+msgid "Map Type Buttons"
+msgstr ""
+
+#: src/block/map/edit.js:367
+msgid "Street View Button"
+msgstr ""
+
+#: src/block/map/edit.js:373
+msgid "Zoom Buttons"
+msgstr ""
+
+#: src/block/map/edit.js:380
+msgid "Map Style"
+msgstr ""
+
+#: src/block/map/edit.js:398
+msgid "Custom Map Style (Paste JSON here)"
+msgstr ""
+
+#: src/block/map/edit.js:410
+msgid "Learn how to use Custom Map Styles"
+msgstr ""
+
+#: src/block/map/edit.js:418
+msgid "Map Marker"
+msgstr ""
+
+#: src/block/map/edit.js:440
+msgid "Uploaded Icon and Icon Color settings are not fully compatible."
+msgstr ""
+
+#: src/block/map/edit.js:444
+msgid "Horizontal Icon Anchor Point"
+msgstr ""
+
+#: src/block/map/edit.js:454
+msgid "Vertical Icon Anchor Point"
+msgstr ""
+
+#: src/block/map/edit.js:501
+msgid "Map"
+msgstr ""
+
+#: src/block/map/edit.js:527
+msgid "Embedded content from Google Map Platform."
+msgstr ""
+
+#: src/block/map/example.js:13
+msgid "Map Example"
+msgstr ""
+
+#: src/block/map/location-control.js:61
+msgid "Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled."
+msgstr ""
+
+#: src/block/map/map-styles.js:29
+#: src/block/map/map-styles.js:30
+msgid "Silver"
+msgstr ""
+
+#: src/block/map/map-styles.js:194
+#: src/block/map/map-styles.js:195
+msgid "Retro"
+msgstr ""
+
+#: src/block/map/map-styles.js:414
+#: src/block/map/map-styles.js:415
+msgid "Dark"
+msgstr ""
+
+#: src/block/map/map-styles.js:605
+#: src/block/map/map-styles.js:606
+msgid "Night"
+msgstr ""
+
+#: src/block/map/map-styles.js:771
+#: src/block/map/map-styles.js:772
+msgid "Aubergine"
+msgstr ""
+
+#: src/block/map/save.js:98
+msgid "Embedded content from Google Maps Platform."
+msgstr ""
+
 #: src/block/notification/edit.js:114
 #: src/deprecated/v2/block/notification/edit.js:161
 msgid "Notification Type"
@@ -6226,7 +6349,7 @@ msgstr ""
 msgid "Sectioned"
 msgstr ""
 
-#: src/block/spacer/edit.js:152
+#: src/block/spacer/edit.js:150
 msgid "Spacer"
 msgstr ""
 
@@ -9078,7 +9201,7 @@ msgid "Rearrange and move columns around by dragging each handle"
 msgstr ""
 
 #: src/plugins/design-library-button/design-library-button.js:39
-#: src/welcome/admin.js:297
+#: src/welcome/admin.js:329
 msgid "Design Library"
 msgstr ""
 
@@ -9340,115 +9463,123 @@ msgstr ""
 msgid "See example"
 msgstr ""
 
-#: src/welcome/admin.js:308
-msgid "Adds a button on the top of the editor which gives access to a collection of pre-made block designs."
+#: src/welcome/admin.js:298
+msgid "Google Maps API Key"
 msgstr ""
 
-#: src/welcome/admin.js:309
-#: src/welcome/admin.js:325
-#: src/welcome/admin.js:341
-#: src/welcome/admin.js:393
-#: src/welcome/admin.js:415
-msgid "Disable feature"
-msgstr ""
-
-#: src/welcome/admin.js:310
-#: src/welcome/admin.js:326
-#: src/welcome/admin.js:342
-#: src/welcome/admin.js:394
-#: src/welcome/admin.js:416
-msgid "Enable feature"
-msgstr ""
-
-#: src/welcome/admin.js:313
-msgid "Optimize Inline CSS"
-msgstr ""
-
-#: src/welcome/admin.js:324
-msgid "Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults."
-msgstr ""
-
-#: src/welcome/admin.js:329
-msgid "Navigation Panel"
+#: src/welcome/admin.js:319
+msgid "Adding a Google API Key enables additional features of the Stackable Map Block."
 msgstr ""
 
 #: src/welcome/admin.js:340
-msgid "A block Navigation panel that floats at the bottom of the inspector that helps with adjusting the different blocks in your column layout."
+msgid "Adds a button on the top of the editor which gives access to a collection of pre-made block designs."
+msgstr ""
+
+#: src/welcome/admin.js:341
+#: src/welcome/admin.js:357
+#: src/welcome/admin.js:373
+#: src/welcome/admin.js:425
+#: src/welcome/admin.js:447
+msgid "Disable feature"
+msgstr ""
+
+#: src/welcome/admin.js:342
+#: src/welcome/admin.js:358
+#: src/welcome/admin.js:374
+#: src/welcome/admin.js:426
+#: src/welcome/admin.js:448
+msgid "Enable feature"
 msgstr ""
 
 #: src/welcome/admin.js:345
+msgid "Optimize Inline CSS"
+msgstr ""
+
+#: src/welcome/admin.js:356
+msgid "Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults."
+msgstr ""
+
+#: src/welcome/admin.js:361
+msgid "Navigation Panel"
+msgstr ""
+
+#: src/welcome/admin.js:372
+msgid "A block Navigation panel that floats at the bottom of the inspector that helps with adjusting the different blocks in your column layout."
+msgstr ""
+
+#: src/welcome/admin.js:377
 msgid "Nested Block Width"
 msgstr ""
 
-#: src/welcome/admin.js:360
+#: src/welcome/admin.js:392
 msgid "The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula."
 msgstr ""
 
-#: src/welcome/admin.js:363
+#: src/welcome/admin.js:395
 msgid "Nested Wide Block Width"
 msgstr ""
 
-#: src/welcome/admin.js:378
+#: src/welcome/admin.js:410
 msgid "The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula."
 msgstr ""
 
-#: src/welcome/admin.js:381
+#: src/welcome/admin.js:413
 msgid "Auto-Collapse Panels"
 msgstr ""
 
-#: src/welcome/admin.js:397
+#: src/welcome/admin.js:429
 msgid "Block Linking (Beta)"
 msgstr ""
 
-#: src/welcome/admin.js:467
+#: src/welcome/admin.js:499
 msgid "Tablet Breakpoint"
 msgstr ""
 
-#: src/welcome/admin.js:474
+#: src/welcome/admin.js:506
 msgid "Mobile Breakpoint"
 msgstr ""
 
-#: src/welcome/admin.js:509
+#: src/welcome/admin.js:541
 msgid "Force Typography Styles"
 msgstr ""
 
-#: src/welcome/admin.js:512
+#: src/welcome/admin.js:544
 msgid "Not forced"
 msgstr ""
 
-#: src/welcome/admin.js:513
+#: src/welcome/admin.js:545
 msgid "Force styles"
 msgstr ""
 
-#: src/welcome/admin.js:553
+#: src/welcome/admin.js:585
 msgid "Show \"Go premium\" notices"
 msgstr ""
 
-#: src/welcome/admin.js:562
+#: src/welcome/admin.js:594
 msgid "Don't show help video tooltips"
 msgstr ""
 
-#: src/welcome/admin.js:569
+#: src/welcome/admin.js:601
 msgid "🏠 Migration Settings"
 msgstr ""
 
-#: src/welcome/admin.js:571
+#: src/welcome/admin.js:603
 msgid "Migrating from version 2 to version 3?"
 msgstr ""
 
-#: src/welcome/admin.js:573
+#: src/welcome/admin.js:605
 msgid "Learn more about migration and the settings below"
 msgstr ""
 
-#: src/welcome/admin.js:589
+#: src/welcome/admin.js:621
 msgid "Load version 2 blocks in the editor only when the page was using version 2 blocks"
 msgstr ""
 
-#: src/welcome/admin.js:603
+#: src/welcome/admin.js:635
 msgid "Load version 2 frontend block stylesheet and scripts for backward compatibility"
 msgstr ""
 
-#: src/welcome/admin.js:611
+#: src/welcome/admin.js:643
 msgid "Load version 1 block stylesheet for backward compatibility"
 msgstr ""
 
@@ -9847,6 +9978,26 @@ msgstr ""
 #: src/block/image/block.json
 msgctxt "block description"
 msgid "An image with advanced controls to make a visual statement."
+msgstr ""
+
+#: src/block/map/block.json
+msgctxt "block title"
+msgid "Map"
+msgstr ""
+
+#: src/block/map/block.json
+msgctxt "block description"
+msgid "Embedded Google Map with advanced controls."
+msgstr ""
+
+#: src/block/map/block.json
+msgctxt "block keyword"
+msgid "location"
+msgstr ""
+
+#: src/block/map/block.json
+msgctxt "block keyword"
+msgid "address"
 msgstr ""
 
 #: src/block/notification/block.json

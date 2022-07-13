@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
 Tested up to: 6.0.0
 Requires PHP: 5.7
-Stable tag: 3.3.5
+Stable tag: 3.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -55,6 +55,7 @@ Special Blocks
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Accordion Block — [View Block](https://wpstackable.com/accordion-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Map Block — [View Block](https://wpstackable.com/map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Icon Label Block
 - Social Buttons Block
 - Card Block — [View Block](https://wpstackable.com/card-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -146,6 +147,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.1 Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -242,6 +244,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.4.0 =
+[Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+* New: Map Block
+* Fixed: Editing Default Blocks now work when the Classic Editor plugin is activated
 
 = 3.3.5 =
 * New: Updated Stackable logos to the new one

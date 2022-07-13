@@ -1,0 +1,29 @@
+.stk-block-map {
+	.stk-block-map__canvas {
+		height: 350px;
+	}
+	iframe {
+		// Need to set important here to override the default of the embedded iframe
+		// if there's no API Key provided.
+		height: 350px !important;
+	}
+}
+.stk-block-map .stk-map-wrapper {
+	margin-left: var(--stk-alignment-margin-left, auto);
+	margin-right: var(--stk-alignment-margin-right, auto);
+}
+
+// Notice when the API Key was removed.
+.stk-block-map.stk--uses-api-key.stk--missing-api-key .stk-block-map__canvas {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #ddd;
+	color: #000;
+	text-align: center;
+}
+
+// When inside a row block.
+.wp-block-group > .stk-block-map {
+	width: 400px;
+}
