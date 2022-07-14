@@ -1,4 +1,12 @@
-/* External dependencies
+/**
+ * External dependencies
+ */
+import {
+	i18n, showProNotice, isPro,
+} from 'stackable'
+
+/**
+ * Internal dependencies
  */
 import {
 	InspectorStyleControls,
@@ -12,50 +20,14 @@ import {
 	ProControlButton,
 	ProControl,
 } from '~stackable/components'
-import {
-	i18n, showProNotice, isPro,
-} from 'stackable'
 import { useAttributeEditHandlers } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Fragment, useMemo } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-
-const colorTypes = applyFilters( 'stackable.block-component.icon.color-type', [
-	{
-		value: '',
-		title: __( 'Single', i18n ),
-		controls: ( { hover } ) => {
-			return (
-				<ColorPaletteControl
-					label={ __( 'Icon Color', i18n ) }
-					attribute="iconColor1"
-					hover={ hover }
-				/>
-			)
-		},
-	},
-] )
-
-const shapeColorTypes = applyFilters( 'stackable.block-component.icon.shape-color-type', [
-	{
-		value: '',
-		title: __( 'Single', i18n ),
-		controls: () => {
-			return (
-				<ColorPaletteControl
-					label={ __( 'Shape Color', i18n ) }
-					attribute="shapeColor1"
-					hover="all"
-					hasTransparent={ true }
-				/>
-			)
-		},
-	},
-] )
 
 export const Edit = props => {
 	const {
@@ -82,37 +54,21 @@ export const Edit = props => {
 		...props, getAttribute, updateAttributeHandler,
 	}
 
-	const { colorControls, shapeColorControls } = useMemo( () => {
-		let colorControls = null
-		let shapeColorControls = null
-		const selectedOption = colorTypes.find( colorType => colorType.value === ( getAttribute( 'iconColorType' ) || '' ) )
-		const selectedShapeOption = shapeColorTypes.find( colorType => colorType.value === ( getAttribute( 'shapeColorType' ) || '' ) )
-		if ( selectedOption ) {
-			if ( selectedOption.hasOwnProperty( 'show' ) ) {
-				if ( selectedOption.show( propsToPass ) ) {
-					colorControls = selectedOption.controls( propsToPass )
-				}
-			}
-
-			colorControls = selectedOption.controls( propsToPass )
-		}
-
-		if ( selectedShapeOption ) {
-			if ( selectedShapeOption.hasOwnProperty( 'show' ) ) {
-				if ( selectedShapeOption.show( propsToPass ) ) {
-					shapeColorControls = selectedShapeOption.controls( propsToPass )
-				}
-			}
-
-			shapeColorControls = selectedShapeOption.controls( propsToPass )
-		}
-
-		return { colorControls, shapeColorControls }
-	}, [ getAttribute, updateAttributeHandler, colorTypes, props ] )
-
-	const filteredColorTypes = useMemo( () => colorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, colorTypes, props ] )
-	const filteredShapeColorTypes = useMemo( () => shapeColorTypes.filter( colorType => colorType.hasOwnProperty( 'show' ) ? colorType.show( propsToPass ) : true ), [ getAttribute, updateAttributeHandler, shapeColorTypes, props ] )
 	const showIconControl = hideControlsIfIconIsNotSet ? !! getAttribute( 'icon' ) : true
+
+	const filteredColorTypes = applyFilters( 'stackable.block-component.icon.color-types', [
+		{
+			value: '',
+			title: __( 'Single', i18n ),
+		},
+	], props )
+
+	const filteredShapeColorTypes = applyFilters( 'stackable.block-component.icon.shape-color-types', [
+		{
+			value: '',
+			title: __( 'Single', i18n ),
+		},
+	], props )
 
 	const iconControls = (
 		<>
@@ -139,7 +95,19 @@ export const Edit = props => {
 				/>
 			) }
 
-			{ showIconControl && colorControls }
+			{ /* { showIconControl && colorControls } */ }
+			{ showIconControl && (
+				<>
+					{ ( getAttribute( 'iconColorType' ) || '' ) === '' && (
+						<ColorPaletteControl
+							label={ __( 'Icon Color', i18n ) }
+							attribute="iconColor1"
+							hover={ hover }
+						/>
+					) }
+					{ applyFilters( 'stackable.block-component.icon.color-controls', null, propsToPass ) }
+				</>
+			) }
 
 			{ showIconControl && <AdvancedRangeControl
 				label={ __( 'Icon Size', i18n ) }
@@ -209,7 +177,15 @@ export const Edit = props => {
 				/>
 			) }
 
-			{ shapeColorControls }
+			{ ( getAttribute( 'shapeColorType' ) || '' ) === '' && (
+				<ColorPaletteControl
+					label={ __( 'Shape Color', i18n ) }
+					attribute="shapeColor1"
+					hover="all"
+					hasTransparent={ true }
+				/>
+			) }
+			{ applyFilters( 'stackable.block-component.icon.shape-color-controls', null, propsToPass ) }
 
 			<AdvancedRangeControl
 				label={ __( 'Shape Border Radius', i18n ) }
