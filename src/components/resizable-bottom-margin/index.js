@@ -1,23 +1,25 @@
 /**
- * External dependencies
+ * Internal dependencies
  */
-import classnames from 'classnames'
-import { range } from 'lodash'
+import { useControlHandlers } from '../base-control2/hooks'
+import { getAttributeName } from '~stackable/util'
 import {
 	useBlockAttributes, useDeviceType, useWithShift,
 } from '~stackable/hooks'
 
 /**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { range } from 'lodash'
+
+/**
  * WordPress dependencies
  */
-import {
-	useState, useEffect, useCallback, memo, useMemo,
-} from '@wordpress/element'
+import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useControlHandlers } from '../base-control2/hooks'
-import { getAttributeName } from '~stackable/util'
 
 const DEFAULT_BOTTOM_MARGINS = {
 	Desktop: 24,
@@ -66,7 +68,7 @@ const ResizableBottomMarginSingle = props => {
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
-	const getInitialHeight = useCallback( () => {
+	const getInitialHeight = () => {
 		let currentMargin = props.value ? parseFloat( props.value ) : 0
 		if ( ! props.value && props.previewSelector ) {
 			const el = document.querySelector( props.previewSelector )
@@ -76,17 +78,11 @@ const ResizableBottomMarginSingle = props => {
 		}
 		setInitialHeight( currentMargin || 0 )
 		return currentMargin || 0
-	}, [ props.value, props.previewSelector ] )
+	}
 
 	useEffect( () => {
 		getInitialHeight()
 	}, [ props.previewSelector ] )
-
-	const size = useMemo( () => {
-		return {
-			height: props.value || props.value === 0 ? props.value : initialHeight || defaultBottomMargin,
-		}
-	}, [ props.value, initialHeight, defaultBottomMargin ] )
 
 	return (
 		<ResizableBox
@@ -94,7 +90,9 @@ const ResizableBottomMarginSingle = props => {
 			minHeight="0"
 			handleStyles={ HANDLE_STYLES }
 			enable={ ENABLE }
-			size={ size }
+			size={ {
+				height: props.value || props.value === 0 ? props.value : initialHeight || defaultBottomMargin,
+			} }
 			snap={ snapWidths }
 			snapGap={ 5 }
 			onResizeStart={ () => {
@@ -142,37 +140,41 @@ const changeCallback = ( value, originalValue ) => {
 	}
 }
 
-const ResizableBottomMargin = memo( props => {
+const getValue = ( _value, attribute, attributes, device ) => {
+	let value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
+
+	// If there's a value already, use that. Or check the other inherited values.
+	if ( value || value === 0 ) {
+		return value
+	}
+
+	// Try and get an inherited value (e.g. if no tablet is supplied, get the desktop value)
+	const deviceSteps = device === 'Mobile' ? [ 'mobile', 'tablet', 'desktop' ]
+		: device === 'Tablet' ? [ 'tablet', 'desktop' ]
+			: [ 'desktop' ]
+
+	deviceSteps.some( device => {
+		const _value = attributes[ getAttributeName( attribute, device ) ]
+		if ( _value !== '' && typeof _value !== 'undefined' ) {
+			value = value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
+			if ( value || value === 0 ) {
+				return true
+			}
+		}
+		return false
+	} )
+
+	return value
+}
+
+const ResizableBottomMargin = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 	const device = useDeviceType()
 
-	const valueCallback = useCallback( _value => {
-		let value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
-
-		// If there's a value already, use that. Or check the other inherited values.
-		if ( value || value === 0 ) {
-			return value
-		}
-
-		// Try and get an inherited value (e.g. if no tablet is supplied, get the desktop value)
-		const deviceSteps = device === 'Mobile' ? [ 'mobile', 'tablet', 'desktop' ]
-			: device === 'Tablet' ? [ 'tablet', 'desktop' ]
-				: [ 'desktop' ]
-
-		deviceSteps.some( device => {
-			const _value = attributes[ getAttributeName( props.attribute, device ) ]
-			if ( _value !== '' && typeof _value !== 'undefined' ) {
-				value = value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
-				if ( value || value === 0 ) {
-					return true
-				}
-			}
-			return false
-		} )
-
-		return value
-	}, [ props.attribute, attributes, device ] )
+	const valueCallback = _value => {
+		return getValue( _value, props.attribute, attributes, device )
+	}
 
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, false, valueCallback, changeCallback )
 
@@ -188,7 +190,7 @@ const ResizableBottomMargin = memo( props => {
 			onChange={ onChange }
 		/>
 	)
-} )
+}
 
 ResizableBottomMargin.defaultProps = {
 	previewSelector: '', // Selector of the element where the margin is applied e.g. .stk-card-group

@@ -116,26 +116,17 @@ export const Icon = props => {
 
 	const ShapeComp = useMemo( () => getShapeSVG( getAttribute( 'backgroundShape' ) || 'blob1' ), [ getAttribute( 'backgroundShape' ) ] )
 
-	const linearGradient = useMemo( () =>
-		hasLinearGradient
-			? (
-				<LinearGradient
-					id={ 'linear-gradient-' + attributes.uniqueId }
-					iconColor1={ getAttribute( 'iconColor1' ) }
-					iconColor2={ getAttribute( 'iconColor2' ) }
-				/>
-			)
-			: <Fragment />,
-	[
-		attributes.uniqueId,
-		getAttribute( 'iconColorGradientDirection' ),
-		getAttribute( 'iconColor1' ),
-		getAttribute( 'iconColor2' ),
-	] )
-
 	if ( ! getAttribute( 'icon' ) ) {
 		return null
 	}
+
+	const linearGradient = hasLinearGradient ? (
+		<LinearGradient
+			id={ 'linear-gradient-' + attributes.uniqueId }
+			iconColor1={ getAttribute( 'iconColor1' ) }
+			iconColor2={ getAttribute( 'iconColor2' ) }
+		/>
+	) : <Fragment />
 
 	const classNames = classnames(
 		[ 'stk--svg-wrapper' ],

@@ -50,6 +50,17 @@ const TYPOGRAPHY_SHADOWS = [
 	'0px 0px 100px rgba(71, 73, 79, 1)',
 ]
 
+const GRADIENT_OPTIONS = [
+	{
+		value: '',
+		title: __( 'Single', i18n ),
+	},
+	{
+		value: 'gradient',
+		title: __( 'Gradient', i18n ),
+	},
+]
+
 export const Controls = props => {
 	const {
 		hasAlign,
@@ -249,16 +260,7 @@ export const Controls = props => {
 				<>
 					{ hasGradient && (
 						<AdvancedToolbarControl
-							controls={ [
-								{
-									value: '',
-									title: __( 'Single', i18n ),
-								},
-								{
-									value: 'gradient',
-									title: __( 'Gradient', i18n ),
-								},
-							] }
+							controls={ GRADIENT_OPTIONS }
 							isSmall={ true }
 							fullwidth={ false }
 							attribute={ attributeName( 'textColorType' ) }

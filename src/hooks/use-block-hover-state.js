@@ -117,9 +117,6 @@ export const useBlockHoverState = () => {
 	const { clientId } = useBlockEditContext()
 
 	const { updateHoverState } = useDispatch( 'stackable/hover-state' )
-	const setHoverState = useCallback( state => {
-		updateHoverState( state )
-	}, [] )
 
 	const hoverState = useSelect(
 		select => select( 'stackable/hover-state' ).getHoverState(),
@@ -185,7 +182,7 @@ export const useBlockHoverState = () => {
 		currentHoverState = 'collapsed'
 	}
 
-	return [ currentHoverState, setHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
+	return [ currentHoverState, updateHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
 }
 
 export const useBlockHoverClass = () => {

@@ -11,14 +11,7 @@ import { useGlobalState } from '~stackable/util/global-state'
 /**
  * WordPress dependencies
  */
-import {
-	Fragment,
-	useState,
-	useMemo,
-	useEffect,
-	useCallback,
-} from '@wordpress/element'
-import { addFilter, removeFilter } from '@wordpress/hooks'
+import { Fragment, useState } from '@wordpress/element'
 import { FormToggle, PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -31,63 +24,16 @@ const PanelAdvancedSettings = props => {
 
 	const [ isOpen, setIsOpen ] = useState( initialOpen )
 	const [ showAdvanced, setShowAdvanced ] = useState( props.initialAdvanced )
-	const instanceId = useMemo( () => parseInt( ( Math.random() * 1000000 ), 10 ), [] )
 
 	const hasToggle = props.hasToggle && props.onChange
 
-	const checkIfAttributeShouldToggleOn = useCallback( ( attributes, blockProps ) => {
-		if ( ! props.hasToggle || ! props.toggleAttributeName || ! props.toggleOnSetAttributes.length ) {
-			return attributes
-		}
-
-		// Don't do anything if turned on already.
-		if ( blockProps.attributes[ props.toggleAttributeName ] ) {
-			return attributes
-		}
-
-		console.warn( '[Stackable V3 deprecation warning] toggleOnSetAttributes and toggleAttributeName props of PanelAdvancedSettings are deprecated, use stackable/hooks/useDidAttributesChange instead' ) // eslint-disable-line no-console
-
-		// Check if an attribute we're watching for was modified with a value.
-		let checkToggle = false
-		props.toggleOnSetAttributes.some( attrName => {
-			if ( Object.keys( attributes ).includes( attrName ) ) {
-				if ( attributes[ attrName ] !== '' ) {
-					checkToggle = true
-					return true
-				}
-			}
-			return false
-		} )
-
-		// Toggle on the "show" attribute along with the other attributes being set.
-		if ( checkToggle ) {
-			if ( props.onChange ) {
-				props.onChange( true )
-			}
-			return {
-				...attributes,
-				[ props.toggleAttributeName ]: true,
-			}
-		}
-
-		return attributes
-	}, [ hasToggle, props.toggleAttributeName, props.toggleOnSetAttributes, props.onChange ] )
-
-	useEffect( () => {
-		addFilter( 'stackable.setAttributes', `stackable/panel-advanced-settings-${ instanceId }`, checkIfAttributeShouldToggleOn, 9 )
-		return () => {
-			removeFilter( 'stackable.setAttributes', `stackable/panel-advanced-settings-${ instanceId }` )
-		}
-	}, [] )
-
-	const onToggle = useCallback( () => {
+	const onToggle = () => {
 		setIsOpen( ! isOpen )
 		setInitialOpen( ! isOpen )
 		if ( props.onToggle ) {
 			props.onToggle( ! isOpen )
 		}
-	}, [ isOpen ] )
-	const onAdvancedToggle = useCallback( () => setShowAdvanced( ! showAdvanced ), [ showAdvanced ] )
+	}
 
 	const mainClasses = classnames( [
 		props.className,
@@ -97,8 +43,8 @@ const PanelAdvancedSettings = props => {
 		[ `ugb-panel--${ props.id }` ]: props.id,
 	} )
 
-	const title = useMemo( () => {
-		return <Fragment>
+	const title = (
+		<Fragment>
 			{ hasToggle && (
 				<span className={ `editor-panel-toggle-settings__panel-title` }>
 					<FormToggle
@@ -125,7 +71,7 @@ const PanelAdvancedSettings = props => {
 			) }
 			{ ! hasToggle && props.title }
 		</Fragment>
-	}, [ onToggle, hasToggle, props.checked, props.onChange, props.title ] )
+	)
 
 	return ( isSelected || ! name ) && ( // If there's no name, then the panel is used in another place.
 		<PanelBody
@@ -140,7 +86,7 @@ const PanelAdvancedSettings = props => {
 			{ props.advancedChildren && (
 				<button
 					className="ugb-panel-advanced-button"
-					onClick={ onAdvancedToggle }
+					onClick={ () => setShowAdvanced( ! showAdvanced ) }
 				>{ showAdvanced ? __( 'Simple', i18n ) : __( 'Advanced', i18n ) }</button>
 			) }
 		</PanelBody>
@@ -159,9 +105,6 @@ PanelAdvancedSettings.defaultProps = {
 	advancedChildren: null,
 	onToggle: () => {},
 	isOpen: null,
-	// Deprecated on v3:
-	toggleOnSetAttributes: [],
-	toggleAttributeName: '',
 }
 
 export default PanelAdvancedSettings
