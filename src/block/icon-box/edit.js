@@ -6,7 +6,7 @@ import { ContainerStyles } from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import { last } from 'lodash'
 import classnames from 'classnames'
 import {
@@ -47,7 +47,7 @@ export const TEMPLATE = [
 	[ 'stackable/icon-label', {}, [
 		[ 'stackable/icon', { contentAlign: 'left' } ],
 		[ 'stackable/heading', {
-			text: __( 'Icon Box' ), hasP: true, textTag: 'h4',
+			text: __( 'Icon Box', i18n ), hasP: true, textTag: 'h4',
 		} ],
 	] ],
 	[ 'stackable/text', {
