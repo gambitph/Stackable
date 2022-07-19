@@ -10,7 +10,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { Toolbar, Popover } from '@wordpress/components'
+import { Popover, ToolbarGroup } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
 } from '@wordpress/rich-text'
@@ -172,7 +172,7 @@ const HighlightButton = props => {
 
 	return (
 		<BlockControls>
-			<Toolbar className="stackable-components-toolbar">
+			<ToolbarGroup className="stackable-components-toolbar">
 				<Button
 					label={ __( 'Color & Highlight', i18n ) }
 					className="components-toolbar__control stk-toolbar-button stk-components-toolbar__highlight"
@@ -247,7 +247,7 @@ const HighlightButton = props => {
 						</div>
 					</Popover>
 				}
-			</Toolbar>
+			</ToolbarGroup>
 		</BlockControls>
 	)
 }

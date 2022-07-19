@@ -32,7 +32,7 @@ const InspectorBottomTip = () => {
 				__( 'Tip: Open the %sList View%s to better see the blocks.', i18n ).split( /%s/g ).map( ( text, i ) => {
 					if ( i === 1 ) {
 						return (
-							<a href="#0" role="button" onClick={ () => {
+							<a href="#0" role="button" key="link" onClick={ () => {
 								document.querySelector( LIST_VIEW_SELECTOR )?.click()
 							} } >
 								{ text }

@@ -1,6 +1,6 @@
 {
 	"name": "stackable",
-	"version": "3.4.0",
+	"version": "3.4.1",
 	"private": true,
 	"description": "Blocks for everyone",
 	"author": "Benjamin Intal of Gambit",
@@ -106,6 +106,8 @@
 		"start:js": "webpack --config .config/webpack.config.dev.js --watch",
 		"start:css": "gulp watch",
 		"start": "npm run clean && concurrently \"npm run start:js\" \"npm run start:css\"",
+		"profiler:js": "webpack --config .config/webpack.config.profiler.js --watch",
+		"profiler": "npm run clean && node ./tools/echo-profiler-note.js && concurrently \"npm run profiler:js\" \"npm run start:css\"",
 		"package": "gulp package && delete-empty build && gulp generate-indexphp && gulp zip",
 		"build:js": "webpack --config .config/webpack.config.prod.js",
 		"build:css": "gulp build",

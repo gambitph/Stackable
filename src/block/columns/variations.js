@@ -10,6 +10,11 @@ import ImageStyleThreeColumns2 from './images/three-columns-wider-center.svg'
 import ImageStyleFourColumns from './images/four-columns-equal.svg'
 
 /**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
@@ -22,16 +27,16 @@ import { __ } from '@wordpress/i18n'
 const variations = [
 	{
 		name: 'one-column-full',
-		title: __( '100' ),
-		description: __( 'One column' ),
+		title: __( '100', i18n ),
+		description: __( 'One column', i18n ),
 		icon: ImageStyleOneColumn,
 		innerBlocks: [ [ 'stackable/column' ] ],
 		scope: [ 'block' ],
 	},
 	{
 		name: 'two-columns-equal',
-		title: __( '50 / 50' ),
-		description: __( 'Two columns; equal split' ),
+		title: __( '50 / 50', i18n ),
+		description: __( 'Two columns; equal split', i18n ),
 		icon: ImageStyleTwoColumns,
 		isDefault: true,
 		innerBlocks: [ [ 'stackable/column' ], [ 'stackable/column' ] ],
@@ -39,8 +44,8 @@ const variations = [
 	},
 	{
 		name: 'two-columns-one-third-two-thirds',
-		title: __( '30 / 70' ),
-		description: __( 'Two columns; one-third, two-thirds split' ),
+		title: __( '30 / 70', i18n ),
+		description: __( 'Two columns; one-third, two-thirds split', i18n ),
 		icon: ImageStyleTwoColumns2,
 		innerBlocks: [
 			[ 'stackable/column', { columnWidth: 33.3 } ],
@@ -50,8 +55,8 @@ const variations = [
 	},
 	{
 		name: 'two-columns-two-thirds-one-third',
-		title: __( '70 / 30' ),
-		description: __( 'Two columns; two-thirds, one-third split' ),
+		title: __( '70 / 30', i18n ),
+		description: __( 'Two columns; two-thirds, one-third split', i18n ),
 		icon: ImageStyleTwoColumns3,
 		innerBlocks: [
 			[ 'stackable/column', { columnWidth: 66.7 } ],
@@ -61,8 +66,8 @@ const variations = [
 	},
 	{
 		name: 'three-columns-equal',
-		title: __( '33 / 33 / 33' ),
-		description: __( 'Three columns; equal split' ),
+		title: __( '33 / 33 / 33', i18n ),
+		description: __( 'Three columns; equal split', i18n ),
 		icon: ImageStyleThreeColumns,
 		innerBlocks: [
 			[ 'stackable/column' ],
@@ -73,8 +78,8 @@ const variations = [
 	},
 	{
 		name: 'three-columns-wider-center',
-		title: __( '25 / 50 / 25' ),
-		description: __( 'Three columns; wide center column' ),
+		title: __( '25 / 50 / 25', i18n ),
+		description: __( 'Three columns; wide center column', i18n ),
 		icon: ImageStyleThreeColumns2,
 		innerBlocks: [
 			[ 'stackable/column', { columnWidth: 25 } ],
@@ -85,8 +90,8 @@ const variations = [
 	},
 	{
 		name: 'four-columns-equal',
-		title: __( '25 / 25 / 25 / 25' ),
-		description: __( 'Four columns; equal split' ),
+		title: __( '25 / 25 / 25 / 25', i18n ),
+		description: __( 'Four columns; equal split', i18n ),
 		icon: ImageStyleFourColumns,
 		innerBlocks: [
 			[ 'stackable/column', { columnWidth: 25 } ],

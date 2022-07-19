@@ -3,6 +3,7 @@
  */
 import { faGetSVGIcon, createElementFromHTMLString } from '~stackable/util'
 import { kebabCase } from 'lodash'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -158,8 +159,8 @@ export const createIconListControls = ( options = {} ) => {
 			<BlockControls group="block">
 				<ToolbarButton
 					icon={ <Icon icon={ isRTL() ? formatListBulletsRTL : formatListBullets } size={ 24 } /> }
-					title={ __( 'Unordered' ) }
-					describedBy={ __( 'Convert to unordered list' ) }
+					title={ __( 'Unordered', i18n ) }
+					describedBy={ __( 'Convert to unordered list', i18n ) }
 					isActive={ isActiveListType( value, 'ul', tagName ) }
 					onClick={ () => {
 						onChange( changeListType( value, { type: 'ul' } ) )
@@ -172,8 +173,8 @@ export const createIconListControls = ( options = {} ) => {
 				/>
 				<ToolbarButton
 					icon={ <Icon icon={ isRTL() ? formatListNumberedRTL : formatListNumbered } size={ 24 } /> }
-					title={ __( 'Ordered' ) }
-					describedBy={ __( 'Convert to ordered list' ) }
+					title={ __( 'Ordered', i18n ) }
+					describedBy={ __( 'Convert to ordered list', i18n ) }
 					isActive={ isActiveListType( value, 'ol', tagName ) }
 					onClick={ () => {
 						onChange( changeListType( value, { type: 'ol' } ) )

@@ -321,7 +321,7 @@ const EditorSettings = () => {
 						i18n
 					) }
 						&nbsp;
-					<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">Learn more</a>
+					<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">{ __( 'Learn more', i18n ) }</a>
 				</>
 				 }
 		></AdminTextSetting>

@@ -22,9 +22,7 @@ import { omit } from 'lodash'
 /**
  * WordPress dependencies
  */
-import {
-	ButtonGroup,
-} from '@wordpress/components'
+import { ButtonGroup } from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 
@@ -123,7 +121,7 @@ const AdvancedToolbarControl = props => {
 		>
 			<ButtonGroup
 				children={
-					controls.map( ( option, index ) => {
+					controls.map( option => {
 						const controlProps = {
 							...( omit( option, 'controls', 'show' ) ),
 							onClick: () => {
@@ -137,7 +135,7 @@ const AdvancedToolbarControl = props => {
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
 						}
-						return <Button key={ index } { ...controlProps } />
+						return <Button key={ option.value } { ...controlProps } />
 					} )
 				}
 				className={ toolbarClasses }
