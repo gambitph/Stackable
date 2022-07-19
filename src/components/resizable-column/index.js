@@ -203,9 +203,18 @@ const ResizableColumn = props => {
 			// Fix the widths, ensure that we don't end up with off numbers 49.9% and 50.1%.
 			columnPercentages = fixFractionWidths( columnPercentages, isShiftKey )
 
-			const totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
+			// Ensure that the total width is exactly 100%.
+			let totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
 			if ( totalCurrentWidth !== 100 ) {
 				columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
+			}
+
+			// There are cases where the total width may slightly go past 100%
+			// because of the toFixed used above, if that happens, don't use
+			// toFixed.
+			totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
+			if ( totalCurrentWidth !== 100 ) {
+				columnPercentages[ adjacentBlockIndex ] = ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth )
 			}
 
 			setNewWidthsPercent( columnPercentages )
