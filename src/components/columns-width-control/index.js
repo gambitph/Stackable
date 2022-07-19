@@ -187,9 +187,9 @@ const ColumnsWidthControl = props => {
 		setSelectedPreset( '' )
 	}, [ props.columns ] )
 
-	const designType = props.design === 'grid' ? 'grid' :
-		props.design === 'plain' ? 'plain' :
-			'uneven'
+	const designType = props.design === 'grid' ? 'grid'
+		: props.design === 'plain' ? 'plain'
+			: 'uneven'
 	const columnPresetOptions = COLUMN_PRESET_OPTIONS[ designType ]
 
 	const resetButton = (
@@ -207,7 +207,7 @@ const ColumnsWidthControl = props => {
 			isSmall
 			isSecondary
 		>
-			{ __( 'Reset' ) }
+			{ __( 'Reset', i18n ) }
 		</Button>
 	)
 
@@ -259,9 +259,9 @@ const ColumnsWidthControl = props => {
 										// succeeding columns first or the prior
 										// columns. This is done to make the UX
 										// better.
-										const newAdjustRightFirst = lastColumnAdjusted < i ? true :
-											lastColumnAdjusted > i ? false :
-												adjustRightFirst
+										const newAdjustRightFirst = lastColumnAdjusted < i ? true
+											: lastColumnAdjusted > i ? false
+												: adjustRightFirst
 
 										// We need to remember the previous adjustments made.
 										setLastColumnAdjusted( i )

@@ -110,7 +110,7 @@ export const Colors = props => {
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
-				title={ __( 'Button Colors' ) }
+				title={ __( 'Button Colors', i18n ) }
 				id="button-colors"
 			>
 				<AdvancedToolbarControl

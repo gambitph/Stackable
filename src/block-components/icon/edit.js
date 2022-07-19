@@ -209,7 +209,7 @@ export const Edit = props => {
 			/>
 
 			<FourRangeControl
-				label={ __( 'Shape Outline Width' ) }
+				label={ __( 'Shape Outline Width', i18n ) }
 				units={ [ 'px' ] }
 				min={ 0 }
 				step={ 1 }
