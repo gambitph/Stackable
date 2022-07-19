@@ -674,20 +674,6 @@
     ]
   },
   {
-    "family": "Andika New Basic",
-    "variants": [
-      "regular",
-      "italic",
-      "700",
-      "700italic"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Anek Bangla",
     "variants": [
       "100",
@@ -7837,15 +7823,6 @@
     "subsets": [
       "latin",
       "latin-ext"
-    ]
-  },
-  {
-    "family": "Kdam Thmor",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "khmer"
     ]
   },
   {

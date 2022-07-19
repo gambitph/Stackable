@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.2
-Tested up to: 6.0.0
+Tested up to: 6.0.1
 Requires PHP: 5.7
-Stable tag: 3.4.0
+Stable tag: 3.4.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -247,11 +247,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.4.1 =
-* New: JetEngine integration
+* New: JetEngine post and taxonomy meta box integration with Stackable Dynamic Content
 * Fixed: Icon speed improvements
 * Fixed: Resizing the 1st column to 33.33% can make the second column wrap
 * Fixed: Added missing translation text domains
-* Fixed: Minor security fixes
+* Fixed: Minor UI, warning & security fixes
 
 = 3.4.0 =
 [Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
