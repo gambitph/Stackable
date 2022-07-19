@@ -264,12 +264,6 @@ export const Controls = props => {
 							isSmall={ true }
 							fullwidth={ false }
 							attribute={ attributeName( 'textColorType' ) }
-							onReset={ () => {
-								updateAttributes( {
-									[ getAttributeName( 'textColor1' ) ]: '',
-									[ getAttributeName( 'textColor2' ) ]: '',
-								} )
-							} }
 						/>
 					) }
 					<ColorPaletteControl
