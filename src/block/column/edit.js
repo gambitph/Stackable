@@ -15,7 +15,9 @@ import {
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withIsHovered, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	Column,
 	getColumnClasses,
@@ -145,4 +147,5 @@ const Edit = props => {
 export default compose(
 	withIsHovered,
 	withQueryLoopContext,
+	withBlockAttributeContext,
 )( Edit )

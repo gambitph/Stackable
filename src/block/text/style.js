@@ -13,7 +13,7 @@ import {
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+import { useDeviceType, useBlockAttributesContext } from '~stackable/hooks'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
@@ -27,23 +27,21 @@ const typographyOptions = {
 	hoverSelector: '.stk-block-text__text:hover',
 }
 
-const getStyleParams = () => {
-	return [
-		{
-			selector: '',
-			styleRule: 'columnCount',
-			attrName: 'columns',
-			responsive: 'all',
-		},
-		{
-			selector: '',
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			responsive: 'all',
-			format: '%spx',
-		},
-	]
-}
+const styleParams = [
+	{
+		selector: '',
+		styleRule: 'columnCount',
+		attrName: 'columns',
+		responsive: 'all',
+	},
+	{
+		selector: '',
+		styleRule: 'columnGap',
+		attrName: 'columnGap',
+		responsive: 'all',
+		format: '%spx',
+	},
+]
 
 export const TextStyles = props => {
 	const {
@@ -51,14 +49,14 @@ export const TextStyles = props => {
 	} = props
 
 	const deviceType = useDeviceType()
+	const attributes = useBlockAttributesContext()
 	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
-	const columnStyles = useStyles( attributes, getStyleParams() )
+	const columnStyles = useStyles( styleParams )
 
 	return (
 		<>
@@ -80,8 +78,6 @@ export const TextStyles = props => {
 
 TextStyles.defaultProps = {
 	isEditor: false,
-	attributes: {},
-	options: {},
 }
 
 TextStyles.Content = props => {
@@ -94,7 +90,7 @@ TextStyles.Content = props => {
 	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const columnStyles = getStyles( props.attributes, getStyleParams() )
+	const columnStyles = getStyles( props.attributes, styleParams )
 
 	const styles = (
 		<>

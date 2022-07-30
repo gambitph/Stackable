@@ -5734,19 +5734,6 @@
     ]
   },
   {
-    "family": "Gentium Basic",
-    "variants": [
-      "regular",
-      "italic",
-      "700",
-      "700italic"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
     "family": "Gentium Book Basic",
     "variants": [
       "regular",

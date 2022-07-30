@@ -29,11 +29,12 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
@@ -121,7 +122,11 @@ const Edit = props => {
 		</Fragment>
 	)
 }
-export default withQueryLoopContext( Edit )
+
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/icon-label', ( enabled, parentBlock ) => {

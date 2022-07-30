@@ -8,9 +8,7 @@ import BlockStyles from './style'
  */
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
-import {
-	InspectorTabs,
-} from '~stackable/components'
+import { InspectorTabs } from '~stackable/components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
@@ -28,11 +26,12 @@ import {
 	getAlignmentClasses,
 	Link,
 } from '~stackable/block-components'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -97,4 +96,7 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

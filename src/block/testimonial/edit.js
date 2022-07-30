@@ -37,11 +37,12 @@ import {
 	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
@@ -117,4 +118,7 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

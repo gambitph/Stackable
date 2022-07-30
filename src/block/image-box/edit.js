@@ -16,7 +16,7 @@ import {
 	InspectorTabs,
 } from '~stackable/components'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -38,6 +38,7 @@ import {
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment, useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
@@ -151,7 +152,10 @@ addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box',
 	}, [ clientId, parentBlock.name, innerBlocks.map( block => block.name ) ] )
 } )
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/image-box', ( enabled, parentBlock ) => {

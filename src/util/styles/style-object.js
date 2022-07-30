@@ -6,9 +6,9 @@ import { getAttrName } from '../attributes'
 /**
  * External dependencies
  */
-import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockHoverState } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
-import { compact } from 'lodash'
+import { compact, pick } from 'lodash'
 import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
 
 /**
@@ -16,7 +16,7 @@ import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-contex
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
-	useMemo, useContext, useState, useEffect,
+	useMemo, useContext, useState, useEffect, useRef,
 } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
@@ -44,14 +44,6 @@ class StyleObject {
 		}
 	}
 
-	/**
-	 * Grabs all the attribute names which will be used in generating styles
-	 * from the styleParams. This is used for generating dependency arrays used
-	 * by React hooks.
-	 *
-	 * @param {Array} styleParams Style parameters
-	 * @return {Array} Attribute names based on the styleParams
-	 */
 	getDependencyAttrnames( styleParams ) {
 		const deps = []
 		styleParams.forEach( styleParams => {
@@ -478,6 +470,72 @@ export const useQueryLoopInstanceId = uniqueId => {
 	return instanceId
 }
 
+// These are all the possible suffixes used.
+const ATTR_NAME_MATRIX = [
+	[ '', 'Tablet', 'Mobile' ],
+	[ '', 'Unit' ],
+	[ '', 'Hover', 'ParentHover', 'Collapsed' ],
+]
+
+/**
+ * Generates all the possible attribute names and suffixes for attribute names.
+ * e.g. FontSize = FontSizeTablet, FontSizeMobile, FontSizeUnitTablet, ...
+ *
+ * @param {Array} attrNames
+ * @return {Array} possible attribute names
+ */
+export const formAllPossibleAttributeNames = attrNames => {
+	return attrNames.reduce( ( attrNames, attrName ) => {
+		ATTR_NAME_MATRIX[ 0 ].forEach( x => {
+			ATTR_NAME_MATRIX[ 1 ].forEach( y => {
+				ATTR_NAME_MATRIX[ 2 ].forEach( z => {
+					attrNames.push( `${ attrName }${ x }${ y }${ z }` )
+				} )
+			} )
+		} )
+		return attrNames
+	}, [] )
+}
+
+/**
+ * Generates a list of all attribute names. This is fast (faster than the
+ * getDependencyAttrnames above). This is fast because the attribute names
+ * generated in the list aren't cross checked on whether they're really
+ * specified in the block's schema.
+ *
+ * This is mostly used for the selector function in `useBlockAttributesContext`
+ * to make the hook performant.
+ *
+ * @param {Array} styleParams
+ * @return {Array} All used attribute names
+ */
+function getDependencyAttrnamesFast( styleParams ) {
+	const attrNames = []
+	styleParams.forEach( styleParams => {
+		const {
+			attrName: _attrName = '',
+			dependencies = [], // If this style rerender depends on other attributes, add them here.
+			attrNameTemplate = '',
+		} = styleParams
+
+		// Add the attribute name.
+		const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+		if ( attrName && ! attrNames.includes( attrName ) ) {
+			attrNames.push( attrName )
+		}
+
+		// Add the attribute dependencies.
+		dependencies.forEach( _attrName => {
+			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+			if ( attrName && ! attrNames.includes( attrName ) ) {
+				attrNames.push( attrName )
+			}
+		} )
+	} )
+
+	return formAllPossibleAttributeNames( attrNames )
+}
+
 /**
  * Generates styles based on styleParams. This works by creating a memoed
  * StyleObject, and only regenerating the CSS styles only when the
@@ -485,43 +543,41 @@ export const useQueryLoopInstanceId = uniqueId => {
  *
  * This already handles the responsiveness and hover states of the style.
  *
- * @param {Object} _attributes Block attributes
- * @param {Array} styleParams Style definitions for each attribute
- *
+ * @param {Array} _styleParams Style definitions for each attribute
  * @return {StyleObject} A object that can be rendered by a StyleComponent
  */
-export const useStyles = ( _attributes, styleParams ) => {
-	const deviceType = useDeviceType()
+export function useStyles( _styleParams ) {
+	// Backward compatibility support. This function used to have 2 args:
+	// attributes, styleParams. Now we don't need the attributes argument, but
+	// still support if given a second the styleParams as the second argument.
+	const styleParams = arguments.length === 2 ? arguments[ 1 ] : _styleParams
+
 	const [ currentHoverState ] = useBlockHoverState()
 	const { clientId } = useBlockEditContext()
 
-	// Add the clientId, this can be used by styles for the editor.
-	const attributes = {
-		..._attributes,
-		clientId,
-	}
+	// Extract the attributes used by the styleParams. This hook only triggers
+	// when the extracted attributes change in value.
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			...pick( attributes, getDependencyAttrnamesFast( styleParams ) ),
+			clientId,
+		}
+	} )
 
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
+	const styleObject = useRef( new StyleObject( styleParams ) )
 
-	const styleObject = useMemo( () => {
-		const styleObjectInstance = new StyleObject( styleParams )
-		// If the block is inside a query loop, make sure that the uniqueIds are not the same.
-		if ( ! styleObjectInstance.getQueryLoopInstance() ) {
-			styleObjectInstance.setQueryLoopInstance( instanceId )
+	// If the block is inside a query loop, make sure that the uniqueIds are not the same.
+	useEffect( () => {
+		if ( ! styleObject.current.getQueryLoopInstance() ) {
+			styleObject.current.setQueryLoopInstance( instanceId )
 		}
+	}, [ instanceId ] )
 
-		return styleObjectInstance
-	}, [ styleParams.length, instanceId ] )
-
-	return useMemo(
-		() => {
-			return styleObject.generateStyles( attributes, currentHoverState )
-		},
-		[
-			...styleObject.getDependencies( attributes, deviceType, currentHoverState ),
-			styleObject,
-		]
-	)
+	// Generating styles takes computation heavy, only do this when needed.
+	return useMemo( () => {
+		return styleObject.current.generateStyles( attributes, currentHoverState )
+	}, [ attributes, currentHoverState ] )
 }
 
 /**

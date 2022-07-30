@@ -36,12 +36,13 @@ import {
 	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
+import { compose } from '@wordpress/compose'
 import { renderToString } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
@@ -111,7 +112,10 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/blockquote', ( enabled, parentBlock ) => {

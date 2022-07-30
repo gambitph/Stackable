@@ -21,12 +21,13 @@ import {
 	getAlignmentClasses,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockStyle } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { compose } from '@wordpress/compose'
 import { createBlock } from '@wordpress/blocks'
 import {
 	AlignmentToolbar, BlockControls, useBlockProps,
@@ -149,4 +150,7 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

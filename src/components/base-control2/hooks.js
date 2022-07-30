@@ -1,32 +1,25 @@
 /**
  * Internal dependencies
  */
-import { useAttributeName, useBlockAttributes } from '~stackable/hooks'
-
-/**
- * WordPress dependencies
- */
-import { useCallback } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { useDispatch } from '@wordpress/data'
+import {
+	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 
 export const useControlHandlers = ( attribute, responsive = false, hover = false, valueCallback = null, changeCallback = null ) => {
-	const { clientId } = useBlockEditContext()
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-
-	const attributes = useBlockAttributes( clientId )
+	const setAttributes = useBlockSetAttributesContext()
 	const attrName = useAttributeName( attribute, responsive, hover )
+	const _value = useBlockAttributesContext( attributes => attributes[ attrName ] )
 
-	const originalValue = attributes ? attributes[ attrName ] : ''
-	let value = attributes ? attributes[ attrName ] : ''
+	const originalValue = _value !== undefined ? _value : ''
+	let value = _value !== undefined ? _value : ''
 	if ( valueCallback ) {
 		value = valueCallback( value )
 	}
 
-	const onChange = useCallback( _value => {
+	const onChange = _value => {
 		const value = changeCallback ? changeCallback( _value, originalValue ) : _value
-		updateBlockAttributes( clientId, { [ attrName ]: value } )
-	}, [ clientId, attrName, changeCallback, originalValue, updateBlockAttributes ] )
+		setAttributes( { [ attrName ]: value } )
+	}
 
 	return [ value, onChange ]
 }

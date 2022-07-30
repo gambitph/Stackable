@@ -9,6 +9,7 @@ import {
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import { useRafMemo } from '~stackable/hooks'
 
 const Style = memo( props => {
 	const {
@@ -41,16 +42,17 @@ const Style = memo( props => {
 			( ! versionDeprecated || compareVersions( version, versionDeprecated ) === -1 ) // Are not yet deprecated.
 	}, [ version, versionAdded, versionDeprecated ] )
 
-	const css = useMemo( () => {
+	// Only generate the CSS styles Request Animation Frame to make things speedy.
+	const css = useRafMemo( () => {
 		if ( ! doRender ) {
 			return ''
 		}
 
 		const stylesToRender = getEditorStylesOnly( styles, deviceType )
-		return generateStyles( doImportant( stylesToRender ), blockUniqueClassName, breakTablet, breakMobile )
+		return generateStyles( doImportant( stylesToRender ), blockUniqueClassName, breakTablet, breakMobile ).join( '' )
 	}, [ doRender, styles, deviceType, blockUniqueClassName, breakTablet, breakMobile ] )
 
-	const output = useDynamicContent( css.join( '' ) )
+	const output = useDynamicContent( css )
 
 	// If the block doesn't have a unique className (based on the uniqueId), it
 	// means that the user is still picking a layout.

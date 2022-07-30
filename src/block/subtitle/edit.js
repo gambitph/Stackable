@@ -24,16 +24,15 @@ import {
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
-import {
-	InspectorTabs,
-} from '~stackable/components'
+import { InspectorTabs } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { createBlock } from '@wordpress/blocks'
 import { addFilter } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
@@ -135,4 +134,7 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

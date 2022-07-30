@@ -11,7 +11,7 @@ import {
 	InspectorTabs, InspectorAdvancedControls, PanelAdvancedSettings, AdvancedTextControl,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -33,6 +33,7 @@ import { getUniqueBlockClass } from '~stackable/util'
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
@@ -101,7 +102,10 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // When saving block styles, don't save the icons used by the block.
 //

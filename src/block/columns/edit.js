@@ -36,11 +36,12 @@ import {
 	useContentAlignmentClasses,
 } from '~stackable/block-components'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -128,7 +129,10 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 addFilter( 'stackable.block-components.responsive.control', 'stackable/premium', output => {
 	const { name } = useBlockEditContext()

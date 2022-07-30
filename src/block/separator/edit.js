@@ -16,10 +16,8 @@ import {
 	AdvancedRangeControl,
 	AdvancedToggleControl,
 } from '~stackable/components'
-import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockHoverClass } from '~stackable/hooks'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -37,6 +35,7 @@ import {
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -129,4 +128,7 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

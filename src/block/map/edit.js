@@ -39,7 +39,9 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withIsHovered, withQueryLoopContext,
+} from '~stackable/higher-order'
 import { currentUserHasCapability, getAttributeName } from '~stackable/util'
 
 /**
@@ -539,4 +541,5 @@ const Edit = props => {
 export default compose(
 	withIsHovered,
 	withQueryLoopContext,
+	withBlockAttributeContext,
 )( Edit )

@@ -18,7 +18,7 @@ import {
 import {
 	useBlockContext, useBlockHoverClass, useBlockStyle, useDeviceType,
 } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -43,6 +43,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment, useMemo } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -164,4 +165,7 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

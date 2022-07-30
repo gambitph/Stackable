@@ -42,12 +42,11 @@ const getStyleParams = ( options = {} ) => {
 
 export const Style = props => {
 	const {
-		attributes,
 		options = {},
 		...propsToPass
 	} = props
 
-	const styles = useStyles( attributes, getStyleParams( options ) )
+	const styles = useStyles( getStyleParams( options ) )
 
 	return (
 		<StyleComponent

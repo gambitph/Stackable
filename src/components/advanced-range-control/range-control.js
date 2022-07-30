@@ -16,7 +16,7 @@ import {
 	__experimentalNumberControl as NumberControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
 import {
-	useState, useLayoutEffect, useEffect, useCallback, memo, useRef,
+	useState, useLayoutEffect, useEffect, memo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -46,8 +46,6 @@ const StackableRangeControl = memo( props => {
 		...propsToPass
 	} = props
 
-	const numberControlRef = useRef( null )
-
 	// We have an internal state for the value so that the user can freely type
 	// any number in the number field without any validation and then we can
 	// just set the proper value on the onChange prop.
@@ -65,7 +63,7 @@ const StackableRangeControl = memo( props => {
 
 	// When the value is changed, set the internal value to it, but provide only
 	// a valid number to the onChange event.
-	const handleOnChange = useCallback( value => {
+	const handleOnChange = value => {
 		setValue( value )
 		if ( typeof value === 'string' && value.toLowerCase() === 'auto' ) {
 			props.onChange( value )
@@ -78,16 +76,16 @@ const StackableRangeControl = memo( props => {
 			}
 		}
 		props.onChange( props.resetFallbackValue )
-	}, [ props.onChange, props.min, props.max, props.resetFallbackValue ] )
+	}
 
-	const handleOnReset = useCallback( () => {
+	const handleOnReset = () => {
 		setValue( props.resetFallbackValue )
 		props.onChange( props.resetFallbackValue )
-	}, [ props.onChange, props.resetFallbackValue ] )
+	}
 
 	// When the number input is blurred, make sure that the value inside the
 	// field looks correct.  The number is within min/max and is a number.
-	const handleOnBlur = useCallback( () => {
+	const handleOnBlur = () => {
 		if ( typeof value === 'string' && value.toLowerCase() === 'auto' ) {
 			setValue( value )
 			return
@@ -99,7 +97,7 @@ const StackableRangeControl = memo( props => {
 			}
 		}
 		setValue( props.resetFallbackValue )
-	}, [ value, props.min, props.max, props.resetFallbackValue ] )
+	}
 
 	/**
 	 * We cannot trust the initialPosition of the RangeControl, so we
@@ -157,7 +155,6 @@ const StackableRangeControl = memo( props => {
 		/>
 		{ withInputField && isNumberControlSupported && (
 			<NumberControl
-				ref={ numberControlRef }
 				disabled={ props.disabled }
 				isShiftStepEnabled={ isShiftStepEnabled }
 				max={ props.max }

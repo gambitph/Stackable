@@ -31,7 +31,7 @@ import {
 	AdvancedRangeControl,
 } from '~stackable/components'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
 
 /**
@@ -42,6 +42,7 @@ import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { useCallback } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
+import { compose } from '@wordpress/compose'
 
 /**
  * Add `autocompleters` support for stackable/text
@@ -141,7 +142,7 @@ const Edit = props => {
 
 						<AdvancedRangeControl
 							label={ __( 'Column Gap', i18n ) }
-							allowRest={ true }
+							allowReset={ true }
 							attribute="columnGap"
 							min="0"
 							sliderMax="50"
@@ -182,4 +183,7 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

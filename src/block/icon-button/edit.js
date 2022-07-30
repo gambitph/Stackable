@@ -3,9 +3,7 @@
  */
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
-import {
-	InspectorTabs,
-} from '~stackable/components'
+import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -18,14 +16,13 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockHoverClass } from '~stackable/hooks'
+import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -98,4 +95,7 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
