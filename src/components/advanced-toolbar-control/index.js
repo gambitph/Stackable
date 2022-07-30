@@ -18,12 +18,13 @@ import { ResetButton } from '../base-control2/reset-button'
  */
 import classnames from 'classnames'
 import { omit } from 'lodash'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { ButtonGroup } from '@wordpress/components'
-import { i18n } from 'stackable'
+import { memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const FLEX_HORIZONTAL_ALIGN_OPTIONS = [
@@ -168,4 +169,4 @@ AdvancedToolbarControl.defaultProps = {
 	onChange: undefined,
 }
 
-export default AdvancedToolbarControl
+export default memo( AdvancedToolbarControl )

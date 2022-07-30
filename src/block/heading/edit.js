@@ -37,11 +37,11 @@ import { withQueryLoopContext } from '~stackable/higher-order'
  * WordPress dependencies
  */
 import {
-	Fragment, useEffect, useState,
+	Fragment, useEffect, useState, useCallback,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
-import { useDispatch } from '@wordpress/data'
+import { useSelect, useDispatch } from '@wordpress/data'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 /**
@@ -72,6 +72,7 @@ const Edit = props => {
 	const { parentBlock } = useBlockContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const { getBlockAttributes } = useSelect( 'core/block-editor' )
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-heading',
@@ -98,6 +99,25 @@ const Edit = props => {
 		}
 		setPrevText( props.attributes.text )
 	}, [ props.attributes.anchor, props.attributes.text ] )
+
+	const onSplit = useCallback( ( value, isOriginal ) => {
+		let block
+
+		if ( isOriginal || value ) {
+			block = createBlock( 'stackable/heading', {
+				...getBlockAttributes( clientId ),
+				text: value,
+			} )
+		} else {
+			block = createBlock( 'stackable/text' )
+		}
+
+		if ( isOriginal ) {
+			block.clientId = clientId
+		}
+
+		return block
+	}, [ clientId ] )
 
 	return (
 		<Fragment>
@@ -228,24 +248,7 @@ const Edit = props => {
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }
-					onSplit={ ( value, isOriginal ) => {
-						let block
-
-						if ( isOriginal || value ) {
-							block = createBlock( 'stackable/heading', {
-								...props.attributes,
-								text: value,
-							} )
-						} else {
-							block = createBlock( 'stackable/text' )
-						}
-
-						if ( isOriginal ) {
-							block.clientId = clientId
-						}
-
-						return block
-					} }
+					onSplit={ onSplit }
 				/>
 				{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 			</BlockDiv>

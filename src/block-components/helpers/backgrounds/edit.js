@@ -13,9 +13,7 @@ import {
 	AdvancedRangeControl,
 	ImageControl2,
 } from '~stackable/components'
-import {
-	useAttributeEditHandlers, useDeviceType,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
 import { getAttributeName, urlIsVideo } from '~stackable/util'
 
 /**
@@ -38,12 +36,12 @@ export const BackgroundControls = props => {
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
 	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) || getAttribute( 'backgroundMediaUrlTablet' ) || getAttribute( 'backgroundMediaUrlMobile' )
-	const isBackgroundVideo = useCallback( () => {
+	const isBackgroundVideo = () => {
 		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
 			.filter( value => value )
 			.filter( urlIsVideo )
 			.length > 0
-	}, [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ] )
+	}
 
 	return (
 		<Fragment>

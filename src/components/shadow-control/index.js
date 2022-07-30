@@ -13,7 +13,7 @@ import { useControlHandlers } from '~stackable/components/base-control2/hooks'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	useCallback, useMemo, useState, useRef, useEffect,
+	useState, useRef, useEffect,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import {
@@ -225,23 +225,23 @@ const ShadowControl = props => {
 		..._props
 	} = props
 
-	const shadows = useMemo( () => options || getShadows(), [ options ] )
+	const shadows = options || getShadows()
 	const buttonRef = useRef( null )
 	const [ isPopoverOpen, setIsPopoverOpen ] = useState( false )
 
-	const valueCallback = useCallback( value => {
+	const valueCallback = value => {
 		return value ? shadows.indexOf( value ) === -1 ? 'custom' : shadows.indexOf( value ) : ''
-	}, [ shadows ] )
+	}
 
-	const changeCallback = useCallback( index => {
+	const changeCallback = index => {
 		return index !== '' ? shadows[ index ] : index
-	}, [ shadows ] )
+	}
 
 	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const [ propsToPass ] = extractControlProps( _props )
 
-	const clickOutsideListener = useCallback( event => {
+	const clickOutsideListener = event => {
 		if ( isPopoverOpen ) {
 			if ( ! event.target.closest( '.shadow-control__popover' ) &&
 				 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
@@ -250,7 +250,7 @@ const ShadowControl = props => {
 				setIsPopoverOpen( false )
 			}
 		}
-	} )
+	}
 
 	useEffect( () => {
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
