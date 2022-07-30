@@ -314,7 +314,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				}
 
 				// Collect all the selectors we can combine.
-				$selector = str_replace( $match, '%s', $selector );
+				$selector = preg_replace( "#" . $match . "(?!-)#", '%s', $selector, 1 ); // Don't replace partial classname matches and only do it once.
 				if ( ! array_key_exists( $selector, $classes_to_combine ) ) {
 					$classes_to_combine[ $selector ] = array();
 				}
