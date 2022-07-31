@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 5.8.2
+Requires at least: 5.8.3
 Tested up to: 6.0.1
 Requires PHP: 5.7
-Stable tag: 3.4.1
+Stable tag: 3.4.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -190,7 +190,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 = Minimum Requirements =
 
-You'll need WordPress version 5.8.2 or higher for this to work.
+You'll need WordPress version 5.8.3 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -245,6 +245,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.4.2 =
+* Fixed: Editor speed performance improvements when editing blocks
+* Fixed: Error when saving a page when styling some blocks with PHP 8
+* Fixed: Taxonomies and post types now show up in Dynamic Content if you have more than 10
+* Fixed: Rare block error when using the highlight text color
+* Fixed: Updated Freemius SDK to 2.5.0 for PHP 8.1 support
 
 = 3.4.1 =
 * New: JetEngine post and taxonomy meta box integration with Stackable Dynamic Content
