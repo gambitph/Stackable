@@ -122,21 +122,22 @@
         <div id="fs_pricing_wrapper" data-public-url="<?php echo trailingslashit( dirname( $pricing_js_url ) ) ?>"></div>
         <?php
         $pricing_config = array_merge( array(
-            'contact_url'         => $fs->contact_url(),
-            'is_network_admin'    => fs_is_network_admin(),
-            'is_production'       => ( defined( 'WP_FS__IS_PRODUCTION_MODE' ) ? WP_FS__IS_PRODUCTION_MODE : null ),
-            'menu_slug'           => $fs->get_menu_slug(),
-            'mode'                => 'dashboard',
-            'fs_wp_endpoint_url'  => WP_FS__ADDRESS,
-            'request_handler_url' => admin_url(
+            'contact_url'            => $fs->contact_url(),
+            'is_network_admin'       => fs_is_network_admin(),
+            'is_production'          => ( defined( 'WP_FS__IS_PRODUCTION_MODE' ) ? WP_FS__IS_PRODUCTION_MODE : null ),
+            'menu_slug'              => $fs->get_menu_slug(),
+            'mode'                   => 'dashboard',
+            'fs_wp_endpoint_url'     => WP_FS__ADDRESS,
+            'request_handler_url'    => admin_url(
                 'admin-ajax.php?' . http_build_query( array(
                     'module_id' => $fs->get_id(),
                     'action'    => $fs->get_ajax_action( 'pricing_ajax_action' ),
                     'security'  => $fs->get_ajax_security( 'pricing_ajax_action' )
                 ) )
             ),
-            'selector'            => '#fs_pricing_wrapper',
-            'unique_affix'        => $fs->get_unique_affix(),
+            'selector'               => '#fs_pricing_wrapper',
+            'unique_affix'           => $fs->get_unique_affix(),
+            'show_annual_in_monthly' => $fs->apply_filters( 'pricing/show_annual_in_monthly', true ),
         ), $query_params );
 
         wp_add_inline_script( 'freemius-pricing', 'Freemius.pricing.new( ' . json_encode( $pricing_config ) . ' )' );

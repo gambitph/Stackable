@@ -41,13 +41,13 @@ export const CardStyles = props => {
 		clientId,
 	}
 
-	const blockStyle = useMemo( () => getBlockStyle( variations, attributes.className ), [ attributes.className ] )
 	const imageOptions = useMemo( () => {
+		const blockStyle = getBlockStyle( variations, attributes.className )
 		return {
 			enableWidth: blockStyle === 'horizontal',
 			selector: '.stk-block-card__image',
 		}
-	}, [ blockStyle ] )
+	}, [ attributes.className ] )
 
 	return (
 		<Fragment>

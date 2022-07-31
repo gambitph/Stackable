@@ -80,6 +80,14 @@ export const extractColors = styleString => {
 	let highlightColor = ''
 	let colorType = ''
 
+	if ( ! styleString ) { // Prevent block errors if stylestring is null or undefined
+		return {
+			textColor,
+			highlightColor,
+			colorType,
+		}
+	}
+
 	// Detect the current colors based on the styles applied on the text.
 	if ( styleString.match( /linear-gradient\(/ ) ) {
 		colorType = 'low'

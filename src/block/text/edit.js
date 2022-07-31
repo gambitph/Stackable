@@ -5,7 +5,7 @@ import { TextStyles } from './style'
 
 /**
  * External dependencies
-k*/
+ */
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -25,7 +25,10 @@ import {
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
-	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
+	InspectorTabs,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	AdvancedRangeControl,
 } from '~stackable/components'
 import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
@@ -37,7 +40,8 @@ import { createBlockCompleter } from '~stackable/util'
 import { createBlock } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { useMemo } from '@wordpress/element'
+import { useCallback } from '@wordpress/element'
+import { useSelect } from '@wordpress/data'
 
 /**
  * Add `autocompleters` support for stackable/text
@@ -67,8 +71,9 @@ const Edit = props => {
 	const {
 		parentBlock, isFirstBlock, isLastBlock,
 	} = useBlockContext()
+	const { getBlockAttributes } = useSelect( 'core/block-editor' )
 
-	const enableColumns = useMemo( () => applyFilters( 'stackable.text.edit.enable-column', true, parentBlock ), [ parentBlock ] )
+	const enableColumns = applyFilters( 'stackable.text.edit.enable-column', true, parentBlock )
 
 	const blockClassNames = classnames( [
 		className,
@@ -82,9 +87,29 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	const placeholder = useMemo( () => applyFilters( 'stackable.text.edit.placeholder', __( 'Type / to choose a block', i18n ), {
+	const placeholder = applyFilters( 'stackable.text.edit.placeholder', __( 'Type / to choose a block', i18n ), {
 		parentBlock, isFirstBlock, isLastBlock,
-	} ), [ parentBlock, isFirstBlock, isLastBlock ] )
+	} )
+
+	const onSplit = useCallback( ( value, isOriginal ) => {
+		// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
+		let newAttributes
+
+		if ( isOriginal || value ) {
+			newAttributes = {
+				...getBlockAttributes( props.clientId ),
+				text: value,
+			}
+		}
+
+		const block = createBlock( 'stackable/text', newAttributes )
+
+		if ( isOriginal ) {
+			block.clientId = props.clientId
+		}
+
+		return block
+	}, [ props.clientId ] )
 
 	return (
 		<>
@@ -149,25 +174,7 @@ const Edit = props => {
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }
 					onReplace={ onReplace }
-					onSplit={ ( value, isOriginal ) => {
-						// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
-						let newAttributes
-
-						if ( isOriginal || value ) {
-							newAttributes = {
-								...props.attributes,
-								text: value,
-							}
-						}
-
-						const block = createBlock( 'stackable/text', newAttributes )
-
-						if ( isOriginal ) {
-							block.clientId = props.clientId
-						}
-
-						return block
-					} }
+					onSplit={ onSplit }
 				/>
 			</BlockDiv>
 			<MarginBottom />
