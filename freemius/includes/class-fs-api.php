@@ -65,6 +65,14 @@
         private $_sdk_version;
 
         /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.0
+         *
+         * @var string
+         */
+        private $_url;
+
+        /**
 		 * @param string      $slug
 		 * @param string      $scope      'app', 'developer', 'user' or 'install'.
 		 * @param number      $id         Element's id.
@@ -72,6 +80,7 @@
 		 * @param bool        $is_sandbox
 		 * @param bool|string $secret_key Element's secret key.
 		 * @param null|string $sdk_version
+		 * @param null|string $url
 		 *
 		 * @return FS_Api
 		 */
@@ -82,14 +91,15 @@
             $public_key,
             $is_sandbox,
             $secret_key = false,
-            $sdk_version = null
+            $sdk_version = null,
+            $url = null
         ) {
 			$identifier = md5( $slug . $scope . $id . $public_key . ( is_string( $secret_key ) ? $secret_key : '' ) . json_encode( $is_sandbox ) );
 
 			if ( ! isset( self::$_instances[ $identifier ] ) ) {
 				self::_init();
 
-				self::$_instances[ $identifier ] = new FS_Api( $slug, $scope, $id, $public_key, $secret_key, $is_sandbox, $sdk_version );
+				self::$_instances[ $identifier ] = new FS_Api( $slug, $scope, $id, $public_key, $secret_key, $is_sandbox, $sdk_version, $url );
 			}
 
 			return self::$_instances[ $identifier ];
@@ -123,6 +133,7 @@
 		 * @param bool|string $secret_key Element's secret key.
 		 * @param bool        $is_sandbox
 		 * @param null|string $sdk_version
+		 * @param null|string $url
 		 */
 		private function __construct(
 		    $slug,
@@ -131,12 +142,14 @@
             $public_key,
             $secret_key,
             $is_sandbox,
-            $sdk_version
+            $sdk_version,
+            $url
         ) {
 			$this->_api = new Freemius_Api_WordPress( $scope, $id, $public_key, $secret_key, $is_sandbox );
 
 			$this->_slug        = $slug;
 			$this->_sdk_version = $sdk_version;
+			$this->_url         = $url;
 			$this->_logger      = FS_Logger::get_logger( WP_FS__SLUG . '_' . $slug . '_api', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 		}
 
@@ -195,6 +208,17 @@
                     ) {
                         // Always add the sdk_version param in the querystring. DO NOT INCLUDE IT IN THE BODY PARAMS, OTHERWISE, IT MAY LEAD TO AN UNEXPECTED PARAMS PARSING IN CASES WHERE THE $params IS A REGULAR NON-ASSOCIATIVE ARRAY.
                         $path = add_query_arg( 'sdk_version', $this->_sdk_version, $path );
+                    }
+                }
+
+                /**
+                 * @since 2.5.0 Include the site's URL, if available, in all API requests that are going through the API manager.
+                 */
+                if ( ! empty( $this->_url ) ) {
+                    if ( false === strpos( $path, 'url=' ) &&
+                         ! isset( $params['url'] )
+                    ) {
+                        $path = add_query_arg( 'url', $this->_url, $path );
                     }
                 }
 

@@ -240,7 +240,11 @@
          * @since  2.0.0
          */
         private function add_transient_filters() {
-            if ( $this->_fs->is_premium() && ! $this->_fs->is_tracking_allowed() ) {
+            if (
+                $this->_fs->is_premium() &&
+                $this->_fs->is_registered() &&
+                ! $this->_fs->is_tracking_allowed()
+            ) {
                 $this->_logger->log( 'Opted out sites cannot receive automatic software updates.' );
 
                 return;
@@ -610,11 +614,9 @@
                 if ( ! isset( $this->_translation_updates ) ) {
                     $this->_translation_updates = array();
 
-                    if ( current_user_can( 'update_languages' ) ) {
-                        $translation_updates = $this->fetch_wp_org_module_translation_updates( $module_type, $slug );
-                        if ( ! empty( $translation_updates ) ) {
-                            $this->_translation_updates = $translation_updates;
-                        }
+                    $translation_updates = $this->fetch_wp_org_module_translation_updates( $module_type, $slug );
+                    if ( ! empty( $translation_updates ) ) {
+                        $this->_translation_updates = $translation_updates;
                     }
                 }
 

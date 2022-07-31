@@ -43,7 +43,7 @@
 				$support_feature->title = fs_text_inline( 'Support', $plugin->slug );
 				$features_plan_map[ $support_feature->id ] = array( 'feature' => $support_feature, 'plans' => array() );
 			} else {
-				$support_feature = $features_plan_map['support'];
+                $support_feature = $features_plan_map['support']['feature'];
 			}
 
 			$features_plan_map[ $support_feature->id ]['plans'][ $plan->id ] = $support_feature;
