@@ -25,6 +25,15 @@
 
 	$fs->_enqueue_connect_essentials();
 
+    /**
+     * Enqueueing the styles in `_enqueue_connect_essentials()` is too late, as we need them in the HEADER. Therefore, inject the styles inline to avoid FOUC.
+     *
+     * @author Vova Feldman (@svovaf)
+     */
+    echo "<style>\n";
+    include WP_FS__DIR_CSS . '/admin/connect.css';
+    echo "</style>\n";
+
 	$current_user = Freemius::_get_current_wp_user();
 
 	$first_name = $current_user->user_firstname;
@@ -152,11 +161,11 @@
 				fs_require_once_template( 'plugin-icon.php', $vars );
 			?>
 			<i class="dashicons dashicons-plus fs-second"></i>
-			<img class="fs-connect-logo" width="80" height="80" src="//img.freemius.com/connect-logo.png"/>
+			<img class="fs-connect-logo" width="80" height="80" src="//img.freemius.com/logo/connect.svg"/>
 		</div>
 		<div class="fs-content">
 			<?php if ( ! empty( $error ) ) : ?>
-				<p class="fs-error"><?php echo esc_html( $error ) ?></p>
+				<p class="fs-error"><?php echo $fs->apply_filters( 'connect_error_esc_html', esc_html( $error ) ) ?></p>
 			<?php endif ?>
 			<p><?php
 					$button_label = fs_text_inline( 'Allow & Continue', 'opt-in-connect', $slug );
@@ -208,11 +217,6 @@
 
 						$message = $fs->apply_filters(
 						    $filter,
-                            ($is_network_upgrade_mode ?
-                                '' :
-                                /* translators: %s: name (e.g. Hey John,) */
-                                $hey_x_text . '<br>'
-                            ) .
 							sprintf(
 								esc_html( $default_optin_message ),
 								'<b>' . esc_html( $fs->get_plugin_name() ) . '</b>',
@@ -369,7 +373,7 @@
                 'icon-class' => 'dashicons dashicons-admin-settings',
                 'tooltip'    => ( $require_license_key ? sprintf( $fs->get_text_inline( 'So you can manage and control your license remotely from the User Dashboard.', 'permissions-site_tooltip' ), $fs->get_module_type() ) : '' ),
                 'label'      => $fs->get_text_inline( 'Your Site Overview', 'permissions-site' ),
-                'desc'       => $fs->get_text_inline( 'Site URL, WP version, PHP info', 'permissions-site_desc' ),
+                'desc'       => $fs->get_text_inline( 'Site URL, WP version, PHP version', 'permissions-site_desc' ),
                 'priority'   => 10,
             );
 
@@ -431,11 +435,12 @@
                     <?php endif ?>
 					<ul><?php
 							foreach ( $permissions as $id => $permission ) : ?>
+                                <?php $is_permission_on = ( ! isset( $permission['default'] ) || true === $permission['default'] ); ?>
 								<li id="fs-permission-<?php echo esc_attr( $id ); ?>"
-								    class="fs-permission fs-<?php echo esc_attr( $id ); ?>">
+								    class="fs-permission fs-<?php echo esc_attr( $id ); ?><?php echo ( ! $is_permission_on ) ? ' fs-disabled' : ''; ?>">
 									<i class="<?php echo esc_attr( $permission['icon-class'] ); ?>"></i>
 									<?php if ( isset( $permission['optional'] ) && true === $permission['optional'] ) : ?>
-										<div class="fs-switch fs-small fs-round fs-<?php echo (! isset( $permission['default'] ) || true === $permission['default'] ) ?  'on' : 'off' ?>">
+										<div class="fs-switch fs-small fs-round fs-<?php echo $is_permission_on ? 'on' : 'off' ?>">
 											<div class="fs-toggle"></div>
 										</div>
 									<?php endif ?>
@@ -600,6 +605,11 @@
 
 				updatePrimaryCtaText( actionType );
 			});
+
+            $sitesListContainer.delegate( 'td:not(:first-child)', 'click', function() {
+                // If a site row is clicked, trigger a click on the checkbox.
+                $( this ).parent().find( 'td:first-child input' ).click();
+            } );
 
 			$sitesListContainer.delegate( '.action', 'click', function( evt ) {
 				var $this = $( evt.target );
@@ -878,6 +888,8 @@
 			$(this)
 				.toggleClass( 'fs-on' )
 				.toggleClass( 'fs-off' );
+
+            $( this ).parent().toggleClass( 'fs-disabled' );
 		});
 
 		if (requireLicenseKey) {

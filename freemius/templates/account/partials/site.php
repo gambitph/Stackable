@@ -23,7 +23,7 @@
     $is_whitelabeled       = $fs->is_whitelabeled();
     $has_paid_plan         = $fs->has_paid_plan();
     $is_premium            = $fs->is_premium();
-    $main_user             = $fs->get_user();
+    $main_user             = $VARS['user'];
     $blog_id               = $site['blog_id'];
 
     $install       = $VARS['install'];
@@ -32,7 +32,7 @@
     $trial_plan    = $fs->get_trial_plan();
     $free_text     = fs_text_inline( 'Free', 'free', $slug );
 
-    if ( $is_whitelabeled && $fs->is_delegated_connection( $blog_id ) ) {
+    if ( $is_whitelabeled && is_object( $install ) && $fs->is_delegated_connection( $blog_id ) ) {
         $is_whitelabeled = $fs->is_whitelabeled( true, $blog_id );
     }
 ?>
@@ -174,7 +174,7 @@
                 <?php $row_index ++ ?>
                 <!--/ Blog ID -->
 
-                <?php if ( $is_registered && $install->user_id != $main_user->id ) : ?>
+                <?php if ( $install->user_id != $main_user->id ) : ?>
                     <?php
                     /**
                      * @var FS_User $user

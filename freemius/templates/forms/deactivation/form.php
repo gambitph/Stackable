@@ -24,6 +24,7 @@
     $anonymous_feedback_checkbox_html = '';
 
     $reasons_list_items_html = '';
+    $snooze_select_html      = '';
 
     if ( $show_deactivation_feedback_form ) {
         $reasons = $VARS['reasons'];
@@ -64,12 +65,54 @@ HTML;
                 fs_esc_html_inline( 'Anonymous feedback', 'anonymous-feedback', $slug )
             );
         }
+
+        $snooze_periods = array(
+            array(
+                'increment' => fs_text_inline( 'hour', $slug ),
+                'quantity'  => number_format_i18n(1),
+                'value'     => 6 * WP_FS__TIME_10_MIN_IN_SEC,
+            ),
+            array(
+                'increment' => fs_text_inline( 'hours', $slug ),
+                'quantity'  => number_format_i18n(24),
+                'value'     => WP_FS__TIME_24_HOURS_IN_SEC,
+            ),
+            array(
+                'increment' => fs_text_inline( 'days', $slug ),
+                'quantity'  => number_format_i18n(7),
+                'value'     => WP_FS__TIME_WEEK_IN_SEC,
+            ),
+            array(
+                'increment' => fs_text_inline( 'days', $slug ),
+                'quantity'  => number_format_i18n(30),
+                'value'     => 30 * WP_FS__TIME_24_HOURS_IN_SEC,
+            ),
+        );
+
+        $snooze_select_html = '<select>';
+        foreach ($snooze_periods as $period) {
+            $snooze_select_html .= sprintf(
+                '<option value="%s">%s %s</option>',
+                $period['value'],
+                $period['quantity'],
+                $period['increment']
+            );
+        }
+
+        $snooze_select_html .= '</select>';
     }
 
 	// Aliases.
 	$deactivate_text = fs_text_inline( 'Deactivate', 'deactivate', $slug );
 	$theme_text      = fs_text_inline( 'Theme', 'theme', $slug );
 	$activate_x_text = fs_text_inline( 'Activate %s', 'activate-x', $slug );
+
+    $submit_deactivate_text = sprintf(
+        fs_text_inline( 'Submit & %s', 'deactivation-modal-button-submit', $slug ),
+        $fs->is_plugin() ?
+            $deactivate_text :
+            sprintf( $activate_x_text, $theme_text )
+    );
 
 	fs_enqueue_local_style( 'fs_dialog_boxes', '/admin/dialog-boxes.css' );
 
@@ -92,6 +135,7 @@ HTML;
 		    + '		</div>'
 		    + '		<div class="fs-modal-footer">'
 			+ '         <?php echo $anonymous_feedback_checkbox_html ?>'
+			+ '         <label style="display: none" class="feedback-from-snooze-label"><input type="checkbox" class="feedback-from-snooze-checkbox"> <span><?php fs_esc_js_echo_inline( 'Snooze this panel during troubleshooting', 'snooze-panel-during-troubleshooting', $slug ) ?></span><span style="display: none"><?php fs_esc_js_echo_inline( 'Snooze this panel for', 'snooze-panel-for', $slug ) ?> <?php echo $snooze_select_html ?></span></label>'
 		    + '			<a href="#" class="button button-secondary button-deactivate"></a>'
 		    + '			<a href="#" class="button button-secondary button-close"><?php fs_esc_js_echo_inline( 'Cancel', 'cancel', $slug ) ?></a>'
 		    + '		</div>'
@@ -101,6 +145,7 @@ HTML;
 	    selectedReasonID               = false,
 	    redirectLink                   = '',
 		$anonymousFeedback             = $modal.find( '.anonymous-feedback-label' ),
+		$feedbackSnooze                = $modal.find( '.feedback-from-snooze-label' ),
 		isAnonymous                    = <?php echo ( $is_anonymous ? 'true' : 'false' ); ?>,
 		otherReasonID                  = <?php echo Freemius::REASON_OTHER; ?>,
 		dontShareDataReasonID          = <?php echo Freemius::REASON_DONT_LIKE_TO_SHARE_MY_INFORMATION; ?>,
@@ -230,10 +275,6 @@ HTML;
 		} ?>
 
 		$modal.on('input propertychange', '.reason-input input', function () {
-			if (!isOtherReasonSelected()) {
-				return;
-			}
-
 			var reason = $(this).val().trim();
 
 			/**
@@ -241,9 +282,12 @@ HTML;
 			 * to change the message color back to default.
 			 */
 			if (reason.length > 0) {
-				$('.message').removeClass('error-message');
-				enableDeactivateButton();
-			}
+                $('.message').removeClass('error-message');
+            }
+
+            toggleDeactivationButtonPrimary( reason.length > 0 );
+
+            changeDeactivateButtonText();
 		});
 
 		$modal.on('blur', '.reason-input input', function () {
@@ -260,8 +304,8 @@ HTML;
 				 */
 				if (0 === $userReason.val().trim().length) {
 					$('.message').addClass('error-message');
-					disableDeactivateButton();
-				}
+                    changeDeactivateButtonText();
+                }
 			}, 150);
 		});
 
@@ -276,9 +320,28 @@ HTML;
 			var _this = $(this);
 
 			if (_this.hasClass('allow-deactivate')) {
-				var $radio = $modal.find('input[type="radio"]:checked');
+				var
+                    $radio           = $modal.find('input[type="radio"]:checked'),
+                    isReasonSelected = (0 < $radio.length),
+                    userReason       = '';
 
-				if (0 === $radio.length) {
+				if ( isReasonSelected ) {
+                    var $selectedReason = $radio.parents('li:first'),
+                        $reasonInput = $selectedReason.find('textarea, input[type="text"]');
+
+                    if ( 0 < $reasonInput.length ) {
+                        userReason = $reasonInput.val().trim();
+                    }
+                }
+
+                if ( otherReasonID == selectedReasonID && '' === userReason ) {
+                    // If the 'Other' is selected and a reason is not provided (aka it's empty), treat it as if a reason wasn't selected at all.
+                    isReasonSelected = false;
+                }
+
+                _parent.find( '.fs-modal-footer .button' ).addClass( 'disabled' );
+
+                if ( ! isReasonSelected ) {
 				    if ( ! deleteThemeUpdateData ) {
                         // If no selected reason, just deactivate the plugin.
                         window.location.href = redirectLink;
@@ -292,8 +355,7 @@ HTML;
                                 module_id: '<?php echo $fs->get_id() ?>'
                             },
                             beforeSend: function() {
-                                _parent.find( '.fs-modal-footer .button' ).addClass( 'disabled' );
-                                _parent.find( '.fs-modal-footer .button-secondary' ).text( 'Processing...' );
+                                _parent.find( '.fs-modal-footer .button-deactivate' ).text( '<?php echo esc_js( fs_text_inline( 'Processing', 'processing', $slug ) ) ?>...' );
                             },
                             complete  : function() {
                                 window.location.href = redirectLink;
@@ -304,28 +366,27 @@ HTML;
 					return;
 				}
 
-				var $selected_reason = $radio.parents('li:first'),
-				    $input = $selected_reason.find('textarea, input[type="text"]'),
-				    userReason = ( 0 !== $input.length ) ? $input.val().trim() : '';
-
-				if (isOtherReasonSelected() && ( '' === userReason )) {
-					return;
-				}
+                var snoozePeriod = 0;
+                  
+                if ( <?php echo Freemius::REASON_TEMPORARY_DEACTIVATION ?> == selectedReasonID ) {
+                    snoozePeriod = parseInt($feedbackSnooze.find('select').val(), 10);
+                }
+                  
 
 				$.ajax({
 					url       : ajaxurl,
 					method    : 'POST',
 					data      : {
-						action      : '<?php echo $fs->get_ajax_action( 'submit_uninstall_reason' ) ?>',
-						security    : '<?php echo $fs->get_ajax_security( 'submit_uninstall_reason' ) ?>',
-						module_id   : '<?php echo $fs->get_id() ?>',
-						reason_id   : $radio.val(),
-						reason_info : userReason,
-						is_anonymous: isAnonymousFeedback()
+						action       : '<?php echo $fs->get_ajax_action( 'submit_uninstall_reason' ) ?>',
+						security     : '<?php echo $fs->get_ajax_security( 'submit_uninstall_reason' ) ?>',
+						module_id    : '<?php echo $fs->get_id() ?>',
+						reason_id    : $radio.val(),
+						reason_info  : userReason,
+						is_anonymous : isAnonymousFeedback(),
+                        snooze_period: snoozePeriod
 					},
 					beforeSend: function () {
-						_parent.find('.fs-modal-footer .button').addClass('disabled');
-						_parent.find('.fs-modal-footer .button-secondary').text('Processing...');
+						_parent.find('.fs-modal-footer .button-deactivate').text('<?php echo esc_js( fs_text_inline( 'Processing', 'processing', $slug ) ) ?>...');
 					},
 					complete  : function () {
 						// Do not show the dialog box, deactivate the plugin.
@@ -365,20 +426,17 @@ HTML;
 
 			$modal.find('.reason-input').remove();
 			$modal.find( '.internal-message' ).hide();
-			$modal.find('.button-deactivate').html('<?php echo esc_js( sprintf(
-				fs_text_inline( 'Submit & %s', 'deactivation-modal-button-submit' , $slug ),
-				$fs->is_plugin() ?
-					$deactivate_text :
-					sprintf( $activate_x_text, $theme_text )
-			) ) ?>');
-
-			enableDeactivateButton();
+			$modal.find('.button-deactivate').html('<?php echo esc_js( $submit_deactivate_text ) ?>');
 
 			if ( _parent.hasClass( 'has-internal-message' ) ) {
 				_parent.find( '.internal-message' ).show();
 			}
 
-			if (_parent.hasClass('has-input')) {
+			if ( ! _parent.hasClass('has-input') ) {
+                toggleDeactivationButtonPrimary( true );
+            } else {
+                toggleDeactivationButtonPrimary( false );
+
 				var inputType = _parent.data('input-type'),
 				    inputPlaceholder = _parent.data('input-placeholder'),
 				    reasonInputHtml = '<div class="reason-input"><span class="message"></span>' + ( ( 'textfield' === inputType ) ? '<input type="text" maxlength="128" />' : '<textarea rows="5" maxlength="128"></textarea>' ) + '</div>';
@@ -388,10 +446,59 @@ HTML;
 
 				if (isOtherReasonSelected()) {
 					showMessage('<?php echo esc_js( fs_text_inline( 'Kindly tell us the reason so we can improve.', 'ask-for-reason-message' , $slug ) ); ?>');
-					disableDeactivateButton();
-				}
+                    changeDeactivateButtonText();
+                }
 			}
+
+            $anonymousFeedback.toggle( <?php echo Freemius::REASON_TEMPORARY_DEACTIVATION ?> != selectedReasonID );
+            $feedbackSnooze.toggle( <?php echo Freemius::REASON_TEMPORARY_DEACTIVATION ?> == selectedReasonID );
+
+            if ( <?php echo Freemius::REASON_TEMPORARY_DEACTIVATION ?> == selectedReasonID ) {
+                updateDeactivationButtonOnTrouble();
+            }
 		});
+
+		var toggleDeactivationButtonPrimary = function ( isPrimary ) {
+		    if ( isPrimary ) {
+                $modal.find('.button-deactivate')
+                    .removeClass( 'button-secondary' )
+                    .addClass( 'button-primary' );
+            } else {
+                $modal.find('.button-deactivate')
+                    .addClass( 'button-secondary' )
+                    .removeClass( 'button-primary' );
+            }
+        };
+
+		var snooze = false;
+
+		var updateDeactivationButtonOnTrouble = function () {
+            if ( snooze ) {
+                $modal.find('.button-deactivate').html('<?php echo esc_js( sprintf(
+                    fs_text_inline( 'Snooze & %s', 'snooze-modal-button-submit' , $slug ),
+                    $fs->is_plugin() ?
+                        $deactivate_text :
+                        sprintf( $activate_x_text, $theme_text )
+                ) ) ?>');
+            } else {
+                $modal.find('.button-deactivate').html('<?php echo esc_js(
+                    $fs->is_plugin() ?
+                        $deactivate_text :
+                        sprintf( $activate_x_text, $theme_text )
+                ) ?>');
+            }
+        };
+
+        $feedbackSnooze.on( 'click', 'input', function () {
+            var $spans = $feedbackSnooze.find( 'span' );
+
+            snooze = ( ! snooze );
+
+            $( $spans[0] ).toggle();
+            $( $spans[1] ).toggle();
+
+            updateDeactivationButtonOnTrouble();
+        });
 
 		// If the user has clicked outside the window, cancel it.
 		$modal.on('click', function (evt) {
@@ -453,8 +560,6 @@ HTML;
 	function resetModal() {
 		selectedReasonID = false;
 
-		enableDeactivateButton();
-
 		// Uncheck all radio buttons.
 		$modal.find('input[type="radio"]').prop('checked', false);
 
@@ -463,8 +568,8 @@ HTML;
 
 		$modal.find('.message').hide();
 
-		if ( isAnonymous ) {
-			$anonymousFeedback.find( 'input' ).prop( 'checked', false );
+        if ( isAnonymous ) {
+			$anonymousFeedback.find( 'input' ).prop( 'checked', <?php echo $fs->apply_filters( 'default_to_anonymous_feedback', false ) ? 'true' : 'false' ?> );
 
 			// Hide, since by default there is no selected reason.
 			$anonymousFeedback.hide();
@@ -491,13 +596,31 @@ HTML;
 		$modal.find('.message').text(message).show();
 	}
 
-	function enableDeactivateButton() {
-		$modal.find('.button-deactivate').removeClass('disabled');
-	}
+    /**
+     * @author Xiaheng Chen (@xhchen)
+     *
+     * @since 2.4.2
+     */
+	function changeDeactivateButtonText() {
+        if ( ! isOtherReasonSelected()) {
+            return;
+        }
 
-	function disableDeactivateButton() {
-		$modal.find('.button-deactivate').addClass('disabled');
-	}
+        var
+            $userReason       = $modal.find('.reason-input input'),
+            $deactivateButton = $modal.find('.button-deactivate');
+
+	    if (0 === $userReason.val().trim().length) {
+	        // If the reason is empty, just change the text to 'Deactivate' (plugin) or 'Activate themeX' (theme).
+            $deactivateButton.html('<?php echo
+                $fs->is_plugin() ?
+                    $deactivate_text :
+                    sprintf( $activate_x_text, $theme_text )
+            ?>');
+        } else {
+            $deactivateButton.html('<?php echo esc_js( $submit_deactivate_text ) ?>');
+        }
+    }
 
 	function showPanel(panelType) {
         $modal.find( '.fs-modal-panel' ).removeClass( 'active' );
