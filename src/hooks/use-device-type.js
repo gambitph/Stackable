@@ -1,6 +1,19 @@
 import {
-	useSelect, createReduxStore, register,
+	useSelect, createReduxStore, register, select as wpSelect,
 } from '@wordpress/data'
+
+// Retrive device type outside react js; when react-hook can't be used
+export const getDeviceType = () => {
+	let deviceType = 'Desktop'
+	// In some editors, there is no edit-post / preview device type. If that
+	// happens, we just set our own internal device type.
+	if ( wpSelect( 'core/edit-post' ) ) {
+		deviceType = wpSelect( 'core/edit-post' ).__experimentalGetPreviewDeviceType()
+	} else {
+		deviceType = wpSelect( 'stackable/device-type' ).getDeviceType()
+	}
+	return deviceType || ''
+}
 
 export const useDeviceType = () => {
 	const { deviceType } = useSelect( select => {

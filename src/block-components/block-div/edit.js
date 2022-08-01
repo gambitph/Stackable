@@ -15,9 +15,7 @@ import {
 	InspectorBlockControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import {
-	useBlockAttributes, useBlockEl,
-} from '~stackable/hooks'
+import { useBlockAttributes, useBlockEl } from '~stackable/hooks'
 
 /**
  * WordPress dependencies

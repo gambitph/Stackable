@@ -8,6 +8,7 @@ import { Style as StyleComponent } from '~stackable/components'
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
+import { getDeviceType } from '~stackable/hooks'
 
 const getStyleParams = ( options = {} ) => {
 	const {
@@ -123,6 +124,10 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hasUnits: 'px',
+			enabledCallback: getAttribute => {
+				const deviceType = getDeviceType()
+				return getAttribute( 'width', deviceType )
+			},
 			valuePreCallback: ( value, getAttribute, device ) => {
 				const right = value?.right
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
@@ -158,11 +163,16 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hasUnits: 'px',
+			enabledCallback: getAttribute => {
+				const deviceType = getDeviceType()
+				return getAttribute( 'width', deviceType )
+			},
 			valuePreCallback: ( value, getAttribute, device ) => {
 				const left = value?.left
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
 				switch ( horizontalAlign ) {
-					case 'flex-start': return left || 0
+					case 'flex-start':
+						return left || 0
 					case 'center':
 					case 'flex-end':
 						return 'auto'
