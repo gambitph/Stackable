@@ -8,7 +8,6 @@ import { Style as StyleComponent } from '~stackable/components'
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
-import { getDeviceType } from '~stackable/hooks'
 
 const getStyleParams = ( options = {} ) => {
 	const {
@@ -124,20 +123,21 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hasUnits: 'px',
-			enabledCallback: getAttribute => {
-				const deviceType = getDeviceType()
-				return getAttribute( 'width', deviceType )
-			},
 			valuePreCallback: ( value, getAttribute, device ) => {
 				const right = value?.right
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
-				switch ( horizontalAlign ) {
-					case 'flex-start':
-					case 'center':
-						return 'auto'
-					case 'flex-end':
-						return right || 0
-					default: return right
+				const blockWidth = getAttribute( 'width', device )
+				if ( blockWidth ) {
+					switch ( horizontalAlign ) {
+						case 'flex-start':
+						case 'center':
+							return 'auto'
+						case 'flex-end':
+							return right || 0
+						default: return right
+					}
+				} else {
+					return ''
 				}
 			},
 			valueCallback: value => {
@@ -163,20 +163,21 @@ const getStyleParams = ( options = {} ) => {
 			attrNameTemplate,
 			responsive: 'all',
 			hasUnits: 'px',
-			enabledCallback: getAttribute => {
-				const deviceType = getDeviceType()
-				return getAttribute( 'width', deviceType )
-			},
 			valuePreCallback: ( value, getAttribute, device ) => {
 				const left = value?.left
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
-				switch ( horizontalAlign ) {
-					case 'flex-start':
-						return left || 0
-					case 'center':
-					case 'flex-end':
-						return 'auto'
-					default: return left
+				const blockWidth = getAttribute( 'width', device )
+				if ( blockWidth ) {
+					switch ( horizontalAlign ) {
+						case 'flex-start':
+							return left || 0
+						case 'center':
+						case 'flex-end':
+							return 'auto'
+						default: return left
+					}
+				} else {
+					return ''
 				}
 			},
 			valueCallback: value => {
