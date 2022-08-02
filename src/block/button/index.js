@@ -9,7 +9,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import transforms from './transforms'
-
+import deprecated from './deprecated'
 /**
  * External dependencies
  */
@@ -29,6 +29,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		anchor: true,
 	},
 	transforms,
+	deprecated,
 
 	edit,
 	save,

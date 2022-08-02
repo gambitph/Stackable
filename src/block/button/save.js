@@ -25,6 +25,7 @@ import { useBlockProps } from '@wordpress/block-editor'
  * Internal dependencies
  */
 import { ButtonStyles } from './style'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -38,12 +39,14 @@ export const Save = props => {
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
-	const blockClassNames = classnames( [
-		className,
-		'stk-block-button',
-		blockAlignmentClass,
-		responsiveClass,
-	] )
+	const blockClassNames = classnames(
+		applyFilters( 'stackable.button.save.blockClassNames', [
+			className,
+			'stk-block-button',
+			blockAlignmentClass,
+			responsiveClass,
+		], props )
+	)
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
