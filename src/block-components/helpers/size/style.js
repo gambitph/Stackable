@@ -126,13 +126,18 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: ( value, getAttribute, device ) => {
 				const right = value?.right
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
-				switch ( horizontalAlign ) {
-					case 'flex-start':
-					case 'center':
-						return 'auto'
-					case 'flex-end':
-						return right || 0
-					default: return right
+				const blockWidth = getAttribute( 'width', device )
+				if ( blockWidth ) {
+					switch ( horizontalAlign ) {
+						case 'flex-start':
+						case 'center':
+							return 'auto'
+						case 'flex-end':
+							return right || 0
+						default: return right
+					}
+				} else {
+					return ''
 				}
 			},
 			valueCallback: value => {
@@ -161,12 +166,18 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: ( value, getAttribute, device ) => {
 				const left = value?.left
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
-				switch ( horizontalAlign ) {
-					case 'flex-start': return left || 0
-					case 'center':
-					case 'flex-end':
-						return 'auto'
-					default: return left
+				const blockWidth = getAttribute( 'width', device )
+				if ( blockWidth ) {
+					switch ( horizontalAlign ) {
+						case 'flex-start':
+							return left || 0
+						case 'center':
+						case 'flex-end':
+							return 'auto'
+						default: return left
+					}
+				} else {
+					return ''
 				}
 			},
 			valueCallback: value => {
