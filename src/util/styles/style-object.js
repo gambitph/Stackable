@@ -26,12 +26,15 @@ import { useSelect } from '@wordpress/data'
  */
 class StyleObject {
 	constructor( styleParams = [] ) {
-	  this.styleParams = styleParams
+		this.styleParams = styleParams
 
-	  // Initialize
-	  this.initStyles()
-	  this.attributesUsed = this.getDependencyAttrnames( this.styleParams )
+		// Initialize
+		this.initStyles()
 		this.queryLoopInstance = null
+	}
+
+	setStyleParams( styleParams ) {
+		this.styleParams = styleParams
 	}
 
 	/**
@@ -44,101 +47,101 @@ class StyleObject {
 		}
 	}
 
-	getDependencyAttrnames( styleParams ) {
-		const deps = []
-		styleParams.forEach( styleParams => {
-			const {
-				attrName: _attrName = '',
-				hasUnits = false,
-				responsive = false,
-				hover: _hover = false,
-				hoverCallback = null,
-				dependencies = [], // If this style rerender depends on other attributes, add them here.
-				styles = null,
-				attrNameTemplate = '',
-			} = styleParams
+	// getDependencyAttrnames( styleParams ) {
+	// 	const deps = []
+	// 	styleParams.forEach( styleParams => {
+	// 		const {
+	// 			attrName: _attrName = '',
+	// 			hasUnits = false,
+	// 			responsive = false,
+	// 			hover: _hover = false,
+	// 			hoverCallback = null,
+	// 			dependencies = [], // If this style rerender depends on other attributes, add them here.
+	// 			styles = null,
+	// 			attrNameTemplate = '',
+	// 		} = styleParams
 
-			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
-			const hover = hoverCallback ? 'all' : _hover
+	// 		const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+	// 		const hover = hoverCallback ? 'all' : _hover
 
-			// This is a shorthand, you can define multiple style rules in a
-			// single styleParam.
-			if ( styles ) {
-				Object.values( styles ).forEach( attrName => {
-					deps.push( ...this.getDependencyAttrnames( [ {
-						...styleParams,
-						styles: null,
-						attrName,
-					} ] ) )
-				} )
-				return
-			}
+	// 		// This is a shorthand, you can define multiple style rules in a
+	// 		// single styleParam.
+	// 		if ( styles ) {
+	// 			Object.values( styles ).forEach( attrName => {
+	// 				deps.push( ...this.getDependencyAttrnames( [ {
+	// 					...styleParams,
+	// 					styles: null,
+	// 					attrName,
+	// 				} ] ) )
+	// 			} )
+	// 			return
+	// 		}
 
-			const pushAttr = ( attrName, device = 'desktop', state = 'normal' ) => {
-				deps.push( getAttributeName( attrName, device, state ) )
-				if ( hasUnits ) {
-					deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
-				}
+	// 		const pushAttr = ( attrName, device = 'desktop', state = 'normal' ) => {
+	// 			deps.push( getAttributeName( attrName, device, state ) )
+	// 			if ( hasUnits ) {
+	// 				deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
+	// 			}
 
-				// Add the attribute names of the other dependencies.
-				dependencies.forEach( _attrName => {
-					const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+	// 			// Add the attribute names of the other dependencies.
+	// 			dependencies.forEach( _attrName => {
+	// 				const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
 
-					deps.push( getAttributeName( attrName, 'desktop', 'normal' ) ) // Always depend on the normal state.
-					deps.push( getAttributeName( attrName, device, state ) )
-					if ( hasUnits ) {
-						deps.push( getAttributeName( `${ attrName }Unit`, 'desktop', 'normal' ) ) // Always depend on the normal state.
-						deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
-					}
-				} )
-			}
+	// 				deps.push( getAttributeName( attrName, 'desktop', 'normal' ) ) // Always depend on the normal state.
+	// 				deps.push( getAttributeName( attrName, device, state ) )
+	// 				if ( hasUnits ) {
+	// 					deps.push( getAttributeName( `${ attrName }Unit`, 'desktop', 'normal' ) ) // Always depend on the normal state.
+	// 					deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
+	// 				}
+	// 			} )
+	// 		}
 
-			const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
-			const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
+	// 		const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
+	// 		const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
 
-			const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
-			const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
-			const hasCollapsed = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'collapsed' ) )
+	// 		const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
+	// 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
+	// 		const hasCollapsed = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'collapsed' ) )
 
-			pushAttr( attrName )
-			if ( hasHover ) {
-				pushAttr( attrName, 'desktop', 'hover' )
-			}
-			if ( hasParentHover ) {
-				pushAttr( attrName, 'desktop', 'parent-hover' )
-			}
-			if ( hasCollapsed ) {
-				pushAttr( attrName, 'desktop', 'collapsed' )
-			}
+	// 		pushAttr( attrName )
+	// 		if ( hasHover ) {
+	// 			pushAttr( attrName, 'desktop', 'hover' )
+	// 		}
+	// 		if ( hasParentHover ) {
+	// 			pushAttr( attrName, 'desktop', 'parent-hover' )
+	// 		}
+	// 		if ( hasCollapsed ) {
+	// 			pushAttr( attrName, 'desktop', 'collapsed' )
+	// 		}
 
-			if ( hasTablet ) {
-				pushAttr( attrName, 'tablet', 'normal' )
-				if ( hasHover ) {
-					pushAttr( attrName, 'tablet', 'hover' )
-				}
-				if ( hasParentHover ) {
-					pushAttr( attrName, 'tablet', 'parent-hover' )
-				}
-				if ( hasCollapsed ) {
-					pushAttr( attrName, 'tablet', 'collapsed' )
-				}
-			}
+	// 		if ( hasTablet ) {
+	// 			pushAttr( attrName, 'tablet', 'normal' )
+	// 			if ( hasHover ) {
+	// 				pushAttr( attrName, 'tablet', 'hover' )
+	// 			}
+	// 			if ( hasParentHover ) {
+	// 				pushAttr( attrName, 'tablet', 'parent-hover' )
+	// 			}
+	// 			if ( hasCollapsed ) {
+	// 				pushAttr( attrName, 'tablet', 'collapsed' )
+	// 			}
+	// 		}
 
-			if ( hasMobile ) {
-				pushAttr( attrName, 'mobile', 'normal' )
-				if ( hasHover ) {
-					pushAttr( attrName, 'mobile', 'hover' )
-				}
-				if ( hasParentHover ) {
-					pushAttr( attrName, 'mobile', 'parent-hover' )
-				}
-				if ( hasCollapsed ) {
-					pushAttr( attrName, 'mobile', 'collapsed' )
-				}
-			}
-		} )
-		return deps
-	}
+	// 		if ( hasMobile ) {
+	// 			pushAttr( attrName, 'mobile', 'normal' )
+	// 			if ( hasHover ) {
+	// 				pushAttr( attrName, 'mobile', 'hover' )
+	// 			}
+	// 			if ( hasParentHover ) {
+	// 				pushAttr( attrName, 'mobile', 'parent-hover' )
+	// 			}
+	// 			if ( hasCollapsed ) {
+	// 				pushAttr( attrName, 'mobile', 'collapsed' )
+	// 			}
+	// 		}
+	// 	} )
+	// 	return deps
+	// }
 
 	setQueryLoopInstance( instanceNumber ) {
 		this.queryLoopInstance = instanceNumber
@@ -418,14 +421,15 @@ class StyleObject {
 		}
 	}
 
-	getDependencies( attributes, deviceType = 'Desktop', blockState = 'normal' ) {
-		return [
-			attributes.uniqueId,
-			deviceType,
-			blockState,
-			...this.attributesUsed.map( attrName => attributes[ attrName ] ),
-		]
-	}
+	// getDependencies( attributes, deviceType = 'Desktop', blockState = 'normal' ) {
+	// 	const attributesUsed = this.getDependencyAttrnames( this.styleParams )
+	// 	return [
+	// 		attributes.uniqueId,
+	// 		deviceType,
+	// 		blockState,
+	// 		...attributesUsed.map( attrName => attributes[ attrName ] ),
+	// 	]
+	// }
 }
 
 export default StyleObject
@@ -533,7 +537,10 @@ function getDependencyAttrnamesFast( styleParams ) {
 		} )
 	} )
 
-	return formAllPossibleAttributeNames( attrNames )
+	return [
+		...formAllPossibleAttributeNames( attrNames ),
+		'uniqueId', // Always include this since this affects all css.
+	]
 }
 
 /**
@@ -565,19 +572,22 @@ export function useStyles( _styleParams ) {
 	} )
 
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
-	const styleObject = useRef( new StyleObject( styleParams ) )
+	const styleObject = useRef( new StyleObject() )
+
+	// Ensure that our styleParams is always the latest.
+	styleObject.current.setStyleParams( styleParams )
 
 	// If the block is inside a query loop, make sure that the uniqueIds are not the same.
 	useEffect( () => {
 		if ( ! styleObject.current.getQueryLoopInstance() ) {
 			styleObject.current.setQueryLoopInstance( instanceId )
 		}
-	}, [ instanceId ] )
+	}, [ styleObject.current, instanceId ] )
 
 	// Generating styles takes computation heavy, only do this when needed.
 	return useMemo( () => {
 		return styleObject.current.generateStyles( attributes, currentHoverState )
-	}, [ attributes, currentHoverState ] )
+	}, [ styleObject.current, attributes, currentHoverState ] )
 }
 
 /**

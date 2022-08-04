@@ -13,68 +13,56 @@ import {
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import { useDeviceType, useBlockAttributesContext } from '~stackable/hooks'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { renderToString, memo } from '@wordpress/element'
 
 const typographyOptions = {
 	selector: '.stk-block-text__text',
 	hoverSelector: '.stk-block-text__text:hover',
 }
 
-const styleParams = [
-	{
-		selector: '',
-		styleRule: 'columnCount',
-		attrName: 'columns',
-		responsive: 'all',
-	},
-	{
-		selector: '',
-		styleRule: 'columnGap',
-		attrName: 'columnGap',
-		responsive: 'all',
-		format: '%spx',
-	},
-]
+const getStyleParams = () => {
+	return [
+		{
+			selector: '',
+			styleRule: 'columnCount',
+			attrName: 'columns',
+			responsive: 'all',
+		},
+		{
+			selector: '',
+			styleRule: 'columnGap',
+			attrName: 'columnGap',
+			responsive: 'all',
+			format: '%spx',
+		},
+	]
+}
 
-export const TextStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const attributes = useBlockAttributesContext()
-	const { clientId } = useBlockEditContext()
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
-	const columnStyles = useStyles( styleParams )
+export const TextStyles = memo( props => {
+	const columnStyles = useStyles( getStyleParams() )
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Typography.Style { ...propsToPass } options={ typographyOptions } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Typography.Style { ...props } { ...typographyOptions } />
 			<StyleComponent
 				styles={ columnStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
-			<EffectsAnimations.Style { ...propsToPass } />
+			<EffectsAnimations.Style { ...props } />
 		</>
 	)
-}
+} )
 
 TextStyles.defaultProps = {
 	isEditor: false,
@@ -90,7 +78,7 @@ TextStyles.Content = props => {
 	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const columnStyles = getStyles( props.attributes, styleParams )
+	const columnStyles = getStyles( props.attributes, getStyleParams( props ) )
 
 	const styles = (
 		<>

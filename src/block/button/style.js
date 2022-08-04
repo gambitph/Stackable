@@ -11,13 +11,11 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
+import { memo, renderToString } from '@wordpress/element'
 
 const buttonOptions = {
 	selector: '.stk-button',
@@ -28,30 +26,18 @@ const typographyOptions = {
 	hoverSelector: '.stk-button:hover .stk-button__inner-text',
 }
 
-export const ButtonStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
+export const ButtonStyles = memo( props => {
 	return (
 		<>
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Button.Style { ...propsToPass } options={ buttonOptions } />
-			<Typography.Style { ...propsToPass } options={ typographyOptions } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Button.Style { ...props } { ...buttonOptions } />
+			<Typography.Style { ...props } { ...typographyOptions } />
+			<EffectsAnimations.Style { ...props } />
 		</>
 	)
-}
+} )
 
 ButtonStyles.defaultProps = {
 	isEditor: false,

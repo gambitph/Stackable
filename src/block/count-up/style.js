@@ -11,43 +11,29 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { Fragment, renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
-export const HeadingStyles = props => {
-	const {
-		...propsToPass
-	} = props
+import {
+	memo, Fragment, renderToString,
+} from '@wordpress/element'
 
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
+export const HeadingStyles = memo( props => {
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Typography.Style { ...{
-				...propsToPass,
-				options: {
-					...propsToPass.options,
-					selector: '.stk-block-count-up__text',
-				},
-			} } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Typography.Style
+				{ ...props }
+				selector=".stk-block-count-up__text"
+			/>
+			<EffectsAnimations.Style { ...props } />
 		</Fragment>
 	)
-}
+} )
 
 HeadingStyles.defaultProps = {
 	isEditor: false,

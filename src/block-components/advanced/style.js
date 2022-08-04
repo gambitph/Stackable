@@ -6,9 +6,11 @@ import { Fragment } from '@wordpress/element'
 import {
 	__getValue, getStyles, useStyles,
 } from '~stackable/util'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const getStyleParams = ( options = {} ) => {
 	const {
+		clientId,
 		positionSelector = '',
 	} = options
 
@@ -94,7 +96,7 @@ const getStyleParams = ( options = {} ) => {
 		// We need to implement z-index on the block itself or else it won't look correct in the editor.
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			selectorCallback: () => `.editor-styles-wrapper [data-block="${ clientId }"]`,
 			styleRule: 'zIndex',
 			attrName: 'zIndex',
 			responsive: 'all',
@@ -205,14 +207,9 @@ const getStyleParams2 = ( options = {} ) => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
-	const styles2 = useStyles( attributes, getStyleParams2( options ) )
+	const { clientId } = useBlockEditContext()
+	const styles = useStyles( getStyleParams( { ...props, clientId } ) )
+	const styles2 = useStyles( getStyleParams2( props ) )
 
 	return (
 		<Fragment>
@@ -220,13 +217,13 @@ export const Style = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<StyleComponent
 				styles={ styles2 }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</Fragment>
 	)

@@ -8,18 +8,15 @@ import {
 } from '../helpers'
 
 export const Style = props => {
-	const options = {
-		...props.options,
-		attrNameTemplate: 'block%s',
-	}
+	const attrNameTemplate = 'block%s'
 
 	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
 
 	return (
 		<Fragment>
-			{ hasBackground && <BackgroundStyle { ...props } options={ options } /> }
-			<BorderStyle { ...props } options={ options } />
-			<SizeStyle { ...props } options={ options } />
+			{ hasBackground && <BackgroundStyle { ...props } attrNameTemplate={ attrNameTemplate } /> }
+			<BorderStyle { ...props } attrNameTemplate={ attrNameTemplate } />
+			<SizeStyle { ...props } attrNameTemplate={ attrNameTemplate } />
 		</Fragment>
 	)
 }

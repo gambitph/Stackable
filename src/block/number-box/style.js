@@ -17,14 +17,13 @@ import {
 	getStyles,
 	useStyles,
 } from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { memo, renderToString } from '@wordpress/element'
 
 const getStyleParams = () => {
 	return [
@@ -47,39 +46,24 @@ const getStyleParams = () => {
 	]
 }
 
-export const HeadingStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	const styles = useStyles( attributes, getStyleParams( props.options || {} ) )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
+export const HeadingStyles = memo( props => {
+	const hasShape = useBlockAttributesContext( attributes => attributes.hasShape )
+	const styles = useStyles( getStyleParams() )
 
 	return (
 		<>
-			{ attributes.hasShape &&
+			{ hasShape &&
 				<>
 					<BackgroundStyle
-						{ ...propsToPass }
-						options={ {
-							attrNameTemplate: 'shape%s',
-							selector: '.stk-block-number-box__text',
-							backgroundFallbackColor: '#000000',
-						} }
+						{ ...props }
+						attrNameTemplate="shape%s"
+						selector=".stk-block-number-box__text"
+						backgroundFallbackColor="#000000"
 					/>
 					<BorderStyle
-						{ ...propsToPass }
-						options={ {
-							attrNameTemplate: 'shape%s',
-							selector: '.stk-block-number-box__text',
-						} }
+						{ ...props }
+						attrNameTemplate="shape%s"
+						selector=".stk-block-number-box__text"
 					/>
 				</>
 			}
@@ -87,24 +71,21 @@ export const HeadingStyles = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Typography.Style { ...{
-				...propsToPass,
-				options: {
-					...propsToPass.options,
-					selector: '.stk-block-number-box__text',
-				},
-			} } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Typography.Style
+				{ ...props }
+				selector=".stk-block-number-box__text"
+			/>
+			<EffectsAnimations.Style { ...props } />
 		</>
 	)
-}
+} )
 
 HeadingStyles.defaultProps = {
 	isEditor: false,

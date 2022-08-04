@@ -9,13 +9,19 @@ import {
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
-import { useRafMemo } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useDeviceType, useRafMemo,
+} from '~stackable/hooks'
 
 const Style = memo( props => {
 	const {
 		version, versionAdded, versionDeprecated,
-		styles, deviceType, blockUniqueClassName: __blockUniqueClassName, breakTablet, breakMobile,
+		styles, breakTablet, breakMobile,
 	} = props
+
+	const deviceType = useDeviceType()
+	const attributeUniqueId = useBlockAttributesContext( attributes => attributes.uniqueId )
+	const __blockUniqueClassName = getUniqueBlockClass( attributeUniqueId )
 
 	// If there's no blockUniqueClassName supplied, create one based from the
 	// clientId so that we can still generate some styles.

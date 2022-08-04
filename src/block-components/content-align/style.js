@@ -61,19 +61,14 @@ const getStyleParams = () => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( propsToPass.options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<StyleComponent
 			styles={ styles }
 			versionAdded="3.0.0"
 			versionDeprecated=""
-			{ ...propsToPass }
+			{ ...props }
 		/>
 	)
 }

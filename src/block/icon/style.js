@@ -9,46 +9,36 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
+import { getUniqueBlockClass } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
-import {
-	Fragment, renderToString,
+	memo, Fragment, renderToString,
 } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 const iconStyleOptions = {
 	selector: '.stk--svg-wrapper',
 	hoverSelector: '.stk--svg-wrapper:hover',
 }
 
-export const IconStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
+export const IconStyles = memo( props => {
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } options={ { selector: '.stk-block', hoverSelector: '.stk-block:hover' } } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<Icon.Style { ...propsToPass } options={ iconStyleOptions } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style
+				{ ...props }
+				selector=".stk-block"
+				hoverSelector=".stk-block:hover"
+			/>
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
+			<Icon.Style { ...props } { ...iconStyleOptions } />
 		</Fragment>
 	)
-}
+} )
 
 IconStyles.defaultProps = {
 	isEditor: false,

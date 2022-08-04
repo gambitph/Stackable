@@ -10,14 +10,15 @@ import {
 	Alignment,
 	BlockDiv, Column, ContainerDiv, EffectsAnimations, Image, Transform,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType, getBlockStyle,
-} from '~stackable/hooks'
+import { getBlockStyle, useBlockAttributesContext } from '~stackable/hooks'
 import { getUniqueBlockClass } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import {
-	Fragment, renderToString, useMemo,
+	Fragment, renderToString, memo,
 } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-card__content',
@@ -25,49 +26,30 @@ const containerDivOptions = {
 	wrapperSelector: '.%s-container',
 }
 
-export const CardStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = {
-		...attributes,
-		clientId,
-	}
-
-	const imageOptions = useMemo( () => {
-		const blockStyle = getBlockStyle( variations, attributes.className )
-		return {
-			enableWidth: blockStyle === 'horizontal',
-			selector: '.stk-block-card__image',
-		}
-	}, [ attributes.className ] )
+export const CardStyles = memo( props => {
+	const className = useBlockAttributesContext( attributes => attributes.className )
+	const blockStyle = getBlockStyle( variations, className )
 
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Column.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Column.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
 			<ContainerDiv.Style
-				{ ...propsToPass }
-				options={ containerDivOptions }
+				{ ...props }
+				{ ...containerDivOptions }
 			/>
 			<Image.Style
-				{ ...propsToPass }
-				options={ imageOptions }
+				{ ...props }
+				enableWidth={ blockStyle === 'horizontal' }
+				selector=".stk-block-card__image"
 			/>
 		</Fragment>
 	)
-}
+} )
 
 CardStyles.defaultProps = {
 	isEditor: false,
