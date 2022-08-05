@@ -64,20 +64,18 @@ const Edit = props => {
 
 	const fullWidthClass = buttonFullWidth ? 'stk-button--full-width' : ''
 
-	const blockClassNames = classnames(
-		[
-			className,
-			'stk-block-button',
-			blockAlignmentClass,
-			blockHoverClass,
-			fullWidthClass,
-			// We need to add the blockStyle here to append the class alongside `.stk-block`
-			// Only in the editor.
-			{
-				[ `is-style-${ blockStyle }` ]: blockStyle,
-			},
-		],
-	)
+	const blockClassNames = classnames( [
+		className,
+		'stk-block-button',
+		blockAlignmentClass,
+		blockHoverClass,
+		fullWidthClass,
+		// We need to add the blockStyle here to append the class alongside `.stk-block`
+		// Only in the editor.
+		{
+			[ `is-style-${ blockStyle }` ]: blockStyle,
+		},
+	] )
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
