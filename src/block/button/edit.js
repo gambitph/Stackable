@@ -31,8 +31,6 @@ import { createBlock } from '@wordpress/blocks'
 import {
 	AlignmentToolbar, BlockControls, useBlockProps,
 } from '@wordpress/block-editor'
-import { addFilter, applyFilters } from '@wordpress/hooks'
-import { useSelect } from '@wordpress/data'
 
 /**
  * Internal dependencies
@@ -64,22 +62,22 @@ const Edit = props => {
 
 	const blockStyle = useBlockStyle( blockStyles )
 
-	const blockClassNames = classnames( [
-		applyFilters( 'stk-button-classes',
-			[
-				className,
-				'stk-block-button',
-				blockAlignmentClass,
-				blockHoverClass,
-				// We need to add the blockStyle here to append the class alongside `.stk-block`
-				// Only in the editor.
-				{
-					[ `is-style-${ blockStyle }` ]: blockStyle,
-				},
-			],
-			props
-		),
-	] )
+	const fullWidthClass = buttonFullWidth ? 'stk-button--full-width' : ''
+
+	const blockClassNames = classnames(
+		[
+			className,
+			'stk-block-button',
+			blockAlignmentClass,
+			blockHoverClass,
+			fullWidthClass,
+			// We need to add the blockStyle here to append the class alongside `.stk-block`
+			// Only in the editor.
+			{
+				[ `is-style-${ blockStyle }` ]: blockStyle,
+			},
+		],
+	)
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
@@ -155,18 +153,5 @@ const Edit = props => {
 		</>
 	)
 }
-
-addFilter( 'stk-button-classes', 'full-width-class', ( output, props ) => {
-	const { getBlockParents, getBlock } = useSelect( 'core/block-editor' )
-	const fullWidthClass = props.attributes.buttonFullWidth ? 'stk-button-full-width' : ''
-	const parenBlocktId = getBlockParents( props.clientId )
-	const parentBlock = getBlock( parenBlocktId )
-
-	if ( parentBlock.attributes.flexWrap === 'wrap' ) {
-		return [ ...output, fullWidthClass ]
-	}
-
-	return output
-} )
 
 export default withQueryLoopContext( Edit )

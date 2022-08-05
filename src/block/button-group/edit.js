@@ -37,9 +37,7 @@ import { withQueryLoopContext } from '~stackable/higher-order'
 /**
  * WordPress dependencies
  */
-import {
-	InnerBlocks,
-} from '@wordpress/block-editor'
+import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button', 'stackable/icon-button' ]
@@ -57,6 +55,7 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const {
+		flexWrap = '',
 		collapseOn = '',
 	} = attributes
 
@@ -64,12 +63,14 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const blockHoverClass = useBlockHoverClass()
 	const { hasInnerBlocks } = useBlockContext()
+	const flexWrapClass = flexWrap ? 'stk-block-button-group--flex-wrap' : flexWrap
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-button-group',
 		rowClass,
 		blockHoverClass,
+		flexWrapClass,
 	] )
 
 	const contentClassNames = classnames( [

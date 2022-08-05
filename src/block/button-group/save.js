@@ -21,6 +21,7 @@ import {
 	getResponsiveClasses,
 	getRowClasses,
 } from '~stackable/block-components'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -28,18 +29,25 @@ export const Save = props => {
 	} = props
 
 	const {
+		flexWrap = '',
 		collapseOn = '',
 	} = attributes
 
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
+	const flexWrapClass = flexWrap ? 'stk-block-button-group--flex-wrap' : flexWrap
 
-	const blockClassName = classnames( [
-		props.className,
-		'stk-block-button-group',
-		responsiveClass,
-	] )
+	const blockClassName = classnames(
+		applyFilters( 'stackable.buttonGroup.save.blockClassNames', [
+			props.className,
+			'stk-block-button-group',
+			responsiveClass,
+			flexWrapClass,
+		],
+		props
+		)
+	 )
 
 	const contentClassNames = classnames( [
 		rowClass,
