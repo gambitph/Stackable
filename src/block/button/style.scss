@@ -14,6 +14,6 @@
 	box-sizing: border-box;
 }
 
-.stk-block-button-group--flex-wrap .stk-block-button.stk-button--full-width {
-	margin-inline-end: unset !important;
+.stk-button-group [data-block]:not(:last-child) .stk-block {
+	margin-inline-end: unset;
 }

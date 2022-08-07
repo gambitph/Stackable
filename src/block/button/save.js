@@ -29,14 +29,9 @@ import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
-		attributes,
 		className,
 		...propsToPass
 	} = props
-
-	const {
-		buttonFullWidth,
-	} = attributes
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
@@ -44,7 +39,7 @@ export const Save = props => {
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
-	const fullWidthClass = buttonFullWidth ? 'stk-button--full-width' : ''
+	const fullWidthClass = props.attributes.buttonFullWidth ? 'stk-button--full-width' : ''
 
 	const blockClassNames = classnames(
 		applyFilters( 'stackable.button.save.blockClassNames', [

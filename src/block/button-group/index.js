@@ -43,7 +43,6 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	},
 	variations,
 	deprecated,
-
 	example: buttonExample,
 	edit,
 	save,

@@ -16,7 +16,7 @@ import compareVersions from 'compare-versions'
 import { addFilter } from '@wordpress/hooks'
 
 // Version 3.4.3 Deprecations
-addFilter( 'stackable.buttonGroup.save.blockClassNames', 'stackable/3.4.3', ( output, props ) => {
+addFilter( 'stackable.button-group.save.blockClassNames', 'stackable/3.4.3', ( output, props ) => {
 	 if ( compareVersions( props.version, '3.4.2' ) === 0 ) {
 		 return output.filter( value => value !== 'stk-block-button-group--flex-wrap' )
 	 }

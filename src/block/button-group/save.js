@@ -39,7 +39,7 @@ export const Save = props => {
 	const flexWrapClass = flexWrap ? 'stk-block-button-group--flex-wrap' : flexWrap
 
 	const blockClassName = classnames(
-		applyFilters( 'stackable.buttonGroup.save.blockClassNames', [
+		applyFilters( 'stackable.button-group.save.blockClassNames', [
 			props.className,
 			'stk-block-button-group',
 			responsiveClass,
