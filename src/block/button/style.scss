@@ -14,6 +14,16 @@
 	box-sizing: border-box;
 }
 
-.stk-button-group [data-block]:not(:last-child) .stk-block {
-	margin-inline-end: unset;
+// Remove margins if button is full width in a wrapped button group
+.stk-block-button-group.stk-block-button-group--flex-wrap {
+
+	[data-block]:not(:last-child) .stk-block {
+		margin-inline-end: unset;
+	}
+
+	:is(.stk-block, .stk-button):not(:last-child) {
+		margin-inline-end: unset;
+	}
+
 }
+
