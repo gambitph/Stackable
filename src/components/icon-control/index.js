@@ -18,6 +18,7 @@ import { omit } from 'lodash'
 import {
 	IconSearchPopover, SvgIcon, Button, BaseControl,
 } from '~stackable/components'
+import { defaultIcon } from '~stackable/block/icon/schema'
 
 const IconControl = props => {
 	const [ openPopover, setOpenPopover ] = useState( false )
@@ -83,6 +84,7 @@ IconControl.defaultProps = {
 	value: '',
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	onChange: () => {},
+	defaultValue: defaultIcon,
 }
 
 export default IconControl
