@@ -55,8 +55,7 @@ const STORE_REDUCER = ( state = {}, action ) => {
 						// elements (like column width drag handlers) do not
 						// show up.
 						if ( block.name === 'stackable/column' ) {
-							if ( parentBlock.name === 'stackable/accordion' ||
-								parentBlock.name === 'stackable/image-box' ) {
+							if ( [ 'stackable/accordion', 'stackable/image-box' ].includes( parentBlock.name ) ) {
 								blocks[ block.clientId ] = {
 									blockIndex: index,
 									parentBlock,
@@ -120,10 +119,10 @@ let prevClientIds = null
 // changes.
 subscribe( () => {
 	const tree = select( 'core/block-editor' ).__unstableGetClientIdsTree()
+	const blocks = getBlocksRecursion( blocks )
 
 	if ( ! prevClientIds ) {
 		prevClientIds = tree
-		const blocks = select( 'core/block-editor' ).getBlocks()
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
 		return
 	}
@@ -133,10 +132,19 @@ subscribe( () => {
 	// even when blocks are edited.
 	if ( tree !== prevClientIds ) {
 		prevClientIds = tree
-		const blocks = select( 'core/block-editor' ).getBlocks()
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
 	}
 } )
+
+const getBlocksRecursion = multipleBlocks => {
+	return multipleBlocks.map( b => {
+		const [ resultingBlock ] = select( 'core/block-editor' ).getBlocksByClientId( b.clientId )
+		return {
+			...resultingBlock,
+			innerBlocks: getBlocksRecursion( b.innerBlocks ),
+		}
+	} )
+}
 
 // Export our hook.
 const useBlockContext = ( blockClientId = null ) => {
