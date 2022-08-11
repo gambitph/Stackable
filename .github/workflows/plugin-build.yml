@@ -32,12 +32,3 @@ jobs:
       with:
         name: stackable-${{ env.VERSION_SUFFIX }}
         path: build/stackable-*
-
-    - name: Pull request artifacts
-      uses: gavv/pull-request-artifacts@v1.0.0
-      with:
-        commit: ${{ github.event.pull_request.head.sha }}
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts-branch: artifacts
-        artifacts: |
-          stackable-${{ env.VERSION_SUFFIX }}.zip
