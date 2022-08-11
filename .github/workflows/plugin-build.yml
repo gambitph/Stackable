@@ -40,4 +40,4 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         artifacts-branch: artifacts
         artifacts: |
-          stackable-${{ env.VERSION_SUFFIX }}
+          stackable-${{ env.VERSION_SUFFIX }}.zip
