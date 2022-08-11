@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows: [Plugin Build]
     types: [completed]
+    branches: [master, develop]
 
 jobs:
   artifacts-url-comments:
@@ -12,7 +13,7 @@ jobs:
       - name: add artifact links to pull request
         uses: tonyhallett/artifacts-url-comments@main
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           prefix: "PR Build: "
           suffix: "This build contains changes from this pull request"

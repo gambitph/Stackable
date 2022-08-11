@@ -32,13 +32,3 @@ jobs:
       with:
         name: stackable-${{ env.VERSION_SUFFIX }}
         path: build/stackable-*
-
-    - name: Add artifact links to pull request
-      uses: tonyhallett/artifacts-url-comments@main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        prefix: "PR Build: "
-        suffix: "This build contains changes from this pull request"
-        format: "name"
-        addTo: "pull"
