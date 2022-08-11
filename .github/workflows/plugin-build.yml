@@ -19,11 +19,15 @@ jobs:
         npm ci
         npm run build:no-translate
 
+    - name: Set the version suffix for the output
+      run: echo VERSION_SUFFIX=${GITHUB_REF_NAME//\//-} >> $GITHUB_ENV
+
     - name: Change build version
       run: |
-        node ./tools/append-build-version.js ${GITHUB_REF_NAME//\//-}
-        mv build/stackable build/stackable-${GITHUB_REF_NAME//\//-}
+        node ./tools/append-build-version.js $VERSION_SUFFIX
+        mv build/stackable build/stackable-$VERSION_SUFFIX
 
     - uses: actions/upload-artifact@v3
       with:
+        name: stackable-${{ env.VERSION_SUFFIX }}
         path: build/stackable-*
