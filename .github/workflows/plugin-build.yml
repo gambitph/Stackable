@@ -19,7 +19,12 @@ jobs:
         npm ci
         npm run build:no-translate
 
+    - name: Change build version
+      run: |
+        node ./tools/append-build-version.js ${GITHUB_REF##*/}
+        mv build/stackable build/stackable-${GITHUB_REF##*/}
+
     - uses: actions/upload-artifact@v3
       with:
         name: plugin
-        path: build/stackable.zip
+        path: build/stackable-${GITHUB_REF##*/}
