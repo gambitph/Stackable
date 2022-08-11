@@ -14,6 +14,9 @@ jobs:
     - name: Check out
       uses: actions/checkout@v2
 
+    - name: Branch name
+      run: echo running on branch ${GITHUB_REF##*/}
+
     - name: Build Stackable Free Plugin
       run: |
         npm ci
