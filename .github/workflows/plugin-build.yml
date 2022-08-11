@@ -27,7 +27,16 @@ jobs:
         node ./tools/append-build-version.js $VERSION_SUFFIX
         mv build/stackable build/stackable-$VERSION_SUFFIX
 
-    - uses: actions/upload-artifact@v3
+    - name: Create plugin zip file artifact
+      uses: actions/upload-artifact@v3
       with:
         name: stackable-${{ env.VERSION_SUFFIX }}
         path: build/stackable-*
+
+    - name: Comment artifact
+      uses: tonyhallett/artifacts-url-comments@v1.1.0
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          prefix: Plugin zip
+          addTo: pullandissues
