@@ -1,0 +1,25 @@
+name: Plugin Build
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out
+      uses: actions/checkout@v2
+
+    - name: Build Stackable Free Plugin
+      run: |
+        npm ci
+        npm run build --if-present
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: plugin
+        path: build/stackable.zip
