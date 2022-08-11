@@ -14,9 +14,6 @@ jobs:
     - name: Check out
       uses: actions/checkout@v2
 
-    - name: Branch name
-      run: echo running on branch ${GITHUB_REF_NAME}
-
     - name: Build Stackable Free Plugin
       run: |
         npm ci
@@ -24,10 +21,10 @@ jobs:
 
     - name: Change build version
       run: |
-        node ./tools/append-build-version.js ${GITHUB_REF##*/}
-        mv build/stackable build/stackable-${GITHUB_REF##*/}
+        node ./tools/append-build-version.js ${GITHUB_REF_NAME//\//-}
+        mv build/stackable build/stackable-${GITHUB_REF_NAME//\//-}
 
     - uses: actions/upload-artifact@v3
       with:
         name: plugin
-        path: build/stackable-${GITHUB_REF##*/}
+        path: build/stackable-${GITHUB_REF_NAME//\//-}
