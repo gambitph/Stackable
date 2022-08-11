@@ -14,13 +14,13 @@ jobs:
     - name: Check out
       uses: actions/checkout@v2
 
+    - name: Set the version suffix for the output
+      run: echo VERSION_SUFFIX=${GITHUB_REF_NAME//\//-} >> $GITHUB_ENV
+
     - name: Build Stackable Free Plugin
       run: |
         npm ci
         npm run build:no-translate
-
-    - name: Set the version suffix for the output
-      run: echo VERSION_SUFFIX=${GITHUB_REF_NAME//\//-} >> $GITHUB_ENV
 
     - name: Change build version
       run: |
@@ -33,10 +33,11 @@ jobs:
         name: stackable-${{ env.VERSION_SUFFIX }}
         path: build/stackable-*
 
-    - name: Comment artifact
-      uses: tonyhallett/artifacts-url-comments@v1.1.0
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Pull request artifacts
+      uses: gavv/pull-request-artifacts@v1.0.0
       with:
-          prefix: Plugin zip
-          addTo: pullandissues
+        commit: ${{ github.event.pull_request.head.sha }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts-branch: artifacts
+        artifacts: |
+          stackable-${{ env.VERSION_SUFFIX }}
