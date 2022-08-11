@@ -26,5 +26,4 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with:
-        name: plugin
-        path: build/stackable-${GITHUB_REF_NAME//\//-}
+        path: build/stackable-*
