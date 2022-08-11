@@ -117,6 +117,7 @@
 		"build:translations-php": "gulp generate-translations-php",
 		"prebuild": "node ./tools/ensure-version-number && node ./tools/ensure-cloudfront-domain && node ./tools/fix-freemius-strings.js && npm run build:translations-js",
 		"build": "npm run clean && concurrently --raw \"npm:build:js\" \"npm:build:css\" \"npm:build:sub-builds\" \"npm:build:translations-php\" \"npm:build:translations-pot\" &&  npm run package",
+		"build:no-translate": "npm run clean && concurrently --raw \"npm:build:js\" \"npm:build:css\" \"npm:build:sub-builds\" && npm run package",
 		"test": "jest --no-cache --watchAll",
 		"test:coverage": "jest --no-cache --coverage",
 		"test:fast": "npm run clean:build && jest",
