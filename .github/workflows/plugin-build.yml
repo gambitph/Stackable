@@ -22,24 +22,23 @@ jobs:
         npm ci
         npm run build:no-translate
 
-    - name: Change build version
+    - name: Append PR in build version & create PR build folder
       run: |
         node ./tools/append-build-version.js $VERSION_SUFFIX
-        mv build/stackable stackable-$VERSION_SUFFIX
+        cp -r build/stackable stackable-$VERSION_SUFFIX
 
-    # - name: Create plugin zip file artifact
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: stackable-${{ env.VERSION_SUFFIX }}
-    #     path: build/stackable-*
-    #     retention-days: 14
+    # Keep this for now. Our plan is to simplify all tests into this one
+    # workflow, this is needed so we can reuse the build folder across sub jobs.
+    # - name: Create plugin zip file artifact uses: actions/upload-artifact@v3
+    #   with: name: stackable-${{ env.VERSION_SUFFIX }} path: build/stackable-*
+    #   retention-days: 1
 
-    - name: Zip build
+    - name: Zip PR build
       uses: montudor/action-zip@v1
       with:
         args: zip -qq -r stackable-${{ env.VERSION_SUFFIX }}.zip stackable-${{ env.VERSION_SUFFIX }}
 
-    - name: Pull request artifacts
+    - name: Upload PR build zip artifact
       if: ${{ github.event_name == 'pull_request' }}
       uses: gavv/pull-request-artifacts@v1.0.0
       with:
