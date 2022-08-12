@@ -25,7 +25,7 @@ jobs:
     - name: Change build version
       run: |
         node ./tools/append-build-version.js $VERSION_SUFFIX
-        cp build/stackable stackable-$VERSION_SUFFIX
+        mv build/stackable stackable-$VERSION_SUFFIX
 
     # - name: Create plugin zip file artifact
     #   uses: actions/upload-artifact@v3
