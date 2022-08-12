@@ -34,10 +34,10 @@ jobs:
     #     path: build/stackable-*
     #     retention-days: 14
 
-    - name: Zip build
-      uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r build/stackable-${{ env.VERSION_SUFFIX }}.zip build/stackable-${{ env.VERSION_SUFFIX }}
+    # - name: Zip build
+    #   uses: montudor/action-zip@v1
+    #   with:
+    #     args: zip -qq -r build/stackable-${{ env.VERSION_SUFFIX }}.zip build/stackable-${{ env.VERSION_SUFFIX }}
 
     - name: Pull request artifacts
       if: ${{ github.event_name == 'pull_request' }}
@@ -45,5 +45,5 @@ jobs:
       with:
         commit: ${{ github.event.pull_request.head.sha }}
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: build/stackable-${{ env.VERSION_SUFFIX }}.zip
+        artifacts: build/stackable-${{ env.VERSION_SUFFIX }}
         artifacts-branch: artifacts
