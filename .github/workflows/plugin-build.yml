@@ -27,8 +27,23 @@ jobs:
         node ./tools/append-build-version.js $VERSION_SUFFIX
         mv build/stackable build/stackable-$VERSION_SUFFIX
 
-    - name: Create plugin zip file artifact
-      uses: actions/upload-artifact@v3
+    # - name: Create plugin zip file artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: stackable-${{ env.VERSION_SUFFIX }}
+    #     path: build/stackable-*
+    #     retention-days: 14
+
+    - name: Zip build
+      uses: montudor/action-zip@v1
       with:
-        name: stackable-${{ env.VERSION_SUFFIX }}
-        path: build/stackable-*
+        args: zip -qq -r build/stackable-$VERSION_SUFFIX.zip build/stackable-$VERSION_SUFFIX
+
+    - name: Pull request artifacts
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: gavv/pull-request-artifacts@v1.0.0
+      with:
+        commit: ${{ github.event.pull_request.head.sha }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: build/stackable-${{ env.VERSION_SUFFIX }}.zip
+        artifacts-branch: artifacts
