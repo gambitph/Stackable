@@ -45,5 +45,5 @@ jobs:
       with:
         commit: ${{ github.event.pull_request.head.sha }}
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: build/stackable-${{ env.VERSION_SUFFIX }}.zip
+        artifacts: stackable-${{ env.VERSION_SUFFIX }}.zip
         artifacts-branch: artifacts
