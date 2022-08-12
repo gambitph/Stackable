@@ -119,10 +119,10 @@ let prevClientIds = null
 // changes.
 subscribe( () => {
 	const tree = select( 'core/block-editor' ).__unstableGetClientIdsTree()
-	const blocks = getBlocksRecursion( tree )
 
 	if ( ! prevClientIds ) {
 		prevClientIds = tree
+		const blocks = fixReusableInnerBlocks( select( 'core/block-editor' ).getBlocks() )
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
 		return
 	}
@@ -132,16 +132,28 @@ subscribe( () => {
 	// even when blocks are edited.
 	if ( tree !== prevClientIds ) {
 		prevClientIds = tree
+		const blocks = fixReusableInnerBlocks( select( 'core/block-editor' ).getBlocks() )
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
 	}
 } )
 
-const getBlocksRecursion = multipleBlocks => {
-	return multipleBlocks.map( b => {
-		const [ resultingBlock ] = select( 'core/block-editor' ).getBlocksByClientId( b.clientId )
+// Use to correct the blocks returned from getBlocks.
+// Applies only core/block (reusable blocks) - Adds missing innerBlocks
+const fixReusableInnerBlocks = blocks => {
+	return blocks.map( block => {
+		if ( block.name !== 'core/block' ) {
+			return {
+				...block,
+				innerBlocks: fixReusableInnerBlocks( block.innerBlocks ),
+			}
+		}
+		const results = select( 'core/block-editor' ).__unstableGetClientIdsTree( block.clientId )
 		return {
-			...resultingBlock,
-			innerBlocks: getBlocksRecursion( b.innerBlocks ),
+			...block,
+			innerBlocks: fixReusableInnerBlocks( results.map( ( { clientId } ) => {
+				const [ innerResult ] = select( 'core/block-editor' ).getBlocksByClientId( clientId )
+				return innerResult
+			} ) ),
 		}
 	} )
 }
