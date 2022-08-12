@@ -119,7 +119,7 @@ let prevClientIds = null
 // changes.
 subscribe( () => {
 	const tree = select( 'core/block-editor' ).__unstableGetClientIdsTree()
-	const blocks = getBlocksRecursion( blocks )
+	const blocks = getBlocksRecursion( tree )
 
 	if ( ! prevClientIds ) {
 		prevClientIds = tree
