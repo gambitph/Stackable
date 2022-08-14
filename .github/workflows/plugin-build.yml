@@ -19,7 +19,6 @@ jobs:
 
     - name: Build Stackable Free Plugin
       run: |
-        rm ./languages/stackable-ultimate-gutenberg-blocks.pot
         npm ci --legacy-peer-deps
         npm run wp-env start
         npm run build:wp-env
