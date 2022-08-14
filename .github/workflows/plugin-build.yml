@@ -19,7 +19,7 @@ jobs:
 
     - name: Build Stackable Free Plugin
       run: |
-        npm ci
+        npm ci --legacy-peer-deps
         npm run wp-env start
         npm run build:wp-env
 
