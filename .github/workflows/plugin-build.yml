@@ -20,7 +20,8 @@ jobs:
     - name: Build Stackable Free Plugin
       run: |
         npm ci
-        npm run build:no-translate
+        npm run wp-env start
+        npm run build:wp-env
 
     - name: Append PR in build version & create PR build folder
       run: |
