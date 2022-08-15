@@ -19,7 +19,7 @@ jobs:
 
     - name: Build Stackable Free Plugin
       run: |
-        npm ci
+        npm ci --legacy-peer-deps
         npm run build:no-translate
 
     - name: Append PR in build version & create PR build folder
