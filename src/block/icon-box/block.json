@@ -2,7 +2,7 @@
 	"name": "stackable/icon-box",
 	"title": "Icon Box",
 	"description": "A small text area with an icon that can be used to summarize features or services",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [
 		"postId",
 		"postType",

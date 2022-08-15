@@ -2,7 +2,7 @@
 	"name": "stackable/icon-label",
 	"title": "Icon Label",
 	"description": "An Icon and Heading paired together.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [
 		"postId",
 		"postType",
