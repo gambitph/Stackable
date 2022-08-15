@@ -1,6 +1,7 @@
-/*
- * External dependencies
+/**
+ * Internal dependencies
  */
+import SeparatorControl from './separator-control'
 import {
 	AdvancedRangeControl,
 	InspectorBlockControls,
@@ -10,24 +11,20 @@ import {
 	ProControlButton,
 	ShadowControl,
 } from '~stackable/components'
-import { i18n, showProNotice } from 'stackable'
-import {
-	useAttributeEditHandlers,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers } from '~stackable/hooks'
 
-/**
- * Internal dependencies
+/*
+ * External dependencies
  */
-import SeparatorControl from './separator-control'
+import { i18n, showProNotice } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo } from '@wordpress/element'
 
-const SEPARATOR_SHADOWS = [
+const SEPARATOR_SHADOWS = applyFilters( 'stackable.separator.shadows', [
 	'none',
 	'0px 0 1px rgba(120, 120, 120, 0.5)',
 	'0px 0 2px rgba(120, 120, 120, 0.5)',
@@ -39,15 +36,13 @@ const SEPARATOR_SHADOWS = [
 	'7px 5px 30px rgba(72, 73, 121, 0.15)',
 	'0px 10px 60px rgba(0, 0, 0, 0.1)',
 	'70px 130px -60px rgba(72, 73, 121, 0.38) ',
-]
+] )
 
 const SeparatorControls = props => {
 	const {
 		attrNameTemplate,
 		hasFlipVertically,
 	} = props
-
-	const shadowOptions = useMemo( () => applyFilters( 'stackable.separator.shadows', SEPARATOR_SHADOWS ), [] )
 
 	const {
 		getAttrName,
@@ -82,7 +77,7 @@ const SeparatorControls = props => {
 				isFilter={ true }
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'separatorShadow' ) }
-				options={ shadowOptions }
+				options={ SEPARATOR_SHADOWS }
 				placeholder="5"
 			/>
 			<AdvancedToggleControl
@@ -138,7 +133,7 @@ export const Edit = props => {
 				} ) }
 				{ showProNotice && (
 					<ProControlButton
-						title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
+						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
 						description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
 					/>
 				) }
@@ -159,7 +154,7 @@ export const Edit = props => {
 				} ) }
 				{ showProNotice && (
 					<ProControlButton
-						title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
+						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
 						description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
 					/>
 				) }

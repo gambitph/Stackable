@@ -55,7 +55,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			}
 
 			// For the options page, load our options script.
-			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable-settings' ) !== false ) {
+			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable-settings' ) !== false || 'settings_page_stackable-getting-started' === $hook ) {
 
 				wp_enqueue_script( 'wp-i18n' );
 				wp_enqueue_script( 'wp-element' );
@@ -292,6 +292,12 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php $this->print_tabs() ?>
 
 					<div class="s-body s-box s-box-spaced s-getting-started">
+
+						<div class="s-getting-started__centered">
+							<h2 class="title"><?php _e( 'Stackable Blocks', STACKABLE_I18N ) ?></h2>
+							<p class="subtitle"><?php _e( 'Here\'s a list of all the amazing blocks Stackable provides.', STACKABLE_I18N )?></p>
+							<div class="s-getting-started__block-list" />
+						</div>
 
 						<div class="s-getting-started__centered">
 							<h2 class="title"><?php _e( 'How to start using Stackable', STACKABLE_I18N ) ?></h2>

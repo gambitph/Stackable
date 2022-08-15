@@ -1,11 +1,17 @@
 {
 	"name": "stackable/icon-label",
 	"title": "Icon Label",
+	"description": "An Icon and Heading paired together.",
 	"category": "layout",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId"
+	],
 	"keywords": [
 		"SVG"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special"
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/icon-label-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

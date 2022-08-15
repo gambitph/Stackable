@@ -3,12 +3,17 @@
 	"title": "Price",
 	"description": "Show a price of a product or service with currency and a suffix styled with different weights",
 	"category": "common",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId"
+	],
 	"keywords": [
 		"Currency",
 		"Pricing",
 		"Number"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special"
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/price-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

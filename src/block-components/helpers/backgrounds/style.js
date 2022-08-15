@@ -6,6 +6,7 @@ import {
 	__getValue,
 	getStyles,
 	useStyles,
+	extractColor,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
@@ -41,9 +42,10 @@ const getStyleParams = ( options = {} ) => {
 					getAttribute( 'backgroundMediaUrl', 'mobile' )
 
 				if ( ! backgroundColorType && backgroundColorOpacity !== '' && ! hasBackground ) {
-					return `${ hexToRgba( value || '#ffffff', backgroundColorOpacity || 0 ) }`
+					// Checks if color comes from Non-stackable color palette.
+					const hexColor = extractColor( value )
+					return `${ hexToRgba( hexColor || '#ffffff', backgroundColorOpacity || 0 ) }`
 				}
-
 				return value
 			},
 			valuePreCallback: ( _value, getAttribute, device, state ) => {

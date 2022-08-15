@@ -15,13 +15,11 @@ import { useControlHandlers } from '../base-control2/hooks'
 /**
  * WordPress dependencies
  */
-import {
-	Tooltip,
-} from '@wordpress/components'
+import { Tooltip } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
-	Fragment, useMemo, useState, useCallback, memo,
+	Fragment, useState, memo,
 } from '@wordpress/element'
 
 /**
@@ -33,6 +31,15 @@ import { Button } from '~stackable/components'
 import {
 	useAttributeName, useBlockAttributes, useDeviceType,
 } from '~stackable/hooks'
+
+const isEqualInitial = ( props, value, firstValue ) => {
+	let isEqual = true
+	isEqual = props.enableTop && value.top !== firstValue ? false : isEqual
+	isEqual = props.enableRight && value.right !== firstValue ? false : isEqual
+	isEqual = props.enableBottom && value.bottom !== firstValue ? false : isEqual
+	isEqual = props.enableLeft && value.left !== firstValue ? false : isEqual
+	return isEqual
+}
 
 const FourRangeControl = props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
@@ -64,16 +71,7 @@ const FourRangeControl = props => {
 			: props.enableBottom ? value.bottom
 				: value.left
 
-	const isEqualInitial = useMemo( () => {
-		let isEqual = true
-		isEqual = props.enableTop && value.top !== firstValue ? false : isEqual
-		isEqual = props.enableRight && value.right !== firstValue ? false : isEqual
-		isEqual = props.enableBottom && value.bottom !== firstValue ? false : isEqual
-		isEqual = props.enableLeft && value.left !== firstValue ? false : isEqual
-		return isEqual
-	}, [] )
-
-	const [ isLocked, setIsLocked ] = useState( isDefaults ? props.defaultLocked : isEqualInitial )
+	const [ isLocked, setIsLocked ] = useState( isDefaults ? props.defaultLocked : isEqualInitial( props, value, firstValue ) )
 
 	const lockClassNames = classnames( [
 		'ugb-four-range-control__lock',
@@ -133,50 +131,50 @@ const FourRangeControl = props => {
 		propsToPass.placeholder = props.placeholder
 	}
 
-	const onChangeAll = useCallback( newValue => {
+	const onChangeAll = newValue => {
 		onChange( {
 			top: props.enableTop ? newValue : value.top,
 			right: props.enableRight ? newValue : value.right,
 			bottom: props.enableBottom ? newValue : value.bottom,
 			left: props.enableLeft ? newValue : value.left,
 		} )
-	} )
+	}
 
-	const onChangeTop = useCallback( newValue => {
+	const onChangeTop = newValue => {
 		onChange( {
 			top: newValue,
 			right: value.right,
 			bottom: value.bottom,
 			left: value.left,
 		} )
-	} )
+	}
 
-	const onChangeRight = useCallback( newValue => {
+	const onChangeRight = newValue => {
 		onChange( {
 			top: value.top,
 			right: newValue,
 			bottom: value.bottom,
 			left: value.left,
 		} )
-	} )
+	}
 
-	const onChangeBottom = useCallback( newValue => {
+	const onChangeBottom = newValue => {
 		onChange( {
 			top: value.top,
 			right: value.right,
 			bottom: newValue,
 			left: value.left,
 		} )
-	} )
+	}
 
-	const onChangeLeft = useCallback( newValue => {
+	const onChangeLeft = newValue => {
 		onChange( {
 			top: value.top,
 			right: value.right,
 			bottom: value.bottom,
 			left: newValue,
 		} )
-	} )
+	}
 
 	return (
 		<AdvancedControl { ...controlProps }>
@@ -300,6 +298,7 @@ FourRangeControl.defaultProps = {
 	placeholderRight: '',
 	placeholderBottom: '',
 	placeholderLeft: '',
+	initialPosition: '',
 
 	allowReset: true,
 	default: '',

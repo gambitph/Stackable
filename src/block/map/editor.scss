@@ -1,0 +1,56 @@
+[data-type="stackable/map"] {
+	// Fixes Google Map displaying blank on the editor due to display flex applied
+	// on [data^=stackable/].
+	// display: block !important;
+
+	// Move resizer down a bit.
+	.stk-resizer-tooltip {
+		top: calc(50% + 40px);
+	}
+
+	iframe {
+		height: 100% !important;
+		width: 100%;
+	}
+
+	// Clicking on the map doesn't select the block.
+	.stk-block-map__canvas,
+	iframe {
+		pointer-events: none;
+	}
+}
+
+// This fixes first time height handler dragging.
+.stk-block-map {
+	height: auto;
+	box-sizing: content-box;
+}
+
+.components-panel__body:not(.stk--uses-api-key) .stk--needs-api-key {
+	opacity: 0.3;
+	pointer-events: none;
+}
+.components-panel__body.stk--needs-api-key:not(.stk--uses-api-key) {
+	.editor-panel-toggle-settings__panel-title {
+		opacity: 0.3;
+		pointer-events: none;
+	}
+}
+
+.stk-block-map__api-key-notice {
+	margin: 0 0 16px;
+}
+
+// Hide Google API errors that show up in the LocationControl dropdown when an
+// API is not available from the provided API Key.
+.pac-container > :not(.pac-item) {
+	display: none !important;
+}
+
+// When inside a row block.
+.editor-styles-wrapper [data-type="core/group"] > [data-type="stackable/map"] {
+	.stk-block-map__canvas,
+	iframe {
+		width: 400px;
+	}
+}

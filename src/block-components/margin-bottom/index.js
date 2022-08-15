@@ -18,6 +18,15 @@ export const MarginBottom = props => {
 	const attributes = useBlockAttributes( clientId )
 	const { isLastBlock, parentBlock } = useBlockContext( clientId )
 
+	// Don't show the margin bottom draggable indicator if this is in a row block.
+	const isRowBlock = parentBlock &&
+		parentBlock.name === 'core/group' &&
+		parentBlock.attributes.layout?.type === 'flex' &&
+		parentBlock.attributes.layout?.flexWrap === 'nowrap'
+	if ( isRowBlock ) {
+		return null
+	}
+
 	const enable = applyFilters( 'stackable.edit.margin-bottom.enable-handlers', true, parentBlock )
 	if ( isLastBlock || ! enable ) {
 		return null

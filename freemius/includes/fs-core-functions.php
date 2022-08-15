@@ -1349,7 +1349,7 @@
         function fs_is_plugin_uninstall() {
             return (
                 defined( 'WP_UNINSTALL_PLUGIN' ) ||
-                ( 0 < did_action( 'update_option_uninstall_plugins' ) )
+                ( 0 < did_action( 'pre_uninstall_plugin' ) )
             );
         }
     }

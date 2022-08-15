@@ -56,7 +56,18 @@
 			return ( isset( $this->is_verified ) && true === $this->is_verified );
 		}
 
-		static function get_type() {
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.4.2
+         *
+         * @return bool
+         */
+        function is_beta() {
+            // Return `false` since this is just for backward compatibility.
+            return false;
+        }
+
+        static function get_type() {
 			return 'user';
 		}
 	}

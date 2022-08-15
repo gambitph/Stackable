@@ -166,7 +166,7 @@ const Edit = props => {
 			<Transform.InspectorControls />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
-					title={ __( 'General' ) }
+					title={ __( 'General', i18n ) }
 					id="general"
 				>
 					<AdvancedRangeControl

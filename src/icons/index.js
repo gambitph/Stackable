@@ -28,6 +28,7 @@ import SVGIconLabelIcon from './images/icon-label-icon.svg'
 import SVGImageIcon from './images/image-icon.svg'
 import SVGImageBoxIcon from './images/image-box-icon.svg'
 import SVGLoadMoreIcon from './images/load-more.svg'
+import SVGMapIcon from './images/map-icon.svg'
 import SVGNotificationIcon from './images/notification-icon.svg'
 import SVGNumberBoxIcon from './images/number-box-icon.svg'
 import SVGPaginationIcon from './images/pagination.svg'
@@ -202,6 +203,10 @@ export function ImageBoxIcon() {
 
 export function LoadMoreIcon() {
 	return colorizeIcon( <SVGLoadMoreIcon width="16" height="16" /> )
+}
+
+export function MapIcon() {
+	return colorizeIcon( <SVGMapIcon width="20" height="20" /> )
 }
 
 export function NotificationIcon() {

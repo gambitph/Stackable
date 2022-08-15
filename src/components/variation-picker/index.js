@@ -17,8 +17,8 @@ import { layout } from '@wordpress/icons'
 const VariationPicker = props => {
 	const {
 		icon = layout,
-		label = __( 'Choose variation' ),
-		instructions = __( 'Select a variation to start with.' ),
+		label = __( 'Choose variation' ), // Dev note: no text domain here since this will use WP's translation.
+		instructions = __( 'Select a variation to start with.' ), // Dev note: no text domain here since this will use WP's translation.
 		variations,
 		onSelect,
 		allowSkip,
@@ -42,7 +42,7 @@ const VariationPicker = props => {
 				<ul
 					className="block-editor-block-variation-picker__variations"
 					role="list"
-					aria-label={ __( 'Block variations' ) }
+					aria-label={ __( 'Block variations' ) } // Dev note: no text domain here since this will use WP's translation.
 				>
 					{ variations.map( variation => (
 						<li key={ variation.name }>
@@ -80,7 +80,7 @@ const VariationPicker = props => {
 				{ allowSkip && (
 					<div className="block-editor-block-variation-picker__skip">
 						<Button variant="link" onClick={ () => onSelect() }>
-							{ __( 'Skip' ) }
+							{ __( 'Skip' ) /* Dev note: no text domain here since this will use WP's translation. */ }
 						</Button>
 					</div>
 				) }

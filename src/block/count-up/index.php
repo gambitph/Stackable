@@ -12,7 +12,8 @@ if ( ! function_exists( 'stackable_load_countup_frontend_script' ) ) {
 				'stk-frontend-count-up',
 				plugins_url( 'dist/frontend_block_count_up.js', STACKABLE_FILE ),
 				array(),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true
 			);
 		}
 	}

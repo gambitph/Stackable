@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { AdvancedSelectControl } from '..'
+import { i18n } from 'stackable'
 
 /**
  * External dependencies
@@ -47,7 +48,7 @@ const ImageSizeControl = ( {
 
 ImageSizeControl.defaultProps = {
 	className: '',
-	label: __( 'Image Size' ),
+	label: __( 'Image Size', i18n ),
 	value: 'large',
 	defaultValue: '',
 	imageSizes: [],

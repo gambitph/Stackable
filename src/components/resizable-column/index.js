@@ -24,7 +24,7 @@ import { getRowsFromColumns } from '~stackable/block-components/column/util'
  */
 import { __ } from '@wordpress/i18n'
 import { ResizableBox, Popover } from '@wordpress/components'
-import { useSelect } from '@wordpress/data'
+import { useSelect, select } from '@wordpress/data'
 import {
 	Fragment, useState, useEffect, useRef, useCallback, useMemo, memo, useContext,
 } from '@wordpress/element'
@@ -120,6 +120,9 @@ const ResizableColumn = props => {
 		topLeft: false,
 	} ), [ deviceType, isOnlyBlock, isLastBlock, isFirstBlock ] )
 
+	const parentBlockClientId = parentBlock?.clientId
+	const _adjacentBlocks = useRef( undefined )
+
 	const onResizeStart = useCallback( ( _event, _direction ) => {
 		// toggleSelection( false )
 
@@ -131,6 +134,8 @@ const ResizableColumn = props => {
 		}
 
 		const editorDom = getEditorDom()
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
 
 		// In desktop, get all the column widths.
 		if ( isDesktop ) {
@@ -138,7 +143,7 @@ const ResizableColumn = props => {
 			const totalColumnGap = parentColumnGaps.desktop * ( adjacentBlocks.length - 1 )
 
 			// Get the current pixel width of the columns.
-			const parentEl = editorDom.querySelector( `[data-block="${ parentBlock.clientId }"]` )
+			const parentEl = editorDom.querySelector( `[data-block="${ parentBlockClientId }"]` )
 			const parentWidth = parentEl.clientWidth - totalColumnGap
 			const isFirstResize = adjacentBlocks.every( ( { attributes } ) => ! attributes.columnWidth )
 			const columnWidths = adjacentBlocks.map( ( { clientId, attributes } ) => {
@@ -176,16 +181,17 @@ const ResizableColumn = props => {
 			setCurrentWidth( columnWidth )
 
 			// The maximum width is the total width of the row.
-			const parentEl = editorDom.querySelector( `[data-block="${ parentBlock.clientId }"]` )
+			const parentEl = editorDom.querySelector( `[data-block="${ parentBlockClientId }"]` )
 			const maxWidth = parentEl?.clientWidth || 0
 			setMaxWidth( maxWidth )
 		}
 
 		setIsTooltipOver( true )
-	}, [ isDesktop, parentBlock?.clientId, adjacentBlocks, blockIndex, clientId, columnGap, columnGapTablet, columnGapMobile, getEditorDom ] )
+	}, [ isDesktop, parentBlockClientId, blockIndex, clientId, columnGap, columnGapTablet, columnGapMobile, getEditorDom ] )
 
 	const onResize = useCallback( ( _event, _direction, elt, delta ) => {
 		let columnPercentages = []
+		const adjacentBlocks = _adjacentBlocks.current
 
 		// In desktop, when one column is resized, the next column is adjusted also.
 		if ( isDesktop ) {
@@ -203,9 +209,18 @@ const ResizableColumn = props => {
 			// Fix the widths, ensure that we don't end up with off numbers 49.9% and 50.1%.
 			columnPercentages = fixFractionWidths( columnPercentages, isShiftKey )
 
-			const totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
+			// Ensure that the total width is exactly 100%.
+			let totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
 			if ( totalCurrentWidth !== 100 ) {
 				columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
+			}
+
+			// There are cases where the total width may slightly go past 100%
+			// because of the toFixed used above, if that happens, don't use
+			// toFixed.
+			totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
+			if ( totalCurrentWidth !== 100 ) {
+				columnPercentages[ adjacentBlockIndex ] = ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth )
 			}
 
 			setNewWidthsPercent( columnPercentages )
@@ -259,9 +274,11 @@ const ResizableColumn = props => {
 				setSnapWidths( { x: getSnapWidths( [ 100 ], 0, maxWidth, _direction, isShiftKey ) } )
 			}
 		}
-	}, [ isDesktop, currentWidths, currentWidth, blockIndex, adjacentBlocks, isShiftKey, maxWidth, clientId, snapWidths ] )
+	}, [ isDesktop, parentBlockClientId, currentWidths, currentWidth, blockIndex, isShiftKey, maxWidth, clientId, snapWidths ] )
 
 	const onResizeStop = useCallback( ( _event, _direction, elt, delta ) => {
+		const adjacentBlocks = _adjacentBlocks.current
+
 		// Update the block widths.
 		if ( delta.width ) {
 			if ( isDesktop ) {
@@ -301,12 +318,17 @@ const ResizableColumn = props => {
 
 		setSnapWidths( null )
 		setIsTooltipOver( false )
-	}, [ isDesktop, isTablet, newWidthsPercent, props.onChangeDesktop, props.onChangeTablet, props.onChangeMobile, tempStyles, adjacentBlocks, blockIndex, isMounted ] )
+
+		_adjacentBlocks.current = undefined
+	}, [ isDesktop, isTablet, parentBlockClientId, newWidthsPercent, props.onChangeDesktop, props.onChangeTablet, props.onChangeMobile, tempStyles, blockIndex, isMounted ] )
 
 	const onTooltipChange = useCallback( width => {
 		if ( width !== '' && width < MIN_COLUMN_WIDTH_PERCENTAGE[ deviceType ] ) {
 			return
 		}
+
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		const adjacentBlocks = parentBlock.innerBlocks
 
 		// For desktop, column adjustments also affect the adjacent column.
 		if ( isDesktop ) {
@@ -357,7 +379,7 @@ const ResizableColumn = props => {
 
 			props.onChangeMobile( finalWidth, columnWidths, blockIndex )
 		}
-	}, [ deviceType, isDesktop, isTablet, adjacentBlocks, blockIndex ] )
+	}, [ deviceType, parentBlockClientId, isDesktop, isTablet, blockIndex ] )
 
 	/**
 	 * Tooltip context stuff to display all tooltip widths across all sibling columns.

@@ -102,7 +102,7 @@ const BlockToggle = props => {
 			{ ...propsToPass }
 		>
 			<h4>{ label }</h4>
-			{ false && demo && ( // TODO: Remove view demo when we have demos for all our blocks.
+			{ demo && (
 				<span className="s-block-demo">
 					<a
 						href={ demo }
@@ -136,6 +136,34 @@ BlockToggle.defaultProps = {
 	value: '',
 	onChange: () => {},
 	demo: '',
+}
+
+const BlockList = () => {
+	return (
+		<>
+			{ BLOCK_CATEROGIES.map( ( { id, label } ) => {
+				return (
+					<div className="s-getting-started-blocks-wrapper" key={ id }>
+						<h3>{ label }</h3>
+						<div className="s-getting-started-blocks">
+							{ BLOCKS[ id ].map( ( block, i ) => {
+								return (
+									<div
+										key={ i }
+										className="s-box"
+									>
+										<h4>{ block.title }</h4>
+										<p>{ block.description }</p>
+										{ block[ 'stk-demo' ] && <a href={ block[ 'stk-demo' ] } target="_example">{ __( 'See example', i18n ) }</a> }
+									</div>
+								)
+							} ) }
+						</div>
+					</div>
+				)
+			} ) }
+		</>
+	)
 }
 
 const BlockToggler = () => {
@@ -252,6 +280,7 @@ const EditorSettings = () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
 				setSettings( pick( response, [
+					'stackable_google_maps_api_key',
 					'stackable_enable_design_library',
 					'stackable_optimize_inline_css',
 					'stackable_enable_navigation_panel',
@@ -265,6 +294,37 @@ const EditorSettings = () => {
 	}, [] )
 
 	return <>
+		<AdminTextSetting
+			label={ __( 'Google Maps API Key', i18n ) }
+			value={ settings.stackable_google_maps_api_key }
+			type="text"
+			onChange={ value => {
+				clearTimeout( saveTimeout )
+				setSettings( {
+					...settings,
+					stackable_google_maps_api_key: value, // eslint-disable-line camelcase
+				} )
+				setSaveTimeout(
+					setTimeout( () => {
+						setIsBusy( true )
+						const model = new models.Settings( {
+							stackable_google_maps_api_key: value, // eslint-disable-line camelcase
+						} )
+						model.save().then( () => setIsBusy( false ) )
+					}, 400 )
+				)
+			} }
+			help={
+				<>
+					{ __(
+						'Adding a Google API Key enables additional features of the Stackable Map Block.',
+						i18n
+					) }
+						&nbsp;
+					<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">{ __( 'Learn more', i18n ) }</a>
+				</>
+				 }
+		></AdminTextSetting>
 		<AdminToggleSetting
 			label={ __( 'Design Library', i18n ) }
 			value={ settings.stackable_enable_design_library }
@@ -602,6 +662,15 @@ AdditionalOptions.defaultProps = {
 
 // Load all the options into the UI.
 domReady( () => {
+	// This is for the getting started block list.
+	if ( document.querySelector( '.s-getting-started__block-list' ) ) {
+		render(
+			<BlockList />,
+			document.querySelector( '.s-getting-started__block-list' )
+		)
+	}
+
+	// All these below are for the settings page.
 	if ( document.querySelector( '.s-settings-wrapper' ) ) {
 		render(
 			<BlockToggler />,
@@ -639,3 +708,4 @@ domReady( () => {
 		)
 	}
 } )
+

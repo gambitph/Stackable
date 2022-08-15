@@ -211,10 +211,23 @@
 		 * @return bool|\FS_Plugin
 		 */
 		function get() {
-			return isset( $this->_module ) ?
-				$this->_module :
-				false;
+            if ( isset( $this->_module ) ) {
+                return $this->_module;
+            }
+
+            if ( empty( $this->_module_id ) ) {
+                return false;
+            }
+
+            /**
+             * Return an FS_Plugin entity that has its `id` and `is_live` properties set (`is_live` is initialized in the FS_Plugin constructor) to avoid triggering an error that is relevant to these properties when the FS_Plugin entity is used before the `parse_settings()` method is called. This can happen when creating a regular WordPress site by cloning a subsite of a multisite network and the data that is stored in the network-level storage is not cloned.
+             *
+             * @author Leo Fajardo (@leorw)
+             * @since 2.5.0
+             */
+            $plugin     = new FS_Plugin();
+            $plugin->id = $this->_module_id;
+
+            return $plugin;
 		}
-
-
 	}

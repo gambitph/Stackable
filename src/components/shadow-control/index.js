@@ -3,21 +3,17 @@
  */
 import { i18n } from 'stackable'
 import { compact, isNumber } from 'lodash'
-import {
-	AdvancedRangeControl, ColorPaletteControl,
-} from '~stackable/components'
-import { hexToRgba } from '~stackable/util'
+import { AdvancedRangeControl, ColorPaletteControl } from '~stackable/components'
+import { hexToRgba, extractColor } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 
 /**
  * WordPress dependencies
  */
+import { __, sprintf } from '@wordpress/i18n'
 import {
-	__, sprintf,
-} from '@wordpress/i18n'
-import {
-	useCallback, useMemo, useState, useRef, useEffect,
+	useState, useRef, useEffect,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import {
@@ -105,6 +101,8 @@ const FILTERS = [
 			if ( color?.startsWith( 'rgb(' ) ) {
 				return color?.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) || ''
 			}
+
+			color = extractColor( color )
 
 			const rgba = hexToRgba( color )
 
@@ -227,31 +225,32 @@ const ShadowControl = props => {
 		..._props
 	} = props
 
-	const shadows = useMemo( () => options || getShadows(), [ options ] )
+	const shadows = options || getShadows()
 	const buttonRef = useRef( null )
 	const [ isPopoverOpen, setIsPopoverOpen ] = useState( false )
 
-	const valueCallback = useCallback( value => {
+	const valueCallback = value => {
 		return value ? shadows.indexOf( value ) === -1 ? 'custom' : shadows.indexOf( value ) : ''
-	}, [ shadows ] )
+	}
 
-	const changeCallback = useCallback( index => {
+	const changeCallback = index => {
 		return index !== '' ? shadows[ index ] : index
-	}, [ shadows ] )
+	}
 
 	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, valueCallback, changeCallback )
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const [ propsToPass ] = extractControlProps( _props )
 
-	const clickOutsideListener = useCallback( event => {
+	const clickOutsideListener = event => {
 		if ( isPopoverOpen ) {
 			if ( ! event.target.closest( '.shadow-control__popover' ) &&
 				 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
-				 ! event.target.closest( '.components-color-picker' ) ) {
+				 ! event.target.closest( '.components-color-picker' ) &&
+				 ! event.target.closest( '.react-autosuggest__suggestions-container' ) ) {
 				setIsPopoverOpen( false )
 			}
 		}
-	} )
+	}
 
 	useEffect( () => {
 		document.body.addEventListener( 'mousedown', clickOutsideListener )

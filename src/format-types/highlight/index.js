@@ -10,9 +10,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import {
-	Toolbar, Popover,
-} from '@wordpress/components'
+import { Popover, ToolbarGroup } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
 } from '@wordpress/rich-text'
@@ -82,6 +80,14 @@ export const extractColors = styleString => {
 	let highlightColor = ''
 	let colorType = ''
 
+	if ( ! styleString ) { // Prevent block errors if stylestring is null or undefined
+		return {
+			textColor,
+			highlightColor,
+			colorType,
+		}
+	}
+
 	// Detect the current colors based on the styles applied on the text.
 	if ( styleString.match( /linear-gradient\(/ ) ) {
 		colorType = 'low'
@@ -122,7 +128,8 @@ const HighlightButton = props => {
 		const isOutside = ! isElementDescendant( popoverEl.current, event.target )
 		const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
 		const isColorPicker = event.target.closest( '.components-color-picker' )
-		if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker ) {
+		const isSuggestion = event.target.closest( '.react-autosuggest__suggestions-container' )
+		if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker && ! isSuggestion ) {
 			setIsOpen( false )
 		}
 	} )
@@ -173,7 +180,7 @@ const HighlightButton = props => {
 
 	return (
 		<BlockControls>
-			<Toolbar className="stackable-components-toolbar">
+			<ToolbarGroup className="stackable-components-toolbar">
 				<Button
 					label={ __( 'Color & Highlight', i18n ) }
 					className="components-toolbar__control stk-toolbar-button stk-components-toolbar__highlight"
@@ -248,7 +255,7 @@ const HighlightButton = props => {
 						</div>
 					</Popover>
 				}
-			</Toolbar>
+			</ToolbarGroup>
 		</BlockControls>
 	)
 }

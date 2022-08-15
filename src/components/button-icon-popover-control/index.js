@@ -7,13 +7,10 @@ import Button from '../button'
 /**
  * WordPress dependencies
  */
-import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
 	Popover, ToggleControl, PanelBody,
 } from '@wordpress/components'
-import {
-	Component, createRef,
-} from '@wordpress/element'
+import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -51,43 +48,7 @@ class ButtonIconPopoverControl extends Component {
 		this.instanceId = buttonInstance++
 	}
 
-	checkIfAttributeShouldToggleOn( attributes, blockProps ) {
-		if ( ! this.props.onToggle || ! this.props.toggleAttributeName || ! this.props.toggleOnSetAttributes.length ) {
-			return attributes
-		}
-
-		// Don't do anything if turned on already.
-		if ( blockProps.attributes[ this.props.toggleAttributeName ] ) {
-			return attributes
-		}
-
-		// Check if an attribute we're watching for was modified with a value.
-		let checkToggle = false
-		this.props.toggleOnSetAttributes.some( attrName => {
-			if ( Object.keys( attributes ).includes( attrName ) ) {
-				if ( attributes[ attrName ] !== '' ) {
-					checkToggle = true
-					return true
-				}
-			}
-			return false
-		} )
-
-		// Toggle on the "show" attribute along with the other attributes being set.
-		if ( checkToggle ) {
-			return {
-				...attributes,
-				[ this.props.toggleAttributeName ]: true,
-			}
-		}
-
-		return attributes
-	}
-
 	componentDidMount() {
-		// Watch for attribute changes.
-		addFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }`, this.checkIfAttributeShouldToggleOn.bind( this ), 9 )
-
 		/**
 		 * Added event listener for mousedown
 		 *
@@ -95,7 +56,7 @@ class ButtonIconPopoverControl extends Component {
 		 * To fix this, an event listener is added which only triggers whenever a user
 		 * clicks outside the Popover.
 		 */
-		document.addEventListener( 'mousedown', this.handleOnClickOutside )
+		document.addEventListener( 'mousedown', this.handleOnClickOutside ) // eslint-disable-line @wordpress/no-global-event-listener
 	}
 
 	componentWillUnmount() {
@@ -108,10 +69,8 @@ class ButtonIconPopoverControl extends Component {
 			delete instancesStatus[ this.props.label ]
 		}, 500 )
 
-		removeFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }` )
-
 		// Remove event listener for moousedown
-		document.removeEventListener( 'mousedown', this.handleOnClickOutside )
+		document.removeEventListener( 'mousedown', this.handleOnClickOutside ) // eslint-disable-line @wordpress/no-global-event-listener
 	}
 
 	handleOpen() {
@@ -155,7 +114,8 @@ class ButtonIconPopoverControl extends Component {
 		if ( this.state.open ) {
 			if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) &&
 			     ! ev.target.closest( '.ugb-button-icon-control__edit' ) &&
-				 ! ev.target.closest( '.components-color-picker' ) ) {
+				 ! ev.target.closest( '.components-color-picker' ) &&
+				 ! ev.target.closest( '.react-autosuggest__suggestions-container' ) ) {
 				this.handleClose()
 			}
 		}
@@ -240,8 +200,6 @@ ButtonIconPopoverControl.defaultProps = {
 	onReset: () => {},
 	checked: false,
 	onToggle: undefined,
-	toggleOnSetAttributes: [],
-	toggleAttributeName: '',
 	colorPreview: null,
 	imageUrlPreview: '',
 	hasColorPreview: false,

@@ -59,7 +59,7 @@ export const BorderControls = props => {
 
 			{ ( getAttribute( 'borderType' ) || ! props.hasBorderType ) && props.hasBorderControls &&
 				<FourRangeControl
-					label={ __( 'Border Width' ) }
+					label={ __( 'Border Width', i18n ) }
 					attribute={ getAttrName( 'borderWidth' ) }
 					responsive="all"
 					hover="all"

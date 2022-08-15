@@ -1,7 +1,9 @@
 /**
  * WordPress dependencies
  */
-import { Component, createRef } from '@wordpress/element'
+import {
+	Component, createRef, createPortal,
+} from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -108,12 +110,16 @@ class AdvancedAutosuggestControl extends Component {
 			label: '',
 			suggestions: [],
 			isEmpty: false,
+			// These are for positioning the suggestion drop down.
+			isShowingSuggestions: false,
+			containerRect: null,
 		}
 		this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind( this )
 		this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind( this )
 		this.onChange = this.onChange.bind( this )
 		this.onFocus = this.onFocus.bind( this )
 		this.autosuggestDiv = createRef()
+		this.suggestionContainerLocationUpdater = this.suggestionContainerLocationUpdater.bind( this )
 	}
 
 	onChange( event, { newValue } ) {
@@ -159,6 +165,17 @@ class AdvancedAutosuggestControl extends Component {
 			suggestions,
 			isEmpty: value.trim() !== '' && suggestions.length === 0,
 		} )
+	}
+
+	// This is for adjusting the location of the suggestion drop down.
+	suggestionContainerLocationUpdater() {
+		if ( this.autosuggestDiv?.current && this.state.isShowingSuggestions ) {
+			this.setState( {
+				containerRect: this.autosuggestDiv.current.getBoundingClientRect(),
+			} )
+			// Keep updating the position.
+			requestAnimationFrame( this.suggestionContainerLocationUpdater )
+		}
 	}
 
 	componentDidMount() {
@@ -214,6 +231,17 @@ class AdvancedAutosuggestControl extends Component {
 				allowReset={ this.props.allowReset }
 			>
 				<div className="ugb-advanced-autosuggest-control__select" ref={ this.autosuggestDiv }>
+					{ /** This style is used to update the suggestion dropdown location,
+					   * we use :root because the suggestion dropdown is attached to the
+					   * document.body and outside the scope of our control. */ }
+					{ this.state.isShowingSuggestions && (
+						<style>
+							{ `:root {
+								--container-left: ${ this.state.containerRect?.left }px;
+								--container-bottom: ${ this.state.containerRect?.bottom }px;
+							}` }
+						</style>
+					) }
 					<Autosuggest
 						multiSection={ isGroupedOptions( this.props.options ) }
 						suggestions={ suggestions }
@@ -237,6 +265,45 @@ class AdvancedAutosuggestControl extends Component {
 						shouldRenderSuggestions={ shouldRenderSuggestions }
 						inputProps={ inputProps }
 						renderInputComponent={ this.props.renderInputComponent ? this.props.renderInputComponent : ( props => <input { ...props } /> ) }
+						renderSuggestionsContainer={ ( { containerProps, children } ) => {
+							const shouldShowSuggestions = containerProps.className.indexOf( 'react-autosuggest__suggestions-container--open' ) >= 0
+
+							// Update the suggestion visibility state for
+							// updating the suggestion dropdown position.
+							if ( shouldShowSuggestions && ! this.state.isShowingSuggestions ) {
+								this.setState( { isShowingSuggestions: true } )
+								requestAnimationFrame( this.suggestionContainerLocationUpdater )
+							} else if ( ! shouldShowSuggestions && this.state.isShowingSuggestions ) {
+								this.setState( { isShowingSuggestions: false } )
+							}
+
+							if ( shouldShowSuggestions ) {
+								// We need to add styling to position the
+								// suggestion drop down correctly. Scrolling
+								// the editor/inspector breaks the position, so
+								// we need to use custom properties to ensure
+								// the correct position.
+								const inputCoords = this.autosuggestDiv.current.getBoundingClientRect()
+								const style = {
+									left: `calc(var(--container-left, 0px) + ${ window.scrollX }px)`,
+									top: `calc(var(--container-bottom, 0px) + ${ window.scrollY }px)`,
+									width: inputCoords.width,
+								}
+
+								containerProps.className = classnames( containerProps.className, 'ugb-advanced-autosuggest__suggestions-container' )
+
+								const suggestions = (
+									<div { ...containerProps } style={ style }>
+										{ children }
+									</div>
+								)
+
+								return createPortal( suggestions, document.body )
+							}
+
+							return null
+						} }
+
 					/>
 					{ this.state.isEmpty && <div className="ugb--autosuggest-empty">{ this.props.noMatchesLabel }</div> }
 					{ this.props.children }

@@ -3,7 +3,12 @@
 	"title": "Image",
 	"description": "An image with advanced controls to make a visual statement.",
 	"category": "media",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId"
+	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "essential"
+	"stk-type": "essential",
+	"stk-demo": "https://wpstackable.com/advanced-image-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

@@ -278,7 +278,7 @@
 		'permissions-profile'                      => _fs_text( 'Your Profile Overview' ),
 		'permissions-profile_desc'                 => _fs_text( 'Name and email address' ),
 		'permissions-site'                         => _fs_text( 'Your Site Overview' ),
-		'permissions-site_desc'                    => _fs_text( 'Site URL, WP version, PHP info, plugins & themes' ),
+		'permissions-site_desc'                    => _fs_text( 'Site URL, WP version, PHP version, plugins & themes' ),
 		'permissions-events'                       => _fs_text( 'Current %s Events' ),
 		'permissions-events_desc'                  => _fs_text( 'Activation, deactivation and uninstall' ),
 		'permissions-plugins_themes'               => _fs_text( 'Plugins & Themes' ),

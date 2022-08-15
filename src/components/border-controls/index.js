@@ -47,7 +47,7 @@ const BorderControls = props => {
 			}
 			{ props.onChangeBorderWidth && props.borderType &&
 				<SpacingControl
-					label={ __( 'Border Width' ) }
+					label={ __( 'Border Width', i18n ) }
 					units={ [ 'px' ] }
 					min={ 0 }
 					max={ 99 }

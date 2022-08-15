@@ -39,8 +39,14 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			hoverSelector: borderRadiusSelector ? undefined : hoverSelector,
-			enabledCallback: () => addBorderRadiusOverflow,
+			enabledCallback: ( _getAttribute, attributes ) => {
+				if ( addBorderRadiusOverflow && attrNameTemplate === 'block%s' && attributes.overflow ) {
+					return false
+				}
+				return addBorderRadiusOverflow
+			},
 			valueCallback: () => 'hidden',
+			dependencies: [ 'overflow' ],
 		},
 		{
 			selector,

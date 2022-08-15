@@ -13,5 +13,10 @@
 		"test": [
 			"phpunit tests"
 		]
-	}
+	},
+	"config": {
+        "allow-plugins": {
+            "roots/wordpress-core-installer": true
+        }
+    }
 }

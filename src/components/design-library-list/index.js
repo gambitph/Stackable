@@ -21,7 +21,10 @@ const DesignLibraryList = props => {
 		designs,
 		isBusy,
 		onSelect,
+		onSelectMulti,
 		apiVersion,
+		isMultiSelectMode = false,
+		selectedDesigns = [],
 	} = props
 
 	const listClasses = classnames( [
@@ -33,6 +36,7 @@ const DesignLibraryList = props => {
 
 	return <div className={ listClasses }>
 		{ ( designs || [] ).map( ( design, i ) => {
+			const selectedNum = isMultiSelectMode ? selectedDesigns.indexOf( design.id ) + 1 : false
 			return (
 				<DesignLibraryListItem
 					key={ i }
@@ -44,8 +48,14 @@ const DesignLibraryList = props => {
 					image={ design.image }
 					label={ design.label }
 					apiVersion={ apiVersion }
-					onClick={ designData => {
-						onSelect( designData, design )
+					isMultiSelectMode={ isMultiSelectMode }
+					selectedNum={ selectedNum }
+					onClick={ ( designData, callback = null ) => {
+						if ( ! isMultiSelectMode ) {
+							onSelect( designData, design, callback )
+						} else if ( onSelectMulti ) {
+							onSelectMulti( designData, callback )
+						}
 					} }
 				/>
 			)

@@ -83,9 +83,10 @@ const Edit = props => {
 		'stk-block-notification__content',
 	], useContentAlignmentClasses( attributes ) )
 
+	const lastBlockName = last( innerBlocks )?.name
 	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
-	}, [ hasInnerBlocks, innerBlocks ] )
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, lastBlockName ] )
 
 	return (
 		<>

@@ -19,7 +19,9 @@ import {
 	PanelAdvancedSettings,
 	ShadowControl,
 } from '~stackable/components'
-import { getAttributeName, getAttrNameFunction } from '~stackable/util'
+import {
+	getAttributeName, getAttrNameFunction, extractColor,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -46,6 +48,17 @@ const TYPOGRAPHY_SHADOWS = [
 	'0px 0px 40px rgba(18, 63, 82, 0.6)',
 	'0px 0px 62px rgba(71, 73, 79, 1)',
 	'0px 0px 100px rgba(71, 73, 79, 1)',
+]
+
+const GRADIENT_OPTIONS = [
+	{
+		value: '',
+		title: __( 'Single', i18n ),
+	},
+	{
+		value: 'gradient',
+		title: __( 'Gradient', i18n ),
+	},
 ]
 
 export const Controls = props => {
@@ -247,25 +260,10 @@ export const Controls = props => {
 				<>
 					{ hasGradient && (
 						<AdvancedToolbarControl
-							controls={ [
-								{
-									value: '',
-									title: __( 'Single', i18n ),
-								},
-								{
-									value: 'gradient',
-									title: __( 'Gradient', i18n ),
-								},
-							] }
+							controls={ GRADIENT_OPTIONS }
 							isSmall={ true }
 							fullwidth={ false }
 							attribute={ attributeName( 'textColorType' ) }
-							onReset={ () => {
-								updateAttributes( {
-									[ getAttributeName( 'textColor1' ) ]: '',
-									[ getAttributeName( 'textColor2' ) ]: '',
-								} )
-							} }
 						/>
 					) }
 					<ColorPaletteControl
@@ -273,7 +271,7 @@ export const Controls = props => {
 							if ( state !== 'normal' ) {
 								return _value
 							}
-							const value = _value?.startsWith( 'var(--stk-global-color' ) ? _value.match( /(#[^\)]*)/g )[ 0 ] : _value
+							const value = extractColor( _value )
 							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
 							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
 							return _value

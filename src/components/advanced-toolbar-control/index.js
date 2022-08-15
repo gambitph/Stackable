@@ -18,14 +18,13 @@ import { ResetButton } from '../base-control2/reset-button'
  */
 import classnames from 'classnames'
 import { omit } from 'lodash'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import {
-	ButtonGroup,
-} from '@wordpress/components'
-import { i18n } from 'stackable'
+import { ButtonGroup } from '@wordpress/components'
+import { memo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const FLEX_HORIZONTAL_ALIGN_OPTIONS = [
@@ -123,7 +122,7 @@ const AdvancedToolbarControl = props => {
 		>
 			<ButtonGroup
 				children={
-					controls.map( ( option, index ) => {
+					controls.map( option => {
 						const controlProps = {
 							...( omit( option, 'controls', 'show' ) ),
 							onClick: () => {
@@ -137,7 +136,7 @@ const AdvancedToolbarControl = props => {
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
 						}
-						return <Button key={ index } { ...controlProps } />
+						return <Button key={ option.value } { ...controlProps } />
 					} )
 				}
 				className={ toolbarClasses }
@@ -170,4 +169,4 @@ AdvancedToolbarControl.defaultProps = {
 	onChange: undefined,
 }
 
-export default AdvancedToolbarControl
+export default memo( AdvancedToolbarControl )

@@ -372,18 +372,22 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * @param string new content.
 		 */
 		public function render_callback( $attributes, $content, $block = null ) {
-			preg_match( '/\&lt;.*?stk-start:posts\/template [^>]*>(.*)\&lt;.*?stk-end:post\/template[^>]*>/', $content, $match );
-			if ( ! isset( $match[ 1 ] ) ) {
+			// We have the odd "–" string here because we have incorrectly used this in previous versions.
+			// Sometimes the "<" & ">" characters get converted into "&lt;" & "&gt;"
+			preg_match( '/(\&lt;|<)[!–\-\s\/]+stk-start:posts\/template[^>;]+(\&gt;|>)(.*?)(\&lt;|<)[!–\-\s\/]+stk-end:post\/template[^>;]+(\&gt;|>)/', $content, $match );
+			if ( ! isset( $match[3] ) ) {
 				return $content;
 			}
+			$matched = $match[0];
+			$single_post_template = $match[3];
 
 			$attributes = $this->generate_defaults( $attributes );
-			$content = $this->render_post_items( $match, $content, $attributes );
+			$content = $this->render_post_items( $matched, $single_post_template, $content, $attributes );
 			$content = apply_filters( 'stackable.posts.output',
 				$content,
 				$attributes,
 				$block,
-				$match
+				$single_post_template
 			);
 			return $content;
 		}
@@ -391,10 +395,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		/**
 		 * Render the post items
 		 */
-		public function render_post_items( $match, $content, $attributes ) {
-			$to_replace = $match[ 0 ];
-			$template = $match[ 1 ];
-
+		public function render_post_items( $to_replace, $template, $content, $attributes ) {
 			$posts = '';
 			$post_query = generate_post_query_from_stackable_posts_block( $attributes );
 			$recent_posts = wp_get_recent_posts( $post_query );

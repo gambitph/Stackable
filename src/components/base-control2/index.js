@@ -24,7 +24,6 @@ import { __ } from '@wordpress/i18n'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch } from '@wordpress/data'
-import { useMemo, useCallback } from '@wordpress/element'
 
 const ALL_SCREENS = [ 'desktop', 'tablet', 'mobile' ]
 
@@ -40,11 +39,9 @@ export const BaseControl = props => {
 
 	const responsive = props.responsive === 'all' ? ALL_SCREENS : props.responsive
 
-	const units = useMemo( () => (
-		props.units && props.units?.map( unit => {
-			return { value: unit }
-		} )
-	), [ props.units ] ) || []
+	const units = ( props.units && props.units?.map( unit => {
+		return { value: unit }
+	} ) ) || []
 
 	const labelClassName = classnames( [
 		'stk-control-label',
@@ -113,7 +110,7 @@ const AdvancedControl = props => {
 	// Unit handles
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 	const unit = props.unit ? props.unit : attributes ? attributes[ unitAttrName ] : ''
-	const onChangeUnit = useCallback( unit => updateBlockAttributes( clientId, { [ unitAttrName ]: unit } ), [ unitAttrName ] )
+	const onChangeUnit = unit => updateBlockAttributes( clientId, { [ unitAttrName ]: unit } )
 
 	const propsToPass = omit( props, [ 'attribute' ] )
 

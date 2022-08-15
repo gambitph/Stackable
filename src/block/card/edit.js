@@ -89,9 +89,10 @@ const Edit = props => {
 		'stk-container-padding': hasContainer,
 	} )
 
+	const lastBlockName = last( innerBlocks )?.name
 	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( last( innerBlocks )?.name ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
-	}, [ hasInnerBlocks, innerBlocks ] )
+		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
+	}, [ hasInnerBlocks, lastBlockName ] )
 
 	let hasHeight = [ 'default', 'default-2' ].includes( blockStyle )
 	const deviceType = useDeviceType()

@@ -12,7 +12,8 @@ if ( ! function_exists( 'stackable_load_expand_frontend_script' ) ) {
 				'stk-frontend-expand',
 				plugins_url( 'dist/frontend_block_expand.js', STACKABLE_FILE ),
 				array(),
-				STACKABLE_VERSION
+				STACKABLE_VERSION,
+				true
 			);
 		}
 	}
