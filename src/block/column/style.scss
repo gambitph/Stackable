@@ -7,6 +7,7 @@
 	margin-bottom: 0;
 }
 
-.stk-block.stk-block-column .stk-inner-blocks {
+// We need this to make position sticky to work inside columns.
+.stk-block.stk-block-column > * > .stk-inner-blocks {
 	height: 100%;
 }
