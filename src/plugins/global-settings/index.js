@@ -18,14 +18,11 @@ import { registerPlugin } from '@wordpress/plugins'
 import {
 	Fragment, render, unmountComponentAtNode, useEffect,
 } from '@wordpress/element'
-// TODO: @wordpress/edit-post isn't loaded in the Widget Editor. In the future,
-// Gutenberg will add a @wordpress/edit-site, so we can use that instead when it
-// arrives.
-// @see https://github.com/WordPress/gutenberg/pull/34460
-// import { PluginSidebar } from '@wordpress/edit-post'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addAction } from '@wordpress/hooks'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 
 // Action used to toggle the global settings panel.
 addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
@@ -41,6 +38,9 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 
 const GlobalSettings = () => {
 	const deviceType = useDeviceType()
+	const editorDom = useSelect( select => {
+		return select( 'stackable/editor-dom' ).getEditorDom()
+	} )
 
 	/**
 	 * Render the global colors and typography in Gutenberg
@@ -56,25 +56,23 @@ const GlobalSettings = () => {
 		const globalTypographyWrapperDiv = document.createElement( 'style' )
 		const globalColorWrapperDiv = document.createElement( 'style' )
 
-		const timeout = setTimeout( () => {
-			const selector = document.querySelector( 'iframe[name="editor-canvas"]' )?.contentWindow.document.body || document.body
-
-			selector.appendChild( globalTypographyWrapperDiv )
+		const editorBody = editorDom?.closest( 'body' )
+		if ( editorBody ) {
+			editorBody.appendChild( globalTypographyWrapperDiv )
 			render( <GlobalTypographyStyles />, globalTypographyWrapperDiv )
 
-			selector.appendChild( globalColorWrapperDiv )
+			editorBody.appendChild( globalColorWrapperDiv )
 			render( <GlobalColorStyles />, globalColorWrapperDiv )
-		}, 2000 )
+		}
 
 		return () => {
-			clearTimeout( timeout )
 			unmountComponentAtNode( globalTypographyWrapperDiv )
 			unmountComponentAtNode( globalColorWrapperDiv )
 
 			globalTypographyWrapperDiv.remove()
 			globalColorWrapperDiv.remove()
 		}
-	}, [ deviceType ] )
+	}, [ deviceType, editorDom ] )
 
 	// TODO: PluginSidebar doesn't work in the Widget Editor since
 	// @wordpress/edit-post isn't loaded in there. In the future, Gutenberg will
