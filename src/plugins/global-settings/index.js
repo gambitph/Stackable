@@ -76,8 +76,6 @@ const GlobalSettings = () => {
 		}
 	}, [ deviceType ] )
 
-	// console.log( document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body )
-
 	// TODO: PluginSidebar doesn't work in the Widget Editor since
 	// @wordpress/edit-post isn't loaded in there. In the future, Gutenberg will
 	// add a @wordpress/edit-site that will have a PluginSidebar, so we can use
