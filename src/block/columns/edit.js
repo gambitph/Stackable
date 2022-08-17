@@ -133,8 +133,8 @@ export default withQueryLoopContext( Edit )
 addFilter( 'stackable.block-components.responsive.control', 'stackable/premium', output => {
 	const { name } = useBlockEditContext()
 
-	// Only do mobile column arrangement for the Columns block.
-	if ( name !== 'stackable/columns' ) {
+	// Only do mobile column arrangement for the Columns & Feature blocks.
+	if ( ! [ 'stackable/columns', 'stackable/feature' ].includes( name ) ) {
 		return output
 	}
 
