@@ -10,6 +10,7 @@ import './block-defaults'
  */
 import { SVGStackableIcon } from '~stackable/icons'
 import { i18n, isContentOnlyMode } from 'stackable'
+import { useDeviceType } from '~stackable/hooks'
 
 /** WordPress dependencies
  */
@@ -24,9 +25,7 @@ import {
 // import { PluginSidebar } from '@wordpress/edit-post'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addAction } from '@wordpress/hooks'
-import {
-	dispatch, select, useSelect,
-} from '@wordpress/data'
+import { dispatch, select } from '@wordpress/data'
 
 // Action used to toggle the global settings panel.
 addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
@@ -41,7 +40,7 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 } )
 
 const GlobalSettings = () => {
-	const isEditingTemplate = useSelect( select => select( 'core/edit-post' )?.isEditingTemplate?.() )
+	const deviceType = useDeviceType()
 
 	/**
 	 * Render the global colors and typography in Gutenberg
@@ -58,16 +57,14 @@ const GlobalSettings = () => {
 		const globalColorWrapperDiv = document.createElement( 'style' )
 
 		const timeout = setTimeout( () => {
-			const selector = isEditingTemplate
-				? document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
-				: document.body
+			const selector = document.querySelector( 'iframe[name="editor-canvas"]' )?.contentWindow.document.body || document.body
 
 			selector.appendChild( globalTypographyWrapperDiv )
 			render( <GlobalTypographyStyles />, globalTypographyWrapperDiv )
 
 			selector.appendChild( globalColorWrapperDiv )
 			render( <GlobalColorStyles />, globalColorWrapperDiv )
-		}, 300 )
+		}, 2000 )
 
 		return () => {
 			clearTimeout( timeout )
@@ -77,7 +74,9 @@ const GlobalSettings = () => {
 			globalTypographyWrapperDiv.remove()
 			globalColorWrapperDiv.remove()
 		}
-	}, [ isEditingTemplate ] )
+	}, [ deviceType ] )
+
+	// console.log( document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body )
 
 	// TODO: PluginSidebar doesn't work in the Widget Editor since
 	// @wordpress/edit-post isn't loaded in there. In the future, Gutenberg will
