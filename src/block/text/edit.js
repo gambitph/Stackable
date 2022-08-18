@@ -21,6 +21,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -162,7 +163,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-
+			<PremadeHoverEffects.InspectorControls effects={ [ 'text' ] } />
 			<TextStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-text" />
 

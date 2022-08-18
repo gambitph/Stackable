@@ -25,15 +25,14 @@ import {
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import {
-	Style as StyleComponent,
-} from '~stackable/components'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import {
-	renderToString, useMemo,
+	renderToString,
+	useMemo,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 

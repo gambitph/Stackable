@@ -37,6 +37,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -157,6 +158,7 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+			<PremadeHoverEffects.InspectorControls effects={ [ 'container' ] } />
 
 			<InspectorStyleControls>
 				<InspectorBottomTip />

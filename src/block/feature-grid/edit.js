@@ -30,6 +30,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
@@ -86,6 +87,7 @@ const Edit = props => {
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
 			<Responsive.InspectorControls />
+			<PremadeHoverEffects.InspectorControls effects={ [ 'container' ] } />
 			<ConditionalDisplay.InspectorControls />
 			<ContentAlign.InspectorControls hasColumnCount={ true } />
 

@@ -3,7 +3,8 @@
  */
 import { PostsStyles } from './style'
 import {
-	generateRenderPostItem, CONTENTS,
+	generateRenderPostItem,
+	CONTENTS,
 } from './util'
 import variations from './variations'
 
@@ -49,6 +50,7 @@ import {
 	Transform,
 	ContentAlign,
 	useContentAlignmentClasses,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -392,6 +394,7 @@ const Edit = props => {
 				initialOpen={ false }
 			/>
 			<ContainerDiv.InspectorControls />
+			<PremadeHoverEffects.InspectorControls effects={ [ 'posts', 'image' ] } />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-posts" />

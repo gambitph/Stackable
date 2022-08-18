@@ -29,6 +29,7 @@ import {
 	MarginBottom,
 	BlockLink,
 	Transform,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -101,6 +102,8 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+
+			<PremadeHoverEffects.InspectorControls effects={ [ 'container' ] } />
 
 			<InspectorStyleControls>
 				<InspectorBottomTip />

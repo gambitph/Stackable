@@ -13,6 +13,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -36,6 +37,7 @@ export const attributes = ( version = VERSION ) => {
 		hasTextTag: false,
 		hasColor: false,
 	} )
+	PremadeHoverEffects.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {

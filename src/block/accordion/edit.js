@@ -30,6 +30,7 @@ import {
 	ConditionalDisplay,
 	MarginBottom,
 	Transform,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import {
 	useAttributeEditHandlers, useBlockHoverClass, useBlockContext,
@@ -145,6 +146,7 @@ const Edit = props => {
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
+			<PremadeHoverEffects.InspectorControls effects={ [ 'container' ] } />
 
 			<InspectorStyleControls>
 				<InspectorBottomTip />

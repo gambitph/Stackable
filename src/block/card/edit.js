@@ -36,6 +36,7 @@ import {
 	ConditionalDisplay,
 	Transform,
 	MarginBottom,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 
 /**
@@ -126,6 +127,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
+			<PremadeHoverEffects.InspectorControls effects={ [ 'container', 'image' ] } />
 
 			<InspectorStyleControls>
 				<InspectorBottomTip />

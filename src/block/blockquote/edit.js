@@ -31,6 +31,7 @@ import {
 	Advanced,
 	MarginBottom,
 	Transform,
+	PremadeHoverEffects,
 } from '~stackable/block-components'
 import {
 	useBlockContext,
@@ -88,9 +89,8 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-blockquote" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
-
+			<PremadeHoverEffects.InspectorControls effects={ [ 'container' ] } />
 			<InspectorStyleControls>
 				<InspectorBottomTip />
 			</InspectorStyleControls>
