@@ -38,6 +38,12 @@ export const EditorDom = () => {
 	} )
 
 	useEffect( () => {
+		// If the editor is available right away, use it.
+		const editorEl = document.querySelector( `.editor-styles-wrapper, iframe[name="editor-canvas"]` )
+		if ( editorEl ) {
+			setIframeForceUpdate( v => v + 1 )
+		}
+
 		if ( deviceType === 'Desktop' ) {
 			// We have to wait for the editor area to load (e.g. FSE iframe takes a long time to load)
 			interval.current = setInterval( () => {
