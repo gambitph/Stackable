@@ -13,9 +13,7 @@ import {
  * External dependencies
  */
 import classnames from 'classnames'
-import {
-	cloneDeep, isPlainObject, debounce,
-} from 'lodash'
+import { cloneDeep, isPlainObject } from 'lodash'
 import { i18n } from 'stackable'
 import { whiteIfDark } from '~stackable/util'
 import { Button } from '~stackable/components'
@@ -27,7 +25,7 @@ import {
 	ColorPicker, Popover, BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import {
-	Fragment, useState, useMemo, useCallback,
+	Fragment, useState, useMemo,
 } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
@@ -36,35 +34,28 @@ import { models } from '@wordpress/api'
 import { __, sprintf } from '@wordpress/i18n'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
-const ColorPickerTextArea = props => {
-	const [ value, setValue ] = useState( props.value )
-	const debouncedCallback = useCallback( debounce( v => props.onChange( v ), 500 ), [] )
-	return (
-		<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
-			<div className="components-color-picker__controls">
-				<div className="components-color-picker__inputs-wrapper">
-					<div className="components-color-picker__inputs-fields">
-						<BaseControl
+const ColorPickerTextArea = props => (
+	<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
+		<div className="components-color-picker__controls">
+			<div className="components-color-picker__inputs-wrapper">
+				<div className="components-color-picker__inputs-fields">
+					<BaseControl
+						id="color-picker-text-name"
+						className="components-color-picker__input-field"
+						label={ __( 'Style name', i18n ) }
+					>
+						<input
+							className="components-text-control__input"
 							id="color-picker-text-name"
-							className="components-color-picker__input-field"
-							label={ __( 'Style name', i18n ) }
-						>
-							<input
-								className="components-text-control__input"
-								id="color-picker-text-name"
-								onChange={ event => {
-									setValue( event.target.value )
-									debouncedCallback( event.target.value )
-								} }
-								value={ value }
-							/>
-						</BaseControl>
-					</div>
+							onChange={ event => props.onChange( event.target.value ) }
+							defaultValue={ props.value }
+						/>
+					</BaseControl>
 				</div>
 			</div>
 		</div>
-	)
-}
+	</div>
+)
 
 ColorPickerTextArea.defaultProps = {
 	value: '',
