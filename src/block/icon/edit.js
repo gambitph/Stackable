@@ -53,7 +53,7 @@ const Edit = props => {
 	] )
 
 	const wrapperClassNames = classnames( [
-		getUniqueBlockClass( attributes.uniqueId ),
+		// getUniqueBlockClass( attributes.uniqueId ),
 		blockHoverClass,
 	] )
 
