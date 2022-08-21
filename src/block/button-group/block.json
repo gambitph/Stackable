@@ -2,7 +2,7 @@
 	"name": "stackable/button-group",
 	"title": "Button Group",
 	"description": "Add a customizable button.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Link"
