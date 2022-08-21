@@ -17,3 +17,10 @@
 		}
 	}
 }
+
+// We need this to make position sticky to work inside columns.
+.stk-block.stk-block-column > .stk-inner-blocks,
+.stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks,
+.stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	height: 100%;
+}
