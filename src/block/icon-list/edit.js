@@ -19,9 +19,7 @@ import {
 	AdvancedSelectControl,
 	AlignButtonsControl,
 } from '~stackable/components'
-import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
+import { useBlockHoverClass } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
 import {
 	Typography,
@@ -43,16 +41,12 @@ import {
 /**
  * WordPress dependencies
  */
-import {
-	useSelect,
-} from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 import {
 	Fragment, useRef, useEffect, useState, useCallback,
 } from '@wordpress/element'
-import {
-	__,
-} from '@wordpress/i18n'
-import { createIconListControls } from './util'
+import { __ } from '@wordpress/i18n'
+import { createIconListControls, DEFAULT_SVG } from './util'
 
 const listTypeOptions = [
 	{
@@ -263,6 +257,7 @@ const Edit = props => {
 							// Reset custom individual icons.
 							setAttributes( { icon, icons: [] } )
 						} }
+						defaultValue={ props.defaultValue }
 					/>
 
 					<AdvancedSelectControl
@@ -386,6 +381,10 @@ const Edit = props => {
 
 		</Fragment>
 	)
+}
+
+Edit.defaultProps = {
+	defaultValue: DEFAULT_SVG,
 }
 
 export default withQueryLoopContext( Edit )

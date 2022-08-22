@@ -43,6 +43,7 @@ export const Edit = props => {
 		wrapInPanels = true,
 		responsive = 'all',
 		hover = 'all',
+		defaultValue,
 	} = props
 
 	const {
@@ -75,6 +76,7 @@ export const Edit = props => {
 			<IconControl
 				label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
 				value={ getAttribute( 'icon' ) }
+				defaultValue={ defaultValue }
 				onChange={ updateAttributeHandler( 'icon' ) }
 				help={ iconControlHelp }
 			/>
@@ -277,4 +279,5 @@ Edit.defaultProps = {
 	hasIconGap: false,
 	hasIconPosition: false,
 	hasMultiColor: false,
+	defaultValue: '',
 }

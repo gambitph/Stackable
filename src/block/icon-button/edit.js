@@ -3,9 +3,7 @@
  */
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
-import {
-	InspectorTabs,
-} from '~stackable/components'
+import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -18,9 +16,7 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
+import { useBlockHoverClass } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
 
 /**
@@ -31,6 +27,7 @@ import { __ } from '@wordpress/i18n'
 /**
  * Internal dependencies
  */
+import { defaultIcon } from './schema'
 import { IconButtonStyles } from './style'
 import { blockStyles } from './block-styles'
 
@@ -63,7 +60,7 @@ const Edit = props => {
 				hasTextColor={ false }
 				hasIconColor={ true }
 			/>
-			<Button.InspectorControls.Icon hasColor={ false } />
+			<Button.InspectorControls.Icon hasColor={ false } defaultValue={ props.defaultValue } />
 			<Button.InspectorControls.Size hasWidth={ true } />
 			<Button.InspectorControls.Borders
 				borderSelector=".stk-button"
@@ -96,6 +93,10 @@ const Edit = props => {
 			</BlockDiv>
 		</>
 	)
+}
+
+Edit.defaultProps = {
+	defaultValue: defaultIcon,
 }
 
 export default withQueryLoopContext( Edit )

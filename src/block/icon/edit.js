@@ -38,6 +38,8 @@ import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { useBlockProps } from '@wordpress/block-editor'
 
+import { defaultIcon } from './schema'
+
 const Edit = props => {
 	const { className, attributes } = props
 
@@ -80,7 +82,7 @@ const Edit = props => {
 			</InspectorAdvancedControls>
 
 			<EffectsAnimations.InspectorControls />
-			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
+			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ props.defaultValue } />
 			<Link.InspectorControls hasToggle={ true } />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
@@ -99,6 +101,10 @@ const Edit = props => {
 			</div>
 		</Fragment>
 	)
+}
+
+Edit.defaultProps = {
+	defaultValue: defaultIcon,
 }
 
 export default withQueryLoopContext( Edit )
