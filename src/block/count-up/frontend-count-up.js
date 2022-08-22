@@ -13,9 +13,11 @@ class StackableCountUp {
 	callback = entries => {
 		entries.forEach( entry => {
 			const el = entry.target
+			const duration = el.getAttribute( 'data-duration' ) ? el.getAttribute( 'data-duration' ) * 1000 : 1000
+
 			if ( ! el.classList.contains( ACTIVE ) && entry.isIntersecting ) {
 				setTimeout( () => {
-					counterUp( el )
+					counterUp( el, { duration } )
 					el.classList.add( ACTIVE )
 				}, 200 )
 			}
