@@ -1,0 +1,33 @@
+@import "breakpoints";
+
+// Button alignment.
+.stk-block .stk-button-group {
+	&:not(.stk-collapse-on-desktop) {
+		justify-content: var(--stk-alignment-justify-content);
+	}
+	&:is(.stk--collapse-on-desktop) {
+		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
+			margin-inline-start: var(--stk-alignment-margin-left);
+			margin-inline-end: var(--stk-alignment-margin-right);
+		}
+	}
+}
+
+@include tablet {
+	.stk-button-group:is(.stk--collapse-on-tablet) {
+		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
+			margin-inline-start: var(--stk-alignment-margin-left);
+			margin-inline-end: var(--stk-alignment-margin-right);
+		}
+	}
+}
+
+@include mobile {
+	.stk-button-group:is(.stk--collapse-on-tablet),
+	.stk-button-group:is(.stk--collapse-on-mobile) {
+		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
+			margin-inline-start: var(--stk-alignment-margin-left);
+			margin-inline-end: var(--stk-alignment-margin-right);
+		}
+	}
+}

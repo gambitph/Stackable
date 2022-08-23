@@ -1,3 +1,4 @@
+import { addDeprecatedAttributes } from './deprecated/attributes'
 import {
 	Advanced,
 	Alignment,
@@ -33,10 +34,6 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	attrObject.add( {
 		attributes: {
-			collapseOn: {
-				type: 'string',
-				default: '',
-			},
 			flexWrap: {
 				type: 'string',
 				stkResponsive: true,
@@ -46,7 +43,24 @@ export const attributes = ( version = VERSION ) => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
+	attrObject.add( {
+		attributes: {
+			buttonAlign: {
+				type: 'string',
+				stkResponsive: true,
+				default: '',
+			},
+			buttonFullWidth: {
+				type: 'boolean',
+				default: '',
+			},
+		},
+		versionAdded: '3.4.3',
+		versionDeprecated: '',
+	} )
 	addFlexGapAttributes( attrObject )
+
+	addDeprecatedAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }
