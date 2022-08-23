@@ -248,6 +248,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 3.4.3 =
 * New: Added duration option for the Count Up block #2355
+* New: Added button alignment & full-width options for the Button Group block
 * Change: Remove doubled Stackable icons in the block inserter #2383
 * Change: Video popup now uses YouTube's no-cookie domain #2392
 * Fixed: Buttons stacking on mobile adds a margin to some buttons #2249
