@@ -29,6 +29,7 @@ import { dispatch, useSelect } from '@wordpress/data'
 export const EditorDom = () => {
 	const deviceType = useDeviceType()
 	const [ iframeForceUpdate, setIframeForceUpdate ] = useState( 0 )
+	const [ editorDom, setEditorDom ] = useState( null )
 	const timeout = useRef( null )
 	const interval = useRef( null )
 
@@ -97,11 +98,20 @@ export const EditorDom = () => {
 	useMemo( () => {
 		const iframeEl = document.querySelector( `iframe[name="editor-canvas"]` )
 		if ( iframeEl ) {
-			dispatch( 'stackable/editor-dom' ).updateEditorDom( iframeEl.contentDocument.body )
+			setEditorDom( iframeEl.contentDocument.body )
 		} else {
-			dispatch( 'stackable/editor-dom' ).updateEditorDom( document.querySelector( `.editor-styles-wrapper` ) )
+			setEditorDom( document.querySelector( `.editor-styles-wrapper` ) )
 		}
 	}, [ iframeForceUpdate, deviceType ] )
+
+	// Need to run dispatch in a useEffect or else we will get a React error
+	// about updating a component while rendering another:
+	// @see https://stackoverflow.com/questions/62336340/cannot-update-a-component-while-rendering-a-different-component-warning
+	useEffect( () => {
+		if ( editorDom ) {
+			dispatch( 'stackable/editor-dom' ).updateEditorDom( editorDom )
+		}
+	}, [ editorDom ] )
 
 	// Don't render anything.
 	return null
