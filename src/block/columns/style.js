@@ -11,9 +11,7 @@ import {
 	Transform,
 	ContentAlign,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
@@ -46,8 +44,11 @@ const BlockStyles = props => {
 		...propsToPass.options,
 	}
 
+	// determine number of columns, regardless of viewport
+	const derivedColumns = propsToPass.attributes.columnArrangementMobile || propsToPass.attributes.columnArrangementTablet || ''
+
 	const columnStyleOptions = {
-		numColumns: ( propsToPass.attributes.columnArrangementMobile || '' ).split( ',' ).length,
+		numColumns: derivedColumns.split( ',' ).length,
 	}
 
 	const columnsStyles = useStyles( attributes, applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
@@ -90,8 +91,11 @@ BlockStyles.Content = props => {
 		...propsToPass.options,
 	}
 
+	// determine number of columns, regardless of viewport
+	const derivedColumns = props.attributes.columnArrangementMobile || propsToPass.attributes.columnArrangementTablet || ''
+
 	const columnStyleOptions = {
-		numColumns: ( props.attributes.columnArrangementMobile || '' ).split( ',' ).length,
+		numColumns: derivedColumns.split( ',' ).length,
 	}
 
 	const columnsStyles = getStyles( props.attributes, applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
