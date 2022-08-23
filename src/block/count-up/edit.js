@@ -66,14 +66,15 @@ const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'Counter', i18n ) }
 					id="count-up"
+					initialOpen={ true }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Duration', i18n ) }
+						label={ __( 'Duration (ms)', i18n ) }
 						attribute="duration"
 						min={ 100 }
 						max={ 10000 }
 						step={ 100 }
-						placeholder="1000ms"
+						placeholder="1000"
 					>
 
 					</AdvancedRangeControl>
@@ -85,8 +86,8 @@ const Edit = props => {
 			<Transform.InspectorControls />
 			<Typography.InspectorControls
 				hasTextTag={ false }
-				initialOpen={ true }
 				hasTextShadow={ true }
+				initialOpen={ false }
 			/>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
