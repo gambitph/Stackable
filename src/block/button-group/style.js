@@ -45,7 +45,11 @@ const getStyleParams = () => {
 			styleRule: 'flexWrap',
 			attrName: 'flexWrap',
 			responsive: 'all',
-			valuePreCallback: value => {
+			valuePreCallback: ( value, getAttribute, device ) => {
+				// In the editor, it should correctly wrap in mobile.
+				if ( device === 'mobile' ) {
+					return 'wrap'
+				}
 				return value || 'nowrap'
 			},
 		},
