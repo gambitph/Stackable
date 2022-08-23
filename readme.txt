@@ -247,7 +247,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.4.3 =
+* New: Added duration option for the Count Up block #2355
 * Change: Remove doubled Stackable icons in the block inserter #2383
+* Change: Video popup now uses YouTube's no-cookie domain #2392
+* Fixed: Buttons stacking on mobile adds a margin to some buttons #2249
+* Fixed: Full width buttons force other non-full width buttons to wrap text
+* Fixed: Multiple full width buttons in a group incorrectly wrap in mobile
+* Fixed: Buttons with borders sometimes show a thin white border
+* Fixed: Typing in a global color name is slow #2339
 * Fixed: Resetting max width doesn't reset content horizontal align #2338
 * Fixed: Icon list block contents are also copied when copying styles #2320
 * Fixed: Columns & Button group blocks show "add block" panel when used in reusable blocks & in widget editor #2371
@@ -255,6 +262,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Remove highlight toolbar button for button blocks #2314
 * Fixed: Icon is not visible in some notification block layouts #2323
 * Fixed: Position "sticky" doesn't work as intended inside columns #2212
+* Fixed: Global typography does not show in tablet & mobile and in FSE #2340 & #2289
+* Fixed: ACF & Metabox dynamic content images show blurry #2064
+* Fixed: ACF & Metabox added image size selector for dynamic content image fields #2064
+* Fixed: Added single image field type support for Metabox
+* Fixed: Related map block scripts now do not appear in the frontend when no map block is used #2386
 
 = 3.4.2 =
 * Fixed: Editor speed performance improvements when editing blocks
