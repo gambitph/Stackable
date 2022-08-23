@@ -83,6 +83,21 @@ const getStyleParams = () => {
 				return value
 			},
 		},
+		// If the buttons are set to vertical, we also need to reset the flex
+		// basis or else full-width buttons (set per button block) will overlap
+		// each other vertically.
+		{
+			renderIn: 'save',
+			selector: '.stk-block',
+			styleRule: 'flexBasis',
+			attrName: 'buttonAlign',
+			responsive: 'all',
+			valuePreCallback: value => {
+				return value === 'vertical' ? 'auto'
+					: value === 'horizontal' ? 0
+						: undefined
+			},
+		},
 		{
 			renderIn: 'save',
 			selector: '.stk-button-group',
