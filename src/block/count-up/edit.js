@@ -25,7 +25,7 @@ import {
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
-	InspectorTabs, InspectorBlockControls, PanelAdvancedSettings, AdvancedRangeControl,
+	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
 } from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
 import { withQueryLoopContext } from '~stackable/higher-order'
@@ -62,21 +62,23 @@ const Edit = props => {
 		<Fragment>
 
 			<InspectorTabs />
-			<InspectorBlockControls>
+			<InspectorStyleControls>
 				<PanelAdvancedSettings
-					title={ __( 'Speed', i18n ) }
-					id="count-up">
+					title={ __( 'Counter', i18n ) }
+					id="count-up"
+				>
 					<AdvancedRangeControl
 						label={ __( 'Duration', i18n ) }
 						attribute="duration"
-						min={ 1 }
-						max={ 10 }
-						placeholder=""
+						min={ 100 }
+						max={ 10000 }
+						step={ 100 }
+						placeholder="1000ms"
 					>
 
 					</AdvancedRangeControl>
 				</PanelAdvancedSettings>
-			</InspectorBlockControls>
+			</InspectorStyleControls>
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
