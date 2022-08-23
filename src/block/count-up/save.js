@@ -42,6 +42,8 @@ const Save = props => {
 		blockAlignmentClass,
 	] )
 
+	const duration = attributes.duration === '' ? null : attributes.duration
+
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
@@ -53,6 +55,7 @@ const Save = props => {
 				tagName="div"
 				attributes={ attributes }
 				className={ textClassNames }
+				data-duration={ duration }
 			/>
 		</BlockDiv.Content>
 	)
