@@ -72,7 +72,7 @@ const Edit = props => {
 						label={ __( 'Duration (ms)', i18n ) }
 						attribute="duration"
 						min={ 100 }
-						max={ 10000 }
+						sliderMax={ 5000 }
 						step={ 100 }
 						placeholder="1000"
 					>
