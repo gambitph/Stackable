@@ -1,3 +1,13 @@
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
 export default {
 	attributes: {
 		uniqueId: 'e65ffe4', hasBackground: false, hasBorders: false, contentAlign: 'center', effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, blockLinkHasLink: true, blockLinkNewTab: false, blockLinkHasTitle: true, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', className: 'is-style-default',
@@ -10,7 +20,7 @@ export default {
 			uniqueId: 'cd5f242', hasBackground: false, hasBorders: false, hasContainer: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, blockLinkHasLink: true, blockLinkNewTab: false, blockLinkHasTitle: true, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', containerBackgroundCustomSizeUnit: '%', containerBackgroundCustomSizeUnitTablet: '%', containerBackgroundCustomSizeUnitMobile: '%',
 		}, innerBlocks: [ {
 			name: 'stackable/heading', attributes: {
-				uniqueId: '889b5d9', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: 'Title', textTag: 'h4', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
+				uniqueId: '889b5d9', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: __( 'Title', i18n ), textTag: 'h4', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 			}, innerBlocks: [],
 		} ],
 	} ],
