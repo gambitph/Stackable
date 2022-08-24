@@ -264,6 +264,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Icon is not visible in some notification block layouts #2323
 * Fixed: Position "sticky" doesn't work as intended inside columns #2212
 * Fixed: Global typography does not show in tablet & mobile and in FSE #2340 & #2289
+* Fixed: Fatal error with Freemius in edge case when blog no longer exists in multisite
 * Fixed: ACF & Metabox dynamic content images show blurry #2064
 * Fixed: ACF & Metabox added image size selector for dynamic content image fields #2064
 * Fixed: Added single image field type support for Metabox
