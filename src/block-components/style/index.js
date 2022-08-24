@@ -213,10 +213,10 @@ export const generateStyles = ( styleObject, blockUniqueClassName = '', breakTab
 		if ( styleString ) {
 			if ( editorMode ) {
 				styleString.forEach( styles => {
-					styleStrings.push( `\n\n` + formMediaQuery( [ 'tablet' ], breakTablet, breakMobile ) + ` {\n` + styles + ' }' )
+					styleStrings.push( `\n\n` + formMediaQuery( [ 'mobile', 'tablet' ], breakTablet, breakMobile ) + ` {\n` + styles + ' }' )
 				} )
 			} else {
-				styleStrings.push( `\n\n${ formMediaQuery( [ 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString.join( '' ) } }` )
+				styleStrings.push( `\n\n${ formMediaQuery( [ 'mobile', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString.join( '' ) } }` )
 			}
 		}
 	}
@@ -304,6 +304,7 @@ export const getEditorStylesOnly = ( style, deviceType = 'Desktop' ) => {
 		styles.push( style.mobile || {} )
 		if ( style.editor ) {
 			styles.push( omit( style.editor, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor', 'ie11', 'saveOnly' ] ) )
+			styles.push( style.editor.tablet || {} )
 			styles.push( style.editor.mobile || {} )
 		}
 	}
