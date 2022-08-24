@@ -82,7 +82,7 @@ const Edit = props => {
 			</InspectorAdvancedControls>
 
 			<EffectsAnimations.InspectorControls />
-			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ props.defaultValue } />
+			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ defaultIcon } />
 			<Link.InspectorControls hasToggle={ true } />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
@@ -101,10 +101,6 @@ const Edit = props => {
 			</div>
 		</Fragment>
 	)
-}
-
-Edit.defaultProps = {
-	defaultValue: defaultIcon,
 }
 
 export default withQueryLoopContext( Edit )

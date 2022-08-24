@@ -60,7 +60,7 @@ const Edit = props => {
 				hasTextColor={ false }
 				hasIconColor={ true }
 			/>
-			<Button.InspectorControls.Icon hasColor={ false } defaultValue={ props.defaultValue } />
+			<Button.InspectorControls.Icon hasColor={ false } defaultValue={ defaultIcon } />
 			<Button.InspectorControls.Size hasWidth={ true } />
 			<Button.InspectorControls.Borders
 				borderSelector=".stk-button"
@@ -93,10 +93,6 @@ const Edit = props => {
 			</BlockDiv>
 		</>
 	)
-}
-
-Edit.defaultProps = {
-	defaultValue: defaultIcon,
 }
 
 export default withQueryLoopContext( Edit )

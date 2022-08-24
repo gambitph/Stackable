@@ -257,7 +257,7 @@ const Edit = props => {
 							// Reset custom individual icons.
 							setAttributes( { icon, icons: [] } )
 						} }
-						defaultValue={ props.defaultValue }
+						defaultValue={ DEFAULT_SVG }
 					/>
 
 					<AdvancedSelectControl
@@ -381,10 +381,6 @@ const Edit = props => {
 
 		</Fragment>
 	)
-}
-
-Edit.defaultProps = {
-	defaultValue: DEFAULT_SVG,
 }
 
 export default withQueryLoopContext( Edit )
