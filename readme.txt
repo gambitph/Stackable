@@ -257,6 +257,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Buttons with borders sometimes show a thin white border
 * Fixed: Typing in a global color name is slow #2339
 * Fixed: Resetting max width doesn't reset content horizontal align #2338
+* Fixed: Icon panel doesn't close
 * Fixed: Icon list block contents are also copied when copying styles #2320
 * Fixed: Columns & Button group blocks show "add block" panel when used in reusable blocks & in widget editor #2371
 * Fixed: Dynamic content button is not aligned in link inspector control #2332
