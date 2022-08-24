@@ -127,7 +127,7 @@ const getStyleParams = ( options = {} ) => {
 				const right = value?.right
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
 				const blockWidth = getAttribute( 'width', device )
-				if ( blockWidth ) {
+				if ( blockWidth || typeof right !== undefined ) {
 					switch ( horizontalAlign ) {
 						case 'flex-start':
 						case 'center':
@@ -167,7 +167,7 @@ const getStyleParams = ( options = {} ) => {
 				const left = value?.left
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
 				const blockWidth = getAttribute( 'width', device )
-				if ( blockWidth ) {
+				if ( blockWidth || typeof left !== undefined ) {
 					switch ( horizontalAlign ) {
 						case 'flex-start':
 							return left || 0
