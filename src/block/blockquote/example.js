@@ -1,3 +1,13 @@
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
 export default {
 	attributes: {
 		uniqueId: '7da7c6b', hasBackground: false, hasBorders: false, hasContainer: true, htmlTag: 'blockquote', effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], displayCondition: {}, hideDesktop: false, hideTablet: false, hideMobile: false, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', containerBackgroundCustomSizeUnit: '%', containerBackgroundCustomSizeUnitTablet: '%', containerBackgroundCustomSizeUnitMobile: '%',
@@ -7,7 +17,7 @@ export default {
 		}, innerBlocks: [],
 	}, {
 		name: 'stackable/text', attributes: {
-			uniqueId: '9f7bc33', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, fontStyle: 'italic', fontWeight: '300', hasP: false, show: true, showText: true, text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
+			uniqueId: '9f7bc33', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, fontStyle: 'italic', fontWeight: '300', hasP: false, show: true, showText: true, text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ), blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 		}, innerBlocks: [],
 	} ],
 }
