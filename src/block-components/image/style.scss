@@ -6,6 +6,9 @@
 	display: block;
 	overflow: hidden; // This is needed for zooming the image.
 
+	//Added this to fix filter: drop-shadows flicker/do not show in safari browsers
+	will-change: filter;
+
 	&::after,
 	&.stk-img--gradient-overlay::before {
 		content: "";
