@@ -3,7 +3,7 @@
 	"name": "stackable/icon",
 	"title": "Icon",
 	"description": "Pick an icon or upload your own SVG icon to decorate your content.",
-	"category": "common",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"SVG"

@@ -23,6 +23,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 import { BlockLink } from '~stackable/block-components/block-link'
 
 export const Save = props => {
@@ -34,23 +35,25 @@ export const Save = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
-	const blockClassNames = classnames( [
+	const blockClassNames = classnames( applyFilters( 'stackable.column.save.blockClassNames', [
 		props.className,
 		'stk-block-column',
+		'stk-block-column--v2',
 		columnClass,
 		responsiveClass,
-	] )
+	], props ) )
 
 	const contentClassNames = classnames( [
 		columnWrapperClass,
 		'stk-block-column__content',
 	] )
 
-	const innerClassNames = classnames( [
+	const innerClassNames = classnames( applyFilters( 'stackable.column.save.innerClassNames', [
 		blockAlignmentClass,
 		'stk-block-content',
 		'stk-inner-blocks',
-	] )
+		`stk-${ attributes.uniqueId }-inner-blocks`,
+	], props ) )
 
 	return (
 		<BlockDiv.Content

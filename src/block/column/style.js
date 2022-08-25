@@ -28,6 +28,9 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const containerDivOptions = {
 	sizeSelector: '.stk-block-column__content',
 	sizeHorizontalAlignRule: 'margin',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeVerticalAlignSelector: '.%s-inner-blocks',
+	sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
 }
 
 const getStyleParams = () => {

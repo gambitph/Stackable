@@ -73,6 +73,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-column',
+		'stk-block-column--v2',
 		columnClass,
 		blockHoverClass,
 	] )
@@ -83,7 +84,7 @@ const Edit = props => {
 		columnWrapperClass,
 		blockAlignmentClass,
 		'stk-block-column__content',
-		`stk-${ props.attributes.uniqueId }-container`,
+		`stk-${ props.attributes.uniqueId }-inner-blocks`,
 	] )
 
 	return (

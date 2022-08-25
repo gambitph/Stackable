@@ -3,7 +3,7 @@
 	"name": "stackable/button",
 	"title": "Button",
 	"description": "Add a customizable button.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"parent": [
 		"stackable/button-group"

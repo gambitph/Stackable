@@ -14,10 +14,6 @@
 	.block-editor-block-list__layout {
 		align-items: center;
 		row-gap: cssvar(button-row-gap);
-	}
-
-	// Use margin-inline-end in gaps instead since safari does not support it.
-	[data-block]:not(:last-child) .stk-block {
-		margin-inline-end: cssvar(button-gap);
+		column-gap: cssvar(button-gap);
 	}
 }

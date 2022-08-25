@@ -17,3 +17,20 @@
 		}
 	}
 }
+
+// We need this to make position sticky to work inside columns.
+.stk-block.stk-block-column > .stk-inner-blocks {
+	height: auto;
+}
+.stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks,
+.stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	height: 100%;
+}
+.stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: column;
+}
+// The inserter now goes in the middle, this fixes it.
+.stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
+	width: 100%;
+}

@@ -30,6 +30,24 @@ const getStyleParams = options => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'buttonFullWidth' ),
 		},
+		// This makes the full-width button occupy the available space, but make
+		// others wrap when it's too small.
+		{
+			renderIn: 'save',
+			selector: '',
+			styleRule: 'flex',
+			attrName: 'buttonFullWidth',
+			valueCallback: () => '1 1 0',
+			enabledCallback: getAttribute => getAttribute( 'buttonFullWidth' ),
+		},
+		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			styleRule: 'flex',
+			attrName: 'buttonFullWidth',
+			valueCallback: () => '1 1 0',
+			enabledCallback: getAttribute => getAttribute( 'buttonFullWidth' ),
+		},
 		{
 			selector,
 			responsive: 'all',
