@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-23T16:35:59+00:00\n"
+"POT-Creation-Date: 2022-08-25T10:32:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -543,7 +543,7 @@ msgid "Sets when buttons will be triggered to arrange vertically"
 msgstr ""
 
 #: dist/translation-strings.php:94
-#: src/block/column/edit.js:113
+#: src/block/column/edit.js:114
 #: src/block/posts/edit.js:287
 #: src/components/panel-spacing-body/index.js:18
 #: src/components/spacing-control/index.js:118
@@ -2740,7 +2740,7 @@ msgid "Faded"
 msgstr ""
 
 #: dist/translation-strings.php:390
-#: src/block/column/edit.js:108
+#: src/block/column/edit.js:109
 msgid "Column Spacing"
 msgstr ""
 
@@ -6245,30 +6245,30 @@ msgid "Bottom"
 msgstr ""
 
 #: dist/translation-strings.php:862
-#: src/components/four-range-control/index.js:87
-msgid "Individual sides"
-msgstr ""
-
-#: dist/translation-strings.php:863
-#: src/components/four-range-control/index.js:87
-msgid "All sides"
-msgstr ""
-
-#: dist/translation-strings.php:864
 #: src/components/global-style-control/index.js:34
 #: src/components/global-style-control/index.js:126
 msgid "Edit Style"
 msgstr ""
 
-#: dist/translation-strings.php:865
+#: dist/translation-strings.php:863
 #: src/components/global-style-control/index.js:134
 msgid "Unlink Style"
 msgstr ""
 
-#: dist/translation-strings.php:866
+#: dist/translation-strings.php:864
 #: src/components/global-style-control/index.js:146
 #: src/components/panel-tabs/index.js:29
 msgid "Style"
+msgstr ""
+
+#: dist/translation-strings.php:865
+#: src/components/four-range-control/index.js:87
+msgid "Individual sides"
+msgstr ""
+
+#: dist/translation-strings.php:866
+#: src/components/four-range-control/index.js:87
+msgid "All sides"
 msgstr ""
 
 #: dist/translation-strings.php:867
@@ -6356,33 +6356,33 @@ msgid "Drop your SVG here"
 msgstr ""
 
 #: dist/translation-strings.php:883
-#: src/components/image-alt-control/index.js:20
-msgid "Describe the purpose of the image"
-msgstr ""
-
-#: dist/translation-strings.php:884
-#: src/components/image-alt-control/index.js:22
-msgid "Leave empty if the image is purely decorative."
-msgstr ""
-
-#: dist/translation-strings.php:885
-#: src/components/image-alt-control/index.js:30
-msgid "Alt Text (Alternative Text)"
-msgstr ""
-
-#: dist/translation-strings.php:886
 #: src/components/image-background-controls/index.js:66
 msgid "Background Image Position"
 msgstr ""
 
-#: dist/translation-strings.php:887
+#: dist/translation-strings.php:884
 #: src/components/image-background-controls/index.js:87
 msgid "Background Image Repeat"
 msgstr ""
 
-#: dist/translation-strings.php:888
+#: dist/translation-strings.php:885
 #: src/components/image-background-controls/index.js:103
 msgid "Background Image Size"
+msgstr ""
+
+#: dist/translation-strings.php:886
+#: src/components/image-alt-control/index.js:20
+msgid "Describe the purpose of the image"
+msgstr ""
+
+#: dist/translation-strings.php:887
+#: src/components/image-alt-control/index.js:22
+msgid "Leave empty if the image is purely decorative."
+msgstr ""
+
+#: dist/translation-strings.php:888
+#: src/components/image-alt-control/index.js:30
+msgid "Alt Text (Alternative Text)"
 msgstr ""
 
 #: dist/translation-strings.php:889
@@ -7707,20 +7707,6 @@ msgid "Resetting this typography style will revert all typography to its origina
 msgstr ""
 
 #: dist/translation-strings.php:1103
-msgid "Corporate"
-msgstr ""
-
-#: dist/translation-strings.php:1104
-#: src/deprecated/v2/block/accordion/edit.js:71
-msgid "Lined to Colored"
-msgstr ""
-
-#: dist/translation-strings.php:1105
-#: src/deprecated/v2/block/accordion/edit.js:150
-msgid "Reverse arrow"
-msgstr ""
-
-#: dist/translation-strings.php:1106
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:37
 #: src/deprecated/v2/block/accordion/edit.js:162
 #: src/deprecated/v2/block/blockquote/edit.js:135
@@ -7742,17 +7728,58 @@ msgstr ""
 msgid "Container"
 msgstr ""
 
+#: dist/translation-strings.php:1104
+#: src/deprecated/v2/block/blockquote/edit.js:215
+msgid "Quotation Mark"
+msgstr ""
+
+#: dist/translation-strings.php:1105
+#: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:23
+#: src/deprecated/v2/block/blockquote/edit.js:270
+msgid "Horizontal Position"
+msgstr ""
+
+#: dist/translation-strings.php:1106
+#: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:32
+#: src/deprecated/v2/block/blockquote/edit.js:283
+msgid "Vertical Position"
+msgstr ""
+
 #: dist/translation-strings.php:1107
+#: pro__premium_only/src/welcome/custom-fields/admin.js:300
+#: src/deprecated/v2/block/blockquote/edit.js:293
+#: src/deprecated/v2/block/expand/edit.js:113
+#: src/deprecated/v2/block/expand/edit.js:189
+#: src/deprecated/v2/block/text/edit.js:190
+#: src/deprecated/v2/block/text/edit.js:235
+msgid "Text"
+msgstr ""
+
+#: dist/translation-strings.php:1108
+msgid "Corporate"
+msgstr ""
+
+#: dist/translation-strings.php:1109
+#: src/deprecated/v2/block/accordion/edit.js:71
+msgid "Lined to Colored"
+msgstr ""
+
+#: dist/translation-strings.php:1110
+#: src/deprecated/v2/block/accordion/edit.js:150
+msgid "Reverse arrow"
+msgstr ""
+
+#: dist/translation-strings.php:1111
 #: src/deprecated/v2/block/accordion/edit.js:228
 msgid "Closed State Background Color"
 msgstr ""
 
-#: dist/translation-strings.php:1108
+#: dist/translation-strings.php:1112
 #: src/deprecated/v2/block/accordion/edit.js:241
 msgid "Padding"
 msgstr ""
 
-#: dist/translation-strings.php:1109
+#: dist/translation-strings.php:1113
 #: src/deprecated/v2/block/accordion/edit.js:294
 #: src/deprecated/v2/block/call-to-action/edit.js:304
 #: src/deprecated/v2/block/card/edit.js:481
@@ -7772,39 +7799,12 @@ msgstr ""
 msgid "Title Color"
 msgstr ""
 
-#: dist/translation-strings.php:1110
+#: dist/translation-strings.php:1114
 #: src/deprecated/v2/block/accordion/edit.js:309
 #: src/deprecated/v2/block/icon-list/deprecated/util.js:55
 #: src/deprecated/v2/block/image-box/edit.js:318
 #: src/deprecated/v2/block/image-box/edit.js:569
 msgid "Arrow"
-msgstr ""
-
-#: dist/translation-strings.php:1111
-#: src/deprecated/v2/block/blockquote/edit.js:215
-msgid "Quotation Mark"
-msgstr ""
-
-#: dist/translation-strings.php:1112
-#: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:23
-#: src/deprecated/v2/block/blockquote/edit.js:270
-msgid "Horizontal Position"
-msgstr ""
-
-#: dist/translation-strings.php:1113
-#: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:32
-#: src/deprecated/v2/block/blockquote/edit.js:283
-msgid "Vertical Position"
-msgstr ""
-
-#: dist/translation-strings.php:1114
-#: pro__premium_only/src/welcome/custom-fields/admin.js:300
-#: src/deprecated/v2/block/blockquote/edit.js:293
-#: src/deprecated/v2/block/expand/edit.js:113
-#: src/deprecated/v2/block/expand/edit.js:189
-#: src/deprecated/v2/block/text/edit.js:190
-#: src/deprecated/v2/block/text/edit.js:235
-msgid "Text"
 msgstr ""
 
 #: dist/translation-strings.php:1115
@@ -7901,17 +7901,6 @@ msgid "« Previous"
 msgstr ""
 
 #: dist/translation-strings.php:1129
-#: src/deprecated/v2/block/button/edit.js:55
-msgid "Spread"
-msgstr ""
-
-#: dist/translation-strings.php:1130
-#: src/deprecated/v2/block/button/edit.js:61
-#: src/deprecated/v2/block/button/edit.js:64
-msgid "Grouped"
-msgstr ""
-
-#: dist/translation-strings.php:1131
 #: pro__premium_only/src/welcome/custom-fields/admin.js:366
 #: src/deprecated/v2/block/call-to-action/edit.js:249
 #: src/deprecated/v2/block/call-to-action/edit.js:319
@@ -7949,7 +7938,7 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: dist/translation-strings.php:1132
+#: dist/translation-strings.php:1130
 #: src/deprecated/v2/block/call-to-action/edit.js:338
 #: src/deprecated/v2/block/card/edit.js:550
 #: src/deprecated/v2/block/count-up/edit.js:447
@@ -7962,6 +7951,17 @@ msgstr ""
 #: src/deprecated/v2/block/team-member/edit.js:551
 #: src/deprecated/v2/modules/block-title/index.js:203
 msgid "Description Color"
+msgstr ""
+
+#: dist/translation-strings.php:1131
+#: src/deprecated/v2/block/button/edit.js:55
+msgid "Spread"
+msgstr ""
+
+#: dist/translation-strings.php:1132
+#: src/deprecated/v2/block/button/edit.js:61
+#: src/deprecated/v2/block/button/edit.js:64
+msgid "Grouped"
 msgstr ""
 
 #: dist/translation-strings.php:1133
@@ -8163,60 +8163,60 @@ msgid "Title on Top"
 msgstr ""
 
 #: dist/translation-strings.php:1166
-#: src/deprecated/v2/block/icon-list/edit.js:107
-msgid "Display as a grid (left to right & evenly spaced)"
-msgstr ""
-
-#: dist/translation-strings.php:1167
-#: src/deprecated/v2/block/icon-list/edit.js:139
-msgid "You can click on each icon in the Icon List block to change them individually."
-msgstr ""
-
-#: dist/translation-strings.php:1168
-#: src/deprecated/v2/block/icon-list/edit.js:183
-msgid "List Text"
-msgstr ""
-
-#: dist/translation-strings.php:1169
-#: src/deprecated/v2/block/icon-list/edit.js:305
-msgid "Text for this block"
-msgstr ""
-
-#: dist/translation-strings.php:1170
-#: src/deprecated/v2/block/icon-list/schema.js:45
-msgid "Line %d"
-msgstr ""
-
-#: dist/translation-strings.php:1171
-#: src/deprecated/v2/block/notification/edit.js:188
-msgid "Border Thickness"
-msgstr ""
-
-#: dist/translation-strings.php:1172
-#: src/deprecated/v2/block/notification/edit.js:412
-msgid "Icon Location"
-msgstr ""
-
-#: dist/translation-strings.php:1173
 #: src/deprecated/v2/block/image-box/edit.js:364
 #: src/deprecated/v2/block/image-box/edit.js:398
 msgid "Overlay Color Type"
 msgstr ""
 
-#: dist/translation-strings.php:1174
+#: dist/translation-strings.php:1167
 #: pro__premium_only/src/components/panel-effects-settings/index.js:26
 #: src/deprecated/v2/block/image-box/edit.js:418
 msgid "Effects"
 msgstr ""
 
-#: dist/translation-strings.php:1175
+#: dist/translation-strings.php:1168
 #: src/deprecated/v2/block/image-box/edit.js:425
 msgid "Zoom In"
 msgstr ""
 
-#: dist/translation-strings.php:1176
+#: dist/translation-strings.php:1169
 #: src/deprecated/v2/block/image-box/edit.js:426
 msgid "Zoom Out"
+msgstr ""
+
+#: dist/translation-strings.php:1170
+#: src/deprecated/v2/block/icon-list/edit.js:107
+msgid "Display as a grid (left to right & evenly spaced)"
+msgstr ""
+
+#: dist/translation-strings.php:1171
+#: src/deprecated/v2/block/icon-list/edit.js:139
+msgid "You can click on each icon in the Icon List block to change them individually."
+msgstr ""
+
+#: dist/translation-strings.php:1172
+#: src/deprecated/v2/block/icon-list/edit.js:183
+msgid "List Text"
+msgstr ""
+
+#: dist/translation-strings.php:1173
+#: src/deprecated/v2/block/icon-list/edit.js:305
+msgid "Text for this block"
+msgstr ""
+
+#: dist/translation-strings.php:1174
+#: src/deprecated/v2/block/icon-list/schema.js:45
+msgid "Line %d"
+msgstr ""
+
+#: dist/translation-strings.php:1175
+#: src/deprecated/v2/block/notification/edit.js:188
+msgid "Border Thickness"
+msgstr ""
+
+#: dist/translation-strings.php:1176
+#: src/deprecated/v2/block/notification/edit.js:412
+msgid "Icon Location"
 msgstr ""
 
 #: dist/translation-strings.php:1177
@@ -9373,135 +9373,135 @@ msgid "Media queries are supported. Use the widths 1024px and 768px for tablet a
 msgstr ""
 
 #: dist/translation-strings.php:1386
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:44
+#: pro__premium_only/src/features/icon-controls/index.js:277
+msgid "Shape Opacity"
+msgstr ""
+
+#: dist/translation-strings.php:1387
+#: pro__premium_only/src/block-components/icon/gradient-controls.js:22
+#: pro__premium_only/src/block-components/icon/gradient-controls.js:26
+msgid "Icon Color #%s"
+msgstr ""
+
+#: dist/translation-strings.php:1388
+#: pro__premium_only/src/block-components/icon/multicolor-controls.js:36
+#: pro__premium_only/src/features/icon-controls/index.js:121
+msgid "Multicolor only works for custom uploaded icons that have multiple path elements or for Font Awesome Pro Duotones."
+msgstr ""
+
+#: dist/translation-strings.php:1389
 #: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:49
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:73
 #: pro__premium_only/src/block-components/transform/transform-control.js:39
 msgid "Rotate"
 msgstr ""
 
-#: dist/translation-strings.php:1387
+#: dist/translation-strings.php:1390
 #: pro__premium_only/src/block-components/effects-animations/index.js:36
 msgid "Effect"
 msgstr ""
 
-#: dist/translation-strings.php:1388
+#: dist/translation-strings.php:1391
 #: pro__premium_only/src/block-components/effects-animations/index.js:39
 #: pro__premium_only/src/block-components/effects-animations/index.js:93
 msgid "Entrance Animation"
 msgstr ""
 
-#: dist/translation-strings.php:1389
+#: dist/translation-strings.php:1392
 #: pro__premium_only/src/block-components/effects-animations/index.js:40
 msgid "Scroll Animation"
 msgstr ""
 
-#: dist/translation-strings.php:1390
+#: dist/translation-strings.php:1393
 #: pro__premium_only/src/block-components/effects-animations/index.js:47
 msgid "Start Position"
 msgstr ""
 
-#: dist/translation-strings.php:1391
+#: dist/translation-strings.php:1394
 #: pro__premium_only/src/block-components/effects-animations/index.js:53
 msgid "Entrance Animation Speed"
 msgstr ""
 
-#: dist/translation-strings.php:1392
+#: dist/translation-strings.php:1395
 #: pro__premium_only/src/block-components/effects-animations/index.js:55
 msgid "Slow"
 msgstr ""
 
-#: dist/translation-strings.php:1393
+#: dist/translation-strings.php:1396
 #: pro__premium_only/src/block-components/effects-animations/index.js:57
 msgid "Fast"
 msgstr ""
 
-#: dist/translation-strings.php:1394
+#: dist/translation-strings.php:1397
 #: pro__premium_only/src/block-components/effects-animations/index.js:62
 msgid "Entrance Animation Delay"
 msgstr ""
 
-#: dist/translation-strings.php:1395
+#: dist/translation-strings.php:1398
 #: pro__premium_only/src/block-components/effects-animations/index.js:74
 msgid "Smoothen Scroll Animation"
 msgstr ""
 
-#: dist/translation-strings.php:1396
+#: dist/translation-strings.php:1399
 #: pro__premium_only/src/block-components/effects-animations/index.js:78
 msgid "Use 3D Transforms"
 msgstr ""
 
-#: dist/translation-strings.php:1397
+#: dist/translation-strings.php:1400
 #: pro__premium_only/src/block-components/effects-animations/index.js:83
 msgid "Perspective"
 msgstr ""
 
-#: dist/translation-strings.php:1398
+#: dist/translation-strings.php:1401
 #: pro__premium_only/src/block-components/effects-animations/index.js:99
 msgid "Exit Animation"
 msgstr ""
 
-#: dist/translation-strings.php:1399
+#: dist/translation-strings.php:1402
 #: pro__premium_only/src/block-components/effects-animations/index.js:112
 msgid "This block has Transforms assigned to it, Motion Effects may not work as expected."
 msgstr ""
 
-#: dist/translation-strings.php:1400
+#: dist/translation-strings.php:1403
 #: pro__premium_only/src/block-components/effects-animations/index.js:120
 msgid "Learn more about Motion Effects"
 msgstr ""
 
-#: dist/translation-strings.php:1401
+#: dist/translation-strings.php:1404
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:30
 #: pro__premium_only/src/block-components/transform/transform-control.js:23
 msgid "Translate X"
 msgstr ""
 
-#: dist/translation-strings.php:1402
+#: dist/translation-strings.php:1405
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:38
 msgid "TranslateY"
 msgstr ""
 
-#: dist/translation-strings.php:1403
+#: dist/translation-strings.php:1406
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:47
 msgid "TranslateZ"
 msgstr ""
 
-#: dist/translation-strings.php:1404
+#: dist/translation-strings.php:1407
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:56
 msgid "RotateX"
 msgstr ""
 
-#: dist/translation-strings.php:1405
+#: dist/translation-strings.php:1408
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:65
 msgid "RotateY"
 msgstr ""
 
-#: dist/translation-strings.php:1406
+#: dist/translation-strings.php:1409
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:97
 msgid "Skew X"
 msgstr ""
 
-#: dist/translation-strings.php:1407
+#: dist/translation-strings.php:1410
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:105
 msgid "Skew Y"
-msgstr ""
-
-#: dist/translation-strings.php:1408
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:44
-#: pro__premium_only/src/features/icon-controls/index.js:277
-msgid "Shape Opacity"
-msgstr ""
-
-#: dist/translation-strings.php:1409
-#: pro__premium_only/src/block-components/icon/gradient-controls.js:22
-#: pro__premium_only/src/block-components/icon/gradient-controls.js:26
-msgid "Icon Color #%s"
-msgstr ""
-
-#: dist/translation-strings.php:1410
-#: pro__premium_only/src/block-components/icon/multicolor-controls.js:36
-#: pro__premium_only/src/features/icon-controls/index.js:121
-msgid "Multicolor only works for custom uploaded icons that have multiple path elements or for Font Awesome Pro Duotones."
 msgstr ""
 
 #: dist/translation-strings.php:1411
@@ -10200,16 +10200,6 @@ msgid "Collapsed Col. Arrangement"
 msgstr ""
 
 #: dist/translation-strings.php:1539
-#: pro__premium_only/src/deprecated/v2/block/container/index.js:168
-msgid "Collapse image on Mobile"
-msgstr ""
-
-#: dist/translation-strings.php:1540
-#: pro__premium_only/src/deprecated/v2/block/container/index.js:174
-msgid "Collapse image height"
-msgstr ""
-
-#: dist/translation-strings.php:1541
 #: pro__premium_only/src/deprecated/v2/block/count-up/index.js:52
 #: pro__premium_only/src/deprecated/v2/block/feature-grid/index.js:93
 #: pro__premium_only/src/deprecated/v2/block/number-box/index.js:54
@@ -10223,7 +10213,7 @@ msgstr ""
 msgid "Override settings for column %d"
 msgstr ""
 
-#: dist/translation-strings.php:1542
+#: dist/translation-strings.php:1540
 #: pro__premium_only/src/deprecated/v2/block/count-up/index.js:54
 #: pro__premium_only/src/deprecated/v2/block/feature-grid/index.js:97
 #: pro__premium_only/src/deprecated/v2/block/number-box/index.js:57
@@ -10237,6 +10227,16 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:90
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:98
 msgid "Column Background"
+msgstr ""
+
+#: dist/translation-strings.php:1541
+#: pro__premium_only/src/deprecated/v2/block/container/index.js:168
+msgid "Collapse image on Mobile"
+msgstr ""
+
+#: dist/translation-strings.php:1542
+#: pro__premium_only/src/deprecated/v2/block/container/index.js:174
+msgid "Collapse image height"
 msgstr ""
 
 #: dist/translation-strings.php:1543
