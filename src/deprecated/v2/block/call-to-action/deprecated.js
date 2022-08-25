@@ -5,6 +5,7 @@ import {
 	DeprecatedButtonContent_1_15_5,
 } from '../../components/button-edit'
 import { descriptionPlaceholder } from '~stackable/util'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -140,7 +141,7 @@ export const deprecatedSchema_1_15_5 = {
 	ctaTitle: {
 		source: 'html',
 		selector: 'h3',
-		default: __( 'Title for This Block' ),
+		default: __( 'Title for This Block', i18n ),
 	},
 	bodyText: {
 		source: 'html',
@@ -150,7 +151,7 @@ export const deprecatedSchema_1_15_5 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	buttonDesign: {
 		type: 'string',
