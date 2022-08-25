@@ -22,15 +22,22 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	registerBlockCollection, getBlockType, registerBlockType,
+	getBlockType,
+	registerBlockType,
+	getCategories,
+	setCategories,
 } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 
-// Register our block collection.
-registerBlockCollection( 'stackable', {
-	title: __( 'Stackable', i18n ),
-	icon: SVGStackableCategoryIcon,
-} )
+// Register our category. Not a collection since our blocks would appear as "Uncategorized"
+setCategories( [
+	{
+		slug: 'stackable',
+		title: __( 'Stackable', i18n ),
+		icon: SVGStackableCategoryIcon,
+	},
+	...getCategories(),
+] )
 
 // Register all the blocks found
 const importAllAndRegister = r => {

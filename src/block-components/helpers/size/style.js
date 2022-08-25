@@ -15,6 +15,8 @@ const getStyleParams = ( options = {} ) => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
+		verticalAlignSelectorEdit = '',
+		verticalAlignSelector = '',
 		wrapperSelector = '', // The outer wrapper element that where the outer flex alignments, widths and margins are applied to.
 	} = options
 
@@ -29,7 +31,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'save',
-			selector,
+			selector: verticalAlignSelector || selector,
 			styleRule: verticalAlignRule || 'alignItems',
 			attrName: 'verticalAlign',
 			attrNameTemplate,
@@ -37,7 +39,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'edit',
-			selector,
+			selector: verticalAlignSelectorEdit || verticalAlignSelector || selector,
 			styleRule: 'justifyContent',
 			attrName: 'verticalAlign',
 			attrNameTemplate,
@@ -126,13 +128,18 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: ( value, getAttribute, device ) => {
 				const right = value?.right
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
-				switch ( horizontalAlign ) {
-					case 'flex-start':
-					case 'center':
-						return 'auto'
-					case 'flex-end':
-						return right || 0
-					default: return right
+				const blockWidth = getAttribute( 'width', device )
+				if ( blockWidth || typeof right !== undefined ) {
+					switch ( horizontalAlign ) {
+						case 'flex-start':
+						case 'center':
+							return 'auto'
+						case 'flex-end':
+							return right || 0
+						default: return right
+					}
+				} else {
+					return ''
 				}
 			},
 			valueCallback: value => {
@@ -161,12 +168,18 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: ( value, getAttribute, device ) => {
 				const left = value?.left
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
-				switch ( horizontalAlign ) {
-					case 'flex-start': return left || 0
-					case 'center':
-					case 'flex-end':
-						return 'auto'
-					default: return left
+				const blockWidth = getAttribute( 'width', device )
+				if ( blockWidth || typeof left !== undefined ) {
+					switch ( horizontalAlign ) {
+						case 'flex-start':
+							return left || 0
+						case 'center':
+						case 'flex-end':
+							return 'auto'
+						default: return left
+					}
+				} else {
+					return ''
 				}
 			},
 			valueCallback: value => {

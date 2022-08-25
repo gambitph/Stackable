@@ -14,13 +14,15 @@ import { Popover, ToolbarGroup } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
 } from '@wordpress/rich-text'
-import { BlockControls } from '@wordpress/block-editor'
+import { BlockControls, useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import {
 	useState, useEffect, useRef, useCallback,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 
 // Apply the proper styles for the different text highlights.
 const createApplyFormat = ( _textValue, colorType, textColor, highlightColor ) => {
@@ -119,9 +121,13 @@ export const extractColors = styleString => {
 }
 
 const HighlightButton = props => {
+	const { clientId } = useBlockEditContext()
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
 	const [ colorType, setColorType ] = useState( null )
+	const { getBlock } = useSelect( 'core/block-editor' )
+
+	const block = getBlock( clientId )
 
 	// Close the window if the user clicks outside.
 	const clickOutsideListener = useCallback( event => {
@@ -177,6 +183,10 @@ const HighlightButton = props => {
 	} = isActive ? extractColors( highlightStyles ) : {}
 	// If highlighted, show the highlight color, otherwise show the text color.
 	const displayIconColor = ( colorType !== '' ? highlightColor : textColor ) || textColor
+
+	if ( block.name === 'stackable/button' ) {
+		return null
+	}
 
 	return (
 		<BlockControls>
