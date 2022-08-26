@@ -1,6 +1,7 @@
 .stk-block-image-box {
 	.stk-block-column .stk-block-column__content {
 		justify-content: center;
+		display: flex;
 		// Because we now have columns as height 100%, we need this.
 		> .stk-inner-blocks {
 			justify-content: center;
