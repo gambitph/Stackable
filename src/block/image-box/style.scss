@@ -1,6 +1,15 @@
 .stk-block-image-box {
 	.stk-block-column .stk-block-column__content {
 		justify-content: center;
+		// Because we now have columns as height 100%, we need this.
+		> .stk-inner-blocks {
+			justify-content: center;
+		}
+		// This is needed for the Container Content Vertical Align to work.
+		height: 100%;
+		height: -moz-available;
+		height: -webkit-fill-available;
+		height: fill-available;
 	}
 	.stk-inner-blocks {
 		display: grid;
