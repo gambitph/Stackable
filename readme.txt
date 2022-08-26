@@ -246,6 +246,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.4.4 =
+* Fixed: Accordion column height issues
+* Fixed: Hard to select the accordion block contents
+* Fixed: Containers with containers inside incorrectly inherit the parent container's size styles
+* Fixed: Content vertical align option now works correctly in the icon box block
+* Fixed: Content alignment issue in the image box block
+
 = 3.4.3 =
 * New: Added duration option for the Count Up block #2355
 * New: Added button alignment & full-width options for the Button Group block
