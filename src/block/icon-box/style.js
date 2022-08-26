@@ -10,24 +10,19 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useDeviceType, useBlockAttributes,
-} from '~stackable/hooks'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
+import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+import { getUniqueBlockClass } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import {
-	Fragment, renderToString,
-} from '@wordpress/element'
+import { Fragment, renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-icon-box__content',
 	sizeHorizontalAlignRule: 'margin',
+	sizeVerticalAlignRule: 'justifyContent',
 }
 
 export const ContainerStyles = props => {

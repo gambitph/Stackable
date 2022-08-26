@@ -11,6 +11,6 @@
 }
 
 // We need this to make position sticky to work inside columns.
-.stk-block.stk-block-column--v2 > * > .stk-inner-blocks {
+.stk-block.stk-block-column--v2:not(.stk-block-accordion__content) > * > .stk-inner-blocks {
 	height: 100%;
 }

@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.3
 Tested up to: 6.0.1
 Requires PHP: 5.7
-Stable tag: 3.4.3
+Stable tag: 3.4.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -245,6 +245,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.4.4 =
+* Fixed: This update fixes some issues which were found in v3.4.3 in the Accordion and Image box blocks
+* Fixed: Accordion column height issues
+* Fixed: Hard to select the accordion block contents
+* Fixed: Containers with containers inside incorrectly inherit the parent container's size styles
+* Fixed: Content alignment issue in the image box block
+* Fixed: Content vertical align option now works correctly in the icon box block #2404
 
 = 3.4.3 =
 * New: Added duration option for the Count Up block #2355
