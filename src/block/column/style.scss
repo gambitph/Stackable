@@ -10,7 +10,9 @@
 	margin-bottom: 0;
 }
 
-// We need this to make position sticky to work inside columns.
-.stk-block.stk-block-column--v2:not(.stk-block-accordion__content) > * > .stk-inner-blocks {
-	height: 100%;
-}
+// FIXME: Temporarily removed this since the frontend is having issues with the Accordion block when it's nested inside a container.
+// // we need this to make position sticky to work inside columns.
+// .stk-block.stk-block-column--v2 > * > .stk-inner-blocks {
+// 	// This is needed for the Container Content Vertical Align to work.
+// 	min-height: 100%;
+// }
