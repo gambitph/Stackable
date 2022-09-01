@@ -128,6 +128,12 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
+	Typography.addAttributes( attrObject, 'stk-table-of-contents__title', {
+		hasTextTag: false,
+		hasTextContent: false,
+		attrNameTemplate: 'title%s',
+	} )
+
 	return attrObject.getMerged( version )
 }
 export default attributes( VERSION )

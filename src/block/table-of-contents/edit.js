@@ -424,14 +424,23 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
-			<InspectorStyleControls>
-			</InspectorStyleControls>
-
 			<Typography.InspectorControls
+				label={ __( 'Table of Contents', i18n ) }
 				isMultiline={ true }
 				initialOpen={ false }
 				hasTextTag={ false }
 				hasTextContent={ false }
+				// attrNameTemplate="table%s"
+			/>
+
+			<Typography.InspectorControls
+				label={ __( 'Title', i18n ) }
+				attrNameTemplate="title%s"
+				hasToggle={ true }
+				hasTextTag={ false }
+				hasTextContent={ false }
+				// hasRemoveMargins={ true }
+				hasAlign={ true }
 			/>
 
 			<Advanced.InspectorControls />
@@ -441,14 +450,20 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-table-of-contents" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-
 			<TableOfContentsStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
-
 			<BlockDiv className={ blockClassNames }>
 				{ !! headings.length && hasEmptyAnchor && (
 					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
 				) }
+				{ attributes.titleShow && <Typography
+					className="stk-table-of-contents__title"
+					attrNameTemplate="title%s"
+				/> }
+				{ /* <Typography
+					className="stk-table-of-contents__title"
+					attrNameTemplate="title%s"
+				/> */ }
 				<TableOfContentsList
 					className="stk-table-of-contents__table"
 					nestedHeadingList={ nestedHeadingList }

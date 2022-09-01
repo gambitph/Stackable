@@ -5,7 +5,7 @@ import { TableOfContentsStyles } from './style'
 import TableOfContentsList from './table-of-contents-list'
 import { linearToNestedHeadingList } from './util'
 import {
-	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses,
+	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses, Typography,
 } from '~stackable/block-components'
 import { withVersion } from '~stackable/higher-order'
 
@@ -59,6 +59,11 @@ export const Save = props => {
 		>
 			<TableOfContentsStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
+			{ attributes.titleShow && <Typography.Content
+				className="stk-table-of-contents__title"
+				attrNameTemplate="title%s"
+				attributes={ attributes }
+			/> }
 			<TableOfContentsList.Content
 				className="stk-table-of-contents__table"
 				nestedHeadingList={ nestedHeadingList }

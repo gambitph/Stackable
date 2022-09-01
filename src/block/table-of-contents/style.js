@@ -32,6 +32,11 @@ const typographyOptions = {
 	],
 }
 
+const titleTypographyOptions = {
+	selector: 'p',
+	attrNameTemplate: 'title%s',
+}
+
 const getStyleParams = () => {
 	return [
 		{
@@ -166,6 +171,7 @@ export const TableOfContentsStyles = props => {
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
 			<Typography.Style { ...propsToPass } options={ typographyOptions } />
+			<Typography.Style { ...propsToPass } options={ titleTypographyOptions } />
 			<MarginBottom.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
