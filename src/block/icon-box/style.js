@@ -22,6 +22,7 @@ import {
 const containerDivOptions = {
 	sizeSelector: '.stk-block-icon-box__content',
 	sizeHorizontalAlignRule: 'margin',
+	sizeVerticalAlignRule: 'justifyContent',
 }
 
 export const ContainerStyles = memo( props => {
