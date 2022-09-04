@@ -7,9 +7,7 @@ import HelpTooltip from './help-tooltip'
 /**
  * External dependencies
  */
-import {
-	srcUrl, cdnUrl,
-} from 'stackable'
+import { srcUrl, cdnUrl } from 'stackable'
 import { camelCase } from 'lodash'
 
 /**
@@ -35,8 +33,8 @@ const HelpToolTipVideo = props => {
 	const showHelp = elORString => {
 		// If there's a currently focused element, blur it since closing the popover
 		// can trigger a scroll to the previously focused element that can confuse the user.
-		if ( document.activeElement ) {
-			document.activeElement.blur()
+		if ( document.activeElement ) { // eslint-disable-line @wordpress/no-global-active-element
+			document.activeElement.blur() // eslint-disable-line @wordpress/no-global-active-element
 		}
 
 		const target = typeof elORString !== 'string' && elORString
@@ -88,7 +86,7 @@ const HelpToolTipVideo = props => {
 			settings.fetch().then( response => {
 				setTooltipsEnabled( ! response.stackable_help_tooltip_disabled )
 			} )
-		} )
+		} ).catch( () => {} )
 
 		// Tooptips are shown/hidden only through these triggers.
 		addAction( 'stackable.help-video.show', 'stackable/help', showHelp )
