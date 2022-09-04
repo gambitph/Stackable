@@ -4,7 +4,6 @@
 /**
  * External dependencies
  */
-import { createAllCombinationAttributes, createButtonAttributes } from '~stackable/util'
 import { upperFirst } from 'lodash'
 
 /**
@@ -18,7 +17,9 @@ import { sprintf } from '@wordpress/i18n'
 import {
 	omitAttributes,
 	pickAttributes,
+	createAllCombinationAttributes,
 } from '../attributes'
+import { createButtonAttributes } from '../button'
 import { SOCIAL_SITES } from './'
 
 const createSocialButtonAttributes = ( attrNameTemplate, options = {} ) => {

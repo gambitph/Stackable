@@ -1,15 +1,14 @@
 /**
  * Internal dependencies
  */
-import { getAttrName } from '../attributes'
+import { getAttrName, getAttributeName } from '../attributes'
 
 /**
  * External dependencies
  */
 import { useBlockAttributesContext, useBlockHoverState } from '~stackable/hooks'
-import { getAttributeName } from '~stackable/util'
 import { compact, pick } from 'lodash'
-import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
+import { QueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies

@@ -56,7 +56,6 @@ export { default as ProControlButton } from './pro-control-button'
 export { default as ProModal } from './pro-modal'
 export { default as FourNumberControl } from './four-number-control'
 export { default as FourRangeControl } from './four-range-control'
-export { default as ColumnsWidthControl } from './columns-width-control'
 export { default as SmallNumberControl } from './small-number-control'
 export { default as ResponsiveToggle } from './responsive-toggle'
 export { default as BaseControlMultiLabel } from './base-control-multi-label'
@@ -85,7 +84,12 @@ export { default as ControlSeparator } from './control-separator'
 export { default as SvgIcon } from './svg-icon'
 export { default as FontAwesomeIcon } from './font-awesome-icon'
 export { default as BaseControl } from './base-control'
-export { default as BaseControl2 } from './base-control2'
+import AdvancedControl from './base-control2'
+export {
+	AdvancedControl,
+	AdvancedControl as BaseControl2, // This was exported before.
+}
+export { useControlHandlers, extractControlProps } from './base-control2'
 export { default as ImageControl2 } from './image-control2'
 export { default as AdvancedToggleControl } from './advanced-toggle-control'
 export { default as AdvancedRadioControl } from './advanced-radio-control'

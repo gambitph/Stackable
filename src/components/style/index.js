@@ -2,13 +2,16 @@ import compareVersions from 'compare-versions'
 import { getEditorStylesOnly, generateStyles } from '~stackable/block-components/style'
 import { useDynamicContent } from '../dynamic-content-control'
 import {
-	appendImportant, getUniqueBlockClass, minifyCSS, useQueryLoopInstanceId,
+	appendImportant,
+	getUniqueBlockClass,
+	minifyCSS,
+	useQueryLoopInstanceId,
+	createUniqueClass,
 } from '~stackable/util'
 import {
 	Fragment, memo, useMemo,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
 import {
 	useBlockAttributesContext, useDeviceType, useRafMemo,
 } from '~stackable/hooks'

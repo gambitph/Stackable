@@ -1,10 +1,8 @@
 /**
  * External dependencies
  */
-import {
-	i18n, isContentOnlyMode,
-} from 'stackable'
-import Button from '~stackable/components/button'
+import { i18n, isContentOnlyMode } from 'stackable'
+import { Button } from '~stackable/components'
 
 /**
  * WordPress dependencies

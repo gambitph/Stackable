@@ -2,8 +2,9 @@
  * External dependencies
  */
 import { get, pick } from 'lodash'
-import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
-import { CONTENT_ATTRIBUTES, recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
+import {
+	CONTENT_ATTRIBUTES, createUniqueClass, recursivelyAddUniqueIdToInnerBlocks,
+} from '~stackable/util'
 import { VariationPicker } from '~stackable/components'
 
 /**

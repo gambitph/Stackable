@@ -266,16 +266,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				return;
 			}
 
-			// Backend editor scripts: common vendor files.
-			wp_register_script(
-				'ugb-block-js-vendor',
-				plugins_url( 'dist/editor_vendor.js', STACKABLE_FILE ),
-				array(),
-				STACKABLE_VERSION
-			);
-
 			// Backend editor scripts: blocks.
-			$dependencies = array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' );
+			$dependencies = array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' );
 			wp_register_script(
 				'ugb-block-js',
 				plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
@@ -341,7 +333,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'settings' => apply_filters( 'stackable_js_settings', array() ),
 				'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 			) );
-			wp_localize_script( 'ugb-block-js-vendor', 'stackable', $args );
+			wp_localize_script( 'wp-blocks', 'stackable', $args );
 		}
 
 		/**

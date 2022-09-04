@@ -3,6 +3,17 @@
  */
 
 /**
+ * Export our API for our other scripts to use.
+ */
+export * as util from './util'
+export * as hooks from './hooks'
+export * as higherOrder from './higher-order'
+export * as components from './components'
+export * as blockComponents from './block-components'
+export * as icons from './icons'
+export * as designLibrary from './design-library'
+
+/**
  * Internal dependencies
  */
 import './format-types'
@@ -10,7 +21,7 @@ import './plugins'
 import './help'
 import './compatibility'
 import './disabled-blocks'
-import { SVGStackableCategoryIcon } from './icons'
+import { SVGStackableCategoryIcon } from '~stackable/icons'
 
 /**
  * External dependencies

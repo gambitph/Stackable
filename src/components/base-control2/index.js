@@ -25,6 +25,9 @@ import { pick, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
 
+// Expose useControlHandlers to our API.
+export { useControlHandlers } from './hooks'
+
 const ALL_SCREENS = [ 'desktop', 'tablet', 'mobile' ]
 
 export const BaseControl = props => {
