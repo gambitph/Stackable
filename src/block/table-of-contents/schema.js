@@ -128,7 +128,19 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
-	Typography.addAttributes( attrObject, 'stk-table-of-contents__title', {
+	attrObject.add( {
+		attributes: {
+			titleText: {
+				source: 'html',
+				selector: '.stk-table-of-contents__title',
+				default: '',
+			},
+		},
+		versionAdded: '3.4.5',
+		versionDeprecated: '',
+	} )
+
+	Typography.addAttributes( attrObject, '.stk-table-of-contents__title', {
 		hasTextTag: false,
 		hasTextContent: false,
 		attrNameTemplate: 'title%s',

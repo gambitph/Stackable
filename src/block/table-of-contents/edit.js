@@ -430,7 +430,6 @@ const Edit = props => {
 				initialOpen={ false }
 				hasTextTag={ false }
 				hasTextContent={ false }
-				// attrNameTemplate="table%s"
 			/>
 
 			<Typography.InspectorControls
@@ -439,8 +438,6 @@ const Edit = props => {
 				hasToggle={ true }
 				hasTextTag={ false }
 				hasTextContent={ false }
-				// hasRemoveMargins={ true }
-				hasAlign={ true }
 			/>
 
 			<Advanced.InspectorControls />
@@ -460,10 +457,6 @@ const Edit = props => {
 					className="stk-table-of-contents__title"
 					attrNameTemplate="title%s"
 				/> }
-				{ /* <Typography
-					className="stk-table-of-contents__title"
-					attrNameTemplate="title%s"
-				/> */ }
 				<TableOfContentsList
 					className="stk-table-of-contents__table"
 					nestedHeadingList={ nestedHeadingList }

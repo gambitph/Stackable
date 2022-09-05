@@ -33,7 +33,8 @@ const typographyOptions = {
 }
 
 const titleTypographyOptions = {
-	selector: 'p',
+	selector: '.stk-table-of-contents__title',
+	hoverSelector: '.stk-table-of-contents__title:hover',
 	attrNameTemplate: 'title%s',
 }
 
@@ -209,6 +210,7 @@ TableOfContentsStyles.Content = props => {
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
+			<Typography.Style.Content { ...propsToPass } options={ titleTypographyOptions } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
