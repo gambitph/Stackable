@@ -40,8 +40,6 @@ import { createBlockCompleter } from '~stackable/util'
 import { createBlock } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { useCallback } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 
 /**
@@ -62,6 +60,7 @@ const Edit = props => {
 		onReplace,
 		onRemove,
 		mergeBlocks,
+		attributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -72,7 +71,6 @@ const Edit = props => {
 	const {
 		parentBlock, isFirstBlock, isLastBlock,
 	} = useBlockContext()
-	const { getBlockAttributes } = useSelect( 'core/block-editor' )
 
 	const enableColumns = applyFilters( 'stackable.text.edit.enable-column', true, parentBlock )
 
@@ -92,13 +90,13 @@ const Edit = props => {
 		parentBlock, isFirstBlock, isLastBlock,
 	} )
 
-	const onSplit = useCallback( ( value, isOriginal ) => {
+	const onSplit = ( value, isOriginal ) => {
 		// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
 		let newAttributes
 
 		if ( isOriginal || value ) {
 			newAttributes = {
-				...getBlockAttributes( props.clientId ),
+				...attributes,
 				text: value,
 			}
 		}
@@ -110,7 +108,7 @@ const Edit = props => {
 		}
 
 		return block
-	}, [ props.clientId ] )
+	}
 
 	return (
 		<>

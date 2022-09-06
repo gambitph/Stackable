@@ -38,11 +38,11 @@ import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/high
  */
 import { compose } from '@wordpress/compose'
 import {
-	Fragment, useEffect, useState, useCallback,
+	Fragment, useEffect, useState,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useDispatch } from '@wordpress/data'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 /**
@@ -65,6 +65,7 @@ const Edit = props => {
 		setAttributes,
 		onRemove,
 		mergeBlocks,
+		attributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -73,7 +74,6 @@ const Edit = props => {
 	const { parentBlock } = useBlockContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { getBlockAttributes } = useSelect( 'core/block-editor' )
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-heading',
@@ -101,12 +101,12 @@ const Edit = props => {
 		setPrevText( props.attributes.text )
 	}, [ props.attributes.anchor, props.attributes.text ] )
 
-	const onSplit = useCallback( ( value, isOriginal ) => {
+	const onSplit = ( value, isOriginal ) => {
 		let block
 
 		if ( isOriginal || value ) {
 			block = createBlock( 'stackable/heading', {
-				...getBlockAttributes( clientId ),
+				...attributes,
 				text: value,
 			} )
 		} else {
@@ -118,7 +118,7 @@ const Edit = props => {
 		}
 
 		return block
-	}, [ clientId ] )
+	}
 
 	return (
 		<Fragment>
