@@ -4,7 +4,7 @@ export const addAttributes = attrObject => {
 			generatedCss: {
 				type: 'string',
 				source: 'html',
-				selector: 'div > style:not(.stk-custom-css)',
+				selector: '.stk-block > style:not(.stk-custom-css)',
 				default: '',
 			},
 		},
