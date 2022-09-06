@@ -215,6 +215,7 @@ const Edit = props => {
 						...heading,
 					}
 				} )
+
 				setHeadings( editorHeadings )
 			}
 			postContent = newPostContent
@@ -304,6 +305,7 @@ const Edit = props => {
 		const BLOCK_ANCHOR_CONTENT = applyFilters( 'stackable.table-of-contents.block-anchor-content', {
 			'core/heading': 'content',
 			'stackable/heading': 'text',
+			'ugb/heading': 'title',
 		} )
 
 		const supportedBlocks = Object.keys( BLOCK_ANCHOR_CONTENT )

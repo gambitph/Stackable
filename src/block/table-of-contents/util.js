@@ -19,6 +19,14 @@ const convertBlockToHeadingObject = block => {
 			anchor: block.attributes.anchor,
 			clientId: block.clientId,
 		}
+	} else if ( block.name === 'ugb/heading' ) {
+		const level = block.attributes.titleTag || 'h2'
+		heading = {
+			content: block.attributes.title,
+			level: parseInt( level.substr( 1 ), 10 ),
+			anchor: block.attributes.anchor,
+			clientId: block.clientId,
+		}
 	} else {
 		heading = applyFilters( 'stackable.block.table-of-contents.convert-block', null, block ) || { // Allow other plugins to add their own heading block.
 			// Native core/heading
@@ -141,6 +149,7 @@ export const getHeadingsFromEditorDom = editorDom => {
 	const allowedHeadingBlocks = applyFilters( 'stackable.block.table-of-contents.allowed-headings', [
 		'core/heading',
 		'stackable/heading',
+		'ugb/heading',
 	] )
 	const query = allowedHeadingBlocks.map( name => `.wp-block[data-type="${ name }"]` ).join( ', ' )
 	const headingBlocks = editorDom.querySelectorAll( query )
