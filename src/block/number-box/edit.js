@@ -40,14 +40,13 @@ import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/high
  */
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
-import { useDispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -55,7 +54,6 @@ const Edit = props => {
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-number-box',
@@ -91,7 +89,7 @@ const Edit = props => {
 					id="shape"
 					initialOpen={ true }
 					checked={ attributes.hasShape }
-					onChange={ hasShape => updateBlockAttributes( clientId, { hasShape } ) }
+					onChange={ hasShape => setAttributes( { hasShape } ) }
 				>
 					<AdvancedRangeControl
 						label={ __( 'Size', i18n ) }

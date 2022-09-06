@@ -11,22 +11,20 @@ import { ResetButton } from '../base-control2/reset-button'
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { useAttributeName, useBlockAttributes } from '~stackable/hooks'
+import {
+	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import {
-	Fragment, useCallback,
-} from '@wordpress/element'
-import { MediaUpload, useBlockEditContext } from '@wordpress/block-editor'
-import { dispatch } from '@wordpress/data'
+import { Fragment, useCallback } from '@wordpress/element'
+import { MediaUpload } from '@wordpress/block-editor'
 
 const ImageControl = props => {
-	const { clientId } = useBlockEditContext()
-
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
+	const setAttributes = useBlockSetAttributesContext()
 	const attrNameId = useAttributeName( `${ props.attribute }Id`, props.responsive, props.hover )
 	const attrNameUrl = useAttributeName( `${ props.attribute }Url`, props.responsive, props.hover )
 	const attrWidthAttribute = useAttributeName( `${ props.attribute }HeightAttribute`, props.responsive, props.hover )
@@ -34,14 +32,14 @@ const ImageControl = props => {
 	const attrAlt = useAttributeName( `${ props.attribute }Alt`, props.responsive, props.hover )
 
 	const _onChange = useCallback( image => {
-		dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
+		setAttributes( {
 			[ attrNameId ]: image.id,
 			[ attrNameUrl ]: image.url,
 			[ attrWidthAttribute ]: image.width || '',
 			[ attrHeightAttribute ]: image.height || '',
 			[ attrAlt ]: image.alt || '',
 		} )
-	}, [ clientId, attrNameId, attrNameUrl, attrWidthAttribute, attrHeightAttribute ] )
+	}, [ setAttributes, attrNameId, attrNameUrl, attrWidthAttribute, attrHeightAttribute ] )
 
 	const onChange = typeof props.onChange !== 'undefined' ? props.onChange : _onChange
 

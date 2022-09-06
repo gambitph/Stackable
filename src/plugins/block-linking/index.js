@@ -69,7 +69,7 @@ export const BlockLinking = () => {
 
 		// Update the blocks!
 		if ( clientIdsToUpdate.length ) {
-			updateBlockAttributes( clientIdsToUpdate, attributes )
+			updateBlockAttributes( clientIdsToUpdate, attributes ) // eslint-disable-line stackable/no-update-block-attributes
 		}
 	}, [ currentClientId, selectedBlockClientId, linkableBlockClientId, isLinked ] )
 

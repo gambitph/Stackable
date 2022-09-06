@@ -9,13 +9,12 @@ import {
 	InspectorAdvancedControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockAttributes } from '~stackable/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 import { useDeviceEditorClasses } from '~stackable/components/resizable-column/use-device-editor-classes'
 
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import {
 	__, _x, sprintf,
@@ -39,12 +38,10 @@ const HTML_TAG_OPTIONS = [
 ]
 
 export const Edit = () => {
-	const { clientId } = useBlockEditContext()
-
 	// Needed for position sticky attribute.
 	useDeviceEditorClasses()
 
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 
 	return (
 		<Fragment>

@@ -1,24 +1,23 @@
 /**
  * WordPress Dependencies
  */
-import { useDispatch } from '@wordpress/data'
 import { useCallback } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { useBlockSetAttributesContext } from '~stackable/hooks'
 
 export const useImage = () => {
-	const { clientId } = useBlockEditContext()
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
+	const setAttributes = useBlockSetAttributesContext()
 
 	const onChange = useCallback(
 		image => {
-			updateBlockAttributes( clientId, {
+			setAttributes( {
 				imageUrl: image.url,
 				imageId: image.id,
 				imageHeightAttribute: image.height,
 				imageWidthAttribute: image.width,
 				imageAlt: image.alt,
 			} )
-		}
+		},
+		[ setAttributes ]
 	)
 
 	const onChangeSizeDesktop = useCallback(
@@ -38,9 +37,9 @@ export const useImage = () => {
 			if ( typeof widthUnit !== 'undefined' ) {
 				size.imageWidthUnit = widthUnit
 			}
-			updateBlockAttributes( clientId, size )
+			setAttributes( size )
 		},
-		[ clientId, updateBlockAttributes ]
+		[ setAttributes ]
 	)
 
 	const onChangeSizeTablet = useCallback(
@@ -60,9 +59,9 @@ export const useImage = () => {
 			if ( typeof widthUnit !== 'undefined' ) {
 				size.imageWidthUnitTablet = widthUnit
 			}
-			updateBlockAttributes( clientId, size )
+			setAttributes( size )
 		},
-		[ clientId, updateBlockAttributes ]
+		[ setAttributes ]
 	)
 
 	const onChangeSizeMobile = useCallback(
@@ -82,14 +81,14 @@ export const useImage = () => {
 			if ( typeof widthUnit !== 'undefined' ) {
 				size.imageWidthUnitMobile = widthUnit
 			}
-			updateBlockAttributes( clientId, size )
+			setAttributes( size )
 		},
-		[ clientId, updateBlockAttributes ]
+		[ setAttributes ]
 	)
 
 	const onRemove = useCallback(
 		() => {
-			updateBlockAttributes( clientId, {
+			setAttributes( {
 				imageUrl: '',
 				imageId: '',
 				imageHeightAttribute: '',
@@ -97,7 +96,7 @@ export const useImage = () => {
 				imageAlt: '',
 			} )
 		},
-		[ clientId, updateBlockAttributes ]
+		[ setAttributes ]
 	)
 
 	return {

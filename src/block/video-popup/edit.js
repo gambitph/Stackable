@@ -38,11 +38,10 @@ import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/high
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
+import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
-import { useDispatch } from '@wordpress/data'
 
 export const defaultIcon = '<svg data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>'
 
@@ -55,15 +54,15 @@ const TEMPLATE = [
 
 const Edit = props => {
 	const {
-		className, attributes,
+		className,
+		attributes,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
-	const { clientId } = useBlockEditContext()
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const blockClassNames = classnames( [
 		className,
@@ -94,12 +93,12 @@ const Edit = props => {
 						isDynamic={ false }
 						label={ __( 'Popup Option #1: Upload Video', i18n ) }
 						help={ __( 'Use .mp4 format for videos', i18n ) }
-						onRemove={ () => updateBlockAttributes( clientId, {
+						onRemove={ () => setAttributes( {
 							videoLink: '',
 							videoId: '',
 						} ) }
 						onChange={ media => {
-							updateBlockAttributes( clientId, {
+							setAttributes( {
 								videoLink: media.url,
 								videoId: media.url,
 							} )
@@ -115,7 +114,7 @@ const Edit = props => {
 						isFormatType={ false }
 						placeholder="https://"
 						value={ ! urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
-						onChange={ videoLink => updateBlockAttributes( clientId, {
+						onChange={ videoLink => setAttributes( {
 							videoLink,
 							videoId: getVideoProviderFromURL( videoLink ).id,
 						} ) }

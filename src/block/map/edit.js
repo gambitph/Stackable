@@ -70,7 +70,6 @@ import { useDispatch } from '@wordpress/data'
 
 const Edit = props => {
 	const {
-		clientId,
 		attributes,
 		className,
 		isHovered,
@@ -138,7 +137,6 @@ const Edit = props => {
 		blockHoverClass,
 		blockAlignmentClass,
 	] )
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
@@ -420,9 +418,7 @@ const Edit = props => {
 					title={ __( 'Map Marker', i18n ) }
 					initialOpen={ false }
 					checked={ apiKey ? showMarker : false }
-					onChange={ showMarker =>
-						updateBlockAttributes( clientId, { showMarker } )
-					}
+					onChange={ showMarker => setAttributes( { showMarker } ) }
 					id="map-marker"
 				>
 					<div className="stk--needs-api-key">

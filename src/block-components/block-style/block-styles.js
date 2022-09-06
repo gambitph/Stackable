@@ -1,15 +1,14 @@
 /**
  * External dependencies
  */
-import { getBlockStyle } from '~stackable/hooks'
+import {
+	getBlockStyle, useBlockAttributesContext, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { useMemo, useCallback } from '@wordpress/element'
-import {
-	select, useSelect, useDispatch,
-} from '@wordpress/data'
 import TokenList from '@wordpress/token-list'
 import { StyleControl } from '~stackable/components'
 
@@ -37,20 +36,14 @@ export function replaceActiveStyle( className, activeStyle, newStyle ) {
 }
 
 const BlockStyles = props => {
-	const { clientId, styles } = props
-
-	const { className } = useSelect( select => {
-		const block = select( 'core/block-editor' ).getBlock( clientId )
-		return {
-			className: block?.attributes?.className || '',
-		}
-	}, [ clientId ] )
+	const { styles } = props
+	const attributes = useBlockAttributesContext()
+	const setAttributes = useBlockSetAttributesContext()
+	const className = attributes?.className || ''
 
 	const activeStyle = useMemo( () => {
 		return getBlockStyle( styles, className )
 	}, [ styles, className ] )
-
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const onSelect = useCallback( style => {
 		const styleClassName = replaceActiveStyle(
@@ -60,14 +53,13 @@ const BlockStyles = props => {
 		)
 
 		// Selecting a new style can update other attributes too.
-		const block = select( 'core/block-editor' ).getBlock( clientId )
-		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( block.attributes )
+		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( attributes )
 
-		updateBlockAttributes( clientId, {
+		setAttributes( {
 			...updatedAttributes,
 			className: styleClassName,
 		} )
-	}, [ clientId, activeStyle, className ] )
+	}, [ activeStyle, className, attributes ] )
 
 	return (
 		<StyleControl

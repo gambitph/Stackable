@@ -8,16 +8,16 @@ import { Button } from '~stackable/components'
  * WordPress dependencies
  */
 import { ToolbarGroup } from '@wordpress/components'
-import { BlockControls, useBlockEditContext } from '@wordpress/block-editor'
+import { BlockControls } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 import { addFilter } from '@wordpress/hooks'
 import { createHigherOrderComponent } from '@wordpress/compose'
+import { useBlockSetAttributesContext } from '~stackable/hooks'
 
 const LayoutPickerButton = props => {
 	const { disabled } = props
-	const { clientId } = useBlockEditContext()
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
+	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<BlockControls>
@@ -27,7 +27,7 @@ const LayoutPickerButton = props => {
 					icon="layout"
 					label={ __( 'Reset layout', i18n ) }
 					disabled={ disabled }
-					onClick={ () => updateBlockAttributes( clientId, { uniqueId: undefined } ) }
+					onClick={ () => setAttributes( { uniqueId: undefined } ) }
 				/>
 			</ToolbarGroup>
 		</BlockControls>

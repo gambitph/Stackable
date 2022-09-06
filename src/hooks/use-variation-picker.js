@@ -101,7 +101,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 					uniqueId: createUniqueClass( clientId ),
 				}
 
-				updateBlockAttributes( clientId, newAttributes )
+				updateBlockAttributes( clientId, newAttributes ) // eslint-disable-line stackable/no-update-block-attributes
 
 				// Add the inner blocks of the layout / variation.
 				if ( nextVariation.innerBlocks ) {

@@ -5,7 +5,7 @@ import { Edit } from './edit'
 
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
-import { useBlockAttributes, useVariationPicker } from '~stackable/hooks'
+import { useBlockAttributesContext, useVariationPicker } from '~stackable/hooks'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -27,7 +27,7 @@ export const BlockDiv = props => {
 	} = props
 
 	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 
 	useUniqueId( ! enableVariationPicker )
 

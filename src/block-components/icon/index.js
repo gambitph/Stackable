@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { useAttributeEditHandlers, useBlockAttributes } from '~stackable/hooks'
+import { useAttributeEditHandlers, useBlockAttributesContext } from '~stackable/hooks'
 import {
 	getAttrNameFunction, __getValue, getShapeSVG, isElementDescendant,
 } from '~stackable/util'
@@ -61,7 +61,7 @@ export const Icon = props => {
 		hasLinearGradient = true,
 	} = props
 
-	const { clientId, isSelected } = useBlockEditContext()
+	const { isSelected } = useBlockEditContext()
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
 
@@ -107,7 +107,7 @@ export const Icon = props => {
 		return () => clearTimeout( t )
 	}, [ isSelected ] )
 
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 
 	const {
 		getAttribute,

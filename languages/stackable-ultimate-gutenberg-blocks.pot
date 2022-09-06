@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-04T17:12:51+00:00\n"
+"POT-Creation-Date: 2022-09-05T15:03:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -1524,7 +1524,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:32
 #: pro__premium_only/src/features/icon-controls/index.js:260
-#: src/block/number-box/edit.js:90
+#: src/block/number-box/edit.js:88
 #: src/components/image-shape-control/index.js:59
 #: src/help/videos.js:181
 msgid "Shape"
@@ -2267,7 +2267,7 @@ msgstr ""
 #: src/block/spacer/edit.js:98
 #: src/block/table-of-contents/edit.js:348
 #: src/block/text/edit.js:128
-#: src/block/video-popup/edit.js:89
+#: src/block/video-popup/edit.js:88
 #: src/deprecated/v2/block/accordion/edit.js:135
 #: src/deprecated/v2/block/blockquote/edit.js:124
 #: src/deprecated/v2/block/blog-posts/edit.js:200
@@ -4194,24 +4194,24 @@ msgstr ""
 msgid "Sticky"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:39
+#: src/block-components/alignment/edit.js:34
 msgid "Alignment"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:43
+#: src/block-components/alignment/edit.js:38
 msgid "Content Alignment"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:49
-#: src/block-components/alignment/edit.js:58
+#: src/block-components/alignment/edit.js:44
+#: src/block-components/alignment/edit.js:53
 msgid "Column Alignment"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:67
+#: src/block-components/alignment/edit.js:62
 msgid "Inner Block Alignment"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:71
+#: src/block-components/alignment/edit.js:66
 #: src/block/button-group/edit.js:108
 #: src/block/button-group/edit.js:122
 #: src/block/call-to-action/variations.js:53
@@ -4239,7 +4239,7 @@ msgstr ""
 msgid "Horizontal"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:75
+#: src/block-components/alignment/edit.js:70
 #: src/block/button-group/edit.js:112
 #: src/block/button-group/edit.js:126
 #: src/block/testimonial/variations.js:118
@@ -4496,8 +4496,8 @@ msgstr ""
 msgid "Columns Alignment"
 msgstr ""
 
+#: src/block-components/custom-attributes/edit.js:29
 #: src/block-components/custom-attributes/edit.js:33
-#: src/block-components/custom-attributes/edit.js:37
 #: src/components/custom-attributes-control/index.js:94
 #: src/deprecated/v2/modules/advanced-custom-attributes/index.js:82
 #: src/deprecated/v2/modules/advanced-custom-attributes/index.js:87
@@ -4579,7 +4579,7 @@ msgid "Background Image"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:162
-#: src/block/video-popup/edit.js:96
+#: src/block/video-popup/edit.js:95
 #: src/components/background-controls/index.js:171
 #: src/components/background-controls/index.js:182
 #: src/components/background-controls/index.js:193
@@ -5182,7 +5182,7 @@ msgid "Letter Spacing"
 msgstr ""
 
 #: src/block-components/typography/edit.js:248
-#: src/block/number-box/edit.js:97
+#: src/block/number-box/edit.js:95
 #: src/components/typography-control/index.js:65
 #: src/components/typography-control/index.js:78
 #: src/components/typography-control/index.js:90
@@ -6028,23 +6028,23 @@ msgstr ""
 msgid "Map Marker"
 msgstr ""
 
-#: src/block/map/edit.js:442
+#: src/block/map/edit.js:440
 msgid "Uploaded Icon and Icon Color settings are not fully compatible."
 msgstr ""
 
-#: src/block/map/edit.js:446
+#: src/block/map/edit.js:444
 msgid "Horizontal Icon Anchor Point"
 msgstr ""
 
-#: src/block/map/edit.js:456
+#: src/block/map/edit.js:454
 msgid "Vertical Icon Anchor Point"
 msgstr ""
 
-#: src/block/map/edit.js:503
+#: src/block/map/edit.js:501
 msgid "Map"
 msgstr ""
 
-#: src/block/map/edit.js:529
+#: src/block/map/edit.js:527
 msgid "Embedded content from Google Map Platform."
 msgstr ""
 
@@ -6478,17 +6478,17 @@ msgstr ""
 msgid "Inverted Vertical"
 msgstr ""
 
-#: src/block/video-popup/edit.js:95
+#: src/block/video-popup/edit.js:94
 #: src/deprecated/v2/block/video-popup/edit.js:79
 msgid "Popup Option #1: Upload Video"
 msgstr ""
 
-#: src/block/video-popup/edit.js:112
+#: src/block/video-popup/edit.js:111
 #: src/deprecated/v2/block/video-popup/edit.js:96
 msgid "Popup Option #2: Video URL"
 msgstr ""
 
-#: src/block/video-popup/edit.js:113
+#: src/block/video-popup/edit.js:112
 #: src/deprecated/v2/block/video-popup/edit.js:97
 msgid "Paste a Youtube / Vimeo URL"
 msgstr ""
