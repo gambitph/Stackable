@@ -99,8 +99,10 @@ export const useColumn = () => {
 			const parentClientId = last( select( 'core/block-editor' ).getBlockParents( clientId ) )
 			const adjacentBlocks = select( 'core/block-editor' ).getBlock( parentClientId )?.innerBlocks || []
 
-			const clientIds = adjacentBlocks.map( block => block.clientId )
-			updateBlockAttributes( clientIds, { columnWidth: '' } ) // eslint-disable-line stackable/no-update-block-attributes
+			if ( adjacentBlocks.length ) {
+				const clientIds = adjacentBlocks.map( block => block.clientId )
+				updateBlockAttributes( clientIds, { columnWidth: '' } ) // eslint-disable-line stackable/no-update-block-attributes
+			}
 		},
 		[ clientId, updateBlockAttributes ]
 	)
