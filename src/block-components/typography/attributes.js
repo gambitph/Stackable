@@ -71,7 +71,7 @@ const typographyAttributes = {
 		default: false,
 	},
 	show: {
-		type: 'booleam',
+		type: 'boolean',
 		default: true,
 	},
 }
