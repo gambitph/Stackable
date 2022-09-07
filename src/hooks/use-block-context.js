@@ -45,6 +45,7 @@ const STORE_REDUCER = ( state = {}, action ) => {
 					numInnerBlocks: innerBlocks.length,
 					hasInnerBlocks: !! innerBlocks.length,
 					innerBlocks,
+					rootBlockClientId: clientId,
 				}
 
 				const parseBlock = ( innerBlocks, parentBlock ) => {
@@ -68,6 +69,7 @@ const STORE_REDUCER = ( state = {}, action ) => {
 									numInnerBlocks: block.innerBlocks.length,
 									hasInnerBlocks: !! block.innerBlocks.length,
 									innerBlocks: block.innerBlocks,
+									rootBlockClientId: rootBlock.clientId,
 								}
 							}
 						}
@@ -87,6 +89,7 @@ const STORE_REDUCER = ( state = {}, action ) => {
 								numInnerBlocks: block.innerBlocks.length,
 								hasInnerBlocks: !! block.innerBlocks.length,
 								innerBlocks: block.innerBlocks,
+								rootBlockClientId: rootBlock.clientId,
 							}
 						}
 

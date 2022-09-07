@@ -19,7 +19,7 @@ if ( ! isContentOnlyMode && settings.stackable_enable_navigation_panel ) {
 		return props => {
 			const isStackableBlock = props.name.startsWith( 'stackable/' )
 
-			if ( ! isStackableBlock ) {
+			if ( ! isStackableBlock || ! props.isSelected ) {
 				return <BlockEdit { ...props } />
 			}
 
