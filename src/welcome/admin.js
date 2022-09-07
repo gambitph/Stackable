@@ -18,21 +18,21 @@ import {
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
 import { loadPromise, models } from '@wordpress/api'
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * External dependencies
  */
 import {
 	i18n,
-	isPro,
 	showProNoticesOption,
 } from 'stackable'
 import classnames from 'classnames'
 import { AdminToggleSetting, AdminTextSetting } from '~stackable/components'
-import { mergePremiumBlocks, importBlocks } from '~stackable/util'
+import { importBlocks } from '~stackable/util'
 
 const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
-export const BLOCKS = isPro ? mergePremiumBlocks( FREE_BLOCKS ) : FREE_BLOCKS
+export const getAllBlocks = () => applyFilters( 'stackable.settings.merge-blocks', FREE_BLOCKS )
 
 export const BLOCK_CATEROGIES = [
 	{
@@ -109,6 +109,7 @@ BlockToggle.defaultProps = {
 }
 
 const BlockList = () => {
+	const DERIVED_BLOCKS = getAllBlocks()
 	return (
 		<>
 			{ BLOCK_CATEROGIES.map( ( { id, label } ) => {
@@ -116,7 +117,7 @@ const BlockList = () => {
 					<div className="s-getting-started-blocks-wrapper" key={ id }>
 						<h3>{ label }</h3>
 						<div className="s-getting-started-blocks">
-							{ BLOCKS[ id ].map( ( block, i ) => {
+							{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 								return (
 									<div
 										key={ i }
@@ -137,6 +138,7 @@ const BlockList = () => {
 }
 
 const BlockToggler = () => {
+	const DERIVED_BLOCKS = getAllBlocks()
 	const [ isSaving, setIsSaving ] = useState( false )
 	const [ disabledBlocks, setDisabledBlocks ] = useState( [] )
 
@@ -157,7 +159,7 @@ const BlockToggler = () => {
 
 	const enableAllBlocks = type => () => {
 		let newDisabledBlocks = [ ...disabledBlocks ]
-		BLOCKS[ type ].forEach( block => {
+		DERIVED_BLOCKS[ type ].forEach( block => {
 			newDisabledBlocks = newDisabledBlocks.filter( blockName => blockName !== block.name )
 		} )
 		setDisabledBlocks( newDisabledBlocks )
@@ -166,7 +168,7 @@ const BlockToggler = () => {
 
 	const disableAllBlocks = type => () => {
 		const newDisabledBlocks = [ ...disabledBlocks ]
-		BLOCKS[ type ].forEach( block => {
+		DERIVED_BLOCKS[ type ].forEach( block => {
 			if ( ! newDisabledBlocks.includes( block.name ) ) {
 				newDisabledBlocks.push( block.name )
 			}
@@ -210,7 +212,7 @@ const BlockToggler = () => {
 							<button onClick={ disableAllBlocks( id ) } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
 						</div>
 						<div className="s-settings-grid">
-							{ BLOCKS[ id ].map( ( block, i ) => {
+							{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 								const isDisabled = disabledBlocks.includes( block.name )
 								const mainClasses = classnames( [
 									's-block',

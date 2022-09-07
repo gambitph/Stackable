@@ -4,8 +4,6 @@
 import {
 	omit,
 	orderBy,
-	uniq,
-	uniqBy,
 	sortBy,
 } from 'lodash'
 import { loadGoogleFontInAttributes, moveArrayIndex } from '~stackable/util'
@@ -267,20 +265,4 @@ export const importBlocks = r => {
 		blocks[ type ] = sortBy( blocks[ type ], 'name' )
 	} )
 	return blocks
-}
-
-export const mergePremiumBlocks = freeBlocks => {
-	const PREMIUM_BLOCKS = importBlocks( require.context( '../../pro__premium_only/src/block', true, /block\.json$/ ) )
-	const keys = uniq( [ ...Object.keys( freeBlocks ), ...Object.keys( PREMIUM_BLOCKS ) ] )
-
-	return keys.reduce( ( ac, cv ) => {
-		const combinedBlocks = [
-			...( freeBlocks[ cv ] || [] ),
-			...( PREMIUM_BLOCKS[ cv ] || [] ),
-		]
-		return {
-			...ac,
-			[ cv ]: uniqBy( combinedBlocks, 'name' ),
-		}
-	}, {} )
 }

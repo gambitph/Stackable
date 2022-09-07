@@ -5567,11 +5567,14 @@
   {
     "family": "Fruktur",
     "variants": [
-      "regular"
+      "regular",
+      "italic"
     ],
     "subsets": [
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {

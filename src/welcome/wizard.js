@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { BLOCKS, BLOCK_CATEROGIES } from './admin'
+import { getAllBlocks, BLOCK_CATEROGIES } from './admin'
 import SVGCheck from './images/check.svg'
 import { AdminToggleSetting } from '~stackable/components'
 
@@ -122,6 +122,8 @@ const ChooseBlocks = () => {
 		setIsBusy( true )
 	}, [ setIsBusy ] )
 
+	const DERIVED_BLOCKS = getAllBlocks()
+
 	return (
 		<>
 			<div className="s-welcome-wizard__content">
@@ -132,9 +134,9 @@ const ChooseBlocks = () => {
 						id, label, Icon,
 					} ) => {
 						const isShowBlocks = showBlocks[ id ] || false
-						const allBlocksDisabled = BLOCKS[ id ].every( ( { name } ) => disabledBlocks.includes( name ) )
-						const someBlocksDisabled = BLOCKS[ id ].some( ( { name } ) => disabledBlocks.includes( name ) )
-						const allBlocksEnabled = BLOCKS[ id ].every( ( { name } ) => ! disabledBlocks.includes( name ) )
+						const allBlocksDisabled = DERIVED_BLOCKS[ id ].every( ( { name } ) => disabledBlocks.includes( name ) )
+						const someBlocksDisabled = DERIVED_BLOCKS[ id ].some( ( { name } ) => disabledBlocks.includes( name ) )
+						const allBlocksEnabled = DERIVED_BLOCKS[ id ].every( ( { name } ) => ! disabledBlocks.includes( name ) )
 
 						return (
 							<div
@@ -146,7 +148,7 @@ const ChooseBlocks = () => {
 								<AdminToggleSetting
 									value={ allBlocksEnabled || ( ! allBlocksDisabled && someBlocksDisabled ) }
 									onChange={ value => {
-										const blockNames = BLOCKS[ id ].map( block => block.name )
+										const blockNames = DERIVED_BLOCKS[ id ].map( block => block.name )
 										let newDisabledBlocks = disabledBlocks.filter( blockName => ! blockNames.includes( blockName ) )
 										if ( ! value ) {
 											// Disable all blocks
@@ -168,12 +170,12 @@ const ChooseBlocks = () => {
 										[ id ]: ! isShowBlocks,
 									 } ) }
 								>
-									{ isShowBlocks ? __( 'Hide all blocks', i18n ) : __( 'Show all blocks', i18n ) + ` (${ BLOCKS[ id ].length })` }
+									{ isShowBlocks ? __( 'Hide all blocks', i18n ) : __( 'Show all blocks', i18n ) + ` (${ DERIVED_BLOCKS[ id ].length })` }
 								</Button>
 								<div className={ classnames( 's-welcome-wizard__block-list', {
 									's--show-all-blocks': isShowBlocks,
 								} ) }>
-									{ BLOCKS[ id ].map( ( block, i ) => {
+									{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 										const isDisabled = disabledBlocks.includes( block.name )
 										return (
 											<AdminToggleSetting
