@@ -133,10 +133,10 @@ export const attributes = ( version = VERSION ) => {
 			titleText: {
 				source: 'html',
 				selector: '.stk-table-of-contents__title',
-				default: '',
+				default: 'Table of Contents',
 			},
 		},
-		versionAdded: '3.4.5',
+		versionAdded: '3.4.6',
 		versionDeprecated: '',
 	} )
 
@@ -144,6 +144,14 @@ export const attributes = ( version = VERSION ) => {
 		hasTextTag: false,
 		hasTextContent: false,
 		attrNameTemplate: 'title%s',
+	} )
+
+	attrObject.addDefaultValues( {
+		attributes: {
+			titleShow: false,
+		},
+		versionAdded: '3.4.6',
+		versionDeprecated: '',
 	} )
 
 	return attrObject.getMerged( version )
