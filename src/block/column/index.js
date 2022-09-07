@@ -13,6 +13,7 @@ import { ColumnIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import deprecated from './deprecated'
 import metadata from './block.json'
 
 /**
@@ -33,7 +34,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	},
 	//  styles: blockStyles,
 
-	// deprecated,
+	deprecated,
 	edit,
 	save,
 } )

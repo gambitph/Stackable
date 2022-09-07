@@ -15,6 +15,8 @@ const getStyleParams = ( options = {} ) => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
+		verticalAlignSelectorEdit = '',
+		verticalAlignSelector = '',
 		wrapperSelector = '', // The outer wrapper element that where the outer flex alignments, widths and margins are applied to.
 	} = options
 
@@ -29,7 +31,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'save',
-			selector,
+			selector: verticalAlignSelector || selector,
 			styleRule: verticalAlignRule || 'alignItems',
 			attrName: 'verticalAlign',
 			attrNameTemplate,
@@ -37,7 +39,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'edit',
-			selector,
+			selector: verticalAlignSelectorEdit || verticalAlignSelector || selector,
 			styleRule: 'justifyContent',
 			attrName: 'verticalAlign',
 			attrNameTemplate,
@@ -127,7 +129,7 @@ const getStyleParams = ( options = {} ) => {
 				const right = value?.right
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
 				const blockWidth = getAttribute( 'width', device )
-				if ( blockWidth ) {
+				if ( blockWidth || typeof right !== 'undefined' ) {
 					switch ( horizontalAlign ) {
 						case 'flex-start':
 						case 'center':
@@ -167,7 +169,7 @@ const getStyleParams = ( options = {} ) => {
 				const left = value?.left
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
 				const blockWidth = getAttribute( 'width', device )
-				if ( blockWidth ) {
+				if ( blockWidth || typeof left !== 'undefined' ) {
 					switch ( horizontalAlign ) {
 						case 'flex-start':
 							return left || 0

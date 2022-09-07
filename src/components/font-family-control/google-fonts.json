@@ -35,6 +35,16 @@
     ]
   },
   {
+    "family": "Aboreto",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Abril Fatface",
     "variants": [
       "regular"
@@ -532,12 +542,39 @@
     ]
   },
   {
+    "family": "Alumni Sans Collegiate One",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Alumni Sans Inline One",
     "variants": [
       "regular",
       "italic"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Alumni Sans Pinstripe",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -2500,8 +2537,10 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -4353,6 +4392,20 @@
     ]
   },
   {
+    "family": "DynaPuff",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Dynalight",
     "variants": [
       "regular"
@@ -5087,6 +5140,22 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Figtree",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10355,7 +10424,16 @@
       "600",
       "700",
       "800",
-      "900"
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -10749,7 +10827,9 @@
       "900"
     ],
     "subsets": [
-      "hebrew"
+      "hebrew",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10858,7 +10938,9 @@
       "regular"
     ],
     "subsets": [
-      "avestan"
+      "avestan",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10870,7 +10952,9 @@
       "700"
     ],
     "subsets": [
-      "balinese"
+      "balinese",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10917,7 +11001,9 @@
       "900"
     ],
     "subsets": [
-      "bengali"
+      "bengali",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10953,7 +11039,9 @@
       "regular"
     ],
     "subsets": [
-      "buhid"
+      "buhid",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11084,7 +11172,9 @@
       "900"
     ],
     "subsets": [
-      "devanagari"
+      "devanagari",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11169,7 +11259,9 @@
       "900"
     ],
     "subsets": [
-      "georgian"
+      "georgian",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11213,7 +11305,9 @@
       "900"
     ],
     "subsets": [
-      "gujarati"
+      "gujarati",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11301,7 +11395,9 @@
       "900"
     ],
     "subsets": [
-      "hebrew"
+      "hebrew",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11403,7 +11499,9 @@
       "900"
     ],
     "subsets": [
-      "kannada"
+      "kannada",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11441,7 +11539,9 @@
       "900"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11476,7 +11576,9 @@
       "900"
     ],
     "subsets": [
-      "lao"
+      "lao",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11524,6 +11626,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "lisu"
     ]
   },
@@ -11568,6 +11672,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "malayalam"
     ]
   },
@@ -12239,6 +12345,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tamil"
     ]
   },
@@ -12265,6 +12373,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "telugu"
     ]
   },
@@ -12299,6 +12409,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "thai"
     ]
   },
@@ -12415,7 +12527,9 @@
       "regular"
     ],
     "subsets": [
-      "ahom"
+      "ahom",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12441,7 +12555,9 @@
       "regular"
     ],
     "subsets": [
-      "balinese"
+      "balinese",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12458,7 +12574,9 @@
       "900"
     ],
     "subsets": [
-      "bengali"
+      "bengali",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12475,7 +12593,9 @@
       "900"
     ],
     "subsets": [
-      "devanagari"
+      "devanagari",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12533,7 +12653,9 @@
       "900"
     ],
     "subsets": [
-      "ethiopic"
+      "ethiopic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12550,7 +12672,9 @@
       "900"
     ],
     "subsets": [
-      "georgian"
+      "georgian",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12576,7 +12700,9 @@
       "900"
     ],
     "subsets": [
-      "gujarati"
+      "gujarati",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12593,7 +12719,29 @@
       "900"
     ],
     "subsets": [
-      "gurmukhi"
+      "gurmukhi",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Noto Serif HK",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "chinese-hongkong",
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -12610,7 +12758,9 @@
       "900"
     ],
     "subsets": [
-      "hebrew"
+      "hebrew",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12659,7 +12809,9 @@
       "900"
     ],
     "subsets": [
-      "kannada"
+      "kannada",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12676,7 +12828,9 @@
       "900"
     ],
     "subsets": [
-      "khmer"
+      "khmer",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12693,7 +12847,9 @@
       "900"
     ],
     "subsets": [
-      "lao"
+      "lao",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12710,6 +12866,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "malayalam"
     ]
   },
@@ -12772,6 +12930,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "sinhala"
     ]
   },
@@ -12814,6 +12974,8 @@
       "900italic"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tamil"
     ]
   },
@@ -12840,6 +13002,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "telugu"
     ]
   },
@@ -12857,6 +13021,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "thai"
     ]
   },
@@ -13517,6 +13683,7 @@
     ],
     "subsets": [
       "latin",
+      "latin-ext",
       "myanmar"
     ]
   },
@@ -13834,7 +14001,9 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -15218,7 +15387,85 @@
     ]
   },
   {
+    "family": "Rubik Burned",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Dirt",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Distressed",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Rubik Glitch",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Iso",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Marker Hatch",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Maze",
     "variants": [
       "regular"
     ],
@@ -16049,6 +16296,17 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Silkscreen",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {

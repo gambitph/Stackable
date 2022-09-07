@@ -31,12 +31,12 @@ import { __ } from '@wordpress/i18n'
 
 // Register our category. Not a collection since our blocks would appear as "Uncategorized"
 setCategories( [
-	...getCategories(),
 	{
 		slug: 'stackable',
 		title: __( 'Stackable', i18n ),
 		icon: SVGStackableCategoryIcon,
 	},
+	...getCategories(),
 ] )
 
 // Register all the blocks found

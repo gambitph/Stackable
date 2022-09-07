@@ -5,7 +5,7 @@ import domReady from '@wordpress/dom-ready'
 
 class StackableMap {
 	init = () => {
-		const apiKey = window.stackable && window.stackable.googleApiKey
+		const apiKey = window.stackableMapVars && window.stackableMapVars.googleApiKey
 		if ( apiKey ) {
 			// eslint-disable-next-line no-undef
 			if ( typeof window.google === 'object' && typeof window.google.maps === 'object' ) {
@@ -17,7 +17,7 @@ class StackableMap {
 			// Display missing api key note if needed.
 			[].forEach.call( document.querySelectorAll( '.stk--uses-api-key' ), el => {
 				el.classList.add( 'stk--missing-api-key' )
-				el.querySelector( '.stk-block-map__canvas' ).innerHTML = window.stackable.i18n.missingMapApiKey
+				el.querySelector( '.stk-block-map__canvas' ).innerHTML = window.stackableMapVars.labelMissingMapApiKey
 			} )
 		}
 	}

@@ -45,7 +45,11 @@ const getStyleParams = () => {
 			styleRule: 'flexWrap',
 			attrName: 'flexWrap',
 			responsive: 'all',
-			valuePreCallback: value => {
+			valuePreCallback: ( value, getAttribute, device ) => {
+				// In the editor, it should correctly wrap in mobile.
+				if ( device === 'mobile' ) {
+					return 'wrap'
+				}
 				return value || 'nowrap'
 			},
 		},
@@ -53,20 +57,124 @@ const getStyleParams = () => {
 			renderIn: 'save',
 			selector: '.stk-button-group',
 			styleRule: 'flexDirection',
-			attrName: 'collapseOn',
+			attrName: 'buttonAlign',
 			responsive: 'all',
-			valuePreCallback: ( _, getAttribute, device ) => {
-				return device === getAttribute( 'collapseOn' ) ? 'column' : undefined
+			valuePreCallback: value => {
+				if ( value === 'vertical' ) {
+					return 'column'
+				} else if ( value === 'horizontal' ) {
+					return 'row'
+				}
+				return value
 			},
 		},
 		{
 			renderIn: 'edit',
 			selector: '.stk-button-group .block-editor-block-list__layout',
 			styleRule: 'flexDirection',
-			attrName: 'collapseOn',
+			attrName: 'buttonAlign',
 			responsive: 'all',
-			valuePreCallback: ( _, getAttribute, device ) => {
-				return device === getAttribute( 'collapseOn' ) ? 'column' : undefined
+			valuePreCallback: value => {
+				if ( value === 'vertical' ) {
+					return 'column'
+				} else if ( value === 'horizontal' ) {
+					return 'row'
+				}
+				return value
+			},
+		},
+		// If the buttons are set to vertical, we also need to reset the flex
+		// basis or else full-width buttons (set per button block) will overlap
+		// each other vertically.
+		{
+			renderIn: 'save',
+			selector: '.stk-block',
+			styleRule: 'flexBasis',
+			attrName: 'buttonAlign',
+			responsive: 'all',
+			valuePreCallback: value => {
+				return value === 'vertical' ? 'auto'
+					: value === 'horizontal' ? 0
+						: undefined
+			},
+		},
+		{
+			renderIn: 'save',
+			selector: '.stk-button-group',
+			styleRule: 'alignItems',
+			attrName: 'buttonAlign',
+			responsive: 'all',
+			valuePreCallback: ( value, getAttribute ) => {
+				if ( value === 'vertical' ) {
+					const buttonFullWidth = getAttribute( 'buttonFullWidth' )
+					if ( buttonFullWidth ) {
+						return 'stretch'
+					}
+					const contentAlign = getAttribute( 'contentAlign' )
+					if ( contentAlign === 'center' ) {
+						return 'center'
+					} else if ( contentAlign === 'right' ) {
+						return 'flex-end'
+					}
+					return 'flex-start'
+				} else if ( value === 'horizontal' ) {
+					return 'center'
+				}
+				return value
+			},
+			dependencies: [ 'contentAlign', 'buttonFullWidth' ],
+		},
+		{
+			renderIn: 'edit',
+			selector: '.stk-button-group .block-editor-block-list__layout',
+			styleRule: 'alignItems',
+			attrName: 'buttonAlign',
+			responsive: 'all',
+			valuePreCallback: ( value, getAttribute ) => {
+				if ( value === 'vertical' ) {
+					const buttonFullWidth = getAttribute( 'buttonFullWidth' )
+					if ( buttonFullWidth ) {
+						return 'stretch'
+					}
+					const contentAlign = getAttribute( 'contentAlign' )
+					if ( contentAlign === 'center' ) {
+						return 'center'
+					} else if ( contentAlign === 'right' ) {
+						return 'flex-end'
+					}
+					return 'flex-start'
+				} else if ( value === 'horizontal' ) {
+					return 'center'
+				}
+				return value
+			},
+			dependencies: [ 'contentAlign', 'buttonFullWidth' ],
+		},
+		{
+			renderIn: 'save',
+			selector: '.stk-block-button, .stk-block-icon-button',
+			styleRule: 'flex',
+			attrName: 'buttonFullWidth',
+			valueCallback: value => {
+				return value ? '1' : undefined
+			},
+		},
+		{
+			renderIn: 'edit',
+			selector: '.stk-block-button, .stk-block-icon-button, [data-type^="stackable/"]',
+			styleRule: 'flex',
+			attrName: 'buttonFullWidth',
+			valueCallback: value => {
+				return value ? '1' : undefined
+			},
+		},
+		// This is to make icon buttons stretch.
+		{
+			selector: '.stk-block-icon-button .stk-button',
+			styleRule: 'width',
+			attrName: 'buttonFullWidth',
+			valueCallback: value => {
+				return value ? '100%' : undefined
 			},
 		},
 	]

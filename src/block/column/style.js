@@ -14,23 +14,22 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getUniqueBlockClass,
 	getStyles,
 	useStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
-import {
-	Fragment, renderToString,
-} from '@wordpress/element'
+import { Fragment, renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
-	sizeSelector: '.stk-block-column__content',
+	sizeSelector: '.%s-container',
 	sizeHorizontalAlignRule: 'margin',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeVerticalAlignSelector: '.%s-inner-blocks',
+	sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
 }
 
 const getStyleParams = () => {

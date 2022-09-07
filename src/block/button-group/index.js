@@ -18,6 +18,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import variations from './variations'
+import deprecated from './deprecated'
 import { buttonExample } from './example'
 
 /**
@@ -41,6 +42,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 		stkSaveBlockStyle: false,
 	},
 	variations,
+	deprecated,
 
 	example: buttonExample,
 	edit,

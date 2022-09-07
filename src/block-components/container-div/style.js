@@ -14,6 +14,8 @@ export const Style = props => {
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = 'margin',
 		wrapperSelector = '',
+		sizeVerticalAlignSelector = '',
+		sizeVerticalAlignSelectorEdit = '',
 	} = props.options
 
 	return (
@@ -41,6 +43,8 @@ export const Style = props => {
 					attrNameTemplate: 'container%s',
 					selector: sizeSelector,
 					verticalAlignRule: sizeVerticalAlignRule,
+					verticalAlignSelector: sizeVerticalAlignSelector,
+					verticalAlignSelectorEdit: sizeVerticalAlignSelectorEdit,
 					horizontalAlignRule: sizeHorizontalAlignRule,
 					wrapperSelector,
 				} }
@@ -61,6 +65,8 @@ Style.Content = props => {
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = 'margin',
 		wrapperSelector = '',
+		sizeVerticalAlignSelector = '',
+		sizeVerticalAlignSelectorEdit = '',
 	} = props.options
 
 	return (
@@ -88,6 +94,8 @@ Style.Content = props => {
 					attrNameTemplate: 'container%s',
 					selector: sizeSelector,
 					verticalAlignRule: sizeVerticalAlignRule,
+					verticalAlignSelector: sizeVerticalAlignSelector,
+					verticalAlignSelectorEdit: sizeVerticalAlignSelectorEdit,
 					horizontalAlignRule: sizeHorizontalAlignRule,
 					wrapperSelector,
 				} }
