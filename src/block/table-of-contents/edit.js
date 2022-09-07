@@ -437,6 +437,7 @@ const Edit = props => {
 			<Typography.InspectorControls
 				label={ __( 'Title', i18n ) }
 				attrNameTemplate="title%s"
+				initialOpen={ false }
 				hasToggle={ true }
 				hasTextTag={ false }
 				hasTextContent={ false }
@@ -458,6 +459,7 @@ const Edit = props => {
 				{ attributes.titleShow && <Typography
 					className="stk-table-of-contents__title"
 					attrNameTemplate="title%s"
+					defaultValue="Table of Contents"
 				/> }
 				<TableOfContentsList
 					className="stk-table-of-contents__table"
