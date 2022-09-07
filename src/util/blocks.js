@@ -1,7 +1,13 @@
 /**
  * External dependencies
  */
-import { omit, orderBy } from 'lodash'
+import {
+	omit,
+	orderBy,
+	uniq,
+	uniqBy,
+	sortBy,
+} from 'lodash'
 import { loadGoogleFontInAttributes, moveArrayIndex } from '~stackable/util'
 
 /**
@@ -13,9 +19,7 @@ import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
 import { useMemo } from '@wordpress/element'
-import {
-	BlockIcon,
-} from '@wordpress/block-editor'
+import { BlockIcon } from '@wordpress/block-editor'
 
 /**
  * Converts the registered block name into a block name string that can be used in hook names or ids.
@@ -229,4 +233,54 @@ export const createBlockCompleter = () => {
 			}
 		},
 	}
+}
+
+// Collect all the blocks and their variations for enabling/disabling and sort
+// them by type.
+export const importBlocks = r => {
+	const blocks = {}
+	r.keys().forEach( key => {
+		const meta = r( key )
+		const type = meta[ 'stk-type' ]
+		if ( type ) {
+			if ( ! blocks[ type ] ) {
+				blocks[ type ] = []
+			}
+			blocks[ type ].push( meta )
+		}
+
+		// Add any varations if any.
+		( meta.variations || [] ).forEach( variation => {
+			const type = variation[ 'stk-type' ]
+			if ( type ) {
+				if ( ! blocks[ type ] ) {
+					blocks[ type ] = []
+				}
+				blocks[ type ].push( {
+					...variation,
+					name: `${ meta.name }|${ variation.name }`,
+				} )
+			}
+		} )
+	} )
+	Object.keys( blocks ).forEach( type => {
+		blocks[ type ] = sortBy( blocks[ type ], 'name' )
+	} )
+	return blocks
+}
+
+export const mergePremiumBlocks = freeBlocks => {
+	const PREMIUM_BLOCKS = importBlocks( require.context( '../../pro__premium_only/src/block', true, /block\.json$/ ) )
+	const keys = uniq( [ ...Object.keys( freeBlocks ), ...Object.keys( PREMIUM_BLOCKS ) ] )
+
+	return keys.reduce( ( ac, cv ) => {
+		const combinedBlocks = [
+			...( freeBlocks[ cv ] || [] ),
+			...( PREMIUM_BLOCKS[ cv ] || [] ),
+		]
+		return {
+			...ac,
+			[ cv ]: uniqBy( combinedBlocks, 'name' ),
+		}
+	}, {} )
 }

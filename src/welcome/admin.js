@@ -11,7 +11,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { pick, sortBy } from 'lodash'
+import { pick } from 'lodash'
 import {
 	render, useEffect, useState, Fragment, createRef, useCallback,
 } from '@wordpress/element'
@@ -24,46 +24,16 @@ import { loadPromise, models } from '@wordpress/api'
  */
 import {
 	i18n,
+	isPro,
 	showProNoticesOption,
 } from 'stackable'
 import classnames from 'classnames'
 import { AdminToggleSetting, AdminTextSetting } from '~stackable/components'
+import { mergePremiumBlocks, importBlocks } from '~stackable/util'
 
-// Collect all the blocks and their variations for enabling/disabling and sort
-// them by type.
-const importBlocks = r => {
-	const blocks = {}
-	r.keys().forEach( key => {
-		const meta = r( key )
-		const type = meta[ 'stk-type' ]
-		if ( type ) {
-			if ( ! blocks[ type ] ) {
-				blocks[ type ] = []
-			}
-			blocks[ type ].push( meta )
-		}
+const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
+export const BLOCKS = isPro ? mergePremiumBlocks( FREE_BLOCKS ) : FREE_BLOCKS
 
-		// Add any varations if any.
-		( meta.variations || [] ).forEach( variation => {
-			const type = variation[ 'stk-type' ]
-			if ( type ) {
-				if ( ! blocks[ type ] ) {
-					blocks[ type ] = []
-				}
-				blocks[ type ].push( {
-					...variation,
-					name: `${ meta.name }|${ variation.name }`,
-				} )
-			}
-		} )
-	} )
-	Object.keys( blocks ).forEach( type => {
-		blocks[ type ] = sortBy( blocks[ type ], 'name' )
-	} )
-	return blocks
-}
-
-export const BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 export const BLOCK_CATEROGIES = [
 	{
 		id: 'essential',
