@@ -14,12 +14,12 @@ import { useControlHandlers } from '../base-control2/hooks'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import {
-	ColorIndicator, ColorPalette,
-} from '@wordpress/components'
+import { ColorIndicator, ColorPalette } from '@wordpress/components'
 import { compose, ifCondition } from '@wordpress/compose'
 import { getColorObjectByColorValue, withColorContext } from '@wordpress/block-editor'
-import { Fragment, memo } from '@wordpress/element'
+import {
+	Fragment, memo, useState, useEffect, useCallback,
+} from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -27,7 +27,9 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import { i18n } from 'stackable'
 import classnames from 'classnames'
-import { isPlainObject, compact } from 'lodash'
+import {
+	isPlainObject, compact, debounce,
+} from 'lodash'
 
 // translators: first %s: The type of color (e.g. background color), second %s: the color name or value (e.g. red or #ff0000)
 const colorIndicatorAriaLabel = __( '(current %s: %s)', i18n )
@@ -38,6 +40,13 @@ const ColorPaletteControl = memo( props => {
 		label,
 		className = '',
 	} = props
+
+	let value = typeof props.value === 'undefined' ? _value : props.value
+	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6}/ ) ) {
+		value = value.match( /#[\d\w]{6}/ )[ 0 ]
+	}
+
+	const [ colorValue, setColorValue ] = useState( value )
 
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
@@ -63,23 +72,27 @@ const ColorPaletteControl = memo( props => {
 		} )
 	}
 
-	let value = typeof props.value === 'undefined' ? _value : props.value
-	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
+	const colorChangeHandler = useCallback( debounce( newColor => {
+		// Allow the selected color to be overriden.
+		const colorObject = getColorObjectByColorValue( colors, newColor )
+		const changeHandler = typeof props.onChange === 'undefined' ? _onChange : props.onChange
+		changeHandler( applyFilters( 'stackable.color-palette-control.change', newColor, colorObject ) )
+	}, 750 ), [] )
 
-	const colorObject = getColorObjectByColorValue( colors, value )
+	useEffect( () => {
+		colorChangeHandler( colorValue )
+	}, [ colorValue ] )
+
+	const colorObject = getColorObjectByColorValue( colors, colorValue )
 	const colorName = colorObject && colorObject.name
 	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || _value )
-
-	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6}/ ) ) {
-		value = value.match( /#[\d\w]{6}/ )[ 0 ]
-	}
 
 	const labelElement = (
 		<Fragment>
 			{ label }
-			{ value && (
+			{ colorValue && (
 				<ColorIndicator
-					colorValue={ value }
+					colorValue={ colorValue }
 					aria-label={ ariaLabel }
 				/>
 			) }
@@ -95,12 +108,8 @@ const ColorPaletteControl = memo( props => {
 		>
 			<ColorPalette
 				className="editor-color-palette-control__color-palette"
-				value={ value }
-				onChange={ value => {
-					// Allow the selected color to be overridden.
-					const colorObject = getColorObjectByColorValue( colors, value )
-					onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
-				} }
+				value={ colorValue }
+				onChange={ setColorValue }
 				{ ... { colors, disableCustomColors } }
 			/>
 		</AdvancedControl>
