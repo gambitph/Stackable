@@ -38,8 +38,7 @@ export const useSavedDefaultBlockStyle = blockProps => {
 			// Let others prevent default block styles to be added depending on the
 			// parent (e.g. helpful for preventing the Accordion block from getting the
 			// default saved styles of the Icon Label block)
-			// const parentBlocks = getBlockParents( clientId ).map( clientId => getBlockName( clientId ) )
-			const parentBlocks = select( 'stackable/block-context' ).getBlockContext( clientId ).parentTree.map( block => block.name )
+			const parentBlocks = select( 'stackable/block-context' ).getBlockContext( clientId ).parentTree?.map( block => block.name ) || []
 			const enable = applyFilters( 'stackable.block-default-styles.use-saved-style', true, blockProps, parentBlocks )
 			if ( ! enable ) {
 				return
