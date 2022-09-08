@@ -39,19 +39,12 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
+import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment, useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
 export const TEMPLATE = variations[ 0 ].innerBlocks
-
-const ALLOWED_BLOCKS = [
-	'stackable/subtitle',
-	'stackable/heading',
-	'stackable/text',
-	'stackable/icon',
-]
 
 const TABS = [ 'block', 'advanced' ]
 
@@ -126,31 +119,6 @@ const Edit = props => {
 		</Fragment>
 	)
 }
-
-addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box', ( allowedBlocks, select ) => {
-	const { getBlock, getBlockParents } = select
-	const { clientId } = useBlockEditContext()
-	const parentClientId = last( getBlockParents( clientId ) )
-	const hasParent = parentClientId && parentClientId !== clientId
-
-	if ( ! hasParent ) {
-		return allowedBlocks
-	}
-
-	const parentBlock = hasParent ? getBlock( parentClientId ) : null
-	const innerBlocks = getBlock( clientId ).innerBlocks
-
-	return useMemo( () => {
-		if ( parentBlock.name !== 'stackable/image-box' ) {
-			return allowedBlocks
-		}
-
-		const currentInnerBlocks = innerBlocks?.map( ( { name } ) => name ) || []
-		const allowedInnerBlocks = ALLOWED_BLOCKS.filter( allowedBlock => ! currentInnerBlocks.includes( allowedBlock ) )
-
-		return ! allowedInnerBlocks.length ? [] : allowedInnerBlocks
-	}, [ clientId, parentBlock.name, innerBlocks.map( block => block.name ) ] )
-} )
 
 export default compose(
 	withQueryLoopContext,
