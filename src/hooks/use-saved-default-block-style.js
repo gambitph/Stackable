@@ -13,7 +13,7 @@ import { find, omit } from 'lodash'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { select, dispatch } from '@wordpress/data'
 import { useState } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { createBlocksFromInnerBlocksTemplate, getBlockVariations } from '@wordpress/blocks'
@@ -24,21 +24,8 @@ export const useSavedDefaultBlockStyle = blockProps => {
 	} = blockProps
 	const [ isApplied, setIsApplied ] = useState( false )
 
-	const { getDefaultBlockStyle } = useSelect( 'stackable/block-styles' )
-	const { getBlockParents, getBlockName } = useSelect( 'core/block-editor' )
-	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' )
-
 	// Only do this for Stackable blocks.
 	if ( ! name.startsWith( 'stackable/' ) ) {
-		return
-	}
-
-	// Let others prevent default block styles to be added depending on the
-	// parent (e.g. helpful for preventing the Accordion block from getting the
-	// default saved styles of the Icon Label block)
-	const parentBlocks = getBlockParents( clientId ).map( clientId => getBlockName( clientId ) )
-	const enable = applyFilters( 'stackable.block-default-styles.use-saved-style', true, blockProps, parentBlocks )
-	if ( ! enable ) {
 		return
 	}
 
@@ -48,8 +35,18 @@ export const useSavedDefaultBlockStyle = blockProps => {
 		// this case the variation picker will do the job.
 		const hasVariations = getBlockVariations( name ).length > 0
 		if ( ! hasVariations ) {
+			// Let others prevent default block styles to be added depending on the
+			// parent (e.g. helpful for preventing the Accordion block from getting the
+			// default saved styles of the Icon Label block)
+			// const parentBlocks = getBlockParents( clientId ).map( clientId => getBlockName( clientId ) )
+			const parentBlocks = select( 'stackable/block-context' ).getBlockContext( clientId ).parentTree.map( block => block.name )
+			const enable = applyFilters( 'stackable.block-default-styles.use-saved-style', true, blockProps, parentBlocks )
+			if ( ! enable ) {
+				return
+			}
+
 			// Get the default block styles.
-			const blockStyle = getDefaultBlockStyle( name )
+			const blockStyle = select( 'stackable/block-styles' ).getDefaultBlockStyle( name )
 			if ( ! blockStyle ) {
 				return
 			}
@@ -83,7 +80,7 @@ export const useSavedDefaultBlockStyle = blockProps => {
 			const innerBlocks = createBlocksFromInnerBlocksTemplate( blockData.innerBlocks )
 			// We need to add unique Ids to prevent the default styles from getting applied.
 			recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
-			replaceInnerBlocks(
+			dispatch( 'core/block-editor' ).replaceInnerBlocks(
 				clientId,
 				innerBlocks,
 				false,

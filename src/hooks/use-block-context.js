@@ -12,7 +12,7 @@
 /**
  * External depedencies
  */
-import { nth } from 'lodash'
+import { nth, cloneDeep } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -40,13 +40,19 @@ const STORE_REDUCER = ( state = {}, action ) => {
 
 			action.blockTree.forEach( rootBlock => {
 				// Gather information about the root block.
-				const { clientId, innerBlocks } = rootBlock
+				const {
+					clientId, innerBlocks, name,
+				} = rootBlock
 				blocks[ clientId ] = {
 					numInnerBlocks: innerBlocks.length,
 					hasInnerBlocks: !! innerBlocks.length,
 					innerBlocks,
 					rootBlockClientId: clientId,
+					parentTree: [],
 				}
+
+				// Form the block name tree so inner blocks would know their locations.
+				const parentTree = [ { clientId, name } ]
 
 				const parseBlock = ( innerBlocks, parentBlock ) => {
 					innerBlocks.forEach( ( block, index ) => {
@@ -70,6 +76,7 @@ const STORE_REDUCER = ( state = {}, action ) => {
 									hasInnerBlocks: !! block.innerBlocks.length,
 									innerBlocks: block.innerBlocks,
 									rootBlockClientId: rootBlock.clientId,
+									parentTree: cloneDeep( parentTree ),
 								}
 							}
 						}
@@ -90,11 +97,21 @@ const STORE_REDUCER = ( state = {}, action ) => {
 								hasInnerBlocks: !! block.innerBlocks.length,
 								innerBlocks: block.innerBlocks,
 								rootBlockClientId: rootBlock.clientId,
+								parentTree: cloneDeep( parentTree ),
 							}
 						}
 
+						// Update the parent tree.
+						parentTree.push( {
+							clientId: block.clientId,
+							name: block.name,
+						} )
+
 						// Recurse innerBlocks.
 						parseBlock( block.innerBlocks, block )
+
+						// Update the parent tree.
+						parentTree.pop()
 					} )
 				}
 
