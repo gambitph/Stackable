@@ -25,7 +25,6 @@ import {
 	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
-	useAlignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -36,6 +35,7 @@ import {
 	BlockLink,
 	ContainerDiv,
 	Transform,
+	getBlockOrientation,
 } from '~stackable/block-components'
 
 /**
@@ -61,7 +61,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const { blockOrientation } = useAlignment()
+	const blockOrientation = getBlockOrientation( props.attributes )
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()

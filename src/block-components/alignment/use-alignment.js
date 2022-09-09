@@ -2,14 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { useBlockAttributesContext } from '~stackable/hooks'
 
-export const useAlignment = () => {
-	const { innerBlockOrientation } = useBlockAttributesContext()
-
-	return {
-		blockOrientation: innerBlockOrientation || 'vertical',
-	}
+export const getBlockOrientation = ( { innerBlockOrientation } ) => {
+	return innerBlockOrientation || 'vertical'
 }
 
 export const getAlignmentClasses = attributes => {

@@ -25,7 +25,6 @@ import {
 	Image,
 	getAlignmentClasses,
 	Alignment,
-	useAlignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -36,6 +35,7 @@ import {
 	ConditionalDisplay,
 	Transform,
 	MarginBottom,
+	getBlockOrientation,
 } from '~stackable/block-components'
 
 /**
@@ -66,7 +66,7 @@ const Edit = props => {
 		className, //isHovered,
 	} = props
 
-	const { blockOrientation } = useAlignment()
+	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( variations )
 	const blockHoverClass = useBlockHoverClass()
