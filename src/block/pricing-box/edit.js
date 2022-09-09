@@ -41,7 +41,6 @@ import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/high
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
-import { useMemo } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -72,9 +71,7 @@ const Edit = props => {
 	], useContentAlignmentClasses( props.attributes ) )
 
 	const lastBlockName = last( innerBlocks )?.name
-	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
-	}, [ hasInnerBlocks, lastBlockName ] )
+	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
 	return (
 		<>

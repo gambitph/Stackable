@@ -40,7 +40,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment, useMemo } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
@@ -78,9 +78,7 @@ const Edit = props => {
 	] )
 
 	const lastBlockName = last( innerBlocks )?.name
-	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
-	}, [ hasInnerBlocks, lastBlockName ] )
+	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
 	return (
 		<Fragment>
