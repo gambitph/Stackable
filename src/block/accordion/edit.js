@@ -181,17 +181,19 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 
 	const isAccordionIcon = useSelect(
 		select => {
-			const { getBlock, getBlockParents } = select( 'core/block-editor' )
-			const parents = getBlockParents( clientId )
-			const iconLabelClientId = nth( parents, -1 )
-			const columnClientId = nth( parents, -2 )
-			const accordionClientId = nth( parents, -3 )
-			if ( ! iconLabelClientId || ! columnClientId || ! accordionClientId ) {
+			const { getBlock } = select( 'core/block-editor' )
+			const { parentTree } = select( 'stackable/block-context' ).getBlockContext( clientId )
+			const columnClientId = nth( parentTree, -2 )?.clientId
+			const accordionClientId = nth( parentTree, -3 )?.clientId
+			const iconLabelName = nth( parentTree, -1 )?.name
+			const columnName = nth( parentTree, -2 )?.name
+			const accordionName = nth( parentTree, -3 )?.name
+			if ( ! iconLabelName || ! columnName || ! accordionName ) {
 				return false
 			}
-			if ( getBlock( iconLabelClientId ).name !== 'stackable/icon-label' ||
-				getBlock( columnClientId ).name !== 'stackable/column' ||
-				getBlock( accordionClientId ).name !== 'stackable/accordion' ) {
+			if ( iconLabelName !== 'stackable/icon-label' ||
+			     columnName !== 'stackable/column' ||
+				 accordionName !== 'stackable/accordion' ) {
 				return false
 			}
 			if ( getBlock( accordionClientId ).innerBlocks[ 0 ].clientId !== columnClientId ) {

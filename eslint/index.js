@@ -5,6 +5,7 @@ module.exports = {
 		'no-import-stk-full-library': require( './rules/no-import-stk-full-library' ),
 		'no-import-use-stk-api': require( './rules/no-import-use-stk-api' ),
 		'no-deprecated-use-styles': require( './rules/no-deprecated-use-styles' ),
+		'no-get-block-parents': require( './rules/no-get-block-parents' ),
 	},
 	configs: {
 		recommended: {
@@ -17,6 +18,7 @@ module.exports = {
 				'stackable/no-import-stk-full-library': 'error',
 				'stackable/no-import-use-stk-api': 'error',
 				'stackable/no-deprecated-use-styles': 'error',
+				'stackable/no-get-block-parents': 'error',
 			},
 		},
 	},
