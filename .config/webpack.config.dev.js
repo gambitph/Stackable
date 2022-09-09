@@ -17,8 +17,8 @@ module.exports = [
 	entry: {
 		// This is our main editor script that loads our modules into an api
 		// window.stk
-		editor_blocks: {
-			import: path.resolve( __dirname, '../src/blocks.js' ),
+		stk: {
+			import: path.resolve( __dirname, '../src/stk.js' ),
 			library: {
 				name: 'stk',
 				type: 'window',
@@ -93,6 +93,9 @@ module.exports = [
     devtool: 'cheap-module-source-map',
 
 	entry: {
+		editor_blocks: {
+			import: path.resolve( __dirname, '../src/blocks.js' ),
+		},
         'editor_blocks_deprecated_v2': {
 			import: path.resolve( __dirname, '../src/deprecated/v2/blocks.js' ),
 			filename: 'deprecated/[name].js'

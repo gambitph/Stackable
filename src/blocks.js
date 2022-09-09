@@ -1,18 +1,6 @@
 /**
  * This is the file that Webpack is compiling into editor_blocks.js
  */
-
-/**
- * Export our API for our other scripts to use.
- */
-export * as util from './util'
-export * as hooks from './hooks'
-export * as higherOrder from './higher-order'
-export * as components from './components'
-export * as blockComponents from './block-components'
-export * as icons from './icons'
-export * as designLibrary from './design-library'
-
 /**
  * Internal dependencies
  */
@@ -71,7 +59,7 @@ const importAllAndRegister = r => {
 
 		// Register the block.
 		if ( ! getBlockType( name ) ) {
-			registerBlockType( name, applyFilters( `stackable.${ name }.settings`, settings ) )
+			registerBlockType( name, applyFilters( `stackable.${ name.replace( 'stackable/', '' ) }.settings`, settings ) )
 		}
 	} )
 }

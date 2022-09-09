@@ -266,14 +266,22 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				return;
 			}
 
+			// STK API.
+			wp_register_script(
+				'ugb-stk',
+				plugins_url( 'dist/stk.js', STACKABLE_FILE ),
+				// wp-util for wp.ajax.
+				// wp-plugins & wp-edit-post for Gutenberg plugins.
+				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' ),
+				STACKABLE_VERSION
+			);
+
 			// Backend editor scripts: blocks.
-			$dependencies = array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' );
 			wp_register_script(
 				'ugb-block-js',
 				plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
-				// wp-util for wp.ajax.
-				// wp-plugins & wp-edit-post for Gutenberg plugins.
-				apply_filters( 'stackable_editor_js_dependencies', $dependencies ),
+				// Depend on the window.stk API.
+				apply_filters( 'stackable_editor_js_dependencies', array( 'ugb-stk' ) ),
 				STACKABLE_VERSION
 			);
 

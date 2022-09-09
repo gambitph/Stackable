@@ -1,3 +1,10 @@
+/**
+ * This profiler config makes it such that we're building the production of
+ * Stackable (so we get the actual speed without the debugging stuff in a
+ * development build), but we're keeping the names of of classes and components
+ * so that when we check the React profiler, we see the components better
+ * instead of just seeing minified names.
+ */
 const config = require( './webpack.config.prod' )
 const TerserPlugin = require( 'terser-webpack-plugin' )
 
