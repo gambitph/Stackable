@@ -241,21 +241,21 @@ const ShadowControl = props => {
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const [ propsToPass ] = extractControlProps( _props )
 
-	const clickOutsideListener = event => {
-		if ( isPopoverOpen ) {
-			if ( ! event.target.closest( '.shadow-control__popover' ) &&
-				 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
-				 ! event.target.closest( '.components-color-picker' ) &&
-				 ! event.target.closest( '.react-autosuggest__suggestions-container' ) ) {
-				setIsPopoverOpen( false )
+	useEffect( () => {
+		const clickOutsideListener = event => {
+			if ( isPopoverOpen ) {
+				if ( ! event.target.closest( '.shadow-control__popover' ) &&
+					 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
+					 ! event.target.closest( '.components-color-picker' ) &&
+					 ! event.target.closest( '.react-autosuggest__suggestions-container' ) ) {
+					setIsPopoverOpen( false )
+				}
 			}
 		}
-	}
 
-	useEffect( () => {
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
 		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
-	}, [ clickOutsideListener ] )
+	}, [] )
 
 	useEffect( () => {
 		if ( isPopoverOpen ) {

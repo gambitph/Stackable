@@ -50,23 +50,23 @@ export const useDynamicContentControlProps = props => {
 	// Debounce the value for performance.
 	const [ debouncedValue, setDebouncedValue ] = useState( props.value )
 
-	const clickOutsideListener = useCallback( event => {
-		if ( isPopoverOpen ) {
-			if (
-				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
-				! event.target.closest( '.stk-dynamic-content-control__button' ) &&
-				! event.target.closest( '.components-color-picker' ) &&
-				! event.target.closest( '.react-autosuggest__suggestions-container' )
-			) {
-				setIsPopoverOpen( false )
+	useEffect( () => {
+		const clickOutsideListener = event => {
+			if ( isPopoverOpen ) {
+				if (
+					! event.target.closest( '.stackable-dynamic-content__popover' ) &&
+					! event.target.closest( '.stk-dynamic-content-control__button' ) &&
+					! event.target.closest( '.components-color-picker' ) &&
+					! event.target.closest( '.react-autosuggest__suggestions-container' )
+				) {
+					setIsPopoverOpen( false )
+				}
 			}
 		}
-	}, [ isPopoverOpen ] )
 
-	useEffect( () => {
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
 		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
-	}, [ clickOutsideListener ] )
+	}, [ isPopoverOpen ] )
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
