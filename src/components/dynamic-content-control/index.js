@@ -285,14 +285,14 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 	} )
 }
 
-export const DynamicContentFields = applyFilters( 'stackable.dynamic-content.component' ) || Fragment
-
 const dynamicContent = <SVGDatabaseIcon />
 
 export const DynamicContentButton = memo( props => {
 	if ( ! isPro && ! showProNotice ) {
 		return null
 	}
+
+	const DynamicContentFields = applyFilters( 'stackable.dynamic-content.component' ) || Fragment
 
 	return (
 		<Fragment>
