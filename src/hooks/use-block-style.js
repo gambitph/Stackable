@@ -1,7 +1,6 @@
 import { find } from 'lodash'
 import TokenList from '@wordpress/token-list'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useMemo } from '@wordpress/element'
 import { useBlockAttributesContext } from './use-block-attributes-context'
 
 // Keeps a list of all blockStyles encountered.
@@ -16,29 +15,23 @@ export const useBlockStyle = styles => {
 	// defined.
 	blockStyles[ blockName ] = styles
 
-	const currentStyle = useMemo( () => {
-		let currentStyle = ''
+	if ( ! className ) {
+		return 'default'
+	}
 
-		for ( const style of new TokenList( className ).values() ) {
-			if ( style.indexOf( 'is-style-' ) === -1 ) {
-				continue
-			}
-
-			const potentialStyleName = style.substring( 9 )
-			const activeStyle = find( styles, { name: potentialStyleName } )
-			if ( activeStyle ) {
-				currentStyle = activeStyle
-				break
-			}
+	for ( const style of new TokenList( className ).values() ) {
+		if ( style.indexOf( 'is-style-' ) === -1 ) {
+			continue
 		}
 
-		if ( ! currentStyle ) {
-			currentStyle = find( styles, 'isDefault' )
+		const potentialStyleName = style.substring( 9 )
+		const activeStyle = find( styles, { name: potentialStyleName } )
+		if ( activeStyle ) {
+			return activeStyle.name
 		}
+	}
 
-		return currentStyle
-	}, [ className, styles ] )
-
+	const currentStyle = find( styles, 'isDefault' )
 	return currentStyle?.name || 'default'
 }
 
