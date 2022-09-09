@@ -36,15 +36,17 @@ export const useBlockStyle = styles => {
 }
 
 export const getBlockStyle = ( styles, className ) => {
-	for ( const style of new TokenList( className ).values() ) {
-		if ( style.indexOf( 'is-style-' ) === -1 ) {
-			continue
-		}
+	if ( className ) {
+		for ( const style of new TokenList( className ).values() ) {
+			if ( style.indexOf( 'is-style-' ) === -1 ) {
+				continue
+			}
 
-		const potentialStyleName = style.substring( 9 )
-		const activeStyle = find( styles, { name: potentialStyleName } )
-		if ( activeStyle ) {
-			return activeStyle
+			const potentialStyleName = style.substring( 9 )
+			const activeStyle = find( styles, { name: potentialStyleName } )
+			if ( activeStyle ) {
+				return activeStyle
+			}
 		}
 	}
 

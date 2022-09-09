@@ -8,7 +8,6 @@ import {
 /**
  * WordPress dependencies
  */
-import { useMemo, useCallback } from '@wordpress/element'
 import TokenList from '@wordpress/token-list'
 import { StyleControl } from '~stackable/components'
 
@@ -40,12 +39,9 @@ const BlockStyles = props => {
 	const attributes = useBlockAttributesContext()
 	const setAttributes = useBlockSetAttributesContext()
 	const className = attributes?.className || ''
+	const activeStyle = getBlockStyle( styles, className )
 
-	const activeStyle = useMemo( () => {
-		return getBlockStyle( styles, className )
-	}, [ styles, className ] )
-
-	const onSelect = useCallback( style => {
+	const onSelect = style => {
 		const styleClassName = replaceActiveStyle(
 			className,
 			activeStyle,
@@ -59,7 +55,7 @@ const BlockStyles = props => {
 			...updatedAttributes,
 			className: styleClassName,
 		} )
-	}, [ activeStyle, className, attributes ] )
+	}
 
 	return (
 		<StyleControl

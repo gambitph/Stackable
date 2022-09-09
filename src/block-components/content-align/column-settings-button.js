@@ -4,9 +4,7 @@ import { useBlockContext } from '~stackable/hooks'
 import { AdvancedRangeControl, Tooltip } from '~stackable/components'
 
 import { __ } from '@wordpress/i18n'
-import {
-	Button, Dashicon,
-} from '@wordpress/components'
+import { Button, Dashicon } from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { dispatch } from '@wordpress/data'
