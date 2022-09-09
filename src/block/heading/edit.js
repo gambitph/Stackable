@@ -86,7 +86,7 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	useUniqueId( true, true )
+	useUniqueId( attributes, true )
 
 	// Auto-generate anchors in Stackable headings.
 	const [ prevText, setPrevText ] = useState( props.attributes.text )

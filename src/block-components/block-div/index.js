@@ -29,7 +29,7 @@ export const BlockDiv = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributesContext()
 
-	useUniqueId( ! enableVariationPicker )
+	useUniqueId( attributes, ! enableVariationPicker )
 
 	// If there's no uniqueId yet, generate one so at least we can have styles
 	// applied to the block correctly.
