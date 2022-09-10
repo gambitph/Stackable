@@ -26,9 +26,6 @@ import {
 /**
  * WordPress dependencies
  */
-import {
-	useEffect, useState, useCallback,
-} from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
 import { applyFilters } from '@wordpress/hooks'
@@ -82,38 +79,8 @@ export const Controls = props => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 	const attributeName = getAttrNameFunction( attrNameTemplate )
 	const colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors ) || []
-
 	const text = getAttribute( 'text' )
-
 	const [ state ] = useBlockHoverState()
-	const [ debouncedText, setDebouncedText ] = useState( text )
-
-	/**
-	 * Setter and getter for escaped/unscaped strings.
-	 *
-	 * Only allow escaping of characters when the user inputs inside the
-	 * `TextControl`. We do this to avoid unnecessary escaping/unescaping of characters
-	 * in side effects.
-	 */
-	const unescapedDebouncedText = unescape( debouncedText )
-	const setDebouncedTextWithEscape = useCallback( text => setDebouncedText( escapeHTML( text ) ), [ setDebouncedText ] )
-
-	useEffect( () => {
-		if ( text !== debouncedText ) {
-			setDebouncedText( text )
-		}
-	}, [ text ] )
-
-	useEffect( () => {
-		let timeout
-		if ( debouncedText !== text ) {
-			timeout = setTimeout( () => {
-				updateAttribute( 'text', debouncedText )
-			}, 300 )
-		}
-
-		return () => clearTimeout( timeout )
-	}, [ updateAttribute, debouncedText, text ] )
 
 	return (
 		<>
@@ -122,12 +89,18 @@ export const Controls = props => {
 				<AdvancedTextControl
 					label={ __( 'Content', i18n ) }
 					isMultiline={ isMultiline }
-					value={ unescapedDebouncedText }
-					onChange={ setDebouncedTextWithEscape }
+					value={ unescape( text ) }
+					onChange={ text => {
+						updateAttribute( 'text', escapeHTML( text ) )
+					} }
 					/**
 					 * Pass the unescaped Dynamic Content `onChange` function.
+					 *
+					 * @param {string} text Text with dynamic content.
 					 */
-					changeDynamicContent={ setDebouncedText }
+					changeDynamicContent={ text => {
+						updateAttribute( 'text', text )
+					} }
 					isDynamic={ true }
 				/>
 			) }
