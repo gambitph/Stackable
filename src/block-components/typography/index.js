@@ -17,7 +17,9 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
  * WordPress dependencies
  */
 import { RichText } from '@wordpress/block-editor'
-import { forwardRef } from '@wordpress/element'
+import {
+	useEffect, useState, forwardRef,
+} from '@wordpress/element'
 
 export const Typography = forwardRef( ( props, ref ) => {
 	const {
@@ -30,6 +32,7 @@ export const Typography = forwardRef( ( props, ref ) => {
 		children,
 		editable,
 		identifier,
+		defaultValue,
 		...propsToPass
 	} = props
 
@@ -40,10 +43,30 @@ export const Typography = forwardRef( ( props, ref ) => {
 	const value = _value === null ? getAttribute( 'text' ) : _value
 	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
 
+	const [ debouncedText, setDebouncedText ] = useState( value )
+
 	// Load any Google Fonts used.
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
-	const dynamicContentText = useDynamicContent( value )
+	// If value was changed externally.
+	useEffect( () => {
+		if ( value !== debouncedText ) {
+			setDebouncedText( value )
+		}
+	}, [ value ] )
+
+	useEffect( () => {
+		let timeout
+		if ( value !== debouncedText ) {
+			timeout = setTimeout( () => {
+				onChange( debouncedText || defaultValue )
+			}, 300 )
+		}
+
+		return () => clearTimeout( timeout )
+	}, [ debouncedText, onChange ] ) // Don't include `value` in the dependency list because it will cause a double triggering of the `onChange`.
+
+	const dynamicContentText = useDynamicContent( debouncedText )
 
 	if ( ! editable ) {
 		return <TagName className={ className }>{ dynamicContentText }</TagName>
@@ -55,7 +78,7 @@ export const Typography = forwardRef( ( props, ref ) => {
 			className={ className }
 			tagName={ TagName }
 			value={ dynamicContentText }
-			onChange={ onChange }
+			onChange={ setDebouncedText }
 			ref={ ref }
 			{ ...propsToPass }
 		>
