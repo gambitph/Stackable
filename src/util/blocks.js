@@ -3,6 +3,7 @@
  */
 import { loadGoogleFontInAttributes } from './font'
 import { moveArrayIndex } from '.'
+import { SVGStackableCategoryIcon } from '~stackable/icons'
 
 /**
  * External dependencies
@@ -12,17 +13,24 @@ import {
 	orderBy,
 	last,
 } from 'lodash'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { createBlock, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks'
+import {
+	createBlock,
+	createBlocksFromInnerBlocksTemplate,
+	getCategories,
+	setCategories,
+} from '@wordpress/blocks'
 import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
 import { useMemo } from '@wordpress/element'
 import { BlockIcon } from '@wordpress/block-editor'
+import { __ } from '@wordpress/i18n'
 
 /**
  * Converts the registered block name into a block name string that can be used in hook names or ids.
@@ -439,4 +447,19 @@ const getNthTypeOfBlock = currentClientId => {
 	} )
 
 	return nthOfType
+}
+
+// Register our block category. Not a collection since our blocks would appear
+// as "Uncategorized"
+export const addStackableBlockCategory = () => {
+	if ( ! getCategories().some( category => category.slug === 'stackable' ) ) {
+		setCategories( [
+			{
+				slug: 'stackable',
+				title: __( 'Stackable', i18n ),
+				icon: SVGStackableCategoryIcon,
+			},
+			...getCategories(),
+		] )
+	}
 }

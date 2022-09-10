@@ -9,13 +9,13 @@ import './plugins'
 import './help'
 import './compatibility'
 import './disabled-blocks'
-import { SVGStackableCategoryIcon } from '~stackable/icons'
 
 /**
  * External dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
+import { addStackableBlockCategory } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -23,20 +23,11 @@ import { i18n } from 'stackable'
 import {
 	getBlockType,
 	registerBlockType,
-	getCategories,
-	setCategories,
 } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 
-// Register our category. Not a collection since our blocks would appear as "Uncategorized"
-setCategories( [
-	{
-		slug: 'stackable',
-		title: __( 'Stackable', i18n ),
-		icon: SVGStackableCategoryIcon,
-	},
-	...getCategories(),
-] )
+// Register our block category.
+addStackableBlockCategory()
 
 // Register all the blocks found
 const importAllAndRegister = r => {
