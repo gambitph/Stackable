@@ -26,7 +26,7 @@ import { __ } from '@wordpress/i18n'
 import { ResizableBox, Popover } from '@wordpress/components'
 import { useSelect, select } from '@wordpress/data'
 import {
-	Fragment, useState, useEffect, useRef, useMemo, memo, useContext,
+	Fragment, useState, useEffect, useRef, memo, useContext,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
@@ -109,7 +109,7 @@ const ResizableColumn = props => {
 		columnGap, columnGapTablet, columnGapMobile,
 	} = ( parentBlock?.attributes || {} )
 
-	const enable = useMemo( () => ( {
+	const enable = {
 		top: false,
 		right: deviceType === 'Desktop' ? ! isOnlyBlock && ! isLastBlock : ! isOnlyBlock,
 		bottom: false,
@@ -118,7 +118,7 @@ const ResizableColumn = props => {
 		bottomRight: false,
 		bottomLeft: false,
 		topLeft: false,
-	} ), [ deviceType, isOnlyBlock, isLastBlock, isFirstBlock ] )
+	}
 
 	const parentBlockClientId = parentBlock?.clientId
 	const _adjacentBlocks = useRef( undefined )
@@ -459,33 +459,29 @@ const ResizableTooltip = memo( props => {
 	const tooltipRef = useRef()
 
 	// Compute the default column label value if none is available.
-	const columnLabel = useMemo( () => {
-		if ( typeof adjacentBlocks !== 'undefined' && ! props.value && ! originalInputValue ) {
-			// The columns are evenly distributed by default.
-			if ( deviceType === 'Desktop' ) {
-				const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
-				if ( value.toString() === '33.3' ) {
-					return 33.33
-				}
-				return value
+	let columnLabel = ''
+	if ( typeof adjacentBlocks !== 'undefined' && ! props.value && ! originalInputValue ) {
+		// The columns are evenly distributed by default.
+		if ( deviceType === 'Desktop' ) {
+			const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
+			if ( value.toString() === '33.3' ) {
+				columnLabel = 33.33
+			} else {
+				columnLabel = value
 			}
-			// In mobile, the columns are  "auto" so that we don't display
-			// inaccurate percentage widths.
-			if ( deviceType === 'Tablet' ) {
-				return __( 'Auto', i18n )
-			}
-			// In mobile, the columns collapse to 100%.
-			return 100.0
 		}
-
-		return ``
-	}, [ adjacentBlocks?.length, props.value, originalInputValue, deviceType ] )
+		// In mobile, the columns are  "auto" so that we don't display
+		// inaccurate percentage widths.
+	} else if ( deviceType === 'Tablet' ) {
+		columnLabel = __( 'Auto', i18n )
+	} else {
+		// In mobile, the columns collapse to 100%.
+		columnLabel = 100.0
+	}
 
 	// Create the label of the tooltip.
-	const tooltipLabel = useMemo( () => {
-		const label = ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel
-		return label !== __( 'Auto', i18n ) ? `'${ label }%'` : `'${ label }'`
-	}, [ props.value, originalInputValue, columnLabel ] )
+	const _label = ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel
+	const tooltipLabel = _label !== __( 'Auto', i18n ) ? `'${ _label }%'` : `'${ _label }'`
 
 	// Setup the input field when the popup opens.
 	useEffect( () => {

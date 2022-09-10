@@ -19,7 +19,7 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Fragment, useCallback } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { MediaUpload } from '@wordpress/block-editor'
 
 const ImageControl = props => {
@@ -31,7 +31,7 @@ const ImageControl = props => {
 	const attrHeightAttribute = useAttributeName( `${ props.attribute }WidthAttribute`, props.responsive, props.hover )
 	const attrAlt = useAttributeName( `${ props.attribute }Alt`, props.responsive, props.hover )
 
-	const _onChange = useCallback( image => {
+	const _onChange = image => {
 		setAttributes( {
 			[ attrNameId ]: image.id,
 			[ attrNameUrl ]: image.url,
@@ -39,13 +39,13 @@ const ImageControl = props => {
 			[ attrHeightAttribute ]: image.height || '',
 			[ attrAlt ]: image.alt || '',
 		} )
-	}, [ setAttributes, attrNameId, attrNameUrl, attrWidthAttribute, attrHeightAttribute ] )
+	}
 
 	const onChange = typeof props.onChange !== 'undefined' ? props.onChange : _onChange
 
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const onChangeReset = useCallback( url => {
+	const onChangeReset = url => {
 		return onChange( {
 			url,
 			id: '',
@@ -53,7 +53,7 @@ const ImageControl = props => {
 			height: '',
 			alt: '',
 		} )
-	}, [ onChange ] )
+	}
 
 	const dynamicContentProps = useDynamicContentControlProps( {
 		onChange: onChangeReset,
@@ -65,7 +65,7 @@ const ImageControl = props => {
 
 	const type = imageUrl && imageUrl.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
 
-	const onRemove = useCallback( () => {
+	const onRemove = () => {
 		onChange( {
 			url: '',
 			id: '',
@@ -73,7 +73,7 @@ const ImageControl = props => {
 			width: '',
 			alt: '',
 		} )
-	}, [ onChange ] )
+	}
 
 	return (
 		<AdvancedControl
