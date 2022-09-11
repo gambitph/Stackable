@@ -16,10 +16,10 @@ import {
 	Button, Popover, TextControl,
 } from '@wordpress/components'
 import {
-	useState, Fragment, useCallback, useEffect, useContext, memo,
+	useState, Fragment, useEffect, useContext, memo, useMemo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-import { useSelect } from '@wordpress/data'
+import { select, useSelect } from '@wordpress/data'
 
 /**
  * Internal dependencies
@@ -110,7 +110,7 @@ export const useDynamicContentControlProps = props => {
 	const isPressed = isPopoverOpen || activeAttributes.length
 	const activeAttribute = first( activeAttributes ) || ''
 
-	const onChange = useCallback( ( newValue, editorQueryString, frontendQueryString ) => {
+	const onChange = ( newValue, editorQueryString, frontendQueryString ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
 		const willChangeValue = props.isFormatType
 			? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
@@ -120,19 +120,19 @@ export const useDynamicContentControlProps = props => {
 		setDebouncedValue( willChangeValue )
 
 		setIsPopoverOpen( false )
-	}, [ props.isFormatType, props.onChange ] )
+	}
 
-	const onClick = useCallback( () => {
+	const onClick = () => {
 		setIsPopoverOpen( ! isPopoverOpen )
-	}, [ isPopoverOpen ] )
+	}
 
-	const onClose = useCallback( () => {
+	const onClose = () => {
 		setIsPopoverOpen( false )
-	}, [] )
+	}
 
-	const onReset = useCallback( () => {
+	const onReset = () => {
 		props.onChange( '' )
-	}, [ props.onChange ] )
+	}
 
 	return {
 		onClick,
@@ -160,16 +160,17 @@ export const useDynamicContentControlProps = props => {
  */
 export const useDynamicContent = ( value = '' ) => {
 	const queryLoopContext = useContext( QueryLoopContext )
-	return useSelect( select => {
-		if ( ! select( 'stackable/dynamic-content' ) ) {
-			return value
-		}
 
-		if ( ! isString( value ) ) {
+	return useMemo( () => {
+		if ( ! value || ! isString( value ) ) {
 			return value
 		}
 
 		if ( ! value.includes( '!#stk_dynamic' ) && ! value.includes( 'data-stk-dynamic' ) ) {
+			return value
+		}
+
+		if ( ! select( 'stackable/dynamic-content' ) ) {
 			return value
 		}
 
@@ -216,13 +217,8 @@ export const useDynamicContent = ( value = '' ) => {
 			} )
 		}
 
-		/**
-		 * A simple trick for subscribing to post changes.
-		 */
-		select( 'core/editor' )?.getPostEdits()
-
 		return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue )
-	}, [ value, queryLoopContext ] )
+	}, [ value, queryLoopContext?.postId ] )
 }
 
 /**
