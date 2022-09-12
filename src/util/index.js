@@ -140,6 +140,10 @@ export const isEditor = () => typeof window.wp !== 'undefined' && typeof window.
  * @return {string} Minified CSS
  */
 export const minifyCSS = ( css, important = false ) => {
+	if ( ! css ) {
+		return css
+	}
+
 	const minified = css.replace( /\/\*.*?\*\//g, '' ) // Comments.
 		.replace( /\n\s*\n/g, '' ) // Comments.
 		.replace( /[\n\r \t]/g, ' ' ) // Spaces.
