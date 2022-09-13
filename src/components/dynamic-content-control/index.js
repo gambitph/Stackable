@@ -13,10 +13,16 @@ import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-contex
  */
 import { __ } from '@wordpress/i18n'
 import {
-	Button, Popover, TextControl,
+	Button,
+	Popover,
+	TextControl,
 } from '@wordpress/components'
 import {
-	useState, Fragment, useEffect, useContext, memo, useMemo,
+	useState,
+	Fragment,
+	useEffect,
+	useContext,
+	memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { select, useSelect } from '@wordpress/data'
@@ -161,7 +167,7 @@ export const useDynamicContentControlProps = props => {
 export const useDynamicContent = ( value = '' ) => {
 	const queryLoopContext = useContext( QueryLoopContext )
 
-	return useMemo( () => {
+	return useSelect( () => {
 		if ( ! value || ! isString( value ) ) {
 			return value
 		}
