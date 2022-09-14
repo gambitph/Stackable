@@ -1,0 +1,46 @@
+/** Essential styles */
+.stk-progress-circle {
+  position: relative;
+  height: 150px;
+  width: 150px;
+}
+.stk-progress-circle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.stk-progress-circle circle {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--progress-background, #f0f0f0);
+  stroke-width: var(--thickness, 8px);
+  stroke-linecap: round;
+  cx: 50%;
+  cy: 50%;
+  r: calc(50% - var(--thickness, 8px) / 2);
+}
+.stk-progress-circle.animate .stk-progress-circle__bar {
+  stroke-dashoffset: calc(300% - 300% * var(--percent) / 100);
+}
+.stk-progress-circle .stk-progress-circle__bar {
+  /* 300% seems to perfectly fit a circle */
+  stroke-dasharray: 300%;
+  stroke-dashoffset: 300%;
+  stroke: var(--progress-color, #3498db);
+  will-change: stroke-dashoffset;
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.2, 0.6, 0.4, 1);
+}
+.stk-progress-circle .number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.stk-progress-circle .number h4,
+.stk-progress-circle .number .wp-block-stackable-count-up .stk-block-count-up__text {
+  font-weight: 200;
+  font-size: 3.5rem;
+  margin: 0;
+  word-break: inherit;
+}

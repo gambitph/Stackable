@@ -64,6 +64,7 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 		'subtitle',
 		'table-of-contents',
 		'text',
+		'progress-circle',
 	);
 
 	return stackable_get_metadata_by_folders( $stk_block_folders, 'stk-block-folders' );

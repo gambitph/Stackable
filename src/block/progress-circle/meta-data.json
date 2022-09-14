@@ -1,0 +1,13 @@
+{
+	"name": "stackable/progress-circle",
+	"title": "Progress Circle",
+	"description": "Adds a circular progress bar block.",
+	"category": "common",
+	"usesContext": [ "postId", "postType", "queryId" ],
+	"keywords": [
+		"Progress",
+		"Progress Circle"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "essential"
+}
