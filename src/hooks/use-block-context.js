@@ -140,7 +140,7 @@ subscribe( () => {
 // Use to correct the blocks returned from getBlocks.
 // Applies only core/block (reusable blocks) - Adds missing innerBlocks
 const fixReusableInnerBlocks = blocks => {
-	return blocks.map( block => {
+	return ( blocks || [] ).map( block => {
 		if ( ! [ 'core/widget-area', 'core/block' ].includes( block.name ) ) {
 			return {
 				...block,
