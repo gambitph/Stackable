@@ -4,6 +4,7 @@
 import RangeControl from './range-control'
 import { useControlHandlers } from '../base-control2/hooks'
 import AdvancedControl, { extractControlProps } from '../base-control2'
+import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import { ResetButton } from '../base-control2/reset-button'
 import {
 	useAttributeName,
@@ -69,15 +70,26 @@ const AdvancedRangeControl = props => {
 		placeholderRender = null
 	}
 
+	const dynamicContentProps = useDynamicContentControlProps( {
+		value: typeof props.value === 'undefined' ? value : props.value,
+		onChange: typeof props.onChange === 'undefined' ? onChange : props.onChange,
+		isFormatType: propsToPass.isFormatType,
+	} )
+
 	return (
 		<AdvancedControl { ...controlProps }>
-			<RangeControl
-				{ ...propsToPass }
-				value={ typeof props.value === 'undefined' ? value : props.value }
-				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
-				allowReset={ false }
-				placeholderRender={ placeholderRender }
-			/>
+			<DynamicContentControl
+				enable={ propsToPass.isDynamic }
+				{ ...dynamicContentProps }
+			>
+				<RangeControl
+					{ ...propsToPass }
+					value={ typeof props.value === 'undefined' ? value : props.value }
+					onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+					allowReset={ false }
+					placeholderRender={ placeholderRender }
+				/>
+			</DynamicContentControl>
 			<ResetButton
 				allowReset={ props.allowReset }
 				value={ typeof props.value === 'undefined' ? value : props.value }
@@ -90,6 +102,8 @@ const AdvancedRangeControl = props => {
 
 AdvancedRangeControl.defaultProps = {
 	allowReset: true,
+	isDynamic: false,
+	isFormatType: true,
 	default: '',
 
 	attribute: '',
