@@ -1,13 +1,18 @@
+import ProgressCircleStyles from './style'
 import {
 	BlockDiv,
 	CustomCSS,
 	getResponsiveClasses,
 } from '~stackable/block-components'
+import { version as VERSION } from 'stackable'
+import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
 
 import { InnerBlocks } from '@wordpress/block-editor'
+import { compose } from '@wordpress/compose'
 
-const Save = ( { className, attributes } ) => {
+const Save = props => {
+	const { className, attributes } = props
 	const responsiveClass = getResponsiveClasses( attributes )
 
 	const blockClassNames = classnames( [
@@ -21,26 +26,21 @@ const Save = ( { className, attributes } ) => {
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
+			<ProgressCircleStyles.Content { ...props } />
 			<CustomCSS.Content attributes={ attributes } />
 			<div
 				className="stk-progress-circle"
-				style={ {
-					'--thickness': `${ attributes.thickness }px`,
-					'--percent': attributes.percentage,
-					'--progress-color': attributes.progressColor,
-					'--progress-background': attributes.progressBackgroundColor,
-				} }
 				role="progressbar"
 				aria-valuemin="0"
 				aria-valuemax="100"
-				aria-valuenow={ attributes.percentage }
-				aria-valuetext={ attributes.ariaValueText }
+				aria-valuenow={ attributes.progressPercent }
+				aria-valuetext={ attributes.progressAriaValueText }
 			>
 				<svg>
 					<circle className="stk-progress-circle__background" />
 					<circle className="stk-progress-circle__bar" />
 				</svg>
-				{ attributes.displayPercentage && (
+				{ attributes.progressDisplayPercent && (
 					<div className="number">
 						<InnerBlocks.Content />
 					</div>
@@ -50,4 +50,6 @@ const Save = ( { className, attributes } ) => {
 	)
 }
 
-export default Save
+export default compose(
+	withVersion( VERSION )
+)( Save )

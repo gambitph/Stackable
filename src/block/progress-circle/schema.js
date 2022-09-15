@@ -13,10 +13,8 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	ProgressBar,
 } from '~stackable/block-components'
-
-export const DEFAULT_THICKNESS = 8
-export const DEFAULT_PERCENT = 50
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
@@ -30,45 +28,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
-
-	attrObject.add( {
-		attributes: {
-			percentage: {
-				type: 'number',
-				default: DEFAULT_PERCENT,
-			},
-			animate: {
-				type: 'boolean',
-				default: false,
-			},
-			displayPercentage: {
-				type: 'boolean',
-				default: false,
-			},
-			ariaValueText: {
-				type: 'string',
-				default: '',
-			},
-			progressColor: {
-				type: 'string',
-				default: '#3498db',
-			},
-			progressBackgroundColor: {
-				type: 'string',
-				default: '#f0f0f0',
-			},
-			thickness: {
-				type: 'number',
-				default: DEFAULT_THICKNESS,
-			},
-			isRounded: {
-				type: 'boolean',
-				default: false,
-			},
-		},
-		versionAdded: '3.4.5',
-		versionDeprecated: '',
-	} )
+	ProgressBar.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }

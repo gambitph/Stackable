@@ -1,3 +1,4 @@
+import ProgressCircleStyles from './style'
 import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
@@ -10,6 +11,7 @@ import {
 	ConditionalDisplay,
 	ProgressBar,
 } from '~stackable/block-components'
+import { version as VERSION } from 'stackable'
 import { useBlockHoverClass } from '~stackable/hooks'
 import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import classnames from 'classnames'
@@ -54,25 +56,20 @@ const Edit = ( {
 			<ProgressBar.InspectorControls />
 
 			<BlockDiv className={ blockClassNames }>
+				<ProgressCircleStyles version={ VERSION } />
 				<div
 					className="stk-progress-circle"
-					style={ {
-						'--thickness': `${ attributes.thickness }px`,
-						'--percent': attributes.percentage,
-						'--progress-color': attributes.progressColor,
-						'--progress-background': attributes.progressBackgroundColor,
-					} }
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
-					aria-valuenow={ attributes.percentage }
-					aria-valuetext={ attributes.ariaValueText }
+					aria-valuenow={ attributes.progressPercent }
+					aria-valuetext={ attributes.progressAriaValueText }
 				>
 					<svg>
 						<circle className="stk-progress-circle__background" />
 						<circle className="stk-progress-circle__bar" />
 					</svg>
-					{ attributes.displayPercentage && (
+					{ attributes.progressDisplayPercent && (
 						<div className="number">
 							<InnerBlocks
 								allowedBlocks={ ALLOWED_BLOCKS }

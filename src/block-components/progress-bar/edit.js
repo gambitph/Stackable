@@ -14,7 +14,7 @@ import {
 import {
 	useBlockAttributesContext, useBlockSetAttributesContext, useAttributeEditHandlers,
 } from '~stackable/hooks'
-import { DEFAULT_PERCENT, DEFAULT_THICKNESS } from '~stackable/block/progress-circle/schema'
+import { DEFAULT_PERCENT, DEFAULT_THICKNESS } from '~stackable/block-components/progress-bar/attributes'
 
 /**
  * WordPress dependencies
@@ -28,9 +28,9 @@ import { __ } from '@wordpress/i18n'
 export const Edit = ( { attrNameTemplate } ) => {
 	const setAttributes = useBlockSetAttributesContext()
 	const {
-		animate,
-		displayPercentage,
-		isRounded,
+		progressAnimate,
+		progressDisplayPercent,
+		progressRounded,
 	} = useBlockAttributesContext()
 
 	const {
@@ -38,11 +38,11 @@ export const Edit = ( { attrNameTemplate } ) => {
 		updateAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
 
-	const ariaValueText = getAttribute( 'ariaValueText' )
-	const [ valueText, setValueText ] = useState( ariaValueText )
+	const progressAriaValueText = getAttribute( 'progressAriaValueText' )
+	const [ valueText, setValueText ] = useState( progressAriaValueText )
 
 	const contentChangeHandler = useCallback( debounce( newValueText => {
-		updateAttribute( 'ariaValueText', newValueText )
+		updateAttribute( 'progressAriaValueText', newValueText )
 	}, 750 ), [] )
 
 	useEffect( () => {
@@ -59,7 +59,7 @@ export const Edit = ( { attrNameTemplate } ) => {
 					<AdvancedRangeControl
 						label={ __( 'Percentage', i18n ) }
 						default={ DEFAULT_PERCENT }
-						attribute="percentage"
+						attribute="progressPercent"
 						min="0"
 						sliderMax="100"
 						step="1"
@@ -68,13 +68,13 @@ export const Edit = ( { attrNameTemplate } ) => {
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Animate', i18n ) }
-						checked={ animate }
-						onChange={ animate => setAttributes( { animate } ) }
+						checked={ progressAnimate }
+						onChange={ progressAnimate => setAttributes( { progressAnimate } ) }
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Display percentage', i18n ) }
-						checked={ displayPercentage }
-						onChange={ displayPercentage => setAttributes( { displayPercentage } ) }
+						checked={ progressDisplayPercent }
+						onChange={ progressDisplayPercent => setAttributes( { progressDisplayPercent } ) }
 					/>
 					<AdvancedTextControl
 						label={ __( 'Accessibility Label', i18n ) }
@@ -100,7 +100,7 @@ export const Edit = ( { attrNameTemplate } ) => {
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Thickness', i18n ) }
-						attribute="thickness"
+						attribute="progressThickness"
 						min="8"
 						sliderMax="100"
 						step="1"
@@ -109,8 +109,8 @@ export const Edit = ( { attrNameTemplate } ) => {
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Rounded', i18n ) }
-						checked={ isRounded }
-						onChange={ isRounded => setAttributes( { isRounded } ) }
+						checked={ progressRounded }
+						onChange={ progressRounded => setAttributes( { progressRounded } ) }
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
