@@ -73,7 +73,6 @@ const AdvancedRangeControl = props => {
 	const dynamicContentProps = useDynamicContentControlProps( {
 		value: typeof props.value === 'undefined' ? value : props.value,
 		onChange: typeof props.onChange === 'undefined' ? onChange : props.onChange,
-		isFormatType: propsToPass.isFormatType,
 	} )
 
 	return (
@@ -103,7 +102,6 @@ const AdvancedRangeControl = props => {
 AdvancedRangeControl.defaultProps = {
 	allowReset: true,
 	isDynamic: false,
-	isFormatType: true,
 	default: '',
 
 	attribute: '',
