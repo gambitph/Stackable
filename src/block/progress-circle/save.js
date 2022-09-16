@@ -21,6 +21,13 @@ const Save = props => {
 		responsiveClass,
 	] )
 
+	const divClassNames = classnames( [
+		'stk-progress-circle',
+		{
+			'with-animation': attributes.progressAnimate,
+		},
+	] )
+
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
@@ -29,7 +36,7 @@ const Save = props => {
 			<ProgressCircleStyles.Content { ...props } />
 			<CustomCSS.Content attributes={ attributes } />
 			<div
-				className="stk-progress-circle"
+				className={ divClassNames }
 				role="progressbar"
 				aria-valuemin="0"
 				aria-valuemax="100"

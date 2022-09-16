@@ -5,10 +5,10 @@
 /**
  * Internal dependencies
  */
-import metadata from './meta-data.json'
+import edit from './edit'
+import save from './save'
 import schema from './schema'
-import Edit from './edit'
-import Save from './save'
+import metadata from './block.json'
 
 /**
  * WordPress dependencies
@@ -21,6 +21,6 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	...metadata,
 	icon: <Icon icon={ wordpress } />,
 	attributes: schema,
-	edit: Edit,
-	save: Save,
+	edit,
+	save,
 } )

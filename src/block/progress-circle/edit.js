@@ -22,12 +22,6 @@ import { InnerBlocks } from '@wordpress/block-editor'
 
 const ALLOWED_BLOCKS = [ 'stackable/text', 'stackable/count-up' ]
 
-// className
-// attributes
-// setAttributes
-// context - whatever data defined in metadata "usesContext"
-// clientId
-// name
 const Edit = ( {
 	className, attributes,
 } ) => {
@@ -61,7 +55,7 @@ const Edit = ( {
 			<BlockDiv className={ blockClassNames }>
 				<ProgressCircleStyles version={ VERSION } />
 				<div
-					className="stk-progress-circle animate"
+					className="stk-progress-circle with-animation animate"
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"

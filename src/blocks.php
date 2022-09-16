@@ -64,7 +64,6 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 		'subtitle',
 		'table-of-contents',
 		'text',
-		'progress-circle',
 	);
 
 	return stackable_get_metadata_by_folders( $stk_block_folders, 'stk-block-folders' );
@@ -73,34 +72,35 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 
 if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
 	function stackable_get_stk_wrapper_block_folders_metadata() {
-	/**
-	 * folders containing stackable blocks with inner blocks.
-	 */
-	$stk_wrapper_block_folders = array(
-		'accordion',
-		'blockquote',
-		'button-group',
-		'call-to-action',
-		'card',
-		'column',
-		'columns',
-		'expand',
-		'feature-grid',
-		'feature',
-		'hero',
-		'icon-box',
-		'icon-label',
-		'image-box',
-		'notification',
-		'posts',
-		'price',
-		'pricing-box',
-		'team-member',
-		'testimonial',
-		'video-popup',
-	);
+		/**
+		 * folders containing stackable blocks with inner blocks.
+		 */
+		$stk_wrapper_block_folders = array(
+			'accordion',
+			'blockquote',
+			'button-group',
+			'call-to-action',
+			'card',
+			'column',
+			'columns',
+			'expand',
+			'feature-grid',
+			'feature',
+			'hero',
+			'icon-box',
+			'icon-label',
+			'image-box',
+			'notification',
+			'posts',
+			'price',
+			'pricing-box',
+			'progress-circle',
+			'team-member',
+			'testimonial',
+			'video-popup',
+		);
 
-	return stackable_get_metadata_by_folders( $stk_wrapper_block_folders, 'stk-wrapper-block-folders' );
+		return stackable_get_metadata_by_folders( $stk_wrapper_block_folders, 'stk-wrapper-block-folders' );
 	}
 
 }

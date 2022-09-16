@@ -653,6 +653,16 @@
     ]
   },
   {
+    "family": "Amiri Quran",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "arabic",
+      "latin"
+    ]
+  },
+  {
     "family": "Amita",
     "variants": [
       "regular",
@@ -1114,6 +1124,18 @@
   },
   {
     "family": "Aref Ruqaa",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Aref Ruqaa Ink",
     "variants": [
       "regular",
       "700"
@@ -2566,6 +2588,17 @@
     ]
   },
   {
+    "family": "Blaka Ink",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Blinker",
     "variants": [
       "100",
@@ -2815,6 +2848,17 @@
     ]
   },
   {
+    "family": "Bungee Spice",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Butcherman",
     "variants": [
       "regular"
@@ -2896,6 +2940,24 @@
   },
   {
     "family": "Cairo",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Cairo Play",
     "variants": [
       "200",
       "300",
@@ -10476,6 +10538,19 @@
     ]
   },
   {
+    "family": "Nabla",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Nanum Brush Script",
     "variants": [
       "regular"
@@ -10753,6 +10828,15 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Noto Color Emoji",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "emoji"
     ]
   },
   {
@@ -14969,6 +15053,33 @@
     "subsets": [
       "arabic",
       "latin"
+    ]
+  },
+  {
+    "family": "Reem Kufi Fun",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Reem Kufi Ink",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {

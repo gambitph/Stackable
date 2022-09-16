@@ -2,7 +2,7 @@
 	"name": "stackable/progress-circle",
 	"title": "Progress Circle",
 	"description": "Adds a circular progress bar block.",
-	"category": "common",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Progress",
