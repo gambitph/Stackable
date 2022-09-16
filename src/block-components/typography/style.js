@@ -102,7 +102,7 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return value
 			},
-			dependencies: [ 'textColorType', ...dependencies ],
+			dependencies: [ 'textColorType', 'textColor2', 'textGradientDirection', ...dependencies ],
 		},
 		{
 			selector,

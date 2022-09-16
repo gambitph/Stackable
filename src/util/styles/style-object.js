@@ -519,6 +519,7 @@ function getDependencyAttrnamesFast( styleParams ) {
 			attrName: _attrName = '',
 			dependencies = [], // If this style rerender depends on other attributes, add them here.
 			attrNameTemplate = '',
+			styles = {},
 		} = styleParams
 
 		// Add the attribute name.
@@ -526,6 +527,14 @@ function getDependencyAttrnamesFast( styleParams ) {
 		if ( attrName && ! attrNames.includes( attrName ) ) {
 			attrNames.push( attrName )
 		}
+
+		// Add the shorthand attributes. We allow multiple styleName to attribute mappings.
+		Object.values( styles ).forEach( _attrName => {
+			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+			if ( attrName && ! attrNames.includes( attrName ) ) {
+				attrNames.push( attrName )
+			}
+		} )
 
 		// Add the attribute dependencies.
 		dependencies.forEach( _attrName => {

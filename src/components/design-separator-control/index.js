@@ -2,9 +2,7 @@
  * External dependencies
  */
 import { DesignControl } from '~stackable/components'
-import {
-	findIndex, omit, uniqBy,
-} from 'lodash'
+import { findIndex, uniqBy } from 'lodash'
 
 /**
  * Internal dependencies
@@ -84,21 +82,28 @@ addFilter( 'stackable.separator.edit.layouts', 'default', layouts => {
 } )
 
 const DesignSeparatorControl = props => {
+	const {
+		label,
+		help,
+		excludeDesigns,
+		...propsToPass
+	} = props
+
 	const options = ( applyFilters( 'stackable.separator.edit.layouts', [] ) || [] )
 		.filter( layouts =>
-			findIndex( props.excludeDesigns, excludeDesign => excludeDesign === layouts.value ) === -1
+			findIndex( excludeDesigns, excludeDesign => excludeDesign === layouts.value ) === -1
 		)
 
 	return (
 		<BaseControl
 			className="ugb-design-separator-control"
 			id="ugb-design-separator-control"
-			label={ props.label }
-			help={ props.help }
+			label={ label }
+			help={ help }
 		>
 			<DesignControl
 				options={ options }
-				{ ...omit( props, [ 'label', 'help' ] ) }
+				{ ...propsToPass }
 			/>
 		</BaseControl>
 	)

@@ -34,6 +34,7 @@ const getStyleParams = () => {
 			responsive: 'all',
 			hasUnits: 'px',
 			enabledCallback: getAttribute => getAttribute( 'hasShape' ),
+			dependencies: [ 'hasShape' ],
 		},
 		{
 			selector: '.stk-block-number-box__text',
@@ -42,6 +43,7 @@ const getStyleParams = () => {
 			responsive: 'all',
 			hasUnits: 'px',
 			enabledCallback: getAttribute => getAttribute( 'hasShape' ),
+			dependencies: [ 'hasShape' ],
 		},
 	]
 }

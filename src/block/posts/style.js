@@ -74,7 +74,7 @@ const categoryTypographyOptions = {
 			: `.stk-block-posts__category a:hover${ selector }`
 	},
 	attrNameTemplate: 'category%s',
-	dependencies: [ 'Highlighted', ...dependencies ],
+	dependencies: [ 'Highlighted', 'hoverStateInContainer', ...dependencies ],
 }
 
 const excerptTypographyOptions = {
@@ -292,6 +292,7 @@ const getStyleParams = ( options = {} ) => {
 				return undefined
 			},
 			enabledCallback: () => blockStyle === 'list',
+			dependencies: [ 'imageWidthUnit', 'className' ],
 		},
 	]
 }

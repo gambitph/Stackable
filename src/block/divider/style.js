@@ -105,6 +105,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'height',
 			format: '%spx',
 			responsive: 'all',
+			dependencies: [ 'className' ],
 		},
 		{
 			selectorCallback: getAttribute => {
