@@ -79,6 +79,7 @@ const AdvancedRangeControl = props => {
 		<AdvancedControl { ...controlProps }>
 			<DynamicContentControl
 				enable={ propsToPass.isDynamic }
+				controlHasTooltip
 				{ ...dynamicContentProps }
 			>
 				<RangeControl
