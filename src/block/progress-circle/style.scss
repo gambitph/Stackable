@@ -1,4 +1,5 @@
-/** Essential styles */
+@import "common";
+
 .stk-progress-circle {
   position: relative;
   height: 150px;
@@ -25,7 +26,7 @@
     stroke-dashoffset: 300%;
     stroke: var(--progress-color, #3498db);
     will-change: stroke-dashoffset;
-    transition: stroke-dashoffset 0.7s cubic-bezier(0.2, 0.6, 0.4, 1);
+    @include transition();
   }
   .number {
     position: absolute;

@@ -10,6 +10,7 @@ import {
 	CustomCSS,
 	ConditionalDisplay,
 	ProgressBar,
+	useGeneratedCss,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import { useBlockHoverClass } from '~stackable/hooks'
@@ -30,6 +31,8 @@ const ALLOWED_BLOCKS = [ 'stackable/text', 'stackable/count-up' ]
 const Edit = ( {
 	className, attributes,
 } ) => {
+	useGeneratedCss( attributes )
+
 	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
@@ -58,7 +61,7 @@ const Edit = ( {
 			<BlockDiv className={ blockClassNames }>
 				<ProgressCircleStyles version={ VERSION } />
 				<div
-					className="stk-progress-circle"
+					className="stk-progress-circle animate"
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
