@@ -76,14 +76,16 @@ export const useSavedDefaultBlockStyle = blockProps => {
 			} )
 
 			// Create and apply the innerBlocks.
-			const innerBlocks = createBlocksFromInnerBlocksTemplate( blockData.innerBlocks )
-			// We need to add unique Ids to prevent the default styles from getting applied.
-			recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
-			dispatch( 'core/block-editor' ).replaceInnerBlocks(
-				clientId,
-				innerBlocks,
-				false,
-			)
+			if ( blockData.innerBlocks?.length ) {
+				const innerBlocks = createBlocksFromInnerBlocksTemplate( blockData.innerBlocks )
+				// We need to add unique Ids to prevent the default styles from getting applied.
+				recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
+				dispatch( 'core/block-editor' ).replaceInnerBlocks(
+					clientId,
+					innerBlocks,
+					false,
+				)
+			}
 
 			// This can repeat because of nested blocks, ens
 			setIsApplied( true )
