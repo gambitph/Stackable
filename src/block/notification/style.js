@@ -39,12 +39,14 @@ const getStyleParams = () => {
 			enabledCallback: getAttribute => getAttribute( 'isDismissible' ) && getAttribute( 'dismissibleSize' ),
 			valuePreCallback: value => value + 44, // 44 is an arbitrary number based on the size of the container paddings vs the close button size.
 			format: '%spx',
+			dependencies: [ 'isDismissible' ],
 		},
 		{
 			selector: '.stk-block-notification__close-button svg',
 			attrName: 'dismissibleColor',
 			styleRule: 'fill',
 			enabledCallback: getAttribute => getAttribute( 'isDismissible' ),
+			dependencies: [ 'isDismissible' ],
 		},
 	]
 }

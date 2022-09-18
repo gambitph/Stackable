@@ -132,7 +132,7 @@ const getStyleParams = ( options = {} ) => {
 				const isGradient = getAttribute( 'backgroundColorType' ) === 'gradient'
 				return ! isGradient && value ? value : undefined
 			},
-			dependencies: [ 'backgroundColorType' ],
+			dependencies: [ 'backgroundColorType', 'backgroundColor2', 'backgroundTintStrength' ],
 		},
 		{
 			selector: `${ selector }:before`,
@@ -153,7 +153,7 @@ const getStyleParams = ( options = {} ) => {
 			valueCallback: value => {
 				return parseInt( value, 10 ) / 10
 			},
-			dependencies: [ 'backgroundColor', 'backgroundMediaUrl' ],
+			dependencies: [ 'backgroundColor', 'backgroundColor2', 'backgroundMediaUrl' ],
 		},
 		{
 			selector: `${ selector }:before`,
@@ -203,7 +203,7 @@ const getStyleParams = ( options = {} ) => {
 				getAttribute( 'backgroundColor' ) ||
 				getAttribute( 'backgroundColor', 'desktop', 'hover' ) ||
 				getAttribute( 'backgroundColor', 'desktop', 'parent-hovered' ),
-			dependencies: [ 'backgroundColorType', 'backgroundColor' ],
+			dependencies: [ 'backgroundColorType', 'backgroundColor', 'backgroundColor2' ],
 		},
 	]
 }

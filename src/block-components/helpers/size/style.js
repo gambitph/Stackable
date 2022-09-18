@@ -145,6 +145,7 @@ const getStyleParams = ( options = {} ) => {
 			valueCallback: value => {
 				return value.startsWith( 'auto' ) ? 'auto' : value
 			},
+			dependencies: [ 'horizontalAlign', 'width' ],
 		},
 		{
 			selector: wrapperSelector || selector,
@@ -185,7 +186,7 @@ const getStyleParams = ( options = {} ) => {
 			valueCallback: value => {
 				return value.startsWith( 'auto' ) ? 'auto' : value
 			},
-			dependencies: [ 'horizontalAlign' ],
+			dependencies: [ 'horizontalAlign', 'width' ],
 		},
 		{
 			selector,

@@ -197,6 +197,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'imageOverlayColor',
 			hover: 'all',
 			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient',
+			dependencies: [ 'imageOverlayColorType' ],
 		},
 		{
 			renderIn: 'edit',
@@ -207,6 +208,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'imageOverlayColor',
 			hover: 'all',
 			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient',
+			dependencies: [ 'imageOverlayColorType' ],
 		},
 		{
 			renderIn: 'save',

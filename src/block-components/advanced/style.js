@@ -36,6 +36,7 @@ const getStyleParams = ( options = {} ) => {
 
 				return value?.top
 			},
+			depenencies: [ 'position' ],
 		},
 		{
 			renderIn: 'save',
@@ -101,6 +102,7 @@ const getStyleParams = ( options = {} ) => {
 
 				return value?.top
 			},
+			depenencies: [ 'position' ],
 		},
 		{
 			renderIn: 'edit',
@@ -155,6 +157,7 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return undefined
 			},
+			depenencies: [ 'position' ],
 		},
 		{
 			renderIn: 'edit',

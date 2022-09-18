@@ -70,6 +70,7 @@ const getStyleParams = ( options = {} ) => {
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			hover: 'all',
 			hoverSelector,
+			dependencies: [ 'borderType' ],
 		},
 		{
 			selector,
@@ -82,6 +83,7 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.top,
+			dependencies: [ 'borderType' ],
 		},
 		{
 			selector,
@@ -94,6 +96,7 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.right,
+			dependencies: [ 'borderType' ],
 		},
 		{
 			selector,
@@ -106,6 +109,7 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.bottom,
+			dependencies: [ 'borderType' ],
 		},
 		{
 			selector,
@@ -118,6 +122,7 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.left,
+			dependencies: [ 'borderType' ],
 		},
 	]
 }
