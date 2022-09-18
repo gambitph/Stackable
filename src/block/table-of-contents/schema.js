@@ -13,7 +13,8 @@ import {
 	ConditionalDisplay,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
+import { __ } from '@wordpress/i18n'
 
 export const tableofContentsAttributes = {
 	// Used to generate a simple example
@@ -133,7 +134,7 @@ export const attributes = ( version = VERSION ) => {
 			titleText: {
 				source: 'html',
 				selector: '.stk-table-of-contents__title',
-				default: 'Table of Contents',
+				default: __( 'Table of Contents', i18n ),
 			},
 		},
 		versionAdded: '3.4.6',
