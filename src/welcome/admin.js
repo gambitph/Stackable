@@ -29,7 +29,7 @@ import {
 } from 'stackable'
 import classnames from 'classnames'
 import { AdminToggleSetting, AdminTextSetting } from '~stackable/components'
-import { importBlocks } from '~stackable/util'
+import { importBlocks } from '~stackable/util/blocks'
 
 const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 export const getAllBlocks = () => applyFilters( 'stackable.settings.merge-blocks', FREE_BLOCKS )
