@@ -459,7 +459,6 @@ const Edit = props => {
 				{ attributes.titleShow && <Typography
 					className="stk-table-of-contents__title"
 					attrNameTemplate="title%s"
-					defaultValue="Table of Contents"
 				/> }
 				<TableOfContentsList
 					className="stk-table-of-contents__table"
