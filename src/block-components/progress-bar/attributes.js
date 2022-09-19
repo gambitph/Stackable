@@ -10,10 +10,6 @@ export const addAttributes = attrObject => {
 			},
 			progressAnimate: {
 				type: 'boolean',
-				default: false,
-			},
-			progressDisplayPercent: {
-				type: 'boolean',
 				default: true,
 			},
 			progressAriaValueText: {

@@ -38,16 +38,6 @@ const transforms = {
 				} ) )
 			},
 		},
-		{
-			type: 'block',
-			isMultiBlock: true,
-			blocks: [ 'stackable/count-up' ],
-			transform: attributes => {
-				return attributes.map( ( { ...attrs } ) => createBlock( 'stackable/text', {
-					...attrs, htmlTag: 'h4', innerTextTag: 'span',
-				} ) )
-			},
-		},
 	],
 	to: [
 		{
@@ -91,14 +81,6 @@ const transforms = {
 						) ],
 					]
 				)[ 0 ] )
-			},
-		},
-		{
-			type: 'block',
-			isMultiBlock: true,
-			blocks: [ 'stackable/count-up' ],
-			transform: attributes => {
-				return attributes.map( ( { ...attrs } ) => createBlock( 'stackable/count-up', { ...attrs } ) )
 			},
 		},
 	],

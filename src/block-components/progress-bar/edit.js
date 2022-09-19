@@ -11,6 +11,7 @@ import {
 	AdvancedTextControl,
 	ColorPaletteControl,
 } from '~stackable/components'
+import { Typography } from '~stackable/block-components'
 import {
 	useBlockAttributesContext, useBlockSetAttributesContext, useAttributeEditHandlers,
 } from '~stackable/hooks'
@@ -29,7 +30,6 @@ export const Edit = ( { attrNameTemplate } ) => {
 	const setAttributes = useBlockSetAttributesContext()
 	const {
 		progressAnimate,
-		progressDisplayPercent,
 		progressRounded,
 	} = useBlockAttributesContext()
 
@@ -66,15 +66,34 @@ export const Edit = ( { attrNameTemplate } ) => {
 						placeholder=""
 						isDynamic
 					/>
+					<AdvancedRangeControl
+						label={ __( 'Thickness', i18n ) }
+						attribute="progressThickness"
+						min="8"
+						sliderMax="100"
+						step="1"
+						placeholder=""
+						default={ DEFAULT_THICKNESS }
+					/>
+					<ColorPaletteControl
+						label={ __( 'Bar Color', i18n ) }
+						attribute="progressColor"
+						hasTransparent={ true }
+					/>
+					<ColorPaletteControl
+						label={ __( 'Background Color', i18n ) }
+						attribute="progressBackgroundColor"
+						hasTransparent={ true }
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Rounded', i18n ) }
+						checked={ progressRounded }
+						onChange={ progressRounded => setAttributes( { progressRounded } ) }
+					/>
 					<AdvancedToggleControl
 						label={ __( 'Animate', i18n ) }
 						checked={ progressAnimate }
 						onChange={ progressAnimate => setAttributes( { progressAnimate } ) }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Display percentage', i18n ) }
-						checked={ progressDisplayPercent }
-						onChange={ progressDisplayPercent => setAttributes( { progressDisplayPercent } ) }
 					/>
 					<AdvancedTextControl
 						label={ __( 'Accessibility Label', i18n ) }
@@ -88,32 +107,18 @@ export const Edit = ( { attrNameTemplate } ) => {
 						changeDynamicContent={ setValueText }
 						isDynamic={ true }
 					/>
-					<ColorPaletteControl
-						label={ __( 'Color', i18n ) }
-						attribute="progressColor"
-						hasTransparent={ true }
-					/>
-					<ColorPaletteControl
-						label={ __( 'Background Color', i18n ) }
-						attribute="progressBackgroundColor"
-						hasTransparent={ true }
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Thickness', i18n ) }
-						attribute="progressThickness"
-						min="8"
-						sliderMax="100"
-						step="1"
-						placeholder=""
-						default={ DEFAULT_THICKNESS }
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Rounded', i18n ) }
-						checked={ progressRounded }
-						onChange={ progressRounded => setAttributes( { progressRounded } ) }
-					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
+			<Typography.InspectorControls
+				initialOpen={ false }
+				hasTextTag={ false }
+				hasTextContent={ false }
+				hasTextShadow
+				hasTextPrefix
+				hasTextSuffix
+				hasToggle
+				label="Label"
+			/>
 		</Fragment>
 	)
 }

@@ -2,6 +2,7 @@ import ProgressCircleStyles from './style'
 import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
+	Alignment,
 	Advanced,
 	Responsive,
 	Transform,
@@ -11,35 +12,43 @@ import {
 	ConditionalDisplay,
 	ProgressBar,
 	useGeneratedCss,
+	Typography,
+	getTypographyClasses,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
-import { useBlockHoverClass } from '~stackable/hooks'
 import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import classnames from 'classnames'
 import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
-import { InnerBlocks } from '@wordpress/block-editor'
-
-const ALLOWED_BLOCKS = [ 'stackable/text', 'stackable/count-up' ]
 
 const Edit = ( {
 	className, attributes,
 } ) => {
 	useGeneratedCss( attributes )
 
-	const blockHoverClass = useBlockHoverClass()
+	const blockAlignmentClass = getAlignmentClasses( attributes )
+	const textClasses = getTypographyClasses( attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-progress-circle',
-		blockHoverClass,
+		blockAlignmentClass,
 	] )
+
+	const textClassNames = classnames( [
+		'stk-progress-circle__inner-text',
+		textClasses,
+	] )
+
+	const derivedValue = `${ attributes.textPrefix.trim() }${ attributes.progressPercent }${ attributes.textSuffix.trim() }`.trim()
 
 	return (
 		<>
 			<InspectorTabs />
 
+			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 
 			{ /** Advanced controls */ }
@@ -55,8 +64,9 @@ const Edit = ( {
 
 			<BlockDiv className={ blockClassNames }>
 				<ProgressCircleStyles version={ VERSION } />
+				<CustomCSS mainBlockClass="stk-block-progress-circle" />
 				<div
-					className="stk-progress-circle stk--with-animation animate"
+					className="stk-progress-circle animate"
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
@@ -67,15 +77,13 @@ const Edit = ( {
 						<circle className="stk-progress-circle__background" />
 						<circle className="stk-progress-circle__bar" />
 					</svg>
-					{ attributes.progressDisplayPercent && (
+					{ attributes.show && (
 						<div className="number">
-							<InnerBlocks
-								allowedBlocks={ ALLOWED_BLOCKS }
-								template={ [
-									[ 'stackable/text', {
-										text: '50%', htmlTag: 'h4', innerTextTag: 'span',
-									} ],
-								] }
+							<Typography
+								tagName="h4"
+								className={ textClassNames }
+								value={ derivedValue }
+								editable={ false }
 							/>
 						</div>
 					) }

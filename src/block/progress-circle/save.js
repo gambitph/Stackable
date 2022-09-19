@@ -2,24 +2,35 @@ import ProgressCircleStyles from './style'
 import {
 	BlockDiv,
 	CustomCSS,
+	Typography,
 	getResponsiveClasses,
+	getTypographyClasses,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
 import striptags from 'striptags'
 
-import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { useBlockProps } from '@wordpress/block-editor'
 
 const Save = props => {
 	const { className, attributes } = props
 	const responsiveClass = getResponsiveClasses( attributes )
+	const blockAlignmentClass = getAlignmentClasses( attributes )
+	const textClasses = getTypographyClasses( attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-progress-circle',
 		responsiveClass,
+		blockAlignmentClass,
+	] )
+
+	const textClassNames = classnames( [
+		'stk-progress-circle__inner-text',
+		textClasses,
 	] )
 
 	const divClassNames = classnames( [
@@ -29,9 +40,11 @@ const Save = props => {
 		},
 	] )
 
+	const derivedValue = `${ attributes.textPrefix.trim() }${ attributes.progressPercent }${ attributes.textSuffix.trim() }`.trim()
+
 	return (
 		<BlockDiv.Content
-			className={ blockClassNames }
+			{ ...useBlockProps.save( { className: blockClassNames } ) }
 			attributes={ attributes }
 		>
 			<ProgressCircleStyles.Content { ...props } />
@@ -48,9 +61,13 @@ const Save = props => {
 					<circle className="stk-progress-circle__background" />
 					<circle className="stk-progress-circle__bar" />
 				</svg>
-				{ attributes.progressDisplayPercent && (
+				{ attributes.show && (
 					<div className="number">
-						<InnerBlocks.Content />
+						<Typography.Content
+							tagName="h4"
+							className={ textClassNames }
+							value={ derivedValue }
+						/>
 					</div>
 				) }
 			</div>

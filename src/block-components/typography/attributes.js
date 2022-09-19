@@ -71,8 +71,16 @@ const typographyAttributes = {
 		default: false,
 	},
 	show: {
-		type: 'booleam',
+		type: 'boolean',
 		default: true,
+	},
+	textPrefix: {
+		type: 'string',
+		default: '',
+	},
+	textSuffix: {
+		type: 'string',
+		default: '%',
 	},
 }
 

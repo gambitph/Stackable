@@ -29,6 +29,14 @@ const getStyleParams = () => {
 			styleRule: '--progress-background',
 			attrName: 'progressBackgroundColor',
 		},
+		{
+			selector: '.stk-progress-circle',
+			styleRule: '--rounded',
+			attrName: 'progressRounded',
+			valuePreCallback: value => {
+				return value ? 'round' : 'unset'
+			},
+		},
 	]
 }
 

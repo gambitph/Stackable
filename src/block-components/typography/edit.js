@@ -70,6 +70,8 @@ export const Controls = props => {
 		isMultiline,
 		hasGradient,
 		hasTextShadow,
+		hasTextPrefix,
+		hasTextSuffix,
 	} = props
 
 	const {
@@ -119,7 +121,18 @@ export const Controls = props => {
 					isDynamic={ true }
 				/>
 			) }
-
+			{ hasTextPrefix && (
+				<AdvancedTextControl
+					label={ __( 'Prefix', i18n ) }
+					attribute="textPrefix"
+				/>
+			) }
+			{ hasTextSuffix && (
+				<AdvancedTextControl
+					label={ __( 'Suffix', i18n ) }
+					attribute="textSuffix"
+				/>
+			) }
 			{ hasRemoveMargins && (
 				<AdvancedToggleControl
 					label={ __( 'Remove extra text margins', i18n ) }
@@ -324,6 +337,8 @@ Controls.defaultProps = {
 	isMultiline: false,
 	hasGradient: true,
 	hasTextShadow: false,
+	hasTextPrefix: false,
+	hasTextSuffix: false,
 }
 
 export const Edit = props => {
@@ -340,6 +355,8 @@ export const Edit = props => {
 		hasToggle,
 		label,
 		hasTextShadow,
+		hasTextPrefix,
+		hasTextSuffix,
 	} = props
 
 	const {
@@ -368,6 +385,8 @@ export const Edit = props => {
 					isMultiline={ isMultiline }
 					hasGradient={ hasGradient }
 					hasTextShadow={ hasTextShadow }
+					hasTextPrefix={ hasTextPrefix }
+					hasTextSuffix={ hasTextSuffix }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
