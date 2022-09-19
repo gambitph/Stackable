@@ -7,6 +7,7 @@ import {
 import { version as VERSION } from 'stackable'
 import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
+import striptags from 'striptags'
 
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
@@ -24,7 +25,7 @@ const Save = props => {
 	const divClassNames = classnames( [
 		'stk-progress-circle',
 		{
-			'with-animation': attributes.progressAnimate,
+			'stk--with-animation': attributes.progressAnimate,
 		},
 	] )
 
@@ -41,7 +42,7 @@ const Save = props => {
 				aria-valuemin="0"
 				aria-valuemax="100"
 				aria-valuenow={ attributes.progressPercent }
-				aria-valuetext={ attributes.progressAriaValueText }
+				aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
 			>
 				<svg>
 					<circle className="stk-progress-circle__background" />

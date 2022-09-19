@@ -14,7 +14,7 @@ import {
 import {
 	useBlockAttributesContext, useBlockSetAttributesContext, useAttributeEditHandlers,
 } from '~stackable/hooks'
-import { DEFAULT_PERCENT, DEFAULT_THICKNESS } from '~stackable/block-components/progress-bar/attributes'
+import { DEFAULT_PERCENT, DEFAULT_THICKNESS } from './attributes'
 
 /**
  * WordPress dependencies

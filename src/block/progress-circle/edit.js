@@ -16,6 +16,7 @@ import { version as VERSION } from 'stackable'
 import { useBlockHoverClass } from '~stackable/hooks'
 import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
 import classnames from 'classnames'
+import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
@@ -55,12 +56,12 @@ const Edit = ( {
 			<BlockDiv className={ blockClassNames }>
 				<ProgressCircleStyles version={ VERSION } />
 				<div
-					className="stk-progress-circle with-animation animate"
+					className="stk-progress-circle stk--with-animation animate"
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
 					aria-valuenow={ attributes.progressPercent }
-					aria-valuetext={ attributes.progressAriaValueText }
+					aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
 				>
 					<svg>
 						<circle className="stk-progress-circle__background" />

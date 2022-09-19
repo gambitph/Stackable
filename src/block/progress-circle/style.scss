@@ -39,7 +39,7 @@
     }
 
   }
-	&.with-animation {
+	&.stk--with-animation {
 		.stk-progress-circle__bar {
 			will-change: stroke-dashoffset;
 			@include transition();
@@ -54,10 +54,9 @@
 
 @media (prefers-reduced-motion) {
   .stk-progress-circle {
-		&.with-animation {
+		&.stk--with-animation {
 			.stk-progress-circle__bar {
 				transition: none;
-				will-change: unset;
 			}
 		}
   }
