@@ -1,5 +1,9 @@
 @import "common";
 
+.stk-block-progress-circle {
+	display: flex;
+}
+
 .stk-progress-circle {
   position: relative;
   height: 150px;
@@ -14,7 +18,7 @@
       fill: none;
       stroke: var(--progress-background, #f0f0f0);
       stroke-width: var(--thickness, 8px);
-      stroke-linecap: round;
+      stroke-linecap: var(--rounded, 'unset');
       cx: 50%;
       cy: 50%;
       r: calc(50% - var(--thickness, 8px) / 2);
