@@ -336,6 +336,7 @@ Controls.defaultProps = {
 	isMultiline: false,
 	hasGradient: true,
 	hasTextShadow: false,
+	onChange: false,
 }
 
 export const Edit = props => {
@@ -352,6 +353,7 @@ export const Edit = props => {
 		hasToggle,
 		label,
 		hasTextShadow,
+		onChange,
 	} = props
 
 	const {
@@ -366,7 +368,7 @@ export const Edit = props => {
 				initialOpen={ initialOpen }
 				{ ...( hasToggle ? {
 					checked: getAttribute( 'show' ),
-					onChange: updateAttributeHandler( 'show' ),
+					onChange: onChange || updateAttributeHandler( 'show' ),
 				} : {} ) }
 				id="text"
 			>

@@ -441,6 +441,13 @@ const Edit = props => {
 				hasToggle={ true }
 				hasTextTag={ false }
 				hasTextContent={ false }
+				onChange={ titleShow => {
+					if ( titleShow && ! attributes.titleText ) {
+						setAttributes( { titleText: __( 'Table of Contents', i18n ), titleShow } )
+					} else {
+						setAttributes( { titleShow } )
+					}
+				} }
 			/>
 
 			<Advanced.InspectorControls />
