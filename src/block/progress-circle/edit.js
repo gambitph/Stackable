@@ -22,10 +22,12 @@ import classnames from 'classnames'
 import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
+import { useState, useEffect } from '@wordpress/element'
 
 const Edit = ( {
 	className, attributes,
 } ) => {
+	const [ forceRedraw, setForceRedraw ] = useState( false )
 	useGeneratedCss( attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -43,6 +45,23 @@ const Edit = ( {
 	] )
 
 	const derivedValue = `${ attributes.textPrefix.trim() }${ attributes.progressPercent }${ attributes.textSuffix.trim() }`.trim()
+
+	/**
+	 * workaround to correct the circle width when size changes
+	 */
+	 const workAroundClass = classnames( {
+		'force-redraw': forceRedraw,
+	} )
+
+	useEffect( () => {
+		if ( attributes.progressSize ) {
+			setForceRedraw( true )
+			const timer = setTimeout( () => {
+				setForceRedraw( false )
+			}, 100 )
+			return () => clearTimeout( timer )
+		}
+	}, [ attributes.progressSize ] )
 
 	return (
 		<>
@@ -73,7 +92,7 @@ const Edit = ( {
 					aria-valuenow={ attributes.progressPercent }
 					aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
 				>
-					<svg>
+					<svg viewBox={ `0 0 ${ attributes.progressSize } ${ attributes.progressSize }` } className={ workAroundClass }>
 						<circle className="stk-progress-circle__background" />
 						<circle className="stk-progress-circle__bar" />
 					</svg>

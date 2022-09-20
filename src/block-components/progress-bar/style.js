@@ -5,13 +5,13 @@ const getStyleParams = () => {
 	return [
 		{
 			selector: '.stk-progress-circle',
-			styleRule: '--thickness',
+			styleRule: '--progress-thickness',
 			attrName: 'progressThickness',
 			format: '%spx',
 		},
 		{
 			selector: '.stk-progress-circle',
-			styleRule: '--percent',
+			styleRule: '--progress-percent',
 			attrName: 'progressPercent',
 		},
 		{
@@ -31,7 +31,13 @@ const getStyleParams = () => {
 		},
 		{
 			selector: '.stk-progress-circle',
-			styleRule: '--rounded',
+			styleRule: '--progress-size',
+			attrName: 'progressSize',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-progress-circle',
+			styleRule: '--progress-rounded',
 			attrName: 'progressRounded',
 			valuePreCallback: value => {
 				return value ? 'round' : 'unset'

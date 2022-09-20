@@ -6,22 +6,27 @@
 
 .stk-progress-circle {
   position: relative;
-  height: 150px;
-  width: 150px;
+  height: var(--progress-size);
+  width: var(--progress-size);
   svg {
     width: 100%;
     height: 100%;
     transform: rotate(-90deg);
+		&.force-redraw {
+			circle {
+				width: auto;
+			}
+		}
     circle {
-      width: 100%;
-      height: 100%;
+			width: 100%;
+			height: 100%;
       fill: none;
       stroke: var(--progress-background, #f0f0f0);
-      stroke-width: var(--thickness, 8px);
-      stroke-linecap: var(--rounded, 'unset');
+      stroke-width: var(--progress-thickness);
+      stroke-linecap: var(--progress-rounded, 'unset');
       cx: 50%;
       cy: 50%;
-      r: calc(50% - var(--thickness, 8px) / 2);
+      r: calc(50% - var(--progress-thickness) / 2);
     }
   }
   .stk-progress-circle__bar {
@@ -51,7 +56,7 @@
 	}
 	&.animate {
     .stk-progress-circle__bar {
-      stroke-dashoffset: calc(300% - 300% * var(--percent) / 100);
+      stroke-dashoffset: calc(300% - 300% * var(--progress-percent) / 100);
     }
   }
 }

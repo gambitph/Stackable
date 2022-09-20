@@ -15,7 +15,9 @@ import { Typography } from '~stackable/block-components'
 import {
 	useBlockAttributesContext, useBlockSetAttributesContext, useAttributeEditHandlers,
 } from '~stackable/hooks'
-import { DEFAULT_PERCENT, DEFAULT_THICKNESS } from './attributes'
+import {
+	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE,
+} from './attributes'
 
 /**
  * WordPress dependencies
@@ -65,6 +67,13 @@ export const Edit = ( { attrNameTemplate } ) => {
 						step="1"
 						placeholder=""
 						isDynamic
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Size', i18n ) }
+						attribute="progressSize"
+						step="1"
+						placeholder=""
+						default={ DEFAULT_SIZE }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Thickness', i18n ) }

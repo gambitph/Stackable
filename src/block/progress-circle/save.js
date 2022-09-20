@@ -13,7 +13,6 @@ import classnames from 'classnames'
 import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
-import { useBlockProps } from '@wordpress/block-editor'
 
 const Save = props => {
 	const { className, attributes } = props
@@ -44,7 +43,7 @@ const Save = props => {
 
 	return (
 		<BlockDiv.Content
-			{ ...useBlockProps.save( { className: blockClassNames } ) }
+			className={ blockClassNames }
 			attributes={ attributes }
 		>
 			<ProgressCircleStyles.Content { ...props } />

@@ -1,3 +1,4 @@
+export const DEFAULT_SIZE = 150
 export const DEFAULT_THICKNESS = 8
 export const DEFAULT_PERCENT = 50
 
@@ -7,6 +8,10 @@ export const addAttributes = attrObject => {
 			progressPercent: {
 				type: 'number',
 				default: DEFAULT_PERCENT,
+			},
+			progressSize: {
+				type: 'number',
+				default: DEFAULT_SIZE,
 			},
 			progressAnimate: {
 				type: 'boolean',
