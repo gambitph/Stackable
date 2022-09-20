@@ -17,8 +17,12 @@ import { memo } from '@wordpress/element'
  */
 import classnames from 'classnames'
 
+// This is only used for display purposes in the focal picker because it doesn't
+// accept blank/empty string/null/undefined.
+const FOCAL_DEFAULT_VALUE = { x: 0.5, y: 0.5 }
+
 const AdvancedFocalPointControl = props => {
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
+	const [ _value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
 	propsToPass.url = useDynamicContent( propsToPass.url )
@@ -27,6 +31,8 @@ const AdvancedFocalPointControl = props => {
 		propsToPass.url = undefined
 	}
 
+	const value = typeof props.value === 'undefined' ? _value : props.value
+
 	return (
 		<AdvancedControl
 			{ ...controlProps }
@@ -34,12 +40,12 @@ const AdvancedFocalPointControl = props => {
 		>
 			<FocalPointPicker
 				{ ...propsToPass }
-				value={ typeof props.value === 'undefined' ? value : props.value }
+				value={ value || FOCAL_DEFAULT_VALUE }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 			/>
 			<ResetButton
 				allowReset={ props.allowReset }
-				value={ typeof props.value === 'undefined' ? value : props.value }
+				value={ value }
 				default={ props.default }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 			/>
