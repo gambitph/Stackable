@@ -38,12 +38,11 @@ export const Edit = () => {
 				>
 					<AdvancedRangeControl
 						label={ __( 'Percentage', i18n ) }
-						default={ DEFAULT_PERCENT }
 						attribute="progressPercent"
 						min="0"
 						sliderMax="100"
 						step="1"
-						placeholder=""
+						placeholder={ DEFAULT_PERCENT }
 						isDynamic
 					/>
 					<AdvancedRangeControl
@@ -53,8 +52,8 @@ export const Edit = () => {
 						sliderMin="50"
 						sliderMax="300"
 						step="1"
-						placeholder=""
-						default={ DEFAULT_SIZE }
+						placeholder={ DEFAULT_SIZE }
+						allowReset={ false }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Thickness', i18n ) }
@@ -63,8 +62,8 @@ export const Edit = () => {
 						sliderMin="1"
 						sliderMax="30"
 						step="1"
-						placeholder=""
-						default={ DEFAULT_THICKNESS }
+						placeholder={ DEFAULT_THICKNESS }
+						allowReset={ false }
 					/>
 					<ColorPaletteControl
 						label={ __( 'Bar Color', i18n ) }

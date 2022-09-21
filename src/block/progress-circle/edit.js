@@ -23,6 +23,7 @@ import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
 import { useState, useEffect } from '@wordpress/element'
+import { DEFAULT_PERCENT } from '../../block-components/progress-bar/attributes'
 
 const Edit = ( {
 	className, attributes,
@@ -44,7 +45,8 @@ const Edit = ( {
 		textClasses,
 	] )
 
-	const derivedValue = `${ attributes.textPrefix.trim() }${ attributes.progressPercent }${ attributes.textSuffix.trim() }`.trim()
+	const derivedPercent = attributes.progressPercent || DEFAULT_PERCENT
+	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
 
 	/**
 	 * workaround to correct the circle width when size changes
@@ -89,7 +91,7 @@ const Edit = ( {
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
-					aria-valuenow={ attributes.progressPercent }
+					aria-valuenow={ derivedPercent }
 					aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
 				>
 					<svg viewBox={ `0 0 ${ attributes.progressSize } ${ attributes.progressSize }` } className={ workAroundClass }>

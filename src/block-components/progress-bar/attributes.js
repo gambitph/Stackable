@@ -7,11 +7,11 @@ export const addAttributes = attrObject => {
 		attributes: {
 			progressPercent: {
 				type: 'number',
-				default: DEFAULT_PERCENT,
+				default: '',
 			},
 			progressSize: {
 				type: 'number',
-				default: DEFAULT_SIZE,
+				default: '',
 			},
 			progressAnimate: {
 				type: 'boolean',
@@ -23,19 +23,19 @@ export const addAttributes = attrObject => {
 			},
 			progressColor: {
 				type: 'string',
-				default: '#3498db',
+				default: '',
 			},
 			progressBackgroundColor: {
 				type: 'string',
-				default: '#f0f0f0',
+				default: '',
 			},
 			progressThickness: {
 				type: 'number',
-				default: DEFAULT_THICKNESS,
+				default: '',
 			},
 			progressRounded: {
 				type: 'boolean',
-				default: false,
+				default: '',
 			},
 		},
 		versionAdded: '3.4.5',

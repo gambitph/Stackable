@@ -13,6 +13,7 @@ import classnames from 'classnames'
 import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
+import { DEFAULT_PERCENT } from '../../block-components/progress-bar/attributes'
 
 const Save = props => {
 	const { className, attributes } = props
@@ -39,7 +40,8 @@ const Save = props => {
 		},
 	] )
 
-	const derivedValue = `${ attributes.textPrefix.trim() }${ attributes.progressPercent }${ attributes.textSuffix.trim() }`.trim()
+	const derivedPercent = attributes.progressPercent || DEFAULT_PERCENT
+	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
 
 	return (
 		<BlockDiv.Content
@@ -53,7 +55,7 @@ const Save = props => {
 				role="progressbar"
 				aria-valuemin="0"
 				aria-valuemax="100"
-				aria-valuenow={ attributes.progressPercent }
+				aria-valuenow={ derivedPercent }
 				aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
 			>
 				<svg>
