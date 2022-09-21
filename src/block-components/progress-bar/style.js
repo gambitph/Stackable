@@ -1,5 +1,8 @@
 import { useStyles, getStyles } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
+import {
+	DEFAULT_PERCENT, DEFAULT_SIZE, DEFAULT_THICKNESS,
+} from './attributes'
 
 const getStyleParams = () => {
 	return [
@@ -44,6 +47,32 @@ const getStyleParams = () => {
 					return undefined
 				}
 				return 'round'
+			},
+		},
+		{
+			selector: '.stk-progress-circle',
+			styleRule: '--progress-dash-array',
+			attrName: 'progressSize',
+			valuePreCallback: ( value, getAttribute ) => {
+				const derivedThickness = getAttribute( 'progressThickness' ) || DEFAULT_THICKNESS
+				const derivedSize = ( value || DEFAULT_SIZE )
+
+				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 )
+				return parseInt( Math.PI * ( radius * 2 ) )
+			},
+		},
+		{
+			selector: '.stk-progress-circle',
+			styleRule: '--progress-dash-offset',
+			attrName: 'progressPercent',
+			valuePreCallback: ( value, getAttribute ) => {
+				const derivedThickness = getAttribute( 'progressThickness' ) || DEFAULT_THICKNESS
+				const derivedSize = getAttribute( 'progressSize' ) || DEFAULT_SIZE
+				const derivedPercent = typeof value === 'string' ? DEFAULT_PERCENT : value
+
+				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 )
+				const circumference = parseInt( Math.PI * ( radius * 2 ) )
+				return ( ( 100 - derivedPercent ) / 100 ) * circumference
 			},
 		},
 	]

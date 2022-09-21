@@ -40,6 +40,7 @@ export const Edit = () => {
 						label={ __( 'Percentage', i18n ) }
 						attribute="progressPercent"
 						min="0"
+						max="100"
 						sliderMax="100"
 						step="1"
 						placeholder={ DEFAULT_PERCENT }

@@ -25,9 +25,8 @@
 		}
 	}
 	.stk-progress-circle__bar {
-		/* 300% seems to perfectly fit a circle */
-		stroke-dasharray: 300%;
-		stroke-dashoffset: 300%;
+		stroke-dasharray: var(--progress-dash-array);
+		stroke-dashoffset: var(--progress-dash-array);
 		stroke: var(--progress-color, #3498db);
 	}
 	.number {
@@ -44,7 +43,7 @@
 	}
 	&.animate {
 		.stk-progress-circle__bar {
-			stroke-dashoffset: calc(300% - 300% * var(--progress-percent, 50) / 100);
+			stroke-dashoffset: var(--progress-dash-offset);
 		}
 	}
 }
