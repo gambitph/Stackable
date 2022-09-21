@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { unescape, debounce } from 'lodash'
 import { i18n } from 'stackable'
 import {
 	PanelAdvancedSettings,
@@ -12,9 +11,7 @@ import {
 	ColorPaletteControl,
 } from '~stackable/components'
 import { Typography } from '~stackable/block-components'
-import {
-	useBlockAttributesContext, useBlockSetAttributesContext, useAttributeEditHandlers,
-} from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 import {
 	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE,
 } from './attributes'
@@ -22,34 +19,15 @@ import {
 /**
  * WordPress dependencies
  */
-import {
-	Fragment, useState, useEffect, useCallback,
-} from '@wordpress/element'
-import { escapeHTML } from '@wordpress/escape-html'
+import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-export const Edit = ( { attrNameTemplate } ) => {
+export const Edit = () => {
 	const setAttributes = useBlockSetAttributesContext()
 	const {
 		progressAnimate,
 		progressRounded,
 	} = useBlockAttributesContext()
-
-	const {
-		getAttribute,
-		updateAttribute,
-	} = useAttributeEditHandlers( attrNameTemplate )
-
-	const progressAriaValueText = getAttribute( 'progressAriaValueText' )
-	const [ valueText, setValueText ] = useState( progressAriaValueText )
-
-	const contentChangeHandler = useCallback( debounce( newValueText => {
-		updateAttribute( 'progressAriaValueText', newValueText )
-	}, 750 ), [] )
-
-	useEffect( () => {
-		contentChangeHandler( valueText )
-	}, [ valueText ] )
 
 	return (
 		<Fragment>
@@ -71,6 +49,9 @@ export const Edit = ( { attrNameTemplate } ) => {
 					<AdvancedRangeControl
 						label={ __( 'Size', i18n ) }
 						attribute="progressSize"
+						min="0"
+						sliderMin="50"
+						sliderMax="300"
 						step="1"
 						placeholder=""
 						default={ DEFAULT_SIZE }
@@ -78,8 +59,9 @@ export const Edit = ( { attrNameTemplate } ) => {
 					<AdvancedRangeControl
 						label={ __( 'Thickness', i18n ) }
 						attribute="progressThickness"
-						min="8"
-						sliderMax="100"
+						min="0"
+						sliderMin="1"
+						sliderMax="30"
 						step="1"
 						placeholder=""
 						default={ DEFAULT_THICKNESS }
@@ -106,15 +88,7 @@ export const Edit = ( { attrNameTemplate } ) => {
 					/>
 					<AdvancedTextControl
 						label={ __( 'Accessibility Label', i18n ) }
-						value={ unescape( valueText ) }
-						onChange={ newValueText => setValueText( escapeHTML( newValueText ) ) }
-						/**
-						 * Pass the unescaped Dynamic Content `onChange` function.
-						 *
-						 * @param {string} text Text with dynamic content.
-						 */
-						changeDynamicContent={ setValueText }
-						isDynamic={ true }
+						attribute="progressAriaValueText"
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
@@ -126,12 +100,8 @@ export const Edit = ( { attrNameTemplate } ) => {
 				hasTextPrefix
 				hasTextSuffix
 				hasToggle
-				label="Label"
+				label={ __( 'Label', i18n ) }
 			/>
 		</Fragment>
 	)
-}
-
-Edit.defaultProps = {
-	attrNameTemplate: '%s',
 }

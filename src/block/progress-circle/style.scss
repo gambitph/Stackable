@@ -5,49 +5,37 @@
 }
 
 .stk-progress-circle {
-  position: relative;
-  height: var(--progress-size);
-  width: var(--progress-size);
-  svg {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-		&.force-redraw {
-			circle {
-				width: auto;
-			}
-		}
-    circle {
+	position: relative;
+	height: var(--progress-size);
+	width: var(--progress-size);
+	svg {
+		width: 100%;
+		height: 100%;
+		transform: rotate(-90deg);
+		circle {
 			width: 100%;
 			height: 100%;
-      fill: none;
-      stroke: var(--progress-background, #f0f0f0);
-      stroke-width: var(--progress-thickness);
-      stroke-linecap: var(--progress-rounded, 'unset');
-      cx: 50%;
-      cy: 50%;
-      r: calc(50% - var(--progress-thickness) / 2);
-    }
-  }
-  .stk-progress-circle__bar {
-    /* 300% seems to perfectly fit a circle */
-    stroke-dasharray: 300%;
-    stroke-dashoffset: 300%;
-    stroke: var(--progress-color, #3498db);
-  }
-  .number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    h4, .wp-block-stackable-count-up .stk-block-count-up__text {
-      font-weight: 200;
-      font-size: 3.5rem;
-      margin: 0;
-      word-break: inherit;
-    }
-
-  }
+			fill: none;
+			stroke: var(--progress-background, #f0f0f0);
+			stroke-width: var(--progress-thickness);
+			stroke-linecap: var(--progress-rounded, "unset");
+			cx: 50%;
+			cy: 50%;
+			r: calc(50% - var(--progress-thickness) / 2);
+		}
+	}
+	.stk-progress-circle__bar {
+		/* 300% seems to perfectly fit a circle */
+		stroke-dasharray: 300%;
+		stroke-dashoffset: 300%;
+		stroke: var(--progress-color, #3498db);
+	}
+	.number {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 	&.stk--with-animation {
 		.stk-progress-circle__bar {
 			will-change: stroke-dashoffset;
@@ -55,18 +43,18 @@
 		}
 	}
 	&.animate {
-    .stk-progress-circle__bar {
-      stroke-dashoffset: calc(300% - 300% * var(--progress-percent) / 100);
-    }
-  }
+		.stk-progress-circle__bar {
+			stroke-dashoffset: calc(300% - 300% * var(--progress-percent) / 100);
+		}
+	}
 }
 
 @media (prefers-reduced-motion) {
-  .stk-progress-circle {
+	.stk-progress-circle {
 		&.stk--with-animation {
 			.stk-progress-circle__bar {
 				transition: none;
 			}
 		}
-  }
+	}
 }

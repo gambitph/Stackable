@@ -1,0 +1,9 @@
+.stk-progress-circle {
+	svg {
+		&.force-redraw {
+			circle {
+				width: auto;
+			}
+		}
+	}
+}

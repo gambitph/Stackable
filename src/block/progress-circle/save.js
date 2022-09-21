@@ -63,7 +63,7 @@ const Save = props => {
 				{ attributes.show && (
 					<div className="number">
 						<Typography.Content
-							tagName="h4"
+							tagName="span"
 							className={ textClassNames }
 							value={ derivedValue }
 						/>

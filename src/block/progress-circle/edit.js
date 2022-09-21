@@ -58,7 +58,7 @@ const Edit = ( {
 			setForceRedraw( true )
 			const timer = setTimeout( () => {
 				setForceRedraw( false )
-			}, 100 )
+			} )
 			return () => clearTimeout( timer )
 		}
 	}, [ attributes.progressSize ] )
@@ -99,7 +99,7 @@ const Edit = ( {
 					{ attributes.show && (
 						<div className="number">
 							<Typography
-								tagName="h4"
+								tagName="span"
 								className={ textClassNames }
 								value={ derivedValue }
 								editable={ false }
