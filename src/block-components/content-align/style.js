@@ -48,7 +48,7 @@ const getStyleParams = () => {
 			attrName: 'columnFitAlign',
 			responsive: 'all',
 			enabledCallback: getAttribute => !! getAttribute( 'columnFit' ),
-			depenencies: [ 'columnFit' ],
+			dependencies: [ 'columnFit' ],
 		},
 		{
 			renderIn: 'edit',
@@ -57,7 +57,7 @@ const getStyleParams = () => {
 			attrName: 'columnFitAlign',
 			responsive: 'all',
 			enabledCallback: getAttribute => !! getAttribute( 'columnFit' ),
-			depenencies: [ 'columnFit' ],
+			dependencies: [ 'columnFit' ],
 		},
 	]
 }
