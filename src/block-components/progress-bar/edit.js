@@ -12,9 +12,7 @@ import {
 	AdvancedToolbarControl,
 } from '~stackable/components'
 import { Typography } from '~stackable/block-components'
-import {
-	useBlockAttributesContext, useBlockSetAttributesContext, useAttributeEditHandlers,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers } from '~stackable/hooks'
 import {
 	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE,
 } from './attributes'
@@ -37,12 +35,6 @@ const GRADIENT_OPTIONS = [
 ]
 
 export const Edit = ( { attrNameTemplate } ) => {
-	const setAttributes = useBlockSetAttributesContext()
-	const {
-		progressAnimate,
-		progressRounded,
-	} = useBlockAttributesContext()
-
 	const {
 		getAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
@@ -72,7 +64,6 @@ export const Edit = ( { attrNameTemplate } ) => {
 						sliderMax="300"
 						step="1"
 						placeholder={ DEFAULT_SIZE }
-						allowReset={ false }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Thickness', i18n ) }
@@ -82,7 +73,6 @@ export const Edit = ( { attrNameTemplate } ) => {
 						sliderMax="30"
 						step="1"
 						placeholder={ DEFAULT_THICKNESS }
-						allowReset={ false }
 					/>
 					<>
 						<AdvancedToolbarControl
@@ -114,13 +104,12 @@ export const Edit = ( { attrNameTemplate } ) => {
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Rounded', i18n ) }
-						checked={ progressRounded }
-						onChange={ progressRounded => setAttributes( { progressRounded } ) }
+						attribute="progressRounded"
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Animate', i18n ) }
-						checked={ progressAnimate }
-						onChange={ progressAnimate => setAttributes( { progressAnimate } ) }
+						attribute="progressAnimate"
+						defaultValue={ true }
 					/>
 					<AdvancedTextControl
 						label={ __( 'Accessibility Label', i18n ) }

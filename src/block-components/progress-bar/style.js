@@ -60,8 +60,9 @@ const getStyleParams = () => {
 				const derivedThickness = getAttribute( 'progressThickness' ) || DEFAULT_THICKNESS
 				const derivedSize = ( value || DEFAULT_SIZE )
 
-				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 )
-				return parseInt( Math.PI * ( radius * 2 ) )
+				// subtract 1 more to fix tiny gap that is visible sometimes
+				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 ) - 1
+				return Math.PI * ( radius * 2 )
 			},
 		},
 		{
@@ -73,8 +74,9 @@ const getStyleParams = () => {
 				const derivedSize = getAttribute( 'progressSize' ) || DEFAULT_SIZE
 				const derivedPercent = typeof value === 'string' ? DEFAULT_PERCENT : value
 
-				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 )
-				const circumference = parseInt( Math.PI * ( radius * 2 ) )
+				// subtract 1 more to fix tiny gap that is visible sometimes
+				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 ) - 1
+				const circumference = Math.PI * ( radius * 2 )
 				return ( ( 100 - derivedPercent ) / 100 ) * circumference
 			},
 		},
