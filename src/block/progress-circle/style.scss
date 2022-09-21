@@ -27,7 +27,7 @@
 	.stk-progress-circle__bar {
 		stroke-dasharray: var(--progress-dash-array);
 		stroke-dashoffset: var(--progress-dash-array);
-		stroke: var(--progress-color, #3498db);
+		stroke: var(--progress-color-1, #3498db);
 	}
 	.number {
 		position: absolute;

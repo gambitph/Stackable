@@ -19,13 +19,16 @@ const getStyleParams = () => {
 		},
 		{
 			selector: '.stk-progress-circle',
-			styleRule: '--progress-color',
-			attrName: 'progressColor',
-		},
-		{
-			selector: '.stk-progress-circle',
-			styleRule: '--progress-color',
-			attrName: 'progressColor',
+			styleRule: '--progress-color-1',
+			attrName: 'progressColor1',
+			valuePreCallback: ( value, getAttribute, _, state ) => {
+				if ( getAttribute( 'progressColorType', 'desktop', state ) === 'gradient' ) {
+					const uniqueId = getAttribute( 'uniqueId' )
+					return `url(#gradient-${ uniqueId })`
+				}
+				return value
+			},
+			dependencies: [ 'progressColorType' ],
 		},
 		{
 			selector: '.stk-progress-circle',

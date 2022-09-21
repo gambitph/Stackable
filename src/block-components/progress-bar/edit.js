@@ -9,9 +9,12 @@ import {
 	AdvancedRangeControl,
 	AdvancedTextControl,
 	ColorPaletteControl,
+	AdvancedToolbarControl,
 } from '~stackable/components'
 import { Typography } from '~stackable/block-components'
-import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockSetAttributesContext, useAttributeEditHandlers,
+} from '~stackable/hooks'
 import {
 	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE,
 } from './attributes'
@@ -20,14 +23,29 @@ import {
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 
-export const Edit = () => {
+const GRADIENT_OPTIONS = [
+	{
+		value: '',
+		title: __( 'Single', i18n ),
+	},
+	{
+		value: 'gradient',
+		title: __( 'Gradient', i18n ),
+	},
+]
+
+export const Edit = ( { attrNameTemplate } ) => {
 	const setAttributes = useBlockSetAttributesContext()
 	const {
 		progressAnimate,
 		progressRounded,
 	} = useBlockAttributesContext()
+
+	const {
+		getAttribute,
+	} = useAttributeEditHandlers( attrNameTemplate )
 
 	return (
 		<Fragment>
@@ -66,11 +84,29 @@ export const Edit = () => {
 						placeholder={ DEFAULT_THICKNESS }
 						allowReset={ false }
 					/>
-					<ColorPaletteControl
-						label={ __( 'Bar Color', i18n ) }
-						attribute="progressColor"
-						hasTransparent={ true }
-					/>
+					<>
+						<AdvancedToolbarControl
+							controls={ GRADIENT_OPTIONS }
+							isSmall={ true }
+							fullwidth={ false }
+							attribute="progressColorType"
+						/>
+						<ColorPaletteControl
+							label={ getAttribute( 'progressColorType' ) === 'gradient' ? sprintf( __( 'Bar Color #%s', i18n ), 1 )
+								: __( 'Bar Color', i18n ) }
+							attribute="progressColor1"
+							hasTransparent={ getAttribute( 'progressColorType' ) === 'gradient' }
+						/>
+						{ getAttribute( 'progressColorType' ) === 'gradient' && (
+							<>
+								<ColorPaletteControl
+									label={ sprintf( __( 'Bar Color #%s', i18n ), 2 ) }
+									attribute="progressColor2"
+									hasTransparent={ true }
+								/>
+							</>
+						) }
+					</>
 					<ColorPaletteControl
 						label={ __( 'Background Color', i18n ) }
 						attribute="progressBackgroundColor"
@@ -104,4 +140,8 @@ export const Edit = () => {
 			/>
 		</Fragment>
 	)
+}
+
+Edit.defaulProps = {
+	attrNameTemplate: '%s',
 }

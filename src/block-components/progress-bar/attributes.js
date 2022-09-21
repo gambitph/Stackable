@@ -21,7 +21,15 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-			progressColor: {
+			progressColorType: {
+				type: 'string',
+				default: '',
+			},
+			progressColor1: {
+				type: 'string',
+				default: '',
+			},
+			progressColor2: {
 				type: 'string',
 				default: '',
 			},

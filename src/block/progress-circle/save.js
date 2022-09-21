@@ -59,6 +59,14 @@ const Save = props => {
 				aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
 			>
 				<svg>
+					{ attributes.progressColorType === 'gradient' && (
+						<defs>
+							<linearGradient id={ `gradient-${ attributes.uniqueId }` }>
+								<stop offset="0%" stopColor={ attributes.progressColor1 } />
+								<stop offset="100%" stopColor={ attributes.progressColor2 } />
+							</linearGradient>
+						</defs>
+					) }
 					<circle className="stk-progress-circle__background" />
 					<circle className="stk-progress-circle__bar" />
 				</svg>
