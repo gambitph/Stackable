@@ -40,10 +40,10 @@ const getStyleParams = () => {
 			styleRule: '--progress-rounded',
 			attrName: 'progressRounded',
 			valuePreCallback: value => {
-				if ( typeof value === 'string' ) {
+				if ( typeof value === 'string' || value === false ) {
 					return undefined
 				}
-				return value ? 'round' : 'unset'
+				return 'round'
 			},
 		},
 	]
