@@ -56,13 +56,11 @@ const Edit = ( {
 	} )
 
 	useEffect( () => {
-		if ( attributes.progressSize ) {
-			setForceRedraw( true )
-			const timer = setTimeout( () => {
-				setForceRedraw( false )
-			} )
-			return () => clearTimeout( timer )
-		}
+		setForceRedraw( true )
+		const timer = setTimeout( () => {
+			setForceRedraw( false )
+		} )
+		return () => clearTimeout( timer )
 	}, [ attributes.progressSize ] )
 
 	return (
