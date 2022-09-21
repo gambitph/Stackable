@@ -94,7 +94,7 @@ const Edit = ( {
 					aria-valuenow={ derivedPercent }
 					aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
 				>
-					<svg viewBox={ `0 0 ${ attributes.progressSize } ${ attributes.progressSize }` } className={ workAroundClass }>
+					<svg className={ workAroundClass }>
 						<circle className="stk-progress-circle__background" />
 						<circle className="stk-progress-circle__bar" />
 					</svg>
