@@ -9,7 +9,7 @@ class StackableProgressCircle {
 		entries.forEach( entry => {
 			if ( entry.isIntersecting ) {
 				const el = entry.target
-				el.classList.add( 'animate' )
+				el.classList.add( 'stk-animate' )
 			}
 		} )
 	}
@@ -18,7 +18,7 @@ class StackableProgressCircle {
   	const els = document.querySelectorAll( '.stk-progress-circle' )
   	if ( ! ( 'IntersectionObserver' in window ) ) {
   		els.forEach( el => {
-  			el.classList.add( 'animate' )
+  			el.classList.add( 'stk-animate' )
   		} )
   	}
   	if ( this.io ) {

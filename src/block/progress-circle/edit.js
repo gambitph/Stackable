@@ -85,12 +85,14 @@ const Edit = ( {
 				<ProgressCircleStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-progress-circle" />
 				<div
-					className="stk-progress-circle animate"
+					className="stk-progress-circle stk-animate"
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
 					aria-valuenow={ derivedPercent }
-					aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
+					{ ...( attributes.progressAriaValueText && {
+						'aria-valuetext': striptags( attributes.progressAriaValueText ),
+					} ) }
 				>
 					<svg className={ workAroundClass }>
 						{ attributes.progressColorType === 'gradient' && (
@@ -105,7 +107,7 @@ const Edit = ( {
 						<circle className="stk-progress-circle__bar" />
 					</svg>
 					{ attributes.show && (
-						<div className="number">
+						<div className="stk-number">
 							<Typography
 								tagName="span"
 								className={ textClassNames }

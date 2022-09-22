@@ -131,6 +131,7 @@ export const Controls = props => {
 				<AdvancedTextControl
 					label={ __( 'Suffix', i18n ) }
 					attribute="textSuffix"
+					default="%"
 				/>
 			) }
 			{ hasRemoveMargins && (

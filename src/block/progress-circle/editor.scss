@@ -1,8 +1,14 @@
+@import "common";
+
 .stk-progress-circle {
 	svg {
+		circle {
+			will-change: width;
+			@include transition();
+		}
 		&.force-redraw {
 			circle {
-				width: auto;
+				width: 99.99%;
 			}
 		}
 	}

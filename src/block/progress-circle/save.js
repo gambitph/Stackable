@@ -56,7 +56,9 @@ const Save = props => {
 				aria-valuemin="0"
 				aria-valuemax="100"
 				aria-valuenow={ derivedPercent }
-				aria-valuetext={ striptags( attributes.progressAriaValueText || undefined ) }
+				{ ...( attributes.progressAriaValueText && {
+					'aria-valuetext': striptags( attributes.progressAriaValueText ),
+				} ) }
 			>
 				<svg>
 					{ attributes.progressColorType === 'gradient' && (
@@ -71,7 +73,7 @@ const Save = props => {
 					<circle className="stk-progress-circle__bar" />
 				</svg>
 				{ attributes.show && (
-					<div className="number">
+					<div className="stk-number">
 						<Typography.Content
 							tagName="span"
 							className={ textClassNames }

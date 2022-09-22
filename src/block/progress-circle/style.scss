@@ -1,7 +1,10 @@
 @import "common";
 
-.stk-block-progress-circle {
+div.stk-block-progress-circle {
 	display: flex;
+	&:not([class*="has-text-align-"]) {
+		justify-content: center;
+	}
 }
 
 .stk-progress-circle {
@@ -29,7 +32,7 @@
 		stroke-dashoffset: var(--progress-dash-array);
 		stroke: var(--progress-color-1, #3498db);
 	}
-	.number {
+	.stk-number {
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -41,7 +44,7 @@
 			@include transition();
 		}
 	}
-	&.animate {
+	&.stk-animate {
 		.stk-progress-circle__bar {
 			stroke-dashoffset: var(--progress-dash-offset);
 		}
