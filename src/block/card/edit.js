@@ -138,7 +138,7 @@ const Edit = props => {
 					<Image
 						className="stk-block-card__image"
 						enableWidth={ blockStyle === 'horizontal' }
-						enableHeight={ [ 'default', 'default-2' ].includes( blockStyle ) }
+						enableHeight={ hasHeight }
 						enableDiagonal={ false }
 						widthUnits={ widthUnit }
 						heightUnits={ heightUnit }

@@ -33,6 +33,8 @@ const getStyleParams = ( options = {} ) => {
 		enableWidth = true,
 		enableHeight = true,
 		widthStyleRule = null,
+		widthUnitCallback = null,
+		heightUnitCallback = null,
 	} = options
 
 	return [
@@ -42,6 +44,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'width',
 			attrName: 'imageWidth',
 			hasUnits: '%',
+			unitCallback: widthUnitCallback,
 			responsive: 'all',
 			enabledCallback: () => enableWidth,
 		},
@@ -51,6 +54,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: widthStyleRule || 'width',
 			attrName: 'imageWidth',
 			hasUnits: '%',
+			unitCallback: widthUnitCallback,
 			responsive: 'all',
 			enabledCallback: () => enableWidth,
 		},
@@ -60,6 +64,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'height',
 			attrName: 'imageHeight',
 			hasUnits: 'px',
+			unitCallback: heightUnitCallback,
 			responsive: 'all',
 			enabledCallback: () => enableHeight,
 		},
@@ -69,6 +74,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'height',
 			attrName: 'imageHeight',
 			hasUnits: 'px',
+			unitCallback: heightUnitCallback,
 			responsive: 'all',
 			enabledCallback: () => enableHeight,
 		},

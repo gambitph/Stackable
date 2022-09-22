@@ -229,6 +229,7 @@ class StyleObject {
 			enabledCallback = null, // Function that if returns false, will not render this style.
 			vendorPrefixes = [], // Add vendor prefixes to also generate for the styleRule, e.g. '-webkit-'
 			clampCallback = null, // Function that can be used to limit the value in tablet/mobile based on the desktop value
+			unitCallback = null, // Function that can override
 		} = styleParams
 
 		const getAttribute = ( _attrName, device = 'desktop', state = 'normal', getInherited = false ) => {
@@ -304,6 +305,11 @@ class StyleObject {
 						unit = desktopUnit
 					}
 				}
+			}
+
+			// Allow others to override the unit.
+			if ( unitCallback ) {
+				unit = unitCallback( unit, device, state )
 			}
 
 			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
