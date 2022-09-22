@@ -28,7 +28,6 @@ import {
 	Link,
 	Transform,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -96,7 +95,7 @@ const Edit = props => {
 						<Icon />
 					</Link>
 				</BlockDiv>
-				<MarginBottom previewSelector={ attributes.uniqueId ? `.${ getUniqueBlockClass( attributes.uniqueId ) } > .stk-block` : undefined } />
+				<MarginBottom />
 			</div>
 		</Fragment>
 	)

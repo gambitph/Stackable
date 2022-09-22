@@ -27,11 +27,7 @@ export const IconStyles = memo( props => {
 	return (
 		<Fragment>
 			<Alignment.Style { ...props } />
-			<BlockDiv.Style
-				{ ...props }
-				selector=".stk-block"
-				hoverSelector=".stk-block:hover"
-			/>
+			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
