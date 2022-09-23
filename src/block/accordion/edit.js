@@ -205,6 +205,7 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 				<IconControl
 					label={ __( 'Open Icon', i18n ) }
 					value={ getAttribute( 'icon2' ) }
+					defaultValue={ getAttribute( 'iconDefault2' ) }
 					onChange={ updateAttributeHandler( 'icon2' ) }
 					help={ __( 'The open icon will appear when the accordion is opened', i18n ) }
 				/>

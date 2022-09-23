@@ -52,6 +52,7 @@ const variations = applyFilters(
 						[ 'stackable/icon', {
 							icon: defaultIcon,
 							linkHasLink: false,
+							iconDefault: defaultIcon,
 						} ],
 					] ],
 				] ],
@@ -92,6 +93,7 @@ const variations = applyFilters(
 						[ 'stackable/icon', {
 							icon: defaultIcon,
 							linkHasLink: false,
+							iconDefault: defaultIcon,
 						} ],
 					] ],
 				] ],
