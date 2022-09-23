@@ -41,15 +41,15 @@ const ColorPaletteControl = memo( props => {
 		className = '',
 	} = props
 
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ _propsToPass, controlProps ] = extractControlProps( props )
+
 	let value = typeof props.value === 'undefined' ? _value : props.value
 	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6}/ ) ) {
 		value = value.match( /#[\d\w]{6}/ )[ 0 ]
 	}
 
 	const [ colorValue, setColorValue ] = useState( value )
-
-	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
-	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
 	const colors = compact( props.colors.map( color => {
 		// Make sure to only get color objects. If null, also return null.
