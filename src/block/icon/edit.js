@@ -50,11 +50,11 @@ const Edit = props => {
 		className,
 		'stk-block-icon',
 		blockAlignmentClass,
+		blockHoverClass,
 	] )
 
 	const wrapperClassNames = classnames( [
 		// getUniqueBlockClass( attributes.uniqueId ),
-		blockHoverClass,
 	] )
 
 	return (
