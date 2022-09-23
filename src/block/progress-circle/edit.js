@@ -59,7 +59,7 @@ const Edit = ( {
 		setForceRedraw( true )
 		const timer = setTimeout( () => {
 			setForceRedraw( false )
-		} )
+		}, [ 50 ] )
 		return () => clearTimeout( timer )
 	}, [ attributes.progressSize ] )
 
