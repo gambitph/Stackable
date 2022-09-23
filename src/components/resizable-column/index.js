@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { useDeviceEditorClasses } from './use-device-editor-classes'
 import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
 import { AdvancedTextControl } from '..'
 import { ColumnShowTooltipContext } from '../column-inner-blocks'
@@ -53,7 +52,6 @@ const ResizableColumn = props => {
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
 	const deviceType = useDeviceType()
-	useDeviceEditorClasses()
 
 	const [ currentWidths, setCurrentWidths ] = useState( [] )
 	const [ currentWidth, setCurrentWidth ] = useState( '' )
