@@ -1,4 +1,12 @@
+/**
+ * Internal dependencies
+ */
 import ProgressCircleStyles from './style'
+import { DEFAULT_PERCENT } from '../../block-components/progress-bar/attributes'
+
+/**
+ * External dependencies
+ */
 import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
@@ -17,13 +25,17 @@ import {
 	getAlignmentClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import classnames from 'classnames'
 import striptags from 'striptags'
 
+/**
+ * WordPress dependencies
+ */
 import { compose } from '@wordpress/compose'
 import { useState, useEffect } from '@wordpress/element'
-import { DEFAULT_PERCENT } from '../../block-components/progress-bar/attributes'
 
 const Edit = ( {
 	className, attributes,
@@ -123,6 +135,7 @@ const Edit = ( {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

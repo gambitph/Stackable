@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/progress-circle",
 	"title": "Progress Circle",
 	"description": "Adds a circular progress bar block.",
