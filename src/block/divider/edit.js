@@ -31,8 +31,10 @@ import {
 	AdvancedRangeControl,
 	ColorPaletteControl,
 } from '~stackable/components'
-import { useBlockHoverClass, useBlockStyle } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockStyle } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -47,14 +49,12 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( blockStyles )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-divider',
-		blockHoverClass,
 		blockAlignmentClass,
 	] )
 
@@ -121,6 +121,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

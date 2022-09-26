@@ -10,7 +10,6 @@ import {
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import { useBlockAttributesContext } from '~stackable/hooks'
-import { useDeviceEditorClasses } from '~stackable/components/resizable-column/use-device-editor-classes'
 
 /**
  * WordPress dependencies
@@ -38,9 +37,6 @@ const HTML_TAG_OPTIONS = [
 ]
 
 export const Edit = () => {
-	// Needed for position sticky attribute.
-	useDeviceEditorClasses()
-
 	const attributes = useBlockAttributesContext()
 
 	return (

@@ -19,8 +19,9 @@ import {
 	AdvancedSelectControl,
 	AlignButtonsControl,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	Typography,
 	BlockDiv,
@@ -161,7 +162,6 @@ const Edit = props => {
 	const { ordered } = attributes
 	const tagName = ordered ? 'ol' : 'ul'
 
-	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -169,7 +169,6 @@ const Edit = props => {
 		className,
 		'stk-block-icon-list',
 		blockAlignmentClass,
-		blockHoverClass,
 		textClasses,
 	] )
 
@@ -379,6 +378,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

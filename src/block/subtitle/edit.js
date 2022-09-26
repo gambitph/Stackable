@@ -25,8 +25,11 @@ import {
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
+} from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
 
 /**
@@ -59,14 +62,12 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-subtitle',
-		blockHoverClass,
 	] )
 
 	const textClassNames = classnames( [
@@ -135,6 +136,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

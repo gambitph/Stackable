@@ -14,7 +14,7 @@ import { find, omit } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import { select, dispatch } from '@wordpress/data'
-import { useState } from '@wordpress/element'
+import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { createBlocksFromInnerBlocksTemplate, getBlockVariations } from '@wordpress/blocks'
 
@@ -23,14 +23,28 @@ export const useSavedDefaultBlockStyle = blockProps => {
 		clientId, name, attributes,
 	} = blockProps
 	const [ isApplied, setIsApplied ] = useState( false )
+	const [ replaceInnerBlocks, setReplaceInnerBlocks ] = useState( null )
 
-	// Only do this for Stackable blocks.
-	if ( ! name.startsWith( 'stackable/' ) ) {
+	// Dispatch the replace inner blocks inside a useEffect to prevent updating
+	// during render.
+	useEffect( () => {
+		if ( clientId && replaceInnerBlocks ) {
+			dispatch( 'core/block-editor' ).replaceInnerBlocks(
+				clientId,
+				replaceInnerBlocks,
+				false,
+			)
+			setReplaceInnerBlocks( null )
+		}
+	}, [ clientId, replaceInnerBlocks ] )
+
+	// Unique ID setting is immediate, so we need to catch if we can apply the default block styles.
+	if ( ! name.startsWith( 'stackable/' ) || attributes.uniqueId ) {
 		return
 	}
 
 	// Apply the default saved styles to the block.
-	if ( ! isApplied && ! attributes.uniqueId ) {
+	if ( ! isApplied ) {
 		// If there is a variation, it means there is a variation/layout picker, in
 		// this case the variation picker will do the job.
 		const hasVariations = getBlockVariations( name ).length > 0
@@ -71,6 +85,7 @@ export const useSavedDefaultBlockStyle = blockProps => {
 			}
 
 			// Apply the saved attributes to the block.
+			// console.log( 'applied!' )
 			Object.keys( newAttributes ).forEach( attrName => {
 				attributes[ attrName ] = newAttributes[ attrName ]
 			} )
@@ -80,11 +95,7 @@ export const useSavedDefaultBlockStyle = blockProps => {
 				const innerBlocks = createBlocksFromInnerBlocksTemplate( blockData.innerBlocks )
 				// We need to add unique Ids to prevent the default styles from getting applied.
 				recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
-				dispatch( 'core/block-editor' ).replaceInnerBlocks(
-					clientId,
-					innerBlocks,
-					false,
-				)
+				setReplaceInnerBlocks( innerBlocks ) // replaceInnerBlocks in useEffect to prevent React error.
 			}
 
 			// This can repeat because of nested blocks, ens

@@ -44,7 +44,15 @@ export const CardStyles = memo( props => {
 			/>
 			<Image.Style
 				{ ...props }
-				enableWidth={ blockStyle === 'horizontal' }
+				enableWidth={ blockStyle.name === 'horizontal' }
+				widthUnitCallback={ ( unit, device ) => {
+					if ( blockStyle.name === 'horizontal' ) {
+						if ( device === 'tablet' ) {
+							return 'px'
+						}
+					}
+					return unit
+				} }
 				selector=".stk-block-card__image"
 			/>
 		</Fragment>

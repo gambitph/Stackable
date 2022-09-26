@@ -328,7 +328,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'primaryColor' => get_theme_mod( 's_primary_color', '#2091e1' ),
 
 				// Premium related variables.
-				'isPro' => sugb_fs()->can_use_premium_code(),
+				'isPro' => STACKABLE_BUILD === 'premium' && sugb_fs()->can_use_premium_code(),
 				'showProNotice' => stackable_should_show_pro_notices(),
 				'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 				'planName' => sugb_fs()->is_plan( 'starter', true ) ? 'starter' :

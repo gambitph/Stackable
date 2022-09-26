@@ -9,7 +9,7 @@ import BlockStyles from './style'
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
 import { InspectorTabs } from '~stackable/components'
-import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -26,13 +26,16 @@ import {
 	getAlignmentClasses,
 	Link,
 } from '~stackable/block-components'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 const heightUnit = [ 'px', 'vh', '%' ]
@@ -45,7 +48,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { parentBlock } = useBlockContext( clientId )
 
@@ -57,13 +59,11 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-image',
-		blockHoverClass,
 		blockAlignmentClass,
 	] )
 
 	return (
-		<Fragment>
-
+		<>
 			<InspectorTabs />
 
 			<Alignment.InspectorControls />
@@ -92,11 +92,12 @@ const Edit = props => {
 				/>
 			</BlockDiv>
 			<MarginBottom />
-		</Fragment>
+		</>
 	)
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

@@ -26,7 +26,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 			responsive: 'all',
 			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
-			depenencies: [ 'innerBlockOrientation' ],
+			dependencies: [ 'innerBlockOrientation' ],
 		},
 
 		{
@@ -37,7 +37,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 			responsive: 'all',
 			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
-			depenencies: [ 'innerBlockOrientation' ],
+			dependencies: [ 'innerBlockOrientation' ],
 		},
 	]
 }

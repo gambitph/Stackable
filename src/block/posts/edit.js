@@ -25,9 +25,16 @@ import {
 	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass, useBlockStyle, usePostsQuery, useAttributeEditHandlers, useDeviceType,
+	useBlockStyle,
+	usePostsQuery,
+	useAttributeEditHandlers,
+	useDeviceType,
 } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	getAlignmentClasses,
 	BlockDiv,
@@ -101,7 +108,6 @@ const Edit = props => {
 		uniqueId,
 	} = attributes
 
-	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const blockStyle = useBlockStyle( variations )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
@@ -120,7 +126,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-posts',
-		blockHoverClass,
 		blockAlignmentClass,
 	], {
 		'stk--has-container': attributes.hasContainer,
@@ -430,6 +435,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

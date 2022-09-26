@@ -80,7 +80,7 @@ const BlockStyles = memo( props => {
 				{ ...props }
 				columnAlignSelectorCallback={ () => `.editor-styles-wrapper [data-block="${ clientId }"]` }
 			/>
-			<BlockDiv.Style { ...props } />
+			<BlockDiv.Style { ...props } verticalAlignSelectorEdit="> .stk-inner-blocks" />
 			<Column.Style { ...props } />
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<Advanced.Style { ...props } />

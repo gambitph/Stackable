@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/notification",
 	"title": "Notification",
 	"description": "Show a notice to your readers. People can dismiss the notice to permanently hide it.",

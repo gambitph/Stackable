@@ -32,8 +32,10 @@ import {
 	useContentAlignmentClasses,
 	ContainerDiv,
 } from '~stackable/block-components'
-import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockContext } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -53,7 +55,6 @@ const Edit = props => {
 	const rowClass = props.attributes.alignVertical ? undefined : getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 	const { hasInnerBlocks } = useBlockContext()
 
@@ -61,7 +62,6 @@ const Edit = props => {
 		className,
 		'stk-block-feature',
 		rowClass,
-		blockHoverClass,
 		separatorClass,
 		columnTooltipClass,
 	] )
@@ -114,6 +114,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

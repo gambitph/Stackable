@@ -16,8 +16,9 @@ import {
 	AdvancedRangeControl,
 	AdvancedToggleControl,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -52,12 +53,9 @@ const Edit = props => {
 		separatorInverted,
 	} = attributes
 
-	const blockHoverClass = useBlockHoverClass()
-
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-separator',
-		blockHoverClass,
 		'stk--no-padding',
 	] )
 
@@ -129,6 +127,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
