@@ -32,10 +32,10 @@ import {
 	FlexGapControls,
 	Transform,
 } from '~stackable/block-components'
+import { useBlockContext, useDeviceType } from '~stackable/hooks'
 import {
-	useBlockContext, useBlockHoverClass, useDeviceType,
-} from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -65,14 +65,12 @@ const Edit = props => {
 	const deviceType = useDeviceType()
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const blockHoverClass = useBlockHoverClass()
 	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-button-group',
 		rowClass,
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -208,6 +206,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

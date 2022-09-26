@@ -19,13 +19,13 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockHoverClass, useDeviceType } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, ResizerTooltip,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
 import {
-	withBlockAttributeContext, withIsHovered, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -61,11 +61,9 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const deviceType = useDeviceType()
-	const blockHoverClass = useBlockHoverClass()
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-spacer',
-		blockHoverClass,
 		'stk--no-padding',
 	] )
 
@@ -172,7 +170,7 @@ const Edit = props => {
 }
 
 export default compose(
-	withIsHovered,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

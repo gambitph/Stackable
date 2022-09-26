@@ -16,9 +16,11 @@ import {
 	InspectorTabs,
 } from '~stackable/components'
 import {
-	useBlockContext, useBlockHoverClass, useBlockStyle, useDeviceType,
+	useBlockContext, useBlockStyle, useDeviceType,
 } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -69,12 +71,10 @@ const Edit = props => {
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( variations )
-	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-card',
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -164,6 +164,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

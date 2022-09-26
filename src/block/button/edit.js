@@ -20,8 +20,10 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockHoverClass, useBlockStyle } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockStyle } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -29,9 +31,7 @@ import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/high
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { createBlock } from '@wordpress/blocks'
-import {
-	AlignmentToolbar, BlockControls, useBlockProps,
-} from '@wordpress/block-editor'
+import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
@@ -49,16 +49,9 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const {
-		buttonFullWidth,
-	} = attributes
-
-	const blockProps = useBlockProps( { style: { width: buttonFullWidth ? '100%' : undefined } } ) || {}
-
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockStyle = useBlockStyle( blockStyles )
@@ -67,7 +60,6 @@ const Edit = props => {
 		className,
 		'stk-block-button',
 		blockAlignmentClass,
-		blockHoverClass,
 		// We need to add the blockStyle here to append the class alongside `.stk-block`
 		// Only in the editor.
 		{
@@ -113,44 +105,43 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<div { ...blockProps }>
-				<ButtonStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-block-button" />
+			<ButtonStyles version={ VERSION } />
+			<CustomCSS mainBlockClass="stk-block-button" />
 
-				<BlockDiv
-					className={ blockClassNames }
-					applyAdvancedAttributes={ false }
-					applyCustomAttributes={ false }
+			<BlockDiv
+				className={ blockClassNames }
+				applyAdvancedAttributes={ false }
+				applyCustomAttributes={ false }
+			>
+				<Button
+					buttonProps={ {
+						tagName: props.attributes.linkTag,
+						id: props.attributes.anchor || undefined,
+						...customAttributes,
+					} }
 				>
-					<Button
-						buttonProps={ {
-							tagName: props.attributes.linkTag,
-							id: props.attributes.anchor || undefined,
-							...customAttributes,
-						} }
-					>
-						<Typography
-							tagName="span"
-							className={ typographyInnerClassNames }
-							placeholder={ __( 'Button text', i18n ) }
-							withoutInteractiveFormatting={ true }
-							onReplace={ onReplace }
-							onSplit={ value => createBlock(
-								'stackable/button',
-								{
-									...props.attributes, text: value,
-								}
-							) }
-						/>
-					</Button>
-				</BlockDiv>
-			</div>
+					<Typography
+						tagName="span"
+						className={ typographyInnerClassNames }
+						placeholder={ __( 'Button text', i18n ) }
+						withoutInteractiveFormatting={ true }
+						onReplace={ onReplace }
+						onSplit={ value => createBlock(
+							'stackable/button',
+							{
+								...props.attributes, text: value,
+							}
+						) }
+					/>
+				</Button>
+			</BlockDiv>
 
 		</>
 	)
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

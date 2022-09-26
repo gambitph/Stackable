@@ -32,8 +32,9 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -51,13 +52,11 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-number-box',
-		blockHoverClass,
 		blockAlignmentClass,
 	], {
 		'stk--has-shape': props.attributes.hasShape,
@@ -129,6 +128,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

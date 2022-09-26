@@ -30,8 +30,10 @@ import {
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 } from '~stackable/components'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockContext } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
 
 /**
@@ -65,7 +67,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const {
@@ -77,7 +78,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-text',
-		blockHoverClass,
 	] )
 
 	const textClassNames = classnames( [
@@ -182,6 +182,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

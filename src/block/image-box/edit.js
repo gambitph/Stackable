@@ -15,8 +15,10 @@ import {
 	InspectorBottomTip,
 	InspectorTabs,
 } from '~stackable/components'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockContext } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -59,13 +61,11 @@ const Edit = props => {
 
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 	const rowClass = getRowClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-image-box',
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -119,6 +119,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

@@ -380,12 +380,42 @@ class StyleObject {
 			return getSelector( _selector )
 		}
 
+		const appendClass = ( _selector, prependString, prependStringIfEditor, blockStateCompare ) => {
+			const getSelector = s => {
+				return `${ s }${ blockState === blockStateCompare ? prependStringIfEditor : prependString }`
+			}
+
+			if ( Array.isArray( _selector ) ) {
+				return _selector.map( getSelector ).join( ', ' )
+			}
+
+			return getSelector( _selector )
+		}
+
 		const collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open', ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open', 'collapsed' )
 		const parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .%s', '.%s.stk--is-hovered', 'parent-hovered' )
-		hoverSelector = hoverSelector
-			// In editor, always use the `selector` instead of the hoverSelector.
-			? prependClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.%s.stk--is-hovered', 'hover' )
-			: prependClass( selector, '.%s:hover', '.%s.stk--is-hovered', 'hover' )
+
+		// Create the hoverSelector, this is done by prepending the selector
+		// with a '.%s:hover' class (%s is replaced with the block's unique
+		// class) However, for the editor, we sometimes target the block itself
+		// using the selector `[data-block="clientId"]`, for these scenarios the
+		// method will not work. Instead we just append `:hover` to the block
+		// selector directly.
+		const selectorHasDataBlock = ( hoverSelector || selector ).includes( '[data-block=' ) && ( hoverSelector || selector ).endsWith( ']' )
+		if ( ! selectorHasDataBlock ) {
+			// Prepend .%s:hover to the selector.
+			hoverSelector = hoverSelector
+				// In editor, always use the `selector` instead of the hoverSelector.
+				? prependClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.%s.stk--is-hovered', 'hover' )
+				: prependClass( selector, '.%s:hover', '.%s.stk--is-hovered', 'hover' )
+		} else {
+			// If there is a [data-block] append the :hover or .stk-is-hovered directly to it.
+			hoverSelector = hoverSelector
+				// In editor, always use the `selector` instead of the hoverSelector.
+				? appendClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.stk--is-hovered', 'hover' )
+				: appendClass( selector, ':hover', '.stk--is-hovered', 'hover' )
+		}
+
 		selector = prependClass( selector )
 
 		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), desktopQuery, renderIn, vendorPrefixes )

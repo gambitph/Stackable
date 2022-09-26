@@ -24,7 +24,9 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -98,6 +100,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

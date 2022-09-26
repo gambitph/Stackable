@@ -5,10 +5,12 @@ import { Edit } from './edit'
 
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
-import { useBlockAttributesContext, useVariationPicker } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockHoverClass, useVariationPicker,
+} from '~stackable/hooks'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
 
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { useBlockEditContext, useBlockProps } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { getHtmlTag } from '../advanced/use-html-tag'
 import { CustomAttributes } from '../custom-attributes'
@@ -28,6 +30,7 @@ export const BlockDiv = props => {
 
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributesContext()
+	const blockHoverClass = useBlockHoverClass()
 
 	useUniqueId( attributes, ! enableVariationPicker )
 
@@ -52,6 +55,7 @@ export const BlockDiv = props => {
 	const classNames = classnames( [
 		className,
 		'stk-block',
+		blockHoverClass,
 		{
 			[ uniqueBlockClass ]: withUniqueClass,
 		},
@@ -112,7 +116,7 @@ BlockDiv.Content = props => {
 	return <Div.Content
 		{ ...propsToPass }
 		{ ...customAttributes }
-		className={ classNames }
+		{ ...useBlockProps.save( { className: classNames } ) }
 		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
 		data-block-id={ attributes.uniqueId || undefined }
 		blockTag={ htmlTag }

@@ -31,10 +31,10 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
+import { useAttributeEditHandlers, useBlockContext } from '~stackable/hooks'
 import {
-	useAttributeEditHandlers, useBlockHoverClass, useBlockContext,
-} from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * Internal dependencies
@@ -67,7 +67,6 @@ const Edit = props => {
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	// Opens or closes the accordion when the heading is clicked.
 	useEffect( () => {
@@ -106,7 +105,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-accordion',
-		blockHoverClass,
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
@@ -166,6 +164,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

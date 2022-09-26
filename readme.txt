@@ -255,6 +255,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Icon block margin and size options not displaying correctly in the editor
 * Fixed: Card block horizontal layout image resizing issues in tablet and mobile
 * Fixed: Hero block can get an error when switching layouts
+* Fixed: Accordion content in the editor overlapped sometimes
+* Fixed: Some styles did not show in the editor when changing hover states
 
 = 3.4.5 =
 * Fixed: Accordion containers incorrectly collapsed when placed inside columns

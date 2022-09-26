@@ -8,10 +8,14 @@ import classnames from 'classnames'
 import { omit } from 'lodash'
 import { version as VERSION, i18n } from 'stackable'
 import {
-	InspectorTabs, InspectorAdvancedControls, PanelAdvancedSettings, AdvancedTextControl,
+	InspectorTabs,
+	InspectorAdvancedControls,
+	PanelAdvancedSettings,
+	AdvancedTextControl,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -36,7 +40,6 @@ import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
-import { useBlockProps } from '@wordpress/block-editor'
 
 const Edit = props => {
 	const { className, attributes } = props
@@ -44,17 +47,11 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon',
 		blockAlignmentClass,
-		blockHoverClass,
-	] )
-
-	const wrapperClassNames = classnames( [
-		// getUniqueBlockClass( attributes.uniqueId ),
 	] )
 
 	return (
@@ -87,21 +84,20 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<div { ...useBlockProps( { className: wrapperClassNames } ) }>
-				<IconStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-block-icon" />
-				<BlockDiv className={ blockClassNames } >
-					<Link linkTrigger=".stk--inner-svg">
-						<Icon />
-					</Link>
-				</BlockDiv>
-				<MarginBottom />
-			</div>
+			<IconStyles version={ VERSION } />
+			<CustomCSS mainBlockClass="stk-block-icon" />
+			<BlockDiv className={ blockClassNames } >
+				<Link linkTrigger=".stk--inner-svg">
+					<Icon />
+				</Link>
+			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

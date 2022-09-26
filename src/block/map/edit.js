@@ -24,7 +24,7 @@ import {
 	ResizerTooltip,
 	StyleControl,
 } from '~stackable/components'
-import { useBlockHoverClass, useDeviceType } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -40,7 +40,7 @@ import {
 	getAlignmentClasses,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withIsHovered, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import { currentUserHasCapability, getAttributeName } from '~stackable/util'
 
@@ -128,13 +128,11 @@ const Edit = props => {
 	}, [ apiKey ] )
 
 	const deviceType = useDeviceType()
-	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-map',
-		blockHoverClass,
 		blockAlignmentClass,
 	] )
 
@@ -535,7 +533,7 @@ const Edit = props => {
 }
 
 export default compose(
-	withIsHovered,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

@@ -14,9 +14,9 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withIsHovered, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	Column,
@@ -43,7 +43,6 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -64,7 +63,6 @@ const Edit = props => {
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, props )
 
@@ -73,7 +71,6 @@ const Edit = props => {
 		'stk-block-column',
 		'stk-block-column--v2',
 		columnClass,
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -86,8 +83,7 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
-
+		<>
 			<InspectorTabs />
 
 			<Alignment.InspectorControls hasColumnAlignment={ true } />
@@ -100,9 +96,6 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-column" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-
-			<BlockStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-block-column" />
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
@@ -125,6 +118,9 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
+			<BlockStyles version={ VERSION } />
+			<CustomCSS mainBlockClass="stk-block-column" />
+
 			<Column showHandle={ isHovered } context={ props.context }>
 				<Linking show={ isHovered } />
 				<BlockDiv className={ blockClassNames }>
@@ -139,12 +135,12 @@ const Edit = props => {
 					</ContainerDiv>
 				</BlockDiv>
 			</Column>
-		</Fragment>
+		</>
 	)
 }
 
 export default compose(
-	withIsHovered,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

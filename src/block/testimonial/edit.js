@@ -33,11 +33,10 @@ import {
 	ContentAlign,
 	useContentAlignmentClasses,
 } from '~stackable/block-components'
+import { useBlockContext } from '~stackable/hooks'
 import {
-	useBlockContext,
-	useBlockHoverClass,
-} from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -57,12 +56,10 @@ const Edit = props => {
 
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-testimonial',
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -116,6 +113,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

@@ -25,8 +25,9 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -71,12 +72,10 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-expand',
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -124,6 +123,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
@@ -143,3 +143,10 @@ addFilter( 'stackable.edit.link.enable-link-popup', 'stackable/expand', ( enable
 	return parentBlock?.name === 'stackable/expand' ? false : enabled
 } )
 
+// Prevent the expand block link from being being styled with a saved default style.
+addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/expand', ( enabled, block, parentBlockNames ) => {
+	if ( block.name === 'stackable/button' && parentBlockNames.length >= 1 && parentBlockNames[ parentBlockNames.length - 1 ] === 'stackable/expand' ) {
+		return false
+	}
+	return enabled
+} )

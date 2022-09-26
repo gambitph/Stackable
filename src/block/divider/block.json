@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/divider",
 	"title": "Divider",
 	"description": "Add a pause between your content.",

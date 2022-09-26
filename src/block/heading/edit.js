@@ -27,19 +27,24 @@ import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import { kebabCase } from 'lodash'
 import {
-	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, ColorPaletteControl, AdvancedRangeControl, AlignButtonsControl,
+	InspectorTabs,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	ColorPaletteControl,
+	AdvancedRangeControl,
+	AlignButtonsControl,
 } from '~stackable/components'
-import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import { createBlockCompleter } from '~stackable/util'
-import { withBlockAttributeContext, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import {
-	Fragment, useEffect, useState,
-} from '@wordpress/element'
+import { useEffect, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
 import { useDispatch } from '@wordpress/data'
@@ -70,14 +75,12 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const { parentBlock } = useBlockContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-heading',
-		blockHoverClass,
 	] )
 
 	const textClassNames = classnames( [
@@ -121,8 +124,7 @@ const Edit = props => {
 	}
 
 	return (
-		<Fragment>
-
+		<>
 			<InspectorTabs />
 
 			<Alignment.InspectorControls />
@@ -254,11 +256,12 @@ const Edit = props => {
 				{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 			</BlockDiv>
 			<MarginBottom />
-		</Fragment>
+		</>
 	)
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

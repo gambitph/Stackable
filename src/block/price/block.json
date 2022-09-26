@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/price",
 	"title": "Price",
 	"description": "Show a price of a product or service with currency and a suffix styled with different weights",
