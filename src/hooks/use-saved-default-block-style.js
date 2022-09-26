@@ -79,15 +79,17 @@ export const useSavedDefaultBlockStyle = blockProps => {
 				attributes[ attrName ] = newAttributes[ attrName ]
 			} )
 
+			if ( blockData.innerBlocks?.length ) {
 			// Create and apply the innerBlocks.
-			const innerBlocks = createBlocksFromInnerBlocksTemplate( blockData.innerBlocks )
-			// We need to add unique Ids to prevent the default styles from getting applied.
-			recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
-			replaceInnerBlocks(
-				clientId,
-				innerBlocks,
-				false,
-			)
+				const innerBlocks = createBlocksFromInnerBlocksTemplate( blockData.innerBlocks )
+				// We need to add unique Ids to prevent the default styles from getting applied.
+				recursivelyAddUniqueIdToInnerBlocks( innerBlocks )
+				replaceInnerBlocks(
+					clientId,
+					innerBlocks,
+					false,
+				)
+			}
 
 			// This can repeat because of nested blocks, ens
 			setIsApplied( true )
