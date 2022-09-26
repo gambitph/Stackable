@@ -184,6 +184,14 @@ const HighlightButton = props => {
 	// If highlighted, show the highlight color, otherwise show the text color.
 	const displayIconColor = ( colorType !== '' ? highlightColor : textColor ) || textColor
 
+	const onChangeColorHandler = useCallback( newTextColor => {
+		onChange( createApplyFormat( value, colorType, newTextColor, highlightColor ), { withoutHistory: true } )
+	}, [ value, colorType, highlightColor ] )
+
+	const onChangeHighlightHandler = useCallback( newHighlightColor => {
+		onChange( createApplyFormat( value, colorType, textColor, newHighlightColor ), { withoutHistory: true } )
+	}, [ value, colorType, textColor ] )
+
 	if ( block.name === 'stackable/button' ) {
 		return null
 	}
@@ -246,9 +254,7 @@ const HighlightButton = props => {
 								<ColorPaletteControl
 									label={ __( 'Text Color', i18n ) }
 									value={ textColor }
-									onChange={ textColor => {
-										onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
-									} }
+									onChange={ onChangeColorHandler }
 								/>
 							</div>
 							{ colorType !== '' &&
@@ -256,9 +262,7 @@ const HighlightButton = props => {
 									<ColorPaletteControl
 										label={ __( 'Highlight Color', i18n ) }
 										value={ highlightColor }
-										onChange={ highlightColor => {
-											onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
-										} }
+										onChange={ onChangeHighlightHandler }
 									/>
 								</div>
 							}
