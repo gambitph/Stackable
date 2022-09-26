@@ -248,7 +248,7 @@ export const importBlocks = r => {
 		}
 
 		// Add any varations if any.
-		( meta.variations || [] ).forEach( variation => {
+		( meta[ 'stk-variants' ] || [] ).forEach( variation => {
 			const type = variation[ 'stk-type' ]
 			if ( type ) {
 				if ( ! blocks[ type ] ) {

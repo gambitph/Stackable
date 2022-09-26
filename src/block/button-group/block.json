@@ -7,6 +7,15 @@
 	"keywords": [
 		"Link"
 	],
+	"stk-variants": [
+		{
+			"name": "social-buttons",
+			"title": "Social Buttons",
+			"description": "Add social buttons.",
+			"category": "stackable",
+			"stk-type": "special"
+		}
+	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special"
+	"stk-type": "hidden"
 }
