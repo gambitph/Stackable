@@ -419,6 +419,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-kadence-theme';
 			} else if ( class_exists( 'Storefront' ) ) {
 				$classes[] = 'stk--is-storefront-theme';
+			} else if ( function_exists( 'twenty_twenty_one_setup' ) ) {
+				$classes[] = 'stk--is-twentytwentyone-theme';
 			} else if ( function_exists( 'twentytwentytwo_support' ) ) {
 				$classes[] = 'stk--is-twentytwentytwo-theme';
 			}

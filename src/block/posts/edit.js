@@ -53,7 +53,7 @@ import {
 	MarginBottom,
 	Transform,
 	ContentAlign,
-	useContentAlignmentClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -120,7 +120,7 @@ const Edit = props => {
 
 	const wrapperClassNames = classnames(
 		'stk-inner-blocks',
-		useContentAlignmentClasses( attributes ),
+		getContentAlignmentClasses( attributes ),
 	)
 
 	const blockClassNames = classnames( [

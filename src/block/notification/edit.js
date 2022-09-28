@@ -36,7 +36,7 @@ import {
 	BlockLink,
 	Transform,
 	ContentAlign,
-	useContentAlignmentClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -78,7 +78,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-notification__content',
-	], useContentAlignmentClasses( attributes ) )
+	], getContentAlignmentClasses( attributes ) )
 
 	const lastBlockName = last( innerBlocks )?.name
 	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender

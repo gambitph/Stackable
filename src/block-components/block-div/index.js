@@ -51,11 +51,11 @@ export const BlockDiv = props => {
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
 	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
-
 	const classNames = classnames( [
 		className,
 		'stk-block',
 		blockHoverClass,
+		attributes.className, // Custom CSS classes.
 		{
 			[ uniqueBlockClass ]: withUniqueClass,
 		},

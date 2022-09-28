@@ -28,7 +28,7 @@ import {
 	ContainerDiv,
 	BlockLink,
 	ContentAlign,
-	useContentAlignmentClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -65,7 +65,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		`stk-${ props.attributes.uniqueId }-container`,
 		'stk-block-pricing-box__content',
-	], useContentAlignmentClasses( props.attributes ) )
+	], getContentAlignmentClasses( props.attributes ) )
 
 	const lastBlockName = last( innerBlocks )?.name
 	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender

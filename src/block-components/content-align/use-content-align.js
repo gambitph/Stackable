@@ -13,10 +13,3 @@ export const getContentAlignmentClasses = attributes => {
 			alignfull: attributes.innerBlockContentAlign === 'alignfull', // This will align the columns inside.
 		} )
 }
-
-export const useContentAlignmentClasses = attributes => {
-	return classnames( {
-		'wp-block': !! attributes.innerBlockContentAlign, // Only in the backend.
-	}, getContentAlignmentClasses( attributes ) )
-}
-

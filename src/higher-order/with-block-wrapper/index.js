@@ -21,7 +21,7 @@ import { createHigherOrderComponent } from '@wordpress/compose'
 const withBlockWrapper = createHigherOrderComponent(
 	WrappedComponent => props => {
 		return (
-			<BlockWrapper>
+			<BlockWrapper attributes={ props.attributes }>
 				<WrappedComponent { ...props } />
 			</BlockWrapper>
 		)
