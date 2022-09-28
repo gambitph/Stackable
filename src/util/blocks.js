@@ -24,6 +24,7 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	getCategories,
 	setCategories,
+	registerBlockType as _registerBlockType,
 } from '@wordpress/blocks'
 import {
 	dispatch, select, useSelect,
@@ -101,7 +102,7 @@ export const applyBlockDesign = ( attributes, clientId = null ) => {
 	// Check for any Fonts that we need to load.
 	loadGoogleFontInAttributes( blockAttributes )
 
-	updateBlockAttributes( blockClientId, omit( blockAttributes, [ 'uniqueClass' ] ) )
+	updateBlockAttributes( blockClientId, omit( blockAttributes, [ 'uniqueClass' ] ) ) // eslint-disable-line stackable/no-update-block-attributes
 }
 
 /**
@@ -286,7 +287,7 @@ export const extractBlockStyleStructure = ( clientId, rootClientId ) => {
 		const { getBlock, getBlockParents } = select( 'core/block-editor' )
 		const block = getBlock( currentClientId )
 		const currentBlockName = block.name
-		const parentClientId = last( getBlockParents( currentClientId ) )
+		const parentClientId = last( getBlockParents( currentClientId ) ) // eslint-disable-line stackable/no-get-block-parents
 
 		if ( ! parentClientId || parentClientId === currentClientId ) {
 			structureArray.unshift( {
@@ -324,7 +325,7 @@ export const extractBlockStyleStructure = ( clientId, rootClientId ) => {
 		if ( currentClientId === rootClientId ) {
 			currentClientId = null
 		} else {
-			currentClientId = last( select( 'core/block-editor' ).getBlockParents( currentClientId ) )
+			currentClientId = last( select( 'core/block-editor' ).getBlockParents( currentClientId ) ) // eslint-disable-line stackable/no-get-block-parents
 		}
 	}
 
@@ -429,7 +430,7 @@ const getNthTypeOfBlock = currentClientId => {
 	const { getBlock, getBlockParents } = select( 'core/block-editor' )
 	const block = getBlock( currentClientId )
 	const currentBlockName = block.name
-	const parentClientId = last( getBlockParents( currentClientId ) )
+	const parentClientId = last( getBlockParents( currentClientId ) ) // eslint-disable-line stackable/no-get-block-parents
 
 	if ( ! parentClientId || parentClientId === currentClientId ) {
 		return 1
@@ -462,4 +463,27 @@ export const addStackableBlockCategory = () => {
 			...getCategories(),
 		] )
 	}
+}
+
+/**
+ * Registers a block. Use this instead of the registerBlockType found in @wordpress/blocks
+ *
+ * @param {string} name The namespaced name of the block
+ * @param {Object} _settings The block properties to register
+ */
+export const registerBlockType = ( name, _settings ) => {
+	let settings = applyFilters( `stackable.block.metadata`, _settings || {} )
+
+	// Workaround to remove the .wp-block[data-align] div wrapper for wide and full
+	// width alignments.  Since we removed this, we add our own data-align attribute
+	// in the BlockWrapper in src/components/block-wrapper (this is used by all our
+	// blocks)
+	settings.getEditWrapperProps = () => {
+		return {
+			'data-align': undefined,
+		}
+	}
+
+	settings = applyFilters( `stackable.${ name.replace( 'stackable/', '' ) }.settings`, settings )
+	_registerBlockType( name, settings )
 }

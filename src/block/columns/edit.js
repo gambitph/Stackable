@@ -33,7 +33,7 @@ import {
 	getSeparatorClasses,
 	Transform,
 	ContentAlign,
-	useContentAlignmentClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -80,7 +80,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	], useContentAlignmentClasses( props.attributes ) )
+	], getContentAlignmentClasses( props.attributes ) )
 
 	return (
 		<>

@@ -13,17 +13,13 @@ import './disabled-blocks'
 /**
  * External dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
-import { addStackableBlockCategory } from '~stackable/util'
+import { addStackableBlockCategory, registerBlockType } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import {
-	getBlockType,
-	registerBlockType,
-} from '@wordpress/blocks'
+import { getBlockType } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 
 // Register our block category.
@@ -50,7 +46,7 @@ const importAllAndRegister = r => {
 
 		// Register the block.
 		if ( ! getBlockType( name ) ) {
-			registerBlockType( name, applyFilters( `stackable.${ name.replace( 'stackable/', '' ) }.settings`, settings ) )
+			registerBlockType( name, settings )
 		}
 	} )
 }
