@@ -30,7 +30,7 @@ const ProgressCircleStyles = memo( props => {
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
-			<ProgressBar.Style { ...props } />
+			<ProgressBar.Style { ...props } isCircle />
 			<Typography.Style { ...props } { ...typographyOptions } />
 		</>
 	)
@@ -58,7 +58,7 @@ ProgressCircleStyles.Content = props => {
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ProgressBar.Style.Content { ...propsToPass } />
+			<ProgressBar.Style.Content { ...propsToPass } isCircle />
 			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
 		</>
 	)

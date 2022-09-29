@@ -1,4 +1,6 @@
 export const DEFAULT_SIZE = 150
+export const DEFAULT_HEIGHT = 32
+
 export const DEFAULT_THICKNESS = 8
 export const DEFAULT_PERCENT = 50
 

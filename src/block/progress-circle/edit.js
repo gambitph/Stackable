@@ -57,7 +57,7 @@ const Edit = ( {
 		textClasses,
 	] )
 
-	const derivedPercent = attributes.progressPercent || DEFAULT_PERCENT
+	const derivedPercent = typeof attributes.progressPercent === 'string' ? DEFAULT_PERCENT : attributes.progressPercent
 	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
 
 	/**
@@ -91,7 +91,7 @@ const Edit = ( {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ProgressBar.InspectorControls />
+			<ProgressBar.InspectorControls isCircle />
 
 			<BlockDiv className={ blockClassNames }>
 				<ProgressCircleStyles version={ VERSION } />

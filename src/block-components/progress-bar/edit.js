@@ -14,7 +14,7 @@ import {
 import { Typography } from '~stackable/block-components'
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import {
-	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE,
+	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE, DEFAULT_HEIGHT,
 } from './attributes'
 
 /**
@@ -34,7 +34,7 @@ const GRADIENT_OPTIONS = [
 	},
 ]
 
-export const Edit = ( { attrNameTemplate } ) => {
+export const Edit = ( { attrNameTemplate, isCircle } ) => {
 	const {
 		getAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
@@ -57,23 +57,25 @@ export const Edit = ( { attrNameTemplate } ) => {
 						isDynamic
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Size', i18n ) }
+						label={ isCircle ? __( 'Size', i18n ) : __( 'Height', i18n ) }
 						attribute="progressSize"
 						min="0"
-						sliderMin="50"
-						sliderMax="300"
+						sliderMin={ isCircle ? 50 : 32 }
+						sliderMax={ isCircle ? 300 : 100 }
 						step="1"
-						placeholder={ DEFAULT_SIZE }
+						placeholder={ isCircle ? DEFAULT_SIZE : DEFAULT_HEIGHT }
 					/>
-					<AdvancedRangeControl
-						label={ __( 'Thickness', i18n ) }
-						attribute="progressThickness"
-						min="0"
-						sliderMin="1"
-						sliderMax="30"
-						step="1"
-						placeholder={ DEFAULT_THICKNESS }
-					/>
+					{ isCircle && (
+						<AdvancedRangeControl
+							label={ __( 'Thickness', i18n ) }
+							attribute="progressThickness"
+							min="0"
+							sliderMin="1"
+							sliderMax="30"
+							step="1"
+							placeholder={ DEFAULT_THICKNESS }
+						/>
+					) }
 					<>
 						<AdvancedToolbarControl
 							controls={ GRADIENT_OPTIONS }
@@ -102,10 +104,12 @@ export const Edit = ( { attrNameTemplate } ) => {
 						attribute="progressBackgroundColor"
 						hasTransparent={ true }
 					/>
-					<AdvancedToggleControl
-						label={ __( 'Rounded', i18n ) }
-						attribute="progressRounded"
-					/>
+					{ isCircle && (
+						<AdvancedToggleControl
+							label={ __( 'Rounded', i18n ) }
+							attribute="progressRounded"
+						/>
+					) }
 					<AdvancedToggleControl
 						label={ __( 'Animate', i18n ) }
 						attribute="progressAnimate"
@@ -132,5 +136,6 @@ export const Edit = ( { attrNameTemplate } ) => {
 }
 
 Edit.defaulProps = {
+	isCircle: false,
 	attrNameTemplate: '%s',
 }

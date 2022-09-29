@@ -40,7 +40,7 @@ const Save = props => {
 		},
 	] )
 
-	const derivedPercent = attributes.progressPercent || DEFAULT_PERCENT
+	const derivedPercent = typeof attributes.progressPercent === 'string' ? DEFAULT_PERCENT : attributes.progressPercent
 	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
 
 	return (
