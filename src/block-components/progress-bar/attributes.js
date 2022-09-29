@@ -54,6 +54,22 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 					default: '',
 					stkUnits: 'px',
 				},
+				progressColorGradientDirection: {
+					type: 'number',
+					default: '',
+				},
+				progressColorGradientLocation1: {
+					type: 'number',
+					default: '',
+				},
+				progressColorGradientLocation2: {
+					type: 'number',
+					default: '',
+				},
+				progressColorGradientBlendMode: {
+					type: 'string',
+					default: '',
+				},
 			} ),
 		},
 		versionAdded: '3.4.5',

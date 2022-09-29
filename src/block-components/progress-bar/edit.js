@@ -10,6 +10,8 @@ import {
 	AdvancedTextControl,
 	ColorPaletteControl,
 	AdvancedToolbarControl,
+	ButtonIconPopoverControl,
+	BlendModeControl,
 } from '~stackable/components'
 import { Typography } from '~stackable/block-components'
 import { useAttributeEditHandlers } from '~stackable/hooks'
@@ -37,7 +39,10 @@ const GRADIENT_OPTIONS = [
 export const Edit = ( { attrNameTemplate, isCircle } ) => {
 	const {
 		getAttribute,
+		updateAttributes,
 	} = useAttributeEditHandlers( attrNameTemplate )
+
+	const isColorGradient = getAttribute( 'progressColorType' ) === 'gradient'
 
 	return (
 		<Fragment>
@@ -95,12 +100,12 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 							attribute="progressColorType"
 						/>
 						<ColorPaletteControl
-							label={ getAttribute( 'progressColorType' ) === 'gradient' ? sprintf( __( 'Bar Color #%s', i18n ), 1 )
+							label={ isColorGradient ? sprintf( __( 'Bar Color #%s', i18n ), 1 )
 								: __( 'Bar Color', i18n ) }
 							attribute="progressColor1"
-							hasTransparent={ getAttribute( 'progressColorType' ) === 'gradient' }
+							hasTransparent={ isColorGradient }
 						/>
-						{ getAttribute( 'progressColorType' ) === 'gradient' && (
+						{ isColorGradient && (
 							<>
 								<ColorPaletteControl
 									label={ sprintf( __( 'Bar Color #%s', i18n ), 2 ) }
@@ -108,6 +113,61 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									hasTransparent={ true }
 								/>
 							</>
+						) }
+						{ ( isColorGradient && ! isCircle ) && (
+							<ButtonIconPopoverControl
+								label={ __( 'Adv. Gradient Color Settings', i18n ) }
+								onReset={ () => {
+									updateAttributes( {
+										progressColorGradientDirection: '',
+										progressColorGradientBlendMode: '',
+										progressColorGradientLocation1: '',
+										progressColorGradientLocation2: '',
+									} )
+								} }
+								allowReset={
+									( getAttribute( 'progressColorGradientDirection' ) !== '' && getAttribute( 'progressColorGradientDirection' ) !== 90 ) ||
+									( getAttribute( 'progressColorGradientLocation1' ) !== '' && getAttribute( 'progressColorGradientLocation1' ) !== 0 ) ||
+									( getAttribute( 'progressColorGradientLocation2' ) !== '' && getAttribute( 'progressColorGradientLocation2' ) !== 100 ) ||
+									getAttribute( 'progressColorGradientBlendMode' )
+								}
+							>
+								<AdvancedRangeControl
+									label={ __( 'Gradient Direction (degrees)', i18n ) }
+									attribute="progressColorGradientDirection"
+									min={ 0 }
+									max={ 360 }
+									step={ 10 }
+									allowReset={ true }
+									placeholder="90"
+									className="ugb--help-tip-gradient-direction"
+								/>
+								<AdvancedRangeControl
+									label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
+									attribute="progressColorGradientLocation1"
+									sliderMin={ 0 }
+									max={ 100 }
+									step={ 1 }
+									allowReset={ true }
+									placeholder="0"
+									className="ugb--help-tip-gradient-location"
+								/>
+								<AdvancedRangeControl
+									label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
+									attribute="progressColorGradientLocation2"
+									sliderMin={ 0 }
+									max={ 100 }
+									step={ 1 }
+									allowReset={ true }
+									placeholder="100"
+									className="ugb--help-tip-gradient-location"
+								/>
+								<BlendModeControl
+									label={ __( 'Background Gradient Blend Mode', i18n ) }
+									attribute="progressColorGradientBlendMode"
+									className="ugb--help-tip-background-blend-mode"
+								/>
+							</ButtonIconPopoverControl>
 						) }
 					</>
 					<ColorPaletteControl

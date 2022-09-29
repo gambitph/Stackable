@@ -1,4 +1,6 @@
-import { useStyles, getStyles } from '~stackable/util'
+import {
+	useStyles, getStyles, hexToRgba,
+} from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 import {
 	DEFAULT_PERCENT, DEFAULT_SIZE, DEFAULT_THICKNESS,
@@ -18,14 +20,6 @@ const getStyleParams = ( { isCircle } ) => {
 			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-color-1',
 			attrName: 'progressColor1',
-			valuePreCallback: ( value, getAttribute, _, state ) => {
-				if ( getAttribute( 'progressColorType', 'desktop', state ) === 'gradient' ) {
-					const uniqueId = getAttribute( 'uniqueId' )
-					return `url(#gradient-${ uniqueId })`
-				}
-				return value
-			},
-			dependencies: [ 'progressColorType' ],
 		},
 		{
 			selector: '[class*="stk-progress-"]',
@@ -86,7 +80,32 @@ const getStyleParams = ( { isCircle } ) => {
 			styleRule: '--progress-border-radius',
 			attrName: 'progressBorderRadius',
 			hasUnits: 'px',
-		} ] ),
+		},
+		{
+			selector: '.stk-progress__bar.stk--has-background-overlay:before',
+			styleRule: 'backgroundImage',
+			attrName: 'progressColor1',
+			enabledCallback: getAttribute => getAttribute( 'progressColorType' ) === 'gradient',
+			valueCallback: ( value, getAttribute ) => {
+				if ( ! getAttribute( 'progressColor2' ) ) {
+					return undefined
+				}
+				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
+				const defaultColor1 = hexToRgba( getAttribute( 'progressColor2' ) || '#ffffff', 0 )
+				const defaultColor2 = hexToRgba( getAttribute( 'progressColor1' ) || '#3498db', 0 )
+
+				// Gradient location.
+				const color1Location = `${ getAttribute( 'progressColorGradientLocation1' ) || '0' }%`
+				const color2Location = `${ getAttribute( 'progressColorGradientLocation2' ) || '100' }%`
+
+				const directionAngle = getAttribute( 'progressColorGradientDirection' )
+				const angle = typeof directionAngle === 'string' ? '90deg' : `${ directionAngle }deg`
+
+				return `linear-gradient(${ angle }, ${ getAttribute( 'progressColor1' ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'progressColor2' ) || defaultColor2 } ${ color2Location })`
+			},
+			dependencies: [ 'progressColorType', 'progressColor1', 'progressColor2', 'progressColorGradientLocation1', 'progressColorGradientLocation2', 'progressColorGradientDirection' ],
+		},
+	 ] ),
 	]
 }
 

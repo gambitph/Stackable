@@ -55,6 +55,10 @@ const Edit = ( {
 		textClasses,
 	] )
 
+	const barClassNames = classnames( 'stk-progress__bar', {
+		'stk--has-background-overlay': attributes.progressColorType === 'gradient' && attributes.progressColor2,
+	} )
+
 	const derivedPercent = typeof attributes.progressPercent === 'string' ? DEFAULT_PERCENT : attributes.progressPercent
 	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
 
@@ -90,7 +94,7 @@ const Edit = ( {
 					} ) }
 				>
 					<div className="stk-progress__background">
-						<div className="stk-progress__bar" />
+						<div className={ barClassNames } />
 					</div>
 					{ attributes.show && (
 						<div className="stk-number">
