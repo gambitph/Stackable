@@ -7,18 +7,18 @@ import {
 const getStyleParams = () => {
 	return [
 		{
-			selector: '.stk-progress-circle',
+			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-thickness',
 			attrName: 'progressThickness',
 			format: '%spx',
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-percent',
 			attrName: 'progressPercent',
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-color-1',
 			attrName: 'progressColor1',
 			valuePreCallback: ( value, getAttribute, _, state ) => {
@@ -31,18 +31,18 @@ const getStyleParams = () => {
 			dependencies: [ 'progressColorType' ],
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-background',
 			attrName: 'progressBackgroundColor',
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-size',
 			attrName: 'progressSize',
 			format: '%spx',
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-rounded',
 			attrName: 'progressRounded',
 			valuePreCallback: value => {
@@ -53,7 +53,7 @@ const getStyleParams = () => {
 			},
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-dash-array',
 			attrName: 'progressSize',
 			valuePreCallback: ( value, getAttribute ) => {
@@ -65,7 +65,7 @@ const getStyleParams = () => {
 			},
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-dash-offset',
 			attrName: 'progressPercent',
 			valuePreCallback: ( value, getAttribute ) => {
