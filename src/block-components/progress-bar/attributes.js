@@ -4,7 +4,7 @@ export const DEFAULT_HEIGHT = 32
 export const DEFAULT_THICKNESS = 8
 export const DEFAULT_PERCENT = 50
 
-export const addAttributes = attrObject => {
+export const addAttributes = ( attrObject, isCircle = false ) => {
 	attrObject.add( {
 		attributes: {
 			progressPercent: {
@@ -39,14 +39,22 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-			progressThickness: {
-				type: 'number',
-				default: '',
-			},
-			progressRounded: {
-				type: 'boolean',
-				default: '',
-			},
+			...( isCircle ? {
+				progressThickness: {
+					type: 'number',
+					default: '',
+				},
+				progressRounded: {
+					type: 'boolean',
+					default: '',
+				},
+			} : {
+				progressBorderRadius: {
+					type: 'number',
+					default: '',
+					stkUnits: 'px',
+				},
+			} ),
 		},
 		versionAdded: '3.4.5',
 		versionDeprecated: '',

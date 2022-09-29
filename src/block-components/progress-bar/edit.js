@@ -65,6 +65,17 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 						step="1"
 						placeholder={ isCircle ? DEFAULT_SIZE : DEFAULT_HEIGHT }
 					/>
+					{ ! isCircle && (
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							attribute="progressBorderRadius"
+							allowReset={ true }
+							min="0"
+							units={ [ 'px', '%', 'rem' ] }
+							step="1"
+							sliderMax="100"
+						/>
+					) }
 					{ isCircle && (
 						<AdvancedRangeControl
 							label={ __( 'Thickness', i18n ) }

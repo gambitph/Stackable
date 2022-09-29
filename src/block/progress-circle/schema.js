@@ -31,7 +31,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
-	ProgressBar.addAttributes( attrObject )
+	ProgressBar.addAttributes( attrObject, true )
 	Typography.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )

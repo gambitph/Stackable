@@ -81,7 +81,12 @@ const getStyleParams = ( { isCircle } ) => {
 				const circumference = Math.PI * ( radius * 2 )
 				return ( ( 100 - derivedPercent ) / 100 ) * circumference
 			},
-		} ] : [] ),
+		} ] : [ {
+			selector: '[class*="stk-progress-"]',
+			styleRule: '--progress-border-radius',
+			attrName: 'progressBorderRadius',
+			hasUnits: 'px',
+		} ] ),
 	]
 }
 
