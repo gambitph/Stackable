@@ -20,7 +20,16 @@ const getStyleParams = ( { isCircle } ) => {
 			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-color-1',
 			attrName: 'progressColor1',
+			valuePreCallback: ( value, getAttribute ) => {
+				if ( getAttribute( 'progressColorType' ) === 'gradient' && isCircle ) {
+					const uniqueId = getAttribute( 'uniqueId' )
+					return `url(#gradient-${ uniqueId })`
+				}
+				return value
+			},
+			dependencies: [ 'progressColorType' ],
 		},
+
 		{
 			selector: '[class*="stk-progress-"]',
 			styleRule: '--progress-background',
