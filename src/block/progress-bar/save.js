@@ -40,7 +40,7 @@ const Save = props => {
 		},
 	] )
 
-	const derivedPercent = attributes.progressPercent || DEFAULT_PERCENT
+	const derivedPercent = typeof attributes.progressPercent === 'string' ? DEFAULT_PERCENT : attributes.progressPercent
 	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
 
 	return (
@@ -60,18 +60,9 @@ const Save = props => {
 					'aria-valuetext': striptags( attributes.progressAriaValueText ),
 				} ) }
 			>
-				<svg>
-					{ attributes.progressColorType === 'gradient' && (
-						<defs>
-							<linearGradient id={ `gradient-${ attributes.uniqueId }` }>
-								<stop offset="0%" stopColor={ attributes.progressColor1 } />
-								<stop offset="100%" stopColor={ attributes.progressColor2 } />
-							</linearGradient>
-						</defs>
-					) }
-					<circle className="stk-progress__background" />
-					<circle className="stk-progress__bar" />
-				</svg>
+				<div className="stk-progress__background">
+					<div className="stk-progress__bar" />
+				</div>
 				{ attributes.show && (
 					<div className="stk-number">
 						<Typography.Content

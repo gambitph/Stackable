@@ -37,6 +37,7 @@ const ProgressBarStyles = memo( props => {
 } )
 
 ProgressBarStyles.defaultProps = {
+	isCircle: false,
 	isEditor: false,
 }
 
@@ -67,6 +68,7 @@ ProgressBarStyles.Content = props => {
 }
 
 ProgressBarStyles.Content.defaultProps = {
+	isCircle: false,
 	attributes: {},
 }
 
