@@ -11,32 +11,28 @@
  * Internal dependencies
  */
 import { useShowMoversGestures } from './util'
-import { useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { useRef } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
-import { useBlockProps } from '@wordpress/block-editor'
+import { BlockWrapper } from '~stackable/components'
 
 const withBlockWrapperIsHovered = createHigherOrderComponent(
 	WrappedComponent => props => {
 		const ref = useRef()
 		const { showMovers, gestures } = useShowMoversGestures( { ref } )
 
-		const blockHoverClass = useBlockHoverClass()
-		const blockProps = useBlockProps( {
-			...( props.blockProps || {} ),
-			className: blockHoverClass,
+		const blockProps = {
 			...gestures,
 			ref,
-		} )
+		}
 
 		return (
-			<div { ...blockProps } >
+			<BlockWrapper attributes={ props.attributes } blockProps={ blockProps }>
 				<WrappedComponent { ...props } isHovered={ showMovers } />
-			</div>
+			</BlockWrapper>
 		)
 	},
 	'withBlockWrapperIsHovered'
