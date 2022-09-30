@@ -72,6 +72,7 @@ export const Controls = props => {
 		hasTextShadow,
 		hasTextPrefix,
 		hasTextSuffix,
+		hasProgressInnerText,
 	} = props
 
 	const {
@@ -106,6 +107,12 @@ export const Controls = props => {
 	return (
 		<>
 			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
+			{ hasProgressInnerText && (
+				<AdvancedTextControl
+					label={ __( 'Progress Bar Text', i18n ) }
+					attribute="progressInnerText"
+				/>
+			) }
 			{ hasTextContent && (
 				<AdvancedTextControl
 					label={ __( 'Content', i18n ) }
@@ -358,6 +365,7 @@ export const Edit = props => {
 		hasTextShadow,
 		hasTextPrefix,
 		hasTextSuffix,
+		hasProgressInnerText,
 	} = props
 
 	const {
@@ -388,6 +396,7 @@ export const Edit = props => {
 					hasTextShadow={ hasTextShadow }
 					hasTextPrefix={ hasTextPrefix }
 					hasTextSuffix={ hasTextSuffix }
+					hasProgressInnerText={ hasProgressInnerText }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
@@ -407,6 +416,7 @@ Edit.defaultProps = {
 	label: __( 'Typography', i18n ),
 	sizePlaceholder: '32',
 	hasTextShadow: false,
+	hasProgressInnerText: false,
 }
 
 Edit.Controls = Controls

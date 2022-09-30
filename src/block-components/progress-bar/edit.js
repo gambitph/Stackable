@@ -200,6 +200,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 				hasTextPrefix
 				hasTextSuffix
 				hasToggle
+				hasProgressInnerText
 				label={ __( 'Label', i18n ) }
 			/>
 		</Fragment>

@@ -65,17 +65,27 @@ const Save = props => {
 				} ) }
 			>
 				<div className="stk-progress__background">
-					<div className={ barClassNames } />
-				</div>
-				{ attributes.show && (
-					<div className="stk-number">
-						<Typography.Content
-							tagName="span"
-							className={ textClassNames }
-							value={ derivedValue }
-						/>
+					<div className={ barClassNames }>
+						{ attributes.show && (
+							<div className="stk-progress-bar__text-container">
+								<div className="stk-text">
+									<Typography.Content
+										tagName="span"
+										className={ textClassNames }
+										value={ attributes.progressInnerText }
+									/>
+								</div>
+								<div className="stk-number">
+									<Typography.Content
+										tagName="span"
+										className={ textClassNames }
+										value={ derivedValue }
+									/>
+								</div>
+							</div>
+						) }
 					</div>
-				) }
+				</div>
 			</div>
 		</BlockDiv.Content>
 	)

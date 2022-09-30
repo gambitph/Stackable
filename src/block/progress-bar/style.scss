@@ -17,7 +17,22 @@ div.stk-block-progress-bar {
 		.stk-progress__bar {
 			width: 0%;
 			height: 100%;
+			display: flex;
+			align-items: center;
 			background-color: var(--progress-color-1, #3498db);
+			.stk-progress-bar__text-container {
+				display: inherit;
+				justify-content: space-between;
+				width: 100%;
+				white-space: nowrap;
+				overflow: hidden;
+				.stk-text {
+					padding-inline-start: 12px;
+				}
+				.stk-number {
+					padding-inline-end: 12px;
+				}
+			}
 		}
 	}
 	&.stk--with-animation {

@@ -94,18 +94,29 @@ const Edit = ( {
 					} ) }
 				>
 					<div className="stk-progress__background">
-						<div className={ barClassNames } />
-					</div>
-					{ attributes.show && (
-						<div className="stk-number">
-							<Typography
-								tagName="span"
-								className={ textClassNames }
-								value={ derivedValue }
-								editable={ false }
-							/>
+						<div className={ barClassNames }>
+							{ attributes.show && (
+								<div className="stk-progress-bar__text-container">
+									<div className="stk-text">
+										<Typography
+											tagName="span"
+											className={ textClassNames }
+											value={ attributes.progressInnerText }
+											editable={ false }
+										/>
+									</div>
+									<div className="stk-number">
+										<Typography
+											tagName="span"
+											className={ textClassNames }
+											value={ derivedValue }
+											editable={ false }
+										/>
+									</div>
+								</div>
+							) }
 						</div>
-					) }
+					</div>
 				</div>
 			</BlockDiv>
 		</>

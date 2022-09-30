@@ -49,6 +49,10 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 					default: '',
 				},
 			} : {
+				progressInnerText: {
+					type: 'string',
+					default: '',
+				},
 				progressBorderRadius: {
 					type: 'number',
 					default: '',
