@@ -61,6 +61,7 @@ const Edit = ( {
 
 	const derivedPercent = typeof attributes.progressPercent === 'string' ? DEFAULT_PERCENT : attributes.progressPercent
 	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
+	const deviedAriaValue = attributes.progressAriaValueText || attributes.progressInnerText || attributes.text
 
 	return (
 		<>
@@ -89,8 +90,8 @@ const Edit = ( {
 					aria-valuemin="0"
 					aria-valuemax="100"
 					aria-valuenow={ derivedPercent }
-					{ ...( attributes.progressAriaValueText && {
-						'aria-valuetext': striptags( attributes.progressAriaValueText ),
+					{ ...( deviedAriaValue && {
+						'aria-valuetext': striptags( deviedAriaValue ),
 					} ) }
 				>
 					<div className="stk-progress__background">
@@ -100,8 +101,7 @@ const Edit = ( {
 									<Typography
 										tagName="span"
 										className={ classnames( [ textClassNames, 'stk-progress-text' ] ) }
-										value={ attributes.progressInnerText }
-										editable={ false }
+										value={ attributes.progressInnerText || attributes.text }
 									/>
 									<Typography
 										tagName="span"

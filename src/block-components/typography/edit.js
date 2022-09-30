@@ -111,6 +111,7 @@ export const Controls = props => {
 				<AdvancedTextControl
 					label={ __( 'Progress Bar Text', i18n ) }
 					attribute="progressInnerText"
+					isDynamic={ true }
 				/>
 			) }
 			{ hasTextContent && (
