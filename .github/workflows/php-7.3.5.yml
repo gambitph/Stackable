@@ -37,8 +37,7 @@ jobs:
     # Install all dependencies from composer.json
     - name: Install dependencies
       run: |
-        composer require --dev yoast/phpunit-polyfills
-        composer require phpunit/phpunit:5.9.4 --dev
+        composer require phpunit/phpunit:5.6.8 --dev
         composer require wp-phpunit/wp-phpunit:${{ matrix.wp-versions }} --dev
         composer require roots/wordpress:${{ matrix.wp-versions }} --dev
         composer install --prefer-dist --no-progress
