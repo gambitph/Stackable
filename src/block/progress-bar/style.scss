@@ -19,17 +19,16 @@ div.stk-block-progress-bar {
 			height: 100%;
 			display: flex;
 			align-items: center;
+			justify-content: space-between;
 			background-color: var(--progress-color-1, #3498db);
-			.stk-progress-bar__text-container {
-				display: inherit;
-				justify-content: space-between;
-				width: 100%;
-				white-space: nowrap;
-				overflow: hidden;
-				.stk-text {
+			.stk-progress-bar__inner-text {
+				&.stk-progress-text {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 					padding-inline-start: 12px;
 				}
-				.stk-number {
+				&.stk-progress-percent-text {
 					padding-inline-end: 12px;
 				}
 			}
