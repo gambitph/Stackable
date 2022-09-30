@@ -65,7 +65,10 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ wrapperClassNames }>
 				<div className={ contentClassNames }>
-					{ generateRenderPostItem.save( { ...attributes, className }, version ) }
+					{ generateRenderPostItem.save( {
+						...attributes,
+						className: className || attributes.className,
+					}, version ) }
 				</div>
 				<div className={ innerClassNames }>
 					<InnerBlocks.Content />
