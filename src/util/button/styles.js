@@ -2,15 +2,12 @@
  * Internal dependencies
  */
 import { appendImportant } from '../'
+import { createTypographyStyles } from '../typography'
+import { whiteIfDarkBlackIfLight, __getValue } from '../styles'
 
 /**
  * External dependencies
  */
-import {
-	createTypographyStyles,
-	whiteIfDarkBlackIfLight,
-	__getValue,
-} from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
 

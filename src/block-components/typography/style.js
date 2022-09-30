@@ -102,7 +102,7 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return value
 			},
-			dependencies: [ 'textColorType', ...dependencies ],
+			dependencies: [ 'textColorType', 'textColor2', 'textGradientDirection', ...dependencies ],
 		},
 		{
 			selector,
@@ -184,20 +184,14 @@ const getStyleParams = ( options = {} ) => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<StyleComponent
 			styles={ styles }
 			versionAdded="3.0.0"
 			versionDeprecated=""
-			{ ...propsToPass }
+			{ ...props }
 		/>
 	)
 }

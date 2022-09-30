@@ -19,7 +19,7 @@ import { getAttributeName, urlIsVideo } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { useCallback, Fragment } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'

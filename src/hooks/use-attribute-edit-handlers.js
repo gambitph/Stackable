@@ -1,10 +1,6 @@
 import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
-import {
-	dispatch, useSelect,
-} from '@wordpress/data'
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { useCallback } from '@wordpress/element'
+import { useBlockAttributesContext, useBlockSetAttributesContext } from './use-block-attributes-context'
 
 /**
  * Provides all the functions needed to get and update attributes for control
@@ -20,45 +16,38 @@ import { useCallback } from '@wordpress/element'
  * @return {Object} Functions
  */
 export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
-	const { clientId } = useBlockEditContext()
-	const { getBlockAttributes } = useSelect( select => ( {
-		getBlockAttributes: select( 'core/block-editor' ).getBlockAttributes,
-	} ), [ clientId ] )
+	const setAttributes = useBlockSetAttributesContext()
+	const attributes = useBlockAttributesContext()
 
-	const getAttrName = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
+	const getAttrName = ( attrName, device = 'desktop', state = 'normal' ) => {
 		return getAttributeName( getAttrNameFunction( attrNameTemplate )( attrName ), device, state )
-	}, [ clientId, attrNameTemplate ] )
+	}
 
-	const getAttribute = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
+	const getAttribute = ( attrName, device = 'desktop', state = 'normal' ) => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
-		const attributes = getBlockAttributes( clientId ) || {}
 		return attributes[ getAttributeName( getAttrName( attrName ), device, state ) ]
-	}, [ clientId, attrNameTemplate, getBlockAttributes ] )
+	}
 
-	const getAttributes = useCallback( () => {
-		return getBlockAttributes( clientId ) || {}
-	}, [ clientId, getBlockAttributes ] )
+	const getAttributes = () => attributes
 
-	const updateAttribute = useCallback( ( attrName, value, device = 'desktop', state = 'normal' ) => {
-		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+	const updateAttribute = ( attrName, value, device = 'desktop', state = 'normal' ) => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
-		return updateBlockAttributes( clientId, {
+		return setAttributes( {
 			[ getAttributeName( getAttrName( attrName ), device, state ) ]: value,
 		} )
-	}, [ clientId, attrNameTemplate ] )
+	}
 
-	const updateAttributeHandler = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
+	const updateAttributeHandler = ( attrName, device = 'desktop', state = 'normal' ) => {
 		return value => updateAttribute( attrName, value, device, state )
-	}, [ clientId, attrNameTemplate ] )
+	}
 
-	const updateAttributes = useCallback( values => {
+	const updateAttributes = values => {
 		const attributes = Object.keys( values ).reduce( ( attributes, attrName ) => {
 			attributes[ getAttrName( attrName ) ] = values[ attrName ]
 			return attributes
 		}, {} )
-		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
-		updateBlockAttributes( clientId, attributes )
-	}, [ clientId, attrNameTemplate ] )
+		setAttributes( attributes )
+	}
 
 	return {
 		getAttrName,

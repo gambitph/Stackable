@@ -290,10 +290,12 @@ class AdvancedAutosuggestControl extends Component {
 									width: inputCoords.width,
 								}
 
-								containerProps.className = classnames( containerProps.className, 'ugb-advanced-autosuggest__suggestions-container' )
-
 								const suggestions = (
-									<div { ...containerProps } style={ style }>
+									<div
+										{ ...containerProps }
+										style={ style }
+										className={ classnames( containerProps.className, 'ugb-advanced-autosuggest__suggestions-container' ) }
+									>
 										{ children }
 									</div>
 								)

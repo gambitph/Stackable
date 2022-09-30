@@ -30,17 +30,16 @@ import {
 	BlockLink,
 	Transform,
 } from '~stackable/block-components'
+import { useBlockContext } from '~stackable/hooks'
 import {
-	useBlockContext,
-	useBlockHoverClass,
-} from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 export const TEMPLATE = [
@@ -64,12 +63,10 @@ const Edit = props => {
 
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-box',
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -80,9 +77,7 @@ const Edit = props => {
 	] )
 
 	const lastBlockName = last( innerBlocks )?.name
-	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
-	}, [ hasInnerBlocks, lastBlockName ] )
+	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
 	return (
 		<>
@@ -123,4 +118,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

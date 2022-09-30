@@ -45,7 +45,7 @@ export const ContentAlign = () => {
 			}
 
 			if ( typeof newContentAlign !== 'undefined' ) {
-				updateBlockAttributes( clientId, { innerBlockContentAlign: newContentAlign } )
+				updateBlockAttributes( clientId, { innerBlockContentAlign: newContentAlign } ) // eslint-disable-line stackable/no-update-block-attributes
 			}
 		}
 	}, [ align ] )

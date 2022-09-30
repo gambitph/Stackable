@@ -15,7 +15,6 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	useBlockEditContext,
 	__experimentalListView as ListView, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 	store as blockEditorStore,
 	InspectorControls,
@@ -27,36 +26,28 @@ import { useState } from '@wordpress/element'
 
 const MIN_HEIGHT = 38
 
-export const Edit = () => {
-	const { clientId, isSelected } = useBlockEditContext()
+export const Edit = props => {
+	const { clientId, isSelected } = props
 	const [ isResizing, setIsResizing ] = useState( false )
 	const { updateHeight, updateIsOpen } = useDispatch( 'stackable/navigation-view' )
 
 	const {
 		height,
 		isOpen,
+		blocks,
+		isOnlyBlock,
 	} = useSelect( select => {
+		const { rootBlockClientId, hasInnerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const childBlocks = select( blockEditorStore ).__unstableGetClientIdsTree( rootBlockClientId )
+
 		return {
 			height: select( 'stackable/navigation-view' ).getHeight(),
 			isOpen: select( 'stackable/navigation-view' ).getIsOpen(),
-		}
-	} )
-
-	const { blocks, isOnlyBlock } = useSelect( select => {
-		// Get the main root block which we will show the blocks of.
-		const parents = select( blockEditorStore ).getBlockParents( clientId )
-		const baseClientId = parents.length ? parents[ 0 ] : clientId
-
-		// These are all the children of the block.
-		const childBlocks = select( blockEditorStore ).__unstableGetClientIdsTree( baseClientId )
-
-		// We need to add the block itself as well so the user can navigate throughout the whole block.
-		return {
+			isOnlyBlock: ! hasInnerBlocks && rootBlockClientId === clientId,
 			blocks: [ {
-				clientId: baseClientId,
+				clientId: rootBlockClientId,
 				innerBlocks: childBlocks,
 			} ],
-			isOnlyBlock: ! childBlocks.length && baseClientId === clientId,
 		}
 	} )
 

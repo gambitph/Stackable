@@ -2,21 +2,21 @@
  * Internal dependencies
  */
 import { Fragment } from '@wordpress/element'
+import { useBlockAttributesContext } from '~stackable/hooks'
 import {
 	BorderStyle, SizeStyle, BackgroundStyle,
 } from '../helpers'
 
 export const Style = props => {
-	const options = {
-		...props.options,
-		attrNameTemplate: 'block%s',
-	}
+	const attrNameTemplate = 'block%s'
+
+	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
 
 	return (
 		<Fragment>
-			{ props.attributes.hasBackground && <BackgroundStyle { ...props } options={ options } /> }
-			<BorderStyle { ...props } options={ options } />
-			<SizeStyle { ...props } options={ options } />
+			{ hasBackground && <BackgroundStyle { ...props } attrNameTemplate={ attrNameTemplate } /> }
+			<BorderStyle { ...props } attrNameTemplate={ attrNameTemplate } />
+			<SizeStyle { ...props } attrNameTemplate={ attrNameTemplate } />
 		</Fragment>
 	)
 }

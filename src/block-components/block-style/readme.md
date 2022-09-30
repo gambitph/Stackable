@@ -52,13 +52,11 @@ const edit = props => {
 ```js
 // In style.js
 import { blockStyles } from './block-styles'
-import { useBlockAttributes, getBlockStyle } from '~stackable/hooks'
+import { getBlockStyle, useBlockAttributesContext } from '~stackable/hooks'
 import { useMemo } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const CardStyles = props => {
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 	const blockStyle = useMemo( () => getBlockStyle( blockStyles, attributes.className ), [ attributes.className ] )
 	// blockStyle === 'horizontal'
 }

@@ -1,14 +1,14 @@
 /**
  * Internal dependencies
  */
-import { appendImportant, appendImportantAll } from '../'
+import {
+	appendImportant, appendImportantAll, getFontFamily,
+} from '../'
+import { __getValue, clampInheritedStyle } from '../styles'
 
 /**
  * External dependencies
  */
-import {
-	getFontFamily, __getValue, clampInheritedStyle,
-} from '~stackable/util'
 import { camelCase } from 'lodash'
 
 /**

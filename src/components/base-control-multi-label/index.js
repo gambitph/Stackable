@@ -8,17 +8,14 @@ import { i18n } from 'stackable'
 /**
  * External dependencies
  */
-import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const BaseControlMultiLabel = props => {
 	const screens = props.screens === 'all' ? [ 'desktop', 'tablet', 'mobile' ] : props.screens
 
-	const units = useMemo( () => (
-		props.units?.map( unit => {
-			return { value: unit }
-		} )
-	), [ props.units ] ) || []
+	const units = props.units?.map( unit => {
+		return { value: unit }
+	} ) || []
 
 	return (
 		<div className="ugb-base-control-multi-label">

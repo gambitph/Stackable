@@ -17,7 +17,7 @@ import {
 import { BlockControls, useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import {
-	useState, useEffect, useRef, useCallback,
+	useState, useEffect, useRef,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import {
@@ -129,22 +129,22 @@ const HighlightButton = props => {
 
 	const block = getBlock( clientId )
 
-	// Close the window if the user clicks outside.
-	const clickOutsideListener = useCallback( event => {
-		const isOutside = ! isElementDescendant( popoverEl.current, event.target )
-		const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
-		const isColorPicker = event.target.closest( '.components-color-picker' )
-		const isSuggestion = event.target.closest( '.react-autosuggest__suggestions-container' )
-		if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker && ! isSuggestion ) {
-			setIsOpen( false )
-		}
-	} )
-
 	// Assign the outside click listener.
 	useEffect( () => {
+		// Close the window if the user clicks outside.
+		const clickOutsideListener = event => {
+			const isOutside = ! isElementDescendant( popoverEl.current, event.target )
+			const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
+			const isColorPicker = event.target.closest( '.components-color-picker' )
+			const isSuggestion = event.target.closest( '.react-autosuggest__suggestions-container' )
+			if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker && ! isSuggestion ) {
+				setIsOpen( false )
+			}
+		}
+
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
 		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
-	}, [ clickOutsideListener ] )
+	}, [ popoverEl.current, isOpen ] )
 
 	const {
 		activeAttributes,

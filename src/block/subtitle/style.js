@@ -10,46 +10,30 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+import { getUniqueBlockClass } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { memo, renderToString } from '@wordpress/element'
 
 const typographyOptions = {
 	selector: '.stk-block-subtitle__text',
 	hoverSelector: '.stk-block-subtitle__text:hover',
 }
 
-export const SubtitleStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
+export const SubtitleStyles = memo( props => {
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Typography.Style { ...propsToPass } options={ typographyOptions } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Typography.Style { ...props } { ...typographyOptions } />
+			<EffectsAnimations.Style { ...props } />
 		</>
 	)
-}
+} )
 
 SubtitleStyles.defaultProps = {
 	isEditor: false,

@@ -1,16 +1,14 @@
 import { addAttributes } from './attributes'
 
-import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockContext } from '~stackable/hooks'
 
-import { useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment, useEffect } from '@wordpress/element'
 
 export * from './use-row'
 
 export const Row = props => {
-	const { clientId } = useBlockEditContext()
 	const { numInnerBlocks } = useBlockContext()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 
 	useEffect( () => {
 		attributes.numInnerBlocks = numInnerBlocks

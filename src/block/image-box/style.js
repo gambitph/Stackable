@@ -12,40 +12,26 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
+import { getUniqueBlockClass } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
-import {
-	Fragment, renderToString,
+	memo, Fragment, renderToString,
 } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const ImageBoxStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
+export const ImageBoxStyles = memo( props => {
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
 		</Fragment>
 	)
-}
+} )
 
 ImageBoxStyles.defaultProps = {
 	isEditor: false,

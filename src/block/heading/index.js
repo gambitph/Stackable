@@ -15,9 +15,8 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import example from './example'
-import { applyFilters } from '@wordpress/hooks'
 
-export const settings = applyFilters( 'stackable.block.metadata', {
+export const settings = {
 	...metadata,
 	icon: HeadingIcon,
 	attributes: schema,
@@ -38,4 +37,4 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 			( ( attributesToMerge.hasOwnProperty( 'content' ) ? attributesToMerge.content : attributesToMerge.text ) || '' ),
 		}
 	},
-} )
+}

@@ -2,14 +2,17 @@
  * External dependencies
  */
 import { get, pick } from 'lodash'
-import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
-import { CONTENT_ATTRIBUTES, recursivelyAddUniqueIdToInnerBlocks } from '~stackable/util'
+import {
+	CONTENT_ATTRIBUTES, createUniqueClass, recursivelyAddUniqueIdToInnerBlocks,
+} from '~stackable/util'
 import { VariationPicker } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { useSelect, useDispatch } from '@wordpress/data'
+import {
+	select, useSelect, useDispatch,
+} from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 import { createBlocksFromInnerBlocksTemplate, cloneBlock } from '@wordpress/blocks'
 
@@ -58,7 +61,6 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 		[ clientId, uniqueId ]
 	)
 	const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	const { getBlock, getBlockAttributes } = useSelect( 'core/block-editor' )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
 	return uniqueId ? null : (
@@ -67,14 +69,13 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 			label={ get( blockType, [ 'title' ] ) }
 			variations={ variations || [] }
 			onSelect={ ( _nextVariation = defaultVariation ) => {
-				const block = getBlock( clientId )
+				const block = select( 'core/block-editor' ).getBlock( clientId )
 
 				// Allow others to change the variation being applied. e.g. if a
 				// variation was modified or added by the user.
 				const nextVariation = applyFilters( 'stackable.variation-picker.variation-selected', _nextVariation, block.name )
 
-				const attributes = getBlockAttributes( clientId )
-				const _activeVariation = getActiveBlockVariation( block.name, attributes )
+				const _activeVariation = getActiveBlockVariation( block.name, block.attributes )
 				const activeVariation = applyFilters( 'stackable.variation-picker.variation-selected', _activeVariation, block.name )
 
 				let newAttributes = {}
@@ -100,7 +101,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 					uniqueId: createUniqueClass( clientId ),
 				}
 
-				updateBlockAttributes( clientId, newAttributes )
+				updateBlockAttributes( clientId, newAttributes ) // eslint-disable-line stackable/no-update-block-attributes
 
 				// Add the inner blocks of the layout / variation.
 				if ( nextVariation.innerBlocks ) {

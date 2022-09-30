@@ -6,7 +6,7 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.4.5
+ * Version: 3.5.0
  *
  * @package Stackable
  */
@@ -23,7 +23,8 @@ if ( function_exists( 'sugb_fs' ) ) {
 }
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.4.5' );
+defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'premium' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.5.0' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_CLOUDFRONT_URL' ) || define( 'STACKABLE_CLOUDFRONT_URL', 'https://d3gt1urn7320t9.cloudfront.net' ); // CloudFront CDN URL
@@ -183,7 +184,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/wizard.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
 
-if ( sugb_fs()->is__premium_only() ) {
+if ( STACKABLE_BUILD === 'premium' && sugb_fs()->is__premium_only() ) {
 	/**
 	 * Premium initialize code.
 	 */

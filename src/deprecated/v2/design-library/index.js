@@ -2,7 +2,11 @@
  * Internal dependencies
  */
 import ModalDesignLibrary from '../components/modal-design-library'
-import { fetchDesignLibrary } from '../../../design-library'
+
+/**
+ * External dependencies
+ */
+import { fetchDesignLibrary } from '~stackable/design-library'
 
 /**
  * WordPress dependencies

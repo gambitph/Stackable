@@ -9,9 +9,6 @@ import {
 	separatorGetStyleParams,
 } from '~stackable/block-components'
 import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
-import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
@@ -19,10 +16,7 @@ import { Style as StyleComponent } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import {
-	renderToString,
-} from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { memo, renderToString } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 const separatorOptions = {
@@ -32,43 +26,31 @@ const separatorOptions = {
 	wrapperSelector: '.stk-block-separator__inner',
 }
 
-export const SeparatorStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
-	const separatorStyles = useStyles( attributes, separatorGetStyleParams( separatorOptions, '' ) )
-	const separatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], separatorOptions, '' ) )
+export const SeparatorStyles = memo( props => {
+	const separatorStyles = useStyles( separatorGetStyleParams( separatorOptions, '' ) )
+	const separatorLayerStyles = useStyles( applyFilters( 'stackable.block-component.separator.get-style-params', [], separatorOptions, '' ) )
 
 	return (
 		<>
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
+			<Transform.Style { ...props } />
 			<StyleComponent
 				styles={ separatorStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<StyleComponent
 				styles={ separatorLayerStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)
-}
+} )
 
 SeparatorStyles.defaultProps = {
 	isEditor: false,

@@ -2,11 +2,11 @@
  * Internal dependencies
  */
 import { appendImportantAll } from '../'
+import { __getValue } from '../styles'
 
 /**
  * External dependencies
  */
-import { __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
 

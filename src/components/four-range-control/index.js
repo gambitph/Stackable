@@ -17,7 +17,6 @@ import { useControlHandlers } from '../base-control2/hooks'
  */
 import { Tooltip } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	Fragment, useState, memo,
 } from '@wordpress/element'
@@ -29,7 +28,9 @@ import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { Button } from '~stackable/components'
 import {
-	useAttributeName, useBlockAttributes, useDeviceType,
+	useAttributeName,
+	useBlockAttributesContext,
+	useDeviceType,
 } from '~stackable/hooks'
 
 const isEqualInitial = ( props, value, firstValue ) => {
@@ -90,8 +91,7 @@ const FourRangeControl = props => {
 	const hasUnits = !! props.units?.length
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 	const unit = attributes[ unitAttrName ]
 
 	// Change the min, max & step values depending on the unit used.

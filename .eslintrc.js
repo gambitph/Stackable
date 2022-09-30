@@ -4,6 +4,7 @@ module.exports = {
 		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
 		'plugin:jest/recommended',
 		'plugin:compat/recommended',
+		'plugin:stackable/recommended',
 	],
 	env: {
 		browser: true,
