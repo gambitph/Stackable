@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.3
 Tested up to: 6.0.1
 Requires PHP: 5.7
-Stable tag: 3.4.5
+Stable tag: 3.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -250,6 +250,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Various performance improvements
 * New: Smaller plugin filesize
 * New: New exposed stk API
+* New: New exposed window.stk API
+* New: Support for block theme contentSize and wideSize
+* Fixed: Wide and fullwidth blocks sometimes showed centered in the editor
 * Fixed: Some block options not showing up in the editor
 * Fixed: Column block's Content Vertical Align not displaying correctly in the editor
 * Fixed: Icon block margin and size options not displaying correctly in the editor
