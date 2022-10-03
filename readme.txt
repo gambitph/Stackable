@@ -259,6 +259,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Hero block can get an error when switching layouts
 * Fixed: Accordion content in the editor overlapped sometimes
 * Fixed: Some styles did not show in the editor when changing hover states
+* Fixed: Some shadows flicker or get clipped in Safari #2328
 
 = 3.4.5 =
 * Fixed: Accordion containers incorrectly collapsed when placed inside columns
