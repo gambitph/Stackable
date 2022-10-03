@@ -1,12 +1,5 @@
 @import "common";
 
-div.stk-block-progress-circle {
-	display: flex;
-	&:not([class*="has-text-align-"]) {
-		justify-content: center;
-	}
-}
-
 .stk-progress-circle {
 	position: relative;
 	height: var(--progress-size, 150px);
@@ -59,4 +52,10 @@ div.stk-block-progress-circle {
 			}
 		}
 	}
+}
+
+.stk-block .stk-block-progress-circle__container {
+	display: flex;
+	width: 100%;
+	justify-content: var(--stk-alignment-justify-content, center);
 }

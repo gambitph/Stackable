@@ -25,6 +25,11 @@ const Save = props => {
 		className,
 		'stk-block-progress-circle',
 		responsiveClass,
+	] )
+
+	const containerClassNames = classnames( [
+		className,
+		'stk-block-progress-circle__container',
 		blockAlignmentClass,
 	] )
 
@@ -50,37 +55,39 @@ const Save = props => {
 		>
 			<ProgressCircleStyles.Content { ...props } />
 			<CustomCSS.Content attributes={ attributes } />
-			<div
-				className={ divClassNames }
-				role="progressbar"
-				aria-valuemin="0"
-				aria-valuemax="100"
-				aria-valuenow={ derivedPercent }
-				{ ...( attributes.progressAriaValueText && {
-					'aria-valuetext': striptags( attributes.progressAriaValueText ),
-				} ) }
-			>
-				<svg>
-					{ attributes.progressColorType === 'gradient' && (
-						<defs>
-							<linearGradient id={ `gradient-${ attributes.uniqueId }` }>
-								<stop offset="0%" stopColor={ attributes.progressColor1 } />
-								<stop offset="100%" stopColor={ attributes.progressColor2 } />
-							</linearGradient>
-						</defs>
+			<div className={ containerClassNames }>
+				<div
+					className={ divClassNames }
+					role="progressbar"
+					aria-valuemin="0"
+					aria-valuemax="100"
+					aria-valuenow={ derivedPercent }
+					{ ...( attributes.progressAriaValueText && {
+						'aria-valuetext': striptags( attributes.progressAriaValueText ),
+					} ) }
+				>
+					<svg>
+						{ attributes.progressColorType === 'gradient' && (
+							<defs>
+								<linearGradient id={ `gradient-${ attributes.uniqueId }` }>
+									<stop offset="0%" stopColor={ attributes.progressColor1 } />
+									<stop offset="100%" stopColor={ attributes.progressColor2 } />
+								</linearGradient>
+							</defs>
+						) }
+						<circle className="stk-progress-circle__background" />
+						<circle className="stk-progress-circle__bar" />
+					</svg>
+					{ attributes.show && (
+						<div className="stk-number">
+							<Typography.Content
+								tagName="span"
+								className={ textClassNames }
+								value={ derivedValue }
+							/>
+						</div>
 					) }
-					<circle className="stk-progress-circle__background" />
-					<circle className="stk-progress-circle__bar" />
-				</svg>
-				{ attributes.show && (
-					<div className="stk-number">
-						<Typography.Content
-							tagName="span"
-							className={ textClassNames }
-							value={ derivedValue }
-						/>
-					</div>
-				) }
+				</div>
 			</div>
 		</BlockDiv.Content>
 	)

@@ -50,6 +50,10 @@ const Edit = ( {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-progress-circle',
+	] )
+
+	const containerClassNames = classnames( [
+		'stk-block-progress-circle__container',
 		blockAlignmentClass,
 	] )
 
@@ -97,38 +101,40 @@ const Edit = ( {
 			<BlockDiv className={ blockClassNames }>
 				<ProgressCircleStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-progress-circle" />
-				<div
-					className="stk-progress-circle stk-animate"
-					role="progressbar"
-					aria-valuemin="0"
-					aria-valuemax="100"
-					aria-valuenow={ derivedPercent }
-					{ ...( attributes.progressAriaValueText && {
-						'aria-valuetext': striptags( attributes.progressAriaValueText ),
-					} ) }
-				>
-					<svg className={ workAroundClass }>
-						{ attributes.progressColorType === 'gradient' && (
-							<defs>
-								<linearGradient id={ `gradient-${ attributes.uniqueId }` }>
-									<stop offset="0%" stopColor={ attributes.progressColor1 } />
-									<stop offset="100%" stopColor={ attributes.progressColor2 } />
-								</linearGradient>
-							</defs>
+				<div className={ containerClassNames }>
+					<div
+						className="stk-progress-circle stk-animate"
+						role="progressbar"
+						aria-valuemin="0"
+						aria-valuemax="100"
+						aria-valuenow={ derivedPercent }
+						{ ...( attributes.progressAriaValueText && {
+							'aria-valuetext': striptags( attributes.progressAriaValueText ),
+						} ) }
+					>
+						<svg className={ workAroundClass }>
+							{ attributes.progressColorType === 'gradient' && (
+								<defs>
+									<linearGradient id={ `gradient-${ attributes.uniqueId }` }>
+										<stop offset="0%" stopColor={ attributes.progressColor1 } />
+										<stop offset="100%" stopColor={ attributes.progressColor2 } />
+									</linearGradient>
+								</defs>
+							) }
+							<circle className="stk-progress-circle__background" />
+							<circle className="stk-progress-circle__bar" />
+						</svg>
+						{ attributes.show && (
+							<div className="stk-number">
+								<Typography
+									tagName="span"
+									className={ textClassNames }
+									value={ derivedValue }
+									editable={ false }
+								/>
+							</div>
 						) }
-						<circle className="stk-progress-circle__background" />
-						<circle className="stk-progress-circle__bar" />
-					</svg>
-					{ attributes.show && (
-						<div className="stk-number">
-							<Typography
-								tagName="span"
-								className={ textClassNames }
-								value={ derivedValue }
-								editable={ false }
-							/>
-						</div>
-					) }
+					</div>
 				</div>
 			</BlockDiv>
 			<MarginBottom />
