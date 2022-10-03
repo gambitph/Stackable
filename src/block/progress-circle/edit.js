@@ -13,6 +13,7 @@ import {
 	Alignment,
 	Advanced,
 	Responsive,
+	MarginBottom,
 	Transform,
 	EffectsAnimations,
 	CustomAttributes,
@@ -130,6 +131,7 @@ const Edit = ( {
 					) }
 				</div>
 			</BlockDiv>
+			<MarginBottom />
 		</>
 	)
 }
