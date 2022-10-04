@@ -24,5 +24,6 @@ export const settings = {
 	save,
 	supports: {
 		anchor: true,
+		align: [ 'center', 'wide', 'full' ],
 	},
 }
