@@ -45,8 +45,10 @@ const Save = props => {
 		},
 	] )
 
-	const derivedPercent = attributes.progressPercent || DEFAULT_PERCENT
-	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
+	// this is to handle dynamic content; only show valid value
+	const parsedPercent = parseFloat( attributes.progressPercent )
+	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
+	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
 
 	return (
 		<BlockDiv.Content

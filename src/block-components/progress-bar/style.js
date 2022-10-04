@@ -14,11 +14,6 @@ const getStyleParams = () => {
 		},
 		{
 			selector: '.stk-progress-circle',
-			styleRule: '--progress-percent',
-			attrName: 'progressPercent',
-		},
-		{
-			selector: '.stk-progress-circle',
 			styleRule: '--progress-color-1',
 			attrName: 'progressColor1',
 			valuePreCallback: ( value, getAttribute, _, state ) => {
@@ -71,7 +66,10 @@ const getStyleParams = () => {
 			valuePreCallback: ( value, getAttribute ) => {
 				const derivedThickness = getAttribute( 'progressThickness' ) || DEFAULT_THICKNESS
 				const derivedSize = getAttribute( 'progressSize' ) || DEFAULT_SIZE
-				const derivedPercent = typeof value === 'string' ? DEFAULT_PERCENT : value
+
+				// this is to handle dynamic content; only show valid value
+				const parsedPercent = parseFloat( value )
+				const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
 
 				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 )
 				const circumference = Math.PI * ( radius * 2 )
