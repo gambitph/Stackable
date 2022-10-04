@@ -33,6 +33,10 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
+			progressGradientDirection: {
+				type: 'number',
+				default: '',
+			},
 			progressBackgroundColor: {
 				type: 'string',
 				default: '',

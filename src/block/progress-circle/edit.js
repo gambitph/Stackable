@@ -117,7 +117,12 @@ const Edit = ( {
 						<svg className={ workAroundClass }>
 							{ attributes.progressColorType === 'gradient' && (
 								<defs>
-									<linearGradient id={ `gradient-${ attributes.uniqueId }` }>
+									<linearGradient
+										id={ `gradient-${ attributes.uniqueId }` }
+										{ ...( attributes.progressGradientDirection && {
+											gradientTransform: `rotate(${ attributes.progressGradientDirection })`,
+										} ) }
+									>
 										<stop offset="0%" stopColor={ attributes.progressColor1 } />
 										<stop offset="100%" stopColor={ attributes.progressColor2 } />
 									</linearGradient>
