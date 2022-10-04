@@ -22,4 +22,7 @@ export const settings = {
 	attributes: schema,
 	edit,
 	save,
+	supports: {
+		anchor: true,
+	},
 }
