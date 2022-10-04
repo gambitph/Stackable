@@ -96,7 +96,7 @@ export const Edit = ( { attrNameTemplate } ) => {
 								/>
 								<AdvancedRangeControl
 									label={ __( 'Gradient Direction (degrees)', i18n ) }
-									attribute="progressGradientDirection"
+									attribute="progressColorGradientDirection"
 									min={ 0 }
 									max={ 360 }
 									step={ 10 }
