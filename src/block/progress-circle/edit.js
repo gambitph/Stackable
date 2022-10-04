@@ -119,8 +119,8 @@ const Edit = ( {
 								<defs>
 									<linearGradient
 										id={ `gradient-${ attributes.uniqueId }` }
-										{ ...( attributes.progressGradientDirection && {
-											gradientTransform: `rotate(${ attributes.progressGradientDirection })`,
+										{ ...( attributes.progressColorGradientDirection && {
+											gradientTransform: `rotate(${ attributes.progressColorGradientDirection })`,
 										} ) }
 									>
 										<stop offset="0%" stopColor={ attributes.progressColor1 } />
