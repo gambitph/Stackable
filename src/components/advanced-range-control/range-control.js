@@ -79,7 +79,9 @@ const StackableRangeControl = memo( props => {
 		} else if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
-				debouncedOnChange( clamp( parsedValue, props.min, props.max ) )
+				const newValue = clamp( parsedValue, props.min, props.max )
+				setValue( newValue )
+				debouncedOnChange( newValue )
 				return
 			}
 		}
