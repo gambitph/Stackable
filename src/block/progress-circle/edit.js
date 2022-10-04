@@ -13,6 +13,7 @@ import {
 	Alignment,
 	Advanced,
 	Responsive,
+	MarginBottom,
 	Transform,
 	EffectsAnimations,
 	CustomAttributes,
@@ -49,6 +50,10 @@ const Edit = ( {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-progress-circle',
+	] )
+
+	const containerClassNames = classnames( [
+		'stk-block-progress-circle__container',
 		blockAlignmentClass,
 	] )
 
@@ -57,8 +62,10 @@ const Edit = ( {
 		textClasses,
 	] )
 
-	const derivedPercent = typeof attributes.progressPercent === 'string' ? DEFAULT_PERCENT : attributes.progressPercent
-	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
+	// this is to handle dynamic content; only show valid value
+	const parsedPercent = parseFloat( attributes.progressPercent )
+	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
+	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
 
 	/**
 	 * workaround to correct the circle width when size changes
@@ -96,40 +103,48 @@ const Edit = ( {
 			<BlockDiv className={ blockClassNames }>
 				<ProgressCircleStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-progress-circle" />
-				<div
-					className="stk-progress-circle stk-animate"
-					role="progressbar"
-					aria-valuemin="0"
-					aria-valuemax="100"
-					aria-valuenow={ derivedPercent }
-					{ ...( attributes.progressAriaValueText && {
-						'aria-valuetext': striptags( attributes.progressAriaValueText ),
-					} ) }
-				>
-					<svg className={ workAroundClass }>
-						{ attributes.progressColorType === 'gradient' && (
-							<defs>
-								<linearGradient id={ `gradient-${ attributes.uniqueId }` }>
-									<stop offset="0%" stopColor={ attributes.progressColor1 } />
-									<stop offset="100%" stopColor={ attributes.progressColor2 } />
-								</linearGradient>
-							</defs>
+				<div className={ containerClassNames }>
+					<div
+						className="stk-progress-circle stk-animate"
+						role="progressbar"
+						aria-valuemin="0"
+						aria-valuemax="100"
+						aria-valuenow={ derivedPercent }
+						{ ...( attributes.progressAriaValueText && {
+							'aria-valuetext': striptags( attributes.progressAriaValueText ),
+						} ) }
+					>
+						<svg className={ workAroundClass }>
+							{ attributes.progressColorType === 'gradient' && (
+								<defs>
+									<linearGradient
+										id={ `gradient-${ attributes.uniqueId }` }
+										{ ...( attributes.progressGradientDirection && {
+											gradientTransform: `rotate(${ attributes.progressGradientDirection })`,
+										} ) }
+									>
+										<stop offset="0%" stopColor={ attributes.progressColor1 } />
+										<stop offset="100%" stopColor={ attributes.progressColor2 } />
+									</linearGradient>
+								</defs>
+							) }
+							<circle className="stk-progress-circle__background" />
+							<circle className="stk-progress-circle__bar" />
+						</svg>
+						{ attributes.show && (
+							<div className="stk-number">
+								<Typography
+									tagName="span"
+									className={ textClassNames }
+									value={ derivedValue }
+									editable={ false }
+								/>
+							</div>
 						) }
-						<circle className="stk-progress-circle__background" />
-						<circle className="stk-progress-circle__bar" />
-					</svg>
-					{ attributes.show && (
-						<div className="stk-number">
-							<Typography
-								tagName="span"
-								className={ textClassNames }
-								value={ derivedValue }
-								editable={ false }
-							/>
-						</div>
-					) }
+					</div>
 				</div>
 			</BlockDiv>
+			<MarginBottom />
 		</>
 	)
 }

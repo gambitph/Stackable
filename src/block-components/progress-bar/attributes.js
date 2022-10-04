@@ -35,6 +35,10 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 				type: 'string',
 				default: '',
 			},
+			progressColorGradientDirection: {
+				type: 'number',
+				default: '',
+			},
 			progressBackgroundColor: {
 				type: 'string',
 				default: '',
@@ -57,10 +61,6 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 					type: 'number',
 					default: '',
 					stkUnits: 'px',
-				},
-				progressColorGradientDirection: {
-					type: 'number',
-					default: '',
 				},
 				progressColorGradientLocation1: {
 					type: 'number',

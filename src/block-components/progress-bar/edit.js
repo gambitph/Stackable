@@ -112,6 +112,14 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									attribute="progressColor2"
 									hasTransparent={ true }
 								/>
+								<AdvancedRangeControl
+									label={ __( 'Gradient Direction (degrees)', i18n ) }
+									attribute="progressGradientDirection"
+									min={ 0 }
+									max={ 360 }
+									step={ 10 }
+									allowReset={ true }
+								/>
 							</>
 						) }
 						{ ( isColorGradient && ! isCircle ) && (
