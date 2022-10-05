@@ -247,7 +247,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
-= 3.6.0 =
+= 3.5.0 =
 [No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Various performance improvements
