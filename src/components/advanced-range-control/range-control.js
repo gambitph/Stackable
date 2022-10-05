@@ -16,7 +16,11 @@ import {
 	__experimentalNumberControl as NumberControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
 import {
-	useState, useLayoutEffect, useEffect, memo,
+	useState,
+	useLayoutEffect,
+	useEffect,
+	memo,
+	useCallback,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -24,7 +28,7 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import classnames from 'classnames'
-import { clamp } from 'lodash'
+import { clamp, debounce } from 'lodash'
 import { i18n } from 'stackable'
 import { useDeviceType } from '~stackable/hooks'
 
@@ -51,6 +55,10 @@ const StackableRangeControl = memo( props => {
 	// just set the proper value on the onChange prop.
 	const [ value, setValue ] = useState( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ? '' : props.value )
 
+	// We need to debounce the prop.onChange callback for when the slider is
+	// dragged, this is so that things feel smoother.
+	const debouncedOnChange = useCallback( debounce( props.onChange, 100 ), [ props.onChange ] )
+
 	// Update the internal value state if the prop changes.
 	useEffect( () => {
 		// Invalid values entered inside the number control will be omitted.
@@ -66,16 +74,18 @@ const StackableRangeControl = memo( props => {
 	const handleOnChange = value => {
 		setValue( value )
 		if ( typeof value === 'string' && value.toLowerCase() === 'auto' ) {
-			props.onChange( value )
+			debouncedOnChange( value )
 			return
 		} else if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
-				props.onChange( clamp( parsedValue, props.min, props.max ) )
+				const newValue = clamp( parsedValue, props.min, props.max )
+				setValue( newValue )
+				debouncedOnChange( newValue )
 				return
 			}
 		}
-		props.onChange( props.resetFallbackValue )
+		debouncedOnChange( props.resetFallbackValue )
 	}
 
 	const handleOnReset = () => {
@@ -140,6 +150,7 @@ const StackableRangeControl = memo( props => {
 	>
 		<RangeControl
 			{ ...propsToPass }
+			value={ value }
 			initialPosition=""
 			onChange={ handleOnChange }
 			withInputField={ false }

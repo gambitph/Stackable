@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-30T02:17:18+00:00\n"
+"POT-Creation-Date: 2022-10-05T03:07:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -2500,7 +2500,7 @@ msgstr ""
 #: pro__premium_only/src/components/panel-design-user-library/index.js:313
 #: pro__premium_only/src/components/panel-design-user-library/modal-design-manage.js:131
 #: pro__premium_only/src/conditional-display/date-time.js:74
-#: src/components/advanced-range-control/range-control.js:179
+#: src/components/advanced-range-control/range-control.js:190
 #: src/components/base-control/index.js:59
 #: src/components/base-control2/reset-button.js:30
 #: src/deprecated/v2/components/columns-width-control/index.js:213

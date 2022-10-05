@@ -2,7 +2,7 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.3
-Tested up to: 6.0.1
+Tested up to: 6.0.2
 Requires PHP: 5.7
 Stable tag: 3.5.0
 License: GPLv3
@@ -148,6 +148,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -247,19 +248,26 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.6.0 =
+[No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: Various performance improvements
 * New: Smaller plugin filesize
 * New: New exposed stk API
-* New: New exposed window.stk API
+* New: New exposed window.stk API (undocumented)
 * New: Support for block theme contentSize and wideSize
 * Fixed: Wide and fullwidth blocks sometimes showed centered in the editor
+* Fixed: Column content vertical align did not show up correctly in the editor
 * Fixed: Some block options not showing up in the editor
 * Fixed: Column block's Content Vertical Align not displaying correctly in the editor
-* Fixed: Icon block margin and size options not displaying correctly in the editor
+* Fixed: Icon block margin and size options not displaying correctly in the editor #2426
 * Fixed: Card block horizontal layout image resizing issues in tablet and mobile
 * Fixed: Hero block can get an error when switching layouts
 * Fixed: Accordion content in the editor overlapped sometimes
 * Fixed: Some styles did not show in the editor when changing hover states
+* Fixed: Some shadows flicker or get clipped in Safari #2328
+* Fixed: Accordions close adjacent doesn't work with reduced motion OS setting #2352
+* Fixed: Custom Fields PHP warnings #2415
+* Fixed: Using custom SVGs with colors can sometimes cause block errors #2411
 
 = 3.4.5 =
 * Fixed: Accordion containers incorrectly collapsed when placed inside columns
