@@ -7,9 +7,10 @@ import {
 } from './attributes'
 
 const getStyleParams = ( { isCircle } ) => {
+	const selector = isCircle ? '.stk-progress-circle' : '.stk-progress-bar'
 	return [
 		{
-			selector: '[class*="stk-progress-"]',
+			selector,
 			styleRule: '--progress-percent',
 			attrName: 'progressPercent',
 			...( ! isCircle && {
@@ -17,33 +18,34 @@ const getStyleParams = ( { isCircle } ) => {
 			} ),
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector,
 			styleRule: '--progress-color-1',
 			attrName: 'progressColor1',
-			valuePreCallback: ( value, getAttribute ) => {
-				if ( getAttribute( 'progressColorType' ) === 'gradient' && isCircle ) {
-					const uniqueId = getAttribute( 'uniqueId' )
-					return `url(#gradient-${ uniqueId })`
-				}
-				return value
-			},
+			...( isCircle && {
+				valuePreCallback: ( value, getAttribute ) => {
+					if ( getAttribute( 'progressColorType' ) === 'gradient' ) {
+						const uniqueId = getAttribute( 'uniqueId' )
+						return `url(#gradient-${ uniqueId })`
+					}
+					return value
+				},
+			} ),
 			dependencies: [ 'progressColorType' ],
 		},
-
 		{
-			selector: '[class*="stk-progress-"]',
+			selector,
 			styleRule: '--progress-background',
 			attrName: 'progressBackgroundColor',
 		},
 		{
-			selector: '[class*="stk-progress-"]',
+			selector,
 			styleRule: '--progress-size',
 			attrName: 'progressSize',
 			format: '%spx',
 		},
 		// only use these stylRules when it's a circular progress
 		...( isCircle ? [ {
-			selector: '[class*="stk-progress-"]',
+			selector,
 			styleRule: '--progress-rounded',
 			attrName: 'progressRounded',
 			valuePreCallback: value => {
@@ -54,13 +56,13 @@ const getStyleParams = ( { isCircle } ) => {
 			},
 		},
 		{
-			selector: '[class*="stk-progress-"]',
+			selector,
 			styleRule: '--progress-thickness',
 			attrName: 'progressThickness',
 			format: '%spx',
 		},
 		{
-			selector: '[class*="stk-progress-"]',
+			selector,
 			styleRule: '--progress-dash-array',
 			attrName: 'progressSize',
 			valuePreCallback: ( value, getAttribute ) => {
@@ -72,7 +74,7 @@ const getStyleParams = ( { isCircle } ) => {
 			},
 		},
 		{
-			selector: '[class*="stk-progress-"]',
+			selector,
 			styleRule: '--progress-dash-offset',
 			attrName: 'progressPercent',
 			valuePreCallback: ( value, getAttribute ) => {
@@ -88,7 +90,7 @@ const getStyleParams = ( { isCircle } ) => {
 				return ( ( 100 - derivedPercent ) / 100 ) * circumference
 			},
 		} ] : [ {
-			selector: '[class*="stk-progress-"]',
+			selector,
 			styleRule: '--progress-border-radius',
 			attrName: 'progressBorderRadius',
 			hasUnits: 'px',
@@ -122,7 +124,7 @@ const getStyleParams = ( { isCircle } ) => {
 }
 
 export const Style = props => {
-	const progressBarStyles = useStyles( getStyleParams( { isCircle: props.isCircle } ) )
+	const progressBarStyles = useStyles( getStyleParams( props.options ) )
 
 	return (
 		<StyleComponent
@@ -135,10 +137,11 @@ export const Style = props => {
 }
 
 Style.defaultProps = {
-	isCircle: false,
 	isEditor: false,
 	attributes: {},
-	options: {},
+	options: {
+		isCircle: false,
+	},
 }
 
 Style.Content = props => {
@@ -146,7 +149,7 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const progressBarStyles = getStyles( propsToPass.attributes, getStyleParams( { isCircle: props.isCircle } ) )
+	const progressBarStyles = getStyles( propsToPass.attributes, getStyleParams( props.options ) )
 
 	return (
 		<StyleComponent.Content
