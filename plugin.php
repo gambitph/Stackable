@@ -184,12 +184,14 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/wizard.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
 
-if ( STACKABLE_BUILD === 'premium' && sugb_fs()->is__premium_only() ) {
-	/**
-	 * Premium initialize code.
-	 */
-	if ( file_exists( plugin_dir_path( __FILE__ ) . 'pro__premium_only/index.php' ) ) {
-		require_once( plugin_dir_path( __FILE__ ) . 'pro__premium_only/index.php' );
+if ( sugb_fs()->is__premium_only() ) {
+	if ( STACKABLE_BUILD === 'premium' ) {
+		/**
+		 * Premium initialize code.
+		 */
+		if ( file_exists( plugin_dir_path( __FILE__ ) . 'pro__premium_only/index.php' ) ) {
+			require_once( plugin_dir_path( __FILE__ ) . 'pro__premium_only/index.php' );
+		}
 	}
 }
 
