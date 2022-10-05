@@ -40,7 +40,7 @@ const Save = props => {
 		},
 	] )
 
-	const barClassNames = classnames( 'stk-progress__bar', {
+	const barClassNames = classnames( 'stk-progress-bar__bar', {
 		'stk--has-background-overlay': attributes.progressColorType === 'gradient' && attributes.progressColor2,
 	} )
 

@@ -14,7 +14,7 @@ div.stk-block-progress-bar {
 		border-radius: var(--progress-border-radius, unset);
 		background-color: var(--progress-background, #f0f0f0);
 		overflow: hidden;
-		.stk-progress__bar {
+		.stk-progress-bar__bar {
 			width: 0%;
 			height: 100%;
 			display: flex;
@@ -35,13 +35,13 @@ div.stk-block-progress-bar {
 		}
 	}
 	&.stk--with-animation {
-		.stk-progress__bar {
+		.stk-progress-bar__bar {
 			will-change: width;
 			@include transition();
 		}
 	}
 	&.stk-animate {
-		.stk-progress__bar {
+		.stk-progress-bar__bar {
 			width: var(--progress-percent, 50%);
 		}
 	}
@@ -50,7 +50,7 @@ div.stk-block-progress-bar {
 @media (prefers-reduced-motion) {
 	.stk-progress-bar {
 		&.stk--with-animation {
-			.stk-progress__bar {
+			.stk-progress-bar__bar {
 				transition: none;
 			}
 		}
