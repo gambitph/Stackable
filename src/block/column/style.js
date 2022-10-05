@@ -30,7 +30,8 @@ const containerDivOptions = {
 	sizeHorizontalAlignRule: 'margin',
 	sizeVerticalAlignRule: 'justifyContent',
 	sizeVerticalAlignSelector: '.%s-inner-blocks',
-	sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
+	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
+	sizeVerticalAlignSelectorEdit: '.%s-inner-blocks',
 }
 
 const getStyleParams = () => {
