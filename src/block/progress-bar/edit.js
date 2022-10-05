@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import ProgressBarStyles from './style'
-import { DEFAULT_PERCENT } from '../../block-components/progress-bar/attributes'
+import { DEFAULT_PERCENT } from './schema'
 
 /**
  * External dependencies

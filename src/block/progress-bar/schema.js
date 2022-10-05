@@ -19,6 +19,8 @@ import {
 	Typography,
 } from '~stackable/block-components'
 
+export const DEFAULT_PERCENT = 50
+
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 

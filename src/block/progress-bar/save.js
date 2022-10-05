@@ -1,4 +1,6 @@
 import ProgressBarStyles from './style'
+import { DEFAULT_PERCENT } from './schema'
+
 import {
 	BlockDiv,
 	CustomCSS,
@@ -13,7 +15,6 @@ import classnames from 'classnames'
 import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
-import { DEFAULT_PERCENT } from '../../block-components/progress-bar/attributes'
 
 const Save = props => {
 	const { className, attributes } = props
