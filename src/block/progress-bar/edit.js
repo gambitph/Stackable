@@ -61,7 +61,7 @@ const Edit = ( {
 	} )
 
 	const derivedPercent = typeof attributes.progressPercent === 'string' ? DEFAULT_PERCENT : attributes.progressPercent
-	const derivedValue = `${ attributes.textPrefix.trim() }${ derivedPercent }${ attributes.textSuffix.trim() }`.trim()
+	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
 	const deviedAriaValue = attributes.progressAriaValueText || attributes.progressInnerText || attributes.text
 
 	return (

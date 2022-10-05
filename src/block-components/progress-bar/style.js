@@ -96,7 +96,7 @@ const getStyleParams = ( { isCircle } ) => {
 			hasUnits: 'px',
 		},
 		{
-			selector: '.stk-progress__bar.stk--has-background-overlay:before',
+			selector: '.stk-progress-bar__bar.stk--has-background-overlay:before',
 			styleRule: 'backgroundImage',
 			attrName: 'progressColor1',
 			enabledCallback: getAttribute => getAttribute( 'progressColorType' ) === 'gradient',
@@ -159,4 +159,12 @@ Style.Content = props => {
 			{ ...propsToPass }
 		/>
 	)
+}
+
+Style.Content.defaultProps = {
+	isEditor: false,
+	attributes: {},
+	options: {
+		isCircle: false,
+	},
 }
