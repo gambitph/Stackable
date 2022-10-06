@@ -97,7 +97,7 @@ const Edit = ( {
 				>
 					<div className="stk-progress__background">
 						<div className={ barClassNames }>
-							{ attributes.show && (
+							{ attributes.showText && (
 								<>
 									<Typography
 										tagName="span"

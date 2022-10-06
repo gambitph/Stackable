@@ -131,7 +131,7 @@ const Edit = ( {
 							<circle className="stk-progress-circle__background" />
 							<circle className="stk-progress-circle__bar" />
 						</svg>
-						{ attributes.show && (
+						{ attributes.showText && (
 							<div className="stk-number">
 								<Typography
 									tagName="span"

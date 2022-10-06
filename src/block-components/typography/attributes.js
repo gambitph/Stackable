@@ -70,10 +70,6 @@ const typographyAttributes = {
 		type: 'boolean',
 		default: false,
 	},
-	show: {
-		type: 'boolean',
-		default: true,
-	},
 	textPrefix: {
 		type: 'string',
 		default: '',

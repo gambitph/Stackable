@@ -86,7 +86,7 @@ const Save = props => {
 						<circle className="stk-progress-circle__background" />
 						<circle className="stk-progress-circle__bar" />
 					</svg>
-					{ attributes.show && (
+					{ attributes.showText && (
 						<div className="stk-number">
 							<Typography.Content
 								tagName="span"

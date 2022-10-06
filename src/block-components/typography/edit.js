@@ -380,8 +380,8 @@ export const Edit = props => {
 				title={ label }
 				initialOpen={ initialOpen }
 				{ ...( hasToggle ? {
-					checked: getAttribute( 'show' ),
-					onChange: updateAttributeHandler( 'show' ),
+					checked: getAttribute( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
+					onChange: updateAttributeHandler( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
 				} : {} ) }
 				id="text"
 			>
