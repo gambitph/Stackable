@@ -30,7 +30,6 @@ import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
-import striptags from 'striptags'
 
 /**
  * WordPress dependencies
@@ -87,24 +86,13 @@ const Edit = ( {
 				<ProgressCircleStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-progress-circle" />
 				<div className={ containerClassNames }>
-					<div
-						className="stk-progress-circle stk-animate"
-						role="progressbar"
-						aria-valuemin="0"
-						aria-valuemax="100"
-						aria-valuenow={ derivedPercent }
-						{ ...( attributes.progressAriaValueText && {
-							'aria-valuetext': striptags( attributes.progressAriaValueText ),
-						} ) }
-					>
+					<div className="stk-progress-circle stk-animate">
 						<svg>
 							{ attributes.progressColorType === 'gradient' && (
 								<defs>
 									<linearGradient
 										id={ `gradient-${ attributes.uniqueId }` }
-										{ ...( attributes.progressColorGradientDirection && {
-											gradientTransform: `rotate(${ attributes.progressColorGradientDirection })`,
-										} ) }
+										gradientTransform={ attributes.progressColorGradientDirection ? `rotate(${ attributes.progressColorGradientDirection })` : undefined }
 									>
 										<stop offset="0%" stopColor={ attributes.progressColor1 } />
 										<stop offset="100%" stopColor={ attributes.progressColor2 } />

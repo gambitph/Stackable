@@ -62,9 +62,7 @@ const Save = props => {
 				aria-valuemin="0"
 				aria-valuemax="100"
 				aria-valuenow={ derivedPercent }
-				{ ...( deviedAriaValue && {
-					'aria-valuetext': striptags( deviedAriaValue ),
-				} ) }
+				aria-valuetext={ deviedAriaValue ? striptags( deviedAriaValue ) : undefined }
 			>
 				<div className="stk-progress__background">
 					<div className={ barClassNames }>

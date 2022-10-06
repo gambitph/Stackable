@@ -65,18 +65,14 @@ const Save = props => {
 					aria-valuemin="0"
 					aria-valuemax="100"
 					aria-valuenow={ derivedPercent }
-					{ ...( attributes.progressAriaValueText && {
-						'aria-valuetext': striptags( attributes.progressAriaValueText ),
-					} ) }
+					aria-valuetext={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
 				>
 					<svg>
 						{ attributes.progressColorType === 'gradient' && (
 							<defs>
 								<linearGradient
 									id={ `gradient-${ attributes.uniqueId }` }
-									{ ...( attributes.progressColorGradientDirection && {
-										gradientTransform: `rotate(${ attributes.progressColorGradientDirection })`,
-									} ) }
+									gradientTransform={ attributes.progressColorGradientDirection ? `rotate(${ attributes.progressColorGradientDirection })` : undefined }
 								>
 									<stop offset="0%" stopColor={ attributes.progressColor1 } />
 									<stop offset="100%" stopColor={ attributes.progressColor2 } />
