@@ -19,10 +19,10 @@ import { getUniqueBlockClass } from '~stackable/util'
 import { memo, renderToString } from '@wordpress/element'
 
 const typographyOptions = {
-	selector: '.stk-progress-circle__inner-text',
+	selector: '.stk-progress-bar__inner-text',
 }
 
-const ProgressCircleStyles = memo( props => {
+const ProgressBarStyles = memo( props => {
 	return (
 		<>
 			<Alignment.Style { ...props } />
@@ -30,17 +30,18 @@ const ProgressCircleStyles = memo( props => {
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
-			<ProgressBar.Style { ...props } options={ { isCircle: true } } />
+			<ProgressBar.Style { ...props } />
 			<Typography.Style { ...props } { ...typographyOptions } />
 		</>
 	)
 } )
 
-ProgressCircleStyles.defaultProps = {
+ProgressBarStyles.defaultProps = {
+	isCircle: false,
 	isEditor: false,
 }
 
-ProgressCircleStyles.Content = props => {
+ProgressBarStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
@@ -58,7 +59,7 @@ ProgressCircleStyles.Content = props => {
 			<Advanced.Style.Content { ...propsToPass } />
 			<Transform.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ProgressBar.Style.Content { ...propsToPass } options={ { isCircle: true } } />
+			<ProgressBar.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
 		</>
 	)
@@ -66,8 +67,9 @@ ProgressCircleStyles.Content = props => {
 	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
-ProgressCircleStyles.Content.defaultProps = {
+ProgressBarStyles.Content.defaultProps = {
+	isCircle: false,
 	attributes: {},
 }
 
-export default ProgressCircleStyles
+export default ProgressBarStyles

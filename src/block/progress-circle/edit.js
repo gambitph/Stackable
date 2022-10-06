@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import ProgressCircleStyles from './style'
-import { DEFAULT_PERCENT } from '../../block-components/progress-bar/attributes'
+import { DEFAULT_PERCENT } from './schema'
 
 /**
  * External dependencies
@@ -98,7 +98,7 @@ const Edit = ( {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ProgressBar.InspectorControls />
+			<ProgressBar.InspectorControls isCircle />
 
 			<BlockDiv className={ blockClassNames }>
 				<ProgressCircleStyles version={ VERSION } />
@@ -131,7 +131,7 @@ const Edit = ( {
 							<circle className="stk-progress-circle__background" />
 							<circle className="stk-progress-circle__bar" />
 						</svg>
-						{ attributes.show && (
+						{ attributes.showText && (
 							<div className="stk-number">
 								<Typography
 									tagName="span"

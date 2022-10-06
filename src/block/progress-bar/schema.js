@@ -9,8 +9,8 @@ import {
 	Style,
 	CustomCSS,
 	Responsive,
-	Advanced,
 	MarginBottom,
+	Advanced,
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
@@ -35,7 +35,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
-	ProgressBar.addAttributes( attrObject, true )
+	ProgressBar.addAttributes( attrObject )
 	Typography.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )

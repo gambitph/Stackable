@@ -1,0 +1,14 @@
+{
+	"apiVersion": 2,
+	"name": "stackable/progress-bar",
+	"title": "Progress Bar",
+	"description": "Adds a progress bar block.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" ],
+	"keywords": [
+		"Progress",
+		"Progress Bar"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special"
+}

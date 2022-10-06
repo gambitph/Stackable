@@ -72,6 +72,7 @@ export const Controls = props => {
 		hasTextShadow,
 		hasTextPrefix,
 		hasTextSuffix,
+		hasProgressInnerText,
 	} = props
 
 	const {
@@ -106,6 +107,13 @@ export const Controls = props => {
 	return (
 		<>
 			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
+			{ hasProgressInnerText && (
+				<AdvancedTextControl
+					label={ __( 'Progress Bar Text', i18n ) }
+					attribute="progressInnerText"
+					isDynamic={ true }
+				/>
+			) }
 			{ hasTextContent && (
 				<AdvancedTextControl
 					label={ __( 'Content', i18n ) }
@@ -358,6 +366,7 @@ export const Edit = props => {
 		hasTextShadow,
 		hasTextPrefix,
 		hasTextSuffix,
+		hasProgressInnerText,
 	} = props
 
 	const {
@@ -371,8 +380,8 @@ export const Edit = props => {
 				title={ label }
 				initialOpen={ initialOpen }
 				{ ...( hasToggle ? {
-					checked: getAttribute( 'show' ),
-					onChange: updateAttributeHandler( 'show' ),
+					checked: getAttribute( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
+					onChange: updateAttributeHandler( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
 				} : {} ) }
 				id="text"
 			>
@@ -388,6 +397,7 @@ export const Edit = props => {
 					hasTextShadow={ hasTextShadow }
 					hasTextPrefix={ hasTextPrefix }
 					hasTextSuffix={ hasTextSuffix }
+					hasProgressInnerText={ hasProgressInnerText }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
@@ -407,6 +417,7 @@ Edit.defaultProps = {
 	label: __( 'Typography', i18n ),
 	sizePlaceholder: '32',
 	hasTextShadow: false,
+	hasProgressInnerText: false,
 }
 
 Edit.Controls = Controls

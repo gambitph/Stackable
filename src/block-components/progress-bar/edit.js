@@ -10,11 +10,13 @@ import {
 	AdvancedTextControl,
 	ColorPaletteControl,
 	AdvancedToolbarControl,
+	ButtonIconPopoverControl,
+	BlendModeControl,
 } from '~stackable/components'
 import { Typography } from '~stackable/block-components'
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import {
-	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE,
+	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE, DEFAULT_HEIGHT,
 } from './attributes'
 
 /**
@@ -34,10 +36,13 @@ const GRADIENT_OPTIONS = [
 	},
 ]
 
-export const Edit = ( { attrNameTemplate } ) => {
+export const Edit = ( { attrNameTemplate, isCircle } ) => {
 	const {
 		getAttribute,
+		updateAttributes,
 	} = useAttributeEditHandlers( attrNameTemplate )
+
+	const isColorGradient = getAttribute( 'progressColorType' ) === 'gradient'
 
 	return (
 		<Fragment>
@@ -57,23 +62,36 @@ export const Edit = ( { attrNameTemplate } ) => {
 						isDynamic
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Size', i18n ) }
+						label={ isCircle ? __( 'Size', i18n ) : __( 'Height', i18n ) }
 						attribute="progressSize"
 						min="0"
-						sliderMin="50"
-						sliderMax="300"
+						sliderMin={ isCircle ? 50 : 32 }
+						sliderMax={ isCircle ? 300 : 100 }
 						step="1"
-						placeholder={ DEFAULT_SIZE }
+						placeholder={ isCircle ? DEFAULT_SIZE : DEFAULT_HEIGHT }
 					/>
-					<AdvancedRangeControl
-						label={ __( 'Thickness', i18n ) }
-						attribute="progressThickness"
-						min="0"
-						sliderMin="1"
-						sliderMax="30"
-						step="1"
-						placeholder={ DEFAULT_THICKNESS }
-					/>
+					{ ! isCircle && (
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							attribute="progressBorderRadius"
+							allowReset={ true }
+							min="0"
+							units={ [ 'px', '%', 'rem' ] }
+							step="1"
+							sliderMax="100"
+						/>
+					) }
+					{ isCircle && (
+						<AdvancedRangeControl
+							label={ __( 'Thickness', i18n ) }
+							attribute="progressThickness"
+							min="0"
+							sliderMin="1"
+							sliderMax="30"
+							step="1"
+							placeholder={ DEFAULT_THICKNESS }
+						/>
+					) }
 					<>
 						<AdvancedToolbarControl
 							controls={ GRADIENT_OPTIONS }
@@ -82,12 +100,12 @@ export const Edit = ( { attrNameTemplate } ) => {
 							attribute="progressColorType"
 						/>
 						<ColorPaletteControl
-							label={ getAttribute( 'progressColorType' ) === 'gradient' ? sprintf( __( 'Bar Color #%s', i18n ), 1 )
+							label={ isColorGradient ? sprintf( __( 'Bar Color #%s', i18n ), 1 )
 								: __( 'Bar Color', i18n ) }
 							attribute="progressColor1"
-							hasTransparent={ getAttribute( 'progressColorType' ) === 'gradient' }
+							hasTransparent={ isColorGradient }
 						/>
-						{ getAttribute( 'progressColorType' ) === 'gradient' && (
+						{ isColorGradient && (
 							<>
 								<ColorPaletteControl
 									label={ sprintf( __( 'Bar Color #%s', i18n ), 2 ) }
@@ -104,16 +122,73 @@ export const Edit = ( { attrNameTemplate } ) => {
 								/>
 							</>
 						) }
+						{ ( isColorGradient && ! isCircle ) && (
+							<ButtonIconPopoverControl
+								label={ __( 'Adv. Gradient Color Settings', i18n ) }
+								onReset={ () => {
+									updateAttributes( {
+										progressColorGradientDirection: '',
+										progressColorGradientBlendMode: '',
+										progressColorGradientLocation1: '',
+										progressColorGradientLocation2: '',
+									} )
+								} }
+								allowReset={
+									( getAttribute( 'progressColorGradientDirection' ) !== '' && getAttribute( 'progressColorGradientDirection' ) !== 90 ) ||
+									( getAttribute( 'progressColorGradientLocation1' ) !== '' && getAttribute( 'progressColorGradientLocation1' ) !== 0 ) ||
+									( getAttribute( 'progressColorGradientLocation2' ) !== '' && getAttribute( 'progressColorGradientLocation2' ) !== 100 ) ||
+									getAttribute( 'progressColorGradientBlendMode' )
+								}
+							>
+								<AdvancedRangeControl
+									label={ __( 'Gradient Direction (degrees)', i18n ) }
+									attribute="progressColorGradientDirection"
+									min={ 0 }
+									max={ 360 }
+									step={ 10 }
+									allowReset={ true }
+									placeholder="90"
+									className="ugb--help-tip-gradient-direction"
+								/>
+								<AdvancedRangeControl
+									label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
+									attribute="progressColorGradientLocation1"
+									sliderMin={ 0 }
+									max={ 100 }
+									step={ 1 }
+									allowReset={ true }
+									placeholder="0"
+									className="ugb--help-tip-gradient-location"
+								/>
+								<AdvancedRangeControl
+									label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
+									attribute="progressColorGradientLocation2"
+									sliderMin={ 0 }
+									max={ 100 }
+									step={ 1 }
+									allowReset={ true }
+									placeholder="100"
+									className="ugb--help-tip-gradient-location"
+								/>
+								<BlendModeControl
+									label={ __( 'Background Gradient Blend Mode', i18n ) }
+									attribute="progressColorGradientBlendMode"
+									className="ugb--help-tip-background-blend-mode"
+								/>
+							</ButtonIconPopoverControl>
+						) }
 					</>
 					<ColorPaletteControl
 						label={ __( 'Background Color', i18n ) }
 						attribute="progressBackgroundColor"
 						hasTransparent={ true }
 					/>
-					<AdvancedToggleControl
-						label={ __( 'Rounded', i18n ) }
-						attribute="progressRounded"
-					/>
+					{ isCircle && (
+						<AdvancedToggleControl
+							label={ __( 'Rounded', i18n ) }
+							attribute="progressRounded"
+						/>
+					) }
 					<AdvancedToggleControl
 						label={ __( 'Animate', i18n ) }
 						attribute="progressAnimate"
@@ -133,6 +208,7 @@ export const Edit = ( { attrNameTemplate } ) => {
 				hasTextPrefix
 				hasTextSuffix
 				hasToggle
+				hasProgressInnerText
 				label={ __( 'Label', i18n ) }
 			/>
 		</Fragment>
@@ -140,5 +216,6 @@ export const Edit = ( { attrNameTemplate } ) => {
 }
 
 Edit.defaulProps = {
+	isCircle: false,
 	attrNameTemplate: '%s',
 }

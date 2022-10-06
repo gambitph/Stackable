@@ -59,6 +59,7 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 		'image',
 		'number-box',
 		'map',
+		'progress-bar',
 		'progress-circle',
 		'separator',
 		'spacer',

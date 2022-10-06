@@ -1,43 +1,51 @@
-import { useStyles, getStyles } from '~stackable/util'
+import {
+	useStyles, getStyles, hexToRgba,
+} from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 import {
 	DEFAULT_PERCENT, DEFAULT_SIZE, DEFAULT_THICKNESS,
 } from './attributes'
 
-const getStyleParams = () => {
+const getStyleParams = ( { isCircle } ) => {
+	const selector = isCircle ? '.stk-progress-circle' : '.stk-progress-bar'
 	return [
 		{
-			selector: '.stk-progress-circle',
-			styleRule: '--progress-thickness',
-			attrName: 'progressThickness',
-			format: '%spx',
+			selector,
+			styleRule: '--progress-percent',
+			attrName: 'progressPercent',
+			...( ! isCircle && {
+				format: '%s%',
+			} ),
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector,
 			styleRule: '--progress-color-1',
 			attrName: 'progressColor1',
-			valuePreCallback: ( value, getAttribute, _, state ) => {
-				if ( getAttribute( 'progressColorType', 'desktop', state ) === 'gradient' ) {
-					const uniqueId = getAttribute( 'uniqueId' )
-					return `url(#gradient-${ uniqueId })`
-				}
-				return value
-			},
+			...( isCircle && {
+				valuePreCallback: ( value, getAttribute ) => {
+					if ( getAttribute( 'progressColorType' ) === 'gradient' ) {
+						const uniqueId = getAttribute( 'uniqueId' )
+						return `url(#gradient-${ uniqueId })`
+					}
+					return value
+				},
+			} ),
 			dependencies: [ 'progressColorType' ],
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector,
 			styleRule: '--progress-background',
 			attrName: 'progressBackgroundColor',
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector,
 			styleRule: '--progress-size',
 			attrName: 'progressSize',
 			format: '%spx',
 		},
-		{
-			selector: '.stk-progress-circle',
+		// only use these stylRules when it's a circular progress
+		...( isCircle ? [ {
+			selector,
 			styleRule: '--progress-rounded',
 			attrName: 'progressRounded',
 			valuePreCallback: value => {
@@ -48,7 +56,13 @@ const getStyleParams = () => {
 			},
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector,
+			styleRule: '--progress-thickness',
+			attrName: 'progressThickness',
+			format: '%spx',
+		},
+		{
+			selector,
 			styleRule: '--progress-dash-array',
 			attrName: 'progressSize',
 			valuePreCallback: ( value, getAttribute ) => {
@@ -60,7 +74,7 @@ const getStyleParams = () => {
 			},
 		},
 		{
-			selector: '.stk-progress-circle',
+			selector,
 			styleRule: '--progress-dash-offset',
 			attrName: 'progressPercent',
 			valuePreCallback: ( value, getAttribute ) => {
@@ -75,12 +89,42 @@ const getStyleParams = () => {
 				const circumference = Math.PI * ( radius * 2 )
 				return ( ( 100 - derivedPercent ) / 100 ) * circumference
 			},
+		} ] : [ {
+			selector,
+			styleRule: '--progress-border-radius',
+			attrName: 'progressBorderRadius',
+			hasUnits: 'px',
 		},
+		{
+			selector: '.stk-progress-bar__bar.stk--has-background-overlay:before',
+			styleRule: 'backgroundImage',
+			attrName: 'progressColor1',
+			enabledCallback: getAttribute => getAttribute( 'progressColorType' ) === 'gradient',
+			valueCallback: ( value, getAttribute ) => {
+				if ( ! getAttribute( 'progressColor2' ) ) {
+					return undefined
+				}
+				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
+				const defaultColor1 = hexToRgba( getAttribute( 'progressColor2' ) || '#ffffff', 0 )
+				const defaultColor2 = hexToRgba( getAttribute( 'progressColor1' ) || '#3498db', 0 )
+
+				// Gradient location.
+				const color1Location = `${ getAttribute( 'progressColorGradientLocation1' ) || '0' }%`
+				const color2Location = `${ getAttribute( 'progressColorGradientLocation2' ) || '100' }%`
+
+				const directionAngle = getAttribute( 'progressColorGradientDirection' )
+				const angle = typeof directionAngle === 'string' ? '90deg' : `${ directionAngle }deg`
+
+				return `linear-gradient(${ angle }, ${ getAttribute( 'progressColor1' ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'progressColor2' ) || defaultColor2 } ${ color2Location })`
+			},
+			dependencies: [ 'progressColorType', 'progressColor1', 'progressColor2', 'progressColorGradientLocation1', 'progressColorGradientLocation2', 'progressColorGradientDirection' ],
+		},
+	 ] ),
 	]
 }
 
 export const Style = props => {
-	const progressBarStyles = useStyles( getStyleParams() )
+	const progressBarStyles = useStyles( getStyleParams( props.options ) )
 
 	return (
 		<StyleComponent
@@ -95,7 +139,9 @@ export const Style = props => {
 Style.defaultProps = {
 	isEditor: false,
 	attributes: {},
-	options: {},
+	options: {
+		isCircle: false,
+	},
 }
 
 Style.Content = props => {
@@ -103,7 +149,7 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const progressBarStyles = getStyles( propsToPass.attributes, getStyleParams() )
+	const progressBarStyles = getStyles( propsToPass.attributes, getStyleParams( props.options ) )
 
 	return (
 		<StyleComponent.Content
@@ -113,4 +159,12 @@ Style.Content = props => {
 			{ ...propsToPass }
 		/>
 	)
+}
+
+Style.Content.defaultProps = {
+	isEditor: false,
+	attributes: {},
+	options: {
+		isCircle: false,
+	},
 }
