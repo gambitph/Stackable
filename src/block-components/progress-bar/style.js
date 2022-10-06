@@ -3,9 +3,6 @@ import {
 	useStyles, getStyles, hexToRgba,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
-import {
-	DEFAULT_PERCENT, DEFAULT_SIZE, DEFAULT_THICKNESS,
-} from './attributes'
 
 const getStyleParams = ( { isCircle } ) => {
 	const selector = isCircle ? '.stk-progress-circle' : '.stk-progress-bar'
@@ -82,35 +79,6 @@ const getStyleParams = ( { isCircle } ) => {
 			styleRule: '--progress-thickness',
 			attrName: 'progressThickness',
 			format: '%spx',
-		},
-		{
-			selector,
-			styleRule: '--progress-dash-array',
-			attrName: 'progressSize',
-			valuePreCallback: ( value, getAttribute ) => {
-				const derivedThickness = getAttribute( 'progressThickness' ) || DEFAULT_THICKNESS
-				const derivedSize = ( value || DEFAULT_SIZE )
-
-				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 )
-				return Math.PI * ( radius * 2 )
-			},
-		},
-		{
-			selector,
-			styleRule: '--progress-dash-offset',
-			attrName: 'progressPercent',
-			valuePreCallback: ( value, getAttribute ) => {
-				const derivedThickness = getAttribute( 'progressThickness' ) || DEFAULT_THICKNESS
-				const derivedSize = getAttribute( 'progressSize' ) || DEFAULT_SIZE
-
-				// this is to handle dynamic content; only show valid value
-				const parsedPercent = parseFloat( value )
-				const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
-
-				const radius = ( derivedSize / 2 ) - ( derivedThickness / 2 )
-				const circumference = Math.PI * ( radius * 2 )
-				return ( ( 100 - derivedPercent ) / 100 ) * circumference
-			},
 		} ] : [ {
 			selector,
 			styleRule: '--progress-border-radius',

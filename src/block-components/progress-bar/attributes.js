@@ -8,7 +8,7 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 	attrObject.add( {
 		attributes: {
 			progressPercent: {
-				type: 'number',
+				type: 'string', // String so that we can support dynamic content.
 				default: '',
 			},
 			progressSize: {

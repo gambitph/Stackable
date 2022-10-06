@@ -47,9 +47,14 @@ const Save = props => {
 	] )
 
 	// this is to handle dynamic content; only show valid value
-	const parsedPercent = parseFloat( attributes.progressPercent )
-	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
-	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
+	let percent = attributes.progressPercent
+	const isDynamicContent = !! attributes.progressPercent?.startsWith( '!#stk_dynamic/' )
+	if ( ! isDynamicContent ) {
+		percent = parseFloat( attributes.progressPercent )
+		percent = isNaN( percent ) ? DEFAULT_PERCENT : percent
+	}
+
+	const label = `${ attributes.textPrefix }${ percent }${ attributes.textSuffix }`.trim()
 
 	return (
 		<BlockDiv.Content
@@ -64,7 +69,7 @@ const Save = props => {
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
-					aria-valuenow={ derivedPercent }
+					aria-valuenow={ percent }
 					aria-valuetext={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
 				>
 					<svg>
@@ -87,7 +92,7 @@ const Save = props => {
 							<Typography.Content
 								tagName="span"
 								className={ textClassNames }
-								value={ derivedValue }
+								value={ label }
 							/>
 						</div>
 					) }

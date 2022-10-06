@@ -8,6 +8,13 @@
 		height: var(--progress-size, 150px);
 		width: var(--progress-size, 150px);
 		transform: rotate(-90deg);
+		// radius = ( size / 2 ) - ( thickness / 2 )
+		// --progress-dash-array = Math.PI * ( radius * 2 )
+		--progress-dash-array: calc(3.1415 * ( ( ( var(--progress-size, 150px) / 2 ) - ( var(--progress-thickness, 8px) / 2 ) ) * 2 ));
+		// radius = ( size / 2 ) - ( thickness / 2 )
+		// circumference = Math.PI * ( radius * 2 )
+		// --progress-dash-offset = ( ( 100 - percent ) / 100 ) * circumference
+		--progress-dash-offset: calc(( ( 100 - var(--progress-percent, 50) ) / 100 ) * 3.1415 * ( ( ( var(--progress-size, 150px) / 2 ) - ( var(--progress-thickness, 8px) / 2 ) ) * 2 ));
 		circle {
 			width: 100%;
 			height: 100%;
