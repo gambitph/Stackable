@@ -34,6 +34,7 @@ import SVGNumberBoxIcon from './images/number-box-icon.svg'
 import SVGPaginationIcon from './images/pagination.svg'
 import SVGPricingBoxIcon from './images/pricing-box-icon.svg'
 import SVGProgressCircleIcon from './images/progress-circle-icon.svg'
+import SVGProgressBarIcon from './images/progress-bar-icon.svg'
 import SVGSeparatorIcon from './images/separator-icon.svg'
 import SVGSocialButtonsIcon from './images/social-buttons.svg'
 import SVGSpacerIcon from './images/spacer-icon.svg'
@@ -228,6 +229,10 @@ export function PricingBoxIcon() {
 
 export function ProgressCircleIcon() {
 	return colorizeIcon( <SVGProgressCircleIcon width="16" height="16" /> )
+}
+
+export function ProgressBarIcon() {
+	return colorizeIcon( <SVGProgressBarIcon width="16" height="16" /> )
 }
 
 export function SeparatorIcon() {
