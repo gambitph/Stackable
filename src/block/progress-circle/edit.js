@@ -36,12 +36,10 @@ import striptags from 'striptags'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { useState, useEffect } from '@wordpress/element'
 
 const Edit = ( {
 	className, attributes,
 } ) => {
-	const [ forceRedraw, setForceRedraw ] = useState( false )
 	useGeneratedCss( attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -66,21 +64,6 @@ const Edit = ( {
 	const parsedPercent = parseFloat( attributes.progressPercent )
 	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
 	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
-
-	/**
-	 * workaround to correct the circle width when size changes
-	 */
-	 const workAroundClass = classnames( {
-		'force-redraw': forceRedraw,
-	} )
-
-	useEffect( () => {
-		setForceRedraw( true )
-		const timer = setTimeout( () => {
-			setForceRedraw( false )
-		}, [ 50 ] )
-		return () => clearTimeout( timer )
-	}, [ attributes.progressSize ] )
 
 	return (
 		<>
@@ -114,7 +97,7 @@ const Edit = ( {
 							'aria-valuetext': striptags( attributes.progressAriaValueText ),
 						} ) }
 					>
-						<svg className={ workAroundClass }>
+						<svg>
 							{ attributes.progressColorType === 'gradient' && (
 								<defs>
 									<linearGradient
