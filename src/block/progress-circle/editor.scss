@@ -3,8 +3,10 @@
 .stk-progress-circle {
 	svg {
 		circle {
+			// This fixes the lag when resizing the progress circle and the circle shape resizes after a delay.
+			cy: calc(var(--progress-size) / 2) !important;
+			cx: calc(var(--progress-size) / 2) !important;
 			will-change: width;
-			@include transition();
 		}
 		&.force-redraw {
 			circle {
