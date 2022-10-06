@@ -5,8 +5,8 @@
 	height: var(--progress-size, 150px);
 	width: var(--progress-size, 150px);
 	svg {
-		width: 100%;
-		height: 100%;
+		height: var(--progress-size, 150px);
+		width: var(--progress-size, 150px);
 		transform: rotate(-90deg);
 		circle {
 			width: 100%;
