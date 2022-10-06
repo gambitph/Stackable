@@ -15,8 +15,9 @@
 			stroke: var(--progress-background, #f0f0f0);
 			stroke-width: var(--progress-thickness, 8px);
 			stroke-linecap: var(--progress-rounded, "unset");
-			cx: 50%;
-			cy: 50%;
+			// should be 50% of the size to fix resizing issue
+			cy: calc(var(--progress-size, 150) / 2);
+			cx: calc(var(--progress-size, 150) / 2);
 			r: calc(50% - var(--progress-thickness, 8px) / 2);
 		}
 	}
