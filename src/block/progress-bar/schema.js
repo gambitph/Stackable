@@ -38,6 +38,17 @@ export const attributes = ( version = VERSION ) => {
 	ProgressBar.addAttributes( attrObject )
 	Typography.addAttributes( attrObject )
 
+	attrObject.add( {
+		attributes: {
+			progressInnerText: {
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.4.5',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 

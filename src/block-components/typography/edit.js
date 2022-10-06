@@ -70,9 +70,6 @@ export const Controls = props => {
 		isMultiline,
 		hasGradient,
 		hasTextShadow,
-		hasTextPrefix,
-		hasTextSuffix,
-		hasProgressInnerText,
 	} = props
 
 	const {
@@ -107,13 +104,6 @@ export const Controls = props => {
 	return (
 		<>
 			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
-			{ hasProgressInnerText && (
-				<AdvancedTextControl
-					label={ __( 'Progress Bar Text', i18n ) }
-					attribute="progressInnerText"
-					isDynamic={ true }
-				/>
-			) }
 			{ hasTextContent && (
 				<AdvancedTextControl
 					label={ __( 'Content', i18n ) }
@@ -127,19 +117,6 @@ export const Controls = props => {
 					 */
 					changeDynamicContent={ setDebouncedText }
 					isDynamic={ true }
-				/>
-			) }
-			{ hasTextPrefix && (
-				<AdvancedTextControl
-					label={ __( 'Prefix', i18n ) }
-					attribute="textPrefix"
-				/>
-			) }
-			{ hasTextSuffix && (
-				<AdvancedTextControl
-					label={ __( 'Suffix', i18n ) }
-					attribute="textSuffix"
-					default="%"
 				/>
 			) }
 			{ hasRemoveMargins && (
@@ -346,8 +323,6 @@ Controls.defaultProps = {
 	isMultiline: false,
 	hasGradient: true,
 	hasTextShadow: false,
-	hasTextPrefix: false,
-	hasTextSuffix: false,
 }
 
 export const Edit = props => {
@@ -364,9 +339,6 @@ export const Edit = props => {
 		hasToggle,
 		label,
 		hasTextShadow,
-		hasTextPrefix,
-		hasTextSuffix,
-		hasProgressInnerText,
 	} = props
 
 	const {
@@ -395,9 +367,6 @@ export const Edit = props => {
 					isMultiline={ isMultiline }
 					hasGradient={ hasGradient }
 					hasTextShadow={ hasTextShadow }
-					hasTextPrefix={ hasTextPrefix }
-					hasTextSuffix={ hasTextSuffix }
-					hasProgressInnerText={ hasProgressInnerText }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
@@ -417,7 +386,6 @@ Edit.defaultProps = {
 	label: __( 'Typography', i18n ),
 	sizePlaceholder: '32',
 	hasTextShadow: false,
-	hasProgressInnerText: false,
 }
 
 Edit.Controls = Controls

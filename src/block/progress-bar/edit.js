@@ -25,7 +25,8 @@ import {
 	getTypographyClasses,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
+import { __ } from '@wordpress/i18n'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -79,6 +80,14 @@ const Edit = ( {
 			<ConditionalDisplay.InspectorControls />
 
 			<ProgressBar.InspectorControls />
+			<Typography.InspectorControls
+				initialOpen={ false }
+				hasTextTag={ false }
+				hasTextContent={ false }
+				hasTextShadow
+				hasToggle
+				label={ __( 'Label', i18n ) }
+			/>
 
 			<BlockDiv className={ blockClassNames }>
 				<ProgressBarStyles version={ VERSION } />

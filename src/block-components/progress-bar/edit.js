@@ -13,7 +13,7 @@ import {
 	ButtonIconPopoverControl,
 	BlendModeControl,
 } from '~stackable/components'
-import { Typography } from '~stackable/block-components'
+
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import {
 	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE, DEFAULT_HEIGHT,
@@ -22,6 +22,8 @@ import {
 /**
  * WordPress dependencies
  */
+import { addFilter } from '@wordpress/hooks'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 
@@ -200,17 +202,6 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
-			<Typography.InspectorControls
-				initialOpen={ false }
-				hasTextTag={ false }
-				hasTextContent={ false }
-				hasTextShadow
-				hasTextPrefix
-				hasTextSuffix
-				hasToggle
-				hasProgressInnerText
-				label={ __( 'Label', i18n ) }
-			/>
 		</Fragment>
 	)
 }
@@ -219,3 +210,31 @@ Edit.defaulProps = {
 	isCircle: false,
 	attrNameTemplate: '%s',
 }
+
+addFilter( 'stackable.block-component.typography.before', 'stackable/progress-blocks', output => {
+	const { name } = useBlockEditContext()
+	if ( ! [ 'stackable/progress-bar', 'stackable/progress-circle' ].includes( name ) ) {
+		return output
+	}
+
+	return (
+		<>
+			{ name === 'stackable/progress-bar' && (
+				<AdvancedTextControl
+					label={ __( 'Progress Bar Text', i18n ) }
+					attribute="progressInnerText"
+					isDynamic={ true }
+				/>
+			) }
+			<AdvancedTextControl
+				label={ __( 'Prefix', i18n ) }
+				attribute="textPrefix"
+			/>
+			<AdvancedTextControl
+				label={ __( 'Suffix', i18n ) }
+				attribute="textSuffix"
+				default="%"
+			/>
+		</>
+	)
+} )
