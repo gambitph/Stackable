@@ -1,3 +1,4 @@
+import md5 from 'md5'
 import {
 	useStyles, getStyles, hexToRgba,
 } from '~stackable/util'
@@ -22,6 +23,7 @@ const getStyleParams = ( { isCircle } ) => {
 			styleRule: '--progress-color-1',
 			attrName: 'progressColor1',
 			...( isCircle && {
+				renderIn: 'save',
 				valuePreCallback: ( value, getAttribute ) => {
 					if ( getAttribute( 'progressColorType' ) === 'gradient' ) {
 						const uniqueId = getAttribute( 'uniqueId' )
@@ -30,7 +32,7 @@ const getStyleParams = ( { isCircle } ) => {
 					return value
 				},
 			} ),
-			dependencies: [ 'progressColorType' ],
+			dependencies: [ 'progressColorType', 'progressColor2' ],
 		},
 		{
 			selector,
@@ -45,6 +47,26 @@ const getStyleParams = ( { isCircle } ) => {
 		},
 		// only use these stylRules when it's a circular progress
 		...( isCircle ? [ {
+			selector,
+			renderIn: 'edit',
+			styleRule: '--progress-color-1',
+			attrName: 'progressColor1',
+			valuePreCallback: ( value, getAttribute ) => {
+				if ( getAttribute( 'progressColorType' ) === 'gradient' ) {
+					// generate custom identifier on the editor as uniqueId can be blank.
+					// This happens when adding block with default block styling created.
+					// should use uniqueId upon saving
+					const color1 = getAttribute( 'progressColor1' ) || ''
+					const color2 = getAttribute( 'progressColor2' ) || ''
+					const direction = getAttribute( 'progressColorGradientDirection' ) || ''
+					const customGradientId = md5( color1 + color2 + direction )
+					return `url(#gradient-${ customGradientId })`
+				}
+				return value
+			},
+			dependencies: [ 'progressColorType', 'progressColor2' ],
+		},
+		{
 			selector,
 			styleRule: '--progress-rounded',
 			attrName: 'progressRounded',

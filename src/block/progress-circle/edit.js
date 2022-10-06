@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import md5 from 'md5'
 import ProgressCircleStyles from './style'
 import { DEFAULT_PERCENT } from './schema'
 
@@ -65,6 +66,14 @@ const Edit = ( {
 	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
 	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
 
+	// generate custom identifier on the editor as uniqueId can be blank
+	// This happens when adding block with default block styling created.
+	// should use uniqueId upon saving
+	const color1 = attributes.progressColor1 || ''
+	const color2 = attributes.progressColor2 || ''
+	const direction = attributes.progressColorGradientDirection || ''
+	const customGradientId = md5( color1 + color2 + direction )
+
 	return (
 		<>
 			<InspectorTabs />
@@ -100,7 +109,7 @@ const Edit = ( {
 							{ attributes.progressColorType === 'gradient' && (
 								<defs>
 									<linearGradient
-										id={ `gradient-${ attributes.uniqueId }` }
+										id={ `gradient-${ customGradientId }` }
 										gradientTransform={ attributes.progressColorGradientDirection ? `rotate(${ attributes.progressColorGradientDirection })` : undefined }
 									>
 										<stop offset="0%" stopColor={ attributes.progressColor1 } />
