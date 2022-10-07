@@ -154,11 +154,14 @@ export const getHeadingsFromEditorDom = editorDom => {
 	const query = allowedHeadingBlocks.map( name => `.wp-block[data-type="${ name }"]` ).join( ', ' )
 	const headingBlocks = editorDom.querySelectorAll( query )
 
-	return [ ...headingBlocks ].map( heading => {
+	return [ ...headingBlocks ].reduce( ( headings, heading ) => {
 		const clientId = heading.getAttribute( 'data-block' )
 		const block = select( 'core/block-editor' ).getBlock( clientId )
-		return convertBlockToHeadingObject( block )
-	} )
+		if ( block ) {
+			headings.push( convertBlockToHeadingObject( block ) )
+		}
+		return headings
+	}, [] )
 }
 
 /**
