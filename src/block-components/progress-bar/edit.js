@@ -65,7 +65,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 					/>
 					<AdvancedRangeControl
 						label={ isCircle ? __( 'Size', i18n ) : __( 'Height', i18n ) }
-						responsive="all"
+						responsive={ isCircle ? 'all' : false }
 						attribute="progressSize"
 						min="0"
 						sliderMin={ isCircle ? 50 : 8 }
@@ -74,15 +74,30 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 						placeholder={ isCircle ? DEFAULT_SIZE : DEFAULT_HEIGHT }
 					/>
 					{ ! isCircle && (
-						<AdvancedRangeControl
-							label={ __( 'Border Radius', i18n ) }
-							attribute="progressBorderRadius"
-							allowReset={ true }
-							min="0"
-							units={ [ 'px', '%', 'rem' ] }
-							step="1"
-							sliderMax="25"
-						/>
+						<>
+							<AdvancedRangeControl
+								label={ __( 'Border Radius', i18n ) }
+								attribute="progressBorderRadius"
+								allowReset={ true }
+								min="0"
+								units={ [ 'px', '%', 'rem' ] }
+								step="1"
+								sliderMax="25"
+								changeCallback={ v => {
+									if ( ! v ) {
+										updateAttributes( { progressApplyBarRadius: false } )
+									}
+									return v
+								} }
+							/>
+							{ getAttribute( 'progressBorderRadius' ) && (
+								<AdvancedToggleControl
+									label={ __( 'Apply border radius to bar', i18n ) }
+									attribute="progressApplyBarRadius"
+									defaultValue={ false }
+								/>
+							) }
+						</>
 					) }
 					{ isCircle && (
 						<AdvancedRangeControl

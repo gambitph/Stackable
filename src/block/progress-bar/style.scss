@@ -18,6 +18,7 @@ div.stk-block-progress-bar {
 		align-items: center;
 		justify-content: space-between;
 		background-color: var(--progress-color-1, #3498db);
+		border-radius: var(--progress-bar-border-radius, unset);
 		.stk-progress-bar__inner-text {
 			&.stk-progress-bar__text {
 				overflow: hidden;

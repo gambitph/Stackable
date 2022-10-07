@@ -88,6 +88,16 @@ const getStyleParams = ( { isCircle } ) => {
 			hasUnits: 'px',
 		},
 		{
+			selector,
+			styleRule: '--progress-bar-border-radius',
+			attrName: 'progressApplyBarRadius',
+			valuePreCallback: ( value, getAttribute ) => {
+				const borderRadius = getAttribute( 'progressBorderRadius' )
+				return value ? borderRadius : undefined
+			},
+			hasUnits: 'px',
+		},
+		{
 			selector: '.stk-progress-bar__bar.stk--has-background-overlay:before',
 			styleRule: 'backgroundImage',
 			attrName: 'progressColor1',

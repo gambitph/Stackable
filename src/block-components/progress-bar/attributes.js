@@ -12,7 +12,7 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 				default: '',
 			},
 			progressSize: {
-				stkResponsive: true,
+				stkResponsive: isCircle,
 				type: 'number',
 				default: '',
 			},
@@ -67,6 +67,10 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 					type: 'number',
 					default: '',
 					stkUnits: 'px',
+				},
+				progressApplyBarRadius: {
+					type: 'boolean',
+					default: '',
 				},
 				progressColorGradientLocation1: {
 					type: 'number',
