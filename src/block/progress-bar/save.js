@@ -52,6 +52,7 @@ const Save = props => {
 		percent = parseFloat( attributes.progressPercent )
 		percent = isNaN( percent ) ? DEFAULT_PERCENT : percent
 	}
+	const derivedValue = `${ attributes.textPrefix }${ percent }${ attributes.textSuffix }`.trim()
 	const deviedAriaValue = attributes.progressAriaValueText || attributes.progressInnerText || attributes.text
 
 	return (
@@ -80,7 +81,7 @@ const Save = props => {
 							<Typography.Content
 								tagName="span"
 								className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
-								value={ percent }
+								value={ derivedValue }
 							/>
 						</>
 					) }
