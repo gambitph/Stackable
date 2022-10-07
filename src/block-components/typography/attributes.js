@@ -70,14 +70,6 @@ const typographyAttributes = {
 		type: 'boolean',
 		default: false,
 	},
-	textPrefix: {
-		type: 'string',
-		default: '',
-	},
-	textSuffix: {
-		type: 'string',
-		default: '%',
-	},
 }
 
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {

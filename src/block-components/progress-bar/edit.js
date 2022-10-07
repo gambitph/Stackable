@@ -67,8 +67,8 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 						label={ isCircle ? __( 'Size', i18n ) : __( 'Height', i18n ) }
 						attribute="progressSize"
 						min="0"
-						sliderMin={ isCircle ? 50 : 32 }
-						sliderMax={ isCircle ? 300 : 100 }
+						sliderMin={ isCircle ? 50 : 8 }
+						sliderMax={ isCircle ? 300 : 50 }
 						step="1"
 						placeholder={ isCircle ? DEFAULT_SIZE : DEFAULT_HEIGHT }
 					/>
@@ -80,7 +80,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 							min="0"
 							units={ [ 'px', '%', 'rem' ] }
 							step="1"
-							sliderMax="100"
+							sliderMax="25"
 						/>
 					) }
 					{ isCircle && (
@@ -227,12 +227,12 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/progress-bl
 				/>
 			) }
 			<AdvancedTextControl
-				label={ __( 'Prefix', i18n ) }
-				attribute="textPrefix"
+				label={ __( 'Percentage Prefix', i18n ) }
+				attribute="progressPercentPrefix"
 			/>
 			<AdvancedTextControl
-				label={ __( 'Suffix', i18n ) }
-				attribute="textSuffix"
+				label={ __( 'Percentage Suffix', i18n ) }
+				attribute="progressPercentSuffix"
 				default="%"
 			/>
 		</>

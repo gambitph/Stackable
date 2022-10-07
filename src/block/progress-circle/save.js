@@ -54,7 +54,7 @@ const Save = props => {
 		percent = isNaN( percent ) ? DEFAULT_PERCENT : percent
 	}
 
-	const label = `${ attributes.textPrefix }${ percent }${ attributes.textSuffix }`.trim()
+	const label = `${ attributes.progressPercentPrefix }${ percent }${ attributes.progressPercentSuffix }`.trim()
 
 	return (
 		<BlockDiv.Content

@@ -10,8 +10,8 @@
 @import "styles/block-design-system-blocks";
 @import "styles/block";
 
-@mixin transition() {
-	transition: all 0.7s cubic-bezier(0.2, 0.6, 0.4, 1);
+@mixin transition($property: all) {
+	transition: $property 0.7s cubic-bezier(0.2, 0.6, 0.4, 1);
 }
 
 // Make sure all our blocks are at the same level. Mainly for our separator to work.

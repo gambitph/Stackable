@@ -63,7 +63,7 @@ const Edit = ( {
 	// parsing string to number since percentage is of a string type to support dynamic content
 	const parsedPercent = parseFloat( useDynamicContent( attributes.progressPercent ) )
 	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
-	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
+	const derivedValue = `${ attributes.progressPercentPrefix }${ derivedPercent }${ attributes.progressPercentSufffix }`.trim()
 
 	return (
 		<>
@@ -101,7 +101,7 @@ const Edit = ( {
 								<Typography
 									tagName="span"
 									className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
-									value={ attributes.progressInnerText || attributes.text }
+									value={ attributes.progressInnerText || attributes.text || 'Design' }
 								/>
 								<Typography
 									tagName="span"

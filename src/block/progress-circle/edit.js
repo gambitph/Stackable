@@ -64,7 +64,7 @@ const Edit = ( {
 	// this is to handle dynamic content; only show valid value
 	const parsedPercent = parseFloat( useDynamicContent( attributes.progressPercent ) )
 	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
-	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
+	const derivedValue = `${ attributes.progressPercentPrefix }${ derivedPercent }${ attributes.progressPercentSuffix }`.trim()
 
 	// generate custom identifier on the editor as uniqueId can be blank
 	// This happens when adding block with default block styling created.

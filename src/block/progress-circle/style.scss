@@ -42,7 +42,7 @@
 	&.stk--with-animation {
 		.stk-progress-circle__bar {
 			will-change: stroke-dashoffset;
-			@include transition();
+			@include transition(stroke-dashoffset);
 		}
 	}
 	&.stk-animate {

@@ -43,6 +43,14 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 				type: 'string',
 				default: '',
 			},
+			progressPercentPrefix: {
+				type: 'string',
+				default: '',
+			},
+			progressPercentSuffix: {
+				type: 'string',
+				default: '%',
+			},
 			...( isCircle ? {
 				progressThickness: {
 					type: 'number',

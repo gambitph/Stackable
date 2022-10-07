@@ -33,7 +33,7 @@ div.stk-block-progress-bar {
 	&.stk--with-animation {
 		.stk-progress-bar__bar {
 			will-change: width;
-			@include transition();
+			@include transition(width);
 		}
 	}
 	&.stk-animate {
