@@ -77,8 +77,10 @@ const AdvancedRangeControl = props => {
 		onChangeFunc( props.isDynamic ? value.toString() : value )
 	}
 
+	const derivedValue = typeof props.value === 'undefined' ? value : props.value
+
 	const dynamicContentProps = useDynamicContentControlProps( {
-		value: typeof props.value === 'undefined' ? value : props.value,
+		value: derivedValue,
 		onChange: _onChange,
 	} )
 
@@ -91,7 +93,7 @@ const AdvancedRangeControl = props => {
 			>
 				<RangeControl
 					{ ...propsToPass }
-					value={ typeof props.value === 'undefined' ? value : props.value }
+					value={ propsToPass.isDynamic ? parseFloat( derivedValue ) : derivedValue }
 					onChange={ _onChange }
 					allowReset={ false }
 					placeholderRender={ placeholderRender }
@@ -99,7 +101,7 @@ const AdvancedRangeControl = props => {
 			</DynamicContentControl>
 			<ResetButton
 				allowReset={ props.allowReset }
-				value={ typeof props.value === 'undefined' ? value : props.value }
+				value={ derivedValue }
 				default={ props.default }
 				onChange={ _onChange }
 			/>
