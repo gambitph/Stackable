@@ -84,8 +84,8 @@ const Save = props => {
 								</linearGradient>
 							</defs>
 						) }
-						<circle className="stk-progress-circle__background" />
-						<circle className="stk-progress-circle__bar" />
+						<circle className="stk-progress-circle__background"></circle>
+						<circle className="stk-progress-circle__bar"></circle>
 					</svg>
 					{ attributes.showText && (
 						<div className="stk-number">
