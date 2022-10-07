@@ -65,6 +65,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 					/>
 					<AdvancedRangeControl
 						label={ isCircle ? __( 'Size', i18n ) : __( 'Height', i18n ) }
+						responsive="all"
 						attribute="progressSize"
 						min="0"
 						sliderMin={ isCircle ? 50 : 8 }
@@ -86,6 +87,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 					{ isCircle && (
 						<AdvancedRangeControl
 							label={ __( 'Thickness', i18n ) }
+							responsive="all"
 							attribute="progressThickness"
 							min="0"
 							sliderMin="1"

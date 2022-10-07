@@ -12,6 +12,7 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 				default: '',
 			},
 			progressSize: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
 			},
@@ -53,6 +54,7 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 			},
 			...( isCircle ? {
 				progressThickness: {
+					stkResponsive: true,
 					type: 'number',
 					default: '',
 				},

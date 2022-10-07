@@ -38,6 +38,7 @@ const getStyleParams = ( { isCircle } ) => {
 		},
 		{
 			selector,
+			responsive: 'all',
 			styleRule: '--progress-size',
 			attrName: 'progressSize',
 			format: '%spx',
@@ -76,6 +77,7 @@ const getStyleParams = ( { isCircle } ) => {
 		},
 		{
 			selector,
+			responsive: 'all',
 			styleRule: '--progress-thickness',
 			attrName: 'progressThickness',
 			format: '%spx',
