@@ -64,23 +64,21 @@ const Save = props => {
 				aria-valuenow={ derivedPercent }
 				aria-valuetext={ deviedAriaValue ? striptags( deviedAriaValue ) : undefined }
 			>
-				<div className="stk-progress__background">
-					<div className={ barClassNames }>
-						{ attributes.showText && (
-							<>
-								<Typography.Content
-									tagName="span"
-									className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
-									value={ attributes.progressInnerText || attributes.text }
-								/>
-								<Typography.Content
-									tagName="span"
-									className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
-									value={ derivedValue }
-								/>
-							</>
-						) }
-					</div>
+				<div className={ barClassNames }>
+					{ attributes.showText && (
+						<>
+							<Typography.Content
+								tagName="span"
+								className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
+								value={ attributes.progressInnerText || attributes.text }
+							/>
+							<Typography.Content
+								tagName="span"
+								className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
+								value={ derivedValue }
+							/>
+						</>
+					) }
 				</div>
 			</div>
 		</BlockDiv.Content>

@@ -93,24 +93,22 @@ const Edit = ( {
 				<ProgressBarStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-progress-bar" />
 				<div className="stk-progress-bar stk-animate">
-					<div className="stk-progress__background">
-						<div className={ barClassNames }>
-							{ attributes.showText && (
-								<>
-									<Typography
-										tagName="span"
-										className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
-										value={ attributes.progressInnerText || attributes.text }
-									/>
-									<Typography
-										tagName="span"
-										className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
-										value={ derivedValue }
-										editable={ false }
-									/>
-								</>
-							) }
-						</div>
+					<div className={ barClassNames }>
+						{ attributes.showText && (
+							<>
+								<Typography
+									tagName="span"
+									className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
+									value={ attributes.progressInnerText || attributes.text }
+								/>
+								<Typography
+									tagName="span"
+									className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
+									value={ derivedValue }
+									editable={ false }
+								/>
+							</>
+						) }
 					</div>
 				</div>
 			</BlockDiv>
