@@ -52,7 +52,7 @@ const Save = props => {
 		percent = parseFloat( attributes.progressPercent )
 		percent = isNaN( percent ) ? DEFAULT_PERCENT : percent
 	}
-	const derivedValue = `${ attributes.progressPercentPrefix }${ percent }${ attributes.progressPercentSufffix }`.trim()
+	const derivedValue = `${ attributes.progressPercentPrefix }${ percent }${ attributes.progressPercentSuffix }`.trim()
 	const deviedAriaValue = attributes.progressAriaValueText || attributes.progressInnerText || attributes.text || 'Design'
 
 	return (
