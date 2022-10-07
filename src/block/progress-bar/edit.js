@@ -99,12 +99,12 @@ const Edit = ( {
 								<>
 									<Typography
 										tagName="span"
-										className={ classnames( [ textClassNames, 'stk-progress-text' ] ) }
+										className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
 										value={ attributes.progressInnerText || attributes.text }
 									/>
 									<Typography
 										tagName="span"
-										className={ classnames( [ textClassNames, 'stk-progress-percent-text' ] ) }
+										className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
 										value={ derivedValue }
 										editable={ false }
 									/>

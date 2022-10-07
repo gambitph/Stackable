@@ -70,12 +70,12 @@ const Save = props => {
 							<>
 								<Typography.Content
 									tagName="span"
-									className={ classnames( [ textClassNames, 'stk-progress-text' ] ) }
+									className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
 									value={ attributes.progressInnerText || attributes.text }
 								/>
 								<Typography.Content
 									tagName="span"
-									className={ classnames( [ textClassNames, 'stk-progress-percent-text' ] ) }
+									className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
 									value={ derivedValue }
 								/>
 							</>

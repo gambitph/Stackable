@@ -22,13 +22,13 @@ div.stk-block-progress-bar {
 			justify-content: space-between;
 			background-color: var(--progress-color-1, #3498db);
 			.stk-progress-bar__inner-text {
-				&.stk-progress-text {
+				&.stk-progress-bar__text {
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					padding-inline-start: 12px;
 				}
-				&.stk-progress-percent-text {
+				&.stk-progress-bar__percent-text {
 					padding-inline-end: 12px;
 				}
 			}
