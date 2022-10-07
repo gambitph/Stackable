@@ -22,7 +22,7 @@ div.stk-block-progress-bar {
 			&.stk-progress-bar__text {
 				overflow: hidden;
 				text-overflow: ellipsis;
-				white-space: nowrap;
+				white-space: nowrap !important;
 				padding-inline-start: 12px;
 			}
 			&.stk-progress-bar__percent-text {

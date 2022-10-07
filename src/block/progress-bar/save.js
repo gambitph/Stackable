@@ -76,7 +76,7 @@ const Save = props => {
 							<Typography.Content
 								tagName="span"
 								className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
-								value={ attributes.progressInnerText || attributes.text }
+								value={ attributes.progressInnerText || attributes.text || 'Design' }
 							/>
 							<Typography.Content
 								tagName="span"
