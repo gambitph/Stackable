@@ -45,10 +45,13 @@ const Save = props => {
 		'stk--has-background-overlay': attributes.progressColorType === 'gradient' && attributes.progressColor2,
 	} )
 
-	// parsing string to number since percentage is of a string type to support dynamic content
-	const percentage = parseFloat( attributes.progressPercent )
-	const derivedPercent = isNaN( percentage ) ? DEFAULT_PERCENT : percentage
-	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
+	// this is to handle dynamic content; only show valid value
+	let percent = attributes.progressPercent
+	const isDynamicContent = !! attributes.progressPercent?.startsWith( '!#stk_dynamic/' )
+	if ( ! isDynamicContent ) {
+		percent = parseFloat( attributes.progressPercent )
+		percent = isNaN( percent ) ? DEFAULT_PERCENT : percent
+	}
 	const deviedAriaValue = attributes.progressAriaValueText || attributes.progressInnerText || attributes.text
 
 	return (
@@ -63,7 +66,7 @@ const Save = props => {
 				role="progressbar"
 				aria-valuemin="0"
 				aria-valuemax="100"
-				aria-valuenow={ derivedPercent }
+				aria-valuenow={ percent }
 				aria-valuetext={ deviedAriaValue ? striptags( deviedAriaValue ) : undefined }
 			>
 				<div className={ barClassNames }>
@@ -77,7 +80,7 @@ const Save = props => {
 							<Typography.Content
 								tagName="span"
 								className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
-								value={ derivedValue }
+								value={ percent }
 							/>
 						</>
 					) }

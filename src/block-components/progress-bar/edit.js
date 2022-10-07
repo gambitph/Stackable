@@ -12,6 +12,7 @@ import {
 	AdvancedToolbarControl,
 	ButtonIconPopoverControl,
 	BlendModeControl,
+	useDynamicContent,
 } from '~stackable/components'
 
 import { useAttributeEditHandlers } from '~stackable/hooks'
@@ -47,8 +48,8 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 	const isColorGradient = getAttribute( 'progressColorType' ) === 'gradient'
 
 	// parsing string to number since percentage is of a string type to support dynamic content
-	const percentage = parseFloat( getAttribute( 'progressPercent' ) )
-	const derivedPercent = isNaN( percentage ) ? DEFAULT_PERCENT : percentage
+	const parsedPercent = parseFloat( useDynamicContent( getAttribute( 'progressPercent' ) ) )
+	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
 
 	return (
 		<Fragment>

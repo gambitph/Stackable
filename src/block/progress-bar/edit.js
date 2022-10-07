@@ -7,7 +7,7 @@ import { DEFAULT_PERCENT } from './schema'
 /**
  * External dependencies
  */
-import { InspectorTabs } from '~stackable/components'
+import { InspectorTabs, useDynamicContent } from '~stackable/components'
 import {
 	BlockDiv,
 	Alignment,
@@ -61,8 +61,8 @@ const Edit = ( {
 	} )
 
 	// parsing string to number since percentage is of a string type to support dynamic content
-	const percentage = parseFloat( attributes.progressPercent )
-	const derivedPercent = isNaN( percentage ) ? DEFAULT_PERCENT : percentage
+	const parsedPercent = parseFloat( useDynamicContent( attributes.progressPercent ) )
+	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
 	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
 
 	return (
