@@ -45,7 +45,9 @@ const Save = props => {
 		'stk--has-background-overlay': attributes.progressColorType === 'gradient' && attributes.progressColor2,
 	} )
 
-	const derivedPercent = typeof attributes.progressPercent === 'string' ? DEFAULT_PERCENT : attributes.progressPercent
+	// parsing string to number since percentage is of a string type to support dynamic content
+	const percentage = parseFloat( attributes.progressPercent )
+	const derivedPercent = isNaN( percentage ) ? DEFAULT_PERCENT : percentage
 	const derivedValue = `${ attributes.textPrefix }${ derivedPercent }${ attributes.textSuffix }`.trim()
 	const deviedAriaValue = attributes.progressAriaValueText || attributes.progressInnerText || attributes.text
 

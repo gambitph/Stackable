@@ -46,6 +46,10 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 
 	const isColorGradient = getAttribute( 'progressColorType' ) === 'gradient'
 
+	// parsing string to number since percentage is of a string type to support dynamic content
+	const percentage = parseFloat( getAttribute( 'progressPercent' ) )
+	const derivedPercent = isNaN( percentage ) ? DEFAULT_PERCENT : percentage
+
 	return (
 		<Fragment>
 			<InspectorStyleControls>
@@ -55,12 +59,13 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 				>
 					<AdvancedRangeControl
 						label={ __( 'Percentage', i18n ) }
-						attribute="progressPercent"
 						min="0"
 						max="100"
 						sliderMax="100"
 						step="1"
 						placeholder={ DEFAULT_PERCENT }
+						value={ derivedPercent }
+						onChange={ v => updateAttributes( { progressPercent: v.toString() } ) }
 						isDynamic
 					/>
 					<AdvancedRangeControl
