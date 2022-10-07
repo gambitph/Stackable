@@ -8,30 +8,25 @@ import {
 	InspectorBlockControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockAttributes } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import {
-	AlignmentToolbar, BlockControls, useBlockEditContext,
-} from '@wordpress/block-editor'
-import { useDispatch } from '@wordpress/data'
+import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 export const Edit = props => {
-	const { clientId } = useBlockEditContext()
-
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
+	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<Fragment>
 			<BlockControls>
 				<AlignmentToolbar
 					value={ attributes.contentAlign }
-					onChange={ contentAlign => updateBlockAttributes( clientId, { contentAlign } ) }
+					onChange={ contentAlign => setAttributes( { contentAlign } ) }
 				/>
 			</BlockControls>
 			<InspectorBlockControls>

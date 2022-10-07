@@ -3,7 +3,7 @@
  */
 import { getAllBlocks, BLOCK_CATEROGIES } from './admin'
 import SVGCheck from './images/check.svg'
-import { AdminToggleSetting } from '~stackable/components'
+import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 
 /**
  * External dependencies

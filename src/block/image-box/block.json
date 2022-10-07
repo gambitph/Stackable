@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/image-box",
 	"title": "Image Box",
 	"description": "Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.",

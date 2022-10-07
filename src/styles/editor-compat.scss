@@ -27,6 +27,14 @@
 }
 
 /**
+ * Twenty Twenty One uses an old custom properties which are no longer standard.
+ */
+.stk--is-twentytwentyone-theme {
+	--stk-block-width-default-detected: var(--responsive--aligndefault-width);
+	--stk-block-width-wide-detected: var(--responsive--alignwide-width);
+}
+
+/**
  * Astra
  */
 .stk--is-astra-theme {

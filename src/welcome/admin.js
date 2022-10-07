@@ -28,8 +28,9 @@ import {
 	showProNoticesOption,
 } from 'stackable'
 import classnames from 'classnames'
-import { AdminToggleSetting, AdminTextSetting } from '~stackable/components'
-import { importBlocks } from '~stackable/util/blocks'
+import { importBlocks } from '~stackable/util/admin'
+import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
+import AdminTextSetting from '~stackable/components/admin-text-setting'
 
 const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 export const getAllBlocks = () => applyFilters( 'stackable.settings.merge-blocks', FREE_BLOCKS )

@@ -9,7 +9,7 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import { Dashicon } from '@wordpress/components'
-import { useCallback, memo } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 
 const icon = <Dashicon icon="image-rotate" />
 
@@ -18,9 +18,9 @@ export const ResetButton = memo( props => {
 		? props.showReset
 		: ( typeof props.value !== 'undefined' && props.value !== props.default && props.value !== props.placeholder )
 
-	const onChange = useCallback( () => {
+	const onChange = () => {
 		props.onChange( typeof props.default === 'undefined' ? '' : props.default )
-	}, [ props.onChange, props.default ] )
+	}
 
 	return ( props.allowReset && showReset &&
 		<Button

@@ -67,7 +67,7 @@ export const resetBlockColorAttributes = ( block, colorObjects ) => {
 
 		// Update the block attributes.
 		if ( ! isEqual( updatedAttributes, block.attributes ) ) {
-			updateBlockAttributes( clientId, updatedAttributes )
+			updateBlockAttributes( clientId, updatedAttributes ) // eslint-disable-line stackable/no-update-block-attributes
 		}
 	} else if ( name.startsWith( 'core/' ) ) {
 		//
@@ -108,7 +108,7 @@ export const resetBlockColorAttributes = ( block, colorObjects ) => {
 			}
 
 			// Update the block attributes.
-			updateBlockAttributes( clientId, newAttributes )
+			updateBlockAttributes( clientId, newAttributes ) // eslint-disable-line stackable/no-update-block-attributes
 		}
 	}
 }
@@ -128,7 +128,7 @@ export const updateFallbackBlockAttributes = updatedColors => {
 			if ( name.startsWith( 'ugb/' ) || name.startsWith( 'stackable/' ) ) {
 				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
 				if ( ! isEqual( newAttributes, block.attributes ) ) {
-					updateBlockAttributes( clientId, newAttributes )
+					updateBlockAttributes( clientId, newAttributes ) // eslint-disable-line stackable/no-update-block-attributes
 				}
 			}
 

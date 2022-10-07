@@ -66,6 +66,7 @@ const variations = applyFilters(
 				hasContainer: false,
 				innerBlockContentAlign: 'alignfull',
 				align: 'full',
+				contentAlign: '',
 			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Horizontal', i18n ),

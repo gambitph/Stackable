@@ -11,43 +11,41 @@ import { ResetButton } from '../base-control2/reset-button'
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { useAttributeName, useBlockAttributes } from '~stackable/hooks'
+import {
+	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import {
-	Fragment, useCallback,
-} from '@wordpress/element'
-import { MediaUpload, useBlockEditContext } from '@wordpress/block-editor'
-import { dispatch } from '@wordpress/data'
+import { Fragment } from '@wordpress/element'
+import { MediaUpload } from '@wordpress/block-editor'
 
 const ImageControl = props => {
-	const { clientId } = useBlockEditContext()
-
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
+	const setAttributes = useBlockSetAttributesContext()
 	const attrNameId = useAttributeName( `${ props.attribute }Id`, props.responsive, props.hover )
 	const attrNameUrl = useAttributeName( `${ props.attribute }Url`, props.responsive, props.hover )
 	const attrWidthAttribute = useAttributeName( `${ props.attribute }HeightAttribute`, props.responsive, props.hover )
 	const attrHeightAttribute = useAttributeName( `${ props.attribute }WidthAttribute`, props.responsive, props.hover )
 	const attrAlt = useAttributeName( `${ props.attribute }Alt`, props.responsive, props.hover )
 
-	const _onChange = useCallback( image => {
-		dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
+	const _onChange = image => {
+		setAttributes( {
 			[ attrNameId ]: image.id,
 			[ attrNameUrl ]: image.url,
 			[ attrWidthAttribute ]: image.width || '',
 			[ attrHeightAttribute ]: image.height || '',
 			[ attrAlt ]: image.alt || '',
 		} )
-	}, [ clientId, attrNameId, attrNameUrl, attrWidthAttribute, attrHeightAttribute ] )
+	}
 
 	const onChange = typeof props.onChange !== 'undefined' ? props.onChange : _onChange
 
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const onChangeReset = useCallback( url => {
+	const onChangeReset = url => {
 		return onChange( {
 			url,
 			id: '',
@@ -55,7 +53,7 @@ const ImageControl = props => {
 			height: '',
 			alt: '',
 		} )
-	}, [ onChange ] )
+	}
 
 	const dynamicContentProps = useDynamicContentControlProps( {
 		onChange: onChangeReset,
@@ -67,7 +65,7 @@ const ImageControl = props => {
 
 	const type = imageUrl && imageUrl.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
 
-	const onRemove = useCallback( () => {
+	const onRemove = () => {
 		onChange( {
 			url: '',
 			id: '',
@@ -75,7 +73,7 @@ const ImageControl = props => {
 			width: '',
 			alt: '',
 		} )
-	}, [ onChange ] )
+	}
 
 	return (
 		<AdvancedControl

@@ -4,7 +4,9 @@
 import { useControlHandlers } from '../base-control2/hooks'
 import { getAttributeName } from '~stackable/util'
 import {
-	useBlockAttributes, useDeviceType, useWithShift,
+	useBlockAttributesContext,
+	useDeviceType,
+	useWithShift,
 } from '~stackable/hooks'
 
 /**
@@ -19,7 +21,6 @@ import { range } from 'lodash'
 import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 const DEFAULT_BOTTOM_MARGINS = {
 	Desktop: 24,
@@ -168,8 +169,7 @@ const getValue = ( _value, attribute, attributes, device ) => {
 }
 
 const ResizableBottomMargin = props => {
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 	const device = useDeviceType()
 
 	const valueCallback = _value => {

@@ -6,7 +6,7 @@
 }
 
 // Remove the margins if it's only 1 block.
-[data-type="stackable/column"]:first-child:last-child > * > * > .stk-block-column > .stk-column-wrapper {
+[data-type="stackable/column"]:first-child:last-child > * > .stk-block-column > .stk-column-wrapper {
 	margin: 0;
 }
 

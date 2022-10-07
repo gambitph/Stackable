@@ -1,18 +1,14 @@
 import { useEffect } from '@wordpress/element'
-import { select } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 
-export const useUniqueId = ( autoApplyUniqueId = true ) => {
+export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 	const { clientId } = useBlockEditContext()
 
+	// Need to do this when the clientId changes (when a block is
+	// cloned/duplicated).
 	useEffect( () => {
-		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
-		if ( ! attributes ) {
-			return
-		}
-
 		// If auto apply unique id is disabled, don't generate a new one. But if
 		// there already is a unique id, we need to still check if it's unique.
 		if ( ! autoApplyUniqueId && ! attributes.uniqueId ) {

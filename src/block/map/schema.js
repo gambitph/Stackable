@@ -2,6 +2,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	BlockLink,
 	Style,
 	ConditionalDisplay,
 	CustomAttributes,
@@ -14,7 +15,6 @@ import {
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
-import { BlockLink } from '~stackable/block-components/block-link'
 
 export const mapAttributes = {
 	// We need to keep note whether the block used a Google API Key when it was

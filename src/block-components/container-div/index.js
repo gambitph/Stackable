@@ -5,13 +5,10 @@ import { Edit } from './edit'
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
-import { useBlockAttributes } from '~stackable/hooks'
-
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { useBlockAttributesContext } from '~stackable/hooks'
 
 export const ContainerDiv = props => {
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
 	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
 	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass

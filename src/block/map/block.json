@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/map",
 	"title": "Map",
 	"description": "Embedded Google Map with advanced controls.",

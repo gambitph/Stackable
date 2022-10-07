@@ -7,20 +7,18 @@
  */
 import './plugins'
 import './design-library'
-import { SVGStackableCategoryIcon } from '../../icons'
+import registerBlock from './register-block'
 
 /**
  * External dependencies
  */
-import registerBlock from './register-block'
 import { i18n } from 'stackable'
+import { SVGStackableCategoryIcon } from '~stackable/icons'
 
 /**
  * WordPress dependencies
  */
-import {
-	getCategories, setCategories,
-} from '@wordpress/blocks'
+import { getCategories, setCategories } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 
 // Register our category. Not a collection since our v2 blocks would appear as "Uncategorized"

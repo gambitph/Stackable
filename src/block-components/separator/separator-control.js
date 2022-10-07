@@ -2,9 +2,7 @@
  * External dependencies
  */
 import { DesignControl } from '~stackable/components'
-import {
-	findIndex,
-} from 'lodash'
+import { findIndex } from 'lodash'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 
@@ -33,7 +31,6 @@ if ( ! hasFilter( 'stackable.block-component.separator.layouts', 'default' ) ) {
 
 const SeparatorControl = props => {
 	const {
-		excludeDesigns,
 		attribute,
 		responsive,
 		hover,
@@ -41,6 +38,10 @@ const SeparatorControl = props => {
 		changeCallback,
 		onChange: _onChange,
 		value: _value,
+	} = props
+	const {
+		excludeDesigns,
+		..._propsToPass
 	} = props
 
 	const options = useMemo( () =>
@@ -54,7 +55,7 @@ const SeparatorControl = props => {
 	, [ ...excludeDesigns ] )
 
 	const [ value, onChange ] = useControlHandlers( attribute, responsive, hover, valueCallback, changeCallback )
-	const [ propsToPass, controlProps ] = extractControlProps( props )
+	const [ propsToPass, controlProps ] = extractControlProps( _propsToPass )
 
 	return (
 		<AdvancedControl { ...controlProps }>

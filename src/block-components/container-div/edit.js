@@ -17,14 +17,14 @@ import {
 	AdvancedToggleControl,
 } from '~stackable/components'
 import {
-	useBlockAttributes, useBlockEl,
+	useBlockAttributesContext,
+	useBlockEl,
+	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { useDispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
 export const Edit = props => {
@@ -33,10 +33,8 @@ export const Edit = props => {
 		borderSelector = '.stk-container',
 	} = props
 
-	const { clientId } = useBlockEditContext()
-
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
+	const setAttributes = useBlockSetAttributesContext()
 	const blockElSize = useBlockEl( sizeSelector )
 	const blockElBorder = useBlockEl( borderSelector )
 
@@ -46,7 +44,7 @@ export const Edit = props => {
 				title={ __( 'Container Background', i18n ) }
 				id="container"
 				checked={ attributes.hasContainer }
-				onChange={ hasContainer => updateBlockAttributes( clientId, { hasContainer } ) }
+				onChange={ hasContainer => setAttributes( { hasContainer } ) }
 			>
 				<AdvancedToggleControl
 					label={ __( 'Trigger hover state on nested blocks', i18n ) }

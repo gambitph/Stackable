@@ -6,7 +6,7 @@ export const ContentAlign = () => {
 	return null
 }
 
-export { getContentAlignmentClasses, useContentAlignmentClasses } from './use-content-align'
+export { getContentAlignmentClasses } from './use-content-align'
 
 ContentAlign.InspectorControls = Edit
 

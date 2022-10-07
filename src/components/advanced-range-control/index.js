@@ -7,7 +7,7 @@ import AdvancedControl, { extractControlProps } from '../base-control2'
 import { ResetButton } from '../base-control2/reset-button'
 import {
 	useAttributeName,
-	useBlockAttributes,
+	useBlockAttributesContext,
 	useBlockHoverState,
 	useDeviceType,
 } from '~stackable/hooks'
@@ -16,7 +16,6 @@ import {
  * External dependencies
  */
 import { memo } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 const AdvancedRangeControl = props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
@@ -26,15 +25,11 @@ const AdvancedRangeControl = props => {
 	const [ currentHoverState ] = useBlockHoverState()
 	const hasUnits = !! props.units?.length
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
-
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const unitAttribute = useBlockAttributesContext( attributes => attributes[ unitAttrName ] )
 
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
-		: attributes
-			? attributes[ unitAttrName ]
-			: ''
+		: ( unitAttribute || '' )
 
 	// Change the min, max & step values depending on the unit used.
 	if ( hasUnits ) {

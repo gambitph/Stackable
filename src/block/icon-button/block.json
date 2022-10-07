@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/icon-button",
 	"title": "Icon Button",
 	"description": "Add a customizable button.",

@@ -1,5 +1,5 @@
 import { i18n } from 'stackable'
-import AdminBaseSetting from '~stackable/components/admin-base-setting'
+import AdminBaseSetting from '../admin-base-setting'
 import { createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 

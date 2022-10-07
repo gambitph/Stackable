@@ -28,7 +28,7 @@ const Save = props => {
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { name: blockStyle } = getBlockStyle( blockStyles, className ) || {}
+	const { name: blockStyle } = getBlockStyle( blockStyles, className || attributes.className ) || {}
 
 	const blockClassNames = classnames( [
 		className,

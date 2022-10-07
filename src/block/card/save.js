@@ -11,13 +11,13 @@ import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
+	BlockLink,
 	ContainerDiv,
 	CustomCSS,
 	getAlignmentClasses,
 	getResponsiveClasses,
 	Image,
 } from '~stackable/block-components'
-import { BlockLink } from '~stackable/block-components/block-link'
 
 /**
  * WordPress dependencies
