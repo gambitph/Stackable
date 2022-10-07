@@ -149,7 +149,7 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.addDefaultValues( {
 		attributes: {
-			titleShow: false,
+			titleShow: true,
 		},
 		versionAdded: '3.5.0',
 		versionDeprecated: '',
