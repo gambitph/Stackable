@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/text",
 	"title": "Text",
 	"description": "Start with the building block of all page layouts.",

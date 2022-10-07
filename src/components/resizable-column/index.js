@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { useDeviceEditorClasses } from './use-device-editor-classes'
 import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
 import { AdvancedTextControl } from '..'
 import { ColumnShowTooltipContext } from '../column-inner-blocks'
@@ -26,7 +25,7 @@ import { __ } from '@wordpress/i18n'
 import { ResizableBox, Popover } from '@wordpress/components'
 import { useSelect, select } from '@wordpress/data'
 import {
-	Fragment, useState, useEffect, useRef, useCallback, useMemo, memo, useContext,
+	Fragment, useState, useEffect, useRef, memo, useContext,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
@@ -53,7 +52,6 @@ const ResizableColumn = props => {
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
 	const deviceType = useDeviceType()
-	useDeviceEditorClasses()
 
 	const [ currentWidths, setCurrentWidths ] = useState( [] )
 	const [ currentWidth, setCurrentWidth ] = useState( '' )
@@ -109,7 +107,7 @@ const ResizableColumn = props => {
 		columnGap, columnGapTablet, columnGapMobile,
 	} = ( parentBlock?.attributes || {} )
 
-	const enable = useMemo( () => ( {
+	const enable = {
 		top: false,
 		right: deviceType === 'Desktop' ? ! isOnlyBlock && ! isLastBlock : ! isOnlyBlock,
 		bottom: false,
@@ -118,12 +116,12 @@ const ResizableColumn = props => {
 		bottomRight: false,
 		bottomLeft: false,
 		topLeft: false,
-	} ), [ deviceType, isOnlyBlock, isLastBlock, isFirstBlock ] )
+	}
 
 	const parentBlockClientId = parentBlock?.clientId
 	const _adjacentBlocks = useRef( undefined )
 
-	const onResizeStart = useCallback( ( _event, _direction ) => {
+	const onResizeStart = ( _event, _direction ) => {
 		// toggleSelection( false )
 
 		// Get the column gap amounts, we need these to calculate percentages when resizing columns.
@@ -187,9 +185,9 @@ const ResizableColumn = props => {
 		}
 
 		setIsTooltipOver( true )
-	}, [ isDesktop, parentBlockClientId, blockIndex, clientId, columnGap, columnGapTablet, columnGapMobile, getEditorDom ] )
+	}
 
-	const onResize = useCallback( ( _event, _direction, elt, delta ) => {
+	const onResize = ( _event, _direction, elt, delta ) => {
 		let columnPercentages = []
 		const adjacentBlocks = _adjacentBlocks.current
 
@@ -274,9 +272,9 @@ const ResizableColumn = props => {
 				setSnapWidths( { x: getSnapWidths( [ 100 ], 0, maxWidth, _direction, isShiftKey ) } )
 			}
 		}
-	}, [ isDesktop, parentBlockClientId, currentWidths, currentWidth, blockIndex, isShiftKey, maxWidth, clientId, snapWidths ] )
+	}
 
-	const onResizeStop = useCallback( ( _event, _direction, elt, delta ) => {
+	const onResizeStop = ( _event, _direction, elt, delta ) => {
 		const adjacentBlocks = _adjacentBlocks.current
 
 		// Update the block widths.
@@ -320,9 +318,9 @@ const ResizableColumn = props => {
 		setIsTooltipOver( false )
 
 		_adjacentBlocks.current = undefined
-	}, [ isDesktop, isTablet, parentBlockClientId, newWidthsPercent, props.onChangeDesktop, props.onChangeTablet, props.onChangeMobile, tempStyles, blockIndex, isMounted ] )
+	}
 
-	const onTooltipChange = useCallback( width => {
+	const onTooltipChange = width => {
 		if ( width !== '' && width < MIN_COLUMN_WIDTH_PERCENTAGE[ deviceType ] ) {
 			return
 		}
@@ -379,27 +377,27 @@ const ResizableColumn = props => {
 
 			props.onChangeMobile( finalWidth, columnWidths, blockIndex )
 		}
-	}, [ deviceType, parentBlockClientId, isDesktop, isTablet, blockIndex ] )
+	}
 
 	/**
 	 * Tooltip context stuff to display all tooltip widths across all sibling columns.
 	 */
 	const [ isTooltipPopupOpen, setIsTooltipPopupOpen ] = useState( false )
 	const [ isTooltipOver, setIsTooltipOver ] = useState( false )
-	const onTooltipMouseEnter = useCallback( () => setIsTooltipOver( true ), [] )
-	const onTooltipMouseLeave = useCallback( () => setIsTooltipOver( false ), [] )
+	const onTooltipMouseEnter = () => setIsTooltipOver( true )
+	const onTooltipMouseLeave = () => setIsTooltipOver( false )
 	const { showColumnTooltip, setShowColumnTooltip } = useContext( ColumnShowTooltipContext )
 
 	// IF the width popup was opened, let the parent columns block know to
 	// display all the tooltip widths.
-	const onTooltipTogglePopup = useCallback( isOpen => {
+	const onTooltipTogglePopup = isOpen => {
 		setIsTooltipPopupOpen( isOpen )
 		if ( isOpen ) {
 			setShowColumnTooltip( clientId )
 		} else if ( ! isTooltipOver && showColumnTooltip === clientId ) {
 			setShowColumnTooltip( false )
 		}
-	}, [ showColumnTooltip, setShowColumnTooltip, setIsTooltipPopupOpen, isTooltipOver, clientId ] )
+	}
 
 	// If the invisible tooltip was hovered, let the parent columns block know
 	// to display all the tooltip widths.
@@ -459,33 +457,29 @@ const ResizableTooltip = memo( props => {
 	const tooltipRef = useRef()
 
 	// Compute the default column label value if none is available.
-	const columnLabel = useMemo( () => {
-		if ( typeof adjacentBlocks !== 'undefined' && ! props.value && ! originalInputValue ) {
-			// The columns are evenly distributed by default.
-			if ( deviceType === 'Desktop' ) {
-				const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
-				if ( value.toString() === '33.3' ) {
-					return 33.33
-				}
-				return value
+	let columnLabel = ''
+	if ( typeof adjacentBlocks !== 'undefined' && ! props.value && ! originalInputValue ) {
+		// The columns are evenly distributed by default.
+		if ( deviceType === 'Desktop' ) {
+			const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
+			if ( value.toString() === '33.3' ) {
+				columnLabel = 33.33
+			} else {
+				columnLabel = value
 			}
-			// In mobile, the columns are  "auto" so that we don't display
-			// inaccurate percentage widths.
-			if ( deviceType === 'Tablet' ) {
-				return __( 'Auto', i18n )
-			}
-			// In mobile, the columns collapse to 100%.
-			return 100.0
 		}
-
-		return ``
-	}, [ adjacentBlocks?.length, props.value, originalInputValue, deviceType ] )
+		// In mobile, the columns are  "auto" so that we don't display
+		// inaccurate percentage widths.
+	} else if ( deviceType === 'Tablet' ) {
+		columnLabel = __( 'Auto', i18n )
+	} else {
+		// In mobile, the columns collapse to 100%.
+		columnLabel = 100.0
+	}
 
 	// Create the label of the tooltip.
-	const tooltipLabel = useMemo( () => {
-		const label = ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel
-		return label !== __( 'Auto', i18n ) ? `'${ label }%'` : `'${ label }'`
-	}, [ props.value, originalInputValue, columnLabel ] )
+	const _label = ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel
+	const tooltipLabel = _label !== __( 'Auto', i18n ) ? `'${ _label }%'` : `'${ _label }'`
 
 	// Setup the input field when the popup opens.
 	useEffect( () => {
@@ -504,7 +498,7 @@ const ResizableTooltip = memo( props => {
 	}, [ isEditWidth ] )
 
 	// Opens the manual entry for the next column.
-	const openNextColumn = useCallback( ( direction = 'right' ) => {
+	const openNextColumn = ( direction = 'right' ) => {
 		if ( ! window.CustomEvent ) {
 			return
 		}
@@ -519,21 +513,19 @@ const ResizableTooltip = memo( props => {
 			const prevTooltip = tooltipRef.current.closest( '.stk-row' ).querySelectorAll( '.stk-resizable-column__size-tooltip' )[ prevIndex ]
 			prevTooltip?.dispatchEvent( new window.CustomEvent( 'openColumnInputPopup' ) )
 		}
-	}, [
-		tooltipRef.current,
-		adjacentBlocks?.map( ( { clientId } ) => clientId ).join( ',' ), // Dependency is the arrangement of the columns.
-	] )
+	}
 
 	// Listen for external triggers to open the column input for this column.
-	const openColumnInputPopupListener = useCallback( () => {
-		setIsEditWidth( true )
-	}, [] )
 	useEffect( () => {
+		const openColumnInputPopupListener = () => {
+			setIsEditWidth( true )
+		}
+
 		tooltipRef.current?.addEventListener( 'openColumnInputPopup', openColumnInputPopupListener )
 		return () => {
 			tooltipRef.current?.removeEventListener( 'openColumnInputPopup', openColumnInputPopupListener )
 		}
-	}, [ tooltipRef.current, openColumnInputPopupListener ] )
+	}, [ tooltipRef.current ] )
 
 	return (
 		<Fragment>

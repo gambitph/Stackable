@@ -32,7 +32,7 @@ const AdvancedTokenField = props => {
 		>
 			<FormTokenField
 				{ ...selectProps }
-				value={ inputValue }
+				value={ inputValue || [] }
 				onChange={ inputOnChange }
 			/>
 			<ResetButton

@@ -10,7 +10,7 @@ import Image_ from './image'
 /**
  * External dependencies
  */
-import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockContext } from '~stackable/hooks'
 import { pickBy } from 'lodash'
 
 /**
@@ -27,8 +27,8 @@ export const Image = props => {
 		...propsToPass
 	} = props
 
-	const { clientId, isSelected } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const { isSelected } = useBlockEditContext()
+	const attributes = useBlockAttributesContext()
 	const { parentBlock } = useBlockContext()
 
 	const { setImage } = useImage()

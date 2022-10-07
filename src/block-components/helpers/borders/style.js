@@ -70,6 +70,7 @@ const getStyleParams = ( options = {} ) => {
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			hover: 'all',
 			hoverSelector,
+			dependencies: [ 'borderType' ],
 		},
 		{
 			selector,
@@ -82,6 +83,7 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.top,
+			dependencies: [ 'borderType' ],
 		},
 		{
 			selector,
@@ -94,6 +96,7 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.right,
+			dependencies: [ 'borderType' ],
 		},
 		{
 			selector,
@@ -106,6 +109,7 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.bottom,
+			dependencies: [ 'borderType' ],
 		},
 		{
 			selector,
@@ -118,18 +122,13 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 			enabledCallback: getAttribute => getAttribute( 'borderType' ),
 			valuePreCallback: value => value?.left,
+			dependencies: [ 'borderType' ],
 		},
 	]
 }
 
 export const BorderStyle = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<Fragment>
@@ -137,7 +136,7 @@ export const BorderStyle = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</Fragment>
 	)

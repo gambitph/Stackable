@@ -26,8 +26,9 @@ import {
 	AdvancedToggleControl,
 	AdvancedSelectControl,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	Typography,
 	BlockDiv,
@@ -47,6 +48,7 @@ import {
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import {
 	Button,
 	Card,
@@ -280,7 +282,6 @@ const Edit = props => {
 	const { listType } = attributes
 	const tagName = isEmpty( listType ) || listType === 'unordered' || listType === 'none' ? 'ul' : 'ol'
 
-	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -288,7 +289,6 @@ const Edit = props => {
 		className,
 		'stk-block-table-of-contents',
 		blockAlignmentClass,
-		blockHoverClass,
 		textClasses,
 	] )
 
@@ -484,4 +484,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

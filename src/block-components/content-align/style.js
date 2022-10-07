@@ -48,6 +48,7 @@ const getStyleParams = () => {
 			attrName: 'columnFitAlign',
 			responsive: 'all',
 			enabledCallback: getAttribute => !! getAttribute( 'columnFit' ),
+			dependencies: [ 'columnFit' ],
 		},
 		{
 			renderIn: 'edit',
@@ -56,24 +57,20 @@ const getStyleParams = () => {
 			attrName: 'columnFitAlign',
 			responsive: 'all',
 			enabledCallback: getAttribute => !! getAttribute( 'columnFit' ),
+			dependencies: [ 'columnFit' ],
 		},
 	]
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( propsToPass.options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<StyleComponent
 			styles={ styles }
 			versionAdded="3.0.0"
 			versionDeprecated=""
-			{ ...propsToPass }
+			{ ...props }
 		/>
 	)
 }

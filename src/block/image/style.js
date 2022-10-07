@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-// import { blockStyles } from './block-styles'
-
-/**
  * External dependencies
  */
 import {
@@ -14,41 +9,27 @@ import {
 	Image,
 	Transform,
 } from '~stackable/block-components'
+import { getUniqueBlockClass } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
-import {
-	Fragment, renderToString,
+	memo, Fragment, renderToString,
 } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
-const BlockStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
+const BlockStyles = memo( props => {
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<Image.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
+			<Image.Style { ...props } />
 		</Fragment>
 	)
-}
+} )
 
 BlockStyles.defaultProps = {
 	isEditor: false,

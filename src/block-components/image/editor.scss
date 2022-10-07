@@ -185,6 +185,9 @@
 	display: block !important;
 	overflow: hidden;
 
+	//Added this to fix filter: drop-shadows flicker/do not show in safari browsers
+	will-change: filter;
+
 	// Add the placeholder background here so that the border radius would also
 	background: transparent;
 	mix-blend-mode: multiply;

@@ -5,7 +5,6 @@ import { isEmpty } from 'lodash'
 import {
 	Typography, MarginBottom, BlockDiv, Advanced, EffectsAnimations, Alignment, Transform,
 } from '~stackable/block-components'
-import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getStyles,
 	getUniqueBlockClass,
@@ -16,8 +15,9 @@ import { Style as StyleComponent } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { Fragment, renderToString } from '@wordpress/element'
+import {
+	memo, Fragment, renderToString,
+} from '@wordpress/element'
 
 const typographyOptions = {
 	selector: [
@@ -150,43 +150,28 @@ const getStyleParams = () => {
 	]
 }
 
-export const TableOfContentsStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = {
-		...attributes, clientId,
-	}
-	const options = { attributes: propsToPass.attributes }
-
-	const iconStyles = useStyles( attributes, getStyleParams( options ) )
+export const TableOfContentsStyles = memo( props => {
+	const iconStyles = useStyles( getStyleParams() )
 
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
-			<Typography.Style { ...propsToPass } options={ typographyOptions } />
-			<Typography.Style { ...propsToPass } options={ titleTypographyOptions } />
-			<MarginBottom.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<Typography.Style { ...props } { ...typographyOptions } />
+			<Typography.Style { ...props } { ...titleTypographyOptions } />
+			<MarginBottom.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
 			<StyleComponent
 				styles={ iconStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</Fragment>
 	)
-}
+} )
 
 TableOfContentsStyles.defaultProps = {
 	attributes: {},
@@ -203,8 +188,7 @@ TableOfContentsStyles.Content = props => {
 	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const options = { attributes: propsToPass.attributes }
-	const iconStyles = getStyles( propsToPass.attributes, getStyleParams( options ) )
+	const iconStyles = getStyles( propsToPass.attributes, getStyleParams() )
 
 	const styles = (
 		<Fragment>

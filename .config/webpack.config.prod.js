@@ -1,60 +1,13 @@
-const externals = require( './externals' )
+const { externals, stackableExternals } = require( './externals' )
 const rules = require( './rules' )
 const path = require( 'path' )
 const plugins = require( './plugins' )
 
-module.exports = [ {
-
-    mode: 'production',
-
-    devtool: 'hidden-source-map',
-
-	entry: {
-        'editor_blocks': path.resolve( __dirname, '../src/blocks.js' ),
-        'editor_blocks_deprecated_v2': {
-			import: path.resolve( __dirname, '../src/deprecated/v2/blocks.js' ),
-			filename: 'deprecated/[name].js'
-		},
-    },
-
-	output: {
-		filename: '[name].js',
-	    library: '[name]',  // it assigns this module to the global (window) object
-    },
-
-    // Permit importing @wordpress/* packages.
-    externals,
-
-    resolve: {
-        alias: {
-            '~stackable': path.resolve( __dirname, '../src/' )
-        }
-    },
-
-    // Optimize output bundle.
-    optimization: {
-		minimize: true,
-        emitOnErrors: false,
-        splitChunks: {
-			cacheGroups: {
-				vendor: {
-					test: /node_modules/,
-					chunks: "initial",
-					name: "editor_vendor",
-					priority: 10,
-					enforce: true
-				}
-			}
-        },
-    },
-
-	module: {
-        strictExportPresence: true,
-        rules,
-	},
-
-	plugins,
-},
+module.exports = [
+/**
+ * These entry is for scripts that compiles our libraries and modules into the
+ * built script.
+ */
 {
 
     mode: 'production',
@@ -62,7 +15,17 @@ module.exports = [ {
     devtool: 'hidden-source-map',
 
 	entry: {
-        'admin_welcome': path.resolve( __dirname, '../src/welcome/admin.js' ),
+        // This is our main editor script that loads our modules into an api
+		// window.stk
+		stk: {
+			import: path.resolve( __dirname, '../src/stk.js' ),
+			library: {
+				name: 'stk',
+				type: 'window',
+			},
+		},
+		// Admin settings script.
+		'admin_welcome': path.resolve( __dirname, '../src/welcome/admin.js' ),
 		// V2 deprecated script, we build this here since that's how we did it before.
 		'admin_welcome_v2': {
 			import: path.resolve( __dirname, '../src/deprecated/v2/welcome/admin.js' ),
@@ -76,10 +39,9 @@ module.exports = [ {
 
 	output: {
 		filename: '[name].js',
-	    library: '[name]',  // it assigns this module to the global (window) object
     },
 
-    // Permit importing @wordpress/* packages.
+    // Externals are only WordPress loaded libraries.
     externals,
 
     resolve: {
@@ -89,10 +51,83 @@ module.exports = [ {
     },
 
     // Optimize output bundle.
-	optimization: {
-		minimize: true,
-        emitOnErrors: false,
+    // optimization: {
+	// 	minimize: true,
+    //     emitOnErrors: false,
+    //     splitChunks: {
+	// 		cacheGroups: {
+	// 			vendor: {
+	// 				test: /node_modules/,
+	// 				chunks: "initial",
+	// 				name: "editor_vendor",
+	// 				priority: 10,
+	// 				enforce: true
+	// 			}
+	// 		}
+    //     },
+    // },
+
+	module: {
+        strictExportPresence: true,
+        rules,
 	},
+
+	plugins,
+},
+
+/**
+ * This entry is for editor scripts that use our apis from window.stk
+ */
+{
+
+    mode: 'production',
+
+    devtool: 'hidden-source-map',
+
+	entry: {
+		editor_blocks: {
+			import: path.resolve( __dirname, '../src/blocks.js' ),
+		},
+        'editor_blocks_deprecated_v2': {
+			import: path.resolve( __dirname, '../src/deprecated/v2/blocks.js' ),
+			filename: 'deprecated/[name].js'
+		},
+    },
+
+	output: {
+		filename: '[name].js',
+    },
+
+    // Use window.stk as external imports.
+    externals: {
+		...externals,
+		...stackableExternals,
+	},
+
+	resolve: {
+		alias: {
+			// This is only used by deprecated v1 and v2 code, this normally
+			// shouldn't be imported outside deprecated scripts.
+			'~stackable/deprecated': path.resolve( __dirname, '../src/deprecated' ),
+		},
+	},
+
+    // Optimize output bundle.
+    // optimization: {
+	// 	minimize: true,
+    //     emitOnErrors: false,
+    //     splitChunks: {
+	// 		cacheGroups: {
+	// 			vendor: {
+	// 				test: /node_modules/,
+	// 				chunks: "initial",
+	// 				name: "editor_vendor",
+	// 				priority: 10,
+	// 				enforce: true
+	// 			}
+	// 		}
+    //     },
+    // },
 
 	module: {
         strictExportPresence: true,

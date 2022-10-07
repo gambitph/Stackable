@@ -1,10 +1,7 @@
-import { last } from 'lodash'
-
 /**
  * WordPress Dependencies
  */
 import { useDispatch, select } from '@wordpress/data'
-import { useCallback } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import classnames from 'classnames'
 import { getRowsFromColumns } from './util'
@@ -13,79 +10,87 @@ export const useColumn = () => {
 	const { clientId } = useBlockEditContext()
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
-	const onChangeDesktop = useCallback(
-		widths => {
-			const parentClientId = last( select( 'core/block-editor' ).getBlockParents( clientId ) )
-			const adjacentBlocks = select( 'core/block-editor' ).getBlock( parentClientId )?.innerBlocks || []
+	const onChangeDesktop = widths => {
+		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const adjacentBlocks = parentBlock?.innerBlocks || []
 
-			if ( adjacentBlocks.length ) {
-				widths.forEach( ( width, i ) => {
-				// TODO: When Gutenberg 10.1 comes out, update this to just one updateBlockAttributes call for all client Ids
-					updateBlockAttributes( adjacentBlocks[ i ].clientId, {
-						columnWidth: width,
-						columnAdjacentCount: widths.length,
-					} )
-				} )
-			}
-		},
-		[ clientId, updateBlockAttributes ]
-	)
+		if ( adjacentBlocks.length ) {
+			// Update multiple blocks.
+			const [ clientIds, attributes ] = widths.reduce( ( results, width, i ) => {
+				const clientId = adjacentBlocks[ i ].clientId
+				results[ 0 ].push( clientId ),
+				results[ 1 ][ clientId ] = {
+					columnWidth: width,
+					columnAdjacentCount: widths.length,
+				}
+				return results
+			}, [ [], {} ] )
 
-	const onChangeTablet = useCallback(
-		( width, widths ) => {
-			updateBlockAttributes( clientId, { columnWidthTablet: width } )
+			updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
+		}
+	}
 
-			const parentClientId = last( select( 'core/block-editor' ).getBlockParents( clientId ) )
-			const adjacentBlocks = select( 'core/block-editor' ).getBlock( parentClientId )?.innerBlocks || []
+	const onChangeTablet = ( width, widths ) => {
+		const clientIds = [ clientId ]
+		const attributes = {
+			[ clientId ]: { columnWidthTablet: width },
+		}
 
-			if ( adjacentBlocks.length ) {
-				const columnRows = getRowsFromColumns( widths )
+		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const adjacentBlocks = parentBlock?.innerBlocks || []
 
-				widths.forEach( ( width, i ) => {
-					// TODO: When Gutenberg 10.1 comes out, update this to just one updateBlockAttributes call for all client Ids
-					updateBlockAttributes( adjacentBlocks[ i ].clientId, {
-						columnWidthTablet: widths[ i ],
-						columnAdjacentCountTablet: columnRows.filter( n => n === columnRows[ i ] ).length,
-					} )
-				} )
-			}
-		},
-		[ clientId, updateBlockAttributes ]
-	)
+		if ( adjacentBlocks.length ) {
+			const columnRows = getRowsFromColumns( widths )
 
-	const onChangeMobile = useCallback(
-		( width, widths ) => {
-			updateBlockAttributes( clientId, { columnWidthMobile: width } )
-
-			const parentClientId = last( select( 'core/block-editor' ).getBlockParents( clientId ) )
-			const adjacentBlocks = select( 'core/block-editor' ).getBlock( parentClientId )?.innerBlocks || []
-
-			if ( adjacentBlocks.length ) {
-				const columnRows = getRowsFromColumns( widths )
-
-				widths.forEach( ( width, i ) => {
-					// TODO: When Gutenberg 10.1 comes out, update this to just one updateBlockAttributes call for all client Ids
-					updateBlockAttributes( adjacentBlocks[ i ].clientId, {
-						columnWidthMobile: widths[ i ],
-						columnAdjacentCountMobile: columnRows.filter( n => n === columnRows[ i ] ).length,
-					} )
-				} )
-			}
-		},
-		[ clientId, updateBlockAttributes ]
-	)
-
-	const onResetDesktop = useCallback(
-		() => {
-			const parentClientId = last( select( 'core/block-editor' ).getBlockParents( clientId ) )
-			const adjacentBlocks = select( 'core/block-editor' ).getBlock( parentClientId )?.innerBlocks || []
-
-			adjacentBlocks.forEach( ( { clientId } ) => {
-				updateBlockAttributes( clientId, { columnWidth: '' } )
+			// Update multiple blocks.
+			widths.forEach( ( width, i ) => {
+				const clientId = adjacentBlocks[ i ].clientId
+				clientIds.push( clientId )
+				attributes[ clientId ] = {
+					columnWidthTablet: width,
+					columnAdjacentCountTablet: columnRows.filter( n => n === columnRows[ i ] ).length,
+				}
 			} )
-		},
-		[ clientId, updateBlockAttributes ]
-	)
+		}
+
+		updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
+	}
+
+	const onChangeMobile = ( width, widths ) => {
+		const clientIds = [ clientId ]
+		const attributes = {
+			[ clientId ]: { columnWidthMobile: width },
+		}
+
+		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const adjacentBlocks = parentBlock?.innerBlocks || []
+
+		if ( adjacentBlocks.length ) {
+			const columnRows = getRowsFromColumns( widths )
+
+			// Update multiple blocks.
+			widths.forEach( ( width, i ) => {
+				const clientId = adjacentBlocks[ i ].clientId
+				clientIds.push( clientId )
+				attributes[ clientId ] = {
+					columnWidthMobile: width,
+					columnAdjacentCountMobile: columnRows.filter( n => n === columnRows[ i ] ).length,
+				}
+			} )
+		}
+
+		updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
+	}
+
+	const onResetDesktop = () => {
+		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const adjacentBlocks = parentBlock?.innerBlocks || []
+
+		if ( adjacentBlocks.length ) {
+			const clientIds = adjacentBlocks.map( block => block.clientId )
+			updateBlockAttributes( clientIds, { columnWidth: '' } ) // eslint-disable-line stackable/no-update-block-attributes
+		}
+	}
 
 	return {
 		onChangeDesktop,

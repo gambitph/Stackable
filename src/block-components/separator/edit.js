@@ -24,7 +24,7 @@ import { i18n, showProNotice } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-const SEPARATOR_SHADOWS = applyFilters( 'stackable.separator.shadows', [
+const SEPARATOR_SHADOWS = [
 	'none',
 	'0px 0 1px rgba(120, 120, 120, 0.5)',
 	'0px 0 2px rgba(120, 120, 120, 0.5)',
@@ -36,7 +36,7 @@ const SEPARATOR_SHADOWS = applyFilters( 'stackable.separator.shadows', [
 	'7px 5px 30px rgba(72, 73, 121, 0.15)',
 	'0px 10px 60px rgba(0, 0, 0, 0.1)',
 	'70px 130px -60px rgba(72, 73, 121, 0.38) ',
-] )
+]
 
 const SeparatorControls = props => {
 	const {
@@ -47,6 +47,8 @@ const SeparatorControls = props => {
 	const {
 		getAttrName,
 	} = useAttributeEditHandlers( attrNameTemplate )
+
+	const separatorShadowOptions = applyFilters( 'stackable.separator.shadows', SEPARATOR_SHADOWS )
 
 	return (
 		<>
@@ -77,7 +79,7 @@ const SeparatorControls = props => {
 				isFilter={ true }
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'separatorShadow' ) }
-				options={ SEPARATOR_SHADOWS }
+				options={ separatorShadowOptions }
 				placeholder="5"
 			/>
 			<AdvancedToggleControl

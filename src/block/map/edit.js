@@ -24,7 +24,7 @@ import {
 	ResizerTooltip,
 	StyleControl,
 } from '~stackable/components'
-import { useBlockHoverClass, useDeviceType } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -39,7 +39,9 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
+} from '~stackable/higher-order'
 import { currentUserHasCapability, getAttributeName } from '~stackable/util'
 
 /**
@@ -68,7 +70,6 @@ import { useDispatch } from '@wordpress/data'
 
 const Edit = props => {
 	const {
-		clientId,
 		attributes,
 		className,
 		isHovered,
@@ -127,16 +128,13 @@ const Edit = props => {
 	}, [ apiKey ] )
 
 	const deviceType = useDeviceType()
-	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-map',
-		blockHoverClass,
 		blockAlignmentClass,
 	] )
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const heightAttrName = getAttributeName( 'height', deviceType )
 	const height = attributes[ heightAttrName ]
@@ -418,9 +416,7 @@ const Edit = props => {
 					title={ __( 'Map Marker', i18n ) }
 					initialOpen={ false }
 					checked={ apiKey ? showMarker : false }
-					onChange={ showMarker =>
-						updateBlockAttributes( clientId, { showMarker } )
-					}
+					onChange={ showMarker => setAttributes( { showMarker } ) }
 					id="map-marker"
 				>
 					<div className="stk--needs-api-key">
@@ -537,6 +533,7 @@ const Edit = props => {
 }
 
 export default compose(
-	withIsHovered,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
+	withBlockAttributeContext,
 )( Edit )
