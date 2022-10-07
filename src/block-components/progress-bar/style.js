@@ -61,7 +61,7 @@ const getStyleParams = ( { isCircle } ) => {
 				}
 				return value
 			},
-			dependencies: [ 'progressColorType', 'progressColor2' ],
+			dependencies: [ 'progressColorType', 'progressColor2', 'progressColorGradientDirection' ],
 		},
 		{
 			selector,
