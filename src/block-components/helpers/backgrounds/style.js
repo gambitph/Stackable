@@ -65,7 +65,7 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return value
 			},
-			dependencies: [ 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ],
+			dependencies: [ 'backgroundColor2', 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ],
 		},
 		{
 			selector,
