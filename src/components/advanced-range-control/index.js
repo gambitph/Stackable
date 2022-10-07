@@ -70,9 +70,16 @@ const AdvancedRangeControl = props => {
 		placeholderRender = null
 	}
 
+	// If this supports dynamic content, then the value should be saved as a String.
+	// Important, the attribute type for this option should be a string.
+	const _onChange = value => {
+		const onChangeFunc = typeof props.onChange === 'undefined' ? onChange : props.onChange
+		onChangeFunc( props.isDynamic ? value.toString() : value )
+	}
+
 	const dynamicContentProps = useDynamicContentControlProps( {
 		value: typeof props.value === 'undefined' ? value : props.value,
-		onChange: typeof props.onChange === 'undefined' ? onChange : props.onChange,
+		onChange: _onChange,
 	} )
 
 	return (
@@ -85,7 +92,7 @@ const AdvancedRangeControl = props => {
 				<RangeControl
 					{ ...propsToPass }
 					value={ typeof props.value === 'undefined' ? value : props.value }
-					onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+					onChange={ _onChange }
 					allowReset={ false }
 					placeholderRender={ placeholderRender }
 				/>
@@ -94,7 +101,7 @@ const AdvancedRangeControl = props => {
 				allowReset={ props.allowReset }
 				value={ typeof props.value === 'undefined' ? value : props.value }
 				default={ props.default }
-				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				onChange={ _onChange }
 			/>
 		</AdvancedControl>
 	)
