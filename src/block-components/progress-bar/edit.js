@@ -50,7 +50,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 		<Fragment>
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
-					title={ __( 'Progress Bar', i18n ) }
+					title={ isCircle ? __( 'Progress Circle', i18n ) : __( 'Progress Bar', i18n ) }
 					initialOpen
 				>
 					<AdvancedRangeControl
