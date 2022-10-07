@@ -1,12 +1,8 @@
 @import "common";
 
-div.stk-block-progress-bar {
-	display: flex;
-}
-
 .stk-progress-bar {
 	position: relative;
-	width: 100%;
+	width: var(--progress-bar-width, 100%);
 	height: var(--progress-size, 32px);
 	border-radius: var(--progress-border-radius, unset);
 	background-color: var(--progress-background, #f0f0f0);
@@ -52,4 +48,10 @@ div.stk-block-progress-bar {
 			}
 		}
 	}
+}
+
+.stk-block .stk-block-progress-bar__container {
+	display: flex;
+	width: 100%;
+	justify-content: var(--stk-alignment-justify-content, flex-start);
 }

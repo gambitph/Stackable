@@ -63,6 +63,18 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 						placeholder={ DEFAULT_PERCENT }
 						isDynamic
 					/>
+					{ ! isCircle && (
+						<AdvancedRangeControl
+							label={ __( 'Width', i18n ) }
+							attribute="progressWidth"
+							responsive="all"
+							units={ [ '%', 'px', 'vw' ] }
+							min={ [ 0, 0, 0 ] }
+							sliderMax={ [ 100, 1000, 100 ] }
+							step="1"
+							placeholder={ 100 }
+						/>
+					) }
 					<AdvancedRangeControl
 						label={ isCircle ? __( 'Size', i18n ) : __( 'Height', i18n ) }
 						responsive={ isCircle ? 'all' : false }

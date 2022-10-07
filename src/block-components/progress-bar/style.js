@@ -83,6 +83,12 @@ const getStyleParams = ( { isCircle } ) => {
 			format: '%spx',
 		} ] : [ {
 			selector,
+			styleRule: '--progress-bar-width',
+			attrName: 'progressWidth',
+			hasUnits: '%',
+		},
+		{
+			selector,
 			styleRule: '--progress-border-radius',
 			attrName: 'progressBorderRadius',
 			hasUnits: 'px',

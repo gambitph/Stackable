@@ -26,6 +26,10 @@ const Save = props => {
 		className,
 		'stk-block-progress-bar',
 		responsiveClass,
+	] )
+
+	const containerClassNames = classnames( [
+		'stk-block-progress-bar__container',
 		blockAlignmentClass,
 	] )
 
@@ -62,29 +66,31 @@ const Save = props => {
 		>
 			<ProgressBarStyles.Content { ...props } />
 			<CustomCSS.Content attributes={ attributes } />
-			<div
-				className={ divClassNames }
-				role="progressbar"
-				aria-valuemin="0"
-				aria-valuemax="100"
-				aria-valuenow={ percent }
-				aria-valuetext={ deviedAriaValue ? striptags( deviedAriaValue ) : undefined }
-			>
-				<div className={ barClassNames }>
-					{ attributes.showText && (
-						<>
-							<Typography.Content
-								tagName="span"
-								className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
-								value={ attributes.progressInnerText || attributes.text || 'Design' }
-							/>
-							<Typography.Content
-								tagName="span"
-								className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
-								value={ derivedValue }
-							/>
-						</>
-					) }
+			<div className={ containerClassNames }>
+				<div
+					className={ divClassNames }
+					role="progressbar"
+					aria-valuemin="0"
+					aria-valuemax="100"
+					aria-valuenow={ percent }
+					aria-valuetext={ deviedAriaValue ? striptags( deviedAriaValue ) : undefined }
+				>
+					<div className={ barClassNames }>
+						{ attributes.showText && (
+							<>
+								<Typography.Content
+									tagName="span"
+									className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
+									value={ attributes.progressInnerText || attributes.text || 'Design' }
+								/>
+								<Typography.Content
+									tagName="span"
+									className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
+									value={ derivedValue }
+								/>
+							</>
+						) }
+					</div>
 				</div>
 			</div>
 		</BlockDiv.Content>

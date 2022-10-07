@@ -48,6 +48,10 @@ const Edit = ( {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-progress-bar',
+	] )
+
+	const containerClassNames = classnames( [
+		'stk-block-progress-bar__container',
 		blockAlignmentClass,
 	] )
 
@@ -94,23 +98,25 @@ const Edit = ( {
 			<BlockDiv className={ blockClassNames }>
 				<ProgressBarStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-progress-bar" />
-				<div className="stk-progress-bar stk-animate">
-					<div className={ barClassNames }>
-						{ attributes.showText && (
-							<>
-								<Typography
-									tagName="span"
-									className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
-									value={ attributes.progressInnerText || attributes.text || 'Design' }
-								/>
-								<Typography
-									tagName="span"
-									className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
-									value={ derivedValue }
-									editable={ false }
-								/>
-							</>
-						) }
+				<div className={ containerClassNames }>
+					<div className="stk-progress-bar stk-animate">
+						<div className={ barClassNames }>
+							{ attributes.showText && (
+								<>
+									<Typography
+										tagName="span"
+										className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
+										value={ attributes.progressInnerText || attributes.text || 'Design' }
+									/>
+									<Typography
+										tagName="span"
+										className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
+										value={ derivedValue }
+										editable={ false }
+									/>
+								</>
+							) }
+						</div>
 					</div>
 				</div>
 			</BlockDiv>
