@@ -137,7 +137,7 @@ export const attributes = ( version = VERSION ) => {
 				default: __( 'Table of Contents', i18n ),
 			},
 		},
-		versionAdded: '3.4.6',
+		versionAdded: '3.5.0',
 		versionDeprecated: '',
 	} )
 
@@ -151,7 +151,7 @@ export const attributes = ( version = VERSION ) => {
 		attributes: {
 			titleShow: false,
 		},
-		versionAdded: '3.4.6',
+		versionAdded: '3.5.0',
 		versionDeprecated: '',
 	} )
 
