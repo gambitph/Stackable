@@ -4,6 +4,11 @@
 import {
 	BorderStyle, SizeStyle, BackgroundStyle,
 } from '../helpers'
+import { useBlockAttributesContext } from '~stackable/hooks'
+
+/**
+ * WordPress dependencies
+ */
 import { Fragment } from '@wordpress/element'
 
 export const Style = props => {
@@ -14,36 +19,36 @@ export const Style = props => {
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = 'margin',
 		wrapperSelector = '',
-	} = props.options
+		sizeVerticalAlignSelector = '',
+		sizeVerticalAlignSelectorEdit = '',
+	} = props
+
+	const hasContainer = useBlockAttributesContext( attributes => attributes.hasContainer )
 
 	return (
 		<Fragment>
-			{ props.attributes.hasContainer &&
+			{ hasContainer &&
 				<BackgroundStyle
 					{ ...props }
-					options={ {
-						attrNameTemplate: 'container%s',
-						selector: backgroundSelector,
-					} }
+					attrNameTemplate="container%s"
+					selector={ backgroundSelector }
 				/>
 			}
 			<BorderStyle
 				{ ...props }
-				options={ {
-					attrNameTemplate: 'container%s',
-					selector: borderSelector,
-					hoverSelector: `${ borderSelector }:hover`,
-				} }
+				attrNameTemplate="container%s"
+				selector={ borderSelector }
+				hoverSelector={ `${ borderSelector }:hover` }
 			/>
 			<SizeStyle
 				{ ...props }
-				options={ {
-					attrNameTemplate: 'container%s',
-					selector: sizeSelector,
-					verticalAlignRule: sizeVerticalAlignRule,
-					horizontalAlignRule: sizeHorizontalAlignRule,
-					wrapperSelector,
-				} }
+				attrNameTemplate="container%s"
+				selector={ sizeSelector }
+				verticalAlignRule={ sizeVerticalAlignRule }
+				verticalAlignSelector={ sizeVerticalAlignSelector }
+				verticalAlignSelectorEdit={ sizeVerticalAlignSelectorEdit }
+				horizontalAlignRule={ sizeHorizontalAlignRule }
+				wrapperSelector={ wrapperSelector }
 			/>
 		</Fragment>
 	)
@@ -61,6 +66,8 @@ Style.Content = props => {
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = 'margin',
 		wrapperSelector = '',
+		sizeVerticalAlignSelector = '',
+		sizeVerticalAlignSelectorEdit = '',
 	} = props.options
 
 	return (
@@ -88,6 +95,8 @@ Style.Content = props => {
 					attrNameTemplate: 'container%s',
 					selector: sizeSelector,
 					verticalAlignRule: sizeVerticalAlignRule,
+					verticalAlignSelector: sizeVerticalAlignSelector,
+					verticalAlignSelectorEdit: sizeVerticalAlignSelectorEdit,
 					horizontalAlignRule: sizeHorizontalAlignRule,
 					wrapperSelector,
 				} }

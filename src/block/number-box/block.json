@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/number-box",
 	"title": "Number Box",
 	"description": "Display steps or methods that your users will do in your service.",
-	"category": "common",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Steps"

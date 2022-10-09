@@ -13,17 +13,15 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import {
-	Style as StyleComponent,
-} from '~stackable/components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
+import { Style as StyleComponent } from '~stackable/components'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+
+/**
+ * WordPress dependencies
+ */
+import { memo, renderToString } from '@wordpress/element'
 
 const getStyleParams = () => {
 	return [
@@ -46,39 +44,27 @@ const getStyleParams = () => {
 	]
 }
 
-export const IconLabelStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
-	const styles = useStyles( attributes, getStyleParams() )
+export const IconLabelStyles = memo( props => {
+	const styles = useStyles( getStyleParams() )
 
 	return (
 		<>
 			{ /* Alignment has been removed in 3.3.0, but retained here to prevent block errors */ }
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Column.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Column.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
 			<StyleComponent
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)
-}
+} )
 
 IconLabelStyles.defaultProps = {
 	isEditor: false,

@@ -41,13 +41,6 @@ export const attributes = ( version = VERSION ) => {
 				type: 'boolean',
 				default: '',
 			},
-		},
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
-
-	attrObject.add( {
-		attributes: {
 			columnArrangement: {
 				stkResponsive: true,
 				type: 'string',

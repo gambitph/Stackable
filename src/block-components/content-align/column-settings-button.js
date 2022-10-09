@@ -4,13 +4,10 @@ import { useBlockContext } from '~stackable/hooks'
 import { AdvancedRangeControl, Tooltip } from '~stackable/components'
 
 import { __ } from '@wordpress/i18n'
-import {
-	Button, Dashicon,
-} from '@wordpress/components'
+import { Button, Dashicon } from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { dispatch } from '@wordpress/data'
-import { useCallback } from '@wordpress/element'
 import { useLocalStorage } from '~stackable/util'
 
 export const ColumnsControl = () => {
@@ -20,7 +17,7 @@ export const ColumnsControl = () => {
 	} = useBlockContext()
 	const [ isDuplicate, setIsDuplicate ] = useLocalStorage( 'stk__columns_new_duplicate', false )
 
-	const setColumns = useCallback( numColumns => {
+	const setColumns = numColumns => {
 		const { insertBlock, removeBlocks } = dispatch( 'core/block-editor' )
 
 		// Remove the columns.
@@ -45,7 +42,7 @@ export const ColumnsControl = () => {
 				insertBlock( block, numInnerBlocks + i + 1, clientId, false )
 			}
 		}
-	} )
+	}
 
 	return (
 		<AdvancedRangeControl

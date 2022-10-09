@@ -8,9 +8,7 @@ import { PriceStyles } from './style'
  */
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
-import {
-	InspectorTabs,
-} from '~stackable/components'
+import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -26,11 +24,14 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
@@ -97,7 +98,12 @@ const Edit = props => {
 		</>
 	)
 }
-export default withQueryLoopContext( Edit )
+
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/price', ( enabled, parentBlock ) => {

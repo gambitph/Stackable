@@ -11,9 +11,7 @@ import {
 	Transform,
 	ContentAlign,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
@@ -22,55 +20,40 @@ import { Style as StyleComponent } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { memo, renderToString } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 const alignmentOptions = {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 }
 
-const BlockStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-	propsToPass.options = {
-		...propsToPass.options,
-	}
-
+const BlockStyles = memo( props => {
+	const columnArrangementMobile = useBlockAttributesContext( attributes => attributes.columnArrangementMobile )
 	const columnStyleOptions = {
-		numColumns: ( propsToPass.attributes.columnArrangementMobile || '' ).split( ',' ).length,
+		numColumns: ( columnArrangementMobile || '' ).split( ',' ).length,
 	}
 
-	const columnsStyles = useStyles( attributes, applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
+	const columnsStyles = useStyles( applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } options={ alignmentOptions } />
-			<BlockDiv.Style { ...propsToPass } />
-			<MarginBottom.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<Separator.Style { ...propsToPass } />
-			<ContentAlign.Style { ...propsToPass } />
+			<Alignment.Style { ...props } { ...alignmentOptions } />
+			<BlockDiv.Style { ...props } />
+			<MarginBottom.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
+			<Separator.Style { ...props } />
+			<ContentAlign.Style { ...props } />
 			<StyleComponent
 				styles={ columnsStyles }
 				versionAdded="3.1.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)
-}
+} )
 
 BlockStyles.defaultProps = {
 	isEditor: false,

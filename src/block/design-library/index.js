@@ -12,9 +12,8 @@ import { StackableIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import metadata from './block.json'
-import { applyFilters } from '@wordpress/hooks'
 
-export const settings = applyFilters( 'stackable.block.metadata', {
+export const settings = {
 	...metadata,
 	icon: StackableIcon,
 	attributes: {
@@ -33,4 +32,4 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	},
 	edit,
 	save,
-} )
+}

@@ -2,13 +2,13 @@
  * Internal dependencies
  */
 import { expandAttributes } from '.'
+import { getAttrName } from '../attributes'
 
 /**
  * External dependencies
  */
 import compareVersions from 'compare-versions'
 import deepmerge from 'deepmerge'
-import { getAttrName } from '~stackable/util'
 import { upperFirst } from 'lodash'
 
 /**

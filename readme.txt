@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.8.3
-Tested up to: 6.0.1
+Tested up to: 6.0.2
 Requires PHP: 5.7
-Stable tag: 3.4.2
+Stable tag: 3.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -148,6 +148,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -245,6 +246,63 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.5.0 =
+[No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Various performance improvements
+* New: Smaller plugin filesize
+* New: New exposed window.stk API (undocumented)
+* New: Support for block theme contentSize and wideSize
+* Fixed: Wide and fullwidth blocks sometimes showed centered in the editor
+* Fixed: Column content vertical align did not show up correctly in the editor
+* Fixed: Some block options not showing up in the editor
+* Fixed: Column block's Content Vertical Align not displaying correctly in the editor
+* Fixed: Icon block margin and size options not displaying correctly in the editor #2426
+* Fixed: Card block horizontal layout image resizing issues in tablet and mobile
+* Fixed: Hero block can get an error when switching layouts
+* Fixed: Accordion content in the editor overlapped sometimes
+* Fixed: Some styles did not show in the editor when changing hover states
+* Fixed: Some shadows flicker or get clipped in Safari #2328
+* Fixed: Accordions close adjacent doesn't work with reduced motion OS setting #2352
+* Fixed: Custom Fields PHP warnings #2415
+* Fixed: Using custom SVGs with colors can sometimes cause block errors #2411
+
+= 3.4.5 =
+* Fixed: Accordion containers incorrectly collapsed when placed inside columns
+
+= 3.4.4 =
+* Fixed: This update fixes some issues which were found in v3.4.3 in the Accordion and Image box blocks
+* Fixed: Accordion column height issues
+* Fixed: Hard to select the accordion block contents
+* Fixed: Containers with containers inside incorrectly inherit the parent container's size styles
+* Fixed: Content alignment issue in the image box block
+* Fixed: Content vertical align option now works correctly in the icon box block #2404
+
+= 3.4.3 =
+* New: Added duration option for the Count Up block #2355
+* New: Added button alignment & full-width options for the Button Group block
+* Change: Remove doubled Stackable icons in the block inserter #2383
+* Change: Video popup now uses YouTube's no-cookie domain #2392
+* Fixed: Buttons stacking on mobile adds a margin to some buttons #2249
+* Fixed: Full width buttons force other non-full width buttons to wrap text
+* Fixed: Multiple full width buttons in a group incorrectly wrap in mobile
+* Fixed: Buttons with borders sometimes show a thin white border
+* Fixed: Typing in a global color name is slow #2339
+* Fixed: Resetting max width doesn't reset content horizontal align #2338
+* Fixed: Icon panel doesn't close
+* Fixed: Icon list block contents are also copied when copying styles #2320
+* Fixed: Columns & Button group blocks show "add block" panel when used in reusable blocks & in widget editor #2371
+* Fixed: Dynamic content button is not aligned in link inspector control #2332
+* Fixed: Remove highlight toolbar button for button blocks #2314
+* Fixed: Icon is not visible in some notification block layouts #2323
+* Fixed: Position "sticky" doesn't work as intended inside columns #2212
+* Fixed: Global typography does not show in tablet & mobile and in FSE #2340 & #2289
+* Fixed: Fatal error with Freemius in edge case when blog no longer exists in multisite
+* Fixed: ACF & Metabox dynamic content images show blurry #2064
+* Fixed: ACF & Metabox added image size selector for dynamic content image fields #2064
+* Fixed: Added single image field type support for Metabox
+* Fixed: Related map block scripts now do not appear in the frontend when no map block is used #2386
 
 = 3.4.2 =
 * Fixed: Editor speed performance improvements when editing blocks

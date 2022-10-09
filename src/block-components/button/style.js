@@ -2,9 +2,7 @@
  * External dependencies
  */
 import { Style as StyleComponent } from '~stackable/components'
-import {
-	useStyles, getStyles,
-} from '~stackable/util'
+import { useStyles, getStyles } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -30,6 +28,24 @@ const getStyleParams = options => {
 			attrName: 'buttonFullWidth',
 			valueCallback: () => '100%',
 			format: '%spx',
+			enabledCallback: getAttribute => getAttribute( 'buttonFullWidth' ),
+		},
+		// This makes the full-width button occupy the available space, but make
+		// others wrap when it's too small.
+		{
+			renderIn: 'save',
+			selector: '',
+			styleRule: 'flex',
+			attrName: 'buttonFullWidth',
+			valueCallback: () => '1 1 0',
+			enabledCallback: getAttribute => getAttribute( 'buttonFullWidth' ),
+		},
+		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			styleRule: 'flex',
+			attrName: 'buttonFullWidth',
+			valueCallback: () => '1 1 0',
 			enabledCallback: getAttribute => getAttribute( 'buttonFullWidth' ),
 		},
 		{
@@ -156,12 +172,7 @@ const getStyleParams = options => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( propsToPass.options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<>
@@ -169,30 +180,20 @@ export const Style = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<BorderStyle
-				{ ...{
-					attributes,
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: propsToPass.options.selector + ':before',
-						// Adding border radius clips button's shadow.
-						// This prevents this from happening.
-						// @see src/block-components/borders/style.js
-						addBorderRadiusOverflow: false,
-						hoverSelector: propsToPass.options.selector + ':hover:before',
-						borderRadiusSelector: propsToPass.options.selector,
-						attrNameTemplate: sprintf( 'button%s', propsToPass.options?.attrNameTemplate || '%s' ),
-					},
-				} }
+				{ ...props }
+				selector={ props.selector + ':before' }
+				// Adding border radius clips button's shadow.
+				// This prevents this from happening.
+				// @see src/block-components/borders/style.js
+				addBorderRadiusOverflow={ false }
+				hoverSelector={ props.selector + ':hover:before' }
+				borderRadiusSelector={ props.selector }
+				attrNameTemplate={ sprintf( 'button%s', props.attrNameTemplate || '%s' ) }
 			/>
-			<Icon.Style
-				{ ...{
-					attributes,
-					...propsToPass,
-				} } />
+			<Icon.Style { ...props } />
 		</>
 	)
 }

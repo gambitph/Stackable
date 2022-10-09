@@ -13,15 +13,15 @@ import { ColumnIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import deprecated from './deprecated'
 import metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 
-export const settings = applyFilters( 'stackable.block.metadata', {
+export const settings = {
 	...metadata,
 	icon: ColumnIcon,
 	attributes: schema,
@@ -33,7 +33,7 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	},
 	//  styles: blockStyles,
 
-	// deprecated,
+	deprecated,
 	edit,
 	save,
-} )
+}

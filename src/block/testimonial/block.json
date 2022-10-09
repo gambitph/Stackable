@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/testimonial",
 	"title": "Testimonial",
 	"description": "Showcase what your users say about your product or service.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",

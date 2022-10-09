@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/feature-grid",
 	"title": "Feature Grid",
 	"description": "Display multiple product features or services. You can use Feature Grids one after another.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",

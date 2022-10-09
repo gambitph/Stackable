@@ -19,23 +19,16 @@ import {
 	Transform,
 	ContentAlign,
 } from '~stackable/block-components'
-import {
-	useBlockAttributes, useDeviceType, useBlockStyle, getBlockStyle,
-} from '~stackable/hooks'
+import { useBlockStyle, getBlockStyle } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import {
-	Style as StyleComponent,
-} from '~stackable/components'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import {
-	renderToString, useMemo,
-} from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { renderToString, memo } from '@wordpress/element'
 
 const itemSelector = ' .%s-container'
 
@@ -81,7 +74,7 @@ const categoryTypographyOptions = {
 			: `.stk-block-posts__category a:hover${ selector }`
 	},
 	attrNameTemplate: 'category%s',
-	dependencies: [ 'Highlighted', ...dependencies ],
+	dependencies: [ 'Highlighted', 'hoverStateInContainer', ...dependencies ],
 }
 
 const excerptTypographyOptions = {
@@ -299,56 +292,45 @@ const getStyleParams = ( options = {} ) => {
 				return undefined
 			},
 			enabledCallback: () => blockStyle === 'list',
+			dependencies: [ 'imageWidthUnit', 'className' ],
 		},
 	]
 }
 
-export const PostsStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
+export const PostsStyles = memo( props => {
 	const blockStyle = useBlockStyle( variations )
-	const postsStyles = useStyles( attributes, getStyleParams() )
-	const imageOptions = useMemo( () => ( {
-		..._imageOptions,
-		enableHeight: ! [ 'portfolio' ].includes( blockStyle ),
-	} ), [ blockStyle, attributes.imageHasLink ] )
+	const postsStyles = useStyles( getStyleParams() )
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Column.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } options={ advancedOptions } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
-			<Image.Style { ...propsToPass } options={ imageOptions } />
-			<Typography.Style { ...propsToPass } options={ titleTypographyOptionsEditor } />
-			<Typography.Style { ...propsToPass } options={ categoryTypographyOptions } />
-			<Typography.Style { ...propsToPass } options={ excerptTypographyOptions } />
-			<Typography.Style { ...propsToPass } options={ metaTypographyOptions } />
-			<Typography.Style { ...propsToPass } options={ readmoreTypographyOptions } />
-			<ContentAlign.Style { ...propsToPass } />
-			<FlexGapStyles { ...propsToPass } options={ flexGapOptions } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Column.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Advanced.Style { ...props } { ...advancedOptions } />
+			<EffectsAnimations.Style { ...props } />
+			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
+			<Image.Style
+				{ ...props }
+				{ ..._imageOptions }
+				enableHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
+			/>
+			<Typography.Style { ...props } { ...titleTypographyOptionsEditor } />
+			<Typography.Style { ...props } { ...categoryTypographyOptions } />
+			<Typography.Style { ...props } { ...excerptTypographyOptions } />
+			<Typography.Style { ...props } { ...metaTypographyOptions } />
+			<Typography.Style { ...props } { ...readmoreTypographyOptions } />
+			<ContentAlign.Style { ...props } />
+			<FlexGapStyles { ...props } { ...flexGapOptions } />
 			<StyleComponent
 				styles={ postsStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)
-}
+} )
 
 PostsStyles.defaultProps = {
 	isEditor: false,

@@ -13,11 +13,9 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
+import { BaseControl, Popover } from '@wordpress/components'
 import {
-	BaseControl, Popover,
-} from '@wordpress/components'
-import {
-	Fragment, useState, useEffect, useRef, useCallback,
+	Fragment, useState, useEffect, useRef,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 
@@ -57,12 +55,12 @@ const ResizerTooltip = props => {
 	const tooltipRef = useRef()
 	const popupRef = useRef()
 
-	const focusInput = useCallback( () => {
+	const focusInput = () => {
 		// When the manual entry opens, select the whole value.
 		setTimeout( () => {
 			popupRef.current?.querySelector( 'input' ).select()
 		}, 1 )
-	}, [ popupRef.current ] )
+	}
 
 	useEffect( () => {
 		setPrevSwitchedWidth( null )

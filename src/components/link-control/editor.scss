@@ -42,19 +42,11 @@
 	.block-editor-link-control__field {
 		margin: auto;
 	}
-	.stk-dynamic-content-control__button {
-		margin-top: 6px;
-		margin-left: 3px;
-	}
-	&.stk--has-value .stk-link-control__input + .stk-dynamic-content-control__button {
-		margin-top: 6px;
-	}
-	.stk-control__reset-button {
-		top: 6px;
-	}
-	.stk--has-dynamic-content {
-		.stk-control__reset-button {
-			top: 3px;
+	.stk-dynamic-content-control {
+		display: flex;
+		align-items: center;
+		.stk-dynamic-content-control__button {
+			margin-left: 3px;
 		}
 	}
 }

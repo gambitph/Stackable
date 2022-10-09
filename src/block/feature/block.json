@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/feature",
 	"title": "Feature",
 	"description": "Display a product feature or a service in a large area.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",

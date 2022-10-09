@@ -9,16 +9,22 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { getPlugin } from '@wordpress/plugins'
 
-export const Linking = () => {
+// We split this off because we use hooks that won't allow conditional rendering
+// for the Linking component.
+export const Linking = props => {
+	const isEnabled = !! getPlugin( 'stackable-block-linking' )
+	return isEnabled ? <_Linking { ...props } /> : null
+}
+
+export const _Linking = () => {
 	const [ isLinked, setIsLinked ] = useLinking()
 
 	const { isOnlyBlock } = useBlockContext()
 	const { clientId } = useBlockEditContext()
 
 	const closestLinkableBlock = useClosestLinkableBlock( clientId )
-	const isEnabled = !! getPlugin( 'stackable-block-linking' )
 
-	if ( ! isEnabled || isOnlyBlock || ! closestLinkableBlock ) {
+	if ( isOnlyBlock || ! closestLinkableBlock ) {
 		return null
 	}
 
@@ -56,10 +62,6 @@ export const Linking = () => {
 			</div>
 		</Tooltip>
 	</div>
-}
-
-Linking.defaultProps = {
-	show: true,
 }
 
 Linking.Content = () => null

@@ -2,20 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { useBlockAttributes } from '~stackable/hooks'
 
-/**
- * WordPress dependencies
- */
-import { useBlockEditContext } from '@wordpress/block-editor'
-
-export const useAlignment = () => {
-	const { clientId } = useBlockEditContext()
-	const { innerBlockOrientation } = useBlockAttributes( clientId )
-
-	return {
-		blockOrientation: innerBlockOrientation || 'vertical',
-	}
+export const getBlockOrientation = ( { innerBlockOrientation } ) => {
+	return innerBlockOrientation || 'vertical'
 }
 
 export const getAlignmentClasses = attributes => {

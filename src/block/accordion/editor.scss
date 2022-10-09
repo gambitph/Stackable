@@ -16,7 +16,7 @@
 }
 
 .stk-block-accordion .stk-block-accordion__content {
-	> .stk-container {
+	> * > * > .stk-container {
 		padding: cssvar(container-padding);
 	}
 }
@@ -59,7 +59,7 @@
 	// since open attribute is not present
 	&.stk--is-open .stk-block-accordion__content {
 		max-height: unset;
-		transform: translateY(-25px);
+		transform: translateY(0px);
 		opacity: 1;
 	}
 }

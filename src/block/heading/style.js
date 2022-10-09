@@ -13,14 +13,14 @@ import {
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { Fragment, renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import {
+	memo, Fragment, renderToString,
+} from '@wordpress/element'
 
 const getStyleParams = () => {
 	return [
@@ -119,50 +119,32 @@ const getStyleParams = () => {
 	]
 }
 
-export const HeadingStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
-	const topBottomLineStyles = useStyles( attributes, getStyleParams() )
+export const HeadingStyles = memo( props => {
+	const topBottomLineStyles = useStyles( getStyleParams() )
 
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...{
-				...propsToPass,
-				options: {
-					...propsToPass.options,
-					verticalAlignRule: 'justifyContent',
-				},
-			} } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Typography.Style { ...{
-				...propsToPass,
-				options: {
-					...propsToPass.options,
-					selector: '.stk-block-heading__text',
-				},
-			} } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style
+				{ ...props }
+				verticalAlignRule="justifyContent"
+			/>
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Typography.Style
+				{ ...props }
+				selector=".stk-block-heading__text"
+			/>
 			<StyleComponent
 				styles={ topBottomLineStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
-			<EffectsAnimations.Style { ...propsToPass } />
+			<EffectsAnimations.Style { ...props } />
 		</Fragment>
 	)
-}
+} )
 
 HeadingStyles.defaultProps = {
 	isEditor: false,

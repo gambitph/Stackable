@@ -1,4 +1,4 @@
-import { AdminBaseSetting } from '~stackable/components'
+import AdminBaseSetting from '../admin-base-setting'
 import { createRef } from '@wordpress/element'
 
 const AdminTextSetting = props => {

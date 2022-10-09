@@ -5,13 +5,13 @@ import SVGViewSingle from './images/view-single.svg'
 import SVGViewMany from './images/view-many.svg'
 import SVGViewFew from './images/view-few.svg'
 import BlockList from './block-list'
-import Button from '../../../../components/button'
-import AdvancedToolbarControl from '../../../../components/advanced-toolbar-control'
 
 /**
  * External deprendencies
  */
-import DesignLibraryList from '~stackable/components/design-library-list'
+import {
+	AdvancedToolbarControl, Button, DesignLibraryList,
+} from '~stackable/components'
 import { getDesigns, setDevModeDesignLibrary } from '~stackable/design-library'
 import {
 	i18n, isPro, devMode,

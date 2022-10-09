@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	useStyles, getStyles,
-} from '~stackable/util'
+import { useStyles, getStyles } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
@@ -227,14 +225,8 @@ const getStyleParams = ( options = {} ) => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
-	const premiumStyles = useStyles( attributes, applyFilters( 'stackable.block-component.icon.get-style-params', [], options ) )
+	const styles = useStyles( getStyleParams( props ) )
+	const premiumStyles = useStyles( applyFilters( 'stackable.block-component.icon.get-style-params', [], props ) )
 
 	return (
 		<>
@@ -242,13 +234,13 @@ export const Style = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<StyleComponent
 				styles={ premiumStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)

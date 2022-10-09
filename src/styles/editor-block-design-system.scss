@@ -6,7 +6,7 @@
 }
 
 // Remove the margins if it's only 1 block.
-[data-type="stackable/column"]:first-child:last-child > * > * > .stk-block-column > .stk-column-wrapper {
+[data-type="stackable/column"]:first-child:last-child > * > .stk-block-column > .stk-column-wrapper {
 	margin: 0;
 }
 
@@ -14,10 +14,6 @@
 	.block-editor-block-list__layout {
 		align-items: center;
 		row-gap: cssvar(button-row-gap);
-	}
-
-	// Use margin-inline-end in gaps instead since safari does not support it.
-	[data-block]:not(:last-child) .stk-block {
-		margin-inline-end: cssvar(button-gap);
+		column-gap: cssvar(button-gap);
 	}
 }

@@ -5,11 +5,25 @@
 	--stk-block-margin-bottom: 0;
 }
 
+// This makes it so that when the button becomes too small for the viewport,
+// that's the time we wrap text. If the button is fullwidth, and other
+// non-fullwidth button presses against it, this stops the button text from
+// wrapping (it will make the other button wrap below instead)
+@include tablet-mobile {
+	.stk-block-button {
+		min-width: fit-content;
+	}
+}
+
 .stk-block.stk-block-button {
 	width: auto;
 }
 
 // Prevent fullwidth buttons from going past their container.
 .stk-button {
-	box-sizing: border-box;
+	&,
+	&::before,
+	&::after {
+		box-sizing: border-box;
+	}
 }

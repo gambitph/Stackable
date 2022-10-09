@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/team-member",
 	"title": "Team Member",
 	"description": "Display members of your team or your office. Use multiple Team Member blocks if you have a large team.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",

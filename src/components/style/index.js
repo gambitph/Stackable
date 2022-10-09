@@ -2,19 +2,29 @@ import compareVersions from 'compare-versions'
 import { getEditorStylesOnly, generateStyles } from '~stackable/block-components/style'
 import { useDynamicContent } from '../dynamic-content-control'
 import {
-	appendImportant, getUniqueBlockClass, minifyCSS, useQueryLoopInstanceId,
+	appendImportant,
+	getUniqueBlockClass,
+	minifyCSS,
+	useQueryLoopInstanceId,
+	createUniqueClass,
 } from '~stackable/util'
 import {
 	Fragment, memo, useMemo,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import {
+	useBlockAttributesContext, useDeviceType, useRafMemo,
+} from '~stackable/hooks'
 
 const Style = memo( props => {
 	const {
 		version, versionAdded, versionDeprecated,
-		styles, deviceType, blockUniqueClassName: __blockUniqueClassName, breakTablet, breakMobile,
+		styles, breakTablet, breakMobile,
 	} = props
+
+	const deviceType = useDeviceType()
+	const attributeUniqueId = useBlockAttributesContext( attributes => attributes.uniqueId )
+	const __blockUniqueClassName = getUniqueBlockClass( attributeUniqueId )
 
 	// If there's no blockUniqueClassName supplied, create one based from the
 	// clientId so that we can still generate some styles.
@@ -41,16 +51,17 @@ const Style = memo( props => {
 			( ! versionDeprecated || compareVersions( version, versionDeprecated ) === -1 ) // Are not yet deprecated.
 	}, [ version, versionAdded, versionDeprecated ] )
 
-	const css = useMemo( () => {
+	// Only generate the CSS styles Request Animation Frame to make things speedy.
+	const css = useRafMemo( () => {
 		if ( ! doRender ) {
 			return ''
 		}
 
 		const stylesToRender = getEditorStylesOnly( styles, deviceType )
-		return generateStyles( doImportant( stylesToRender ), blockUniqueClassName, breakTablet, breakMobile )
+		return generateStyles( doImportant( stylesToRender ), blockUniqueClassName, breakTablet, breakMobile ).join( '' )
 	}, [ doRender, styles, deviceType, blockUniqueClassName, breakTablet, breakMobile ] )
 
-	const output = useDynamicContent( css.join( '' ) )
+	const output = useDynamicContent( css )
 
 	// If the block doesn't have a unique className (based on the uniqueId), it
 	// means that the user is still picking a layout.
