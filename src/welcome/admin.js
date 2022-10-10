@@ -28,7 +28,7 @@ import {
 	showProNoticesOption,
 } from 'stackable'
 import classnames from 'classnames'
-import { importBlocks } from '~stackable/util/blocks'
+import { importBlocks } from '~stackable/util/admin'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 
