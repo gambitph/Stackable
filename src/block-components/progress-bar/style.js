@@ -106,6 +106,13 @@ const getStyleParams = ( { isCircle } ) => {
 		},
 		{
 			selector: '.stk-progress-bar__bar.stk--has-background-overlay:before',
+			styleRule: 'mixBlendMode',
+			attrName: 'progressColorGradientBlendMode',
+			enabledCallback: getAttribute => getAttribute( 'progressColorType' ) === 'gradient',
+			dependencies: [ 'progressColorType' ],
+		},
+		{
+			selector: '.stk-progress-bar__bar.stk--has-background-overlay:before',
 			styleRule: 'backgroundImage',
 			attrName: 'progressColor1',
 			enabledCallback: getAttribute => getAttribute( 'progressColorType' ) === 'gradient',
