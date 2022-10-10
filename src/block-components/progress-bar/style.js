@@ -82,10 +82,14 @@ const getStyleParams = ( { isCircle } ) => {
 			attrName: 'progressThickness',
 			format: '%spx',
 		} ] : [ {
+		},
+		{
 			selector,
 			styleRule: '--progress-bar-width',
 			attrName: 'progressWidth',
 			hasUnits: '%',
+			responsive: 'all',
+			dependencies: [ 'progressWidthUnit' ],
 		},
 		{
 			selector,
