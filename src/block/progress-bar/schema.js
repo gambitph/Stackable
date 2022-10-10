@@ -36,7 +36,10 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
 	ProgressBar.addAttributes( attrObject )
-	Typography.addAttributes( attrObject )
+	Typography.addAttributes( attrObject, '.stk-progress-bar__inner-text', {
+		hasTextTag: false,
+		hasColor: false,
+	} )
 
 	attrObject.add( {
 		attributes: {
