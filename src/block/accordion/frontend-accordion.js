@@ -12,9 +12,7 @@ class StackableAccordion {
 	init = () => {
 		// If reduce motion is on, don't use smooth resizing.
 		const reduceMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
-		if ( ! ( 'ResizeObserver' in window ) || reduceMotion ) {
-			return
-		}
+		const isAnimationDisabled = ( ! ( 'ResizeObserver' in window ) || reduceMotion )
 
 		// This observer is called whenever the size element is changed.
 		const RO = new ResizeObserver( entries => { // eslint-disable-line compat/compat
@@ -70,8 +68,10 @@ class StackableAccordion {
 				// from this current height.
 				el.dataset.preHeight = el.dataset.height
 
-				// Trigger the animation when the accordion is opened/closed.
-				el.doAnimate = true
+				if ( ! isAnimationDisabled ) {
+					// Trigger the animation when the accordion is opened/closed.
+					el.doAnimate = true
+				}
 
 				// Close other adjacent accordions if needed.
 				if ( el.open && el.classList.contains( 'stk--single-open' ) ) {
@@ -91,12 +91,14 @@ class StackableAccordion {
 					}
 				}
 			} )
-		  } )
+		} )
 
 		const els = document.querySelectorAll( '.stk-block-accordion' )
 		els.forEach( el => {
 			el.contentEl = el.querySelector( '.stk-block-accordion__content' )
-			RO.observe( el )
+			if ( ! isAnimationDisabled ) {
+				RO.observe( el )
+			}
 			MO.observe( el, {
 				attributeFilter: [ 'open' ],
 				attributeOldValue: true,

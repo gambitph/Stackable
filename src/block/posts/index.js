@@ -12,10 +12,9 @@ import schema from './schema'
 import metadata from './block.json'
 import example from './example'
 import { BlogPostsIcon } from '~stackable/icons'
-import { applyFilters } from '@wordpress/hooks'
 import deprecated from './deprecated'
 
-export const settings = applyFilters( 'stackable.block.metadata', {
+export const settings = {
 	...metadata,
 	icon: BlogPostsIcon,
 	supports: {
@@ -30,4 +29,4 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	variations,
 	edit,
 	save,
-} )
+}

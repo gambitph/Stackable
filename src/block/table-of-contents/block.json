@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/table-of-contents",
 	"title": "Table of Contents",
 	"description": "Automatically generated table of contents based on Heading blocks.",

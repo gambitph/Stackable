@@ -32,33 +32,31 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
-import { useDispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
-		clientId,
 		className,
 		attributes,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-number-box',
-		blockHoverClass,
 		blockAlignmentClass,
 	], {
 		'stk--has-shape': props.attributes.hasShape,
@@ -90,7 +88,7 @@ const Edit = props => {
 					id="shape"
 					initialOpen={ true }
 					checked={ attributes.hasShape }
-					onChange={ hasShape => updateBlockAttributes( clientId, { hasShape } ) }
+					onChange={ hasShape => setAttributes( { hasShape } ) }
 				>
 					<AdvancedRangeControl
 						label={ __( 'Size', i18n ) }
@@ -129,4 +127,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

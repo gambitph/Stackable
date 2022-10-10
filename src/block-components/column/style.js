@@ -6,15 +6,21 @@ import {
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
+/**
+ * WordPress dependencies
+ */
+import { useBlockEditContext } from '@wordpress/block-editor'
+
 const getStyleParams = ( options = {} ) => {
 	const {
+		clientId,
 		selector = '',
 	} = options
 
 	return [
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			selectorCallback: () => `.editor-styles-wrapper [data-block="${ clientId }"]`,
 			styleRule: 'flex',
 			attrName: 'columnWidth',
 			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
@@ -36,7 +42,7 @@ const getStyleParams = ( options = {} ) => {
 		// resizes to a larger size.
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			selectorCallback: () => `.editor-styles-wrapper [data-block="${ clientId }"]`,
 			styleRule: 'maxWidth',
 			attrName: 'columnWidth',
 			responsive: [ 'desktopTablet', 'tabletOnly', 'mobile' ],
@@ -81,19 +87,15 @@ const getStyleParams = ( options = {} ) => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams() )
+	const { clientId } = useBlockEditContext()
+	const styles = useStyles( getStyleParams( { clientId } ) )
 
 	return (
 		<StyleComponent
 			styles={ styles }
 			versionAdded="3.0.0"
 			versionDeprecated=""
-			{ ...propsToPass }
+			{ ...props }
 		/>
 	)
 }

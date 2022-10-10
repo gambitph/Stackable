@@ -13,13 +13,19 @@ import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-contex
  */
 import { __ } from '@wordpress/i18n'
 import {
-	Button, Popover, TextControl,
+	Button,
+	Popover,
+	TextControl,
 } from '@wordpress/components'
 import {
-	useState, Fragment, useCallback, useEffect, useContext, memo,
+	useState,
+	Fragment,
+	useEffect,
+	useContext,
+	memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-import { useSelect } from '@wordpress/data'
+import { select, useSelect } from '@wordpress/data'
 
 /**
  * Internal dependencies
@@ -50,23 +56,23 @@ export const useDynamicContentControlProps = props => {
 	// Debounce the value for performance.
 	const [ debouncedValue, setDebouncedValue ] = useState( props.value )
 
-	const clickOutsideListener = useCallback( event => {
-		if ( isPopoverOpen ) {
-			if (
-				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
-				! event.target.closest( '.stk-dynamic-content-control__button' ) &&
-				! event.target.closest( '.components-color-picker' ) &&
-				! event.target.closest( '.react-autosuggest__suggestions-container' )
-			) {
-				setIsPopoverOpen( false )
+	useEffect( () => {
+		const clickOutsideListener = event => {
+			if ( isPopoverOpen ) {
+				if (
+					! event.target.closest( '.stackable-dynamic-content__popover' ) &&
+					! event.target.closest( '.stk-dynamic-content-control__button' ) &&
+					! event.target.closest( '.components-color-picker' ) &&
+					! event.target.closest( '.react-autosuggest__suggestions-container' )
+				) {
+					setIsPopoverOpen( false )
+				}
 			}
 		}
-	}, [ isPopoverOpen ] )
 
-	useEffect( () => {
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
 		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
-	}, [ clickOutsideListener ] )
+	}, [ isPopoverOpen ] )
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
@@ -110,7 +116,7 @@ export const useDynamicContentControlProps = props => {
 	const isPressed = isPopoverOpen || activeAttributes.length
 	const activeAttribute = first( activeAttributes ) || ''
 
-	const onChange = useCallback( ( newValue, editorQueryString, frontendQueryString ) => {
+	const onChange = ( newValue, editorQueryString, frontendQueryString ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
 		const willChangeValue = props.isFormatType
 			? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
@@ -120,19 +126,19 @@ export const useDynamicContentControlProps = props => {
 		setDebouncedValue( willChangeValue )
 
 		setIsPopoverOpen( false )
-	}, [ props.isFormatType, props.onChange ] )
+	}
 
-	const onClick = useCallback( () => {
+	const onClick = () => {
 		setIsPopoverOpen( ! isPopoverOpen )
-	}, [ isPopoverOpen ] )
+	}
 
-	const onClose = useCallback( () => {
+	const onClose = () => {
 		setIsPopoverOpen( false )
-	}, [] )
+	}
 
-	const onReset = useCallback( () => {
+	const onReset = () => {
 		props.onChange( '' )
-	}, [ props.onChange ] )
+	}
 
 	return {
 		onClick,
@@ -160,16 +166,17 @@ export const useDynamicContentControlProps = props => {
  */
 export const useDynamicContent = ( value = '' ) => {
 	const queryLoopContext = useContext( QueryLoopContext )
-	return useSelect( select => {
-		if ( ! select( 'stackable/dynamic-content' ) ) {
-			return value
-		}
 
-		if ( ! isString( value ) ) {
+	return useSelect( () => {
+		if ( ! value || ! isString( value ) ) {
 			return value
 		}
 
 		if ( ! value.includes( '!#stk_dynamic' ) && ! value.includes( 'data-stk-dynamic' ) ) {
+			return value
+		}
+
+		if ( ! select( 'stackable/dynamic-content' ) ) {
 			return value
 		}
 
@@ -216,13 +223,8 @@ export const useDynamicContent = ( value = '' ) => {
 			} )
 		}
 
-		/**
-		 * A simple trick for subscribing to post changes.
-		 */
-		select( 'core/editor' )?.getPostEdits()
-
 		return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue )
-	}, [ value, queryLoopContext ] )
+	}, [ value, queryLoopContext?.postId ] )
 }
 
 /**
@@ -285,14 +287,14 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 	} )
 }
 
-export const DynamicContentFields = applyFilters( 'stackable.dynamic-content.component' ) || Fragment
-
 const dynamicContent = <SVGDatabaseIcon />
 
 export const DynamicContentButton = memo( props => {
 	if ( ! isPro && ! showProNotice ) {
 		return null
 	}
+
+	const DynamicContentFields = applyFilters( 'stackable.dynamic-content.component' ) || Fragment
 
 	return (
 		<Fragment>

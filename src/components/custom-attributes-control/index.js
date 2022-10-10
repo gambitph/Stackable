@@ -8,7 +8,11 @@ import { escape as _escape } from 'lodash'
  * WordPress dependencies
  */
 import {
-	Fragment, useState, useEffect, render, unmountComponentAtNode, useRef, useCallback,
+	Fragment,
+	useState,
+	render,
+	unmountComponentAtNode,
+	useRef,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { TextControl, ExternalLink } from '@wordpress/components'
@@ -35,14 +39,7 @@ const CustomAttributesControl = props => {
 
 	const [ customAttributes, setCustomAttributes ] = useState( createAttributeString( props.value ) )
 
-	useEffect( () => {
-		// Add support to WP 5.6
-		if ( ( inputRef.current || document.querySelector( '.ugb-custom-attributes-control input' ) ) !== document.activeElement ) { // eslint-disable-line @wordpress/no-global-active-element
-			setCustomAttributes( createAttributeString( props.value ) )
-		}
-	}, [ JSON.stringify( props.value ) ] )
-
-	const onChange = useCallback( newCustomAttributes => {
+	const onChange = newCustomAttributes => {
 		setCustomAttributes( newCustomAttributes )
 		const el = document.createElement( 'div' )
 		el.innerHTML = `<div ${ newCustomAttributes } />`
@@ -77,14 +74,14 @@ const CustomAttributesControl = props => {
 
 		setHasError( hasError )
 		props.onChange( attributes )
-	}, [ setCustomAttributes, props.invalidHtmlAttributes, props.onChange, setHasError ] )
+	}
 
-	const onBlur = useCallback( () => {
+	const onBlur = () => {
 		// Sanitize the input on blur.
 		if ( Array.isArray( props.value ) && props.value.length > 0 ) {
 			setCustomAttributes( createAttributeString( props.value ) )
 		}
-	}, [ JSON.stringify( props.value ) ] )
+	}
 
 	return (
 		<TextControl

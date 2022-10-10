@@ -2,13 +2,13 @@
  * Internal dependencies
  */
 import { createButtonStyleSet } from '../'
+import { __getValue } from '../styles'
 
 /**
  * External dependencies
  */
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
-import { __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies

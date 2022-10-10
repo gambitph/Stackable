@@ -15,7 +15,7 @@ import deepmerge from 'deepmerge'
  */
 import { memo } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
+import { useBlockAttributesContext, useDeviceType } from '~stackable/hooks'
 
 /**
  * Internal dependencies
@@ -334,7 +334,7 @@ export const Style = memo( props => {
 	} = props
 	const deviceType = useDeviceType()
 	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 
 	const blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 

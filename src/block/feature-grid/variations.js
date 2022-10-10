@@ -35,7 +35,7 @@ const variations = applyFilters(
 			attributes: {
 				className: 'is-style-default',
 				innerBlockContentAlign: 'alignwide',
-				align: 'full',
+				align: 'wide',
 			},
 			isActive: [ 'className' ],
 			pickerTitle: __( 'Default', i18n ),

@@ -4,18 +4,18 @@
 import SVGCircle from './images/circle.svg'
 import SVGSquare from './images/square.svg'
 import SVGBlob1 from './images/blob1.svg'
+import { appendImportant, __getValue } from '../styles'
+import { svgRenderToString } from '../svg'
 
 /**
  * External dependencies
  */
 import { camelCase } from 'lodash'
-import { appendImportant, __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
-import { svgRenderToString } from '../svg'
 import { applyFilters } from '@wordpress/hooks'
 
 const SVGS = {

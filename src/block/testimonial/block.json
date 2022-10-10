@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/testimonial",
 	"title": "Testimonial",
 	"description": "Showcase what your users say about your product or service.",

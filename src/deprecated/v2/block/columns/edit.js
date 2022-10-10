@@ -23,10 +23,13 @@ import {
 	ControlSeparator,
 	ColorPaletteControl,
 	DesignControl,
-	ColumnsWidthControl,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { ContentAlignControl, ResponsiveControl } from '../../components'
+import {
+	ColumnsWidthControl,
+	ContentAlignControl,
+	ResponsiveControl,
+} from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -45,9 +48,7 @@ import { i18n, showProNotice } from 'stackable'
 import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
-import {
-	addFilter, applyFilters,
-} from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose, withState } from '@wordpress/compose'

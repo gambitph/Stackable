@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { locale } from 'stackable'
-import { getDocumentHead } from '.'
 
 // @from https://github.com/elementor/elementor/blob/45eaa6704fe1ad18f6190c8e95952b38b8a38dc7/assets/dev/js/editor/utils/helpers.js#L23
 const subsets = { /* eslint-disable quote-props */
@@ -24,6 +23,22 @@ export const getGoogleFontURL = fontName => {
 }
 
 export const isWebFont = fontName => fontName && ! fontName?.match( /^(sans[-+]serif|serif|monospace|serif-alt)$/i )
+
+/**
+ * Returns the current block editor head
+ * element.
+ *
+ * @return {HTMLDocument} the head document
+ */
+const getDocumentHead = () => {
+	const hasEditingContent = !! document.querySelector( 'iframe[name="editor-canvas"]' )
+
+	if ( hasEditingContent ) {
+		return document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.querySelector( 'head' )
+	}
+
+	return document.querySelector( 'head' )
+}
 
 /**
  * Load the stylesheet of a Google Font.

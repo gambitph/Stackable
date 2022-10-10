@@ -5,7 +5,7 @@ import { addAttributes } from './attributes'
 import { Style } from './style'
 import { ResizableBottomMargin } from '~stackable/components'
 import { getUniqueBlockClass } from '~stackable/util'
-import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -15,7 +15,7 @@ import { applyFilters } from '@wordpress/hooks'
 
 export const MarginBottom = props => {
 	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 	const { isLastBlock, parentBlock } = useBlockContext( clientId )
 
 	// Don't show the margin bottom draggable indicator if this is in a row block.

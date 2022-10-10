@@ -23,6 +23,7 @@ module.exports = {
 		'@wordpress/ajax': '<rootDir>/src/test/ajax-stub.js',
 		'@wordpress/codeEditor': '<rootDir>/src/test/ajax-stub.js',
 		'@wordpress/api': '<rootDir>/src/test/wp-api-stub.js',
+		'@wordpress/plugins': '<rootDir>/src/test/wp-plugins.js',
 	},
 
 	transform: {

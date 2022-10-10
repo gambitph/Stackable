@@ -14,8 +14,10 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withIsHovered, withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockContext } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	Column,
 	getColumnClasses,
@@ -23,7 +25,6 @@ import {
 	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
-	useAlignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -34,6 +35,7 @@ import {
 	BlockLink,
 	ContainerDiv,
 	Transform,
+	getBlockOrientation,
 } from '~stackable/block-components'
 
 /**
@@ -41,9 +43,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { useSelect } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 
 const TEMPLATE = []
@@ -60,20 +60,17 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const { blockOrientation } = useAlignment()
+	const blockOrientation = getBlockOrientation( props.attributes )
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
-	const { getBlock, getBlockParents } = useSelect( 'core/block-editor' )
-	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, { getBlock, getBlockParents } )
+	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, props )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-column',
 		'stk-block-column--v2',
 		columnClass,
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -86,8 +83,7 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
-
+		<>
 			<InspectorTabs />
 
 			<Alignment.InspectorControls hasColumnAlignment={ true } />
@@ -100,9 +96,6 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-column" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
-
-			<BlockStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-block-column" />
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
@@ -125,6 +118,9 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
+			<BlockStyles version={ VERSION } />
+			<CustomCSS mainBlockClass="stk-block-column" />
+
 			<Column showHandle={ isHovered } context={ props.context }>
 				<Linking show={ isHovered } />
 				<BlockDiv className={ blockClassNames }>
@@ -139,11 +135,12 @@ const Edit = props => {
 					</ContainerDiv>
 				</BlockDiv>
 			</Column>
-		</Fragment>
+		</>
 	)
 }
 
 export default compose(
-	withIsHovered,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
+	withBlockAttributeContext,
 )( Edit )

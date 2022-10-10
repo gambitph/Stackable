@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/accordion",
 	"title": "Accordion",
 	"description": "A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.",

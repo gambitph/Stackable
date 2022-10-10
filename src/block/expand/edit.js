@@ -25,12 +25,14 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
@@ -70,12 +72,10 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-expand',
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -122,7 +122,11 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/expand', ( enabled, parentBlock ) => {
@@ -139,3 +143,10 @@ addFilter( 'stackable.edit.link.enable-link-popup', 'stackable/expand', ( enable
 	return parentBlock?.name === 'stackable/expand' ? false : enabled
 } )
 
+// Prevent the expand block link from being being styled with a saved default style.
+addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/expand', ( enabled, block, parentBlockNames ) => {
+	if ( block.name === 'stackable/button' && parentBlockNames.length >= 1 && parentBlockNames[ parentBlockNames.length - 1 ] === 'stackable/expand' ) {
+		return false
+	}
+	return enabled
+} )
