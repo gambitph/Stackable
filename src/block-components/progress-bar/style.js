@@ -101,7 +101,8 @@ const getStyleParams = ( { isCircle } ) => {
 				const borderRadius = getAttribute( 'progressBorderRadius' )
 				return value ? borderRadius : undefined
 			},
-			hasUnits: 'px',
+			format: '%spx',
+			dependencies: [ 'progressBorderRadius' ],
 		},
 		{
 			selector: '.stk-progress-bar__bar.stk--has-background-overlay:before',
