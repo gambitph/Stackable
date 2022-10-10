@@ -26,6 +26,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 			responsive: 'all',
 			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+			dependencies: [ 'innerBlockOrientation' ],
 		},
 
 		{
@@ -36,25 +37,20 @@ const getStyleParams = ( options = {} ) => {
 			},
 			responsive: 'all',
 			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
+			dependencies: [ 'innerBlockOrientation' ],
 		},
 	]
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<StyleComponent
 			styles={ styles }
 			versionAdded="3.0.0"
 			versionDeprecated=""
-			{ ...propsToPass }
+			{ ...props }
 		/>
 	)
 }

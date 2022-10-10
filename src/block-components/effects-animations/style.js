@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	useStyles, getStyles,
-} from '~stackable/util'
+import { useStyles, getStyles } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -20,16 +18,11 @@ const getStyleParams = options => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( propsToPass.options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<Fragment>
-			{ applyFilters( 'stackable.block-component.effects-animations.style', null, styles, propsToPass ) }
+			{ applyFilters( 'stackable.block-component.effects-animations.style', null, styles, props ) }
 		</Fragment>
 	)
 }

@@ -16,12 +16,14 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -38,13 +40,11 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-button',
-		blockHoverClass,
 	] )
 
 	return (
@@ -95,4 +95,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

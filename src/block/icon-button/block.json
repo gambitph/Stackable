@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/icon-button",
 	"title": "Icon Button",
 	"description": "Add a customizable button.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"parent": [
 		"stackable/button-group"

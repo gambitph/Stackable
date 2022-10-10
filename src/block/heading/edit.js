@@ -27,21 +27,27 @@ import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import { kebabCase } from 'lodash'
 import {
-	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, ColorPaletteControl, AdvancedRangeControl, AlignButtonsControl,
+	InspectorTabs,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	ColorPaletteControl,
+	AdvancedRangeControl,
+	AlignButtonsControl,
 } from '~stackable/components'
-import { useBlockHoverClass, useBlockContext } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import { createBlockCompleter } from '~stackable/util'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
-import {
-	Fragment, useEffect, useState, useCallback,
-} from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+import { useEffect, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useDispatch } from '@wordpress/data'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 /**
@@ -64,19 +70,17 @@ const Edit = props => {
 		setAttributes,
 		onRemove,
 		mergeBlocks,
+		attributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const { parentBlock } = useBlockContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { getBlockAttributes } = useSelect( 'core/block-editor' )
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-heading',
-		blockHoverClass,
 	] )
 
 	const textClassNames = classnames( [
@@ -85,7 +89,7 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	useUniqueId( true, true )
+	useUniqueId( attributes, true )
 
 	// Auto-generate anchors in Stackable headings.
 	const [ prevText, setPrevText ] = useState( props.attributes.text )
@@ -100,12 +104,12 @@ const Edit = props => {
 		setPrevText( props.attributes.text )
 	}, [ props.attributes.anchor, props.attributes.text ] )
 
-	const onSplit = useCallback( ( value, isOriginal ) => {
+	const onSplit = ( value, isOriginal ) => {
 		let block
 
 		if ( isOriginal || value ) {
 			block = createBlock( 'stackable/heading', {
-				...getBlockAttributes( clientId ),
+				...attributes,
 				text: value,
 			} )
 		} else {
@@ -117,11 +121,10 @@ const Edit = props => {
 		}
 
 		return block
-	}, [ clientId ] )
+	}
 
 	return (
-		<Fragment>
-
+		<>
 			<InspectorTabs />
 
 			<Alignment.InspectorControls />
@@ -253,8 +256,12 @@ const Edit = props => {
 				{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 			</BlockDiv>
 			<MarginBottom />
-		</Fragment>
+		</>
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

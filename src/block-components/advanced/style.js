@@ -6,14 +6,17 @@ import { Fragment } from '@wordpress/element'
 import {
 	__getValue, getStyles, useStyles,
 } from '~stackable/util'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const getStyleParams = ( options = {} ) => {
 	const {
+		clientId,
 		positionSelector = '',
 	} = options
 
 	return [
 		{
+			renderIn: 'save',
 			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'top',
@@ -21,17 +24,22 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			hasUnits: 'px',
-			valuePreCallback: ( value, getAttribute, device ) => {
-				if ( value && value.top === '' ) {
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				// If position is sticky, we need to set top: 0px or else the sticky won't show.
+				if ( device === 'desktop' && state === 'normal' ) {
 					const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
-					if ( isSticky ) {
+					const isTopBlank = ! value || ( value && value.top === '' )
+					if ( isSticky && isTopBlank ) {
 						return 0
 					}
 				}
+
 				return value?.top
 			},
+			dependencies: [ 'position' ],
 		},
 		{
+			renderIn: 'save',
 			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'right',
@@ -42,6 +50,7 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: value => value?.right,
 		},
 		{
+			renderIn: 'save',
 			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'bottom',
@@ -52,6 +61,77 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: value => value?.bottom,
 		},
 		{
+			renderIn: 'save',
+			selector: positionSelector,
+			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
+			styleRule: 'left',
+			attrName: 'positionNum',
+			responsive: 'all',
+			hover: 'all',
+			hasUnits: 'px',
+			valuePreCallback: value => value?.left,
+		},
+		{
+			renderIn: 'save',
+			selector: '',
+			styleRule: 'position',
+			attrName: 'position',
+			responsive: 'all',
+		},
+		// For positions (top, right, bottom, left) and postiion (absolute,
+		// sticky) we need to apply these to the block itself so it would look
+		// correctly in the editor.
+		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			hoverSelectorCallback: getAttribute => positionSelector ? `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]:hover` : undefined,
+			styleRule: 'top',
+			attrName: 'positionNum',
+			responsive: 'all',
+			hover: 'all',
+			hasUnits: 'px',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				// If position is sticky, we need to set top: 0px or else the sticky won't show.
+				if ( device === 'desktop' && state === 'normal' ) {
+					const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
+					const isTopBlank = ! value || ( value && value.top === '' )
+					if ( isSticky && isTopBlank ) {
+						return 0
+					}
+				}
+
+				return value?.top
+			},
+			dependencies: [ 'position' ],
+		},
+		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			hoverSelectorCallback: getAttribute => positionSelector ? `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]:hover` : undefined,
+			styleRule: 'right',
+			attrName: 'positionNum',
+			responsive: 'all',
+			hover: 'all',
+			hasUnits: 'px',
+			valuePreCallback: value => value?.right,
+		},
+		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			hoverSelectorCallback: getAttribute => positionSelector ? `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]:hover` : undefined,
+			selector: positionSelector,
+			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
+			styleRule: 'bottom',
+			attrName: 'positionNum',
+			responsive: 'all',
+			hover: 'all',
+			hasUnits: 'px',
+			valuePreCallback: value => value?.bottom,
+		},
+		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			hoverSelectorCallback: getAttribute => positionSelector ? `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]:hover` : undefined,
 			selector: positionSelector,
 			hoverSelector: positionSelector ? `${ positionSelector }:hover` : undefined,
 			styleRule: 'left',
@@ -77,13 +157,16 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return undefined
 			},
+			dependencies: [ 'position' ],
 		},
 		{
-			selector: '',
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
 			styleRule: 'position',
 			attrName: 'position',
 			responsive: 'all',
 		},
+
 		{
 			selector: '',
 			styleRule: 'opacity',
@@ -94,7 +177,7 @@ const getStyleParams = ( options = {} ) => {
 		// We need to implement z-index on the block itself or else it won't look correct in the editor.
 		{
 			renderIn: 'edit',
-			selectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
+			selectorCallback: () => `.editor-styles-wrapper [data-block="${ clientId }"]`,
 			styleRule: 'zIndex',
 			attrName: 'zIndex',
 			responsive: 'all',
@@ -205,14 +288,9 @@ const getStyleParams2 = ( options = {} ) => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
-	const styles2 = useStyles( attributes, getStyleParams2( options ) )
+	const { clientId } = useBlockEditContext()
+	const styles = useStyles( getStyleParams( { ...props, clientId } ) )
+	const styles2 = useStyles( getStyleParams2( props ) )
 
 	return (
 		<Fragment>
@@ -220,13 +298,13 @@ export const Style = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<StyleComponent
 				styles={ styles2 }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</Fragment>
 	)

@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/card",
 	"title": "Card",
 	"description": "Describe a single subject in a small card. You can use this to describe your product, service or a person.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",

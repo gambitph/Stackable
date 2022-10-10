@@ -12,7 +12,7 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import {
-	useState, useCallback, memo, useMemo, useRef, useEffect,
+	useState, memo, useMemo, useRef, useEffect,
 } from '@wordpress/element'
 import { Popover } from '@wordpress/components'
 
@@ -31,21 +31,21 @@ const ControlIconToggle = props => {
 		return index / options.length * 100
 	}, [ options, value ] )
 
-	// Close the picker if the user clicks outside.
-	const clickOutsideListener = useCallback( event => {
-		if ( isOpen ) {
-			const closest = event.target?.closest( '.stk-label-unit-toggle' )
-			if ( closest !== buttonRef.current ) {
-				setIsOpen( false )
-			}
-		}
-	} )
-
 	// Assign the outside click listener.
 	useEffect( () => {
+		// Close the picker if the user clicks outside.
+		const clickOutsideListener = event => {
+			if ( isOpen ) {
+				const closest = event.target?.closest( '.stk-label-unit-toggle' )
+				if ( closest !== buttonRef.current ) {
+					setIsOpen( false )
+				}
+			}
+		}
+
 		document.body.addEventListener( 'click', clickOutsideListener )
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
-	}, [ clickOutsideListener ] )
+	}, [ isOpen, buttonRef.current ] )
 
 	if ( options.length <= 1 ) {
 		return null

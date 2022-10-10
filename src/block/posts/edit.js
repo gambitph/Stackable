@@ -2,9 +2,7 @@
  * Internal dependencies
  */
 import { PostsStyles } from './style'
-import {
-	generateRenderPostItem, CONTENTS,
-} from './util'
+import { generateRenderPostItem, CONTENTS } from './util'
 import variations from './variations'
 
 /**
@@ -27,9 +25,16 @@ import {
 	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass, useBlockStyle, usePostsQuery, useAttributeEditHandlers, useDeviceType,
+	useBlockStyle,
+	usePostsQuery,
+	useAttributeEditHandlers,
+	useDeviceType,
 } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	getAlignmentClasses,
 	BlockDiv,
@@ -48,7 +53,7 @@ import {
 	MarginBottom,
 	Transform,
 	ContentAlign,
-	useContentAlignmentClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
 import { getAttrName } from '~stackable/util'
 
@@ -61,7 +66,7 @@ import { applyFilters, addFilter } from '@wordpress/hooks'
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo, useEffect } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
-import { useInstanceId } from '@wordpress/compose'
+import { compose, useInstanceId } from '@wordpress/compose'
 
 const ALLOWED_INNER_BLOCKS = [
 	'stackable/load-more',
@@ -103,7 +108,6 @@ const Edit = props => {
 		uniqueId,
 	} = attributes
 
-	const blockHoverClass = useBlockHoverClass()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const blockStyle = useBlockStyle( variations )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
@@ -116,13 +120,12 @@ const Edit = props => {
 
 	const wrapperClassNames = classnames(
 		'stk-inner-blocks',
-		useContentAlignmentClasses( attributes ),
+		getContentAlignmentClasses( attributes ),
 	)
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-posts',
-		blockHoverClass,
 		blockAlignmentClass,
 	], {
 		'stk--has-container': attributes.hasContainer,
@@ -431,7 +434,11 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Add hover selector control
 addFilter( 'stackable.block-component.typography.color.after', 'stackable/posts', ( output, props ) => {

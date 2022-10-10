@@ -21,9 +21,8 @@ import example from './example'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 
-export const settings = applyFilters( 'stackable.block.metadata', {
+export const settings = {
 	...metadata,
 	icon: AccordionIcon,
 	attributes: schema,
@@ -37,4 +36,4 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	variations,
 	edit,
 	save,
-} )
+}

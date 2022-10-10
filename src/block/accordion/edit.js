@@ -31,10 +31,10 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
+import { useAttributeEditHandlers, useBlockContext } from '~stackable/hooks'
 import {
-	useAttributeEditHandlers, useBlockHoverClass, useBlockContext,
-} from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * Internal dependencies
@@ -46,6 +46,7 @@ import variations from './variations'
  */
 import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
 import { useState, useEffect } from '@wordpress/element'
 import { addFilter } from '@wordpress/hooks'
@@ -66,7 +67,6 @@ const Edit = props => {
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	// Opens or closes the accordion when the heading is clicked.
 	useEffect( () => {
@@ -105,7 +105,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-accordion',
-		blockHoverClass,
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
@@ -164,7 +163,11 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Add another icon picker to the Icon block for picking the icon for the opened accordion.
 addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {
@@ -177,17 +180,19 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 
 	const isAccordionIcon = useSelect(
 		select => {
-			const { getBlock, getBlockParents } = select( 'core/block-editor' )
-			const parents = getBlockParents( clientId )
-			const iconLabelClientId = nth( parents, -1 )
-			const columnClientId = nth( parents, -2 )
-			const accordionClientId = nth( parents, -3 )
-			if ( ! iconLabelClientId || ! columnClientId || ! accordionClientId ) {
+			const { getBlock } = select( 'core/block-editor' )
+			const { parentTree } = select( 'stackable/block-context' ).getBlockContext( clientId )
+			const columnClientId = nth( parentTree, -2 )?.clientId
+			const accordionClientId = nth( parentTree, -3 )?.clientId
+			const iconLabelName = nth( parentTree, -1 )?.name
+			const columnName = nth( parentTree, -2 )?.name
+			const accordionName = nth( parentTree, -3 )?.name
+			if ( ! iconLabelName || ! columnName || ! accordionName ) {
 				return false
 			}
-			if ( getBlock( iconLabelClientId ).name !== 'stackable/icon-label' ||
-				getBlock( columnClientId ).name !== 'stackable/column' ||
-				getBlock( accordionClientId ).name !== 'stackable/accordion' ) {
+			if ( iconLabelName !== 'stackable/icon-label' ||
+			     columnName !== 'stackable/column' ||
+				 accordionName !== 'stackable/accordion' ) {
 				return false
 			}
 			if ( getBlock( accordionClientId ).innerBlocks[ 0 ].clientId !== columnClientId ) {

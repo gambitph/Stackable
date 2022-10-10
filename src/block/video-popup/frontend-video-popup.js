@@ -66,6 +66,7 @@ class StackableVideoPopup {
 					const { type, id } = getVideoProviderFromURL( videoID )
 					if ( type === 'youtube' ) {
 						args.ytSrc = id
+						args.ytNoCookie = true // Use youtube-nocookie.
 					} else if ( type === 'vimeo' ) {
 						args.vimeoSrc = id
 					} else {

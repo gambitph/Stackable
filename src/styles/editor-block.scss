@@ -77,15 +77,10 @@
 .stk-inner-blocks.stk-content-align {
 	margin-top: 0;
 	margin-bottom: 0;
-	&:not(.alignfull):not(.alignwide):not(.stk-button-group) {
+	&:not(.alignfull):not(.stk-button-group) {
 		margin-left: auto;
 		margin-right: auto;
 	}
-}
-
-:where(.editor-styles-wrapper .stk-block-columns .wp-block,
-.editor-styles-wrapper .stk-block-columns .stk-block-column) {
-	max-width: inherit !important;
 }
 
 // Columns should occupy the entire available area.
@@ -105,35 +100,38 @@
 }
 
 // For wide/full width blocks, but with their contents center aligned.
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:not([data-align="center"]) > .wp-block[data-align] > .stk-block > .stk-inner-blocks:not(.alignwide):not(.alignfull)),
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:not([data-align="center"]) [data-type^="stackable/"][data-align="center"]) {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:is([data-align="wide"], [data-align="full"]) > .stk-block > .stk-inner-blocks:not(.alignwide):not(.alignfull)),
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:is([data-align="wide"], [data-align="full"]) [data-type^="stackable/"][data-align="center"]) {
 	// --stk-block-default-width is a Stackable setting
-	// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 	// --stk-block-width-default-detected is from the fallback autodetected value.
-	max-width: var(--stk-block-default-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px))) !important;
+	max-width: var(--stk-block-default-width, var(--stk-block-width-default-detected, 900px)) !important;
 }
-// :is(.stk-preview-device-desktop, .stk-preview-device-tablet) .is-root-container > [data-type^="stackable/"][data-align="wide"], // Wide blocks show up as full-width (with blank sides), resize wide blocks correctly.
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks.alignwide),
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] [data-type^="stackable/"][data-align="wide"]) {
+
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:is([data-align="wide"], [data-align="full"]) > .stk-block > .stk-inner-blocks.alignwide),
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"]:is([data-align="wide"], [data-align="full"]) [data-type^="stackable/"][data-align="wide"]) {
 	// --stk-block-default-width is a Stackable setting
-	// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 	// --stk-block-width-default-detected is from the fallback autodetected value.
-	max-width: var(--stk-block-wide-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, calc(80vw - 280px)))) !important; // Make way for the inspector
+	max-width: var(--stk-block-wide-width, var(--stk-block-width-wide-detected, calc(80vw - 280px))) !important; // Make way for the inspector
 }
+
+// If the content width is wide/full, don't limit the block's default width.
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) .stk-inner-blocks [data-block] .wp-block:not([data-align])) {
+	max-width: none !important;
+}
+
 // If main block is centered and inner block is centered too, no max-width for the block to occupy entire centerd width.
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"][data-align="center"] [data-type="stackable/column"] [data-type^="stackable/"][data-align="center"]) {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"][data-align="center"] [data-type^="stackable/"][data-align="center"]) {
 	max-width: none !important;
 }
 // Nested wide blocks will have their data-align wrappers limited by Gutenberg, make them occupy entire wide width of the parent.
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] [data-type^="stackable/"][data-align="wide"] > .wp-block[data-align="wide"]) {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] [data-type^="stackable/"][data-align="wide"]) {
 	width: 100% !important;
 }
 // If the main container is wide and the Content Width is wide too, don't set a max width so it occupies the whole space.
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align="wide"] > .stk-block > .stk-inner-blocks.alignwide) {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"][data-align="wide"] > .stk-block > .stk-inner-blocks.alignwide) {
 	max-width: none !important;
 }
-// :is(.stk-preview-device-desktop, .stk-preview-device-tablet) .is-root-container > [data-type^="stackable/"][data-align="full"],
-:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"] > .wp-block[data-align] > .stk-block > .stk-inner-blocks.alignfull) {
+:where(:is(.stk-preview-device-desktop, .stk-preview-device-tablet) [data-type^="stackable/"][data-align] > .stk-block > .stk-inner-blocks.alignfull) {
 	max-width: none !important;
 }
 
@@ -275,36 +273,7 @@
 }
 
 // Button alignment.
-.stk-button-group {
-	&:not(.stk-collapse-on-desktop) .block-editor-block-list__layout {
-		justify-content: var(--stk-alignment-justify-content);
-	}
-	&:is(.stk--collapse-on-desktop) > .block-editor-inner-blocks > .block-editor-block-list__layout {
-		> [data-block] {
-			margin-inline-start: var(--stk-alignment-margin-left);
-			margin-inline-end: var(--stk-alignment-margin-right);
-		}
-	}
-}
-
-@include tablet {
-	.stk-button-group:is(.stk--collapse-on-tablet) > .block-editor-inner-blocks > .block-editor-block-list__layout {
-		> [data-block] {
-			margin-inline-start: var(--stk-alignment-margin-left);
-			margin-inline-end: var(--stk-alignment-margin-right);
-		}
-	}
-}
-
-@include mobile {
-	.stk-button-group:is(.stk--collapse-on-tablet) > .block-editor-inner-blocks > .block-editor-block-list__layout,
-	.stk-button-group:is(.stk--collapse-on-mobile) > .block-editor-inner-blocks > .block-editor-block-list__layout {
-		> [data-block] {
-			margin-inline-start: var(--stk-alignment-margin-left);
-			margin-inline-end: var(--stk-alignment-margin-right);
-		}
-	}
-}
+@import "deprecated-editor-block";
 
 .stk-block .stk-button-group .block-editor-block-list__layout {
 	align-items: center;

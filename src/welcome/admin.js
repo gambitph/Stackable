@@ -27,7 +27,8 @@ import {
 	showProNoticesOption,
 } from 'stackable'
 import classnames from 'classnames'
-import { AdminToggleSetting, AdminTextSetting } from '~stackable/components'
+import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
+import AdminTextSetting from '~stackable/components/admin-text-setting'
 
 // Collect all the blocks and their variations for enabling/disabling and sort
 // them by type.

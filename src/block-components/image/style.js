@@ -33,6 +33,8 @@ const getStyleParams = ( options = {} ) => {
 		enableWidth = true,
 		enableHeight = true,
 		widthStyleRule = null,
+		widthUnitCallback = null,
+		heightUnitCallback = null,
 	} = options
 
 	return [
@@ -42,6 +44,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'width',
 			attrName: 'imageWidth',
 			hasUnits: '%',
+			unitCallback: widthUnitCallback,
 			responsive: 'all',
 			enabledCallback: () => enableWidth,
 		},
@@ -51,6 +54,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: widthStyleRule || 'width',
 			attrName: 'imageWidth',
 			hasUnits: '%',
+			unitCallback: widthUnitCallback,
 			responsive: 'all',
 			enabledCallback: () => enableWidth,
 		},
@@ -60,6 +64,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'height',
 			attrName: 'imageHeight',
 			hasUnits: 'px',
+			unitCallback: heightUnitCallback,
 			responsive: 'all',
 			enabledCallback: () => enableHeight,
 		},
@@ -69,6 +74,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'height',
 			attrName: 'imageHeight',
 			hasUnits: 'px',
+			unitCallback: heightUnitCallback,
 			responsive: 'all',
 			enabledCallback: () => enableHeight,
 		},
@@ -197,6 +203,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'imageOverlayColor',
 			hover: 'all',
 			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient',
+			dependencies: [ 'imageOverlayColorType' ],
 		},
 		{
 			renderIn: 'edit',
@@ -207,6 +214,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'imageOverlayColor',
 			hover: 'all',
 			enabledCallback: getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient',
+			dependencies: [ 'imageOverlayColorType' ],
 		},
 		{
 			renderIn: 'save',
@@ -376,13 +384,7 @@ const getStyleParams = ( options = {} ) => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<Fragment>
@@ -390,7 +392,7 @@ export const Style = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</Fragment>
 	)

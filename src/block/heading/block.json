@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/heading",
 	"title": "Heading",
 	"description": "Introduce new sections of your content in style.",
-	"category": "common",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Title"

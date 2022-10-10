@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/spacer",
 	"title": "Spacer",
 	"description": "Sometimes you just need some space.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special"

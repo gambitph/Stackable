@@ -8,9 +8,9 @@ import { useDeviceType } from '~stackable/hooks'
  * WordPress dependencies
  */
 import {
-	useState, useEffect, useMemo,
+	useState, useEffect, useMemo, useRef,
 } from '@wordpress/element'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 
 /**
  * Gets the editor wrapper DOM element. This should be the way if you need to do
@@ -29,55 +29,89 @@ import { dispatch } from '@wordpress/data'
 export const EditorDom = () => {
 	const deviceType = useDeviceType()
 	const [ iframeForceUpdate, setIframeForceUpdate ] = useState( 0 )
-	const [ timeoutCache, setTimeoutCache ] = useState( null )
+	const [ editorDom, setEditorDom ] = useState( null )
+	const timeout = useRef( null )
+	const interval = useRef( null )
+
+	// If in FSE, switching templates will recreate the editor.
+	const editedSitePostId = useSelect( select => {
+		return select( 'core/edit-site' )?.getEditedPostId?.()
+	} )
 
 	useEffect( () => {
+		// If the editor is available right away, use it.
+		const editorEl = document.querySelector( `.editor-styles-wrapper, iframe[name="editor-canvas"]` )
+		if ( editorEl ) {
+			setIframeForceUpdate( v => v + 1 )
+		}
+
 		if ( deviceType === 'Desktop' ) {
-			// Need to force an update because it takes some time for the iframe to disappear.
-			clearTimeout( timeoutCache )
-			const timeout = setTimeout( () => {
-				setIframeForceUpdate( iframeForceUpdate + 1 )
+			// We have to wait for the editor area to load (e.g. FSE iframe takes a long time to load)
+			interval.current = setInterval( () => {
+				const editorEl = document.querySelector( `.editor-styles-wrapper, iframe[name="editor-canvas"]` )
+				if ( editorEl ) {
+					clearInterval( interval.current )
+					clearTimeout( timeout.current )
+					setIframeForceUpdate( v => v + 1 )
+					// There's a chance that the editor STILL isn't ready, try again.
+					setTimeout( () => {
+						setIframeForceUpdate( v => v + 1 )
+					}, 200 )
+				}
 			}, 200 )
-			setTimeoutCache( timeout )
 		} else { // Tablet or Mobile.
 			const iframeEl = document.querySelector( `iframe[name="editor-canvas"]` )
 			if ( iframeEl ) {
 				const body = iframeEl.contentDocument.body
 				if ( body && body.querySelector( '.block-editor-block-list__layout' ) ) {
-					setIframeForceUpdate( iframeForceUpdate + 1 )
+					clearInterval( interval.current )
+					setIframeForceUpdate( v => v + 1 )
 				} else {
-					clearTimeout( timeoutCache )
-					const timeout = setTimeout( () => {
+					clearTimeout( timeout.current )
+					timeout.current = setTimeout( () => {
 						const body = iframeEl.contentDocument.body
 						if ( body && body.querySelector( '.block-editor-block-list__layout' ) ) {
-							setIframeForceUpdate( iframeForceUpdate + 1 )
+							setIframeForceUpdate( v => v + 1 )
 						}
 					}, 200 )
-					setTimeoutCache( timeout )
 					iframeEl.onload = () => {
-						clearTimeout( timeoutCache )
+						clearTimeout( timeout.current )
 						const body = iframeEl.contentDocument.body
 						if ( body && body.querySelector( '.block-editor-block-list__layout' ) ) {
-							setIframeForceUpdate( iframeForceUpdate + 1 )
+							setIframeForceUpdate( v => v + 1 )
 						} else {
 							setTimeout( () => {
-								setIframeForceUpdate( iframeForceUpdate + 1 )
+								setIframeForceUpdate( v => v + 1 )
 							}, 200 )
 						}
 					}
 				}
 			}
 		}
-	}, [ deviceType ] )
+
+		return () => {
+			clearInterval( interval.current )
+			clearTimeout( timeout.current )
+		}
+	}, [ deviceType, editedSitePostId ] )
 
 	useMemo( () => {
 		const iframeEl = document.querySelector( `iframe[name="editor-canvas"]` )
 		if ( iframeEl ) {
-			dispatch( 'stackable/editor-dom' ).updateEditorDom( iframeEl.contentDocument.body )
+			setEditorDom( iframeEl.contentDocument.body )
 		} else {
-			dispatch( 'stackable/editor-dom' ).updateEditorDom( document.querySelector( `.editor-styles-wrapper` ) )
+			setEditorDom( document.querySelector( `.editor-styles-wrapper` ) )
 		}
 	}, [ iframeForceUpdate, deviceType ] )
+
+	// Need to run dispatch in a useEffect or else we will get a React error
+	// about updating a component while rendering another:
+	// @see https://stackoverflow.com/questions/62336340/cannot-update-a-component-while-rendering-a-different-component-warning
+	useEffect( () => {
+		if ( editorDom ) {
+			dispatch( 'stackable/editor-dom' ).updateEditorDom( editorDom )
+		}
+	}, [ editorDom ] )
 
 	// Don't render anything.
 	return null

@@ -2,6 +2,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	BlockLink,
 	Style,
 	Column,
 	ConditionalDisplay,
@@ -14,7 +15,6 @@ import {
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
-import { BlockLink } from '~stackable/block-components/block-link'
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()

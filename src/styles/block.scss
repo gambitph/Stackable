@@ -51,9 +51,8 @@
 	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align:not(.alignwide):not(.alignfull),
 	.stk-block .stk-block.aligncenter {
 		// --stk-block-default-width is a Stackable setting
-		// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 		// --stk-block-width-default-detected is from the fallback autodetected value.
-		max-width: var(--stk-block-default-width, var(--responsive--aligndefault-width, var(--stk-block-width-default-detected, 900px)));
+		max-width: var(--stk-block-default-width, var(--stk-block-width-default-detected, 900px));
 		width: 100%;
 		margin-left: auto;
 		margin-right: auto;
@@ -63,9 +62,8 @@
 	.stk-block:is(.aligncenter, .alignwide, .alignfull) > .stk-content-align.alignwide,
 	.stk-block .stk-block.alignwide {
 		// --stk-block-default-width is a Stackable setting
-		// --responsive--aligndefault-width is a Twenty Twenty One setting (possibly for all WP themes)
 		// --stk-block-width-default-detected is from the fallback autodetected value.
-		max-width: var(--stk-block-wide-width, var(--responsive--alignwide-width, var(--stk-block-width-wide-detected, 80vw)));
+		max-width: var(--stk-block-wide-width, var(--stk-block-width-wide-detected, 80vw));
 		width: 100%;
 		margin-left: auto;
 		margin-right: auto;
@@ -263,36 +261,7 @@
 }
 
 // Button alignment.
-.stk-block .stk-button-group {
-	&:not(.stk-collapse-on-desktop) {
-		justify-content: var(--stk-alignment-justify-content);
-	}
-	&:is(.stk--collapse-on-desktop) {
-		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
-			margin-inline-start: var(--stk-alignment-margin-left);
-			margin-inline-end: var(--stk-alignment-margin-right);
-		}
-	}
-}
-
-@include tablet {
-	.stk-button-group:is(.stk--collapse-on-tablet) {
-		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
-			margin-inline-start: var(--stk-alignment-margin-left);
-			margin-inline-end: var(--stk-alignment-margin-right);
-		}
-	}
-}
-
-@include mobile {
-	.stk-button-group:is(.stk--collapse-on-tablet),
-	.stk-button-group:is(.stk--collapse-on-mobile) {
-		.stk-block:is(.stk-block-button, .stk-block-icon-button) {
-			margin-inline-start: var(--stk-alignment-margin-left);
-			margin-inline-end: var(--stk-alignment-margin-right);
-		}
-	}
-}
+@import "deprecated-block";
 
 .stk-block .stk-button-group {
 	flex-direction: row;

@@ -11,21 +11,17 @@ import {
 	InspectorAdvancedControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockAttributes } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { useDispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { INVALID_HTML_ATTRIBUTES } from '.'
 
 export const Edit = () => {
-	const { clientId } = useBlockEditContext()
-
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
+	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<InspectorAdvancedControls>
@@ -37,7 +33,7 @@ export const Edit = () => {
 					label={ __( 'Custom Attributes', i18n ) }
 					value={ attributes.customAttributes }
 					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }
-					onChange={ customAttributes => updateBlockAttributes( clientId, { customAttributes } ) }
+					onChange={ customAttributes => setAttributes( { customAttributes } ) }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorAdvancedControls>

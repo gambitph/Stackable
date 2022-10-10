@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/call-to-action",
 	"title": "Call to Action",
 	"description": "A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"CTA"

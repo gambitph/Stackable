@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/blockquote",
 	"title": "Blockquote",
 	"description": "Display a quote in style",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",

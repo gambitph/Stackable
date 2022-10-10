@@ -10,7 +10,6 @@ import {
 	FlexGapStyles,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
@@ -19,8 +18,7 @@ import { Style as StyleComponent } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { memo, renderToString } from '@wordpress/element'
 
 const flexGapOptionsEdit = {
 	selector: '.block-editor-block-list__layout',
@@ -45,7 +43,11 @@ const getStyleParams = () => {
 			styleRule: 'flexWrap',
 			attrName: 'flexWrap',
 			responsive: 'all',
-			valuePreCallback: value => {
+			valuePreCallback: ( value, getAttribute, device ) => {
+				// In the editor, it should correctly wrap in mobile.
+				if ( device === 'mobile' ) {
+					return 'wrap'
+				}
 				return value || 'nowrap'
 			},
 		},
@@ -53,60 +55,150 @@ const getStyleParams = () => {
 			renderIn: 'save',
 			selector: '.stk-button-group',
 			styleRule: 'flexDirection',
-			attrName: 'collapseOn',
+			attrName: 'buttonAlign',
 			responsive: 'all',
-			valuePreCallback: ( _, getAttribute, device ) => {
-				return device === getAttribute( 'collapseOn' ) ? 'column' : undefined
+			valuePreCallback: value => {
+				if ( value === 'vertical' ) {
+					return 'column'
+				} else if ( value === 'horizontal' ) {
+					return 'row'
+				}
+				return value
 			},
 		},
 		{
 			renderIn: 'edit',
 			selector: '.stk-button-group .block-editor-block-list__layout',
 			styleRule: 'flexDirection',
-			attrName: 'collapseOn',
+			attrName: 'buttonAlign',
 			responsive: 'all',
-			valuePreCallback: ( _, getAttribute, device ) => {
-				return device === getAttribute( 'collapseOn' ) ? 'column' : undefined
+			valuePreCallback: value => {
+				if ( value === 'vertical' ) {
+					return 'column'
+				} else if ( value === 'horizontal' ) {
+					return 'row'
+				}
+				return value
+			},
+		},
+		// If the buttons are set to vertical, we also need to reset the flex
+		// basis or else full-width buttons (set per button block) will overlap
+		// each other vertically.
+		{
+			renderIn: 'save',
+			selector: '.stk-block',
+			styleRule: 'flexBasis',
+			attrName: 'buttonAlign',
+			responsive: 'all',
+			valuePreCallback: value => {
+				return value === 'vertical' ? 'auto'
+					: value === 'horizontal' ? 0
+						: undefined
+			},
+		},
+		{
+			renderIn: 'save',
+			selector: '.stk-button-group',
+			styleRule: 'alignItems',
+			attrName: 'buttonAlign',
+			responsive: 'all',
+			valuePreCallback: ( value, getAttribute ) => {
+				if ( value === 'vertical' ) {
+					const buttonFullWidth = getAttribute( 'buttonFullWidth' )
+					if ( buttonFullWidth ) {
+						return 'stretch'
+					}
+					const contentAlign = getAttribute( 'contentAlign' )
+					if ( contentAlign === 'center' ) {
+						return 'center'
+					} else if ( contentAlign === 'right' ) {
+						return 'flex-end'
+					}
+					return 'flex-start'
+				} else if ( value === 'horizontal' ) {
+					return 'center'
+				}
+				return value
+			},
+			dependencies: [ 'contentAlign', 'buttonFullWidth' ],
+		},
+		{
+			renderIn: 'edit',
+			selector: '.stk-button-group .block-editor-block-list__layout',
+			styleRule: 'alignItems',
+			attrName: 'buttonAlign',
+			responsive: 'all',
+			valuePreCallback: ( value, getAttribute ) => {
+				if ( value === 'vertical' ) {
+					const buttonFullWidth = getAttribute( 'buttonFullWidth' )
+					if ( buttonFullWidth ) {
+						return 'stretch'
+					}
+					const contentAlign = getAttribute( 'contentAlign' )
+					if ( contentAlign === 'center' ) {
+						return 'center'
+					} else if ( contentAlign === 'right' ) {
+						return 'flex-end'
+					}
+					return 'flex-start'
+				} else if ( value === 'horizontal' ) {
+					return 'center'
+				}
+				return value
+			},
+			dependencies: [ 'contentAlign', 'buttonFullWidth' ],
+		},
+		{
+			renderIn: 'save',
+			selector: '.stk-block-button, .stk-block-icon-button',
+			styleRule: 'flex',
+			attrName: 'buttonFullWidth',
+			valueCallback: value => {
+				return value ? '1' : undefined
+			},
+		},
+		{
+			renderIn: 'edit',
+			selector: '.stk-block-button, .stk-block-icon-button, [data-type^="stackable/"]',
+			styleRule: 'flex',
+			attrName: 'buttonFullWidth',
+			valueCallback: value => {
+				return value ? '1' : undefined
+			},
+		},
+		// This is to make icon buttons stretch.
+		{
+			selector: '.stk-block-icon-button .stk-button',
+			styleRule: 'width',
+			attrName: 'buttonFullWidth',
+			valueCallback: value => {
+				return value ? '100%' : undefined
 			},
 		},
 	]
 }
 
-export const ButtonGroupStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = {
-		...attributes, clientId,
-	}
-
-	const buttonGroupStyles = useStyles( attributes, getStyleParams() )
+export const ButtonGroupStyles = memo( props => {
+	const buttonGroupStyles = useStyles( getStyleParams() )
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<MarginBottom.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<FlexGapStyles { ...propsToPass } options={ flexGapOptionsEdit } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<MarginBottom.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
+			<FlexGapStyles { ...props } { ...flexGapOptionsEdit } />
 			<StyleComponent
 				styles={ buttonGroupStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)
-}
+} )
 
 ButtonGroupStyles.defaultProps = {
 	isEditor: false,

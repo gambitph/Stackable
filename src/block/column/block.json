@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/column",
 	"title": "Column",
 	"description": "A single column within an advanced columns block. Get advanced options on how you want your column to look.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId", "stackable/columnFit" ],
 	"keywords": [
 		"Section rows"

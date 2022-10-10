@@ -34,6 +34,16 @@ export const attributes = ( version = VERSION ) => {
 	Transform.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-block-count-up__text' )
 
+	attrObject.add( {
+		attributes: {
+			duration: {
+				type: 'number',
+				default: '',
+			},
+		},
+		versionAdded: '3.4.2',
+	} )
+
 	return attrObject.getMerged( version )
 }
 

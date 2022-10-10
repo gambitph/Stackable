@@ -2,14 +2,9 @@
  * Creates all the attributes needed for the Image Controls component
  */
 /**
- * External dependencies
- */
-import { createAllCombinationAttributes } from '~stackable/util'
-
-/**
  * Internal dependencies
  */
-import { omitAttributes } from '../attributes'
+import { omitAttributes, createAllCombinationAttributes } from '../attributes'
 
 const createImageAttributes = ( attrNameTemplate, options = {} ) => {
 	const {

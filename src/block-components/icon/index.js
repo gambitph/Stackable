@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { useAttributeEditHandlers, useBlockAttributes } from '~stackable/hooks'
+import { useAttributeEditHandlers, useBlockAttributesContext } from '~stackable/hooks'
 import {
 	getAttrNameFunction, __getValue, getShapeSVG, isElementDescendant,
 } from '~stackable/util'
@@ -21,7 +21,7 @@ import { Style } from './style'
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
-	useMemo, Fragment, useState, useRef, useEffect, useCallback,
+	useMemo, Fragment, useState, useRef, useEffect,
 } from '@wordpress/element'
 
 const LinearGradient = ( {
@@ -61,21 +61,9 @@ export const Icon = props => {
 		hasLinearGradient = true,
 	} = props
 
-	const { clientId, isSelected } = useBlockEditContext()
+	const { isSelected } = useBlockEditContext()
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
-
-	const clickOutsideListener = useCallback( event => {
-		if ( isOpen ) {
-			// If the icon is clicked, just close the popover.
-			if ( event.target.closest( '.stk--inner-svg' ) ) {
-				event.stopPropagation()
-			}
-			if ( ! event.target.closest( '.stk--inner-svg' ) && ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
-				setIsOpen( false )
-			}
-		}
-	}, [ popoverEl.current, isOpen ] )
 
 	// When the block is unselected, make sure that the popover is closed.
 	useEffect( () => {
@@ -86,9 +74,21 @@ export const Icon = props => {
 
 	// Assign the outside click listener.
 	useEffect( () => {
+		const clickOutsideListener = event => {
+			if ( isOpen ) {
+				// If the icon is clicked, just close the popover.
+				if ( event.target.closest( '.stk--inner-svg' ) ) {
+					event.stopPropagation()
+				}
+				if ( ! event.target.closest( '.stk--inner-svg' ) && ! isElementDescendant( popoverEl.current, event.target ) && ! event.target.closest( '.components-popover' ) ) {
+					setIsOpen( false )
+				}
+			}
+		}
+
 		document.body.addEventListener( 'click', clickOutsideListener )
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
-	}, [ clickOutsideListener ] )
+	}, [ popoverEl.current, isOpen ] )
 
 	// Enable editing of the icon only when the current block that implements
 	// it is selected. We need to use setTimeout since the isSelected is
@@ -107,7 +107,7 @@ export const Icon = props => {
 		return () => clearTimeout( t )
 	}, [ isSelected ] )
 
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 
 	const {
 		getAttribute,

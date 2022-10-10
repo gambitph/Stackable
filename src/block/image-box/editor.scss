@@ -33,3 +33,8 @@
 .editor-styles-wrapper .stk-block-image-box__content [data-block] {
 	max-width: none;
 }
+
+// Because of the new column height 100%, the image box columns are no longer centered.
+.stk-block-image-box .stk-block-column__content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	justify-content: center;
+}

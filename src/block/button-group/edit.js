@@ -14,6 +14,7 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedSelectControl,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -31,15 +32,16 @@ import {
 	FlexGapControls,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockContext, useDeviceType } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
-import {
-	InnerBlocks,
-} from '@wordpress/block-editor'
+import { compose } from '@wordpress/compose'
+import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button', 'stackable/icon-button' ]
@@ -60,16 +62,15 @@ const Edit = props => {
 		collapseOn = '',
 	} = attributes
 
+	const deviceType = useDeviceType()
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const blockHoverClass = useBlockHoverClass()
 	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-button-group',
 		rowClass,
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -95,6 +96,42 @@ const Edit = props => {
 					id="general"
 					initialOpen={ true }
 				>
+					<AdvancedSelectControl
+						label={ __( 'Button Alignment', i18n ) }
+						attribute="buttonAlign"
+						responsive="all"
+						options={ deviceType === 'Desktop'
+							? [
+								{
+									label: __( 'Horizontal', i18n ),
+									value: '',
+								},
+								{
+									label: __( 'Vertical', i18n ),
+									value: 'vertical',
+								},
+							]
+							: [
+								{
+									label: __( 'Inherit', i18n ),
+									value: '',
+								},
+								{
+									label: __( 'Horizontal', i18n ),
+									value: 'horizontal',
+								},
+								{
+									label: __( 'Vertical', i18n ),
+									value: 'vertical',
+								},
+							]
+						}
+					/>
+					<AdvancedToggleControl
+						label={ __( 'Full Width Buttons', i18n ) }
+						attribute="buttonFullWidth"
+						defaultValue={ false }
+					/>
 					<FlexGapControls />
 					<AdvancedSelectControl
 						label={ __( 'Flex Wrap', i18n ) }
@@ -115,7 +152,7 @@ const Edit = props => {
 						] }
 						responsive="all"
 					/>
-					<AdvancedSelectControl
+					{ /* <AdvancedSelectControl
 						label={ __( 'Collapse Buttons On', i18n ) }
 						attribute="collapseOn"
 						options={ [
@@ -136,7 +173,7 @@ const Edit = props => {
 								value: 'mobile',
 							},
 						] }
-					/>
+					/> */ }
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<Advanced.InspectorControls />
@@ -168,4 +205,9 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
+

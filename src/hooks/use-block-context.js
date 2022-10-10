@@ -12,7 +12,7 @@
 /**
  * External depedencies
  */
-import { nth } from 'lodash'
+import { nth, cloneDeep } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -40,12 +40,19 @@ const STORE_REDUCER = ( state = {}, action ) => {
 
 			action.blockTree.forEach( rootBlock => {
 				// Gather information about the root block.
-				const { clientId, innerBlocks } = rootBlock
+				const {
+					clientId, innerBlocks, name,
+				} = rootBlock
 				blocks[ clientId ] = {
 					numInnerBlocks: innerBlocks.length,
 					hasInnerBlocks: !! innerBlocks.length,
 					innerBlocks,
+					rootBlockClientId: clientId,
+					parentTree: [],
 				}
+
+				// Form the block name tree so inner blocks would know their locations.
+				const parentTree = [ { clientId, name } ]
 
 				const parseBlock = ( innerBlocks, parentBlock ) => {
 					innerBlocks.forEach( ( block, index ) => {
@@ -55,8 +62,7 @@ const STORE_REDUCER = ( state = {}, action ) => {
 						// elements (like column width drag handlers) do not
 						// show up.
 						if ( block.name === 'stackable/column' ) {
-							if ( parentBlock.name === 'stackable/accordion' ||
-								parentBlock.name === 'stackable/image-box' ) {
+							if ( [ 'stackable/accordion', 'stackable/image-box' ].includes( parentBlock.name ) ) {
 								blocks[ block.clientId ] = {
 									blockIndex: index,
 									parentBlock,
@@ -69,6 +75,8 @@ const STORE_REDUCER = ( state = {}, action ) => {
 									numInnerBlocks: block.innerBlocks.length,
 									hasInnerBlocks: !! block.innerBlocks.length,
 									innerBlocks: block.innerBlocks,
+									rootBlockClientId: rootBlock.clientId,
+									parentTree: cloneDeep( parentTree ),
 								}
 							}
 						}
@@ -88,11 +96,22 @@ const STORE_REDUCER = ( state = {}, action ) => {
 								numInnerBlocks: block.innerBlocks.length,
 								hasInnerBlocks: !! block.innerBlocks.length,
 								innerBlocks: block.innerBlocks,
+								rootBlockClientId: rootBlock.clientId,
+								parentTree: cloneDeep( parentTree ),
 							}
 						}
 
+						// Update the parent tree.
+						parentTree.push( {
+							clientId: block.clientId,
+							name: block.name,
+						} )
+
 						// Recurse innerBlocks.
 						parseBlock( block.innerBlocks, block )
+
+						// Update the parent tree.
+						parentTree.pop()
 					} )
 				}
 
@@ -123,7 +142,7 @@ subscribe( () => {
 
 	if ( ! prevClientIds ) {
 		prevClientIds = tree
-		const blocks = select( 'core/block-editor' ).getBlocks()
+		const blocks = fixReusableInnerBlocks( select( 'core/block-editor' ).getBlocks() )
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
 		return
 	}
@@ -133,10 +152,31 @@ subscribe( () => {
 	// even when blocks are edited.
 	if ( tree !== prevClientIds ) {
 		prevClientIds = tree
-		const blocks = select( 'core/block-editor' ).getBlocks()
+		const blocks = fixReusableInnerBlocks( select( 'core/block-editor' ).getBlocks() )
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
 	}
 } )
+
+// Use to correct the blocks returned from getBlocks.
+// Applies only core/block (reusable blocks) - Adds missing innerBlocks
+const fixReusableInnerBlocks = blocks => {
+	return ( blocks || [] ).map( block => {
+		if ( ! [ 'core/widget-area', 'core/block' ].includes( block.name ) ) {
+			return {
+				...block,
+				innerBlocks: fixReusableInnerBlocks( block.innerBlocks ),
+			}
+		}
+		const results = select( 'core/block-editor' ).__unstableGetClientIdsTree( block.clientId )
+		return {
+			...block,
+			innerBlocks: fixReusableInnerBlocks( results.map( ( { clientId } ) => {
+				const [ innerResult ] = select( 'core/block-editor' ).getBlocksByClientId( clientId )
+				return innerResult
+			} ) ),
+		}
+	} )
+}
 
 // Export our hook.
 const useBlockContext = ( blockClientId = null ) => {

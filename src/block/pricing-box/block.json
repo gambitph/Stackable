@@ -1,8 +1,9 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/pricing-box",
 	"title": "Pricing Box",
 	"description": "Display the different pricing tiers of your business.",
-	"category": "layout",
+	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
 		"Currency",

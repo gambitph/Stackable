@@ -14,13 +14,15 @@ import { Popover, ToolbarGroup } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
 } from '@wordpress/rich-text'
-import { BlockControls } from '@wordpress/block-editor'
+import { BlockControls, useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import {
-	useState, useEffect, useRef, useCallback,
+	useState, useEffect, useRef,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 
 // Apply the proper styles for the different text highlights.
 const createApplyFormat = ( _textValue, colorType, textColor, highlightColor ) => {
@@ -119,26 +121,30 @@ export const extractColors = styleString => {
 }
 
 const HighlightButton = props => {
+	const { clientId } = useBlockEditContext()
 	const [ isOpen, setIsOpen ] = useState( false )
 	const popoverEl = useRef( null )
 	const [ colorType, setColorType ] = useState( null )
+	const { getBlock } = useSelect( 'core/block-editor' )
 
-	// Close the window if the user clicks outside.
-	const clickOutsideListener = useCallback( event => {
-		const isOutside = ! isElementDescendant( popoverEl.current, event.target )
-		const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
-		const isColorPicker = event.target.closest( '.components-color-picker' )
-		const isSuggestion = event.target.closest( '.react-autosuggest__suggestions-container' )
-		if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker && ! isSuggestion ) {
-			setIsOpen( false )
-		}
-	} )
+	const block = getBlock( clientId )
 
 	// Assign the outside click listener.
 	useEffect( () => {
+		// Close the window if the user clicks outside.
+		const clickOutsideListener = event => {
+			const isOutside = ! isElementDescendant( popoverEl.current, event.target )
+			const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
+			const isColorPicker = event.target.closest( '.components-color-picker' )
+			const isSuggestion = event.target.closest( '.react-autosuggest__suggestions-container' )
+			if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker && ! isSuggestion ) {
+				setIsOpen( false )
+			}
+		}
+
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
 		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
-	}, [ clickOutsideListener ] )
+	}, [ popoverEl.current, isOpen ] )
 
 	const {
 		activeAttributes,
@@ -177,6 +183,10 @@ const HighlightButton = props => {
 	} = isActive ? extractColors( highlightStyles ) : {}
 	// If highlighted, show the highlight color, otherwise show the text color.
 	const displayIconColor = ( colorType !== '' ? highlightColor : textColor ) || textColor
+
+	if ( block.name === 'stackable/button' ) {
+		return null
+	}
 
 	return (
 		<BlockControls>

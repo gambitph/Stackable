@@ -2,14 +2,11 @@
  * Creates all the attributes needed for the Icon Controls component
  */
 /**
- * External dependencies
- */
-import { createAllCombinationAttributes } from '~stackable/util'
-
-/**
  * Internal dependencies
  */
-import { omitAttributes, pickAttributes } from '../attributes'
+import {
+	omitAttributes, pickAttributes, createAllCombinationAttributes,
+} from '../attributes'
 
 const createIconAttributes = ( attrNameTemplate, options = {} ) => {
 	const {

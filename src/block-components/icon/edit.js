@@ -243,7 +243,7 @@ export const Edit = props => {
 	return (
 		<Wrapper>
 			{ wrapInPanels
-				? <PanelAdvancedSettings title={ __( 'Icon', i18n ) } id="icon" initialOpen={ initialOpen } isOpen={ true } >{ iconControls }</PanelAdvancedSettings>
+				? <PanelAdvancedSettings title={ __( 'Icon', i18n ) } id="icon" initialOpen={ initialOpen }>{ iconControls }</PanelAdvancedSettings>
 				: iconControls
 			}
 			{ hasShape && ( wrapInPanels
