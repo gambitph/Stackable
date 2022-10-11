@@ -50,7 +50,7 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 			},
 			progressValueSuffix: {
 				type: 'string',
-				default: '%',
+				default: '',
 			},
 			progressMax: {
 				type: 'number',

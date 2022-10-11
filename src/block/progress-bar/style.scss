@@ -8,6 +8,8 @@
 	background-color: var(--progress-background, #f0f0f0);
 	overflow: hidden;
 	.stk-progress-bar__bar {
+		// 	percentage = ( progressValue (%) / progressMax ) * 100
+		--progress-percent: calc(( var(--progress-value, 50%) / var(--progress-max, 100)) * 100);
 		width: 0%;
 		height: 100%;
 		display: flex;
@@ -35,7 +37,7 @@
 	}
 	&.stk-animate {
 		.stk-progress-bar__bar {
-			width: var(--progress-percent, 50%);
+			width: var(--progress-percent);
 		}
 	}
 }

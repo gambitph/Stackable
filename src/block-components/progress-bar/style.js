@@ -9,7 +9,12 @@ const getStyleParams = ( { isCircle } ) => {
 	return [
 		{
 			selector,
-			styleRule: '--progress-percent',
+			styleRule: '--progress-max',
+			attrName: 'progressMax',
+		},
+		{
+			selector,
+			styleRule: '--progress-value',
 			attrName: 'progressValue',
 			...( ! isCircle && {
 				format: '%s%',

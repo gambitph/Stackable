@@ -48,6 +48,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 
 	const isColorGradient = getAttribute( 'progressColorType' ) === 'gradient'
+	const progressSliderMax = getAttribute( 'progressMax' ) || 100
 
 	return (
 		<Fragment>
@@ -68,9 +69,9 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 						label={ __( 'Progress', i18n ) }
 						attribute="progressValue"
 						min="0"
-						max="100"
-						sliderMax="100"
-						step="1"
+						max={ progressSliderMax }
+						sliderMax={ progressSliderMax }
+						step={ progressSliderMax <= 10 ? 0.1 : 1 }
 						placeholder={ DEFAULT_PROGRESS }
 						isDynamic
 					/>
@@ -303,7 +304,6 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/progress-bl
 				attribute="progressValuePrefix"
 			/>
 			<AdvancedTextControl
-				default="%"
 				label={ __( 'Progress Suffix', i18n ) }
 				attribute="progressValueSuffix"
 			/>
