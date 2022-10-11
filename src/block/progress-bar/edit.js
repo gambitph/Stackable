@@ -106,7 +106,7 @@ const Edit = ( {
 									<Typography
 										tagName="span"
 										className={ classnames( [ textClassNames, 'stk-progress-bar__text' ] ) }
-										value={ attributes.progressInnerText || attributes.text || 'Design' }
+										value={ attributes.text }
 									/>
 									<Typography
 										tagName="span"

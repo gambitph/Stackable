@@ -39,17 +39,7 @@ export const attributes = ( version = VERSION ) => {
 	Typography.addAttributes( attrObject, '.stk-progress-bar__inner-text', {
 		hasTextTag: false,
 		hasColor: false,
-	} )
-
-	attrObject.add( {
-		attributes: {
-			progressInnerText: {
-				type: 'string',
-				default: '',
-			},
-		},
-		versionAdded: '3.4.5',
-		versionDeprecated: '',
+		defaultText: 'Design',
 	} )
 
 	return attrObject.getMerged( version )
