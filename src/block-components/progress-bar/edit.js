@@ -16,7 +16,7 @@ import {
 
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import {
-	DEFAULT_PERCENT, DEFAULT_THICKNESS, DEFAULT_SIZE, DEFAULT_HEIGHT,
+	DEFAULT_PROGRESS, DEFAULT_THICKNESS, DEFAULT_SIZE, DEFAULT_HEIGHT,
 } from './attributes'
 
 /**
@@ -57,13 +57,21 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 					initialOpen
 				>
 					<AdvancedRangeControl
-						label={ __( 'Percentage', i18n ) }
-						attribute="progressPercent"
+						label={ __( 'Maximum Progress', i18n ) }
+						attribute="progressMax"
+						min="0"
+						sliderMax="100"
+						step="1"
+						placeholder={ 100 }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Progress', i18n ) }
+						attribute="progressValue"
 						min="0"
 						max="100"
 						sliderMax="100"
 						step="1"
-						placeholder={ DEFAULT_PERCENT }
+						placeholder={ DEFAULT_PROGRESS }
 						isDynamic
 					/>
 					{ ! isCircle && (
@@ -291,13 +299,13 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/progress-bl
 				/>
 			) }
 			<AdvancedTextControl
-				label={ __( 'Percentage Prefix', i18n ) }
-				attribute="progressPercentPrefix"
+				label={ __( 'Progress Prefix', i18n ) }
+				attribute="progressValuePrefix"
 			/>
 			<AdvancedTextControl
-				label={ __( 'Percentage Suffix', i18n ) }
-				attribute="progressPercentSuffix"
 				default="%"
+				label={ __( 'Progress Suffix', i18n ) }
+				attribute="progressValueSuffix"
 			/>
 		</>
 	)

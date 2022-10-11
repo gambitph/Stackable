@@ -3,7 +3,7 @@
  */
 import md5 from 'md5'
 import ProgressCircleStyles from './style'
-import { DEFAULT_PERCENT } from './schema'
+import { DEFAULT_PROGRESS } from './schema'
 
 /**
  * External dependencies
@@ -62,9 +62,9 @@ const Edit = ( {
 	] )
 
 	// this is to handle dynamic content; only show valid value
-	const parsedPercent = parseFloat( useDynamicContent( attributes.progressPercent ) )
-	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
-	const derivedValue = `${ attributes.progressPercentPrefix }${ derivedPercent }${ attributes.progressPercentSuffix }`.trim()
+	const parsedProgressValue = parseFloat( useDynamicContent( attributes.progressValue ) )
+	const derivedProgressValue = isNaN( parsedProgressValue ) ? DEFAULT_PROGRESS : parsedProgressValue
+	const derivedValue = `${ attributes.progressValuePrefix }${ derivedProgressValue }${ attributes.progressValueSuffix }`.trim()
 
 	// generate custom identifier on the editor as uniqueId can be blank
 	// This happens when adding block with default block styling created.

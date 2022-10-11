@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import ProgressBarStyles from './style'
-import { DEFAULT_PERCENT } from './schema'
+import { DEFAULT_PROGRESS } from './schema'
 
 /**
  * External dependencies
@@ -64,10 +64,10 @@ const Edit = ( {
 		'stk--has-background-overlay': attributes.progressColorType === 'gradient' && attributes.progressColor2,
 	} )
 
-	// parsing string to number since percentage is of a string type to support dynamic content
-	const parsedPercent = parseFloat( useDynamicContent( attributes.progressPercent ) )
-	const derivedPercent = isNaN( parsedPercent ) ? DEFAULT_PERCENT : parsedPercent
-	const derivedValue = `${ attributes.progressPercentPrefix }${ derivedPercent }${ attributes.progressPercentSuffix }`.trim()
+	// parsing string to number since progress value is of a string type to support dynamic content
+	const parsedProgressValue = parseFloat( useDynamicContent( attributes.progressValue ) )
+	const derivedProgressValue = isNaN( parsedProgressValue ) ? DEFAULT_PROGRESS : parsedProgressValue
+	const derivedValue = `${ attributes.progressValuePrefix }${ derivedProgressValue }${ attributes.progressValueSuffix }`.trim()
 
 	return (
 		<>
@@ -110,7 +110,7 @@ const Edit = ( {
 									/>
 									<Typography
 										tagName="span"
-										className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
+										className={ classnames( [ textClassNames, 'stk-progress-bar__progress-value-text' ] ) }
 										value={ derivedValue }
 										editable={ false }
 									/>

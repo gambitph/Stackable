@@ -1,5 +1,5 @@
 import ProgressBarStyles from './style'
-import { DEFAULT_PERCENT } from './schema'
+import { DEFAULT_PROGRESS } from './schema'
 
 import {
 	BlockDiv,
@@ -50,13 +50,13 @@ const Save = props => {
 	} )
 
 	// this is to handle dynamic content; only show valid value
-	let percent = attributes.progressPercent
-	const isDynamicContent = !! attributes.progressPercent?.startsWith( '!#stk_dynamic/' )
+	let progressValue = attributes.progressValue
+	const isDynamicContent = !! attributes.progressValue?.startsWith( '!#stk_dynamic/' )
 	if ( ! isDynamicContent ) {
-		percent = parseFloat( attributes.progressPercent )
-		percent = isNaN( percent ) ? DEFAULT_PERCENT : percent
+		progressValue = parseFloat( attributes.progressValue )
+		progressValue = isNaN( progressValue ) ? DEFAULT_PROGRESS : progressValue
 	}
-	const derivedValue = `${ attributes.progressPercentPrefix }${ percent }${ attributes.progressPercentSuffix }`.trim()
+	const derivedValue = `${ attributes.progressValuePrefix }${ progressValue }${ attributes.progressValueSuffix }`.trim()
 	const deviedAriaValue = attributes.progressAriaValueText || attributes.text
 
 	return (
@@ -72,7 +72,7 @@ const Save = props => {
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
-					aria-valuenow={ percent }
+					aria-valuenow={ progressValue }
 					aria-valuetext={ deviedAriaValue ? striptags( deviedAriaValue ) : undefined }
 				>
 					<div className={ barClassNames }>
@@ -85,7 +85,7 @@ const Save = props => {
 								/>
 								<Typography.Content
 									tagName="span"
-									className={ classnames( [ textClassNames, 'stk-progress-bar__percent-text' ] ) }
+									className={ classnames( [ textClassNames, 'stk-progress-bar__progress-value-text' ] ) }
 									value={ derivedValue }
 								/>
 							</>

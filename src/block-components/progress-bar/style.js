@@ -10,7 +10,7 @@ const getStyleParams = ( { isCircle } ) => {
 		{
 			selector,
 			styleRule: '--progress-percent',
-			attrName: 'progressPercent',
+			attrName: 'progressValue',
 			...( ! isCircle && {
 				format: '%s%',
 			} ),

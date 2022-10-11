@@ -1,5 +1,5 @@
 import ProgressCircleStyles from './style'
-import { DEFAULT_PERCENT } from './schema'
+import { DEFAULT_PROGRESS } from './schema'
 
 import {
 	BlockDiv,
@@ -47,14 +47,14 @@ const Save = props => {
 	] )
 
 	// this is to handle dynamic content; only show valid value
-	let percent = attributes.progressPercent
-	const isDynamicContent = !! attributes.progressPercent?.startsWith( '!#stk_dynamic/' )
+	let progressValue = attributes.progressValue
+	const isDynamicContent = !! attributes.progressValue?.startsWith( '!#stk_dynamic/' )
 	if ( ! isDynamicContent ) {
-		percent = parseFloat( attributes.progressPercent )
-		percent = isNaN( percent ) ? DEFAULT_PERCENT : percent
+		progressValue = parseFloat( attributes.progressValue )
+		progressValue = isNaN( progressValue ) ? DEFAULT_PROGRESS : progressValue
 	}
 
-	const label = `${ attributes.progressPercentPrefix }${ percent }${ attributes.progressPercentSuffix }`.trim()
+	const label = `${ attributes.progressValuePrefix }${ progressValue }${ attributes.progressValueSuffix }`.trim()
 
 	return (
 		<BlockDiv.Content
@@ -69,7 +69,7 @@ const Save = props => {
 					role="progressbar"
 					aria-valuemin="0"
 					aria-valuemax="100"
-					aria-valuenow={ percent }
+					aria-valuenow={ progressValue }
 					aria-valuetext={ attributes.progressAriaValueText ? striptags( attributes.progressAriaValueText ) : undefined }
 				>
 					<svg>

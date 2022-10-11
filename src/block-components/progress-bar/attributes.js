@@ -2,12 +2,12 @@ export const DEFAULT_SIZE = 150
 export const DEFAULT_HEIGHT = 32
 
 export const DEFAULT_THICKNESS = 8
-export const DEFAULT_PERCENT = 50
+export const DEFAULT_PROGRESS = 50
 
 export const addAttributes = ( attrObject, isCircle = false ) => {
 	attrObject.add( {
 		attributes: {
-			progressPercent: {
+			progressValue: {
 				type: 'string', // String so that we can support dynamic content.
 				default: '',
 			},
@@ -44,13 +44,17 @@ export const addAttributes = ( attrObject, isCircle = false ) => {
 				type: 'string',
 				default: '',
 			},
-			progressPercentPrefix: {
+			progressValuePrefix: {
 				type: 'string',
 				default: '',
 			},
-			progressPercentSuffix: {
+			progressValueSuffix: {
 				type: 'string',
 				default: '%',
+			},
+			progressMax: {
+				type: 'number',
+				default: '',
 			},
 			...( isCircle ? {
 				progressThickness: {
