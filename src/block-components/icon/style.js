@@ -255,15 +255,19 @@ const Styles = props => {
 }
 
 export const Style = props => {
+	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style', null )
+
 	return <>
 		<Styles { ...props } />
-		{ applyFilters( 'stackable.block-component.icon.get-style-params', null, props ) }
+		{ IndivIconStyles && <IndivIconStyles { ...props } /> }
 	</>
 }
 
 Style.Content = props => {
+	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style', null )
+
 	return <>
 		<Styles { ...props } />
-		{ applyFilters( 'stackable.block-component.icon.get-style-params', null, props ) }
+		{ IndivIconStyles && <IndivIconStyles { ...props } /> }
 	</>
 }

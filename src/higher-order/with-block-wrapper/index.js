@@ -22,11 +22,11 @@ import { useEffect, useState } from '@wordpress/element'
 
 const withBlockWrapper = createHigherOrderComponent(
 	WrappedComponent => props => {
-		const isDisplayed = useDevicePreviewOptimization( props )
+		// const isDisplayed = useDevicePreviewOptimization( props )
 
 		return (
 			<BlockWrapper attributes={ props.attributes }>
-				{ isDisplayed && <WrappedComponent { ...props } /> }
+				<WrappedComponent { ...props } />
 			</BlockWrapper>
 		)
 	},

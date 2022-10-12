@@ -28,6 +28,8 @@ const BlockStyles = memo( props => {
 	const columnArrangementMobile = useBlockAttributesContext( attributes => attributes.columnArrangementMobile )
 	const numColumns = ( columnArrangementMobile || '' ).split( ',' ).length
 
+	const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
+
 	return (
 		<>
 			<Alignment.Style { ...props } { ...alignmentOptions } />
@@ -38,7 +40,7 @@ const BlockStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<Separator.Style { ...props } />
 			<ContentAlign.Style { ...props } />
-			{ applyFilters( 'stackable.block-component.columns.get-style-params', null, { ...props, numColumns } ) }
+			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 		</>
 	)
 } )
@@ -53,6 +55,7 @@ BlockStyles.Content = props => {
 	}
 
 	const numColumns = ( props.attributes.columnArrangementMobile || '' ).split( ',' ).length
+	const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
 
 	return (
 		<BlockCssCompiler>
@@ -64,7 +67,7 @@ BlockStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
 			<ContentAlign.Style.Content { ...props } />
-			{ applyFilters( 'stackable.block-component.columns.get-style-params', null, { ...props, numColumns } ) }
+			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 		</BlockCssCompiler>
 	)
 }

@@ -4,9 +4,11 @@
 import { applyFilters } from '@wordpress/hooks'
 
 export const Style = props => {
-	return applyFilters( 'stackable.block-component.transform.style', null, props )
+	const TransformStyles = applyFilters( 'stackable.block-component.transform.style', null )
+	return TransformStyles && <TransformStyles { ...props } />
 }
 
 Style.Content = props => {
-	return applyFilters( 'stackable.block-component.transform.style.content', null, props )
+	const TransformStyles = applyFilters( 'stackable.block-component.transform.style.content', null )
+	return TransformStyles && <TransformStyles { ...props } />
 }

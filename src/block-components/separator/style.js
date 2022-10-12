@@ -143,24 +143,28 @@ const MarginBottomStyles = props => {
 }
 
 export const Style = props => {
+	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
+
 	return (
 		<>
 			<SeparatorStyles { ...props } location="top" />
 			<SeparatorStyles { ...props } isInitiallyFlippedVertically={ false } location="bottom" />
 			<MarginBottomStyles { ...props } />
-			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, { ...props, location: 'top' } ) }
-			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, { ...props, location: 'bottom' } ) }
+			{ SeparatorLayerStyles && <SeparatorLayerStyles { ...props } location="top" /> }
+			{ SeparatorLayerStyles && <SeparatorLayerStyles { ...props } location="bottom" /> }
 		</>
 	)
 }
 
 Style.Content = props => {
+	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
+
 	return (
 		<>
 			<SeparatorStyles { ...props } location="top" />
 			<SeparatorStyles { ...props } isInitiallyFlippedVertically={ false } location="bottom" />
-			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, { ...props, location: 'top' } ) }
-			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, { ...props, location: 'bottom' } ) }
+			{ SeparatorLayerStyles && <SeparatorLayerStyles { ...props } location="top" /> }
+			{ SeparatorLayerStyles && <SeparatorLayerStyles { ...props } location="bottom" /> }
 		</>
 	)
 }

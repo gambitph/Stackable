@@ -24,6 +24,8 @@ const separatorOptions = {
 }
 
 export const SeparatorStyles = memo( props => {
+	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
+
 	return (
 		<>
 			<BlockDiv.Style { ...props } />
@@ -31,11 +33,13 @@ export const SeparatorStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<Transform.Style { ...props } />
 			<SeparatorStyles_ { ...props } { ...separatorOptions } location="" />
-			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, {
-				...props,
-				...separatorOptions,
-				location: '',
-			} ) }
+			{ SeparatorLayerStyles && (
+				<SeparatorLayerStyles
+					{ ...props }
+					{ ...separatorOptions }
+					location=""
+				/>
+			) }
 		</>
 	)
 } )
@@ -48,6 +52,7 @@ SeparatorStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
+	const SeparatorLayerStyles = applyFilters( 'stackable.block-component.separator.layer-styles', null )
 
 	return (
 		<BlockCssCompiler>
@@ -56,11 +61,13 @@ SeparatorStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<SeparatorStyles_ { ...props } { ...separatorOptions } location="" />
-			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, {
-				...props,
-				...separatorOptions,
-				location: '',
-			} ) }
+			{ SeparatorLayerStyles && (
+				<SeparatorLayerStyles
+					{ ...props }
+					{ ...separatorOptions }
+					location=""
+				/>
+			) }
 		</BlockCssCompiler>
 	)
 }
