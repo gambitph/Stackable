@@ -261,6 +261,7 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/progress-bl
 				<AdvancedTextControl
 					label={ __( 'Progress Bar Text', i18n ) }
 					attribute="text"
+					isDynamic
 				/>
 			) }
 			<AdvancedTextControl
