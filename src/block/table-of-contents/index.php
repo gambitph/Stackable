@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_filter( 'rank_math/researches/toc_plugins', function( $toc_plugins ) {
-       $toc_plugins['Stackable/plugin.php'] = 'Stackable';
-    return $toc_plugins;
+	$toc_plugins['stackable-ultimate-gutenberg-blocks-premium/plugin.php'] = 'Stackable';
+	$toc_plugins['stackable-ultimate-gutenberg-blocks/plugin.php'] = 'Stackable';
+ 	return $toc_plugins;
 } );
