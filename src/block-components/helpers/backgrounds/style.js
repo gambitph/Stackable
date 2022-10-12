@@ -33,6 +33,7 @@ const Styles = props => {
 				valueCallback={ ( value, getAttribute, device, state ) => {
 					const backgroundColorType = getAttribute( 'backgroundColorType' )
 					const backgroundColorOpacity = getAttribute( 'backgroundColorOpacity', 'desktop', state )
+					const backgroundColor2 = getAttribute( 'backgroundColor2' )
 
 					const hasBackground = getAttribute( 'backgroundMediaUrl', 'desktop' ) ||
 						getAttribute( 'backgroundMediaUrl', 'tablet' ) ||
@@ -43,6 +44,11 @@ const Styles = props => {
 						const hexColor = extractColor( value )
 						return `${ hexToRgba( hexColor || '#ffffff', backgroundColorOpacity || 0 ) }`
 					}
+
+					if ( backgroundColorType === 'gradient' && backgroundColor2 === 'transparent' ) {
+						return 'transparent'
+					}
+
 					return value
 				} }
 				valuePreCallback={ ( _value, getAttribute, device, state ) => {
@@ -56,7 +62,7 @@ const Styles = props => {
 					}
 					return value
 				} }
-				dependencies={ [ 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ] }
+				dependencies={ [ 'backgroundColor2', 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
