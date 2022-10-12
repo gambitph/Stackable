@@ -114,13 +114,13 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									return v
 								} }
 							/>
-							{ getAttribute( 'progressBorderRadius' ) && (
+							{ getAttribute( 'progressBorderRadius' ) ? (
 								<AdvancedToggleControl
 									label={ __( 'Apply border radius to bar', i18n ) }
 									attribute="progressApplyBarRadius"
 									defaultValue={ false }
 								/>
-							) }
+							) : null }
 						</>
 					) }
 					{ isCircle && (
