@@ -58,22 +58,22 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 					initialOpen
 				>
 					<AdvancedRangeControl
+						label={ __( 'Progress', i18n ) }
+						attribute="progressValue"
+						min="0"
+						max={ progressSliderMax }
+						sliderMax={ progressSliderMax }
+						step={ progressSliderMax <= 1 ? 0.01 : 0.1 }
+						placeholder={ DEFAULT_PROGRESS }
+						isDynamic
+					/>
+					<AdvancedRangeControl
 						label={ __( 'Maximum Progress', i18n ) }
 						attribute="progressMax"
 						min="0"
 						sliderMax="100"
 						step="1"
 						placeholder={ 100 }
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Progress', i18n ) }
-						attribute="progressValue"
-						min="0"
-						max={ progressSliderMax }
-						sliderMax={ progressSliderMax }
-						step={ progressSliderMax <= 10 ? 0.1 : 1 }
-						placeholder={ DEFAULT_PROGRESS }
-						isDynamic
 					/>
 					{ ! isCircle && (
 						<AdvancedRangeControl
