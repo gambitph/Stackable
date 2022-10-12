@@ -347,17 +347,18 @@ const BlockCssEdit = props => {
 
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
 
-	const css = <BlockCss
-		{ ...props }
-		blockState={ blockState }
-		clientId={ clientId }
-		attributes={ attributes }
-		instanceId={ instanceId }
-	/>
+	// Call as a function and not as createElement.
+	const css = BlockCss( {
+		...props,
+		blockState,
+		clientId,
+		attributes,
+		instanceId,
+	} )
 
 	const output = useDynamicContent( css )
 
-	return output ? <style>{ output }</style> : null
+	return css ? <style>{ output }</style> : null
 }
 
 // Unify in a single component so it's easier to write block styles.
@@ -367,7 +368,11 @@ const _BlockCss = props => {
 		return <BlockCssEdit { ...props } editorMode={ true } />
 	}
 	// Else, it means we need to compile all the css into the object passed to the compileCssTo prop.
-	return <BlockCss { ...props } editorMode={ false } />
+	// Call as a function so we just return the string quickly.
+	return BlockCss( {
+		...props,
+		editorMode: false,
+	} )
 }
 
 export default _BlockCss
