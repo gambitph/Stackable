@@ -24,10 +24,6 @@ import {
  */
 import { addFilter } from '@wordpress/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import {
-	Fragment, useEffect, useState,
-} from '@wordpress/element'
-import { escapeHTML } from '@wordpress/escape-html'
 import { __, sprintf } from '@wordpress/i18n'
 
 const GRADIENT_OPTIONS = [
@@ -51,7 +47,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 	const progressSliderMax = getAttribute( 'progressMax' ) || 100
 
 	return (
-		<Fragment>
+		<>
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ isCircle ? __( 'Progress Circle', i18n ) : __( 'Progress Bar', i18n ) }
@@ -243,7 +239,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
-		</Fragment>
+		</>
 	)
 }
 
@@ -253,30 +249,7 @@ Edit.defaulProps = {
 }
 
 addFilter( 'stackable.block-component.typography.before', 'stackable/progress-blocks', output => {
-	const {
-		getAttribute,
-		updateAttribute,
-	} = useAttributeEditHandlers()
-	const text = getAttribute( 'text' )
-	const [ debouncedText, setDebouncedText ] = useState( text )
 	const { name } = useBlockEditContext()
-
-	useEffect( () => {
-		if ( text !== debouncedText ) {
-			setDebouncedText( text )
-		}
-	}, [ text ] )
-
-	useEffect( () => {
-		let timeout
-		if ( debouncedText !== text ) {
-			timeout = setTimeout( () => {
-				updateAttribute( 'text', debouncedText )
-			}, 300 )
-		}
-
-		return () => clearTimeout( timeout )
-	}, [ updateAttribute, debouncedText, text ] )
 
 	if ( ! [ 'stackable/progress-bar', 'stackable/progress-circle' ].includes( name ) ) {
 		return output
@@ -287,16 +260,7 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/progress-bl
 			{ name === 'stackable/progress-bar' && (
 				<AdvancedTextControl
 					label={ __( 'Progress Bar Text', i18n ) }
-					attribute="progressInnerText"
-					value={ debouncedText ? unescape( debouncedText ) : '' }
-					onChange={ text => setDebouncedText( escapeHTML( text ) ) }
-					/**
-					 * Pass the unescaped Dynamic Content `onChange` function.
-					 *
-					 * @param {string} text Text with dynamic content.
-					 */
-					changeDynamicContent={ setDebouncedText }
-					isDynamic
+					attribute="text"
 				/>
 			) }
 			<AdvancedTextControl
