@@ -20,22 +20,23 @@ import { createHigherOrderComponent } from '@wordpress/compose'
 import { BlockWrapper } from '~stackable/components'
 
 const withBlockWrapperIsHovered = createHigherOrderComponent(
-	WrappedComponent => props => {
-		const ref = useRef()
-		const { showMovers, gestures } = useShowMoversGestures( { ref } )
+	 WrappedComponent => props => {
+		 const ref = useRef()
+		 const { showMovers, gestures } = useShowMoversGestures( { ref } )
 
-		const blockProps = {
-			...gestures,
-			ref,
-		}
+		 const blockProps = {
+			 ...gestures,
+			 ref,
+		 }
 
-		return (
-			<BlockWrapper attributes={ props.attributes } blockProps={ blockProps }>
-				<WrappedComponent { ...props } isHovered={ showMovers } />
-			</BlockWrapper>
-		)
-	},
-	'withBlockWrapperIsHovered'
+		 return (
+			 <BlockWrapper attributes={ props.attributes } blockProps={ blockProps }>
+				 <WrappedComponent { ...props } isHovered={ showMovers } />
+			 </BlockWrapper>
+		 )
+	 },
+	 'withBlockWrapperIsHovered'
 )
 
 export default withBlockWrapperIsHovered
+

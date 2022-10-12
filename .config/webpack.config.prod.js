@@ -159,6 +159,8 @@ module.exports = [
 		'frontend_block_map': path.resolve( __dirname, '../src/block/map/frontend-map.js' ),
 		'frontend_block_notification': path.resolve( __dirname, '../src/block/notification/frontend-notification.js' ),
 		'frontend_block_video_popup': path.resolve( __dirname, '../src/block/video-popup/frontend-video-popup.js' ),
+		'frontend_block_progress_circle': path.resolve( __dirname, '../src/block/progress-circle/frontend-progress-circle.js' ),
+		'frontend_block_progress_bar': path.resolve( __dirname, '../src/block/progress-bar/frontend-progress-bar.js' ),
 	},
 
 	output: {
