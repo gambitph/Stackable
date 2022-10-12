@@ -10,7 +10,7 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { BlockCss } from '~stackable/components'
+import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -37,6 +37,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				// This makes the block fullwidth inside the editor.
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
@@ -45,7 +46,6 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value ? '100%' : undefined
 				} }
-				{ ...propsToPass }
 			/>
 		</>
 	)
@@ -75,7 +75,7 @@ ButtonStyles.Content = props => {
 	}
 
 	return (
-		<>
+		<BlockCssCompiler>
 			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
@@ -83,7 +83,7 @@ ButtonStyles.Content = props => {
 			<Typography.Style.Content { ...props } { ...typographyOptions } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<Styles { ...props } />
-		</>
+		</BlockCssCompiler>
 	)
 }
 

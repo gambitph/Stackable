@@ -20,6 +20,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				hoverSelector={ `${ selector }:hover` }
 				styleRule="backgroundColor"
@@ -56,42 +57,42 @@ const Styles = props => {
 					return value
 				} }
 				dependencies={ [ 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="backgroundImage"
 				attrName="backgroundMediaUrl"
 				attrNameTemplate={ attrNameTemplate }
 				format="url(%s)"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="backgroundAttachment"
 				attrName="fixedBackground"
 				attrNameTemplate={ attrNameTemplate }
 				valueCallback={ value => value ? 'fixed' : undefined }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="backgroundPosition"
 				attrName="backgroundPosition"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="backgroundRepeat"
 				attrName="backgroundRepeat"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="backgroundSize"
 				attrName="backgroundSize"
@@ -106,16 +107,16 @@ const Styles = props => {
 					return value
 				} }
 				dependencies={ [ 'backgroundCustomSize', 'backgroundCustomSizeUnit' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="backgroundBlendMode"
 				attrName="backgroundImageBlendMode"
 				attrNameTemplate={ attrNameTemplate }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector }:before` }
 				hoverSelector={ `${ selector }:hover:before` }
 				styleRule="backgroundColor"
@@ -135,9 +136,9 @@ const Styles = props => {
 					return ! isGradient && value ? value : undefined
 				} }
 				dependencies={ [ 'backgroundColorType', 'backgroundColor2', 'backgroundTintStrength' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector }:before` }
 				hoverSelector={ `${ selector }:hover:before` }
 				styleRule="opacity"
@@ -157,18 +158,18 @@ const Styles = props => {
 					return parseInt( value, 10 ) / 10
 				} }
 				dependencies={ [ 'backgroundColor', 'backgroundColor2', 'backgroundMediaUrl' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector }:before` }
 				styleRule="mixBlendMode"
 				attrName="backgroundGradientBlendMode"
 				attrNameTemplate={ attrNameTemplate }
 				enabledCallback={ getAttribute => getAttribute( 'backgroundColorType' ) === 'gradient' }
 				dependencies={ [ 'backgroundColorType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector }:before` }
 				styleRule="backgroundImage"
 				attrName="backgroundColor"
@@ -192,9 +193,9 @@ const Styles = props => {
 					return `linear-gradient(${ angle }, ${ getAttribute( 'backgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })`
 				} }
 				dependencies={ [ 'backgroundColorType', 'backgroundColor', 'backgroundColor2', 'backgroundGradientLocation1', 'backgroundGradientLocation2', 'backgroundGradientDirection' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				// In the editor, the background overlay can go outside the block if there's a border radius.
 				renderIn="edit"
 				selector={ `${ selector }:before` }
@@ -208,7 +209,6 @@ const Styles = props => {
 					getAttribute( 'backgroundColor', 'desktop', 'hover' ) ||
 					getAttribute( 'backgroundColor', 'desktop', 'parent-hovered' ) }
 				dependencies={ [ 'backgroundColorType', 'backgroundColor', 'backgroundColor2' ] }
-				{ ...propsToPass }
 			/>
 		</>
 	)

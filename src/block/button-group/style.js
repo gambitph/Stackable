@@ -36,14 +36,15 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".stk-button-group"
 				styleRule="flexWrap"
 				attrName="flexWrap"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector=".stk-button-group .block-editor-block-list__layout"
 				styleRule="flexWrap"
@@ -56,9 +57,9 @@ const Styles = props => {
 					}
 					return value || 'nowrap'
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".stk-button-group"
 				styleRule="flexDirection"
@@ -72,9 +73,9 @@ const Styles = props => {
 					}
 					return value
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector=".stk-button-group .block-editor-block-list__layout"
 				styleRule="flexDirection"
@@ -88,7 +89,6 @@ const Styles = props => {
 					}
 					return value
 				} }
-				{ ...propsToPass }
 			/>
 
 			{
@@ -97,6 +97,7 @@ const Styles = props => {
 			// each other vertically.
 			}
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".stk-block"
 				styleRule="flexBasis"
@@ -107,9 +108,9 @@ const Styles = props => {
 						: value === 'horizontal' ? 0
 							: undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".stk-button-group"
 				styleRule="alignItems"
@@ -134,9 +135,9 @@ const Styles = props => {
 					return value
 				} }
 				dependencies={ [ 'contentAlign', 'buttonFullWidth' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector=".stk-button-group .block-editor-block-list__layout"
 				styleRule="alignItems"
@@ -161,9 +162,9 @@ const Styles = props => {
 					return value
 				} }
 				dependencies={ [ 'contentAlign', 'buttonFullWidth' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".stk-block-button, .stk-block-icon-button"
 				styleRule="flex"
@@ -171,9 +172,9 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value ? '1' : undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ `.stk-block-button, .stk-block-icon-button, [data-type^="stackable/"]` }
 				styleRule="flex"
@@ -181,9 +182,9 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value ? '1' : undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				// This is to make icon buttons stretch.
 				selector=".stk-block-icon-button .stk-button"
 				styleRule="width"
@@ -191,7 +192,6 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value ? '100%' : undefined
 				} }
-				{ ...propsToPass }
 			/>
 		</>
 	)

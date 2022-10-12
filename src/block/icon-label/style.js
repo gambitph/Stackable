@@ -27,22 +27,22 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".stk-block-icon"
 				attrName="iconGap"
 				styleRule="flexBasis"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ `.stk-inner-blocks [data-block][data-type="stackable/icon"]` }
 				attrName="iconGap"
 				styleRule="flexBasis"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 		</>
 	)

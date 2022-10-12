@@ -34,6 +34,7 @@ export const SeparatorStyles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				attrNameTemplate={ `${ location }%s` }
 				selector={ selector }
 				styleRule="zIndex"
@@ -44,9 +45,9 @@ export const SeparatorStyles = props => {
 					}
 					return undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				attrNameTemplate={ `${ location }%s` }
 				selector={ selector }
 				styleRule="transform"
@@ -74,33 +75,33 @@ export const SeparatorStyles = props => {
 					] ).join( ' ' )
 				} }
 				dependencies={ [ 'separatorFlipVertically' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				attrNameTemplate={ `${ location }%s` }
 				selector={ selector + ' svg' }
 				styleRule="fill"
 				attrName="separatorColor"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				attrNameTemplate={ `${ location }%s` }
 				selector={ selector + ` ${ wrapperSelector }` }
 				styleRule="transform"
 				attrName="separatorWidth"
 				format="scaleX(%s)"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				attrNameTemplate={ `${ location }%s` }
 				selector={ selector + ` ${ wrapperSelector }` }
 				styleRule="height"
 				responsive="all"
 				attrName="separatorHeight"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				attrNameTemplate={ `${ location }%s` }
 				selector={ selector + ' svg' }
 				styleRule="filter"
@@ -109,7 +110,6 @@ export const SeparatorStyles = props => {
 				valueCallback={ value => {
 					return value === 'drop-shadow(none)' ? 'none' : value
 				} }
-				{ ...propsToPass }
 			/>
 		</>
 	)
@@ -129,6 +129,7 @@ const MarginBottomStyles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ _selector !== undefined ? _selector : ` > .stk-separator__bottom` }
 				styleRule="bottom"
@@ -136,7 +137,6 @@ const MarginBottomStyles = props => {
 				responsive="all"
 				valuePreCallback={ value => value?.bottom }
 				format="%spx"
-				{ ...propsToPass }
 			/>
 		</>
 	)

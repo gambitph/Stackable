@@ -33,19 +33,19 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="columnCount"
 				attrName="columns"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="columnGap"
 				attrName="columnGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 		</>
 	)

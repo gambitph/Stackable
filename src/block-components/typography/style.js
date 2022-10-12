@@ -26,6 +26,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -34,9 +35,9 @@ const Styles = props => {
 				hover="all"
 				hoverSelector={ hoverSelector }
 				hoverSelectorCallback={ hoverSelectorCallback }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -81,9 +82,9 @@ const Styles = props => {
 					return value
 				} }
 				dependencies={ [ 'fontSizeUnit', 'fontSize', ...dependencies ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -93,9 +94,9 @@ const Styles = props => {
 					return value ? 0 : undefined
 				} }
 				dependencies={ dependencies }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -111,9 +112,9 @@ const Styles = props => {
 					return value
 				} }
 				dependencies={ [ 'textColorType', 'textColor2', 'textGradientDirection', ...dependencies ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -149,9 +150,9 @@ const Styles = props => {
 					return `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`
 				} }
 				dependencies={ [ 'textColorType', 'textColor1', 'textColor2', 'textGradientDirection', ...dependencies ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -160,9 +161,9 @@ const Styles = props => {
 				responsive="all"
 				hasUnits="em"
 				dependencies={ dependencies }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -172,9 +173,9 @@ const Styles = props => {
 					fontStyle: 'fontStyle',
 				} }
 				dependencies={ dependencies }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -182,9 +183,9 @@ const Styles = props => {
 				attrName="fontFamily"
 				valueCallback={ value => getFontFamily( value ) }
 				dependencies={ dependencies }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
@@ -192,7 +193,6 @@ const Styles = props => {
 				attrName="letterSpacing"
 				format="%spx"
 				dependencies={ dependencies }
-				{ ...propsToPass }
 			/>
 		</>
 	)

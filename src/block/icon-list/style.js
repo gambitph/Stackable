@@ -44,6 +44,7 @@ const Styles = props => {
 			{ Object.keys( icons ).reduce( ( acc, key ) => {
 				acc.push(
 					<BlockCss
+						{ ...propsToPass }
 						renderIn="edit"
 						selector={ key }
 						hover="all"
@@ -62,11 +63,11 @@ const Styles = props => {
 							return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 						} }
 						dependencies={ [ 'icons', 'iconRotation', 'iconOpacity' ] }
-						{ ...propsToPass }
 					/>
 				)
 				acc.push(
 					<BlockCss
+						{ ...propsToPass }
 						renderIn="save"
 						selector={ key }
 						hover="all"
@@ -86,58 +87,58 @@ const Styles = props => {
 							return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 						} }
 						dependencies={ [ 'icons', 'iconRotation', 'iconOpacity' ] }
-						{ ...propsToPass }
 					/>
 				)
 				return acc
 			}, [] ) }
 
 			<BlockCss
+				{ ...propsToPass }
 				selector="li"
 				styleRule="paddingInlineStart"
 				attrName="iconGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="ol"
 				styleRule="listStyleType"
 				attrName="listType"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="columnCount"
 				attrName="columns"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="columnGap"
 				attrName="columnGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="li"
 				styleRule="marginBottom"
 				attrName="rowGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ [ 'ul', 'ol' ] }
 				styleRule="paddingLeft"
 				attrName="indentation"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="ul li"
 				hover="all"
 				hoverSelector=".%s:hover li"
@@ -161,25 +162,25 @@ const Styles = props => {
 					return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 				} }
 				dependencies={ [ 'icon', 'iconRotation', 'iconOpacity' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="li::marker"
 				hover="all"
 				hoverSelector=".%s:hover li::marker"
 				styleRule="color"
 				attrName="markerColor"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="li::marker"
 				styleRule="fontSize"
 				attrName="iconSize"
 				responsive="all"
 				format="%sem"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				// For calculating the approximate clickable area for
 				// icon picker.
 				renderIn="edit"
@@ -188,15 +189,14 @@ const Styles = props => {
 				attrName="iconSize"
 				responsive="all"
 				format="%sem"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ [ 'li' ] }
 				styleRule="marginInline"
 				attrName="listAlignment"
 				responsive="all"
 				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
-				{ ...propsToPass }
 			/>
 		</>
 	)

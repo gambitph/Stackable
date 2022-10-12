@@ -17,6 +17,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
@@ -38,9 +39,9 @@ const Styles = props => {
 					return value?.top
 				} }
 				dependencies={ [ 'position' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
@@ -50,9 +51,9 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.right }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
@@ -62,9 +63,9 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.bottom }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
@@ -74,15 +75,14 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.left }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=""
 				styleRule="position"
 				attrName="position"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			{ /**
 			   * For positions (top, right, bottom, left) and postiion (absolute,
@@ -90,6 +90,7 @@ const Styles = props => {
 			   * correctly in the editor.
 			   */ }
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
@@ -111,9 +112,9 @@ const Styles = props => {
 					return value?.top
 				} }
 				dependencies={ [ 'position' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
@@ -125,9 +126,9 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.bottom }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
@@ -139,9 +140,9 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.left }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
@@ -158,61 +159,60 @@ const Styles = props => {
 					return undefined
 				} }
 				dependencies={ [ 'position' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="position"
 				attrName="position"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="opacity"
 				attrName="opacity"
 				responsive="all"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				// We need to implement z-index on the block itself or else it won't look correct in the editor.
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
 				styleRule="zIndex"
 				attrName="zIndex"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=""
 				styleRule="zIndex"
 				attrName="zIndex"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="overflow"
 				attrName="overflow"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-container"
 				styleRule="overflow"
 				attrName="overflow"
 				enabledCallback={ getAttribute => getAttribute( 'overflow' ) === 'visible' }
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="clear"
 				attrName="clear"
-				{ ...propsToPass }
 			/>
 
 			{
@@ -222,6 +222,7 @@ const Styles = props => {
 			// state position e.g. hover `top: 20px` given but no initial state.
 			}
 			<BlockCss
+				{ ...propsToPass }
 				selector={ positionSelector }
 				styleRule="top"
 				attrName="positionNum"
@@ -236,9 +237,9 @@ const Styles = props => {
 					}
 					return undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ positionSelector }
 				styleRule="right"
 				attrName="positionNum"
@@ -253,9 +254,9 @@ const Styles = props => {
 					}
 					return undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ positionSelector }
 				styleRule="bottom"
 				attrName="positionNum"
@@ -270,9 +271,9 @@ const Styles = props => {
 					}
 					return undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ positionSelector }
 				styleRule="left"
 				attrName="positionNum"
@@ -287,7 +288,6 @@ const Styles = props => {
 					}
 					return undefined
 				} }
-				{ ...propsToPass }
 			/>
 		</>
 	)

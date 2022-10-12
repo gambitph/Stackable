@@ -34,6 +34,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-container"
 				attrName="dismissibleSize"
 				styleRule="paddingInlineEnd"
@@ -41,15 +42,14 @@ const Styles = props => {
 				valuePreCallback={ value => value + 44 } // 44 is an arbitrary number based on the size of the container paddings vs the close button size.
 				format="%spx"
 				dependencies={ [ 'isDismissible' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-notification__close-button svg"
 				attrName="dismissibleColor"
 				styleRule="fill"
 				enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) }
 				dependencies={ [ 'isDismissible' ] }
-				{ ...propsToPass }
 			/>
 		</>
 	)

@@ -39,6 +39,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector }:not(.stk--is-resizing)` }
 				renderIn="edit"
 				styleRule="width"
@@ -47,9 +48,9 @@ const Styles = props => {
 				unitCallback={ widthUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableWidth }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				renderIn="save"
 				styleRule={ widthStyleRule || 'width' }
@@ -58,9 +59,9 @@ const Styles = props => {
 				unitCallback={ widthUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableWidth }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector }:not(.stk--is-resizing)` }
 				renderIn="edit"
 				styleRule="height"
@@ -69,9 +70,9 @@ const Styles = props => {
 				unitCallback={ heightUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableHeight }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				renderIn="save"
 				styleRule="height"
@@ -80,9 +81,9 @@ const Styles = props => {
 				unitCallback={ heightUnitCallback }
 				responsive="all"
 				enabledCallback={ () => enableHeight }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				/**
 				 * `box-shadow` will not work alongside
 				 * `mask-image`. Use `drop-shadow` instead.
@@ -97,9 +98,9 @@ const Styles = props => {
 				attrName="imageShadow"
 				format="drop-shadow(%s)"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				hoverSelector={ hoverSelector }
 				renderIn="save"
@@ -107,18 +108,18 @@ const Styles = props => {
 				attrName="imageShadow"
 				format="drop-shadow(%s)"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector } img` }
 				hoverSelector={ `${ hoverSelector } img` }
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="filter"
 				attrName="imageFilter"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector } img` }
 				hoverSelector={ `${ hoverSelector } img` }
 				hoverSelectorCallback={ hoverSelectorCallback }
@@ -126,9 +127,9 @@ const Styles = props => {
 				attrName="imageZoom"
 				format="scale(%s)"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				/**
 				 * Add the border radius in the actual image since
 				 * filter CSS style values (e.g. `brightness`) can sometimes mess up
@@ -141,17 +142,17 @@ const Styles = props => {
 				styleRule="borderRadius"
 				attrName="imageBorderRadius"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector } img` }
 				renderIn="save"
 				styleRule="borderRadius"
 				attrName="imageBorderRadius"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector } img` }
 				hoverSelector={ `${ hoverSelector } img` }
 				hoverSelectorCallback={ hoverSelectorCallback }
@@ -160,18 +161,18 @@ const Styles = props => {
 				valueCallback={ focalPointToPosition }
 				responsive="all"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector } img` }
 				styleRule="objectFit"
 				attrName="imageFit"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 
 			{ /** Image shape */ }
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				// This is so that the resizer won't get clipped.
 				selector={ [
@@ -188,9 +189,9 @@ const Styles = props => {
 					return getShapeCSS( value, getAttribute( 'imageShapeFlipX' ), getAttribute( 'imageShapeFlipY' ), getAttribute( 'imageShapeStretch' ) )
 				} }
 				dependencies={ [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ [
 					`${ selector } img`,
@@ -206,9 +207,9 @@ const Styles = props => {
 					return getShapeCSS( value, getAttribute( 'imageShapeFlipX' ), getAttribute( 'imageShapeFlipY' ), getAttribute( 'imageShapeStretch' ) )
 				} }
 				dependencies={ [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ `${ selector }::after` }
 				hoverSelector={ `${ hoverSelector }::after` }
@@ -218,9 +219,9 @@ const Styles = props => {
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient' }
 				dependencies={ [ 'imageOverlayColorType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ `${ selector } .stk-img-resizer-wrapper::after` }
 				hoverSelector={ `${ hoverSelector } .stk-img-resizer-wrapper::after` }
@@ -230,9 +231,9 @@ const Styles = props => {
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient' }
 				dependencies={ [ 'imageOverlayColorType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ `${ selector }::after` }
 				hoverSelector={ `${ selector }::before` }
@@ -298,9 +299,9 @@ const Styles = props => {
 					return `linear-gradient(${ angle }, ${ color1 || defaultColor1 } ${ color1Location }, ${ color2 || defaultColor2 } ${ color2Location })`
 				} }
 				dependencies={ [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection', 'imageOverlayOpacity' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ `${ selector } .stk-img-resizer-wrapper::after` }
 				hoverSelector={ `${ selector } .stk-img-resizer-wrapper::before` }
@@ -367,40 +368,39 @@ const Styles = props => {
 					return `linear-gradient(${ angle }, ${ color1 || defaultColor1 } ${ color1Location }, ${ color2 || defaultColor2 } ${ color2Location })`
 				} }
 				dependencies={ [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection', 'imageOverlayOpacity' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ `${ selector }` }
 				hoverSelector={ `${ selector }::before` }
 				styleRule="--stk-gradient-overlay"
 				attrName="imageOverlayOpacity"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ `${ selector } .stk-img-resizer-wrapper` }
 				hoverSelector={ `${ selector } .stk-img-resizer-wrapper::before` }
 				styleRule="--stk-gradient-overlay"
 				attrName="imageOverlayOpacity"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ `${ selector }::after, ${ selector }::before` }
 				styleRule="mix-blend-mode"
 				attrName="imageOverlayBlendMode"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ `${ selector } .stk-img-resizer-wrapper::after, ${ selector } .stk-img-resizer-wrapper::before` }
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="mix-blend-mode"
 				attrName="imageOverlayBlendMode"
-				{ ...propsToPass }
 			/>
 		</>
 	)

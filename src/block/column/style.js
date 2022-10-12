@@ -52,40 +52,40 @@ const ColumnStyles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".%s-container"
 				styleRule="marginTop"
 				attrName="columnSpacing"
 				responsive="all"
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginTop.valuePreCallback }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".%s-container"
 				styleRule="marginRight"
 				attrName="columnSpacing"
 				responsive="all"
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginRight.valuePreCallback }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".%s-container"
 				styleRule="marginBottom"
 				attrName="columnSpacing"
 				responsive="all"
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginBottom.valuePreCallback }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".%s-container"
 				styleRule="marginLeft"
 				attrName="columnSpacing"
 				responsive="all"
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginLeft.valuePreCallback }
-				{ ...propsToPass }
 			/>
 		</>
 	)

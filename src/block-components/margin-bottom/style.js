@@ -17,12 +17,12 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="marginBottom"
 				attrName="blockMarginBottom"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 		</>
 	)

@@ -28,111 +28,110 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__top-line"
 				styleRule="height"
 				attrName="topLineHeight"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__top-line"
 				styleRule="width"
 				attrName="topLineWidth"
 				hasUnits="px"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__top-line"
 				styleRule="backgroundColor"
 				attrName="topLineColor"
 				hover="all"
-
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__top-line"
 				styleRule="backgroundColor"
 				attrName="topLineColor"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__top-line"
 				styleRule="marginBottom"
 				attrName="topLineMargin"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__top-line"
 				styleRule="marginLeft"
 				attrName="topLineAlign"
 				responsive="all"
 				valueCallback={ value => value === 'center' || value === 'right' ? 'auto' : '0' }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__top-line"
 				styleRule="marginRight"
 				attrName="topLineAlign"
 				responsive="all"
 				valueCallback={ value => value === 'center' || value === 'left' ? 'auto' : '0' }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__bottom-line"
 				styleRule="height"
 				attrName="bottomLineHeight"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__bottom-line"
 				styleRule="width"
 				attrName="bottomLineWidth"
 				hasUnits="px"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__bottom-line"
 				styleRule="backgroundColor"
 				attrName="bottomLineColor"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__bottom-line"
 				styleRule="backgroundColor"
 				attrName="bottomLineColor"
 				hover="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__bottom-line"
 				styleRule="marginTop"
 				attrName="bottomLineMargin"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__bottom-line"
 				styleRule="marginLeft"
 				attrName="bottomLineAlign"
 				responsive="all"
 				valueCallback={ value => value === 'center' || value === 'right' ? 'auto' : undefined }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-heading__bottom-line"
 				styleRule="marginRight"
 				attrName="bottomLineAlign"
 				responsive="all"
 				valueCallback={ value => value === 'center' || value === 'left' ? 'auto' : undefined }
-				{ ...propsToPass }
 			/>
 		</>
 	)

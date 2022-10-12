@@ -31,6 +31,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-number-box__text"
 				styleRule="height"
 				attrName="shapeSize"
@@ -38,9 +39,9 @@ const Styles = props => {
 				hasUnits="px"
 				enabledCallback={ getAttribute => getAttribute( 'hasShape' ) }
 				dependencies={ [ 'hasShape' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-number-box__text"
 				styleRule="width"
 				attrName="shapeSize"
@@ -48,7 +49,6 @@ const Styles = props => {
 				hasUnits="px"
 				enabledCallback={ getAttribute => getAttribute( 'hasShape' ) }
 				dependencies={ [ 'hasShape' ] }
-				{ ...propsToPass }
 			/>
 		</>
 	)

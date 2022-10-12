@@ -259,107 +259,115 @@ const BlockCss = props => {
 		}
 	}
 
-	 //
-	 let blockUniqueClassName = getBlockUniqueClassname( attributes.uniqueId, clientId )
-	 if ( instanceId ) {
-		 if ( ! blockUniqueClassName.match( /-[\d]$/g ) ) {
-			 blockUniqueClassName = blockUniqueClassName + `-${ instanceId }`
-		 }
+	//
+	let blockUniqueClassName = getBlockUniqueClassname( attributes.uniqueId, clientId )
+	if ( instanceId ) {
+		if ( ! blockUniqueClassName.match( /-[\d]$/g ) ) {
+			blockUniqueClassName = blockUniqueClassName + `-${ instanceId }`
+		}
 
-		 // Add instance id to classes. ( e.g. `stk-abc123` -> `stk-abc123-2`, where 2 is `instanceId`. )
-		 selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-		 hoverSelector = hoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-		 parentHoverSelector = parentHoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-		 collapsedSelector = collapsedSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-	 }
+		// Add instance id to classes. ( e.g. `stk-abc123` -> `stk-abc123-2`, where 2 is `instanceId`. )
+		selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+		hoverSelector = hoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+		parentHoverSelector = parentHoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+		collapsedSelector = collapsedSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+	}
 
-	 selector = prependCSSClass( selector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
-	 hoverSelector = prependCSSClass( hoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
-	 parentHoverSelector = prependCSSClass( parentHoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
-	 collapsedSelector = prependCSSClass( collapsedSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	// Selectors can be arrays, flatten them.
+	if ( Array.isArray( selector ) ) {
+		selector = selector.join( ', ' )
+	}
+	if ( Array.isArray( hoverSelector ) ) {
+		hoverSelector = hoverSelector.join( ', ' )
+	}
 
-	 let css = ''
+	selector = prependCSSClass( selector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	hoverSelector = prependCSSClass( hoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	parentHoverSelector = prependCSSClass( parentHoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	collapsedSelector = prependCSSClass( collapsedSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
 
-	 // If rendering for the ditor, output the css, if saving, compile css to an object.
-	 const createCssFunc = editorMode ? createCss : addCssToCssSaveObject
+	let css = ''
 
-	 css += createCssFunc( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), desktopQuery, vendorPrefixes, compileCssTo )
-	 if ( hasHover ) {
-		 css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'desktop', 'hover' ), desktopQuery, vendorPrefixes, compileCssTo )
-	 }
-	 if ( hasParentHover ) {
-		 css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'desktop', 'parent-hover' ), desktopQuery, vendorPrefixes, compileCssTo )
-	 }
-	 if ( hasCollapsed ) {
-		 css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'desktop', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
-	 }
+	// If rendering for the ditor, output the css, if saving, compile css to an object.
+	const createCssFunc = editorMode ? createCss : addCssToCssSaveObject
 
-	 if ( hasTablet ) {
-		 css += createCssFunc( selector, styleRule, getValue( attrName, 'tablet', 'normal' ), tabletQuery, vendorPrefixes, compileCssTo )
-		 if ( hasHover ) {
-			 css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'tablet', 'hover' ), tabletQuery, vendorPrefixes, compileCssTo )
-		 }
-		 if ( hasParentHover ) {
-			 css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'tablet', 'parent-hover' ), tabletQuery, vendorPrefixes, compileCssTo )
-		 }
-		 if ( hasCollapsed ) {
-			 css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'tablet', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
-		 }
-	 }
+	css += createCssFunc( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), desktopQuery, vendorPrefixes, compileCssTo )
+	if ( hasHover ) {
+		css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'desktop', 'hover' ), desktopQuery, vendorPrefixes, compileCssTo )
+	}
+	if ( hasParentHover ) {
+		css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'desktop', 'parent-hover' ), desktopQuery, vendorPrefixes, compileCssTo )
+	}
+	if ( hasCollapsed ) {
+		css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'desktop', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
+	}
 
-	 if ( hasMobile ) {
-		 css += createCssFunc( selector, styleRule, getValue( attrName, 'mobile', 'normal' ), mobileQuery, vendorPrefixes, compileCssTo )
-		 if ( hasHover ) {
-			 css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'mobile', 'hover' ), mobileQuery, vendorPrefixes, compileCssTo )
-		 }
-		 if ( hasParentHover ) {
-			 css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'mobile', 'parent-hover' ), mobileQuery, vendorPrefixes, compileCssTo )
-		 }
-		 if ( hasCollapsed ) {
-			 css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'mobile', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
-		 }
-	 }
+	if ( hasTablet ) {
+		css += createCssFunc( selector, styleRule, getValue( attrName, 'tablet', 'normal' ), tabletQuery, vendorPrefixes, compileCssTo )
+		if ( hasHover ) {
+			css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'tablet', 'hover' ), tabletQuery, vendorPrefixes, compileCssTo )
+		}
+		if ( hasParentHover ) {
+			css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'tablet', 'parent-hover' ), tabletQuery, vendorPrefixes, compileCssTo )
+		}
+		if ( hasCollapsed ) {
+			css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'tablet', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
+		}
+	}
 
-	 return css || null
+	if ( hasMobile ) {
+		css += createCssFunc( selector, styleRule, getValue( attrName, 'mobile', 'normal' ), mobileQuery, vendorPrefixes, compileCssTo )
+		if ( hasHover ) {
+			css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'mobile', 'hover' ), mobileQuery, vendorPrefixes, compileCssTo )
+		}
+		if ( hasParentHover ) {
+			css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'mobile', 'parent-hover' ), mobileQuery, vendorPrefixes, compileCssTo )
+		}
+		if ( hasCollapsed ) {
+			css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'mobile', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
+		}
+	}
+
+	return css || null
 }
 
 // This is used for rendering styles for the editor.
 const BlockCssEdit = props => {
-	 const [ blockState ] = useBlockHoverState()
-	 const { clientId } = useBlockEditContext()
+	const [ blockState ] = useBlockHoverState()
+	const { clientId } = useBlockEditContext()
 
-	 // Extract the attributes used by the styleParams. This hook only triggers
-	 // when the extracted attributes change in value.
-	 const attributes = useBlockAttributesContext( attributes => {
-		 return {
-			 ...pick( attributes, getDependencyAttrnamesFast( props ) ),
-			 clientId,
-		 }
-	 } )
+	// Extract the attributes used by the styleParams. This hook only triggers
+	// when the extracted attributes change in value.
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			...pick( attributes, getDependencyAttrnamesFast( props ) ),
+			clientId,
+		}
+	} )
 
-	 const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
+	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
 
-	 const css = <BlockCss
-		 { ...props }
-		 blockState={ blockState }
-		 clientId={ clientId }
-		 attributes={ attributes }
-		 instanceId={ instanceId }
-	 />
+	const css = <BlockCss
+		{ ...props }
+		blockState={ blockState }
+		clientId={ clientId }
+		attributes={ attributes }
+		instanceId={ instanceId }
+	/>
 
-	 const output = useDynamicContent( css )
+	const output = useDynamicContent( css )
 
-	 return output ? <style>{ output }</style> : null
+	return output ? <style>{ output }</style> : null
 }
 
 // Unify in a single component so it's easier to write block styles.
 const _BlockCss = props => {
-	 // If no compileCssTo prop is provided, then we just print the styles directly.
-	 if ( ! props.compileCssTo ) {
-		 return <BlockCssEdit { ...props } editorMode={ true } />
-	 }
-	 // Else, it means we need to compile all the css into the object passed to the compileCssTo prop.
-	 return <BlockCss { ...props } editorMode={ false } />
+	// If no compileCssTo prop is provided, then we just print the styles directly.
+	if ( ! props.compileCssTo ) {
+		return <BlockCssEdit { ...props } editorMode={ true } />
+	}
+	// Else, it means we need to compile all the css into the object passed to the compileCssTo prop.
+	return <BlockCss { ...props } editorMode={ false } />
 }
 
 export default _BlockCss

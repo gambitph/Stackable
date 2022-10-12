@@ -25,12 +25,12 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="height"
 				attrName="height"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 		</>
 	)

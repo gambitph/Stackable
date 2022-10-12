@@ -23,42 +23,43 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="minHeight"
 				attrName="height"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ verticalAlignSelector || selector }
 				styleRule={ verticalAlignRule || 'alignItems' }
 				attrName="verticalAlign"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ verticalAlignSelectorEdit || verticalAlignSelector || selector }
 				styleRule="justifyContent"
 				attrName="verticalAlign"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
 				styleRule="maxWidth"
 				attrName="width"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
 				styleRule="minWidth"
 				attrName="width"
@@ -70,9 +71,9 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value !== '' ? 'auto' : undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="paddingTop"
 				attrName="padding"
@@ -81,9 +82,9 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.top }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="paddingRight"
 				attrName="padding"
@@ -92,9 +93,9 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.right }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="paddingBottom"
 				attrName="padding"
@@ -103,9 +104,9 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.bottom }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="paddingLeft"
 				attrName="padding"
@@ -114,9 +115,9 @@ const Styles = props => {
 				hover="all"
 				hasUnits="px"
 				valuePreCallback={ value => value?.left }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
 				styleRule="marginTop"
 				attrName="margin"
@@ -127,9 +128,9 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value.startsWith( 'auto' ) ? 'auto' : value
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
 				styleRule="marginRight"
 				attrName="margin"
@@ -157,9 +158,9 @@ const Styles = props => {
 					return value.startsWith( 'auto' ) ? 'auto' : value
 				} }
 				dependencies={ [ 'horizontalAlign', 'width' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
 				styleRule="marginBottom"
 				attrName="margin"
@@ -170,9 +171,9 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value.startsWith( 'auto' ) ? 'auto' : value
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
 				styleRule="marginLeft"
 				attrName="margin"
@@ -200,9 +201,9 @@ const Styles = props => {
 					return value.startsWith( 'auto' ) ? 'auto' : value
 				} }
 				dependencies={ [ 'horizontalAlign', 'width' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="display"
 				attrName="verticalAlign"
@@ -211,9 +212,9 @@ const Styles = props => {
 				valueCallback={ () => {
 					return 'flex'
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ selector }
 				styleRule="flexDirection"
@@ -223,9 +224,9 @@ const Styles = props => {
 				valueCallback={ () => {
 					return ( verticalAlignRule || 'alignItems' ) === 'justifyContent' ? 'column' : undefined
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector={ selector }
 				styleRule="flexDirection"
@@ -235,17 +236,16 @@ const Styles = props => {
 				valueCallback={ () => {
 					return 'column'
 				} }
-				{ ...propsToPass }
 			/>
 			{ horizontalAlignRule !== 'margin' &&
 				<BlockCss
+					{ ...propsToPass }
 					renderIn="save"
 					selector={ wrapperSelector || selector }
 					styleRule={ horizontalAlignRule || 'justifyContent' }
 					attrName="horizontalAlign"
 					attrNameTemplate={ attrNameTemplate }
 					responsive="all"
-					{ ...propsToPass }
 				/> }
 		</>
 	)

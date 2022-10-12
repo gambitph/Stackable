@@ -18,21 +18,21 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="columnGap"
 				attrName="columnGap"
 				format="%spx"
 				responsive="all"
 				enabledCallback={ () => enableColumnGap }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="rowGap"
 				attrName="rowGap"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 		</>
 	)

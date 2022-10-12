@@ -20,7 +20,7 @@ import {
 	ContentAlign,
 } from '~stackable/block-components'
 import { useBlockStyle, getBlockStyle } from '~stackable/hooks'
-import { BlockCss } from '~stackable/components'
+import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -121,47 +121,48 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="--stk-columns"
 				attrName="columns"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				responsive="all"
 				styleRule="--stk-container-padding-left"
 				attrName="containePadding"
 				hasUnits="px"
 				valueCallback={ value => value?.left }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				responsive="all"
 				styleRule="--stk-container-padding-right"
 				attrName="containePadding"
 				hasUnits="px"
 				valueCallback={ value => value?.right }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=""
 				styleRule="--stk-column-gap"
 				attrName="columnGap"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-content-align"
 				hasUnits="px"
 				responsive="all"
 				styleRule="maxWidth"
 				attrName="innerBlockContentWidth"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-content-align"
 				responsive="all"
 				styleRule="marginLeft"
@@ -176,9 +177,9 @@ const Styles = props => {
 					return 0
 				} }
 				dependencies={ [ 'innerBlockContentWidth' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-content-align"
 				responsive="all"
 				styleRule="marginRight"
@@ -193,19 +194,19 @@ const Styles = props => {
 					return 0
 				} }
 				dependencies={ [ 'innerBlockContentWidth' ] }
-				{ ...propsToPass }
 			/>
 
 			{ /** Category Highlight Color */ }
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ itemSelector } .stk-button` }
 				styleRule="background"
 				attrName="categoryHighlightColor"
 				enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
 				dependencies={ [ 'categoryHighlighted' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ itemSelector } .stk-button:after` }
 				styleRule="background"
 				attrName="categoryHighlightColor"
@@ -222,9 +223,9 @@ const Styles = props => {
 				} }
 				enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
 				dependencies={ [ 'categoryHighlighted', 'categoryHoverStateInContainer' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ itemSelector } .stk-button:after` }
 				styleRule="opacity"
 				attrName="categoryHighlightColor"
@@ -241,59 +242,59 @@ const Styles = props => {
 				} }
 				enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
 				dependencies={ [ 'categoryHighlighted', 'categoryHoverStateInContainer' ] }
-				{ ...propsToPass }
 			/>
 
 			{ /** Spacing */ }
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ itemSelector } .stk-block-posts__image-link` }
 				styleRule="marginBottom"
 				attrName="imageSpacing"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-posts__title"
 				styleRule="marginBottom"
 				attrName="titleSpacing"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-posts__category"
 				styleRule="marginBottom"
 				attrName="categorySpacing"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-posts__excerpt"
 				styleRule="marginBottom"
 				attrName="excerptSpacing"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-posts__meta"
 				styleRule="marginBottom"
 				attrName="metaSpacing"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-posts__readmore"
 				styleRule="marginBottom"
 				attrName="readmoreSpacing"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".stk-container-padding"
 				styleRule="width"
@@ -308,7 +309,6 @@ const Styles = props => {
 				} }
 				enabledCallback={ () => blockStyle === 'list' }
 				dependencies={ [ 'imageWidthUnit', 'className' ] }
-				{ ...propsToPass }
 			/>
 		</>
 	)
@@ -363,7 +363,7 @@ PostsStyles.Content = props => {
 	}
 
 	return (
-		<>
+		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<Column.Style.Content { ...props } />
@@ -380,7 +380,7 @@ PostsStyles.Content = props => {
 			<ContentAlign.Style.Content { ...props } />
 			<FlexGapStyles.Content { ...props } { ...flexGapOptions } />
 			<Styles { ...props } blockStyle={ blockStyle?.name } />
-		</>
+		</BlockCssCompiler>
 	)
 }
 

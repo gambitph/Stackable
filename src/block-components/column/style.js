@@ -18,6 +18,7 @@ const ColumnStyles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="flex"
@@ -35,9 +36,9 @@ const ColumnStyles = props => {
 					}
 					return value
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				// We need to add a maxWidth in the editor since the re-resizable box
 				// can mess up the snapping if the column width is too small, then
 				// resizes to a larger size.
@@ -55,9 +56,9 @@ const ColumnStyles = props => {
 					}
 					return value
 				} }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector={ selector }
 				styleRule="flex"
@@ -83,7 +84,6 @@ const ColumnStyles = props => {
 					}
 					return value
 				} }
-				{ ...propsToPass }
 			/>
 		</>
 	)

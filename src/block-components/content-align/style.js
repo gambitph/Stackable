@@ -14,42 +14,43 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".%s-column"
 				styleRule="--stk-column-gap"
 				attrName="columnGap"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
 				styleRule="--stk-column-gap"
 				attrName="columnGap"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".%s-column"
 				styleRule="rowGap"
 				attrName="rowGap"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
 				styleRule="rowGap"
 				attrName="rowGap"
 				format="%spx"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".%s-column"
 				styleRule="justifyContent"
@@ -57,9 +58,9 @@ const Styles = props => {
 				responsive="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
 				dependencies={ [ 'columnFit' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
 				styleRule="justifyContent"
@@ -67,7 +68,6 @@ const Styles = props => {
 				responsive="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
 				dependencies={ [ 'columnFit' ] }
-				{ ...propsToPass }
 			/>
 		</>
 	)

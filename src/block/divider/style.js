@@ -33,6 +33,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selectorCallback={ getAttribute => {
 					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
 
@@ -57,9 +58,9 @@ const Styles = props => {
 				} }
 				attrName="color"
 				dependencies={ [ 'className' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-divider__dot:before"
 				styleRule="fontSize"
 				attrName="height"
@@ -70,9 +71,9 @@ const Styles = props => {
 					return blockStyle === 'asterisks'
 				} }
 				dependencies={ [ 'className' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="hr.stk-block-divider__hr"
 				styleRule="borderRadius"
 				attrName="height"
@@ -83,9 +84,9 @@ const Styles = props => {
 					return blockStyle === 'bar'
 				} }
 				dependencies={ [ 'className' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-divider__dot"
 				styleRule="width"
 				attrName="height"
@@ -96,9 +97,9 @@ const Styles = props => {
 					return [ 'asterisks', 'dots' ].includes( blockStyle )
 				} }
 				dependencies={ [ 'className' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selectorCallback={ getAttribute => {
 					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
 					if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
@@ -112,9 +113,9 @@ const Styles = props => {
 				format="%spx"
 				responsive="all"
 				dependencies={ [ 'className' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selectorCallback={ getAttribute => {
 					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
 					if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
@@ -128,7 +129,6 @@ const Styles = props => {
 				format="%s%"
 				responsive="all"
 				dependencies={ [ 'className' ] }
-				{ ...propsToPass }
 			/>
 		</>
 	)

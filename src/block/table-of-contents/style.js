@@ -36,21 +36,22 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector="li"
 				styleRule="paddingInlineStart"
 				attrName="iconGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="ul"
 				styleRule="listStyleType"
 				attrName="listType"
 				valueCallback={ value => ( value === 'none' ? 'none' : undefined ) }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="ol"
 				styleRule="listStyleType"
 				attrName="listType"
@@ -58,65 +59,65 @@ const Styles = props => {
 					isEmpty( value ) || value === 'none' || value === 'unordered'
 						? undefined
 						: value }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-table-of-contents__table"
 				styleRule="columnCount"
 				attrName="columns"
 				responsive="all"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-table-of-contents__table"
 				styleRule="columnGap"
 				attrName="columnGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector="li"
 				styleRule="marginBottom"
 				attrName="rowGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selector=".stk-block-table-of-contents__list-item-inner"
 				styleRule="marginBottom"
 				attrName="rowGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-table-of-contents__table ul"
 				styleRule="marginTop"
 				attrName="rowGap"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ [ 'ul', 'ol' ] }
 				styleRule="paddingLeft"
 				attrName="indentation"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="li a"
 				hover="all"
 				styleRule="color"
 				attrName="color"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ [ 'li' ] }
 				styleRule="marginInline"
 				attrName="listAlignment"
@@ -129,24 +130,24 @@ const Styles = props => {
 							: value === 'left'
 								? '0 auto'
 								: '' }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="html"
 				styleRule="scroll-behavior"
 				attrName="isSmoothScroll"
 				valueCallback={ value => ( value ? 'smooth' : undefined ) }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector="html"
 				styleRule="scroll-padding-top"
 				attrName="scrollTopOffset"
 				responsive="all"
 				format={ '%spx' }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				// This fixes the issue where the bullet becomes small when a global font size is set.
 				renderIn="edit"
 				selector=".%s.%s li"
@@ -154,7 +155,6 @@ const Styles = props => {
 				attrName="fontSize"
 				responsive="all"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 		</>
 	)

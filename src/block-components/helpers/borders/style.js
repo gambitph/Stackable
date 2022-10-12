@@ -21,6 +21,7 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ borderRadiusSelector || selector }
 				styleRule="borderRadius"
 				attrName="borderRadius"
@@ -29,9 +30,9 @@ const Styles = props => {
 				responsive="all"
 				hover="all"
 				hoverSelector={ borderRadiusSelector ? undefined : hoverSelector }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				// Adding a border radius should append `overflow: hidden`.
 				// This is to prevent gradient background from overflowing.
 				selector={ borderRadiusSelector || selector }
@@ -49,25 +50,25 @@ const Styles = props => {
 				} }
 				valueCallback={ () => 'hidden' }
 				dependencies={ [ 'overflow' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="boxShadow"
 				attrName="shadow"
 				attrNameTemplate={ attrNameTemplate }
 				hover="all"
 				hoverSelector={ hoverSelector }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="borderStyle"
 				attrName="borderType"
 				attrNameTemplate={ attrNameTemplate }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="borderColor"
 				attrName="borderColor"
@@ -76,9 +77,9 @@ const Styles = props => {
 				hover="all"
 				hoverSelector={ hoverSelector }
 				dependencies={ [ 'borderType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="borderTopWidth"
 				attrName="borderWidth"
@@ -90,9 +91,9 @@ const Styles = props => {
 				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
 				valuePreCallback={ value => value?.top }
 				dependencies={ [ 'borderType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="borderRightWidth"
 				attrName="borderWidth"
@@ -104,9 +105,9 @@ const Styles = props => {
 				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
 				valuePreCallback={ value => value?.right }
 				dependencies={ [ 'borderType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="borderBottomWidth"
 				attrName="borderWidth"
@@ -118,9 +119,9 @@ const Styles = props => {
 				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
 				valuePreCallback={ value => value?.bottom }
 				dependencies={ [ 'borderType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="borderLeftWidth"
 				attrName="borderWidth"
@@ -132,7 +133,6 @@ const Styles = props => {
 				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
 				valuePreCallback={ value => value?.left }
 				dependencies={ [ 'borderType' ] }
-				{ ...propsToPass }
 			/>
 		</>
 	)

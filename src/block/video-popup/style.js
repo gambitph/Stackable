@@ -27,11 +27,11 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector=".stk-block-icon"
 				attrName="iconGap"
 				styleRule="flexBasis"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 		</>
 	)

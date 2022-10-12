@@ -25,45 +25,46 @@ const Styles = props => {
 	return (
 		<>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ [ '', '.stk-button' ] }
 				styleRule="width"
 				attrName="buttonFullWidth"
 				valueCallback={ () => '100%' }
 				format="%spx"
 				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
-				{ ...propsToPass }
 			/>
 			{
 			// This makes the full-width button occupy the available space, but make
 			// others wrap when it's too small.
 			}
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=""
 				styleRule="flex"
 				attrName="buttonFullWidth"
 				valueCallback={ () => '1 1 0' }
 				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="flex"
 				attrName="buttonFullWidth"
 				valueCallback={ () => '1 1 0' }
 				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				responsive="all"
 				styleRule="minHeight"
 				attrName="buttonMinHeight"
 				format="%spx"
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				responsive="all"
 				styleRule="width"
@@ -71,45 +72,45 @@ const Styles = props => {
 				format="%spx"
 				enabledCallback={ getAttribute => ! getAttribute( 'buttonFullWidth' ) }
 				dependencies={ [ 'buttonFullWidth' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				responsive="all"
 				styleRule="paddingTop"
 				attrName="buttonPadding"
 				hasUnits="px"
 				valuePreCallback={ value => value?.top }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				responsive="all"
 				styleRule="paddingRight"
 				attrName="buttonPadding"
 				hasUnits="px"
 				valuePreCallback={ value => value?.right }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				responsive="all"
 				styleRule="paddingBottom"
 				attrName="buttonPadding"
 				hasUnits="px"
 				valuePreCallback={ value => value?.bottom }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				responsive="all"
 				styleRule="paddingLeft"
 				attrName="buttonPadding"
 				hasUnits="px"
 				valuePreCallback={ value => value?.left }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ selector }
 				styleRule="background"
 				attrName="buttonBackgroundColor"
@@ -125,9 +126,9 @@ const Styles = props => {
 					return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
 				} }
 				dependencies={ [ 'buttonBackgroundGradientDirection', 'buttonBackgroundColor', 'buttonBackgroundColor2', 'buttonBackgroundColorType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector }:after` }
 				styleRule="background"
 				attrName="buttonBackgroundColor"
@@ -158,9 +159,9 @@ const Styles = props => {
 					return undefined
 				} }
 				dependencies={ [ 'buttonBackgroundGradientDirection', 'buttonBackgroundColor', 'buttonBackgroundColor2', 'buttonBackgroundColorType' ] }
-				{ ...propsToPass }
 			/>
 			<BlockCss
+				{ ...propsToPass }
 				selector={ `${ selector }:after` }
 				styleRule="opacity"
 				attrName="buttonBackgroundColor"
@@ -182,7 +183,6 @@ const Styles = props => {
 
 					return undefined
 				} }
-				{ ...propsToPass }
 			/>
 		</>
 	)
