@@ -1,53 +1,37 @@
 /**
  * External dependencies
  */
-import { getStyles, useStyles } from '~stackable/util'
-import { Style as StyleComponent } from '~stackable/components'
+import { BlockCss } from '~stackable/components'
 
-const getStyleParams = ( options = {} ) => {
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
 	const {
 		selector = '',
-	} = options
+	} = props
 
-	return [
-		{
-			selector,
-			styleRule: 'marginBottom',
-			attrName: 'blockMarginBottom',
-			responsive: 'all',
-			format: '%spx',
-		},
-	]
+	return (
+		<>
+			<BlockCss
+				selector={ selector }
+				styleRule="marginBottom"
+				attrName="blockMarginBottom"
+				responsive="all"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+		</>
+	)
 }
 
 export const Style = props => {
-	const styles = useStyles( getStyleParams( props ) )
-
-	return (
-		<StyleComponent
-			styles={ styles }
-			versionAdded="3.0.0"
-			versionDeprecated=""
-			{ ...props }
-		/>
-	)
+	return <Styles { ...props } />
 }
 
 Style.Content = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = getStyles( attributes, getStyleParams( options ) )
-
-	return (
-		<StyleComponent.Content
-			styles={ styles }
-			versionAdded="3.0.0"
-			versionDeprecated=""
-			{ ...propsToPass }
-		/>
-	)
+	return <Styles { ...props } />
 }

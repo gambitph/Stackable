@@ -9,11 +9,8 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import {
-	getUniqueBlockClass, useStyles, getStyles,
-} from '~stackable/util'
 import { getBlockStyle } from '~stackable/hooks'
-import { Style as StyleComponent } from '~stackable/components'
+import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
 /**
  * Internal dependencies
@@ -23,111 +20,121 @@ import { blockStyles } from './block-styles'
 /**
  * WordPress dependencies
  */
-import { memo, renderToString } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 
-const getStyleParams = ( options = {} ) => {
-	const { } = options
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
 
-	return [
-		{
-			selectorCallback: getAttribute => {
-				const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+	return (
+		<>
+			<BlockCss
+				selectorCallback={ getAttribute => {
+					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
 
-				if ( blockStyle === 'dots' ) {
-					return '.stk-block-divider__dot'
-				}
+					if ( blockStyle === 'dots' ) {
+						return '.stk-block-divider__dot'
+					}
 
-				if ( blockStyle === 'asterisks' ) {
-					return '.stk-block-divider__dot:before'
-				}
+					if ( blockStyle === 'asterisks' ) {
+						return '.stk-block-divider__dot:before'
+					}
 
-				return 'hr.stk-block-divider__hr'
-			},
-			styleRuleCallback: getAttribute => {
-				const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+					return 'hr.stk-block-divider__hr'
+				} }
+				styleRuleCallback={ getAttribute => {
+					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
 
-				if ( blockStyle === 'asterisks' ) {
-					return 'color'
-				}
+					if ( blockStyle === 'asterisks' ) {
+						return 'color'
+					}
 
-				return 'background'
-			},
+					return 'background'
+				} }
+				attrName="color"
+				dependencies={ [ 'className' ] }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector=".stk-block-divider__dot:before"
+				styleRule="fontSize"
+				attrName="height"
+				responsive="all"
+				format="calc(%spx * 1.8)"
+				enabledCallback={ getAttribute => {
+					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+					return blockStyle === 'asterisks'
+				} }
+				dependencies={ [ 'className' ] }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector="hr.stk-block-divider__hr"
+				styleRule="borderRadius"
+				attrName="height"
+				responsive="all"
+				format="calc(%spx / 2)"
+				enabledCallback={ getAttribute => {
+					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+					return blockStyle === 'bar'
+				} }
+				dependencies={ [ 'className' ] }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector=".stk-block-divider__dot"
+				styleRule="width"
+				attrName="height"
+				responsive="all"
+				format="%spx"
+				enabledCallback={ getAttribute => {
+					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+					return [ 'asterisks', 'dots' ].includes( blockStyle )
+				} }
+				dependencies={ [ 'className' ] }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selectorCallback={ getAttribute => {
+					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+					if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
+						return '.stk-block-divider__dot'
+					}
 
-			attrName: 'color',
-			dependencies: [ 'className' ],
-		},
-		{
-			selector: '.stk-block-divider__dot:before',
-			styleRule: 'fontSize',
-			attrName: 'height',
-			responsive: 'all',
-			format: 'calc(%spx * 1.8)',
-			enabledCallback: getAttribute => {
-				const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-				return blockStyle === 'asterisks'
-			},
-			dependencies: [ 'className' ],
-		},
-		{
-			selector: 'hr.stk-block-divider__hr',
-			styleRule: 'borderRadius',
-			attrName: 'height',
-			responsive: 'all',
-			format: 'calc(%spx / 2)',
-			enabledCallback: getAttribute => {
-				const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-				return blockStyle === 'bar'
-			},
-			dependencies: [ 'className' ],
-		},
-		{
-			selector: '.stk-block-divider__dot',
-			styleRule: 'width',
-			attrName: 'height',
-			responsive: 'all',
-			format: '%spx',
-			enabledCallback: getAttribute => {
-				const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-				return [ 'asterisks', 'dots' ].includes( blockStyle )
-			},
-			dependencies: [ 'className' ],
-		},
-		{
-			selectorCallback: getAttribute => {
-				const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-				if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
-					return '.stk-block-divider__dot'
-				}
+					return 'hr.stk-block-divider__hr'
+				} }
+				styleRule="height"
+				attrName="height"
+				format="%spx"
+				responsive="all"
+				dependencies={ [ 'className' ] }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selectorCallback={ getAttribute => {
+					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+					if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
+						return '.stk-block-divider__dots'
+					}
 
-				return 'hr.stk-block-divider__hr'
-			},
-			styleRule: 'height',
-			attrName: 'height',
-			format: '%spx',
-			responsive: 'all',
-			dependencies: [ 'className' ],
-		},
-		{
-			selectorCallback: getAttribute => {
-				const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-				if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
-					return '.stk-block-divider__dots'
-				}
-
-				return 'hr.stk-block-divider__hr'
-			},
-			styleRule: 'width',
-			attrName: 'width',
-			format: '%s%',
-			responsive: 'all',
-			dependencies: [ 'className' ],
-		},
-	]
+					return 'hr.stk-block-divider__hr'
+				} }
+				styleRule="width"
+				attrName="width"
+				format="%s%"
+				responsive="all"
+				dependencies={ [ 'className' ] }
+				{ ...propsToPass }
+			/>
+		</>
+	)
 }
 
 export const DividerStyles = memo( props => {
-	const dividerStyles = useStyles( getStyleParams() )
-
 	return (
 		<>
 			<Alignment.Style { ...props } />
@@ -135,55 +142,34 @@ export const DividerStyles = memo( props => {
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
-			<StyleComponent
-				styles={ dividerStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
+			<Styles { ...props } />
 		</>
 	)
 } )
 
 DividerStyles.defaultProps = {
-	isEditor: false,
-	attributes: {},
-	options: {},
+	version: '',
 }
 
 DividerStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const dividerStyles = getStyles( propsToPass.attributes, getStyleParams() )
-
-	const styles = (
-		<>
-			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<MarginBottom.Style.Content { ...propsToPass } />
-			<StyleComponent.Content
-				styles={ dividerStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<MarginBottom.Style.Content { ...props } />
+			<Styles { ...props } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
 DividerStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
-	options: {},
 }

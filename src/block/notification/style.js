@@ -11,51 +11,53 @@ import {
 	Transform,
 	ContentAlign,
 } from '~stackable/block-components'
-import { Style as StyleComponent } from '~stackable/components'
-import {
-	getUniqueBlockClass,
-	useStyles,
-	getStyles,
-} from '~stackable/util'
+import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import {
-	memo, Fragment, renderToString,
-} from '@wordpress/element'
+import { memo } from '@wordpress/element'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-notification__content',
 	sizeHorizontalAlignRule: 'margin',
 }
 
-const getStyleParams = () => {
-	return [
-		{
-			selector: '.stk-container',
-			attrName: 'dismissibleSize',
-			styleRule: 'paddingInlineEnd',
-			enabledCallback: getAttribute => getAttribute( 'isDismissible' ) && getAttribute( 'dismissibleSize' ),
-			valuePreCallback: value => value + 44, // 44 is an arbitrary number based on the size of the container paddings vs the close button size.
-			format: '%spx',
-			dependencies: [ 'isDismissible' ],
-		},
-		{
-			selector: '.stk-block-notification__close-button svg',
-			attrName: 'dismissibleColor',
-			styleRule: 'fill',
-			enabledCallback: getAttribute => getAttribute( 'isDismissible' ),
-			dependencies: [ 'isDismissible' ],
-		},
-	]
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
+
+	return (
+		<>
+			<BlockCss
+				selector=".stk-container"
+				attrName="dismissibleSize"
+				styleRule="paddingInlineEnd"
+				enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) && getAttribute( 'dismissibleSize' ) }
+				valuePreCallback={ value => value + 44 } // 44 is an arbitrary number based on the size of the container paddings vs the close button size.
+				format="%spx"
+				dependencies={ [ 'isDismissible' ] }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector=".stk-block-notification__close-button svg"
+				attrName="dismissibleColor"
+				styleRule="fill"
+				enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) }
+				dependencies={ [ 'isDismissible' ] }
+				{ ...propsToPass }
+			/>
+		</>
+	)
 }
 
 export const ContainerStyles = memo( props => {
-	const styles = useStyles( getStyleParams() )
-
 	return (
-		<Fragment>
+		<>
 			<Alignment.Style { ...props } />
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
@@ -64,54 +66,36 @@ export const ContainerStyles = memo( props => {
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<MarginBottom.Style { ...props } />
 			<ContentAlign.Style { ...props } />
-			<StyleComponent
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
-		</Fragment>
+			<Styles { ...props } />
+		</>
 	)
 } )
 
 ContainerStyles.defaultProps = {
-	isEditor: false,
+	version: '',
 }
 
 ContainerStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const styles = getStyles( propsToPass.attributes, getStyleParams() )
-
-	const stylesToRender = (
-		<Fragment>
-			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
-			<MarginBottom.Style.Content { ...propsToPass } />
-			<ContentAlign.Style.Content { ...propsToPass } />
-			<StyleComponent.Content
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</Fragment>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
+			<MarginBottom.Style.Content { ...props } />
+			<ContentAlign.Style.Content { ...props } />
+			<Styles { ...props } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
 ContainerStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
 }

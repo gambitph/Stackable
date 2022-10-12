@@ -5,19 +5,12 @@ import { isEmpty } from 'lodash'
 import {
 	Typography, MarginBottom, BlockDiv, Advanced, EffectsAnimations, Alignment, Transform,
 } from '~stackable/block-components'
-import {
-	getStyles,
-	getUniqueBlockClass,
-	useStyles,
-} from '~stackable/util'
-import { Style as StyleComponent } from '~stackable/components'
+import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import {
-	memo, Fragment, renderToString,
-} from '@wordpress/element'
+import { memo } from '@wordpress/element'
 
 const typographyOptions = {
 	selector: [
@@ -32,123 +25,144 @@ const typographyOptions = {
 	],
 }
 
-const getStyleParams = () => {
-	return [
-		{
-			selector: 'li',
-			styleRule: 'paddingInlineStart',
-			attrName: 'iconGap',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			selector: 'ul',
-			styleRule: 'listStyleType',
-			attrName: 'listType',
-			valueCallback: value => ( value === 'none' ? 'none' : undefined ),
-		},
-		{
-			selector: 'ol',
-			styleRule: 'listStyleType',
-			attrName: 'listType',
-			valueCallback: value =>
-				isEmpty( value ) || value === 'none' || value === 'unordered'
-					? undefined
-					: value,
-		},
-		{
-			selector: '.stk-table-of-contents__table',
-			styleRule: 'columnCount',
-			attrName: 'columns',
-			responsive: 'all',
-		},
-		{
-			selector: '.stk-table-of-contents__table',
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			renderIn: 'save',
-			selector: 'li',
-			styleRule: 'marginBottom',
-			attrName: 'rowGap',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			renderIn: 'edit',
-			selector: '.stk-block-table-of-contents__list-item-inner',
-			styleRule: 'marginBottom',
-			attrName: 'rowGap',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			selector: '.stk-table-of-contents__table ul',
-			styleRule: 'marginTop',
-			attrName: 'rowGap',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			selector: [ 'ul', 'ol' ],
-			styleRule: 'paddingLeft',
-			attrName: 'indentation',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			selector: 'li a',
-			hover: 'all',
-			styleRule: 'color',
-			attrName: 'color',
-		},
-		{
-			selector: [ 'li' ],
-			styleRule: 'marginInline',
-			attrName: 'listAlignment',
-			responsive: 'all',
-			valueCallback: value =>
-				value === 'center'
-					? 'auto'
-					: value === 'right'
-						? 'auto 0'
-						: value === 'left'
-							? '0 auto'
-							: '',
-		},
-		{
-			selector: 'html',
-			styleRule: 'scroll-behavior',
-			attrName: 'isSmoothScroll',
-			valueCallback: value => ( value ? 'smooth' : undefined ),
-		},
-		{
-			selector: 'html',
-			styleRule: 'scroll-padding-top',
-			attrName: 'scrollTopOffset',
-			responsive: 'all',
-			format: '%spx',
-		},
-		// This fixes the issue where the bullet becomes small when a global font size is set.
-		{
-			renderIn: 'edit',
-			selector: '.%s.%s li',
-			styleRule: 'fontSize',
-			attrName: 'fontSize',
-			responsive: 'all',
-			format: '%spx',
-		},
-	]
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
+
+	return (
+		<>
+			<BlockCss
+				selector="li"
+				styleRule="paddingInlineStart"
+				attrName="iconGap"
+				responsive="all"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector="ul"
+				styleRule="listStyleType"
+				attrName="listType"
+				valueCallback={ value => ( value === 'none' ? 'none' : undefined ) }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector="ol"
+				styleRule="listStyleType"
+				attrName="listType"
+				valueCallback={ value =>
+					isEmpty( value ) || value === 'none' || value === 'unordered'
+						? undefined
+						: value }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector=".stk-table-of-contents__table"
+				styleRule="columnCount"
+				attrName="columns"
+				responsive="all"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector=".stk-table-of-contents__table"
+				styleRule="columnGap"
+				attrName="columnGap"
+				responsive="all"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				renderIn="save"
+				selector="li"
+				styleRule="marginBottom"
+				attrName="rowGap"
+				responsive="all"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				renderIn="edit"
+				selector=".stk-block-table-of-contents__list-item-inner"
+				styleRule="marginBottom"
+				attrName="rowGap"
+				responsive="all"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector=".stk-table-of-contents__table ul"
+				styleRule="marginTop"
+				attrName="rowGap"
+				responsive="all"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector={ [ 'ul', 'ol' ] }
+				styleRule="paddingLeft"
+				attrName="indentation"
+				responsive="all"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector="li a"
+				hover="all"
+				styleRule="color"
+				attrName="color"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector={ [ 'li' ] }
+				styleRule="marginInline"
+				attrName="listAlignment"
+				responsive="all"
+				valueCallback={ value =>
+					value === 'center'
+						? 'auto'
+						: value === 'right'
+							? 'auto 0'
+							: value === 'left'
+								? '0 auto'
+								: '' }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector="html"
+				styleRule="scroll-behavior"
+				attrName="isSmoothScroll"
+				valueCallback={ value => ( value ? 'smooth' : undefined ) }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				selector="html"
+				styleRule="scroll-padding-top"
+				attrName="scrollTopOffset"
+				responsive="all"
+				format={ '%spx' }
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				// This fixes the issue where the bullet becomes small when a global font size is set.
+				renderIn="edit"
+				selector=".%s.%s li"
+				styleRule="fontSize"
+				attrName="fontSize"
+				responsive="all"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+		</>
+	)
 }
 
 export const TableOfContentsStyles = memo( props => {
-	const iconStyles = useStyles( getStyleParams() )
-
 	return (
-		<Fragment>
+		<>
 			<Alignment.Style { ...props } />
 			<Typography.Style { ...props } { ...typographyOptions } />
 			<MarginBottom.Style { ...props } />
@@ -156,55 +170,35 @@ export const TableOfContentsStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
-			<StyleComponent
-				styles={ iconStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
-		</Fragment>
+			<Styles { ...props } />
+		</>
 	)
 } )
 
 TableOfContentsStyles.defaultProps = {
-	attributes: {},
-	options: {},
+	version: '',
 }
 
 TableOfContentsStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const iconStyles = getStyles( propsToPass.attributes, getStyleParams() )
-
-	const styles = (
-		<Fragment>
-			<Alignment.Style.Content { ...propsToPass } />
-			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
-			<MarginBottom.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<StyleComponent.Content
-				styles={ iconStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</Fragment>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
+			<Typography.Style.Content { ...props } options={ typographyOptions } />
+			<MarginBottom.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<Styles { ...props } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
 TableOfContentsStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
-	options: {},
 }

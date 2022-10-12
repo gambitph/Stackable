@@ -57,7 +57,8 @@ const StackableRangeControl = memo( props => {
 
 	// We need to debounce the prop.onChange callback for when the slider is
 	// dragged, this is so that things feel smoother.
-	const debouncedOnChange = useCallback( debounce( props.onChange, 100 ), [ props.onChange ] )
+	// TODO: may need to remove this?
+	const _debouncedOnChange = useCallback( debounce( props.onChange, 100 ), [ props.onChange ] )
 
 	// Update the internal value state if the prop changes.
 	useEffect( () => {
@@ -74,18 +75,18 @@ const StackableRangeControl = memo( props => {
 	const handleOnChange = value => {
 		setValue( value )
 		if ( typeof value === 'string' && value.toLowerCase() === 'auto' ) {
-			debouncedOnChange( value )
+			props.onChange( value )
 			return
 		} else if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
 				const newValue = clamp( parsedValue, props.min, props.max )
 				setValue( newValue )
-				debouncedOnChange( newValue )
+				props.onChange( newValue )
 				return
 			}
 		}
-		debouncedOnChange( props.resetFallbackValue )
+		props.onChange( props.resetFallbackValue )
 	}
 
 	const handleOnReset = () => {

@@ -6,17 +6,14 @@ import {
 	BlockDiv,
 	EffectsAnimations,
 	Transform,
-	separatorGetStyleParams,
+	SeparatorStyles as SeparatorStyles_,
 } from '~stackable/block-components'
-import {
-	getUniqueBlockClass, useStyles, getStyles,
-} from '~stackable/util'
-import { Style as StyleComponent } from '~stackable/components'
+import { BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { memo, renderToString } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 const separatorOptions = {
@@ -27,73 +24,48 @@ const separatorOptions = {
 }
 
 export const SeparatorStyles = memo( props => {
-	const separatorStyles = useStyles( separatorGetStyleParams( separatorOptions, '' ) )
-	const separatorLayerStyles = useStyles( applyFilters( 'stackable.block-component.separator.get-style-params', [], separatorOptions, '' ) )
-
 	return (
 		<>
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Transform.Style { ...props } />
-			<StyleComponent
-				styles={ separatorStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
-			<StyleComponent
-				styles={ separatorLayerStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
+			<SeparatorStyles_ { ...props } { ...separatorOptions } location="" />
+			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, {
+				...props,
+				...separatorOptions,
+				location: '',
+			} ) }
 		</>
 	)
 } )
 
 SeparatorStyles.defaultProps = {
-	isEditor: false,
+	version: '',
 }
 
 SeparatorStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-
-	const separatorStyles = getStyles( props.attributes, separatorGetStyleParams( separatorOptions, '' ) )
-	const separatorLayerStyles = getStyles( props.attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], separatorOptions, '' ) )
-
-	const styles = (
-		<>
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<StyleComponent.Content
-				styles={ separatorStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ separatorLayerStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</>
+	return (
+		<BlockCssCompiler>
+			<BlockDiv.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<SeparatorStyles_ { ...props } { ...separatorOptions } location="" />
+			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, {
+				...props,
+				...separatorOptions,
+				location: '',
+			} ) }
+		</BlockCssCompiler>
 	)
-
-	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
 SeparatorStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
 }

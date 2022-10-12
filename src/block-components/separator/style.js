@@ -1,8 +1,11 @@
 /**
+ * Internal dependencies
+ */
+import { BlockCss } from '~stackable/components'
+
+/**
  * External dependencies
  */
-import { Style as StyleComponent } from '~stackable/components'
-import { getStyles, useStyles } from '~stackable/util'
 import { compact } from 'lodash'
 
 /**
@@ -10,192 +13,154 @@ import { compact } from 'lodash'
  */
 import { applyFilters } from '@wordpress/hooks'
 
-export const separatorGetStyleParams = ( options = {}, location ) => {
+export const SeparatorStyles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
 	const {
+		location = '',
 		selector: _selector,
 		wrapperSelector = '.stk-separator__wrapper',
 		enableFlipHorizontally = true,
 		enableFlipVertically = false,
 		isInitiallyFlippedVertically = true,
-	} = options
+	} = props
 
 	const selector = _selector !== undefined ? _selector : ` > .stk-separator__${ location }`
 
-	return [
-		{
-			attrNameTemplate: `${ location }%s`,
-			selector,
-			styleRule: 'zIndex',
-			attrName: 'separatorBringToFront',
-			valuePreCallback: value => {
-				if ( value ) {
-					return 6
-				}
-				return undefined
-			},
-		},
-		{
-			attrNameTemplate: `${ location }%s`,
-			selector,
-			styleRule: 'transform',
-			attrName: 'separatorFlipHorizontally',
-			valuePreCallback: ( value, getAttribute ) => {
-				const flipHorizontally = value
-				const flipVertically = getAttribute( 'separatorFlipVertically' )
-
-				if ( ! enableFlipVertically && ! enableFlipHorizontally ) {
-					return undefined
-				}
-
-				if ( ! flipHorizontally && ! flipVertically ) {
-					return undefined
-				}
-
-				const shouldApplyScaleX = enableFlipHorizontally && flipHorizontally
-				const shouldAddScaleYAlongsideScaleX = shouldApplyScaleX && isInitiallyFlippedVertically
-				const shouldApplyScaleY = enableFlipVertically && flipVertically
-
-				return compact( [
-					shouldApplyScaleX ? 'scaleX(-1)' : undefined,
-					shouldAddScaleYAlongsideScaleX ? 'scaleY(-1)' : undefined,
-					shouldApplyScaleY ? 'scaleY(-1)' : undefined,
-				] ).join( ' ' )
-			},
-			dependencies: [ 'separatorFlipVertically' ],
-		},
-		{
-			attrNameTemplate: `${ location }%s`,
-			selector: selector + ' svg',
-			styleRule: 'fill',
-			attrName: 'separatorColor',
-		},
-		{
-			attrNameTemplate: `${ location }%s`,
-			selector: selector + ` ${ wrapperSelector }`,
-			styleRule: 'transform',
-			attrName: 'separatorWidth',
-			format: 'scaleX(%s)',
-		},
-		{
-			attrNameTemplate: `${ location }%s`,
-			selector: selector + ` ${ wrapperSelector }`,
-			styleRule: 'height',
-			responsive: 'all',
-			attrName: 'separatorHeight',
-			format: '%spx',
-		},
-		{
-			attrNameTemplate: `${ location }%s`,
-			selector: selector + ' svg',
-			styleRule: 'filter',
-			attrName: 'separatorShadow',
-			format: 'drop-shadow(%s)',
-			valueCallback: value => {
-				return value === 'drop-shadow(none)' ? 'none' : value
-			},
-		},
-	]
-}
-
-const editorMarginBottomParams = ( options = {} ) => {
-	const {
-		selector: _selector,
-	} = options
-
-	return [
-		{
-			renderIn: 'edit',
-			selector: _selector !== undefined ? _selector : ` > .stk-separator__bottom`,
-			styleRule: 'bottom',
-			attrName: 'blockMargin',
-			responsive: 'all',
-			valuePreCallback: value => value?.bottom,
-			format: '%spx',
-		},
-	]
-}
-
-export const Style = props => {
-	const topSeparatorStyles = useStyles( separatorGetStyleParams( props, 'top' ) )
-	const bottomSeparatorStyles = useStyles( separatorGetStyleParams( { ...props, isInitiallyFlippedVertically: false }, 'bottom' ) )
-	const bottomMarginBottomStyle = useStyles( editorMarginBottomParams( props ) )
-	const topSeparatorLayerStyles = useStyles( applyFilters( 'stackable.block-component.separator.get-style-params', [], props, 'top' ) )
-	const bottomSeparatorLayerStyles = useStyles( applyFilters( 'stackable.block-component.separator.get-style-params', [], props, 'bottom' ) )
-
 	return (
 		<>
-			<StyleComponent
-				styles={ topSeparatorStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
+			<BlockCss
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector }
+				styleRule="zIndex"
+				attrName="separatorBringToFront"
+				valuePreCallback={ value => {
+					if ( value ) {
+						return 6
+					}
+					return undefined
+				} }
+				{ ...propsToPass }
 			/>
-			<StyleComponent
-				styles={ bottomSeparatorStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
+			<BlockCss
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector }
+				styleRule="transform"
+				attrName="separatorFlipHorizontally"
+				valuePreCallback={ ( value, getAttribute ) => {
+					const flipHorizontally = value
+					const flipVertically = getAttribute( 'separatorFlipVertically' )
+
+					if ( ! enableFlipVertically && ! enableFlipHorizontally ) {
+						return undefined
+					}
+
+					if ( ! flipHorizontally && ! flipVertically ) {
+						return undefined
+					}
+
+					const shouldApplyScaleX = enableFlipHorizontally && flipHorizontally
+					const shouldAddScaleYAlongsideScaleX = shouldApplyScaleX && isInitiallyFlippedVertically
+					const shouldApplyScaleY = enableFlipVertically && flipVertically
+
+					return compact( [
+						shouldApplyScaleX ? 'scaleX(-1)' : undefined,
+						shouldAddScaleYAlongsideScaleX ? 'scaleY(-1)' : undefined,
+						shouldApplyScaleY ? 'scaleY(-1)' : undefined,
+					] ).join( ' ' )
+				} }
+				dependencies={ [ 'separatorFlipVertically' ] }
+				{ ...propsToPass }
 			/>
-			<StyleComponent
-				styles={ topSeparatorLayerStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
+			<BlockCss
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector + ' svg' }
+				styleRule="fill"
+				attrName="separatorColor"
+				{ ...propsToPass }
 			/>
-			<StyleComponent
-				styles={ bottomSeparatorLayerStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
+			<BlockCss
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector + ` ${ wrapperSelector }` }
+				styleRule="transform"
+				attrName="separatorWidth"
+				format="scaleX(%s)"
+				{ ...propsToPass }
 			/>
-			<StyleComponent
-				styles={ bottomMarginBottomStyle }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
+			<BlockCss
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector + ` ${ wrapperSelector }` }
+				styleRule="height"
+				responsive="all"
+				attrName="separatorHeight"
+				format="%spx"
+				{ ...propsToPass }
+			/>
+			<BlockCss
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector + ' svg' }
+				styleRule="filter"
+				attrName="separatorShadow"
+				format="drop-shadow(%s)"
+				valueCallback={ value => {
+					return value === 'drop-shadow(none)' ? 'none' : value
+				} }
+				{ ...propsToPass }
 			/>
 		</>
 	)
 }
 
-Style.Content = props => {
+const MarginBottomStyles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
 	const {
-		attributes,
-		options = {},
-		...propsToPass
+		selector: _selector,
 	} = props
-
-	const topSeparatorStyles = getStyles( attributes, separatorGetStyleParams( options, 'top' ) )
-	const bottomSeparatorStyles = getStyles( attributes, separatorGetStyleParams( { ...options, isInitiallyFlippedVertically: false }, 'bottom' ) )
-	const topSeparatorLayerStyles = getStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'top' ) )
-	const bottomSeparatorLayerStyles = getStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'bottom' ) )
 
 	return (
 		<>
-			<StyleComponent.Content
-				styles={ topSeparatorStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
+			<BlockCss
+				renderIn="edit"
+				selector={ _selector !== undefined ? _selector : ` > .stk-separator__bottom` }
+				styleRule="bottom"
+				attrName="blockMargin"
+				responsive="all"
+				valuePreCallback={ value => value?.bottom }
+				format="%spx"
 				{ ...propsToPass }
 			/>
-			<StyleComponent.Content
-				styles={ bottomSeparatorStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ topSeparatorLayerStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ bottomSeparatorLayerStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
+		</>
+	)
+}
+
+export const Style = props => {
+	return (
+		<>
+			<SeparatorStyles { ...props } location="top" />
+			<SeparatorStyles { ...props } isInitiallyFlippedVertically={ false } location="bottom" />
+			<MarginBottomStyles { ...props } />
+			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, { ...props, location: 'top' } ) }
+			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, { ...props, location: 'bottom' } ) }
+		</>
+	)
+}
+
+Style.Content = props => {
+	return (
+		<>
+			<SeparatorStyles { ...props } location="top" />
+			<SeparatorStyles { ...props } isInitiallyFlippedVertically={ false } location="bottom" />
+			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, { ...props, location: 'top' } ) }
+			{ applyFilters( 'stackable.block-component.separator.get-style-params', null, { ...props, location: 'bottom' } ) }
 		</>
 	)
 }
