@@ -6,7 +6,7 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.5.0
+ * Version: 3.6.0
  *
  * @package Stackable
  */
@@ -172,6 +172,8 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/notification/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/video-popup/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/map/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-bar/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-circle/index.php' );
 
 /**
  * Welcome screen.

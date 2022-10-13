@@ -9,6 +9,10 @@
 	align-items: flex-start;
 	overflow: hidden;
 
+	&.stk--has-control-tooltip {
+		overflow: visible;
+	}
+
 	.stk-dynamic-content-control__button {
 		height: 100%;
 		min-width: unset;

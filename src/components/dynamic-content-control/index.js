@@ -348,6 +348,7 @@ const DynamicContentControl = ( {
 		'stk-dynamic-content-control',
 	], {
 		'stk--has-dynamic-content': hasDynamicContent,
+		'stk--has-control-tooltip': otherProps.controlHasTooltip,
 	} )
 
 	return (
@@ -373,6 +374,7 @@ const DynamicContentControl = ( {
 
 DynamicContentControl.defaultProps = {
 	enable: false,
+	controlHasTooltip: false,
 	children: null,
 	activeAttribute: '',
 	onReset: () => {},
