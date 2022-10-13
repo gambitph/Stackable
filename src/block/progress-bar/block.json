@@ -2,13 +2,13 @@
 	"apiVersion": 2,
 	"name": "stackable/progress-bar",
 	"title": "Progress Bar",
-	"description": "Adds a progress bar block.",
+	"description": "Visualize a progress value or percentage in a bar.",
 	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
-		"Progress",
-		"Progress Bar"
+		"percentage status"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special"
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/progress-bar-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }
