@@ -58,21 +58,6 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
-	attrObject.add( {
-		attributes: {
-			iconDefault: {
-				type: 'string',
-				default: defaultIcon,
-			},
-			iconDefault2: {
-				type: 'string',
-				default: '',
-			},
-		},
-		versionAdded: '3.4.2',
-		versionDeprecated: '',
-	} )
-
 	return attrObject.getMerged( version )
 }
 
