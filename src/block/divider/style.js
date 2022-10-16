@@ -21,6 +21,7 @@ import { blockStyles } from './block-styles'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { attributeHasValue } from '~stackable/util'
 
 const Styles = props => {
 	const propsToPass = {
@@ -29,107 +30,122 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		attributes,
+	} = props
 
 	return (
 		<>
-			<BlockCss
-				{ ...propsToPass }
-				selectorCallback={ getAttribute => {
-					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+			{ attributeHasValue( 'color', attributes ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selectorCallback={ getAttribute => {
+						const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
 
-					if ( blockStyle === 'dots' ) {
-						return '.stk-block-divider__dot'
-					}
+						if ( blockStyle === 'dots' ) {
+							return '.stk-block-divider__dot'
+						}
 
-					if ( blockStyle === 'asterisks' ) {
-						return '.stk-block-divider__dot:before'
-					}
+						if ( blockStyle === 'asterisks' ) {
+							return '.stk-block-divider__dot:before'
+						}
 
-					return 'hr.stk-block-divider__hr'
-				} }
-				styleRuleCallback={ getAttribute => {
-					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+						return 'hr.stk-block-divider__hr'
+					} }
+					styleRuleCallback={ getAttribute => {
+						const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
 
-					if ( blockStyle === 'asterisks' ) {
-						return 'color'
-					}
+						if ( blockStyle === 'asterisks' ) {
+							return 'color'
+						}
 
-					return 'background'
-				} }
-				attrName="color"
-				dependencies={ [ 'className' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-divider__dot:before"
-				styleRule="fontSize"
-				attrName="height"
-				responsive="all"
-				format="calc(%spx * 1.8)"
-				enabledCallback={ getAttribute => {
-					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-					return blockStyle === 'asterisks'
-				} }
-				dependencies={ [ 'className' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector="hr.stk-block-divider__hr"
-				styleRule="borderRadius"
-				attrName="height"
-				responsive="all"
-				format="calc(%spx / 2)"
-				enabledCallback={ getAttribute => {
-					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-					return blockStyle === 'bar'
-				} }
-				dependencies={ [ 'className' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-divider__dot"
-				styleRule="width"
-				attrName="height"
-				responsive="all"
-				format="%spx"
-				enabledCallback={ getAttribute => {
-					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-					return [ 'asterisks', 'dots' ].includes( blockStyle )
-				} }
-				dependencies={ [ 'className' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selectorCallback={ getAttribute => {
-					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-					if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
-						return '.stk-block-divider__dot'
-					}
+						return 'background'
+					} }
+					attrName="color"
+					dependencies={ [ 'className' ] }
+				/>
+			}
+			{ attributeHasValue( 'height', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-divider__dot:before"
+					styleRule="fontSize"
+					attrName="height"
+					responsive="all"
+					format="calc(%spx * 1.8)"
+					enabledCallback={ getAttribute => {
+						const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+						return blockStyle === 'asterisks'
+					} }
+					dependencies={ [ 'className' ] }
+				/>
+			}
+			{ attributeHasValue( 'height', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector="hr.stk-block-divider__hr"
+					styleRule="borderRadius"
+					attrName="height"
+					responsive="all"
+					format="calc(%spx / 2)"
+					enabledCallback={ getAttribute => {
+						const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+						return blockStyle === 'bar'
+					} }
+					dependencies={ [ 'className' ] }
+				/>
+			}
+			{ attributeHasValue( 'height', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-divider__dot"
+					styleRule="width"
+					attrName="height"
+					responsive="all"
+					format="%spx"
+					enabledCallback={ getAttribute => {
+						const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+						return [ 'asterisks', 'dots' ].includes( blockStyle )
+					} }
+					dependencies={ [ 'className' ] }
+				/>
+			}
+			{ attributeHasValue( 'height', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selectorCallback={ getAttribute => {
+						const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+						if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
+							return '.stk-block-divider__dot'
+						}
 
-					return 'hr.stk-block-divider__hr'
-				} }
-				styleRule="height"
-				attrName="height"
-				format="%spx"
-				responsive="all"
-				dependencies={ [ 'className' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selectorCallback={ getAttribute => {
-					const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
-					if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
-						return '.stk-block-divider__dots'
-					}
+						return 'hr.stk-block-divider__hr'
+					} }
+					styleRule="height"
+					attrName="height"
+					format="%spx"
+					responsive="all"
+					dependencies={ [ 'className' ] }
+				/>
+			}
+			{ attributeHasValue( 'width', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selectorCallback={ getAttribute => {
+						const blockStyle = getBlockStyle( blockStyles, getAttribute( 'className' ) || '' )?.name
+						if ( [ 'dots', 'asterisks' ].includes( blockStyle ) ) {
+							return '.stk-block-divider__dots'
+						}
 
-					return 'hr.stk-block-divider__hr'
-				} }
-				styleRule="width"
-				attrName="width"
-				format="%s%"
-				responsive="all"
-				dependencies={ [ 'className' ] }
-			/>
+						return 'hr.stk-block-divider__hr'
+					} }
+					styleRule="width"
+					attrName="width"
+					format="%s%"
+					responsive="all"
+					dependencies={ [ 'className' ] }
+				/>
+			}
 		</>
 	)
 }

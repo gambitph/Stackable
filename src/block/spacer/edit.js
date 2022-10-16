@@ -115,7 +115,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<SpacerStyles version={ VERSION } />
+			<SpacerStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-spacer" />
 			<BlockDiv className={ blockClassNames }>
 				<ResizableBox

@@ -84,7 +84,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<IconStyles version={ VERSION } />
+			<IconStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-icon" />
 			<BlockDiv className={ blockClassNames } >
 				<Link linkTrigger=".stk--inner-svg">

@@ -19,6 +19,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { attributeHasValue } from '~stackable/util'
 
 const Styles = props => {
 	const propsToPass = {
@@ -27,29 +28,36 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		attributes,
+	} = props
 
 	return (
 		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-number-box__text"
-				styleRule="height"
-				attrName="shapeSize"
-				responsive="all"
-				hasUnits="px"
-				enabledCallback={ getAttribute => getAttribute( 'hasShape' ) }
-				dependencies={ [ 'hasShape' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-number-box__text"
-				styleRule="width"
-				attrName="shapeSize"
-				responsive="all"
-				hasUnits="px"
-				enabledCallback={ getAttribute => getAttribute( 'hasShape' ) }
-				dependencies={ [ 'hasShape' ] }
-			/>
+			{ attributeHasValue( 'shapeSize', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-number-box__text"
+					styleRule="height"
+					attrName="shapeSize"
+					responsive="all"
+					hasUnits="px"
+					enabledCallback={ getAttribute => getAttribute( 'hasShape' ) }
+					dependencies={ [ 'hasShape' ] }
+				/>
+			}
+			{ attributeHasValue( 'shapeSize', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-number-box__text"
+					styleRule="width"
+					attrName="shapeSize"
+					responsive="all"
+					hasUnits="px"
+					enabledCallback={ getAttribute => getAttribute( 'hasShape' ) }
+					dependencies={ [ 'hasShape' ] }
+				/>
+			}
 		</>
 	)
 }

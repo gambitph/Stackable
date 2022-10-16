@@ -16,6 +16,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { attributeHasValue } from '~stackable/util'
 
 const typographyOptions = {
 	selector: '.stk-block-text__text',
@@ -29,24 +30,31 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		attributes,
+	} = props
 
 	return (
 		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector=""
-				styleRule="columnCount"
-				attrName="columns"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=""
-				styleRule="columnGap"
-				attrName="columnGap"
-				responsive="all"
-				format="%spx"
-			/>
+			{ attributeHasValue( 'columns', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=""
+					styleRule="columnCount"
+					attrName="columns"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'columnGap', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=""
+					styleRule="columnGap"
+					attrName="columnGap"
+					responsive="all"
+					format="%spx"
+				/>
+			}
 		</>
 	)
 }

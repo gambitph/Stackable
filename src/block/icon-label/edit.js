@@ -104,7 +104,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<IconLabelStyles version={ VERSION } />
+			<IconLabelStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-icon-label" />
 
 			<BlockDiv className={ blockClassNames }>

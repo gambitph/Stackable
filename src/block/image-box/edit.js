@@ -54,6 +54,7 @@ const Edit = props => {
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
 	const {
+		attributes,
 		className,
 	} = props
 
@@ -100,7 +101,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorBlockControls>
 
-			<ImageBoxStyles version={ VERSION } />
+			<ImageBoxStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-image-box" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

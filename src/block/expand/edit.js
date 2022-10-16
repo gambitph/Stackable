@@ -66,6 +66,7 @@ const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
+		attributes,
 		className,
 	} = props
 
@@ -103,7 +104,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorBlockControls>
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-expand" />
 
 			<style>{ `.stk-block.stk-block-expand .stk-block-expand__short-text::before { content: "${ __( 'Less text', i18n ) }" !important; }` }</style>

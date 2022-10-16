@@ -112,7 +112,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<Typography.InspectorControls hasTextTag={ false } sizePlaceholder="56" />
 
-			<HeadingStyles version={ VERSION } />
+			<HeadingStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-number-box" />
 
 			<BlockDiv className={ blockClassNames }>

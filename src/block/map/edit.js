@@ -467,7 +467,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv className={ blockClassNames }>

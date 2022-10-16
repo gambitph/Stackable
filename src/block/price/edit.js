@@ -83,7 +83,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<PriceStyles version={ VERSION } />
+			<PriceStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-price" />
 
 			<BlockDiv className={ blockClassNames }>

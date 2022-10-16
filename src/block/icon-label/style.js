@@ -15,6 +15,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { attributeHasValue } from '~stackable/util'
 
 const Styles = props => {
 	const propsToPass = {
@@ -23,27 +24,34 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		attributes,
+	} = props
 
 	return (
 		<>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="save"
-				selector=".stk-block-icon"
-				attrName="iconGap"
-				styleRule="flexBasis"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector={ `.stk-inner-blocks [data-block][data-type="stackable/icon"]` }
-				attrName="iconGap"
-				styleRule="flexBasis"
-				format="%spx"
-				responsive="all"
-			/>
+			{ attributeHasValue( 'iconGap', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					renderIn="save"
+					selector=".stk-block-icon"
+					attrName="iconGap"
+					styleRule="flexBasis"
+					format="%spx"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'iconGap', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					renderIn="edit"
+					selector={ `.stk-inner-blocks [data-block][data-type="stackable/icon"]` }
+					attrName="iconGap"
+					styleRule="flexBasis"
+					format="%spx"
+					responsive="all"
+				/>
+			}
 		</>
 	)
 }

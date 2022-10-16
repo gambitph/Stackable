@@ -26,6 +26,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { attributeHasValue } from '~stackable/util'
 
 const itemSelector = ' .%s-container'
 
@@ -115,201 +116,236 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 	const {
+		attributes,
 		blockStyle,
 	} = props
 
 	return (
 		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector=""
-				styleRule="--stk-columns"
-				attrName="columns"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=""
-				responsive="all"
-				styleRule="--stk-container-padding-left"
-				attrName="containePadding"
-				hasUnits="px"
-				valueCallback={ value => value?.left }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=""
-				responsive="all"
-				styleRule="--stk-container-padding-right"
-				attrName="containePadding"
-				hasUnits="px"
-				valueCallback={ value => value?.right }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=""
-				styleRule="--stk-column-gap"
-				attrName="columnGap"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-content-align"
-				hasUnits="px"
-				responsive="all"
-				styleRule="maxWidth"
-				attrName="innerBlockContentWidth"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-content-align"
-				responsive="all"
-				styleRule="marginLeft"
-				attrName="innerBlockAlign"
-				valueCallback={ ( value, getAttribute, device ) => {
-					if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
-						return undefined
-					}
-					if ( value === 'center' || value === 'flex-end' ) {
-						return 'auto'
-					}
-					return 0
-				} }
-				dependencies={ [ 'innerBlockContentWidth' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-content-align"
-				responsive="all"
-				styleRule="marginRight"
-				attrName="innerBlockAlign"
-				valueCallback={ ( value, getAttribute, device ) => {
-					if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
-						return undefined
-					}
-					if ( value === 'center' || value === 'flex-start' ) {
-						return 'auto'
-					}
-					return 0
-				} }
-				dependencies={ [ 'innerBlockContentWidth' ] }
-			/>
+			{ attributeHasValue( 'columns', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=""
+					styleRule="--stk-columns"
+					attrName="columns"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'containePadding', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=""
+					responsive="all"
+					styleRule="--stk-container-padding-left"
+					attrName="containePadding"
+					hasUnits="px"
+					valueCallback={ value => value?.left }
+				/>
+			}
+			{ attributeHasValue( 'containePadding', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=""
+					responsive="all"
+					styleRule="--stk-container-padding-right"
+					attrName="containePadding"
+					hasUnits="px"
+					valueCallback={ value => value?.right }
+				/>
+			}
+			{ attributeHasValue( 'columnGap', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=""
+					styleRule="--stk-column-gap"
+					attrName="columnGap"
+					format="%spx"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'innerBlockContentWidth', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-content-align"
+					hasUnits="px"
+					responsive="all"
+					styleRule="maxWidth"
+					attrName="innerBlockContentWidth"
+				/>
+			}
+			{ attributeHasValue( 'innerBlockAlign', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-content-align"
+					responsive="all"
+					styleRule="marginLeft"
+					attrName="innerBlockAlign"
+					valueCallback={ ( value, getAttribute, device ) => {
+						if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
+							return undefined
+						}
+						if ( value === 'center' || value === 'flex-end' ) {
+							return 'auto'
+						}
+						return 0
+					} }
+					dependencies={ [ 'innerBlockContentWidth' ] }
+				/>
+			}
+			{ attributeHasValue( 'innerBlockAlign', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-content-align"
+					responsive="all"
+					styleRule="marginRight"
+					attrName="innerBlockAlign"
+					valueCallback={ ( value, getAttribute, device ) => {
+						if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
+							return undefined
+						}
+						if ( value === 'center' || value === 'flex-start' ) {
+							return 'auto'
+						}
+						return 0
+					} }
+					dependencies={ [ 'innerBlockContentWidth' ] }
+				/>
+			}
 
 			{ /** Category Highlight Color */ }
-			<BlockCss
-				{ ...propsToPass }
-				selector={ `${ itemSelector } .stk-button` }
-				styleRule="background"
-				attrName="categoryHighlightColor"
-				enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
-				dependencies={ [ 'categoryHighlighted' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ `${ itemSelector } .stk-button:after` }
-				styleRule="background"
-				attrName="categoryHighlightColor"
-				hoverSelectorCallback={ getAttribute => getAttribute( 'categoryHoverStateInContainer' )
-					? `${ itemSelector }:hover .stk-button:after`
-					: `${ itemSelector } .stk-button:hover:after` }
-				hover="all"
-				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					if ( state === 'normal' ) {
-						return undefined
-					}
+			{ attributeHasValue( 'categoryHighlightColor', attributes ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector={ `${ itemSelector } .stk-button` }
+					styleRule="background"
+					attrName="categoryHighlightColor"
+					enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
+					dependencies={ [ 'categoryHighlighted' ] }
+				/>
+			}
+			{ attributeHasValue( 'categoryHighlightColor', attributes, { hasHover: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector={ `${ itemSelector } .stk-button:after` }
+					styleRule="background"
+					attrName="categoryHighlightColor"
+					hoverSelectorCallback={ getAttribute => getAttribute( 'categoryHoverStateInContainer' )
+						? `${ itemSelector }:hover .stk-button:after`
+						: `${ itemSelector } .stk-button:hover:after` }
+					hover="all"
+					valuePreCallback={ ( value, getAttribute, device, state ) => {
+						if ( state === 'normal' ) {
+							return undefined
+						}
 
-					return value
-				} }
-				enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
-				dependencies={ [ 'categoryHighlighted', 'categoryHoverStateInContainer' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ `${ itemSelector } .stk-button:after` }
-				styleRule="opacity"
-				attrName="categoryHighlightColor"
-				hoverSelectorCallback={ getAttribute => getAttribute( 'categoryHoverStateInContainer' )
-					? `${ itemSelector }:hover .stk-button:after`
-					: `${ itemSelector } .stk-button:hover:after` }
-				hover="all"
-				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					if ( state === 'normal' ) {
-						return undefined
-					}
+						return value
+					} }
+					enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
+					dependencies={ [ 'categoryHighlighted', 'categoryHoverStateInContainer' ] }
+				/>
+			}
+			{ attributeHasValue( 'categoryHighlightColor', attributes, { hasHover: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector={ `${ itemSelector } .stk-button:after` }
+					styleRule="opacity"
+					attrName="categoryHighlightColor"
+					hoverSelectorCallback={ getAttribute => getAttribute( 'categoryHoverStateInContainer' )
+						? `${ itemSelector }:hover .stk-button:after`
+						: `${ itemSelector } .stk-button:hover:after` }
+					hover="all"
+					valuePreCallback={ ( value, getAttribute, device, state ) => {
+						if ( state === 'normal' ) {
+							return undefined
+						}
 
-					return ( value !== undefined && value !== '' ) ? 1 : undefined
-				} }
-				enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
-				dependencies={ [ 'categoryHighlighted', 'categoryHoverStateInContainer' ] }
-			/>
+						return ( value !== undefined && value !== '' ) ? 1 : undefined
+					} }
+					enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
+					dependencies={ [ 'categoryHighlighted', 'categoryHoverStateInContainer' ] }
+				/>
+			}
 
 			{ /** Spacing */ }
-			<BlockCss
-				{ ...propsToPass }
-				selector={ `${ itemSelector } .stk-block-posts__image-link` }
-				styleRule="marginBottom"
-				attrName="imageSpacing"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-posts__title"
-				styleRule="marginBottom"
-				attrName="titleSpacing"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-posts__category"
-				styleRule="marginBottom"
-				attrName="categorySpacing"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-posts__excerpt"
-				styleRule="marginBottom"
-				attrName="excerptSpacing"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-posts__meta"
-				styleRule="marginBottom"
-				attrName="metaSpacing"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-posts__readmore"
-				styleRule="marginBottom"
-				attrName="readmoreSpacing"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="save"
-				selector=".stk-container-padding"
-				styleRule="width"
-				attrName="imageWidth"
-				responsive="all"
-				valueCallback={ ( value, getAttribute, device ) => {
-					if ( getAttribute( 'imageWidthUnit', device ) === '%' && value !== undefined && value !== '' ) {
-						return ( 100 - parseInt( value ) ) + '%'
-					}
+			{ attributeHasValue( 'imageSpacing', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector={ `${ itemSelector } .stk-block-posts__image-link` }
+					styleRule="marginBottom"
+					attrName="imageSpacing"
+					format="%spx"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'titleSpacing', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-posts__title"
+					styleRule="marginBottom"
+					attrName="titleSpacing"
+					format="%spx"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'categorySpacing', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-posts__category"
+					styleRule="marginBottom"
+					attrName="categorySpacing"
+					format="%spx"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'excerptSpacing', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-posts__excerpt"
+					styleRule="marginBottom"
+					attrName="excerptSpacing"
+					format="%spx"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'metaSpacing', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-posts__meta"
+					styleRule="marginBottom"
+					attrName="metaSpacing"
+					format="%spx"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'readmoreSpacing', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-posts__readmore"
+					styleRule="marginBottom"
+					attrName="readmoreSpacing"
+					format="%spx"
+					responsive="all"
+				/>
+			}
+			{ attributeHasValue( 'imageWidth', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					renderIn="save"
+					selector=".stk-container-padding"
+					styleRule="width"
+					attrName="imageWidth"
+					responsive="all"
+					valueCallback={ ( value, getAttribute, device ) => {
+						if ( getAttribute( 'imageWidthUnit', device ) === '%' && value !== undefined && value !== '' ) {
+							return ( 100 - parseInt( value ) ) + '%'
+						}
 
-					return undefined
-				} }
-				enabledCallback={ () => blockStyle === 'list' }
-				dependencies={ [ 'imageWidthUnit', 'className' ] }
-			/>
+						return undefined
+					} }
+					enabledCallback={ () => blockStyle === 'list' }
+					dependencies={ [ 'imageWidthUnit', 'className' ] }
+				/>
+			}
 		</>
 	)
 }

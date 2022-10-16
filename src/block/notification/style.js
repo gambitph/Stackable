@@ -17,6 +17,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { attributeHasValue } from '~stackable/util'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-notification__content',
@@ -30,27 +31,34 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		attributes,
+	} = props
 
 	return (
 		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-container"
-				attrName="dismissibleSize"
-				styleRule="paddingInlineEnd"
-				enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) && getAttribute( 'dismissibleSize' ) }
-				valuePreCallback={ value => value + 44 } // 44 is an arbitrary number based on the size of the container paddings vs the close button size.
-				format="%spx"
-				dependencies={ [ 'isDismissible' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-notification__close-button svg"
-				attrName="dismissibleColor"
-				styleRule="fill"
-				enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) }
-				dependencies={ [ 'isDismissible' ] }
-			/>
+			{ attributeHasValue( 'dismissibleSize', attributes ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-container"
+					attrName="dismissibleSize"
+					styleRule="paddingInlineEnd"
+					enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) && getAttribute( 'dismissibleSize' ) }
+					valuePreCallback={ value => value + 44 } // 44 is an arbitrary number based on the size of the container paddings vs the close button size.
+					format="%spx"
+					dependencies={ [ 'isDismissible' ] }
+				/>
+			}
+			{ attributeHasValue( 'dismissibleColor', attributes ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-notification__close-button svg"
+					attrName="dismissibleColor"
+					styleRule="fill"
+					enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) }
+					dependencies={ [ 'isDismissible' ] }
+				/>
+			}
 		</>
 	)
 }

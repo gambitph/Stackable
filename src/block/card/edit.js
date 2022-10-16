@@ -65,6 +65,7 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const {
+		attributes,
 		className, //isHovered,
 	} = props
 
@@ -130,7 +131,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<CardStyles version={ VERSION } />
+			<CardStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-card" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

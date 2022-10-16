@@ -54,6 +54,7 @@ const Edit = props => {
 	} = useBlockContext()
 
 	const {
+		attributes,
 		className,
 		isHovered,
 	} = props
@@ -118,7 +119,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-column" />
 
 			<Column showHandle={ isHovered } context={ props.context }>

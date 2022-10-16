@@ -44,6 +44,7 @@ import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
+		attributes,
 		className,
 	} = props
 
@@ -103,7 +104,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<DividerStyles version={ VERSION } />
+			<DividerStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-divider" />
 
 			<BlockDiv className={ blockClassNames }>

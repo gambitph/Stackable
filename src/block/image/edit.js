@@ -42,6 +42,7 @@ const heightUnit = [ 'px', 'vh', '%' ]
 
 const Edit = props => {
 	const {
+		attributes,
 		clientId,
 		className,
 	} = props
@@ -81,7 +82,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-image" />
 
 			<BlockDiv className={ blockClassNames }>

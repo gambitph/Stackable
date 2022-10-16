@@ -47,6 +47,7 @@ const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
+		attributes,
 		className,
 	} = props
 
@@ -94,7 +95,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-feature-grid" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

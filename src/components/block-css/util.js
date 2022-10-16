@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import {
-	createUniqueClass, getAttributeName, getAttrName, getUniqueBlockClass,
+	createUniqueClass, formAllPossibleAttributeNames, getAttributeName, getAttrName, getUniqueBlockClass,
 } from '~stackable/util'
 
 /**
@@ -125,33 +125,6 @@ export const getDependencyAttrnamesFast = styleParams => {
 		...formAllPossibleAttributeNames( attrNames ),
 		'uniqueId', // Always include this since this affects all css.
 	]
-}
-
-// These are all the possible suffixes used.
-const ATTR_NAME_MATRIX = [
-	[ '', 'Tablet', 'Mobile' ],
-	[ '', 'Unit' ],
-	[ '', 'Hover', 'ParentHover', 'Collapsed' ],
-]
-
-/**
- * Generates all the possible attribute names and suffixes for attribute names.
- * e.g. FontSize = FontSizeTablet, FontSizeMobile, FontSizeUnitTablet, ...
- *
- * @param {Array} attrNames
- * @return {Array} possible attribute names
- */
-export const formAllPossibleAttributeNames = attrNames => {
-	return attrNames.reduce( ( attrNames, attrName ) => {
-		ATTR_NAME_MATRIX[ 0 ].forEach( x => {
-			ATTR_NAME_MATRIX[ 1 ].forEach( y => {
-				ATTR_NAME_MATRIX[ 2 ].forEach( z => {
-					attrNames.push( `${ attrName }${ x }${ y }${ z }` )
-				} )
-			} )
-		} )
-		return attrNames
-	}, [] )
 }
 
 /**

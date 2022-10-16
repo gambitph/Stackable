@@ -101,7 +101,7 @@ const Edit = ( {
 			/>
 
 			<BlockDiv className={ blockClassNames }>
-				<ProgressCircleStyles version={ VERSION } />
+				<ProgressCircleStyles version={ VERSION } attributes={ attributes } />
 				<CustomCSS mainBlockClass="stk-block-progress-circle" />
 				<div className={ containerClassNames }>
 					<div className="stk-progress-circle stk-animate">

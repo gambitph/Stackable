@@ -16,6 +16,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { attributeHasValue } from '~stackable/util'
 
 const Styles = props => {
 	const propsToPass = {
@@ -24,115 +25,147 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		attributes,
+	} = props
 
 	return (
 		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__top-line"
-				styleRule="height"
-				attrName="topLineHeight"
-				format="%spx"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__top-line"
-				styleRule="width"
-				attrName="topLineWidth"
-				hasUnits="px"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__top-line"
-				styleRule="backgroundColor"
-				attrName="topLineColor"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__top-line"
-				styleRule="backgroundColor"
-				attrName="topLineColor"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__top-line"
-				styleRule="marginBottom"
-				attrName="topLineMargin"
-				responsive="all"
-				format="%spx"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__top-line"
-				styleRule="marginLeft"
-				attrName="topLineAlign"
-				responsive="all"
-				valueCallback={ value => value === 'center' || value === 'right' ? 'auto' : '0' }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__top-line"
-				styleRule="marginRight"
-				attrName="topLineAlign"
-				responsive="all"
-				valueCallback={ value => value === 'center' || value === 'left' ? 'auto' : '0' }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__bottom-line"
-				styleRule="height"
-				attrName="bottomLineHeight"
-				format="%spx"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__bottom-line"
-				styleRule="width"
-				attrName="bottomLineWidth"
-				hasUnits="px"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__bottom-line"
-				styleRule="backgroundColor"
-				attrName="bottomLineColor"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__bottom-line"
-				styleRule="backgroundColor"
-				attrName="bottomLineColor"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__bottom-line"
-				styleRule="marginTop"
-				attrName="bottomLineMargin"
-				responsive="all"
-				format="%spx"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__bottom-line"
-				styleRule="marginLeft"
-				attrName="bottomLineAlign"
-				responsive="all"
-				valueCallback={ value => value === 'center' || value === 'right' ? 'auto' : undefined }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__bottom-line"
-				styleRule="marginRight"
-				attrName="bottomLineAlign"
-				responsive="all"
-				valueCallback={ value => value === 'center' || value === 'left' ? 'auto' : undefined }
-			/>
+			{ attributeHasValue( 'topLineHeight', attributes ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__top-line"
+					styleRule="height"
+					attrName="topLineHeight"
+					format="%spx"
+				/>
+			}
+			{ attributeHasValue( 'topLineWidth', attributes, { hasHover: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__top-line"
+					styleRule="width"
+					attrName="topLineWidth"
+					hasUnits="px"
+					hover="all"
+				/>
+			}
+			{ attributeHasValue( 'topLineColor', attributes, { hasHover: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__top-line"
+					styleRule="backgroundColor"
+					attrName="topLineColor"
+					hover="all"
+				/>
+			}
+			{ attributeHasValue( 'topLineColor', attributes, { hasHover: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__top-line"
+					styleRule="backgroundColor"
+					attrName="topLineColor"
+					hover="all"
+				/>
+			}
+			{ attributeHasValue( 'topLineMargin', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__top-line"
+					styleRule="marginBottom"
+					attrName="topLineMargin"
+					responsive="all"
+					format="%spx"
+				/>
+			}
+			{ attributeHasValue( 'topLineAlign', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__top-line"
+					styleRule="marginLeft"
+					attrName="topLineAlign"
+					responsive="all"
+					valueCallback={ value => value === 'center' || value === 'right' ? 'auto' : '0' }
+				/>
+			}
+			{ attributeHasValue( 'topLineAlign', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__top-line"
+					styleRule="marginRight"
+					attrName="topLineAlign"
+					responsive="all"
+					valueCallback={ value => value === 'center' || value === 'left' ? 'auto' : '0' }
+				/>
+			}
+			{ attributeHasValue( 'bottomLineHeight', attributes ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__bottom-line"
+					styleRule="height"
+					attrName="bottomLineHeight"
+					format="%spx"
+				/>
+			}
+			{ attributeHasValue( 'bottomLineWidth', attributes, { hasHover: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__bottom-line"
+					styleRule="width"
+					attrName="bottomLineWidth"
+					hasUnits="px"
+					hover="all"
+				/>
+			}
+			{ attributeHasValue( 'bottomLineColor', attributes, { hasHover: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__bottom-line"
+					styleRule="backgroundColor"
+					attrName="bottomLineColor"
+					hover="all"
+				/>
+			}
+			{ attributeHasValue( 'bottomLineColor', attributes, { hasHover: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__bottom-line"
+					styleRule="backgroundColor"
+					attrName="bottomLineColor"
+					hover="all"
+				/>
+			}
+			{ attributeHasValue( 'bottomLineMargin', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__bottom-line"
+					styleRule="marginTop"
+					attrName="bottomLineMargin"
+					responsive="all"
+					format="%spx"
+				/>
+			}
+			{ attributeHasValue( 'bottomLineAlign', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__bottom-line"
+					styleRule="marginLeft"
+					attrName="bottomLineAlign"
+					responsive="all"
+					valueCallback={ value => value === 'center' || value === 'right' ? 'auto' : undefined }
+				/>
+			}
+			{ attributeHasValue( 'bottomLineAlign', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=".stk-block-heading__bottom-line"
+					styleRule="marginRight"
+					attrName="bottomLineAlign"
+					responsive="all"
+					valueCallback={ value => value === 'center' || value === 'left' ? 'auto' : undefined }
+				/>
+			}
+
 		</>
 	)
 }

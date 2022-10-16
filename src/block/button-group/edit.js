@@ -185,7 +185,7 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 
 			<BlockDiv className={ blockClassNames }>
-				<ButtonGroupStyles version={ VERSION } />
+				<ButtonGroupStyles version={ VERSION } attributes={ attributes } />
 				<CustomCSS mainBlockClass="stk-block-button-group" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }

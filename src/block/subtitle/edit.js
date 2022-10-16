@@ -54,6 +54,7 @@ addFilter( 'editor.Autocomplete.completers', 'stackable/subtitle', ( filteredCom
 
 const Edit = props => {
 	const {
+		attributes,
 		className,
 		onReplace,
 		onRemove,
@@ -98,7 +99,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<SubtitleStyles version={ VERSION } />
+			<SubtitleStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-subtitle" />
 
 			<BlockDiv className={ blockClassNames }>

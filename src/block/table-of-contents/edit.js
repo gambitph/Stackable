@@ -442,7 +442,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<TableOfContentsStyles version={ VERSION } />
+			<TableOfContentsStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
 			<BlockDiv className={ blockClassNames }>

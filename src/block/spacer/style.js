@@ -13,6 +13,7 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+import { attributeHasValue } from '~stackable/util'
 
 const Styles = props => {
 	const propsToPass = {
@@ -21,17 +22,22 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		attributes,
+	} = props
 
 	return (
 		<>
-			<BlockCss
-				{ ...propsToPass }
-				selector=""
-				styleRule="height"
-				attrName="height"
-				format="%spx"
-				responsive="all"
-			/>
+			{ attributeHasValue( 'height', attributes, { hasResponsive: true } ) &&
+				<BlockCss
+					{ ...propsToPass }
+					selector=""
+					styleRule="height"
+					attrName="height"
+					format="%spx"
+					responsive="all"
+				/>
+			}
 		</>
 	)
 }

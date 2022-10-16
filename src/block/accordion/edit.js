@@ -56,6 +56,7 @@ const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
+		attributes,
 		clientId,
 		className,
 	} = props
@@ -149,7 +150,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles version={ VERSION } attributes={ attributes } />
 			<CustomCSS mainBlockClass="stk-block-accordion" />
 
 			<BlockDiv className={ blockClassNames } renderHtmlTag={ false } enableVariationPicker={ true }>
