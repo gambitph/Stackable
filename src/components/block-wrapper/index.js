@@ -22,7 +22,7 @@ import { useBlockProps } from '@wordpress/block-editor'
 
 const BlockWrapper = props => {
 	const {
-		align = '',
+		align = undefined,
 		className: blockClassName = '',
 	} = props
 	const blockHoverClass = useBlockHoverClass()
