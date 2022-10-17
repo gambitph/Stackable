@@ -25,7 +25,10 @@ const withBlockWrapper = createHigherOrderComponent(
 		const isDisplayed = useDevicePreviewOptimization( props )
 
 		return (
-			<BlockWrapper attributes={ props.attributes }>
+			<BlockWrapper
+				align={ props.attributes.align }
+				className={ props.attributes.className }
+			>
 				{ isDisplayed && <WrappedComponent { ...props } /> }
 			</BlockWrapper>
 		)

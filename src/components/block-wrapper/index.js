@@ -21,7 +21,10 @@ import classnames from 'classnames'
 import { useBlockProps } from '@wordpress/block-editor'
 
 const BlockWrapper = props => {
-	const align = props.attributes.align
+	const {
+		align = '',
+		className: blockClassName = '',
+	} = props
 	const blockHoverClass = useBlockHoverClass()
 
 	const className = classnames(
@@ -36,11 +39,11 @@ const BlockWrapper = props => {
 		className,
 		// We force-removed the block alignment wrapper div (see src/blocks.js),
 		// so we need to add our own data-align attribute.
-		'data-align': props.attributes.align,
+		'data-align': align,
 	} )
 
 	// Remove the custom CSS names here because we will be adding it in the BlockDiv component, we need to do this for our current styles to work.
-	blockProps.className = blockProps.className.replace( props.attributes.className, '' ).trim()
+	blockProps.className = blockProps.className.replace( blockClassName, '' ).trim()
 
 	return <div { ...blockProps } >
 		{ props.children }
