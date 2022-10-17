@@ -153,6 +153,69 @@ export const useDynamicContentControlProps = props => {
 	}
 }
 
+export const hasDynamicContent = ( value = '' ) => {
+	if ( ! value || ! isString( value ) ) {
+		return false
+	}
+
+	return value.includes( '!#stk_dynamic' ) || value.includes( 'data-stk-dynamic' )
+}
+
+export const getDynamicContent = ( value = '', queryLoopContext = null ) => {
+	if ( ! select( 'stackable/dynamic-content' ) ) {
+		return value
+	}
+
+	const currentPostId = select( 'core/editor' )?.getCurrentPostId() || -1
+
+	let tempValue = value
+
+	// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
+	if ( currentPostId !== -1 && queryLoopContext?.postId && queryLoopContext.postId !== currentPostId ) {
+		// Replace all post IDS.
+		tempValue = tempValue?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
+			const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
+			const splitFieldString = dataFieldString.split( '/' )
+			if ( ! dataFieldString.startsWith( 'current-page' ) ) {
+				return value
+			}
+
+			if ( splitFieldString.length > 2 && splitFieldString[ 2 ].startsWith( '?' ) ) {
+				splitFieldString.splice( 2, 0, queryLoopContext.postId.toString() )
+			} else if ( splitFieldString.length === 2 ) {
+				splitFieldString.push( queryLoopContext.postId.toString() )
+			}
+
+			return value.replace(
+				/data-stk-dynamic="[^\"]*"/g,
+				'data-stk-dynamic="' + splitFieldString.join( '/' ) + '"'
+			)
+		} )
+
+		tempValue = tempValue?.replace( /!#stk_dynamic(.*)\!#/g, value => {
+			const dataFieldString = value.replace( /\!#/g, '' ).replace( 'stk_dynamic/', '' )
+			const splitFieldString = dataFieldString.split( '/' )
+			if ( ! dataFieldString.startsWith( 'current-page' ) ) {
+				return value
+			}
+
+			if ( splitFieldString.length > 2 ) {
+				splitFieldString.splice( 2, 0, queryLoopContext.postId.toString() )
+			} else if ( splitFieldString.length === 2 ) {
+				splitFieldString.push( queryLoopContext.postId.toString() )
+			}
+
+			return '!#stk_dynamic/' + splitFieldString.join( '/' ) + '!#'
+		} )
+	}
+
+	return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue )
+}
+
+export const useQueryLoopContext = () => {
+	return useContext( QueryLoopContext )
+}
+
 /**
  * Custom hook for parsing the dynamic content field data
  * in a string.

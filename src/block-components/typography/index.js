@@ -11,14 +11,16 @@ export { getTypographyClasses } from './get-typography-classes'
  */
 import { useAttributeEditHandlers, useFontLoader } from '~stackable/hooks'
 import { getAttributeName, getAttrName } from '~stackable/util'
-import { useDynamicContent } from '~stackable/components/dynamic-content-control'
+import {
+	getDynamicContent, hasDynamicContent, useQueryLoopContext,
+} from '~stackable/components/dynamic-content-control'
 
 /**
  * WordPress dependencies
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	useEffect, useState, forwardRef,
+	useEffect, useState, forwardRef, useMemo,
 } from '@wordpress/element'
 
 export const Typography = forwardRef( ( props, ref ) => {
@@ -66,7 +68,14 @@ export const Typography = forwardRef( ( props, ref ) => {
 		return () => clearTimeout( timeout )
 	}, [ debouncedText, onChange ] ) // Don't include `value` in the dependency list because it will cause a double triggering of the `onChange`.
 
-	const dynamicContentText = useDynamicContent( debouncedText )
+	// Dynamic content
+	const queryLoopContext = useQueryLoopContext()
+	const dynamicContentText = useMemo( () => {
+		if ( hasDynamicContent( debouncedText ) ) {
+			return getDynamicContent( debouncedText, queryLoopContext )
+		}
+		return debouncedText
+	}, [ debouncedText, queryLoopContext ] )
 
 	if ( ! editable ) {
 		return <TagName className={ className }>{ dynamicContentText }</TagName>
