@@ -16,7 +16,6 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
-import { attributeHasValue } from '~stackable/util'
 
 const buttonOptions = {
 	selector: '.stk-button',
@@ -34,25 +33,20 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
-	const {
-		attributes,
-	} = props
 
 	return (
 		<>
-			{ attributeHasValue( 'buttonFullWidth', attributes ) &&
-				<BlockCss
-					{ ...propsToPass }
-					// This makes the block fullwidth inside the editor.
-					renderIn="edit"
-					selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
-					styleRule="width"
-					attrName="buttonFullWidth"
-					valueCallback={ value => {
-						return value ? '100%' : undefined
-					} }
-				/>
-			}
+			<BlockCss
+				{ ...propsToPass }
+				// This makes the block fullwidth inside the editor.
+				renderIn="edit"
+				selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
+				styleRule="width"
+				attrName="buttonFullWidth"
+				valueCallback={ value => {
+					return value ? '100%' : undefined
+				} }
+			/>
 		</>
 	)
 }

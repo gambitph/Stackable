@@ -40,7 +40,6 @@ import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
-		attributes,
 		className,
 	} = props
 
@@ -96,7 +95,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<HeadingStyles version={ VERSION } attributes={ attributes } />
+			<HeadingStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-count-up" />
 
 			<BlockDiv className={ blockClassNames }>

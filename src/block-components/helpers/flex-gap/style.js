@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { BlockCss } from '~stackable/components'
-import { attributeHasValue } from '~stackable/util'
 
 const Styles = props => {
 	const propsToPass = {
@@ -12,34 +11,29 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 	const {
-		attributes,
 		selector,
 		enableColumnGap = true,
 	} = props
 
 	return (
 		<>
-			{ attributeHasValue( 'columnGap', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector={ selector }
-					styleRule="columnGap"
-					attrName="columnGap"
-					format="%spx"
-					responsive="all"
-					enabledCallback={ () => enableColumnGap }
-				/>
-			}
-			{ attributeHasValue( 'rowGap', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector={ selector }
-					styleRule="rowGap"
-					attrName="rowGap"
-					format="%spx"
-					responsive="all"
-				/>
-			}
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="columnGap"
+				attrName="columnGap"
+				format="%spx"
+				responsive="all"
+				enabledCallback={ () => enableColumnGap }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="rowGap"
+				attrName="rowGap"
+				format="%spx"
+				responsive="all"
+			/>
 		</>
 	)
 }

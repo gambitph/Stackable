@@ -12,7 +12,6 @@ import { compact } from 'lodash'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { attributeHasValue } from '~stackable/util'
 
 export const SeparatorStyles = props => {
 	const propsToPass = {
@@ -22,7 +21,6 @@ export const SeparatorStyles = props => {
 		versionDeprecated: '',
 	}
 	const {
-		attributes,
 		location = '',
 		selector: _selector,
 		wrapperSelector = '.stk-separator__wrapper',
@@ -35,97 +33,84 @@ export const SeparatorStyles = props => {
 
 	return (
 		<>
-			{ attributeHasValue( 'separatorBringToFront', attributes, { attrNameTemplate: `${ location }%s` } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					attrNameTemplate={ `${ location }%s` }
-					selector={ selector }
-					styleRule="zIndex"
-					attrName="separatorBringToFront"
-					valuePreCallback={ value => {
-						if ( value ) {
-							return 6
-						}
+			<BlockCss
+				{ ...propsToPass }
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector }
+				styleRule="zIndex"
+				attrName="separatorBringToFront"
+				valuePreCallback={ value => {
+					if ( value ) {
+						return 6
+					}
+					return undefined
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector }
+				styleRule="transform"
+				attrName="separatorFlipHorizontally"
+				valuePreCallback={ ( value, getAttribute ) => {
+					const flipHorizontally = value
+					const flipVertically = getAttribute( 'separatorFlipVertically' )
+
+					if ( ! enableFlipVertically && ! enableFlipHorizontally ) {
 						return undefined
-					} }
-				/>
-			}
-			{ attributeHasValue( 'separatorFlipHorizontally', attributes, { attrNameTemplate: `${ location }%s` } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					attrNameTemplate={ `${ location }%s` }
-					selector={ selector }
-					styleRule="transform"
-					attrName="separatorFlipHorizontally"
-					valuePreCallback={ ( value, getAttribute ) => {
-						const flipHorizontally = value
-						const flipVertically = getAttribute( 'separatorFlipVertically' )
+					}
 
-						if ( ! enableFlipVertically && ! enableFlipHorizontally ) {
-							return undefined
-						}
+					if ( ! flipHorizontally && ! flipVertically ) {
+						return undefined
+					}
 
-						if ( ! flipHorizontally && ! flipVertically ) {
-							return undefined
-						}
+					const shouldApplyScaleX = enableFlipHorizontally && flipHorizontally
+					const shouldAddScaleYAlongsideScaleX = shouldApplyScaleX && isInitiallyFlippedVertically
+					const shouldApplyScaleY = enableFlipVertically && flipVertically
 
-						const shouldApplyScaleX = enableFlipHorizontally && flipHorizontally
-						const shouldAddScaleYAlongsideScaleX = shouldApplyScaleX && isInitiallyFlippedVertically
-						const shouldApplyScaleY = enableFlipVertically && flipVertically
-
-						return compact( [
-							shouldApplyScaleX ? 'scaleX(-1)' : undefined,
-							shouldAddScaleYAlongsideScaleX ? 'scaleY(-1)' : undefined,
-							shouldApplyScaleY ? 'scaleY(-1)' : undefined,
-						] ).join( ' ' )
-					} }
-					dependencies={ [ 'separatorFlipVertically' ] }
-				/>
-			}
-			{ attributeHasValue( 'separatorColor', attributes, { attrNameTemplate: `${ location }%s` } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					attrNameTemplate={ `${ location }%s` }
-					selector={ selector + ' svg' }
-					styleRule="fill"
-					attrName="separatorColor"
-				/>
-			}
-			{ attributeHasValue( 'separatorWidth', attributes, { attrNameTemplate: `${ location }%s` } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					attrNameTemplate={ `${ location }%s` }
-					selector={ selector + ` ${ wrapperSelector }` }
-					styleRule="transform"
-					attrName="separatorWidth"
-					format="scaleX(%s)"
-				/>
-			}
-			{ attributeHasValue( 'separatorHeight', attributes, { hasResponsive: true, attrNameTemplate: `${ location }%s` } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					attrNameTemplate={ `${ location }%s` }
-					selector={ selector + ` ${ wrapperSelector }` }
-					styleRule="height"
-					responsive="all"
-					attrName="separatorHeight"
-					format="%spx"
-				/>
-			}
-			{ attributeHasValue( 'separatorShadow', attributes, { attrNameTemplate: `${ location }%s` } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					attrNameTemplate={ `${ location }%s` }
-					selector={ selector + ' svg' }
-					styleRule="filter"
-					attrName="separatorShadow"
-					format="drop-shadow(%s)"
-					valueCallback={ value => {
-						return value === 'drop-shadow(none)' ? 'none' : value
-					} }
-				/>
-			}
-
+					return compact( [
+						shouldApplyScaleX ? 'scaleX(-1)' : undefined,
+						shouldAddScaleYAlongsideScaleX ? 'scaleY(-1)' : undefined,
+						shouldApplyScaleY ? 'scaleY(-1)' : undefined,
+					] ).join( ' ' )
+				} }
+				dependencies={ [ 'separatorFlipVertically' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector + ' svg' }
+				styleRule="fill"
+				attrName="separatorColor"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector + ` ${ wrapperSelector }` }
+				styleRule="transform"
+				attrName="separatorWidth"
+				format="scaleX(%s)"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector + ` ${ wrapperSelector }` }
+				styleRule="height"
+				responsive="all"
+				attrName="separatorHeight"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				attrNameTemplate={ `${ location }%s` }
+				selector={ selector + ' svg' }
+				styleRule="filter"
+				attrName="separatorShadow"
+				format="drop-shadow(%s)"
+				valueCallback={ value => {
+					return value === 'drop-shadow(none)' ? 'none' : value
+				} }
+			/>
 		</>
 	)
 }

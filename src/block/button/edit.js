@@ -105,7 +105,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ButtonStyles version={ VERSION } attributes={ attributes } />
+			<ButtonStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-button" />
 
 			<BlockDiv

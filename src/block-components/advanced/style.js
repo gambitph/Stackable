@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { BlockCss } from '~stackable/components'
-import { attributeHasValue } from '~stackable/util'
 
 const Styles = props => {
 	const propsToPass = {
@@ -12,242 +11,209 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 	const {
-		attributes,
 		positionSelector = '',
 	} = props
 
 	return (
 		<>
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="save"
-					selector={ positionSelector }
-					hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
-					styleRule="top"
-					attrName="positionNum"
-					responsive="all"
-					hover="all"
-					hasUnits="px"
-					valuePreCallback={ ( value, getAttribute, device, state ) => {
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector={ positionSelector }
+				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
+				styleRule="top"
+				attrName="positionNum"
+				responsive="all"
+				hover="all"
+				hasUnits="px"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					// If position is sticky, we need to set top: 0px or else the sticky won't show.
-						if ( device === 'desktop' && state === 'normal' ) {
-							const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
-							const isTopBlank = ! value || ( value && value.top === '' )
-							if ( isSticky && isTopBlank ) {
-								return 0
-							}
+					if ( device === 'desktop' && state === 'normal' ) {
+						const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
+						const isTopBlank = ! value || ( value && value.top === '' )
+						if ( isSticky && isTopBlank ) {
+							return 0
 						}
+					}
 
-						return value?.top
-					} }
-					dependencies={ [ 'position' ] }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="save"
-					selector={ positionSelector }
-					hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
-					styleRule="right"
-					attrName="positionNum"
-					responsive="all"
-					hover="all"
-					hasUnits="px"
-					valuePreCallback={ value => value?.right }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="save"
-					selector={ positionSelector }
-					hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
-					styleRule="bottom"
-					attrName="positionNum"
-					responsive="all"
-					hover="all"
-					hasUnits="px"
-					valuePreCallback={ value => value?.bottom }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="save"
-					selector={ positionSelector }
-					hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
-					styleRule="left"
-					attrName="positionNum"
-					responsive="all"
-					hover="all"
-					hasUnits="px"
-					valuePreCallback={ value => value?.left }
-				/>
-			}
-			{ attributeHasValue( 'position', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="save"
-					selector=""
-					styleRule="position"
-					attrName="position"
-					responsive="all"
-				/>
-			}
+					return value?.top
+				} }
+				dependencies={ [ 'position' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector={ positionSelector }
+				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
+				styleRule="right"
+				attrName="positionNum"
+				responsive="all"
+				hover="all"
+				hasUnits="px"
+				valuePreCallback={ value => value?.right }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector={ positionSelector }
+				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
+				styleRule="bottom"
+				attrName="positionNum"
+				responsive="all"
+				hover="all"
+				hasUnits="px"
+				valuePreCallback={ value => value?.bottom }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector={ positionSelector }
+				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
+				styleRule="left"
+				attrName="positionNum"
+				responsive="all"
+				hover="all"
+				hasUnits="px"
+				valuePreCallback={ value => value?.left }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=""
+				styleRule="position"
+				attrName="position"
+				responsive="all"
+			/>
 			{ /**
 			   * For positions (top, right, bottom, left) and postiion (absolute,
 			   * sticky) we need to apply these to the block itself so it would look
 			   * correctly in the editor.
 			   */ }
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="edit"
-					selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-					hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
-					styleRule="top"
-					attrName="positionNum"
-					responsive="all"
-					hover="all"
-					hasUnits="px"
-					valuePreCallback={ ( value, getAttribute, device, state ) => {
-						// If position is sticky, we need to set top: 0px or else the sticky won't show.
-						if ( device === 'desktop' && state === 'normal' ) {
-							const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
-							const isTopBlank = ! value || ( value && value.top === '' )
-							if ( isSticky && isTopBlank ) {
-								return 0
-							}
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
+				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
+				styleRule="top"
+				attrName="positionNum"
+				responsive="all"
+				hover="all"
+				hasUnits="px"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+				// If position is sticky, we need to set top: 0px or else the sticky won't show.
+					if ( device === 'desktop' && state === 'normal' ) {
+						const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
+						const isTopBlank = ! value || ( value && value.top === '' )
+						if ( isSticky && isTopBlank ) {
+							return 0
 						}
+					}
 
-						return value?.top
-					} }
-					dependencies={ [ 'position' ] }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="edit"
-					selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-					hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
-					selector={ positionSelector }
-					hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
-					styleRule="bottom"
-					attrName="positionNum"
-					responsive="all"
-					hover="all"
-					hasUnits="px"
-					valuePreCallback={ value => value?.bottom }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="edit"
-					selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-					hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
-					selector={ positionSelector }
-					hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
-					styleRule="left"
-					attrName="positionNum"
-					responsive="all"
-					hover="all"
-					hasUnits="px"
-					valuePreCallback={ value => value?.left }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="edit"
-					selector={ positionSelector }
-					hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
-					styleRule="position"
-					attrName="positionNum"
-					responsive="all"
-					hover="all"
-					valuePreCallback={ ( value, getAttribute, device ) => {
-						if ( value && ( value.top !== '' || value.right !== '' || value.bottom !== '' || value.left !== '' ) ) {
-							if ( getAttribute( 'position', device ) === '' ) {
-								return 'relative'
-							}
+					return value?.top
+				} }
+				dependencies={ [ 'position' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
+				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
+				selector={ positionSelector }
+				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
+				styleRule="bottom"
+				attrName="positionNum"
+				responsive="all"
+				hover="all"
+				hasUnits="px"
+				valuePreCallback={ value => value?.bottom }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
+				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
+				selector={ positionSelector }
+				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
+				styleRule="left"
+				attrName="positionNum"
+				responsive="all"
+				hover="all"
+				hasUnits="px"
+				valuePreCallback={ value => value?.left }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector={ positionSelector }
+				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
+				styleRule="position"
+				attrName="positionNum"
+				responsive="all"
+				hover="all"
+				valuePreCallback={ ( value, getAttribute, device ) => {
+					if ( value && ( value.top !== '' || value.right !== '' || value.bottom !== '' || value.left !== '' ) ) {
+						if ( getAttribute( 'position', device ) === '' ) {
+							return 'relative'
 						}
-						return undefined
-					} }
-					dependencies={ [ 'position' ] }
-				/>
-			}
-			{ attributeHasValue( 'position', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="edit"
-					selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-					styleRule="position"
-					attrName="position"
-					responsive="all"
-				/>
-			}
-			{ attributeHasValue( 'opacity', attributes, { hasResponsive: true, hasHover: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector=""
-					styleRule="opacity"
-					attrName="opacity"
-					responsive="all"
-					hover="all"
-				/>
-			}
-			{ attributeHasValue( 'zIndex', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					// We need to implement z-index on the block itself or else it won't look correct in the editor.
-					renderIn="edit"
-					selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
-					styleRule="zIndex"
-					attrName="zIndex"
-					responsive="all"
-				/>
-			}
-			{ attributeHasValue( 'zIndex', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="save"
-					selector=""
-					styleRule="zIndex"
-					attrName="zIndex"
-					responsive="all"
-				/>
-			}
-			{ attributeHasValue( 'overflow', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector=""
-					styleRule="overflow"
-					attrName="overflow"
-					responsive="all"
-				/>
-			}
-			{ attributeHasValue( 'overflow', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector=".stk-container"
-					styleRule="overflow"
-					attrName="overflow"
-					enabledCallback={ getAttribute => getAttribute( 'overflow' ) === 'visible' }
-					responsive="all"
-				/>
-			}
-			{ attributeHasValue( 'clear', attributes ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector=""
-					styleRule="clear"
-					attrName="clear"
-				/>
-			}
+					}
+					return undefined
+				} }
+				dependencies={ [ 'position' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
+				styleRule="position"
+				attrName="position"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=""
+				styleRule="opacity"
+				attrName="opacity"
+				responsive="all"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				// We need to implement z-index on the block itself or else it won't look correct in the editor.
+				renderIn="edit"
+				selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
+				styleRule="zIndex"
+				attrName="zIndex"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=""
+				styleRule="zIndex"
+				attrName="zIndex"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=""
+				styleRule="overflow"
+				attrName="overflow"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-container"
+				styleRule="overflow"
+				attrName="overflow"
+				enabledCallback={ getAttribute => getAttribute( 'overflow' ) === 'visible' }
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=""
+				styleRule="clear"
+				attrName="clear"
+			/>
 
 			{
 			// If a top, right, bottom, left hover state position was given, it will not
@@ -255,82 +221,74 @@ const Styles = props => {
 			// function adds a `top: 0` for the normal state of the CSS if there's a hover
 			// state position e.g. hover `top: 20px` given but no initial state.
 			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector={ positionSelector }
-					styleRule="top"
-					attrName="positionNum"
-					responsive="all"
-					valuePreCallback={ ( value, getAttribute, device, state ) => {
-						if ( ( ! value || value.top === '' ) && state === 'normal' ) {
-							const hoverValue = getAttribute( 'positionNum', device, 'hover' )
-							const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
-							if ( ( hoverValue && hoverValue.top !== '' ) || ( parentHoverValue && parentHoverValue.top !== '' ) ) {
-								return 0
-							}
+			<BlockCss
+				{ ...propsToPass }
+				selector={ positionSelector }
+				styleRule="top"
+				attrName="positionNum"
+				responsive="all"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					if ( ( ! value || value.top === '' ) && state === 'normal' ) {
+						const hoverValue = getAttribute( 'positionNum', device, 'hover' )
+						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+						if ( ( hoverValue && hoverValue.top !== '' ) || ( parentHoverValue && parentHoverValue.top !== '' ) ) {
+							return 0
 						}
-						return undefined
-					} }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector={ positionSelector }
-					styleRule="right"
-					attrName="positionNum"
-					responsive="all"
-					valuePreCallback={ ( value, getAttribute, device, state ) => {
-						if ( ( ! value || value.right === '' ) && state === 'normal' ) {
-							const hoverValue = getAttribute( 'positionNum', device, 'hover' )
-							const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
-							if ( ( hoverValue && hoverValue.right !== '' ) || ( parentHoverValue && parentHoverValue.right !== '' ) ) {
-								return 0
-							}
+					}
+					return undefined
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ positionSelector }
+				styleRule="right"
+				attrName="positionNum"
+				responsive="all"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					if ( ( ! value || value.right === '' ) && state === 'normal' ) {
+						const hoverValue = getAttribute( 'positionNum', device, 'hover' )
+						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+						if ( ( hoverValue && hoverValue.right !== '' ) || ( parentHoverValue && parentHoverValue.right !== '' ) ) {
+							return 0
 						}
-						return undefined
-					} }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector={ positionSelector }
-					styleRule="bottom"
-					attrName="positionNum"
-					responsive="all"
-					valuePreCallback={ ( value, getAttribute, device, state ) => {
-						if ( ( ! value || value.bottom === '' ) && state === 'normal' ) {
-							const hoverValue = getAttribute( 'positionNum', device, 'hover' )
-							const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
-							if ( ( hoverValue && hoverValue.bottom !== '' ) || ( parentHoverValue && parentHoverValue.bottom !== '' ) ) {
-								return 0
-							}
+					}
+					return undefined
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ positionSelector }
+				styleRule="bottom"
+				attrName="positionNum"
+				responsive="all"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					if ( ( ! value || value.bottom === '' ) && state === 'normal' ) {
+						const hoverValue = getAttribute( 'positionNum', device, 'hover' )
+						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+						if ( ( hoverValue && hoverValue.bottom !== '' ) || ( parentHoverValue && parentHoverValue.bottom !== '' ) ) {
+							return 0
 						}
-						return undefined
-					} }
-				/>
-			}
-			{ attributeHasValue( 'positionNum', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector={ positionSelector }
-					styleRule="left"
-					attrName="positionNum"
-					responsive="all"
-					valuePreCallback={ ( value, getAttribute, device, state ) => {
-						if ( ( ! value || value.left === '' ) && state === 'normal' ) {
-							const hoverValue = getAttribute( 'positionNum', device, 'hover' )
-							const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
-							if ( ( hoverValue && hoverValue.left !== '' ) || ( parentHoverValue && parentHoverValue.left !== '' ) ) {
-								return 0
-							}
+					}
+					return undefined
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ positionSelector }
+				styleRule="left"
+				attrName="positionNum"
+				responsive="all"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					if ( ( ! value || value.left === '' ) && state === 'normal' ) {
+						const hoverValue = getAttribute( 'positionNum', device, 'hover' )
+						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+						if ( ( hoverValue && hoverValue.left !== '' ) || ( parentHoverValue && parentHoverValue.left !== '' ) ) {
+							return 0
 						}
-						return undefined
-					} }
-				/>
-			}
+					}
+					return undefined
+				} }
+			/>
 		</>
 	)
 }

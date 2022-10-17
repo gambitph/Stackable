@@ -401,7 +401,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<PostsStyles version={ VERSION } attributes={ attributes } />
+			<PostsStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-posts" />
 
 			{ ( isRequesting || ! hasPosts ) ? (

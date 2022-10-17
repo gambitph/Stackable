@@ -136,7 +136,7 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<IconLabelStyles version={ VERSION } attributes={ attributes } />
+			<IconLabelStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-video-popup" />
 
 			<BlockDiv className={ blockClassNames }>

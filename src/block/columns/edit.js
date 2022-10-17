@@ -57,7 +57,6 @@ const TEMPLATE = [
 
 const Edit = props => {
 	const {
-		attributes,
 		className,
 	} = props
 
@@ -103,7 +102,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
-				<BlockStyles version={ VERSION } attributes={ attributes } />
+				<BlockStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }

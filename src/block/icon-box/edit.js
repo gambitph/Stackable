@@ -56,7 +56,6 @@ export const TEMPLATE = [
 
 const Edit = props => {
 	const {
-		attributes,
 		className,
 	} = props
 
@@ -103,7 +102,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames }>
-				<ContainerStyles version={ VERSION } attributes={ attributes } />
+				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-icon-box" />
 
 				<ContainerDiv className={ contentClassNames }>

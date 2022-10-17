@@ -109,7 +109,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<SeparatorStyles version={ VERSION } attributes={ attributes } />
+			<SeparatorStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-separator" />
 
 			<BlockDiv className={ blockClassNames }>

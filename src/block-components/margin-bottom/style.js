@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { BlockCss } from '~stackable/components'
-import { attributeHasValue } from '~stackable/util'
 
 const Styles = props => {
 	const propsToPass = {
@@ -12,23 +11,19 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 	const {
-		attributes,
 		selector = '',
 	} = props
 
 	return (
 		<>
-			{ attributeHasValue( 'blockMarginBottom', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector={ selector }
-					styleRule="marginBottom"
-					attrName="blockMarginBottom"
-					responsive="all"
-					format="%spx"
-				/>
-			}
-
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="marginBottom"
+				attrName="blockMarginBottom"
+				responsive="all"
+				format="%spx"
+			/>
 		</>
 	)
 }

@@ -1,8 +1,7 @@
 /**
  * Internal dependencies
  */
-import { BlockCss, extractControlProps } from '~stackable/components'
-import { attributeHasValue } from '~stackable/util'
+import { BlockCss } from '~stackable/components'
 
 const AlignmentStyles = props => {
 	const propsToPass = {
@@ -15,46 +14,37 @@ const AlignmentStyles = props => {
 		selectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		columnAlignSelectorCallback = ( () => '' ),
-	} = extractControlProps
-	const {
-		attributes,
 	} = props
 
 	return (
 		<>
-			{ attributeHasValue( 'columnAlign', attributes ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selectorCallback={ columnAlignSelectorCallback }
-					responsive="all"
-					styleRule="alignSelf"
-					attrName="columnAlign"
-				/>
-			}
-			{ attributeHasValue( 'rowAlign', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="save"
-					selectorCallback={ selectorCallback }
-					styleRule="alignItems"
-					attrName="rowAlign"
-					responsive="all"
-					enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
-					dependencies={ [ 'innerBlockOrientation' ] }
-				/>
-			}
-			{ attributeHasValue( 'rowAlign', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					renderIn="edit"
-					selectorCallback={ editorSelectorCallback }
-					styleRule="alignItems"
-					attrName="rowAlign"
-					responsive="all"
-					enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
-					dependencies={ [ 'innerBlockOrientation' ] }
-				/>
-			}
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ columnAlignSelectorCallback }
+				responsive="all"
+				styleRule="alignSelf"
+				attrName="columnAlign"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selectorCallback={ selectorCallback }
+				styleRule="alignItems"
+				attrName="rowAlign"
+				responsive="all"
+				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
+				dependencies={ [ 'innerBlockOrientation' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selectorCallback={ editorSelectorCallback }
+				styleRule="alignItems"
+				attrName="rowAlign"
+				responsive="all"
+				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
+				dependencies={ [ 'innerBlockOrientation' ] }
+			/>
 		</>
 	)
 }

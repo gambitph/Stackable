@@ -50,7 +50,6 @@ const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
-		attributes,
 		className,
 	} = props
 
@@ -101,7 +100,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
-				<ContainerStyles version={ VERSION } attributes={ attributes } />
+				<ContainerStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-hero" />
 
 				<Separator>

@@ -34,7 +34,6 @@ import { blockStyles } from './block-styles'
 
 const Edit = props => {
 	const {
-		attributes,
 		className,
 	} = props
 
@@ -75,7 +74,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<IconButtonStyles version={ VERSION } attributes={ attributes } />
+			<IconButtonStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-icon-button" />
 
 			<BlockDiv

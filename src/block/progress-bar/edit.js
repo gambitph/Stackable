@@ -96,7 +96,7 @@ const Edit = ( {
 			/>
 
 			<BlockDiv className={ blockClassNames }>
-				<ProgressBarStyles version={ VERSION } attributes={ attributes } />
+				<ProgressBarStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-block-progress-bar" />
 				<div className={ containerClassNames }>
 					<div className="stk-progress-bar stk-animate">

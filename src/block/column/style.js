@@ -16,7 +16,6 @@ import { BlockCss, BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
-import { attributeHasValue } from '~stackable/util'
 
 const containerDivOptions = {
 	sizeSelector: '.%s-container',
@@ -49,56 +48,45 @@ const ColumnStyles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
-	const {
-		attributes,
-	} = props
 
 	return (
 		<>
-			{ attributeHasValue( 'columnSpacing', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector=".%s-container"
-					styleRule="marginTop"
-					attrName="columnSpacing"
-					responsive="all"
-					hasUnits="px"
-					valuePreCallback={ callbacks.marginTop.valuePreCallback }
-				/>
-			}
-			{ attributeHasValue( 'columnSpacing', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector=".%s-container"
-					styleRule="marginRight"
-					attrName="columnSpacing"
-					responsive="all"
-					hasUnits="px"
-					valuePreCallback={ callbacks.marginRight.valuePreCallback }
-				/>
-			}
-			{ attributeHasValue( 'columnSpacing', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector=".%s-container"
-					styleRule="marginBottom"
-					attrName="columnSpacing"
-					responsive="all"
-					hasUnits="px"
-					valuePreCallback={ callbacks.marginBottom.valuePreCallback }
-				/>
-			}
-			{ attributeHasValue( 'columnSpacing', attributes, { hasResponsive: true } ) &&
-				<BlockCss
-					{ ...propsToPass }
-					selector=".%s-container"
-					styleRule="marginLeft"
-					attrName="columnSpacing"
-					responsive="all"
-					hasUnits="px"
-					valuePreCallback={ callbacks.marginLeft.valuePreCallback }
-				/>
-			}
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s-container"
+				styleRule="marginTop"
+				attrName="columnSpacing"
+				responsive="all"
+				hasUnits="px"
+				valuePreCallback={ callbacks.marginTop.valuePreCallback }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s-container"
+				styleRule="marginRight"
+				attrName="columnSpacing"
+				responsive="all"
+				hasUnits="px"
+				valuePreCallback={ callbacks.marginRight.valuePreCallback }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s-container"
+				styleRule="marginBottom"
+				attrName="columnSpacing"
+				responsive="all"
+				hasUnits="px"
+				valuePreCallback={ callbacks.marginBottom.valuePreCallback }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s-container"
+				styleRule="marginLeft"
+				attrName="columnSpacing"
+				responsive="all"
+				hasUnits="px"
+				valuePreCallback={ callbacks.marginLeft.valuePreCallback }
+			/>
 		</>
 	)
 }
