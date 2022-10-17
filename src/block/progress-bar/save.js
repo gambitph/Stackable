@@ -57,7 +57,7 @@ const Save = props => {
 		progressValue = isNaN( progressValue ) ? DEFAULT_PROGRESS : progressValue
 	}
 	const derivedValue = `${ attributes.progressValuePrefix }${ progressValue }${ attributes.progressValueSuffix }`.trim()
-	const deviedAriaValue = attributes.progressAriaValueText || attributes.text
+	const deviedAriaValue = attributes.progressAriaValueText || attributes.text || 'Design'
 
 	return (
 		<BlockDiv.Content
