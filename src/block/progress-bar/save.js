@@ -57,7 +57,7 @@ const Save = props => {
 		progressValue = isNaN( progressValue ) ? DEFAULT_PROGRESS : progressValue
 	}
 	const derivedValue = `${ attributes.progressValuePrefix }${ progressValue }${ attributes.progressValueSuffix }`.trim()
-	const deviedAriaValue = attributes.progressAriaValueText || attributes.text
+	const derivedAriaValue = attributes.showText ? attributes.progressAriaValueText || attributes.text : undefined
 
 	return (
 		<BlockDiv.Content
@@ -73,7 +73,7 @@ const Save = props => {
 					aria-valuemin="0"
 					aria-valuemax="100"
 					aria-valuenow={ progressValue }
-					aria-valuetext={ deviedAriaValue ? striptags( deviedAriaValue ) : undefined }
+					aria-valuetext={ derivedAriaValue ? striptags( derivedAriaValue ) : undefined }
 				>
 					<div className={ barClassNames }>
 						{ attributes.showText && (
