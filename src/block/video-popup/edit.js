@@ -35,6 +35,7 @@ import { getVideoProviderFromURL, urlIsVideo } from '~stackable/util'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
+import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -56,6 +57,7 @@ const TEMPLATE = [
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		attributes,
 		setAttributes,
@@ -63,6 +65,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -136,7 +139,11 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<IconLabelStyles version={ VERSION } />
+			<IconLabelStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-video-popup" />
 
 			<BlockDiv className={ blockClassNames }>

@@ -15,7 +15,7 @@ import {
 	InspectorBottomTip,
 	InspectorTabs,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -54,11 +54,13 @@ const Edit = props => {
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
 	const {
+		clientId,
 		className,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const rowClass = getRowClasses( props.attributes )
@@ -100,7 +102,11 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorBlockControls>
 
-			<ImageBoxStyles version={ VERSION } />
+			<ImageBoxStyles
+				version={ VERSION }
+				clientId={ clientId }
+				blockState={ blockState }
+			/>
 			<CustomCSS mainBlockClass="stk-block-image-box" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

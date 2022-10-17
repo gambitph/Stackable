@@ -20,7 +20,7 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockStyle } from '~stackable/hooks'
+import { useBlockHoverState, useBlockStyle } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -45,10 +45,12 @@ const Edit = props => {
 		onReplace,
 		attributes,
 		setAttributes,
+		clientId,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
@@ -105,7 +107,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<ButtonStyles version={ VERSION } />
+			<ButtonStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-button" />
 
 			<BlockDiv

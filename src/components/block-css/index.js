@@ -22,7 +22,7 @@ import {
 } from './util'
 import { useDynamicContent } from '../dynamic-content-control'
 export { BlockCssCompiler } from './block-css-compiler'
-import { useBlockAttributesContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 import {
 	 getAttributeName, getAttrName, prependCSSClass, useQueryLoopInstanceId,
 } from '~stackable/util'
@@ -35,7 +35,6 @@ import { pick, kebabCase } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
 import { sprintf } from '@wordpress/i18n'
 
 const BlockCss = props => {
@@ -333,8 +332,9 @@ const BlockCss = props => {
 
 // This is used for rendering styles for the editor.
 const BlockCssEdit = props => {
-	const [ blockState ] = useBlockHoverState()
-	const { clientId } = useBlockEditContext()
+	const {
+		clientId,
+	} = props
 
 	// Extract the attributes used by the styleParams. This hook only triggers
 	// when the extracted attributes change in value.
@@ -350,7 +350,6 @@ const BlockCssEdit = props => {
 	// Call as a function and not as createElement.
 	const css = BlockCss( {
 		...props,
-		blockState,
 		clientId,
 		attributes,
 		instanceId,

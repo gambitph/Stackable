@@ -39,6 +39,7 @@ import { compose } from '@wordpress/compose'
 import { createBlock } from '@wordpress/blocks'
 import { addFilter } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
+import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * Add `autocompleters` support for stackable/subtitle
@@ -54,6 +55,7 @@ addFilter( 'editor.Autocomplete.completers', 'stackable/subtitle', ( filteredCom
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		onReplace,
 		onRemove,
@@ -62,6 +64,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
@@ -98,7 +101,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<SubtitleStyles version={ VERSION } />
+			<SubtitleStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-subtitle" />
 
 			<BlockDiv className={ blockClassNames }>

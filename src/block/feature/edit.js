@@ -32,7 +32,7 @@ import {
 	getContentAlignmentClasses,
 	ContainerDiv,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -47,11 +47,13 @@ const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const rowClass = props.attributes.alignVertical ? undefined : getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -93,7 +95,11 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-feature" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

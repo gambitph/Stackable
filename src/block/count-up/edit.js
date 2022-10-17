@@ -37,14 +37,17 @@ import {
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { useBlockHoverState } from '~stackable/hooks'
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [
@@ -95,7 +98,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<HeadingStyles version={ VERSION } />
+			<HeadingStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-count-up" />
 
 			<BlockDiv className={ blockClassNames }>

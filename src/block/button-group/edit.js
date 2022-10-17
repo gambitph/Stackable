@@ -32,7 +32,9 @@ import {
 	FlexGapControls,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockContext, useDeviceType } from '~stackable/hooks'
+import {
+	useBlockContext, useBlockHoverState, useDeviceType,
+} from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -54,6 +56,7 @@ const Edit = props => {
 	const {
 		className,
 		attributes,
+		clientId,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -62,6 +65,7 @@ const Edit = props => {
 		collapseOn = '',
 	} = attributes
 
+	const [ blockState ] = useBlockHoverState()
 	const deviceType = useDeviceType()
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -185,7 +189,11 @@ const Edit = props => {
 			<ConditionalDisplay.InspectorControls />
 
 			<BlockDiv className={ blockClassNames }>
-				<ButtonGroupStyles version={ VERSION } />
+				<ButtonGroupStyles
+					version={ VERSION }
+					blockState={ blockState }
+					clientId={ clientId }
+				/>
 				<CustomCSS mainBlockClass="stk-block-button-group" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }

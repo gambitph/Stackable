@@ -34,7 +34,7 @@ import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
 import { createBlockCompleter } from '~stackable/util'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
@@ -75,6 +75,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const { parentBlock } = useBlockContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -239,7 +240,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<HeadingStyles version={ VERSION } />
+			<HeadingStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-heading" />
 
 			<BlockDiv className={ blockClassNames }>

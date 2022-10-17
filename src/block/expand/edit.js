@@ -36,6 +36,7 @@ import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
+import { useBlockHoverState } from '~stackable/hooks'
 
 const TEMPLATE = [
 	[ 'stackable/text', {
@@ -66,11 +67,13 @@ const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
@@ -103,7 +106,11 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorBlockControls>
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles
+				version={ VERSION }
+				clientId={ clientId }
+				blockState={ blockState }
+			/>
 			<CustomCSS mainBlockClass="stk-block-expand" />
 
 			<style>{ `.stk-block.stk-block-expand .stk-block-expand__short-text::before { content: "${ __( 'Less text', i18n ) }" !important; }` }</style>

@@ -24,7 +24,7 @@ import {
 	ResizerTooltip,
 	StyleControl,
 } from '~stackable/components'
-import { useDeviceType } from '~stackable/hooks'
+import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -75,6 +75,7 @@ const Edit = props => {
 		isHovered,
 		isSelected,
 		setAttributes,
+		clientId,
 	} = props
 
 	const {
@@ -127,6 +128,7 @@ const Edit = props => {
 		}
 	}, [ apiKey ] )
 
+	const [ blockState ] = useBlockHoverState()
 	const deviceType = useDeviceType()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
@@ -467,7 +469,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-map" />
 
 			<BlockDiv className={ blockClassNames }>

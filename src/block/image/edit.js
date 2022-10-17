@@ -9,7 +9,7 @@ import BlockStyles from './style'
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
 import { InspectorTabs } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -48,6 +48,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { parentBlock } = useBlockContext( clientId )
 
@@ -81,7 +82,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-image" />
 
 			<BlockDiv className={ blockClassNames }>

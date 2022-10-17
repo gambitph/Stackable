@@ -30,7 +30,7 @@ import {
 	BlockLink,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -56,11 +56,13 @@ export const TEMPLATE = [
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
@@ -102,7 +104,11 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<BlockDiv className={ blockClassNames }>
-				<ContainerStyles version={ VERSION } />
+				<ContainerStyles
+					version={ VERSION }
+					blockState={ blockState }
+					clientId={ clientId }
+				/>
 				<CustomCSS mainBlockClass="stk-block-icon-box" />
 
 				<ContainerDiv className={ contentClassNames }>

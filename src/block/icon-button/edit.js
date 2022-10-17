@@ -31,14 +31,17 @@ import { __ } from '@wordpress/i18n'
  */
 import { IconButtonStyles } from './style'
 import { blockStyles } from './block-styles'
+import { useBlockHoverState } from '~stackable/hooks'
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockClassNames = classnames( [
@@ -74,7 +77,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<IconButtonStyles version={ VERSION } />
+			<IconButtonStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-icon-button" />
 
 			<BlockDiv

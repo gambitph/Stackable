@@ -16,7 +16,7 @@ import {
 	InspectorTabs,
 } from '~stackable/components'
 import {
-	useBlockContext, useBlockStyle, useDeviceType,
+	useBlockContext, useBlockHoverState, useBlockStyle, useDeviceType,
 } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
@@ -65,9 +65,11 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const {
+		clientId,
 		className, //isHovered,
 	} = props
 
+	const [ blockState ] = useBlockHoverState()
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( variations )
@@ -130,7 +132,11 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<CardStyles version={ VERSION } />
+			<CardStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-card" />
 
 			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>

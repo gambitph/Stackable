@@ -49,6 +49,7 @@ import {
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createIconListControls } from './util'
+import { useBlockHoverState } from '~stackable/hooks'
 
 const listTypeOptions = [
 	{
@@ -149,6 +150,7 @@ const Edit = props => {
 	}, [ setSelectedEvent, setSelectedIconCSSSelector, setIconSearchAnchor, setIsOpenIconSearch, textRef.current ] )
 
 	const {
+		clientId,
 		attributes,
 		setAttributes,
 		className,
@@ -162,6 +164,7 @@ const Edit = props => {
 	const { ordered } = attributes
 	const tagName = ordered ? 'ol' : 'ul'
 
+	const [ blockState ] = useBlockHoverState()
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -314,7 +317,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<IconListStyles version={ VERSION } />
+			<IconListStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-icon-list" />
 
 			<BlockDiv className={ blockClassNames }>

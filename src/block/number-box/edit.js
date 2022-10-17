@@ -42,9 +42,11 @@ import {
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { useBlockHoverState } from '~stackable/hooks'
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		attributes,
 		setAttributes,
@@ -52,6 +54,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [
@@ -112,7 +115,11 @@ const Edit = props => {
 			</InspectorStyleControls>
 			<Typography.InspectorControls hasTextTag={ false } sizePlaceholder="56" />
 
-			<HeadingStyles version={ VERSION } />
+			<HeadingStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-number-box" />
 
 			<BlockDiv className={ blockClassNames }>

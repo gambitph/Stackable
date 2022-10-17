@@ -19,7 +19,7 @@ import {
 	ConditionalDisplay,
 	Transform,
 } from '~stackable/block-components'
-import { useDeviceType } from '~stackable/hooks'
+import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, ResizerTooltip,
 } from '~stackable/components'
@@ -51,6 +51,7 @@ const isDefined = ( value = '' ) => {
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		attributes,
 		setAttributes,
@@ -60,6 +61,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const deviceType = useDeviceType()
 	const blockClassNames = classnames( [
 		className,
@@ -115,7 +117,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<SpacerStyles version={ VERSION } />
+			<SpacerStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-spacer" />
 			<BlockDiv className={ blockClassNames }>
 				<ResizableBox

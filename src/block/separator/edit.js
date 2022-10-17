@@ -32,6 +32,7 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
+import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -42,11 +43,14 @@ import { applyFilters } from '@wordpress/hooks'
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		attributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
+
+	const [ blockState ] = useBlockHoverState()
 
 	const {
 		separatorDesign,
@@ -109,7 +113,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<SeparatorStyles version={ VERSION } />
+			<SeparatorStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-separator" />
 
 			<BlockDiv className={ blockClassNames }>

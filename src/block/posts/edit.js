@@ -29,6 +29,7 @@ import {
 	usePostsQuery,
 	useAttributeEditHandlers,
 	useDeviceType,
+	useBlockHoverState,
 } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
@@ -84,6 +85,7 @@ export const DEFAULT_ORDER = [
 
 const Edit = props => {
 	const {
+		clientId,
 		attributes,
 		name,
 		className,
@@ -92,10 +94,10 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const deviceType = useDeviceType()
 
 	const {
-		clientId,
 		stkQueryId,
 		imageSize,
 		type = 'post',
@@ -401,7 +403,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<PostsStyles version={ VERSION } />
+			<PostsStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-posts" />
 
 			{ ( isRequesting || ! hasPosts ) ? (

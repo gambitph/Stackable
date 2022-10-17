@@ -27,22 +27,24 @@ import {
 	getAlignmentClasses,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
 
 const Edit = ( {
-	className, attributes,
+	clientId, className, attributes,
 } ) => {
 	useGeneratedCss( attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const textClasses = getTypographyClasses( attributes )
 
@@ -101,7 +103,11 @@ const Edit = ( {
 			/>
 
 			<BlockDiv className={ blockClassNames }>
-				<ProgressCircleStyles version={ VERSION } />
+				<ProgressCircleStyles
+					version={ VERSION }
+					blockState={ blockState }
+					clientId={ clientId }
+				/>
 				<CustomCSS mainBlockClass="stk-block-progress-circle" />
 				<div className={ containerClassNames }>
 					<div className="stk-progress-circle stk-animate">

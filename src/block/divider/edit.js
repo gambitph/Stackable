@@ -31,7 +31,7 @@ import {
 	AdvancedRangeControl,
 	ColorPaletteControl,
 } from '~stackable/components'
-import { useBlockStyle } from '~stackable/hooks'
+import { useBlockHoverState, useBlockStyle } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -44,11 +44,13 @@ import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( blockStyles )
 
@@ -103,7 +105,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<DividerStyles version={ VERSION } />
+			<DividerStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-divider" />
 
 			<BlockDiv className={ blockClassNames }>

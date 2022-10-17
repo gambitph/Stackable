@@ -63,6 +63,7 @@ import {
 } from '@wordpress/i18n'
 import { RichText } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
+import { useBlockHoverState } from '~stackable/hooks'
 
 const listTypeOptions = [
 	{
@@ -145,12 +146,14 @@ const Notice = ( { autoGenerateAnchors } ) => {
 
 const Edit = props => {
 	const {
+		clientId,
 		attributes,
 		setAttributes,
 		className,
 		isSelected,
 	} = props
 
+	const [ blockState ] = useBlockHoverState()
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 	const [ headings, setHeadings ] = useState( attributes.headings )
 	const { getEditedPostContent } = useSelect( 'core/editor' )
@@ -442,7 +445,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<TableOfContentsStyles version={ VERSION } />
+			<TableOfContentsStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
 			<BlockDiv className={ blockClassNames }>

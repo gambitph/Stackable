@@ -30,7 +30,7 @@ import {
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -63,10 +63,12 @@ const Edit = props => {
 		onRemove,
 		mergeBlocks,
 		attributes,
+		clientId,
 	} = props
 
 	useGeneratedCss( props.attributes )
 
+	const [ blockState ] = useBlockHoverState()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const {
@@ -162,7 +164,11 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<TextStyles version={ VERSION } />
+			<TextStyles
+				version={ VERSION }
+				blockState={ blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-text" />
 
 			<BlockDiv className={ blockClassNames }>
