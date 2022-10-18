@@ -386,7 +386,6 @@ Edit.defaultProps = {
 	label: __( 'Typography', i18n ),
 	sizePlaceholder: '32',
 	hasTextShadow: false,
-	onChangeToggle: false,
 }
 
 Edit.Controls = Controls
