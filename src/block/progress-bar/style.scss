@@ -1,0 +1,62 @@
+@import "common";
+
+.stk-block-progress-bar {
+	width: 100%;
+}	
+.stk-progress-bar {
+	position: relative;
+	width: var(--progress-bar-width, 100%);
+	height: var(--progress-size, 32px);
+	border-radius: var(--progress-border-radius, 0);
+	background-color: var(--progress-background, #f0f0f0);
+	overflow: hidden;
+	.stk-progress-bar__bar {
+		// 	percentage = ( progressValue (%) / progressMax ) * 100
+		--progress-percent: calc(( var(--progress-value, 50%) / var(--progress-max, 100)) * 100);
+		width: 0%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background-color: var(--progress-color-1, #3498db);
+		border-radius: var(--progress-bar-border-radius, 0);
+		.stk-progress-bar__inner-text {
+			&.stk-progress-bar__text {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap !important;
+				padding-inline-start: 12px;
+			}
+			&.stk-progress-bar__progress-value-text {
+				padding-inline-end: 12px;
+			}
+		}
+	}
+	&.stk--with-animation {
+		.stk-progress-bar__bar {
+			will-change: width;
+			@include transition(width);
+		}
+	}
+	&.stk-animate {
+		.stk-progress-bar__bar {
+			width: var(--progress-percent);
+		}
+	}
+}
+
+@media (prefers-reduced-motion) {
+	.stk-progress-bar {
+		&.stk--with-animation {
+			.stk-progress-bar__bar {
+				transition: none;
+			}
+		}
+	}
+}
+
+.stk-block .stk-block-progress-bar__container {
+	display: flex;
+	width: 100%;
+	justify-content: var(--stk-alignment-justify-content, flex-start);
+}

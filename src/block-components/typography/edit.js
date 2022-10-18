@@ -119,7 +119,6 @@ export const Controls = props => {
 					isDynamic={ true }
 				/>
 			) }
-
 			{ hasRemoveMargins && (
 				<AdvancedToggleControl
 					label={ __( 'Remove extra text margins', i18n ) }
@@ -340,7 +339,6 @@ export const Edit = props => {
 		hasToggle,
 		label,
 		hasTextShadow,
-		onChangeToggle,
 	} = props
 
 	const {
@@ -354,8 +352,8 @@ export const Edit = props => {
 				title={ label }
 				initialOpen={ initialOpen }
 				{ ...( hasToggle ? {
-					checked: getAttribute( 'show' ),
-					onChange: onChangeToggle || updateAttributeHandler( 'show' ),
+					checked: getAttribute( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
+					onChange: updateAttributeHandler( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
 				} : {} ) }
 				id="text"
 			>
