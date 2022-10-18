@@ -261,7 +261,6 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 * New: Various performance improvements
 * New: Smaller plugin filesize
-* New: New exposed stk API
 * New: New exposed window.stk API (undocumented)
 * New: Support for block theme contentSize and wideSize
 * Fixed: Wide and fullwidth blocks sometimes showed centered in the editor
