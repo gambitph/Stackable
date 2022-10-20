@@ -143,7 +143,7 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 	 *
 	 * @return array post query which will be used for WP_Query.
 	 */
-	function generate_post_query_from_stackable_posts_block( $block_or_attribute ) {
+	function generate_post_query_from_stackable_posts_block( $block_or_attribute, $query_string = '' ) {
 		$is_wp_block = ! is_array( $block_or_attribute ) && get_class( $block_or_attribute ) === 'WP_Block';
 		/**
 		 * If the passed object is an instance of
@@ -185,7 +185,8 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 
 		return apply_filters( 'stackable/posts/post_query',
 			$post_query,
-			$context
+			$context,
+			$query_string,
 		);
 	}
 }
@@ -382,7 +383,8 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			$single_post_template = $match[3];
 
 			$attributes = $this->generate_defaults( $attributes );
-			$content = $this->render_post_items( $matched, $single_post_template, $content, $attributes );
+			$query_string = isset( $block->inner_blocks[0]->attributes['queryString'] ) ? $block->inner_blocks[0]->attributes['queryString'] : '';
+			$content = $this->render_post_items( $matched, $single_post_template, $content, $attributes, $query_string );
 			$content = apply_filters( 'stackable.posts.output',
 				$content,
 				$attributes,
@@ -395,9 +397,9 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		/**
 		 * Render the post items
 		 */
-		public function render_post_items( $to_replace, $template, $content, $attributes ) {
+		public function render_post_items( $to_replace, $template, $content, $attributes, $query_string ) {
 			$posts = '';
-			$post_query = generate_post_query_from_stackable_posts_block( $attributes );
+			$post_query = generate_post_query_from_stackable_posts_block( $attributes, $query_string );
 			$recent_posts = wp_get_recent_posts( $post_query );
 			// Manually slice the array based on the number of posts per page.
 			if ( is_array( $recent_posts ) && count( $recent_posts ) > (int) $post_query['numberposts'] ) {
