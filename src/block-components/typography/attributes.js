@@ -70,10 +70,6 @@ const typographyAttributes = {
 		type: 'boolean',
 		default: false,
 	},
-	show: {
-		type: 'booleam',
-		default: true,
-	},
 }
 
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {

@@ -1,0 +1,71 @@
+@import "common";
+
+.stk-progress-circle {
+	position: relative;
+	height: var(--progress-size, 150px);
+	width: var(--progress-size, 150px);
+	svg {
+		height: var(--progress-size, 150px);
+		width: var(--progress-size, 150px);
+		transform: rotate(-90deg);
+		// 	percentage = ( progressValue / progressMax ) * 100
+		--progress-percent: calc(( var(--progress-value, 50) / var(--progress-max, 100)) * 100);
+		// radius = ( size / 2 ) - ( thickness / 2 )
+		// --progress-dash-array = Math.PI * ( radius * 2 )
+		--progress-dash-array: calc(3.1415 * ( ( ( var(--progress-size, 150px) / 2 ) - ( var(--progress-thickness, 8px) / 2 ) ) * 2 ));
+		// radius = ( size / 2 ) - ( thickness / 2 )
+		// circumference = Math.PI * ( radius * 2 )
+		// --progress-dash-offset = ( ( 100 - percent ) / 100 ) * circumference
+		--progress-dash-offset: calc(( ( 100 - var(--progress-percent) ) / 100 ) * 3.1415 * ( ( ( var(--progress-size, 150px) / 2 ) - ( var(--progress-thickness, 8px) / 2 ) ) * 2 ));
+		circle {
+			width: 100%;
+			height: 100%;
+			fill: none;
+			stroke: var(--progress-background, #f0f0f0);
+			stroke-width: var(--progress-thickness, 8px);
+			stroke-linecap: var(--progress-rounded, "unset");
+			// should be 50% of the size to fix resizing issue
+			cy: calc(var(--progress-size, 150px) / 2);
+			cx: calc(var(--progress-size, 150px) / 2);
+			r: calc(50% - var(--progress-thickness, 8px) / 2);
+		}
+	}
+	.stk-progress-circle__bar {
+		stroke-dasharray: var(--progress-dash-array);
+		stroke-dashoffset: var(--progress-dash-array);
+		stroke: var(--progress-color-1, #3498db);
+	}
+	.stk-number {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	&.stk--with-animation {
+		.stk-progress-circle__bar {
+			will-change: stroke-dashoffset;
+			@include transition(stroke-dashoffset);
+		}
+	}
+	&.stk-animate {
+		.stk-progress-circle__bar {
+			stroke-dashoffset: var(--progress-dash-offset);
+		}
+	}
+}
+
+@media (prefers-reduced-motion) {
+	.stk-progress-circle {
+		&.stk--with-animation {
+			.stk-progress-circle__bar {
+				transition: none;
+			}
+		}
+	}
+}
+
+.stk-block .stk-block-progress-circle__container {
+	display: flex;
+	width: 100%;
+	justify-content: var(--stk-alignment-justify-content, center);
+}
