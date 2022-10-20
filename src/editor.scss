@@ -104,6 +104,7 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 	}
 	&:hover::after {
 		outline: 2px dotted var(--stk-block-outline-color);
+		position: absolute;
 	}
 }
 // For blocks inside columns, highlight all blocks.
@@ -116,6 +117,7 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 		}
 		&:hover::after {
 			outline: 2px dotted var(--stk-block-outline-color);
+			position: absolute;
 		}
 	}
 }
