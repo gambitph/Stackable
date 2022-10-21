@@ -12,13 +12,16 @@ import {
 	BlockControls,
 	RichTextShortcut,
 } from '@wordpress/block-editor'
-import { ToolbarButton } from '@wordpress/components'
+import {
+	ToolbarButton,
+} from '@wordpress/components'
 /* eslint-disable @wordpress/no-unsafe-wp-apis */
 import {
 	__unstableIndentListItems as indentListItems,
 	__unstableOutdentListItems as outdentListItems,
 	__unstableChangeListType as changeListType,
 	__unstableIsListRootSelected as isListRootSelected,
+	__unstableIsActiveListType as isActiveListType,
 } from '@wordpress/rich-text'
 /* eslint-enable @wordpress/no-unsafe-wp-apis */
 import {
@@ -158,7 +161,7 @@ export const createIconListControls = ( options = {} ) => {
 					icon={ <Icon icon={ isRTL() ? formatListBulletsRTL : formatListBullets } size={ 24 } /> }
 					title={ __( 'Unordered', i18n ) }
 					describedBy={ __( 'Convert to unordered list', i18n ) }
-					isActive={ value }
+					isActive={ isActiveListType( value, 'ul', tagName ) }
 					onClick={ () => {
 						onChange( changeListType( value, { type: 'ul' } ) )
 						onFocus()
@@ -172,7 +175,7 @@ export const createIconListControls = ( options = {} ) => {
 					icon={ <Icon icon={ isRTL() ? formatListNumberedRTL : formatListNumbered } size={ 24 } /> }
 					title={ __( 'Ordered', i18n ) }
 					describedBy={ __( 'Convert to ordered list', i18n ) }
-					isActive={ value }
+					isActive={ isActiveListType( value, 'ol', tagName ) }
 					onClick={ () => {
 						onChange( changeListType( value, { type: 'ol' } ) )
 						onFocus()
