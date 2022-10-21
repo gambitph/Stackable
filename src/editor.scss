@@ -155,10 +155,10 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 	font-size: 12px;
 }
 
+// Fix WP 6.1 makes the control into 1 column only.
 .ugb-design-control .components-flex {
 	display: inline-block;
 }
-
 .ugb-columns-width-control .ugb-design-control .components-flex {
 	display: inline-block;
 	text-align: center;
