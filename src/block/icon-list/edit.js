@@ -200,6 +200,14 @@ const Edit = props => {
 					initialOpen={ true }
 					id="general"
 				>
+					<AdvancedSelectControl
+						label={ __( 'List Type', i18n ) }
+						options={ listTypeOptions }
+						value={ ordered ? 'ordered' : 'unordered' }
+						onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
+						default="unordered"
+					/>
+
 					<AdvancedRangeControl
 						label={ __( 'Columns', i18n ) }
 						attribute="columns"
@@ -263,13 +271,6 @@ const Edit = props => {
 							// Reset custom individual icons.
 							setAttributes( { icon, icons: [] } )
 						} }
-					/>
-
-					<AdvancedSelectControl
-						label={ __( 'List Type', i18n ) }
-						options={ listTypeOptions }
-						value={ ordered ? 'ordered' : 'unordered' }
-						onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
 					/>
 
 					<AdvancedSelectControl
