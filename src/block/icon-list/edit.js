@@ -52,12 +52,12 @@ import { createIconListControls } from './util'
 
 const listTypeOptions = [
 	{
-		label: __( 'Ordered List', i18n ),
-		value: 'ordered',
-	},
-	{
 		label: __( 'Unordered List', i18n ),
 		value: 'unordered',
+	},
+	{
+		label: __( 'Ordered List', i18n ),
+		value: 'ordered',
 	},
 ]
 
