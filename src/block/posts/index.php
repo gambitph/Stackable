@@ -381,9 +381,15 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 			}
 			$matched = $match[0];
 			$single_post_template = $match[3];
+			$query_string = '';
 
 			$attributes = $this->generate_defaults( $attributes );
-			$query_string = isset( $block->inner_blocks[0]->attributes['queryString'] ) ? $block->inner_blocks[0]->attributes['queryString'] : '';
+			foreach ( $block->inner_blocks as $inner_block ) {
+				if ( $inner_block->name === 'stackable/pagination' ) {
+					$query_string = isset( $inner_block->attributes['queryString'] ) ? $inner_block->attributes['queryString'] : '';
+					break;
+				}
+			}
 			$content = $this->render_post_items( $matched, $single_post_template, $content, $attributes, $query_string );
 			$content = apply_filters( 'stackable.posts.output',
 				$content,
