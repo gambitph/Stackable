@@ -18,13 +18,13 @@
 		min-width: unset;
 		padding-left: 4px;
 		padding-right: 4px;
-		width: 35px !important;
+		width: 30px !important;
 		height: 30px;
 		margin-left: 4px;
 
 		[data-icon="database"] {
-			width: 14px;
-			height: 16px;
+			width: 20px;
+			height: 20px;
 		}
 
 		&:hover {
@@ -57,7 +57,7 @@
 	}
 }
 
-.stk-control.ugb-image-control {
+.ugb-image-control {
 	.stk-dynamic-content-control {
 		display: block;
 		> .ugb-image-preview-wrapper,
@@ -79,7 +79,7 @@
 		}
 
 		height: 30px;
-		width: 30px !important;
+		width: 30px;
 
 		.dashicon {
 			margin: 0;
