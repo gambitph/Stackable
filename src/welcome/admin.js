@@ -33,7 +33,7 @@ import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 
 const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
-export const getAllBlocks = () => applyFilters( 'stackable.settings.merge-blocks', FREE_BLOCKS )
+export const getAllBlocks = () => applyFilters( 'stackable.settings.blocks', FREE_BLOCKS )
 
 export const BLOCK_CATEROGIES = [
 	{
