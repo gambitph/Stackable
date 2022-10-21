@@ -49,6 +49,7 @@ import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
 import { useState, useEffect } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
+import { findLast } from 'lodash'
 
 // Use the default template from the block variations.
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -178,11 +179,11 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 	const { getBlock } = useSelect( 'core/block-editor' )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
-	const accordionBlock = parentTree.findLast( pt => pt.name === 'stackable/accordion' )
+	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
 	const accordionBlockDetails = getBlock( accordionBlock?.clientId )
 
-	const columnBlock = parentTree.findLast( pt => pt.name === 'stackable/column' )
-	const iconLabelBlock = parentTree.findLast( pt => pt.name === 'stackable/icon-label' )
+	const columnBlock = findLast( parentTree, pt => pt.name === 'stackable/column' )
+	const iconLabelBlock = findLast( parentTree, pt => pt.name === 'stackable/icon-label' )
 
 	// an accordion icon must have accordion (0), column (1) and icon-label (2) as parent blocks (indicated by array index)
 	// also parent column block (1) of an accordion icon must match with the first accordion block's innerblocks[0].clientId
@@ -222,11 +223,11 @@ addFilter( 'stackable.block-component.icon.default', 'stackable/accordion', star
 	const { getBlock } = useSelect( 'core/block-editor' )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
-	const accordionBlock = parentTree.findLast( pt => pt.name === 'stackable/accordion' )
+	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
 	const accordionBlockDetails = getBlock( accordionBlock?.clientId )
 
-	const columnBlock = parentTree.findLast( pt => pt.name === 'stackable/column' )
-	const iconLabelBlock = parentTree.findLast( pt => pt.name === 'stackable/icon-label' )
+	const columnBlock = findLast( parentTree, pt => pt.name === 'stackable/column' )
+	const iconLabelBlock = findLast( parentTree, pt => pt.name === 'stackable/icon-label' )
 
 	// an accordion icon must have accordion (0), column (1) and icon-label (2) as parent blocks (indicated by array index)
 	// also parent column block (1) of an accordion icon must match with the first accordion block's innerblocks[0].clientId
