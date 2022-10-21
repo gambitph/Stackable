@@ -52,6 +52,17 @@ import { createIconListControls } from './util'
 
 const listTypeOptions = [
 	{
+		label: __( 'Ordered List', i18n ),
+		value: 'ordered',
+	},
+	{
+		label: __( 'Unordered List', i18n ),
+		value: 'unordered',
+	},
+]
+
+const listStyleTypeOptions = [
+	{
 		label: __( 'Number', i18n ),
 		value: 'decimal',
 	},
@@ -173,7 +184,7 @@ const Edit = props => {
 	] )
 
 	const controls = createIconListControls( {
-		isSelected, tagName, setAttributes,
+		isSelected, tagName,
 	} )
 
 	return (
@@ -256,8 +267,15 @@ const Edit = props => {
 
 					<AdvancedSelectControl
 						label={ __( 'List Type', i18n ) }
-						attribute="listType"
 						options={ listTypeOptions }
+						value={ ordered ? 'ordered' : 'unordered' }
+						onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
+					/>
+
+					<AdvancedSelectControl
+						label={ __( 'List Style Type', i18n ) }
+						attribute="listType"
+						options={ listStyleTypeOptions }
 					/>
 
 					<ColorPaletteControl
