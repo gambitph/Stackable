@@ -274,7 +274,7 @@ const Edit = props => {
 					/>
 
 					<AdvancedSelectControl
-						label={ __( 'List Style Type', i18n ) }
+						label={ __( 'List Type', i18n ) }
 						attribute="listType"
 						options={ listStyleTypeOptions }
 					/>
