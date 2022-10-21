@@ -154,3 +154,12 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 .stk-block .components-card__body {
 	font-size: 12px;
 }
+
+.ugb-design-control .components-flex {
+	display: inline-block;
+}
+
+.ugb-columns-width-control .ugb-design-control .components-flex {
+	display: inline-block;
+	text-align: center;
+}
