@@ -1,10 +1,9 @@
 /**
  * Internal dependencies
  */
-import { useControlHandlers } from '../base-control2/hooks'
 import { getAttributeName } from '~stackable/util'
 import {
-	useBlockAttributesContext,
+	useBlockSetAttributesContext,
 	useDeviceType,
 	useWithShift,
 } from '~stackable/hooks'
@@ -48,7 +47,6 @@ const ENABLE = {
 }
 
 const ResizableBottomMarginSingle = props => {
-	const [ initialHeight, setInitialHeight ] = useState( 0 )
 	const [ currentHeight, setCurrentHeight ] = useState( null )
 	const [ isResizing, setIsResizing ] = useState( false )
 
@@ -69,21 +67,7 @@ const ResizableBottomMarginSingle = props => {
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
-	const getInitialHeight = () => {
-		let currentMargin = props.value ? parseFloat( props.value ) : 0
-		if ( ! props.value && props.previewSelector ) {
-			const el = document.querySelector( props.previewSelector )
-			if ( el ) {
-				currentMargin = parseFloat( window.getComputedStyle( el ).marginBottom )
-			}
-		}
-		setInitialHeight( currentMargin || 0 )
-		return currentMargin || 0
-	}
-
-	useEffect( () => {
-		getInitialHeight()
-	}, [ props.previewSelector ] )
+	const height = props.value || props.value === 0 ? props.value : defaultBottomMargin
 
 	return (
 		<ResizableBox
@@ -91,18 +75,15 @@ const ResizableBottomMarginSingle = props => {
 			minHeight="0"
 			handleStyles={ HANDLE_STYLES }
 			enable={ ENABLE }
-			size={ {
-				height: props.value || props.value === 0 ? props.value : initialHeight || defaultBottomMargin,
-			} }
+			size={ { height } }
 			snap={ snapWidths }
 			snapGap={ 5 }
 			onResizeStart={ () => {
-				const currentHeight = getInitialHeight()
-				setCurrentHeight( currentHeight )
+				setCurrentHeight( height )
 				setIsResizing( true )
 			} }
 			onResize={ ( _event, _direction, elt, delta ) => {
-				setCurrentHeight( initialHeight + delta.height )
+				setCurrentHeight( height + delta.height )
 
 				// Set snap widths. We need to do this here not on
 				// ResizeStart or it won't be used at first drag.
@@ -111,8 +92,7 @@ const ResizableBottomMarginSingle = props => {
 				}
 			} }
 			onResizeStop={ () => {
-				props.onChange( currentHeight === defaultBottomMargin ? '' : currentHeight )
-				setInitialHeight( 0 )
+				props.onChange( parseInt( currentHeight, 10 ) === parseInt( defaultBottomMargin, 10 ) ? '' : parseInt( currentHeight, 10 ) )
 				setCurrentHeight( null )
 				setIsResizing( false )
 			} }
@@ -122,7 +102,7 @@ const ResizableBottomMarginSingle = props => {
 				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ currentHeight }px !important; }` }</style>
 			}
 			<span className="stk-resizable-bottom-margin__label">
-				{ `${ isResizing ? currentHeight : ( props.value !== '' ? props.value : ( initialHeight || defaultBottomMargin ) ) }px` }
+				{ `${ isResizing ? currentHeight : height }px` }
 			</span>
 		</ResizableBox>
 	)
@@ -134,53 +114,34 @@ ResizableBottomMarginSingle.defaultProps = {
 	onChange: () => {},
 }
 
-const changeCallback = ( value, originalValue ) => {
-	return {
-		...( originalValue || {} ),
-		bottom: value,
-	}
-}
-
-const getValue = ( _value, attribute, attributes, device ) => {
-	let value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
-
-	// If there's a value already, use that. Or check the other inherited values.
-	if ( value || value === 0 ) {
-		return value
-	}
-
-	// Try and get an inherited value (e.g. if no tablet is supplied, get the desktop value)
-	const deviceSteps = device === 'Mobile' ? [ 'mobile', 'tablet', 'desktop' ]
-		: device === 'Tablet' ? [ 'tablet', 'desktop' ]
-			: [ 'desktop' ]
-
-	deviceSteps.some( device => {
-		const _value = attributes[ getAttributeName( attribute, device ) ]
-		if ( _value !== '' && typeof _value !== 'undefined' ) {
-			value = value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
-			if ( value || value === 0 ) {
-				return true
-			}
-		}
-		return false
-	} )
-
-	return value
-}
-
 const ResizableBottomMargin = props => {
-	const attributes = useBlockAttributesContext()
-	const device = useDeviceType()
+	const setAttributes = useBlockSetAttributesContext()
+	const deviceType = useDeviceType()
+	const attrName = getAttributeName( props.attribute, deviceType )
 
-	const valueCallback = _value => {
-		return getValue( _value, props.attribute, attributes, device )
+	let value = props[ attrName ]?.bottom
+
+	if ( deviceType === 'Mobile' ) {
+		if ( typeof value === 'undefined' || value === '' ) {
+			const attrNameTablet = getAttributeName( props.attribute, 'Tablet' )
+			value = props[ attrNameTablet ]?.bottom
+		}
 	}
 
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, false, valueCallback, changeCallback )
+	if ( deviceType === 'Tablet' || deviceType === 'Mobile' ) {
+		if ( typeof value === 'undefined' || value === '' ) {
+			const attrNameDesktop = getAttributeName( props.attribute, 'Desktop' )
+			value = props[ attrNameDesktop ]?.bottom
+		}
+	}
 
-	// Don't show margin bottom handler if the user is picking a layout.
-	if ( ! attributes.uniqueId ) {
-		return null
+	const onChange = _value => {
+		setAttributes( {
+			[ attrName ]: {
+				...props[ attrName ],
+				bottom: _value,
+			},
+		} )
 	}
 
 	return (
