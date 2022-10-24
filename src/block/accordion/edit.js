@@ -188,9 +188,9 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 	// an accordion icon must have accordion (0), column (1) and icon-label (2) as parent blocks (indicated by array index)
 	// also parent column block (1) of an accordion icon must match with the first accordion block's innerblocks[0].clientId
 	// as it should be the same block
-	const isAccordionIcon = iconLabelBlock && accordionBlockDetails.innerBlocks[ 0 ].clientId === columnBlock.clientId
+	const isAccordionIcon = iconLabelBlock && accordionBlockDetails?.innerBlocks[ 0 ].clientId === columnBlock?.clientId
 
-	if ( isAccordionIcon ) {
+	if ( isAccordionIcon && accordionBlockDetails ) {
 		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
 		const defaultValue = activeVariation.name === 'plus' ? applyFilters( 'stackable.block-component.plus.icon-close' ) : undefined
 		return (
@@ -232,9 +232,9 @@ addFilter( 'stackable.block-component.icon.default', 'stackable/accordion', star
 	// an accordion icon must have accordion (0), column (1) and icon-label (2) as parent blocks (indicated by array index)
 	// also parent column block (1) of an accordion icon must match with the first accordion block's innerblocks[0].clientId
 	// as it should be the same block
-	const isAccordionIcon = iconLabelBlock && accordionBlockDetails.innerBlocks[ 0 ].clientId === columnBlock.clientId
+	const isAccordionIcon = iconLabelBlock && accordionBlockDetails?.innerBlocks[ 0 ].clientId === columnBlock?.clientId
 
-	if ( isAccordionIcon ) {
+	if ( isAccordionIcon && accordionBlockDetails ) {
 		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
 		return ( activeVariation.name === 'plus' )
 			? applyFilters( 'stackable.block-component.plus.icon-open' ) : defaultIcon
