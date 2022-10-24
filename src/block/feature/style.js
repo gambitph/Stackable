@@ -29,9 +29,9 @@ import { memo, renderToString } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 const BlockStyles = memo( props => {
-	const columnArrangementMobile = useBlockAttributesContext( attributes => attributes.columnArrangementMobile )
+	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
 	const columnStyleOptions = {
-		numColumns: ( columnArrangementMobile || '' ).split( ',' ).length,
+		numColumns: ( columnArrangement || '' ).split( ',' ).length,
 	}
 
 	const columnsStyles = useStyles( applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
@@ -73,7 +73,7 @@ BlockStyles.Content = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 
 	const columnStyleOptions = {
-		numColumns: ( props.attributes.columnArrangementMobile || '' ).split( ',' ).length,
+		numColumns: ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet || '' ).split( ',' ).length,
 	}
 
 	const columnsStyles = getStyles( props.attributes, applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
