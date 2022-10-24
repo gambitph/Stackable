@@ -167,11 +167,26 @@ const Styles = props => {
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
-				styles={ {
-					fontWeight: 'fontWeight',
-					textTransform: 'textTransform',
-					fontStyle: 'fontStyle',
-				} }
+				styleRule="fontWeight"
+				attrName="fontWeight"
+				dependencies={ dependencies }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				selectorCallback={ selectorCallback }
+				attrNameTemplate={ attrNameTemplate }
+				styleRule="textTransform"
+				attrName="textTransform"
+				dependencies={ dependencies }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				selectorCallback={ selectorCallback }
+				attrNameTemplate={ attrNameTemplate }
+				styleRule="fontStyle"
+				attrName="fontStyle"
 				dependencies={ dependencies }
 			/>
 			<BlockCss
