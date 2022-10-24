@@ -1,10 +1,20 @@
+/**
+ * Internal dependencies
+ */
+import { useBlockSetAttributesContext } from '~stackable/hooks'
+
+/**
+ * WordPress dependencies
+ */
 import { useEffect } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { dispatch } from '@wordpress/data'
 
 export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 
 export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 	const { clientId } = useBlockEditContext()
+	const setAttributes = useBlockSetAttributesContext()
 
 	// Need to do this when the clientId changes (when a block is
 	// cloned/duplicated).
@@ -18,13 +28,15 @@ export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 		// When there's no unique ID yet, create one.
 		const uniqueClass = createUniqueClass( clientId )
 		if ( ! attributes.uniqueId ) {
-			attributes.uniqueId = uniqueClass
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { uniqueId: uniqueClass } )
 
 			// If there's one already, check whether the we need to re-create one.
 			// Duplicating a block or copy pasting a block may give us duplicate IDs.
 		} else if ( uniqueClass !== attributes.uniqueId ) {
 			if ( document.querySelectorAll( `[data-block-id="${ attributes.uniqueId }"]` ).length > 1 ) {
-				attributes.uniqueId = uniqueClass
+				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+				setAttributes( { uniqueId: uniqueClass } )
 			}
 		}
 	}, [ clientId ] )
