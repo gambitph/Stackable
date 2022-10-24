@@ -89,6 +89,7 @@ export const BackgroundControls = props => {
 				<ColorPaletteControl
 					label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Background Color', i18n ), 2 ) }
 					attribute={ getAttrName( 'backgroundColor2' ) }
+					hasTransparent={ true }
 				/>
 			) }
 			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (

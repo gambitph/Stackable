@@ -12,6 +12,7 @@ import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-contex
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	Button,
 	Popover,
@@ -165,6 +166,8 @@ export const useDynamicContentControlProps = props => {
  * @param {string} value
  */
 export const useDynamicContent = ( value = '' ) => {
+	const { clientId } = useBlockEditContext()
+	const blockDetails = select( 'core/block-editor' ).getBlock( clientId )
 	const queryLoopContext = useContext( QueryLoopContext )
 
 	return useSelect( () => {
@@ -223,7 +226,7 @@ export const useDynamicContent = ( value = '' ) => {
 			} )
 		}
 
-		return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue )
+		return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue, blockDetails )
 	}, [ value, queryLoopContext?.postId ] )
 }
 
@@ -348,6 +351,7 @@ const DynamicContentControl = ( {
 		'stk-dynamic-content-control',
 	], {
 		'stk--has-dynamic-content': hasDynamicContent,
+		'stk--has-control-tooltip': otherProps.controlHasTooltip,
 	} )
 
 	return (
@@ -373,6 +377,7 @@ const DynamicContentControl = ( {
 
 DynamicContentControl.defaultProps = {
 	enable: false,
+	controlHasTooltip: false,
 	children: null,
 	activeAttribute: '',
 	onReset: () => {},

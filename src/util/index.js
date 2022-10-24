@@ -1,3 +1,4 @@
+export * from './admin'
 export * from './font'
 export * from './attributes'
 export * from './typography'
