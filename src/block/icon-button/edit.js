@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n'
 /**
  * Internal dependencies
  */
+import { defaultIcon } from './schema'
 import { IconButtonStyles } from './style'
 import { blockStyles } from './block-styles'
 
@@ -59,7 +60,7 @@ const Edit = props => {
 				hasTextColor={ false }
 				hasIconColor={ true }
 			/>
-			<Button.InspectorControls.Icon hasColor={ false } />
+			<Button.InspectorControls.Icon hasColor={ false } defaultValue={ defaultIcon } />
 			<Button.InspectorControls.Size hasWidth={ true } />
 			<Button.InspectorControls.Borders
 				borderSelector=".stk-button"

@@ -39,7 +39,8 @@ import {
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { defaultIcon } from './schema'
 
 const Edit = props => {
 	const { className, attributes } = props
@@ -53,6 +54,8 @@ const Edit = props => {
 		'stk-block-icon',
 		blockAlignmentClass,
 	] )
+
+	const derivedIcon = applyFilters( 'stackable.block-component.icon.default', defaultIcon )
 
 	return (
 		<Fragment>
@@ -77,7 +80,7 @@ const Edit = props => {
 			</InspectorAdvancedControls>
 
 			<EffectsAnimations.InspectorControls />
-			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
+			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
 			<Link.InspectorControls hasToggle={ true } />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />

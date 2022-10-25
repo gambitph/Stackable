@@ -42,13 +42,13 @@ import {
 /**
  * WordPress dependencies
  */
-import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
 import {
 	Fragment, useRef, useEffect, useState,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { createIconListControls } from './util'
+import { createIconListControls, DEFAULT_SVG } from './util'
+import { compose } from '@wordpress/compose'
 
 const listTypeOptions = [
 	{
@@ -271,6 +271,7 @@ const Edit = props => {
 							// Reset custom individual icons.
 							setAttributes( { icon, icons: [] } )
 						} }
+						defaultValue={ DEFAULT_SVG }
 					/>
 
 					<AdvancedSelectControl
