@@ -50,11 +50,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
-const TEMPLATE = [
-	[ 'stackable/column' ],
-	[ 'stackable/column' ],
-]
-
 const Edit = props => {
 	const {
 		className,
@@ -118,7 +113,6 @@ const Edit = props => {
 							orientation="horizontal"
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ false }
-							template={ TEMPLATE }
 							templateLock={ props.attributes.templateLock || false }
 						/>
 					</div>
