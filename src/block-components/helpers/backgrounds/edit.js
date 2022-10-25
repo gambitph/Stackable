@@ -24,6 +24,17 @@ import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
 
+const COLOR_TYPE_CONTROLS = [
+	{
+		value: '',
+		title: __( 'Single', i18n ),
+	},
+	{
+		value: 'gradient',
+		title: __( 'Gradient', i18n ),
+	},
+]
+
 // TODO: Post v3, add option to select the image size for the background (full, large, medium)
 export const BackgroundControls = props => {
 	const deviceType = useDeviceType()
@@ -47,16 +58,7 @@ export const BackgroundControls = props => {
 		<Fragment>
 			{ props.hasGradient &&
 				<AdvancedToolbarControl
-					controls={ [
-						{
-							value: '',
-							title: __( 'Single', i18n ),
-						},
-						{
-							value: 'gradient',
-							title: __( 'Gradient', i18n ),
-						},
-					] }
+					controls={ COLOR_TYPE_CONTROLS }
 					attribute={ getAttrName( 'backgroundColorType' ) }
 					fullwidth={ false }
 					isSmall={ true }
