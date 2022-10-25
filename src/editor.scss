@@ -163,3 +163,8 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 	display: inline-block;
 	text-align: center;
 }
+
+// Fix WP 6.1 FSE selected block outline looks like cut when with background color.
+.is-outline-mode .block-editor-block-list__block:not(.remove-outline).is-selected {
+	padding: 2px;
+}
