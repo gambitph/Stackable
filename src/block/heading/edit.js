@@ -34,10 +34,12 @@ import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
 } from '~stackable/components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import { createBlockCompleter } from '~stackable/util'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -75,7 +77,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const { parentBlock } = useBlockContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -134,6 +135,7 @@ const Edit = props => {
 			<Transform.InspectorControls />
 
 			<Typography.InspectorControls
+				{ ...props }
 				hasRemoveMargins={ true }
 				initialOpen={ true }
 				hasTextShadow={ true }
@@ -242,12 +244,17 @@ const Edit = props => {
 
 			<HeadingStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-heading" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				{ props.attributes.showTopLine && <div className="stk-block-heading__top-line" /> }
 				<Typography
 					defaultTag="h2"

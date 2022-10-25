@@ -32,7 +32,6 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -49,8 +48,6 @@ const Edit = props => {
 	} = props
 
 	useGeneratedCss( props.attributes )
-
-	const [ blockState ] = useBlockHoverState()
 
 	const {
 		separatorDesign,
@@ -115,12 +112,17 @@ const Edit = props => {
 
 			<SeparatorStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-separator" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<div className={ separatorClassNames }>
 					<Separator2
 						design={ separatorDesign }

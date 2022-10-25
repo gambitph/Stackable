@@ -9,7 +9,7 @@ import BlockStyles from './style'
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
 import { InspectorTabs } from '~stackable/components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -48,7 +48,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { parentBlock } = useBlockContext( clientId )
 
@@ -72,6 +71,7 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
 			<Image.InspectorControls
+				{ ...props }
 				initialOpen={ true }
 				heightUnits={ heightUnit }
 			/>
@@ -84,12 +84,17 @@ const Edit = props => {
 
 			<BlockStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-image" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Image
 					heightUnits={ heightUnit }
 					defaultWidth="100"

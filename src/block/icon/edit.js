@@ -40,7 +40,6 @@ import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
-import { useBlockHoverState } from '~stackable/hooks'
 
 const Edit = props => {
 	const {
@@ -51,7 +50,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
 	const blockClassNames = classnames( [
@@ -92,11 +90,16 @@ const Edit = props => {
 
 			<IconStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-icon" />
-			<BlockDiv className={ blockClassNames } >
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Link linkTrigger=".stk--inner-svg">
 					<Icon />
 				</Link>

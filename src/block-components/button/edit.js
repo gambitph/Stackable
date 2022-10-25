@@ -12,9 +12,7 @@ import {
 	AdvancedSelectControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
-import {
-	useAttributeEditHandlers, useBlockContext, useBlockHoverState,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers, useBlockContext } from '~stackable/hooks'
 import { extractColor } from '~stackable/util'
 
 /**
@@ -98,7 +96,11 @@ export const HoverEffects = () => {
 }
 
 export const Colors = props => {
-	const [ state ] = useBlockHoverState()
+	const {
+		blockState,
+		hasIconColor,
+		hasTextColor,
+	} = props
 
 	const {
 		getAttribute,
@@ -134,7 +136,7 @@ export const Colors = props => {
 						: __( 'Button Color', i18n )
 					}
 					attribute="buttonBackgroundColor"
-					hasTransparent={ state === 'normal' && getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' }
+					hasTransparent={ blockState === 'normal' && getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' }
 					hover="all"
 				/>
 				{ getAttribute( 'buttonBackgroundColorType' ) === 'gradient' && (
@@ -157,10 +159,10 @@ export const Colors = props => {
 					</>
 				) }
 
-				{ props.hasTextColor && (
+				{ hasTextColor && (
 					<ColorPaletteControl
 						changeCallback={ _value => {
-							if ( state !== 'normal' ) {
+							if ( blockState !== 'normal' ) {
 								return _value
 							}
 							const value = extractColor( _value )
@@ -175,7 +177,7 @@ export const Colors = props => {
 					/>
 				) }
 
-				{ props.hasIconColor && (
+				{ hasIconColor && (
 					<ColorPaletteControl
 						label={ __( 'Icon Color', i18n ) }
 						attribute="iconColor1"
@@ -286,6 +288,7 @@ export const Edit = props => {
 		hasIconPosition,
 		borderRadiusPlaceholder,
 		hasFullWidth,
+		...propsToPass
 	} = props
 
 	const { parentBlock } = useBlockContext()
@@ -295,7 +298,7 @@ export const Edit = props => {
 	return (
 		<>
 			{ ( hasLink || enableLink ) && <Link /> }
-			<Colors hasTextColor={ hasTextColor } />
+			<Colors hasTextColor={ hasTextColor } { ...propsToPass } />
 			<Size hasFullWidth={ hasFullWidth } />
 			<Borders
 				borderSelector={ borderSelector }

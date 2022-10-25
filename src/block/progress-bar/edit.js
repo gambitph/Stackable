@@ -30,7 +30,6 @@ import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
-import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -38,12 +37,15 @@ import { useBlockHoverState } from '~stackable/hooks'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
-const Edit = ( {
-	clientId, className, attributes,
-} ) => {
+const Edit = props => {
+	const {
+		clientId,
+		className,
+		attributes,
+	} = props
+
 	useGeneratedCss( attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const textClasses = getTypographyClasses( attributes )
 
@@ -89,6 +91,7 @@ const Edit = ( {
 
 			<ProgressBar.InspectorControls />
 			<Typography.InspectorControls
+				{ ...props }
 				initialOpen={ false }
 				hasTextTag={ false }
 				hasTextContent={ false }
@@ -97,10 +100,15 @@ const Edit = ( {
 				label={ __( 'Label', i18n ) }
 			/>
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<ProgressBarStyles
 					version={ VERSION }
-					blockState={ blockState }
+					blockState={ props.blockState }
 					clientId={ clientId }
 				/>
 				<CustomCSS mainBlockClass="stk-block-progress-bar" />

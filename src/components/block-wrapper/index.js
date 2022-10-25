@@ -6,11 +6,6 @@
  */
 
 /**
- * Internal dependencies
- */
-import { useBlockHoverClass } from '~stackable/hooks'
-
-/**
  * External dependencies
  */
 import classnames from 'classnames'
@@ -19,13 +14,14 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { useBlockProps } from '@wordpress/block-editor'
+import { memo } from '@wordpress/element'
 
-const BlockWrapper = props => {
+const BlockWrapper = memo( props => {
 	const {
 		align = undefined,
 		className: blockClassName = '',
+		blockHoverClass = '',
 	} = props
-	const blockHoverClass = useBlockHoverClass()
 
 	const className = classnames(
 		blockHoverClass,
@@ -48,7 +44,7 @@ const BlockWrapper = props => {
 	return <div { ...blockProps } >
 		{ props.children }
 	</div>
-}
+} )
 
 BlockWrapper.defaultProps = {
 	blockProps: null,

@@ -63,7 +63,6 @@ import {
 } from '@wordpress/i18n'
 import { RichText } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
-import { useBlockHoverState } from '~stackable/hooks'
 
 const listTypeOptions = [
 	{
@@ -153,7 +152,6 @@ const Edit = props => {
 		isSelected,
 	} = props
 
-	const [ blockState ] = useBlockHoverState()
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 	const [ headings, setHeadings ] = useState( attributes.headings )
 	const { getEditedPostContent } = useSelect( 'core/editor' )
@@ -431,6 +429,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<Typography.InspectorControls
+				{ ...props }
 				isMultiline={ true }
 				initialOpen={ false }
 				hasTextTag={ false }
@@ -447,12 +446,17 @@ const Edit = props => {
 
 			<TableOfContentsStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				{ !! headings.length && hasEmptyAnchor && (
 					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
 				) }

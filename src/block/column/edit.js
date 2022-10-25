@@ -14,9 +14,11 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapperIsHovered,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	Column,
@@ -61,7 +63,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -122,14 +123,19 @@ const Edit = props => {
 
 			<BlockStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-column" />
 
 			<Column showHandle={ isHovered } context={ props.context }>
 				<Linking show={ isHovered } />
-				<BlockDiv className={ blockClassNames }>
+				<BlockDiv
+					blockHoverClass={ props.blockHoverClass }
+					clientId={ props.clientId }
+					attributes={ props.attributes }
+					className={ blockClassNames }
+				>
 					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }

@@ -32,7 +32,7 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapper,
@@ -60,7 +60,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
 
@@ -97,10 +96,16 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<ContainerStyles
 					version={ VERSION }
-					blockState={ blockState }
+					blockState={ props.blockState }
 					clientId={ clientId }
 				/>
 				<CustomCSS mainBlockClass="stk-block-blockquote" />

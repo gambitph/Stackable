@@ -31,7 +31,7 @@ import {
 	AdvancedRangeControl,
 	ColorPaletteControl,
 } from '~stackable/components'
-import { useBlockHoverState, useBlockStyle } from '~stackable/hooks'
+import { useBlockStyle } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -50,7 +50,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( blockStyles )
 
@@ -107,12 +106,17 @@ const Edit = props => {
 
 			<DividerStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-divider" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				{ [ 'dots', 'asterisks' ].includes( blockStyle ) ? (
 					<div className="stk-block-divider__dots" aria-hidden="true">
 						<div className="stk-block-divider__dot" />

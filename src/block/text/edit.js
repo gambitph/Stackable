@@ -30,9 +30,11 @@ import {
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 } from '~stackable/components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
 
@@ -68,7 +70,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const {
@@ -153,6 +154,7 @@ const Edit = props => {
 			}
 
 			<Typography.InspectorControls
+				{ ...props }
 				hasTextTag={ false }
 				isMultiline={ true }
 				initialOpen={ ! enableColumns }
@@ -166,12 +168,17 @@ const Edit = props => {
 
 			<TextStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-text" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Typography
 					tagName={ props.attributes.innerTextTag || 'p' }
 					className={ textClassNames }

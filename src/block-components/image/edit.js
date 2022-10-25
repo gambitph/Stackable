@@ -23,7 +23,6 @@ import {
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
-	useBlockHoverState,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
@@ -53,9 +52,12 @@ const IMAGE_SHADOWS = [
 ]
 
 const Controls = props => {
+	const {
+		blockState = 'normal',
+	} = props
+
 	const attributes = useBlockAttributesContext()
 	const setAttributes = useBlockSetAttributesContext()
-	const [ state ] = useBlockHoverState()
 
 	// Get the image size urls.
 	const { imageData } = useSelect( select => {
@@ -269,27 +271,27 @@ const Controls = props => {
 					label={ __( 'Gradient Overlay Settings', i18n ) }
 					onReset={ () => {
 						setAttributes( {
-							[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', blockState ) ]: '',
 						} )
 					} }
 					allowReset={
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', state ) ]
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', blockState ) ]
 					}
 				>
 					<AdvancedRangeControl

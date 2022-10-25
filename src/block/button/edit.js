@@ -20,9 +20,11 @@ import {
 	Transform,
 	getAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockHoverState, useBlockStyle } from '~stackable/hooks'
+import { useBlockStyle } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -50,7 +52,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
@@ -90,10 +91,12 @@ const Edit = props => {
 				<Button.InspectorControls.HoverEffects />
 			</BlockStyle.InspectorControls>
 			<Button.InspectorControls
+				blockState={ props.blockState }
 				borderSelector=".stk-button"
 				hasFullWidth={ true }
 			/>
 			<Typography.InspectorControls
+				{ ...props }
 				hasTextTag={ false }
 				initialOpen={ false }
 				hasColor={ false }
@@ -109,12 +112,15 @@ const Edit = props => {
 
 			<ButtonStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-button" />
 
 			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
 				className={ blockClassNames }
 				applyAdvancedAttributes={ false }
 				applyCustomAttributes={ false }

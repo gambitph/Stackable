@@ -41,7 +41,6 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
-import { useBlockHoverState } from '~stackable/hooks'
 
 export const TEMPLATE = [
 	[ 'stackable/icon', { contentAlign: 'left' } ],
@@ -57,7 +56,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -108,12 +106,17 @@ const Edit = props => {
 
 			<IconLabelStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-icon-label" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Fragment>
 					<div className={ contentClassNames }>
 						<InnerBlocks

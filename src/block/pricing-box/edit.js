@@ -30,7 +30,7 @@ import {
 	ContentAlign,
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -52,7 +52,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
@@ -96,12 +95,18 @@ const Edit = props => {
 
 			<BlockStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<ContainerDiv className={ contentClassNames }>
 					<ColumnInnerBlocks
 						template={ TEMPLATE }

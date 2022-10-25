@@ -35,9 +35,11 @@ import {
 	ContentAlign,
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -63,7 +65,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
@@ -101,12 +102,15 @@ const Edit = props => {
 			<ContentAlign.InspectorControls hasColumnCount={ true } />
 
 			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
 				<BlockStyles
 					version={ VERSION }
-					blockState={ blockState }
+					blockState={ props.blockState }
 					clientId={ clientId }
 				/>
 				<CustomCSS mainBlockClass="stk-block-columns" />

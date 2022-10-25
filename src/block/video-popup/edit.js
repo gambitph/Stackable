@@ -33,9 +33,10 @@ import {
 } from '~stackable/block-components'
 import { getVideoProviderFromURL, urlIsVideo } from '~stackable/util'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
-import { useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -65,7 +66,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const rowClass = getRowClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -141,12 +141,17 @@ const Edit = props => {
 
 			<IconLabelStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-video-popup" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<div className={ contentClassNames }>
 					<InnerBlocks
 						template={ TEMPLATE }

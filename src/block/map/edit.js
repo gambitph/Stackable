@@ -24,7 +24,7 @@ import {
 	ResizerTooltip,
 	StyleControl,
 } from '~stackable/components'
-import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -128,7 +128,6 @@ const Edit = props => {
 		}
 	}, [ apiKey ] )
 
-	const [ blockState ] = useBlockHoverState()
 	const deviceType = useDeviceType()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
@@ -472,12 +471,17 @@ const Edit = props => {
 
 			<BlockStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-map" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<ResizableBox
 					ref={ resizableRef }
 					showHandle={ isHovered || isSelected }

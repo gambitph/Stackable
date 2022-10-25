@@ -31,9 +31,7 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import {
-	useAttributeEditHandlers, useBlockContext, useBlockHoverState,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers, useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -64,7 +62,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const [ isOpen, setIsOpen ] = useState( true )
 	const { hasInnerBlocks } = useBlockContext()
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
@@ -154,12 +151,19 @@ const Edit = props => {
 
 			<BlockStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-accordion" />
 
-			<BlockDiv className={ blockClassNames } renderHtmlTag={ false } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				renderHtmlTag={ false }
+				enableVariationPicker={ true }
+			>
 				<InnerBlocks
 					template={ TEMPLATE }
 					templateLock="insert"

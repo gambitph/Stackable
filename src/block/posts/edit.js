@@ -29,7 +29,6 @@ import {
 	usePostsQuery,
 	useAttributeEditHandlers,
 	useDeviceType,
-	useBlockHoverState,
 } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
@@ -94,7 +93,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const deviceType = useDeviceType()
 
 	const {
@@ -343,6 +341,7 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 			<Image.InspectorControls
+				{ ...props }
 				label={ __( 'Featured Image', i18n ) }
 				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
 				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
@@ -354,6 +353,7 @@ const Edit = props => {
 				hasToggle={ true }
 			/>
 			<Typography.InspectorControls
+				{ ...props }
 				label={ __( 'Title', i18n ) }
 				hasToggle={ true }
 				attrNameTemplate="title%s"
@@ -362,6 +362,7 @@ const Edit = props => {
 				initialOpen={ false }
 			/>
 			<Typography.InspectorControls
+				{ ...props }
 				label={ __( 'Category', i18n ) }
 				hasToggle={ true }
 				attrNameTemplate="category%s"
@@ -371,6 +372,7 @@ const Edit = props => {
 				initialOpen={ false }
 			/>
 			<Typography.InspectorControls
+				{ ...props }
 				label={ __( 'Excerpt', i18n ) }
 				hasToggle={ true }
 				attrNameTemplate="excerpt%s"
@@ -380,6 +382,7 @@ const Edit = props => {
 				initialOpen={ false }
 			/>
 			<Typography.InspectorControls
+				{ ...props }
 				label={ __( 'Meta', i18n ) }
 				hasToggle={ true }
 				attrNameTemplate="meta%s"
@@ -389,6 +392,7 @@ const Edit = props => {
 				initialOpen={ false }
 			/>
 			<Typography.InspectorControls
+				{ ...props }
 				label={ __( 'Read More Link', i18n ) }
 				attrNameTemplate="readmore%s"
 				hasTextTag={ false }
@@ -405,7 +409,7 @@ const Edit = props => {
 
 			<PostsStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-posts" />
@@ -422,7 +426,13 @@ const Edit = props => {
 					) }
 				</Placeholder>
 			) : (
-				<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+				<BlockDiv
+					blockHoverClass={ props.blockHoverClass }
+					clientId={ props.clientId }
+					attributes={ props.attributes }
+					className={ blockClassNames }
+					enableVariationPicker={ true }
+				>
 					<div className={ wrapperClassNames } key={ `posts-wrapper-${ clientId }` }>
 						<div className={ contentClassNames } key={ `posts-content-${ clientId }` }>
 							{ ( posts || [] ).map( editorPostItems ) }

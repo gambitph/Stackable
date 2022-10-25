@@ -38,7 +38,7 @@ import {
 	ContentAlign,
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -63,7 +63,6 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ blockState ] = useBlockHoverState()
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
@@ -159,11 +158,17 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<ContainerStyles
 					version={ VERSION }
 					clientId={ clientId }
-					blockState={ blockState }
+					blockState={ props.blockState }
 				/>
 				<CustomCSS mainBlockClass="stk-block-notification" />
 

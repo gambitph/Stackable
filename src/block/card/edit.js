@@ -16,10 +16,12 @@ import {
 	InspectorTabs,
 } from '~stackable/components'
 import {
-	useBlockContext, useBlockHoverState, useBlockStyle, useDeviceType,
+	useBlockContext, useBlockStyle, useDeviceType,
 } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -69,7 +71,6 @@ const Edit = props => {
 		className, //isHovered,
 	} = props
 
-	const [ blockState ] = useBlockHoverState()
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( variations )
@@ -113,6 +114,7 @@ const Edit = props => {
 			<Transform.InspectorControls />
 			<BlockLink.InspectorControls />
 			<Image.InspectorControls
+				{ ...props }
 				hasWidth={ blockStyle === 'horizontal' }
 				hasHeight={ hasHeight }
 				widthUnits={ widthUnit }
@@ -134,12 +136,18 @@ const Edit = props => {
 
 			<CardStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-card" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<ContainerDiv className={ contentClassNames }>
 					<Image
 						className="stk-block-card__image"

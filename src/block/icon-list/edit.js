@@ -49,7 +49,6 @@ import {
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createIconListControls } from './util'
-import { useBlockHoverState } from '~stackable/hooks'
 
 const listTypeOptions = [
 	{
@@ -164,7 +163,6 @@ const Edit = props => {
 	const { ordered } = attributes
 	const tagName = ordered ? 'ol' : 'ul'
 
-	const [ blockState ] = useBlockHoverState()
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -303,6 +301,7 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<Typography.InspectorControls
+				{ ...props }
 				isMultiline={ true }
 				initialOpen={ false }
 				hasTextTag={ false }
@@ -319,12 +318,17 @@ const Edit = props => {
 
 			<IconListStyles
 				version={ VERSION }
-				blockState={ blockState }
+				blockState={ props.blockState }
 				clientId={ clientId }
 			/>
 			<CustomCSS mainBlockClass="stk-block-icon-list" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				{ /* eslint-disable-next-line */ }
 				<div
 					ref={ typographyWrapperRef }

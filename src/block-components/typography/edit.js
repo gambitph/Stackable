@@ -3,7 +3,7 @@
  */
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
-import { useAttributeEditHandlers, useBlockHoverState } from '~stackable/hooks'
+import { useAttributeEditHandlers } from '~stackable/hooks'
 import {
 	AlignButtonsControl,
 	AdvancedRangeControl,
@@ -26,11 +26,13 @@ import {
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element'
+import {
+	useEffect, useState, useCallback,
+} from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
 import { applyFilters } from '@wordpress/hooks'
-import { useSelect } from '@wordpress/data'
+import { select } from '@wordpress/data'
 import { getColorClassName } from '@wordpress/block-editor'
 
 const TYPOGRAPHY_SHADOWS = [
@@ -70,6 +72,7 @@ export const Controls = props => {
 		isMultiline,
 		hasGradient,
 		hasTextShadow,
+		blockState,
 	} = props
 
 	const {
@@ -79,9 +82,7 @@ export const Controls = props => {
 		updateAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
 	const attributeName = getAttrNameFunction( attrNameTemplate )
-	const colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors ) || []
 	const text = getAttribute( 'text' )
-	const [ state ] = useBlockHoverState()
 	const [ debouncedText, setDebouncedText ] = useState( text )
 
 	useEffect( () => {
@@ -101,6 +102,19 @@ export const Controls = props => {
 		return () => clearTimeout( timeout )
 	}, [ updateAttribute, debouncedText, text ] )
 
+	const onChangeContent = useCallback( text => setDebouncedText( escapeHTML( text ) ), [] )
+
+	const colorChangeCallback = useCallback( _value => {
+		if ( blockState !== 'normal' ) {
+			return _value
+		}
+		const value = extractColor( _value )
+		const colors = select( 'core/block-editor' ).getSettings().colors || []
+		const colorSlug = colors.find( ( { color } ) => value === color )?.slug
+		updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
+		return _value
+	}, [ blockState ] )
+
 	return (
 		<>
 			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
@@ -109,7 +123,7 @@ export const Controls = props => {
 					label={ __( 'Content', i18n ) }
 					isMultiline={ isMultiline }
 					value={ unescape( debouncedText ) }
-					onChange={ text => setDebouncedText( escapeHTML( text ) ) }
+					onChange={ onChangeContent }
 					/**
 					 * Pass the unescaped Dynamic Content `onChange` function.
 					 *
@@ -140,28 +154,28 @@ export const Controls = props => {
 				onReset={ () => {
 					updateAttributes( {
 						[ getAttributeName( 'fontFamily' ) ]: '',
-						[ getAttributeName( 'fontSize', 'desktop', state ) ]: '',
-						[ getAttributeName( 'fontSize', 'tablet', state ) ]: '',
-						[ getAttributeName( 'fontSize', 'mobile', state ) ]: '',
-						[ getAttributeName( 'fontWeight', 'desktop', state ) ]: '',
-						[ getAttributeName( 'textTransform', 'desktop', state ) ]: '',
-						[ getAttributeName( 'letterSpacing', 'desktop', state ) ]: '',
-						[ getAttributeName( 'lineHeight', 'desktop', state ) ]: '',
-						[ getAttributeName( 'lineHeight', 'tablet', state ) ]: '',
-						[ getAttributeName( 'lineHeight', 'mobile', state ) ]: '',
+						[ getAttributeName( 'fontSize', 'desktop', blockState ) ]: '',
+						[ getAttributeName( 'fontSize', 'tablet', blockState ) ]: '',
+						[ getAttributeName( 'fontSize', 'mobile', blockState ) ]: '',
+						[ getAttributeName( 'fontWeight', 'desktop', blockState ) ]: '',
+						[ getAttributeName( 'textTransform', 'desktop', blockState ) ]: '',
+						[ getAttributeName( 'letterSpacing', 'desktop', blockState ) ]: '',
+						[ getAttributeName( 'lineHeight', 'desktop', blockState ) ]: '',
+						[ getAttributeName( 'lineHeight', 'tablet', blockState ) ]: '',
+						[ getAttributeName( 'lineHeight', 'mobile', blockState ) ]: '',
 					} )
 				} }
 				allowReset={
 					( getAttribute( 'fontFamily' ) ||
-						getAttribute( 'fontSize', 'desktop', state ) ||
-						getAttribute( 'fontSize', 'tablet', state ) ||
-						getAttribute( 'fontSize', 'mobile', state ) ||
-						getAttribute( 'fontWeight', 'desktop', state ) ||
-						getAttribute( 'textTransform', 'desktop', state ) ||
-						getAttribute( 'letterSpacing', 'desktop', state ) ||
-						getAttribute( 'lineHeight', 'desktop', state ) ||
-						getAttribute( 'lineHeight', 'tablet', state ) ||
-						getAttribute( 'lineHeight', 'mobile', state ) )
+						getAttribute( 'fontSize', 'desktop', blockState ) ||
+						getAttribute( 'fontSize', 'tablet', blockState ) ||
+						getAttribute( 'fontSize', 'mobile', blockState ) ||
+						getAttribute( 'fontWeight', 'desktop', blockState ) ||
+						getAttribute( 'textTransform', 'desktop', blockState ) ||
+						getAttribute( 'letterSpacing', 'desktop', blockState ) ||
+						getAttribute( 'lineHeight', 'desktop', blockState ) ||
+						getAttribute( 'lineHeight', 'tablet', blockState ) ||
+						getAttribute( 'lineHeight', 'mobile', blockState ) )
 				}
 			>
 				<FontFamilyControl
@@ -254,15 +268,7 @@ export const Controls = props => {
 						/>
 					) }
 					<ColorPaletteControl
-						changeCallback={ _value => {
-							if ( state !== 'normal' ) {
-								return _value
-							}
-							const value = extractColor( _value )
-							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
-							return _value
-						} }
+						changeCallback={ colorChangeCallback }
 						label={ getAttribute( 'textColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
 							: __( 'Text Color', i18n ) }
 						attribute={ attributeName( 'textColor1' ) }
@@ -323,6 +329,7 @@ Controls.defaultProps = {
 	isMultiline: false,
 	hasGradient: true,
 	hasTextShadow: false,
+	blockState: 'normal',
 }
 
 export const Edit = props => {
@@ -339,6 +346,7 @@ export const Edit = props => {
 		hasToggle,
 		label,
 		hasTextShadow,
+		blockState,
 	} = props
 
 	const {
@@ -368,6 +376,7 @@ export const Edit = props => {
 					isMultiline={ isMultiline }
 					hasGradient={ hasGradient }
 					hasTextShadow={ hasTextShadow }
+					blockState={ blockState }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
