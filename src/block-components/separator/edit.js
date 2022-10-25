@@ -122,6 +122,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Top Separator', i18n ) }
 				id="top-separator"
+				hasToggle={ true }
 				checked={ getAttribute( 'topSeparatorShow' ) }
 				onChange={ updateAttributeHandler( 'topSeparatorShow' ) }
 			>
@@ -143,6 +144,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator', i18n ) }
 				id="bottom-separator"
+				hasToggle={ true }
 				checked={ getAttribute( 'bottomSeparatorShow' ) }
 				onChange={ updateAttributeHandler( 'bottomSeparatorShow' ) }
 			>

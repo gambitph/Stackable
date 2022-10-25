@@ -43,6 +43,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Container Background', i18n ) }
 				id="container"
+				hasToggle={ true }
 				checked={ attributes.hasContainer }
 				onChange={ hasContainer => setAttributes( { hasContainer } ) }
 			>

@@ -351,6 +351,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ label }
 				initialOpen={ initialOpen }
+				hasToggle={ hasToggle }
 				{ ...( hasToggle ? {
 					checked: getAttribute( attrNameTemplate !== '%s' ? 'show' : 'showText' ),
 					onChange: updateAttributeHandler( attrNameTemplate !== '%s' ? 'show' : 'showText' ),

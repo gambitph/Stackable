@@ -25,6 +25,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Link', i18n ) }
 				id="link"
+				hasToggle={ props.hasToggle }
 				checked={ props.hasToggle ? getAttribute( 'hasLink' ) : undefined }
 				onChange={ props.hasToggle ? updateAttributeHandler( 'hasLink' ) : undefined }
 			>

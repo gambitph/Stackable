@@ -417,6 +417,7 @@ const Edit = props => {
 					className={ classnames( 'stk--needs-api-key', { 'stk--uses-api-key': apiKey } ) }
 					title={ __( 'Map Marker', i18n ) }
 					initialOpen={ false }
+					hasToggle={ true }
 					checked={ apiKey ? showMarker : false }
 					onChange={ showMarker => setAttributes( { showMarker } ) }
 					id="map-marker"

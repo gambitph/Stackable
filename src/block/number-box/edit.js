@@ -90,6 +90,7 @@ const Edit = props => {
 					title={ __( 'Shape', i18n ) }
 					id="shape"
 					initialOpen={ true }
+					hasToggle={ true }
 					checked={ attributes.hasShape }
 					onChange={ hasShape => setAttributes( { hasShape } ) }
 				>

@@ -36,7 +36,7 @@ const PanelBody = (
 		id = '', // Used for remembering whether this is currently open or closed
 		// Toggle options.
 		checked,
-		hasToggle = false,
+		hasToggle = undefined,
 		onChange = noop,
 	},
 	ref
@@ -95,7 +95,7 @@ const PanelBody = (
 				onClick={ handleOnToggle }
 				title={ title }
 				checked={ checked }
-				hasToggle={ hasToggle }
+				hasToggle={ typeof hasToggle === 'undefined' ? !! onChange : hasToggle }
 				onChange={ onChange }
 				setIsOpened={ setIsOpened }
 				{ ...buttonProps }

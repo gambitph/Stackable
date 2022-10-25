@@ -441,6 +441,7 @@ export const Edit = props => {
 				title={ props.label }
 				id="image"
 				initialOpen={ props.initialOpen }
+				hasToggle={ props.hasToggle }
 				{ ...( props.hasToggle ? {
 					checked: attributes.imageShow,
 					onChange: imageShow => setAttributes( { imageShow } ),
