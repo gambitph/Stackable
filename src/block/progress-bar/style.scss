@@ -2,7 +2,7 @@
 
 .stk-block-progress-bar {
 	width: 100%;
-}	
+}
 .stk-progress-bar {
 	position: relative;
 	width: var(--progress-bar-width, 100%);
@@ -21,10 +21,10 @@
 		background-color: var(--progress-color-1, #3498db);
 		border-radius: var(--progress-bar-border-radius, 0);
 		.stk-progress-bar__inner-text {
+			white-space: nowrap !important;
+			overflow: hidden;
 			&.stk-progress-bar__text {
-				overflow: hidden;
 				text-overflow: ellipsis;
-				white-space: nowrap !important;
 				padding-inline-start: 12px;
 			}
 			&.stk-progress-bar__progress-value-text {

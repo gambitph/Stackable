@@ -11,13 +11,14 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { pick, sortBy } from 'lodash'
+import { pick } from 'lodash'
 import {
 	render, useEffect, useState, Fragment, createRef, useCallback,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
 import { loadPromise, models } from '@wordpress/api'
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * External dependencies
@@ -27,44 +28,13 @@ import {
 	showProNoticesOption,
 } from 'stackable'
 import classnames from 'classnames'
+import { importBlocks } from '~stackable/util/admin'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 
-// Collect all the blocks and their variations for enabling/disabling and sort
-// them by type.
-const importBlocks = r => {
-	const blocks = {}
-	r.keys().forEach( key => {
-		const meta = r( key )
-		const type = meta[ 'stk-type' ]
-		if ( type ) {
-			if ( ! blocks[ type ] ) {
-				blocks[ type ] = []
-			}
-			blocks[ type ].push( meta )
-		}
+const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
+export const getAllBlocks = () => applyFilters( 'stackable.settings.blocks', FREE_BLOCKS )
 
-		// Add any varations if any.
-		( meta.variations || [] ).forEach( variation => {
-			const type = variation[ 'stk-type' ]
-			if ( type ) {
-				if ( ! blocks[ type ] ) {
-					blocks[ type ] = []
-				}
-				blocks[ type ].push( {
-					...variation,
-					name: `${ meta.name }|${ variation.name }`,
-				} )
-			}
-		} )
-	} )
-	Object.keys( blocks ).forEach( type => {
-		blocks[ type ] = sortBy( blocks[ type ], 'name' )
-	} )
-	return blocks
-}
-
-export const BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 export const BLOCK_CATEROGIES = [
 	{
 		id: 'essential',
@@ -140,6 +110,7 @@ BlockToggle.defaultProps = {
 }
 
 const BlockList = () => {
+	const DERIVED_BLOCKS = getAllBlocks()
 	return (
 		<>
 			{ BLOCK_CATEROGIES.map( ( { id, label } ) => {
@@ -147,7 +118,7 @@ const BlockList = () => {
 					<div className="s-getting-started-blocks-wrapper" key={ id }>
 						<h3>{ label }</h3>
 						<div className="s-getting-started-blocks">
-							{ BLOCKS[ id ].map( ( block, i ) => {
+							{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 								return (
 									<div
 										key={ i }
@@ -168,6 +139,7 @@ const BlockList = () => {
 }
 
 const BlockToggler = () => {
+	const DERIVED_BLOCKS = getAllBlocks()
 	const [ isSaving, setIsSaving ] = useState( false )
 	const [ disabledBlocks, setDisabledBlocks ] = useState( [] )
 
@@ -188,7 +160,7 @@ const BlockToggler = () => {
 
 	const enableAllBlocks = type => () => {
 		let newDisabledBlocks = [ ...disabledBlocks ]
-		BLOCKS[ type ].forEach( block => {
+		DERIVED_BLOCKS[ type ].forEach( block => {
 			newDisabledBlocks = newDisabledBlocks.filter( blockName => blockName !== block.name )
 		} )
 		setDisabledBlocks( newDisabledBlocks )
@@ -197,7 +169,7 @@ const BlockToggler = () => {
 
 	const disableAllBlocks = type => () => {
 		const newDisabledBlocks = [ ...disabledBlocks ]
-		BLOCKS[ type ].forEach( block => {
+		DERIVED_BLOCKS[ type ].forEach( block => {
 			if ( ! newDisabledBlocks.includes( block.name ) ) {
 				newDisabledBlocks.push( block.name )
 			}
@@ -241,7 +213,7 @@ const BlockToggler = () => {
 							<button onClick={ disableAllBlocks( id ) } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
 						</div>
 						<div className="s-settings-grid">
-							{ BLOCKS[ id ].map( ( block, i ) => {
+							{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 								const isDisabled = disabledBlocks.includes( block.name )
 								const mainClasses = classnames( [
 									's-block',
