@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 5.8.3
-Tested up to: 6.0.2
+Requires at least: 6.0.3
+Tested up to: 6.1
 Requires PHP: 5.7
-Stable tag: 3.6.0
+Stable tag: 3.6.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -249,6 +249,19 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.6.1 =
+* New: WordPress 6.1 compatibility
+* New: You can now change the Query String of the Posts block's Pagination Block #2313
+* New: Added Advanced Tab > Responsive > Tablet column arrangement option ##2325
+* New: Added Advanced Tab > Responsive > Tablet and mobile column arrangement option #2361
+* Fixed: Newly created columns are not cloned correctly when using the Columns block's Columns option #2476
+* Fixed: Posts block pagination could not navigate back to page 1 #2313
+* Fixed: Reset button on icon options now reset correctly #2329
+* Fixed: Copy and pasting styles on the Progress Circle and Bar blocks also copied some content #2469
+* Fixed: Progress Bar block percentage text can wrap around spaces #2464
+* Fixed: Button blocks can still be added even if they're disabled in the admin #2305
+* Fixed: Possible block error when adding conditional display about dates #2477
 
 = 3.6.0 =
 [Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
