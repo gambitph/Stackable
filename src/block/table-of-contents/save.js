@@ -22,6 +22,7 @@ import classnames from 'classnames'
  */
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -52,6 +53,8 @@ export const Save = props => {
 
 	const nestedHeadingList = linearToNestedHeadingList( filteredHeadlingList )
 
+	const titleShow = applyFilters( 'stackable.table-of-contents.save.titleNotRender', attributes.titleShow, props )
+
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
@@ -59,7 +62,7 @@ export const Save = props => {
 		>
 			<TableOfContentsStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ attributes.titleShow && <Typography.Content
+			{ titleShow && <Typography.Content
 				className="stk-table-of-contents__title"
 				attrNameTemplate="title%s"
 				attributes={ attributes }

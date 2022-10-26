@@ -129,29 +129,22 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
-	attrObject.add( {
-		attributes: {
-			titleText: {
-				source: 'html',
-				selector: '.stk-table-of-contents__title',
-				default: __( 'Table of Contents', i18n ),
-			},
-		},
-		versionAdded: '3.5.0',
-		versionDeprecated: '',
-	} )
-
+	//Does not generate titleShow, generates titleShowText. That is why we added titleShow manually below
 	Typography.addAttributes( attrObject, '.stk-table-of-contents__title', {
 		hasTextTag: false,
-		hasTextContent: false,
+		hasTextContent: true,
 		attrNameTemplate: 'title%s',
+		defaultText: __( 'Table of Contents', i18n ),
 	} )
 
-	attrObject.addDefaultValues( {
+	attrObject.add( {
 		attributes: {
-			titleShow: true,
+			titleShow: {
+				type: 'boolean',
+				default: true,
+			},
 		},
-		versionAdded: '3.5.0',
+		versionAdded: '3.6.1',
 		versionDeprecated: '',
 	} )
 

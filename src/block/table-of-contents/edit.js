@@ -440,14 +440,6 @@ const Edit = props => {
 				initialOpen={ false }
 				hasToggle={ true }
 				hasTextTag={ false }
-				hasTextContent={ false }
-				onChangeToggle={ titleShow => {
-					if ( titleShow && ! attributes.titleText ) {
-						setAttributes( { titleText: __( 'Table of Contents', i18n ), titleShow } )
-					} else {
-						setAttributes( { titleShow } )
-					}
-				} }
 			/>
 
 			<Advanced.InspectorControls />
@@ -463,9 +455,10 @@ const Edit = props => {
 				{ !! headings.length && hasEmptyAnchor && (
 					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
 				) }
-				{ attributes.titleShow && <Typography
+				{ ( attributes.titleShow ) && <Typography
 					className="stk-table-of-contents__title"
 					attrNameTemplate="title%s"
+					placeholder={ __( 'Title for This Block', i18n ) }
 				/> }
 				<TableOfContentsList
 					className="stk-table-of-contents__table"
