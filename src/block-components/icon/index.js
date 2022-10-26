@@ -107,7 +107,7 @@ export const Icon = props => {
 		return () => clearTimeout( t )
 	}, [ isSelected ] )
 
-	const attributes = useBlockAttributesContext()
+	const uniqueId = useBlockAttributesContext( attributes => attributes.uniqueId )
 
 	const {
 		getAttribute,
@@ -122,7 +122,7 @@ export const Icon = props => {
 
 	const linearGradient = hasLinearGradient ? (
 		<LinearGradient
-			id={ 'linear-gradient-' + attributes.uniqueId }
+			id={ 'linear-gradient-' + uniqueId }
 			iconColor1={ getAttribute( 'iconColor1' ) }
 			iconColor2={ getAttribute( 'iconColor2' ) }
 		/>

@@ -33,7 +33,7 @@ export const Edit = props => {
 		borderSelector = '.stk-container',
 	} = props
 
-	const attributes = useBlockAttributesContext()
+	const hasContainer = useBlockAttributesContext( attributes => attributes.hasContainer )
 	const setAttributes = useBlockSetAttributesContext()
 	const blockElSize = useBlockEl( sizeSelector )
 	const blockElBorder = useBlockEl( borderSelector )
@@ -44,7 +44,7 @@ export const Edit = props => {
 				title={ __( 'Container Background', i18n ) }
 				id="container"
 				hasToggle={ true }
-				checked={ attributes.hasContainer }
+				checked={ hasContainer }
 				onChange={ hasContainer => setAttributes( { hasContainer } ) }
 			>
 				<AdvancedToggleControl

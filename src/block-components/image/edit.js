@@ -56,7 +56,24 @@ const Controls = props => {
 		blockState = 'normal',
 	} = props
 
-	const attributes = useBlockAttributesContext()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			imageId: attributes.imageId,
+			imageWidthUnit: attributes.imageWidthUnit,
+			imageHeightUnit: attributes.imageHeightUnit,
+			imageWidth: attributes.imageWidth,
+			imageHeight: attributes.imageHeight,
+			imageSize: attributes.imageSize,
+			imageAlt: attributes.imageAlt,
+			imageOverlayColorType: attributes.imageOverlayColorType,
+			imageUrl: attributes.imageUrl,
+			imageShapeFlipX: attributes.imageShapeFlipX,
+			imageShapeFlipY: attributes.imageShapeFlipY,
+			imageShapeStretch: attributes.imageShapeStretch,
+			imageShape: attributes.imageShape,
+			imageFilter: attributes.imageFilter,
+		}
+	} )
 	const setAttributes = useBlockSetAttributesContext()
 
 	// Get the image size urls.
@@ -434,7 +451,7 @@ Controls.defaultProps = {
 }
 
 export const Edit = props => {
-	const attributes = useBlockAttributesContext()
+	const imageShow = useBlockAttributesContext( attributes => attributes.imageShow )
 	const setAttributes = useBlockSetAttributesContext()
 
 	return (
@@ -445,7 +462,7 @@ export const Edit = props => {
 				initialOpen={ props.initialOpen }
 				hasToggle={ props.hasToggle }
 				{ ...( props.hasToggle ? {
-					checked: attributes.imageShow,
+					checked: imageShow,
 					onChange: imageShow => setAttributes( { imageShow } ),
 				} : {} ) }
 			>

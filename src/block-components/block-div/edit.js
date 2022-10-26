@@ -30,7 +30,7 @@ export const Edit = props => {
 	const {
 		hasSizeSpacing,
 	} = props
-	const attributes = useBlockAttributesContext()
+	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
 	const setAttributes = useBlockSetAttributesContext()
 	const blockEl = useBlockEl()
 
@@ -40,7 +40,7 @@ export const Edit = props => {
 				title={ __( 'Background', i18n ) }
 				id="background"
 				hasToggle={ true }
-				checked={ attributes.hasBackground }
+				checked={ hasBackground }
 				onChange={ hasBackground => setAttributes( { hasBackground } ) }
 			>
 				<BackgroundControls attrNameTemplate="block%s" />

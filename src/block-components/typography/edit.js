@@ -27,7 +27,7 @@ import {
  * WordPress dependencies
  */
 import {
-	useEffect, useState, useCallback,
+	useEffect, useState, useCallback, memo,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
@@ -142,8 +142,7 @@ export const Controls = props => {
 
 			{ hasTextTag && (
 				<HeadingButtonsControl
-					value={ getAttribute( 'textTag' ) }
-					onChange={ updateAttributeHandler( 'textTag' ) }
+					attribute={ attributeName( 'textTag' ) }
 					hasP={ getAttribute( 'hasP' ) }
 				/>
 			) }
@@ -332,7 +331,7 @@ Controls.defaultProps = {
 	blockState: 'normal',
 }
 
-export const Edit = props => {
+export const Edit = memo( props => {
 	const {
 		hasAlign,
 		hasColor,
@@ -381,7 +380,7 @@ export const Edit = props => {
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)
-}
+} )
 
 Edit.defaultProps = {
 	hasAlign: false,

@@ -28,7 +28,41 @@ export const Image = props => {
 	} = props
 
 	const { isSelected } = useBlockEditContext()
-	const attributes = useBlockAttributesContext()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			imageOverlayColorType: attributes.imageOverlayColorType,
+			imageOverlayColorHover: attributes.imageOverlayColorHover,
+			imageOverlayColorParentHover: attributes.imageOverlayColorParentHover,
+			imageOverlayColor2Hover: attributes.imageOverlayColor2Hover,
+			imageOverlayColor2ParentHover: attributes.imageOverlayColor2ParentHover,
+			imageOverlayOpacityHover: attributes.imageOverlayOpacityHover,
+			imageOverlayOpacityParentHover: attributes.imageOverlayOpacityParentHover,
+			imageOverlayGradientLocation1Hover: attributes.imageOverlayGradientLocation1Hover,
+			imageOverlayGradientLocation1ParentHover: attributes.imageOverlayGradientLocation1ParentHover,
+			imageOverlayGradientLocation2Hover: attributes.imageOverlayGradientLocation2Hover,
+			imageOverlayGradientLocation2ParentHover: attributes.imageOverlayGradientLocation2ParentHover,
+			imageOverlayGradientDirectionHover: attributes.imageOverlayGradientDirectionHover,
+			imageOverlayGradientDirectionParentHover: attributes.imageOverlayGradientDirectionParentHover,
+			imageId: attributes.imageId,
+			imageUrl: attributes.imageUrl,
+			imageSize: attributes.imageSize,
+			imageWidth: attributes.imageWidth,
+			imageWidthTablet: attributes.imageWidthTablet,
+			imageWidthMobile: attributes.imageWidthMobile,
+			imageWidthUnit: attributes.imageWidthUnit,
+			imageWidthUnitTablet: attributes.imageWidthUnitTablet,
+			imageWidthUnitMobile: attributes.imageWidthUnitMobile,
+			imageHeight: attributes.imageHeight,
+			imageHeightTablet: attributes.imageHeightTablet,
+			imageHeightMobile: attributes.imageHeightMobile,
+			imageHeightUnit: attributes.imageHeightUnit,
+			imageHeightUnitTablet: attributes.imageHeightUnitTablet,
+			imageHeightUnitMobile: attributes.imageHeightUnitMobile,
+			imageShape: attributes.imageShape,
+			imageShapeStretch: attributes.imageShapeStretch,
+			imageShadow: attributes.imageShadow,
+		}
+	} )
 	const { parentBlock } = useBlockContext()
 
 	const { setImage } = useImage()

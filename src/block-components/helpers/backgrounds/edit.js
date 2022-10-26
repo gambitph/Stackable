@@ -35,6 +35,9 @@ const COLOR_TYPE_CONTROLS = [
 	},
 ]
 
+const IMAGE_AND_VIDEO_TYPES = [ 'image', 'video' ]
+const IMAGE_TYPES = [ 'image' ]
+
 // TODO: Post v3, add option to select the image size for the background (full, large, medium)
 export const BackgroundControls = props => {
 	const deviceType = useDeviceType()
@@ -163,7 +166,7 @@ export const BackgroundControls = props => {
 				<ImageControl2
 					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
-					allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
+					allowedTypes={ props.backgroundMediaAllowVideo ? IMAGE_AND_VIDEO_TYPES : IMAGE_TYPES }
 					attribute={ getAttrName( 'backgroundMedia' ) }
 					responsive="all"
 				/>

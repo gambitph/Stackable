@@ -8,7 +8,17 @@ import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
 import { useBlockAttributesContext } from '~stackable/hooks'
 
 export const ContainerDiv = props => {
-	const attributes = useBlockAttributesContext()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			uniqueId: attributes.uniqueId,
+			hasContainer: attributes.hasContainer,
+			triggerHoverState: attributes.triggerHoverState,
+			containerBackgroundMediaUrl: attributes.containerBackgroundMediaUrl,
+			containerBackgroundMediaUrlTablet: attributes.containerBackgroundMediaUrlTablet,
+			containerBackgroundMediaUrlMobile: attributes.containerBackgroundMediaUrlMobile,
+			containerBackgroundColorType: attributes.containerBackgroundColorType,
+		}
+	} )
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
 	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
 	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass

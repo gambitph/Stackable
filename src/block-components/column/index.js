@@ -14,7 +14,13 @@ export const Column = props => {
 	} = props
 
 	const setHandlers = useColumn()
-	const attributes = useBlockAttributesContext()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			columnWidth: attributes.columnWidth,
+			columnWidthTablet: attributes.columnWidthTablet,
+			columnWidthMobile: attributes.columnWidthMobile,
+		}
+	} )
 
 	return <ResizableColumn
 		showHandle={ isHovered }
