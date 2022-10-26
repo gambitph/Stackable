@@ -291,6 +291,11 @@ const Edit = props => {
 		textClasses,
 	] )
 
+	const titleClassNames = classnames(
+		'stk-table-of-contents__title',
+		getTypographyClasses( attributes, 'title%s' )
+	)
+
 	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
 		n => attributes[ `includeH${ n }` ]
 	)
@@ -449,16 +454,17 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 			<TableOfContentsStyles version={ VERSION } />
+
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 			<BlockDiv className={ blockClassNames }>
-				{ !! headings.length && hasEmptyAnchor && (
-					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
-				) }
 				{ ( attributes.titleShow ) && <Typography
-					className="stk-table-of-contents__title"
+					className={ titleClassNames }
 					attrNameTemplate="title%s"
 					placeholder={ __( 'Title for This Block', i18n ) }
 				/> }
+				{ !! headings.length && hasEmptyAnchor && (
+					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
+				) }
 				<TableOfContentsList
 					className="stk-table-of-contents__table"
 					nestedHeadingList={ nestedHeadingList }
