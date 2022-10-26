@@ -194,7 +194,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 = Minimum Requirements =
 
-You'll need WordPress version 5.8.3 or higher for this to work.
+You'll need WordPress version 6.0.3 or higher for this to work.
 
 == Frequently Asked Questions ==
 
