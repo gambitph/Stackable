@@ -217,7 +217,6 @@ const Edit = props => {
 						...heading,
 					}
 				} )
-
 				setHeadings( editorHeadings )
 			}
 			postContent = newPostContent
