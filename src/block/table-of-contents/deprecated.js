@@ -15,7 +15,7 @@ import compareVersions from 'compare-versions'
  */
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.table-of-contents.save.titleNotRender', 'titleNotRendered', ( output, props ) => {
+addFilter( 'stackable.table-of-contents.save.titleNotRender', 'stackable/titleNotRendered', ( output, props ) => {
 	if ( compareVersions( props.version, '3.6.0' ) === 0 ) {
 		return false
 	}
