@@ -9,8 +9,12 @@ export { getTypographyClasses } from './get-typography-classes'
 /**
  * External dependencies
  */
-import { useAttributeEditHandlers, useFontLoader } from '~stackable/hooks'
-import { getAttributeName, getAttrName } from '~stackable/util'
+import {
+	useBlockAttributesContext, useBlockSetAttributesContext, useFontLoader,
+} from '~stackable/hooks'
+import {
+	getAttributeName, getAttrName, getAttrNameFunction,
+} from '~stackable/util'
 import {
 	getDynamicContent, hasDynamicContent, useQueryLoopContext,
 } from '~stackable/components/dynamic-content-control'
@@ -20,10 +24,14 @@ import {
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	useEffect, useState, forwardRef, useMemo,
+	useEffect,
+	useState,
+	forwardRef,
+	useMemo,
+	memo,
 } from '@wordpress/element'
 
-export const Typography = forwardRef( ( props, ref ) => {
+export const Typography = memo( forwardRef( ( props, ref ) => {
 	const {
 		className,
 		attrNameTemplate,
@@ -38,17 +46,30 @@ export const Typography = forwardRef( ( props, ref ) => {
 		...propsToPass
 	} = props
 
+	const getAttrName = getAttrNameFunction( attrNameTemplate )
+	const setAttributes = useBlockSetAttributesContext()
+
 	const {
-		getAttribute, updateAttribute,
-	} = useAttributeEditHandlers( attrNameTemplate )
-	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag || 'p'
-	const value = _value === null ? getAttribute( 'text' ) : _value
-	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
+		textTag,
+		text,
+		fontFamily,
+	} = useBlockAttributesContext( attributes => {
+		const getAttrName = getAttrNameFunction( attrNameTemplate )
+		return {
+			textTag: attributes[ getAttrName( 'textTag' ) ],
+			text: attributes[ getAttrName( 'text' ) ],
+			fontFamily: attributes[ getAttrName( 'fontFamily' ) ],
+		}
+	} )
+
+	const TagName = ( tagName === null ? textTag : tagName ) || defaultTag || 'p'
+	const value = _value === null ? text : _value
+	const onChange = _onChange === null ? value => setAttributes( { [ getAttrName( 'text' ) ]: value } ) : _onChange
 
 	const [ debouncedText, setDebouncedText ] = useState( value )
 
 	// Load any Google Fonts used.
-	useFontLoader( getAttribute( 'fontFamily' ) )
+	useFontLoader( fontFamily )
 
 	// If value was changed externally.
 	useEffect( () => {
@@ -94,7 +115,7 @@ export const Typography = forwardRef( ( props, ref ) => {
 			{ children }
 		</RichText>
 	)
-} )
+} ) )
 
 Typography.defaultProps = {
 	attrNameTemplate: '%s',
