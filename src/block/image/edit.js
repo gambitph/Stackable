@@ -102,7 +102,7 @@ const Edit = props => {
 					defaultHeight="auto"
 				/>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }

@@ -17,7 +17,7 @@ import {
 	AdvancedToggleControl,
 } from '~stackable/components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -131,13 +131,13 @@ const Edit = props => {
 					{ applyFilters( 'stackable.block.separator.edit.output.layers', null, props ) }
 				</div>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

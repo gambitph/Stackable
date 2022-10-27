@@ -447,7 +447,7 @@ const Edit = props => {
 					</div>
 				</BlockDiv>
 			) }
-			{ ! isRequesting && hasPosts && uniqueId && <MarginBottom /> }
+			{ props.isHovered && ! isRequesting && hasPosts && uniqueId && <MarginBottom /> }
 		</>
 	)
 }

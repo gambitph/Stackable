@@ -173,7 +173,7 @@ const Edit = props => {
 					</div>
 				</ContainerDiv>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
+			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</Fragment>
 	)
 }

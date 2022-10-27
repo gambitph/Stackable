@@ -33,7 +33,7 @@ import {
 import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
@@ -189,13 +189,13 @@ const Edit = props => {
 					onSplit={ onSplit }
 				/>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

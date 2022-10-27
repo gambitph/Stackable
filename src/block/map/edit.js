@@ -538,7 +538,7 @@ const Edit = props => {
 					) }
 				</ResizableBox>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }

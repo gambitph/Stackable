@@ -27,7 +27,7 @@ import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
 import {
 	withBlockAttributeContext,
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
@@ -141,13 +141,13 @@ const Edit = props => {
 					} }
 				/>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
