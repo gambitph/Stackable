@@ -24,6 +24,7 @@ export const Column = props => {
 
 	return <ResizableColumn
 		showHandle={ isHovered }
+		isHovered={ isHovered }
 		columnWidth={ attributes.columnWidth }
 		columnWidthTablet={ attributes.columnWidthTablet }
 		columnWidthMobile={ attributes.columnWidthMobile }

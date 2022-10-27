@@ -413,12 +413,12 @@ const ResizableColumn = props => {
 
 	return (
 		<ResizableBox
-			enable={ enable }
+			enable={ props.isHovered ? enable : false }
 			minWidth="30" // Need to use String here or else ResizableBox will not snap properly when coming from the minimum width.
 			minHeight="30"
 			maxWidth={ maxWidth }
 			className={ className }
-			showHandle={ allowResize ? props.showHandle : false }
+			showHandle={ allowResize && props.isHovered ? props.showHandle : false }
 			snap={ snapWidths }
 			snapGap={ 20 }
 			onResizeStart={ onResizeStart }
@@ -594,12 +594,15 @@ const ResizableTooltip = memo( props => {
 	)
 } )
 
+const noobj = {}
+const noop = () => {}
+
 ResizableTooltip.defaultProps = {
 	isVisible: true,
-	blockContext: {},
+	blockContext: noobj,
 	value: '',
-	onChange: () => {},
-	tooltipProps: {},
+	onChange: noop,
+	tooltipProps: noobj,
 	onTogglePopup: null,
 }
 
@@ -610,10 +613,11 @@ ResizableColumn.defaultProps = {
 	columnWidth: '',
 	columnWidthTablet: '',
 	columnWidthMobile: '',
-	onChangeDesktop: () => {},
-	onChangeTablet: () => {},
-	onChangeMobile: () => {},
-	onResetDesktop: () => {},
+	isHovered: false,
+	onChangeDesktop: noop,
+	onChangeTablet: noop,
+	onChangeMobile: noop,
+	onResetDesktop: noop,
 }
 
 export default memo( ResizableColumn )

@@ -128,7 +128,7 @@ const Edit = props => {
 			/>
 			<CustomCSS mainBlockClass="stk-block-column" />
 
-			<Column showHandle={ isHovered } context={ props.context }>
+			<Column isHovered={ isHovered } showHandle={ isHovered } context={ props.context }>
 				<Linking show={ isHovered } />
 				<BlockDiv
 					blockHoverClass={ props.blockHoverClass }
