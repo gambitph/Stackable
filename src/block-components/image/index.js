@@ -17,7 +17,6 @@ import { pickBy } from 'lodash'
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 export const Image = props => {
@@ -71,23 +70,6 @@ export const Image = props => {
 
 	const enableHandlers = applyFilters( 'stackable.image.enable-handlers', true, parentBlock )
 
-	// Enable editing of the image only when the current block that implements
-	// it is selected. We need to use setTimeout since the isSelected is
-	// changed earlier.
-	const [ debouncedIsSelected, setDebouncedIsSelected ] = useState( false )
-	useEffect( () => {
-		if ( ! isSelected ) {
-			setDebouncedIsSelected( false )
-			return
-		}
-		const t = setTimeout( () => {
-			if ( isSelected ) {
-				setDebouncedIsSelected( isSelected )
-			}
-		}, 1 )
-		return () => clearTimeout( t )
-	}, [ isSelected ] )
-
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
 		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
 		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
@@ -98,7 +80,6 @@ export const Image = props => {
 
 	return <Image_
 		{ ...setImage }
-		enableClickToEdit={ debouncedIsSelected }
 		showHandles={ enableHandlers && isSelected }
 
 		imageId={ attributes.imageId }
