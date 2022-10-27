@@ -2,7 +2,9 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { compact, isNumber } from 'lodash'
+import {
+	compact, isNumber, isEqual,
+} from 'lodash'
 import { AdvancedRangeControl, ColorPaletteControl } from '~stackable/components'
 import { hexToRgba, extractColor } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
@@ -13,7 +15,10 @@ import { useControlHandlers } from '~stackable/components/base-control2/hooks'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	useState, useRef, useEffect,
+	useState,
+	useRef,
+	useEffect,
+	memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import {
@@ -218,7 +223,7 @@ const ShadowFilterControl = props => {
 	)
 }
 
-const ShadowControl = props => {
+const ShadowControl = memo( props => {
 	const {
 		options,
 		label,
@@ -299,7 +304,7 @@ const ShadowControl = props => {
 			) }
 		</>
 	)
-}
+}, isEqual )
 
 ShadowControl.defaultProps = {
 	label: __( 'Shadow / Outline', i18n ),

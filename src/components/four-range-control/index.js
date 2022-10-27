@@ -24,6 +24,7 @@ import {
 /**
  * External dependencies
  */
+import { isEqual } from 'lodash'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { Button } from '~stackable/components'
@@ -42,7 +43,7 @@ const isEqualInitial = ( props, value, firstValue ) => {
 	return isEqual
 }
 
-const FourRangeControl = props => {
+const FourRangeControl = memo( props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
@@ -279,7 +280,7 @@ const FourRangeControl = props => {
 			}
 		</AdvancedControl>
 	)
-}
+}, isEqual )
 
 FourRangeControl.defaultProps = {
 	defaultLocked: true,

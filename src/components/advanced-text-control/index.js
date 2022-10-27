@@ -10,13 +10,15 @@ import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic
  * WordPress dependencies
  */
 import { TextControl, TextareaControl } from '@wordpress/components'
+import { memo } from '@wordpress/element'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
+import { isEqual } from 'lodash'
 
-const AdvancedTextControl = props => {
+const AdvancedTextControl = memo( props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
@@ -61,7 +63,7 @@ const AdvancedTextControl = props => {
 			/>
 		</AdvancedControl>
 	)
-}
+}, isEqual )
 
 AdvancedTextControl.defaultProps = {
 	isMultiline: false,

@@ -17,7 +17,7 @@ import { ResetButton } from '../base-control2/reset-button'
  * External dependencies
  */
 import classnames from 'classnames'
-import { omit } from 'lodash'
+import { omit, isEqual } from 'lodash'
 import { i18n } from 'stackable'
 
 /**
@@ -170,4 +170,4 @@ AdvancedToolbarControl.defaultProps = {
 	placeholder: '',
 }
 
-export default memo( AdvancedToolbarControl )
+export default memo( AdvancedToolbarControl, isEqual )
