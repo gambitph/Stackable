@@ -20,7 +20,7 @@ import {
 } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
@@ -150,6 +150,7 @@ const Edit = props => {
 			>
 				<ContainerDiv className={ contentClassNames }>
 					<Image
+						showTooltips={ props.isHovered }
 						className="stk-block-card__image"
 						enableWidth={ blockStyle === 'horizontal' }
 						enableHeight={ hasHeight }
@@ -178,7 +179,7 @@ const Edit = props => {
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

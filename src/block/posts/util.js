@@ -61,7 +61,7 @@ export const CONTENTS = [
 	},
 ]
 
-export const generateRenderPostItem = attributes => {
+export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 	const {
 		className = '',
 		categoryHighlighted = false,
@@ -131,6 +131,7 @@ export const generateRenderPostItem = attributes => {
 
 		const featuredImage = !! featuredImgSrc && (
 			<Image
+				showTooltips={ isHovered }
 				src={ featuredImgSrc }
 				alt={ __( 'featured', i18n ) }
 				hasRemove={ false }

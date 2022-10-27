@@ -32,7 +32,7 @@ import {
 } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
@@ -145,7 +145,9 @@ const Edit = props => {
 		[ posts?.length ]
 	)
 
-	const editorPostItems = useMemo( () => generateRenderPostItem( attributes ), [ attributes ] )
+	const editorPostItems = useMemo( () => {
+		return generateRenderPostItem( attributes, { isHovered: props.isHovered } )
+	}, [ attributes, props.isHovered ] )
 
 	useEffect( () => {
 		// Set a unique instance ID for the posts block.
@@ -451,7 +453,7 @@ const Edit = props => {
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

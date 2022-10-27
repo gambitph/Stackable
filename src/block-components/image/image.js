@@ -16,8 +16,10 @@ import { ResizerTooltip } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { MediaUpload } from '@wordpress/block-editor'
-import { Dashicon, ResizableBox } from '@wordpress/components'
+import { MediaUpload, useBlockEditContext } from '@wordpress/block-editor'
+import {
+	Button, Dashicon, ResizableBox,
+} from '@wordpress/components'
 import {
 	useState, useEffect, memo, useRef,
 } from '@wordpress/element'
@@ -60,6 +62,7 @@ const getImageClasses = props => {
 }
 
 const Image = memo( props => {
+	const { isSelected } = useBlockEditContext()
 	const [ isResizing, setIsResizing ] = useState( false )
 	const [ lockAspectRatio, setLockAspectRatio ] = useState( false )
 	const [ initialHeight, setInitialHeight ] = useState()
@@ -113,207 +116,197 @@ const Image = memo( props => {
 	const imageClasses = getImageClasses( props )
 
 	return (
-		<MediaUpload
-			onSelect={ image => {
-				// If image size is provided, return the URL of that size.
-				let {
-					url, width, height,
-				} = image
-				const currentSelectedSize = props.size || 'full'
-
-				if ( image.sizes && image.sizes[ currentSelectedSize ] ) {
-					url = image.sizes[ currentSelectedSize ].url
-					width = image.sizes[ currentSelectedSize ].width
-					height = image.sizes[ currentSelectedSize ].height
-				}
-
-				props.onChange( {
-					...image,
-					url,
-					width,
-					height,
-				} )
+		<ResizableBox
+			className={ imageWrapperClasses }
+			enable={ {
+				top: props.showHandles && props.heightResizePosition === 'top' ? props.enableHeight : false,
+				bottom: props.showHandles && props.heightResizePosition === 'bottom' ? props.enableHeight : false,
+				right: props.showHandles && props.widthResizePosition === 'right' ? props.enableWidth : false,
+				left: props.showHandles && props.widthResizePosition === 'left' ? props.enableWidth : false,
+				topRight: false,
+				bottomRight: props.showHandles && props.enableDiagonal,
+				bottomLeft: false,
+				topLeft: false,
 			} }
-			allowedTypes={ props.allowedTypes }
-			value={ props.imageID }
-			render={ obj => {
-				return (
-					<ResizableBox
-						className={ imageWrapperClasses }
-						enable={ {
-							top: props.showHandles && props.heightResizePosition === 'top' ? props.enableHeight : false,
-							bottom: props.showHandles && props.heightResizePosition === 'bottom' ? props.enableHeight : false,
-							right: props.showHandles && props.widthResizePosition === 'right' ? props.enableWidth : false,
-							left: props.showHandles && props.widthResizePosition === 'left' ? props.enableWidth : false,
-							topRight: false,
-							bottomRight: props.showHandles && props.enableDiagonal,
-							bottomLeft: false,
-							topLeft: false,
-						} }
-						size={ {
-							width: formSize( currentWidth || props.width, props.widthUnit ),
-							height: formSize( currentHeight || props.height, props.heightUnit ),
-						} }
+			size={ {
+				width: formSize( currentWidth || props.width, props.widthUnit ),
+				height: formSize( currentHeight || props.height, props.heightUnit ),
+			} }
 
-						// Resizing is a bit slow when the image is centered, make it a bit faster.
-						resizeRatio={ 1.2 }
+			// Resizing is a bit slow when the image is centered, make it a bit faster.
+			resizeRatio={ 1.2 }
 
-						// Lock aspect ratio when resizing via the corner handler
-						lockAspectRatio={ lockAspectRatio }
+			// Lock aspect ratio when resizing via the corner handler
+			lockAspectRatio={ lockAspectRatio }
 
-						// Open the media picker, but only when the image is clicked, not the popup, etc.
-						onClick={ event => {
-							if ( props.enableClickToEdit ) {
-								if ( event.target?.classList?.contains( 'stk-img' ) ||
-									event.target?.classList?.contains( 'stk-img-placeholder' ) ||
-									event.target?.classList?.contains( 'stk-img-resizer-wrapper' ) ||
-									event.target?.classList?.contains( 'stk-img-resizer' )
-								) {
-									obj.open()
-								}
-							}
-						} }
+			snap={ snap }
+			snapGap={ 10 }
 
-						role="button"
-						tabIndex={ 0 }
+			onResizeStart={ ( _event, _direction, elt ) => {
+				// Lock the aspect ratio when changing diagonally.
+				setLockAspectRatio( _direction === 'bottomRight' )
 
-						snap={ snap }
-						snapGap={ 10 }
+				// Get the current size of the image.
+				let currentHeight = props.height ? parseFloat( props.height ) : 0
+				if ( props.heightUnit === '%' ) {
+					const parentHeight = elt.parentElement.getBoundingClientRect().height
+					setParentHeight( parentHeight )
+					currentHeight = ( props.height || 100 ) / 100 * parentHeight
+				} else if ( ! props.height || props.height === 'auto' ) {
+					currentHeight = parseInt( elt.getBoundingClientRect().height, 10 )
+				}
+				setInitialHeight( currentHeight || 0 )
 
-						onResizeStart={ ( _event, _direction, elt ) => {
-							// Lock the aspect ratio when changing diagonally.
-							setLockAspectRatio( _direction === 'bottomRight' )
+				let currentWidth = props.width ? parseFloat( props.width ) : 0
+				if ( props.widthUnit === '%' ) {
+					const parentWidth = elt.parentElement.getBoundingClientRect().width
+					setParentWidth( parentWidth )
+					currentWidth = ( props.width || 100 ) / 100 * parentWidth
+				} else if ( ! props.width || props.width === 'auto' ) {
+					currentWidth = parseInt( elt.getBoundingClientRect().width, 10 )
+				}
+				setInitialWidth( currentWidth || 0 )
 
-							// Get the current size of the image.
-							let currentHeight = props.height ? parseFloat( props.height ) : 0
-							if ( props.heightUnit === '%' ) {
-								const parentHeight = elt.parentElement.getBoundingClientRect().height
-								setParentHeight( parentHeight )
-								currentHeight = ( props.height || 100 ) / 100 * parentHeight
-							} else if ( ! props.height || props.height === 'auto' ) {
-								currentHeight = parseInt( elt.getBoundingClientRect().height, 10 )
-							}
-							setInitialHeight( currentHeight || 0 )
+				setIsResizing( true )
+				setSnap( null )
+			} }
+			onResize={ ( _event, _direction, elt, delta ) => {
+				// Get the new size of the image when dragging.
+				let currentHeight, currentWidth
+				if ( props.heightUnit === '%' ) {
+					currentHeight = clamp( Math.round( ( initialHeight + delta.height ) / parentHeight * 100 ), 0, 100 )
+					// This is to make percentage heights work, see comment above about the issue in ResizableBox.
+					setTempStyle( `.stk--is-resizing { height: ${ currentHeight }% !important; }` )
+				} else {
+					currentHeight = initialHeight + delta.height
+				}
+				setCurrentHeight( currentHeight )
 
-							let currentWidth = props.width ? parseFloat( props.width ) : 0
-							if ( props.widthUnit === '%' ) {
-								const parentWidth = elt.parentElement.getBoundingClientRect().width
-								setParentWidth( parentWidth )
-								currentWidth = ( props.width || 100 ) / 100 * parentWidth
-							} else if ( ! props.width || props.width === 'auto' ) {
-								currentWidth = parseInt( elt.getBoundingClientRect().width, 10 )
-							}
-							setInitialWidth( currentWidth || 0 )
+				if ( props.widthUnit === '%' ) {
+					currentWidth = clamp( Math.round( ( initialWidth + delta.width ) / parentWidth * 100 ), 0, 100 )
+				} else {
+					currentWidth = initialWidth + delta.width
+				}
+				setCurrentWidth( currentWidth )
 
-							setIsResizing( true )
-							setSnap( null )
-						} }
-						onResize={ ( _event, _direction, elt, delta ) => {
-							// Get the new size of the image when dragging.
-							let currentHeight, currentWidth
-							if ( props.heightUnit === '%' ) {
-								currentHeight = clamp( Math.round( ( initialHeight + delta.height ) / parentHeight * 100 ), 0, 100 )
-								// This is to make percentage heights work, see comment above about the issue in ResizableBox.
-								setTempStyle( `.stk--is-resizing { height: ${ currentHeight }% !important; }` )
-							} else {
-								currentHeight = initialHeight + delta.height
-							}
-							setCurrentHeight( currentHeight )
+				// Adjust the snapping of the image size.
+				if ( ! snap ) {
+					setSnap( getSnapSizes( parentWidth, parentHeight, props.widthUnit, props.heightUnit, _direction, isShiftKey ) )
+				}
+			} }
+			onResizeStop={ () => {
+				props.onChangeSize( {
+					width: currentWidth,
+					widthUnit: props.widthUnit,
+					height: currentHeight,
+					heightUnit: props.heightUnit,
+				} )
+				setIsResizing( false )
+				setCurrentWidth( null )
+				setCurrentHeight( null )
+				setTempStyle( null )
+				setSnap( null )
+			} }
+		>
+			{ src && props.onRemove && props.hasRemove && props.showTooltips && (
+				<button
+					className="stk-img-upload-remove"
+					onClick={ ev => {
+						props.onRemove()
+						ev.stopPropagation()
+					} }
+				>
+					<Dashicon icon="no" />
+				</button>
+			) }
+			{ props.hasTooltip && props.showTooltips && (
+				<ResizerTooltip
+					enableHeight={ props.enableHeight || props.enableDiagonal }
+					enableWidth={ props.enableWidth || props.enableDiagonal }
+					height={ formSize( currentHeight || props.height, props.heightUnit, false, false ) }
+					width={ formSize( currentWidth || props.width, props.widthUnit, false, false ) }
+					widthUnits={ props.widthUnits }
+					heightUnits={ props.heightUnits }
+					heightUnit={ props.heightUnit }
+					widthUnit={ props.widthUnit }
+					allowReset={ props.allowReset }
+					defaultWidth={ props.defaultWidth }
+					defaultHeight={ props.defaultHeight }
+					onChangeHeight={ ( { value, unit } ) => {
+						const size = {}
+						if ( typeof value !== 'undefined' ) {
+							size.height = value
+						}
+						if ( typeof unit !== 'undefined' ) {
+							size.heightUnit = unit
+						}
+						props.onChangeSize( size )
+					} }
+					onChangeWidth={ ( { value, unit } ) => {
+						const size = {}
+						if ( typeof value !== 'undefined' ) {
+							size.width = value
+						}
+						if ( typeof unit !== 'undefined' ) {
+							size.widthUnit = unit
+						}
+						props.onChangeSize( size )
+					} }
+				/>
+			) }
+			<div className="stk-img-resizer-wrapper">
+				<img
+					ref={ imageRef }
+					onLoad={ () => setHasImageError( false ) }
+					onError={ () => setHasImageError( true ) }
+					className={ imageClasses }
+					src={ src || undefined }
+					alt={ striptags( props.alt || undefined ) }
+					title={ striptags( props.title || undefined ) }
+					width={ props.width || undefined }
+					height={ props.height || undefined }
+					draggable="false"
+				/>
+			</div>
+			{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }
+			{ isResizing && tempStyle && <style>{ tempStyle }</style> }
+			{ isSelected && (
+				<MediaUpload
+					onSelect={ image => {
+						// If image size is provided, return the URL of that size.
+						let {
+							url, width, height,
+						} = image
+						const currentSelectedSize = props.size || 'full'
 
-							if ( props.widthUnit === '%' ) {
-								currentWidth = clamp( Math.round( ( initialWidth + delta.width ) / parentWidth * 100 ), 0, 100 )
-							} else {
-								currentWidth = initialWidth + delta.width
-							}
-							setCurrentWidth( currentWidth )
+						if ( image.sizes && image.sizes[ currentSelectedSize ] ) {
+							url = image.sizes[ currentSelectedSize ].url
+							width = image.sizes[ currentSelectedSize ].width
+							height = image.sizes[ currentSelectedSize ].height
+						}
 
-							// Adjust the snapping of the image size.
-							if ( ! snap ) {
-								setSnap( getSnapSizes( parentWidth, parentHeight, props.widthUnit, props.heightUnit, _direction, isShiftKey ) )
-							}
-						} }
-						onResizeStop={ () => {
-							props.onChangeSize( {
-								width: currentWidth,
-								widthUnit: props.widthUnit,
-								height: currentHeight,
-								heightUnit: props.heightUnit,
-							} )
-							setIsResizing( false )
-							setCurrentWidth( null )
-							setCurrentHeight( null )
-							setTempStyle( null )
-							setSnap( null )
-						} }
-					>
-						{ src && props.onRemove && props.hasRemove && (
-							<button
-								className="stk-img-upload-remove"
-								onClick={ ev => {
-									props.onRemove()
-									ev.stopPropagation()
-								} }
-							>
-								<Dashicon icon="no" />
-							</button>
-						) }
-						{ props.hasTooltip && (
-							<ResizerTooltip
-								enableHeight={ props.enableHeight || props.enableDiagonal }
-								enableWidth={ props.enableWidth || props.enableDiagonal }
-								height={ formSize( currentHeight || props.height, props.heightUnit, false, false ) }
-								width={ formSize( currentWidth || props.width, props.widthUnit, false, false ) }
-								widthUnits={ props.widthUnits }
-								heightUnits={ props.heightUnits }
-								heightUnit={ props.heightUnit }
-								widthUnit={ props.widthUnit }
-								allowReset={ props.allowReset }
-								defaultWidth={ props.defaultWidth }
-								defaultHeight={ props.defaultHeight }
-								onChangeHeight={ ( { value, unit } ) => {
-									const size = {}
-									if ( typeof value !== 'undefined' ) {
-										size.height = value
-									}
-									if ( typeof unit !== 'undefined' ) {
-										size.heightUnit = unit
-									}
-									props.onChangeSize( size )
-								} }
-								onChangeWidth={ ( { value, unit } ) => {
-									const size = {}
-									if ( typeof value !== 'undefined' ) {
-										size.width = value
-									}
-									if ( typeof unit !== 'undefined' ) {
-										size.widthUnit = unit
-									}
-									props.onChangeSize( size )
-								} }
+						props.onChange( {
+							...image,
+							url,
+							width,
+							height,
+						} )
+					} }
+					allowedTypes={ props.allowedTypes }
+					value={ props.imageID }
+					render={ obj => {
+						// Show an invisible button on top of the image.
+						return (
+							<Button
+								className="stk-img-media-manager-button"
+								onClick={ () => obj.open() }
 							/>
-						) }
-						<div className="stk-img-resizer-wrapper">
-							<img
-								ref={ imageRef }
-								onLoad={ () => setHasImageError( false ) }
-								onError={ () => setHasImageError( true ) }
-								className={ imageClasses }
-								src={ src || undefined }
-								alt={ striptags( props.alt || undefined ) }
-								title={ striptags( props.title || undefined ) }
-								width={ props.width || undefined }
-								height={ props.height || undefined }
-								draggable="false"
-							/>
-						</div>
-						{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }
-						{ isResizing && tempStyle && <style>{ tempStyle }</style> }
-					</ResizableBox>
-				)
-			} }>
-
+						)
+					} }
+				/>
+			) }
 			{ props.children }
-		</MediaUpload>
+		</ResizableBox>
 	)
 } )
 
@@ -321,6 +314,7 @@ Image.defaultProps = {
 	imageId: '',
 	enableClickToEdit: true,
 	showHandles: true,
+	showTooltips: true,
 
 	alt: '',
 	title: '',

@@ -28,7 +28,7 @@ import {
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 
@@ -96,6 +96,7 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				<Image
+					showTooltips={ props.isHovered }
 					heightUnits={ heightUnit }
 					defaultWidth="100"
 					defaultHeight="auto"
@@ -107,7 +108,7 @@ const Edit = props => {
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

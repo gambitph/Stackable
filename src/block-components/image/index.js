@@ -137,6 +137,7 @@ Image.defaultProps = {
 	defaultWidth: 150,
 	defaultHeight: 300,
 	enableHandles: true,
+	showTooltips: false,
 }
 
 Image.Content = props => {
