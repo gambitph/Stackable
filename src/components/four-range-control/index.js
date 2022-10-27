@@ -91,8 +91,7 @@ const FourRangeControl = props => {
 	const hasUnits = !! props.units?.length
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 
-	const attributes = useBlockAttributesContext()
-	const unit = attributes[ unitAttrName ]
+	const unit = useBlockAttributesContext( attributes => attributes[ unitAttrName ] )
 
 	// Change the min, max & step values depending on the unit used.
 	if ( hasUnits ) {

@@ -19,17 +19,22 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Fragment } from '@wordpress/element'
+import { Fragment, memo } from '@wordpress/element'
 import { MediaUpload } from '@wordpress/block-editor'
 
-const ImageControl = props => {
-	const attributes = useBlockAttributesContext()
-	const setAttributes = useBlockSetAttributesContext()
+const ImageControl = memo( props => {
 	const attrNameId = useAttributeName( `${ props.attribute }Id`, props.responsive, props.hover )
 	const attrNameUrl = useAttributeName( `${ props.attribute }Url`, props.responsive, props.hover )
 	const attrWidthAttribute = useAttributeName( `${ props.attribute }HeightAttribute`, props.responsive, props.hover )
 	const attrHeightAttribute = useAttributeName( `${ props.attribute }WidthAttribute`, props.responsive, props.hover )
 	const attrAlt = useAttributeName( `${ props.attribute }Alt`, props.responsive, props.hover )
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			[ attrNameId ]: attributes[ attrNameId ],
+			[ attrNameUrl ]: attributes[ attrNameUrl ],
+		}
+	} )
+	const setAttributes = useBlockSetAttributesContext()
 
 	const _onChange = image => {
 		setAttributes( {
@@ -155,7 +160,7 @@ const ImageControl = props => {
 			/>
 		</AdvancedControl>
 	)
-}
+} )
 
 ImageControl.defaultProps = {
 	label: '',

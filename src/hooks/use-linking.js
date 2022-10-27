@@ -10,7 +10,7 @@ const getLinkedData = () => {
 }
 
 export const useLinking = () => {
-	const { uniqueId } = useBlockAttributesContext()
+	const uniqueId = useBlockAttributesContext( attributes => attributes.uniqueId )
 	const [ linkedData, setLinkedData ] = useState( getLinkedData() )
 
 	useEffect( () => {
