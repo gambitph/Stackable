@@ -11,6 +11,7 @@
  * Internal dependencies
  */
 import { useShowMoversGestures } from './util'
+import { useDevicePreviewOptimization } from '../with-block-wrapper'
 import { useBlockHoverState } from '~stackable/hooks'
 
 /**
@@ -25,6 +26,7 @@ const withBlockWrapperIsHovered = createHigherOrderComponent(
 		const ref = useRef()
 		const { showMovers, gestures } = useShowMoversGestures( { ref } )
 		const [ blockState, , blockHoverClass ] = useBlockHoverState()
+		const isDisplayed = useDevicePreviewOptimization( props )
 
 		const blockProps = {
 			...gestures,
@@ -33,15 +35,18 @@ const withBlockWrapperIsHovered = createHigherOrderComponent(
 
 		return (
 			<BlockWrapper
-				attributes={ props.attributes }
 				blockProps={ blockProps }
+				align={ props.attributes.align }
+				className={ props.attributes.className }
 				blockHoverClass={ blockHoverClass }
 			>
-				<WrappedComponent { ...props }
-					isHovered={ showMovers }
-					blockState={ blockState }
-					blockHoverClass={ blockHoverClass }
-				/>
+				{ isDisplayed && (
+					<WrappedComponent { ...props }
+						isHovered={ showMovers }
+						blockState={ blockState }
+						blockHoverClass={ blockHoverClass }
+					/>
+				) }
 			</BlockWrapper>
 		)
 	},

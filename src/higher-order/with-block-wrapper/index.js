@@ -68,7 +68,7 @@ let selectedBlock = null
  *
  * @param {Object} blockProps Block props
  */
-const useDevicePreviewOptimization = blockProps => {
+export const useDevicePreviewOptimization = blockProps => {
 	const { clientId, isSelected } = blockProps
 	const { rootBlockClientId } = useBlockContext()
 
