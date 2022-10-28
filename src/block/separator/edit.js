@@ -45,6 +45,7 @@ const Edit = props => {
 		clientId,
 		className,
 		attributes,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -66,49 +67,53 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<BlockDiv.InspectorControls />
+					<BlockDiv.InspectorControls />
 
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Height', i18n ) }
-						min={ 30 }
-						sliderMax={ 400 }
-						placeholder=""
-						attribute="separatorHeight"
-						responsive="all"
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Flip Horizontally', i18n ) }
-						attribute="separatorFlipHorizontally"
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Flip Vertically', i18n ) }
-						attribute="separatorFlipVertically"
-					/>
-				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					title={ __( 'Separator', i18n ) }
-					id="separator"
-				>
-					<Separator.InspectorControls.SeparatorControls hasFlipVertically={ true } />
-				</PanelAdvancedSettings>
-				{ applyFilters( 'stackable.block.separator.edit.after', null, props ) }
-			</InspectorStyleControls>
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Height', i18n ) }
+								min={ 30 }
+								sliderMax={ 400 }
+								placeholder=""
+								attribute="separatorHeight"
+								responsive="all"
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Flip Horizontally', i18n ) }
+								attribute="separatorFlipHorizontally"
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Flip Vertically', i18n ) }
+								attribute="separatorFlipVertically"
+							/>
+						</PanelAdvancedSettings>
+						<PanelAdvancedSettings
+							title={ __( 'Separator', i18n ) }
+							id="separator"
+						>
+							<Separator.InspectorControls.SeparatorControls hasFlipVertically={ true } />
+						</PanelAdvancedSettings>
+						{ applyFilters( 'stackable.block.separator.edit.after', null, props ) }
+					</InspectorStyleControls>
 
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-separator" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-separator" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<SeparatorStyles
 				version={ VERSION }

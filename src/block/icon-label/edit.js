@@ -51,7 +51,10 @@ export const TEMPLATE = [
 
 const Edit = props => {
 	const {
-		className, attributes, clientId,
+		className,
+		attributes,
+		clientId,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -72,37 +75,41 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
-			<InspectorTabs />
-			<BlockDiv.InspectorControls />
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Icon Gap', i18n ) }
-						attribute="iconGap"
-						responsive="all"
-						min={ 0 }
-						sliderMax={ 300 }
-						placeholder="64"
-					/>
-				</PanelAdvancedSettings>
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
+					<BlockDiv.InspectorControls />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Icon Gap', i18n ) }
+								attribute="iconGap"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 300 }
+								placeholder="64"
+							/>
+						</PanelAdvancedSettings>
 
-			</InspectorStyleControls>
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					</InspectorStyleControls>
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
 			<IconLabelStyles
 				version={ VERSION }
@@ -117,20 +124,18 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				<Fragment>
-					<div className={ contentClassNames }>
-						<InnerBlocks
-							orientation="horizontal"
-							template={ TEMPLATE }
-							templateLock="insert"
-							templateInsertUpdatesSelection={ true }
-						/>
-					</div>
-				</Fragment>
+				<div className={ contentClassNames }>
+					<InnerBlocks
+						orientation="horizontal"
+						template={ TEMPLATE }
+						templateLock="insert"
+						templateInsertUpdatesSelection={ true }
+					/>
+				</div>
 			</BlockDiv>
 			{ /* Hack, somehow the icon list doesn't have a uniqueId when it's just added, so the data-block-id isn't populated and isn't detected, this fixes that. */ }
 			<MarginBottom previewSelector={ `[data-block="${ clientId }"] > .stk-block` } />
-		</Fragment>
+		</>
 	)
 }
 

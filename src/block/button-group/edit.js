@@ -57,6 +57,7 @@ const Edit = props => {
 		className,
 		attributes,
 		clientId,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -88,74 +89,76 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
 
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<AdvancedSelectControl
-						label={ __( 'Button Alignment', i18n ) }
-						attribute="buttonAlign"
-						responsive="all"
-						options={ deviceType === 'Desktop'
-							? [
-								{
-									label: __( 'Horizontal', i18n ),
-									value: '',
-								},
-								{
-									label: __( 'Vertical', i18n ),
-									value: 'vertical',
-								},
-							]
-							: [
-								{
-									label: __( 'Inherit', i18n ),
-									value: '',
-								},
-								{
-									label: __( 'Horizontal', i18n ),
-									value: 'horizontal',
-								},
-								{
-									label: __( 'Vertical', i18n ),
-									value: 'vertical',
-								},
-							]
-						}
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Full Width Buttons', i18n ) }
-						attribute="buttonFullWidth"
-						defaultValue={ false }
-					/>
-					<FlexGapControls />
-					<AdvancedSelectControl
-						label={ __( 'Flex Wrap', i18n ) }
-						attribute="flexWrap"
-						options={ [
-							{
-								label: __( 'No Wrap', i18n ),
-								value: '',
-							},
-							{
-								label: __( 'Wrap', i18n ),
-								value: 'wrap',
-							},
-							{
-								label: __( 'Wrap Reverse', i18n ),
-								value: 'wrap-reverse',
-							},
-						] }
-						responsive="all"
-					/>
-					{ /* <AdvancedSelectControl
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<AdvancedSelectControl
+								label={ __( 'Button Alignment', i18n ) }
+								attribute="buttonAlign"
+								responsive="all"
+								options={ deviceType === 'Desktop'
+									? [
+										{
+											label: __( 'Horizontal', i18n ),
+											value: '',
+										},
+										{
+											label: __( 'Vertical', i18n ),
+											value: 'vertical',
+										},
+									]
+									: [
+										{
+											label: __( 'Inherit', i18n ),
+											value: '',
+										},
+										{
+											label: __( 'Horizontal', i18n ),
+											value: 'horizontal',
+										},
+										{
+											label: __( 'Vertical', i18n ),
+											value: 'vertical',
+										},
+									]
+								}
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Full Width Buttons', i18n ) }
+								attribute="buttonFullWidth"
+								defaultValue={ false }
+							/>
+							<FlexGapControls />
+							<AdvancedSelectControl
+								label={ __( 'Flex Wrap', i18n ) }
+								attribute="flexWrap"
+								options={ [
+									{
+										label: __( 'No Wrap', i18n ),
+										value: '',
+									},
+									{
+										label: __( 'Wrap', i18n ),
+										value: 'wrap',
+									},
+									{
+										label: __( 'Wrap Reverse', i18n ),
+										value: 'wrap-reverse',
+									},
+								] }
+								responsive="all"
+							/>
+							{ /* <AdvancedSelectControl
 						label={ __( 'Collapse Buttons On', i18n ) }
 						attribute="collapseOn"
 						options={ [
@@ -177,15 +180,17 @@ const Edit = props => {
 							},
 						] }
 					/> */ }
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

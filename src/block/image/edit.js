@@ -44,6 +44,7 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -64,23 +65,27 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<Image.InspectorControls
-				{ ...props }
-				initialOpen={ true }
-				heightUnits={ heightUnit }
-			/>
-			{ enableLink && <Link.InspectorControls hasTitle={ true } /> }
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<Image.InspectorControls
+						{ ...props }
+						initialOpen={ true }
+						heightUnits={ heightUnit }
+					/>
+					{ enableLink && <Link.InspectorControls hasTitle={ true } /> }
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<BlockStyles
 				version={ VERSION }

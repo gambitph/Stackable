@@ -43,6 +43,7 @@ const Edit = props => {
 		clientId,
 		className,
 		attributes,
+		isSelected,
 	} = props
 
 	useGeneratedCss( attributes )
@@ -80,30 +81,34 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
 
-			{ /** Advanced controls */ }
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					{ /** Advanced controls */ }
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<ProgressBar.InspectorControls isCircle />
-			<Typography.InspectorControls
-				{ ...props }
-				initialOpen={ false }
-				hasTextTag={ false }
-				hasTextContent={ false }
-				hasTextShadow
-				hasToggle
-				label={ __( 'Label', i18n ) }
-			/>
+					<ProgressBar.InspectorControls isCircle />
+					<Typography.InspectorControls
+						{ ...props }
+						initialOpen={ false }
+						hasTextTag={ false }
+						hasTextContent={ false }
+						hasTextShadow
+						hasToggle
+						label={ __( 'Label', i18n ) }
+					/>
+				</>
+			) }
 
 			<BlockDiv
 				blockHoverClass={ props.blockHoverClass }

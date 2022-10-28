@@ -35,13 +35,13 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
 		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -60,42 +60,45 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'Counter', i18n ) }
+							id="count-up"
+							initialOpen={ true }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Duration (ms)', i18n ) }
+								attribute="duration"
+								min={ 100 }
+								sliderMax={ 5000 }
+								step={ 100 }
+								placeholder="1000"
+							>
 
-			<InspectorTabs />
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'Counter', i18n ) }
-					id="count-up"
-					initialOpen={ true }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Duration (ms)', i18n ) }
-						attribute="duration"
-						min={ 100 }
-						sliderMax={ 5000 }
-						step={ 100 }
-						placeholder="1000"
-					>
-
-					</AdvancedRangeControl>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<Typography.InspectorControls
-				{ ...props }
-				hasTextTag={ false }
-				hasTextShadow={ true }
-				initialOpen={ false }
-			/>
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-count-up" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+							</AdvancedRangeControl>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<Typography.InspectorControls
+						{ ...props }
+						hasTextTag={ false }
+						hasTextShadow={ true }
+						initialOpen={ false }
+					/>
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-count-up" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<HeadingStyles
 				version={ VERSION }
@@ -117,7 +120,7 @@ const Edit = props => {
 				/>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
-		</Fragment>
+		</>
 	)
 }
 

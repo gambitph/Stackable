@@ -48,6 +48,7 @@ const Edit = props => {
 		attributes,
 		setAttributes,
 		clientId,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -77,38 +78,42 @@ const Edit = props => {
 
 	return (
 		<>
-			<BlockControls>
-				<AlignmentToolbar
-					value={ attributes.contentAlign }
-					onChange={ contentAlign => setAttributes( { contentAlign } ) }
-				/>
-			</BlockControls>
+			{ isSelected && (
+				<>
+					<BlockControls>
+						<AlignmentToolbar
+							value={ attributes.contentAlign }
+							onChange={ contentAlign => setAttributes( { contentAlign } ) }
+						/>
+					</BlockControls>
 
-			<InspectorTabs />
-			<BlockDiv.InspectorControls />
+					<InspectorTabs />
+					<BlockDiv.InspectorControls />
 
-			<BlockStyle.InspectorControls styles={ blockStyles }>
-				<Button.InspectorControls.HoverEffects />
-			</BlockStyle.InspectorControls>
-			<Button.InspectorControls
-				blockState={ props.blockState }
-				borderSelector=".stk-button"
-				hasFullWidth={ true }
-			/>
-			<Typography.InspectorControls
-				{ ...props }
-				hasTextTag={ false }
-				initialOpen={ false }
-				hasColor={ false }
-			/>
+					<BlockStyle.InspectorControls styles={ blockStyles }>
+						<Button.InspectorControls.HoverEffects />
+					</BlockStyle.InspectorControls>
+					<Button.InspectorControls
+						blockState={ props.blockState }
+						borderSelector=".stk-button"
+						hasFullWidth={ true }
+					/>
+					<Typography.InspectorControls
+						{ ...props }
+						hasTextTag={ false }
+						initialOpen={ false }
+						hasColor={ false }
+					/>
 
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<ButtonStyles
 				version={ VERSION }

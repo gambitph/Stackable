@@ -58,6 +58,7 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -114,40 +115,43 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<AdvancedToggleControl
+								label={ __( 'Open at the start', i18n ) }
+								attribute="startOpen"
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Close adjacent on open', i18n ) }
+								attribute="onlyOnePanelOpen"
+								className="ugb--help-tip-accordion-adjacent-open"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
 
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<AdvancedToggleControl
-						label={ __( 'Open at the start', i18n ) }
-						attribute="startOpen"
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Close adjacent on open', i18n ) }
-						attribute="onlyOnePanelOpen"
-						className="ugb--help-tip-accordion-adjacent-open"
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
 			<BlockStyles
 				version={ VERSION }

@@ -89,6 +89,7 @@ const Edit = props => {
 		name,
 		className,
 		setAttributes,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -163,251 +164,255 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-				>
-					<AdvancedRangeControl
-						label={ __( 'Columns', i18n ) }
-						attribute="columns"
-						responsive="all"
-						min={ 1 }
-						sliderMax={ 4 }
-						placeholder="2"
-					/>
-					<ContentAlign.InspectorControls.Controls />
-					<AdvancedRangeControl
-						label={ __( 'Content Width', i18n ) }
-						attribute="innerBlockContentWidth"
-						responsive="all"
-						units={ [ 'px', '%' ] }
-						min={ [ 0, 0 ] }
-						sliderMax={ [ 1500, 100 ] }
-						step={ [ 1, 1 ] }
-						allowReset={ true }
-						placeholder=""
-						initialPosition="1500"
-						className="ugb--help-tip-advanced-block-content-width"
-					/>
-					{ attributes.innerBlockContentWidth !== '' && deviceType === 'Desktop' &&
-						<AdvancedToolbarControl
-							label={ __( 'Content Horizontal Align', i18n ) }
-							attribute="innerBlockAlign"
-							responsive="all"
-							controls="flex-horizontal"
-							className="ugb--help-tip-advanced-block-horizontal-align"
-						/>
-					}
-					{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' ) && deviceType === 'Tablet' &&
-						<AdvancedToolbarControl
-							label={ __( 'Content Horizontal Align', i18n ) }
-							attribute="innerBlockAlign"
-							responsive="all"
-							controls="flex-horizontal"
-							className="ugb--help-tip-advanced-block-horizontal-align"
-						/>
-					}
-					{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' || attributes.innerBlockContentWidthMobile !== '' ) && deviceType === 'Mobile' &&
-						<AdvancedToolbarControl
-							label={ __( 'Content Horizontal Align', i18n ) }
-							attribute="innerBlockAlign"
-							responsive="all"
-							controls="flex-horizontal"
-							className="ugb--help-tip-advanced-block-horizontal-align"
-						/>
-					}
-					<FlexGapControls />
-					<SortControl
-						label={ __( 'Content Arrangement', i18n ) }
-						axis="y"
-						values={ contentOrderOptions }
-						num={ contentOrderOptions.length }
-						allowReset={ ! isEqual( contentOrder, defaultContentOrder ) }
-						onChange={ order => {
-							if ( order ) {
-								setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
-							} else {
-								setAttributes( { contentOrder: defaultContentOrder } )
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+						>
+							<AdvancedRangeControl
+								label={ __( 'Columns', i18n ) }
+								attribute="columns"
+								responsive="all"
+								min={ 1 }
+								sliderMax={ 4 }
+								placeholder="2"
+							/>
+							<ContentAlign.InspectorControls.Controls />
+							<AdvancedRangeControl
+								label={ __( 'Content Width', i18n ) }
+								attribute="innerBlockContentWidth"
+								responsive="all"
+								units={ [ 'px', '%' ] }
+								min={ [ 0, 0 ] }
+								sliderMax={ [ 1500, 100 ] }
+								step={ [ 1, 1 ] }
+								allowReset={ true }
+								placeholder=""
+								initialPosition="1500"
+								className="ugb--help-tip-advanced-block-content-width"
+							/>
+							{ attributes.innerBlockContentWidth !== '' && deviceType === 'Desktop' &&
+								<AdvancedToolbarControl
+									label={ __( 'Content Horizontal Align', i18n ) }
+									attribute="innerBlockAlign"
+									responsive="all"
+									controls="flex-horizontal"
+									className="ugb--help-tip-advanced-block-horizontal-align"
+								/>
 							}
-						} }
-					/>
-				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					title={ __( 'Query', i18n ) }
-					id="query"
-				>
-					<AdvancedRangeControl
-						label={ __( 'Number of items', i18n ) }
-						min={ 1 }
-						max={ 100 }
-						allowReset={ true }
-						attribute="numberOfItems"
-						placeholder="6"
-						default={ 6 }
-					/>
-					<AdvancedSelectControl
-						label={ __( 'Order by', i18n ) }
-						options={ [
-							{ label: __( 'Newest to Oldest', i18n ), value: 'date,desc' },
-							{ label: __( 'Oldest to Newest', i18n ), value: 'date,asc' },
-							{ label: __( 'A → Z', i18n ), value: 'title,asc' },
-							{ label: __( 'Z → A', i18n ), value: 'title,desc' },
-							{ label: __( 'Last Modified to Oldest', i18n ), value: 'modified,desc' },
-							{ label: __( 'Oldest Modified to Last', i18n ), value: 'modified,asc' },
-							{ label: __( 'Menu Order', i18n ), value: 'menu_order,asc' },
-							{ label: __( 'Random', i18n ), value: 'rand,desc' },
-						] }
-						value={ `${ orderBy },${ order }` }
-						onChange={ value => {
-							const [ orderBy, order ] = value.split( ',' )
-							setAttributes( {
-								orderBy,
-								order,
-							} )
-						} }
-						default="date,desc"
-					/>
-					<TaxonomyControl
-						allowReset={ true }
-						postType={ type }
-						onChangePostType={ type => setAttributes( { type } ) }
-						taxonomyType={ taxonomyType }
-						onChangeTaxonomyType={ taxonomyType => setAttributes( { taxonomyType } ) }
-						taxonomy={ taxonomy }
-						onChangeTaxonomy={ taxonomy => setAttributes( { taxonomy } ) }
-						taxonomyFilterType={ taxonomyFilterType }
-						onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
-						stkVersion="3"
-					/>
-					{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
-				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					title={ __( 'Spacing', i18n ) }
-					id="spacing"
-				>
-					<AdvancedRangeControl
+							{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' ) && deviceType === 'Tablet' &&
+								<AdvancedToolbarControl
+									label={ __( 'Content Horizontal Align', i18n ) }
+									attribute="innerBlockAlign"
+									responsive="all"
+									controls="flex-horizontal"
+									className="ugb--help-tip-advanced-block-horizontal-align"
+								/>
+							}
+							{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' || attributes.innerBlockContentWidthMobile !== '' ) && deviceType === 'Mobile' &&
+								<AdvancedToolbarControl
+									label={ __( 'Content Horizontal Align', i18n ) }
+									attribute="innerBlockAlign"
+									responsive="all"
+									controls="flex-horizontal"
+									className="ugb--help-tip-advanced-block-horizontal-align"
+								/>
+							}
+							<FlexGapControls />
+							<SortControl
+								label={ __( 'Content Arrangement', i18n ) }
+								axis="y"
+								values={ contentOrderOptions }
+								num={ contentOrderOptions.length }
+								allowReset={ ! isEqual( contentOrder, defaultContentOrder ) }
+								onChange={ order => {
+									if ( order ) {
+										setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
+									} else {
+										setAttributes( { contentOrder: defaultContentOrder } )
+									}
+								} }
+							/>
+						</PanelAdvancedSettings>
+						<PanelAdvancedSettings
+							title={ __( 'Query', i18n ) }
+							id="query"
+						>
+							<AdvancedRangeControl
+								label={ __( 'Number of items', i18n ) }
+								min={ 1 }
+								max={ 100 }
+								allowReset={ true }
+								attribute="numberOfItems"
+								placeholder="6"
+								default={ 6 }
+							/>
+							<AdvancedSelectControl
+								label={ __( 'Order by', i18n ) }
+								options={ [
+									{ label: __( 'Newest to Oldest', i18n ), value: 'date,desc' },
+									{ label: __( 'Oldest to Newest', i18n ), value: 'date,asc' },
+									{ label: __( 'A → Z', i18n ), value: 'title,asc' },
+									{ label: __( 'Z → A', i18n ), value: 'title,desc' },
+									{ label: __( 'Last Modified to Oldest', i18n ), value: 'modified,desc' },
+									{ label: __( 'Oldest Modified to Last', i18n ), value: 'modified,asc' },
+									{ label: __( 'Menu Order', i18n ), value: 'menu_order,asc' },
+									{ label: __( 'Random', i18n ), value: 'rand,desc' },
+								] }
+								value={ `${ orderBy },${ order }` }
+								onChange={ value => {
+									const [ orderBy, order ] = value.split( ',' )
+									setAttributes( {
+										orderBy,
+										order,
+									} )
+								} }
+								default="date,desc"
+							/>
+							<TaxonomyControl
+								allowReset={ true }
+								postType={ type }
+								onChangePostType={ type => setAttributes( { type } ) }
+								taxonomyType={ taxonomyType }
+								onChangeTaxonomyType={ taxonomyType => setAttributes( { taxonomyType } ) }
+								taxonomy={ taxonomy }
+								onChangeTaxonomy={ taxonomy => setAttributes( { taxonomy } ) }
+								taxonomyFilterType={ taxonomyFilterType }
+								onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
+								stkVersion="3"
+							/>
+							{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
+						</PanelAdvancedSettings>
+						<PanelAdvancedSettings
+							title={ __( 'Spacing', i18n ) }
+							id="spacing"
+						>
+							<AdvancedRangeControl
+								label={ __( 'Featured Image', i18n ) }
+								attribute="imageSpacing"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 100 }
+								placeholder=""
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Title', i18n ) }
+								attribute="titleSpacing"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 100 }
+								placeholder=""
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Category', i18n ) }
+								attribute="categorySpacing"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 100 }
+								placeholder=""
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Excerpt', i18n ) }
+								attribute="excerptSpacing"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 100 }
+								placeholder=""
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Meta', i18n ) }
+								attribute="metaSpacing"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 100 }
+								placeholder=""
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Read More Link', i18n ) }
+								attribute="readmoreSpacing"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 100 }
+								placeholder=""
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+					<Image.InspectorControls
+						{ ...props }
 						label={ __( 'Featured Image', i18n ) }
-						attribute="imageSpacing"
-						responsive="all"
-						min={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
+						hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
+						hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
+						hasShape={ false }
+						hasWidth={ [ 'list', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
+						hasAlt={ false }
+						hasSelector={ false }
+						src={ focalPointPlaceholder }
+						hasToggle={ true }
 					/>
-					<AdvancedRangeControl
+					<Typography.InspectorControls
+						{ ...props }
 						label={ __( 'Title', i18n ) }
-						attribute="titleSpacing"
-						responsive="all"
-						min={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
+						hasToggle={ true }
+						attrNameTemplate="title%s"
+						hasTextContent={ false }
+						hasAlign={ true }
+						initialOpen={ false }
 					/>
-					<AdvancedRangeControl
+					<Typography.InspectorControls
+						{ ...props }
 						label={ __( 'Category', i18n ) }
-						attribute="categorySpacing"
-						responsive="all"
-						min={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
+						hasToggle={ true }
+						attrNameTemplate="category%s"
+						hasTextContent={ false }
+						hasAlign={ true }
+						hasTextTag={ false }
+						initialOpen={ false }
 					/>
-					<AdvancedRangeControl
+					<Typography.InspectorControls
+						{ ...props }
 						label={ __( 'Excerpt', i18n ) }
-						attribute="excerptSpacing"
-						responsive="all"
-						min={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
+						hasToggle={ true }
+						attrNameTemplate="excerpt%s"
+						hasTextTag={ false }
+						hasTextContent={ false }
+						hasAlign={ true }
+						initialOpen={ false }
 					/>
-					<AdvancedRangeControl
+					<Typography.InspectorControls
+						{ ...props }
 						label={ __( 'Meta', i18n ) }
-						attribute="metaSpacing"
-						responsive="all"
-						min={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
+						hasToggle={ true }
+						attrNameTemplate="meta%s"
+						hasTextTag={ false }
+						hasTextContent={ false }
+						hasAlign={ true }
+						initialOpen={ false }
 					/>
-					<AdvancedRangeControl
+					<Typography.InspectorControls
+						{ ...props }
 						label={ __( 'Read More Link', i18n ) }
-						attribute="readmoreSpacing"
-						responsive="all"
-						min={ 0 }
-						sliderMax={ 100 }
-						placeholder=""
+						attrNameTemplate="readmore%s"
+						hasTextTag={ false }
+						hasToggle={ true }
+						hasAlign={ true }
+						initialOpen={ false }
 					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-			<Image.InspectorControls
-				{ ...props }
-				label={ __( 'Featured Image', i18n ) }
-				hasHeight={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
-				hasBorderRadius={ ! [ 'portfolio', 'portfolio-2', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
-				hasShape={ false }
-				hasWidth={ [ 'list', 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
-				hasAlt={ false }
-				hasSelector={ false }
-				src={ focalPointPlaceholder }
-				hasToggle={ true }
-			/>
-			<Typography.InspectorControls
-				{ ...props }
-				label={ __( 'Title', i18n ) }
-				hasToggle={ true }
-				attrNameTemplate="title%s"
-				hasTextContent={ false }
-				hasAlign={ true }
-				initialOpen={ false }
-			/>
-			<Typography.InspectorControls
-				{ ...props }
-				label={ __( 'Category', i18n ) }
-				hasToggle={ true }
-				attrNameTemplate="category%s"
-				hasTextContent={ false }
-				hasAlign={ true }
-				hasTextTag={ false }
-				initialOpen={ false }
-			/>
-			<Typography.InspectorControls
-				{ ...props }
-				label={ __( 'Excerpt', i18n ) }
-				hasToggle={ true }
-				attrNameTemplate="excerpt%s"
-				hasTextTag={ false }
-				hasTextContent={ false }
-				hasAlign={ true }
-				initialOpen={ false }
-			/>
-			<Typography.InspectorControls
-				{ ...props }
-				label={ __( 'Meta', i18n ) }
-				hasToggle={ true }
-				attrNameTemplate="meta%s"
-				hasTextTag={ false }
-				hasTextContent={ false }
-				hasAlign={ true }
-				initialOpen={ false }
-			/>
-			<Typography.InspectorControls
-				{ ...props }
-				label={ __( 'Read More Link', i18n ) }
-				attrNameTemplate="readmore%s"
-				hasTextTag={ false }
-				hasToggle={ true }
-				hasAlign={ true }
-				initialOpen={ false }
-			/>
-			<ContainerDiv.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-posts" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<ContainerDiv.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-posts" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<PostsStyles
 				version={ VERSION }

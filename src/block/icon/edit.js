@@ -46,6 +46,7 @@ const Edit = props => {
 		clientId,
 		className,
 		attributes,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -59,34 +60,38 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
-			<InspectorTabs />
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 
-			<InspectorAdvancedControls>
-				<PanelAdvancedSettings
-					title={ __( 'Accessibility', i18n ) }
-					id="accessibility"
-				>
-					<AdvancedTextControl
-						isDynamic={ false }
-						label={ __( 'Icon Label', i18n ) }
-						attribute="ariaLabel"
-					/>
-				</PanelAdvancedSettings>
-			</InspectorAdvancedControls>
+					<InspectorAdvancedControls>
+						<PanelAdvancedSettings
+							title={ __( 'Accessibility', i18n ) }
+							id="accessibility"
+						>
+							<AdvancedTextControl
+								isDynamic={ false }
+								label={ __( 'Icon Label', i18n ) }
+								attribute="ariaLabel"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorAdvancedControls>
 
-			<EffectsAnimations.InspectorControls />
-			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
-			<Link.InspectorControls hasToggle={ true } />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
+					<Link.InspectorControls hasToggle={ true } />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<IconStyles
 				version={ VERSION }
@@ -105,7 +110,7 @@ const Edit = props => {
 				</Link>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
-		</Fragment>
+		</>
 	)
 }
 

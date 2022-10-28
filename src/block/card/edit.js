@@ -46,7 +46,6 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
@@ -69,6 +68,7 @@ const Edit = props => {
 	const {
 		clientId,
 		className, //isHovered,
+		isSelected,
 	} = props
 
 	const blockOrientation = getBlockOrientation( props.attributes )
@@ -104,35 +104,38 @@ const Edit = props => {
 	}
 
 	return (
-		<Fragment>
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<BlockLink.InspectorControls />
+					<Image.InspectorControls
+						{ ...props }
+						hasWidth={ blockStyle === 'horizontal' }
+						hasHeight={ hasHeight }
+						widthUnits={ widthUnit }
+						heightUnits={ heightUnit }
+						hasBorderRadius={ false }
+						hasShape={ false }
+						hasShadow={ false }
+					/>
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<Alignment.InspectorControls hasBlockAlignment={ true } />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
-			<Image.InspectorControls
-				{ ...props }
-				hasWidth={ blockStyle === 'horizontal' }
-				hasHeight={ hasHeight }
-				widthUnits={ widthUnit }
-				heightUnits={ heightUnit }
-				hasBorderRadius={ false }
-				hasShape={ false }
-				hasShadow={ false }
-			/>
-			<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
 			<CardStyles
 				version={ VERSION }
@@ -174,7 +177,7 @@ const Edit = props => {
 				</ContainerDiv>
 			</BlockDiv>
 			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
-		</Fragment>
+		</>
 	)
 }
 

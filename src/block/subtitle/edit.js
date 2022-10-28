@@ -59,6 +59,7 @@ const Edit = props => {
 		onReplace,
 		onRemove,
 		mergeBlocks,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -80,25 +81,28 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
-
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<Typography.InspectorControls
-				{ ...props }
-				hasTextTag={ false }
-				isMultiline={ false }
-				initialOpen={ true }
-				hasTextShadow={ true }
-			/>
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<Typography.InspectorControls
+						{ ...props }
+						hasTextTag={ false }
+						isMultiline={ false }
+						initialOpen={ true }
+						hasTextShadow={ true }
+					/>
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<SubtitleStyles
 				version={ VERSION }

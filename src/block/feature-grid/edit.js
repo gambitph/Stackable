@@ -49,6 +49,7 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -76,24 +77,27 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls hasRowAlignment={ true } />
+					<BlockDiv.InspectorControls />
+					<Separator.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+					<ContentAlign.InspectorControls hasColumnCount={ true } />
 
-			<Alignment.InspectorControls hasRowAlignment={ true } />
-			<BlockDiv.InspectorControls />
-			<Separator.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-			<ContentAlign.InspectorControls hasColumnCount={ true } />
-
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
 			<BlockStyles
 				version={ VERSION }

@@ -66,6 +66,7 @@ const Edit = props => {
 		mergeBlocks,
 		attributes,
 		clientId,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -115,56 +116,59 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
+					{ enableColumns &&
+						<InspectorStyleControls>
+							<PanelAdvancedSettings
+								title={ __( 'General', i18n ) }
+								initialOpen={ true }
+								id="general"
+							>
+								<AdvancedRangeControl
+									label={ __( 'Columns', i18n ) }
+									allowReset={ true }
+									attribute="columns"
+									min="1"
+									sliderMax="3"
+									step="1"
+									placeholder="1"
+									responsive="all"
+								/>
 
-			{ enableColumns &&
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						initialOpen={ true }
-						id="general"
-					>
-						<AdvancedRangeControl
-							label={ __( 'Columns', i18n ) }
-							allowReset={ true }
-							attribute="columns"
-							min="1"
-							sliderMax="3"
-							step="1"
-							placeholder="1"
-							responsive="all"
-						/>
+								<AdvancedRangeControl
+									label={ __( 'Column Gap', i18n ) }
+									allowReset={ true }
+									attribute="columnGap"
+									min="0"
+									sliderMax="50"
+									responsive="all"
+								/>
+							</PanelAdvancedSettings>
+						</InspectorStyleControls>
+					}
 
-						<AdvancedRangeControl
-							label={ __( 'Column Gap', i18n ) }
-							allowReset={ true }
-							attribute="columnGap"
-							min="0"
-							sliderMax="50"
-							responsive="all"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-			}
-
-			<Typography.InspectorControls
-				{ ...props }
-				hasTextTag={ false }
-				isMultiline={ true }
-				initialOpen={ ! enableColumns }
-				hasTextShadow={ true }
-			/>
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<Typography.InspectorControls
+						{ ...props }
+						hasTextTag={ false }
+						isMultiline={ true }
+						initialOpen={ ! enableColumns }
+						hasTextShadow={ true }
+					/>
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
 			<TextStyles
 				version={ VERSION }
