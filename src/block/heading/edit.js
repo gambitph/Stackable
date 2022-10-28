@@ -263,7 +263,7 @@ const Edit = props => {
 				{ props.attributes.showTopLine && <div className="stk-block-heading__top-line" /> }
 				<Typography
 					defaultTag="h2"
-					placeholder={ __( 'Title for This Block', i18n ) }
+					placeholder={ __( 'Add heading text here', i18n ) }
 					className={ textClassNames }
 					onMerge={ mergeBlocks }
 					onRemove={ onRemove }

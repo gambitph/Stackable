@@ -8,7 +8,6 @@ import BlockStyles from './style'
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import { nth } from 'lodash'
 import {
 	AdvancedToggleControl,
 	IconControl,
@@ -39,17 +38,18 @@ import {
 /**
  * Internal dependencies
  */
-import variations from './variations'
+import variations, { defaultIcon } from './variations'
 
 /**
  * WordPress dependencies
  */
-import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
+import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
 import { useState, useEffect } from '@wordpress/element'
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { findLast } from 'lodash'
 
 // Use the default template from the block variations.
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -186,45 +186,35 @@ export default compose(
 
 // Add another icon picker to the Icon block for picking the icon for the opened accordion.
 addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {
-	const { clientId } = useBlockEditContext()
-
 	const {
 		getAttribute,
 		updateAttributeHandler,
 	} = useAttributeEditHandlers()
+	const { parentTree } = useBlockContext()
+	const { getBlock } = useSelect( 'core/block-editor' )
+	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
-	const isAccordionIcon = useSelect(
-		select => {
-			const { getBlock } = select( 'core/block-editor' )
-			const { parentTree } = select( 'stackable/block-context' ).getBlockContext( clientId )
-			const columnClientId = nth( parentTree, -2 )?.clientId
-			const accordionClientId = nth( parentTree, -3 )?.clientId
-			const iconLabelName = nth( parentTree, -1 )?.name
-			const columnName = nth( parentTree, -2 )?.name
-			const accordionName = nth( parentTree, -3 )?.name
-			if ( ! iconLabelName || ! columnName || ! accordionName ) {
-				return false
-			}
-			if ( iconLabelName !== 'stackable/icon-label' ||
-			     columnName !== 'stackable/column' ||
-				 accordionName !== 'stackable/accordion' ) {
-				return false
-			}
-			if ( getBlock( accordionClientId ).innerBlocks[ 0 ].clientId !== columnClientId ) {
-				return false
-			}
-			return true
-		},
-		[ clientId ]
-	)
+	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
+	const accordionBlockDetails = getBlock( accordionBlock?.clientId )
 
-	if ( isAccordionIcon ) {
+	const columnBlock = findLast( parentTree, pt => pt.name === 'stackable/column' )
+	const iconLabelBlock = findLast( parentTree, pt => pt.name === 'stackable/icon-label' )
+
+	// an accordion icon must have accordion (0), column (1) and icon-label (2) as parent blocks (indicated by array index)
+	// also parent column block (1) of an accordion icon must match with the first accordion block's innerblocks[0].clientId
+	// as it should be the same block
+	const isAccordionIcon = iconLabelBlock && accordionBlockDetails?.innerBlocks[ 0 ].clientId === columnBlock?.clientId
+
+	if ( isAccordionIcon && accordionBlockDetails ) {
+		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
+		const defaultValue = activeVariation.name === 'plus' ? applyFilters( 'stackable.block-component.plus.icon-close' ) : undefined
 		return (
 			<>
 				{ output }
 				<IconControl
 					label={ __( 'Open Icon', i18n ) }
 					value={ getAttribute( 'icon2' ) }
+					defaultValue={ defaultValue }
 					onChange={ updateAttributeHandler( 'icon2' ) }
 					help={ __( 'The open icon will appear when the accordion is opened', i18n ) }
 				/>
@@ -240,4 +230,29 @@ addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/icon-lab
 		return false
 	}
 	return enabled
+} )
+
+// Return default icon for accordion
+addFilter( 'stackable.block-component.icon.default', 'stackable/accordion', starIcon => {
+	const { parentTree } = useBlockContext()
+	const { getBlock } = useSelect( 'core/block-editor' )
+	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
+
+	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
+	const accordionBlockDetails = getBlock( accordionBlock?.clientId )
+
+	const columnBlock = findLast( parentTree, pt => pt.name === 'stackable/column' )
+	const iconLabelBlock = findLast( parentTree, pt => pt.name === 'stackable/icon-label' )
+
+	// an accordion icon must have accordion (0), column (1) and icon-label (2) as parent blocks (indicated by array index)
+	// also parent column block (1) of an accordion icon must match with the first accordion block's innerblocks[0].clientId
+	// as it should be the same block
+	const isAccordionIcon = iconLabelBlock && accordionBlockDetails?.innerBlocks[ 0 ].clientId === columnBlock?.clientId
+
+	if ( isAccordionIcon && accordionBlockDetails ) {
+		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
+		return ( activeVariation.name === 'plus' )
+			? applyFilters( 'stackable.block-component.plus.icon-open' ) : defaultIcon
+	}
+	return starIcon
 } )

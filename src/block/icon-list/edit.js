@@ -42,15 +42,26 @@ import {
 /**
  * WordPress dependencies
  */
-import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
 import {
 	useRef, useEffect, useState,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { createIconListControls } from './util'
+import { createIconListControls, DEFAULT_SVG } from './util'
+import { compose } from '@wordpress/compose'
 
 const listTypeOptions = [
+	{
+		label: __( 'Unordered List', i18n ),
+		value: 'unordered',
+	},
+	{
+		label: __( 'Ordered List', i18n ),
+		value: 'ordered',
+	},
+]
+
+const listStyleTypeOptions = [
 	{
 		label: __( 'Number', i18n ),
 		value: 'decimal',
@@ -174,7 +185,7 @@ const Edit = props => {
 	] )
 
 	const controls = createIconListControls( {
-		isSelected, tagName, setAttributes,
+		isSelected, tagName,
 	} )
 
 	return (
@@ -192,6 +203,14 @@ const Edit = props => {
 							initialOpen={ true }
 							id="general"
 						>
+							<AdvancedSelectControl
+								label={ __( 'List Type', i18n ) }
+								options={ listTypeOptions }
+								value={ ordered ? 'ordered' : 'unordered' }
+								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
+								default="unordered"
+							/>
+
 							<AdvancedRangeControl
 								label={ __( 'Columns', i18n ) }
 								attribute="columns"
@@ -255,12 +274,13 @@ const Edit = props => {
 									// Reset custom individual icons.
 									setAttributes( { icon, icons: [] } )
 								} }
+								defaultValue={ DEFAULT_SVG }
 							/>
 
 							<AdvancedSelectControl
 								label={ __( 'List Type', i18n ) }
 								attribute="listType"
-								options={ listTypeOptions }
+								options={ listStyleTypeOptions }
 							/>
 
 							<ColorPaletteControl

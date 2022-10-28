@@ -14,6 +14,10 @@ import { __ } from '@wordpress/i18n'
 import {
 	iconButtonExample, socialButtonExample, buttonExample,
 } from './example'
+import {
+	IconButtonsIcon,
+	SocialButtonsIcon,
+} from '~stackable/icons'
 
 /**
  * Template option choices for predefined columns layouts.
@@ -32,6 +36,7 @@ const variations = [
 	{
 		name: 'icon-button',
 		title: __( 'Icon Button', i18n ),
+		icon: IconButtonsIcon,
 		'stk-type': 'essential',
 		innerBlocks: [
 			[
@@ -44,6 +49,7 @@ const variations = [
 	{
 		name: 'social-buttons',
 		title: __( 'Social Buttons', i18n ),
+		icon: SocialButtonsIcon,
 		'stk-type': 'special',
 		scope: [
 			'inserter',

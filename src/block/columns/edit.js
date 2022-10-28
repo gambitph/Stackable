@@ -52,11 +52,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
-const TEMPLATE = [
-	[ 'stackable/column' ],
-	[ 'stackable/column' ],
-]
-
 const Edit = props => {
 	const {
 		className,
@@ -133,7 +128,6 @@ const Edit = props => {
 							orientation="horizontal"
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ false }
-							template={ TEMPLATE }
 							templateLock={ props.attributes.templateLock || false }
 						/>
 					</div>
@@ -153,8 +147,8 @@ export default compose(
 addFilter( 'stackable.block-components.responsive.control', 'stackable/premium', output => {
 	const { name } = useBlockEditContext()
 
-	// Only do mobile column arrangement for the Columns block.
-	if ( name !== 'stackable/columns' ) {
+	// Only do mobile column arrangement for the Columns & Feature blocks.
+	if ( ! [ 'stackable/columns', 'stackable/feature' ].includes( name ) ) {
 		return output
 	}
 

@@ -48,8 +48,6 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-const TEMPLATE = []
-
 const Edit = props => {
 	const {
 		hasInnerBlocks, isOnlyBlock,
@@ -144,7 +142,6 @@ const Edit = props => {
 					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
-							template={ TEMPLATE }
 							templateLock={ props.attributes.templateLock || false }
 							orientation={ blockOrientation }
 							renderAppender={ ! hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : InnerBlocks.DefaultBlockAppender }

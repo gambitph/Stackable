@@ -3,37 +3,18 @@
  */
 import { faGetSVGIcon, createElementFromHTMLString } from '~stackable/util'
 import { kebabCase } from 'lodash'
-import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import {
-	BlockControls,
-	RichTextShortcut,
-} from '@wordpress/block-editor'
-import {
-	ToolbarButton,
-} from '@wordpress/components'
+import { RichTextShortcut } from '@wordpress/block-editor'
 /* eslint-disable @wordpress/no-unsafe-wp-apis */
 import {
 	__unstableIndentListItems as indentListItems,
 	__unstableOutdentListItems as outdentListItems,
-	__unstableChangeListType as changeListType,
-	__unstableIsListRootSelected as isListRootSelected,
-	__unstableIsActiveListType as isActiveListType,
 } from '@wordpress/rich-text'
 /* eslint-enable @wordpress/no-unsafe-wp-apis */
-import {
-	formatListBullets,
-	formatListBulletsRTL,
-	formatListNumbered,
-	formatListNumberedRTL,
-	Icon,
-} from '@wordpress/icons'
-import {
-	__, _x, isRTL,
-} from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 
 // The default icon list SVG.
 export const DEFAULT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190"><polygon points="173.8,28.4 60.4,141.8 15.7,97.2 5.1,107.8 60.4,163 184.4,39 173.8,28.4"/></svg>'
@@ -105,87 +86,51 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '', styles = {} )
  * Create a toolbar control
  * for the icon list block.
  *
- * @param {{ isSelected, tagName, setAttributes }}  options
+ * @param {{ isSelected, tagName }}  options
  * @return {Function} function which will be used as render prop.
  */
 export const createIconListControls = ( options = {} ) => {
 	const {
 		isSelected,
 		tagName,
-		setAttributes,
 	} = options
 
 	return ( {
-		value, onChange, onFocus,
-	} ) => (
+		value, onChange,
+	} ) => isSelected && (
 		<>
-			{ isSelected && (
-				<>
-					<RichTextShortcut
-						type="primary"
-						character="["
-						onUse={ () => {
-							onChange( outdentListItems( value ) )
-						} }
-					/>
-					<RichTextShortcut
-						type="primary"
-						character="]"
-						onUse={ () => {
-							onChange(
-								indentListItems( value, { type: tagName } )
-							)
-						} }
-					/>
-					<RichTextShortcut
-						type="primary"
-						character="m"
-						onUse={ () => {
-							onChange(
-								indentListItems( value, { type: tagName } )
-							)
-						} }
-					/>
-					<RichTextShortcut
-						type="primaryShift"
-						character="m"
-						onUse={ () => {
-							onChange( outdentListItems( value ) )
-						} }
-					/>
-				</>
-			) }
-
-			<BlockControls group="block">
-				<ToolbarButton
-					icon={ <Icon icon={ isRTL() ? formatListBulletsRTL : formatListBullets } size={ 24 } /> }
-					title={ __( 'Unordered', i18n ) }
-					describedBy={ __( 'Convert to unordered list', i18n ) }
-					isActive={ isActiveListType( value, 'ul', tagName ) }
-					onClick={ () => {
-						onChange( changeListType( value, { type: 'ul' } ) )
-						onFocus()
-
-						if ( isListRootSelected( value ) ) {
-							setAttributes( { ordered: false } )
-						}
-					} }
-				/>
-				<ToolbarButton
-					icon={ <Icon icon={ isRTL() ? formatListNumberedRTL : formatListNumbered } size={ 24 } /> }
-					title={ __( 'Ordered', i18n ) }
-					describedBy={ __( 'Convert to ordered list', i18n ) }
-					isActive={ isActiveListType( value, 'ol', tagName ) }
-					onClick={ () => {
-						onChange( changeListType( value, { type: 'ol' } ) )
-						onFocus()
-
-						if ( isListRootSelected( value ) ) {
-							setAttributes( { ordered: true } )
-						}
-					} }
-				/>
-			</BlockControls>
+			<RichTextShortcut
+				type="primary"
+				character="["
+				onUse={ () => {
+					onChange( outdentListItems( value ) )
+				} }
+			/>
+			<RichTextShortcut
+				type="primary"
+				character="]"
+				onUse={ () => {
+					onChange(
+						indentListItems( value, { type: tagName } )
+					)
+				} }
+			/>
+			<RichTextShortcut
+				type="primary"
+				character="m"
+				onUse={ () => {
+					onChange(
+						indentListItems( value, { type: tagName } )
+					)
+				} }
+			/>
+			<RichTextShortcut
+				type="primaryShift"
+				character="m"
+				onUse={ () => {
+					onChange( outdentListItems( value ) )
+				} }
+			/>
 		</>
 	)
 }

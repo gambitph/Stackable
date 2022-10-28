@@ -12,6 +12,7 @@ import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-contex
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	Button,
 	Popover,
@@ -228,6 +229,8 @@ export const useQueryLoopContext = () => {
  * @param {string} value
  */
 export const useDynamicContent = ( value = '' ) => {
+	const { clientId } = useBlockEditContext()
+	const blockDetails = select( 'core/block-editor' ).getBlock( clientId )
 	const queryLoopContext = useContext( QueryLoopContext )
 
 	return useSelect( () => {
@@ -286,7 +289,7 @@ export const useDynamicContent = ( value = '' ) => {
 			} )
 		}
 
-		return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue )
+		return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue, blockDetails )
 	}, [ value, queryLoopContext?.postId ] )
 }
 

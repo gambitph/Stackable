@@ -1,3 +1,11 @@
 .stk-toggle-control .stk-inspector-control__reset-button {
 	bottom: -4px !important;
 }
+
+.stk-toggle-control .components-base-control__field {
+	display: flex;
+	align-items: center;
+	.components-form-toggle {
+		margin-inline-end: 12px;
+	}
+}

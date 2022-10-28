@@ -58,7 +58,8 @@
 		flex: 1;
 		flex-basis: calc(100% - 50px);
 	}
-	.ugb-icon-popover__settings-button {
+	.components-button.ugb-icon-popover__settings-button.ugb-button-component {
+		width: 36px;
 		height: 30px;
 		margin-left: 8px;
 	}

@@ -38,6 +38,7 @@ export const Icon = props => (
 		hasBackgroundShape={ false }
 		hasIconGap={ props.hasIconGap }
 		hasIconPosition={ props.hasIconPosition }
+		defaultValue={ props.defaultValue }
 	/>
 )
 
@@ -45,6 +46,7 @@ Icon.defaultProps = {
 	hasIconGap: true,
 	hasIconPosition: true,
 	hasColor: true,
+	defaultValue: '',
 }
 
 export const Link = _Link.InspectorControls

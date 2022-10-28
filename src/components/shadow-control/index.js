@@ -186,7 +186,7 @@ const ShadowFilterControl = props => {
 
 	return (
 		<Popover
-			position="top center"
+			placement="top-start"
 			className="shadow-control__popover"
 			anchorRect={ props.anchorRect }
 		>
@@ -260,7 +260,7 @@ const ShadowControl = memo( props => {
 
 		document.body.addEventListener( 'mousedown', clickOutsideListener )
 		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
-	}, [] )
+	}, [ isPopoverOpen ] )
 
 	useEffect( () => {
 		if ( isPopoverOpen ) {

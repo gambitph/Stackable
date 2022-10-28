@@ -25,8 +25,8 @@ const alignmentOptions = {
 }
 
 const BlockStyles = memo( props => {
-	const columnArrangementMobile = useBlockAttributesContext( attributes => attributes.columnArrangementMobile )
-	const numColumns = ( columnArrangementMobile || '' ).split( ',' ).length
+	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
+	const numColumns = ( columnArrangement || '' ).split( ',' ).length
 
 	const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
 
@@ -54,7 +54,7 @@ BlockStyles.Content = props => {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	const numColumns = ( props.attributes.columnArrangementMobile || '' ).split( ',' ).length
+	const numColumns = ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet || '' ).split( ',' ).length
 	const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
 
 	return (
