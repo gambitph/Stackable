@@ -12,9 +12,7 @@ import {
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import {
-	useDeviceType, useBlockAttributes, getBlockStyle,
-} from '~stackable/hooks'
+import { getBlockStyle } from '~stackable/hooks'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
@@ -25,8 +23,7 @@ import { blockStyles } from './block-styles'
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { memo, renderToString } from '@wordpress/element'
 
 const getStyleParams = ( options = {} ) => {
 	const { } = options
@@ -108,6 +105,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'height',
 			format: '%spx',
 			responsive: 'all',
+			dependencies: [ 'className' ],
 		},
 		{
 			selectorCallback: getAttribute => {
@@ -127,37 +125,25 @@ const getStyleParams = ( options = {} ) => {
 	]
 }
 
-export const DividerStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
-	const dividerStyles = useStyles( attributes, getStyleParams() )
+export const DividerStyles = memo( props => {
+	const dividerStyles = useStyles( getStyleParams() )
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
 			<StyleComponent
 				styles={ dividerStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)
-}
+} )
 
 DividerStyles.defaultProps = {
 	isEditor: false,

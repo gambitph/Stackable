@@ -132,6 +132,28 @@ const postsAttributes = {
 		default: '',
 	},
 
+	// Panels.
+	titleShow: {
+		type: 'boolean',
+		default: true,
+	},
+	categoryShow: {
+		type: 'boolean',
+		default: true,
+	},
+	excerptShow: {
+		type: 'boolean',
+		default: true,
+	},
+	metaShow: {
+		type: 'boolean',
+		default: true,
+	},
+	readmoreShow: {
+		type: 'boolean',
+		default: true,
+	},
+
 	// Misc.
 	authorShow: {
 		type: 'boolean',

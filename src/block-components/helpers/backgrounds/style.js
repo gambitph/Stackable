@@ -36,6 +36,7 @@ const getStyleParams = ( options = {} ) => {
 			valueCallback: ( value, getAttribute, device, state ) => {
 				const backgroundColorType = getAttribute( 'backgroundColorType' )
 				const backgroundColorOpacity = getAttribute( 'backgroundColorOpacity', 'desktop', state )
+				const backgroundColor2 = getAttribute( 'backgroundColor2' )
 
 				const hasBackground = getAttribute( 'backgroundMediaUrl', 'desktop' ) ||
 					getAttribute( 'backgroundMediaUrl', 'tablet' ) ||
@@ -46,6 +47,11 @@ const getStyleParams = ( options = {} ) => {
 					const hexColor = extractColor( value )
 					return `${ hexToRgba( hexColor || '#ffffff', backgroundColorOpacity || 0 ) }`
 				}
+
+				if ( backgroundColorType === 'gradient' && backgroundColor2 === 'transparent' ) {
+					return 'transparent'
+				}
+
 				return value
 			},
 			valuePreCallback: ( _value, getAttribute, device, state ) => {
@@ -59,7 +65,7 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return value
 			},
-			dependencies: [ 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ],
+			dependencies: [ 'backgroundColor2', 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ],
 		},
 		{
 			selector,
@@ -132,7 +138,7 @@ const getStyleParams = ( options = {} ) => {
 				const isGradient = getAttribute( 'backgroundColorType' ) === 'gradient'
 				return ! isGradient && value ? value : undefined
 			},
-			dependencies: [ 'backgroundColorType' ],
+			dependencies: [ 'backgroundColorType', 'backgroundColor2', 'backgroundTintStrength' ],
 		},
 		{
 			selector: `${ selector }:before`,
@@ -153,7 +159,7 @@ const getStyleParams = ( options = {} ) => {
 			valueCallback: value => {
 				return parseInt( value, 10 ) / 10
 			},
-			dependencies: [ 'backgroundColor', 'backgroundMediaUrl' ],
+			dependencies: [ 'backgroundColor', 'backgroundColor2', 'backgroundMediaUrl' ],
 		},
 		{
 			selector: `${ selector }:before`,
@@ -203,19 +209,13 @@ const getStyleParams = ( options = {} ) => {
 				getAttribute( 'backgroundColor' ) ||
 				getAttribute( 'backgroundColor', 'desktop', 'hover' ) ||
 				getAttribute( 'backgroundColor', 'desktop', 'parent-hovered' ),
-			dependencies: [ 'backgroundColorType', 'backgroundColor' ],
+			dependencies: [ 'backgroundColorType', 'backgroundColor', 'backgroundColor2' ],
 		},
 	]
 }
 
 export const BackgroundStyle = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<Fragment>
@@ -223,7 +223,7 @@ export const BackgroundStyle = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</Fragment>
 	)

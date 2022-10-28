@@ -10,7 +10,6 @@ import {
 	FlexGapStyles,
 	Transform,
 } from '~stackable/block-components'
-import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
@@ -19,8 +18,7 @@ import { Style as StyleComponent } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { memo, renderToString } from '@wordpress/element'
 
 const flexGapOptionsEdit = {
 	selector: '.block-editor-block-list__layout',
@@ -180,41 +178,27 @@ const getStyleParams = () => {
 	]
 }
 
-export const ButtonGroupStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = {
-		...attributes, clientId,
-	}
-
-	const buttonGroupStyles = useStyles( attributes, getStyleParams() )
+export const ButtonGroupStyles = memo( props => {
+	const buttonGroupStyles = useStyles( getStyleParams() )
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<MarginBottom.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<FlexGapStyles { ...propsToPass } options={ flexGapOptionsEdit } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<MarginBottom.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
+			<FlexGapStyles { ...props } { ...flexGapOptionsEdit } />
 			<StyleComponent
 				styles={ buttonGroupStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)
-}
+} )
 
 ButtonGroupStyles.defaultProps = {
 	isEditor: false,

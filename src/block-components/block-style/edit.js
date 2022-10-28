@@ -15,13 +15,10 @@ import {
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
 
 export const Edit = memo( props => {
-	const { clientId } = useBlockEditContext()
-
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
@@ -29,7 +26,7 @@ export const Edit = memo( props => {
 				id="styles"
 				initialOpen={ props.initialOpen }
 			>
-				<BlockStyles styles={ props.styles } clientId={ clientId } />
+				<BlockStyles styles={ props.styles } />
 				{ props.children }
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>

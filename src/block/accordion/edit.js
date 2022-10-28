@@ -8,7 +8,6 @@ import BlockStyles from './style'
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import { nth } from 'lodash'
 import {
 	AdvancedToggleControl,
 	IconControl,
@@ -31,24 +30,26 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
+import { useAttributeEditHandlers, useBlockContext } from '~stackable/hooks'
 import {
-	useAttributeEditHandlers, useBlockHoverClass, useBlockContext,
-} from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * Internal dependencies
  */
-import variations from './variations'
+import variations, { defaultIcon } from './variations'
 
 /**
  * WordPress dependencies
  */
-import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
+import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
 import { useState, useEffect } from '@wordpress/element'
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { findLast } from 'lodash'
 
 // Use the default template from the block variations.
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -66,7 +67,6 @@ const Edit = props => {
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	// Opens or closes the accordion when the heading is clicked.
 	useEffect( () => {
@@ -105,7 +105,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-accordion',
-		blockHoverClass,
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
@@ -164,47 +163,43 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Add another icon picker to the Icon block for picking the icon for the opened accordion.
 addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {
-	const { clientId } = useBlockEditContext()
-
 	const {
 		getAttribute,
 		updateAttributeHandler,
 	} = useAttributeEditHandlers()
+	const { parentTree } = useBlockContext()
+	const { getBlock } = useSelect( 'core/block-editor' )
+	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
-	const isAccordionIcon = useSelect(
-		select => {
-			const { getBlock, getBlockParents } = select( 'core/block-editor' )
-			const parents = getBlockParents( clientId )
-			const iconLabelClientId = nth( parents, -1 )
-			const columnClientId = nth( parents, -2 )
-			const accordionClientId = nth( parents, -3 )
-			if ( ! iconLabelClientId || ! columnClientId || ! accordionClientId ) {
-				return false
-			}
-			if ( getBlock( iconLabelClientId ).name !== 'stackable/icon-label' ||
-				getBlock( columnClientId ).name !== 'stackable/column' ||
-				getBlock( accordionClientId ).name !== 'stackable/accordion' ) {
-				return false
-			}
-			if ( getBlock( accordionClientId ).innerBlocks[ 0 ].clientId !== columnClientId ) {
-				return false
-			}
-			return true
-		},
-		[ clientId ]
-	)
+	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
+	const accordionBlockDetails = getBlock( accordionBlock?.clientId )
 
-	if ( isAccordionIcon ) {
+	const columnBlock = findLast( parentTree, pt => pt.name === 'stackable/column' )
+	const iconLabelBlock = findLast( parentTree, pt => pt.name === 'stackable/icon-label' )
+
+	// an accordion icon must have accordion (0), column (1) and icon-label (2) as parent blocks (indicated by array index)
+	// also parent column block (1) of an accordion icon must match with the first accordion block's innerblocks[0].clientId
+	// as it should be the same block
+	const isAccordionIcon = iconLabelBlock && accordionBlockDetails?.innerBlocks[ 0 ].clientId === columnBlock?.clientId
+
+	if ( isAccordionIcon && accordionBlockDetails ) {
+		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
+		const defaultValue = activeVariation.name === 'plus' ? applyFilters( 'stackable.block-component.plus.icon-close' ) : undefined
 		return (
 			<>
 				{ output }
 				<IconControl
 					label={ __( 'Open Icon', i18n ) }
 					value={ getAttribute( 'icon2' ) }
+					defaultValue={ defaultValue }
 					onChange={ updateAttributeHandler( 'icon2' ) }
 					help={ __( 'The open icon will appear when the accordion is opened', i18n ) }
 				/>
@@ -220,4 +215,29 @@ addFilter( 'stackable.block-default-styles.use-saved-style', 'stackable/icon-lab
 		return false
 	}
 	return enabled
+} )
+
+// Return default icon for accordion
+addFilter( 'stackable.block-component.icon.default', 'stackable/accordion', starIcon => {
+	const { parentTree } = useBlockContext()
+	const { getBlock } = useSelect( 'core/block-editor' )
+	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
+
+	const accordionBlock = findLast( parentTree, pt => pt.name === 'stackable/accordion' )
+	const accordionBlockDetails = getBlock( accordionBlock?.clientId )
+
+	const columnBlock = findLast( parentTree, pt => pt.name === 'stackable/column' )
+	const iconLabelBlock = findLast( parentTree, pt => pt.name === 'stackable/icon-label' )
+
+	// an accordion icon must have accordion (0), column (1) and icon-label (2) as parent blocks (indicated by array index)
+	// also parent column block (1) of an accordion icon must match with the first accordion block's innerblocks[0].clientId
+	// as it should be the same block
+	const isAccordionIcon = iconLabelBlock && accordionBlockDetails?.innerBlocks[ 0 ].clientId === columnBlock?.clientId
+
+	if ( isAccordionIcon && accordionBlockDetails ) {
+		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
+		return ( activeVariation.name === 'plus' )
+			? applyFilters( 'stackable.block-component.plus.icon-open' ) : defaultIcon
+	}
+	return starIcon
 } )

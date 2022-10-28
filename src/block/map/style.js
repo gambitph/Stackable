@@ -10,14 +10,12 @@ import {
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { memo, renderToString } from '@wordpress/element'
 
 const getStyleParams = () => {
 	return [
@@ -40,36 +38,24 @@ const getStyleParams = () => {
 	]
 }
 
-const BlockStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	const mapStyles = useStyles( attributes, getStyleParams() )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
+const BlockStyles = memo( props => {
+	const mapStyles = useStyles( getStyleParams() )
 
 	return (
 		<>
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
 			<StyleComponent
 				styles={ mapStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)
-}
+} )
 
 BlockStyles.defaultProps = {
 	isEditor: false,

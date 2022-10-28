@@ -1,66 +1,34 @@
 /**
  * External dependencies
  */
-import {
-	__getValue,
-	appendImportantAll,
-} from '~stackable/util'
+import { getStyles, useStyles } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { useMemo } from '@wordpress/element'
-
-export const getStyles = ( attributes, options = {} ) => {
-	const getValue = __getValue( attributes )
+const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 	} = options
 
-	return {
-		[ selector ]: appendImportantAll( {
-			marginBottom: getValue( 'blockMarginBottom', '%spx' ),
-		} ),
-		tablet: {
-			[ selector ]: appendImportantAll( {
-				marginBottom: getValue( 'blockMarginBottomTablet', '%spx' ),
-			} ),
+	return [
+		{
+			selector,
+			styleRule: 'marginBottom',
+			attrName: 'blockMarginBottom',
+			responsive: 'all',
+			format: '%spx',
 		},
-		mobile: {
-			[ selector ]: appendImportantAll( {
-				marginBottom: getValue( 'blockMarginBottomMobile', '%spx' ),
-			} ),
-		},
-	}
+	]
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const getValue = __getValue( attributes )
-
-	const styles = useMemo(
-		() => getStyles( attributes, options ),
-		[
-			options.selector,
-			getValue( 'blockMarginBottom' ),
-			getValue( 'blockMarginBottomTablet' ),
-			getValue( 'blockMarginBottomMobile' ),
-			attributes.uniqueId,
-		]
-	)
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<StyleComponent
 			styles={ styles }
 			versionAdded="3.0.0"
 			versionDeprecated=""
-			{ ...propsToPass }
+			{ ...props }
 		/>
 	)
 }
@@ -72,7 +40,7 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const styles = getStyles( attributes, options )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent.Content

@@ -15,9 +15,7 @@ import {
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
-import {
-	useAttributeEditHandlers,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -76,6 +74,7 @@ export const Controls = props => {
 								const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 								getBlock( clientId ).innerBlocks.forEach( block => {
 									if ( block.name === 'stackable/column' ) {
+										// eslint-disable-next-line stackable/no-update-block-attributes
 										updateBlockAttributes( block.clientId, {
 											[ getAttributeName( 'columnWidth', 'desktop' ) ]: '',
 											[ getAttributeName( 'columnWidth', 'tablet' ) ]: '',

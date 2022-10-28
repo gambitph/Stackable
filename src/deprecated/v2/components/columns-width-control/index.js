@@ -1,8 +1,6 @@
 /**
  * Internal dependencies
  */
-import BaseControlMultiLabel from '../base-control-multi-label'
-import DesignControl from '../design-control'
 import Image2_1 from './images/2-1.png'
 import Image2_2 from './images/2-2.png'
 import Image2_3 from './images/2-3.png'
@@ -51,7 +49,12 @@ import {
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { range, isEqual } from 'lodash'
-import { AdvancedRangeControl, Button } from '~stackable/components'
+import {
+	AdvancedRangeControl,
+	Button,
+	BaseControlMultiLabel,
+	DesignControl,
+} from '~stackable/components'
 
 const MIN = 10
 

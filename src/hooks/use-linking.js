@@ -1,17 +1,16 @@
-import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	useState, useEffect, useMemo,
 } from '@wordpress/element'
 import { select } from '@wordpress/data'
 import { useBlockAttributes } from './use-block-attributes'
+import { useBlockAttributesContext } from './use-block-attributes-context'
 
 const getLinkedData = () => {
 	return JSON.parse( window.localStorage.getItem( `stackable-linking` ) ) || []
 }
 
 export const useLinking = () => {
-	const { clientId } = useBlockEditContext()
-	const { uniqueId } = useBlockAttributes( clientId )
+	const { uniqueId } = useBlockAttributesContext()
 	const [ linkedData, setLinkedData ] = useState( getLinkedData() )
 
 	useEffect( () => {
@@ -51,7 +50,7 @@ export const useLinking = () => {
 }
 
 export const useIsLinked = clientId => {
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributes( clientId ) // eslint-disable-line stackable/no-use-block-attributes
 	return attributes?.uniqueId ? getLinkedData().includes( attributes.uniqueId ) : null
 }
 

@@ -11,6 +11,7 @@ import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
+	BlockLink,
 	CustomCSS,
 	getResponsiveClasses,
 	getAlignmentClasses,
@@ -22,7 +23,6 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { BlockLink } from '~stackable/block-components/block-link'
 
 export const Save = props => {
 	const {

@@ -2,17 +2,14 @@
  * External dependencies
  */
 import { camelCase } from 'lodash'
-import { __getValue } from '~stackable/util'
+import {
+	__getValue, appendImportant, hexToRgba,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
-
-/**
- * Internal dependencies
- */
-import { appendImportant, hexToRgba } from '../../../../util'
 
 const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )

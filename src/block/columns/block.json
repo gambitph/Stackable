@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/columns",
 	"title": "Columns / Container",
 	"description": "Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.",

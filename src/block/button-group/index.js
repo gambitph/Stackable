@@ -4,11 +4,7 @@
 /**
  * External dependencies
  */
-import {
-	ButtonGroupIcon,
-	IconButtonsIcon,
-	SocialButtonsIcon,
-} from '~stackable/icons'
+import { ButtonGroupIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -25,13 +21,8 @@ import { buttonExample } from './example'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 
-// Add the icon for the social button variation.
-variations.find( variation => variation.name === 'social-buttons' ).icon = SocialButtonsIcon
-variations.find( variation => variation.name === 'icon-button' ).icon = IconButtonsIcon
-
-export const settings = applyFilters( 'stackable.block.metadata', {
+export const settings = {
 	...metadata,
 	icon: ButtonGroupIcon,
 	attributes: schema,
@@ -47,4 +38,4 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	example: buttonExample,
 	edit,
 	save,
-} )
+}

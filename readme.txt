@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 5.8.3
-Tested up to: 6.0.1
+Requires at least: 5.9
+Tested up to: 6.1
 Requires PHP: 5.7
-Stable tag: 3.4.5
+Stable tag: 3.6.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -35,7 +35,7 @@ Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to j
 
 ## Powerful Custom Blocks
 
-Get 36 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 39 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 You can choose which of these blocks you need, depending on your workflow.
 
@@ -54,6 +54,8 @@ Special Blocks
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Progress Circle Block — [View Block](https://wpstackable.com/progress-circle-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Progress Bar Block — [View Block](https://wpstackable.com/progress-bar-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Accordion Block — [View Block](https://wpstackable.com/accordion-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Map Block — [View Block](https://wpstackable.com/map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Icon Label Block
@@ -148,6 +150,8 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.6 Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -245,6 +249,47 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.6.1 =
+* New: WordPress 6.1 compatibility
+* New: You can now change the Query String of the Posts block's Pagination Block #2313
+* New: Added Advanced Tab > Responsive > Tablet column arrangement option ##2325
+* New: Added Advanced Tab > Responsive > Tablet and mobile column arrangement option #2361
+* Fixed: RankMath compatibility for the Table of Contents block #2424
+* Fixed: Newly created columns are not cloned correctly when using the Columns block's Columns option #2476
+* Fixed: Posts block pagination could not navigate back to page 1 #2313
+* Fixed: Reset button on icon options now reset correctly #2329
+* Fixed: Copy and pasting styles on the Progress Circle and Bar blocks also copied some content #2469
+* Fixed: Progress Bar block percentage text can wrap around spaces #2464
+* Fixed: Button blocks can still be added even if they're disabled in the admin #2305
+* Fixed: Possible block error when adding conditional display about dates #2477
+
+= 3.6.0 =
+[Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Progress Circle and Progress Bar Blocks
+* Fixed: You can now select transparent as the color for the 2nd gradient background color #2358
+
+= 3.5.0 =
+[No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Various performance improvements
+* New: Smaller plugin filesize
+* New: New exposed window.stk API (undocumented)
+* New: Support for block theme contentSize and wideSize
+* Fixed: Wide and fullwidth blocks sometimes showed centered in the editor
+* Fixed: Column content vertical align did not show up correctly in the editor
+* Fixed: Some block options not showing up in the editor
+* Fixed: Column block's Content Vertical Align not displaying correctly in the editor
+* Fixed: Icon block margin and size options not displaying correctly in the editor #2426
+* Fixed: Card block horizontal layout image resizing issues in tablet and mobile
+* Fixed: Hero block can get an error when switching layouts
+* Fixed: Accordion content in the editor overlapped sometimes
+* Fixed: Some styles did not show in the editor when changing hover states
+* Fixed: Some shadows flicker or get clipped in Safari #2328
+* Fixed: Accordions close adjacent doesn't work with reduced motion OS setting #2352
+* Fixed: Custom Fields PHP warnings #2415
+* Fixed: Using custom SVGs with colors can sometimes cause block errors #2411
 
 = 3.4.5 =
 * Fixed: Accordion containers incorrectly collapsed when placed inside columns

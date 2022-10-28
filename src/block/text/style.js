@@ -13,14 +13,12 @@ import {
 import {
 	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { renderToString, memo } from '@wordpress/element'
 
 const typographyOptions = {
 	selector: '.stk-block-text__text',
@@ -45,43 +43,29 @@ const getStyleParams = () => {
 	]
 }
 
-export const TextStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
-	const columnStyles = useStyles( attributes, getStyleParams() )
+export const TextStyles = memo( props => {
+	const columnStyles = useStyles( getStyleParams() )
 
 	return (
 		<>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Typography.Style { ...propsToPass } options={ typographyOptions } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Typography.Style { ...props } { ...typographyOptions } />
 			<StyleComponent
 				styles={ columnStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
-			<EffectsAnimations.Style { ...propsToPass } />
+			<EffectsAnimations.Style { ...props } />
 		</>
 	)
-}
+} )
 
 TextStyles.defaultProps = {
 	isEditor: false,
-	attributes: {},
-	options: {},
 }
 
 TextStyles.Content = props => {
@@ -94,7 +78,7 @@ TextStyles.Content = props => {
 	}
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const columnStyles = getStyles( props.attributes, getStyleParams() )
+	const columnStyles = getStyles( props.attributes, getStyleParams( props ) )
 
 	const styles = (
 		<>

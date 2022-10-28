@@ -20,9 +20,8 @@ import {
 	AlignButtonsControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	Typography,
 	BlockDiv,
@@ -43,18 +42,26 @@ import {
 /**
  * WordPress dependencies
  */
+import { useSelect } from '@wordpress/data'
 import {
-	useSelect,
-} from '@wordpress/data'
-import {
-	Fragment, useRef, useEffect, useState, useCallback,
+	Fragment, useRef, useEffect, useState,
 } from '@wordpress/element'
-import {
-	__,
-} from '@wordpress/i18n'
-import { createIconListControls } from './util'
+import { __ } from '@wordpress/i18n'
+import { createIconListControls, DEFAULT_SVG } from './util'
+import { compose } from '@wordpress/compose'
 
 const listTypeOptions = [
+	{
+		label: __( 'Unordered List', i18n ),
+		value: 'unordered',
+	},
+	{
+		label: __( 'Ordered List', i18n ),
+		value: 'ordered',
+	},
+]
+
+const listStyleTypeOptions = [
 	{
 		label: __( 'Number', i18n ),
 		value: 'decimal',
@@ -94,68 +101,63 @@ const Edit = props => {
 		isTyping: select( 'core/block-editor' ).isTyping(),
 	} ) )
 
-	// Click handler to detect whether an icon is clicked, and open the icon
-	// picker for that icon.
-	const iconClickHandler = useCallback( event => {
-		// If li isn't clicked, close the icon search.
-		setSelectedEvent( event )
-		if ( event.target.tagName !== 'LI' || event.target.parentElement.tagName !== 'UL' ) {
-			return setIsOpenIconSearch( false )
-		}
-
-		/**
-		 * Check if the click is on the icon.
-		 */
-
-		if ( event.offsetX <= 2 ) {
-			// Get the selected li and show the icon picker on it.
-			const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
-			const { currentlyOpenIndex } = event.target.parentElement
-
-			if ( currentlyOpenIndex && currentlyOpenIndex === index ) {
-				event.target.parentElement.currentlyOpenIndex = undefined
+	useEffect( () => {
+		// Click handler to detect whether an icon is clicked, and open the icon
+		// picker for that icon.
+		const iconClickHandler = event => {
+			// If li isn't clicked, close the icon search.
+			setSelectedEvent( event )
+			if ( event.target.tagName !== 'LI' || event.target.parentElement.tagName !== 'UL' ) {
 				return setIsOpenIconSearch( false )
 			}
 
-			event.target.parentElement.currentlyOpenIndex = index
-
 			/**
-			 * Get the CSS selector of the selected icon.
-			 *
-			 * @since 3.0.0
+			 * Check if the click is on the icon.
 			 */
-			let traverseToRichText = event.target
-			let found = null
-			while ( traverseToRichText.tagName !== 'DIV' ) {
-				for ( let i = 0; i < Array.from( traverseToRichText.parentElement.childNodes ).length; i++ ) {
-					if ( traverseToRichText.parentElement.childNodes[ i ] === traverseToRichText && found === null ) {
-						found = i + 1
-						break
-					}
+
+			if ( event.offsetX <= 2 ) {
+				// Get the selected li and show the icon picker on it.
+				const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
+				const { currentlyOpenIndex } = event.target.parentElement
+
+				if ( currentlyOpenIndex && currentlyOpenIndex === index ) {
+					event.target.parentElement.currentlyOpenIndex = undefined
+					return setIsOpenIconSearch( false )
 				}
-				traverseToRichText = traverseToRichText.parentElement
+
+				event.target.parentElement.currentlyOpenIndex = index
+
+				/**
+				 * Get the CSS selector of the selected icon.
+				 *
+				 * @since 3.0.0
+				 */
+				let traverseToRichText = event.target
+				let found = null
+				while ( traverseToRichText.tagName !== 'DIV' ) {
+					for ( let i = 0; i < Array.from( traverseToRichText.parentElement.childNodes ).length; i++ ) {
+						if ( traverseToRichText.parentElement.childNodes[ i ] === traverseToRichText && found === null ) {
+							found = i + 1
+							break
+						}
+					}
+					traverseToRichText = traverseToRichText.parentElement
+				}
+
+				setSelectedIconCSSSelector( `ul li:nth-child(${ found })` )
+				setIconSearchAnchor( event.target )
+				return setIsOpenIconSearch( true )
 			}
 
-			setSelectedIconCSSSelector( `ul li:nth-child(${ found })` )
-			setIconSearchAnchor( event.target )
-			return setIsOpenIconSearch( true )
+			// Hide the icon picker.
+			event.target.parentElement.currentlyOpenIndex = undefined
+			setIconSearchAnchor( null )
+			return setIsOpenIconSearch( false )
 		}
 
-		// Hide the icon picker.
-		event.target.parentElement.currentlyOpenIndex = undefined
-		setIconSearchAnchor( null )
-		return setIsOpenIconSearch( false )
-	}, [ setSelectedEvent, setSelectedIconCSSSelector, setIconSearchAnchor, setIsOpenIconSearch ] )
-
-	useEffect( () => {
 		textRef.current.addEventListener( 'click', iconClickHandler )
-
-		return () => {
-			if ( textRef.current ) {
-				textRef.current.removeEventListener( 'click', iconClickHandler )
-			}
-		}
-	}, [ iconClickHandler, textRef.current ] )
+		return () => textRef.current?.removeEventListener( 'click', iconClickHandler )
+	}, [ setSelectedEvent, setSelectedIconCSSSelector, setIconSearchAnchor, setIsOpenIconSearch, textRef.current ] )
 
 	const {
 		attributes,
@@ -171,7 +173,6 @@ const Edit = props => {
 	const { ordered } = attributes
 	const tagName = ordered ? 'ol' : 'ul'
 
-	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
@@ -179,13 +180,12 @@ const Edit = props => {
 		className,
 		'stk-block-icon-list',
 		blockAlignmentClass,
-		blockHoverClass,
 		textClasses,
 	] )
 
-	const controls = useCallback( createIconListControls( {
-		isSelected, tagName, setAttributes,
-	} ), [ isSelected, tagName, setAttributes ] )
+	const controls = createIconListControls( {
+		isSelected, tagName,
+	} )
 
 	return (
 		<Fragment>
@@ -200,6 +200,14 @@ const Edit = props => {
 					initialOpen={ true }
 					id="general"
 				>
+					<AdvancedSelectControl
+						label={ __( 'List Type', i18n ) }
+						options={ listTypeOptions }
+						value={ ordered ? 'ordered' : 'unordered' }
+						onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
+						default="unordered"
+					/>
+
 					<AdvancedRangeControl
 						label={ __( 'Columns', i18n ) }
 						attribute="columns"
@@ -263,12 +271,13 @@ const Edit = props => {
 							// Reset custom individual icons.
 							setAttributes( { icon, icons: [] } )
 						} }
+						defaultValue={ DEFAULT_SVG }
 					/>
 
 					<AdvancedSelectControl
 						label={ __( 'List Type', i18n ) }
 						attribute="listType"
-						options={ listTypeOptions }
+						options={ listStyleTypeOptions }
 					/>
 
 					<ColorPaletteControl
@@ -388,4 +397,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

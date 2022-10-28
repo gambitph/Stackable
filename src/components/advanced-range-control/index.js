@@ -4,10 +4,11 @@
 import RangeControl from './range-control'
 import { useControlHandlers } from '../base-control2/hooks'
 import AdvancedControl, { extractControlProps } from '../base-control2'
+import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import { ResetButton } from '../base-control2/reset-button'
 import {
 	useAttributeName,
-	useBlockAttributes,
+	useBlockAttributesContext,
 	useBlockHoverState,
 	useDeviceType,
 } from '~stackable/hooks'
@@ -16,7 +17,6 @@ import {
  * External dependencies
  */
 import { memo } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 const AdvancedRangeControl = props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
@@ -26,15 +26,11 @@ const AdvancedRangeControl = props => {
 	const [ currentHoverState ] = useBlockHoverState()
 	const hasUnits = !! props.units?.length
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
-
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
+	const unitAttribute = useBlockAttributesContext( attributes => attributes[ unitAttrName ] )
 
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
-		: attributes
-			? attributes[ unitAttrName ]
-			: ''
+		: ( unitAttribute || '' )
 
 	// Change the min, max & step values depending on the unit used.
 	if ( hasUnits ) {
@@ -74,20 +70,40 @@ const AdvancedRangeControl = props => {
 		placeholderRender = null
 	}
 
+	// If this supports dynamic content, then the value should be saved as a String.
+	// Important, the attribute type for this option should be a string.
+	const _onChange = value => {
+		const onChangeFunc = typeof props.onChange === 'undefined' ? onChange : props.onChange
+		onChangeFunc( props.isDynamic ? value.toString() : value )
+	}
+
+	const derivedValue = typeof props.value === 'undefined' ? value : props.value
+
+	const dynamicContentProps = useDynamicContentControlProps( {
+		value: derivedValue,
+		onChange: _onChange,
+	} )
+
 	return (
 		<AdvancedControl { ...controlProps }>
-			<RangeControl
-				{ ...propsToPass }
-				value={ typeof props.value === 'undefined' ? value : props.value }
-				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
-				allowReset={ false }
-				placeholderRender={ placeholderRender }
-			/>
+			<DynamicContentControl
+				enable={ propsToPass.isDynamic }
+				controlHasTooltip
+				{ ...dynamicContentProps }
+			>
+				<RangeControl
+					{ ...propsToPass }
+					value={ propsToPass.isDynamic ? parseFloat( derivedValue ) : derivedValue }
+					onChange={ _onChange }
+					allowReset={ false }
+					placeholderRender={ placeholderRender }
+				/>
+			</DynamicContentControl>
 			<ResetButton
 				allowReset={ props.allowReset }
-				value={ typeof props.value === 'undefined' ? value : props.value }
+				value={ derivedValue }
 				default={ props.default }
-				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				onChange={ _onChange }
 			/>
 		</AdvancedControl>
 	)
@@ -95,6 +111,7 @@ const AdvancedRangeControl = props => {
 
 AdvancedRangeControl.defaultProps = {
 	allowReset: true,
+	isDynamic: false,
 	default: '',
 
 	attribute: '',

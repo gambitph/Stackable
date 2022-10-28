@@ -11,52 +11,34 @@ import {
 	Transform,
 	ContentAlign,
 } from '~stackable/block-components'
-import {
-	useDeviceType, useBlockAttributes,
-} from '~stackable/hooks'
-import {
-	getUniqueBlockClass,
-} from '~stackable/util'
+import { getUniqueBlockClass } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import {
-	Fragment, renderToString,
+	memo, Fragment, renderToString,
 } from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-testimonial__content',
 	sizeHorizontalAlignRule: 'margin',
 }
 
-export const ContainerStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
-
+export const ContainerStyles = memo( props => {
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
-			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
-			<MarginBottom.Style { ...propsToPass } />
-			<ContentAlign.Style { ...propsToPass } />
+			<Alignment.Style { ...props } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
+			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
+			<MarginBottom.Style { ...props } />
+			<ContentAlign.Style { ...props } />
 		</Fragment>
 	)
-}
+} )
 
 ContainerStyles.defaultProps = {
 	isEditor: false,
