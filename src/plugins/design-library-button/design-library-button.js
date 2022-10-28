@@ -34,7 +34,6 @@ const DesignLibraryButton = () => {
 		<Button
 			onClick={ onClick }
 			className="ugb-insert-library-button"
-			label={ __( 'Open Design Library', i18n ) }
 			icon={ <SVGStackableIcon /> }
 		>{ __( 'Design Library', i18n ) }</Button>
 	)
