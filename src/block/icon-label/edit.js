@@ -30,7 +30,7 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -134,13 +134,13 @@ const Edit = props => {
 				</div>
 			</BlockDiv>
 			{ /* Hack, somehow the icon list doesn't have a uniqueId when it's just added, so the data-block-id isn't populated and isn't detected, this fixes that. */ }
-			<MarginBottom previewSelector={ `[data-block="${ clientId }"] > .stk-block` } />
+			{ props.isHovered && <MarginBottom previewSelector={ `[data-block="${ clientId }"] > .stk-block` } /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
