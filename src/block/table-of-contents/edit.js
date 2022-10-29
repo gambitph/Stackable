@@ -54,7 +54,7 @@ import {
 	Card,
 	CardBody,
 } from '@wordpress/components'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useSelect, dispatch } from '@wordpress/data'
 import {
 	useEffect, useState, useCallback,
 } from '@wordpress/element'
@@ -156,7 +156,6 @@ const Edit = props => {
 	const [ headings, setHeadings ] = useState( attributes.headings )
 	const { getEditedPostContent } = useSelect( 'core/editor' )
 	const { getBlocks } = useSelect( 'core/block-editor' )
-	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 	// This is used by the generate anchors button to force the update of heading data.
 	const [ forceUpdateHeadings, setForceUpdateHeadings ] = useState( 0 )
 
@@ -272,7 +271,7 @@ const Edit = props => {
 	// Update headings attribute when the headings state changes
 	useEffect( debounce( () => {
 		if ( ! isEqual( attributes.headings, headings ) ) {
-			__unstableMarkNextChangeAsNotPersistent()
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { headings } )
 		}
 	}, 301 ), [ headings ] )

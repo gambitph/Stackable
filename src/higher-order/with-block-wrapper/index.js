@@ -23,7 +23,7 @@ import { useEffect, useState } from '@wordpress/element'
 const withBlockWrapper = createHigherOrderComponent(
 	WrappedComponent => props => {
 		const isDisplayed = useDevicePreviewOptimization( props )
-		const [ blockState, , blockHoverClass ] = useBlockHoverState()
+		const [ blockState, blockHoverClass ] = useBlockHoverState()
 
 		return (
 			<BlockWrapper

@@ -66,7 +66,7 @@ import { __ } from '@wordpress/i18n'
 import {
 	Fragment, useEffect, useRef, useState, useMemo, useCallback,
 } from '@wordpress/element'
-import { useDispatch } from '@wordpress/data'
+import { dispatch } from '@wordpress/data'
 
 const Edit = props => {
 	const {
@@ -115,9 +115,8 @@ const Edit = props => {
 	useGeneratedCss( attributes )
 
 	// Always keep note whether this block uses the Google API Key.
-	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 	useEffect( () => {
-		__unstableMarkNextChangeAsNotPersistent()
+		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 		setAttributes( { usesApiKey: !! apiKey } )
 
 		// If the API Key was removed, ensure that our map is still centered on the previous location.

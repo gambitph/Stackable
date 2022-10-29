@@ -49,7 +49,7 @@ import { compose } from '@wordpress/compose'
 import { useEffect, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
-import { useDispatch } from '@wordpress/data'
+import { dispatch } from '@wordpress/data'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 /**
@@ -96,12 +96,11 @@ const Edit = props => {
 
 	// Auto-generate anchors in Stackable headings.
 	const [ prevText, setPrevText ] = useState( props.attributes.text )
-	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 
 	useEffect( () => {
 		const cleanAnchorValue = kebabCase( props.attributes.anchor )
 		if ( cleanAnchorValue === kebabCase( prevText ) || ! props.attributes.anchor ) {
-			__unstableMarkNextChangeAsNotPersistent()
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { anchor: kebabCase( props.attributes.text ) } )
 		}
 		setPrevText( props.attributes.text )

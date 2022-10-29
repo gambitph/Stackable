@@ -47,6 +47,7 @@ const ENABLE = {
 }
 
 const ResizableBottomMarginSingle = props => {
+	const { deviceType } = props
 	const [ currentHeight, setCurrentHeight ] = useState( null )
 	const [ isResizing, setIsResizing ] = useState( false )
 
@@ -57,7 +58,6 @@ const ResizableBottomMarginSingle = props => {
 	}, [ isShiftKey ] )
 
 	// Allow other developers to override the default bottom margin value.
-	const deviceType = useDeviceType()
 	const defaultBottomMargin = applyFilters( 'stackable.resizable-bottom-margin.default', DEFAULT_BOTTOM_MARGINS[ deviceType ] )
 
 	const classNames = classnames( [
@@ -146,6 +146,7 @@ const ResizableBottomMargin = props => {
 
 	return (
 		<ResizableBottomMarginSingle
+			deviceType={ deviceType }
 			previewSelector={ props.previewSelector }
 			value={ value }
 			onChange={ onChange }

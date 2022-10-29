@@ -25,7 +25,7 @@ const withBlockWrapperIsHovered = createHigherOrderComponent(
 	WrappedComponent => props => {
 		const ref = useRef()
 		const isHovered = useIsHovered( ref )
-		const [ blockState, , blockHoverClass ] = useBlockHoverState()
+		const [ blockState, blockHoverClass ] = useBlockHoverState()
 		const isDisplayed = useDevicePreviewOptimization( props )
 
 		return (

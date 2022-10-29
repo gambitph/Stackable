@@ -2,7 +2,7 @@ import './blocks'
 
 import { last, omit } from 'lodash'
 import {
-	useSelect, select, useDispatch,
+	useSelect, select, dispatch,
 } from '@wordpress/data'
 import {
 	useEffect, useCallback, useState, useMemo,
@@ -14,8 +14,6 @@ import {
 import { extractBlockStyleStructure, getBlocksToStyle } from '~stackable/util'
 
 export const BlockLinking = () => {
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-
 	const [ currentClientId, setCurrentClientId ] = useState( null )
 	const { selectedBlock, selectedBlockClientId } = useSelect(
 		select => {
@@ -69,7 +67,7 @@ export const BlockLinking = () => {
 
 		// Update the blocks!
 		if ( clientIdsToUpdate.length ) {
-			updateBlockAttributes( clientIdsToUpdate, attributes ) // eslint-disable-line stackable/no-update-block-attributes
+			dispatch( 'core/block-editor' ).updateBlockAttributes( clientIdsToUpdate, attributes ) // eslint-disable-line stackable/no-update-block-attributes
 		}
 	}, [ currentClientId, selectedBlockClientId, linkableBlockClientId, isLinked ] )
 

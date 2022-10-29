@@ -19,7 +19,7 @@ import { extractColor } from '~stackable/util'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { useSelect } from '@wordpress/data'
+import { select } from '@wordpress/data'
 import { getColorClassName } from '@wordpress/block-editor'
 
 /**
@@ -109,8 +109,6 @@ export const Colors = props => {
 		updateAttribute,
 	} = useAttributeEditHandlers()
 
-	const colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors ) || []
-
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
@@ -168,6 +166,7 @@ export const Colors = props => {
 								return _value
 							}
 							const value = extractColor( _value )
+							const colors = select( select => select( 'core/block-editor' ).getSettings().colors ) || []
 							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
 							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
 
