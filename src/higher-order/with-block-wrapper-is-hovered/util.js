@@ -12,12 +12,12 @@ import { useState, useCallback } from '@wordpress/element'
 export function useIsHovered() {
 	const [ isHovered, setIsHovered ] = useState( false )
 
-	const onMouseEnter = useCallback( () => setIsHovered( true ), [] )
+	const onMouseOver = useCallback( () => setIsHovered( true ), [] )
 	const onMouseLeave = useCallback( () => setIsHovered( false ), [] )
 
 	return {
 		isHovered,
-		onMouseEnter,
+		onMouseOver,
 		onMouseLeave,
 	}
 }
