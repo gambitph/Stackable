@@ -122,27 +122,6 @@ const BlockCss = props => {
 		}
 	}
 
-	// Allow style rule to be dynamic.
-	let styleRule = _styleRule
-	if ( styleRuleCallback ) {
-		styleRule = styleRuleCallback( getAttribute, attributes )
-	}
-
-	let selector = selectorCallback ? selectorCallback( getAttribute, attributes, clientId ) : _selector
-	let hoverSelector = hoverSelectorCallback ? hoverSelectorCallback( getAttribute, attributes, clientId ) : _hoverSelector
-	const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
-
-	const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
-	const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
-
-	const desktopQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'desktop' ) ) : 'desktop' ) || 'desktop'
-	const tabletQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'tablet' ) ) : 'tablet' ) || 'tablet'
-	const mobileQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'mobile' ) ) : 'mobile' ) || 'mobile'
-
-	const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
-	const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
-	const hasCollapsed = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'collapsed' ) )
-
 	const getValue = ( attrName, device, state ) => {
 		const unitAttrName = getAttributeName( `${ attrName }Unit`, device, state )
 		const actualAttrName = getAttributeName( attrName, device, state )
@@ -217,20 +196,111 @@ const BlockCss = props => {
 		return value
 	}
 
+	const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
+
+	const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
+	const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
+
+	const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
+	const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
+	const hasCollapsed = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'collapsed' ) )
+
+	let valueDesktopCollapsed,
+		valueDesktopHover,
+		valueDesktopParentHover,
+		valueMobile,
+		valueMobileCollapsed,
+		valueMobileHover,
+		valueMobileParentHover,
+		valueTablet,
+		valueTabletCollapsed,
+		valueTabletHover,
+		valueTabletParentHover
+
+	const valueDesktop = getValue( attrName, 'desktop', 'normal' )
+	if ( hasHover ) {
+		valueDesktopHover = getValue( attrName, 'desktop', 'hover' )
+	}
+	if ( hasParentHover ) {
+		valueDesktopParentHover = getValue( attrName, 'desktop', 'parent-hover' )
+	}
+	if ( hasCollapsed ) {
+		valueDesktopCollapsed = getValue( attrName, 'desktop', 'collapsed' )
+	}
+
+	if ( hasTablet ) {
+		valueTablet = getValue( attrName, 'tablet', 'normal' )
+		if ( hasHover ) {
+			valueTabletHover = getValue( attrName, 'tablet', 'hover' )
+		}
+		if ( hasParentHover ) {
+			valueTabletParentHover = getValue( attrName, 'tablet', 'parent-hover' )
+		}
+		if ( hasCollapsed ) {
+			valueTabletCollapsed = getValue( attrName, 'tablet', 'collapsed' )
+		}
+	}
+
+	if ( hasMobile ) {
+		valueMobile = getValue( attrName, 'mobile', 'normal' )
+		if ( hasHover ) {
+			valueMobileHover = getValue( attrName, 'mobile', 'hover' )
+		}
+		if ( hasParentHover ) {
+			valueMobileParentHover = getValue( attrName, 'mobile', 'parent-hover' )
+		}
+		if ( hasCollapsed ) {
+			valueMobileCollapsed = getValue( attrName, 'mobile', 'collapsed' )
+		}
+	}
+
+	// Skip everything if all values are null.
+	if ( typeof valueDesktop === 'undefined' &&
+		typeof valueDesktopHover === 'undefined' &&
+		typeof valueDesktopParentHover === 'undefined' &&
+		typeof valueDesktopCollapsed === 'undefined' &&
+		typeof valueTablet === 'undefined' &&
+		typeof valueTabletHover === 'undefined' &&
+		typeof valueTabletParentHover === 'undefined' &&
+		typeof valueTabletCollapsed === 'undefined' &&
+		typeof valueMobile === 'undefined' &&
+		typeof valueMobileHover === 'undefined' &&
+		typeof valueMobileParentHover === 'undefined' &&
+		typeof valueMobileCollapsed === 'undefined' ) {
+		return null
+	}
+
+	// Allow style rule to be dynamic.
+	let styleRule = _styleRule
+	if ( styleRuleCallback ) {
+		styleRule = styleRuleCallback( getAttribute, attributes )
+	}
+
+	let selector = selectorCallback ? selectorCallback( getAttribute, attributes, clientId ) : _selector
+	let hoverSelector = hoverSelectorCallback ? hoverSelectorCallback( getAttribute, attributes, clientId ) : _hoverSelector
+
+	const desktopQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'desktop' ) ) : 'desktop' ) || 'desktop'
+	const tabletQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'tablet' ) ) : 'tablet' ) || 'tablet'
+	const mobileQuery = ( Array.isArray( responsive ) ? responsive.find( s => s.startsWith( 'mobile' ) ) : 'mobile' ) || 'mobile'
+
 	let collapsedSelector = ''
 	let parentHoverSelector = ''
 
 	// TODO: why do we have this condition for the collapsedSelector, but they just do the same prepending??
-	if ( blockState === 'collapsed' ) {
-		collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open' )
-	} else {
-		collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open' )
+	if ( hasCollapsed ) {
+		if ( blockState === 'collapsed' ) {
+			collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open' )
+		} else {
+			collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open' )
+		}
 	}
 
-	if ( blockState === 'parent-hovered' ) {
-		parentHoverSelector = prependClass( selector, '.%s.stk--is-hovered' )
-	} else {
-		parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .%s' )
+	if ( hasParentHover ) {
+		if ( blockState === 'parent-hovered' ) {
+			parentHoverSelector = prependClass( selector, '.%s.stk--is-hovered' )
+		} else {
+			parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .%s' )
+		}
 	}
 
 	// Create the hoverSelector, this is done by prepending the selector
@@ -239,22 +309,24 @@ const BlockCss = props => {
 	// using the selector `[data-block="clientId"]`, for these scenarios the
 	// method will not work. Instead we just append `:hover` to the block
 	// selector directly.
-	const selectorHasDataBlock = ( hoverSelector || selector ).includes( '[data-block=' ) && ( hoverSelector || selector ).endsWith( ']' )
-	if ( selectorHasDataBlock ) {
+	if ( hasHover ) {
+		const selectorHasDataBlock = ( hoverSelector || selector ).includes( '[data-block=' ) && ( hoverSelector || selector ).endsWith( ']' )
+		if ( selectorHasDataBlock ) {
 		// If there is a [data-block] append the :hover or .stk-is-hovered directly to it.
-		if ( blockState === 'hover' ) {
+			if ( blockState === 'hover' ) {
 			// In editor, always use the `selector` instead of the hoverSelector.
-			hoverSelector = appendClass( selector, '.stk--is-hovered' )
+				hoverSelector = appendClass( selector, '.stk--is-hovered' )
+			} else {
+				hoverSelector = hoverSelector || appendClass( selector, ':hover' )
+			}
 		} else {
-			hoverSelector = hoverSelector || appendClass( selector, ':hover' )
-		}
-	} else {
 		// Prepend .%s:hover to the selector.
-		if ( blockState === 'hover' ) { // eslint-disable-line no-lonely-if
+			if ( blockState === 'hover' ) { // eslint-disable-line no-lonely-if
 			// In editor, always use the `selector` instead of the hoverSelector.
-			hoverSelector = prependClass( selector, '.%s.stk--is-hovered' )
-		} else {
-			hoverSelector = hoverSelector || prependClass( selector, '.%s:hover' )
+				hoverSelector = prependClass( selector, '.%s.stk--is-hovered' )
+			} else {
+				hoverSelector = hoverSelector || prependClass( selector, '.%s:hover' )
+			}
 		}
 	}
 
@@ -281,49 +353,55 @@ const BlockCss = props => {
 	}
 
 	selector = prependCSSClass( selector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
-	hoverSelector = prependCSSClass( hoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
-	parentHoverSelector = prependCSSClass( parentHoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
-	collapsedSelector = prependCSSClass( collapsedSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	if ( hasHover ) {
+		hoverSelector = prependCSSClass( hoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	}
+	if ( hasParentHover ) {
+		parentHoverSelector = prependCSSClass( parentHoverSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	}
+	if ( hasCollapsed ) {
+		collapsedSelector = prependCSSClass( collapsedSelector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
+	}
 
 	let css = ''
 
 	// If rendering for the ditor, output the css, if saving, compile css to an object.
 	const createCssFunc = editorMode ? createCss : addCssToCssSaveObject
 
-	css += createCssFunc( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), desktopQuery, vendorPrefixes, compileCssTo )
+	css += createCssFunc( selector, styleRule, valueDesktop, desktopQuery, vendorPrefixes, compileCssTo )
 	if ( hasHover ) {
-		css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'desktop', 'hover' ), desktopQuery, vendorPrefixes, compileCssTo )
+		css += createCssFunc( hoverSelector, styleRule, valueDesktopHover, desktopQuery, vendorPrefixes, compileCssTo )
 	}
 	if ( hasParentHover ) {
-		css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'desktop', 'parent-hover' ), desktopQuery, vendorPrefixes, compileCssTo )
+		css += createCssFunc( parentHoverSelector, styleRule, valueDesktopParentHover, desktopQuery, vendorPrefixes, compileCssTo )
 	}
 	if ( hasCollapsed ) {
-		css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'desktop', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
+		css += createCssFunc( collapsedSelector, styleRule, valueDesktopCollapsed, desktopQuery, vendorPrefixes, compileCssTo )
 	}
 
 	if ( hasTablet ) {
-		css += createCssFunc( selector, styleRule, getValue( attrName, 'tablet', 'normal' ), tabletQuery, vendorPrefixes, compileCssTo )
+		css += createCssFunc( selector, styleRule, valueTablet, tabletQuery, vendorPrefixes, compileCssTo )
 		if ( hasHover ) {
-			css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'tablet', 'hover' ), tabletQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( hoverSelector, styleRule, valueTabletHover, tabletQuery, vendorPrefixes, compileCssTo )
 		}
 		if ( hasParentHover ) {
-			css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'tablet', 'parent-hover' ), tabletQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( parentHoverSelector, styleRule, valueTabletParentHover, tabletQuery, vendorPrefixes, compileCssTo )
 		}
 		if ( hasCollapsed ) {
-			css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'tablet', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( collapsedSelector, styleRule, valueTabletCollapsed, desktopQuery, vendorPrefixes, compileCssTo )
 		}
 	}
 
 	if ( hasMobile ) {
-		css += createCssFunc( selector, styleRule, getValue( attrName, 'mobile', 'normal' ), mobileQuery, vendorPrefixes, compileCssTo )
+		css += createCssFunc( selector, styleRule, valueMobile, mobileQuery, vendorPrefixes, compileCssTo )
 		if ( hasHover ) {
-			css += createCssFunc( hoverSelector, styleRule, getValue( attrName, 'mobile', 'hover' ), mobileQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( hoverSelector, styleRule, valueMobileHover, mobileQuery, vendorPrefixes, compileCssTo )
 		}
 		if ( hasParentHover ) {
-			css += createCssFunc( parentHoverSelector, styleRule, getValue( attrName, 'mobile', 'parent-hover' ), mobileQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( parentHoverSelector, styleRule, valueMobileParentHover, mobileQuery, vendorPrefixes, compileCssTo )
 		}
 		if ( hasCollapsed ) {
-			css += createCssFunc( collapsedSelector, styleRule, getValue( attrName, 'mobile', 'collapsed' ), desktopQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( collapsedSelector, styleRule, valueMobileCollapsed, desktopQuery, vendorPrefixes, compileCssTo )
 		}
 	}
 
