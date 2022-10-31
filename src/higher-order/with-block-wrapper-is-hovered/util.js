@@ -1,20 +1,15 @@
 /**
- * External dependencies
- */
-import { noop } from 'lodash'
-
-/**
  * WordPress dependencies
  */
 import {
-	useState, useRef, useEffect,
+	useState, useRef, useEffect, useCallback,
 } from '@wordpress/element'
 
 const {
 	clearTimeout,
 	setTimeout,
 } = window
-const DEBOUNCE_TIMEOUT = 250
+const DEBOUNCE_TIMEOUT = 50
 
 /**
  * Hook that creates a showMover state, as well as debounced show/hide callbacks.
@@ -22,66 +17,36 @@ const DEBOUNCE_TIMEOUT = 250
  * @param {Object}   props                       Component props.
  * @param {Object}   props.ref                   Element reference.
  * @param {boolean}  props.isFocused             Whether the component has current focus.
- * @param {number}   [props.debounceTimeout=250] Debounce timeout in milliseconds.
- * @param {Function} [props.onChange=noop]       Callback function.
  */
 export function useDebouncedShowMovers( {
 	ref,
 	isFocused,
-	debounceTimeout = DEBOUNCE_TIMEOUT,
-	onChange = noop,
 } ) {
 	const [ showMovers, setShowMovers ] = useState( false )
 	const timeoutRef = useRef()
 
-	const handleOnChange = nextIsFocused => {
-		setShowMovers( nextIsFocused )
-		onChange( nextIsFocused )
-	}
-
-	const getIsHovered = () => {
-		return ref?.current && ref.current.matches( ':hover' )
-	}
-
-	const shouldHideMovers = () => {
-		const isHovered = getIsHovered()
-
-		return ! isFocused && ! isHovered
-	}
-
-	const clearTimeoutRef = () => {
-		const timeout = timeoutRef.current
-
-		if ( timeout && clearTimeout ) {
-			clearTimeout( timeout )
-		}
-	}
-
-	const debouncedShowMovers = event => {
-		if ( event ) {
-			// event.stopPropagation()
+	const debouncedShowMovers = useCallback( () => {
+		if ( timeoutRef.current && clearTimeout ) {
+			clearTimeout( timeoutRef.current )
 		}
 
-		clearTimeoutRef()
+		// if ( ! showMovers ) {
+		setShowMovers( true )
+		// }
+	}, [] )
 
-		if ( ! showMovers ) {
-			handleOnChange( true )
+	const debouncedHideMovers = useCallback( () => {
+		if ( timeoutRef.current && clearTimeout ) {
+			clearTimeout( timeoutRef.current )
 		}
-	}
-
-	const debouncedHideMovers = event => {
-		if ( event ) {
-			// event.stopPropagation()
-		}
-
-		clearTimeoutRef()
 
 		timeoutRef.current = setTimeout( () => {
-			if ( shouldHideMovers() ) {
-				handleOnChange( false )
+			const isHovered = ref?.current && ref.current.matches( ':hover' )
+			if ( ! isFocused && ! isHovered ) {
+				setShowMovers( false )
 			}
-		}, debounceTimeout )
-	}
+		}, DEBOUNCE_TIMEOUT )
+	}, [ isFocused ] )
 
 	useEffect(
 		() => () => {
@@ -90,8 +55,11 @@ export function useDebouncedShowMovers( {
 			 * set to false on unmount because we also clear the
 			 * timeout that would handle that.
 			 */
-			handleOnChange( false )
-			clearTimeoutRef()
+			setShowMovers( false )
+
+			if ( timeoutRef.current && clearTimeout ) {
+				clearTimeout( timeoutRef.current )
+			}
 		},
 		[]
 	)
@@ -109,13 +77,9 @@ export function useDebouncedShowMovers( {
  *
  * @param {Object}   props                       Component props.
  * @param {Object}   props.ref                   Element reference.
- * @param {number}   [props.debounceTimeout=250] Debounce timeout in milliseconds.
- * @param {Function} [props.onChange=noop]       Callback function.
  */
 export function useShowMoversGestures( {
 	ref,
-	debounceTimeout = DEBOUNCE_TIMEOUT,
-	onChange = noop,
 } ) {
 	const [ isFocused, setIsFocused ] = useState( false )
 	const {
@@ -123,7 +87,7 @@ export function useShowMoversGestures( {
 		debouncedShowMovers,
 		debouncedHideMovers,
 	} = useDebouncedShowMovers( {
-		ref, debounceTimeout, isFocused, onChange,
+		ref, isFocused,
 	} )
 
 	const registerRef = useRef( false )
