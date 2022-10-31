@@ -21,7 +21,9 @@ const BlockWrapper = memo( props => {
 		align = undefined,
 		className: blockClassName = '',
 		blockHoverClass = '',
-		...blockPropsToPass
+		children,
+		hoverRef,
+		...propsToPass
 	} = props
 
 	const className = classnames(
@@ -32,7 +34,8 @@ const BlockWrapper = memo( props => {
 	)
 
 	const blockProps = useBlockProps( {
-		...blockPropsToPass,
+		...( propsToPass || {} ),
+		ref: hoverRef,
 		className,
 		// We force-removed the block alignment wrapper div (see src/blocks.js),
 		// so we need to add our own data-align attribute.
@@ -43,7 +46,7 @@ const BlockWrapper = memo( props => {
 	blockProps.className = blockProps.className.replace( blockClassName, '' ).trim()
 
 	return <div { ...blockProps } >
-		{ props.children }
+		{ children }
 	</div>
 } )
 
