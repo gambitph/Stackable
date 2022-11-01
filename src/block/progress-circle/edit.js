@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import md5 from 'md5'
 import ProgressCircleStyles from './style'
 import { DEFAULT_PROGRESS } from './schema'
 
@@ -77,7 +76,7 @@ const Edit = props => {
 	const color1 = attributes.progressColor1 || ''
 	const color2 = attributes.progressColor2 || ''
 	const direction = attributes.progressColorGradientDirection || ''
-	const customGradientId = md5( color1 + color2 + direction )
+	const customGradientId = ( color1 + color2 + direction ).replace( /[^0-9A-Z]+/gi, '' )
 
 	return (
 		<>

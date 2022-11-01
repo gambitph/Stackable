@@ -11,12 +11,11 @@ import {
 	Typography,
 } from '~stackable/block-components'
 
-import { getUniqueBlockClass } from '~stackable/util'
-
 /**
  * WordPress dependencies
  */
-import { memo, renderToString } from '@wordpress/element'
+import { memo } from '@wordpress/element'
+import { BlockCssCompiler } from '~stackable/components'
 
 const typographyOptions = {
 	selector: '.stk-progress-circle__inner-text',
@@ -30,43 +29,36 @@ const ProgressCircleStyles = memo( props => {
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
-			<ProgressBar.Style { ...props } options={ { isCircle: true } } />
+			<ProgressBar.Style { ...props } isCircle={ true } />
 			<Typography.Style { ...props } { ...typographyOptions } />
 		</>
 	)
 } )
 
 ProgressCircleStyles.defaultProps = {
-	isEditor: false,
+	version: '',
 }
 
 ProgressCircleStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-
-	const stylesToRender = (
-		<>
-			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ProgressBar.Style.Content { ...propsToPass } options={ { isCircle: true } } />
-			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
-		</>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<ProgressBar.Style.Content { ...props } isCircle={ true } />
+			<Typography.Style.Content { ...props } { ...typographyOptions } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
 ProgressCircleStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
 }
 

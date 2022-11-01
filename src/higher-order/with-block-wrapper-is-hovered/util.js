@@ -30,9 +30,7 @@ export function useDebouncedShowMovers( {
 			clearTimeout( timeoutRef.current )
 		}
 
-		// if ( ! showMovers ) {
 		setShowMovers( true )
-		// }
 	}, [] )
 
 	const debouncedHideMovers = useCallback( () => {
