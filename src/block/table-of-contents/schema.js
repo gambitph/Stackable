@@ -144,7 +144,7 @@ export const attributes = ( version = VERSION ) => {
 				default: true,
 			},
 		},
-		versionAdded: '3.6.1',
+		versionAdded: '3.7.0',
 		versionDeprecated: '',
 	} )
 
