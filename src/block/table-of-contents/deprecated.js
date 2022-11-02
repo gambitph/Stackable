@@ -15,25 +15,34 @@ import compareVersions from 'compare-versions'
  */
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.table-of-contents.save.titleNotRender', 'stackable/titleNotRendered', ( output, props ) => {
-	if ( compareVersions( props.version, '3.6.0' ) === 0 ) {
-		return false
+addFilter( 'stackable.table-of-contents.save.blockClasses', 'stackable/classesNotRendered', ( output, textClasses, props ) => {
+	if ( compareVersions( props.version, '3.7.0' ) === 0 ) {
+		output.push( textClasses )
+		return output
 	}
 
 	return output
 } )
 
+addFilter( 'stackable.table-of-contents.save.tableOfContentsClasses', 'stackable/classesNotRendered', ( output, props ) => {
+	if ( compareVersions( props.version, '3.7.0' ) === 0 ) {
+		return 'stk-table-of-contents__table'
+	}
+	return output
+} )
+
 const deprecated = [
-	{
-		attributes: attributes(),
-		migrate: attributes => {
+	 {
+		 attributes: attributes( '3.6.1' ),
+		 migrate: attributes => {
 			return {
-				...attributes,
-				titleShow: false,
-			}
-		},
-		save: withVersion( '3.6.0' )( Save ),
-	},
+				 ...attributes,
+				 titleShow: false,
+			 }
+		 },
+		 save: withVersion( '3.6.1' )( Save ),
+	 },
 ]
 
 export default deprecated
+
