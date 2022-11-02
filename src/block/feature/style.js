@@ -16,14 +16,26 @@ import {
 	ContainerDiv,
 	ContentAlign,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
+import {
+	getUniqueBlockClass, useStyles, getStyles,
+} from '~stackable/util'
+import { useBlockAttributesContext } from '~stackable/hooks'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { memo, renderToString } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 const BlockStyles = memo( props => {
+	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
+	const columnStyleOptions = {
+		numColumns: ( columnArrangement || '' ).split( ',' ).length,
+	}
+
+	const columnsStyles = useStyles( applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
+
 	return (
 		<>
 			<Alignment.Style { ...props } />
@@ -35,6 +47,12 @@ const BlockStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<Separator.Style { ...props } />
 			<ContentAlign.Style { ...props } />
+			<StyleComponent
+				styles={ columnsStyles }
+				versionAdded="3.1.0"
+				versionDeprecated=""
+				{ ...props }
+			/>
 		</>
 	)
 } )
@@ -54,6 +72,12 @@ BlockStyles.Content = props => {
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 
+	const columnStyleOptions = {
+		numColumns: ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet || '' ).split( ',' ).length,
+	}
+
+	const columnsStyles = getStyles( props.attributes, applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
+
 	const stylesToRender = (
 		<>
 			<Alignment.Style.Content { ...propsToPass } />
@@ -65,6 +89,12 @@ BlockStyles.Content = props => {
 			<Transform.Style.Content { ...propsToPass } />
 			<Separator.Style.Content { ...propsToPass } />
 			<ContentAlign.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ columnsStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</>
 	)
 
