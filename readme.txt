@@ -1,7 +1,7 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.0.3
+Requires at least: 5.9
 Tested up to: 6.1
 Requires PHP: 5.7
 Stable tag: 3.6.1
@@ -255,6 +255,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: You can now change the Query String of the Posts block's Pagination Block #2313
 * New: Added Advanced Tab > Responsive > Tablet column arrangement option ##2325
 * New: Added Advanced Tab > Responsive > Tablet and mobile column arrangement option #2361
+* Fixed: RankMath compatibility for the Table of Contents block #2424
 * Fixed: Newly created columns are not cloned correctly when using the Columns block's Columns option #2476
 * Fixed: Posts block pagination could not navigate back to page 1 #2313
 * Fixed: Reset button on icon options now reset correctly #2329
