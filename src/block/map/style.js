@@ -30,6 +30,7 @@ const Styles = props => {
 				selector=".stk-block-map__canvas"
 				styleRule="height"
 				attrName="height"
+				key="height"
 				format="%spx"
 				responsive="all"
 			/>
@@ -39,6 +40,7 @@ const Styles = props => {
 				selector=".stk-block-map__canvas, iframe"
 				styleRule="height"
 				attrName="height"
+				key="height-save"
 				format="%spx"
 				responsive="all"
 			/>

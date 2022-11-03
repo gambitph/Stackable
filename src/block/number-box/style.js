@@ -35,6 +35,7 @@ const Styles = props => {
 				selector=".stk-block-number-box__text"
 				styleRule="height"
 				attrName="shapeSize"
+				key="shapeSize"
 				responsive="all"
 				hasUnits="px"
 				enabledCallback={ getAttribute => getAttribute( 'hasShape' ) }
@@ -45,6 +46,7 @@ const Styles = props => {
 				selector=".stk-block-number-box__text"
 				styleRule="width"
 				attrName="shapeSize"
+				key="shapeSize-width"
 				responsive="all"
 				hasUnits="px"
 				enabledCallback={ getAttribute => getAttribute( 'hasShape' ) }

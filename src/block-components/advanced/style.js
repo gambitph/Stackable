@@ -23,6 +23,7 @@ const Styles = props => {
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="top"
 				attrName="positionNum"
+				key="positionNum-save-top"
 				responsive="all"
 				hover="all"
 				hasUnits="px"
@@ -47,6 +48,7 @@ const Styles = props => {
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="right"
 				attrName="positionNum"
+				key="positionNum-save-right"
 				responsive="all"
 				hover="all"
 				hasUnits="px"
@@ -59,6 +61,7 @@ const Styles = props => {
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="bottom"
 				attrName="positionNum"
+				key="positionNum-save-bottom"
 				responsive="all"
 				hover="all"
 				hasUnits="px"
@@ -71,6 +74,7 @@ const Styles = props => {
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="left"
 				attrName="positionNum"
+				key="positionNum-save-left"
 				responsive="all"
 				hover="all"
 				hasUnits="px"
@@ -82,6 +86,7 @@ const Styles = props => {
 				selector=""
 				styleRule="position"
 				attrName="position"
+				key="position-save"
 				responsive="all"
 			/>
 			{ /**
@@ -96,6 +101,7 @@ const Styles = props => {
 				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
 				styleRule="top"
 				attrName="positionNum"
+				key="positionNum-top"
 				responsive="all"
 				hover="all"
 				hasUnits="px"
@@ -122,6 +128,7 @@ const Styles = props => {
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="bottom"
 				attrName="positionNum"
+				key="positionNum-bottom"
 				responsive="all"
 				hover="all"
 				hasUnits="px"
@@ -136,6 +143,7 @@ const Styles = props => {
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="left"
 				attrName="positionNum"
+				key="positionNum-left"
 				responsive="all"
 				hover="all"
 				hasUnits="px"
@@ -148,6 +156,7 @@ const Styles = props => {
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="position"
 				attrName="positionNum"
+				key="positionNum"
 				responsive="all"
 				hover="all"
 				valuePreCallback={ ( value, getAttribute, device ) => {
@@ -166,6 +175,7 @@ const Styles = props => {
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="position"
 				attrName="position"
+				key="position"
 				responsive="all"
 			/>
 			<BlockCss
@@ -173,6 +183,7 @@ const Styles = props => {
 				selector=""
 				styleRule="opacity"
 				attrName="opacity"
+				key="opacity"
 				responsive="all"
 				hover="all"
 			/>
@@ -183,6 +194,7 @@ const Styles = props => {
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
 				styleRule="zIndex"
 				attrName="zIndex"
+				key="zIndex"
 				responsive="all"
 			/>
 			<BlockCss
@@ -191,6 +203,7 @@ const Styles = props => {
 				selector=""
 				styleRule="zIndex"
 				attrName="zIndex"
+				key="zIndex-save"
 				responsive="all"
 			/>
 			<BlockCss
@@ -198,6 +211,7 @@ const Styles = props => {
 				selector=""
 				styleRule="overflow"
 				attrName="overflow"
+				key="overflow"
 				responsive="all"
 			/>
 			<BlockCss
@@ -205,6 +219,7 @@ const Styles = props => {
 				selector=".stk-container"
 				styleRule="overflow"
 				attrName="overflow"
+				key="overflow-container"
 				enabledCallback={ getAttribute => getAttribute( 'overflow' ) === 'visible' }
 				responsive="all"
 			/>
@@ -213,6 +228,7 @@ const Styles = props => {
 				selector=""
 				styleRule="clear"
 				attrName="clear"
+				key="clear"
 			/>
 
 			{
@@ -226,6 +242,7 @@ const Styles = props => {
 				selector={ positionSelector }
 				styleRule="top"
 				attrName="positionNum"
+				key="positionNum-hover-top"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( ( ! value || value.top === '' ) && state === 'normal' ) {
@@ -243,6 +260,7 @@ const Styles = props => {
 				selector={ positionSelector }
 				styleRule="right"
 				attrName="positionNum"
+				key="positionNum-hover-right"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( ( ! value || value.right === '' ) && state === 'normal' ) {
@@ -260,6 +278,7 @@ const Styles = props => {
 				selector={ positionSelector }
 				styleRule="bottom"
 				attrName="positionNum"
+				key="positionNum-hover-bottom"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( ( ! value || value.bottom === '' ) && state === 'normal' ) {
@@ -277,6 +296,7 @@ const Styles = props => {
 				selector={ positionSelector }
 				styleRule="left"
 				attrName="positionNum"
+				key="positionNum-hover-left"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( ( ! value || value.left === '' ) && state === 'normal' ) {

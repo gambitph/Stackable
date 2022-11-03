@@ -22,6 +22,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="columnGap"
 				attrName="columnGap"
+				key="columnGap"
 				format="%spx"
 				responsive="all"
 				enabledCallback={ () => enableColumnGap }
@@ -31,6 +32,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="rowGap"
 				attrName="rowGap"
+				key="rowGap"
 				format="%spx"
 				responsive="all"
 			/>

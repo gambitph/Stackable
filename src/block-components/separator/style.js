@@ -39,6 +39,7 @@ export const SeparatorStyles = props => {
 				selector={ selector }
 				styleRule="zIndex"
 				attrName="separatorBringToFront"
+				key="separatorBringToFront"
 				valuePreCallback={ value => {
 					if ( value ) {
 						return 6
@@ -52,6 +53,7 @@ export const SeparatorStyles = props => {
 				selector={ selector }
 				styleRule="transform"
 				attrName="separatorFlipHorizontally"
+				key="separatorFlipHorizontally"
 				valuePreCallback={ ( value, getAttribute ) => {
 					const flipHorizontally = value
 					const flipVertically = getAttribute( 'separatorFlipVertically' )
@@ -82,6 +84,7 @@ export const SeparatorStyles = props => {
 				selector={ selector + ' svg' }
 				styleRule="fill"
 				attrName="separatorColor"
+				key="separatorColor"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -89,6 +92,7 @@ export const SeparatorStyles = props => {
 				selector={ selector + ` ${ wrapperSelector }` }
 				styleRule="transform"
 				attrName="separatorWidth"
+				key="separatorWidth"
 				format="scaleX(%s)"
 			/>
 			<BlockCss
@@ -98,6 +102,7 @@ export const SeparatorStyles = props => {
 				styleRule="height"
 				responsive="all"
 				attrName="separatorHeight"
+				key="separatorHeight"
 				format="%spx"
 			/>
 			<BlockCss
@@ -106,6 +111,7 @@ export const SeparatorStyles = props => {
 				selector={ selector + ' svg' }
 				styleRule="filter"
 				attrName="separatorShadow"
+				key="separatorShadow"
 				format="drop-shadow(%s)"
 				valueCallback={ value => {
 					return value === 'drop-shadow(none)' ? 'none' : value
@@ -134,6 +140,7 @@ const MarginBottomStyles = props => {
 				selector={ _selector !== undefined ? _selector : ` > .stk-separator__bottom` }
 				styleRule="bottom"
 				attrName="blockMargin"
+				key="blockMargin"
 				responsive="all"
 				valuePreCallback={ value => value?.bottom }
 				format="%spx"

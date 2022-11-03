@@ -32,6 +32,7 @@ const Styles = props => {
 				selector=".stk-block-heading__top-line"
 				styleRule="height"
 				attrName="topLineHeight"
+				key="topLineHeight"
 				format="%spx"
 			/>
 			<BlockCss
@@ -39,6 +40,7 @@ const Styles = props => {
 				selector=".stk-block-heading__top-line"
 				styleRule="width"
 				attrName="topLineWidth"
+				key="topLineWidth"
 				hasUnits="px"
 				hover="all"
 			/>
@@ -47,13 +49,7 @@ const Styles = props => {
 				selector=".stk-block-heading__top-line"
 				styleRule="backgroundColor"
 				attrName="topLineColor"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__top-line"
-				styleRule="backgroundColor"
-				attrName="topLineColor"
+				key="topLineColor"
 				hover="all"
 			/>
 			<BlockCss
@@ -61,6 +57,7 @@ const Styles = props => {
 				selector=".stk-block-heading__top-line"
 				styleRule="marginBottom"
 				attrName="topLineMargin"
+				key="topLineMargin"
 				responsive="all"
 				format="%spx"
 			/>
@@ -69,6 +66,7 @@ const Styles = props => {
 				selector=".stk-block-heading__top-line"
 				styleRule="marginLeft"
 				attrName="topLineAlign"
+				key="topLineAlign-left"
 				responsive="all"
 				valueCallback={ value => value === 'center' || value === 'right' ? 'auto' : '0' }
 			/>
@@ -77,6 +75,7 @@ const Styles = props => {
 				selector=".stk-block-heading__top-line"
 				styleRule="marginRight"
 				attrName="topLineAlign"
+				key="topLineAlign"
 				responsive="all"
 				valueCallback={ value => value === 'center' || value === 'left' ? 'auto' : '0' }
 			/>
@@ -85,6 +84,7 @@ const Styles = props => {
 				selector=".stk-block-heading__bottom-line"
 				styleRule="height"
 				attrName="bottomLineHeight"
+				key="bottomLineHeight"
 				format="%spx"
 			/>
 			<BlockCss
@@ -92,6 +92,7 @@ const Styles = props => {
 				selector=".stk-block-heading__bottom-line"
 				styleRule="width"
 				attrName="bottomLineWidth"
+				key="bottomLineWidth"
 				hasUnits="px"
 				hover="all"
 			/>
@@ -100,13 +101,7 @@ const Styles = props => {
 				selector=".stk-block-heading__bottom-line"
 				styleRule="backgroundColor"
 				attrName="bottomLineColor"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-heading__bottom-line"
-				styleRule="backgroundColor"
-				attrName="bottomLineColor"
+				key="bottomLineColor"
 				hover="all"
 			/>
 			<BlockCss
@@ -114,6 +109,7 @@ const Styles = props => {
 				selector=".stk-block-heading__bottom-line"
 				styleRule="marginTop"
 				attrName="bottomLineMargin"
+				key="bottomLineMargin"
 				responsive="all"
 				format="%spx"
 			/>
@@ -122,6 +118,7 @@ const Styles = props => {
 				selector=".stk-block-heading__bottom-line"
 				styleRule="marginLeft"
 				attrName="bottomLineAlign"
+				key="bottomLineAlign"
 				responsive="all"
 				valueCallback={ value => value === 'center' || value === 'right' ? 'auto' : undefined }
 			/>
@@ -130,6 +127,7 @@ const Styles = props => {
 				selector=".stk-block-heading__bottom-line"
 				styleRule="marginRight"
 				attrName="bottomLineAlign"
+				key="bottomLineAlign-right"
 				responsive="all"
 				valueCallback={ value => value === 'center' || value === 'left' ? 'auto' : undefined }
 			/>

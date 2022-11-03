@@ -20,7 +20,7 @@ import {
 	ProControlButton,
 	ProControl,
 } from '~stackable/components'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -28,6 +28,10 @@ import { useAttributeEditHandlers } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+
+const PremiumColorControls = applyFilters( 'stackable.block-component.icon.color-controls', null )
+const PremiumShapeColorControls = applyFilters( 'stackable.block-component.icon.shape-color-controls', null )
+const PremiumBackgroundShapeControls = applyFilters( 'stackable.block-component.icon.edit.background-shape', null )
 
 export const Edit = props => {
 	const {
@@ -46,16 +50,16 @@ export const Edit = props => {
 		defaultValue,
 	} = props
 
-	const {
-		getAttribute,
-		updateAttributeHandler,
-	} = useAttributeEditHandlers()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			icon: attributes.icon,
+			iconColorType: attributes.iconColorType,
+			shapeColorType: attributes.shapeColorType,
+		}
+	} )
+	const setAttributes = useBlockSetAttributesContext()
 
-	const propsToPass = {
-		...props, getAttribute, updateAttributeHandler,
-	}
-
-	const showIconControl = hideControlsIfIconIsNotSet ? !! getAttribute( 'icon' ) : true
+	const showIconControl = hideControlsIfIconIsNotSet ? !! attributes.icon : true
 
 	const filteredColorTypes = applyFilters( 'stackable.block-component.icon.color-types', [
 		{
@@ -75,9 +79,9 @@ export const Edit = props => {
 		<>
 			<IconControl
 				label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
-				value={ getAttribute( 'icon' ) }
+				value={ attributes.icon }
 				defaultValue={ defaultValue }
-				onChange={ updateAttributeHandler( 'icon' ) }
+				onChange={ icon => setAttributes( { icon } ) }
 				help={ iconControlHelp }
 			/>
 
@@ -100,14 +104,14 @@ export const Edit = props => {
 			{ /* { showIconControl && colorControls } */ }
 			{ showIconControl && (
 				<>
-					{ ( getAttribute( 'iconColorType' ) || '' ) === '' && (
+					{ ( attributes.iconColorType || '' ) === '' && (
 						<ColorPaletteControl
 							label={ __( 'Icon Color', i18n ) }
 							attribute="iconColor1"
 							hover={ hover }
 						/>
 					) }
-					{ applyFilters( 'stackable.block-component.icon.color-controls', null, propsToPass ) }
+					{ PremiumColorControls && <PremiumColorControls { ...props } /> }
 				</>
 			) }
 
@@ -179,7 +183,7 @@ export const Edit = props => {
 				/>
 			) }
 
-			{ ( getAttribute( 'shapeColorType' ) || '' ) === '' && (
+			{ ( attributes.shapeColorType || '' ) === '' && (
 				<ColorPaletteControl
 					label={ __( 'Shape Color', i18n ) }
 					attribute="shapeColor1"
@@ -187,7 +191,7 @@ export const Edit = props => {
 					hasTransparent={ true }
 				/>
 			) }
-			{ applyFilters( 'stackable.block-component.icon.shape-color-controls', null, propsToPass ) }
+			{ PremiumShapeColorControls && <PremiumShapeColorControls { ...props } /> }
 
 			<AdvancedRangeControl
 				label={ __( 'Shape Border Radius', i18n ) }
@@ -259,9 +263,7 @@ export const Edit = props => {
 							: iconBackgroundShapeControls
 					) }
 
-					{ isPro && applyFilters( 'stackable.block-component.icon.edit.background-shape', null, {
-						...props, getAttribute, updateAttributeHandler,
-					} ) }
+					{ isPro && PremiumBackgroundShapeControls && <PremiumBackgroundShapeControls { ...props } /> }
 				</>
 			}
 		</Wrapper>

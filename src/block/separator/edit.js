@@ -40,6 +40,8 @@ import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
+const PremiumSeparatorControls = applyFilters( 'stackable.block.separator.edit.after', null )
+
 const Edit = props => {
 	const {
 		clientId,
@@ -102,7 +104,7 @@ const Edit = props => {
 						>
 							<Separator.InspectorControls.SeparatorControls hasFlipVertically={ true } />
 						</PanelAdvancedSettings>
-						{ applyFilters( 'stackable.block.separator.edit.after', null, props ) }
+						{ PremiumSeparatorControls && <PremiumSeparatorControls { ...props } /> }
 					</InspectorStyleControls>
 
 					<Advanced.InspectorControls />

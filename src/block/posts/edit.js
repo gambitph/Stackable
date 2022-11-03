@@ -27,8 +27,9 @@ import {
 import {
 	useBlockStyle,
 	usePostsQuery,
-	useAttributeEditHandlers,
 	useDeviceType,
+	useBlockAttributesContext,
+	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
@@ -484,9 +485,7 @@ addFilter( 'stackable.block-component.typography.color.after', 'stackable/posts'
 
 addFilter( 'stackable.block-component.typography.color.after', 'stackable/posts', ( output, props ) => {
 	const { name } = useBlockEditContext()
-	const {
-		getAttribute,
-	} = useAttributeEditHandlers()
+	const categoryHighlighted = useBlockAttributesContext( attributes => attributes.categoryHighlighted )
 
 	if ( name !== 'stackable/posts' ) {
 		return output
@@ -502,7 +501,7 @@ addFilter( 'stackable.block-component.typography.color.after', 'stackable/posts'
 				label={ __( 'Highlighted', i18n ) }
 				attribute="categoryHighlighted"
 			/>
-			{ getAttribute( 'categoryHighlighted' ) && (
+			{ categoryHighlighted && (
 				<ColorPaletteControl
 					label={ __( 'Highlight Color', i18n ) }
 					hover="all"
@@ -579,10 +578,8 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/posts', ( o
 // Add additional image options.
 addFilter( 'stackable.block-component.image.before', 'stackable/posts', output => {
 	const { name } = useBlockEditContext()
-	const {
-		getAttribute,
-		updateAttributeHandler,
-	} = useAttributeEditHandlers()
+	const imageSize = useBlockAttributesContext( attributes => attributes.imageSize )
+	const setAttributes = useBlockSetAttributesContext()
 
 	if ( name !== 'stackable/posts' ) {
 		return output
@@ -596,8 +593,8 @@ addFilter( 'stackable.block-component.image.before', 'stackable/posts', output =
 			/>
 			<ImageSizeControl
 				label={ __( 'Image Size', i18n ) }
-				value={ getAttribute( 'imageSize' ) }
-				onChange={ updateAttributeHandler( 'imageSize' ) }
+				value={ imageSize }
+				onChange={ imageSize => setAttributes( { imageSize } ) }
 				default="full"
 				className="ugb--help-tip-image-size"
 			/>

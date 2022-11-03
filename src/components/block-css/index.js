@@ -440,6 +440,10 @@ const BlockCssEdit = props => {
 
 // Unify in a single component so it's easier to write block styles.
 const _BlockCss = props => {
+	if ( props.styles ) {
+		console.error( 'BlockCss `styles` prop is deprecated, use individual BlockCss components instead.' ) // eslint-disable-line no-console
+	}
+
 	// If no compileCssTo prop is provided, then we just print the styles directly.
 	if ( ! props.compileCssTo ) {
 		return <BlockCssEdit { ...props } editorMode={ true } />

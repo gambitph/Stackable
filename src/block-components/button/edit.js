@@ -12,7 +12,9 @@ import {
 	AdvancedSelectControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
-import { useAttributeEditHandlers, useBlockContext } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 import { extractColor } from '~stackable/util'
 
 /**
@@ -104,10 +106,8 @@ export const Colors = props => {
 		hasTextColor,
 	} = props
 
-	const {
-		getAttribute,
-		updateAttribute,
-	} = useAttributeEditHandlers()
+	const buttonBackgroundColorType = useBlockAttributesContext( attributes => attributes.buttonBackgroundColorType )
+	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<InspectorStyleControls>
@@ -131,15 +131,15 @@ export const Colors = props => {
 					fullwidth={ false }
 				/>
 				<ColorPaletteControl
-					label={ getAttribute( 'buttonBackgroundColorType' ) === 'gradient'
+					label={ buttonBackgroundColorType === 'gradient'
 						? sprintf( __( 'Button Color #%s', i18n ), 1 )
 						: __( 'Button Color', i18n )
 					}
 					attribute="buttonBackgroundColor"
-					hasTransparent={ blockState === 'normal' && getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' }
+					hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
 					hover="all"
 				/>
-				{ getAttribute( 'buttonBackgroundColorType' ) === 'gradient' && (
+				{ buttonBackgroundColorType === 'gradient' && (
 					<>
 						<ColorPaletteControl
 							label={ __( 'Button Color #2', i18n ) }
@@ -168,7 +168,7 @@ export const Colors = props => {
 							const value = extractColor( _value )
 							const colors = select( select => select( 'core/block-editor' ).getSettings().colors ) || []
 							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
+							setAttributes( { textColorClass: colorSlug ? getColorClassName( 'color', colorSlug ) : '' } )
 
 							return _value
 						} }

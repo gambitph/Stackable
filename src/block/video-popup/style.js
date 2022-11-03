@@ -30,6 +30,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				selector=".stk-block-icon"
 				attrName="iconGap"
+				key="iconGap"
 				styleRule="flexBasis"
 				format="%spx"
 			/>

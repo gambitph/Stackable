@@ -40,6 +40,7 @@ const Styles = props => {
 				selector="li"
 				styleRule="paddingInlineStart"
 				attrName="iconGap"
+				key="iconGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -48,6 +49,7 @@ const Styles = props => {
 				selector="ul"
 				styleRule="listStyleType"
 				attrName="listType"
+				key="listType"
 				valueCallback={ value => ( value === 'none' ? 'none' : undefined ) }
 			/>
 			<BlockCss
@@ -55,6 +57,7 @@ const Styles = props => {
 				selector="ol"
 				styleRule="listStyleType"
 				attrName="listType"
+				key="listType-ol"
 				valueCallback={ value =>
 					isEmpty( value ) || value === 'none' || value === 'unordered'
 						? undefined
@@ -65,6 +68,7 @@ const Styles = props => {
 				selector=".stk-table-of-contents__table"
 				styleRule="columnCount"
 				attrName="columns"
+				key="columns"
 				responsive="all"
 			/>
 			<BlockCss
@@ -72,6 +76,7 @@ const Styles = props => {
 				selector=".stk-table-of-contents__table"
 				styleRule="columnGap"
 				attrName="columnGap"
+				key="columnGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -81,6 +86,7 @@ const Styles = props => {
 				selector="li"
 				styleRule="marginBottom"
 				attrName="rowGap"
+				key="rowGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -90,6 +96,7 @@ const Styles = props => {
 				selector=".stk-block-table-of-contents__list-item-inner"
 				styleRule="marginBottom"
 				attrName="rowGap"
+				key="rowGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -98,6 +105,7 @@ const Styles = props => {
 				selector=".stk-table-of-contents__table ul"
 				styleRule="marginTop"
 				attrName="rowGap"
+				key="rowGap-top"
 				responsive="all"
 				format="%spx"
 			/>
@@ -106,6 +114,7 @@ const Styles = props => {
 				selector={ [ 'ul', 'ol' ] }
 				styleRule="paddingLeft"
 				attrName="indentation"
+				key="indentation"
 				responsive="all"
 				format="%spx"
 			/>
@@ -115,12 +124,14 @@ const Styles = props => {
 				hover="all"
 				styleRule="color"
 				attrName="color"
+				key="color"
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector={ [ 'li' ] }
 				styleRule="marginInline"
 				attrName="listAlignment"
+				key="listAlignment"
 				responsive="all"
 				valueCallback={ value =>
 					value === 'center'
@@ -136,6 +147,7 @@ const Styles = props => {
 				selector="html"
 				styleRule="scroll-behavior"
 				attrName="isSmoothScroll"
+				key="isSmoothScroll"
 				valueCallback={ value => ( value ? 'smooth' : undefined ) }
 			/>
 			<BlockCss
@@ -143,6 +155,7 @@ const Styles = props => {
 				selector="html"
 				styleRule="scroll-padding-top"
 				attrName="scrollTopOffset"
+				key="scrollTopOffset"
 				responsive="all"
 				format={ '%spx' }
 			/>
@@ -153,6 +166,7 @@ const Styles = props => {
 				selector=".%s.%s li"
 				styleRule="fontSize"
 				attrName="fontSize"
+				key="fontSize"
 				responsive="all"
 				format="%spx"
 			/>

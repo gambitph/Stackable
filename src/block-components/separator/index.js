@@ -2,7 +2,7 @@ export * from './get-separator-classes'
 /**
  * External dependencies
  */
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 import { Separator2 } from '~stackable/components'
 
 /**
@@ -23,36 +23,48 @@ export {
 import { applyFilters } from '@wordpress/hooks'
 
 export const Separator = ( { children } ) => {
-	const {
-		getAttribute,
-		getAttributes,
-	} = useAttributeEditHandlers()
+	const separatorAttributes = useBlockAttributesContext( attributes => {
+		return {
+			// Top attributes.
+			topSeparatorShow: attributes.topSeparatorShow,
+			topSeparatorDesign: attributes.topSeparatorDesign,
+			topSeparatorInverted: attributes.topSeparatorInverted,
+			topSeparatorLayer2Show: attributes.topSeparatorLayer2Show,
+			topSeparatorLayer3Show: attributes.topSeparatorLayer3Show,
+			// Bottom attributes.
+			bottomSeparatorShow: attributes.bottomSeparatorShow,
+			bottomSeparatorDesign: attributes.bottomSeparatorDesign,
+			bottomSeparatorInverted: attributes.bottomSeparatorInverted,
+			bottomSeparatorLayer2Show: attributes.bottomSeparatorLayer2Show,
+			bottomSeparatorLayer3Show: attributes.bottomSeparatorLayer3Show,
+		}
+	} )
 
 	return (
 		<>
-			{ getAttribute( 'topSeparatorShow' ) && (
+			{ separatorAttributes.topSeparatorShow && (
 				<>
 					<div className="stk-separator stk-separator__top">
 						<div className="stk-separator__wrapper">
 							<Separator2
-								design={ getAttribute( 'topSeparatorDesign' ) }
-								inverted={ getAttribute( 'topSeparatorInverted' ) }
+								design={ separatorAttributes.topSeparatorDesign }
+								inverted={ separatorAttributes.topSeparatorInverted }
 							/>
-							{ applyFilters( 'stackable.block-component.separator.output.top.after', null, getAttributes() ) }
+							{ applyFilters( 'stackable.block-component.separator.output.top.after', null, separatorAttributes ) }
 						</div>
 					</div>
 				</>
 			) }
 			{ children }
-			{ getAttribute( 'bottomSeparatorShow' ) && (
+			{ separatorAttributes.bottomSeparatorShow && (
 				<>
 					<div className="stk-separator stk-separator__bottom">
 						<div className="stk-separator__wrapper">
 							<Separator2
-								design={ getAttribute( 'bottomSeparatorDesign' ) }
-								inverted={ getAttribute( 'bottomSeparatorInverted' ) }
+								deseparatorAign={ separatorAttributes.bottomSeparatorDesign }
+								inseparatorAerted={ separatorAttributes.bottomSeparatorInverted }
 							/>
-							{ applyFilters( 'stackable.block-component.separator.output.bottom.after', null, getAttributes() ) }
+							{ applyFilters( 'stackable.block-component.separator.output.bottom.after', null, separatorAttributes ) }
 						</div>
 					</div>
 				</>

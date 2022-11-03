@@ -37,6 +37,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				selector=".stk-container"
 				attrName="dismissibleSize"
+				key="dismissibleSize"
 				styleRule="paddingInlineEnd"
 				enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) && getAttribute( 'dismissibleSize' ) }
 				valuePreCallback={ value => value + 44 } // 44 is an arbitrary number based on the size of the container paddings vs the close button size.
@@ -47,6 +48,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				selector=".stk-block-notification__close-button svg"
 				attrName="dismissibleColor"
+				key="dismissibleColor"
 				styleRule="fill"
 				enabledCallback={ getAttribute => getAttribute( 'isDismissible' ) }
 				dependencies={ [ 'isDismissible' ] }

@@ -11,7 +11,9 @@ import {
 	ProControlButton,
 	ShadowControl,
 } from '~stackable/components'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers, useBlockAttributesContext, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 
 /*
  * External dependencies
@@ -109,13 +111,17 @@ SeparatorControls.defaultProps = {
 	hasFlipVertically: false,
 }
 
+const PremiumTopSeparatorControls = applyFilters( 'stackable.block-component.separator.top.after', null )
+const PremiumBottomSeparatorControls = applyFilters( 'stackable.block-component.separator.bottom.after', null )
+
 export const Edit = props => {
-	const {
-		getAttribute,
-		updateAttributeHandler,
-		updateAttributes,
-		getAttrName,
-	} = useAttributeEditHandlers()
+	const setAttributes = useBlockSetAttributesContext()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			topSeparatorShow: attributes.topSeparatorShow,
+			bottomSeparatorShow: attributes.bottomSeparatorShow,
+		}
+	} )
 
 	return (
 		<InspectorBlockControls>
@@ -123,17 +129,11 @@ export const Edit = props => {
 				title={ __( 'Top Separator', i18n ) }
 				id="top-separator"
 				hasToggle={ true }
-				checked={ getAttribute( 'topSeparatorShow' ) }
-				onChange={ updateAttributeHandler( 'topSeparatorShow' ) }
+				checked={ attributes.topSeparatorShow }
+				onChange={ topSeparatorShow => setAttributes( { topSeparatorShow } ) }
 			>
 				<SeparatorControls attrNameTemplate="top%s" />
-				{ applyFilters( 'stackable.block-component.separator.top.after', null, {
-					...props,
-					getAttribute,
-					updateAttributeHandler,
-					updateAttributes,
-					getAttrName,
-				} ) }
+				{ PremiumTopSeparatorControls && <PremiumTopSeparatorControls { ...props } /> }
 				{ showProNotice && (
 					<ProControlButton
 						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
@@ -145,17 +145,11 @@ export const Edit = props => {
 				title={ __( 'Bottom Separator', i18n ) }
 				id="bottom-separator"
 				hasToggle={ true }
-				checked={ getAttribute( 'bottomSeparatorShow' ) }
-				onChange={ updateAttributeHandler( 'bottomSeparatorShow' ) }
+				checked={ attributes.bottomSeparatorShow }
+				onChange={ bottomSeparatorShow => setAttributes( { bottomSeparatorShow } ) }
 			>
 				<SeparatorControls attrNameTemplate="bottom%s" />
-				{ applyFilters( 'stackable.block-component.separator.bottom.after', null, {
-					...props,
-					getAttribute,
-					updateAttributeHandler,
-					updateAttributes,
-					getAttrName,
-				} ) }
+				{ PremiumBottomSeparatorControls && <PremiumBottomSeparatorControls { ...props } /> }
 				{ showProNotice && (
 					<ProControlButton
 						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }

@@ -29,6 +29,7 @@ const Styles = props => {
 				selector=""
 				styleRule="height"
 				attrName="height"
+				key="height"
 				format="%spx"
 				responsive="all"
 			/>

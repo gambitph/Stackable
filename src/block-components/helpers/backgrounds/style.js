@@ -25,6 +25,7 @@ const Styles = props => {
 				hoverSelector={ `${ selector }:hover` }
 				styleRule="backgroundColor"
 				attrName="backgroundColor"
+				key="backgroundColor-hover"
 				attrNameTemplate={ attrNameTemplate }
 				hoverCallback={ getAttribute => {
 					return getAttribute( 'backgroundColorType' ) !== 'gradient'
@@ -69,6 +70,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="backgroundImage"
 				attrName="backgroundMediaUrl"
+				key="backgroundMediaUrl"
 				attrNameTemplate={ attrNameTemplate }
 				format="url(%s)"
 				responsive="all"
@@ -78,6 +80,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="backgroundAttachment"
 				attrName="fixedBackground"
+				key="fixedBackground"
 				attrNameTemplate={ attrNameTemplate }
 				valueCallback={ value => value ? 'fixed' : undefined }
 			/>
@@ -86,6 +89,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="backgroundPosition"
 				attrName="backgroundPosition"
+				key="backgroundPosition"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 			/>
@@ -94,6 +98,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="backgroundRepeat"
 				attrName="backgroundRepeat"
+				key="backgroundRepeat"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 			/>
@@ -102,6 +107,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="backgroundSize"
 				attrName="backgroundSize"
+				key="backgroundSize"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				valueCallback={ ( value, getAttribute, device ) => {
@@ -119,6 +125,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="backgroundBlendMode"
 				attrName="backgroundImageBlendMode"
+				key="backgroundImageBlendMode"
 				attrNameTemplate={ attrNameTemplate }
 			/>
 			<BlockCss
@@ -127,6 +134,7 @@ const Styles = props => {
 				hoverSelector={ `${ selector }:hover:before` }
 				styleRule="backgroundColor"
 				attrName="backgroundColor"
+				key="backgroundColor-before"
 				attrNameTemplate={ attrNameTemplate }
 				hover="all"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
@@ -149,6 +157,7 @@ const Styles = props => {
 				hoverSelector={ `${ selector }:hover:before` }
 				styleRule="opacity"
 				attrName="backgroundTintStrength"
+				key="backgroundTintStrength"
 				attrNameTemplate={ attrNameTemplate }
 				hover="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'backgroundMediaUrl', 'mobile', 'normal', true ) }
@@ -170,6 +179,7 @@ const Styles = props => {
 				selector={ `${ selector }:before` }
 				styleRule="mixBlendMode"
 				attrName="backgroundGradientBlendMode"
+				key="backgroundGradientBlendMode"
 				attrNameTemplate={ attrNameTemplate }
 				enabledCallback={ getAttribute => getAttribute( 'backgroundColorType' ) === 'gradient' }
 				dependencies={ [ 'backgroundColorType' ] }
@@ -179,6 +189,7 @@ const Styles = props => {
 				selector={ `${ selector }:before` }
 				styleRule="backgroundImage"
 				attrName="backgroundColor"
+				key="backgroundColor-image"
 				attrNameTemplate={ attrNameTemplate }
 				enabledCallback={ getAttribute => getAttribute( 'backgroundColorType' ) === 'gradient' }
 				valueCallback={ ( value, getAttribute ) => {
@@ -207,6 +218,7 @@ const Styles = props => {
 				selector={ `${ selector }:before` }
 				styleRule="borderRadius"
 				attrName="borderRadius"
+				key="borderRadius"
 				attrNameTemplate={ attrNameTemplate }
 				format="%spx"
 				enabledCallback={ getAttribute =>

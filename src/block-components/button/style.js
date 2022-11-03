@@ -29,6 +29,7 @@ const Styles = props => {
 				selector={ [ '', '.stk-button' ] }
 				styleRule="width"
 				attrName="buttonFullWidth"
+				key="buttonFullWidth"
 				valueCallback={ () => '100%' }
 				format="%spx"
 				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
@@ -43,6 +44,7 @@ const Styles = props => {
 				selector=""
 				styleRule="flex"
 				attrName="buttonFullWidth"
+				key="buttonFullWidth-save"
 				valueCallback={ () => '1 1 0' }
 				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
 			/>
@@ -52,6 +54,7 @@ const Styles = props => {
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="flex"
 				attrName="buttonFullWidth"
+				key="buttonFullWidth-flex"
 				valueCallback={ () => '1 1 0' }
 				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
 			/>
@@ -61,6 +64,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="minHeight"
 				attrName="buttonMinHeight"
+				key="buttonMinHeight"
 				format="%spx"
 			/>
 			<BlockCss
@@ -69,6 +73,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="width"
 				attrName="buttonWidth"
+				key="buttonWidth"
 				format="%spx"
 				enabledCallback={ getAttribute => ! getAttribute( 'buttonFullWidth' ) }
 				dependencies={ [ 'buttonFullWidth' ] }
@@ -79,6 +84,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="paddingTop"
 				attrName="buttonPadding"
+				key="buttonPadding-top"
 				hasUnits="px"
 				valuePreCallback={ value => value?.top }
 			/>
@@ -88,6 +94,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="paddingRight"
 				attrName="buttonPadding"
+				key="buttonPadding-right"
 				hasUnits="px"
 				valuePreCallback={ value => value?.right }
 			/>
@@ -97,6 +104,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="paddingBottom"
 				attrName="buttonPadding"
+				key="buttonPadding-bottom"
 				hasUnits="px"
 				valuePreCallback={ value => value?.bottom }
 			/>
@@ -106,6 +114,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="paddingLeft"
 				attrName="buttonPadding"
+				key="buttonPadding-left"
 				hasUnits="px"
 				valuePreCallback={ value => value?.left }
 			/>
@@ -114,6 +123,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="background"
 				attrName="buttonBackgroundColor"
+				key="buttonBackgroundColor"
 				valueCallback={ ( _, getAttribute ) => {
 					const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection' )
 					const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor' )
@@ -132,6 +142,7 @@ const Styles = props => {
 				selector={ `${ selector }:after` }
 				styleRule="background"
 				attrName="buttonBackgroundColor"
+				key="buttonBackgroundColor-after"
 				hover="all"
 				hoverSelector={ hoverSelector ? hoverSelector : `${ selector }:hover:after` }
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
@@ -165,6 +176,7 @@ const Styles = props => {
 				selector={ `${ selector }:after` }
 				styleRule="opacity"
 				attrName="buttonBackgroundColor"
+				key="buttonBackgroundColor-opacity"
 				hover="all"
 				hoverSelector={ hoverSelector ? hoverSelector : `${ selector }:hover:after` }
 				valuePreCallback={ ( value, getAttribute, device, state ) => {

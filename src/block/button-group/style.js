@@ -41,6 +41,7 @@ const Styles = props => {
 				selector=".stk-button-group"
 				styleRule="flexWrap"
 				attrName="flexWrap"
+				key="flexWrap-save"
 				responsive="all"
 			/>
 			<BlockCss
@@ -49,6 +50,7 @@ const Styles = props => {
 				selector=".stk-button-group .block-editor-block-list__layout"
 				styleRule="flexWrap"
 				attrName="flexWrap"
+				key="flexWrap"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute, device ) => {
 				// In the editor, it should correctly wrap in mobile.
@@ -64,6 +66,7 @@ const Styles = props => {
 				selector=".stk-button-group"
 				styleRule="flexDirection"
 				attrName="buttonAlign"
+				key="buttonAlign-save-group"
 				responsive="all"
 				valuePreCallback={ value => {
 					if ( value === 'vertical' ) {
@@ -80,6 +83,7 @@ const Styles = props => {
 				selector=".stk-button-group .block-editor-block-list__layout"
 				styleRule="flexDirection"
 				attrName="buttonAlign"
+				key="buttonAlign-list-layout"
 				responsive="all"
 				valuePreCallback={ value => {
 					if ( value === 'vertical' ) {
@@ -102,6 +106,7 @@ const Styles = props => {
 				selector=".stk-block"
 				styleRule="flexBasis"
 				attrName="buttonAlign"
+				key="buttonAlign-save-block"
 				responsive="all"
 				valuePreCallback={ value => {
 					return value === 'vertical' ? 'auto'
@@ -115,6 +120,7 @@ const Styles = props => {
 				selector=".stk-button-group"
 				styleRule="alignItems"
 				attrName="buttonAlign"
+				key="buttonAlign-save-button-group"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute ) => {
 					if ( value === 'vertical' ) {
@@ -142,6 +148,7 @@ const Styles = props => {
 				selector=".stk-button-group .block-editor-block-list__layout"
 				styleRule="alignItems"
 				attrName="buttonAlign"
+				key="buttonAlign-group-list-layout"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute ) => {
 					if ( value === 'vertical' ) {
@@ -169,6 +176,7 @@ const Styles = props => {
 				selector=".stk-block-button, .stk-block-icon-button"
 				styleRule="flex"
 				attrName="buttonFullWidth"
+				key="buttonFullWidth-save"
 				valueCallback={ value => {
 					return value ? '1' : undefined
 				} }
@@ -179,6 +187,7 @@ const Styles = props => {
 				selector={ `.stk-block-button, .stk-block-icon-button, [data-type^="stackable/"]` }
 				styleRule="flex"
 				attrName="buttonFullWidth"
+				key="buttonFullWidth"
 				valueCallback={ value => {
 					return value ? '1' : undefined
 				} }
@@ -189,6 +198,7 @@ const Styles = props => {
 				selector=".stk-block-icon-button .stk-button"
 				styleRule="width"
 				attrName="buttonFullWidth"
+				key="buttonFullWidth-icon-button"
 				valueCallback={ value => {
 					return value ? '100%' : undefined
 				} }

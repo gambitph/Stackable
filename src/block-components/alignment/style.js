@@ -24,6 +24,7 @@ const AlignmentStyles = props => {
 				responsive="all"
 				styleRule="alignSelf"
 				attrName="columnAlign"
+				key="columnAlign"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -31,6 +32,7 @@ const AlignmentStyles = props => {
 				selectorCallback={ selectorCallback }
 				styleRule="alignItems"
 				attrName="rowAlign"
+				key="rowAlign-save"
 				responsive="all"
 				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
 				dependencies={ [ 'innerBlockOrientation' ] }
@@ -41,6 +43,7 @@ const AlignmentStyles = props => {
 				selectorCallback={ editorSelectorCallback }
 				styleRule="alignItems"
 				attrName="rowAlign"
+				key="rowAlign"
 				responsive="all"
 				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
 				dependencies={ [ 'innerBlockOrientation' ] }

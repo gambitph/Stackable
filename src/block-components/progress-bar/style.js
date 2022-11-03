@@ -21,12 +21,14 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="--progress-max"
 				attrName="progressMax"
+				key="progressMax"
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
 				styleRule="--progress-value"
 				attrName="progressValue"
+				key="progressValue"
 				format={ ! isCircle ? '%s%' : undefined }
 			/>
 			{ ! isCircle && (
@@ -35,6 +37,7 @@ const Styles = props => {
 					selector={ selector }
 					styleRule="--progress-color-1"
 					attrName="progressColor1"
+					key="progressColor1-bar"
 					dependencies={ [ 'progressColorType', 'progressColor2' ] }
 				/>
 			) }
@@ -44,6 +47,7 @@ const Styles = props => {
 					selector={ selector }
 					styleRule="--progress-color-1"
 					attrName="progressColor1"
+					key="progressColor1-circle"
 					dependencies={ [ 'progressColorType', 'progressColor2' ] }
 					renderIn="save"
 					valuePreCallback={ ( value, getAttribute ) => {
@@ -60,6 +64,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="--progress-background"
 				attrName="progressBackgroundColor"
+				key="progressBackgroundColor"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -67,6 +72,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="--progress-size"
 				attrName="progressSize"
+				key="progressSize"
 				format="%spx"
 			/>
 			{ /* Only use these stylRules when it's a circular progress */ }
@@ -78,6 +84,7 @@ const Styles = props => {
 						renderIn="edit"
 						styleRule="--progress-color-1"
 						attrName="progressColor1"
+						key="progressColor1-circle-var"
 						valuePreCallback={ ( value, getAttribute ) => {
 							if ( getAttribute( 'progressColorType' ) === 'gradient' ) {
 								// generate custom identifier on the editor as uniqueId can be blank.
@@ -98,6 +105,7 @@ const Styles = props => {
 						selector={ selector }
 						styleRule="--progress-rounded"
 						attrName="progressRounded"
+						key="progressRounded"
 						valuePreCallback={ value => {
 							if ( typeof value === 'string' || value === false ) {
 								return undefined
@@ -111,6 +119,7 @@ const Styles = props => {
 						responsive="all"
 						styleRule="--progress-thickness"
 						attrName="progressThickness"
+						key="progressThickness"
 						format="%spx"
 					/>
 				</>
@@ -123,6 +132,7 @@ const Styles = props => {
 						selector={ selector }
 						styleRule="--progress-bar-width"
 						attrName="progressWidth"
+						key="progressWidth"
 						hasUnits="%"
 						responsive="all"
 						dependencies={ [ 'progressWidthUnit' ] }
@@ -132,6 +142,7 @@ const Styles = props => {
 						selector={ selector }
 						styleRule="--progress-border-radius"
 						attrName="progressBorderRadius"
+						key="progressBorderRadius"
 						hasUnits="px"
 					/>
 					<BlockCss
@@ -139,6 +150,7 @@ const Styles = props => {
 						selector={ selector }
 						styleRule="--progress-bar-border-radius"
 						attrName="progressApplyBarRadius"
+						key="progressApplyBarRadius"
 						valuePreCallback={ ( value, getAttribute ) => {
 							const borderRadius = getAttribute( 'progressBorderRadius' )
 							return value ? borderRadius : undefined
@@ -151,6 +163,7 @@ const Styles = props => {
 						selector=".stk-progress-bar__bar.stk--has-background-overlay:before"
 						styleRule="mixBlendMode"
 						attrName="progressColorGradientBlendMode"
+						key="progressColorGradientBlendMode"
 						enabledCallback={ getAttribute => getAttribute( 'progressColorType' ) === 'gradient' }
 						dependencies={ [ 'progressColorType' ] }
 					/>
@@ -159,6 +172,7 @@ const Styles = props => {
 						selector=".stk-progress-bar__bar.stk--has-background-overlay:before"
 						styleRule="backgroundImage"
 						attrName="progressColor1"
+						key="progressColor1-overlay"
 						enabledCallback={ getAttribute => getAttribute( 'progressColorType' ) === 'gradient' }
 						valueCallback={ ( value, getAttribute ) => {
 							if ( ! getAttribute( 'progressColor2' ) ) {

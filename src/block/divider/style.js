@@ -57,6 +57,7 @@ const Styles = props => {
 					return 'background'
 				} }
 				attrName="color"
+				key="color"
 				dependencies={ [ 'className' ] }
 			/>
 			<BlockCss
@@ -64,6 +65,7 @@ const Styles = props => {
 				selector=".stk-block-divider__dot:before"
 				styleRule="fontSize"
 				attrName="height"
+				key="height-dot"
 				responsive="all"
 				format="calc(%spx * 1.8)"
 				enabledCallback={ getAttribute => {
@@ -77,6 +79,7 @@ const Styles = props => {
 				selector="hr.stk-block-divider__hr"
 				styleRule="borderRadius"
 				attrName="height"
+				key="height-hr"
 				responsive="all"
 				format="calc(%spx / 2)"
 				enabledCallback={ getAttribute => {
@@ -90,6 +93,7 @@ const Styles = props => {
 				selector=".stk-block-divider__dot"
 				styleRule="width"
 				attrName="height"
+				key="height-dot-width"
 				responsive="all"
 				format="%spx"
 				enabledCallback={ getAttribute => {
@@ -110,6 +114,7 @@ const Styles = props => {
 				} }
 				styleRule="height"
 				attrName="height"
+				key="height-hr-height"
 				format="%spx"
 				responsive="all"
 				dependencies={ [ 'className' ] }
@@ -126,6 +131,7 @@ const Styles = props => {
 				} }
 				styleRule="width"
 				attrName="width"
+				key="width"
 				format="%s%"
 				responsive="all"
 				dependencies={ [ 'className' ] }

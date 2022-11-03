@@ -19,6 +19,7 @@ const Styles = props => {
 				selector=".%s-column"
 				styleRule="--stk-column-gap"
 				attrName="columnGap"
+				key="columnGap-save"
 				format="%spx"
 				responsive="all"
 			/>
@@ -28,6 +29,7 @@ const Styles = props => {
 				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
 				styleRule="--stk-column-gap"
 				attrName="columnGap"
+				key="columnGap"
 				format="%spx"
 				responsive="all"
 			/>
@@ -37,6 +39,7 @@ const Styles = props => {
 				selector=".%s-column"
 				styleRule="rowGap"
 				attrName="rowGap"
+				key="rowGap-save"
 				format="%spx"
 				responsive="all"
 			/>
@@ -46,6 +49,7 @@ const Styles = props => {
 				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
 				styleRule="rowGap"
 				attrName="rowGap"
+				key="rowGap"
 				format="%spx"
 				responsive="all"
 			/>
@@ -55,6 +59,7 @@ const Styles = props => {
 				selector=".%s-column"
 				styleRule="justifyContent"
 				attrName="columnFitAlign"
+				key="columnFitAlign-save"
 				responsive="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
 				dependencies={ [ 'columnFit' ] }
@@ -65,6 +70,7 @@ const Styles = props => {
 				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
 				styleRule="justifyContent"
 				attrName="columnFitAlign"
+				key="columnFitAlign"
 				responsive="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
 				dependencies={ [ 'columnFit' ] }

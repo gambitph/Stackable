@@ -125,6 +125,7 @@ const Styles = props => {
 				selector=""
 				styleRule="--stk-columns"
 				attrName="columns"
+				key="columns"
 				responsive="all"
 			/>
 			<BlockCss
@@ -133,6 +134,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="--stk-container-padding-left"
 				attrName="containePadding"
+				key="containePadding"
 				hasUnits="px"
 				valueCallback={ value => value?.left }
 			/>
@@ -142,6 +144,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="--stk-container-padding-right"
 				attrName="containePadding"
+				key="containePadding-right"
 				hasUnits="px"
 				valueCallback={ value => value?.right }
 			/>
@@ -150,6 +153,7 @@ const Styles = props => {
 				selector=""
 				styleRule="--stk-column-gap"
 				attrName="columnGap"
+				key="columnGap"
 				format="%spx"
 				responsive="all"
 			/>
@@ -160,6 +164,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="maxWidth"
 				attrName="innerBlockContentWidth"
+				key="innerBlockContentWidth"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -167,6 +172,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="marginLeft"
 				attrName="innerBlockAlign"
+				key="innerBlockAlign-margin-left"
 				valueCallback={ ( value, getAttribute, device ) => {
 					if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
 						return undefined
@@ -184,6 +190,7 @@ const Styles = props => {
 				responsive="all"
 				styleRule="marginRight"
 				attrName="innerBlockAlign"
+				key="innerBlockAlign"
 				valueCallback={ ( value, getAttribute, device ) => {
 					if ( getAttribute( 'innerBlockContentWidth', device ) === undefined || getAttribute( 'innerBlockContentWidth', device ) === '' ) {
 						return undefined
@@ -202,6 +209,7 @@ const Styles = props => {
 				selector={ `${ itemSelector } .stk-button` }
 				styleRule="background"
 				attrName="categoryHighlightColor"
+				key="categoryHighlightColor-button"
 				enabledCallback={ getAttribute => getAttribute( 'categoryHighlighted' ) }
 				dependencies={ [ 'categoryHighlighted' ] }
 			/>
@@ -210,6 +218,7 @@ const Styles = props => {
 				selector={ `${ itemSelector } .stk-button:after` }
 				styleRule="background"
 				attrName="categoryHighlightColor"
+				key="categoryHighlightColor-button-after"
 				hoverSelectorCallback={ getAttribute => getAttribute( 'categoryHoverStateInContainer' )
 					? `${ itemSelector }:hover .stk-button:after`
 					: `${ itemSelector } .stk-button:hover:after` }
@@ -229,6 +238,7 @@ const Styles = props => {
 				selector={ `${ itemSelector } .stk-button:after` }
 				styleRule="opacity"
 				attrName="categoryHighlightColor"
+				key="categoryHighlightColor-opacity"
 				hoverSelectorCallback={ getAttribute => getAttribute( 'categoryHoverStateInContainer' )
 					? `${ itemSelector }:hover .stk-button:after`
 					: `${ itemSelector } .stk-button:hover:after` }
@@ -250,6 +260,7 @@ const Styles = props => {
 				selector={ `${ itemSelector } .stk-block-posts__image-link` }
 				styleRule="marginBottom"
 				attrName="imageSpacing"
+				key="imageSpacing"
 				format="%spx"
 				responsive="all"
 			/>
@@ -258,6 +269,7 @@ const Styles = props => {
 				selector=".stk-block-posts__title"
 				styleRule="marginBottom"
 				attrName="titleSpacing"
+				key="titleSpacing"
 				format="%spx"
 				responsive="all"
 			/>
@@ -266,6 +278,7 @@ const Styles = props => {
 				selector=".stk-block-posts__category"
 				styleRule="marginBottom"
 				attrName="categorySpacing"
+				key="categorySpacing"
 				format="%spx"
 				responsive="all"
 			/>
@@ -274,6 +287,7 @@ const Styles = props => {
 				selector=".stk-block-posts__excerpt"
 				styleRule="marginBottom"
 				attrName="excerptSpacing"
+				key="excerptSpacing"
 				format="%spx"
 				responsive="all"
 			/>
@@ -282,6 +296,7 @@ const Styles = props => {
 				selector=".stk-block-posts__meta"
 				styleRule="marginBottom"
 				attrName="metaSpacing"
+				key="metaSpacing"
 				format="%spx"
 				responsive="all"
 			/>
@@ -290,6 +305,7 @@ const Styles = props => {
 				selector=".stk-block-posts__readmore"
 				styleRule="marginBottom"
 				attrName="readmoreSpacing"
+				key="readmoreSpacing"
 				format="%spx"
 				responsive="all"
 			/>
@@ -299,6 +315,7 @@ const Styles = props => {
 				selector=".stk-container-padding"
 				styleRule="width"
 				attrName="imageWidth"
+				key="imageWidth"
 				responsive="all"
 				valueCallback={ ( value, getAttribute, device ) => {
 					if ( getAttribute( 'imageWidthUnit', device ) === '%' && value !== undefined && value !== '' ) {

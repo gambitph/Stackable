@@ -51,6 +51,7 @@ const Styles = props => {
 						hoverSelector={ '.%s:hover ' + key }
 						styleRule="listStyleImage"
 						attrName="markerColor"
+						key="markerColor"
 						valuePreCallback={ ( value, getAttribute, device, state ) => {
 							const iconRotation = getAttribute( 'iconRotation' )
 							const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
@@ -74,6 +75,7 @@ const Styles = props => {
 						hoverSelector={ '.%s:hover ' + key }
 						styleRule="listStyleImage"
 						attrName="markerColor"
+						key="markerColor-save"
 						valuePreCallback={ ( value, getAttribute, device, state ) => {
 							const iconRotation = getAttribute( 'iconRotation' )
 							const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
@@ -97,6 +99,7 @@ const Styles = props => {
 				selector="li"
 				styleRule="paddingInlineStart"
 				attrName="iconGap"
+				key="iconGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -105,12 +108,14 @@ const Styles = props => {
 				selector="ol"
 				styleRule="listStyleType"
 				attrName="listType"
+				key="listType"
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector=""
 				styleRule="columnCount"
 				attrName="columns"
+				key="columns"
 				responsive="all"
 			/>
 			<BlockCss
@@ -118,6 +123,7 @@ const Styles = props => {
 				selector=""
 				styleRule="columnGap"
 				attrName="columnGap"
+				key="columnGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -126,6 +132,7 @@ const Styles = props => {
 				selector="li"
 				styleRule="marginBottom"
 				attrName="rowGap"
+				key="rowGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -134,6 +141,7 @@ const Styles = props => {
 				selector={ [ 'ul', 'ol' ] }
 				styleRule="paddingLeft"
 				attrName="indentation"
+				key="indentation"
 				responsive="all"
 				format="%spx"
 			/>
@@ -144,6 +152,7 @@ const Styles = props => {
 				hoverSelector=".%s:hover li"
 				styleRule="listStyleImage"
 				attrName="markerColor"
+				key="markerColor"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					const iconSVG = getAttribute( 'icon' )
 					const iconRotation = getAttribute( 'iconRotation' )
@@ -170,12 +179,14 @@ const Styles = props => {
 				hoverSelector=".%s:hover li::marker"
 				styleRule="color"
 				attrName="markerColor"
+				key="markerColor-hover"
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector="li::marker"
 				styleRule="fontSize"
 				attrName="iconSize"
+				key="iconSize"
 				responsive="all"
 				format="%sem"
 			/>
@@ -187,6 +198,7 @@ const Styles = props => {
 				selector=""
 				styleRule="--stk-icon-height"
 				attrName="iconSize"
+				key="iconSize-picker"
 				responsive="all"
 				format="%sem"
 			/>
@@ -195,6 +207,7 @@ const Styles = props => {
 				selector={ [ 'li' ] }
 				styleRule="marginInline"
 				attrName="listAlignment"
+				key="listAlignment"
 				responsive="all"
 				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
 			/>

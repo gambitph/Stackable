@@ -44,6 +44,7 @@ const Styles = props => {
 				renderIn="edit"
 				styleRule="width"
 				attrName="imageWidth"
+				key="imageWidth"
 				hasUnits="%"
 				unitCallback={ widthUnitCallback }
 				responsive="all"
@@ -55,6 +56,7 @@ const Styles = props => {
 				renderIn="save"
 				styleRule={ widthStyleRule || 'width' }
 				attrName="imageWidth"
+				key="imageWidth-save"
 				hasUnits="%"
 				unitCallback={ widthUnitCallback }
 				responsive="all"
@@ -66,6 +68,7 @@ const Styles = props => {
 				renderIn="edit"
 				styleRule="height"
 				attrName="imageHeight"
+				key="imageHeight"
 				hasUnits="px"
 				unitCallback={ heightUnitCallback }
 				responsive="all"
@@ -77,6 +80,7 @@ const Styles = props => {
 				renderIn="save"
 				styleRule="height"
 				attrName="imageHeight"
+				key="imageHeight-save"
 				hasUnits="px"
 				unitCallback={ heightUnitCallback }
 				responsive="all"
@@ -96,6 +100,7 @@ const Styles = props => {
 				renderIn="edit"
 				styleRule="filter"
 				attrName="imageShadow"
+				key="imageShadow"
 				format="drop-shadow(%s)"
 				hover="all"
 			/>
@@ -106,6 +111,7 @@ const Styles = props => {
 				renderIn="save"
 				styleRule="filter"
 				attrName="imageShadow"
+				key="imageShadow-save"
 				format="drop-shadow(%s)"
 				hover="all"
 			/>
@@ -116,6 +122,7 @@ const Styles = props => {
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="filter"
 				attrName="imageFilter"
+				key="imageFilter"
 				hover="all"
 			/>
 			<BlockCss
@@ -125,6 +132,7 @@ const Styles = props => {
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="transform"
 				attrName="imageZoom"
+				key="imageZoom"
 				format="scale(%s)"
 				hover="all"
 			/>
@@ -141,6 +149,7 @@ const Styles = props => {
 				renderIn="edit"
 				styleRule="borderRadius"
 				attrName="imageBorderRadius"
+				key="imageBorderRadius"
 				format="%spx"
 			/>
 			<BlockCss
@@ -149,6 +158,7 @@ const Styles = props => {
 				renderIn="save"
 				styleRule="borderRadius"
 				attrName="imageBorderRadius"
+				key="imageBorderRadius-save"
 				format="%spx"
 			/>
 			<BlockCss
@@ -158,6 +168,7 @@ const Styles = props => {
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="objectPosition"
 				attrName="imageFocalPoint"
+				key="imageFocalPoint"
 				valueCallback={ focalPointToPosition }
 				responsive="all"
 				hover="all"
@@ -167,6 +178,7 @@ const Styles = props => {
 				selector={ `${ selector } img` }
 				styleRule="objectFit"
 				attrName="imageFit"
+				key="imageFit"
 				responsive="all"
 			/>
 
@@ -183,6 +195,7 @@ const Styles = props => {
 				styleRule="mask-image"
 				vendorPrefixes={ [ '-webkit-' ] }
 				attrName="imageShape"
+				key="imageShape"
 				responsive="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'imageShape' ) }
 				valueCallback={ ( value, getAttribute ) => {
@@ -201,6 +214,7 @@ const Styles = props => {
 				styleRule="mask-image"
 				vendorPrefixes={ [ '-webkit-' ] }
 				attrName="imageShape"
+				key="imageShape-save"
 				responsive="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'imageShape' ) }
 				valueCallback={ ( value, getAttribute ) => {
@@ -216,6 +230,7 @@ const Styles = props => {
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="backgroundColor"
 				attrName="imageOverlayColor"
+				key="imageOverlayColor-save"
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient' }
 				dependencies={ [ 'imageOverlayColorType' ] }
@@ -228,6 +243,7 @@ const Styles = props => {
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="backgroundColor"
 				attrName="imageOverlayColor"
+				key="imageOverlayColor"
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient' }
 				dependencies={ [ 'imageOverlayColorType' ] }
@@ -239,6 +255,7 @@ const Styles = props => {
 				hoverSelector={ `${ selector }::before` }
 				styleRule="backgroundImage"
 				attrName="imageOverlayColor"
+				key="imageOverlayColor-save-image"
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient' }
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
@@ -308,6 +325,7 @@ const Styles = props => {
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="backgroundImage"
 				attrName="imageOverlayColor"
+				key="imageOverlayColor-image"
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient' }
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
@@ -376,6 +394,7 @@ const Styles = props => {
 				hoverSelector={ `${ selector }::before` }
 				styleRule="--stk-gradient-overlay"
 				attrName="imageOverlayOpacity"
+				key="imageOverlayOpacity-save"
 				hover="all"
 			/>
 			<BlockCss
@@ -385,6 +404,7 @@ const Styles = props => {
 				hoverSelector={ `${ selector } .stk-img-resizer-wrapper::before` }
 				styleRule="--stk-gradient-overlay"
 				attrName="imageOverlayOpacity"
+				key="imageOverlayOpacity"
 				hover="all"
 			/>
 			<BlockCss
@@ -393,6 +413,7 @@ const Styles = props => {
 				selector={ `${ selector }::after, ${ selector }::before` }
 				styleRule="mix-blend-mode"
 				attrName="imageOverlayBlendMode"
+				key="imageOverlayBlendMode-save"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -401,6 +422,7 @@ const Styles = props => {
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="mix-blend-mode"
 				attrName="imageOverlayBlendMode"
+				key="imageOverlayBlendMode"
 			/>
 		</>
 	)

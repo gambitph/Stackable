@@ -27,6 +27,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="minHeight"
 				attrName="height"
+				key="height"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
@@ -37,6 +38,7 @@ const Styles = props => {
 				selector={ verticalAlignSelector || selector }
 				styleRule={ verticalAlignRule || 'alignItems' }
 				attrName="verticalAlign"
+				key="verticalAlign-save"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 			/>
@@ -46,6 +48,7 @@ const Styles = props => {
 				selector={ verticalAlignSelectorEdit || verticalAlignSelector || selector }
 				styleRule="justifyContent"
 				attrName="verticalAlign"
+				key="verticalAlign"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 			/>
@@ -54,6 +57,7 @@ const Styles = props => {
 				selector={ wrapperSelector || selector }
 				styleRule="maxWidth"
 				attrName="width"
+				key="width-maxwidth"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
@@ -63,6 +67,7 @@ const Styles = props => {
 				selector={ wrapperSelector || selector }
 				styleRule="minWidth"
 				attrName="width"
+				key="width-minwidth"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -77,6 +82,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="paddingTop"
 				attrName="padding"
+				key="padding-top"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -88,6 +94,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="paddingRight"
 				attrName="padding"
+				key="padding-right"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -99,6 +106,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="paddingBottom"
 				attrName="padding"
+				key="padding-bottom"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -110,6 +118,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="paddingLeft"
 				attrName="padding"
+				key="padding-left"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -121,6 +130,7 @@ const Styles = props => {
 				selector={ wrapperSelector || selector }
 				styleRule="marginTop"
 				attrName="margin"
+				key="margin-top"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
@@ -134,6 +144,7 @@ const Styles = props => {
 				selector={ wrapperSelector || selector }
 				styleRule="marginRight"
 				attrName="margin"
+				key="margin-right"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
@@ -164,6 +175,7 @@ const Styles = props => {
 				selector={ wrapperSelector || selector }
 				styleRule="marginBottom"
 				attrName="margin"
+				key="margin-bottom"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
@@ -177,6 +189,7 @@ const Styles = props => {
 				selector={ wrapperSelector || selector }
 				styleRule="marginLeft"
 				attrName="margin"
+				key="margin-left"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
@@ -207,6 +220,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="display"
 				attrName="verticalAlign"
+				key="verticalAlign-display"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				valueCallback={ () => {
@@ -219,6 +233,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="flexDirection"
 				attrName="verticalAlign"
+				key="verticalAlign-save-flex"
 				responsive="all"
 				attrNameTemplate={ attrNameTemplate }
 				valueCallback={ () => {
@@ -231,6 +246,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="flexDirection"
 				attrName="verticalAlign"
+				key="verticalAlign-flex"
 				responsive="all"
 				attrNameTemplate={ attrNameTemplate }
 				valueCallback={ () => {
@@ -244,6 +260,7 @@ const Styles = props => {
 					selector={ wrapperSelector || selector }
 					styleRule={ horizontalAlignRule || 'justifyContent' }
 					attrName="horizontalAlign"
+					key="horizontalAlign"
 					attrNameTemplate={ attrNameTemplate }
 					responsive="all"
 				/> }

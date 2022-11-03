@@ -32,6 +32,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="textShadow"
 				attrName="textShadow"
+				key="textShadow"
 				hover="all"
 				hoverSelector={ hoverSelector }
 				hoverSelectorCallback={ hoverSelectorCallback }
@@ -43,6 +44,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="fontSize"
 				attrName="fontSize"
+				key="fontSize"
 				hasUnits="px"
 				responsive="all"
 				clampCallback={ ( _value, getAttribute, device, state ) => {
@@ -90,6 +92,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="margin"
 				attrName="textRemoveTextMargins"
+				key="textRemoveTextMargins"
 				valueCallback={ value => {
 					return value ? 0 : undefined
 				} }
@@ -105,6 +108,7 @@ const Styles = props => {
 				hoverSelector={ hoverSelector }
 				hoverSelectorCallback={ hoverSelectorCallback }
 				attrName="textColor1"
+				key="textColor1-color"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( getAttribute( 'textColorType', 'desktop', state ) === 'gradient' ) {
 						return undefined
@@ -120,6 +124,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="backgroundImage"
 				attrName="textColor1"
+				key="textColor1-image"
 				valuePreCallback={ ( value, getAttribute ) => {
 					if ( getAttribute( 'textColorType', 'desktop', 'normal' ) !== 'gradient' ) {
 						return undefined
@@ -158,6 +163,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="lineHeight"
 				attrName="lineHeight"
+				key="lineHeight"
 				responsive="all"
 				hasUnits="em"
 				dependencies={ dependencies }
@@ -169,6 +175,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="fontWeight"
 				attrName="fontWeight"
+				key="fontWeight"
 				dependencies={ dependencies }
 			/>
 			<BlockCss
@@ -178,6 +185,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="textTransform"
 				attrName="textTransform"
+				key="textTransform"
 				dependencies={ dependencies }
 			/>
 			<BlockCss
@@ -187,6 +195,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="fontStyle"
 				attrName="fontStyle"
+				key="fontStyle"
 				dependencies={ dependencies }
 			/>
 			<BlockCss
@@ -196,6 +205,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="fontFamily"
 				attrName="fontFamily"
+				key="fontFamily"
 				valueCallback={ value => getFontFamily( value ) }
 				dependencies={ dependencies }
 			/>
@@ -206,6 +216,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				styleRule="letterSpacing"
 				attrName="letterSpacing"
+				key="letterSpacing"
 				format="%spx"
 				dependencies={ dependencies }
 			/>

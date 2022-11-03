@@ -15,13 +15,13 @@ import {
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { select, dispatch } from '@wordpress/data'
+import { select } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const Controls = props => {
@@ -30,9 +30,13 @@ export const Controls = props => {
 	} = props
 
 	const { clientId } = useBlockEditContext()
-	const {
-		getAttribute, updateAttribute,
-	} = useAttributeEditHandlers()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			align: attributes.align,
+			columnFit: attributes.columnFit,
+		}
+	} )
+	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<>
@@ -41,7 +45,7 @@ export const Controls = props => {
 			<AdvancedToolbarControl
 				label={ __( 'Content Width', i18n ) }
 				attribute="innerBlockContentAlign"
-				default={ getAttribute( 'align' ) ? `align${ getAttribute( 'align' ) }` : '' }
+				default={ attributes.align ? `align${ attributes.align }` : '' }
 				controls={ [
 					{
 						value: '',
@@ -64,28 +68,27 @@ export const Controls = props => {
 				<>
 					<AdvancedToggleControl
 						label={ __( 'Fit all columns to content', i18n ) }
-						checked={ getAttribute( 'columnFit' ) }
+						checked={ attributes.columnFit }
 						onChange={ value => {
-							updateAttribute( 'columnFit', value ? true : '' )
+							const attributesToSave = { columnFit: value ? true : '' }
 
 							// When columnFit is changed, remove all column widths.
 							if ( value ) {
 								const { getBlock } = select( 'core/block-editor' )
-								const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 								getBlock( clientId ).innerBlocks.forEach( block => {
 									if ( block.name === 'stackable/column' ) {
 										// eslint-disable-next-line stackable/no-update-block-attributes
-										updateBlockAttributes( block.clientId, {
-											[ getAttributeName( 'columnWidth', 'desktop' ) ]: '',
-											[ getAttributeName( 'columnWidth', 'tablet' ) ]: '',
-											[ getAttributeName( 'columnWidth', 'mobile' ) ]: '',
-										} )
+										attributesToSave[ getAttributeName( 'columnWidth', 'desktop' ) ] = ''
+										attributesToSave[ getAttributeName( 'columnWidth', 'tablet' ) ] = ''
+										attributesToSave[ getAttributeName( 'columnWidth', 'mobile' ) ] = ''
 									}
 								} )
 							}
+
+							setAttributes( attributesToSave )
 						} }
 					/>
-					{ getAttribute( 'columnFit' ) &&
+					{ attributes.columnFit &&
 						<AdvancedToolbarControl
 							label={ __( 'Columns Alignment', i18n ) }
 							attribute="columnFitAlign"

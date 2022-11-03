@@ -21,6 +21,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="marginBottom"
 				attrName="blockMarginBottom"
+				key="blockMarginBottom"
 				responsive="all"
 				format="%spx"
 			/>

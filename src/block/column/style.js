@@ -56,6 +56,7 @@ const ColumnStyles = props => {
 				selector=".%s-container"
 				styleRule="marginTop"
 				attrName="columnSpacing"
+				key="columnSpacing-top"
 				responsive="all"
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginTop.valuePreCallback }
@@ -65,6 +66,7 @@ const ColumnStyles = props => {
 				selector=".%s-container"
 				styleRule="marginRight"
 				attrName="columnSpacing"
+				key="columnSpacing-right"
 				responsive="all"
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginRight.valuePreCallback }
@@ -74,6 +76,7 @@ const ColumnStyles = props => {
 				selector=".%s-container"
 				styleRule="marginBottom"
 				attrName="columnSpacing"
+				key="columnSpacing-bottom"
 				responsive="all"
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginBottom.valuePreCallback }
@@ -83,6 +86,7 @@ const ColumnStyles = props => {
 				selector=".%s-container"
 				styleRule="marginLeft"
 				attrName="columnSpacing"
+				key="columnSpacing-left"
 				responsive="all"
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginLeft.valuePreCallback }

@@ -25,6 +25,7 @@ const Styles = props => {
 				selector={ borderRadiusSelector || selector }
 				styleRule="borderRadius"
 				attrName="borderRadius"
+				key="borderRadius"
 				attrNameTemplate={ attrNameTemplate }
 				format="%spx"
 				responsive="all"
@@ -38,6 +39,7 @@ const Styles = props => {
 				selector={ borderRadiusSelector || selector }
 				styleRule="overflow"
 				attrName="borderRadius"
+				key="borderRadius-overflow"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -56,6 +58,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="boxShadow"
 				attrName="shadow"
+				key="shadow"
 				attrNameTemplate={ attrNameTemplate }
 				hover="all"
 				hoverSelector={ hoverSelector }
@@ -65,6 +68,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="borderStyle"
 				attrName="borderType"
+				key="borderType"
 				attrNameTemplate={ attrNameTemplate }
 			/>
 			<BlockCss
@@ -72,6 +76,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="borderColor"
 				attrName="borderColor"
+				key="borderColor"
 				attrNameTemplate={ attrNameTemplate }
 				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
 				hover="all"
@@ -83,6 +88,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="borderTopWidth"
 				attrName="borderWidth"
+				key="borderWidth-top"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -97,6 +103,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="borderRightWidth"
 				attrName="borderWidth"
+				key="borderWidth-right"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -111,6 +118,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="borderBottomWidth"
 				attrName="borderWidth"
+				key="borderWidth-bottom"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"
@@ -125,6 +133,7 @@ const Styles = props => {
 				selector={ selector }
 				styleRule="borderLeftWidth"
 				attrName="borderWidth"
+				key="borderWidth-left"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hover="all"

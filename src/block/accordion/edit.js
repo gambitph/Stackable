@@ -30,7 +30,9 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useAttributeEditHandlers, useBlockContext } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
+} from '~stackable/hooks'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
@@ -186,10 +188,9 @@ export default compose(
 
 // Add another icon picker to the Icon block for picking the icon for the opened accordion.
 addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {
-	const {
-		getAttribute,
-		updateAttributeHandler,
-	} = useAttributeEditHandlers()
+	const icon2 = useBlockAttributesContext( attributes => attributes.icon2 )
+	const setAttributes = useBlockSetAttributesContext()
+
 	const { parentTree } = useBlockContext()
 	const { getBlock } = useSelect( 'core/block-editor' )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
@@ -213,9 +214,9 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 				{ output }
 				<IconControl
 					label={ __( 'Open Icon', i18n ) }
-					value={ getAttribute( 'icon2' ) }
+					value={ icon2 }
 					defaultValue={ defaultValue }
-					onChange={ updateAttributeHandler( 'icon2' ) }
+					onChange={ icon2 => setAttributes( { icon2 } ) }
 					help={ __( 'The open icon will appear when the accordion is opened', i18n ) }
 				/>
 			</>

@@ -37,6 +37,7 @@ const Styles = props => {
 				selector=""
 				styleRule="columnCount"
 				attrName="columns"
+				key="columns"
 				responsive="all"
 			/>
 			<BlockCss
@@ -44,6 +45,7 @@ const Styles = props => {
 				selector=""
 				styleRule="columnGap"
 				attrName="columnGap"
+				key="columnGap"
 				responsive="all"
 				format="%spx"
 			/>

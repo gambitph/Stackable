@@ -43,6 +43,7 @@ const Styles = props => {
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
 				styleRule="width"
 				attrName="buttonFullWidth"
+				key="buttonFullWidth"
 				valueCallback={ value => {
 					return value ? '100%' : undefined
 				} }

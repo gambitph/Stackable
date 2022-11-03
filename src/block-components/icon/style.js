@@ -45,6 +45,7 @@ const Styles = props => {
 				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ) }
 				styleRule="height"
 				attrName="iconSize"
+				key="iconSize"
 				responsive="all"
 				format="%spx"
 			/>
@@ -54,6 +55,7 @@ const Styles = props => {
 				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ) }
 				styleRule="width"
 				attrName="iconSize"
+				key="iconSize-width"
 				responsive="all"
 				format="%spx"
 			/>
@@ -63,6 +65,7 @@ const Styles = props => {
 				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ) }
 				styleRule="opacity"
 				attrName="iconOpacity"
+				key="iconOpacity"
 				hover="all"
 			/>
 			<BlockCss
@@ -71,6 +74,7 @@ const Styles = props => {
 				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ) }
 				styleRule="transform"
 				attrName="iconRotation"
+				key="iconRotation"
 				hover="all"
 				format="rotate(%sdeg)"
 			/>
@@ -80,6 +84,7 @@ const Styles = props => {
 				hoverSelectorCallback={ getAttribute => getSvgSelector( getAttribute, hoverSelector ) }
 				styleRuleCallback={ getAttribute => getAttribute( 'iconPosition' ) === 'right' ? 'marginInlineStart' : 'marginInlineEnd' }
 				attrName="iconGap"
+				key="iconGap"
 				format={ `%spx` }
 				dependencies={ [ 'iconPosition' ] }
 			/>
@@ -89,6 +94,7 @@ const Styles = props => {
 				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ) }
 				styleRule="fill"
 				attrName="iconColor1"
+				key="iconColor1-fill"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( getAttribute( 'iconColorType' ) === 'gradient' && getAttribute( 'iconColor1', 'desktop', state ) && getAttribute( 'iconColor2', 'desktop', state ) ) {
 						return `url(#linear-gradient-${ getAttribute( 'uniqueId' ) })`
@@ -109,6 +115,7 @@ const Styles = props => {
 				styleRule="transform"
 				format="rotate(%sdeg)"
 				attrName="iconColorGradientDirection"
+				key="iconColorGradientDirection"
 				hoverSelectorCallback={ getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
 			/>
 			<BlockCss
@@ -116,6 +123,7 @@ const Styles = props => {
 				selectorCallback={ getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
 				styleRuleCallback={ getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-1` }
 				attrName="iconColor1"
+				key="iconColor1"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
 					     ! getAttribute( 'iconColor1', 'desktop', state ) ||
@@ -133,6 +141,7 @@ const Styles = props => {
 				selectorCallback={ getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
 				styleRuleCallback={ getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-2` }
 				attrName="iconColor2"
+				key="iconColor2"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
 					! getAttribute( 'iconColor1', 'desktop', state ) ||
@@ -153,6 +162,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="backgroundColor"
 				attrName="shapeColor1"
+				key="shapeColor1"
 				hover="all"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					const shapeColorType = getAttribute( 'shapeColorType' )
@@ -170,6 +180,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="borderRadius"
 				attrName="shapeBorderRadius"
+				key="shapeBorderRadius"
 				format={ `%s%` }
 				hover="all"
 			/>
@@ -179,6 +190,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="padding"
 				attrName="shapePadding"
+				key="shapePadding"
 				format={ `%spx` }
 			/>
 			<BlockCss
@@ -187,6 +199,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="borderColor"
 				attrName="shapeOutlineColor"
+				key="shapeOutlineColor"
 				hover="all"
 			/>
 			<BlockCss
@@ -195,6 +208,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="borderStyle"
 				attrName="borderStyle"
+				key="borderStyle"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if (
 						! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.top ||
@@ -216,6 +230,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="borderTopWidth"
 				attrName="shapeOutlineWidth"
+				key="shapeOutlineWidth-top"
 				responsive="all"
 				format="%spx"
 				valuePreCallback={ value => value?.top }
@@ -226,6 +241,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="borderRightWidth"
 				attrName="shapeOutlineWidth"
+				key="shapeOutlineWidth-right"
 				responsive="all"
 				format="%spx"
 				valuePreCallback={ value => value?.right }
@@ -236,6 +252,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="borderBottomWidth"
 				attrName="shapeOutlineWidth"
+				key="shapeOutlineWidth-bottom"
 				responsive="all"
 				format="%spx"
 				valuePreCallback={ value => value?.bottom }
@@ -246,6 +263,7 @@ const Styles = props => {
 				hoverSelector={ shapeHoverSelector }
 				styleRule="borderLeftWidth"
 				attrName="shapeOutlineWidth"
+				key="shapeOutlineWidth-left"
 				responsive="all"
 				format="%spx"
 				valuePreCallback={ value => value?.left }

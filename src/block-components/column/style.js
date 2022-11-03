@@ -23,6 +23,7 @@ const ColumnStyles = props => {
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="flex"
 				attrName="columnWidth"
+				key="columnWidth-flex"
 				responsive={ [ 'desktopTablet', 'tabletOnly', 'mobile' ] }
 				format="1 1 %s%"
 				dependencies={ [ 'columnAdjacentCount' ] }
@@ -46,6 +47,7 @@ const ColumnStyles = props => {
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="maxWidth"
 				attrName="columnWidth"
+				key="columnWidth-maxwidth"
 				responsive={ [ 'desktopTablet', 'tabletOnly', 'mobile' ] }
 				format="%s%"
 				dependencies={ [ 'columnAdjacentCount' ] }
@@ -63,6 +65,7 @@ const ColumnStyles = props => {
 				selector={ selector }
 				styleRule="flex"
 				attrName="columnWidth"
+				key="columnWidth-save-flex"
 				responsive={ [ 'desktopTablet', 'tabletOnly', 'mobile' ] }
 				format="1 1 %s%"
 				dependencies={ [ 'columnAdjacentCount' ] }
