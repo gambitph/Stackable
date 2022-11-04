@@ -20,4 +20,19 @@
 	.component-color-indicator {
 		margin-left: 8px;
 	}
+
+	// Color button label outline.
+	.block-editor-tools-panel-color-gradient-settings__dropdown {
+		border: 1px solid rgba(0, 0, 0, 0.1);
+	}
+
+	.stk-control__reset-button {
+		margin-top: 6px;
+	}
+}
+
+// Popover container.
+.stk-color-palette-control__popover-content {
+	width: 260px;
+	padding: 8px;
 }
