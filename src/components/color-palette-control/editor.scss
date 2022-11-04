@@ -24,6 +24,10 @@
 	// Color button label outline.
 	.block-editor-tools-panel-color-gradient-settings__dropdown {
 		border: 1px solid rgba(0, 0, 0, 0.1);
+		width: 100%; // WP 6.0 support.
+	}
+	.block-editor-panel-color-gradient-settings__dropdown {
+		height: 40px; // WP 6.0 support.
 	}
 
 	.stk-control__reset-button {
