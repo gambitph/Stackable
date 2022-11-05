@@ -96,9 +96,32 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkResponsive: true,
 			},
+			useThemeTextMargins: {
+				type: 'boolean',
+				default: '',
+			},
+			// We need to put the anchor here because the deprecation will fail
+			// without it (Gutenberg bug).
+			anchor: {
+				attribute: 'id',
+				selector: '*',
+				source: 'attribute',
+				type: 'string',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
+	} )
+
+	attrObject.add( {
+		attributes: {
+			textRemoveTextMargins: {
+				type: 'boolean',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '3.6.2',
 	} )
 
 	return attrObject.getMerged( version )

@@ -4,3 +4,9 @@
 	height: 4px;
 	background-color: #000;
 }
+// Don't follow theme margins.
+.stk-block-heading--v2 {
+	.stk-block-heading__text:not(.stk-block-heading--use-theme-margins) {
+		margin: 0 !important;
+	}
+}

@@ -135,8 +135,8 @@ export const Controls = props => {
 			) }
 			{ hasRemoveMargins && (
 				<AdvancedToggleControl
-					label={ __( 'Remove extra text margins', i18n ) }
-					attribute={ attributeName( 'textRemoveTextMargins' ) }
+					label={ __( 'Use theme heading margins', i18n ) }
+					attribute={ attributeName( 'useThemeTextMargins' ) }
 				/>
 			) }
 

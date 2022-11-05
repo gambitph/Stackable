@@ -22,8 +22,9 @@ import { withVersion } from '~stackable/higher-order'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
-const Save = props => {
+export const Save = props => {
 	const {
 		className,
 		attributes,
@@ -33,17 +34,20 @@ const Save = props => {
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
-	const blockClassNames = classnames( [
+	const blockClassNames = classnames( applyFilters( 'stackable.heading.save.blockClassNames', [
 		className,
 		'stk-block-heading',
 		responsiveClass,
-	] )
+		'stk-block-heading--v2',
+	], props ) )
 
 	const textClassNames = classnames( [
 		'stk-block-heading__text',
 		textClasses,
 		blockAlignmentClass,
-	] )
+	], {
+		'stk-block-heading--use-theme-margins': attributes.useThemeTextMargins,
+	} )
 
 	return (
 		<BlockDiv.Content
