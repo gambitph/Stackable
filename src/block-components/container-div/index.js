@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import { Div } from '~stackable/components'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
 import { useBlockAttributesContext } from '~stackable/hooks'
+import { applyFilters } from '@wordpress/hooks'
 
 export const ContainerDiv = props => {
 	const attributes = useBlockAttributesContext( attributes => {
@@ -22,11 +23,12 @@ export const ContainerDiv = props => {
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
 	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
 	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass
+	const uniqueContainerClass = applyFilters( 'stackable.container-div.uniqueClass.edit', `${ uniqueBlockClass }-container`, uniqueBlockClass )
 
 	const classNames = classnames( [
 		props.className,
 		'stk-container',
-		`${ uniqueBlockClass }-container`,
+		uniqueContainerClass,
 	], {
 		'stk-hover-parent': attributes.hasContainer && attributes.triggerHoverState, // This is needed to trigger parent-hovered hover styles.
 		'stk--no-background': ! attributes.hasContainer,
@@ -54,10 +56,12 @@ ContainerDiv.Content = props => {
 		...propsToPass
 	} = props
 
+	const uniqueContainerClass = applyFilters( 'stackable.container-div.uniqueClass.save', `stk-${ attributes.uniqueId }-container`, `stk-${ attributes.uniqueId }`, attributes )
+
 	const classNames = classnames( [
 		props.className,
 		'stk-container',
-		`stk-${ attributes.uniqueId }-container`,
+		uniqueContainerClass,
 	], {
 		'stk-hover-parent': attributes.hasContainer && attributes.triggerHoverState, // This is needed to trigger parent-hovered hover styles.
 		'stk--no-background': ! attributes.hasContainer,

@@ -24,7 +24,7 @@ import { useDynamicContent } from '../dynamic-content-control'
 export { BlockCssCompiler } from './block-css-compiler'
 import { useBlockAttributesContext } from '~stackable/hooks'
 import {
-	 getAttributeName, getAttrName, prependCSSClass, useQueryLoopInstanceId,
+	 getAttributeName, getAttrName, getUniqueBlockClass, prependCSSClass, useQueryLoopInstanceId,
 } from '~stackable/util'
 
 /**
@@ -36,6 +36,7 @@ import { pick, kebabCase } from 'lodash'
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 const BlockCss = props => {
 	const {
@@ -405,6 +406,13 @@ const BlockCss = props => {
 		}
 	}
 
+	// When saving, allow others to change the output css. We do this here for
+	// the save function, the edit does the filter in the BlockCssEdit
+	// component.
+	if ( ! props.editorMode ) {
+		css = applyFilters( 'stackable.block-styles.save', css, blockUniqueClassName, attributes )
+	}
+
 	return css || null
 }
 
@@ -433,7 +441,8 @@ const BlockCssEdit = props => {
 		instanceId,
 	} )
 
-	const output = useDynamicContent( css )
+	let output = useDynamicContent( css )
+	output = applyFilters( 'stackable.block-styles.edit', output, getUniqueBlockClass( attributes.uniqueId ) )
 
 	return css ? <style>{ output }</style> : null
 }
