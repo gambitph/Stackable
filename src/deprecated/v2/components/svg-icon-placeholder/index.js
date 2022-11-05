@@ -7,9 +7,7 @@ import { useState, useEffect } from '@wordpress/element'
 /**
  * External dependencies
  */
-import {
-	Button, IconSearchPopover,
-} from '~stackable/components'
+import { Button, IconSearchPopover } from '~stackable/components'
 
 /**
  * Internal dependencies
@@ -51,7 +49,7 @@ const SvgIconPlaceholder = withInstanceId( ( props => {
 			</Button>
 			{ ( ( isOpen !== null && isOpen ) || ( isOpen === null && openPopover ) ) &&
 				<IconSearchPopover
-					onClickOutside={ event => {
+					__deprecatedOnClickOutside={ event => {
 						// This statement checks whether the close was triggered by clicking on the button that opens this.
 						// This is needed or else the popup will always open when spam clicking the button.
 						if ( event.target ) {
@@ -63,6 +61,7 @@ const SvgIconPlaceholder = withInstanceId( ( props => {
 						setOpenPopover( false )
 						setClickedOnButton( false )
 					} }
+					__hasPopover={ true }
 					onClose={ () => setOpenPopover( false ) }
 					onChange={ onChange }
 				/>
