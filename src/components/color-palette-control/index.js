@@ -88,32 +88,39 @@ const ColorPaletteControl = memo( props => {
 		label: colorName || value,
 	}
 
+	const colorPalette = (
+		<ColorPalette
+			value={ value }
+			onChange={ value => {
+				// Allow the selected color to be overridden.
+				const colorObject = getColorObjectByColorValue( colors, value )
+				onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
+			} }
+			label={ colorName || value }
+			clearable={ false }
+			{ ...{ colors, disableCustomColors } }
+		/>
+	)
+
 	return (
 		<AdvancedControl
 			{ ...controlProps }
 			className={ classnames( [ className, 'editor-color-palette-control', 'stk-color-palette-control' ] ) }
 			label={ label }
 		>
-			<Dropdown
-				popoverProps={ popoverProps }
-				className="block-editor-tools-panel-color-gradient-settings__dropdown"
-				renderToggle={ renderToggle( toggleSettings ) }
-				renderContent={ () => (
-					<div className="stk-color-palette-control__popover-content">
-						<ColorPalette
-							value={ value }
-							onChange={ value => {
-								// Allow the selected color to be overridden.
-								const colorObject = getColorObjectByColorValue( colors, value )
-								onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
-							} }
-							label={ colorName || value }
-							clearable={ false }
-							{ ...{ colors, disableCustomColors } }
-						/>
-					</div>
-				) }
-			/>
+			{ props.isExpanded && colorPalette }
+			{ ! props.isExpanded && (
+				<Dropdown
+					popoverProps={ popoverProps }
+					className="block-editor-tools-panel-color-gradient-settings__dropdown"
+					renderToggle={ renderToggle( toggleSettings ) }
+					renderContent={ () => (
+						<div className="stk-color-palette-control__popover-content">
+							{ colorPalette }
+						</div>
+					) }
+				/>
+			) }
 			<ResetButton
 				allowReset={ props.allowReset }
 				value={ value }
@@ -132,6 +139,7 @@ ColorPaletteControl.defaultProps = {
 
 	value: undefined,
 	onChange: undefined,
+	isExpanded: false,
 }
 
 export default ColorPaletteControl
