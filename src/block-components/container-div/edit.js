@@ -15,6 +15,7 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedToggleControl,
+	InspectorBlockControls,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
@@ -39,40 +40,54 @@ export const Edit = props => {
 	const blockElBorder = useBlockEl( borderSelector )
 
 	return (
-		<InspectorStyleControls>
-			<PanelAdvancedSettings
-				title={ __( 'Container Background', i18n ) }
-				id="container"
-				hasToggle={ true }
-				checked={ hasContainer }
-				onChange={ hasContainer => setAttributes( { hasContainer } ) }
-			>
-				<AdvancedToggleControl
-					label={ __( 'Trigger hover state on nested blocks', i18n ) }
-					attribute="triggerHoverState"
-					defaultValue={ true }
-				/>
-				<BackgroundControls attrNameTemplate="container%s" />
-			</PanelAdvancedSettings>
-			<PanelAdvancedSettings
-				title={ __( 'Container Size & Spacing', i18n ) }
-				id="container-size"
-			>
-				<SizeControls
-					attrNameTemplate="container%s"
-					blockEl={ blockElSize }
-					enableMargin={ false }
-				/>
-			</PanelAdvancedSettings>
-			<PanelAdvancedSettings
-				title={ __( 'Container Borders & Shadow', i18n ) }
-				id="container-size"
-			>
-				<BorderControls
-					attrNameTemplate="container%s"
-					blockEl={ blockElBorder }
-				/>
-			</PanelAdvancedSettings>
-		</InspectorStyleControls>
+		<>
+			<InspectorBlockControls>
+				<PanelAdvancedSettings
+					title={ __( 'Container Layout', i18n ) }
+					id="container-layout"
+				>
+					<SizeControls.Layout
+						attrNameTemplate="container%s"
+						blockEl={ blockElSize }
+						enableMargin={ false }
+					/>
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Container Spacing', i18n ) }
+					id="container-size"
+				>
+					<SizeControls.Spacing
+						attrNameTemplate="container%s"
+						blockEl={ blockElSize }
+						enableMargin={ false }
+					/>
+				</PanelAdvancedSettings>
+			</InspectorBlockControls>
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Container Background', i18n ) }
+					id="container"
+					hasToggle={ true }
+					checked={ hasContainer }
+					onChange={ hasContainer => setAttributes( { hasContainer } ) }
+				>
+					<AdvancedToggleControl
+						label={ __( 'Trigger hover state on nested blocks', i18n ) }
+						attribute="triggerHoverState"
+						defaultValue={ true }
+					/>
+					<BackgroundControls attrNameTemplate="container%s" />
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Container Borders & Shadow', i18n ) }
+					id="container-size"
+				>
+					<BorderControls
+						attrNameTemplate="container%s"
+						blockEl={ blockElBorder }
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+		</>
 	)
 }

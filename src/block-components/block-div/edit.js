@@ -13,6 +13,8 @@ import {
 import { i18n } from 'stackable'
 import {
 	InspectorBlockControls,
+	InspectorLayoutControls,
+	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
@@ -35,37 +37,49 @@ export const Edit = props => {
 	const blockEl = useBlockEl()
 
 	return (
-		<InspectorBlockControls>
-			<PanelAdvancedSettings
-				title={ __( 'Background', i18n ) }
-				id="background"
-				hasToggle={ true }
-				checked={ hasBackground }
-				onChange={ hasBackground => setAttributes( { hasBackground } ) }
-			>
-				<BackgroundControls attrNameTemplate="block%s" />
-			</PanelAdvancedSettings>
-			{ hasSizeSpacing && (
+		<>
+			<InspectorLayoutControls>
+				{ hasSizeSpacing && (
+					<SizeControls.Layout
+						attrNameTemplate="block%s"
+						blockEl={ blockEl }
+					/>
+				) }
+			</InspectorLayoutControls>
+			<InspectorBlockControls>
+				{ hasSizeSpacing && (
+					<PanelAdvancedSettings
+						title={ __( 'Spacing', i18n ) }
+						id="spacing"
+					>
+						<SizeControls.Spacing
+							attrNameTemplate="block%s"
+							blockEl={ blockEl }
+						/>
+					</PanelAdvancedSettings>
+				) }
+			</InspectorBlockControls>
+			<InspectorStyleControls>
 				<PanelAdvancedSettings
-					title={ __( 'Size & Spacing', i18n ) }
-					id="size"
+					title={ __( 'Background', i18n ) }
+					id="background"
+					hasToggle={ true }
+					checked={ hasBackground }
+					onChange={ hasBackground => setAttributes( { hasBackground } ) }
 				>
-					<SizeControls
+					<BackgroundControls attrNameTemplate="block%s" />
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Borders & Shadows', i18n ) }
+					id="borders"
+				>
+					<BorderControls
 						attrNameTemplate="block%s"
 						blockEl={ blockEl }
 					/>
 				</PanelAdvancedSettings>
-			) }
-			<PanelAdvancedSettings
-				title={ __( 'Borders & Shadows', i18n ) }
-				id="borders"
-			>
-				<BorderControls
-					attrNameTemplate="block%s"
-					blockEl={ blockEl }
-				/>
-			</PanelAdvancedSettings>
-		</InspectorBlockControls>
+			</InspectorStyleControls>
+		</>
 	)
 }
 

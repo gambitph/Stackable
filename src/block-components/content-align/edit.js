@@ -11,8 +11,7 @@ import {
 	AdvancedRangeControl,
 	AdvancedToggleControl,
 	AdvancedToolbarControl,
-	InspectorStyleControls,
-	PanelAdvancedSettings,
+	InspectorLayoutControls,
 } from '~stackable/components'
 import { getAttributeName } from '~stackable/util'
 import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
@@ -20,7 +19,7 @@ import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stacka
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 import { select } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
@@ -90,7 +89,7 @@ export const Controls = props => {
 					/>
 					{ attributes.columnFit &&
 						<AdvancedToolbarControl
-							label={ __( 'Columns Alignment', i18n ) }
+							label={ sprintf( __( '%s Alignment', i18n ), __( 'Columns', i18n ) ) }
 							attribute="columnFitAlign"
 							responsive="all"
 							controls="flex-horizontal"
@@ -125,15 +124,9 @@ Controls.defaultProps = {
 
 export const Edit = props => {
 	return (
-		<InspectorStyleControls>
-			<PanelAdvancedSettings
-				title={ __( 'General', i18n ) }
-				id="general"
-				initialOpen={ true }
-			>
-				<Controls { ...props } />
-			</PanelAdvancedSettings>
-		</InspectorStyleControls>
+		<InspectorLayoutControls>
+			<Controls { ...props } />
+		</InspectorLayoutControls>
 	)
 }
 

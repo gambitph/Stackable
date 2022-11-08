@@ -7,17 +7,14 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 } from '~stackable/components'
-import {
-	useAttributeEditHandlers, useDeviceType,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-export const SizeControls = props => {
+const Layout = props => {
 	const deviceType = useDeviceType()
 
 	const {
@@ -30,12 +27,10 @@ export const SizeControls = props => {
 		labelContentWidth = __( 'Max. Content Width', i18n ),
 		labelHorizontalAlign = __( 'Content Horizontal Align', i18n ),
 		labelVerticalAlign = __( 'Content Vertical Align', i18n ),
-		labelPaddings = __( 'Paddings', i18n ),
-		labelMargins = __( 'Margins', i18n ),
 	} = props.labels
 
 	return (
-		<Fragment>
+		<>
 			<AdvancedRangeControl
 				label={ labelHeight }
 				attribute={ getAttrName( 'height' ) }
@@ -99,7 +94,27 @@ export const SizeControls = props => {
 					className="ugb--help-tip-advanced-block-horizontal-align"
 				/>
 			}
+		</>
+	)
+}
 
+Layout.defaultProps = {
+	attrNameTemplate: '%s',
+	labels: {},
+}
+
+const Spacing = props => {
+	const {
+		getAttrName,
+	} = useAttributeEditHandlers( props.attrNameTemplate )
+
+	const {
+		labelPaddings = __( 'Paddings', i18n ),
+		labelMargins = __( 'Margins', i18n ),
+	} = props.labels
+
+	return (
+		<>
 			<FourRangeControl
 				label={ labelPaddings }
 				attribute={ getAttrName( 'padding' ) }
@@ -125,14 +140,16 @@ export const SizeControls = props => {
 					className="ugb--help-tip-advanced-block-margins"
 				/>
 			}
-
-		</Fragment>
+		</>
 	)
 }
 
-SizeControls.defaultProps = {
+Spacing.defaultProps = {
 	attrNameTemplate: '%s',
-	blockEl: null,
 	enableMargin: true,
 	labels: {},
+}
+export const SizeControls = {
+	Layout,
+	Spacing,
 }

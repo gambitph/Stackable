@@ -30,6 +30,7 @@ export const settings = {
 		reusable: false,
 		stkBlockLinking: true,
 		stkSaveBlockStyle: false,
+		stkDefaultTab: 'layout',
 	},
 	//  styles: blockStyles,
 

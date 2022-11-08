@@ -5,8 +5,7 @@ import { i18n } from 'stackable'
 import {
 	AdvancedToolbarControl,
 	AlignButtonsControl,
-	InspectorBlockControls,
-	PanelAdvancedSettings,
+	InspectorLayoutControls,
 } from '~stackable/components'
 import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
@@ -15,11 +14,15 @@ import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stacka
  */
 import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 
 export const Edit = props => {
 	const contentAlign = useBlockAttributesContext( attributes => attributes.contentAlign )
 	const setAttributes = useBlockSetAttributesContext()
+
+	const {
+		labelContentAlign = sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ),
+	} = props
 
 	return (
 		<Fragment>
@@ -29,52 +32,47 @@ export const Edit = props => {
 					onChange={ contentAlign => setAttributes( { contentAlign } ) }
 				/>
 			</BlockControls>
-			<InspectorBlockControls>
-				<PanelAdvancedSettings
-					title={ __( 'Alignment', i18n ) }
-					id="alignment"
-				>
-					<AlignButtonsControl
-						label={ __( 'Content Alignment', i18n ) }
-						attribute="contentAlign"
+			<InspectorLayoutControls>
+				<AlignButtonsControl
+					label={ labelContentAlign }
+					attribute="contentAlign"
+					responsive="all"
+				/>
+				{ props.hasColumnAlignment &&
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Alignment', i18n ), __( 'Column', i18n ) ) }
+						attribute="columnAlign"
 						responsive="all"
+						controls="flex-vertical-with-stretch"
+						className="ugb--help-tip-advanced-block-vertical-align"
 					/>
-					{ props.hasColumnAlignment &&
-						<AdvancedToolbarControl
-							label={ __( 'Column Alignment', i18n ) }
-							attribute="columnAlign"
-							responsive="all"
-							controls="flex-vertical-with-stretch"
-							className="ugb--help-tip-advanced-block-vertical-align"
-						/>
-					}
-					{ props.hasRowAlignment &&
-						<AdvancedToolbarControl
-							label={ __( 'Column Alignment', i18n ) }
-							attribute="rowAlign"
-							responsive="all"
-							controls="flex-vertical-with-stretch"
-							className="ugb--help-tip-advanced-block-vertical-align"
-						/>
-					}
-					{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
-						<AdvancedToolbarControl
-							label={ __( 'Inner Block Alignment', i18n ) }
-							controls={ [
-								{
-									value: 'horizontal',
-									title: __( 'Horizontal', i18n ),
-								},
-								{
-									value: '',
-									title: __( 'Vertical', i18n ),
-								},
-							] }
-							attribute="innerBlockOrientation"
-						/>
-					}
-				</PanelAdvancedSettings>
-			</InspectorBlockControls>
+				}
+				{ props.hasRowAlignment &&
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Alignment', i18n ), __( 'Column', i18n ) ) }
+						attribute="rowAlign"
+						responsive="all"
+						controls="flex-vertical-with-stretch"
+						className="ugb--help-tip-advanced-block-vertical-align"
+					/>
+				}
+				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Alignment', i18n ), __( 'Inner Block', i18n ) ) }
+						controls={ [
+							{
+								value: 'horizontal',
+								title: __( 'Horizontal', i18n ),
+							},
+							{
+								value: '',
+								title: __( 'Vertical', i18n ),
+							},
+						] }
+						attribute="innerBlockOrientation"
+					/>
+				}
+			</InspectorLayoutControls>
 		</Fragment>
 	)
 }

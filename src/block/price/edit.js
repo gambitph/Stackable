@@ -50,7 +50,7 @@ const TEMPLATE = [
 	} ],
 ]
 
-const TABS = [ 'block', 'advanced' ]
+const TABS = [ 'layout', 'advanced' ]
 
 const Edit = props => {
 	const {

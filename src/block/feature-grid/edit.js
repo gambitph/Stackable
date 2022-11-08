@@ -81,6 +81,7 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
+					<ContentAlign.InspectorControls hasColumnCount={ true } />
 					<Alignment.InspectorControls hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />
 					<Separator.InspectorControls />
@@ -91,7 +92,6 @@ const Edit = props => {
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-					<ContentAlign.InspectorControls hasColumnCount={ true } />
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />

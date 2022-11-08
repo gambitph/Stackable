@@ -26,9 +26,9 @@ import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
-	InspectorStyleControls,
-	PanelAdvancedSettings,
 	AdvancedRangeControl,
+	InspectorLayoutControls,
+	ControlSeparator,
 } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -42,7 +42,7 @@ import { createBlockCompleter } from '~stackable/util'
  * WordPress dependencies
  */
 import { createBlock } from '@wordpress/blocks'
-import { __ } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 
@@ -120,48 +120,44 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-
-					{ enableColumns &&
-						<InspectorStyleControls>
-							<PanelAdvancedSettings
-								title={ __( 'General', i18n ) }
-								initialOpen={ true }
-								id="general"
-							>
-								<AdvancedRangeControl
-									label={ __( 'Columns', i18n ) }
-									allowReset={ true }
-									attribute="columns"
-									min="1"
-									sliderMax="3"
-									step="1"
-									placeholder="1"
-									responsive="all"
-								/>
-
-								<AdvancedRangeControl
-									label={ __( 'Column Gap', i18n ) }
-									allowReset={ true }
-									attribute="columnGap"
-									min="0"
-									sliderMax="50"
-									responsive="all"
-								/>
-							</PanelAdvancedSettings>
-						</InspectorStyleControls>
-					}
-
 					<Typography.InspectorControls
 						{ ...props }
 						hasTextTag={ false }
 						isMultiline={ true }
-						initialOpen={ ! enableColumns }
+						initialOpen={ true }
 						hasTextShadow={ true }
 					/>
+					<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
+					{ enableColumns && (
+						<InspectorLayoutControls>
+							<AdvancedRangeControl
+								label={ __( 'Columns', i18n ) }
+								allowReset={ true }
+								attribute="columns"
+								min="1"
+								sliderMax="3"
+								step="1"
+								placeholder="1"
+								responsive="all"
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Column Gap', i18n ) }
+								allowReset={ true }
+								attribute="columnGap"
+								min="0"
+								sliderMax="50"
+								responsive="all"
+							/>
+
+							<ControlSeparator />
+						</InspectorLayoutControls>
+					) }
+
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />

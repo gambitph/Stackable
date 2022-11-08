@@ -46,7 +46,7 @@ import { useSelect } from '@wordpress/data'
 import {
 	useRef, useEffect, useState,
 } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 import { createIconListControls, DEFAULT_SVG } from './util'
 import { compose } from '@wordpress/compose'
 
@@ -254,7 +254,7 @@ const Edit = props => {
 								placeholder=""
 							/>
 							<AlignButtonsControl
-								label={ __( 'List Alignment', i18n ) }
+								label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
 								attribute="listAlignment"
 								responsive="all"
 							/>

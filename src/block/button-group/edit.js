@@ -44,7 +44,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { __ } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button', 'stackable/icon-button' ]
 
@@ -103,7 +103,7 @@ const Edit = props => {
 							initialOpen={ true }
 						>
 							<AdvancedSelectControl
-								label={ __( 'Button Alignment', i18n ) }
+								label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
 								attribute="buttonAlign"
 								responsive="all"
 								options={ deviceType === 'Desktop'

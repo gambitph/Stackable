@@ -38,7 +38,7 @@ import { createBlockCompleter } from '~stackable/util'
 import { compose } from '@wordpress/compose'
 import { createBlock } from '@wordpress/blocks'
 import { addFilter } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 
 /**
  * Add `autocompleters` support for stackable/subtitle
@@ -85,10 +85,6 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
 					<Typography.InspectorControls
 						{ ...props }
 						hasTextTag={ false }
@@ -96,6 +92,11 @@ const Edit = props => {
 						initialOpen={ true }
 						hasTextShadow={ true }
 					/>
+
+					<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
