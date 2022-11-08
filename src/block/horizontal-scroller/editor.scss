@@ -14,14 +14,16 @@
 }
 
 .stk-block-horizontal-scroller > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	scroll-behavior: smooth;
 	display: grid;
 	overflow-x: auto;
 	overscroll-behavior-inline: contain;
 	scroll-snap-type: inline mandatory;
 	grid-auto-flow: column;
 	grid-auto-columns: var(--stk-column-width, 300px);
-	gap: var(--stk-column-gap);
+	gap: var(--stk-column-gap, 0);
 	height: var(--stk-column-height);
+	padding-inline-start: var(--stk-left-offset);
 	> * {
 		scroll-snap-align: var(--stk-snapping, center);
 	}

@@ -14,6 +14,7 @@ import {
 	 CustomCSS,
 	 getAlignmentClasses,
 	 getResponsiveClasses,
+	 getContentAlignmentClasses,
 } from '~stackable/block-components'
 
 /**
@@ -41,9 +42,8 @@ export const Save = props => {
 			 'stk-inner-blocks',
 			 blockAlignmentClass,
 			 'stk-block-content',
-			 'stk-content-align',
-			 `stk-${ attributes.uniqueId }-horizontal-scroller`,
 		 ],
+		 getContentAlignmentClasses( props.attributes, 'horizontal-scroller' ),
 	 ], props ) )
 
 	 return (

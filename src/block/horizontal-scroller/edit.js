@@ -32,6 +32,7 @@ import {
 	 ConditionalDisplay,
 	 Transform,
 	 ColumnsControl,
+	 getContentAlignmentClasses,
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -66,12 +67,10 @@ const Edit = props => {
 	 ] )
 
 	 const contentClassNames = classnames( [
-		 'stk-inner-blocks',
-		 blockAlignmentClass,
-		 'stk-block-content',
-		 'stk-content-align',
-		 `stk-${ props.attributes.uniqueId }-horizontal-scroller`,
-	 ] )
+		'stk-inner-blocks',
+		blockAlignmentClass,
+		'stk-block-content',
+	 ], getContentAlignmentClasses( props.attributes, 'horizontal-scroller' ) )
 
 	 return (
 		 <>
@@ -138,7 +137,7 @@ const Edit = props => {
 								responsive="all"
 								units={ [ 'px', 'em', '%' ] }
 								min={ [ 0, 0, 0 ] }
-								sliderMax={ [ 100, 1000, 1000 ] }
+								sliderMax={ [ 300, 500, 100 ] }
 								step="1"
 							/>
 						</PanelAdvancedSettings>
@@ -165,7 +164,7 @@ const Edit = props => {
 					data-align={ ! props.attributes.contentAlign ? undefined // Only needed in the backend
 							 : props.attributes.contentAlign === 'alignwide' ? 'wide'
 								 : props.attributes.contentAlign === 'alignfull' ? 'full' : undefined }
-					 >
+				>
 					<ColumnInnerBlocks
 						providerValue={ columnProviderValue }
 						orientation="horizontal"
@@ -176,7 +175,7 @@ const Edit = props => {
 							[ 'stackable/column' ],
 							 ] }
 						templateLock={ props.attributes.templateLock || false }
-						 />
+					/>
 				</div>
 			 </BlockDiv>
 			 { props.isHovered && hasInnerBlocks && <MarginBottom /> }

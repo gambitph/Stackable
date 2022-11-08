@@ -98,6 +98,7 @@ const Styles = props => {
 				attrName="horizontalScrollerLeftOffset"
 				key="horizontalScrollerLeftOffset-save"
 				format="%spx"
+				responsive="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -107,6 +108,7 @@ const Styles = props => {
 				attrName="horizontalScrollerLeftOffset"
 				key="horizontalScrollerLeftOffset"
 				format="%spx"
+				responsive="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -114,7 +116,7 @@ const Styles = props => {
 				selector=".%s-horizontal-scroller"
 				styleRule="--stk-snapping"
 				attrName="horizontalScrollerSnap"
-				key="horizontalScrollerSnapping-save"
+				key="horizontalScrollerSnap-save"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -122,7 +124,7 @@ const Styles = props => {
 				selector=".%s-horizontal-scroller > .block-editor-inner-blocks > .block-editor-block-list__layout"
 				styleRule="--stk-snapping"
 				attrName="horizontalScrollerSnap"
-				key="horizontalScrollerSnapping"
+				key="horizontalScrollerSnap"
 			/>
 		</>
 	)
