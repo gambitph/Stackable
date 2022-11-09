@@ -37,6 +37,7 @@ export const BlockDiv = props => {
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId || tempUniqueId )
 	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId || tempUniqueId )
 	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass
+	uniqueBlockClass = applyFilters( 'stackable.block-div.uniqueClass.edit', uniqueBlockClass )
 
 	// Variation picker will show up if there's no uniqueId yet (which will be
 	// the case when enableVariationPicker = true)
@@ -100,11 +101,13 @@ BlockDiv.Content = props => {
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
 	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
+	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
+	uniqueBlockClass = applyFilters( 'stackable.block-div.uniqueClass.save', uniqueBlockClass, attributes )
 
 	const classNames = classnames( [
 		className,
 		'stk-block',
-		getUniqueBlockClass( attributes.uniqueId ),
+		uniqueBlockClass,
 	],
 	applyFilters( 'stackable.block-components.block-div.classnames.content', [], attributes ),
 	{

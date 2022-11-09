@@ -84,13 +84,16 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-heading',
+		'stk-block-heading--v2',
 	] )
 
 	const textClassNames = classnames( [
 		'stk-block-heading__text',
 		textClasses,
 		blockAlignmentClass,
-	] )
+	], {
+		'stk-block-heading--use-theme-margins': attributes.useThemeTextMargins,
+	} )
 
 	useUniqueId( attributes, true )
 

@@ -135,8 +135,8 @@ export const Controls = props => {
 			) }
 			{ hasRemoveMargins && (
 				<AdvancedToggleControl
-					label={ __( 'Remove extra text margins', i18n ) }
-					attribute={ attributeName( 'textRemoveTextMargins' ) }
+					label={ __( 'Use theme heading margins', i18n ) }
+					attribute={ attributeName( 'useThemeTextMargins' ) }
 				/>
 			) }
 
@@ -153,9 +153,6 @@ export const Controls = props => {
 				onReset={ () => {
 					updateAttributes( {
 						[ getAttributeName( 'fontFamily' ) ]: '',
-						[ getAttributeName( 'fontSize', 'desktop', blockState ) ]: '',
-						[ getAttributeName( 'fontSize', 'tablet', blockState ) ]: '',
-						[ getAttributeName( 'fontSize', 'mobile', blockState ) ]: '',
 						[ getAttributeName( 'fontWeight', 'desktop', blockState ) ]: '',
 						[ getAttributeName( 'textTransform', 'desktop', blockState ) ]: '',
 						[ getAttributeName( 'letterSpacing', 'desktop', blockState ) ]: '',
@@ -166,9 +163,6 @@ export const Controls = props => {
 				} }
 				allowReset={
 					( getAttribute( 'fontFamily' ) ||
-						getAttribute( 'fontSize', 'desktop', blockState ) ||
-						getAttribute( 'fontSize', 'tablet', blockState ) ||
-						getAttribute( 'fontSize', 'mobile', blockState ) ||
 						getAttribute( 'fontWeight', 'desktop', blockState ) ||
 						getAttribute( 'textTransform', 'desktop', blockState ) ||
 						getAttribute( 'letterSpacing', 'desktop', blockState ) ||

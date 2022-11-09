@@ -90,19 +90,6 @@ const Styles = props => {
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
-				styleRule="margin"
-				attrName="textRemoveTextMargins"
-				key="textRemoveTextMargins"
-				valueCallback={ value => {
-					return value ? 0 : undefined
-				} }
-				dependencies={ dependencies }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ selector }
-				selectorCallback={ selectorCallback }
-				attrNameTemplate={ attrNameTemplate }
 				styleRule="color"
 				hover="all"
 				hoverSelector={ hoverSelector }

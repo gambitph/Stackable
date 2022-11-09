@@ -381,8 +381,9 @@ const Edit = props => {
 					</Typography>
 					{ ! isTyping && isSelected && isOpenIconSearch && (
 						<IconSearchPopover
-							position="bottom left"
-							anchorRef={ iconSearchAnchor }
+							__deprecatedAnchorRef={ iconSearchAnchor }
+							__deprecatedPosition="bottom left"
+							__hasPopover={ true }
 							onClose={ () => {
 								if ( selectedEvent ) {
 									selectedEvent.target.parentElement.currentlyOpenIndex = undefined
