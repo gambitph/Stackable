@@ -55,6 +55,7 @@ Special Blocks
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Video Popup Button Block
+- Image Popup Block
 - Progress Circle Block — [View Block](https://wpstackable.com/progress-circle-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Progress Bar Block — [View Block](https://wpstackable.com/progress-bar-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Accordion Block — [View Block](https://wpstackable.com/accordion-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

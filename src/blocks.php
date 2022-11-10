@@ -92,6 +92,7 @@ if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
 			'icon-box',
 			'icon-label',
 			'image-box',
+			'image-popup',
 			'notification',
 			'posts',
 			'price',
