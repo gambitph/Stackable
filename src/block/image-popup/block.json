@@ -1,0 +1,15 @@
+{
+	"apiVersion": 2,
+	"name": "stackable/image-popup",
+	"title": "Image Popup",
+	"description": "Display a thumbnail that your users can click to display an image full-screen.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" ],
+	"keywords": [
+		"image",
+		"modal"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/image-popup-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+}

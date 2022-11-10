@@ -1,0 +1,16 @@
+{
+	"apiVersion": 2,
+	"name": "stackable/video-popup-button",
+	"title": "Video Popup Button",
+	"description": "Display a button that your users can click to play a video full-screen.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" ],
+	"keywords": [
+		"YouTube",
+		"Vimeo",
+		"Embed Mp4"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/video-popup-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+}
