@@ -13,11 +13,17 @@ const railOuterStyle = {
 const railInnerStyle = {
 	position: 'absolute',
 	width: '100%',
-	height: 3,
-	backgroundColor: '#e2e4e7',
+	height: 4,
+	backgroundColor: 'rgb(221, 221, 221)',
 	transform: 'translate(0%, -50%)',
 	borderRadius: 7,
 	pointerEvents: 'none',
+}
+
+const buttonStyle = {
+	backgroundColor: 'var(--wp-admin-theme-color)',
+	height: 12,
+	width: 12,
 }
 
 export const SliderRail = ( { getRailProps } ) => {
@@ -34,11 +40,12 @@ export const Handle = props => {
 	const {
 		domain: [ min, max ],
 		handle: {
-			id, value, percent,
+			value, percent,
 		},
 		disabled = false,
-		getHandleProps,
+		handleProps,
 	} = props
+
 	return (
 		<button
 			role="slider"
@@ -48,8 +55,9 @@ export const Handle = props => {
 			disabled={ disabled }
 			style={ {
 				left: `${ percent }%`,
+				...buttonStyle,
 			} }
-			{ ...getHandleProps( id ) }
+			{ ...handleProps }
 		/>
 	)
 }

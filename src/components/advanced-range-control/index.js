@@ -65,7 +65,7 @@ const AdvancedRangeControl = props => {
 	}
 
 	// Remove the placeholder.
-	if ( deviceType !== 'Desktop' || currentHoverState !== 'normal' ) {
+	if ( ! props.forcePlaceholder && ( deviceType !== 'Desktop' || currentHoverState !== 'normal' ) ) {
 		propsToPass.initialPosition = ''
 		propsToPass.placeholder = ''
 	}
@@ -125,6 +125,7 @@ AdvancedRangeControl.defaultProps = {
 
 	value: undefined,
 	onChange: undefined,
+	forcePlaceholder: false,
 }
 
 export default memo( AdvancedRangeControl, isEqual )

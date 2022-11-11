@@ -1,0 +1,28 @@
+.stk-columns-width-multi-control__range {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+	position: relative; // For the reset buttons to be beside each range control.
+	.components-range-control,
+	.components-base-control__field {
+		margin-bottom: 0 !important;
+	}
+}
+.stk-columns-width-multi-control__range__icon {
+	width: 20px;
+	text-align: center;
+	font-weight: bold;
+}
+.stk-columns-width-multi-control__range__range-control {
+	flex: 1;
+	.stk-control {
+		margin-bottom: 0 !important;
+	}
+	.stk-control-label {
+		display: none !important;
+	}
+}
+.stk-columns-width-multi-control__range__suffix {
+	font-size: 12px;
+}

@@ -30,6 +30,7 @@ import {
 	Transform,
 	ContentAlign,
 	getContentAlignmentClasses,
+	Columns,
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -81,7 +82,8 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<ContentAlign.InspectorControls hasColumnCount={ true } />
+					<Columns.InspectorControls />
+					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />
 					<Separator.InspectorControls />

@@ -9,7 +9,7 @@ import {
 	EffectsAnimations,
 	Separator,
 	Transform,
-	ContentAlign,
+	Columns,
 } from '~stackable/block-components'
 import { BlockCssCompiler } from '~stackable/components'
 
@@ -28,7 +28,7 @@ const BlockStyles = memo( props => {
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Separator.Style { ...props } />
-			<ContentAlign.Style { ...props } />
+			<Columns.Style { ...props } />
 		</>
 	)
 } )
@@ -51,7 +51,7 @@ BlockStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
-			<ContentAlign.Style.Content { ...props } />
+			<Columns.Style.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

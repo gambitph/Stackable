@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import { fixColumnWidths, columnWidthSum } from './util'
 
 const gridTemplateColumns = columns => {
@@ -14,20 +15,26 @@ const ColumnsInputs = props => {
 		gridAutoFlow: isBlank( props.value ) ? 'column' : undefined,
 		justifyContent: isBlank( props.value ) ? 'space-around' : undefined,
 	}
+	const className = classNames( 'stk-column-widths-control__columns-input', {
+		'stk-column-widths--many': props.value?.length && props.value.length > 4,
+	} )
+
 	return (
-		<div className="ugb-column-widths-control__columns-input" style={ style }>
+		<div className={ className } style={ style }>
 			{ props.value.map( ( column, i ) => {
 				return (
 					<input
 						key={ i }
 						className="components-column-widths-control__number"
 						type="number"
+						step="any"
 						value={ column ? column : '' }
 						// Update the value, but don't really adjust things
 						// since we want the user to finish inputting the number
 						// they want.
 						onChange={ event => {
-							const newValue = parseInt( event.target.value, 10 )
+							const value = event.target.value
+							const newValue = value.includes( '.' ) ? parseFloat( parseFloat( value ).toFixed( 3 ) ) : parseInt( value, 10 )
 							const values = [ ...props.value ]
 							values[ i ] = isNaN( newValue ) ? '' : newValue
 							props.onChange( values )

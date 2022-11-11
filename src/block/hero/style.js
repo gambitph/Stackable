@@ -10,7 +10,6 @@ import {
 	MarginBottom,
 	Separator,
 	Transform,
-	ContentAlign,
 } from '~stackable/block-components'
 import { BlockCssCompiler } from '~stackable/components'
 
@@ -35,7 +34,6 @@ export const ContainerStyles = memo( props => {
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<MarginBottom.Style { ...props } />
 			<Separator.Style { ...props } />
-			<ContentAlign.Style { ...props } />
 		</>
 	)
 } )
@@ -59,7 +57,6 @@ ContainerStyles.Content = props => {
 			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
 			<MarginBottom.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
-			<ContentAlign.Style.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

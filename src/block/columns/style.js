@@ -9,7 +9,7 @@ import {
 	MarginBottom,
 	Separator,
 	Transform,
-	ContentAlign,
+	Columns,
 } from '~stackable/block-components'
 import { useBlockAttributesContext } from '~stackable/hooks'
 import { BlockCssCompiler } from '~stackable/components'
@@ -39,7 +39,7 @@ const BlockStyles = memo( props => {
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Separator.Style { ...props } />
-			<ContentAlign.Style { ...props } />
+			<Columns.Style { ...props } />
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 		</>
 	)
@@ -66,7 +66,7 @@ BlockStyles.Content = props => {
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
-			<ContentAlign.Style.Content { ...props } />
+			<Columns.Style.Content { ...props } />
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 		</BlockCssCompiler>
 	)
