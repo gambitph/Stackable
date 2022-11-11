@@ -1,7 +1,18 @@
 /**
+ * External dependencies
+ */
+import { range } from 'lodash'
+
+/**
  * Internal dependencies
  */
 import { BlockCss } from '~stackable/components'
+import { useBlockAttributesContext } from '~stackable/hooks'
+
+/**
+ * WordPress dependencies
+ */
+import { Fragment } from '@wordpress/element'
 
 const Styles = props => {
 	const propsToPass = {
@@ -10,6 +21,9 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		numColumns,
+	} = props
 
 	return (
 		<>
@@ -75,14 +89,68 @@ const Styles = props => {
 				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
 				dependencies={ [ 'columnFit' ] }
 			/>
+
+			{ range( 1, numColumns + 1 ).map( i => {
+				return (
+					<Fragment key={ `column-arrangement-${ i }` }>
+						<BlockCss
+							{ ...propsToPass }
+							// In the editor, target the specific column to change the order.
+							renderIn="edit"
+							selector={ `> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > :nth-child(${ i })` }
+							styleRule="order"
+							responsive="all"
+							attrName="columnArrangement"
+							key="columnArrangement"
+							valueCallback={ value => {
+								// Look for the order in the values list for the column i
+								return ( value.split( ',' ) || [] ).indexOf( i.toString() ) + 1
+							} }
+							valuePreCallback={ ( value, getAttribute, device ) => {
+								const tabletAttribute = getAttribute( 'columnArrangement', 'tablet' )
+								if ( device === 'mobile' && ! value && tabletAttribute ) {
+									return [ ...Array( numColumns ).keys() ].map( i => i + 1 ).join( ',' )
+								}
+								return value
+							} }
+						/>
+						<BlockCss
+							{ ...propsToPass }
+							// In the frontend, use the css custom property to specify the order.
+							// See style.scss We do this because we cannot use the direct descendent
+							// selector ">" in the saved CSS or else non-admin users in multisite
+							// will encounter block errors (this is a WP issue)
+							renderIn="save"
+							styleRule={ `--stk-col-order-${ i }` }
+							responsive="all"
+							attrName="columnArrangement"
+							key="columnArrangement-save"
+							valueCallback={ value => {
+								// Look for the order in the values list for the column i
+								return ( value.split( ',' ) || [] ).indexOf( i.toString() ) + 1
+							} }
+							valuePreCallback={ ( value, getAttribute, device ) => {
+								const tabletAttribute = getAttribute( 'columnArrangement', 'tablet' )
+								if ( device === 'mobile' && ! value && tabletAttribute ) {
+									return [ ...Array( numColumns ).keys() ].map( i => i + 1 ).join( ',' )
+								}
+								return value
+							} }
+						/>
+					</Fragment>
+				)
+			} ) }
 		</>
 	)
 }
 
 export const Style = props => {
-	return <Styles { ...props } />
+	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
+	const numColumns = ( columnArrangement || '' ).split( ',' ).length
+	return <Styles { ...props } numColumns={ numColumns } />
 }
 
 Style.Content = props => {
-	return <Styles { ...props } />
+	const numColumns = ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet || '' ).split( ',' ).length
+	return <Styles { ...props } numColumns={ numColumns } />
 }

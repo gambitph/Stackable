@@ -13,7 +13,6 @@ import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stacka
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
-import { applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 
 export const Edit = () => {
@@ -52,7 +51,6 @@ export const Edit = () => {
 						checked={ hideMobile }
 						onChange={ hideMobile => setAttributes( { hideMobile } ) }
 					/>
-					{ applyFilters( 'stackable.block-components.responsive.control', null ) }
 				</PanelAdvancedSettings>
 			</InspectorAdvancedControls>
 		</Fragment>
