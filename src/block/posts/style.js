@@ -100,10 +100,21 @@ const readmoreTypographyOptions = {
 
 const _imageOptions = {
 	selector: `${ itemSelector } .stk-img-wrapper`,
-	hoverSelectorCallback: getAttribute => getAttribute( 'imageHoverStateInContainer' )
-		? `${ itemSelector }:hover .stk-img-wrapper img`
-		: `${ itemSelector } .stk-img-wrapper:hover img`,
-	dependencies: [ 'imageHoverStateInContainer' ],
+	hoverSelectorCallback: ( getAttribute, attributes, renderIn ) => {
+		if ( getAttribute( 'imageHoverStateInContainer' ) ) {
+			if ( renderIn === 'editor' && getAttribute( 'imageOverlayColorType' ) === 'gradient' ) {
+				return `${ itemSelector }:hover .stk-img-wrapper::before`
+			}
+			return `${ itemSelector }:hover .stk-img-wrapper::after`
+		}
+
+		// Change selector based on where it is rendered when the color type is gradient
+		if ( renderIn === 'editor' && getAttribute( 'imageOverlayColorType' ) === 'gradient' ) {
+			return `${ itemSelector } .stk-img-wrapper:hover::before`
+		}
+		return `${ itemSelector } .stk-img-wrapper:hover::after`
+	},
+	dependencies: [ 'imageHoverStateInContainer', 'imageOverlayColorType' ],
 }
 
 const advancedOptions = {
