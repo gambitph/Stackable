@@ -276,7 +276,7 @@ class StyleObject {
 		}
 
 		let selector = selectorCallback ? selectorCallback( getAttribute, attributes ) : _selector
-		let hoverSelector = hoverSelectorCallback ? hoverSelectorCallback( getAttribute, attributes ) : _hoverSelector
+		let hoverSelector = hoverSelectorCallback ? hoverSelectorCallback( getAttribute, attributes, renderIn ) : _hoverSelector
 		const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
 
 		const getValue = ( attrName, device, state ) => {
