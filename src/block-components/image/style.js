@@ -220,6 +220,7 @@ const getStyleParams = ( options = {} ) => {
 			renderIn: 'save',
 			selector: `${ selector }::after`,
 			hoverSelector: `${ selector }::before`,
+			hoverSelectorCallback,
 			styleRule: 'backgroundImage',
 			attrName: 'imageOverlayColor',
 			hover: 'all',
