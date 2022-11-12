@@ -8,13 +8,10 @@
 //
 // This method ensures that only columns blocks with custom order will get their
 // order rules changed by the custom properties.
-@for $i from 1 through 30 {
-	.stk-block-column:nth-child(#{ $i }) {
-		order: var(--stk-col-order-#{ $i }, initial);
-	}
-}
-.stk-block-columns {
-	@for $i from 1 through 30 {
-		--stk-col-order-#{ $i }: #{ $i };
+.stk--has-column-order {
+	@for $i from 1 through 20 {
+		.stk-block-column:nth-child(#{ $i }) {
+			order: var(--stk-col-order-#{ $i }, initial);
+		}
 	}
 }
