@@ -13,6 +13,7 @@ import {
 	AdvancedToolbarControl,
 	ColumnsWidthControl,
 	ColumnsWidthMultiControl,
+	ControlSeparator,
 	InspectorLayoutControls,
 	SortControl,
 } from '~stackable/components'
@@ -126,6 +127,7 @@ export const Controls = props => {
 					} }
 				/>
 			) }
+			<ControlSeparator />
 			{ props.hasColumnFit && (
 				<>
 					<AdvancedToggleControl
