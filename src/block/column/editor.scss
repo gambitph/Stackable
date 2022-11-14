@@ -4,8 +4,13 @@
 	z-index: 2;
 }
 
-.editor-styles-wrapper .stk-column-wrapper > .block-editor-inner-blocks {
-	width: 100%;
+.editor-styles-wrapper {
+	.stk-block.stk-block-column .stk-column-wrapper {
+		width: auto;
+		> .block-editor-inner-blocks {
+			width: 100%;
+		}
+	}
 }
 
 // Ensure that only directly hovered columns will show their resizer. Nested
