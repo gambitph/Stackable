@@ -165,6 +165,16 @@ export const Controls = props => {
 			{ props.hasGap && (
 				<>
 					<AdvancedRangeControl
+						label={ __( 'Column Spacing', i18n ) }
+						attribute="columnSpacing"
+						responsive="all"
+						units={ [ 'px', 'em' ] }
+						defaultLocked={ true }
+						min={ [ 0, 0 ] }
+						sliderMax={ [ 200, 30 ] }
+						placeholder={ numInnerBlocks === 1 ? '0' : '12' }
+					/>
+					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
 						attribute="columnGap"
 						responsive="all"

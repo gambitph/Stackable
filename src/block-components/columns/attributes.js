@@ -10,6 +10,12 @@ export const addAttributes = attrObject => {
 				default: '',
 				stkResponsive: true,
 			},
+			columnSpacing: {
+				stkResponsive: true,
+				stkUnits: 'px',
+				type: 'number',
+				default: '',
+			},
 			columnGap: {
 				stkResponsive: true,
 				type: 'number',

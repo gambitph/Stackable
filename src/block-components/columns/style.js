@@ -29,6 +29,15 @@ const Styles = props => {
 		<>
 			<BlockCss
 				{ ...propsToPass }
+				selector=".%s-column"
+				styleRule="--stk-columns-spacing"
+				attrName="columnSpacing"
+				key="columnSpacing"
+				hasUnits="px"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
 				renderIn="save"
 				selector=".%s-column"
 				styleRule="--stk-column-gap"

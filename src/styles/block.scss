@@ -39,6 +39,11 @@
 	min-width: 1px;
 }
 
+// Columns spacing
+.stk-block.stk-block-column.stk-column > .stk-column-wrapper {
+	margin: var(--stk-columns-spacing); // This is defined in the design system
+}
+
 /**
  * Block widths for when blocks are placed inside columns, and Content Width is set to center or wide.
  */
