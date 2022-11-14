@@ -46,7 +46,6 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { useBlockEditContext } from '@wordpress/block-editor'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
@@ -130,13 +129,6 @@ export default compose(
 )( Edit )
 
 addFilter( 'stackable.block-components.responsive.control', 'stackable/premium', output => {
-	const { name } = useBlockEditContext()
-
-	// Only do mobile column arrangement for the Columns & Feature blocks.
-	if ( ! [ 'stackable/columns', 'stackable/feature' ].includes( name ) ) {
-		return output
-	}
-
 	if ( showProNotice && ! isPro ) {
 		return (
 			<ProControlButton
