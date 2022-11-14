@@ -80,4 +80,9 @@ $right-space: 28px;
 .stk-control,
 .stk-inspector-control {
 	margin-bottom: 12px !important;
+	// Toggles feel too close.
+	&.stk-toggle-control {
+		margin-bottom: 16px !important;
+		margin-top: 16px !important;
+	}
 }
