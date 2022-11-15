@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.6.1\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.6.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-27T09:31:36+00:00\n"
+"POT-Creation-Date: 2022-11-15T02:46:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -1634,7 +1634,7 @@ msgid "Google Maps API Key"
 msgstr ""
 
 #: dist/translation-strings.php:277
-#: src/plugins/design-library-button/design-library-button.js:39
+#: src/plugins/design-library-button/design-library-button.js:38
 #: src/welcome/admin.js:302
 msgid "Design Library"
 msgstr ""
@@ -1953,72 +1953,72 @@ msgid "Icons"
 msgstr ""
 
 #: dist/translation-strings.php:336
-#: pro__premium_only/src/block/load-more/edit.js:80
-#: pro__premium_only/src/block/pagination/edit.js:71
-#: src/block-components/advanced/edit.js:46
-#: src/block-components/content-align/edit.js:127
-#: src/block/accordion/edit.js:132
-#: src/block/button-group/edit.js:95
-#: src/block/divider/edit.js:72
-#: src/block/icon-label/edit.js:80
-#: src/block/icon-list/edit.js:199
-#: src/block/map/edit.js:267
-#: src/block/notification/edit.js:104
-#: src/block/posts/edit.js:172
-#: src/block/separator/edit.js:74
-#: src/block/spacer/edit.js:96
-#: src/block/table-of-contents/edit.js:347
-#: src/block/text/edit.js:126
-#: src/block/video-popup/edit.js:90
-#: src/deprecated/v2/block/accordion/edit.js:135
-#: src/deprecated/v2/block/blockquote/edit.js:124
-#: src/deprecated/v2/block/blog-posts/edit.js:200
-#: src/deprecated/v2/block/button/edit.js:107
-#: src/deprecated/v2/block/call-to-action/edit.js:137
-#: src/deprecated/v2/block/card/edit.js:154
-#: src/deprecated/v2/block/column/edit.js:121
-#: src/deprecated/v2/block/columns/edit.js:256
-#: src/deprecated/v2/block/container/edit.js:142
-#: src/deprecated/v2/block/count-up/edit.js:134
-#: src/deprecated/v2/block/divider/edit.js:96
-#: src/deprecated/v2/block/expand/edit.js:62
-#: src/deprecated/v2/block/feature-grid/edit.js:146
-#: src/deprecated/v2/block/feature/edit.js:172
-#: src/deprecated/v2/block/header/edit.js:151
-#: src/deprecated/v2/block/heading/edit.js:70
-#: src/deprecated/v2/block/icon-list/edit.js:90
-#: src/deprecated/v2/block/icon/edit.js:73
-#: src/deprecated/v2/block/image-box/edit.js:157
-#: src/deprecated/v2/block/notification/edit.js:157
-#: src/deprecated/v2/block/number-box/edit.js:146
-#: src/deprecated/v2/block/pricing-box/edit.js:156
-#: src/deprecated/v2/block/separator/edit.js:136
-#: src/deprecated/v2/block/spacer/edit.js:51
-#: src/deprecated/v2/block/team-member/edit.js:155
-#: src/deprecated/v2/block/testimonial/edit.js:154
-#: src/deprecated/v2/block/text/edit.js:121
-#: src/deprecated/v2/block/video-popup/edit.js:75
-#: src/deprecated/v2/modules/advanced-general/index.js:39
-msgid "General"
+#: src/block/blockquote/edit.js:132
+msgid "Quotation Mark Icons"
 msgstr ""
 
 #: dist/translation-strings.php:337
-#: src/block/accordion/edit.js:137
-#: src/deprecated/v2/block/accordion/edit.js:145
-msgid "Open at the start"
+#: src/block/blockquote/edit.js:148
+msgid "Pick another icon"
 msgstr ""
 
 #: dist/translation-strings.php:338
-#: src/block/accordion/edit.js:200
-msgid "Open Icon"
+#: src/block/blockquote/quotes.js:28
+#: src/deprecated/v2/block/blockquote/quotes.js:38
+msgid "Round Thin"
 msgstr ""
 
 #: dist/translation-strings.php:339
-#: src/block/accordion/edit.js:204
-msgid "The open icon will appear when the accordion is opened"
+#: src/block/blockquote/quotes.js:33
+#: src/deprecated/v2/block/blockquote/quotes.js:44
+msgid "Round"
 msgstr ""
 
 #: dist/translation-strings.php:340
+#: src/block/blockquote/quotes.js:38
+#: src/deprecated/v2/block/blockquote/quotes.js:50
+msgid "Round Thick"
+msgstr ""
+
+#: dist/translation-strings.php:341
+#: src/block/blockquote/quotes.js:43
+#: src/deprecated/v2/block/blockquote/quotes.js:56
+msgid "Round Fat"
+msgstr ""
+
+#: dist/translation-strings.php:342
+#: src/block/blockquote/quotes.js:48
+#: src/deprecated/v2/block/blockquote/quotes.js:62
+msgid "Square Thin"
+msgstr ""
+
+#: dist/translation-strings.php:343
+#: src/block/blockquote/quotes.js:53
+#: src/components/image-shape-control/index.js:41
+#: src/deprecated/v2/block/blockquote/quotes.js:68
+#: src/deprecated/v2/block/number-box/edit.js:345
+msgid "Square"
+msgstr ""
+
+#: dist/translation-strings.php:344
+#: src/block/blockquote/quotes.js:58
+#: src/deprecated/v2/block/blockquote/quotes.js:74
+msgid "Square Simple"
+msgstr ""
+
+#: dist/translation-strings.php:345
+#: src/block/blockquote/quotes.js:63
+#: src/deprecated/v2/block/blockquote/quotes.js:80
+msgid "Square Modern"
+msgstr ""
+
+#: dist/translation-strings.php:346
+#: src/block/blockquote/quotes.js:68
+#: src/deprecated/v2/block/blockquote/quotes.js:86
+msgid "Square Fat"
+msgstr ""
+
+#: dist/translation-strings.php:347
 #: src/block/accordion/variations.js:36
 #: src/block/accordion/variations.js:68
 #: src/block/accordion/variations.js:114
@@ -2103,7 +2103,7 @@ msgctxt "Block layout name"
 msgid "%s Layout"
 msgstr ""
 
-#: dist/translation-strings.php:341
+#: dist/translation-strings.php:348
 #: pro__premium_only/src/block-components/transform/index.js:40
 #: pro__premium_only/src/block-components/transform/index.js:68
 #: src/block-components/advanced/edit.js:23
@@ -2169,70 +2169,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: dist/translation-strings.php:342
-#: pro__premium_only/src/block/accordion/index.js:40
-#: pro__premium_only/src/block/accordion/index.js:91
-#: pro__premium_only/src/block/accordion/index.js:149
-#: pro__premium_only/src/block/call-to-action/index.js:27
-#: pro__premium_only/src/block/call-to-action/index.js:48
-#: pro__premium_only/src/block/call-to-action/index.js:71
-#: pro__premium_only/src/block/feature-grid/index.js:89
-#: pro__premium_only/src/block/feature-grid/index.js:109
-#: pro__premium_only/src/block/feature-grid/index.js:125
-#: pro__premium_only/src/block/feature-grid/index.js:170
-#: pro__premium_only/src/block/feature-grid/index.js:207
-#: pro__premium_only/src/block/feature-grid/index.js:244
-#: pro__premium_only/src/block/feature-grid/index.js:271
-#: pro__premium_only/src/block/feature-grid/index.js:290
-#: pro__premium_only/src/block/feature-grid/index.js:304
-#: pro__premium_only/src/block/feature/index.js:33
-#: pro__premium_only/src/block/feature/index.js:73
-#: pro__premium_only/src/block/feature/index.js:97
-#: pro__premium_only/src/block/feature/index.js:138
-#: pro__premium_only/src/block/feature/index.js:163
-#: pro__premium_only/src/block/feature/index.js:195
-#: pro__premium_only/src/block/feature/index.js:231
-#: pro__premium_only/src/block/feature/index.js:257
-#: pro__premium_only/src/block/feature/index.js:296
-#: pro__premium_only/src/block/feature/index.js:323
-#: pro__premium_only/src/block/hero/index.js:37
-#: pro__premium_only/src/block/hero/index.js:72
-#: pro__premium_only/src/block/hero/index.js:110
-#: pro__premium_only/src/block/hero/index.js:144
-#: pro__premium_only/src/block/image-box/index.js:63
-#: pro__premium_only/src/block/image-box/index.js:120
-#: pro__premium_only/src/block/image-box/index.js:175
-#: pro__premium_only/src/block/image-box/index.js:236
-#: pro__premium_only/src/block/notification/index.js:94
-#: pro__premium_only/src/block/notification/index.js:144
-#: pro__premium_only/src/block/notification/index.js:191
-#: pro__premium_only/src/block/pricing-box/index.js:50
-#: pro__premium_only/src/block/pricing-box/index.js:89
-#: pro__premium_only/src/block/pricing-box/index.js:163
-#: src/block/accordion/variations.js:50
-#: src/block/accordion/variations.js:90
-#: src/block/call-to-action/variations.js:43
-#: src/block/call-to-action/variations.js:66
-#: src/block/feature-grid/variations.js:48
-#: src/block/feature-grid/variations.js:62
-#: src/block/feature-grid/variations.js:76
-#: src/block/feature/variations.js:48
-#: src/block/feature/variations.js:73
-#: src/block/feature/variations.js:76
-#: src/block/feature/variations.js:80
-#: src/block/hero/variations.js:45
-#: src/block/hero/variations.js:87
-#: src/block/image-box/variations.js:58
-#: src/block/image-box/variations.js:114
-#: src/block/notification/variations.js:46
-#: src/block/notification/variations.js:92
-#: src/block/pricing-box/variations.js:41
-#: src/block/pricing-box/variations.js:73
-msgctxt "Heading placeholder"
-msgid "Title for This Block"
-msgstr ""
-
-#: dist/translation-strings.php:343
+#: dist/translation-strings.php:349
 #: pro__premium_only/src/block/accordion/index.js:56
 #: pro__premium_only/src/block/accordion/index.js:107
 #: pro__premium_only/src/block/accordion/index.js:161
@@ -2303,7 +2240,166 @@ msgctxt "Content placeholder"
 msgid "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
 msgstr ""
 
-#: dist/translation-strings.php:344
+#: dist/translation-strings.php:350
+#: src/block/blockquote/variations.js:55
+#: src/block/blockquote/variations.js:61
+#: src/components/panel-advanced-settings/index.js:90
+msgid "Simple"
+msgstr ""
+
+#: dist/translation-strings.php:351
+#: src/block/blockquote/variations.js:82
+#: src/block/blockquote/variations.js:87
+#: src/block/posts/edit.js:479
+#: src/deprecated/v2/block/blog-posts/edit.js:601
+msgid "Highlighted"
+msgstr ""
+
+#: dist/translation-strings.php:352
+#: src/block/blockquote/variations.js:94
+#: src/block/blockquote/variations.js:99
+#: src/deprecated/v2/block/blockquote/edit.js:72
+#: src/deprecated/v2/block/header/edit.js:92
+msgid "Huge"
+msgstr ""
+
+#: dist/translation-strings.php:353
+#: src/block/blockquote/variations.js:106
+#: src/block/blockquote/variations.js:111
+#: src/deprecated/v2/block/blockquote/edit.js:69
+msgid "Centered Quote"
+msgstr ""
+
+#: dist/translation-strings.php:354
+#: pro__premium_only/src/block/load-more/edit.js:80
+#: pro__premium_only/src/block/pagination/edit.js:71
+#: src/block-components/advanced/edit.js:46
+#: src/block-components/content-align/edit.js:127
+#: src/block/accordion/edit.js:132
+#: src/block/button-group/edit.js:95
+#: src/block/divider/edit.js:72
+#: src/block/icon-label/edit.js:80
+#: src/block/icon-list/edit.js:199
+#: src/block/map/edit.js:267
+#: src/block/notification/edit.js:104
+#: src/block/posts/edit.js:172
+#: src/block/separator/edit.js:74
+#: src/block/spacer/edit.js:96
+#: src/block/table-of-contents/edit.js:347
+#: src/block/text/edit.js:126
+#: src/block/video-popup/edit.js:90
+#: src/deprecated/v2/block/accordion/edit.js:135
+#: src/deprecated/v2/block/blockquote/edit.js:124
+#: src/deprecated/v2/block/blog-posts/edit.js:200
+#: src/deprecated/v2/block/button/edit.js:107
+#: src/deprecated/v2/block/call-to-action/edit.js:137
+#: src/deprecated/v2/block/card/edit.js:154
+#: src/deprecated/v2/block/column/edit.js:121
+#: src/deprecated/v2/block/columns/edit.js:256
+#: src/deprecated/v2/block/container/edit.js:142
+#: src/deprecated/v2/block/count-up/edit.js:134
+#: src/deprecated/v2/block/divider/edit.js:96
+#: src/deprecated/v2/block/expand/edit.js:62
+#: src/deprecated/v2/block/feature-grid/edit.js:146
+#: src/deprecated/v2/block/feature/edit.js:172
+#: src/deprecated/v2/block/header/edit.js:151
+#: src/deprecated/v2/block/heading/edit.js:70
+#: src/deprecated/v2/block/icon-list/edit.js:90
+#: src/deprecated/v2/block/icon/edit.js:73
+#: src/deprecated/v2/block/image-box/edit.js:157
+#: src/deprecated/v2/block/notification/edit.js:157
+#: src/deprecated/v2/block/number-box/edit.js:146
+#: src/deprecated/v2/block/pricing-box/edit.js:156
+#: src/deprecated/v2/block/separator/edit.js:136
+#: src/deprecated/v2/block/spacer/edit.js:51
+#: src/deprecated/v2/block/team-member/edit.js:155
+#: src/deprecated/v2/block/testimonial/edit.js:154
+#: src/deprecated/v2/block/text/edit.js:121
+#: src/deprecated/v2/block/video-popup/edit.js:75
+#: src/deprecated/v2/modules/advanced-general/index.js:39
+msgid "General"
+msgstr ""
+
+#: dist/translation-strings.php:355
+#: src/block/accordion/edit.js:137
+#: src/deprecated/v2/block/accordion/edit.js:145
+msgid "Open at the start"
+msgstr ""
+
+#: dist/translation-strings.php:356
+#: src/block/accordion/edit.js:200
+msgid "Open Icon"
+msgstr ""
+
+#: dist/translation-strings.php:357
+#: src/block/accordion/edit.js:204
+msgid "The open icon will appear when the accordion is opened"
+msgstr ""
+
+#: dist/translation-strings.php:358
+#: pro__premium_only/src/block/accordion/index.js:40
+#: pro__premium_only/src/block/accordion/index.js:91
+#: pro__premium_only/src/block/accordion/index.js:149
+#: pro__premium_only/src/block/call-to-action/index.js:27
+#: pro__premium_only/src/block/call-to-action/index.js:48
+#: pro__premium_only/src/block/call-to-action/index.js:71
+#: pro__premium_only/src/block/feature-grid/index.js:89
+#: pro__premium_only/src/block/feature-grid/index.js:109
+#: pro__premium_only/src/block/feature-grid/index.js:125
+#: pro__premium_only/src/block/feature-grid/index.js:170
+#: pro__premium_only/src/block/feature-grid/index.js:207
+#: pro__premium_only/src/block/feature-grid/index.js:244
+#: pro__premium_only/src/block/feature-grid/index.js:271
+#: pro__premium_only/src/block/feature-grid/index.js:290
+#: pro__premium_only/src/block/feature-grid/index.js:304
+#: pro__premium_only/src/block/feature/index.js:33
+#: pro__premium_only/src/block/feature/index.js:73
+#: pro__premium_only/src/block/feature/index.js:97
+#: pro__premium_only/src/block/feature/index.js:138
+#: pro__premium_only/src/block/feature/index.js:163
+#: pro__premium_only/src/block/feature/index.js:195
+#: pro__premium_only/src/block/feature/index.js:231
+#: pro__premium_only/src/block/feature/index.js:257
+#: pro__premium_only/src/block/feature/index.js:296
+#: pro__premium_only/src/block/feature/index.js:323
+#: pro__premium_only/src/block/hero/index.js:37
+#: pro__premium_only/src/block/hero/index.js:72
+#: pro__premium_only/src/block/hero/index.js:110
+#: pro__premium_only/src/block/hero/index.js:144
+#: pro__premium_only/src/block/image-box/index.js:63
+#: pro__premium_only/src/block/image-box/index.js:120
+#: pro__premium_only/src/block/image-box/index.js:175
+#: pro__premium_only/src/block/image-box/index.js:236
+#: pro__premium_only/src/block/notification/index.js:94
+#: pro__premium_only/src/block/notification/index.js:144
+#: pro__premium_only/src/block/notification/index.js:191
+#: pro__premium_only/src/block/pricing-box/index.js:50
+#: pro__premium_only/src/block/pricing-box/index.js:89
+#: pro__premium_only/src/block/pricing-box/index.js:163
+#: src/block/accordion/variations.js:50
+#: src/block/accordion/variations.js:90
+#: src/block/call-to-action/variations.js:43
+#: src/block/call-to-action/variations.js:66
+#: src/block/feature-grid/variations.js:48
+#: src/block/feature-grid/variations.js:62
+#: src/block/feature-grid/variations.js:76
+#: src/block/feature/variations.js:48
+#: src/block/feature/variations.js:73
+#: src/block/feature/variations.js:76
+#: src/block/feature/variations.js:80
+#: src/block/hero/variations.js:45
+#: src/block/hero/variations.js:87
+#: src/block/image-box/variations.js:58
+#: src/block/image-box/variations.js:114
+#: src/block/notification/variations.js:46
+#: src/block/notification/variations.js:92
+#: src/block/pricing-box/variations.js:41
+#: src/block/pricing-box/variations.js:73
+msgctxt "Heading placeholder"
+msgid "Title for This Block"
+msgstr ""
+
+#: dist/translation-strings.php:359
 #: src/block/accordion/variations.js:68
 #: src/block/accordion/variations.js:81
 #: src/block/button/block-styles.js:83
@@ -2338,7 +2434,7 @@ msgstr ""
 msgid "Plain"
 msgstr ""
 
-#: dist/translation-strings.php:345
+#: dist/translation-strings.php:360
 #: src/block/accordion/variations.js:126
 #: src/block/accordion/variations.js:131
 #: src/block/pricing-box/variations.js:108
@@ -2347,107 +2443,11 @@ msgstr ""
 msgid "Colored"
 msgstr ""
 
-#: dist/translation-strings.php:346
+#: dist/translation-strings.php:361
 #: src/block/accordion/variations.js:138
 #: src/block/accordion/variations.js:143
 #: src/deprecated/v2/block/icon-list/deprecated/util.js:48
 msgid "Plus"
-msgstr ""
-
-#: dist/translation-strings.php:347
-#: src/block/blockquote/edit.js:132
-msgid "Quotation Mark Icons"
-msgstr ""
-
-#: dist/translation-strings.php:348
-#: src/block/blockquote/edit.js:148
-msgid "Pick another icon"
-msgstr ""
-
-#: dist/translation-strings.php:349
-#: src/block/blockquote/quotes.js:28
-#: src/deprecated/v2/block/blockquote/quotes.js:38
-msgid "Round Thin"
-msgstr ""
-
-#: dist/translation-strings.php:350
-#: src/block/blockquote/quotes.js:33
-#: src/deprecated/v2/block/blockquote/quotes.js:44
-msgid "Round"
-msgstr ""
-
-#: dist/translation-strings.php:351
-#: src/block/blockquote/quotes.js:38
-#: src/deprecated/v2/block/blockquote/quotes.js:50
-msgid "Round Thick"
-msgstr ""
-
-#: dist/translation-strings.php:352
-#: src/block/blockquote/quotes.js:43
-#: src/deprecated/v2/block/blockquote/quotes.js:56
-msgid "Round Fat"
-msgstr ""
-
-#: dist/translation-strings.php:353
-#: src/block/blockquote/quotes.js:48
-#: src/deprecated/v2/block/blockquote/quotes.js:62
-msgid "Square Thin"
-msgstr ""
-
-#: dist/translation-strings.php:354
-#: src/block/blockquote/quotes.js:53
-#: src/components/image-shape-control/index.js:41
-#: src/deprecated/v2/block/blockquote/quotes.js:68
-#: src/deprecated/v2/block/number-box/edit.js:345
-msgid "Square"
-msgstr ""
-
-#: dist/translation-strings.php:355
-#: src/block/blockquote/quotes.js:58
-#: src/deprecated/v2/block/blockquote/quotes.js:74
-msgid "Square Simple"
-msgstr ""
-
-#: dist/translation-strings.php:356
-#: src/block/blockquote/quotes.js:63
-#: src/deprecated/v2/block/blockquote/quotes.js:80
-msgid "Square Modern"
-msgstr ""
-
-#: dist/translation-strings.php:357
-#: src/block/blockquote/quotes.js:68
-#: src/deprecated/v2/block/blockquote/quotes.js:86
-msgid "Square Fat"
-msgstr ""
-
-#: dist/translation-strings.php:358
-#: src/block/blockquote/variations.js:55
-#: src/block/blockquote/variations.js:61
-#: src/components/panel-advanced-settings/index.js:90
-msgid "Simple"
-msgstr ""
-
-#: dist/translation-strings.php:359
-#: src/block/blockquote/variations.js:82
-#: src/block/blockquote/variations.js:87
-#: src/block/posts/edit.js:479
-#: src/deprecated/v2/block/blog-posts/edit.js:601
-msgid "Highlighted"
-msgstr ""
-
-#: dist/translation-strings.php:360
-#: src/block/blockquote/variations.js:94
-#: src/block/blockquote/variations.js:99
-#: src/deprecated/v2/block/blockquote/edit.js:72
-#: src/deprecated/v2/block/header/edit.js:92
-msgid "Huge"
-msgstr ""
-
-#: dist/translation-strings.php:361
-#: src/block/blockquote/variations.js:106
-#: src/block/blockquote/variations.js:111
-#: src/deprecated/v2/block/blockquote/edit.js:69
-msgid "Centered Quote"
 msgstr ""
 
 #: dist/translation-strings.php:362
@@ -2859,7 +2859,6 @@ msgstr ""
 #: src/block/design-library/edit.js:101
 #: src/deprecated/v2/components/design-library-control/index.js:57
 #: src/deprecated/v2/components/design-library-control/index.js:61
-#: src/plugins/design-library-button/design-library-button.js:37
 msgid "Open Design Library"
 msgstr ""
 
@@ -4371,116 +4370,95 @@ msgid "Play Video"
 msgstr ""
 
 #: dist/translation-strings.php:603
-#: src/block-components/alignment/edit.js:34
-msgid "Alignment"
-msgstr ""
-
-#: dist/translation-strings.php:604
-#: src/block-components/alignment/edit.js:38
-msgid "Content Alignment"
-msgstr ""
-
-#: dist/translation-strings.php:605
-#: src/block-components/alignment/edit.js:44
-#: src/block-components/alignment/edit.js:53
-msgid "Column Alignment"
-msgstr ""
-
-#: dist/translation-strings.php:606
-#: src/block-components/alignment/edit.js:62
-msgid "Inner Block Alignment"
-msgstr ""
-
-#: dist/translation-strings.php:607
 #: src/block-components/advanced/edit.js:24
 #: src/deprecated/v2/modules/advanced-general/index.js:58
 msgctxt "HTML Tag"
 msgid "Address"
 msgstr ""
 
-#: dist/translation-strings.php:608
+#: dist/translation-strings.php:604
 #: src/block-components/advanced/edit.js:25
 #: src/deprecated/v2/modules/advanced-general/index.js:52
 msgctxt "HTML Tag"
 msgid "Article"
 msgstr ""
 
-#: dist/translation-strings.php:609
+#: dist/translation-strings.php:605
 #: src/block-components/advanced/edit.js:26
 #: src/deprecated/v2/modules/advanced-general/index.js:53
 msgctxt "HTML Tag"
 msgid "Aside"
 msgstr ""
 
-#: dist/translation-strings.php:610
+#: dist/translation-strings.php:606
 #: src/block-components/advanced/edit.js:27
 #: src/deprecated/v2/modules/advanced-general/index.js:50
 msgctxt "HTML Tag"
 msgid "Blockquote"
 msgstr ""
 
-#: dist/translation-strings.php:611
+#: dist/translation-strings.php:607
 #: src/block-components/advanced/edit.js:28
 #: src/deprecated/v2/modules/advanced-general/index.js:49
 msgctxt "HTML Tag"
 msgid "Div"
 msgstr ""
 
-#: dist/translation-strings.php:612
+#: dist/translation-strings.php:608
 #: src/block-components/advanced/edit.js:29
 msgctxt "HTML Tag"
 msgid "Details"
 msgstr ""
 
-#: dist/translation-strings.php:613
+#: dist/translation-strings.php:609
 #: src/block-components/advanced/edit.js:30
 #: src/deprecated/v2/modules/advanced-general/index.js:56
 msgctxt "HTML Tag"
 msgid "Footer"
 msgstr ""
 
-#: dist/translation-strings.php:614
+#: dist/translation-strings.php:610
 #: src/block-components/advanced/edit.js:31
 #: src/deprecated/v2/modules/advanced-general/index.js:55
 msgctxt "HTML Tag"
 msgid "Header"
 msgstr ""
 
-#: dist/translation-strings.php:615
+#: dist/translation-strings.php:611
 #: src/block-components/advanced/edit.js:32
 #: src/deprecated/v2/modules/advanced-general/index.js:59
 msgctxt "HTML Tag"
 msgid "Hgroup"
 msgstr ""
 
-#: dist/translation-strings.php:616
+#: dist/translation-strings.php:612
 #: src/block-components/advanced/edit.js:33
 #: src/deprecated/v2/modules/advanced-general/index.js:54
 msgctxt "HTML Tag"
 msgid "Main"
 msgstr ""
 
-#: dist/translation-strings.php:617
+#: dist/translation-strings.php:613
 #: src/block-components/advanced/edit.js:34
 #: src/deprecated/v2/modules/advanced-general/index.js:57
 msgctxt "HTML Tag"
 msgid "Nav"
 msgstr ""
 
-#: dist/translation-strings.php:618
+#: dist/translation-strings.php:614
 #: src/block-components/advanced/edit.js:35
 #: src/deprecated/v2/modules/advanced-general/index.js:51
 msgctxt "HTML Tag"
 msgid "Section"
 msgstr ""
 
-#: dist/translation-strings.php:619
+#: dist/translation-strings.php:615
 #: src/block-components/advanced/edit.js:36
 msgctxt "HTML Tag"
 msgid "Summary"
 msgstr ""
 
-#: dist/translation-strings.php:620
+#: dist/translation-strings.php:616
 #: src/block-components/advanced/edit.js:50
 #: src/components/heading-buttons-control/index.js:76
 #: src/deprecated/v2/block/testimonial/edit.js:422
@@ -4489,19 +4467,19 @@ msgctxt "component"
 msgid "%s HTML Tag"
 msgstr ""
 
-#: dist/translation-strings.php:621
+#: dist/translation-strings.php:617
 #: src/block-components/advanced/edit.js:50
 #: src/components/panel-tabs/index.js:23
 #: src/deprecated/v2/modules/advanced-general/index.js:45
 msgid "Block"
 msgstr ""
 
-#: dist/translation-strings.php:622
+#: dist/translation-strings.php:618
 #: src/block-components/advanced/edit.js:55
 msgid "Overflow"
 msgstr ""
 
-#: dist/translation-strings.php:623
+#: dist/translation-strings.php:619
 #: src/block-components/advanced/edit.js:60
 #: src/block-components/helpers/backgrounds/edit.js:261
 #: src/components/background-controls/index.js:366
@@ -4514,27 +4492,27 @@ msgstr ""
 msgid "Auto"
 msgstr ""
 
-#: dist/translation-strings.php:624
+#: dist/translation-strings.php:620
 #: src/block-components/advanced/edit.js:61
 msgid "Hidden"
 msgstr ""
 
-#: dist/translation-strings.php:625
+#: dist/translation-strings.php:621
 #: src/block-components/advanced/edit.js:62
 msgid "Scroll"
 msgstr ""
 
-#: dist/translation-strings.php:626
+#: dist/translation-strings.php:622
 #: src/block-components/advanced/edit.js:63
 msgid "Visible"
 msgstr ""
 
-#: dist/translation-strings.php:627
+#: dist/translation-strings.php:623
 #: src/block-components/advanced/edit.js:67
 msgid "Clear"
 msgstr ""
 
-#: dist/translation-strings.php:628
+#: dist/translation-strings.php:624
 #: pro__premium_only/src/deprecated/v2/block/image-box/index.js:32
 #: src/block-components/advanced/edit.js:71
 #: src/block-components/icon/edit.js:152
@@ -4544,7 +4522,7 @@ msgstr ""
 msgid "Left"
 msgstr ""
 
-#: dist/translation-strings.php:629
+#: dist/translation-strings.php:625
 #: pro__premium_only/src/deprecated/v2/block/image-box/index.js:33
 #: src/block-components/advanced/edit.js:72
 #: src/block-components/icon/edit.js:153
@@ -4554,34 +4532,55 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: dist/translation-strings.php:630
+#: dist/translation-strings.php:626
 #: src/block-components/advanced/edit.js:73
 msgid "Both"
 msgstr ""
 
-#: dist/translation-strings.php:631
+#: dist/translation-strings.php:627
 #: src/block-components/advanced/edit.js:111
 msgid "Sticky position may not work across all themes"
 msgstr ""
 
-#: dist/translation-strings.php:632
+#: dist/translation-strings.php:628
 #: src/block-components/advanced/edit.js:116
 msgid "Static"
 msgstr ""
 
-#: dist/translation-strings.php:633
+#: dist/translation-strings.php:629
 #: src/block-components/advanced/edit.js:117
 msgid "Relative"
 msgstr ""
 
-#: dist/translation-strings.php:634
+#: dist/translation-strings.php:630
 #: src/block-components/advanced/edit.js:118
 msgid "Absolute"
 msgstr ""
 
-#: dist/translation-strings.php:635
+#: dist/translation-strings.php:631
 #: src/block-components/advanced/edit.js:119
 msgid "Sticky"
+msgstr ""
+
+#: dist/translation-strings.php:632
+#: src/block-components/alignment/edit.js:34
+msgid "Alignment"
+msgstr ""
+
+#: dist/translation-strings.php:633
+#: src/block-components/alignment/edit.js:38
+msgid "Content Alignment"
+msgstr ""
+
+#: dist/translation-strings.php:634
+#: src/block-components/alignment/edit.js:44
+#: src/block-components/alignment/edit.js:53
+msgid "Column Alignment"
+msgstr ""
+
+#: dist/translation-strings.php:635
+#: src/block-components/alignment/edit.js:62
+msgid "Inner Block Alignment"
 msgstr ""
 
 #: dist/translation-strings.php:636
@@ -6203,14 +6202,6 @@ msgid "There is an error in your custom attribute"
 msgstr ""
 
 #: dist/translation-strings.php:858
-#: src/components/design-panel-body/index.js:22
-#: src/deprecated/v2/block/column/edit.js:80
-#: src/deprecated/v2/block/columns/edit.js:153
-#: src/deprecated/v2/higher-order/with-tabbed-inspector/index.js:32
-msgid "Layout"
-msgstr ""
-
-#: dist/translation-strings.php:859
 #: dist/translation-strings.php:1640
 #: pro__premium_only/src/welcome/custom-fields/custom-fields.php:156
 #: src/welcome/index.php:129
@@ -6222,9 +6213,17 @@ msgstr ""
 msgid "Go Premium"
 msgstr ""
 
-#: dist/translation-strings.php:860
+#: dist/translation-strings.php:859
 #: src/components/design-library-list/index.js:67
 msgid "No designs found"
+msgstr ""
+
+#: dist/translation-strings.php:860
+#: src/components/design-panel-body/index.js:22
+#: src/deprecated/v2/block/column/edit.js:80
+#: src/deprecated/v2/block/columns/edit.js:153
+#: src/deprecated/v2/higher-order/with-tabbed-inspector/index.js:32
+msgid "Layout"
 msgstr ""
 
 #: dist/translation-strings.php:861
@@ -9469,135 +9468,135 @@ msgid "Media queries are supported. Use the widths 1024px and 768px for tablet a
 msgstr ""
 
 #: dist/translation-strings.php:1402
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:44
-#: pro__premium_only/src/features/icon-controls/index.js:277
-msgid "Shape Opacity"
-msgstr ""
-
-#: dist/translation-strings.php:1403
-#: pro__premium_only/src/block-components/icon/gradient-controls.js:22
-#: pro__premium_only/src/block-components/icon/gradient-controls.js:26
-msgid "Icon Color #%s"
-msgstr ""
-
-#: dist/translation-strings.php:1404
-#: pro__premium_only/src/block-components/icon/multicolor-controls.js:36
-#: pro__premium_only/src/features/icon-controls/index.js:121
-msgid "Multicolor only works for custom uploaded icons that have multiple path elements or for Font Awesome Pro Duotones."
-msgstr ""
-
-#: dist/translation-strings.php:1405
 #: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:52
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:76
 #: pro__premium_only/src/block-components/transform/transform-control.js:42
 msgid "Rotate"
 msgstr ""
 
-#: dist/translation-strings.php:1406
+#: dist/translation-strings.php:1403
 #: pro__premium_only/src/block-components/effects-animations/index.js:34
 msgid "Effect"
 msgstr ""
 
-#: dist/translation-strings.php:1407
+#: dist/translation-strings.php:1404
 #: pro__premium_only/src/block-components/effects-animations/index.js:37
 #: pro__premium_only/src/block-components/effects-animations/index.js:91
 msgid "Entrance Animation"
 msgstr ""
 
-#: dist/translation-strings.php:1408
+#: dist/translation-strings.php:1405
 #: pro__premium_only/src/block-components/effects-animations/index.js:38
 msgid "Scroll Animation"
 msgstr ""
 
-#: dist/translation-strings.php:1409
+#: dist/translation-strings.php:1406
 #: pro__premium_only/src/block-components/effects-animations/index.js:45
 msgid "Start Position"
 msgstr ""
 
-#: dist/translation-strings.php:1410
+#: dist/translation-strings.php:1407
 #: pro__premium_only/src/block-components/effects-animations/index.js:51
 msgid "Entrance Animation Speed"
 msgstr ""
 
-#: dist/translation-strings.php:1411
+#: dist/translation-strings.php:1408
 #: pro__premium_only/src/block-components/effects-animations/index.js:53
 msgid "Slow"
 msgstr ""
 
-#: dist/translation-strings.php:1412
+#: dist/translation-strings.php:1409
 #: pro__premium_only/src/block-components/effects-animations/index.js:55
 msgid "Fast"
 msgstr ""
 
-#: dist/translation-strings.php:1413
+#: dist/translation-strings.php:1410
 #: pro__premium_only/src/block-components/effects-animations/index.js:60
 msgid "Entrance Animation Delay"
 msgstr ""
 
-#: dist/translation-strings.php:1414
+#: dist/translation-strings.php:1411
 #: pro__premium_only/src/block-components/effects-animations/index.js:72
 msgid "Smoothen Scroll Animation"
 msgstr ""
 
-#: dist/translation-strings.php:1415
+#: dist/translation-strings.php:1412
 #: pro__premium_only/src/block-components/effects-animations/index.js:76
 msgid "Use 3D Transforms"
 msgstr ""
 
-#: dist/translation-strings.php:1416
+#: dist/translation-strings.php:1413
 #: pro__premium_only/src/block-components/effects-animations/index.js:81
 msgid "Perspective"
 msgstr ""
 
-#: dist/translation-strings.php:1417
+#: dist/translation-strings.php:1414
 #: pro__premium_only/src/block-components/effects-animations/index.js:97
 msgid "Exit Animation"
 msgstr ""
 
-#: dist/translation-strings.php:1418
+#: dist/translation-strings.php:1415
 #: pro__premium_only/src/block-components/effects-animations/index.js:110
 msgid "This block has Transforms assigned to it, Motion Effects may not work as expected."
 msgstr ""
 
-#: dist/translation-strings.php:1419
+#: dist/translation-strings.php:1416
 #: pro__premium_only/src/block-components/effects-animations/index.js:118
 msgid "Learn more about Motion Effects"
 msgstr ""
 
-#: dist/translation-strings.php:1420
+#: dist/translation-strings.php:1417
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:33
 #: pro__premium_only/src/block-components/transform/transform-control.js:26
 msgid "Translate X"
 msgstr ""
 
-#: dist/translation-strings.php:1421
+#: dist/translation-strings.php:1418
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:41
 msgid "TranslateY"
 msgstr ""
 
-#: dist/translation-strings.php:1422
+#: dist/translation-strings.php:1419
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:50
 msgid "TranslateZ"
 msgstr ""
 
-#: dist/translation-strings.php:1423
+#: dist/translation-strings.php:1420
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:59
 msgid "RotateX"
 msgstr ""
 
-#: dist/translation-strings.php:1424
+#: dist/translation-strings.php:1421
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:68
 msgid "RotateY"
 msgstr ""
 
-#: dist/translation-strings.php:1425
+#: dist/translation-strings.php:1422
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:100
 msgid "Skew X"
 msgstr ""
 
-#: dist/translation-strings.php:1426
+#: dist/translation-strings.php:1423
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:108
 msgid "Skew Y"
+msgstr ""
+
+#: dist/translation-strings.php:1424
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:44
+#: pro__premium_only/src/features/icon-controls/index.js:277
+msgid "Shape Opacity"
+msgstr ""
+
+#: dist/translation-strings.php:1425
+#: pro__premium_only/src/block-components/icon/gradient-controls.js:22
+#: pro__premium_only/src/block-components/icon/gradient-controls.js:26
+msgid "Icon Color #%s"
+msgstr ""
+
+#: dist/translation-strings.php:1426
+#: pro__premium_only/src/block-components/icon/multicolor-controls.js:36
+#: pro__premium_only/src/features/icon-controls/index.js:121
+msgid "Multicolor only works for custom uploaded icons that have multiple path elements or for Font Awesome Pro Duotones."
 msgstr ""
 
 #: dist/translation-strings.php:1427
