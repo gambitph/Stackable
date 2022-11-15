@@ -501,9 +501,15 @@
          *
          * @author Vova Feldman (@svovaf)
          * @since  1.0.8
+         *
+         * @param bool $is_temporary @since 2.5.1
          */
-        function clear_all_sticky() {
-            $this->_sticky_storage->clear_all();
+        function clear_all_sticky( $is_temporary = false ) {
+            if ( $is_temporary ) {
+                $this->_notices = array();
+            } else {
+                $this->_sticky_storage->clear_all();
+            }
         }
 
         #--------------------------------------------------------------------------------

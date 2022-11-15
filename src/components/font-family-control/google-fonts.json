@@ -3070,7 +3070,8 @@
       "700italic"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -5522,6 +5523,18 @@
     ]
   },
   {
+    "family": "Fragment Mono",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Francois One",
     "variants": [
       "regular"
@@ -6939,6 +6952,24 @@
     "subsets": [
       "cyrillic-ext",
       "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "IBM Plex Sans JP",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
       "latin",
       "latin-ext"
     ]
@@ -9554,7 +9585,10 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9616,6 +9650,21 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Marhey",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
       "latin",
       "latin-ext"
     ]
@@ -9828,12 +9877,18 @@
   {
     "family": "Merienda",
     "variants": [
+      "300",
       "regular",
-      "700"
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -10936,6 +10991,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "music"
     ]
   },
@@ -11124,16 +11181,23 @@
       "700"
     ],
     "subsets": [
-      "bamum"
+      "bamum",
+      "latin",
+      "latin-ext"
     ]
   },
   {
     "family": "Noto Sans Bassa Vah",
     "variants": [
-      "regular"
+      "regular",
+      "500",
+      "600",
+      "700"
     ],
     "subsets": [
-      "bassa-vah"
+      "bassa-vah",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11190,7 +11254,9 @@
       "regular"
     ],
     "subsets": [
-      "buginese"
+      "buginese",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11247,7 +11313,9 @@
       "regular"
     ],
     "subsets": [
-      "chakma"
+      "chakma",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11560,7 +11628,9 @@
       "regular"
     ],
     "subsets": [
-      "hanunoo"
+      "hanunoo",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11708,7 +11778,9 @@
       "700"
     ],
     "subsets": [
-      "kayah-li"
+      "kayah-li",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11745,7 +11817,9 @@
       "regular"
     ],
     "subsets": [
-      "khojki"
+      "khojki",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11777,11 +11851,32 @@
     ]
   },
   {
+    "family": "Noto Sans Lao Looped",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "lao",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Noto Sans Lepcha",
     "variants": [
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "lepcha"
     ]
   },
@@ -11907,6 +12002,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "masaram-gondi"
     ]
   },
@@ -11937,6 +12034,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "medefaidrin"
     ]
   },
@@ -11957,6 +12056,17 @@
       "latin",
       "latin-ext",
       "meetei-mayek"
+    ]
+  },
+  {
+    "family": "Noto Sans Mende Kikakui",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "mende-kikakui"
     ]
   },
   {
@@ -11985,6 +12095,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "modi"
     ]
   },
@@ -11994,6 +12106,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "mongolian"
     ]
   },
@@ -12035,6 +12149,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "multani"
     ]
   },
@@ -12076,9 +12192,14 @@
   {
     "family": "Noto Sans New Tai Lue",
     "variants": [
-      "regular"
+      "regular",
+      "500",
+      "600",
+      "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "new-tai-lue"
     ]
   },
@@ -12088,6 +12209,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "newa"
     ]
   },
@@ -12118,6 +12241,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "ol-chiki"
     ]
   },
@@ -12218,6 +12343,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "osage"
     ]
   },
@@ -12227,6 +12354,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "osmanya"
     ]
   },
@@ -12236,6 +12365,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "pahawh-hmong"
     ]
   },
@@ -12254,6 +12385,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "pau-cin-hau"
     ]
   },
@@ -12290,6 +12423,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "rejang"
     ]
   },
@@ -12332,6 +12467,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "saurashtra"
     ]
   },
@@ -12359,6 +12496,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "siddham"
     ]
   },
@@ -12399,6 +12538,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "sora-sompeng"
     ]
   },
@@ -12420,6 +12561,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "sundanese"
     ]
   },
@@ -12429,6 +12572,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "syloti-nagri"
     ]
   },
@@ -12492,6 +12637,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tagalog"
     ]
   },
@@ -12501,6 +12648,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tagbanwa"
     ]
   },
@@ -12510,6 +12659,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tai-le"
     ]
   },
@@ -12522,6 +12673,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tai-tham"
     ]
   },
@@ -12531,6 +12684,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tai-viet"
     ]
   },
@@ -12540,6 +12695,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "takri"
     ]
   },
@@ -12604,6 +12761,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "thaana"
     ]
   },
@@ -12709,6 +12868,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "yi"
     ]
   },
@@ -12718,6 +12879,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "zanabazar-square"
     ]
   },
@@ -13123,6 +13286,20 @@
     ]
   },
   {
+    "family": "Noto Serif Oriya",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "oriya"
+    ]
+  },
+  {
     "family": "Noto Serif SC",
     "variants": [
       "200",
@@ -13262,6 +13439,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tibetan"
     ]
   },
@@ -16769,6 +16948,23 @@
     ]
   },
   {
+    "family": "Sono",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Sonsie One",
     "variants": [
       "regular"
@@ -18972,6 +19168,8 @@
     "family": "Zen Old Mincho",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700",
       "900"
     ],

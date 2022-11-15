@@ -22,6 +22,8 @@
      * @property string $request_handler_id
      * @property int    $request_handler_timestamp
      * @property int    $request_handler_retries_count
+     * @property bool   $hide_manual_resolution
+     * @property array  $new_blog_install_map
      */
     class FS_Clone_Manager {
         /**
@@ -32,23 +34,6 @@
          * @var FS_Option_Manager
          */
         private $_network_storage;
-        /**
-         * @var array {
-         * @type int    $clone_identification_timestamp
-         * @type int    $temporary_duplicate_mode_selection_timestamp
-         * @type int    $temporary_duplicate_notice_shown_timestamp
-         * @type string $request_handler_id
-         * @type int    $request_handler_timestamp
-         * @type int    $request_handler_retries_count
-         * }
-         */
-        private $_data;
-        /**
-         * @var array {
-         * @type array $new_blog_install_map
-         * }
-         */
-        private $_network_data;
         /**
          * @var FS_Admin_Notices
          */
@@ -85,6 +70,10 @@
         /**
          * @var string
          */
+        const OPTION_LONG_TERM_DUPLICATE = 'long_term_duplicate';
+        /**
+         * @var string
+         */
         const OPTION_NEW_HOME = 'new_home';
 
         #--------------------------------------------------------------------------------
@@ -112,36 +101,37 @@
         private function __construct() {
             $this->_storage         = FS_Option_Manager::get_manager( WP_FS___OPTION_PREFIX . self::OPTION_MANAGER_NAME, true );
             $this->_network_storage = FS_Option_Manager::get_manager( WP_FS___OPTION_PREFIX . self::OPTION_MANAGER_NAME, true, true );
-            $this->_data            = $this->_storage->get_option( self::OPTION_NAME, array() );
-            $this->_network_data    = $this->_network_storage->get_option( self::OPTION_NAME, array() );
+
+            $this->maybe_migrate_options();
 
             $this->_notices = FS_Admin_Notices::instance( 'global_clone_resolution_notices', '', '', true );
             $this->_logger  = FS_Logger::get_logger( WP_FS__SLUG . '_' . '_clone_manager', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
+        }
 
-            $defaults = array(
-                'clone_identification_timestamp'               => null,
-                'temporary_duplicate_mode_selection_timestamp' => null,
-                'temporary_duplicate_notice_shown_timestamp'   => null,
-                'request_handler_id'                           => null,
-                'request_handler_timestamp'                    => null,
-                'request_handler_retries_count'                => null,
+        /**
+         * Migrate clone resolution options from 2.5.0 array-based structure, to a new flat structure.
+         *
+         * The reason this logic is not in a separate migration script is that we want to be 100% sure data is migrated before any execution of clone logic.
+         *
+         * @todo Delete this one in the future.
+         */
+        private function maybe_migrate_options() {
+            $storages = array(
+                $this->_storage,
+                $this->_network_storage
             );
 
-            if ( ! is_array( $this->_data ) ) {
-                $this->_data = $defaults;
-            } else {
-                foreach ( $defaults as $name => $value ) {
-                    $this->_data[ $name ] = isset( $this->_data[ $name ] ) ?
-                        $this->_data[ $name ] :
-                        $value;
-                }
-            }
+            foreach ( $storages as $storage ) {
+                $clone_data = $storage->get_option( self::OPTION_NAME );
+                if ( is_array( $clone_data ) && ! empty( $clone_data ) ) {
+                    foreach ( $clone_data as $key => $val ) {
+                        if ( ! is_null( $val ) ) {
+                            $storage->set_option( $key, $val );
+                        }
+                    }
 
-            if (
-                ! is_array( $this->_network_data ) ||
-                ! isset( $this->_network_data['new_blog_install_map'] )
-            ) {
-                $this->_network_data = array( 'new_blog_install_map' => null );
+                    $storage->unset_option( self::OPTION_NAME, true );
+                }
             }
         }
 
@@ -155,18 +145,19 @@
                     add_action( 'admin_post_fs_clone_resolution', array( $this, '_handle_clone_resolution' ) );
                 }
 
-                if (
-                    empty( $this->get_clone_identification_timestamp() ) &&
-                    (
-                        ! fs_is_network_admin() ||
-                        ! ( $this->is_clone_resolution_options_notice_shown() || $this->is_temporary_duplicate_notice_shown() )
-                    )
-                ) {
-                    $this->hide_clone_admin_notices();
+                if ( Freemius::is_ajax() ) {
+                    Freemius::add_ajax_action_static( 'handle_clone_resolution', array( $this, '_clone_resolution_action_ajax_handler' ) );
                 } else {
-                    if ( Freemius::is_ajax() ) {
-                        Freemius::add_ajax_action_static( 'handle_clone_resolution', array( $this, '_clone_resolution_action_ajax_handler' ) );
+                    if (
+                        empty( $this->get_clone_identification_timestamp() ) &&
+                        (
+                            ! fs_is_network_admin() ||
+                            ! ( $this->is_clone_resolution_options_notice_shown() || $this->is_temporary_duplicate_notice_shown() )
+                        )
+                    ) {
+                        $this->hide_clone_admin_notices();
                     } else if ( ! Freemius::is_cron() && ! Freemius::is_admin_post() ) {
+                        $this->try_resolve_clone_automatically();
                         $this->maybe_show_clone_admin_notice();
 
                         add_action( 'admin_footer', array( $this, '_add_clone_resolution_javascript' ) );
@@ -181,7 +172,24 @@
          * @return int|null
          */
         function get_clone_identification_timestamp() {
-            return $this->clone_identification_timestamp;
+            return $this->get_option( 'clone_identification_timestamp', true );
+        }
+
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.1
+         *
+         * @param string $sdk_last_version
+         */
+        function maybe_update_clone_resolution_support_flag( $sdk_last_version ) {
+            if ( null !== $this->hide_manual_resolution ) {
+                return;
+            }
+
+            $this->hide_manual_resolution = (
+                ! empty( $sdk_last_version ) &&
+                version_compare( $sdk_last_version, '2.5.0', '<' )
+            );
         }
 
         /**
@@ -220,6 +228,16 @@
 
             // Give the logic that handles clones enough time to finish (it is given 3 minutes for now).
             return ( time() > ( $this->request_handler_timestamp + self::CLONE_RESOLUTION_MAX_EXECUTION_TIME ) );
+        }
+
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.1
+         *
+         * @return bool
+         */
+        function should_hide_manual_resolution() {
+            return ( true === $this->hide_manual_resolution );
         }
 
         /**
@@ -288,7 +306,6 @@
             }
 
             if ( ! $this->try_automatic_resolution() ) {
-                $this->store_clone_identification_timestamp();
                 $this->clear_temporary_duplicate_notice_shown_timestamp();
             }
         }
@@ -359,7 +376,7 @@
          * @return object
          */
         private function find_other_install_by_url( Freemius $instance, $url ) {
-            $result = $instance->get_api_user_scope()->get( "/plugins/{$instance->get_id()}/installs.json?search=" . urlencode( $url ) . "&all=true", true );
+            $result = $instance->get_api_user_scope()->get( "/plugins/{$instance->get_id()}/installs.json?url=" . urlencode( $url ) . "&all=true", true );
 
             $current_install = $instance->get_site();
 
@@ -447,7 +464,12 @@
          *
          * @return bool If managed to automatically resolve the clone.
          */
-        private function try_resolve_clone_automatically( Freemius $instance, $current_url, $is_localhost, $is_clone_of_network_subsite = null ) {
+        private function try_resolve_clone_automatically_by_instance(
+            Freemius $instance,
+            $current_url,
+            $is_localhost,
+            $is_clone_of_network_subsite = null
+        ) {
             // Try to find a different install of the context product that is associated with the current URL.
             $associated_install = $this->find_other_install_by_url( $instance, $current_url );
 
@@ -472,20 +494,103 @@
                 return false;
             }
 
-            $is_clone_of_network_subsite = ( ! is_null( $is_clone_of_network_subsite ) ) ?
-                $is_clone_of_network_subsite :
-                is_object( $this->find_network_subsite_clone_install( $instance ) );
+            if ( ! WP_FS__IS_LOCALHOST_FOR_SERVER && ! $is_localhost ) {
+                $is_clone_of_network_subsite = ( ! is_null( $is_clone_of_network_subsite ) ) ?
+                    $is_clone_of_network_subsite :
+                    is_object( $this->find_network_subsite_clone_install( $instance ) );
 
-            if (
-                $is_clone_of_network_subsite ||
-                WP_FS__IS_LOCALHOST_FOR_SERVER ||
-                $is_localhost
-            ) {
-                // If the site is a clone of another subsite in the network, or a localhost one, try to auto activate the license.
-                return $this->delete_install_and_connect( $instance, $license->secret_key );
+                if ( ! $is_clone_of_network_subsite ) {
+                    return false;
+                }
             }
 
-            return false;
+            // If the site is a clone of another subsite in the network, or a localhost one, try to auto activate the license.
+            return $this->delete_install_and_connect( $instance, $license->secret_key );
+        }
+
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.0
+         */
+        private function try_resolve_clone_automatically() {
+            $clone_action = $this->get_clone_resolution_action_from_config();
+
+            if ( ! empty( $clone_action ) ) {
+                $this->try_resolve_clone_automatically_by_config( $clone_action );
+                return;
+            }
+
+            $this->try_automatic_resolution();
+        }
+
+        /**
+         * Tries to resolve the clone situation automatically based on the config in the wp-config.php file.
+         *
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.0
+         *
+         * @param string $clone_action
+         */
+        private function try_resolve_clone_automatically_by_config( $clone_action ) {
+            $fs_instances = array();
+
+            if ( self::OPTION_LONG_TERM_DUPLICATE === $clone_action ) {
+                $instances = Freemius::_get_all_instances();
+
+                foreach ( $instances as $instance ) {
+                    if ( ! $instance->is_registered() ) {
+                        continue;
+                    }
+
+                    if ( ! $instance->is_clone() ) {
+                        continue;
+                    }
+
+                    $license = $instance->has_features_enabled_license() ?
+                        $instance->_get_license() :
+                        null;
+
+                    if (
+                        is_object( $license ) &&
+                        ! $license->is_utilized(
+                            ( WP_FS__IS_LOCALHOST_FOR_SERVER || FS_Site::is_localhost_by_address( Freemius::get_unfiltered_site_url() ) )
+                        )
+                    ) {
+                        $fs_instances[] = $instance;
+                    }
+                }
+
+                if ( empty( $fs_instances ) ) {
+                    return;
+                }
+            }
+
+            $this->resolve_cloned_sites( $clone_action, $fs_instances );
+        }
+
+        /**
+         * @author Leo Fajard (@leorw)
+         * @since 2.5.0
+         *
+         * @return string|null
+         */
+        private function get_clone_resolution_action_from_config() {
+            if ( ! defined( 'FS__RESOLVE_CLONE_AS' ) ) {
+                return null;
+            }
+
+            if ( ! in_array(
+                FS__RESOLVE_CLONE_AS,
+                array(
+                    self::OPTION_NEW_HOME,
+                    self::OPTION_TEMPORARY_DUPLICATE,
+                    self::OPTION_LONG_TERM_DUPLICATE,
+                )
+            ) ) {
+                return null;
+            }
+
+            return FS__RESOLVE_CLONE_AS;
         }
 
         /**
@@ -542,9 +647,17 @@
                 return;
             }
 
+            require_once WP_FS__DIR_INCLUDES . '/class-fs-lock.php';
+
+            $lock = new FS_Lock( self::OPTION_NAME . '_subsite' );
+
+            if ( ! $lock->try_lock(60) ) {
+                return;
+            }
+
             $instance->switch_to_blog( $blog_id );
 
-            $current_url          = fs_strip_url_protocol( untrailingslashit( get_site_url() ) );
+            $current_url          = untrailingslashit( Freemius::get_unfiltered_site_url( null, true ) );
             $current_install_url  = is_object( $current_install ) ?
                 fs_strip_url_protocol( untrailingslashit( $current_install->url ) ) :
                 null;
@@ -574,7 +687,7 @@
                     // If there's no expected install (or it couldn't be fetched) and the current install is a clone, try to resolve the clone automatically.
                     $is_localhost = FS_Site::is_localhost_by_address( $current_url );
 
-                    $resolved = $this->try_resolve_clone_automatically( $instance, $current_url, $is_localhost, is_object( $network_subsite_clone_install ) );
+                    $resolved = $this->try_resolve_clone_automatically_by_instance( $instance, $current_url, $is_localhost, is_object( $network_subsite_clone_install ) );
 
                     if ( ! $resolved && is_object( $network_subsite_clone_install ) ) {
                         if ( empty( $this->get_clone_identification_timestamp() ) ) {
@@ -591,10 +704,12 @@
 
             // Remove the current site's information from the map to prevent handling it again.
             $this->remove_new_blog_install_info_from_storage( $blog_id );
+
+            $lock->unlock();
         }
 
         /**
-         * If a new install was created after creating a new subsite, its ID is stored in the blog-install map so that it can be recovered in case it's replaced with a clone install (e.g., when the newly created subsite is a clone).
+         * If a new install was created after creating a new subsite, its ID is stored in the blog-install map so that it can be recovered in case it's replaced with a clone install (e.g., when the newly created subsite is a clone). The IDs of the clone subsites that were created while not running this version of the SDK or a higher version will also be stored in the said map so that the clone manager can also try to resolve them later on.
          *
          * @author Leo Fajardo (@leorw)
          * @since 2.5.0
@@ -602,7 +717,7 @@
          * @param int     $blog_id
          * @param FS_Site $site
          */
-        function store_new_blog_install_info( $blog_id, $site = null ) {
+        function store_blog_install_info( $blog_id, $site = null ) {
             $new_blog_install_map = $this->new_blog_install_map;
 
             if (
@@ -647,7 +762,18 @@
         private function try_automatic_resolution() {
             $this->_logger->entrance();
 
-            $current_url  = fs_strip_url_protocol( untrailingslashit( get_site_url() ) );
+            require_once WP_FS__DIR_INCLUDES . '/class-fs-lock.php';
+
+            $lock = new FS_Lock( self::OPTION_NAME );
+
+            /**
+             * Try to acquire lock for the next 60 sec based on the thread ID.
+             */
+            if ( ! $lock->try_lock( 60 ) ) {
+                return false;
+            }
+
+            $current_url  = untrailingslashit( Freemius::get_unfiltered_site_url( null, true ) );
             $is_localhost = FS_Site::is_localhost_by_address( $current_url );
 
             $require_manual_resolution = false;
@@ -663,10 +789,13 @@
                     continue;
                 }
 
-                if ( ! $this->try_resolve_clone_automatically( $instance, $current_url, $is_localhost ) ) {
+                if ( ! $this->try_resolve_clone_automatically_by_instance( $instance, $current_url, $is_localhost ) ) {
                     $require_manual_resolution = true;
                 }
             }
+
+            // Create a 1-day lock.
+            $lock->lock( WP_FS__TIME_24_HOURS_IN_SEC );
 
             return ( ! $require_manual_resolution );
         }
@@ -697,6 +826,13 @@
             check_ajax_referer( Freemius::get_ajax_action_static( 'handle_clone_resolution' ), 'security' );
 
             $clone_action = fs_request_get( 'clone_action' );
+            $blog_id      = is_multisite() ?
+                fs_request_get( 'blog_id' ) :
+                0;
+
+            if ( is_multisite() && $blog_id == get_current_blog_id() ) {
+                $blog_id = 0;
+            }
 
             if ( empty( $clone_action ) ) {
                 Freemius::shoot_ajax_failure( array(
@@ -705,19 +841,7 @@
                 ) );
             }
 
-            $result = array();
-
-            if ( self::OPTION_TEMPORARY_DUPLICATE === $clone_action ) {
-                $this->store_temporary_duplicate_timestamp();
-            } else {
-                $result = $this->resolve_cloned_sites( $clone_action );
-            }
-
-            if ( 'temporary_duplicate_license_activation' !== $clone_action ) {
-                $this->remove_clone_resolution_options_notice();
-            } else {
-                $this->remove_temporary_duplicate_notice();
-            }
+            $result = $this->resolve_cloned_sites( $clone_action, array(), $blog_id );
 
             Freemius::shoot_ajax_success( $result );
         }
@@ -726,53 +850,102 @@
          * @author Leo Fajardo (@leorw)
          * @since 2.5.0
          *
-         * @param string $clone_action
+         * @param string     $clone_action
+         * @param Freemius[] $fs_instances
+         * @param int        $blog_id
+         *
+         * @return array
          */
-        private function resolve_cloned_sites( $clone_action ) {
+        private function resolve_cloned_sites( $clone_action, $fs_instances = array(), $blog_id = 0 ) {
             $this->_logger->entrance();
 
-            $instances_with_clone_count = 0;
-            $instance_with_error        = null;
-            $has_error                  = false;
+            $result = array();
 
-            $instances = Freemius::_get_all_instances();
+            $instances_with_clone       = array();
+            $instances_with_clone_count = 0;
+            $install_by_instance_id     = array();
+
+            $instances = ( ! empty( $fs_instances ) ) ?
+                $fs_instances :
+                Freemius::_get_all_instances();
+
+            $should_switch_to_blog = ( $blog_id > 0 );
 
             foreach ( $instances as $instance ) {
-                if ( ! $instance->is_registered() ) {
-                    continue;
+                if ( $should_switch_to_blog ) {
+                    $instance->switch_to_blog( $blog_id );
                 }
 
-                if ( ! $instance->is_clone() ) {
-                    continue;
+                if ( $instance->is_registered() && $instance->is_clone() ) {
+                    $instances_with_clone[] = $instance;
+
+                    $instances_with_clone_count ++;
+
+                    $install_by_instance_id[ $instance->get_id() ] = $instance->get_site();
                 }
+            }
 
-                $instances_with_clone_count ++;
+            if ( self::OPTION_TEMPORARY_DUPLICATE === $clone_action ) {
+                $this->store_temporary_duplicate_timestamp();
+            } else {
+                $redirect_url = '';
 
-                if ( FS_Clone_Manager::OPTION_NEW_HOME === $clone_action ) {
-                    $instance->sync_install( array( 'is_new_site' => true ), true );
-                } else {
-                    $instance->_handle_long_term_duplicate();
+                foreach ( $instances_with_clone as $instance ) {
+                    if ( $should_switch_to_blog ) {
+                        $instance->switch_to_blog( $blog_id );
+                    }
 
-                    if ( ! is_object( $instance->get_site() ) ) {
-                        $has_error = true;
+                    $has_error = false;
 
-                        if ( ! is_object( $instance_with_error ) ) {
-                            $instance_with_error = $instance;
+                    if ( self::OPTION_NEW_HOME === $clone_action ) {
+                        $instance->sync_install( array( 'is_new_site' => true ), true );
+
+                        if ( $instance->is_clone() ) {
+                            $has_error = true;
+                        }
+                    } else {
+                        $instance->_handle_long_term_duplicate();
+
+                        if ( ! is_object( $instance->get_site() ) ) {
+                            $has_error = true;
                         }
                     }
+                    
+                    if ( $has_error && 1 === $instances_with_clone_count ) {
+                        $redirect_url = $instance->get_activation_url();
+                    }
+                }
+
+                $result = ( array( 'redirect_url' => $redirect_url ) );
+            }
+            
+            foreach ( $instances_with_clone as $instance ) {
+                if ( $should_switch_to_blog ) {
+                    $instance->switch_to_blog( $blog_id );
+                }
+
+                // No longer a clone, send an update.
+                if ( ! $instance->is_clone() ) {
+                    $instance->send_clone_resolution_update(
+                        $clone_action,
+                        $install_by_instance_id[ $instance->get_id() ]
+                    );
                 }
             }
 
-            $redirect_url = '';
-
-            if (
-                1 === $instances_with_clone_count &&
-                $has_error
-            ) {
-                $redirect_url = $instance_with_error->get_activation_url();
+            if ( 'temporary_duplicate_license_activation' !== $clone_action ) {
+                $this->remove_clone_resolution_options_notice();
+            } else {
+                $this->remove_temporary_duplicate_notice();
             }
 
-            return ( array( 'redirect_url' => $redirect_url ) );
+            if ( $should_switch_to_blog ) {
+                foreach ( $instances as $instance ) {
+                    $instance->restore_current_blog();
+                }
+            }
+
+            return $result;
         }
 
         /**
@@ -788,7 +961,7 @@
          * @author Leo Fajardo (@leorw)
          * @since 2.5.0
          */
-        private function maybe_show_clone_admin_notice() {
+        function maybe_show_clone_admin_notice() {
             $this->_logger->entrance();
 
             if ( fs_is_network_admin() ) {
@@ -816,7 +989,7 @@
                     continue;
                 }
 
-                if ( ! $instance->is_clone() ) {
+                if ( ! $instance->is_clone( true ) ) {
                     continue;
                 }
 
@@ -874,7 +1047,7 @@
                         $product_ids,
                         $product_titles,
                         $site_urls,
-                        get_site_url(),
+                        Freemius::get_unfiltered_site_url(),
                         ( count( $site_urls ) === count( $sites_with_license_urls ) ),
                         ( count( $site_urls ) === $sites_with_premium_version_count ),
                         $doc_url
@@ -889,7 +1062,7 @@
             }
 
             if ( ! $this->is_temporary_duplicate_notice_shown() ) {
-                $last_time_temporary_duplicate_notice_shown  = $this->last_time_temporary_duplicate_notice_was_shown();
+                $last_time_temporary_duplicate_notice_shown  = $this->temporary_duplicate_notice_shown_timestamp;
                 $was_temporary_duplicate_notice_shown_before = is_numeric( $last_time_temporary_duplicate_notice_shown );
 
                 if ( $was_temporary_duplicate_notice_shown_before ) {
@@ -984,10 +1157,9 @@
                             continue;
                         }
 
-                        $subsite_url = trailingslashit( get_site_url( $blog_id ) );
-                        $install_url = trailingslashit( $install->url );
+                        $subsite_url = Freemius::get_unfiltered_site_url( $blog_id, true, true );
 
-                        $has_clone = ( fs_strip_url_protocol( $install_url ) !== fs_strip_url_protocol( $subsite_url ) );
+                        $has_clone = ( fs_strip_url_protocol( trailingslashit( $install->url ) ) !== $subsite_url );
                     }
                 }
 
@@ -1078,7 +1250,7 @@
                 $option_template,
                 fs_esc_html_inline( 'Is %2$s a duplicate of %4$s?', 'duplicate-site-confirmation-message' ),
                 fs_esc_html_inline( 'Yes, %2$s is a duplicate of %4$s for the purpose of testing, staging, or development.', 'duplicate-site-message' ),
-                ($this->has_temporary_duplicate_mode_expired() ?
+                ( $this->has_temporary_duplicate_mode_expired() ?
                     sprintf(
                         $button_template,
                         'long_term_duplicate',
@@ -1088,7 +1260,7 @@
                         $button_template,
                         'temporary_duplicate',
                         fs_text_inline( 'Duplicate Website', 'duplicate-site' )
-                    ))
+                    ) )
             );
 
             $migration_option = sprintf(
@@ -1124,6 +1296,8 @@
                 )
             );
 
+            $blog_id = get_current_blog_id();
+
             /**
              * %1$s - single product's title or product titles list.
              * %2$s - site's URL.
@@ -1132,7 +1306,7 @@
              */
             $message = sprintf(
                 $notice_header .
-                '<div class="fs-clone-resolution-options-container" data-ajax-url="' . esc_attr( admin_url( 'admin-ajax.php?_fs_network_admin=false', 'relative' ) ) . '">' .
+                '<div class="fs-clone-resolution-options-container" data-ajax-url="' . esc_attr( admin_url( 'admin-ajax.php?_fs_network_admin=false', 'relative' ) ) . '" data-blog-id="' . $blog_id . '">' .
                 $duplicate_option .
                 $migration_option .
                 $new_website . '</div>' .
@@ -1167,7 +1341,7 @@
                 false,
                 array(
                     'product_ids' => $product_ids,
-                    'blog_id'     => get_current_blog_id()
+                    'blog_id'     => $blog_id
                 )
             );
         }
@@ -1184,13 +1358,17 @@
          *
          * @return string
          */
-        private function get_temporary_duplicate_admin_notice_string( $site_urls, $product_titles, $module_label ) {
+        private function get_temporary_duplicate_admin_notice_string(
+            $site_urls,
+            $product_titles,
+            $module_label
+        ) {
             $this->_logger->entrance();
 
             $temporary_duplicate_end_date = $this->get_temporary_duplicate_expiration_timestamp();
             $temporary_duplicate_end_date = date( 'M j, Y', $temporary_duplicate_end_date );
 
-            $current_url       = get_site_url();
+            $current_url       = Freemius::get_unfiltered_site_url();
             $current_site_link = sprintf(
                 '<b><a href="%s" target="_blank">%s</a></b>',
                 $current_url,
@@ -1271,7 +1449,7 @@
          */
         function has_temporary_duplicate_mode_expired() {
             $temporary_duplicate_mode_start_timestamp = $this->was_temporary_duplicate_mode_selected() ?
-                $this->temporary_duplicate_mode_selection_timestamp :
+                $this->get_option( 'temporary_duplicate_mode_selection_timestamp', true ) :
                 $this->get_clone_identification_timestamp();
 
             if ( ! is_numeric( $temporary_duplicate_mode_start_timestamp ) ) {
@@ -1287,10 +1465,7 @@
          * @return bool
          */
         function was_temporary_duplicate_mode_selected() {
-            return (
-                isset( $this->temporary_duplicate_mode_selection_timestamp ) &&
-                is_numeric( $this->temporary_duplicate_mode_selection_timestamp )
-            );
+            return is_numeric( $this->temporary_duplicate_mode_selection_timestamp );
         }
 
         /**
@@ -1342,23 +1517,12 @@
          * @return bool
          */
         function is_temporary_duplicate_by_blog_id( $blog_id ) {
-            $storage = FS_Option_Manager::get_manager( WP_FS___OPTION_PREFIX . self::OPTION_MANAGER_NAME, true, $blog_id );
-            $data    = $storage->get_option( self::OPTION_NAME, array() );
+            $timestamp = $this->get_option( 'temporary_duplicate_mode_selection_timestamp', false, $blog_id );
 
-            if ( ! is_array( $data ) ) {
-                return false;
-            }
-
-            $was_temporary_duplicate_mode_selected = (
-                isset( $data['temporary_duplicate_mode_selection_timestamp'] ) &&
-                is_numeric( $data['temporary_duplicate_mode_selection_timestamp'] )
+            return (
+                is_numeric( $timestamp ) &&
+                time() < ( $timestamp + self::TEMPORARY_DUPLICATE_PERIOD )
             );
-
-            if ( ! $was_temporary_duplicate_mode_selected ) {
-                return false;
-            }
-
-            return ( time() < ( $data['temporary_duplicate_mode_selection_timestamp'] + self::TEMPORARY_DUPLICATE_PERIOD ) );
         }
 
         /**
@@ -1367,16 +1531,14 @@
          * @return int|null
          */
         function last_time_temporary_duplicate_notice_was_shown() {
-            return ( ! isset( $this->temporary_duplicate_notice_shown_timestamp ) ) ?
-                null :
-                $this->temporary_duplicate_notice_shown_timestamp;
+            return $this->temporary_duplicate_notice_shown_timestamp;
         }
 
         /**
          * Clears the time that has been stored when the temporary duplicate notice was shown.
          */
         function clear_temporary_duplicate_notice_shown_timestamp() {
-            $this->temporary_duplicate_notice_shown_timestamp = null;
+            unset( $this->temporary_duplicate_notice_shown_timestamp );
         }
 
         /**
@@ -1384,10 +1546,13 @@
          *
          * @param number[]    $product_ids
          * @param string      $message
-         * @param string      $message
          * @param string|null $plugin_title
          */
-        function add_temporary_duplicate_sticky_notice( $product_ids, $message, $plugin_title = null ) {
+        function add_temporary_duplicate_sticky_notice(
+            $product_ids,
+            $message,
+            $plugin_title = null
+        ) {
             $this->_logger->entrance();
 
             $this->_notices->add_sticky(
@@ -1423,6 +1588,33 @@
             return ( 'new_blog_install_map' === $key );
         }
 
+        /**
+         * @param string      $key
+         * @param number|null $blog_id
+         *
+         * @return FS_Option_Manager
+         */
+        private function get_storage( $key, $blog_id = null ) {
+            if ( is_numeric( $blog_id ) ){
+                return FS_Option_Manager::get_manager( WP_FS___OPTION_PREFIX . self::OPTION_MANAGER_NAME, true, $blog_id );
+            }
+
+            return $this->should_use_network_storage( $key ) ?
+                $this->_network_storage :
+                $this->_storage;
+        }
+
+        /**
+         * @param string      $name
+         * @param bool        $flush
+         * @param number|null $blog_id
+         *
+         * @return mixed
+         */
+        private function get_option( $name, $flush = false, $blog_id = null ) {
+            return $this->get_storage( $name, $blog_id )->get_option( $name, null, $flush );
+        }
+
         #--------------------------------------------------------------------------------
         #region Magic methods
         #--------------------------------------------------------------------------------
@@ -1432,21 +1624,7 @@
          * @param int|string $value
          */
         function __set( $name, $value ) {
-            if ( ! $this->should_use_network_storage( $name ) ) {
-                $storage = $this->_storage;
-                $data    = $this->_data;
-            } else {
-                $storage = $this->_network_storage;
-                $data    = $this->_network_data;
-            }
-
-            if ( ! array_key_exists( $name, $data ) ) {
-                return;
-            }
-
-            $data[ $name ] = $value;
-
-            $storage->set_option( self::OPTION_NAME, $data, true );
+            $this->get_storage( $name )->set_option( $name, $value, true );
         }
 
         /**
@@ -1455,10 +1633,14 @@
          * @return bool
          */
         function __isset( $name ) {
-            return (
-                isset( $this->_data[ $name ] ) ||
-                isset( $this->_network_data[ $name ] )
-            );
+            return $this->get_storage( $name )->has_option( $name, true );
+        }
+
+        /**
+         * @param string $name
+         */
+        function __unset( $name ) {
+            $this->get_storage( $name )->unset_option( $name, true );
         }
 
         /**
@@ -1467,13 +1649,11 @@
          * @return null|int|string
          */
         function __get( $name ) {
-            $data = ( ! $this->should_use_network_storage( $name ) ) ?
-                $this->_data :
-                $this->_network_data;
-
-            return array_key_exists( $name, $data ) ?
-                $data[ $name ] :
-                null;
+            return $this->get_option(
+                $name,
+                // Reload storage from DB when accessing request_handler_* options to avoid race conditions.
+                fs_starts_with( $name, 'request_handler' )
+            );
         }
 
         #endregion

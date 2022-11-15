@@ -48,8 +48,9 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 	// Init Freemius.
 	sugb_fs();
 
-	// Disable deactivation feedback form.
+	// Disable some Freemius features.
 	sugb_fs()->add_filter( 'show_deactivation_feedback_form', '__return_false' );
+	sugb_fs()->add_filter( 'hide_freemius_powered_by', '__return_true' );
 
 	// Signal that SDK was initiated.
 	do_action( 'sugb_fs_loaded' );

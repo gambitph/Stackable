@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.9
 Tested up to: 6.1
 Requires PHP: 5.7
-Stable tag: 3.6.1
+Stable tag: 3.6.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -249,6 +249,18 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.6.2 =
+* New: (Freemius) Granular opt-out controls
+* New: (Freemius) Support for anonymous license activation
+* New: (Freemius) New opt-in screen
+* New: (Freemius) User IP is no longer sent during opt-in
+* New: (Freemius) No data is now sent when skipping the opt-in screen
+* New: (Freemius) Admin query strings no longer include a Freemius flag
+* New: (Freemius) Better PHP 8 compatibility
+* Fixed: Some PHP 8 warning messages with Twenty Twenty Three theme and Dynamic Content #2508 #2503
+* Fixed: Design Library button text label now shows properly #2486
+* Fixed: Possible Block error with v2 Button blocks and Blocksy #2484
 
 = 3.6.1 =
 * New: WordPress 6.1 compatibility

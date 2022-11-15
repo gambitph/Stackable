@@ -180,7 +180,7 @@ HTML;
                 ?>
 
                 $.ajax({
-                    url       : ajaxurl,
+                    url       : <?php echo Freemius::ajax_url() ?>,
                     method    : 'POST',
                     data      : {
                         action   : '<?php echo $fs->get_ajax_action( 'cancel_subscription_or_trial' ) ?>',
@@ -347,7 +347,7 @@ HTML;
                         window.location.href = redirectLink;
                     } else {
                         $.ajax({
-                            url       : ajaxurl,
+                            url       : <?php echo Freemius::ajax_url() ?>,
                             method    : 'POST',
                             data      : {
                                 action   : '<?php echo $fs->get_ajax_action( 'delete_theme_update_data' ) ?>',
@@ -366,15 +366,15 @@ HTML;
 					return;
 				}
 
-                var snoozePeriod = 0;
-                  
-                if ( <?php echo Freemius::REASON_TEMPORARY_DEACTIVATION ?> == selectedReasonID ) {
+                var snoozePeriod = 0,
+                    shouldSnooze = $feedbackSnooze.find( '.feedback-from-snooze-checkbox' ).is( ':checked' );
+
+                if ( shouldSnooze && <?php echo Freemius::REASON_TEMPORARY_DEACTIVATION ?> == selectedReasonID ) {
                     snoozePeriod = parseInt($feedbackSnooze.find('select').val(), 10);
                 }
-                  
 
 				$.ajax({
-					url       : ajaxurl,
+					url       : <?php echo Freemius::ajax_url() ?>,
 					method    : 'POST',
 					data      : {
 						action       : '<?php echo $fs->get_ajax_action( 'submit_uninstall_reason' ) ?>',

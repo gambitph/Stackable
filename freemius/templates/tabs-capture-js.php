@@ -45,7 +45,7 @@
 					var tabsHtml = $('.wrap .nav-tab-wrapper').clone().wrap('<div>').parent().html();
 
 					$.ajax({
-						url        : ajaxurl + '?' + $.param({
+						url        : <?php echo Freemius::ajax_url() ?> + '?' + $.param({
 							action   : '<?php echo $fs->get_ajax_action( 'store_tabs' ) ?>',
 							security : '<?php echo $fs->get_ajax_security( 'store_tabs' ) ?>',
 							module_id: '<?php echo $fs->get_id() ?>'

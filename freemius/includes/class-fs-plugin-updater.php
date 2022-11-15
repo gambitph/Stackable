@@ -243,7 +243,7 @@
             if (
                 $this->_fs->is_premium() &&
                 $this->_fs->is_registered() &&
-                ! $this->_fs->is_tracking_allowed()
+                ! FS_Permission_Manager::instance( $this->_fs )->is_essentials_tracking_allowed()
             ) {
                 $this->_logger->log( 'Opted out sites cannot receive automatic software updates.' );
 
@@ -650,7 +650,7 @@
         }
 
         /**
-         * Get module's required data for the updates mechanism.
+         * Get module's required data for the updates' mechanism.
          *
          * @author Vova Feldman (@svovaf)
          * @since  2.0.0
