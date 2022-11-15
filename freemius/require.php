@@ -22,6 +22,7 @@
 	require_once WP_FS__DIR_INCLUDES . '/managers/class-fs-option-manager.php';
 	require_once WP_FS__DIR_INCLUDES . '/managers/class-fs-gdpr-manager.php';
 	require_once WP_FS__DIR_INCLUDES . '/managers/class-fs-clone-manager.php';
+	require_once WP_FS__DIR_INCLUDES . '/managers/class-fs-permission-manager.php';
 	require_once WP_FS__DIR_INCLUDES . '/managers/class-fs-cache-manager.php';
 	require_once WP_FS__DIR_INCLUDES . '/managers/class-fs-admin-notice-manager.php';
 	require_once WP_FS__DIR_INCLUDES . '/managers/class-fs-admin-menu-manager.php';

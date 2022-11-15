@@ -58,7 +58,7 @@
     <div class="fs-sites-list-container">
         <table cellspacing="0">
             <tbody>
-            <?php $site_props = array('uid', 'url', 'title', 'charset', 'language') ?>
+            <?php $site_props = array('uid', 'url', 'title', 'language') ?>
             <?php foreach ( $sites as $site ) : ?>
                 <tr<?php if ( ! empty( $site['license_id'] ) ) {
                     echo ' data-license-id="' . $site['license_id'] . '"';
