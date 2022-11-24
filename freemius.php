@@ -51,6 +51,8 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 	// Disable some Freemius features.
 	sugb_fs()->add_filter( 'show_deactivation_feedback_form', '__return_false' );
 	sugb_fs()->add_filter( 'hide_freemius_powered_by', '__return_true' );
+	sugb_fs()->add_filter( 'permission_diagnostic_default', '__return_false' ); // Disable opt-in option by default
+	sugb_fs()->add_filter( 'permission_extensions_default', '__return_false' ); // Disable opt-in option by default
 
 	// Signal that SDK was initiated.
 	do_action( 'sugb_fs_loaded' );
