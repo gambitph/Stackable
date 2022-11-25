@@ -10,7 +10,9 @@ import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInnerBlocks,
+	ControlSeparator,
 	GroupPlaceholder,
+	InspectorLayoutControls,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -84,6 +86,9 @@ const Edit = props => {
 					<InspectorTabs />
 
 					<Columns.InspectorControls />
+					<InspectorLayoutControls>
+						<ControlSeparator />
+					</InspectorLayoutControls>
 					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />

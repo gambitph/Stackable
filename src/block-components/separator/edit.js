@@ -4,12 +4,12 @@
 import SeparatorControl from './separator-control'
 import {
 	AdvancedRangeControl,
-	InspectorBlockControls,
 	PanelAdvancedSettings,
 	ColorPaletteControl,
 	AdvancedToggleControl,
 	ProControlButton,
 	ShadowControl,
+	InspectorStyleControls,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers, useBlockAttributesContext, useBlockSetAttributesContext,
@@ -124,7 +124,7 @@ export const Edit = props => {
 	} )
 
 	return (
-		<InspectorBlockControls>
+		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Top Separator', i18n ) }
 				id="top-separator"
@@ -157,7 +157,7 @@ export const Edit = props => {
 					/>
 				) }
 			</PanelAdvancedSettings>
-		</InspectorBlockControls>
+		</InspectorStyleControls>
 	)
 }
 

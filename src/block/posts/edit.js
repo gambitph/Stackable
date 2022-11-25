@@ -205,7 +205,7 @@ const Edit = props => {
 									label={ __( 'Content Horizontal Align', i18n ) }
 									attribute="innerBlockAlign"
 									responsive="all"
-									controls="flex-horizontal"
+									controls="horizontal"
 									className="ugb--help-tip-advanced-block-horizontal-align"
 								/>
 							}
@@ -214,7 +214,7 @@ const Edit = props => {
 									label={ __( 'Content Horizontal Align', i18n ) }
 									attribute="innerBlockAlign"
 									responsive="all"
-									controls="flex-horizontal"
+									controls="horizontal"
 									className="ugb--help-tip-advanced-block-horizontal-align"
 								/>
 							}
@@ -223,7 +223,7 @@ const Edit = props => {
 									label={ __( 'Content Horizontal Align', i18n ) }
 									attribute="innerBlockAlign"
 									responsive="all"
-									controls="flex-horizontal"
+									controls="horizontal"
 									className="ugb--help-tip-advanced-block-horizontal-align"
 								/>
 							}

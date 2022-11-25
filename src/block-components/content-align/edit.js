@@ -19,6 +19,28 @@ export const Controls = () => {
 	return (
 		<>
 			<AdvancedToolbarControl
+				label={ __( 'Block Width', i18n ) }
+				attribute="align"
+				default=""
+				controls={ [
+					{
+						value: '',
+						title: __( 'Align Center', i18n ),
+						icon: 'align-center',
+					},
+					{
+						value: 'wide',
+						title: __( 'Align Wide', i18n ),
+						icon: 'align-wide',
+					},
+					{
+						value: 'full',
+						title: __( 'Align Full', i18n ),
+						icon: 'align-full-width',
+					},
+				] }
+			/>
+			<AdvancedToolbarControl
 				label={ __( 'Content Width', i18n ) }
 				attribute="innerBlockContentAlign"
 				default={ align ? `align${ align }` : '' }

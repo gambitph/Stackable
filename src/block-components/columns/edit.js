@@ -154,7 +154,7 @@ export const Controls = props => {
 					/>
 					{ attributes.columnFit &&
 						<AdvancedToolbarControl
-							label={ sprintf( __( '%s Alignment', i18n ), __( 'Columns', i18n ) ) }
+							label={ sprintf( __( '%s Justify', i18n ), __( 'Columns', i18n ) ) }
 							attribute="columnFitAlign"
 							responsive="all"
 							controls="flex-horizontal"
@@ -165,7 +165,7 @@ export const Controls = props => {
 			{ props.hasGap && (
 				<>
 					<AdvancedRangeControl
-						label={ __( 'Column Spacing', i18n ) }
+						label={ __( 'Column Inner Spacing', i18n ) }
 						attribute="columnSpacing"
 						responsive="all"
 						units={ [ 'px', 'em' ] }

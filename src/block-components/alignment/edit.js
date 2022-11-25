@@ -43,7 +43,7 @@ export const Edit = props => {
 						label={ sprintf( __( '%s Alignment', i18n ), __( 'Column', i18n ) ) }
 						attribute="columnAlign"
 						responsive="all"
-						controls="flex-vertical-with-stretch"
+						controls="flex-vertical"
 						className="ugb--help-tip-advanced-block-vertical-align"
 					/>
 				}
@@ -52,7 +52,7 @@ export const Edit = props => {
 						label={ sprintf( __( '%s Alignment', i18n ), __( 'Column', i18n ) ) }
 						attribute="rowAlign"
 						responsive="all"
-						controls="flex-vertical-with-stretch"
+						controls="flex-vertical"
 						className="ugb--help-tip-advanced-block-vertical-align"
 					/>
 				}

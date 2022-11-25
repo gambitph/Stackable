@@ -18,6 +18,7 @@
 	}
 }
 
+// TODO: switch stk--fit-content to stk--flex
 .editor-styles-wrapper .stk--fit-content > * > * > [data-type="stackable/column"] {
 	width: fit-content !important;
 	flex: 0 1 auto !important;

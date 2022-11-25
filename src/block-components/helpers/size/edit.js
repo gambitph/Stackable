@@ -48,7 +48,7 @@ const Layout = props => {
 				label={ labelVerticalAlign }
 				attribute={ getAttrName( 'verticalAlign' ) }
 				responsive="all"
-				controls="flex-vertical"
+				controls="vertical"
 				className="ugb--help-tip-advanced-block-vertical-align"
 			/>
 
@@ -71,7 +71,7 @@ const Layout = props => {
 					label={ labelHorizontalAlign }
 					attribute={ getAttrName( 'HorizontalAlign' ) }
 					responsive="all"
-					controls="flex-horizontal"
+					controls="horizontal"
 					value={ getAttribute( 'HorizontalAlign' ) }
 					className="ugb--help-tip-advanced-block-horizontal-align"
 				/>
@@ -81,7 +81,7 @@ const Layout = props => {
 					label={ labelHorizontalAlign }
 					attribute={ getAttrName( 'HorizontalAlign' ) }
 					responsive="all"
-					controls="flex-horizontal"
+					controls="horizontal"
 					className="ugb--help-tip-advanced-block-horizontal-align"
 				/>
 			}
@@ -90,7 +90,7 @@ const Layout = props => {
 					label={ labelHorizontalAlign }
 					attribute={ getAttrName( 'HorizontalAlign' ) }
 					responsive="all"
-					controls="flex-horizontal"
+					controls="horizontal"
 					className="ugb--help-tip-advanced-block-horizontal-align"
 				/>
 			}

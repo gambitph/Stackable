@@ -1,3 +1,4 @@
+import './advanced-toolbar-control'
 export {
 	default as ButtonEdit,
 	ButtonEditHelper,
