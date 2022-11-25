@@ -152,6 +152,21 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="edit"
+				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
+				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
+				selector={ positionSelector }
+				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
+				styleRule="right"
+				attrName="positionNum"
+				key="positionNum-right"
+				responsive="all"
+				hover="all"
+				hasUnits="px"
+				valuePreCallback={ value => value?.right }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="position"
