@@ -63,9 +63,7 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { RichText } from '@wordpress/block-editor'
-import {
-	SelectControl,
-} from '@wordpress/components'
+import { SelectControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
@@ -177,7 +175,6 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 			{ show.columnBorder &&
 				<PanelAdvancedSettings
 					title={ __( 'Border', i18n ) }
-					hasToggle={ false }
 				>
 					<ColorPaletteControl
 						value={ columnBorderColor }
@@ -362,6 +359,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					...createResponsiveAttributeNames( 'dismissibleIcon%sSize' ),
 					'dismissibleIconColor',
 				] }
+				hasToggle
 				toggleAttributeName="dismissible"
 				className="ugb--help-tip-notification-dismissible"
 			>
@@ -395,6 +393,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					...createIconAttributeNames( 'icon%s' ),
 					...createResponsiveAttributeNames( 'icon%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showIcon"
 			>
 				<IconControlsHelper
@@ -449,6 +448,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					'titleColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<HeadingButtonsControl
@@ -489,6 +489,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					'descriptionColor',
 					...createResponsiveAttributeNames( 'description%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showDescription"
 			>
 				<TypographyControlHelper
@@ -522,6 +523,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					...createButtonAttributeNames( 'button%s' ),
 					...createResponsiveAttributeNames( 'button%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showButton"
 			>
 				<ButtonControlsHelper

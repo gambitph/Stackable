@@ -79,6 +79,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					'topSeparatorLayer2FlipHorizontally',
 					'topSeparatorLayer3FlipHorizontally',
 				] }
+				hasToggle
 				toggleAttributeName="showTopSeparator"
 				className="ugb-top-block-separator-panel ugb--help-tip-separator-top-on"
 			>
@@ -179,6 +180,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					'bottomSeparatorLayer2FlipHorizontally',
 					'bottomSeparatorLayer3FlipHorizontally',
 				] }
+				hasToggle
 				toggleAttributeName="showBottomSeparator"
 				className="ugb-bottom-block-separator-panel ugb--help-tip-separator-bottom-on"
 			>

@@ -37,9 +37,7 @@ import ImageDesignSpread from './images/spread.png'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import classnames from 'classnames'
-import {
-	SelectControl,
-} from '@wordpress/components'
+import { SelectControl } from '@wordpress/components'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
@@ -162,6 +160,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 				onChange={ showButton2 => setAttributes( { showButton2 } ) }
 				toggleOnSetAttributes={ createButtonAttributeNames( 'button2%s' ) }
 				toggleAttributeName="showButton2"
+				hasToggle
 			>
 				<ButtonControlsHelper
 					attrNameTemplate="button2%s"
@@ -177,6 +176,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 				onChange={ showButton3 => setAttributes( { showButton3 } ) }
 				toggleOnSetAttributes={ createButtonAttributeNames( 'button3%s' ) }
 				toggleAttributeName="showButton3"
+				hasToggle
 			>
 				<ButtonControlsHelper
 					attrNameTemplate="button3%s"
