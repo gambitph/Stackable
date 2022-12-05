@@ -15,6 +15,8 @@ const Styles = props => {
 		selector = '',
 		attrNameTemplate = '%s',
 		backgroundFallbackColor = '#ffffff',
+		dependencies = [],
+		selectorCallback = null,
 	} = props
 
 	return (
@@ -27,6 +29,7 @@ const Styles = props => {
 				attrName="backgroundColor"
 				key="backgroundColor-hover"
 				attrNameTemplate={ attrNameTemplate }
+				selectorCallback={ selectorCallback }
 				hoverCallback={ getAttribute => {
 					return getAttribute( 'backgroundColorType' ) !== 'gradient'
 						? 'all' : false
@@ -63,7 +66,13 @@ const Styles = props => {
 					}
 					return value
 				} }
-				dependencies={ [ 'backgroundColor2', 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ] }
+				dependencies={ [
+					'backgroundColor2',
+					'backgroundColorOpacity',
+					'backgroundColorType',
+					'backgroundMediaUrl',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -118,7 +127,11 @@ const Styles = props => {
 					}
 					return value
 				} }
-				dependencies={ [ 'backgroundCustomSize', 'backgroundCustomSizeUnit' ] }
+				dependencies={ [
+					'backgroundCustomSize',
+					 'backgroundCustomSizeUnit',
+					 ...dependencies,
+					 ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -136,6 +149,7 @@ const Styles = props => {
 				attrName="backgroundColor"
 				key="backgroundColor-before"
 				attrNameTemplate={ attrNameTemplate }
+				selectorCallback={ selectorCallback }
 				hover="all"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( value === '' ) {
@@ -149,7 +163,12 @@ const Styles = props => {
 					const isGradient = getAttribute( 'backgroundColorType' ) === 'gradient'
 					return ! isGradient && value ? value : undefined
 				} }
-				dependencies={ [ 'backgroundColorType', 'backgroundColor2', 'backgroundTintStrength' ] }
+				dependencies={ [
+					'backgroundColorType',
+					'backgroundColor2',
+					'backgroundTintStrength',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -172,7 +191,12 @@ const Styles = props => {
 				valueCallback={ value => {
 					return parseInt( value, 10 ) / 10
 				} }
-				dependencies={ [ 'backgroundColor', 'backgroundColor2', 'backgroundMediaUrl' ] }
+				dependencies={ [
+					'backgroundColor',
+					'backgroundColor2',
+					 'backgroundMediaUrl',
+					 ...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -182,7 +206,10 @@ const Styles = props => {
 				key="backgroundGradientBlendMode"
 				attrNameTemplate={ attrNameTemplate }
 				enabledCallback={ getAttribute => getAttribute( 'backgroundColorType' ) === 'gradient' }
-				dependencies={ [ 'backgroundColorType' ] }
+				dependencies={ [
+					'backgroundColorType',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -209,7 +236,15 @@ const Styles = props => {
 
 					return `linear-gradient(${ angle }, ${ getAttribute( 'backgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })`
 				} }
-				dependencies={ [ 'backgroundColorType', 'backgroundColor', 'backgroundColor2', 'backgroundGradientLocation1', 'backgroundGradientLocation2', 'backgroundGradientDirection' ] }
+				dependencies={ [
+					'backgroundColorType',
+					'backgroundColor',
+					'backgroundColor2',
+					'backgroundGradientLocation1',
+					'backgroundGradientLocation2',
+					'backgroundGradientDirection',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -226,7 +261,12 @@ const Styles = props => {
 					getAttribute( 'backgroundColor' ) ||
 					getAttribute( 'backgroundColor', 'desktop', 'hover' ) ||
 					getAttribute( 'backgroundColor', 'desktop', 'parent-hovered' ) }
-				dependencies={ [ 'backgroundColorType', 'backgroundColor', 'backgroundColor2' ] }
+				dependencies={ [
+					'backgroundColorType',
+					'backgroundColor',
+					'backgroundColor2',
+					...dependencies,
+				] }
 			/>
 		</>
 	)

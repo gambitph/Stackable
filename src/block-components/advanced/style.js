@@ -12,6 +12,7 @@ const Styles = props => {
 	}
 	const {
 		positionSelector = '',
+		dependencies = [],
 	} = props
 
 	return (
@@ -39,7 +40,10 @@ const Styles = props => {
 
 					return value?.top
 				} }
-				dependencies={ [ 'position' ] }
+				dependencies={ [
+					'position',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -117,7 +121,10 @@ const Styles = props => {
 
 					return value?.top
 				} }
-				dependencies={ [ 'position' ] }
+				dependencies={ [
+					'position',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -167,7 +174,10 @@ const Styles = props => {
 					}
 					return undefined
 				} }
-				dependencies={ [ 'position' ] }
+				dependencies={ [
+					'position',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

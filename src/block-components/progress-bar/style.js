@@ -10,6 +10,7 @@ const Styles = props => {
 	}
 	const {
 		isCircle = false,
+		dependencies = [],
 	} = props
 
 	const selector = isCircle ? '.stk-progress-circle' : '.stk-progress-bar'
@@ -38,7 +39,11 @@ const Styles = props => {
 					styleRule="--progress-color-1"
 					attrName="progressColor1"
 					key="progressColor1-bar"
-					dependencies={ [ 'progressColorType', 'progressColor2' ] }
+					dependencies={ [
+						'progressColorType',
+						'progressColor2',
+						...dependencies,
+					] }
 				/>
 			) }
 			{ isCircle && (
@@ -48,8 +53,11 @@ const Styles = props => {
 					styleRule="--progress-color-1"
 					attrName="progressColor1"
 					key="progressColor1-circle"
-					dependencies={ [ 'progressColorType', 'progressColor2' ] }
-					renderIn="save"
+					dependencies={ [
+						'progressColorType',
+						'progressColor2',
+						...dependencies,
+					] }					renderIn="save"
 					valuePreCallback={ ( value, getAttribute ) => {
 						if ( getAttribute( 'progressColorType' ) === 'gradient' ) {
 							const uniqueId = getAttribute( 'uniqueId' )
@@ -98,7 +106,12 @@ const Styles = props => {
 							}
 							return value
 						} }
-						dependencies={ [ 'progressColorType', 'progressColor2', 'progressColorGradientDirection' ] }
+						dependencies={ [
+							 'progressColorType',
+							 'progressColor2',
+							 'progressColorGradientDirection',
+							 ...dependencies,
+						] }
 					/>
 					<BlockCss
 						{ ...propsToPass }
@@ -135,7 +148,10 @@ const Styles = props => {
 						key="progressWidth"
 						hasUnits="%"
 						responsive="all"
-						dependencies={ [ 'progressWidthUnit' ] }
+						dependencies={ [
+							'progressWidthUnit',
+							...dependencies,
+						] }
 					/>
 					<BlockCss
 						{ ...propsToPass }
@@ -156,7 +172,10 @@ const Styles = props => {
 							return value ? borderRadius : undefined
 						} }
 						format="%spx"
-						dependencies={ [ 'progressBorderRadius' ] }
+						dependencies={ [
+							'progressBorderRadius',
+							...dependencies,
+						] }
 					/>
 					<BlockCss
 						{ ...propsToPass }
@@ -165,7 +184,10 @@ const Styles = props => {
 						attrName="progressColorGradientBlendMode"
 						key="progressColorGradientBlendMode"
 						enabledCallback={ getAttribute => getAttribute( 'progressColorType' ) === 'gradient' }
-						dependencies={ [ 'progressColorType' ] }
+						dependencies={ [
+							'progressColorType',
+							...dependencies,
+						] }
 					/>
 					<BlockCss
 						{ ...propsToPass }
@@ -191,7 +213,15 @@ const Styles = props => {
 
 							return `linear-gradient(${ angle }, ${ getAttribute( 'progressColor1' ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'progressColor2' ) || defaultColor2 } ${ color2Location })`
 						} }
-						dependencies={ [ 'progressColorType', 'progressColor1', 'progressColor2', 'progressColorGradientLocation1', 'progressColorGradientLocation2', 'progressColorGradientDirection' ] }
+						dependencies={ [
+							'progressColorType',
+							'progressColor1',
+							'progressColor2',
+							'progressColorGradientLocation1',
+							'progressColorGradientLocation2',
+							'progressColorGradientDirection',
+							...dependencies,
+						] }
 					/>
 				</>
 			}
