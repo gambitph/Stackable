@@ -131,7 +131,7 @@ const Styles = props => {
 					'backgroundCustomSize',
 					 'backgroundCustomSizeUnit',
 					 ...dependencies,
-					 ] }
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
