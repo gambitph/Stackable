@@ -172,7 +172,8 @@ const Styles = props => {
 					'iconColor1',
 					'iconColor2',
 					...dependencies,
-				] }			/>
+				] }
+			/>
 
 			{ /* Shape Styles */ }
 			<BlockCss
