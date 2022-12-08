@@ -222,7 +222,7 @@ const Styles = props => {
 					'horizontalAlign',
 					 'width',
 					 ...dependencies,
-					 ] }
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
