@@ -57,7 +57,8 @@ const Styles = props => {
 						'progressColorType',
 						'progressColor2',
 						...dependencies,
-					] }					renderIn="save"
+					] }
+					renderIn="save"
 					valuePreCallback={ ( value, getAttribute ) => {
 						if ( getAttribute( 'progressColorType' ) === 'gradient' ) {
 							const uniqueId = getAttribute( 'uniqueId' )
