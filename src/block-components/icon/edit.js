@@ -26,12 +26,8 @@ import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stacka
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Fragment } from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-
-const PremiumColorControls = applyFilters( 'stackable.block-component.icon.color-controls', null )
-const PremiumShapeColorControls = applyFilters( 'stackable.block-component.icon.shape-color-controls', null )
-const PremiumBackgroundShapeControls = applyFilters( 'stackable.block-component.icon.edit.background-shape', null )
 
 export const Edit = props => {
 	const {
@@ -49,6 +45,10 @@ export const Edit = props => {
 		hover = 'all',
 		defaultValue,
 	} = props
+
+	const PremiumColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.color-controls', null ), [ props ] )
+	const PremiumShapeColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.shape-color-controls', null ), [ props ] )
+	const PremiumBackgroundShapeControls = useMemo( () => applyFilters( 'stackable.block-component.icon.edit.background-shape', null ), [ props ] )
 
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
@@ -263,7 +263,7 @@ export const Edit = props => {
 							: iconBackgroundShapeControls
 					) }
 
-					{ isPro && PremiumBackgroundShapeControls && <PremiumBackgroundShapeControls { ...props } /> }
+					{ PremiumBackgroundShapeControls && <PremiumBackgroundShapeControls { ...props } /> }
 				</>
 			}
 		</Wrapper>
