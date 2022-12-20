@@ -46,9 +46,9 @@ export const Edit = props => {
 		defaultValue,
 	} = props
 
-	const PremiumColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.color-controls', null ), [ props ] )
-	const PremiumShapeColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.shape-color-controls', null ), [ props ] )
-	const PremiumBackgroundShapeControls = useMemo( () => applyFilters( 'stackable.block-component.icon.edit.background-shape', null ), [ props ] )
+	const PremiumColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.color-controls', null ), [ ] )
+	const PremiumShapeColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.shape-color-controls', null ), [ ] )
+	const PremiumBackgroundShapeControls = useMemo( () => applyFilters( 'stackable.block-component.icon.edit.background-shape', null ), [ ] )
 
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
