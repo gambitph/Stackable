@@ -206,7 +206,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				// We need to implement z-index on the block itself or else it won't look correct in the editor.
 				renderIn="edit"
-				selectorCallback={ ( getAttributes, attributes, clientId ) => `.editor-styles-wrapper [data-block="${ clientId }"]` }
+				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="zIndex"
 				attrName="zIndex"
 				key="zIndex"
