@@ -98,7 +98,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
+				// hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `[data-block="${ clientId }"]:hover` : undefined }
 				styleRule="top"
 				attrName="positionNum"
 				key="positionNum-top"
@@ -123,7 +123,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
+				// hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `[data-block="${ clientId }"]:hover` : undefined }
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="bottom"
@@ -138,7 +138,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
+				// hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `[data-block="${ clientId }"]:hover` : undefined }
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="left"
@@ -153,7 +153,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
-				hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `.editor-styles-wrapper [data-block="${ clientId }"]:hover` : undefined }
+				// hoverSelectorCallback={ ( getAttributes, attributes, clientId ) => positionSelector ? `[data-block="${ clientId }"]:hover` : undefined }
 				selector={ positionSelector }
 				hoverSelector={ positionSelector ? `${ positionSelector }:hover` : undefined }
 				styleRule="right"
