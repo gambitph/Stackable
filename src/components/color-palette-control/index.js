@@ -82,10 +82,11 @@ const ColorPaletteControl = memo( props => {
 
 	const colorObject = getColorObjectByColorValue( colors, value )
 	const colorName = colorObject && colorObject.name
+	const colorLabel = colorName || ( value === 'transparent' ? 'Transparent' : value )
 
 	const toggleSettings = {
 		colorValue: value,
-		label: colorName || value,
+		label: colorLabel,
 	}
 
 	const colorPalette = (
@@ -96,7 +97,7 @@ const ColorPaletteControl = memo( props => {
 				const colorObject = getColorObjectByColorValue( colors, value )
 				onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
 			} }
-			label={ colorName || value }
+			label={ colorLabel }
 			clearable={ false }
 			{ ...{ colors, disableCustomColors } }
 		/>
