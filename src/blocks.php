@@ -51,6 +51,7 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 	$stk_block_folders = array(
 		'button',
 		'count-up',
+		'countdown',
 		'divider',
 		'heading',
 		'icon-button',
