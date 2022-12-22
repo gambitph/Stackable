@@ -16,7 +16,7 @@ import compareVersions from 'compare-versions'
 import { addFilter } from '@wordpress/hooks'
 
 addFilter( 'stackable.table-of-contents.save.blockClasses', 'stackable/classesNotRendered', ( output, textClasses, props ) => {
-	if ( compareVersions( props.version, '3.6.1' ) === 0 ) {
+	if ( compareVersions( props.version, '3.6.2' ) === 0 ) {
 		output.push( textClasses )
 		return output
 	}
@@ -25,7 +25,7 @@ addFilter( 'stackable.table-of-contents.save.blockClasses', 'stackable/classesNo
 } )
 
 addFilter( 'stackable.table-of-contents.save.tableOfContentsClasses', 'stackable/classesNotRendered', ( output, props ) => {
-	if ( compareVersions( props.version, '3.6.1' ) === 0 ) {
+	if ( compareVersions( props.version, '3.6.2' ) === 0 ) {
 		return 'stk-table-of-contents__table'
 	}
 	return output
@@ -33,14 +33,14 @@ addFilter( 'stackable.table-of-contents.save.tableOfContentsClasses', 'stackable
 
 const deprecated = [
 	 {
-		 attributes: attributes( '3.6.1' ),
+		 attributes: attributes( '3.6.2' ),
 		 migrate: attributes => {
 			return {
 				 ...attributes,
 				 titleShow: false,
 			 }
 		 },
-		 save: withVersion( '3.6.1' )( Save ),
+		 save: withVersion( '3.6.2' )( Save ),
 	 },
 ]
 
