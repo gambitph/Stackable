@@ -129,7 +129,6 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 			<PanelAdvancedSettings
 				title={ __( 'Icon', i18n ) }
 				id="icon"
-				hasToggle={ false }
 			>
 				<IconControlsHelper
 					attrNameTemplate="icon%s"
@@ -175,6 +174,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 					'titleColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<AdvancedToggleControl
