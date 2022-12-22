@@ -101,7 +101,7 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				<Image
-					showTooltips={ props.isHovered }
+					showTooltips // ={ props.isHovered }
 					heightUnits={ heightUnit }
 					defaultWidth="100"
 					defaultHeight="auto"

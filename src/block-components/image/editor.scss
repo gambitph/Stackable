@@ -44,8 +44,7 @@
 	}
 
 	&:not(:hover):not(.stk--is-resizing) {
-		.components-resizable-box__handle,
-		.stk-resizer-tooltip:not(.stk--is-editing) {
+		.components-resizable-box__handle {
 			display: none !important;
 		}
 	}
