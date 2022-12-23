@@ -31,4 +31,9 @@
 	&:is(.stk--has-background-overlay) {
 		background-clip: initial !important;
 	}
+
+	.stk-table-of-contents__title {
+		margin-block-start: 0;
+		margin-block-end: 0;
+	}
 }
