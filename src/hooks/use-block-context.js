@@ -12,7 +12,7 @@
 /**
  * External depedencies
  */
-import { nth, cloneDeep } from 'lodash'
+import { nth, cloneDeep, isEmpty } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -178,12 +178,19 @@ const fixReusableInnerBlocks = blocks => {
 	} )
 }
 
+// The default context if none is found. This can be true when the block is
+// being previewed as an example.
+const DEFAULT_CONTEXT = {
+	hasInnerBlocks: true, // This is true so that the "No blocks found" placeholder won't be shown.
+}
+
 // Export our hook.
 const useBlockContext = ( blockClientId = null ) => {
 	const blockProps = useBlockEditContext()
 	const clientId = blockClientId || blockProps.clientId
 	return useSelect( select => {
-		return select( 'stackable/block-context' ).getBlockContext( clientId )
+		const blockContext = select( 'stackable/block-context' ).getBlockContext( clientId )
+		return ! isEmpty( blockContext ) ? blockContext : DEFAULT_CONTEXT
 	} )
 }
 
