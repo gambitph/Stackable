@@ -250,6 +250,20 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.6.3 =
+* New: The Table of Contents block can now have a title #2346
+* Fixed: In Conditional Display, added support for named and 0 timezones #2530
+* Fixed: FontAwesome script loading is now delayed in the editor
+* Fixed: Possible error in the Accordion block's icon #2546
+* Fixed: Tablet and mobile units are not being followed in the editor #2547
+* Fixed: Added missing translation strings #2399 #2402 #2472 #2498 (Thanks DAnn2012)
+* Fixed: Table of Contents block now support the Stackable v2 Heading block #2376
+* Fixed: Content vertical align option in the Column block doesn't appear correctly in the editor #2408
+* Fixed: Using a custom SVG in the Icon block can result in it losing its colors  #2137
+* Fixed: Image Box block selection goes past its container in the editor #2369
+* Fixed: Block example show a "no blocks in the group" placeholder #2405
+* Fixed: Image alt now no longer gets overridden when picking images #2524
+
 = 3.6.2 =
 * New: (Freemius) Granular opt-out controls
 * New: (Freemius) Support for anonymous license activation
