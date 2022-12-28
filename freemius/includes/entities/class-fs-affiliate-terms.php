@@ -84,6 +84,10 @@
          * @var bool If `true`, allow referrals from any site.
          */
         public $is_any_site_allowed;
+        /**
+         * @var string $plugin_title Title of the plugin. This is used in case we are showing affiliate form for a Bundle instead of the `plugin` in context.
+         */
+        public $plugin_title;
 
         #endregion Properties
 
