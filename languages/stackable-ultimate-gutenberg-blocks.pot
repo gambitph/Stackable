@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-12-28T02:08:17+00:00\n"
+"POT-Creation-Date: 2022-12-28T02:27:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -3055,85 +3055,12 @@ msgid "More text"
 msgstr ""
 
 #: dist/translation-strings.php:430
-#: src/block/feature/example.js:23
-#: src/block/icon-box/example.js:28
-msgid "Description for this block. Use this space for describing your block."
-msgstr ""
-
-#: dist/translation-strings.php:431
-#: src/block/feature/variations.js:77
-#: src/block/feature/variations.js:81
-msgctxt "Content placeholder"
-msgid "Description for this block. Use this space for describing your block."
-msgstr ""
-
-#: dist/translation-strings.php:432
-#: src/block/feature/variations.js:96
-#: src/block/feature/variations.js:101
-msgid "Overlap Shape 1"
-msgstr ""
-
-#: dist/translation-strings.php:433
-#: src/block/feature/variations.js:108
-#: src/block/feature/variations.js:113
-msgid "Overlap Shape 2"
-msgstr ""
-
-#: dist/translation-strings.php:434
-#: src/block/feature/variations.js:120
-#: src/block/feature/variations.js:125
-msgid "Overlap Shape 3"
-msgstr ""
-
-#: dist/translation-strings.php:435
-#: src/block/feature/variations.js:132
-#: src/block/feature/variations.js:137
-msgid "Overlap Shape 4"
-msgstr ""
-
-#: dist/translation-strings.php:436
-#: src/block/feature/variations.js:144
-#: src/block/feature/variations.js:149
-msgid "Overlap Shape 5"
-msgstr ""
-
-#: dist/translation-strings.php:437
-#: src/block/feature/variations.js:156
-#: src/block/feature/variations.js:161
-msgid "Overlap Background 1"
-msgstr ""
-
-#: dist/translation-strings.php:438
-#: src/block/feature/variations.js:168
-#: src/block/feature/variations.js:173
-msgid "Overlap Background 2"
-msgstr ""
-
-#: dist/translation-strings.php:439
-#: src/block/feature/variations.js:180
-#: src/block/feature/variations.js:185
-msgid "Overlap Background 3"
-msgstr ""
-
-#: dist/translation-strings.php:440
-#: src/block/feature/variations.js:192
-#: src/block/feature/variations.js:197
-msgid "Overlap Background 4"
-msgstr ""
-
-#: dist/translation-strings.php:441
-#: src/block/feature/variations.js:204
-#: src/block/feature/variations.js:209
-msgid "Overlap Background 5"
-msgstr ""
-
-#: dist/translation-strings.php:442
 #: src/block/feature-grid/variations.js:92
 #: src/block/feature-grid/variations.js:99
 msgid "Float"
 msgstr ""
 
-#: dist/translation-strings.php:443
+#: dist/translation-strings.php:431
 #: pro__premium_only/src/block/feature-grid/index.js:36
 #: pro__premium_only/src/block/feature-grid/index.js:59
 #: src/block/feature-grid/variations.js:118
@@ -3210,14 +3137,14 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: dist/translation-strings.php:444
+#: dist/translation-strings.php:432
 #: src/block/feature-grid/variations.js:179
 #: src/block/feature-grid/variations.js:184
 #: src/deprecated/v2/block/feature-grid/edit.js:85
 msgid "Large Mid"
 msgstr ""
 
-#: dist/translation-strings.php:445
+#: dist/translation-strings.php:433
 #: pro__premium_only/src/block/posts/index.js:218
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:47
 #: src/block/feature-grid/variations.js:191
@@ -3225,15 +3152,88 @@ msgstr ""
 msgid "Offset"
 msgstr ""
 
-#: dist/translation-strings.php:446
+#: dist/translation-strings.php:434
 #: src/block/feature-grid/variations.js:203
 msgid "Zizag"
 msgstr ""
 
-#: dist/translation-strings.php:447
+#: dist/translation-strings.php:435
 #: src/block/feature-grid/variations.js:208
 #: src/deprecated/v2/block/feature-grid/edit.js:88
 msgid "Zigzag"
+msgstr ""
+
+#: dist/translation-strings.php:436
+#: src/block/feature/example.js:23
+#: src/block/icon-box/example.js:28
+msgid "Description for this block. Use this space for describing your block."
+msgstr ""
+
+#: dist/translation-strings.php:437
+#: src/block/feature/variations.js:77
+#: src/block/feature/variations.js:81
+msgctxt "Content placeholder"
+msgid "Description for this block. Use this space for describing your block."
+msgstr ""
+
+#: dist/translation-strings.php:438
+#: src/block/feature/variations.js:96
+#: src/block/feature/variations.js:101
+msgid "Overlap Shape 1"
+msgstr ""
+
+#: dist/translation-strings.php:439
+#: src/block/feature/variations.js:108
+#: src/block/feature/variations.js:113
+msgid "Overlap Shape 2"
+msgstr ""
+
+#: dist/translation-strings.php:440
+#: src/block/feature/variations.js:120
+#: src/block/feature/variations.js:125
+msgid "Overlap Shape 3"
+msgstr ""
+
+#: dist/translation-strings.php:441
+#: src/block/feature/variations.js:132
+#: src/block/feature/variations.js:137
+msgid "Overlap Shape 4"
+msgstr ""
+
+#: dist/translation-strings.php:442
+#: src/block/feature/variations.js:144
+#: src/block/feature/variations.js:149
+msgid "Overlap Shape 5"
+msgstr ""
+
+#: dist/translation-strings.php:443
+#: src/block/feature/variations.js:156
+#: src/block/feature/variations.js:161
+msgid "Overlap Background 1"
+msgstr ""
+
+#: dist/translation-strings.php:444
+#: src/block/feature/variations.js:168
+#: src/block/feature/variations.js:173
+msgid "Overlap Background 2"
+msgstr ""
+
+#: dist/translation-strings.php:445
+#: src/block/feature/variations.js:180
+#: src/block/feature/variations.js:185
+msgid "Overlap Background 3"
+msgstr ""
+
+#: dist/translation-strings.php:446
+#: src/block/feature/variations.js:192
+#: src/block/feature/variations.js:197
+msgid "Overlap Background 4"
+msgstr ""
+
+#: dist/translation-strings.php:447
+#: src/block/feature/variations.js:204
+#: src/block/feature/variations.js:209
+msgid "Overlap Background 5"
 msgstr ""
 
 #: dist/translation-strings.php:448
@@ -5358,61 +5358,85 @@ msgid "Navigation"
 msgstr ""
 
 #: dist/translation-strings.php:739
+#: src/block-components/responsive/edit.js:31
+#: src/deprecated/v2/modules/advanced-responsive/index.js:28
+msgid "Responsive"
+msgstr ""
+
+#: dist/translation-strings.php:740
+#: src/block-components/responsive/edit.js:35
+#: src/deprecated/v2/modules/advanced-responsive/index.js:33
+msgid "Hide on Desktop"
+msgstr ""
+
+#: dist/translation-strings.php:741
+#: src/block-components/responsive/edit.js:40
+#: src/deprecated/v2/modules/advanced-responsive/index.js:38
+msgid "Hide on Tablet"
+msgstr ""
+
+#: dist/translation-strings.php:742
+#: src/block-components/responsive/edit.js:45
+#: src/deprecated/v2/modules/advanced-responsive/index.js:43
+msgid "Hide on Mobile"
+msgstr ""
+
+#: dist/translation-strings.php:743
 #: src/block-components/progress-bar/edit.js:53
 msgid "Progress Circle"
 msgstr ""
 
-#: dist/translation-strings.php:740
+#: dist/translation-strings.php:744
 #: src/block-components/progress-bar/edit.js:53
 msgid "Progress Bar"
 msgstr ""
 
-#: dist/translation-strings.php:741
+#: dist/translation-strings.php:745
 #: src/block-components/progress-bar/edit.js:57
 msgid "Progress"
 msgstr ""
 
-#: dist/translation-strings.php:742
+#: dist/translation-strings.php:746
 #: src/block-components/progress-bar/edit.js:67
 msgid "Maximum Progress"
 msgstr ""
 
-#: dist/translation-strings.php:743
+#: dist/translation-strings.php:747
 #: src/block-components/progress-bar/edit.js:115
 msgid "Apply border radius to bar"
 msgstr ""
 
-#: dist/translation-strings.php:744
+#: dist/translation-strings.php:748
 #: src/block-components/progress-bar/edit.js:124
 msgid "Thickness"
 msgstr ""
 
-#: dist/translation-strings.php:745
+#: dist/translation-strings.php:749
 #: src/block-components/progress-bar/edit.js:142
 #: src/block-components/progress-bar/edit.js:150
 msgid "Bar Color #%s"
 msgstr ""
 
-#: dist/translation-strings.php:746
+#: dist/translation-strings.php:750
 #: src/block-components/progress-bar/edit.js:143
 msgid "Bar Color"
 msgstr ""
 
-#: dist/translation-strings.php:747
+#: dist/translation-strings.php:751
 #: src/block-components/helpers/backgrounds/edit.js:97
 #: src/block-components/progress-bar/edit.js:166
 #: src/components/background-controls/index.js:100
 msgid "Adv. Gradient Color Settings"
 msgstr ""
 
-#: dist/translation-strings.php:748
+#: dist/translation-strings.php:752
 #: src/block-components/helpers/backgrounds/edit.js:148
 #: src/block-components/progress-bar/edit.js:213
 #: src/components/background-controls/index.js:153
 msgid "Background Gradient Blend Mode"
 msgstr ""
 
-#: dist/translation-strings.php:749
+#: dist/translation-strings.php:753
 #: src/block-components/helpers/backgrounds/edit.js:68
 #: src/block-components/helpers/backgrounds/edit.js:69
 #: src/block-components/helpers/backgrounds/edit.js:90
@@ -5423,7 +5447,7 @@ msgstr ""
 msgid "Background Color"
 msgstr ""
 
-#: dist/translation-strings.php:750
+#: dist/translation-strings.php:754
 #: src/block-components/progress-bar/edit.js:227
 #: src/block-components/separator/designs.js:62
 #: src/block-components/separator/designs.js:65
@@ -5434,53 +5458,29 @@ msgstr ""
 msgid "Rounded"
 msgstr ""
 
-#: dist/translation-strings.php:751
+#: dist/translation-strings.php:755
 #: src/block-components/progress-bar/edit.js:232
 msgid "Animate"
 msgstr ""
 
-#: dist/translation-strings.php:752
+#: dist/translation-strings.php:756
 #: src/block-components/progress-bar/edit.js:237
 msgid "Accessibility Label"
 msgstr ""
 
-#: dist/translation-strings.php:753
+#: dist/translation-strings.php:757
 #: src/block-components/progress-bar/edit.js:262
 msgid "Progress Bar Text"
 msgstr ""
 
-#: dist/translation-strings.php:754
+#: dist/translation-strings.php:758
 #: src/block-components/progress-bar/edit.js:268
 msgid "Progress Prefix"
 msgstr ""
 
-#: dist/translation-strings.php:755
+#: dist/translation-strings.php:759
 #: src/block-components/progress-bar/edit.js:272
 msgid "Progress Suffix"
-msgstr ""
-
-#: dist/translation-strings.php:756
-#: src/block-components/responsive/edit.js:31
-#: src/deprecated/v2/modules/advanced-responsive/index.js:28
-msgid "Responsive"
-msgstr ""
-
-#: dist/translation-strings.php:757
-#: src/block-components/responsive/edit.js:35
-#: src/deprecated/v2/modules/advanced-responsive/index.js:33
-msgid "Hide on Desktop"
-msgstr ""
-
-#: dist/translation-strings.php:758
-#: src/block-components/responsive/edit.js:40
-#: src/deprecated/v2/modules/advanced-responsive/index.js:38
-msgid "Hide on Tablet"
-msgstr ""
-
-#: dist/translation-strings.php:759
-#: src/block-components/responsive/edit.js:45
-#: src/deprecated/v2/modules/advanced-responsive/index.js:43
-msgid "Hide on Mobile"
 msgstr ""
 
 #: dist/translation-strings.php:760
@@ -6361,33 +6361,33 @@ msgid "Add Column"
 msgstr ""
 
 #: dist/translation-strings.php:875
-#: src/components/convert-to-container-buttons/buttons.js:54
-msgid "Group into Container"
-msgstr ""
-
-#: dist/translation-strings.php:876
-#: src/components/convert-to-container-buttons/buttons.js:69
-msgid "Ungroup from Container"
-msgstr ""
-
-#: dist/translation-strings.php:877
 #: src/components/custom-attributes-control/index.js:97
 msgid "You can type in custom HTML attributes for this block in the field above."
 msgstr ""
 
-#: dist/translation-strings.php:878
+#: dist/translation-strings.php:876
 #: src/components/custom-attributes-control/index.js:99
 msgid "Example:"
 msgstr ""
 
-#: dist/translation-strings.php:879
+#: dist/translation-strings.php:877
 #: src/components/custom-attributes-control/index.js:107
 msgid "Learn more about Custom Attributes"
 msgstr ""
 
-#: dist/translation-strings.php:880
+#: dist/translation-strings.php:878
 #: src/components/custom-attributes-control/index.js:109
 msgid "There is an error in your custom attribute"
+msgstr ""
+
+#: dist/translation-strings.php:879
+#: src/components/convert-to-container-buttons/buttons.js:54
+msgid "Group into Container"
+msgstr ""
+
+#: dist/translation-strings.php:880
+#: src/components/convert-to-container-buttons/buttons.js:69
+msgid "Ungroup from Container"
 msgstr ""
 
 #: dist/translation-strings.php:881
@@ -6408,73 +6408,65 @@ msgid "No designs found"
 msgstr ""
 
 #: dist/translation-strings.php:883
-#: src/components/design-panel-body/index.js:22
-#: src/deprecated/v2/block/column/edit.js:80
-#: src/deprecated/v2/block/columns/edit.js:153
-#: src/deprecated/v2/higher-order/with-tabbed-inspector/index.js:32
-msgid "Layout"
-msgstr ""
-
-#: dist/translation-strings.php:884
 #: pro__premium_only/src/dynamic-content/components/dynamic-content-fields.js:258
 #: pro__premium_only/src/format-types/dynamic-content/index.js:144
 #: src/components/dynamic-content-control/index.js:308
 msgid "Dynamic Fields"
 msgstr ""
 
-#: dist/translation-strings.php:885
+#: dist/translation-strings.php:884
 #: src/components/dynamic-content-control/index.js:321
 msgid "Say Hello to Dynamic Attributes 👋"
 msgstr ""
 
-#: dist/translation-strings.php:886
+#: dist/translation-strings.php:885
 #: src/components/dynamic-content-control/index.js:322
 msgid "Add dynamic values to your Stackable blocks. This feature is only available on Stackable Premium."
 msgstr ""
 
-#: dist/translation-strings.php:887
+#: dist/translation-strings.php:886
 #: src/components/font-family-control/index.js:29
 msgid "System Fonts"
 msgstr ""
 
-#: dist/translation-strings.php:888
+#: dist/translation-strings.php:887
 #: src/components/font-family-control/index.js:31
 msgid "Sans-Serif"
 msgstr ""
 
-#: dist/translation-strings.php:889
+#: dist/translation-strings.php:888
 #: src/components/font-family-control/index.js:32
 msgid "Serif"
 msgstr ""
 
-#: dist/translation-strings.php:890
+#: dist/translation-strings.php:889
 #: src/components/font-family-control/index.js:33
 msgid "Serif Alternative"
 msgstr ""
 
-#: dist/translation-strings.php:891
+#: dist/translation-strings.php:890
 #: src/components/font-family-control/index.js:34
 msgid "Monospace"
 msgstr ""
 
-#: dist/translation-strings.php:892
+#: dist/translation-strings.php:891
 #: src/components/font-family-control/index.js:39
 msgid "Google Fonts"
 msgstr ""
 
-#: dist/translation-strings.php:893
+#: dist/translation-strings.php:892
 #: src/components/font-size-control/index.js:57
 msgid "Font Size"
 msgstr ""
 
-#: dist/translation-strings.php:894
+#: dist/translation-strings.php:893
 #: src/components/four-number-control/index.js:164
 #: src/components/four-number-control/index.js:169
 #: src/components/four-range-control/index.js:201
 msgid "Top"
 msgstr ""
 
-#: dist/translation-strings.php:895
+#: dist/translation-strings.php:894
 #: src/components/four-number-control/index.js:166
 #: src/components/four-number-control/index.js:178
 #: src/components/four-number-control/index.js:190
@@ -6482,52 +6474,60 @@ msgstr ""
 msgid "auto"
 msgstr ""
 
-#: dist/translation-strings.php:896
+#: dist/translation-strings.php:895
 #: src/components/four-number-control/index.js:193
 #: src/components/four-range-control/index.js:241
 msgid "Bottom"
 msgstr ""
 
-#: dist/translation-strings.php:897
+#: dist/translation-strings.php:896
 #: src/components/four-range-control/index.js:88
 msgid "Individual sides"
 msgstr ""
 
-#: dist/translation-strings.php:898
+#: dist/translation-strings.php:897
 #: src/components/four-range-control/index.js:88
 msgid "All sides"
 msgstr ""
 
-#: dist/translation-strings.php:899
+#: dist/translation-strings.php:898
 #: src/components/global-style-control/index.js:34
 #: src/components/global-style-control/index.js:126
 msgid "Edit Style"
 msgstr ""
 
-#: dist/translation-strings.php:900
+#: dist/translation-strings.php:899
 #: src/components/global-style-control/index.js:134
 msgid "Unlink Style"
 msgstr ""
 
-#: dist/translation-strings.php:901
+#: dist/translation-strings.php:900
 #: src/components/global-style-control/index.js:146
 #: src/components/panel-tabs/index.js:29
 msgid "Style"
 msgstr ""
 
-#: dist/translation-strings.php:902
+#: dist/translation-strings.php:901
 #: src/components/group-placeholder/index.js:21
 msgid "There are no blocks in this group, please add one."
 msgstr ""
 
-#: dist/translation-strings.php:903
+#: dist/translation-strings.php:902
 #: src/components/group-placeholder/index.js:29
 msgid "Add Block"
 msgstr ""
 
-#: dist/translation-strings.php:904
+#: dist/translation-strings.php:903
 #: src/components/heading-buttons-control/index.js:58
 msgid "Paragraph"
+msgstr ""
+
+#: dist/translation-strings.php:904
+#: src/components/design-panel-body/index.js:22
+#: src/deprecated/v2/block/column/edit.js:80
+#: src/deprecated/v2/block/columns/edit.js:153
+#: src/deprecated/v2/higher-order/with-tabbed-inspector/index.js:32
+msgid "Layout"
 msgstr ""
 
 #: dist/translation-strings.php:905
@@ -6580,53 +6580,53 @@ msgid "Outline Width"
 msgstr ""
 
 #: dist/translation-strings.php:914
-#: src/components/icon-search-popover/index.js:199
-msgid "Type to search icon"
-msgstr ""
-
-#: dist/translation-strings.php:915
-#: src/components/icon-search-popover/index.js:221
-msgid "Upload SVG"
-msgstr ""
-
-#: dist/translation-strings.php:916
-#: src/components/icon-search-popover/index.js:234
-msgid "Clear icon"
-msgstr ""
-
-#: dist/translation-strings.php:917
-#: src/components/icon-search-popover/index.js:264
-msgid "Drop your SVG here"
-msgstr ""
-
-#: dist/translation-strings.php:918
-#: src/components/image-alt-control/index.js:20
-msgid "Describe the purpose of the image"
-msgstr ""
-
-#: dist/translation-strings.php:919
-#: src/components/image-alt-control/index.js:22
-msgid "Leave empty if the image is purely decorative."
-msgstr ""
-
-#: dist/translation-strings.php:920
-#: src/components/image-alt-control/index.js:30
-msgid "Alt Text (Alternative Text)"
-msgstr ""
-
-#: dist/translation-strings.php:921
 #: src/components/image-background-controls/index.js:66
 msgid "Background Image Position"
 msgstr ""
 
-#: dist/translation-strings.php:922
+#: dist/translation-strings.php:915
 #: src/components/image-background-controls/index.js:87
 msgid "Background Image Repeat"
 msgstr ""
 
-#: dist/translation-strings.php:923
+#: dist/translation-strings.php:916
 #: src/components/image-background-controls/index.js:103
 msgid "Background Image Size"
+msgstr ""
+
+#: dist/translation-strings.php:917
+#: src/components/image-alt-control/index.js:20
+msgid "Describe the purpose of the image"
+msgstr ""
+
+#: dist/translation-strings.php:918
+#: src/components/image-alt-control/index.js:22
+msgid "Leave empty if the image is purely decorative."
+msgstr ""
+
+#: dist/translation-strings.php:919
+#: src/components/image-alt-control/index.js:30
+msgid "Alt Text (Alternative Text)"
+msgstr ""
+
+#: dist/translation-strings.php:920
+#: src/components/icon-search-popover/index.js:199
+msgid "Type to search icon"
+msgstr ""
+
+#: dist/translation-strings.php:921
+#: src/components/icon-search-popover/index.js:221
+msgid "Upload SVG"
+msgstr ""
+
+#: dist/translation-strings.php:922
+#: src/components/icon-search-popover/index.js:234
+msgid "Clear icon"
+msgstr ""
+
+#: dist/translation-strings.php:923
+#: src/components/icon-search-popover/index.js:264
+msgid "Drop your SVG here"
 msgstr ""
 
 #: dist/translation-strings.php:924
@@ -6636,6 +6636,48 @@ msgid "preview"
 msgstr ""
 
 #: dist/translation-strings.php:925
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:92
+#: src/components/image-filter-control/index.js:23
+#: src/components/shadow-control/index.js:67
+msgid "Blur"
+msgstr ""
+
+#: dist/translation-strings.php:926
+#: src/components/image-filter-control/index.js:31
+msgid "Brightness"
+msgstr ""
+
+#: dist/translation-strings.php:927
+#: src/components/image-filter-control/index.js:39
+msgid "Contrast"
+msgstr ""
+
+#: dist/translation-strings.php:928
+#: src/components/image-filter-control/index.js:47
+msgid "Grayscale"
+msgstr ""
+
+#: dist/translation-strings.php:929
+#: src/components/image-filter-control/index.js:55
+msgid "Hue Rotate"
+msgstr ""
+
+#: dist/translation-strings.php:930
+#: src/components/image-filter-control/index.js:63
+msgid "Invert"
+msgstr ""
+
+#: dist/translation-strings.php:931
+#: src/components/image-filter-control/index.js:79
+msgid "Saturate"
+msgstr ""
+
+#: dist/translation-strings.php:932
+#: src/components/image-filter-control/index.js:87
+msgid "Sepia"
+msgstr ""
+
+#: dist/translation-strings.php:933
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:123
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:138
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:152
@@ -6650,58 +6692,16 @@ msgstr ""
 msgid "Image Width"
 msgstr ""
 
-#: dist/translation-strings.php:926
+#: dist/translation-strings.php:934
 #: src/components/image-controls/index.js:177
 #: src/components/image-controls/index.js:187
 #: src/components/image-controls/index.js:197
 msgid "Force square image"
 msgstr ""
 
-#: dist/translation-strings.php:927
+#: dist/translation-strings.php:935
 #: src/components/image-controls/index.js:236
 msgid "Blend Mode"
-msgstr ""
-
-#: dist/translation-strings.php:928
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:92
-#: src/components/image-filter-control/index.js:23
-#: src/components/shadow-control/index.js:67
-msgid "Blur"
-msgstr ""
-
-#: dist/translation-strings.php:929
-#: src/components/image-filter-control/index.js:31
-msgid "Brightness"
-msgstr ""
-
-#: dist/translation-strings.php:930
-#: src/components/image-filter-control/index.js:39
-msgid "Contrast"
-msgstr ""
-
-#: dist/translation-strings.php:931
-#: src/components/image-filter-control/index.js:47
-msgid "Grayscale"
-msgstr ""
-
-#: dist/translation-strings.php:932
-#: src/components/image-filter-control/index.js:55
-msgid "Hue Rotate"
-msgstr ""
-
-#: dist/translation-strings.php:933
-#: src/components/image-filter-control/index.js:63
-msgid "Invert"
-msgstr ""
-
-#: dist/translation-strings.php:934
-#: src/components/image-filter-control/index.js:79
-msgid "Saturate"
-msgstr ""
-
-#: dist/translation-strings.php:935
-#: src/components/image-filter-control/index.js:87
-msgid "Sepia"
 msgstr ""
 
 #: dist/translation-strings.php:936
@@ -7178,152 +7178,152 @@ msgid "Highlight Text"
 msgstr ""
 
 #: dist/translation-strings.php:1010
+#: src/util/social/index.js:17
+msgid "Facebook"
+msgstr ""
+
+#: dist/translation-strings.php:1011
+#: src/util/social/index.js:21
+msgid "Twitter"
+msgstr ""
+
+#: dist/translation-strings.php:1012
+#: src/util/social/index.js:25
+msgid "Instagram"
+msgstr ""
+
+#: dist/translation-strings.php:1013
+#: src/util/social/index.js:29
+msgid "Pinterest"
+msgstr ""
+
+#: dist/translation-strings.php:1014
+#: src/util/social/index.js:33
+msgid "LinkedIn"
+msgstr ""
+
+#: dist/translation-strings.php:1015
+#: src/util/social/index.js:37
+msgid "YouTube"
+msgstr ""
+
+#: dist/translation-strings.php:1016
+#: src/util/social/index.js:41
+msgid "Email"
+msgstr ""
+
+#: dist/translation-strings.php:1017
 #: src/welcome/index.php:159
 #: src/plugins/global-settings/index.js:79
 msgid "Stackable Settings"
 msgstr ""
 
-#: dist/translation-strings.php:1011
-#: src/plugins/layout-picker-reset/index.js:26
-msgid "Reset layout"
-msgstr ""
-
-#: dist/translation-strings.php:1012
-#: src/plugins/premium-notice/index.js:55
-msgid "Get Premium"
-msgstr ""
-
-#: dist/translation-strings.php:1013
-#: src/plugins/premium-notice/index.js:56
-msgid "Achieve More with Premium"
-msgstr ""
-
-#: dist/translation-strings.php:1014
-#: src/plugins/premium-notice/index.js:57
-msgid "If you're enjoying Stackable blocks, we have a Premium version that lets you do so much more. Check it out now."
-msgstr ""
-
-#: dist/translation-strings.php:1015
+#: dist/translation-strings.php:1018
 #: src/plugins/save-block/custom-block-styles-editor.js:73
 msgid "Error saving block, please make sure you only have a %s block"
 msgstr ""
 
-#: dist/translation-strings.php:1016
+#: dist/translation-strings.php:1019
 #: src/plugins/save-block/custom-block-styles-editor.js:108
 msgid "Default %s Block saved"
 msgstr ""
 
-#: dist/translation-strings.php:1017
+#: dist/translation-strings.php:1020
 #: src/plugins/save-block/custom-block-styles-editor.js:109
 msgid "%s Block style saved"
 msgstr ""
 
-#: dist/translation-strings.php:1018
+#: dist/translation-strings.php:1021
 #: src/plugins/save-block/save-menu.js:72
 msgid "Default %s Block Saved!"
 msgstr ""
 
-#: dist/translation-strings.php:1019
+#: dist/translation-strings.php:1022
 #: src/plugins/save-block/save-menu.js:76
 msgid "Save as Default %s Block"
 msgstr ""
 
-#: dist/translation-strings.php:1020
+#: dist/translation-strings.php:1023
 #: src/plugins/global-settings/block-defaults/index.js:82
 #: src/plugins/save-block/save-menu.js:82
 msgid "Default %s Block Deleted!"
 msgstr ""
 
-#: dist/translation-strings.php:1021
+#: dist/translation-strings.php:1024
 #: src/plugins/save-block/save-menu.js:86
 msgid "Reset Default %s Block"
 msgstr ""
 
-#: dist/translation-strings.php:1022
+#: dist/translation-strings.php:1025
 #: src/plugins/save-block/store.js:124
 #: src/plugins/save-block/store.js:179
 msgid "Couldn't update block styles, got this error:"
 msgstr ""
 
-#: dist/translation-strings.php:1023
+#: dist/translation-strings.php:1026
 #: src/plugins/save-block/store.js:124
 #: src/plugins/save-block/store.js:179
 msgid "Please refresh the page and try again."
 msgstr ""
 
-#: dist/translation-strings.php:1024
+#: dist/translation-strings.php:1027
 #: src/plugins/v2-migration-popup/migration-popover.js:32
 msgid "The page will now reload for the old blocks to load. Please reload it if it does not refresh automatically."
 msgstr ""
 
-#: dist/translation-strings.php:1025
+#: dist/translation-strings.php:1028
 #: src/plugins/v2-migration-popup/migration-popover.js:63
 msgid "Stackable V2 Block Detected"
 msgstr ""
 
-#: dist/translation-strings.php:1026
+#: dist/translation-strings.php:1029
 #: src/plugins/v2-migration-popup/migration-popover.js:67
 msgid "Hello! 👋"
 msgstr ""
 
-#: dist/translation-strings.php:1027
+#: dist/translation-strings.php:1030
 #: src/plugins/v2-migration-popup/migration-popover.js:68
 msgid "We noticed that the page you are editing contains old Stackable version 2 blocks. Starting Stackable version 3, old v2 blocks are not anymore loaded in the editor. This means that you would not be able to edit the old v2 blocks in the editor and any old v2 block would show a block error in the editor."
 msgstr ""
 
-#: dist/translation-strings.php:1028
+#: dist/translation-strings.php:1031
 #: src/plugins/v2-migration-popup/migration-popover.js:69
 msgid "Do you want to enable backward compatibility, so the old blocks will be loaded in the editor?"
 msgstr ""
 
-#: dist/translation-strings.php:1029
+#: dist/translation-strings.php:1032
 #: src/plugins/v2-migration-popup/migration-popover.js:75
 msgid "Yes, load V2 Blocks in the editor, but only when V2 blocks are present already"
 msgstr ""
 
-#: dist/translation-strings.php:1030
+#: dist/translation-strings.php:1033
 #: src/plugins/v2-migration-popup/migration-popover.js:81
 msgid "Yes, always load V2 blocks in the editor"
 msgstr ""
 
-#: dist/translation-strings.php:1031
+#: dist/translation-strings.php:1034
 #: src/plugins/v2-migration-popup/migration-popover.js:87
 msgid "No, don't load V2 blocks in the editor"
 msgstr ""
 
-#: dist/translation-strings.php:1032
-#: src/util/social/index.js:17
-msgid "Facebook"
-msgstr ""
-
-#: dist/translation-strings.php:1033
-#: src/util/social/index.js:21
-msgid "Twitter"
-msgstr ""
-
-#: dist/translation-strings.php:1034
-#: src/util/social/index.js:25
-msgid "Instagram"
-msgstr ""
-
 #: dist/translation-strings.php:1035
-#: src/util/social/index.js:29
-msgid "Pinterest"
+#: src/plugins/layout-picker-reset/index.js:26
+msgid "Reset layout"
 msgstr ""
 
 #: dist/translation-strings.php:1036
-#: src/util/social/index.js:33
-msgid "LinkedIn"
+#: src/plugins/premium-notice/index.js:55
+msgid "Get Premium"
 msgstr ""
 
 #: dist/translation-strings.php:1037
-#: src/util/social/index.js:37
-msgid "YouTube"
+#: src/plugins/premium-notice/index.js:56
+msgid "Achieve More with Premium"
 msgstr ""
 
 #: dist/translation-strings.php:1038
-#: src/util/social/index.js:41
-msgid "Email"
+#: src/plugins/premium-notice/index.js:57
+msgid "If you're enjoying Stackable blocks, we have a Premium version that lets you do so much more. Check it out now."
 msgstr ""
 
 #: dist/translation-strings.php:1039
@@ -8605,53 +8605,53 @@ msgid "Position Color"
 msgstr ""
 
 #: dist/translation-strings.php:1235
-#: src/deprecated/v2/block/testimonial/edit.js:95
-msgid "Vertical Inverse"
-msgstr ""
-
-#: dist/translation-strings.php:1236
-#: src/deprecated/v2/block/testimonial/edit.js:262
-#: src/deprecated/v2/block/testimonial/edit.js:322
-msgid "Testimonial"
-msgstr ""
-
-#: dist/translation-strings.php:1237
-#: src/deprecated/v2/block/testimonial/edit.js:341
-msgid "Testimonial Color"
-msgstr ""
-
-#: dist/translation-strings.php:1238
 #: src/deprecated/v2/block/text/edit.js:63
 #: src/deprecated/v2/block/text/edit.js:66
 msgid "Side Title"
 msgstr ""
 
-#: dist/translation-strings.php:1239
+#: dist/translation-strings.php:1236
 #: src/deprecated/v2/block/text/edit.js:135
 msgid "Reverse Title"
 msgstr ""
 
-#: dist/translation-strings.php:1240
+#: dist/translation-strings.php:1237
 #: src/deprecated/v2/block/text/edit.js:201
 msgid "Column Rule"
 msgstr ""
 
-#: dist/translation-strings.php:1241
+#: dist/translation-strings.php:1238
 #: src/deprecated/v2/block/text/edit.js:292
 msgid "Vertical Align"
 msgstr ""
 
-#: dist/translation-strings.php:1242
+#: dist/translation-strings.php:1239
 #: src/deprecated/v2/block/text/edit.js:323
 msgid "Subtitle on Top"
 msgstr ""
 
-#: dist/translation-strings.php:1243
+#: dist/translation-strings.php:1240
 #: src/deprecated/v2/block/text/edit.js:396
 #: src/deprecated/v2/block/text/schema.js:63
 #: src/deprecated/v2/modules/block-title/index.js:75
 #: src/deprecated/v2/modules/block-title/index.js:412
 msgid "Block Title"
+msgstr ""
+
+#: dist/translation-strings.php:1241
+#: src/deprecated/v2/block/testimonial/edit.js:95
+msgid "Vertical Inverse"
+msgstr ""
+
+#: dist/translation-strings.php:1242
+#: src/deprecated/v2/block/testimonial/edit.js:262
+#: src/deprecated/v2/block/testimonial/edit.js:322
+msgid "Testimonial"
+msgstr ""
+
+#: dist/translation-strings.php:1243
+#: src/deprecated/v2/block/testimonial/edit.js:341
+msgid "Testimonial Color"
 msgstr ""
 
 #: dist/translation-strings.php:1244
@@ -8713,82 +8713,50 @@ msgid "Premium Designs"
 msgstr ""
 
 #: dist/translation-strings.php:1255
-#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:73
-msgid "Pick a layout or design"
-msgstr ""
-
-#: dist/translation-strings.php:1256
-#: src/components/variation-picker/index.js:21
-#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:146
-msgid "Select a variation to start with."
-msgstr ""
-
-#: dist/translation-strings.php:1257
-#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:151
-msgid "Or pick from our Design Library."
-msgstr ""
-
-#: dist/translation-strings.php:1258
-#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:152
-msgid "Select a design from our library to start with."
-msgstr ""
-
-#: dist/translation-strings.php:1259
-#: src/components/variation-picker/index.js:83
-#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:173
-msgid "Skip"
-msgstr ""
-
-#: dist/translation-strings.php:1260
-#: src/deprecated/v2/higher-order/with-tabbed-inspector/index.js:33
-msgid "Layout Tab"
-msgstr ""
-
-#: dist/translation-strings.php:1261
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:133
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:149
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:164
 msgid "Min. Block Height"
 msgstr ""
 
-#: dist/translation-strings.php:1262
+#: dist/translation-strings.php:1256
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:399
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:429
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:458
 msgid "Block Paddings"
 msgstr ""
 
-#: dist/translation-strings.php:1263
+#: dist/translation-strings.php:1257
 #: src/deprecated/v2/modules/block-background/index.js:68
 msgid "Block Background"
 msgstr ""
 
-#: dist/translation-strings.php:1264
+#: dist/translation-strings.php:1258
 #: src/deprecated/v2/modules/block-background/index.js:115
 msgid "Align center"
 msgstr ""
 
-#: dist/translation-strings.php:1265
+#: dist/translation-strings.php:1259
 #: src/deprecated/v2/modules/block-background/index.js:123
 msgid "Wide width"
 msgstr ""
 
-#: dist/translation-strings.php:1266
+#: dist/translation-strings.php:1260
 #: src/deprecated/v2/modules/block-background/index.js:131
 msgid "Full width"
 msgstr ""
 
-#: dist/translation-strings.php:1267
+#: dist/translation-strings.php:1261
 #: src/deprecated/v2/modules/block-background/index.js:163
 msgid "Change Alignment"
 msgstr ""
 
-#: dist/translation-strings.php:1268
+#: dist/translation-strings.php:1262
 #: src/deprecated/v2/modules/block-designs/index.js:30
 msgid "You will not lose your block content when changing designs."
 msgstr ""
 
-#: dist/translation-strings.php:1269
+#: dist/translation-strings.php:1263
 #: src/deprecated/v2/modules/block-title/index.js:113
 #: src/deprecated/v2/modules/block-title/index.js:128
 #: src/deprecated/v2/modules/block-title/index.js:143
@@ -8798,42 +8766,74 @@ msgstr ""
 msgid "Max Width"
 msgstr ""
 
-#: dist/translation-strings.php:1270
+#: dist/translation-strings.php:1264
 #: src/deprecated/v2/modules/block-title/index.js:158
 #: src/deprecated/v2/modules/block-title/index.js:252
 msgid "Horizontal Align"
 msgstr ""
 
-#: dist/translation-strings.php:1271
+#: dist/translation-strings.php:1265
 #: src/deprecated/v2/modules/block-title/index.js:170
 #: src/deprecated/v2/modules/block-title/index.js:264
 msgid "Text Align"
 msgstr ""
 
-#: dist/translation-strings.php:1272
+#: dist/translation-strings.php:1266
 #: src/deprecated/v2/modules/block-title/index.js:176
 #: src/deprecated/v2/modules/block-title/index.js:428
 msgid "Block Description"
 msgstr ""
 
-#: dist/translation-strings.php:1273
+#: dist/translation-strings.php:1267
 #: src/deprecated/v2/modules/container-link/index.js:120
 msgid "Container Link"
 msgstr ""
 
-#: dist/translation-strings.php:1274
+#: dist/translation-strings.php:1268
 #: src/deprecated/v2/modules/container-link/index.js:137
 msgid "Link / URL #%d"
 msgstr ""
 
-#: dist/translation-strings.php:1275
+#: dist/translation-strings.php:1269
 #: src/deprecated/v2/modules/container-link/index.js:145
 msgid "Link %d Title"
 msgstr ""
 
-#: dist/translation-strings.php:1276
+#: dist/translation-strings.php:1270
 #: src/deprecated/v2/modules/custom-css/index.js:27
 msgid "Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium"
+msgstr ""
+
+#: dist/translation-strings.php:1271
+#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:73
+msgid "Pick a layout or design"
+msgstr ""
+
+#: dist/translation-strings.php:1272
+#: src/components/variation-picker/index.js:21
+#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:146
+msgid "Select a variation to start with."
+msgstr ""
+
+#: dist/translation-strings.php:1273
+#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:151
+msgid "Or pick from our Design Library."
+msgstr ""
+
+#: dist/translation-strings.php:1274
+#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:152
+msgid "Select a design from our library to start with."
+msgstr ""
+
+#: dist/translation-strings.php:1275
+#: src/components/variation-picker/index.js:83
+#: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:173
+msgid "Skip"
+msgstr ""
+
+#: dist/translation-strings.php:1276
+#: src/deprecated/v2/higher-order/with-tabbed-inspector/index.js:33
+msgid "Layout Tab"
 msgstr ""
 
 #: dist/translation-strings.php:1277
@@ -9393,134 +9393,228 @@ msgid "Save changes"
 msgstr ""
 
 #: dist/translation-strings.php:1383
-#: pro__premium_only/src/block/columns/index.js:28
-msgid "Mobile Column Arrangement"
+#: pro__premium_only/src/block-components/conditional-display/delete-button.js:47
+msgid "Delete Condition"
 msgstr ""
 
 #: dist/translation-strings.php:1384
-#: pro__premium_only/src/block/columns/index.js:37
-msgid "Tablet Column Arrangement"
+#: pro__premium_only/src/block-components/conditional-display/delete-button.js:50
+msgid "Deleting will remove this condition for the block. Proceed?"
 msgstr ""
 
 #: dist/translation-strings.php:1385
-#: pro__premium_only/src/block/load-more/edit.js:85
-msgid "Number of Items"
+#: pro__premium_only/src/block-components/conditional-display/index.js:60
+msgid "Condition Type"
 msgstr ""
 
 #: dist/translation-strings.php:1386
-#: pro__premium_only/src/block/notification/index.js:64
-#: pro__premium_only/src/block/team-member/index.js:110
-msgctxt "Content placeholder"
-msgid "Description for this block. Use this space for describing your block. Any text will do."
+#: pro__premium_only/src/block-components/conditional-display/index.js:97
+msgid "Visibility"
 msgstr ""
 
 #: dist/translation-strings.php:1387
-#: pro__premium_only/src/block/pagination/edit.js:77
-msgid "URL Query String"
+#: pro__premium_only/src/block-components/conditional-display/index.js:99
+msgid "Show on condition match"
 msgstr ""
 
 #: dist/translation-strings.php:1388
-#: pro__premium_only/src/block/pagination/edit.js:80
-msgid "This is the string appended to the URL when changing pages."
+#: pro__premium_only/src/block-components/conditional-display/index.js:100
+msgid "Hide on condition match"
 msgstr ""
 
 #: dist/translation-strings.php:1389
-#: pro__premium_only/src/block/pagination/edit.js:83
-msgid "Show Next & Previous Button"
+#: pro__premium_only/src/block-components/conditional-display/index.js:112
+msgid "No conditions yet. Add your first condition."
 msgstr ""
 
 #: dist/translation-strings.php:1390
-#: pro__premium_only/src/block/pagination/edit.js:90
-msgid "Next Label"
+#: pro__premium_only/src/block-components/conditional-display/index.js:120
+msgid "OR"
 msgstr ""
 
+#. translators: This is the separator between conditions: OR / AND.
 #: dist/translation-strings.php:1391
-#: pro__premium_only/src/block/pagination/index.php:74
-#: pro__premium_only/src/block/pagination/edit.js:92
-#: pro__premium_only/src/block/pagination/schema.js:62
-msgid "Next"
+#: pro__premium_only/src/block-components/conditional-display/index.js:122
+msgid "AND"
 msgstr ""
 
+#. translators: This is the separator between conditions: OR / AND.
 #: dist/translation-strings.php:1392
-#: pro__premium_only/src/block/pagination/edit.js:95
-msgid "Previous Label"
+#: pro__premium_only/src/block-components/conditional-display/index.js:150
+msgid "Trigger if ANY condition matches"
 msgstr ""
 
+#. translators: This is the separator between conditions: OR / AND.
 #: dist/translation-strings.php:1393
-#: pro__premium_only/src/block/pagination/index.php:278
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:202
-#: pro__premium_only/src/block/pagination/pagination.js:63
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:108
-msgid "Previous page"
+#: pro__premium_only/src/block-components/conditional-display/index.js:151
+msgid "Trigger if ALL conditions match"
 msgstr ""
 
 #: dist/translation-strings.php:1394
-#: pro__premium_only/src/block/pagination/index.php:299
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:223
-#: pro__premium_only/src/block/pagination/pagination.js:75
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:119
-msgid "Page %s"
+#: pro__premium_only/src/block-components/conditional-display/index.js:164
+msgid "Add New"
 msgstr ""
 
 #: dist/translation-strings.php:1395
-#: pro__premium_only/src/block/pagination/index.php:324
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:248
-#: pro__premium_only/src/block/pagination/pagination.js:83
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:128
-msgid "Next page"
+#: pro__premium_only/src/block-components/conditional-display/index.js:168
+msgid "Add New Condition"
 msgstr ""
 
 #: dist/translation-strings.php:1396
-#: pro__premium_only/src/block/posts/index.js:223
-msgid "Offset your posts by a specific number of items."
+#: pro__premium_only/src/block-components/conditional-display/index.js:178
+msgid "Learn more about Conditional Display"
 msgstr ""
 
 #: dist/translation-strings.php:1397
-#: pro__premium_only/src/block/posts/index.js:227
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:57
-msgid "Exclude Post IDs"
+#: pro__premium_only/src/block-components/custom-css/custom-css-control.js:21
+#: pro__premium_only/src/components/panel-custom-css-settings/index.js:44
+msgid "You can use this area to further customize your block. Any custom CSS added here will only affect this block."
 msgstr ""
 
 #: dist/translation-strings.php:1398
-#: pro__premium_only/src/block/posts/index.js:230
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:61
-msgid "Excludes specific IDs from the display. Enter post IDs separated by a commas"
+#: pro__premium_only/src/block-components/custom-css/custom-css-control.js:24
+msgid "Media queries are supported. Use the widths 1024px and 768px for tablet and mobile breakpoints."
 msgstr ""
 
 #: dist/translation-strings.php:1399
-#: pro__premium_only/src/block/posts/index.js:233
-msgid "Hide the current post"
+#: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:52
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:76
+#: pro__premium_only/src/block-components/transform/transform-control.js:42
+msgid "Rotate"
 msgstr ""
 
 #: dist/translation-strings.php:1400
-#: pro__premium_only/src/block/posts/index.js:235
-msgid "Removes the current post from the posts list"
+#: pro__premium_only/src/block-components/effects-animations/index.js:34
+msgid "Effect"
 msgstr ""
 
 #: dist/translation-strings.php:1401
-#: pro__premium_only/src/block/posts/index.js:238
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:64
-msgid "Display Specific Post IDs"
+#: pro__premium_only/src/block-components/effects-animations/index.js:37
+#: pro__premium_only/src/block-components/effects-animations/index.js:91
+msgid "Entrance Animation"
 msgstr ""
 
 #: dist/translation-strings.php:1402
-#: pro__premium_only/src/block/posts/index.js:241
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:68
-msgid "Limit display to only these specific IDs. Enter post IDs separated by a commas"
+#: pro__premium_only/src/block-components/effects-animations/index.js:38
+msgid "Scroll Animation"
 msgstr ""
 
 #: dist/translation-strings.php:1403
-#: pro__premium_only/src/block/pricing-box/index.js:45
-msgid "Sale"
+#: pro__premium_only/src/block-components/effects-animations/index.js:45
+msgid "Start Position"
 msgstr ""
 
 #: dist/translation-strings.php:1404
-#: pro__premium_only/src/block/separator/index.js:58
-#: pro__premium_only/src/block/separator/index.js:110
-msgid "Layer %s"
+#: pro__premium_only/src/block-components/effects-animations/index.js:51
+msgid "Entrance Animation Speed"
 msgstr ""
 
 #: dist/translation-strings.php:1405
+#: pro__premium_only/src/block-components/effects-animations/index.js:53
+msgid "Slow"
+msgstr ""
+
+#: dist/translation-strings.php:1406
+#: pro__premium_only/src/block-components/effects-animations/index.js:55
+msgid "Fast"
+msgstr ""
+
+#: dist/translation-strings.php:1407
+#: pro__premium_only/src/block-components/effects-animations/index.js:60
+msgid "Entrance Animation Delay"
+msgstr ""
+
+#: dist/translation-strings.php:1408
+#: pro__premium_only/src/block-components/effects-animations/index.js:72
+msgid "Smoothen Scroll Animation"
+msgstr ""
+
+#: dist/translation-strings.php:1409
+#: pro__premium_only/src/block-components/effects-animations/index.js:76
+msgid "Use 3D Transforms"
+msgstr ""
+
+#: dist/translation-strings.php:1410
+#: pro__premium_only/src/block-components/effects-animations/index.js:81
+msgid "Perspective"
+msgstr ""
+
+#: dist/translation-strings.php:1411
+#: pro__premium_only/src/block-components/effects-animations/index.js:97
+msgid "Exit Animation"
+msgstr ""
+
+#: dist/translation-strings.php:1412
+#: pro__premium_only/src/block-components/effects-animations/index.js:110
+msgid "This block has Transforms assigned to it, Motion Effects may not work as expected."
+msgstr ""
+
+#: dist/translation-strings.php:1413
+#: pro__premium_only/src/block-components/effects-animations/index.js:118
+msgid "Learn more about Motion Effects"
+msgstr ""
+
+#: dist/translation-strings.php:1414
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:33
+#: pro__premium_only/src/block-components/transform/transform-control.js:26
+msgid "Translate X"
+msgstr ""
+
+#: dist/translation-strings.php:1415
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:41
+msgid "TranslateY"
+msgstr ""
+
+#: dist/translation-strings.php:1416
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:50
+msgid "TranslateZ"
+msgstr ""
+
+#: dist/translation-strings.php:1417
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:59
+msgid "RotateX"
+msgstr ""
+
+#: dist/translation-strings.php:1418
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:68
+msgid "RotateY"
+msgstr ""
+
+#: dist/translation-strings.php:1419
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:100
+msgid "Skew X"
+msgstr ""
+
+#: dist/translation-strings.php:1420
+#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:108
+msgid "Skew Y"
+msgstr ""
+
+#: dist/translation-strings.php:1421
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:44
+#: pro__premium_only/src/features/icon-controls/index.js:277
+msgid "Shape Opacity"
+msgstr ""
+
+#: dist/translation-strings.php:1422
+#: pro__premium_only/src/block-components/icon/gradient-controls.js:22
+#: pro__premium_only/src/block-components/icon/gradient-controls.js:26
+msgid "Icon Color #%s"
+msgstr ""
+
+#: dist/translation-strings.php:1423
+#: pro__premium_only/src/block-components/icon/multicolor-controls.js:36
+#: pro__premium_only/src/features/icon-controls/index.js:121
+msgid "Multicolor only works for custom uploaded icons that have multiple path elements or for Font Awesome Pro Duotones."
+msgstr ""
+
+#: dist/translation-strings.php:1424
+#: pro__premium_only/src/block-components/separator/index.js:45
+#: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:43
+msgid "Separator Layer %s"
+msgstr ""
+
+#: dist/translation-strings.php:1425
 #: pro__premium_only/src/block-components/separator/index.js:74
 #: pro__premium_only/src/block/separator/index.js:70
 #: pro__premium_only/src/block/separator/index.js:122
@@ -9530,7 +9624,7 @@ msgstr ""
 msgid "Layer Height"
 msgstr ""
 
-#: dist/translation-strings.php:1406
+#: dist/translation-strings.php:1426
 #: pro__premium_only/src/block-components/separator/index.js:83
 #: pro__premium_only/src/block/separator/index.js:79
 #: pro__premium_only/src/block/separator/index.js:131
@@ -9540,321 +9634,227 @@ msgstr ""
 msgid "Layer Width"
 msgstr ""
 
-#: dist/translation-strings.php:1407
-#: pro__premium_only/src/block-components/conditional-display/delete-button.js:47
-msgid "Delete Condition"
-msgstr ""
-
-#: dist/translation-strings.php:1408
-#: pro__premium_only/src/block-components/conditional-display/delete-button.js:50
-msgid "Deleting will remove this condition for the block. Proceed?"
-msgstr ""
-
-#: dist/translation-strings.php:1409
-#: pro__premium_only/src/block-components/conditional-display/index.js:60
-msgid "Condition Type"
-msgstr ""
-
-#: dist/translation-strings.php:1410
-#: pro__premium_only/src/block-components/conditional-display/index.js:97
-msgid "Visibility"
-msgstr ""
-
-#: dist/translation-strings.php:1411
-#: pro__premium_only/src/block-components/conditional-display/index.js:99
-msgid "Show on condition match"
-msgstr ""
-
-#: dist/translation-strings.php:1412
-#: pro__premium_only/src/block-components/conditional-display/index.js:100
-msgid "Hide on condition match"
-msgstr ""
-
-#: dist/translation-strings.php:1413
-#: pro__premium_only/src/block-components/conditional-display/index.js:112
-msgid "No conditions yet. Add your first condition."
-msgstr ""
-
-#: dist/translation-strings.php:1414
-#: pro__premium_only/src/block-components/conditional-display/index.js:120
-msgid "OR"
-msgstr ""
-
-#. translators: This is the separator between conditions: OR / AND.
-#: dist/translation-strings.php:1415
-#: pro__premium_only/src/block-components/conditional-display/index.js:122
-msgid "AND"
-msgstr ""
-
-#. translators: This is the separator between conditions: OR / AND.
-#: dist/translation-strings.php:1416
-#: pro__premium_only/src/block-components/conditional-display/index.js:150
-msgid "Trigger if ANY condition matches"
-msgstr ""
-
-#. translators: This is the separator between conditions: OR / AND.
-#: dist/translation-strings.php:1417
-#: pro__premium_only/src/block-components/conditional-display/index.js:151
-msgid "Trigger if ALL conditions match"
-msgstr ""
-
-#: dist/translation-strings.php:1418
-#: pro__premium_only/src/block-components/conditional-display/index.js:164
-msgid "Add New"
-msgstr ""
-
-#: dist/translation-strings.php:1419
-#: pro__premium_only/src/block-components/conditional-display/index.js:168
-msgid "Add New Condition"
-msgstr ""
-
-#: dist/translation-strings.php:1420
-#: pro__premium_only/src/block-components/conditional-display/index.js:178
-msgid "Learn more about Conditional Display"
-msgstr ""
-
-#: dist/translation-strings.php:1421
-#: pro__premium_only/src/block-components/custom-css/custom-css-control.js:21
-#: pro__premium_only/src/components/panel-custom-css-settings/index.js:44
-msgid "You can use this area to further customize your block. Any custom CSS added here will only affect this block."
-msgstr ""
-
-#: dist/translation-strings.php:1422
-#: pro__premium_only/src/block-components/custom-css/custom-css-control.js:24
-msgid "Media queries are supported. Use the widths 1024px and 768px for tablet and mobile breakpoints."
-msgstr ""
-
-#: dist/translation-strings.php:1423
-#: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:52
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:76
-#: pro__premium_only/src/block-components/transform/transform-control.js:42
-msgid "Rotate"
-msgstr ""
-
-#: dist/translation-strings.php:1424
-#: pro__premium_only/src/block-components/effects-animations/index.js:34
-msgid "Effect"
-msgstr ""
-
-#: dist/translation-strings.php:1425
-#: pro__premium_only/src/block-components/effects-animations/index.js:37
-#: pro__premium_only/src/block-components/effects-animations/index.js:91
-msgid "Entrance Animation"
-msgstr ""
-
-#: dist/translation-strings.php:1426
-#: pro__premium_only/src/block-components/effects-animations/index.js:38
-msgid "Scroll Animation"
-msgstr ""
-
 #: dist/translation-strings.php:1427
-#: pro__premium_only/src/block-components/effects-animations/index.js:45
-msgid "Start Position"
-msgstr ""
-
-#: dist/translation-strings.php:1428
-#: pro__premium_only/src/block-components/effects-animations/index.js:51
-msgid "Entrance Animation Speed"
-msgstr ""
-
-#: dist/translation-strings.php:1429
-#: pro__premium_only/src/block-components/effects-animations/index.js:53
-msgid "Slow"
-msgstr ""
-
-#: dist/translation-strings.php:1430
-#: pro__premium_only/src/block-components/effects-animations/index.js:55
-msgid "Fast"
-msgstr ""
-
-#: dist/translation-strings.php:1431
-#: pro__premium_only/src/block-components/effects-animations/index.js:60
-msgid "Entrance Animation Delay"
-msgstr ""
-
-#: dist/translation-strings.php:1432
-#: pro__premium_only/src/block-components/effects-animations/index.js:72
-msgid "Smoothen Scroll Animation"
-msgstr ""
-
-#: dist/translation-strings.php:1433
-#: pro__premium_only/src/block-components/effects-animations/index.js:76
-msgid "Use 3D Transforms"
-msgstr ""
-
-#: dist/translation-strings.php:1434
-#: pro__premium_only/src/block-components/effects-animations/index.js:81
-msgid "Perspective"
-msgstr ""
-
-#: dist/translation-strings.php:1435
-#: pro__premium_only/src/block-components/effects-animations/index.js:97
-msgid "Exit Animation"
-msgstr ""
-
-#: dist/translation-strings.php:1436
-#: pro__premium_only/src/block-components/effects-animations/index.js:110
-msgid "This block has Transforms assigned to it, Motion Effects may not work as expected."
-msgstr ""
-
-#: dist/translation-strings.php:1437
-#: pro__premium_only/src/block-components/effects-animations/index.js:118
-msgid "Learn more about Motion Effects"
-msgstr ""
-
-#: dist/translation-strings.php:1438
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:33
-#: pro__premium_only/src/block-components/transform/transform-control.js:26
-msgid "Translate X"
-msgstr ""
-
-#: dist/translation-strings.php:1439
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:41
-msgid "TranslateY"
-msgstr ""
-
-#: dist/translation-strings.php:1440
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:50
-msgid "TranslateZ"
-msgstr ""
-
-#: dist/translation-strings.php:1441
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:59
-msgid "RotateX"
-msgstr ""
-
-#: dist/translation-strings.php:1442
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:68
-msgid "RotateY"
-msgstr ""
-
-#: dist/translation-strings.php:1443
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:100
-msgid "Skew X"
-msgstr ""
-
-#: dist/translation-strings.php:1444
-#: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:108
-msgid "Skew Y"
-msgstr ""
-
-#: dist/translation-strings.php:1445
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:44
-#: pro__premium_only/src/features/icon-controls/index.js:277
-msgid "Shape Opacity"
-msgstr ""
-
-#: dist/translation-strings.php:1446
-#: pro__premium_only/src/block-components/icon/gradient-controls.js:22
-#: pro__premium_only/src/block-components/icon/gradient-controls.js:26
-msgid "Icon Color #%s"
-msgstr ""
-
-#: dist/translation-strings.php:1447
-#: pro__premium_only/src/block-components/icon/multicolor-controls.js:36
-#: pro__premium_only/src/features/icon-controls/index.js:121
-msgid "Multicolor only works for custom uploaded icons that have multiple path elements or for Font Awesome Pro Duotones."
-msgstr ""
-
-#: dist/translation-strings.php:1448
-#: pro__premium_only/src/block-components/separator/index.js:45
-#: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:43
-msgid "Separator Layer %s"
-msgstr ""
-
-#: dist/translation-strings.php:1449
 #: pro__premium_only/src/block-components/transform/index.js:30
 msgid "Transition Duration (secs)"
 msgstr ""
 
-#: dist/translation-strings.php:1450
+#: dist/translation-strings.php:1428
 #: pro__premium_only/src/block-components/transform/index.js:38
 msgid "Transition Function"
 msgstr ""
 
-#: dist/translation-strings.php:1451
+#: dist/translation-strings.php:1429
 #: pro__premium_only/src/block-components/transform/index.js:41
 msgid "Ease"
 msgstr ""
 
-#: dist/translation-strings.php:1452
+#: dist/translation-strings.php:1430
 #: pro__premium_only/src/block-components/transform/index.js:42
 msgid "Ease In"
 msgstr ""
 
-#: dist/translation-strings.php:1453
+#: dist/translation-strings.php:1431
 #: pro__premium_only/src/block-components/transform/index.js:43
 msgid "Ease Out"
 msgstr ""
 
-#: dist/translation-strings.php:1454
+#: dist/translation-strings.php:1432
 #: pro__premium_only/src/block-components/transform/index.js:44
 msgid "Ease In Out"
 msgstr ""
 
-#: dist/translation-strings.php:1455
+#: dist/translation-strings.php:1433
 #: pro__premium_only/src/block-components/transform/index.js:45
 msgid "Linear"
 msgstr ""
 
-#: dist/translation-strings.php:1456
+#: dist/translation-strings.php:1434
 #: pro__premium_only/src/block-components/transform/index.js:46
 msgid "Ease In Quad"
 msgstr ""
 
-#: dist/translation-strings.php:1457
+#: dist/translation-strings.php:1435
 #: pro__premium_only/src/block-components/transform/index.js:47
 msgid "Ease Out Quad"
 msgstr ""
 
-#: dist/translation-strings.php:1458
+#: dist/translation-strings.php:1436
 #: pro__premium_only/src/block-components/transform/index.js:48
 msgid "Ease In Out Quad"
 msgstr ""
 
-#: dist/translation-strings.php:1459
+#: dist/translation-strings.php:1437
 #: pro__premium_only/src/block-components/transform/index.js:49
 msgid "Ease In Expo"
 msgstr ""
 
-#: dist/translation-strings.php:1460
+#: dist/translation-strings.php:1438
 #: pro__premium_only/src/block-components/transform/index.js:50
 msgid "Ease Out Expo"
 msgstr ""
 
-#: dist/translation-strings.php:1461
+#: dist/translation-strings.php:1439
 #: pro__premium_only/src/block-components/transform/index.js:51
 msgid "Ease In Out Expo"
 msgstr ""
 
-#: dist/translation-strings.php:1462
+#: dist/translation-strings.php:1440
 #: pro__premium_only/src/block-components/transform/index.js:52
 msgid "Ease In Back"
 msgstr ""
 
-#: dist/translation-strings.php:1463
+#: dist/translation-strings.php:1441
 #: pro__premium_only/src/block-components/transform/index.js:53
 msgid "Ease Out Back"
 msgstr ""
 
-#: dist/translation-strings.php:1464
+#: dist/translation-strings.php:1442
 #: pro__premium_only/src/block-components/transform/index.js:54
 msgid "Ease In Out Back"
 msgstr ""
 
-#: dist/translation-strings.php:1465
+#: dist/translation-strings.php:1443
 #: pro__premium_only/src/block-components/transform/index.js:66
 msgid "Transform Origin"
 msgstr ""
 
-#: dist/translation-strings.php:1466
+#: dist/translation-strings.php:1444
 #: pro__premium_only/src/block-components/transform/index.js:88
 msgid "This block has Motion Effects assigned to it, applying transforms above may prevent the Motion Effects from working as expected."
 msgstr ""
 
-#: dist/translation-strings.php:1467
+#: dist/translation-strings.php:1445
 #: pro__premium_only/src/block-components/transform/transform-control.js:34
 msgid "Translate Y"
+msgstr ""
+
+#: dist/translation-strings.php:1446
+#: pro__premium_only/src/block/columns/index.js:28
+msgid "Mobile Column Arrangement"
+msgstr ""
+
+#: dist/translation-strings.php:1447
+#: pro__premium_only/src/block/columns/index.js:37
+msgid "Tablet Column Arrangement"
+msgstr ""
+
+#: dist/translation-strings.php:1448
+#: pro__premium_only/src/block/load-more/edit.js:85
+msgid "Number of Items"
+msgstr ""
+
+#: dist/translation-strings.php:1449
+#: pro__premium_only/src/block/notification/index.js:64
+#: pro__premium_only/src/block/team-member/index.js:110
+msgctxt "Content placeholder"
+msgid "Description for this block. Use this space for describing your block. Any text will do."
+msgstr ""
+
+#: dist/translation-strings.php:1450
+#: pro__premium_only/src/block/pagination/edit.js:77
+msgid "URL Query String"
+msgstr ""
+
+#: dist/translation-strings.php:1451
+#: pro__premium_only/src/block/pagination/edit.js:80
+msgid "This is the string appended to the URL when changing pages."
+msgstr ""
+
+#: dist/translation-strings.php:1452
+#: pro__premium_only/src/block/pagination/edit.js:83
+msgid "Show Next & Previous Button"
+msgstr ""
+
+#: dist/translation-strings.php:1453
+#: pro__premium_only/src/block/pagination/edit.js:90
+msgid "Next Label"
+msgstr ""
+
+#: dist/translation-strings.php:1454
+#: pro__premium_only/src/block/pagination/index.php:74
+#: pro__premium_only/src/block/pagination/edit.js:92
+#: pro__premium_only/src/block/pagination/schema.js:62
+msgid "Next"
+msgstr ""
+
+#: dist/translation-strings.php:1455
+#: pro__premium_only/src/block/pagination/edit.js:95
+msgid "Previous Label"
+msgstr ""
+
+#: dist/translation-strings.php:1456
+#: pro__premium_only/src/block/pagination/index.php:278
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:202
+#: pro__premium_only/src/block/pagination/pagination.js:63
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:108
+msgid "Previous page"
+msgstr ""
+
+#: dist/translation-strings.php:1457
+#: pro__premium_only/src/block/pagination/index.php:299
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:223
+#: pro__premium_only/src/block/pagination/pagination.js:75
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:119
+msgid "Page %s"
+msgstr ""
+
+#: dist/translation-strings.php:1458
+#: pro__premium_only/src/block/pagination/index.php:324
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:248
+#: pro__premium_only/src/block/pagination/pagination.js:83
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:128
+msgid "Next page"
+msgstr ""
+
+#: dist/translation-strings.php:1459
+#: pro__premium_only/src/block/posts/index.js:223
+msgid "Offset your posts by a specific number of items."
+msgstr ""
+
+#: dist/translation-strings.php:1460
+#: pro__premium_only/src/block/posts/index.js:227
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:57
+msgid "Exclude Post IDs"
+msgstr ""
+
+#: dist/translation-strings.php:1461
+#: pro__premium_only/src/block/posts/index.js:230
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:61
+msgid "Excludes specific IDs from the display. Enter post IDs separated by a commas"
+msgstr ""
+
+#: dist/translation-strings.php:1462
+#: pro__premium_only/src/block/posts/index.js:233
+msgid "Hide the current post"
+msgstr ""
+
+#: dist/translation-strings.php:1463
+#: pro__premium_only/src/block/posts/index.js:235
+msgid "Removes the current post from the posts list"
+msgstr ""
+
+#: dist/translation-strings.php:1464
+#: pro__premium_only/src/block/posts/index.js:238
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:64
+msgid "Display Specific Post IDs"
+msgstr ""
+
+#: dist/translation-strings.php:1465
+#: pro__premium_only/src/block/posts/index.js:241
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:68
+msgid "Limit display to only these specific IDs. Enter post IDs separated by a commas"
+msgstr ""
+
+#: dist/translation-strings.php:1466
+#: pro__premium_only/src/block/pricing-box/index.js:45
+msgid "Sale"
+msgstr ""
+
+#: dist/translation-strings.php:1467
+#: pro__premium_only/src/block/separator/index.js:58
+#: pro__premium_only/src/block/separator/index.js:110
+msgid "Layer %s"
 msgstr ""
 
 #: dist/translation-strings.php:1468

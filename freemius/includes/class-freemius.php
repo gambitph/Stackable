@@ -13833,7 +13833,7 @@
                             'license_whitelabeled'
                         ),
                         "<strong>{$this->get_plugin_title()}</strong>",
-                        sprintf( '<a href="https://users.freemius.com" target="_blank">%s</a>', $this->get_text_inline( 'User Dashboard', 'user-dashboard' ) ),
+                        sprintf( '<a href="https://wpstackable.com/account/" target="_blank">%s</a>', $this->get_text_inline( 'User Dashboard', 'user-dashboard' ) ),
                         sprintf( '<a href="#" class="fs-toggle-whitelabel-mode">%s</a>', $this->get_text_inline( 'revert it now', 'revert-it-now' ) )
                     ),
                     'license_whitelabeled'
