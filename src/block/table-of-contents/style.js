@@ -208,7 +208,7 @@ TableOfContentsStyles.Content = props => {
 	return (
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
-			<Typography.Style.Content { ...props } options={ typographyOptions } />
+			<Typography.Style.Content { ...props } { ...typographyOptions } />
 			<Typography.Style.Content { ...props } options={ titleTypographyOptions } />
 			<MarginBottom.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
