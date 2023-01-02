@@ -64,9 +64,7 @@ import { showOptions } from './util'
 /**
  * WordPress dependencies
  */
-import {
-	__,
-} from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -462,6 +460,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					'titleColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<HeadingButtonsControl
@@ -502,6 +501,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					'subtitleColor',
 					...createResponsiveAttributeNames( 'subtitle%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showSubtitle"
 			>
 				<TypographyControlHelper
@@ -537,6 +537,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					'descriptionColor',
 					...createResponsiveAttributeNames( 'description%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showDescription"
 			>
 				<TypographyControlHelper
@@ -570,6 +571,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					...createButtonAttributeNames( 'button%s' ),
 					...createResponsiveAttributeNames( 'button%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showButton"
 			>
 				<ButtonControlsHelper

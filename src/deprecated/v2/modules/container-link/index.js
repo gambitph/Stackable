@@ -8,9 +8,7 @@ import {
 	ControlSeparator,
 	URLInputControl,
 } from '~stackable/components'
-import {
-	createAllCombinationAttributes,
-} from '~stackable/util'
+import { createAllCombinationAttributes } from '~stackable/util'
 import {
 	omit, range, camelCase, isPlainObject,
 } from 'lodash'
@@ -19,14 +17,10 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import {
-	addFilter,
-} from '@wordpress/hooks'
+import { addFilter } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-import {
-	ToggleControl, TextControl,
-} from '@wordpress/components'
+import { ToggleControl, TextControl } from '@wordpress/components'
 
 const createContainerLinkAttributes = ( attrNameTemplate, options = {} ) => {
 	const {
@@ -123,6 +117,7 @@ const addInspectorPanel = ( output, props ) => {
 				onChange={ showContainerLink => setAttributes( {
 					showContainerLink,
 				} ) }
+				hasToggle
 				toggleAttributeName="showContainerLink"
 			>
 				{ range( 1, columns + 1 ).map( column => {

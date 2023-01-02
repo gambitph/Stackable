@@ -37,10 +37,9 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { useMemo } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-
-const PremiumSeparatorControls = applyFilters( 'stackable.block.separator.edit.after', null )
 
 const Edit = props => {
 	const {
@@ -51,6 +50,8 @@ const Edit = props => {
 	} = props
 
 	useGeneratedCss( props.attributes )
+
+	const PremiumSeparatorControls = useMemo( applyFilters( 'stackable.block.separator.edit.after', null ), [] )
 
 	const {
 		separatorDesign,

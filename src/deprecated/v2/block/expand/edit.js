@@ -79,6 +79,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					'titleColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<HeadingButtonsControl
@@ -275,14 +276,14 @@ const edit = props => {
 				{ isSelected && <label className="ugb-expand__label">{ __( 'More text', i18n ) }</label> }
 				{
 					isSelected &&
-					<RichText
-						multiline="p"
-						className="ugb-expand__more-text"
-						value={ moreText }
-						onChange={ text => setAttributes( { moreText: text } ) }
-						placeholder={ `${ __( 'Some short text that can be expanded to show more details.', i18n ) } ${ descriptionPlaceholder( 'medium' ) }` }
-						keepPlaceholderOnFocus
-					/>
+						<RichText
+							multiline="p"
+							className="ugb-expand__more-text"
+							value={ moreText }
+							onChange={ text => setAttributes( { moreText: text } ) }
+							placeholder={ `${ __( 'Some short text that can be expanded to show more details.', i18n ) } ${ descriptionPlaceholder( 'medium' ) }` }
+							keepPlaceholderOnFocus
+						/>
 				}
 				{ isSelected &&
 					<div className="ugb-expand__toggle-wrapper">

@@ -8,7 +8,7 @@ body[class*="page_stk-"] {
 	#wpcontent {
 		padding-left: 0;
 	}
-	#wpbody-content > .wrap {
+	#wpbody-content > .wrap:not(#fs_connect) { // stylelint-disable-line selector-id-pattern
 		margin: 0;
 		padding: 0 50px;
 	}

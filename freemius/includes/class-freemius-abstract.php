@@ -37,9 +37,12 @@
 		 *          `$fs->is_registered() && $fs->is_tracking_allowed()`
 		 *
 		 * @since 1.0.1
+         *
+         * @param bool $ignore_anonymous_state Since 2.5.1
+         *
 		 * @return bool
 		 */
-		abstract function is_registered();
+		abstract function is_registered( $ignore_anonymous_state = false );
 
 		/**
 		 * Check if the user skipped connecting the account with Freemius.
@@ -58,68 +61,6 @@
 		 * @return bool
 		 */
 		abstract function is_activation_mode();
-
-		#endregion
-
-		#----------------------------------------------------------------------------------
-		#region Usage Tracking
-		#----------------------------------------------------------------------------------
-
-		/**
-		 * Returns TRUE if the user opted-in and didn't disconnect (opt-out).
-		 *
-		 * @author Leo Fajardo (@leorw)
-		 * @since 1.2.1.5
-		 *
-		 * @return bool
-		 */
-		abstract function is_tracking_allowed();
-
-		/**
-		 * Returns TRUE if the user never opted-in or manually opted-out.
-		 *
-		 * @author Vova Feldman (@svovaf)
-		 * @since 1.2.1.5
-		 *
-		 * @return bool
-		 */
-		function is_tracking_prohibited() {
-			return ! $this->is_registered() || ! $this->is_tracking_allowed();
-		}
-
-		/**
-		 * Opt-out from usage tracking.
-		 *
-		 * Note: This will not delete the account information but will stop all tracking.
-		 *
-		 * Returns:
-		 *  1. FALSE  - If the user never opted-in.
-		 *  2. TRUE   - If successfully opted-out.
-		 *  3. object - API Result on failure.
-		 *
-		 * @author Leo Fajardo (@leorw)
-		 * @since  1.2.1.5
-		 *
-		 * @return bool|object
-		 */
-		abstract function stop_tracking();
-
-		/**
-		 * Opt-in back into usage tracking.
-		 *
-		 * Note: This will only work if the user opted-in previously.
-		 *
-		 * Returns:
-		 *  1. FALSE  - If the user never opted-in.
-		 *  2. TRUE   - If successfully opted-in back to usage tracking.
-		 *  3. object - API result on failure.
-		 *
-		 * @author Leo Fajardo (@leorw)
-		 * @since  1.2.1.5
-		 *
-		 * @return bool|object
-		 */
-		abstract function allow_tracking();
 
 		#endregion
 

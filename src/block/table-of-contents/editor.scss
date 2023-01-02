@@ -1,6 +1,7 @@
 .stk-block-table-of-contents {
 	.components-card {
 		margin-bottom: 18px;
+		display: flex;
 	}
 
 	&:is(.stk--is-gradient) {

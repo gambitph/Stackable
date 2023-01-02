@@ -79,7 +79,6 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
 				id="title"
-				hasToggle={ false }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 			>
 				<HeadingButtonsControl
@@ -120,6 +119,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					'subtitleColor',
 					...createResponsiveAttributeNames( 'subtitle%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showSubtitle"
 			>
 				<TypographyControlHelper
@@ -155,6 +155,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					'topLineWidth',
 					...createResponsiveAttributeNames( 'topLine%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTopLine"
 			>
 				<ColorPaletteControl
@@ -207,6 +208,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					'bottomLineWidth',
 					...createResponsiveAttributeNames( 'bottomLine%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showBottomLine"
 			>
 				<ColorPaletteControl

@@ -1,17 +1,27 @@
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
 export const buttonExample = {
 	attributes: {
 		uniqueId: '6b587de', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%',
 	}, innerBlocks: [ {
 		name: 'stackable/button', attributes: {
-			uniqueId: '824bdf0', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, hasP: false, show: true, showText: true, text: 'Button Text', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
+			uniqueId: '824bdf0', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, hasP: false, show: true, showText: true, text: __( 'Button Text', i18n ), blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 		}, innerBlocks: [],
 	}, {
 		name: 'stackable/button', attributes: {
-			uniqueId: '99649b5', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, buttonBackgroundColor: 'transparent', buttonBorderType: 'solid', linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, hasP: false, show: true, showText: true, text: 'Button Text', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', buttonBackgroundColorHover: 'transparent', buttonBackgroundColorParentHover: 'transparent', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em', className: 'is-style-ghost',
+			uniqueId: '99649b5', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, buttonBackgroundColor: 'transparent', buttonBorderType: 'solid', linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, hasP: false, show: true, showText: true, text: __( 'Button Text', i18n ), blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', buttonBackgroundColorHover: 'transparent', buttonBackgroundColorParentHover: 'transparent', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em', className: 'is-style-ghost',
 		}, innerBlocks: [],
 	}, {
 		name: 'stackable/button', attributes: {
-			uniqueId: 'baa8a30', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, buttonBackgroundColor: 'transparent', linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, hasP: false, show: true, showText: true, text: 'Button Text', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', buttonBackgroundColorHover: 'transparent', buttonBackgroundColorParentHover: 'transparent', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em', className: 'is-style-plain',
+			uniqueId: 'baa8a30', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, buttonBackgroundColor: 'transparent', linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, hasP: false, show: true, showText: true, text: __( 'Button Text', i18n ), blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', buttonBackgroundColorHover: 'transparent', buttonBackgroundColorParentHover: 'transparent', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em', className: 'is-style-plain',
 		}, innerBlocks: [],
 	} ],
 }

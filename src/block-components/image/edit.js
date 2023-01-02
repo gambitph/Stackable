@@ -66,6 +66,9 @@ const Controls = props => {
 			imageSize: attributes.imageSize,
 			imageAlt: attributes.imageAlt,
 			imageOverlayColorType: attributes.imageOverlayColorType,
+			imageOverlayGradientDirection: attributes.imageOverlayGradientDirection,
+			imageOverlayGradientLocation1: attributes.imageOverlayGradientLocation1,
+			imageOverlayGradientLocation2: attributes.imageOverlayGradientLocation2,
 			imageUrl: attributes.imageUrl,
 			imageShapeFlipX: attributes.imageShapeFlipX,
 			imageShapeFlipY: attributes.imageShapeFlipY,
@@ -114,7 +117,6 @@ const Controls = props => {
 						imageUrl: '',
 						imageWidthAttribute: '',
 						imageHeightAttribute: '',
-						imageAlt: '',
 					} ) }
 					onChange={ image => {
 						// Get the URL of the currently selected image size.
@@ -134,7 +136,7 @@ const Controls = props => {
 							imageUrl: url,
 							imageWidthAttribute: width,
 							imageHeightAttribute: height,
-							imageAlt: image.alt || '',
+							...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only set the alt if it's empty.
 						} )
 					} }
 				/>

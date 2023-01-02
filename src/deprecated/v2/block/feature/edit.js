@@ -237,34 +237,34 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						/>
 					</ButtonIconPopoverControl>
 					{ show.containerWidth &&
-					<ResponsiveControl
-						attrNameTemplate="container%sWidth"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Container Width', i18n ) }
-							min={ 0 }
-							max={ 1000 }
-							allowReset={ true }
-							className="ugb--help-tip-feature-container-width"
-						/>
-					</ResponsiveControl>
+						<ResponsiveControl
+							attrNameTemplate="container%sWidth"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Container Width', i18n ) }
+								min={ 0 }
+								max={ 1000 }
+								allowReset={ true }
+								className="ugb--help-tip-feature-container-width"
+							/>
+						</ResponsiveControl>
 					}
 					{ show.containerOffset &&
-					<ResponsiveControl
-						attrNameTemplate="container%sOffset"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Container Offset', i18n ) }
-							min={ 0 }
-							max={ 300 }
-							allowReset={ true }
-							className="ugb--help-tip-feature-container-offset"
-						/>
-					</ResponsiveControl>
+						<ResponsiveControl
+							attrNameTemplate="container%sOffset"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Container Offset', i18n ) }
+								min={ 0 }
+								max={ 300 }
+								allowReset={ true }
+								className="ugb--help-tip-feature-container-offset"
+							/>
+						</ResponsiveControl>
 					}
 
 					{ show.border &&
@@ -276,29 +276,29 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					}
 
 					{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
 					}
 
 					{ show.columnBackground &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ shadow }
+							onChange={ shadow => setAttributes( { shadow } ) }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="3"
+							className="ugb--help-tip-general-shadow"
+						/>
 					}
 				</PanelAdvancedSettings>
 			}
@@ -401,6 +401,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					'titleColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<HeadingButtonsControl
@@ -441,6 +442,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					'descriptionColor',
 					...createResponsiveAttributeNames( 'description%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showDescription"
 			>
 				<TypographyControlHelper
@@ -474,6 +476,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					...createButtonAttributeNames( 'button%s' ),
 					...createResponsiveAttributeNames( 'button%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showButton"
 			>
 				<ButtonControlsHelper
