@@ -209,7 +209,7 @@ TableOfContentsStyles.Content = props => {
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
 			<Typography.Style.Content { ...props } { ...typographyOptions } />
-			<Typography.Style.Content { ...props } options={ titleTypographyOptions } />
+			<Typography.Style.Content { ...props } { ...titleTypographyOptions } />
 			<MarginBottom.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
