@@ -113,8 +113,8 @@ SeparatorControls.defaultProps = {
 }
 
 export const Edit = props => {
-	const PremiumTopSeparatorControls = useMemo( applyFilters( 'stackable.block-component.separator.top.after', null ), [] )
-	const PremiumBottomSeparatorControls = useMemo( applyFilters( 'stackable.block-component.separator.bottom.after', null ), [] )
+	const PremiumTopSeparatorControls = useMemo( () => applyFilters( 'stackable.block-component.separator.top.after', null ), [] )
+	const PremiumBottomSeparatorControls = useMemo( () => applyFilters( 'stackable.block-component.separator.bottom.after', null ), [] )
 
 	const setAttributes = useBlockSetAttributesContext()
 	const attributes = useBlockAttributesContext( attributes => {
