@@ -191,7 +191,6 @@ const ResizerTooltip = props => {
 					props.onChangeHeight( { value: '', unit: '' } )
 				}
 			}
-			focusInput()
 		} }
 	/>
 
