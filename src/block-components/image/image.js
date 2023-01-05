@@ -270,7 +270,7 @@ const Image = memo( props => {
 			</div>
 			{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }
 			{ isResizing && tempStyle && <style>{ tempStyle }</style> }
-			{ isSelected && (
+			{ ( isSelected && props.enableClickToEdit ) && (
 				<MediaUpload
 					onSelect={ image => {
 						// If image size is provided, return the URL of that size.
