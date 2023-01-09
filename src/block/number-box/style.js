@@ -98,20 +98,16 @@ HeadingStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
-			{ props.attributes.hasShape &&
-				<>
-					<BackgroundStyle.Content
-						{ ...props }
-						attrNameTemplate="shape%s"
-						selector=".stk-block-number-box__text"
-					/>
-					<BorderStyle.Content
-						{ ...props }
-						attrNameTemplate="shape%s"
-						selector=".stk-block-number-box__text"
-					/>
-				</>
-			}
+			<BackgroundStyle.Content
+				{ ...props }
+				attrNameTemplate="shape%s"
+				selector=".stk-block-number-box__text"
+			/>
+			<BorderStyle.Content
+				{ ...props }
+				attrNameTemplate="shape%s"
+				selector=".stk-block-number-box__text"
+			/>
 			<Styles { ...props } />
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
