@@ -1,0 +1,15 @@
+.stk-block-countdown {
+	display: flex;
+}
+
+.stk-block-countdown__digit_day,
+.stk-block-countdown__digit_hour,
+.stk-block-countdown__digit_minute,
+.stk-block-countdown__digit_second {
+	text-align: center;
+}
+
+.stk-block-countdown__label {
+	text-align: center;
+}
+
