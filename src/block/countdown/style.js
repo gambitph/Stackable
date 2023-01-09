@@ -3,11 +3,14 @@
  */
 import {
 	BlockDiv,
+	ContainerDiv,
 	Advanced,
 	Alignment,
 	MarginBottom,
 	EffectsAnimations,
 	Transform,
+	Typography,
+	Divider,
 } from '~stackable/block-components'
 import { BlockCssCompiler } from '~stackable/components'
 
@@ -16,9 +19,31 @@ import { BlockCssCompiler } from '~stackable/components'
  */
 import { memo } from '@wordpress/element'
 
+const containerDivOptions = {
+	sizeSelector: '.stk-block-countdown__content',
+	sizeHorizontalAlignRule: 'margin',
+	wrapperSelector: '.%s-container',
+}
+
+const digitTypographyOptions = {
+	selector: '.stk-block-countdown__digit',
+	hoverSelector: '.stk-block-countdown__label:hover',
+	attrNameTemplate: 'digit%s',
+}
+
+const labelTypographyOptions = {
+	selector: '.stk-block-countdown__label',
+	hoverSelector: '.stk-block-countdown__label:hover',
+	attrNameTemplate: 'label%s',
+}
+
 export const CountdownStyles = memo( props => {
 	return (
 		<>
+			<Divider.Style { ...props } />
+			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
+			<Typography.Style { ...props } { ...digitTypographyOptions } />
+			<Typography.Style { ...props } { ...labelTypographyOptions } />
 			<Alignment.Style { ...props } />
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
@@ -39,8 +64,12 @@ CountdownStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
+			<Divider.Style.Content { ...props } />
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
+			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
+			<Typography.Style.Content { ...props } { ...digitTypographyOptions } />
+			<Typography.Style.Content { ...props } { ...labelTypographyOptions } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
