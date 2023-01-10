@@ -5,10 +5,11 @@ import { Edit } from './edit'
 export const Divider = props => {
 	const {
 		attributes,
+		className,
 	} = props
 
 	return (
-		<div className="divider">
+		<div className={ className }>
 			{ attributes?.dividerType }
 		</div>
 	)
@@ -17,10 +18,11 @@ export const Divider = props => {
 Divider.Content = props => {
 	const {
 		attributes,
+		className,
 	} = props
 
 	return (
-		<div className="divider">
+		<div className={ className }>
 			{ attributes?.dividerType }
 		</div>
 	)

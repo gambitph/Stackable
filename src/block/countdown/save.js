@@ -38,6 +38,7 @@ const Save = props => {
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
+		'stk-block-countdown__content',
 	] )
 
 	const dayDigitClassNames = classnames( [
@@ -69,6 +70,10 @@ const Save = props => {
 		labelTextClasses,
 	] )
 
+	const dividerClassNames = classnames( [
+		'stk-block-countdown__divider',
+	] )
+
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
@@ -84,7 +89,7 @@ const Save = props => {
 					attributes={ attributes }
 				/>
 			</ContainerDiv.Content>
-			{ attributes?.hasDivider && <Divider.Content attributes={ attributes } /> }
+			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
 			<ContainerDiv.Content className={ contentClassNames }>
 				<CountdownNumber.Content className={ hourDigitClassNames } />
 				<Typography.Content
@@ -93,7 +98,7 @@ const Save = props => {
 					attributes={ attributes }
 				/>
 			</ContainerDiv.Content>
-			{ attributes?.hasDivider && <Divider.Content attributes={ attributes } /> }
+			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
 			<ContainerDiv.Content className={ contentClassNames }>
 				<CountdownNumber.Content className={ minuteDigitClassNames } />
 				<Typography.Content
@@ -102,7 +107,7 @@ const Save = props => {
 					attributes={ attributes }
 				/>
 			</ContainerDiv.Content>
-			{ attributes?.hasDivider && <Divider.Content attributes={ attributes } /> }
+			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
 			<ContainerDiv.Content className={ contentClassNames }>
 				<CountdownNumber.Content className={ secondDigitClassNames } />
 				<Typography.Content

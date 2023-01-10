@@ -37,10 +37,14 @@ const labelTypographyOptions = {
 	attrNameTemplate: 'label%s',
 }
 
+const dividerOptions = {
+	selector: '.stk-block-countdown__divider',
+}
+
 export const CountdownStyles = memo( props => {
 	return (
 		<>
-			<Divider.Style { ...props } />
+			<Divider.Style { ...props } { ...dividerOptions } />
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<Typography.Style { ...props } { ...digitTypographyOptions } />
 			<Typography.Style { ...props } { ...labelTypographyOptions } />
