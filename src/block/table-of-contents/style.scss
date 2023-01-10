@@ -13,6 +13,7 @@
 		-moz-column-break-inside: avoid;
 		-o-column-break-inside: avoid;
 		-ms-column-break-inside: avoid;
+		/* stylelint-disable-next-line property-no-unknown */
 		column-break-inside: avoid;
 	}
 
@@ -30,5 +31,10 @@
 	// Prevents block background from going transparent.
 	&:is(.stk--has-background-overlay) {
 		background-clip: initial !important;
+	}
+
+	.stk-table-of-contents__title {
+		margin-block-start: 0;
+		margin-block-end: 0;
 	}
 }

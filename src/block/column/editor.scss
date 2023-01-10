@@ -4,6 +4,10 @@
 	z-index: 2;
 }
 
+// Fixes horizontal scrolling on content align
+.editor-styles-wrapper .stk-block.stk-block-column .stk-column-wrapper {
+	width: auto;
+}
 .editor-styles-wrapper .stk-column-wrapper > .block-editor-inner-blocks {
 	width: 100%;
 }

@@ -4,6 +4,7 @@
 import { default as _isDarkColor } from 'is-dark-color'
 import { lowerFirst, clamp } from 'lodash'
 import rgba from 'color-rgba'
+import { extractColor } from '../colors'
 
 /**
  * WordPress dependencies
@@ -22,20 +23,7 @@ export const isDarkColor = _color => {
 
 		if ( ! color.match( /^#/ ) ) {
 			if ( color.indexOf( 'var(' ) > -1 ) {
-				//
-				/**
-				 * Detect CSS variables in form of var(--color) and get their current
-				 * values from the :root selector.
-				 */
-				const colorVar = color.match( /--(.*?(?=,))/g )
-				if ( ! colorVar ) {
-					color = window.getComputedStyle( document.documentElement )
-						.getPropertyValue( color.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
-				} else {
-					// Do also for CSS variables with fallback values.
-					color = window.getComputedStyle( document.documentElement )
-						.getPropertyValue( colorVar[ 0 ] ) || '#fff'
-				}
+				color = extractColor( color )
 			} else {
 				return _isDarkColor( color )
 			}
@@ -59,7 +47,7 @@ export const isDarkColor = _color => {
 			color = color.replace( /(.)(.)(.)/, '$1$1$2$2$3$3' )
 		}
 
-		return _isDarkColor( `#${ color }` )
+		return _isDarkColor( `#${ color }`.trim() )
 	} catch ( err ) {
 		return false
 	}

@@ -286,6 +286,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			);
 
 			// Add translations.
+			wp_set_script_translations( 'ugb-stk', STACKABLE_I18N );
 			wp_set_script_translations( 'ugb-block-js', STACKABLE_I18N );
 			stackable_load_js_translations(); // This is needed for the translation strings to be loaded.
 
