@@ -50,7 +50,7 @@ import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
+const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
 const Edit = props => {
 	const {

@@ -80,7 +80,7 @@ HTML;
 					var $button = $(this);
 
 					$.ajax({
-						url       : ajaxurl,
+						url       : <?php echo Freemius::ajax_url() ?>,
 						method    : 'POST',
 						data      : {
 							action   : '<?php echo $fs->get_ajax_action( 'start_trial' ) ?>',

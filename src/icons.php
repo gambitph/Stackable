@@ -70,7 +70,7 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 		 */
 		public function script_loader_tag( $html, $handle ) {
 			if ( $handle === 'ugb-font-awesome-kit' ) {
-				$html = preg_replace( '#></script>#', ' crossorigin="anonymous" data-auto-replace-svg="false" data-auto-add-css="false" data-family-prefix="fa" data-observe-mutations="false" data-show-missing-icons="false"></script>', $html );
+				$html = preg_replace( '#></script>#', ' crossorigin="anonymous" data-auto-replace-svg="false" data-auto-add-css="false" data-family-prefix="fa" data-observe-mutations="false" data-show-missing-icons="false" async></script>', $html );
 			}
 			return $html;
 		}

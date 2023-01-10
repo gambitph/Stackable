@@ -54,7 +54,10 @@ HTML;
 HTML;
 	}
 
-	$message_above_input_field = fs_esc_html_inline( "Enter the email address you've used for the upgrade below and we will resend you the license key.", 'ask-for-upgrade-email-address', $slug );
+    $message_above_input_field = $fs->is_only_premium() ?
+        fs_esc_html_inline( "Enter the email address you've used during the purchase and we will resend you the license key.", 'ask-for-upgrade-email-address-premium-only', $slug ) :
+        fs_esc_html_inline( "Enter the email address you've used for the upgrade below and we will resend you the license key.", 'ask-for-upgrade-email-address', $slug );
+
 	$modal_content_html = <<< HTML
     <div class="notice notice-error inline license-resend-message"><p></p></div>
     <p>{$message_above_input_field}</p>
@@ -142,7 +145,7 @@ HTML;
 					}
 
 					$.ajax({
-						url       : ajaxurl,
+						url       : <?php echo Freemius::ajax_url() ?>,
 						method    : 'POST',
 						data      : {
 							action     : '<?php echo $fs->get_ajax_action( 'resend_license_key' ) ?>',

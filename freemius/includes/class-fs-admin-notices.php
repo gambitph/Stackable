@@ -241,21 +241,22 @@
          * @since  2.0.0
          *
          * @param int|null $network_level_or_blog_id
+         * @param bool     $is_temporary
          */
-        function clear_all_sticky( $network_level_or_blog_id = null ) {
+        function clear_all_sticky( $network_level_or_blog_id = null, $is_temporary = false ) {
             if ( ! $this->_is_multisite ||
                  false === $network_level_or_blog_id ||
                  0 == $network_level_or_blog_id ||
                  is_null( $network_level_or_blog_id )
             ) {
                 $notices = $this->get_site_notices( $network_level_or_blog_id );
-                $notices->clear_all_sticky();
+                $notices->clear_all_sticky( $is_temporary );
             }
 
             if ( $this->_is_multisite &&
                  ( true === $network_level_or_blog_id || is_null( $network_level_or_blog_id ) )
             ) {
-                $this->_network_notices->clear_all_sticky();
+                $this->_network_notices->clear_all_sticky( $is_temporary );
             }
         }
 

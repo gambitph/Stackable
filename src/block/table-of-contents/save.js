@@ -5,7 +5,7 @@ import { TableOfContentsStyles } from './style'
 import TableOfContentsList from './table-of-contents-list'
 import { linearToNestedHeadingList } from './util'
 import {
-	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses,
+	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses, Typography,
 } from '~stackable/block-components'
 import { withVersion } from '~stackable/higher-order'
 
@@ -22,6 +22,7 @@ import classnames from 'classnames'
  */
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -34,15 +35,26 @@ export const Save = props => {
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const { headings } = attributes
 
+	const titleTextClasses = getTypographyClasses( attributes, 'title%s' )
+
 	const { listType } = attributes
 	const tagName = isEmpty( listType ) || listType === 'unordered' || listType === 'none' ? 'ul' : 'ol'
 
-	const blockClassNames = classnames( [
+	const blockClassNames = classnames( applyFilters( 'stackable.table-of-contents.save.blockClasses', [
 		className,
 		'stk-block-table-of-contents',
 		blockAlignmentClass,
 		responsiveClass,
+	], textClasses, props ) )
+
+	const tableOfContentsClassNames = applyFilters( 'stackable.table-of-contents.save.tableOfContentsClasses', classnames( [
+		'stk-table-of-contents__table',
 		textClasses,
+	] ), props )
+
+	const titleClassNames = classnames( [
+		'stk-table-of-contents__title',
+		titleTextClasses,
 	] )
 
 	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
@@ -59,8 +71,13 @@ export const Save = props => {
 		>
 			<TableOfContentsStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
+			{ attributes.titleShow && <Typography.Content
+				className={ titleClassNames }
+				attrNameTemplate="title%s"
+				attributes={ attributes }
+			/> }
 			<TableOfContentsList.Content
-				className="stk-table-of-contents__table"
+				className={ tableOfContentsClassNames }
 				nestedHeadingList={ nestedHeadingList }
 				listTag={ tagName }
 				h1={ attributes.includeH1 }

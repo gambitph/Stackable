@@ -15,9 +15,11 @@
      *
      * A wrapper class for handling network level and single site level storage.
      *
-     * @property bool   $is_network_activation
-     * @property int    $network_install_blog_id
-     * @property object $sync_cron
+     * @property bool        $is_network_activation
+     * @property int         $network_install_blog_id
+     * @property bool|null   $is_extensions_tracking_allowed
+     * @property bool|null   $is_diagnostic_tracking_allowed
+     * @property object      $sync_cron
      */
     class FS_Storage {
         /**
@@ -71,6 +73,16 @@
          * }
          */
         private static $_NETWORK_OPTIONS_MAP;
+
+        const OPTION_LEVEL_UNDEFINED                       = -1;
+        // The option should be stored on the network level.
+        const OPTION_LEVEL_NETWORK                         = 0;
+        // The option should be stored on the network level when the plugin is network-activated.
+        const OPTION_LEVEL_NETWORK_ACTIVATED               = 1;
+        // The option should be stored on the network level when the plugin is network-activated and the opt-in connection was NOT delegated to the sub-site admin.
+        const OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED = 2;
+        // The option should be stored on the site level.
+        const OPTION_LEVEL_SITE                            = 3;
 
         /**
          * @author Leo Fajardo (@leorw)
@@ -142,10 +154,17 @@
          * @param string        $key
          * @param mixed         $value
          * @param null|bool|int $network_level_or_blog_id When an integer, use the given blog storage. When `true` use the multisite storage (if there's a network). When `false`, use the current context blog storage. When `null`, the decision which storage to use (MS vs. Current S) will be handled internally and determined based on the $option (based on self::$_BINARY_MAP).
+         * @param int           $option_level Since 2.5.1
          * @param bool          $flush
          */
-        function store( $key, $value, $network_level_or_blog_id = null, $flush = true ) {
-            if ( $this->should_use_network_storage( $key, $network_level_or_blog_id ) ) {
+        function store(
+            $key,
+            $value,
+            $network_level_or_blog_id = null,
+            $option_level = self::OPTION_LEVEL_UNDEFINED,
+            $flush = true
+        ) {
+            if ( $this->should_use_network_storage( $key, $network_level_or_blog_id, $option_level ) ) {
                 $this->_network_storage->store( $key, $value, $flush );
             } else {
                 $storage = $this->get_site_storage( $network_level_or_blog_id );
@@ -199,11 +218,17 @@
          * @param string        $key
          * @param mixed         $default
          * @param null|bool|int $network_level_or_blog_id When an integer, use the given blog storage. When `true` use the multisite storage (if there's a network). When `false`, use the current context blog storage. When `null`, the decision which storage to use (MS vs. Current S) will be handled internally and determined based on the $option (based on self::$_BINARY_MAP).
+         * @param int           $option_level Since 2.5.1
          *
          * @return mixed
          */
-        function get( $key, $default = false, $network_level_or_blog_id = null ) {
-            if ( $this->should_use_network_storage( $key, $network_level_or_blog_id ) ) {
+        function get(
+            $key,
+            $default = false,
+            $network_level_or_blog_id = null,
+            $option_level = self::OPTION_LEVEL_UNDEFINED
+        ) {
+            if ( $this->should_use_network_storage( $key, $network_level_or_blog_id, $option_level ) ) {
                 return $this->_network_storage->get( $key, $default );
             } else {
                 $storage = $this->get_site_storage( $network_level_or_blog_id );
@@ -289,19 +314,6 @@
                     // Migrate option to the network storage.
                     $this->_network_storage->store( $option, $this->_storage->{$option}, false );
 
-                    /**
-                     * Remove the option from site level storage.
-                     *
-                     * IMPORTANT:
-                     *      The line below is intentionally commented since we want to preserve the option
-                     *      on the site storage level for "downgrade compatibility". Basically, if the user
-                     *      will downgrade to an older version of the plugin with the prev storage structure,
-                     *      it will continue working.
-                     *
-                     * @todo After a few releases we can remove this.
-                     */
-//                    $this->_storage->remove($option, false);
-
                     $updated = true;
                 }
             }
@@ -336,63 +348,61 @@
         private static function load_network_options_map() {
             self::$_NETWORK_OPTIONS_MAP = array(
                 // Network level options.
-                'affiliate_application_data'   => 0,
-                'beta_data'                    => 0,
-                'connectivity_test'            => 0,
-                'handle_gdpr_admin_notice'     => 0,
-                'has_trial_plan'               => 0,
-                'install_sync_timestamp'       => 0,
-                'install_sync_cron'            => 0,
-                'is_anonymous_ms'              => 0,
-                'is_network_activated'         => 0,
-                'is_on'                        => 0,
-                'is_plugin_new_install'        => 0,
-                'network_install_blog_id'      => 0,
-                'pending_sites_info'           => 0,
-                'plugin_last_version'          => 0,
-                'plugin_main_file'             => 0,
-                'plugin_version'               => 0,
-                'sdk_downgrade_mode'           => 0,
-                'sdk_last_version'             => 0,
-                'sdk_upgrade_mode'             => 0,
-                'sdk_version'                  => 0,
-                'sticky_optin_added_ms'        => 0,
-                'subscriptions'                => 0,
-                'sync_timestamp'               => 0,
-                'sync_cron'                    => 0,
-                'was_plugin_loaded'            => 0,
-                'network_user_id'              => 0,
-                'plugin_upgrade_mode'          => 0,
-                'plugin_downgrade_mode'        => 0,
-                'is_network_connected'         => 0,
+                'affiliate_application_data'   => self::OPTION_LEVEL_NETWORK,
+                'beta_data'                    => self::OPTION_LEVEL_NETWORK,
+                'connectivity_test'            => self::OPTION_LEVEL_NETWORK,
+                'handle_gdpr_admin_notice'     => self::OPTION_LEVEL_NETWORK,
+                'has_trial_plan'               => self::OPTION_LEVEL_NETWORK,
+                'install_sync_timestamp'       => self::OPTION_LEVEL_NETWORK,
+                'install_sync_cron'            => self::OPTION_LEVEL_NETWORK,
+                'is_anonymous_ms'              => self::OPTION_LEVEL_NETWORK,
+                'is_network_activated'         => self::OPTION_LEVEL_NETWORK,
+                'is_on'                        => self::OPTION_LEVEL_NETWORK,
+                'is_plugin_new_install'        => self::OPTION_LEVEL_NETWORK,
+                'network_install_blog_id'      => self::OPTION_LEVEL_NETWORK,
+                'pending_sites_info'           => self::OPTION_LEVEL_NETWORK,
+                'plugin_last_version'          => self::OPTION_LEVEL_NETWORK,
+                'plugin_main_file'             => self::OPTION_LEVEL_NETWORK,
+                'plugin_version'               => self::OPTION_LEVEL_NETWORK,
+                'sdk_downgrade_mode'           => self::OPTION_LEVEL_NETWORK,
+                'sdk_last_version'             => self::OPTION_LEVEL_NETWORK,
+                'sdk_upgrade_mode'             => self::OPTION_LEVEL_NETWORK,
+                'sdk_version'                  => self::OPTION_LEVEL_NETWORK,
+                'sticky_optin_added_ms'        => self::OPTION_LEVEL_NETWORK,
+                'subscriptions'                => self::OPTION_LEVEL_NETWORK,
+                'sync_timestamp'               => self::OPTION_LEVEL_NETWORK,
+                'sync_cron'                    => self::OPTION_LEVEL_NETWORK,
+                'was_plugin_loaded'            => self::OPTION_LEVEL_NETWORK,
+                'network_user_id'              => self::OPTION_LEVEL_NETWORK,
+                'plugin_upgrade_mode'          => self::OPTION_LEVEL_NETWORK,
+                'plugin_downgrade_mode'        => self::OPTION_LEVEL_NETWORK,
+                'is_network_connected'         => self::OPTION_LEVEL_NETWORK,
                 /**
-                 * Special flag that is used when a super-admin upgrades to the new version of the SDK that
-                 * supports network level integration, when the connection decision wasn't made for all of the
-                 * sites in the network.
+                 * Special flag that is used when a super-admin upgrades to the new version of the SDK that supports network level integration, when the connection decision wasn't made for all the sites in the network.
                  */
-                'is_network_activation'        => 0,
-                'license_migration'            => 0,
+                'is_network_activation'        => self::OPTION_LEVEL_NETWORK,
+                'license_migration'            => self::OPTION_LEVEL_NETWORK,
 
                 // When network activated, then network level.
-                'install_timestamp'            => 1,
-                'prev_is_premium'              => 1,
-                'require_license_activation'   => 1,
+                'install_timestamp'            => self::OPTION_LEVEL_NETWORK_ACTIVATED,
+                'prev_is_premium'              => self::OPTION_LEVEL_NETWORK_ACTIVATED,
+                'require_license_activation'   => self::OPTION_LEVEL_NETWORK_ACTIVATED,
 
                 // If not network activated OR delegated, then site level.
-                'activation_timestamp'           => 2,
-                'expired_license_notice_shown'   => 2,
-                'is_whitelabeled'                => 2,
-                'last_license_key'               => 2,
-                'last_license_user_id'           => 2,
-                'prev_user_id'                   => 2,
-                'sticky_optin_added'             => 2,
-                'uninstall_reason'               => 2,
-                'is_pending_activation'          => 2,
-                'pending_license_key'            => 2,
-                'is_extensions_tracking_allowed' => 2,
+                'activation_timestamp'         => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'expired_license_notice_shown' => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'is_whitelabeled'              => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'last_license_key'             => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'last_license_user_id'         => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'prev_user_id'                 => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'sticky_optin_added'           => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'uninstall_reason'             => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'is_pending_activation'        => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
+                'pending_license_key'          => self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED,
 
                 // Site level options.
-                'is_anonymous'                 => 3,
+                'is_anonymous'                 => self::OPTION_LEVEL_SITE,
+                'clone_id'                     => self::OPTION_LEVEL_SITE,
             );
         }
 
@@ -403,25 +413,33 @@
          * @since  2.0.0
          *
          * @param string $key
+         * @param int    $option_level Since 2.5.1
          *
-         * @return bool|mixed
+         * @return bool
          */
-        private function is_multisite_option( $key ) {
+        private function is_multisite_option( $key, $option_level = self::OPTION_LEVEL_UNDEFINED ) {
             if ( ! isset( self::$_NETWORK_OPTIONS_MAP ) ) {
                 self::load_network_options_map();
             }
 
-            if ( ! isset( self::$_NETWORK_OPTIONS_MAP[ $key ] ) ) {
+            if (
+                self::OPTION_LEVEL_UNDEFINED === $option_level &&
+                isset( self::$_NETWORK_OPTIONS_MAP[ $key ] )
+            ) {
+                $option_level = self::$_NETWORK_OPTIONS_MAP[ $key ];
+            }
+
+            if ( self::OPTION_LEVEL_UNDEFINED === $option_level ) {
                 // Option not found -> use site level storage.
                 return false;
             }
 
-            if ( 0 === self::$_NETWORK_OPTIONS_MAP[ $key ] ) {
+            if ( self::OPTION_LEVEL_NETWORK === $option_level ) {
                 // Option found and set to always use the network level storage on a multisite.
                 return true;
             }
 
-            if ( 3 === self::$_NETWORK_OPTIONS_MAP[ $key ] ) {
+            if ( self::OPTION_LEVEL_SITE === $option_level ) {
                 // Option found and set to always use the site level storage on a multisite.
                 return false;
             }
@@ -430,12 +448,15 @@
                 return false;
             }
 
-            if ( 1 === self::$_NETWORK_OPTIONS_MAP[ $key ] ) {
+            if ( self::OPTION_LEVEL_NETWORK_ACTIVATED === $option_level ) {
                 // Network activated.
                 return true;
             }
 
-            if ( 2 === self::$_NETWORK_OPTIONS_MAP[ $key ] && ! $this->_is_delegated_connection ) {
+            if (
+                self::OPTION_LEVEL_NETWORK_ACTIVATED_NOT_DELEGATED === $option_level &&
+                ! $this->_is_delegated_connection
+            ) {
                 // Network activated and not delegated.
                 return true;
             }
@@ -448,10 +469,15 @@
          *
          * @param string        $key
          * @param null|bool|int $network_level_or_blog_id When an integer, use the given blog storage. When `true` use the multisite storage (if there's a network). When `false`, use the current context blog storage. When `null`, the decision which storage to use (MS vs. Current S) will be handled internally and determined based on the $option (based on self::$_BINARY_MAP).
+         * @param int           $option_level Since 2.5.1
          *
          * @return bool
          */
-        private function should_use_network_storage( $key, $network_level_or_blog_id = null ) {
+        private function should_use_network_storage(
+            $key,
+            $network_level_or_blog_id = null,
+            $option_level = self::OPTION_LEVEL_UNDEFINED
+        ) {
             if ( ! $this->_is_multisite ) {
                 // Not a multisite environment.
                 return false;
@@ -463,12 +489,12 @@
             }
 
             if ( is_bool( $network_level_or_blog_id ) ) {
-                // Explicitly specified whether should use the network or blog level storage.
+                // Explicitly specified whether it should use the network or blog level storage.
                 return $network_level_or_blog_id;
             }
 
             // Determine which storage to use based on the option.
-            return $this->is_multisite_option( $key );
+            return $this->is_multisite_option( $key, $option_level );
         }
 
         /**

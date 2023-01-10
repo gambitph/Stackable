@@ -65,12 +65,8 @@ import {
 /**
  * WordPress dependencies
  */
-import {
-	ToggleControl,
-} from '@wordpress/components'
-import {
-	__,
-} from '@wordpress/i18n'
+import { ToggleControl } from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -213,29 +209,29 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					}
 
 					{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
 					}
 
 					{ show.shadow &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ shadow }
+							onChange={ shadow => setAttributes( { shadow } ) }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="3"
+							className="ugb--help-tip-general-shadow"
+						/>
 					}
 				</PanelAdvancedSettings>
 			}
@@ -464,6 +460,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					'nameColor',
 					...createResponsiveAttributeNames( 'Name%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showName"
 			>
 				<HeadingButtonsControl
@@ -504,6 +501,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					'positionColor',
 					...createResponsiveAttributeNames( 'position%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showPosition"
 			>
 				<TypographyControlHelper
@@ -538,6 +536,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					'descriptionColor',
 					...createResponsiveAttributeNames( 'description%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showDescription"
 			>
 				<TypographyControlHelper
@@ -572,6 +571,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 						...createButtonAttributeNames( 'social%s' ),
 						...createResponsiveAttributeNames( 'social%sAlign' ),
 					] }
+					hasToggle
 					toggleAttributeName="showSocial"
 				>
 					<div className="components-base-control">
