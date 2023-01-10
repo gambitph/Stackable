@@ -7,28 +7,34 @@ const Styles = props => {
 	const propsToPass = {
 		...props,
 		version: props.version,
-		versionAdded: '3.8.0',
+		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+
+	const {
+		selector = '',
+		selectorCallback = null,
+	 } = props
 
 	return (
 		<>
 			<BlockCss
 				{ ...propsToPass }
-				renderIn="save"
-				selector=".divider"
+				selector={ selector }
+				selectorCallback={ selectorCallback }
 				styleRule="color"
 				attrName="dividerColor"
-				key="dividerColor-save"
+				key="dividerColor"
 				responsive="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				renderIn="edit"
-				selector=".divider"
-				styleRule="color"
-				attrName="dividerColor"
-				key="dividerColor-edit"
+				selector={ selector }
+				selectorCallback={ selectorCallback }
+				styleRule="fontSize"
+				attrName="dividerSize"
+				key="dividerSize"
+				hasUnits="px"
 				responsive="all"
 			/>
 		</>
@@ -42,3 +48,5 @@ export const Style = props => {
 Style.Content = props => {
 	return <Styles { ...props } />
 }
+
+// @TODO: gap for gap inbetween and background color and remove margins and natural padding
