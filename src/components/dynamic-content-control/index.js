@@ -15,7 +15,6 @@ import { __ } from '@wordpress/i18n'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	Button,
-	Popover,
 	TextControl,
 } from '@wordpress/components'
 import {
@@ -32,6 +31,7 @@ import { select, useSelect } from '@wordpress/data'
  * Internal dependencies
  */
 import ProControl from '../pro-control'
+import Popover from '../popover'
 import SVGDatabaseIcon from './icons/database-light.svg'
 import { ResetButton } from '../base-control2/reset-button'
 
@@ -64,7 +64,8 @@ export const useDynamicContentControlProps = props => {
 					! event.target.closest( '.stackable-dynamic-content__popover' ) &&
 					! event.target.closest( '.stk-dynamic-content-control__button' ) &&
 					! event.target.closest( '.components-color-picker' ) &&
-					! event.target.closest( '.react-autosuggest__suggestions-container' )
+					! event.target.closest( '.react-autosuggest__suggestions-container' ) &&
+					! event.target.closest( '.components-dropdown__content' )
 				) {
 					setIsPopoverOpen( false )
 				}

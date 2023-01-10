@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import Button from '../button'
+import Popover from '../popover'
 
 /**
  * External dependencies
@@ -14,7 +15,6 @@ import classnames from 'classnames'
 import {
 	useState, memo, useMemo, useRef, useEffect,
 } from '@wordpress/element'
-import { Popover } from '@wordpress/components'
 
 const ControlIconToggle = props => {
 	const {

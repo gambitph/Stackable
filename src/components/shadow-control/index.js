@@ -5,7 +5,9 @@ import { i18n } from 'stackable'
 import {
 	compact, isNumber, isEqual,
 } from 'lodash'
-import { AdvancedRangeControl, ColorPaletteControl } from '~stackable/components'
+import {
+	AdvancedRangeControl, ColorPaletteControl, Popover,
+} from '~stackable/components'
 import { hexToRgba, extractColor } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
@@ -21,9 +23,7 @@ import {
 	memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-import {
-	Button, Popover, Dashicon,
-} from '@wordpress/components'
+import { Button, Dashicon } from '@wordpress/components'
 
 const getShadows = () => {
 	return applyFilters( 'stackable.shadows', [
@@ -252,7 +252,8 @@ const ShadowControl = memo( props => {
 				if ( ! event.target.closest( '.shadow-control__popover' ) &&
 					 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
 					 ! event.target.closest( '.components-color-picker' ) &&
-					 ! event.target.closest( '.react-autosuggest__suggestions-container' ) ) {
+					 ! event.target.closest( '.react-autosuggest__suggestions-container' ) &&
+					 ! event.target.closest( '.components-dropdown__content' ) ) {
 					setIsPopoverOpen( false )
 				}
 			}
