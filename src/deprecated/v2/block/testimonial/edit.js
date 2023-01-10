@@ -328,6 +328,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					'testimonialColor',
 					...createResponsiveAttributeNames( 'testimonial%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTestimonial"
 			>
 				<TypographyControlHelper
@@ -371,6 +372,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 						'imageShadow',
 						'imageBlendMode',
 					] }
+					hasToggle
 					toggleAttributeName="showImage"
 				>
 					<ImageControlsHelper
@@ -416,6 +418,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					'nameColor',
 					...createResponsiveAttributeNames( 'Name%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showName"
 			>
 				<HeadingButtonsControl
@@ -457,6 +460,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					'positionColor',
 					...createResponsiveAttributeNames( 'position%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showPosition"
 			>
 				<TypographyControlHelper
