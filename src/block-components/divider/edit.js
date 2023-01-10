@@ -7,6 +7,7 @@ import {
 	PanelAdvancedSettings,
 	AdvancedToolbarControl,
 	ColorPaletteControl,
+	AdvancedRangeControl,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
@@ -20,22 +21,18 @@ import { __ } from '@wordpress/i18n'
 
 const DIVIDER_TYPE_CONTROLS = [
 	{
-		value: '',
-		title: __( 'None', i18n ),
-	},
-	{
 		value: ':',
-		title: __( ':', i18n ),
+		title: __( 'Colon', i18n ),
 	},
 	{
 		value: '|',
-		title: __( '|', i18n ),
+		title: __( 'Line', i18n ),
 	},
 ]
 
 export const Edit = props => {
 	const {
-		attributes,
+		// attributes,
 	} = props
 
 	const hasDivider = useBlockAttributesContext( attributes => attributes.hasDivider )
@@ -54,8 +51,14 @@ export const Edit = props => {
 					controls={ DIVIDER_TYPE_CONTROLS }
 					attribute="dividerType"
 					fullwidth={ true }
-					default={ attributes?.dividerType ? attributes.dividerType : '' }
+					default={ ':' }
 					isSmall={ false }
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Size', i18n ) }
+					min={ 0 }
+					sliderMax={ 100 }
+					attribute="dividerSize"
 				/>
 				<ColorPaletteControl
 					label={ __( 'Color', i18n ) }
