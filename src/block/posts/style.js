@@ -95,28 +95,7 @@ const readmoreTypographyOptions = {
 	dependencies,
 }
 
-const _imageOptionsEdit = {
-	selector: `${ itemSelector } .stk-img-wrapper`,
-	hoverSelectorCallback: getAttribute => {
-		if ( getAttribute( 'imageHoverStateInContainer' ) ) {
-			return `${ itemSelector }:hover .stk-img-wrapper::after`
-		}
-		return getAttribute( 'imageOverlayColorType' )
-			? `${ itemSelector } .stk-img-wrapper:hover::before`
-			: `${ itemSelector } .stk-img-wrapper:hover::after`
-	},
-	dependencies: [ 'imageHoverStateInContainer', 'imageOverlayColorType' ],
-}
-
-const _imageOptionsSave = {
-	selector: `${ itemSelector } .stk-img-wrapper`,
-	hoverSelectorCallback: getAttribute => {
-		if ( getAttribute( 'imageHoverStateInContainer' ) ) {
-			return `${ itemSelector }:hover .stk-img-wrapper::after`
-		}
-
-		return `${ itemSelector } .stk-img-wrapper:hover::after`
-	},
+const _imageOptions = {
 	dependencies: [ 'imageHoverStateInContainer', 'imageOverlayColorType' ],
 }
 
@@ -358,7 +337,7 @@ export const PostsStyles = memo( props => {
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<Image.Style
 				{ ...props }
-				{ ..._imageOptionsEdit }
+				{ ..._imageOptions }
 				enableHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
 			/>
 			<Typography.Style { ...props } { ...titleTypographyOptionsEditor } />
@@ -387,7 +366,7 @@ PostsStyles.Content = props => {
 	const blockStyle = getBlockStyle( variations, props.attributes.className )
 
 	const imageOptions = {
-		..._imageOptionsSave,
+		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
 		...( [ 'list' ].includes( blockStyle?.name ) && props.attributes.imageHasLink ? { selector: `${ itemSelector } .stk-block-posts__image-link`, widthStyleRule: 'flexBasis' } : {} ),
 	}
