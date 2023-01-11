@@ -305,6 +305,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					...createIconAttributeNames( 'icon%s' ),
 					...createResponsiveAttributeNames( 'icon%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showIcon"
 			>
 				{ range( 1, columns + 1 ).map( i => {
@@ -356,6 +357,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					'titleColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<HeadingButtonsControl
@@ -396,6 +398,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					'numberColor',
 					...createResponsiveAttributeNames( 'Number%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showNumber"
 			>
 				<TypographyControlHelper
@@ -434,6 +437,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					'descriptionColor',
 					...createResponsiveAttributeNames( 'description%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showDescription"
 			>
 				<TypographyControlHelper

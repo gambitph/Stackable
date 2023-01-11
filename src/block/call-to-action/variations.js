@@ -43,7 +43,7 @@ const variations = applyFilters(
 				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3' } ],
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/button-group', {}, [
-					[ 'stackable/button', { text: 'Button' } ],
+					[ 'stackable/button', { text: __( 'Button', i18n ) } ],
 				] ],
 			],
 			scope: [ 'block' ],
@@ -66,7 +66,7 @@ const variations = applyFilters(
 				[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3' } ],
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 				[ 'stackable/button-group', {}, [
-					[ 'stackable/button', { text: 'Button' } ],
+					[ 'stackable/button', { text: __( 'Button', i18n ) } ],
 				] ],
 			],
 			scope: [ 'block' ],

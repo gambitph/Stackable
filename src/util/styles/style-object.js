@@ -511,8 +511,8 @@ export const useQueryLoopInstanceId = uniqueId => {
 
 // These are all the possible suffixes used.
 const ATTR_NAME_MATRIX = [
-	[ '', 'Tablet', 'Mobile' ],
 	[ '', 'Unit' ],
+	[ '', 'Tablet', 'Mobile' ],
 	[ '', 'Hover', 'ParentHover', 'Collapsed' ],
 ]
 

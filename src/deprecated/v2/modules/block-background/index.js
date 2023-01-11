@@ -34,9 +34,7 @@ import { __ } from '@wordpress/i18n'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import {
-	ToolbarButton, ToolbarGroup,
-} from '@wordpress/components'
+import { ToolbarButton, ToolbarGroup } from '@wordpress/components'
 
 // When block background is turned on, change the ailgnment and block inner width also.
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-background/show' )
@@ -73,6 +71,7 @@ const addInspectorPanel = ( output, props ) => {
 					...createBackgroundAttributeNames( 'blockBackground%s' ),
 					'noPaddings',
 				] }
+				hasToggle
 				toggleAttributeName="showBlockBackground"
 				className="ugb--help-tip-background-on-off"
 			>

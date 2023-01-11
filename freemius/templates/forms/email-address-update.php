@@ -185,7 +185,7 @@
             }
 
             $.ajax( {
-                url       : ajaxurl,
+                url       : <?php echo Freemius::ajax_url() ?>,
                 method    : 'POST',
                 data      : {
                     action       : '<?php echo $fs->get_ajax_action( 'update_email_address' ) ?>',

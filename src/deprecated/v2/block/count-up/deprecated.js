@@ -7,6 +7,7 @@ import { getFontFamily } from './deprecated-font'
  * External dependencies
  */
 import { range } from '~stackable/util'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -189,22 +190,22 @@ export const deprecatedSchema_1_15_4 = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(1) .ugb-countup__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(2) .ugb-countup__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(3) .ugb-countup__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title4: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(4) .ugb-countup__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	countText1: {
 		source: 'html',
@@ -229,22 +230,22 @@ export const deprecatedSchema_1_15_4 = {
 	description1: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(1) .ugb-countup__description',
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	},
 	description2: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(2) .ugb-countup__description',
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	},
 	description3: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(3) .ugb-countup__description',
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	},
 	description4: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(4) .ugb-countup__description',
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	},
 	textColor: {
 		type: 'string',
