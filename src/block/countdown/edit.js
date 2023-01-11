@@ -27,7 +27,8 @@ import {
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
-	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl,
+	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
+	AdvancedRangeControl,
 } from '~stackable/components'
 import {
 	 withBlockAttributeContext,
@@ -41,6 +42,18 @@ import {
 import { __, i18n } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { DateTimePicker } from '@wordpress/components'
+import { Fragment } from 'react'
+
+const COUNTDOWN_TYPE_OPTIONS = [
+	{
+		value: 'dueDate',
+		title: __( 'Due Date', i18n ),
+	},
+	{
+		value: 'recurring',
+		title: __( 'Recurring', i18n ),
+	},
+]
 
 const Edit = props => {
 	const {
@@ -111,21 +124,75 @@ const Edit = props => {
 							id="countdown"
 							initialOpen={ true }
 						>
-							<DateTimePicker
-								label={ __( 'End Date', i18n ) }
-								currentDate={ attributes.endDate }
-								is12Hour={ true }
-								onChange={ currentDate => {
-									// Do not include seconds
-									setAttributes( { endDate: currentDate.slice( 0, currentDate.length - 3 ) } )
-								} }
+							<AdvancedToolbarControl
+								controls={ COUNTDOWN_TYPE_OPTIONS }
+								attribute="countdownType"
+								value={ attributes?.countdownType }
+								fullwidth={ true }
+								// default={ ':' }
+								isSmall={ false }
 							/>
-							<AdvancedSelectControl
-								// value={ value || 'large' }
-								// options={ imageSizeOptions }
-								// className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
-								// defaultValue={ defaultValue || 'large' }
-							/>
+							{	attributes.countdownType === 'dueDate' && (
+								<Fragment>
+									<DateTimePicker
+										label={ __( 'Start Date', i18n ) }
+										currentDate={ attributes.startDate }
+										is12Hour={ true }
+										onChange={ currentDate => {
+											// Do not include seconds
+											setAttributes( { endDate: currentDate.slice( 0, currentDate.length - 3 ) } )
+										} }
+									/>
+									<AdvancedSelectControl
+										label={ __( 'Timezone', i18n ) }
+										// value={ value || 'large' }
+										// options={ imageSizeOptions }
+										// className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
+										// defaultValue={ defaultValue || 'large' }
+									/>
+								</Fragment>
+							) }
+							{ attributes.countdownType === 'recurring' && (
+								<div className="stk-block-countdown__recurring_control">
+									<DateTimePicker
+										label={ __( 'Start Date', i18n ) }
+										currentDate={ attributes.startDate }
+										is12Hour={ true }
+										onChange={ currentDate => {
+											// Do not include seconds
+											setAttributes( { startDate: currentDate.slice( 0, currentDate.length - 3 ) } )
+										} }
+									/>
+									<AdvancedRangeControl
+										label={ __( 'Days', i18n ) }
+										min={ 0 }
+										max={ 364 }
+										value={ attributes.daysLeft }
+										attribute="daysLeft"
+									/>
+									<AdvancedRangeControl
+										label={ __( 'Hours', i18n ) }
+										min={ 0 }
+										max={ 23 }
+										value={ attributes.hoursLeft }
+										attribute="hoursLeft"
+									/>
+									<AdvancedRangeControl
+										label={ __( 'Minutes', i18n ) }
+										min={ 0 }
+										max={ 59 }
+										value={ attributes.minutesLeft }
+										attribute="minutesLeft"
+									/>
+									<AdvancedRangeControl
+										label={ __( 'Seconds', i18n ) }
+										min={ 0 }
+										max={ 59 }
+										value={ attributes.secondsLeft }
+										attribute="secondsLeft"
+									/>
+								</div>
+							) }
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 					<Typography.InspectorControls

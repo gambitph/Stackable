@@ -18,11 +18,32 @@ import { withVersion } from '~stackable/higher-order'
  */
 import { compose } from '@wordpress/compose'
 
+const SECONDS = 1000
+const SECONDS_IN_MINUTE = SECONDS * 60
+const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60
+const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
+
 const Save = props => {
 	const {
 		className,
 		attributes,
 	} = props
+
+	let startDate = ''
+	let endDate = ''
+
+	if ( attributes.countdownType === 'dueDate' ) {
+		startDate = null
+		endDate = attributes.endDate
+	} else {
+		startDate = attributes.startDate
+		// Conver into milli seconds
+		endDate =
+			( attributes.daysLeft * SECONDS_IN_DAY ) +
+			( attributes.hoursLeft * SECONDS_IN_HOUR ) +
+			( attributes.minutesLeft * SECONDS_IN_MINUTE ) +
+			( attributes.secondsLeft * SECONDS )
+	}
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
@@ -78,7 +99,9 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
-			enddate={ attributes.endDate }
+			data-stk-start-date={ startDate }
+			data-stk-end-date={ endDate }
+			data-stk-countdown-type={ attributes.countdownType }
 		>
 			<CountdownStyles.Content version={ props.version } attributes={ attributes } />
 			<ContainerDiv.Content className={ contentClassNames }>

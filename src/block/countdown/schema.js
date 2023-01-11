@@ -51,19 +51,7 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
-			days: { // The inner text `p` tag can be overridden.
-				type: 'string',
-				default: '',
-			},
-			hours: {
-				type: 'string',
-				default: '',
-			},
-			minutes: {
-				type: 'string',
-				default: '',
-			},
-			seconds: {
+			countdownType: {
 				type: 'string',
 				default: '',
 			},
@@ -83,6 +71,26 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			daysLeft: {
+				type: 'number',
+				default: '',
+			},
+			hoursLeft: {
+				type: 'number',
+				default: '',
+			},
+			minutesLeft: {
+				type: 'number',
+				default: '',
+			},
+			secondsLeft: {
+				type: 'number',
+				default: '',
+			},
+			startDate: {
+				type: 'string',
+				default: '',
+			},
 			endDate: {
 				type: 'string',
 				default: '',
@@ -94,10 +102,6 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.addDefaultValues( {
 		attributes: {
-			days: '0',
-			hours: '0',
-			minutes: '0',
-			seconds: '0',
 			dayText: 'Days',
 			hourText: 'Hours',
 			minuteText: 'Minutes',

@@ -9,7 +9,11 @@ const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60
 const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
 
 class StackableCountdown {
-	callback = ( el, end ) => {
+	constructor() {
+		this.countDown
+	}
+
+	callback = ( el, start, end, countdownType ) => {
 		const day = el.querySelector( '.stk-block-countdown__digit_day' )
 		const hour = el.querySelector( '.stk-block-countdown__digit_hour' )
 		const minute = el.querySelector( '.stk-block-countdown__digit_minute' )
@@ -17,11 +21,17 @@ class StackableCountdown {
 
 		const difference = end - Date.now()
 
+		if ( Date.now() <= start ) {
+			return
+		}
+
 		if ( difference <= 0 ) {
-			day.innerHTML = 0
-			hour.innerHTML = 0
-			minute.innerHTML = 0
-			second.innerHTML = 0
+			clearInterval( this.countDown )
+			if ( countdownType === 'recurring' ) {
+				const nextEnd = Math.abs( start - end ) + end
+				this.countDown = setInterval( this.callback, 1000, el, end, nextEnd, countdownType )
+			}
+			return
 		}
 
 		const days = Math.floor( difference / SECONDS_IN_DAY )
@@ -38,9 +48,12 @@ class StackableCountdown {
 	init = () => {
 		const els = document.querySelectorAll( '.stk-block-countdown' )
 		els.forEach( el => {
-			const elsDate = el.getAttribute( 'enddate' )
-			const end = Date.parse( elsDate )
-			setInterval( this.callback, 1000, el, end )
+			const elsEndDate = el.getAttribute( 'data-stk-end-date' )
+			const elsStartDate = el.getAttribute( 'data-stk-start-date' )
+			const countdownType = el.getAttribute( 'data-stk-countdown-type' )
+			const start = Date.parse( elsStartDate )
+			const end = countdownType === 'dueDate' ? Date.parse( elsEndDate ) : parseInt( elsEndDate ) + start
+			this.countDown = setInterval( this.callback, 1000, el, start, end, countdownType )
 		} )
 	}
 }
