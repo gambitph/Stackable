@@ -193,6 +193,13 @@ const Edit = props => {
 									/>
 								</div>
 							) }
+							<AdvancedRangeControl
+								label={ __( 'Box Gap', i18n ) }
+								min={ 0 }
+								sliderMax={ 50 }
+								value={ attributes.boxGap }
+								attribute="boxGap"
+							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 					<Typography.InspectorControls
@@ -293,7 +300,6 @@ const Edit = props => {
 						placeholder={ __( 'Seconds', i18n ) }
 					/>
 				</ContainerDiv>
-
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

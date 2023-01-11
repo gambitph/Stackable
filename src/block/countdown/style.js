@@ -12,7 +12,7 @@ import {
 	Typography,
 	Divider,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockCssCompiler, BlockCss } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -41,6 +41,29 @@ const dividerOptions = {
 	selector: '.stk-block-countdown__divider',
 }
 
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
+
+	return (
+		<>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s.stk-block-countdown"
+				styleRule="gap"
+				attrName="boxGap"
+				key="boxGap"
+				responsive="all"
+				hasUnits="px"
+			/>
+		</>
+	)
+}
+
 export const CountdownStyles = memo( props => {
 	return (
 		<>
@@ -53,6 +76,7 @@ export const CountdownStyles = memo( props => {
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
+			<Styles { ...props } />
 		</>
 	)
 } )
@@ -78,6 +102,7 @@ CountdownStyles.Content = props => {
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
+			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }
