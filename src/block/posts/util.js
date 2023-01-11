@@ -322,7 +322,7 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 		getTypographyClasses( attributes, 'readmore%s' )
 	)
 
-	let featuredImage = <Image.Content />
+	let featuredImage = <Image.Content attributes={ attributes } />
 	if ( imageHasLink ) {
 		featuredImage = <a href="!#postLink!#" className="stk-block-posts__image-link">{ featuredImage }</a>
 	}

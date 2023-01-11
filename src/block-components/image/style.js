@@ -269,7 +269,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				renderIn="save"
 				selector={ `${ selector }::after` }
-				hoverSelector={ `${ selector }::before` }
+				hoverSelector={ `${ hoverSelector }::before` }
 				styleRule="backgroundImage"
 				attrName="imageOverlayColor"
 				key="imageOverlayColor-save-image"
@@ -347,7 +347,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				renderIn="edit"
 				selector={ `${ selector } .stk-img-resizer-wrapper::after` }
-				hoverSelector={ `${ selector } .stk-img-resizer-wrapper::before` }
+				hoverSelector={ `${ hoverSelector } .stk-img-resizer-wrapper::before` }
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="backgroundImage"
 				attrName="imageOverlayColor"
