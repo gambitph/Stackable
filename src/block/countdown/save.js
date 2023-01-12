@@ -29,16 +29,11 @@ const Save = props => {
 		attributes,
 	} = props
 
-	let startDate = ''
-	let endDate = ''
+	let duration = ''
 
-	if ( attributes.countdownType === 'dueDate' ) {
-		startDate = null
-		endDate = attributes.endDate
-	} else {
-		startDate = attributes.startDate
-		// Conver into milli seconds
-		endDate =
+	if ( attributes.countdownType === 'recurring' ) {
+		// Convert into milli seconds
+		duration =
 			( attributes.daysLeft * SECONDS_IN_DAY ) +
 			( attributes.hoursLeft * SECONDS_IN_HOUR ) +
 			( attributes.minutesLeft * SECONDS_IN_MINUTE ) +
@@ -59,7 +54,6 @@ const Save = props => {
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
-		'stk-block-countdown__content',
 	] )
 
 	const dayDigitClassNames = classnames( [
@@ -99,12 +93,13 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
-			data-stk-start-date={ startDate }
-			data-stk-end-date={ endDate }
+			data-stk-countdown-date={ attributes.date }
+			data-stk-countdown-duration={ duration }
+			data-stk-countdown-restart-interval={ attributes.restartInterval }
 			data-stk-countdown-type={ attributes.countdownType }
 		>
 			<CountdownStyles.Content version={ props.version } attributes={ attributes } />
-			<ContainerDiv.Content className={ contentClassNames }>
+			<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 				<CountdownNumber.Content className={ dayDigitClassNames } />
 				<Typography.Content
 					className={ labelClassNames }
@@ -113,7 +108,7 @@ const Save = props => {
 				/>
 			</ContainerDiv.Content>
 			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
-			<ContainerDiv.Content className={ contentClassNames }>
+			<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 				<CountdownNumber.Content className={ hourDigitClassNames } />
 				<Typography.Content
 					className={ labelClassNames }
@@ -122,7 +117,7 @@ const Save = props => {
 				/>
 			</ContainerDiv.Content>
 			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
-			<ContainerDiv.Content className={ contentClassNames }>
+			<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 				<CountdownNumber.Content className={ minuteDigitClassNames } />
 				<Typography.Content
 					className={ labelClassNames }
@@ -131,7 +126,7 @@ const Save = props => {
 				/>
 			</ContainerDiv.Content>
 			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
-			<ContainerDiv.Content className={ contentClassNames }>
+			<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 				<CountdownNumber.Content className={ secondDigitClassNames } />
 				<Typography.Content
 					className={ labelClassNames }
