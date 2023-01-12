@@ -20,6 +20,11 @@ import {
 	Typography,
 } from '~stackable/block-components'
 
+import { __, i18n } from '@wordpress/i18n'
+import { date } from '@wordpress/date'
+
+const DEFAULT_DATE = date( 'Y-m-d\TH:i', Date.now() + 345600000 )
+
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
@@ -53,23 +58,34 @@ export const attributes = ( version = VERSION ) => {
 		attributes: {
 			countdownType: {
 				type: 'string',
-				default: '',
+				selector: '[data-stk-countdown-type]',
+				source: 'attribute',
+				attribute: 'data-stk-countdown-type',
+				default: 'dueDate',
 			},
 			dayText: {
 				type: 'string',
-				default: '',
+				selector: '.stk-block-countdown__digit_day .stk-block-countdown__label',
+				source: 'text',
+				default: __( 'Days', i18n ),
 			},
 			hourText: {
 				type: 'string',
-				default: '',
+				selector: '.stk-block-countdown__digit_hour .stk-block-countdown__label',
+				source: 'text',
+				default: __( 'Hours', i18n ),
 			},
 			minuteText: {
 				type: 'string',
-				default: '',
+				selector: '.stk-block-countdown__digit_minute .stk-block-countdown__label',
+				source: 'text',
+				default: __( 'Minutes', i18n ),
 			},
 			secondText: {
 				type: 'string',
-				default: '',
+				selector: '.stk-block-countdown__digit_second .stk-block-countdown__label',
+				source: 'text',
+				default: __( 'Seconds', i18n ),
 			},
 			daysLeft: {
 				type: 'number',
@@ -87,15 +103,25 @@ export const attributes = ( version = VERSION ) => {
 				type: 'number',
 				default: '',
 			},
-			startDate: {
+			date: {
 				type: 'string',
-				default: '',
+				selector: '[data-stk-countdown-date]',
+				source: 'attribute',
+				attribute: 'data-stk-countdown-date',
+				default: DEFAULT_DATE,
 			},
-			endDate: {
-				type: 'string',
+			restartInterval: {
+				type: 'number',
+				selector: '[data-stk-countdown-restart-interval]',
+				source: 'attribute',
+				attribute: 'data-stk-countdown-restart-interval',
 				default: '',
 			},
 			boxGap: {
+				type: 'number',
+				default: '',
+			},
+			labelMarginTop: {
 				type: 'number',
 				default: '',
 			},
@@ -106,10 +132,7 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.addDefaultValues( {
 		attributes: {
-			dayText: 'Days',
-			hourText: 'Hours',
-			minuteText: 'Minutes',
-			secondText: 'Seconds',
+			dividerType: ':',
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
