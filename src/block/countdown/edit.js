@@ -77,7 +77,6 @@ const Edit = props => {
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
-		'stk-block-countdown__content',
 	] )
 
 	const dayDigitClassNames = classnames( [
@@ -127,20 +126,20 @@ const Edit = props => {
 							<AdvancedToolbarControl
 								controls={ COUNTDOWN_TYPE_OPTIONS }
 								attribute="countdownType"
-								value={ attributes?.countdownType }
+								value={ attributes.countdownType }
 								fullwidth={ true }
-								// default={ ':' }
+								default={ 'dueDate' }
 								isSmall={ false }
 							/>
 							{	attributes.countdownType === 'dueDate' && (
 								<Fragment>
 									<DateTimePicker
 										label={ __( 'Start Date', i18n ) }
-										currentDate={ attributes.startDate }
+										currentDate={ attributes.date }
 										is12Hour={ true }
 										onChange={ currentDate => {
 											// Do not include seconds
-											setAttributes( { endDate: currentDate.slice( 0, currentDate.length - 3 ) } )
+											setAttributes( { date: currentDate.slice( 0, currentDate.length - 3 ) } )
 										} }
 									/>
 									<AdvancedSelectControl
@@ -156,11 +155,11 @@ const Edit = props => {
 								<div className="stk-block-countdown__recurring_control">
 									<DateTimePicker
 										label={ __( 'Start Date', i18n ) }
-										currentDate={ attributes.startDate }
+										currentDate={ attributes.date }
 										is12Hour={ true }
 										onChange={ currentDate => {
 											// Do not include seconds
-											setAttributes( { startDate: currentDate.slice( 0, currentDate.length - 3 ) } )
+											setAttributes( { date: currentDate.slice( 0, currentDate.length - 3 ) } )
 										} }
 									/>
 									<AdvancedRangeControl
@@ -191,6 +190,13 @@ const Edit = props => {
 										value={ attributes.secondsLeft }
 										attribute="secondsLeft"
 									/>
+									<AdvancedRangeControl
+										label={ __( 'Restart Countdown After no. of Hours', i18n ) }
+										min={ 0 }
+										maxSlider={ 10 }
+										value={ attributes.restartInterval }
+										attribute="restartInterval"
+									/>
 								</div>
 							) }
 							<AdvancedRangeControl
@@ -199,6 +205,13 @@ const Edit = props => {
 								sliderMax={ 50 }
 								value={ attributes.boxGap }
 								attribute="boxGap"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Label Top Margin', i18n ) }
+								min={ 0 }
+								sliderMax={ 50 }
+								value={ attributes.labelMarginTop }
+								attribute="labelMarginTop"
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
@@ -245,7 +258,7 @@ const Edit = props => {
 					<CountdownNumber
 						className={ dayDigitClassNames }
 						type={ 'days' }
-						datetime={ attributes?.endDate }
+						datetime={ attributes.date }
 					/>
 					<Typography
 						identifier="day"
@@ -260,7 +273,7 @@ const Edit = props => {
 					<CountdownNumber
 						className={ hourDigitClassNames }
 						type={ 'hours' }
-						datetime={ attributes?.endDate }
+						datetime={ attributes.date }
 					/>
 					<Typography
 						identifier="hour"
@@ -275,7 +288,7 @@ const Edit = props => {
 					<CountdownNumber
 						className={ minuteDigitClassNames }
 						type={ 'minutes' }
-						datetime={ attributes?.endDate }
+						datetime={ attributes.date }
 					/>
 					<Typography
 						identifier="minute"
@@ -290,7 +303,7 @@ const Edit = props => {
 					<CountdownNumber
 						className={ secondDigitClassNames }
 						type={ 'seconds' }
-						datetime={ attributes?.endDate }
+						datetime={ attributes.date }
 					/>
 					<Typography
 						identifier="second"
