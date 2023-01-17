@@ -1,5 +1,6 @@
 .stk-block-countdown {
 	display: flex;
+	flex-shrink: 0;
 }
 
 .stk-block-countdown__digit_day,
@@ -11,6 +12,7 @@
 
 .stk-block-countdown__label {
 	text-align: center;
+	margin-bottom: 0;
 }
 
 .stk-block-countdown__divider {
