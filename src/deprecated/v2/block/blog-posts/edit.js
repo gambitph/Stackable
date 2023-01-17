@@ -55,9 +55,7 @@ import {
 	withBlockStyles,
 	withClickOpenInspector,
 } from '../../higher-order'
-import {
-	i18n, showProNotice,
-} from 'stackable'
+import { i18n, showProNotice } from 'stackable'
 import {
 	isEmpty,
 	isUndefined,
@@ -535,6 +533,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					...createResponsiveAttributeNames( 'Image%sWidth' ),
 					...createResponsiveAttributeNames( 'Image%sHeight' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<ImageSizeControl
@@ -589,6 +588,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					'categoryHoverColor',
 					...createResponsiveAttributeNames( 'Category%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showCategory"
 			>
 				<TypographyControlHelper
@@ -636,6 +636,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					'titleHoverColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<HeadingButtonsControl
@@ -682,6 +683,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					'excerptLength',
 					...createResponsiveAttributeNames( 'Excerpt%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showExcerpt"
 			>
 				<AdvancedRangeControl
@@ -729,6 +731,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					'metaSeparator',
 					...createResponsiveAttributeNames( 'Meta%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showMeta"
 			>
 				<AdvancedToggleControl
@@ -797,6 +800,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					'readmoreHoverColor',
 					...createResponsiveAttributeNames( 'Readmore%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showReadmore"
 			>
 				<TextControl

@@ -26,9 +26,8 @@ import {
 	getAlignmentClasses,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -36,10 +35,16 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
 
-const Edit = ( {
-	className, attributes,
-} ) => {
+const Edit = props => {
+	const {
+		clientId,
+		className,
+		attributes,
+		isSelected,
+	} = props
+
 	useGeneratedCss( attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -71,32 +76,46 @@ const Edit = ( {
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
 
-			{ /** Advanced controls */ }
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-bar" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					{ /** Advanced controls */ }
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-bar" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<ProgressBar.InspectorControls />
-			<Typography.InspectorControls
-				initialOpen={ false }
-				hasTextTag={ false }
-				hasTextContent={ false }
-				hasTextShadow
-				hasToggle
-				label={ __( 'Label', i18n ) }
-			/>
+					<ProgressBar.InspectorControls />
+					<Typography.InspectorControls
+						{ ...props }
+						initialOpen={ false }
+						hasTextTag={ false }
+						hasTextContent={ false }
+						hasTextShadow
+						hasToggle
+						label={ __( 'Label', i18n ) }
+					/>
+				</>
+			) }
 
-			<BlockDiv className={ blockClassNames }>
-				<ProgressBarStyles version={ VERSION } />
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
+				<ProgressBarStyles
+					version={ VERSION }
+					blockState={ props.blockState }
+					clientId={ clientId }
+				/>
 				<CustomCSS mainBlockClass="stk-block-progress-bar" />
 				<div className={ containerClassNames }>
 					<div className="stk-progress-bar stk-animate">
@@ -120,13 +139,13 @@ const Edit = ( {
 					</div>
 				</div>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

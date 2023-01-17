@@ -22,7 +22,9 @@ import {
 } from '~stackable/block-components'
 import { useBlockStyle } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapper,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -45,6 +47,8 @@ const Edit = props => {
 		onReplace,
 		attributes,
 		setAttributes,
+		clientId,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -74,41 +78,54 @@ const Edit = props => {
 
 	return (
 		<>
-			<BlockControls>
-				<AlignmentToolbar
-					value={ attributes.contentAlign }
-					onChange={ contentAlign => setAttributes( { contentAlign } ) }
-				/>
-			</BlockControls>
+			{ isSelected && (
+				<>
+					<BlockControls>
+						<AlignmentToolbar
+							value={ attributes.contentAlign }
+							onChange={ contentAlign => setAttributes( { contentAlign } ) }
+						/>
+					</BlockControls>
 
-			<InspectorTabs />
-			<BlockDiv.InspectorControls />
+					<InspectorTabs />
+					<BlockDiv.InspectorControls />
 
-			<BlockStyle.InspectorControls styles={ blockStyles }>
-				<Button.InspectorControls.HoverEffects />
-			</BlockStyle.InspectorControls>
-			<Button.InspectorControls
-				borderSelector=".stk-button"
-				hasFullWidth={ true }
+					<BlockStyle.InspectorControls styles={ blockStyles }>
+						<Button.InspectorControls.HoverEffects />
+					</BlockStyle.InspectorControls>
+					<Button.InspectorControls
+						blockState={ props.blockState }
+						borderSelector=".stk-button"
+						hasFullWidth={ true }
+					/>
+					<Typography.InspectorControls
+						{ ...props }
+						hasTextTag={ false }
+						initialOpen={ false }
+						hasColor={ false }
+					/>
+
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
+
+			<ButtonStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
 			/>
-			<Typography.InspectorControls
-				hasTextTag={ false }
-				initialOpen={ false }
-				hasColor={ false }
-			/>
-
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<ButtonStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-button" />
 
 			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
 				className={ blockClassNames }
 				applyAdvancedAttributes={ false }
 				applyCustomAttributes={ false }

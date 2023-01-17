@@ -2,8 +2,12 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { compact, isNumber } from 'lodash'
-import { AdvancedRangeControl, ColorPaletteControl } from '~stackable/components'
+import {
+	compact, isNumber, isEqual,
+} from 'lodash'
+import {
+	AdvancedRangeControl, ColorPaletteControl, Popover,
+} from '~stackable/components'
 import { hexToRgba, extractColor } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
@@ -13,12 +17,13 @@ import { useControlHandlers } from '~stackable/components/base-control2/hooks'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	useState, useRef, useEffect,
+	useState,
+	useRef,
+	useEffect,
+	memo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-import {
-	Button, Popover, Dashicon,
-} from '@wordpress/components'
+import { Button, Dashicon } from '@wordpress/components'
 
 const getShadows = () => {
 	return applyFilters( 'stackable.shadows', [
@@ -218,7 +223,7 @@ const ShadowFilterControl = props => {
 	)
 }
 
-const ShadowControl = props => {
+const ShadowControl = memo( props => {
 	const {
 		options,
 		label,
@@ -247,7 +252,8 @@ const ShadowControl = props => {
 				if ( ! event.target.closest( '.shadow-control__popover' ) &&
 					 ! event.target.closest( '.stk-shadow-control__more-button' ) &&
 					 ! event.target.closest( '.components-color-picker' ) &&
-					 ! event.target.closest( '.react-autosuggest__suggestions-container' ) ) {
+					 ! event.target.closest( '.react-autosuggest__suggestions-container' ) &&
+					 ! event.target.closest( '.components-dropdown__content' ) ) {
 					setIsPopoverOpen( false )
 				}
 			}
@@ -299,7 +305,7 @@ const ShadowControl = props => {
 			) }
 		</>
 	)
-}
+}, isEqual )
 
 ShadowControl.defaultProps = {
 	label: __( 'Shadow / Outline', i18n ),

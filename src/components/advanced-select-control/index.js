@@ -9,13 +9,15 @@ import { ResetButton } from '../base-control2/reset-button'
  * WordPress dependencies
  */
 import { SelectControl } from '@wordpress/components'
+import { memo } from '@wordpress/element'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
+import { isEqual } from 'lodash'
 
-const AdvancedSelectControl = props => {
+const AdvancedSelectControl = memo( props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
@@ -42,7 +44,7 @@ const AdvancedSelectControl = props => {
 			/>
 		</AdvancedControl>
 	)
-}
+}, isEqual )
 
 AdvancedSelectControl.defaultProps = {
 	className: '',

@@ -23,7 +23,12 @@ export const Button = props => {
 		linkTrigger,
 	} = props
 
-	const attributes = useBlockAttributesContext()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			buttonHoverEffect: attributes.buttonHoverEffect,
+			iconPosition: attributes.iconPosition,
+		}
+	} )
 
 	return (
 		<Link

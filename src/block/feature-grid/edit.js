@@ -33,7 +33,7 @@ import {
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -47,7 +47,9 @@ const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -75,29 +77,42 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls hasRowAlignment={ true } />
+					<BlockDiv.InspectorControls />
+					<Separator.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+					<ContentAlign.InspectorControls hasColumnCount={ true } />
 
-			<Alignment.InspectorControls hasRowAlignment={ true } />
-			<BlockDiv.InspectorControls />
-			<Separator.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-feature-grid" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-			<ContentAlign.InspectorControls hasColumnCount={ true } />
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
-
-			<BlockStyles version={ VERSION } />
+			<BlockStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-feature-grid" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<Separator>
 					<div className={ contentClassNames }>
 						<ColumnInnerBlocks
@@ -111,13 +126,13 @@ const Edit = props => {
 					</div>
 				</Separator>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
+			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

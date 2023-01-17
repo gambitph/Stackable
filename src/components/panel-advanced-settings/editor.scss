@@ -34,3 +34,16 @@
 		}
 	}
 }
+
+// Icon size.
+.ugb-toggle-panel-body {
+	.components-panel__arrow {
+		height: 24px;
+		width: 24px;
+	}
+}
+
+// This fixes the auto-scroll when a panel is opened.
+.ugb-toggle-panel-body {
+	scroll-margin-top: 128px;
+}

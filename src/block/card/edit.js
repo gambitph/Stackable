@@ -19,7 +19,9 @@ import {
 	useBlockContext, useBlockStyle, useDeviceType,
 } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapperIsHovered,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -44,7 +46,6 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
@@ -65,7 +66,9 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const {
+		clientId,
 		className, //isHovered,
+		isSelected,
 	} = props
 
 	const blockOrientation = getBlockOrientation( props.attributes )
@@ -101,41 +104,56 @@ const Edit = props => {
 	}
 
 	return (
-		<Fragment>
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<BlockLink.InspectorControls />
+					<Image.InspectorControls
+						{ ...props }
+						hasWidth={ blockStyle === 'horizontal' }
+						hasHeight={ hasHeight }
+						widthUnits={ widthUnit }
+						heightUnits={ heightUnit }
+						hasBorderRadius={ false }
+						hasShape={ false }
+						hasShadow={ false }
+					/>
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<Alignment.InspectorControls hasBlockAlignment={ true } />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
-			<Image.InspectorControls
-				hasWidth={ blockStyle === 'horizontal' }
-				hasHeight={ hasHeight }
-				widthUnits={ widthUnit }
-				heightUnits={ heightUnit }
-				hasBorderRadius={ false }
-				hasShape={ false }
-				hasShadow={ false }
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
+
+			<CardStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
 			/>
-			<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
-
-			<CardStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-card" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<ContainerDiv className={ contentClassNames }>
 					<Image
+						showTooltips={ props.isHovered }
 						className="stk-block-card__image"
 						enableWidth={ blockStyle === 'horizontal' }
 						enableHeight={ hasHeight }
@@ -158,13 +176,13 @@ const Edit = props => {
 					</div>
 				</ContainerDiv>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
-		</Fragment>
+			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
+		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

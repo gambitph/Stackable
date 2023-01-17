@@ -10,12 +10,12 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
+import { BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { memo, renderToString } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 
 const typographyOptions = {
 	selector: '.stk-block-subtitle__text',
@@ -36,39 +36,29 @@ export const SubtitleStyles = memo( props => {
 } )
 
 SubtitleStyles.defaultProps = {
-	isEditor: false,
-	attributes: {},
-	options: {},
+	version: '',
 }
 
 SubtitleStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-
-	const styles = (
-		<>
-			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<MarginBottom.Style.Content { ...propsToPass } />
-		</>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<Typography.Style.Content { ...props } { ...typographyOptions } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<MarginBottom.Style.Content { ...props } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
 SubtitleStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
-	options: {},
 }
 

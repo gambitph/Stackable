@@ -188,21 +188,21 @@ const deprecatedSave_1_15 = props => {
 					},
 					number: {
 						backgroundColor: numberBGColor,
-						color: numberColor ? numberColor :
-						       ! numberBGColor ? undefined :
-						       isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
+						color: numberColor ? numberColor
+						       : ! numberBGColor ? undefined
+						       : isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
 					},
 					title: {
-						color: titleColor ? titleColor :
-						       design === 'plain' ? undefined :
-						       ! backgroundColor ? undefined :
-						       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+						color: titleColor ? titleColor
+						       : design === 'plain' ? undefined
+						       : ! backgroundColor ? undefined
+						       : isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
 					},
 					description: {
-						color: descriptionColor ? descriptionColor :
-						       design === 'plain' ? undefined :
-						       ! backgroundColor ? undefined :
-						       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+						color: descriptionColor ? descriptionColor
+						       : design === 'plain' ? undefined
+						       : ! backgroundColor ? undefined
+						       : isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
 					},
 				}, design, props )
 

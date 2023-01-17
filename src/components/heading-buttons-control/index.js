@@ -21,6 +21,7 @@ import { AdvancedToolbarControl } from '~stackable/components'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
 const TAG_OPTIONS = [
 	{
@@ -62,19 +63,21 @@ const TAG_OPTIONS = [
 
 const TAG_OPTIONS_NOP = TAG_OPTIONS.filter( ( { value } ) => value !== 'p' )
 
-const HeadingButtonsControl = props => {
+const HeadingButtonsControl = memo( props => {
 	return (
 		<AdvancedToolbarControl
 			{ ...props }
 			className="ugb-heading-buttons-control"
 			controls={ props.hasP ? TAG_OPTIONS : TAG_OPTIONS_NOP }
+			placeholder={ TAG_OPTIONS[ 1 ].value }
+			default={ TAG_OPTIONS[ 1 ].value }
 		/>
 	)
-}
+} )
 
 HeadingButtonsControl.defaultProps = {
 	label: sprintf( _x( '%s HTML Tag', 'component', i18n ), __( 'Title', i18n ) ),
-	value: TAG_OPTIONS[ 0 ].value,
+	value: undefined,
 	hasP: true,
 }
 

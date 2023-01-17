@@ -26,7 +26,7 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -66,6 +66,7 @@ const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 	} = props
 
@@ -103,12 +104,21 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorBlockControls>
 
-			<BlockStyles version={ VERSION } />
+			<BlockStyles
+				version={ VERSION }
+				clientId={ clientId }
+				blockState={ props.blockState }
+			/>
 			<CustomCSS mainBlockClass="stk-block-expand" />
 
 			<style>{ `.stk-block.stk-block-expand .stk-block-expand__short-text::before { content: "${ __( 'Less text', i18n ) }" !important; }` }</style>
 			<style>{ `.stk-block.stk-block-expand .stk-block-expand__more-text::before { content: "${ __( 'More text', i18n ) }" !important; }` }</style>
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<div className={ contentClassNames }>
 					<InnerBlocks
 						template={ TEMPLATE }
@@ -117,13 +127,13 @@ const Edit = props => {
 					/>
 				</div>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

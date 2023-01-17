@@ -20,7 +20,7 @@ import { __ } from '@wordpress/i18n'
 import { INVALID_HTML_ATTRIBUTES } from '.'
 
 export const Edit = () => {
-	const attributes = useBlockAttributesContext()
+	const customAttributes = useBlockAttributesContext( attributes => attributes.customAttributes )
 	const setAttributes = useBlockSetAttributesContext()
 
 	return (
@@ -31,7 +31,7 @@ export const Edit = () => {
 			>
 				<CustomAttributesControl
 					label={ __( 'Custom Attributes', i18n ) }
-					value={ attributes.customAttributes }
+					value={ customAttributes }
 					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }
 					onChange={ customAttributes => setAttributes( { customAttributes } ) }
 				/>

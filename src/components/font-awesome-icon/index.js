@@ -10,7 +10,7 @@ import { pick } from 'lodash'
  * WordPress dependencies
  */
 import {
-	useState, useEffect, RawHTML, useMemo, renderToString,
+	useState, useEffect, RawHTML, memo,
 } from '@wordpress/element'
 import { Spinner } from '@wordpress/components'
 
@@ -79,13 +79,11 @@ const addSVGAttributes = ( svgHTML, attributesToAdd = {}, attributesToRemove = [
 	return svgNode.outerHTML
 }
 
-const FontAwesomeIcon = props => {
+const FontAwesomeIcon = memo( props => {
 	const [ forceUpdateCount, setForceUpdateCount ] = useState( 0 )
 	const forceUpdate = () => {
 		setForceUpdateCount( forceUpdateCount + 1 )
 	}
-
-	const prependRender = useMemo( () => props.prependRender ? renderToString( props.prependRender ) : '', [ props.prependRender ] )
 
 	// Wait for the FA API to load.
 	useEffect( () => {
@@ -99,7 +97,7 @@ const FontAwesomeIcon = props => {
 		let svg = addSVGAriaLabel( props.value, props.ariaLabel )
 		// Add fallback SVG width and height values.
 		svg = addSVGAttributes( svg, { width: '32', height: '32' } )
-		return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
+		return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
 	}
 
 	// There's a chance that the Font Awesome library hasn't loaded yet, wait for it.
@@ -122,7 +120,7 @@ const FontAwesomeIcon = props => {
 		let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 		// Add fallback SVG width and height values.
 		svg = addSVGAttributes( svg, { width: '32', height: '32' } )
-		return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
+		return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
 	}
 
 	// If no value, just display a smiley placeholder.
@@ -130,13 +128,16 @@ const FontAwesomeIcon = props => {
 	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 	// Add fallback SVG width and height values.
 	svg = addSVGAttributes( svg, { width: '32', height: '32' } )
-	return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
-}
+	return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
+} )
 
 FontAwesomeIcon.Content = props => {
 	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style' ] )
+	const {
+		prependRenderString = '',
+	} = props
 
-	const prependRender = props.prependRender ? renderToString( props.prependRender ) : ''
+	// const prependRenderString = props.prependRenderString ? renderToString( props.prependRenderString ) : ''
 
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {
@@ -144,7 +145,7 @@ FontAwesomeIcon.Content = props => {
 			let svg = addSVGAriaLabel( props.value, props.ariaLabel )
 			// Add fallback SVG width and height values.
 			svg = addSVGAttributes( svg, { width: '32', height: '32' } )
-			return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
+			return <RawHTML { ...propsToPass }>{ prependRenderString + svg }</RawHTML>
 		}
 	}
 
@@ -155,7 +156,7 @@ FontAwesomeIcon.Content = props => {
 	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 	// Add fallback SVG width and height values.
 	svg = addSVGAttributes( svg, { width: '32', height: '32' } )
-	return <RawHTML { ...propsToPass }>{ prependRender + svg }</RawHTML>
+	return <RawHTML { ...propsToPass }>{ prependRenderString + svg }</RawHTML>
 }
 
 FontAwesomeIcon.defaultProps = {
@@ -163,6 +164,7 @@ FontAwesomeIcon.defaultProps = {
 	prefix: '',
 	iconName: '',
 	value: '', // This is the old-style of prefix + iconName e.g. 'fab-apple'
+	prependRenderString: '',
 }
 
 export default FontAwesomeIcon

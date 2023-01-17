@@ -129,7 +129,7 @@ export const ImageFilterControl = props => {
 		<AdvancedControl
 			{ ...controlProps }
 			boldLabel={ true }
-			className={ classnames( 'stk-image-filter-control', props.className ) }
+			className={ classnames( 'stk-image-filter-control', 'stk--no-padding', props.className ) }
 		>
 			{ Object.keys( FILTERS ).map( ( filterName, i ) => {
 				const filter = FILTERS[ filterName ]

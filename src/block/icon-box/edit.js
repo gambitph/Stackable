@@ -32,7 +32,7 @@ import {
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -56,7 +56,9 @@ export const TEMPLATE = [
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -81,28 +83,40 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<BlockLink.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-box" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-box" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
-
-			<BlockDiv className={ blockClassNames }>
-				<ContainerStyles version={ VERSION } />
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
+				<ContainerStyles
+					version={ VERSION }
+					blockState={ props.blockState }
+					clientId={ clientId }
+				/>
 				<CustomCSS mainBlockClass="stk-block-icon-box" />
 
 				<ContainerDiv className={ contentClassNames }>
@@ -113,13 +127,13 @@ const Edit = props => {
 					/>
 				</ContainerDiv>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

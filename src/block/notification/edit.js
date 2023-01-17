@@ -40,7 +40,7 @@ import {
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -55,9 +55,11 @@ const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		attributes,
 		setAttributes,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -85,80 +87,93 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<BlockLink.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<Alignment.InspectorControls hasBlockAlignment={ true } />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<ContentAlign.InspectorControls.Controls />
-					<AdvancedSelectControl
-						label={ __( 'Notification Type', i18n ) }
-						attribute="notificationType"
-						options={ [
-							{
-								label: __( 'Success', i18n ),
-								value: '',
-							},
-							{
-								label: __( 'Error', i18n ),
-								value: 'error',
-							},
-							{
-								label: __( 'Warning', i18n ),
-								value: 'warning',
-							},
-							{
-								label: __( 'Information', i18n ),
-								value: 'info',
-							},
-						] }
-					/>
-				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					title={ __( 'Dismissible', i18n ) }
-					initialOpen={ props.attributes.isDismissible }
-					id="dismissible"
-					hasToggle={ true }
-					checked={ props.attributes.isDismissible }
-					onChange={ value => setAttributes( { isDismissible: value } ) }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Icon Size', i18n ) }
-						attribute="dismissibleSize"
-						min="0"
-						sliderMax="50"
-						step="1"
-						placeholder="16"
-					/>
-					<ColorPaletteControl
-						label={ __( 'Icon Color', i18n ) }
-						attribute="dismissibleColor"
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<ContentAlign.InspectorControls.Controls />
+							<AdvancedSelectControl
+								label={ __( 'Notification Type', i18n ) }
+								attribute="notificationType"
+								options={ [
+									{
+										label: __( 'Success', i18n ),
+										value: '',
+									},
+									{
+										label: __( 'Error', i18n ),
+										value: 'error',
+									},
+									{
+										label: __( 'Warning', i18n ),
+										value: 'warning',
+									},
+									{
+										label: __( 'Information', i18n ),
+										value: 'info',
+									},
+								] }
+							/>
+						</PanelAdvancedSettings>
+						<PanelAdvancedSettings
+							title={ __( 'Dismissible', i18n ) }
+							initialOpen={ props.attributes.isDismissible }
+							id="dismissible"
+							hasToggle={ true }
+							checked={ props.attributes.isDismissible }
+							onChange={ value => setAttributes( { isDismissible: value } ) }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Icon Size', i18n ) }
+								attribute="dismissibleSize"
+								min="0"
+								sliderMax="50"
+								step="1"
+								placeholder="16"
+							/>
+							<ColorPaletteControl
+								label={ __( 'Icon Color', i18n ) }
+								attribute="dismissibleColor"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+				</>
+			) }
 
 			<InspectorStyleControls>
 				<InspectorBottomTip />
 			</InspectorStyleControls>
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
-				<ContainerStyles version={ VERSION } />
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
+				<ContainerStyles
+					version={ VERSION }
+					clientId={ clientId }
+					blockState={ props.blockState }
+				/>
 				<CustomCSS mainBlockClass="stk-block-notification" />
 
 				<ContainerDiv className={ contentClassNames }>
@@ -181,13 +196,13 @@ const Edit = props => {
 					}
 				</ContainerDiv>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
+			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

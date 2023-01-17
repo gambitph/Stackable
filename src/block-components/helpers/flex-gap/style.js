@@ -1,66 +1,49 @@
 /**
  * External dependencies
  */
-import { useStyles, getStyles } from '~stackable/util'
-import { Style as StyleComponent } from '~stackable/components'
+import { BlockCss } from '~stackable/components'
 
-const getStyleParams = ( options = {} ) => {
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
 	const {
 		selector,
 		enableColumnGap = true,
-	} = options
+	} = props
 
-	return [
-		{
-			selector,
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			format: '%spx',
-			responsive: 'all',
-			enabledCallback: () => enableColumnGap,
-		},
-		{
-			selector,
-			styleRule: 'rowGap',
-			attrName: 'rowGap',
-			format: '%spx',
-			responsive: 'all',
-		},
-	]
+	return (
+		<>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="columnGap"
+				attrName="columnGap"
+				key="columnGap"
+				format="%spx"
+				responsive="all"
+				enabledCallback={ () => enableColumnGap }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="rowGap"
+				attrName="rowGap"
+				key="rowGap"
+				format="%spx"
+				responsive="all"
+			/>
+		</>
+	)
 }
 
 export const FlexGapStyles = props => {
-	const styles = useStyles( getStyleParams( props ) )
-
-	return (
-		<>
-			<StyleComponent
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
-		</>
-	)
+	return <Styles { ...props } />
 }
 
 FlexGapStyles.Content = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = getStyles( attributes, getStyleParams( options ) )
-
-	return (
-		<>
-			<StyleComponent.Content
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</>
-	)
+	return <Styles { ...props } />
 }

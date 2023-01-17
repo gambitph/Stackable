@@ -8,12 +8,10 @@ import { searchFontAwesomeIconName } from './search'
  * WordPress dependencies
  */
 import {
-	Popover, PanelBody, TextControl, Spinner,
+	PanelBody, TextControl, Spinner,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import {
-	useState, useEffect,
-} from '@wordpress/element'
+import { useState, useEffect } from '@wordpress/element'
 
 /**
  * External dependencies
@@ -21,7 +19,9 @@ import {
 import {
 	i18n, isPro, settingsUrl,
 } from 'stackable'
-import { Button, FontAwesomeIcon } from '~stackable/components'
+import {
+	Button, FontAwesomeIcon, Popover,
+} from '~stackable/components'
 import { faGetSVGIcon } from '~stackable/util'
 import { FileDrop } from 'react-file-drop'
 import classnames from 'classnames'
@@ -153,131 +153,145 @@ const IconSearchPopover = props => {
 		'ugb-icon--has-reset': props.allowReset,
 	} )
 
-	return (
-		<Popover
-			className="ugb-icon-popover"
-			onClose={ props.onClose }
-			onClickOutside={ props.onClickOutside }
-			position={ props.position }
-			anchorRef={ props.anchorRef }
-			ref={ props.useRef }
-		>
-			<PanelBody>
-				<FileDrop
-					onFrameDragEnter={ () => setIsDropping( true ) }
-					onFrameDragLeave={ () => setIsDropping( false ) }
-					onFrameDrop={ () => setIsDropping( false ) }
-					onDrop={ files => {
-						if ( ! allowSVGUpload || ! files.length ) {
-							setIsDropping( false )
-							return
-						}
-
-						// Only SVGs are allowed.
-						if ( files[ 0 ].type !== 'image/svg+xml' ) {
-							setIsDropping( false )
-							return
-						}
-
-						// Read the SVG,
-						const fr = new FileReader()
-						fr.onload = function( e ) {
-							setIsDropping( false )
-							const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
-							props.onChange( svgString )
-							props.onClose()
-						}
-
-						fr.readAsText( files[ 0 ] )
-					} }
-				>
-					<div className={ labelContainerClasses }>
-						<TextControl
-							className="ugb-icon-popover__input"
-							value={ value }
-							onChange={ setValue }
-							placeholder={ __( 'Type to search icon', i18n ) }
-						/>
-						{ isPro &&
-							<Button
-								className="ugb-icon-popover__settings-button"
-								icon="admin-generic"
-								href={ settingsUrl + '#icon-settings' }
-								target="_settings"
-								iconSize="16"
-								label={ __( 'Icon Settings', i18n ) }
-								showTooltip={ true }
-								isSmall
-								isSecondary
-							/>
-						}
-						{ allowSVGUpload &&
-							<Button
-								onClick={ uploadSvg }
-								isSmall
-								isPrimary
-								className="components-range-control__upload"
-							>
-								{ __( 'Upload SVG', i18n ) }
-							</Button>
-						}
-						{ props.allowReset &&
-							<Button
-								onClick={ () => {
-									props.onChange( '' )
-									props.onClose()
-								} }
-								isSmall
-								isSecondary
-								className="components-range-control__reset"
-							>
-								{ __( 'Clear icon', i18n ) }
-							</Button>
-						}
-					</div>
-					<div className="ugb-icon-popover__iconlist">
-						{ isBusy && <Spinner /> }
-						{ ! isBusy && results.map( ( { prefix, iconName }, i ) => {
-							const iconValue = `${ prefix }-${ iconName }`
-							return <button
-								key={ i }
-								className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
-								onClick={ () => {
-									if ( props.returnSVGValue ) {
-										props.onChange( cleanSvgString( faGetSVGIcon( prefix, iconName ) ) )
-									} else {
-										props.onChange( iconValue, prefix, iconName )
-									}
-									props.onClose()
-								} }
-							>
-								<FontAwesomeIcon prefix={ prefix } iconName={ iconName } />
-							</button>
-						} ) }
-						{ ! isBusy && ! results.length &&
-							<p className="components-base-control__help">{ __( 'No matches found', i18n ) }</p>
-						}
-					</div>
-					{ allowSVGUpload && isDropping &&
-						<div className="ugb-icon-popover__drop-indicator">
-							<SVGDrop height="40" width="40" />
-							{ __( 'Drop your SVG here', i18n ) }
-						</div>
+	const content = (
+		<div className="stk-icon-search-popover-container">
+			<FileDrop
+				onFrameDragEnter={ () => setIsDropping( true ) }
+				onFrameDragLeave={ () => setIsDropping( false ) }
+				onFrameDrop={ () => setIsDropping( false ) }
+				onDrop={ files => {
+					if ( ! allowSVGUpload || ! files.length ) {
+						setIsDropping( false )
+						return
 					}
-				</FileDrop>
-			</PanelBody>
-		</Popover>
+
+					// Only SVGs are allowed.
+					if ( files[ 0 ].type !== 'image/svg+xml' ) {
+						setIsDropping( false )
+						return
+					}
+
+					// Read the SVG,
+					const fr = new FileReader()
+					fr.onload = function( e ) {
+						setIsDropping( false )
+						const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
+						props.onChange( svgString )
+						props.onClose()
+					}
+
+					fr.readAsText( files[ 0 ] )
+				} }
+			>
+				<div className={ labelContainerClasses }>
+					<TextControl
+						className="ugb-icon-popover__input"
+						value={ value }
+						onChange={ setValue }
+						placeholder={ __( 'Type to search icon', i18n ) }
+					/>
+					{ isPro &&
+						<Button
+							className="ugb-icon-popover__settings-button"
+							icon="admin-generic"
+							href={ settingsUrl + '#icon-settings' }
+							target="_settings"
+							iconSize="16"
+							label={ __( 'Icon Settings', i18n ) }
+							showTooltip={ true }
+							isSmall
+							isSecondary
+						/>
+					}
+					{ allowSVGUpload &&
+						<Button
+							onClick={ uploadSvg }
+							isSmall
+							isPrimary
+							className="components-range-control__upload"
+						>
+							{ __( 'Upload SVG', i18n ) }
+						</Button>
+					}
+					{ props.allowReset &&
+						<Button
+							onClick={ () => {
+								props.onChange( '' )
+								props.onClose()
+							} }
+							isSmall
+							isSecondary
+							className="components-range-control__reset"
+						>
+							{ __( 'Clear icon', i18n ) }
+						</Button>
+					}
+				</div>
+				<div className="ugb-icon-popover__iconlist">
+					{ isBusy && <Spinner /> }
+					{ ! isBusy && results.map( ( { prefix, iconName }, i ) => {
+						const iconValue = `${ prefix }-${ iconName }`
+						return <button
+							key={ i }
+							className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
+							onClick={ () => {
+								if ( props.returnSVGValue ) {
+									props.onChange( cleanSvgString( faGetSVGIcon( prefix, iconName ) ) )
+								} else {
+									props.onChange( iconValue, prefix, iconName )
+								}
+								props.onClose()
+							} }
+						>
+							<FontAwesomeIcon prefix={ prefix } iconName={ iconName } />
+						</button>
+					} ) }
+					{ ! isBusy && ! results.length &&
+						<p className="components-base-control__help">{ __( 'No matches found', i18n ) }</p>
+					}
+				</div>
+				{ allowSVGUpload && isDropping &&
+					<div className="ugb-icon-popover__drop-indicator">
+						<SVGDrop height="40" width="40" />
+						{ __( 'Drop your SVG here', i18n ) }
+					</div>
+				}
+			</FileDrop>
+		</div>
 	)
+
+	// Backward support, we used to have a popover, now we use this in a DropDown component.
+	if ( props.__hasPopover ) {
+		return (
+			<Popover
+				className="ugb-icon-popover"
+				onClose={ props.onClose }
+				onClickOutside={ props.__deprecatedOnClickOutside }
+				position={ props.__deprecatedPosition }
+				anchorRef={ props.__deprecatedAnchorRef }
+				ref={ props.__deprecateUseRef }
+			>
+				<PanelBody>
+					{ content }
+				</PanelBody>
+			</Popover>
+		)
+	}
+
+	return content
 }
 
+const noop = () => {}
+
 IconSearchPopover.defaultProps = {
-	onChange: () => {},
-	onClose: () => {},
-	onClickOutside: () => {},
+	onChange: noop,
+	onClose: noop,
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	allowReset: true,
-	anchorRef: undefined,
-	position: 'center',
+	__deprecatedAnchorRef: undefined,
+	__deprecatedPosition: 'center',
+	__deprecatedOnClickOutside: noop,
+	__hasPopover: false,
 }
 
 export default IconSearchPopover

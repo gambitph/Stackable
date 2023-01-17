@@ -12,7 +12,7 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useSelect, dispatch } from '@wordpress/data'
 import { MenuItem } from '@wordpress/components'
 import { BlockSettingsMenuControls } from '@wordpress/block-editor'
 
@@ -41,11 +41,6 @@ const SaveMenu = ( { clientId } ) => {
 		}
 	} )
 
-	const {
-		deleteBlockDefaultStyle,
-		updateBlockDefaultStyle,
-	} = useDispatch( 'stackable/block-styles' )
-
 	// Only do this if the block is ours.
 	if ( ! clientId || ! getBlockName( clientId )?.startsWith( 'stackable/' ) ) {
 		return null
@@ -69,7 +64,7 @@ const SaveMenu = ( { clientId } ) => {
 								const attributes = getBlockAttributes( clientId )
 								const innerBlocks = getBlockInnerBlocks( clientId )
 								const blockSave = getBlockSave( clientId )
-								updateBlockDefaultStyle( blockName, attributes, innerBlocks, blockSave, sprintf( __( 'Default %s Block Saved!', i18n ), blockTitle ) )
+								dispatch( 'stackable/block-styles' ).updateBlockDefaultStyle( blockName, attributes, innerBlocks, blockSave, sprintf( __( 'Default %s Block Saved!', i18n ), blockTitle ) )
 								onClose()
 							} }
 						>
@@ -79,7 +74,7 @@ const SaveMenu = ( { clientId } ) => {
 							<MenuItem
 								icon="editor-removeformatting"
 								onClick={ () => {
-									deleteBlockDefaultStyle( blockName, sprintf( __( 'Default %s Block Deleted!', i18n ), blockTitle ) )
+									dispatch( 'stackable/block-styles' ).deleteBlockDefaultStyle( blockName, sprintf( __( 'Default %s Block Deleted!', i18n ), blockTitle ) )
 									onClose()
 								} }
 							>

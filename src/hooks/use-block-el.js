@@ -9,7 +9,7 @@ import { useBlockAttributesContext } from './use-block-attributes-context'
 import { useMemo } from '@wordpress/element'
 
 export const useBlockEl = selector => {
-	const { uniqueId } = useBlockAttributesContext()
+	const uniqueId = useBlockAttributesContext( attributes => attributes.uniqueId )
 	return useMemo( () => new BlockEl( uniqueId, selector ), [ uniqueId, selector ] )
 }
 

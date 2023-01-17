@@ -10,6 +10,7 @@
 	will-change: filter;
 
 	&::after,
+	&::before,
 	&.stk-img--gradient-overlay::before {
 		content: "";
 		position: absolute;

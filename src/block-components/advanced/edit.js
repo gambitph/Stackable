@@ -37,7 +37,13 @@ const HTML_TAG_OPTIONS = [
 ]
 
 export const Edit = () => {
-	const attributes = useBlockAttributesContext()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			position: attributes.position,
+			positionTablet: attributes.positionTablet,
+			positionMobile: attributes.positionMobile,
+		}
+	} )
 
 	return (
 		<Fragment>
