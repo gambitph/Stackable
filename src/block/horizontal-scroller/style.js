@@ -59,7 +59,7 @@ const Styles = props => {
 				styleRule="--stk-column-width"
 				attrName="horizontalScrollerColumnWidth"
 				key="horizontalScrollerColumnWidth-save"
-				format="%spx"
+				hasUnits="px"
 				responsive="all"
 			/>
 			<BlockCss
@@ -69,7 +69,7 @@ const Styles = props => {
 				styleRule="--stk-column-width"
 				attrName="horizontalScrollerColumnWidth"
 				key="horizontalScrollerColumnWidth"
-				format="%spx"
+				hasUnits="px"
 				responsive="all"
 			/>
 			<BlockCss
@@ -97,7 +97,7 @@ const Styles = props => {
 				styleRule="--stk-left-offset"
 				attrName="horizontalScrollerLeftOffset"
 				key="horizontalScrollerLeftOffset-save"
-				format="%spx"
+				hasUnits="px"
 				responsive="all"
 			/>
 			<BlockCss
@@ -107,7 +107,7 @@ const Styles = props => {
 				styleRule="--stk-left-offset"
 				attrName="horizontalScrollerLeftOffset"
 				key="horizontalScrollerLeftOffset"
-				format="%spx"
+				hasUnits="px"
 				responsive="all"
 			/>
 			<BlockCss

@@ -47,6 +47,12 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
+const TEMPLATE = [
+	[ 'stackable/column' ],
+	[ 'stackable/column' ],
+	[ 'stackable/column' ],
+]
+
 const Edit = props => {
 	 const {
 		 className,
@@ -103,7 +109,6 @@ const Edit = props => {
 									{ value: 'none', label: __( 'No Snapping', i18n ) },
 								] }
 								value={ props.attributes.horizontalScrollerSnap || 'center' }
-								default="center"
 							/>
 							<AdvancedRangeControl
 								label={ __( 'Item Width', i18n ) }
@@ -111,8 +116,8 @@ const Edit = props => {
 								responsive="all"
 								units={ [ 'px', 'em', '%' ] }
 								min={ [ 0, 0, 0 ] }
-								sliderMax={ [ 100, 1000, 1000 ] }
-								step="1"
+								sliderMax={ [ 500, 40, 50 ] }
+								step={ [ 1, 0.1, 1 ] }
 								placeholder={ 300 }
 							/>
 							<AdvancedRangeControl
@@ -120,7 +125,7 @@ const Edit = props => {
 								attribute="horizontalScrollerHeight"
 								min="0"
 								sliderMin={ 0 }
-								sliderMax={ 1000 }
+								sliderMax={ 500 }
 								step="1"
 							/>
 							<AdvancedRangeControl
@@ -137,8 +142,8 @@ const Edit = props => {
 								responsive="all"
 								units={ [ 'px', 'em', '%' ] }
 								min={ [ 0, 0, 0 ] }
-								sliderMax={ [ 300, 500, 100 ] }
-								step="1"
+								sliderMax={ [ 500, 40, 50 ] }
+								step={ [ 1, 0.1, 1 ] }
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
@@ -169,11 +174,7 @@ const Edit = props => {
 						providerValue={ columnProviderValue }
 						orientation="horizontal"
 						renderAppender={ false }
-						template={ [
-							[ 'stackable/column' ],
-							[ 'stackable/column' ],
-							[ 'stackable/column' ],
-							 ] }
+						template={ TEMPLATE }
 						templateLock={ props.attributes.templateLock || false }
 					/>
 				</div>

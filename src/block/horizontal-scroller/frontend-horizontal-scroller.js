@@ -1,5 +1,4 @@
 /* eslint-disable @wordpress/no-global-event-listener */
-/* eslint-disable no-mixed-spaces-and-tabs */
 /**
  * WordPress dependencies
  */
@@ -7,7 +6,7 @@ import domReady from '@wordpress/dom-ready'
 
 class StackableHorizontalScroller {
 	init = () => {
-		const els = document.querySelectorAll( '.stk-block-horizontal-scroller:not(.editor) > .stk-block-content' )
+		const els = document.querySelectorAll( '.stk-block-horizontal-scroller > .stk-block-content' )
 		const pos = Array( els.length ).fill().map( ( ) => ( {
 			top: 0,
 			left: 0,
