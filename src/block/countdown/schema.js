@@ -111,7 +111,7 @@ export const attributes = ( version = VERSION ) => {
 				default: DEFAULT_DATE,
 			},
 			restartInterval: {
-				type: 'number',
+				type: 'string',
 				selector: '[data-stk-countdown-restart-interval]',
 				source: 'attribute',
 				attribute: 'data-stk-countdown-restart-interval',
