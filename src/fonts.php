@@ -19,7 +19,8 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		}
 
 		public function gather_google_fonts( $block_content, $block ) {
-			if ( $this->is_stackable_block( $block['blockName'] ) && is_array( $block['attrs'] ) ) {
+			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+			if ( $this->is_stackable_block( $block_name ) && is_array( $block['attrs'] ) ) {
 				foreach ( $block['attrs'] as $attr_name => $font_name ) {
 					if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
 						self::register_font( $font_name );

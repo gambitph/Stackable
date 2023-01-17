@@ -140,7 +140,8 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 */
 		public function parse_blocks( $blocks, &$style_arr ) {
 			foreach ( $blocks as $block ) {
-				if ( stripos( $block['blockName'], 'stackable/' ) !== false ) {
+				$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+				if ( stripos( $block_name, 'stackable/' ) !== false ) {
 					$this->parse_block_style( $block, $style_arr );
 				}
 
