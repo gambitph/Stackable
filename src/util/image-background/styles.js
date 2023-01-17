@@ -1,8 +1,12 @@
 /**
+ * Internal dependencies
+ */
+import { appendImportant, __getValue } from '../styles'
+
+/**
  * External dependencies
  */
 import { camelCase } from 'lodash'
-import { appendImportant, __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -19,9 +23,9 @@ const createImageBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop
 			backgroundPosition: appendImportant( getValue( 'BackgroundPosition' ) ),
 			backgroundRepeat: appendImportant( getValue( 'BackgroundRepeat' ) ),
 			backgroundSize: appendImportant(
-				getValue( 'BackgroundSize' ) !== 'custom' ? getValue( 'BackgroundSize' ) :
-					getValue( 'BackgroundCustomSize' ) ? getValue( 'BackgroundCustomSize' ) + getValue( 'BackgroundCustomSizeUnit', '%s', 'px' ) :
-						undefined
+				getValue( 'BackgroundSize' ) !== 'custom' ? getValue( 'BackgroundSize' )
+					: getValue( 'BackgroundCustomSize' ) ? getValue( 'BackgroundCustomSize' ) + getValue( 'BackgroundCustomSizeUnit', '%s', 'px' )
+						: undefined
 			),
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.

@@ -70,10 +70,6 @@ const typographyAttributes = {
 		type: 'boolean',
 		default: false,
 	},
-	show: {
-		type: 'booleam',
-		default: true,
-	},
 }
 
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {
@@ -90,6 +86,7 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 	attrObject.add( {
 		attributes: {
 			...typographyAttributes,
+			// TODO:Add 'show' attribute if attributeNameTemplate is not the default
 			...( hasTextContent ? {
 				showText: {
 					type: 'boolean',

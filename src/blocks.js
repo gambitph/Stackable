@@ -1,7 +1,6 @@
 /**
  * This is the file that Webpack is compiling into editor_blocks.js
  */
-
 /**
  * Internal dependencies
  */
@@ -10,34 +9,21 @@ import './plugins'
 import './help'
 import './compatibility'
 import './disabled-blocks'
-import { SVGStackableCategoryIcon } from './icons'
 
 /**
  * External dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
+import { addStackableBlockCategory, registerBlockType } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import {
-	getBlockType,
-	registerBlockType,
-	getCategories,
-	setCategories,
-} from '@wordpress/blocks'
+import { getBlockType } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 
-// Register our category. Not a collection since our blocks would appear as "Uncategorized"
-setCategories( [
-	...getCategories(),
-	{
-		slug: 'stackable',
-		title: __( 'Stackable', i18n ),
-		icon: SVGStackableCategoryIcon,
-	},
-] )
+// Register our block category.
+addStackableBlockCategory()
 
 // Register all the blocks found
 const importAllAndRegister = r => {
@@ -60,7 +46,7 @@ const importAllAndRegister = r => {
 
 		// Register the block.
 		if ( ! getBlockType( name ) ) {
-			registerBlockType( name, applyFilters( `stackable.${ name }.settings`, settings ) )
+			registerBlockType( name, settings )
 		}
 	} )
 }

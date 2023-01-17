@@ -1,43 +1,62 @@
-const externals = require( './externals' )
+const { externals, stackableExternals } = require( './externals' )
 const rules = require( './rules' )
 const plugins = require( './plugins' )
 const path = require( 'path' )
 
-module.exports = [ {
+module.exports = [
+/**
+ * These entry is for scripts that compiles our libraries and modules into the
+ * built script.
+ */
+{
 
     mode: 'development',
 
     devtool: 'cheap-module-source-map',
 
 	entry: {
-        'editor_blocks': path.resolve( __dirname, '../src/blocks.js' ),
-        'editor_blocks_deprecated_v2': {
-			import: path.resolve( __dirname, '../src/deprecated/v2/blocks.js' ),
+		// This is our main editor script that loads our modules into an api
+		// window.stk
+		stk: {
+			import: path.resolve( __dirname, '../src/stk.js' ),
+			library: {
+				name: 'stk',
+				type: 'window',
+			},
+		},
+		// Admin settings script.
+		'admin_welcome': path.resolve( __dirname, '../src/welcome/admin.js' ),
+		// V2 deprecated scripts, we build this here since that's how we did it before.
+		'admin_welcome_v2': {
+			import: path.resolve( __dirname, '../src/deprecated/v2/welcome/admin.js' ),
+			filename: 'deprecated/[name].js'
+		},
+		'frontend_blocks_deprecated_v2': {
+			import: path.resolve( __dirname, '../src/deprecated/v2/block-frontend.js' ),
 			filename: 'deprecated/[name].js'
 		},
     },
 
 	output: {
 		filename: '[name].js',
-	    library: '[name]',  // it assigns this module to the global (window) object
     },
 
-    // Permit importing @wordpress/* packages.
+    // Externals are only WordPress loaded libraries.
     externals,
 
-    optimization: {
-        splitChunks: {
-			cacheGroups: {
-				vendor: {
-					test: /node_modules/,
-					chunks: "initial",
-					name: "editor_vendor",
-					priority: 10,
-					enforce: true
-				}
-			}
-        },
-    },
+    // optimization: {
+    //     splitChunks: {
+	// 		cacheGroups: {
+	// 			vendor: {
+	// 				test: /node_modules/,
+	// 				chunks: "initial",
+	// 				name: "editor_vendor",
+	// 				priority: 10,
+	// 				enforce: true
+	// 			}
+	// 		}
+    //     },
+    // },
 
     resolve: {
         alias: {
@@ -63,37 +82,57 @@ module.exports = [ {
 
 	plugins,
 },
+
+/**
+ * This entry is for editor scripts that use our apis from window.stk
+ */
 {
+
     mode: 'development',
 
     devtool: 'cheap-module-source-map',
 
 	entry: {
-		'admin_welcome': path.resolve( __dirname, '../src/welcome/admin.js' ),
-		// V2 deprecated script, we build this here since that's how we did it before.
-		'admin_welcome_v2': {
-			import: path.resolve( __dirname, '../src/deprecated/v2/welcome/admin.js' ),
-			filename: 'deprecated/[name].js'
+		editor_blocks: {
+			import: path.resolve( __dirname, '../src/blocks.js' ),
 		},
-		'frontend_blocks_deprecated_v2': {
-			import: path.resolve( __dirname, '../src/deprecated/v2/block-frontend.js' ),
+        'editor_blocks_deprecated_v2': {
+			import: path.resolve( __dirname, '../src/deprecated/v2/blocks.js' ),
 			filename: 'deprecated/[name].js'
 		},
     },
 
 	output: {
 		filename: '[name].js',
-	    library: '[name]',  // it assigns this module to the global (window) object
     },
 
-    // Permit importing @wordpress/* packages.
-    externals,
+    // Use window.stk as external imports.
+	externals: {
+		...externals,
+		...stackableExternals,
+	},
 
-    resolve: {
-        alias: {
-            '~stackable': path.resolve( __dirname, '../src/' )
-        }
-    },
+    // optimization: {
+    //     splitChunks: {
+	// 		cacheGroups: {
+	// 			vendor: {
+	// 				test: /node_modules/,
+	// 				chunks: "initial",
+	// 				name: "editor_vendor",
+	// 				priority: 10,
+	// 				enforce: true
+	// 			}
+	// 		}
+    //     },
+    // },
+
+	resolve: {
+		alias: {
+			// This is only used by deprecated v1 and v2 code, this normally
+			// shouldn't be imported outside deprecated scripts.
+			'~stackable/deprecated': path.resolve( __dirname, '../src/deprecated' ),
+		},
+	},
 
     // Clean up build output
 	stats: {
@@ -135,7 +174,9 @@ module.exports = [ {
 		'frontend_block_map': path.resolve( __dirname, '../src/block/map/frontend-map.js' ),
 		'frontend_block_notification': path.resolve( __dirname, '../src/block/notification/frontend-notification.js' ),
 		'frontend_block_video_popup': path.resolve( __dirname, '../src/block/video-popup/frontend-video-popup.js' ),
-    },
+		'frontend_block_progress_circle': path.resolve( __dirname, '../src/block/progress-circle/frontend-progress-circle.js' ),
+		'frontend_block_progress_bar': path.resolve( __dirname, '../src/block/progress-bar/frontend-progress-bar.js' ),
+	},
 
 	output: {
 		filename: '[name].js',

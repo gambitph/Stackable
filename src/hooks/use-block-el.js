@@ -1,17 +1,15 @@
 /**
  * Internal dependencies
  */
-import { useBlockAttributes } from './use-block-attributes'
+import { useBlockAttributesContext } from './use-block-attributes-context'
 
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 
 export const useBlockEl = selector => {
-	const { clientId } = useBlockEditContext()
-	const { uniqueId } = useBlockAttributes( clientId )
+	const { uniqueId } = useBlockAttributesContext()
 	return useMemo( () => new BlockEl( uniqueId, selector ), [ uniqueId, selector ] )
 }
 

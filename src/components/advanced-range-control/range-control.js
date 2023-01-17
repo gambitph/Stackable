@@ -16,7 +16,11 @@ import {
 	__experimentalNumberControl as NumberControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
 import {
-	useState, useLayoutEffect, useEffect, useCallback, memo, useRef,
+	useState,
+	useLayoutEffect,
+	useEffect,
+	memo,
+	useCallback,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -24,7 +28,7 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import classnames from 'classnames'
-import { clamp } from 'lodash'
+import { clamp, debounce } from 'lodash'
 import { i18n } from 'stackable'
 import { useDeviceType } from '~stackable/hooks'
 
@@ -46,12 +50,14 @@ const StackableRangeControl = memo( props => {
 		...propsToPass
 	} = props
 
-	const numberControlRef = useRef( null )
-
 	// We have an internal state for the value so that the user can freely type
 	// any number in the number field without any validation and then we can
 	// just set the proper value on the onChange prop.
 	const [ value, setValue ] = useState( props.value === '' || ( isNaN( props.value ) && props.value !== 'auto' ) ? '' : props.value )
+
+	// We need to debounce the prop.onChange callback for when the slider is
+	// dragged, this is so that things feel smoother.
+	const debouncedOnChange = useCallback( debounce( props.onChange, 100 ), [ props.onChange ] )
 
 	// Update the internal value state if the prop changes.
 	useEffect( () => {
@@ -65,29 +71,31 @@ const StackableRangeControl = memo( props => {
 
 	// When the value is changed, set the internal value to it, but provide only
 	// a valid number to the onChange event.
-	const handleOnChange = useCallback( value => {
+	const handleOnChange = value => {
 		setValue( value )
 		if ( typeof value === 'string' && value.toLowerCase() === 'auto' ) {
-			props.onChange( value )
+			debouncedOnChange( value )
 			return
 		} else if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
-				props.onChange( clamp( parsedValue, props.min, props.max ) )
+				const newValue = clamp( parsedValue, props.min, props.max )
+				setValue( newValue )
+				debouncedOnChange( newValue )
 				return
 			}
 		}
-		props.onChange( props.resetFallbackValue )
-	}, [ props.onChange, props.min, props.max, props.resetFallbackValue ] )
+		debouncedOnChange( props.resetFallbackValue )
+	}
 
-	const handleOnReset = useCallback( () => {
+	const handleOnReset = () => {
 		setValue( props.resetFallbackValue )
 		props.onChange( props.resetFallbackValue )
-	}, [ props.onChange, props.resetFallbackValue ] )
+	}
 
 	// When the number input is blurred, make sure that the value inside the
 	// field looks correct.  The number is within min/max and is a number.
-	const handleOnBlur = useCallback( () => {
+	const handleOnBlur = () => {
 		if ( typeof value === 'string' && value.toLowerCase() === 'auto' ) {
 			setValue( value )
 			return
@@ -99,7 +107,7 @@ const StackableRangeControl = memo( props => {
 			}
 		}
 		setValue( props.resetFallbackValue )
-	}, [ value, props.min, props.max, props.resetFallbackValue ] )
+	}
 
 	/**
 	 * We cannot trust the initialPosition of the RangeControl, so we
@@ -142,6 +150,7 @@ const StackableRangeControl = memo( props => {
 	>
 		<RangeControl
 			{ ...propsToPass }
+			value={ value }
 			initialPosition=""
 			onChange={ handleOnChange }
 			withInputField={ false }
@@ -157,7 +166,6 @@ const StackableRangeControl = memo( props => {
 		/>
 		{ withInputField && isNumberControlSupported && (
 			<NumberControl
-				ref={ numberControlRef }
 				disabled={ props.disabled }
 				isShiftStepEnabled={ isShiftStepEnabled }
 				max={ props.max }

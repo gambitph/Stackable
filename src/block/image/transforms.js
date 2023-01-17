@@ -11,7 +11,7 @@ import { TEMPLATE as IMAGE_BOX_TEMPLATE } from '../image-box/edit'
 /**
  * External dependencies
  */
-import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import { createUniqueClass } from '~stackable/util'
 
 const transforms = {
 	from: [

@@ -1,5 +1,5 @@
 // Show column widths when hovering.
-.stk-inner-blocks:hover > * > * > [data-type="stackable/column"] > * > .stk-column-resizeable > .stk-linking-wrapper {
+.stk-inner-blocks:hover > * > * > [data-type="stackable/column"] > .stk-column-resizeable > .stk-linking-wrapper {
 	display: block;
 }
 

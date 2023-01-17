@@ -18,7 +18,7 @@ import { useDynamicContent } from '~stackable/components/dynamic-content-control
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	useEffect, useState, forwardRef, useMemo,
+	useEffect, useState, forwardRef,
 } from '@wordpress/element'
 
 export const Typography = forwardRef( ( props, ref ) => {
@@ -41,9 +41,7 @@ export const Typography = forwardRef( ( props, ref ) => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 	const TagName = ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag || 'p'
 	const value = _value === null ? getAttribute( 'text' ) : _value
-	const onChange = useMemo( () => {
-		return _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
-	}, [ _onChange, updateAttribute ] )
+	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
 
 	const [ debouncedText, setDebouncedText ] = useState( value )
 

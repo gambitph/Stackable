@@ -10,14 +10,14 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
-import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { Style as StyleComponent } from '~stackable/components'
+import { getUniqueBlockClass, useStyles } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import { renderToString } from '@wordpress/element'
+import { memo, renderToString } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const buttonOptions = {
 	selector: '.stk-button',
@@ -28,30 +28,46 @@ const typographyOptions = {
 	hoverSelector: '.stk-button:hover .stk-button__inner-text',
 }
 
-export const ButtonStyles = props => {
+const getStyleParams = ( options = {} ) => {
 	const {
-		...propsToPass
-	} = props
+		clientId,
+	} = options
 
-	const deviceType = useDeviceType()
+	return [
+		// This makes the block fullwidth inside the editor.
+		{
+			renderIn: 'edit',
+			selectorCallback: () => `.editor-styles-wrapper [data-block="${ clientId }"]`,
+			styleRule: 'width',
+			attrName: 'buttonFullWidth',
+			valueCallback: value => {
+				return value ? '100%' : undefined
+			},
+		},
+	]
+}
+
+export const ButtonStyles = memo( props => {
 	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
+	const styles = useStyles( getStyleParams( { ...props, clientId } ) )
 
 	return (
 		<>
-			<BlockDiv.Style { ...propsToPass } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<Button.Style { ...propsToPass } options={ buttonOptions } />
-			<Typography.Style { ...propsToPass } options={ typographyOptions } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<BlockDiv.Style { ...props } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<Button.Style { ...props } { ...buttonOptions } />
+			<Typography.Style { ...props } { ...typographyOptions } />
+			<EffectsAnimations.Style { ...props } />
+			<StyleComponent
+				styles={ styles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...props }
+			/>
 		</>
 	)
-}
+} )
 
 ButtonStyles.defaultProps = {
 	isEditor: false,

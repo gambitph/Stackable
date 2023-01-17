@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 5.8.3
-Tested up to: 6.0.1
+Requires at least: 5.9
+Tested up to: 6.1.1
 Requires PHP: 5.7
-Stable tag: 3.4.3
+Stable tag: 3.6.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -35,7 +35,7 @@ Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to j
 
 ## Powerful Custom Blocks
 
-Get 36 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 39 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 You can choose which of these blocks you need, depending on your workflow.
 
@@ -54,6 +54,8 @@ Special Blocks
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Progress Circle Block — [View Block](https://wpstackable.com/progress-circle-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Progress Bar Block — [View Block](https://wpstackable.com/progress-bar-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Accordion Block — [View Block](https://wpstackable.com/accordion-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Map Block — [View Block](https://wpstackable.com/map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Icon Label Block
@@ -148,6 +150,8 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.6 Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -190,7 +194,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 = Minimum Requirements =
 
-You'll need WordPress version 5.8.3 or higher for this to work.
+You'll need WordPress version 5.9 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -246,15 +250,108 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.6.3 =
+* New: The Table of Contents block can now have a title #2346
+* Fixed: In Conditional Display, added support for named and 0 timezones #2530
+* Fixed: FontAwesome script loading is now delayed in the editor
+* Fixed: Possible error in the Accordion block's icon #2546
+* Fixed: Tablet and mobile units are not being followed in the editor #2547
+* Fixed: Added missing translation strings #2399 #2402 #2472 #2498 (Thanks DAnn2012)
+* Fixed: Table of Contents block now support the Stackable v2 Heading block #2376
+* Fixed: Content vertical align option in the Column block doesn't appear correctly in the editor #2408
+* Fixed: Using a custom SVG in the Icon block can result in it losing its colors  #2137
+* Fixed: Image Box block selection goes past its container in the editor #2369
+* Fixed: Block example show a "no blocks in the group" placeholder #2405
+* Fixed: Image alt now no longer gets overridden when picking images #2524
+
+= 3.6.2 =
+* New: (Freemius) Granular opt-out controls
+* New: (Freemius) Support for anonymous license activation
+* New: (Freemius) New opt-in screen
+* New: (Freemius) User IP is no longer sent during opt-in
+* New: (Freemius) No data is now sent when skipping the opt-in screen
+* New: (Freemius) Admin query strings no longer include a Freemius flag
+* New: (Freemius) Better PHP 8 compatibility
+* Fixed: Some PHP 8 warning messages with Twenty Twenty Three theme and Dynamic Content #2508 #2503
+* Fixed: Design Library button text label now shows properly #2486
+* Fixed: Possible Block error with v2 Button blocks and Blocksy #2484
+
+= 3.6.1 =
+* New: WordPress 6.1 compatibility
+* New: You can now change the Query String of the Posts block's Pagination Block #2313
+* New: Added Advanced Tab > Responsive > Tablet column arrangement option ##2325
+* New: Added Advanced Tab > Responsive > Tablet and mobile column arrangement option #2361
+* Fixed: RankMath compatibility for the Table of Contents block #2424
+* Fixed: Newly created columns are not cloned correctly when using the Columns block's Columns option #2476
+* Fixed: Posts block pagination could not navigate back to page 1 #2313
+* Fixed: Reset button on icon options now reset correctly #2329
+* Fixed: Copy and pasting styles on the Progress Circle and Bar blocks also copied some content #2469
+* Fixed: Progress Bar block percentage text can wrap around spaces #2464
+* Fixed: Button blocks can still be added even if they're disabled in the admin #2305
+* Fixed: Possible block error when adding conditional display about dates #2477
+
+= 3.6.0 =
+[Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Progress Circle and Progress Bar Blocks
+* Fixed: You can now select transparent as the color for the 2nd gradient background color #2358
+
+= 3.5.0 =
+[No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Various performance improvements
+* New: Smaller plugin filesize
+* New: New exposed window.stk API (undocumented)
+* New: Support for block theme contentSize and wideSize
+* Fixed: Wide and fullwidth blocks sometimes showed centered in the editor
+* Fixed: Column content vertical align did not show up correctly in the editor
+* Fixed: Some block options not showing up in the editor
+* Fixed: Column block's Content Vertical Align not displaying correctly in the editor
+* Fixed: Icon block margin and size options not displaying correctly in the editor #2426
+* Fixed: Card block horizontal layout image resizing issues in tablet and mobile
+* Fixed: Hero block can get an error when switching layouts
+* Fixed: Accordion content in the editor overlapped sometimes
+* Fixed: Some styles did not show in the editor when changing hover states
+* Fixed: Some shadows flicker or get clipped in Safari #2328
+* Fixed: Accordions close adjacent doesn't work with reduced motion OS setting #2352
+* Fixed: Custom Fields PHP warnings #2415
+* Fixed: Using custom SVGs with colors can sometimes cause block errors #2411
+
+= 3.4.5 =
+* Fixed: Accordion containers incorrectly collapsed when placed inside columns
+
+= 3.4.4 =
+* Fixed: This update fixes some issues which were found in v3.4.3 in the Accordion and Image box blocks
+* Fixed: Accordion column height issues
+* Fixed: Hard to select the accordion block contents
+* Fixed: Containers with containers inside incorrectly inherit the parent container's size styles
+* Fixed: Content alignment issue in the image box block
+* Fixed: Content vertical align option now works correctly in the icon box block #2404
+
 = 3.4.3 =
+* New: Added duration option for the Count Up block #2355
+* New: Added button alignment & full-width options for the Button Group block
 * Change: Remove doubled Stackable icons in the block inserter #2383
+* Change: Video popup now uses YouTube's no-cookie domain #2392
+* Fixed: Buttons stacking on mobile adds a margin to some buttons #2249
+* Fixed: Full width buttons force other non-full width buttons to wrap text
+* Fixed: Multiple full width buttons in a group incorrectly wrap in mobile
+* Fixed: Buttons with borders sometimes show a thin white border
+* Fixed: Typing in a global color name is slow #2339
 * Fixed: Resetting max width doesn't reset content horizontal align #2338
+* Fixed: Icon panel doesn't close
 * Fixed: Icon list block contents are also copied when copying styles #2320
 * Fixed: Columns & Button group blocks show "add block" panel when used in reusable blocks & in widget editor #2371
 * Fixed: Dynamic content button is not aligned in link inspector control #2332
 * Fixed: Remove highlight toolbar button for button blocks #2314
 * Fixed: Icon is not visible in some notification block layouts #2323
 * Fixed: Position "sticky" doesn't work as intended inside columns #2212
+* Fixed: Global typography does not show in tablet & mobile and in FSE #2340 & #2289
+* Fixed: Fatal error with Freemius in edge case when blog no longer exists in multisite
+* Fixed: ACF & Metabox dynamic content images show blurry #2064
+* Fixed: ACF & Metabox added image size selector for dynamic content image fields #2064
+* Fixed: Added single image field type support for Metabox
+* Fixed: Related map block scripts now do not appear in the frontend when no map block is used #2386
 
 = 3.4.2 =
 * Fixed: Editor speed performance improvements when editing blocks

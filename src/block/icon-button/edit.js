@@ -3,9 +3,7 @@
  */
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
-import {
-	InspectorTabs,
-} from '~stackable/components'
+import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -19,18 +17,19 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
 /**
  * Internal dependencies
  */
+import { defaultIcon } from './schema'
 import { IconButtonStyles } from './style'
 import { blockStyles } from './block-styles'
 
@@ -41,13 +40,11 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const blockHoverClass = useBlockHoverClass()
 	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-button',
-		blockHoverClass,
 	] )
 
 	return (
@@ -63,7 +60,7 @@ const Edit = props => {
 				hasTextColor={ false }
 				hasIconColor={ true }
 			/>
-			<Button.InspectorControls.Icon hasColor={ false } />
+			<Button.InspectorControls.Icon hasColor={ false } defaultValue={ defaultIcon } />
 			<Button.InspectorControls.Size hasWidth={ true } />
 			<Button.InspectorControls.Borders
 				borderSelector=".stk-button"
@@ -98,4 +95,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

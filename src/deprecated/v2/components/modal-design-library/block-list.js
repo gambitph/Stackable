@@ -4,8 +4,7 @@
 import {
 	orderBy, last, startCase,
 } from 'lodash'
-import ControlSeparator from '../../../../components/control-separator'
-import AdvancedToolbarControl from '../../../../components/advanced-toolbar-control'
+import { ControlSeparator, AdvancedToolbarControl } from '~stackable/components'
 import { getAllBlocks } from '../../design-library/index'
 import { getDesigns } from '~stackable/design-library'
 import { isPro, i18n } from 'stackable'

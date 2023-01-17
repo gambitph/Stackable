@@ -116,17 +116,11 @@ const editorMarginBottomParams = ( options = {} ) => {
 }
 
 export const Style = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const topSeparatorStyles = useStyles( attributes, separatorGetStyleParams( options, 'top' ) )
-	const bottomSeparatorStyles = useStyles( attributes, separatorGetStyleParams( { ...options, isInitiallyFlippedVertically: false }, 'bottom' ) )
-	const bottomMarginBottomStyle = useStyles( attributes, editorMarginBottomParams( options ) )
-	const topSeparatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'top' ) )
-	const bottomSeparatorLayerStyles = useStyles( attributes, applyFilters( 'stackable.block-component.separator.get-style-params', [], options, 'bottom' ) )
+	const topSeparatorStyles = useStyles( separatorGetStyleParams( props, 'top' ) )
+	const bottomSeparatorStyles = useStyles( separatorGetStyleParams( { ...props, isInitiallyFlippedVertically: false }, 'bottom' ) )
+	const bottomMarginBottomStyle = useStyles( editorMarginBottomParams( props ) )
+	const topSeparatorLayerStyles = useStyles( applyFilters( 'stackable.block-component.separator.get-style-params', [], props, 'top' ) )
+	const bottomSeparatorLayerStyles = useStyles( applyFilters( 'stackable.block-component.separator.get-style-params', [], props, 'bottom' ) )
 
 	return (
 		<>
@@ -134,31 +128,31 @@ export const Style = props => {
 				styles={ topSeparatorStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<StyleComponent
 				styles={ bottomSeparatorStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<StyleComponent
 				styles={ topSeparatorLayerStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<StyleComponent
 				styles={ bottomSeparatorLayerStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 			<StyleComponent
 				styles={ bottomMarginBottomStyle }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</>
 	)

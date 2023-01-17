@@ -3,9 +3,7 @@ import { Style } from './style'
 import { useColumn } from './use-column'
 
 import { ResizableColumn } from '~stackable/components'
-import { useBlockAttributes } from '~stackable/hooks'
-
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { useBlockAttributesContext } from '~stackable/hooks'
 
 export { getColumnClasses } from './use-column'
 
@@ -15,9 +13,8 @@ export const Column = props => {
 		...propsToPass
 	} = props
 
-	const { clientId } = useBlockEditContext()
 	const setHandlers = useColumn()
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
 
 	return <ResizableColumn
 		showHandle={ isHovered }

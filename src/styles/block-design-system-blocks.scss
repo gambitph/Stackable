@@ -13,12 +13,8 @@
 
 .stk-button-group {
 	row-gap: cssvar(button-row-gap);
+	column-gap: cssvar(button-gap);
 	justify-content: var(--stk-alignment-justify-content);
-
-	// Use margin-inline-end in gaps instead since safari does not support it.
-	:is(.stk-block, .stk-button):not(:last-child) {
-		margin-inline-end: cssvar(button-gap);
-	}
 }
 
 :is(.stk-block-button, .stk-block-icon-button, .stk-block-pagination) {
@@ -112,7 +108,7 @@
 // Icons
 .stk--inner-svg {
 	border-color: cssvar(icon-color);
-	svg:last-child {
+	svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
 		width: cssvar(icon-size);
 		height: cssvar(icon-size);
 		&,

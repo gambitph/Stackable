@@ -2,20 +2,22 @@
  * Creates all the attributes needed for the Button Controls component
  */
 /**
+ * Internal dependencies
+ */
+import {
+	createAllCombinationAttributes, omitAttributes, pickAttributes,
+} from '../attributes'
+import { createTypographyAttributes } from '../typography'
+
+/**
  * External dependencies
  */
-import { createAllCombinationAttributes, createTypographyAttributes } from '~stackable/util'
 import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-
-/**
- * Internal dependencies
- */
-import { omitAttributes, pickAttributes } from '../attributes'
 
 const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 	const {

@@ -17,9 +17,8 @@ import {
 	AdvancedToggleControl,
 } from '~stackable/components'
 import {
-	useBlockHoverClass,
-} from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -37,6 +36,7 @@ import {
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -53,12 +53,9 @@ const Edit = props => {
 		separatorInverted,
 	} = attributes
 
-	const blockHoverClass = useBlockHoverClass()
-
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-separator',
-		blockHoverClass,
 		'stk--no-padding',
 	] )
 
@@ -129,4 +126,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

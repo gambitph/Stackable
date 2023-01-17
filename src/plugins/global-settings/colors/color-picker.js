@@ -48,7 +48,7 @@ const ColorPickerTextArea = props => (
 							className="components-text-control__input"
 							id="color-picker-text-name"
 							onChange={ event => props.onChange( event.target.value ) }
-							value={ props.value }
+							defaultValue={ props.value }
 						/>
 					</BaseControl>
 				</div>

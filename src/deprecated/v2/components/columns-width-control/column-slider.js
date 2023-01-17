@@ -1,9 +1,7 @@
 import {
 	Slider, Handles, Rail,
 } from 'react-compound-slider'
-import {
-	SliderRail, Handle,
-} from './slider-components'
+import { SliderRail, Handle } from './slider-components'
 import { isEqual } from 'lodash'
 import { fixColumnWidths } from './util'
 

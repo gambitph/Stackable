@@ -43,6 +43,7 @@ export const Edit = props => {
 		wrapInPanels = true,
 		responsive = 'all',
 		hover = 'all',
+		defaultValue,
 	} = props
 
 	const {
@@ -75,6 +76,7 @@ export const Edit = props => {
 			<IconControl
 				label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
 				value={ getAttribute( 'icon' ) }
+				defaultValue={ defaultValue }
 				onChange={ updateAttributeHandler( 'icon' ) }
 				help={ iconControlHelp }
 			/>
@@ -241,7 +243,7 @@ export const Edit = props => {
 	return (
 		<Wrapper>
 			{ wrapInPanels
-				? <PanelAdvancedSettings title={ __( 'Icon', i18n ) } id="icon" initialOpen={ initialOpen } isOpen={ true } >{ iconControls }</PanelAdvancedSettings>
+				? <PanelAdvancedSettings title={ __( 'Icon', i18n ) } id="icon" initialOpen={ initialOpen }>{ iconControls }</PanelAdvancedSettings>
 				: iconControls
 			}
 			{ hasShape && ( wrapInPanels
@@ -277,4 +279,5 @@ Edit.defaultProps = {
 	hasIconGap: false,
 	hasIconPosition: false,
 	hasMultiColor: false,
+	defaultValue: '',
 }

@@ -1,22 +1,21 @@
 /**
  * Internal dependencies
  */
-import { getAttrName } from '../attributes'
+import { getAttrName, getAttributeName } from '../attributes'
 
 /**
  * External dependencies
  */
-import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
-import { getAttributeName } from '~stackable/util'
-import { compact } from 'lodash'
-import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
+import { useBlockAttributesContext, useBlockHoverState } from '~stackable/hooks'
+import { compact, pick } from 'lodash'
+import { QueryLoopContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
-	useMemo, useContext, useState, useEffect,
+	useMemo, useContext, useState, useEffect, useRef,
 } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
@@ -26,12 +25,15 @@ import { useSelect } from '@wordpress/data'
  */
 class StyleObject {
 	constructor( styleParams = [] ) {
-	  this.styleParams = styleParams
+		this.styleParams = styleParams
 
-	  // Initialize
-	  this.initStyles()
-	  this.attributesUsed = this.getDependencyAttrnames( this.styleParams )
+		// Initialize
+		this.initStyles()
 		this.queryLoopInstance = null
+	}
+
+	setStyleParams( styleParams ) {
+		this.styleParams = styleParams
 	}
 
 	/**
@@ -44,109 +46,101 @@ class StyleObject {
 		}
 	}
 
-	/**
-	 * Grabs all the attribute names which will be used in generating styles
-	 * from the styleParams. This is used for generating dependency arrays used
-	 * by React hooks.
-	 *
-	 * @param {Array} styleParams Style parameters
-	 * @return {Array} Attribute names based on the styleParams
-	 */
-	getDependencyAttrnames( styleParams ) {
-		const deps = []
-		styleParams.forEach( styleParams => {
-			const {
-				attrName: _attrName = '',
-				hasUnits = false,
-				responsive = false,
-				hover: _hover = false,
-				hoverCallback = null,
-				dependencies = [], // If this style rerender depends on other attributes, add them here.
-				styles = null,
-				attrNameTemplate = '',
-			} = styleParams
+	// getDependencyAttrnames( styleParams ) {
+	// 	const deps = []
+	// 	styleParams.forEach( styleParams => {
+	// 		const {
+	// 			attrName: _attrName = '',
+	// 			hasUnits = false,
+	// 			responsive = false,
+	// 			hover: _hover = false,
+	// 			hoverCallback = null,
+	// 			dependencies = [], // If this style rerender depends on other attributes, add them here.
+	// 			styles = null,
+	// 			attrNameTemplate = '',
+	// 		} = styleParams
 
-			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
-			const hover = hoverCallback ? 'all' : _hover
+	// 		const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+	// 		const hover = hoverCallback ? 'all' : _hover
 
-			// This is a shorthand, you can define multiple style rules in a
-			// single styleParam.
-			if ( styles ) {
-				Object.values( styles ).forEach( attrName => {
-					deps.push( ...this.getDependencyAttrnames( [ {
-						...styleParams,
-						styles: null,
-						attrName,
-					} ] ) )
-				} )
-				return
-			}
+	// 		// This is a shorthand, you can define multiple style rules in a
+	// 		// single styleParam.
+	// 		if ( styles ) {
+	// 			Object.values( styles ).forEach( attrName => {
+	// 				deps.push( ...this.getDependencyAttrnames( [ {
+	// 					...styleParams,
+	// 					styles: null,
+	// 					attrName,
+	// 				} ] ) )
+	// 			} )
+	// 			return
+	// 		}
 
-			const pushAttr = ( attrName, device = 'desktop', state = 'normal' ) => {
-				deps.push( getAttributeName( attrName, device, state ) )
-				if ( hasUnits ) {
-					deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
-				}
+	// 		const pushAttr = ( attrName, device = 'desktop', state = 'normal' ) => {
+	// 			deps.push( getAttributeName( attrName, device, state ) )
+	// 			if ( hasUnits ) {
+	// 				deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
+	// 			}
 
-				// Add the attribute names of the other dependencies.
-				dependencies.forEach( _attrName => {
-					const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+	// 			// Add the attribute names of the other dependencies.
+	// 			dependencies.forEach( _attrName => {
+	// 				const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
 
-					deps.push( getAttributeName( attrName, 'desktop', 'normal' ) ) // Always depend on the normal state.
-					deps.push( getAttributeName( attrName, device, state ) )
-					if ( hasUnits ) {
-						deps.push( getAttributeName( `${ attrName }Unit`, 'desktop', 'normal' ) ) // Always depend on the normal state.
-						deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
-					}
-				} )
-			}
+	// 				deps.push( getAttributeName( attrName, 'desktop', 'normal' ) ) // Always depend on the normal state.
+	// 				deps.push( getAttributeName( attrName, device, state ) )
+	// 				if ( hasUnits ) {
+	// 					deps.push( getAttributeName( `${ attrName }Unit`, 'desktop', 'normal' ) ) // Always depend on the normal state.
+	// 					deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
+	// 				}
+	// 			} )
+	// 		}
 
-			const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
-			const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
+	// 		const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
+	// 		const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
 
-			const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
-			const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
-			const hasCollapsed = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'collapsed' ) )
+	// 		const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
+	// 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
+	// 		const hasCollapsed = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'collapsed' ) )
 
-			pushAttr( attrName )
-			if ( hasHover ) {
-				pushAttr( attrName, 'desktop', 'hover' )
-			}
-			if ( hasParentHover ) {
-				pushAttr( attrName, 'desktop', 'parent-hover' )
-			}
-			if ( hasCollapsed ) {
-				pushAttr( attrName, 'desktop', 'collapsed' )
-			}
+	// 		pushAttr( attrName )
+	// 		if ( hasHover ) {
+	// 			pushAttr( attrName, 'desktop', 'hover' )
+	// 		}
+	// 		if ( hasParentHover ) {
+	// 			pushAttr( attrName, 'desktop', 'parent-hover' )
+	// 		}
+	// 		if ( hasCollapsed ) {
+	// 			pushAttr( attrName, 'desktop', 'collapsed' )
+	// 		}
 
-			if ( hasTablet ) {
-				pushAttr( attrName, 'tablet', 'normal' )
-				if ( hasHover ) {
-					pushAttr( attrName, 'tablet', 'hover' )
-				}
-				if ( hasParentHover ) {
-					pushAttr( attrName, 'tablet', 'parent-hover' )
-				}
-				if ( hasCollapsed ) {
-					pushAttr( attrName, 'tablet', 'collapsed' )
-				}
-			}
+	// 		if ( hasTablet ) {
+	// 			pushAttr( attrName, 'tablet', 'normal' )
+	// 			if ( hasHover ) {
+	// 				pushAttr( attrName, 'tablet', 'hover' )
+	// 			}
+	// 			if ( hasParentHover ) {
+	// 				pushAttr( attrName, 'tablet', 'parent-hover' )
+	// 			}
+	// 			if ( hasCollapsed ) {
+	// 				pushAttr( attrName, 'tablet', 'collapsed' )
+	// 			}
+	// 		}
 
-			if ( hasMobile ) {
-				pushAttr( attrName, 'mobile', 'normal' )
-				if ( hasHover ) {
-					pushAttr( attrName, 'mobile', 'hover' )
-				}
-				if ( hasParentHover ) {
-					pushAttr( attrName, 'mobile', 'parent-hover' )
-				}
-				if ( hasCollapsed ) {
-					pushAttr( attrName, 'mobile', 'collapsed' )
-				}
-			}
-		} )
-		return deps
-	}
+	// 		if ( hasMobile ) {
+	// 			pushAttr( attrName, 'mobile', 'normal' )
+	// 			if ( hasHover ) {
+	// 				pushAttr( attrName, 'mobile', 'hover' )
+	// 			}
+	// 			if ( hasParentHover ) {
+	// 				pushAttr( attrName, 'mobile', 'parent-hover' )
+	// 			}
+	// 			if ( hasCollapsed ) {
+	// 				pushAttr( attrName, 'mobile', 'collapsed' )
+	// 			}
+	// 		}
+	// 	} )
+	// 	return deps
+	// }
 
 	setQueryLoopInstance( instanceNumber ) {
 		this.queryLoopInstance = instanceNumber
@@ -235,6 +229,7 @@ class StyleObject {
 			enabledCallback = null, // Function that if returns false, will not render this style.
 			vendorPrefixes = [], // Add vendor prefixes to also generate for the styleRule, e.g. '-webkit-'
 			clampCallback = null, // Function that can be used to limit the value in tablet/mobile based on the desktop value
+			unitCallback = null, // Function that can override
 		} = styleParams
 
 		const getAttribute = ( _attrName, device = 'desktop', state = 'normal', getInherited = false ) => {
@@ -312,6 +307,11 @@ class StyleObject {
 				}
 			}
 
+			// Allow others to override the unit.
+			if ( unitCallback ) {
+				unit = unitCallback( unit, device, state )
+			}
+
 			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
 			if ( clampCallback && responsive ) {
 				const desktopValue = attributes[ getAttributeName( attrName, 'desktop', state ) ]
@@ -380,12 +380,42 @@ class StyleObject {
 			return getSelector( _selector )
 		}
 
+		const appendClass = ( _selector, prependString, prependStringIfEditor, blockStateCompare ) => {
+			const getSelector = s => {
+				return `${ s }${ blockState === blockStateCompare ? prependStringIfEditor : prependString }`
+			}
+
+			if ( Array.isArray( _selector ) ) {
+				return _selector.map( getSelector ).join( ', ' )
+			}
+
+			return getSelector( _selector )
+		}
+
 		const collapsedSelector = prependClass( selector, ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open', ':where(.stk-block-accordion.stk--is-open) .%s, .%s.stk--is-open', 'collapsed' )
 		const parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .%s', '.%s.stk--is-hovered', 'parent-hovered' )
-		hoverSelector = hoverSelector
-			// In editor, always use the `selector` instead of the hoverSelector.
-			? prependClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.%s.stk--is-hovered', 'hover' )
-			: prependClass( selector, '.%s:hover', '.%s.stk--is-hovered', 'hover' )
+
+		// Create the hoverSelector, this is done by prepending the selector
+		// with a '.%s:hover' class (%s is replaced with the block's unique
+		// class) However, for the editor, we sometimes target the block itself
+		// using the selector `[data-block="clientId"]`, for these scenarios the
+		// method will not work. Instead we just append `:hover` to the block
+		// selector directly.
+		const selectorHasDataBlock = ( hoverSelector || selector ).includes( '[data-block=' ) && ( hoverSelector || selector ).endsWith( ']' )
+		if ( ! selectorHasDataBlock ) {
+			// Prepend .%s:hover to the selector.
+			hoverSelector = hoverSelector
+				// In editor, always use the `selector` instead of the hoverSelector.
+				? prependClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.%s.stk--is-hovered', 'hover' )
+				: prependClass( selector, '.%s:hover', '.%s.stk--is-hovered', 'hover' )
+		} else {
+			// If there is a [data-block] append the :hover or .stk-is-hovered directly to it.
+			hoverSelector = hoverSelector
+				// In editor, always use the `selector` instead of the hoverSelector.
+				? appendClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.stk--is-hovered', 'hover' )
+				: appendClass( selector, ':hover', '.stk--is-hovered', 'hover' )
+		}
+
 		selector = prependClass( selector )
 
 		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), desktopQuery, renderIn, vendorPrefixes )
@@ -426,14 +456,15 @@ class StyleObject {
 		}
 	}
 
-	getDependencies( attributes, deviceType = 'Desktop', blockState = 'normal' ) {
-		return [
-			attributes.uniqueId,
-			deviceType,
-			blockState,
-			...this.attributesUsed.map( attrName => attributes[ attrName ] ),
-		]
-	}
+	// getDependencies( attributes, deviceType = 'Desktop', blockState = 'normal' ) {
+	// 	const attributesUsed = this.getDependencyAttrnames( this.styleParams )
+	// 	return [
+	// 		attributes.uniqueId,
+	// 		deviceType,
+	// 		blockState,
+	// 		...attributesUsed.map( attrName => attributes[ attrName ] ),
+	// 	]
+	// }
 }
 
 export default StyleObject
@@ -478,6 +509,84 @@ export const useQueryLoopInstanceId = uniqueId => {
 	return instanceId
 }
 
+// These are all the possible suffixes used.
+const ATTR_NAME_MATRIX = [
+	[ '', 'Unit' ],
+	[ '', 'Tablet', 'Mobile' ],
+	[ '', 'Hover', 'ParentHover', 'Collapsed' ],
+]
+
+/**
+ * Generates all the possible attribute names and suffixes for attribute names.
+ * e.g. FontSize = FontSizeTablet, FontSizeMobile, FontSizeUnitTablet, ...
+ *
+ * @param {Array} attrNames
+ * @return {Array} possible attribute names
+ */
+export const formAllPossibleAttributeNames = attrNames => {
+	return attrNames.reduce( ( attrNames, attrName ) => {
+		ATTR_NAME_MATRIX[ 0 ].forEach( x => {
+			ATTR_NAME_MATRIX[ 1 ].forEach( y => {
+				ATTR_NAME_MATRIX[ 2 ].forEach( z => {
+					attrNames.push( `${ attrName }${ x }${ y }${ z }` )
+				} )
+			} )
+		} )
+		return attrNames
+	}, [] )
+}
+
+/**
+ * Generates a list of all attribute names. This is fast (faster than the
+ * getDependencyAttrnames above). This is fast because the attribute names
+ * generated in the list aren't cross checked on whether they're really
+ * specified in the block's schema.
+ *
+ * This is mostly used for the selector function in `useBlockAttributesContext`
+ * to make the hook performant.
+ *
+ * @param {Array} styleParams
+ * @return {Array} All used attribute names
+ */
+function getDependencyAttrnamesFast( styleParams ) {
+	const attrNames = []
+	styleParams.forEach( styleParams => {
+		const {
+			attrName: _attrName = '',
+			dependencies = [], // If this style rerender depends on other attributes, add them here.
+			attrNameTemplate = '',
+			styles = {},
+		} = styleParams
+
+		// Add the attribute name.
+		const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+		if ( attrName && ! attrNames.includes( attrName ) ) {
+			attrNames.push( attrName )
+		}
+
+		// Add the shorthand attributes. We allow multiple styleName to attribute mappings.
+		Object.values( styles ).forEach( _attrName => {
+			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+			if ( attrName && ! attrNames.includes( attrName ) ) {
+				attrNames.push( attrName )
+			}
+		} )
+
+		// Add the attribute dependencies.
+		dependencies.forEach( _attrName => {
+			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+			if ( attrName && ! attrNames.includes( attrName ) ) {
+				attrNames.push( attrName )
+			}
+		} )
+	} )
+
+	return [
+		...formAllPossibleAttributeNames( attrNames ),
+		'uniqueId', // Always include this since this affects all css.
+	]
+}
+
 /**
  * Generates styles based on styleParams. This works by creating a memoed
  * StyleObject, and only regenerating the CSS styles only when the
@@ -485,43 +594,44 @@ export const useQueryLoopInstanceId = uniqueId => {
  *
  * This already handles the responsiveness and hover states of the style.
  *
- * @param {Object} _attributes Block attributes
- * @param {Array} styleParams Style definitions for each attribute
- *
+ * @param {Array} _styleParams Style definitions for each attribute
  * @return {StyleObject} A object that can be rendered by a StyleComponent
  */
-export const useStyles = ( _attributes, styleParams ) => {
-	const deviceType = useDeviceType()
+export function useStyles( _styleParams ) {
+	// Backward compatibility support. This function used to have 2 args:
+	// attributes, styleParams. Now we don't need the attributes argument, but
+	// still support if given a second the styleParams as the second argument.
+	const styleParams = arguments.length === 2 ? arguments[ 1 ] : _styleParams
+
 	const [ currentHoverState ] = useBlockHoverState()
 	const { clientId } = useBlockEditContext()
 
-	// Add the clientId, this can be used by styles for the editor.
-	const attributes = {
-		..._attributes,
-		clientId,
-	}
+	// Extract the attributes used by the styleParams. This hook only triggers
+	// when the extracted attributes change in value.
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			...pick( attributes, getDependencyAttrnamesFast( styleParams ) ),
+			clientId,
+		}
+	} )
 
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId )
+	const styleObject = useRef( new StyleObject() )
 
-	const styleObject = useMemo( () => {
-		const styleObjectInstance = new StyleObject( styleParams )
-		// If the block is inside a query loop, make sure that the uniqueIds are not the same.
-		if ( ! styleObjectInstance.getQueryLoopInstance() ) {
-			styleObjectInstance.setQueryLoopInstance( instanceId )
+	// Ensure that our styleParams is always the latest.
+	styleObject.current.setStyleParams( styleParams )
+
+	// If the block is inside a query loop, make sure that the uniqueIds are not the same.
+	useEffect( () => {
+		if ( ! styleObject.current.getQueryLoopInstance() ) {
+			styleObject.current.setQueryLoopInstance( instanceId )
 		}
+	}, [ styleObject.current, instanceId ] )
 
-		return styleObjectInstance
-	}, [ styleParams.length, instanceId ] )
-
-	return useMemo(
-		() => {
-			return styleObject.generateStyles( attributes, currentHoverState )
-		},
-		[
-			...styleObject.getDependencies( attributes, deviceType, currentHoverState ),
-			styleObject,
-		]
-	)
+	// Generating styles takes computation heavy, only do this when needed.
+	return useMemo( () => {
+		return styleObject.current.generateStyles( attributes, currentHoverState )
+	}, [ styleObject.current, attributes, currentHoverState ] )
 }
 
 /**

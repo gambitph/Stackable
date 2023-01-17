@@ -1,14 +1,13 @@
 /**
  * Internal dependencies
  */
-import { appendImportant } from '../'
+import {
+	__getValue, appendImportant, clampInheritedStyle,
+} from '../styles'
 
 /**
  * External dependencies
  */
-import {
-	__getValue, clampInheritedStyle,
-} from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
 

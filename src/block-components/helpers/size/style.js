@@ -15,6 +15,8 @@ const getStyleParams = ( options = {} ) => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
+		verticalAlignSelectorEdit = '',
+		verticalAlignSelector = '',
 		wrapperSelector = '', // The outer wrapper element that where the outer flex alignments, widths and margins are applied to.
 	} = options
 
@@ -29,7 +31,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'save',
-			selector,
+			selector: verticalAlignSelector || selector,
 			styleRule: verticalAlignRule || 'alignItems',
 			attrName: 'verticalAlign',
 			attrNameTemplate,
@@ -37,7 +39,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'edit',
-			selector,
+			selector: verticalAlignSelectorEdit || verticalAlignSelector || selector,
 			styleRule: 'justifyContent',
 			attrName: 'verticalAlign',
 			attrNameTemplate,
@@ -127,7 +129,7 @@ const getStyleParams = ( options = {} ) => {
 				const right = value?.right
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
 				const blockWidth = getAttribute( 'width', device )
-				if ( blockWidth ) {
+				if ( blockWidth || typeof right !== 'undefined' ) {
 					switch ( horizontalAlign ) {
 						case 'flex-start':
 						case 'center':
@@ -143,6 +145,7 @@ const getStyleParams = ( options = {} ) => {
 			valueCallback: value => {
 				return value.startsWith( 'auto' ) ? 'auto' : value
 			},
+			dependencies: [ 'horizontalAlign', 'width' ],
 		},
 		{
 			selector: wrapperSelector || selector,
@@ -167,7 +170,7 @@ const getStyleParams = ( options = {} ) => {
 				const left = value?.left
 				const horizontalAlign = getAttribute( 'horizontalAlign', device )
 				const blockWidth = getAttribute( 'width', device )
-				if ( blockWidth ) {
+				if ( blockWidth || typeof left !== 'undefined' ) {
 					switch ( horizontalAlign ) {
 						case 'flex-start':
 							return left || 0
@@ -183,7 +186,7 @@ const getStyleParams = ( options = {} ) => {
 			valueCallback: value => {
 				return value.startsWith( 'auto' ) ? 'auto' : value
 			},
-			dependencies: [ 'horizontalAlign' ],
+			dependencies: [ 'horizontalAlign', 'width' ],
 		},
 		{
 			selector,
@@ -232,13 +235,7 @@ const getStyleParams = ( options = {} ) => {
 }
 
 export const SizeStyle = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = useStyles( attributes, getStyleParams( options ) )
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<Fragment>
@@ -246,7 +243,7 @@ export const SizeStyle = props => {
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</Fragment>
 	)

@@ -159,14 +159,15 @@
                     <td><?php if ( ! FS_Plugin_License::is_valid_id( $install->license_id ) ) : ?>
                         <!-- Toggle Usage Tracking -->
                         <?php $action = 'toggle_tracking' ?>
+                        <?php $is_disconnected = ! FS_Permission_Manager::instance( $fs )->is_homepage_url_tracking_allowed( $blog_id ) ?>
                         <form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
                             <input type="hidden" name="fs_action" value="<?php echo $action ?>">
                             <?php wp_nonce_field( trim( "{$action}:{$blog_id}:{$install->id}", ':' ) ) ?>
                             <input type="hidden" name="install_id" value="<?php echo $install->id ?>">
                             <input type="hidden" name="blog_id" value="<?php echo $blog_id ?>">
-                            <button class="fs-toggle-tracking button button-small<?php if ( $install->is_disconnected ) {
+                            <button class="fs-toggle-tracking button button-small<?php if ( $is_disconnected ) {
                                 echo ' button-primary';
-                            } ?>" data-is-disconnected="<?php echo $install->is_disconnected ? 'true' : 'false' ?>"><?php $install->is_disconnected ? fs_esc_html_echo_inline( 'Opt In', 'opt-in', $slug ) : fs_esc_html_echo_inline( 'Opt Out', 'opt-out', $slug ) ?></button>
+                            } ?>" data-is-disconnected="<?php echo $is_disconnected ? 'true' : 'false' ?>"><?php $is_disconnected ? fs_esc_html_echo_inline( 'Opt In', 'opt-in', $slug ) : fs_esc_html_echo_inline( 'Opt Out', 'opt-out', $slug ) ?></button>
                         </form>
                     <!--/ Toggle Usage Tracking -->
                     <?php endif ?></td>
@@ -226,7 +227,8 @@
                     <td>
                         <nobr><?php fs_esc_html_echo_inline( 'Public Key', 'public-key', $slug ) ?>:</nobr>
                     </td>
-                    <td colspan="2"><code><?php echo htmlspecialchars( $install->public_key ) ?></code></td>
+                    <td><code><?php echo htmlspecialchars( $install->public_key ) ?></code></td>
+                    <td></td>
                 </tr>
                 <?php $row_index ++ ?>
                 <!--/ Public Key -->

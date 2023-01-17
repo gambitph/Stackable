@@ -52,7 +52,9 @@ const SortControl = memo( props => {
 	}
 
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
-	const showReset = ! isEqual( values.map( i => i.toString() ), range( props.num ).map( i => ( i + 1 ).toString() ) )
+
+	const defaultSortOrder = range( props.num ).map( i => ( i + 1 ).toString() )
+	const valuesSortOrder = values.map( i => i.toString() )
 
 	return (
 		<AdvancedControl
@@ -68,7 +70,12 @@ const SortControl = memo( props => {
 				onSortEnd={ ( { oldIndex, newIndex } ) => {
 					isSorting = false
 					const newValues = applySort( values, oldIndex, newIndex )
-					onChange( [ ...newValues ], { oldIndex, newIndex } )
+					// reset value if newValues matches default sort order
+					if ( isEqual( newValues.map( i => i.toString() ), defaultSortOrder ) ) {
+						onChange( '', { oldIndex: 0, newIndex: 0 } )
+					} else {
+						onChange( [ ...newValues ], { oldIndex, newIndex } )
+					}
 				} }
 				axis={ props.axis }
 			>
@@ -92,7 +99,7 @@ const SortControl = memo( props => {
 			</SortableContainer>
 			<ResetButton
 				allowReset={ props.allowReset }
-				showReset={ showReset }
+				showReset={ ! isEqual( valuesSortOrder, defaultSortOrder ) }
 				value={ values }
 				default={ props.default }
 				onChange={ () => onChange( '', { oldIndex: 0, newIndex: 0 } ) }

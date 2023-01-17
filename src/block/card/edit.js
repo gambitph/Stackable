@@ -16,16 +16,17 @@ import {
 	InspectorTabs,
 } from '~stackable/components'
 import {
-	useBlockContext, useBlockHoverClass, useBlockStyle, useDeviceType,
+	useBlockContext, useBlockStyle, useDeviceType,
 } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
 	Image,
 	getAlignmentClasses,
 	Alignment,
-	useAlignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -36,13 +37,15 @@ import {
 	ConditionalDisplay,
 	Transform,
 	MarginBottom,
+	getBlockOrientation,
 } from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment, useMemo } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -65,15 +68,13 @@ const Edit = props => {
 		className, //isHovered,
 	} = props
 
-	const { blockOrientation } = useAlignment()
+	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( variations )
-	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-card',
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -90,9 +91,7 @@ const Edit = props => {
 	} )
 
 	const lastBlockName = last( innerBlocks )?.name
-	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
-	}, [ hasInnerBlocks, lastBlockName ] )
+	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
 	let hasHeight = [ 'default', 'default-2' ].includes( blockStyle )
 	const deviceType = useDeviceType()
@@ -139,7 +138,7 @@ const Edit = props => {
 					<Image
 						className="stk-block-card__image"
 						enableWidth={ blockStyle === 'horizontal' }
-						enableHeight={ [ 'default', 'default-2' ].includes( blockStyle ) }
+						enableHeight={ hasHeight }
 						enableDiagonal={ false }
 						widthUnits={ widthUnit }
 						heightUnits={ heightUnit }
@@ -164,4 +163,8 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )

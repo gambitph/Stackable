@@ -22,15 +22,16 @@ import {
 	ControlSeparator,
 } from '~stackable/components'
 import {
-	useBlockAttributes, useBlockHoverState,
+	useBlockAttributesContext,
+	useBlockHoverState,
+	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { useDispatch, useSelect } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 import {
 	sprintf, _x, __,
 } from '@wordpress/i18n'
@@ -52,10 +53,8 @@ const IMAGE_SHADOWS = [
 ]
 
 const Controls = props => {
-	const { clientId } = useBlockEditContext()
-
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
+	const setAttributes = useBlockSetAttributesContext()
 	const [ state ] = useBlockHoverState()
 
 	// Get the image size urls.
@@ -91,12 +90,11 @@ const Controls = props => {
 					label={ __( 'Select Image', i18n ) }
 					allowedTypes={ [ 'image' ] }
 					attribute="image"
-					onRemove={ () => updateBlockAttributes( clientId, {
+					onRemove={ () => setAttributes( {
 						imageId: '',
 						imageUrl: '',
 						imageWidthAttribute: '',
 						imageHeightAttribute: '',
-						imageAlt: '',
 					} ) }
 					onChange={ image => {
 						// Get the URL of the currently selected image size.
@@ -111,12 +109,12 @@ const Controls = props => {
 							height = image.sizes?.[ currentSelectedSize ]?.height || height || ''
 							width = image.sizes?.[ currentSelectedSize ]?.width || width || ''
 						}
-						updateBlockAttributes( clientId, {
+						setAttributes( {
 							imageId: image.id,
 							imageUrl: url,
 							imageWidthAttribute: width,
 							imageHeightAttribute: height,
-							imageAlt: image.alt || '',
+							...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only set the alt if it's empty.
 						} )
 					} }
 				/>
@@ -155,7 +153,7 @@ const Controls = props => {
 				<ImageAltControl
 					label={ __( 'Image Alt', i18n ) }
 					value={ attributes.imageAlt }
-					onChange={ imageAlt => updateBlockAttributes( clientId, { imageAlt } ) }
+					onChange={ imageAlt => setAttributes( { imageAlt } ) }
 				/>
 			) }
 
@@ -187,7 +185,7 @@ const Controls = props => {
 						const imageUrl = imageData.media_details?.sizes[ imageSize ]?.source_url || imageData.source_url
 						const width = imageData.media_details?.sizes[ imageSize ]?.width || imageData.media_details?.width || ''
 						const height = imageData.media_details?.sizes[ imageSize ]?.height || imageData.media_details?.height || ''
-						updateBlockAttributes( clientId, {
+						setAttributes( {
 							imageSize,
 							imageUrl,
 							imageWidthAttribute: width,
@@ -269,7 +267,7 @@ const Controls = props => {
 				<ButtonIconPopoverControl
 					label={ __( 'Gradient Overlay Settings', i18n ) }
 					onReset={ () => {
-						updateBlockAttributes( clientId, {
+						setAttributes( {
 							[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', state ) ]: '',
 							[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', state ) ]: '',
 							[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', state ) ]: '',
@@ -360,7 +358,7 @@ const Controls = props => {
 				<ButtonIconPopoverControl
 					label={ __( 'Image Shape', i18n ) }
 					onReset={ () => {
-						updateBlockAttributes( clientId, {
+						setAttributes( {
 							imageShape: '',
 							imageShapeFlipX: '',
 							imageShapeFlipY: '',
@@ -376,7 +374,7 @@ const Controls = props => {
 				>
 					<ImageShapeControl
 						selected={ attributes.imageShape }
-						onChange={ imageShape => updateBlockAttributes( clientId, { imageShape } ) }
+						onChange={ imageShape => setAttributes( { imageShape } ) }
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Flip Shape Horizontally', i18n ) }
@@ -398,7 +396,7 @@ const Controls = props => {
 				label={ __( 'Image Filter', i18n ) }
 				popoverLabel=""
 				onReset={ () => {
-					updateBlockAttributes( clientId, { imageFilter: '' } )
+					setAttributes( { imageFilter: '' } )
 				} }
 				allowReset={ attributes.imageFilter }
 			>
@@ -433,10 +431,8 @@ Controls.defaultProps = {
 }
 
 export const Edit = props => {
-	const { clientId } = useBlockEditContext()
-
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	const attributes = useBlockAttributes( clientId )
+	const attributes = useBlockAttributesContext()
+	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<InspectorStyleControls>
@@ -446,7 +442,7 @@ export const Edit = props => {
 				initialOpen={ props.initialOpen }
 				{ ...( props.hasToggle ? {
 					checked: attributes.imageShow,
-					onChange: imageShow => updateBlockAttributes( clientId, { imageShow } ),
+					onChange: imageShow => setAttributes( { imageShow } ),
 				} : {} ) }
 			>
 				<Controls { ...props } />

@@ -18,7 +18,7 @@ import { isElementDescendant } from '~stackable/util'
 import { Popover } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
-	Fragment, useRef, useState, useEffect, useCallback,
+	Fragment, useRef, useState, useEffect,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
@@ -55,23 +55,23 @@ export const Link = props => {
 		}
 	}, [ isSelected, isOpen ] )
 
-	const clickOutsideListener = useCallback( event => {
-		if ( isOpen ) {
-			// If the button text is clicked, don't re-open the popover, just close it.
-			if ( event.target.closest( '.stk-button' ) && event.target.closest( props.linkTrigger || '.rich-text' ) ) {
-				event.stopPropagation()
-			}
-			if ( ! isElementDescendant( popoverEl.curent, event.target ) && ! event.target.closest( '.components-popover' ) ) {
-				setIsOpen( false )
-			}
-		}
-	}, [ popoverEl.current, isOpen ] )
-
 	// Assign the outside click listener.
 	useEffect( () => {
+		const clickOutsideListener = event => {
+			if ( isOpen ) {
+				// If the button text is clicked, don't re-open the popover, just close it.
+				if ( event.target.closest( '.stk-button' ) && event.target.closest( props.linkTrigger || '.rich-text' ) ) {
+					event.stopPropagation()
+				}
+				if ( ! isElementDescendant( popoverEl.curent, event.target ) && ! event.target.closest( '.components-popover' ) ) {
+					setIsOpen( false )
+				}
+			}
+		}
+
 		document.body.addEventListener( 'click', clickOutsideListener )
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
-	}, [ clickOutsideListener ] )
+	}, [ popoverEl.current, isOpen ] )
 
 	// Allow parent blocks to prevent the link popup to open.
 	const enable = applyFilters( 'stackable.edit.link.enable-link-popup', true, parentBlock )

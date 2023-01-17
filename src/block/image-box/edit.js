@@ -15,14 +15,15 @@ import {
 	InspectorBottomTip,
 	InspectorTabs,
 } from '~stackable/components'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockContext } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
 	getAlignmentClasses,
 	Alignment,
-	useAlignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -33,24 +34,19 @@ import {
 	getRowClasses,
 	MarginBottom,
 	Transform,
+	getBlockOrientation,
 } from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
-import { InnerBlocks, useBlockEditContext } from '@wordpress/block-editor'
-import { Fragment, useMemo } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+import { InnerBlocks } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
 export const TEMPLATE = variations[ 0 ].innerBlocks
-
-const ALLOWED_BLOCKS = [
-	'stackable/subtitle',
-	'stackable/heading',
-	'stackable/text',
-	'stackable/icon',
-]
 
 const TABS = [ 'block', 'advanced' ]
 
@@ -63,15 +59,13 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const { blockOrientation } = useAlignment()
+	const blockOrientation = getBlockOrientation( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockHoverClass = useBlockHoverClass()
 	const rowClass = getRowClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-image-box',
-		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
@@ -84,9 +78,7 @@ const Edit = props => {
 	] )
 
 	const lastBlockName = last( innerBlocks )?.name
-	const renderAppender = useMemo( () => {
-		return hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
-	}, [ hasInnerBlocks, lastBlockName ] )
+	const renderAppender = hasInnerBlocks ? ( [ 'stackable/text', 'core/paragraph' ].includes( lastBlockName ) ? () => <></> : InnerBlocks.DefaultBlockAppender ) : InnerBlocks.ButtonBlockAppender
 
 	return (
 		<Fragment>
@@ -126,32 +118,11 @@ const Edit = props => {
 	)
 }
 
-addFilter( 'stackable.block.column.allowed-inner-blocks', 'stackable/image-box', ( allowedBlocks, select ) => {
-	const { getBlock, getBlockParents } = select
-	const { clientId } = useBlockEditContext()
-	const parentClientId = last( getBlockParents( clientId ) )
-	const hasParent = parentClientId && parentClientId !== clientId
-
-	if ( ! hasParent ) {
-		return allowedBlocks
-	}
-
-	const parentBlock = hasParent ? getBlock( parentClientId ) : null
-	const innerBlocks = getBlock( clientId ).innerBlocks
-
-	return useMemo( () => {
-		if ( parentBlock.name !== 'stackable/image-box' ) {
-			return allowedBlocks
-		}
-
-		const currentInnerBlocks = innerBlocks?.map( ( { name } ) => name ) || []
-		const allowedInnerBlocks = ALLOWED_BLOCKS.filter( allowedBlock => ! currentInnerBlocks.includes( allowedBlock ) )
-
-		return ! allowedInnerBlocks.length ? [] : allowedInnerBlocks
-	}, [ clientId, parentBlock.name, innerBlocks.map( block => block.name ) ] )
-} )
-
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // Disable bottom margins for child blocks.
 addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/image-box', ( enabled, parentBlock ) => {

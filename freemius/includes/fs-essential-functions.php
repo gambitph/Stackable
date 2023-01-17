@@ -149,111 +149,21 @@
 
 	#endregion Core Redirect (copied from BuddyPress) -----------------------------------------
 
-	if ( ! function_exists( '__fs' ) ) {
-		global $fs_text_overrides;
-
-		if ( ! isset( $fs_text_overrides ) ) {
-			$fs_text_overrides = array();
-		}
-
-		/**
-		 * Retrieve a translated text by key.
-		 *
-		 * @deprecated Use `fs_text()` instead since methods starting with `__` trigger warnings in Php 7.
-         * @todo Remove this method in the future.
-		 *
-		 * @author     Vova Feldman (@svovaf)
-		 * @since      1.1.4
-		 *
-		 * @param string $key
-		 * @param string $slug
-		 *
-		 * @return string
-		 *
-		 * @global       $fs_text, $fs_text_overrides
-		 */
-		function __fs( $key, $slug = 'freemius' ) {
-            _deprecated_function( __FUNCTION__, '2.0.0', 'fs_text()' );
-
-			global $fs_text,
-			       $fs_module_info_text,
-			       $fs_text_overrides;
-
-			if ( isset( $fs_text_overrides[ $slug ] ) ) {
-				if ( isset( $fs_text_overrides[ $slug ][ $key ] ) ) {
-					return $fs_text_overrides[ $slug ][ $key ];
-				}
-
-				$lower_key = strtolower( $key );
-				if ( isset( $fs_text_overrides[ $slug ][ $lower_key ] ) ) {
-					return $fs_text_overrides[ $slug ][ $lower_key ];
-				}
-			}
-
-			if ( ! isset( $fs_text ) ) {
-				$dir = defined( 'WP_FS__DIR_INCLUDES' ) ?
-					WP_FS__DIR_INCLUDES :
-					dirname( __FILE__ );
-
-				require_once $dir . '/i18n.php';
-			}
-
-			if ( isset( $fs_text[ $key ] ) ) {
-				return $fs_text[ $key ];
-			}
-
-			if ( isset( $fs_module_info_text[ $key ] ) ) {
-				return $fs_module_info_text[ $key ];
-			}
-
-			return $key;
-		}
-
-		/**
-		 * Output a translated text by key.
-		 *
-		 * @deprecated Use `fs_echo()` instead for consistency with `fs_text()`.
-		 *
-         * @todo Remove this method in the future.
-         *
-		 * @author     Vova Feldman (@svovaf)
-		 * @since      1.1.4
-		 *
-		 * @param string $key
-		 * @param string $slug
-		 */
-		function _efs( $key, $slug = 'freemius' ) {
-			fs_echo( $key, $slug );
-		}
-	}
-
 	if ( ! function_exists( 'fs_get_ip' ) ) {
 		/**
-		 * Get client IP.
-		 *
+		 * Get server IP.
+         *
+         * @since 2.5.1 This method returns the server IP.
+         *
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.1.2
 		 *
 		 * @return string|null
 		 */
 		function fs_get_ip() {
-			$fields = array(
-				'HTTP_CF_CONNECTING_IP',
-				'HTTP_CLIENT_IP',
-				'HTTP_X_FORWARDED_FOR',
-				'HTTP_X_FORWARDED',
-				'HTTP_FORWARDED_FOR',
-				'HTTP_FORWARDED',
-				'REMOTE_ADDR',
-			);
-
-			foreach ( $fields as $ip_field ) {
-				if ( ! empty( $_SERVER[ $ip_field ] ) ) {
-					return $_SERVER[ $ip_field ];
-				}
-			}
-
-			return null;
+			return empty( $_SERVER[ 'SERVER_ADDR' ] ) ?
+                null :
+                $_SERVER[ 'SERVER_ADDR' ];
 		}
 	}
 

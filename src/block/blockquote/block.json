@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "stackable/blockquote",
 	"title": "Blockquote",
 	"description": "Display a quote in style",

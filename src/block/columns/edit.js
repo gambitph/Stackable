@@ -33,24 +33,22 @@ import {
 	getSeparatorClasses,
 	Transform,
 	ContentAlign,
-	useContentAlignmentClasses,
+	getContentAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import { useBlockContext } from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
-
-const TEMPLATE = [
-	[ 'stackable/column' ],
-	[ 'stackable/column' ],
-]
 
 const Edit = props => {
 	const {
@@ -63,14 +61,12 @@ const Edit = props => {
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
-	const blockHoverClass = useBlockHoverClass()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-columns',
 		rowClass,
-		blockHoverClass,
 		separatorClass,
 		columnTooltipClass,
 	] )
@@ -79,7 +75,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	], useContentAlignmentClasses( props.attributes ) )
+	], getContentAlignmentClasses( props.attributes ) )
 
 	return (
 		<>
@@ -117,7 +113,6 @@ const Edit = props => {
 							orientation="horizontal"
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ false }
-							template={ TEMPLATE }
 							templateLock={ props.attributes.templateLock || false }
 						/>
 					</div>
@@ -128,13 +123,17 @@ const Edit = props => {
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 addFilter( 'stackable.block-components.responsive.control', 'stackable/premium', output => {
 	const { name } = useBlockEditContext()
 
-	// Only do mobile column arrangement for the Columns block.
-	if ( name !== 'stackable/columns' ) {
+	// Only do mobile column arrangement for the Columns & Feature blocks.
+	if ( ! [ 'stackable/columns', 'stackable/feature' ].includes( name ) ) {
 		return output
 	}
 

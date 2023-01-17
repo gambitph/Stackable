@@ -33,7 +33,7 @@ const buildInclude = [
 	path.resolve( __dirname, './images/**' ),
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.
-	'!' + path.resolve( __dirname, './dist/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
 ]
 
 const postCSSOptions = [
@@ -185,7 +185,16 @@ gulp.task( 'generate-translations-php', gulp.series(
 		cb()
 	},
 	function gatherAllGetTextFuncs() {
-		return gulp.src( [ path.resolve( __dirname, './src/**/*.js' ), path.resolve( __dirname, './*.php' ), path.resolve( __dirname, './src/**/*.js' ), path.resolve( __dirname, './pro__premium_only/src/**/*.js' ), path.resolve( __dirname, './pro__premium_only/**/*.php' ), '!' + path.resolve( __dirname, './**/__test__/*.js' ), '!' + path.resolve( __dirname, './src/translation-strings.js' ), '!./**/dist/**/*' ] )
+		return gulp.src( [
+			path.resolve( __dirname, './src/**/*.js' ),
+			path.resolve( __dirname, './pro__premium_only/src/**/*.js' ),
+			'!' + path.resolve( __dirname, './src/test/*.js' ),
+			'!' + path.resolve( __dirname, './**/__test__/*.js' ),
+			'!' + path.resolve( __dirname, './src/translation-strings.js' ),
+			path.resolve( __dirname, './pro__premium_only/*.php' ),
+			path.resolve( __dirname, './pro__premium_only/src/**/*.php' ),
+			'!./**/dist/**/*',
+		 ] )
 			// Extract all gettext calls.
 			.pipe( collect( {
 				file: 'dist/translation-strings.php',

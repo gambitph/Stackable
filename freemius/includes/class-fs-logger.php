@@ -38,9 +38,10 @@
 		private static $_HOOKED_FOOTER = false;
 
 		private function __construct( $id, $on = false, $echo = false ) {
+            $bt = debug_backtrace();
+
 			$this->_id = $id;
 
-			$bt     = debug_backtrace();
 			$caller = $bt[2];
 
 			if ( false !== strpos( $caller['file'], 'plugins' ) ) {

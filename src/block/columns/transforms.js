@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { get } from 'lodash'
-import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
+import { createUniqueClass } from '~stackable/util'
 
 /**
  * WordPress dependencies

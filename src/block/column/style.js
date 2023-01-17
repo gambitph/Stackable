@@ -1,8 +1,4 @@
 /**
- * Internal dependencies
- */
-
-/**
  * External dependencies
  */
 import {
@@ -15,22 +11,27 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	useBlockAttributes, useDeviceType,
-} from '~stackable/hooks'
-import {
 	getUniqueBlockClass,
 	getStyles,
 	useStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import {
-	Fragment, renderToString,
+	Fragment, memo, renderToString,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const containerDivOptions = {
-	sizeSelector: '.stk-block-column__content',
+	sizeSelector: '.%s-container',
 	sizeHorizontalAlignRule: 'margin',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeVerticalAlignSelector: '.%s-inner-blocks',
+	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
+	sizeVerticalAlignSelectorEdit: '.%s-inner-blocks',
 }
 
 const getStyleParams = () => {
@@ -70,41 +71,31 @@ const getStyleParams = () => {
 	]
 }
 
-const BlockStyles = props => {
-	const {
-		...propsToPass
-	} = props
-
-	const deviceType = useDeviceType()
+const BlockStyles = memo( props => {
 	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-
-	const styles = useStyles( attributes, getStyleParams( props.options || {} ) )
-
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
-	propsToPass.deviceType = deviceType
-	propsToPass.attributes = { ...attributes, clientId }
+	const styles = useStyles( getStyleParams( props ) )
 
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } options={ {
-				columnAlignSelectorCallback: getAttribute => `.editor-styles-wrapper [data-block="${ getAttribute( 'clientId' ) }"]`,
-			} } />
-			<BlockDiv.Style { ...propsToPass } />
-			<Column.Style { ...propsToPass } />
-			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
-			<Advanced.Style { ...propsToPass } />
-			<Transform.Style { ...propsToPass } />
-			<EffectsAnimations.Style { ...propsToPass } />
+			<Alignment.Style
+				{ ...props }
+				columnAlignSelectorCallback={ () => `.editor-styles-wrapper [data-block="${ clientId }"]` }
+			/>
+			<BlockDiv.Style { ...props } verticalAlignSelectorEdit="> .stk-inner-blocks" />
+			<Column.Style { ...props } />
+			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
+			<Advanced.Style { ...props } />
+			<Transform.Style { ...props } />
+			<EffectsAnimations.Style { ...props } />
 			<StyleComponent
 				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
-				{ ...propsToPass }
+				{ ...props }
 			/>
 		</Fragment>
 	)
-}
+} )
 
 BlockStyles.defaultProps = {
 	isEditor: false,

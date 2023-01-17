@@ -8,10 +8,14 @@ import classnames from 'classnames'
 import { omit } from 'lodash'
 import { version as VERSION, i18n } from 'stackable'
 import {
-	InspectorTabs, InspectorAdvancedControls, PanelAdvancedSettings, AdvancedTextControl,
+	InspectorTabs,
+	InspectorAdvancedControls,
+	PanelAdvancedSettings,
+	AdvancedTextControl,
 } from '~stackable/components'
-import { useBlockHoverClass } from '~stackable/hooks'
-import { withQueryLoopContext } from '~stackable/higher-order'
+import {
+	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+} from '~stackable/higher-order'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -28,15 +32,15 @@ import {
 	Link,
 	Transform,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
+import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { addFilter } from '@wordpress/hooks'
-import { useBlockProps } from '@wordpress/block-editor'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { defaultIcon } from './schema'
 
 const Edit = props => {
 	const { className, attributes } = props
@@ -44,7 +48,6 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
@@ -52,10 +55,7 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	const wrapperClassNames = classnames( [
-		// getUniqueBlockClass( attributes.uniqueId ),
-		blockHoverClass,
-	] )
+	const derivedIcon = applyFilters( 'stackable.block-component.icon.default', defaultIcon )
 
 	return (
 		<Fragment>
@@ -80,28 +80,30 @@ const Edit = props => {
 			</InspectorAdvancedControls>
 
 			<EffectsAnimations.InspectorControls />
-			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } />
+			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
 			<Link.InspectorControls hasToggle={ true } />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<div { ...useBlockProps( { className: wrapperClassNames } ) }>
-				<IconStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-block-icon" hasChildMainBlockClass={ true } />
-				<BlockDiv className={ blockClassNames } >
-					<Link linkTrigger=".stk--inner-svg">
-						<Icon />
-					</Link>
-				</BlockDiv>
-				<MarginBottom previewSelector={ attributes.uniqueId ? `.${ getUniqueBlockClass( attributes.uniqueId ) } > .stk-block` : undefined } />
-			</div>
+			<IconStyles version={ VERSION } />
+			<CustomCSS mainBlockClass="stk-block-icon" />
+			<BlockDiv className={ blockClassNames } >
+				<Link linkTrigger=".stk--inner-svg">
+					<Icon />
+				</Link>
+			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }
 
-export default withQueryLoopContext( Edit )
+export default compose(
+	withBlockWrapper,
+	withQueryLoopContext,
+	withBlockAttributeContext,
+)( Edit )
 
 // When saving block styles, don't save the icons used by the block.
 //

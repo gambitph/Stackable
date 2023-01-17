@@ -83,6 +83,7 @@ IconControl.defaultProps = {
 	value: '',
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	onChange: () => {},
+	defaultValue: '',
 }
 
 export default IconControl

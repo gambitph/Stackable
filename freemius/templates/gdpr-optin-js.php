@@ -38,7 +38,7 @@
                 }
 
                 $.ajax({
-                    url       : ajaxurl + '?' + $.param({
+                    url       : <?php echo Freemius::ajax_url() ?> + '?' + $.param({
                         action   : '<?php echo $fs->get_ajax_action( 'gdpr_optin_action' ) ?>',
                         security : '<?php echo $fs->get_ajax_security( 'gdpr_optin_action' ) ?>',
                         module_id: '<?php echo $fs->get_id() ?>'

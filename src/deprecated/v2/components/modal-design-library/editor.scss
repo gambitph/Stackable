@@ -12,9 +12,12 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
+		margin-top: 57px;
 	}
 	.components-modal__header {
 		margin: 0;
+		height: 58px;
+		border-bottom: 1px solid #ddd;
 	}
 	.ugb-modal-design-library__wrapper {
 		display: grid;

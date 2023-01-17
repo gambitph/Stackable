@@ -57,6 +57,7 @@ export const Save = props => {
 			[ blockAlignmentClass ]: blockAlignmentClass,
 			'stk-block-content': true,
 			[ rowClass ]: [ rowClass ],
+			'stk--has-column-order': attributes.columnArrangementMobile || props.attributes.columnArrangementTablet,
 		}, props )
 	)
 

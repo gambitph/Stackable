@@ -118,13 +118,17 @@ export const useBlockHoverState = () => {
 
 	const { updateHoverState } = useDispatch( 'stackable/hover-state' )
 
-	const hoverState = useSelect(
-		select => select( 'stackable/hover-state' ).getHoverState(),
-		[]
-	)
+	const {
+		hoverState,
+		hoverStateClientId,
+	} = useSelect( select => {
+		return {
+			hoverState: select( 'stackable/hover-state' ).getHoverState(),
+			hoverStateClientId: select( 'stackable/hover-state' ).getSelectedBlock(),
+		}
+	}, [] )
 
 	const {
-		getSelectedBlock,
 		getSelectedParentHoverBlock,
 		getSelectedParentHoverBlockChildren,
 		getSelectedHoverChildren,
@@ -134,7 +138,6 @@ export const useBlockHoverState = () => {
 		getSelectedCollapsedBlockChildren,
 	} = useSelect( 'stackable/hover-state' )
 
-	const hoverStateClientId = getSelectedBlock()
 	const hasParentHoverState = getHasParentHoverState()
 	const parentHoverClientId = getSelectedParentHoverBlock()
 	const hasCollapsedState = getHasCollapsedState()
@@ -197,10 +200,15 @@ export const useBlockHoverState = () => {
 // hook above. But we separate the logic for better performance.
 export const useBlockHoverClass = () => {
 	const { clientId } = useBlockEditContext()
-	const hoverState = useSelect(
-		select => select( 'stackable/hover-state' ).getHoverState(),
-		[]
-	)
+	const {
+		hoverState,
+		parentHoverChildrenClientIds,
+	} = useSelect( select => {
+		return {
+			hoverState: select( 'stackable/hover-state' ).getHoverState(),
+			parentHoverChildrenClientIds: select( 'stackable/hover-state' ).getSelectedParentHoverBlockChildren(),
+		}
+	}, [] )
 
 	const {
 		getSelectedBlock,
@@ -232,7 +240,6 @@ export const useBlockHoverClass = () => {
 
 		} else {
 
-			const parentHoverChildrenClientIds = getSelectedParentHoverBlockChildren()
 			const hoverChildrenClientIds = getSelectedHoverChildren()
 
 			const isChildOfParentHover = parentHoverChildrenClientIds.includes( clientId )

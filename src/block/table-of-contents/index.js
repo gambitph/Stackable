@@ -13,14 +13,15 @@ import save from './save'
 import metadata from './block.json'
 import schema from './schema'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { applyFilters, addFilter } from '@wordpress/hooks'
+import { addFilter } from '@wordpress/hooks'
 
-export const settings = applyFilters( 'stackable.block.metadata', {
+export const settings = {
 	...metadata,
 	icon: TableOfContentsIcon,
 	attributes: schema,
@@ -64,9 +65,10 @@ export const settings = applyFilters( 'stackable.block.metadata', {
 	},
 	example,
 
+	deprecated,
 	edit,
 	save,
-} )
+}
 
 // When saving block styles, don't save the headings detected by the block.
 addFilter( 'stackable.table-of-contents.design.filtered-block-attributes', 'stackable/table-of-contents', attributes => {

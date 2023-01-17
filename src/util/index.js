@@ -1,3 +1,4 @@
+export * from './admin'
 export * from './font'
 export * from './attributes'
 export * from './typography'
@@ -27,7 +28,6 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import striptags from 'striptags'
 import { inRange } from 'lodash'
-import { createUniqueClass } from '~stackable/block-components/block-div/use-unique-id'
 import { getBlockVariations } from '@wordpress/blocks'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
@@ -141,6 +141,10 @@ export const isEditor = () => typeof window.wp !== 'undefined' && typeof window.
  * @return {string} Minified CSS
  */
 export const minifyCSS = ( css, important = false ) => {
+	if ( ! css ) {
+		return css
+	}
+
 	const minified = css.replace( /\/\*.*?\*\//g, '' ) // Comments.
 		.replace( /\n\s*\n/g, '' ) // Comments.
 		.replace( /[\n\r \t]/g, ' ' ) // Spaces.
@@ -296,29 +300,6 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
 }
 
 /**
- * Returns the current block editor head
- * element.
- *
- * @return {HTMLDocument} the head document
- */
-export const getDocumentHead = () => {
-	let head = document.querySelector( 'head' )
-
-	if ( hasEditingContent() ) {
-		head = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.querySelector( 'head' )
-	}
-
-	return head
-}
-
-/**
- * Checks whether the editing template window is open.
- *
- * @return {boolean} true if open.
- */
-export const hasEditingContent = () => !! document.querySelector( 'iframe[name="editor-canvas"]' )
-
-/**
  * Recursively add uniqueId to inner blocks.
  *
  * @param {Array} innerBlocks
@@ -384,3 +365,5 @@ export const sanitizeIdAttr = str => {
 		.trim()
 		.toLowerCase()
 }
+
+export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`

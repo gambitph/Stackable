@@ -266,26 +266,27 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				return;
 			}
 
-			// Backend editor scripts: common vendor files.
+			// STK API.
 			wp_register_script(
-				'ugb-block-js-vendor',
-				plugins_url( 'dist/editor_vendor.js', STACKABLE_FILE ),
-				array(),
+				'ugb-stk',
+				plugins_url( 'dist/stk.js', STACKABLE_FILE ),
+				// wp-util for wp.ajax.
+				// wp-plugins & wp-edit-post for Gutenberg plugins.
+				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' ),
 				STACKABLE_VERSION
 			);
 
 			// Backend editor scripts: blocks.
-			$dependencies = array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' );
 			wp_register_script(
 				'ugb-block-js',
 				plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
-				// wp-util for wp.ajax.
-				// wp-plugins & wp-edit-post for Gutenberg plugins.
-				apply_filters( 'stackable_editor_js_dependencies', $dependencies ),
+				// Depend on the window.stk API.
+				apply_filters( 'stackable_editor_js_dependencies', array( 'ugb-stk' ) ),
 				STACKABLE_VERSION
 			);
 
 			// Add translations.
+			wp_set_script_translations( 'ugb-stk', STACKABLE_I18N );
 			wp_set_script_translations( 'ugb-block-js', STACKABLE_I18N );
 			stackable_load_js_translations(); // This is needed for the translation strings to be loaded.
 
@@ -328,7 +329,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'primaryColor' => get_theme_mod( 's_primary_color', '#2091e1' ),
 
 				// Premium related variables.
-				'isPro' => sugb_fs()->can_use_premium_code(),
+				'isPro' => STACKABLE_BUILD === 'premium' && sugb_fs()->can_use_premium_code(),
 				'showProNotice' => stackable_should_show_pro_notices(),
 				'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 				'planName' => sugb_fs()->is_plan( 'starter', true ) ? 'starter' :
@@ -341,7 +342,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'settings' => apply_filters( 'stackable_js_settings', array() ),
 				'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 			) );
-			wp_localize_script( 'ugb-block-js-vendor', 'stackable', $args );
+			wp_localize_script( 'wp-blocks', 'stackable', $args );
 		}
 
 		/**
@@ -419,6 +420,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-kadence-theme';
 			} else if ( class_exists( 'Storefront' ) ) {
 				$classes[] = 'stk--is-storefront-theme';
+			} else if ( function_exists( 'twenty_twenty_one_setup' ) ) {
+				$classes[] = 'stk--is-twentytwentyone-theme';
 			} else if ( function_exists( 'twentytwentytwo_support' ) ) {
 				$classes[] = 'stk--is-twentytwentytwo-theme';
 			}
