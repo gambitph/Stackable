@@ -85,10 +85,7 @@
 		define( 'FS_API__SANDBOX_ADDRESS', '://sandbox-api.freemius.com' );
 	}
 
-	if ( class_exists( 'Freemius_Api_WordPress' ) ) {
-		return;
-	}
-
+	if ( ! class_exists( 'Freemius_Api_WordPress' ) ) {
 	class Freemius_Api_WordPress extends Freemius_Api_Base {
 		private static $_logger = array();
 
@@ -305,6 +302,8 @@
 		 * @return mixed
 		 */
 		private static function ExecuteRequest( $pUrl, &$pWPRemoteArgs ) {
+            $bt = debug_backtrace();
+
 			$start = microtime( true );
 
 			$response = wp_remote_request( $pUrl, $pWPRemoteArgs );
@@ -327,7 +326,7 @@
 						$response['body'] :
 						json_encode( $response->get_error_messages() ),
 					'code'      => ! $is_http_error ? $response['response']['code'] : null,
-					'backtrace' => debug_backtrace(),
+					'backtrace' => $bt,
 				);
 			}
 
@@ -713,3 +712,4 @@
 
 		#endregion
 	}
+    }

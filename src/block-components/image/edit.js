@@ -95,7 +95,6 @@ const Controls = props => {
 						imageUrl: '',
 						imageWidthAttribute: '',
 						imageHeightAttribute: '',
-						imageAlt: '',
 					} ) }
 					onChange={ image => {
 						// Get the URL of the currently selected image size.
@@ -115,7 +114,7 @@ const Controls = props => {
 							imageUrl: url,
 							imageWidthAttribute: width,
 							imageHeightAttribute: height,
-							imageAlt: image.alt || '',
+							...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only set the alt if it's empty.
 						} )
 					} }
 				/>

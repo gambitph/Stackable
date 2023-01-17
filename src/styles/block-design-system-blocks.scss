@@ -108,7 +108,7 @@
 // Icons
 .stk--inner-svg {
 	border-color: cssvar(icon-color);
-	svg:last-child {
+	svg:last-child:not(.ugb-custom-icon):not(.stk-custom-icon) {
 		width: cssvar(icon-size);
 		height: cssvar(icon-size);
 		&,

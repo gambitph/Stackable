@@ -192,7 +192,7 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 
 	if ( isAccordionIcon && accordionBlockDetails ) {
 		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
-		const defaultValue = activeVariation.name === 'plus' ? applyFilters( 'stackable.block-component.plus.icon-close' ) : undefined
+		const defaultValue = activeVariation?.name === 'plus' ? applyFilters( 'stackable.block-component.plus.icon-close' ) : undefined
 		return (
 			<>
 				{ output }
@@ -236,7 +236,7 @@ addFilter( 'stackable.block-component.icon.default', 'stackable/accordion', star
 
 	if ( isAccordionIcon && accordionBlockDetails ) {
 		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
-		return ( activeVariation.name === 'plus' )
+		return ( activeVariation?.name === 'plus' )
 			? applyFilters( 'stackable.block-component.plus.icon-open' ) : defaultIcon
 	}
 	return starIcon

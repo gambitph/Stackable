@@ -32,6 +32,12 @@ const typographyOptions = {
 	],
 }
 
+const titleTypographyOptions = {
+	selector: '.stk-table-of-contents__title',
+	hoverSelector: '.stk-table-of-contents__title:hover',
+	attrNameTemplate: 'title%s',
+}
+
 const getStyleParams = () => {
 	return [
 		{
@@ -151,6 +157,7 @@ export const TableOfContentsStyles = memo( props => {
 		<Fragment>
 			<Alignment.Style { ...props } />
 			<Typography.Style { ...props } { ...typographyOptions } />
+			<Typography.Style { ...props } { ...titleTypographyOptions } />
 			<MarginBottom.Style { ...props } />
 			<BlockDiv.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
@@ -187,6 +194,7 @@ TableOfContentsStyles.Content = props => {
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
+			<Typography.Style.Content { ...propsToPass } options={ titleTypographyOptions } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />

@@ -5,6 +5,7 @@ import {
 	DeprecatedButtonContent_1_15_5,
 } from '../../components/button-edit'
 import { range } from '~stackable/util'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -35,7 +36,7 @@ const deprecatedSchema_1_15_5 = {
 	text: {
 		source: 'html',
 		selector: 'a span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	align: {
 		type: 'string',
@@ -80,7 +81,7 @@ const deprecatedSchema_1_15_5 = {
 	text2: {
 		source: 'html',
 		selector: 'div:nth-of-type(2) .ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	color2: {
 		type: 'string',
@@ -118,7 +119,7 @@ const deprecatedSchema_1_15_5 = {
 	text3: {
 		source: 'html',
 		selector: 'div:nth-of-type(3) .ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	color3: {
 		type: 'string',
