@@ -51,7 +51,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const PremiumSeparatorControls = useMemo( applyFilters( 'stackable.block.separator.edit.after', null ), [] )
+	const PremiumSeparatorControls = useMemo( () => applyFilters( 'stackable.block.separator.edit.after', null ), [] )
 
 	const {
 		separatorDesign,
