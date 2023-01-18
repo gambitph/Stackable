@@ -105,6 +105,7 @@ const Save = props => {
 			data-stk-countdown-restart-interval={ attributes.restartInterval }
 			data-stk-countdown-type={ attributes.countdownType }
 			data-stk-countdown-action={ attributes.actionOnExpiration }
+			data-stk-countdown-timezone={ attributes.timezone }
 		>
 			<div className="stk-block-countdown__container">
 				<CountdownStyles.Content version={ props.version } attributes={ attributes } />

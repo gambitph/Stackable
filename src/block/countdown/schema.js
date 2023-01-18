@@ -23,7 +23,7 @@ import {
 import { __, i18n } from '@wordpress/i18n'
 import { date } from '@wordpress/date'
 
-const DEFAULT_DATE = date( 'Y-m-d\TH:i', Date.now() + 345600000 )
+const DEFAULT_DATE = date( 'Y-m-d\\TH:i', Date.now() + 345600000 )
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
@@ -136,6 +136,13 @@ export const attributes = ( version = VERSION ) => {
 			},
 			labelMarginTop: {
 				type: 'number',
+				default: '',
+			},
+			timezone: {
+				type: 'string',
+				selector: '[data-stk-countdown-timezone]',
+				source: 'attribute',
+				attribute: 'data-stk-countdown-timezone',
 				default: '',
 			},
 		},

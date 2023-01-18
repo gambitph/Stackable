@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
+import { date } from '@wordpress/date'
 
 const SECONDS = 1
 const SECONDS_IN_MINUTE = SECONDS * 60
@@ -18,21 +19,16 @@ class StackableCountdown {
 		clearInterval( this.countdownInterval )
 	}
 
-	setPause = pause => {
-		this.pause = pause
-	}
-
-	restart = () => {
-		setTimeout
-	}
-
-	countDown = ( endDate, action = '', duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
+	countDown = ( countdownDate, timezone, action, duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
 		const day = this.el.querySelector( '.stk-block-countdown__digit_day' )
 		const hour = this.el.querySelector( '.stk-block-countdown__digit_hour' )
 		const minute = this.el.querySelector( '.stk-block-countdown__digit_minute' )
 		const second = this.el.querySelector( '.stk-block-countdown__digit_second' )
 
-		let timer = Math.floor( endDate / 1000 ) - Math.floor( Date.now() / 1000 )
+		// Convert to chosen timezone
+		const endDate = timezone ? Date.parse( date( 'Y-m-d\\TH:i', countdownDate, timezone ) ) : countdownDate
+
+		let timer = Math.floor( endDate / 1000 ) - Math.floor( Date.parse( date( 'Y-m-d\\TH:i:s', Date.now(), timezone ) ) / 1000 )
 		let isRestarting = false
 		let restartLeft = 0
 
@@ -71,7 +67,7 @@ class StackableCountdown {
 			if ( countdownType === 'recurring' ) {
 				const a = isRestarting ? restartLeft : restartInterval
 				setTimeout( () => {
-					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, Date.now(), duration, countdownType, restartInterval )
+					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, Date.now(), duration, countdownType, restartInterval, timezone )
 				}, a * 1000 ).bind( this )
 			}
 			if ( action === 'hide' ) {
@@ -91,11 +87,12 @@ class StackableCountdown {
 		const duration = parseInt( this.el.getAttribute( 'data-stk-countdown-duration' ) )
 		const restartInterval = parseInt( this.el.getAttribute( 'data-stk-countdown-restart-interval' ) ) || 0
 		const action = this.el.getAttribute( 'data-stk-countdown-action' )
+		const timezone = this.el.getAttribute( 'data-stk-countdown-timezone' )
 
 		if ( countdownType === 'dueDate' ) {
-			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, action )
+			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, timezone, action )
 		} else {
-			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, '', date, duration, countdownType, restartInterval )
+			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, '', '', date, duration, countdownType, restartInterval )
 		}
 	}
 }

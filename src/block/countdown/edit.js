@@ -3,6 +3,7 @@
  */
 import { CountdownStyles } from './style'
 import { CountdownNumber } from './countdown-number'
+import { timezones as TIMEZONE_OPTIONS } from './timezones'
 
 /**
  * External dependencies
@@ -40,9 +41,9 @@ import {
  * WordPress dependencies
  */
 import { __, i18n } from '@wordpress/i18n'
+import { useEffect, Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { DateTimePicker } from '@wordpress/components'
-import { Fragment } from 'react'
 
 const COUNTDOWN_TYPE_OPTIONS = [
 	{
@@ -135,6 +136,12 @@ const Edit = props => {
 		'stk-block-countdown__divider',
 	] )
 
+	useEffect( () => {
+		if ( attributes.countdownType === 'recurring' ) {
+			setAttributes( { timezone: '' } )
+		}
+	}, [ attributes.countdownType ] )
+
 	return (
 		<>
 			{ isSelected && (
@@ -167,23 +174,23 @@ const Edit = props => {
 									/>
 									<AdvancedSelectControl
 										label={ __( 'Timezone', i18n ) }
-										// value={ value || 'large' }
-										// options={ imageSizeOptions }
-										// className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
-										// defaultValue={ defaultValue || 'large' }
+										value={ attributes.timezone }
+										options={ TIMEZONE_OPTIONS }
+										defaultValue={ '' }
+										attribute="timezone"
 									/>
 									<AdvancedSelectControl
 										label={ __( 'Action on Expiration', i18n ) }
 										value={ attributes.actionOnExpiration }
 										options={ ACTION_ON_EXPIRATION_OPTIONS }
-										defaultValue={ attributes.actionOnExpiration }
+										defaultValue={ '' }
 										attribute="actionOnExpiration"
 									/>
 									{ attributes.actionOnExpiration === 'showMessage' }
 								</Fragment>
 							) }
 							{ attributes.countdownType === 'recurring' && (
-								<div className="stk-block-countdown__recurring_control">
+								<Fragment>
 									<DateTimePicker
 										label={ __( 'Start Date', i18n ) }
 										currentDate={ attributes.date }
@@ -228,7 +235,7 @@ const Edit = props => {
 										value={ attributes.restartInterval }
 										attribute="restartInterval"
 									/>
-								</div>
+								</Fragment>
 							) }
 							<AdvancedRangeControl
 								label={ __( 'Box Gap', i18n ) }
