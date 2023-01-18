@@ -42,16 +42,22 @@ export const attributes = ( version = VERSION ) => {
 	Alignment.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 
-	Typography.addAttributes( attrObject, 'stk-block-countdown__digit', {
+	Typography.addAttributes( attrObject, '.stk-block-countdown__digit', {
 		hasTextTag: false,
 		hasTextContent: false,
 		attrNameTemplate: 'digit%s',
 	} )
 
-	Typography.addAttributes( attrObject, 'stk-block-countdown__label', {
+	Typography.addAttributes( attrObject, '.stk-block-countdown__label', {
 		hasTextTag: false,
 		hasTextContent: false,
 		attrNameTemplate: 'label%s',
+	} )
+
+	Typography.addAttributes( attrObject, '.stk-block-countdown__message', {
+		hasTextTag: true,
+		hasTextContent: true,
+		attrNameTemplate: 'message%s',
 	} )
 
 	attrObject.add( {
@@ -115,6 +121,13 @@ export const attributes = ( version = VERSION ) => {
 				selector: '[data-stk-countdown-restart-interval]',
 				source: 'attribute',
 				attribute: 'data-stk-countdown-restart-interval',
+				default: '',
+			},
+			actionOnExpiration: {
+				type: 'string',
+				selector: '[data-stk-countdown-action]',
+				source: 'attribute',
+				attribute: 'data-stk-countdown-action',
 				default: '',
 			},
 			boxGap: {

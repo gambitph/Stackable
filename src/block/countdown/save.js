@@ -46,6 +46,8 @@ const Save = props => {
 
 	const labelTextClasses = getTypographyClasses( attributes, 'label%s' )
 
+	const messageTextClasses = getTypographyClasses( attributes, 'message%s' )
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-countdown',
@@ -85,6 +87,11 @@ const Save = props => {
 		labelTextClasses,
 	] )
 
+	const messageClassNames = classnames( [
+		'stk-block-countdown__message',
+		messageTextClasses,
+	] )
+
 	const dividerClassNames = classnames( [
 		'stk-block-countdown__divider',
 	] )
@@ -97,43 +104,53 @@ const Save = props => {
 			data-stk-countdown-duration={ duration }
 			data-stk-countdown-restart-interval={ attributes.restartInterval }
 			data-stk-countdown-type={ attributes.countdownType }
+			data-stk-countdown-action={ attributes.actionOnExpiration }
 		>
-			<CountdownStyles.Content version={ props.version } attributes={ attributes } />
-			<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-				<CountdownNumber.Content className={ dayDigitClassNames } />
+			<div className="stk-block-countdown__container">
+				<CountdownStyles.Content version={ props.version } attributes={ attributes } />
+				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
+					<CountdownNumber.Content className={ dayDigitClassNames } />
+					<Typography.Content
+						className={ labelClassNames }
+						attrNameTemplate="day%s"
+						attributes={ attributes }
+					/>
+				</ContainerDiv.Content>
+				{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
+				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
+					<CountdownNumber.Content className={ hourDigitClassNames } />
+					<Typography.Content
+						className={ labelClassNames }
+						attrNameTemplate="hour%s"
+						attributes={ attributes }
+					/>
+				</ContainerDiv.Content>
+				{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
+				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
+					<CountdownNumber.Content className={ minuteDigitClassNames } />
+					<Typography.Content
+						className={ labelClassNames }
+						attrNameTemplate="minute%s"
+						attributes={ attributes }
+					/>
+				</ContainerDiv.Content>
+				{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
+				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
+					<CountdownNumber.Content className={ secondDigitClassNames } />
+					<Typography.Content
+						className={ labelClassNames }
+						attrNameTemplate="second%s"
+						attributes={ attributes }
+					/>
+				</ContainerDiv.Content>
+			</div>
+			{ attributes.actionOnExpiration === 'showMessage' &&
 				<Typography.Content
-					className={ labelClassNames }
-					attrNameTemplate="day%s"
+					className={ messageClassNames }
+					attrNameTemplate="message%s"
 					attributes={ attributes }
 				/>
-			</ContainerDiv.Content>
-			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
-			<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-				<CountdownNumber.Content className={ hourDigitClassNames } />
-				<Typography.Content
-					className={ labelClassNames }
-					attrNameTemplate="hour%s"
-					attributes={ attributes }
-				/>
-			</ContainerDiv.Content>
-			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
-			<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-				<CountdownNumber.Content className={ minuteDigitClassNames } />
-				<Typography.Content
-					className={ labelClassNames }
-					attrNameTemplate="minute%s"
-					attributes={ attributes }
-				/>
-			</ContainerDiv.Content>
-			{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
-			<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-				<CountdownNumber.Content className={ secondDigitClassNames } />
-				<Typography.Content
-					className={ labelClassNames }
-					attrNameTemplate="second%s"
-					attributes={ attributes }
-				/>
-			</ContainerDiv.Content>
+			}
 		</BlockDiv.Content>
 	)
 }

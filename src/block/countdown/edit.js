@@ -55,6 +55,22 @@ const COUNTDOWN_TYPE_OPTIONS = [
 	},
 ]
 
+const ACTION_ON_EXPIRATION_OPTIONS = [
+	{
+		label: __( 'None', i18n ),
+		value: '',
+	},
+	{
+		label: __( 'Hide Block', i18n ),
+		value: 'hide',
+	},
+	{
+		label: __( 'Display Message', i18n ),
+		value: 'showMessage',
+	},
+
+]
+
 const Edit = props => {
 	const {
 		className,
@@ -69,6 +85,8 @@ const Edit = props => {
 	const digitTextClasses = getTypographyClasses( attributes, 'digit%s' )
 
 	const labelTextClasses = getTypographyClasses( attributes, 'label%s' )
+
+	const messageTextClasses = getTypographyClasses( attributes, 'message%s' )
 
 	const blockClassNames = classnames( [
 		className,
@@ -106,6 +124,11 @@ const Edit = props => {
 	const labelClassNames = classnames( [
 		'stk-block-countdown__label',
 		labelTextClasses,
+	] )
+
+	const messageClassNames = classnames( [
+		'stk-block-countdown__message',
+		messageTextClasses,
 	] )
 
 	const dividerClassNames = classnames( [
@@ -149,6 +172,14 @@ const Edit = props => {
 										// className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
 										// defaultValue={ defaultValue || 'large' }
 									/>
+									<AdvancedSelectControl
+										label={ __( 'Action on Expiration', i18n ) }
+										value={ attributes.actionOnExpiration }
+										options={ ACTION_ON_EXPIRATION_OPTIONS }
+										defaultValue={ attributes.actionOnExpiration }
+										attribute="actionOnExpiration"
+									/>
+									{ attributes.actionOnExpiration === 'showMessage' }
 								</Fragment>
 							) }
 							{ attributes.countdownType === 'recurring' && (
@@ -215,6 +246,13 @@ const Edit = props => {
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
+					{ attributes.actionOnExpiration === 'showMessage' &&
+						<Typography.InspectorControls
+							label={ __( 'Message', i18n ) }
+							attrNameTemplate="message%s"
+							hasTextTag={ true }
+							hasTextContent={ true }
+						/> }
 					<Typography.InspectorControls
 						label={ __( 'Digits', i18n ) }
 						attrNameTemplate="digit%s"
@@ -254,65 +292,74 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				<ContainerDiv className={ contentClassNames }>
-					<CountdownNumber
-						className={ dayDigitClassNames }
-						type={ 'days' }
-						datetime={ attributes.date }
-					/>
+				<div className="stk-block-countdown__container">
+					<ContainerDiv className={ contentClassNames }>
+						<CountdownNumber
+							className={ dayDigitClassNames }
+							type={ 'days' }
+							datetime={ attributes.date }
+						/>
+						<Typography
+							identifier="day"
+							tagName="p"
+							className={ labelClassNames }
+							attrNameTemplate="day%s"
+							placeholder={ __( 'Days', i18n ) }
+						/>
+					</ContainerDiv>
+					{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					<ContainerDiv className={ contentClassNames }>
+						<CountdownNumber
+							className={ hourDigitClassNames }
+							type={ 'hours' }
+							datetime={ attributes.date }
+						/>
+						<Typography
+							identifier="hour"
+							tagName="p"
+							className={ labelClassNames }
+							attrNameTemplate="hour%s"
+							placeholder={ __( 'Hours', i18n ) }
+						/>
+					</ContainerDiv>
+					{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					<ContainerDiv className={ contentClassNames }>
+						<CountdownNumber
+							className={ minuteDigitClassNames }
+							type={ 'minutes' }
+							datetime={ attributes.date }
+						/>
+						<Typography
+							identifier="minute"
+							tagName="p"
+							className={ labelClassNames }
+							attrNameTemplate="minute%s"
+							placeholder={ __( 'Minutes', i18n ) }
+						/>
+					</ContainerDiv>
+					{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					<ContainerDiv className={ contentClassNames }>
+						<CountdownNumber
+							className={ secondDigitClassNames }
+							type={ 'seconds' }
+							datetime={ attributes.date }
+						/>
+						<Typography
+							identifier="second"
+							tagName="p"
+							className={ labelClassNames }
+							attrNameTemplate="second%s"
+							placeholder={ __( 'Seconds', i18n ) }
+						/>
+					</ContainerDiv>
+				</div>
+				{ attributes.actionOnExpiration === 'showMessage' &&
 					<Typography
-						identifier="day"
-						tagName="p"
-						className={ labelClassNames }
-						attrNameTemplate="day%s"
-						placeholder={ __( 'Days', i18n ) }
+						identifier="message"
+						className={ messageClassNames }
+						attrNameTemplate="message%s"
 					/>
-				</ContainerDiv>
-				{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
-				<ContainerDiv className={ contentClassNames }>
-					<CountdownNumber
-						className={ hourDigitClassNames }
-						type={ 'hours' }
-						datetime={ attributes.date }
-					/>
-					<Typography
-						identifier="hour"
-						tagName="p"
-						className={ labelClassNames }
-						attrNameTemplate="hour%s"
-						placeholder={ __( 'Hours', i18n ) }
-					/>
-				</ContainerDiv>
-				{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
-				<ContainerDiv className={ contentClassNames }>
-					<CountdownNumber
-						className={ minuteDigitClassNames }
-						type={ 'minutes' }
-						datetime={ attributes.date }
-					/>
-					<Typography
-						identifier="minute"
-						tagName="p"
-						className={ labelClassNames }
-						attrNameTemplate="minute%s"
-						placeholder={ __( 'Minutes', i18n ) }
-					/>
-				</ContainerDiv>
-				{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
-				<ContainerDiv className={ contentClassNames }>
-					<CountdownNumber
-						className={ secondDigitClassNames }
-						type={ 'seconds' }
-						datetime={ attributes.date }
-					/>
-					<Typography
-						identifier="second"
-						tagName="p"
-						className={ labelClassNames }
-						attrNameTemplate="second%s"
-						placeholder={ __( 'Seconds', i18n ) }
-					/>
-				</ContainerDiv>
+				}
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

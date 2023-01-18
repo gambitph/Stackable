@@ -26,7 +26,7 @@ class StackableCountdown {
 		setTimeout
 	}
 
-	countDown = ( endDate, duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
+	countDown = ( endDate, action = '', duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
 		const day = this.el.querySelector( '.stk-block-countdown__digit_day' )
 		const hour = this.el.querySelector( '.stk-block-countdown__digit_hour' )
 		const minute = this.el.querySelector( '.stk-block-countdown__digit_minute' )
@@ -74,6 +74,13 @@ class StackableCountdown {
 					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, Date.now(), duration, countdownType, restartInterval )
 				}, a * 1000 ).bind( this )
 			}
+			if ( action === 'hide' ) {
+				this.el.style.display = 'none'
+			}
+			if ( action === 'showMessage' ) {
+				const timer = this.el.querySelector( '.stk-block-countdown__container' )
+				timer.style.display = 'none'
+			}
 		}
 	}
 
@@ -83,10 +90,12 @@ class StackableCountdown {
 		const countdownType = this.el.getAttribute( 'data-stk-countdown-type' )
 		const duration = parseInt( this.el.getAttribute( 'data-stk-countdown-duration' ) )
 		const restartInterval = parseInt( this.el.getAttribute( 'data-stk-countdown-restart-interval' ) ) || 0
+		const action = this.el.getAttribute( 'data-stk-countdown-action' )
+
 		if ( countdownType === 'dueDate' ) {
-			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date )
+			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, action )
 		} else {
-			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, duration, countdownType, restartInterval )
+			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, '', date, duration, countdownType, restartInterval )
 		}
 	}
 }

@@ -31,6 +31,12 @@ const labelTypographyOptions = {
 	attrNameTemplate: 'label%s',
 }
 
+const messageTypographyOptions = {
+	selector: '.stk-block-countdown__message',
+	hoverSelector: '.stk-block-countdown__message:hover',
+	attrNameTemplate: 'message%s',
+}
+
 const dividerOptions = {
 	selector: '.stk-block-countdown__divider',
 }
@@ -47,7 +53,7 @@ const Styles = props => {
 		<>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".%s.stk-block-countdown"
+				selector=".%s.stk-block-countdown stk-block-countdown__container"
 				styleRule="gap"
 				attrName="boxGap"
 				key="boxGap"
@@ -74,6 +80,7 @@ export const CountdownStyles = memo( props => {
 			<ContainerDiv.Style { ...props } />
 			<Typography.Style { ...props } { ...digitTypographyOptions } />
 			<Typography.Style { ...props } { ...labelTypographyOptions } />
+			<Typography.Style { ...props } { ...messageTypographyOptions } />
 			<Alignment.Style { ...props } />
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
@@ -101,6 +108,7 @@ CountdownStyles.Content = props => {
 			<ContainerDiv.Style.Content { ...props } />
 			<Typography.Style.Content { ...props } { ...digitTypographyOptions } />
 			<Typography.Style.Content { ...props } { ...labelTypographyOptions } />
+			<Typography.Style.Content { ...props } { ...messageTypographyOptions } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
