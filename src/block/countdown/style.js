@@ -1,3 +1,5 @@
+import { Divider } from './divider'
+
 /**
  * External dependencies
  */
@@ -10,7 +12,6 @@ import {
 	EffectsAnimations,
 	Transform,
 	Typography,
-	Divider,
 } from '~stackable/block-components'
 import { BlockCssCompiler, BlockCss } from '~stackable/components'
 
@@ -53,7 +54,7 @@ const Styles = props => {
 		<>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".%s.stk-block-countdown stk-block-countdown__container"
+				selector=".%s.stk-block-countdown .stk-block-countdown__container"
 				styleRule="gap"
 				attrName="boxGap"
 				key="boxGap"
@@ -102,7 +103,7 @@ CountdownStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
-			<Divider.Style.Content { ...props } />
+			<Divider.Style.Content { ...props } { ...dividerOptions } />
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<ContainerDiv.Style.Content { ...props } />
