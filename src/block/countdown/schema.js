@@ -1,3 +1,5 @@
+import { Divider } from './divider'
+
 /**
  * External dependencies
  */
@@ -5,7 +7,6 @@ import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
-	Divider,
 	Style,
 	ContainerDiv,
 	CustomCSS,
@@ -144,6 +145,22 @@ export const attributes = ( version = VERSION ) => {
 				source: 'attribute',
 				attribute: 'data-stk-countdown-timezone',
 				default: '',
+			},
+			dayShow: {
+				type: 'boolean',
+				default: 'true',
+			},
+			hourShow: {
+				type: 'boolean',
+				default: 'true',
+			},
+			minuteShow: {
+				type: 'boolean',
+				default: 'true',
+			},
+			secondShow: {
+				type: 'boolean',
+				default: 'true',
 			},
 		},
 		versionAdded: '3.0.0',

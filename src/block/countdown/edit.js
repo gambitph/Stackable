@@ -3,13 +3,13 @@
  */
 import { CountdownStyles } from './style'
 import { CountdownNumber } from './countdown-number'
+import { Divider } from './divider'
 import { timezones as TIMEZONE_OPTIONS } from './timezones'
 
 /**
  * External dependencies
  */
 import {
-	Divider,
 	BlockDiv,
 	ContainerDiv,
 	useGeneratedCss,
@@ -29,7 +29,7 @@ import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
-	AdvancedRangeControl,
+	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl,
 } from '~stackable/components'
 import {
 	 withBlockAttributeContext,
@@ -44,6 +44,8 @@ import { __, i18n } from '@wordpress/i18n'
 import { useEffect, Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { DateTimePicker } from '@wordpress/components'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { addFilter } from '@wordpress/hooks'
 
 const COUNTDOWN_TYPE_OPTIONS = [
 	{
@@ -306,28 +308,28 @@ const Edit = props => {
 							type={ 'days' }
 							datetime={ attributes.date }
 						/>
-						<Typography
+						{ attributes.dayShow && <Typography
 							identifier="day"
 							tagName="p"
 							className={ labelClassNames }
 							attrNameTemplate="day%s"
 							placeholder={ __( 'Days', i18n ) }
-						/>
+						/> }
 					</ContainerDiv>
-					{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					{ props.attributes.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
 					<ContainerDiv className={ contentClassNames }>
 						<CountdownNumber
 							className={ hourDigitClassNames }
 							type={ 'hours' }
 							datetime={ attributes.date }
 						/>
-						<Typography
+						{ attributes.hourShow && <Typography
 							identifier="hour"
 							tagName="p"
 							className={ labelClassNames }
 							attrNameTemplate="hour%s"
 							placeholder={ __( 'Hours', i18n ) }
-						/>
+						/> }
 					</ContainerDiv>
 					{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
 					<ContainerDiv className={ contentClassNames }>
@@ -336,13 +338,13 @@ const Edit = props => {
 							type={ 'minutes' }
 							datetime={ attributes.date }
 						/>
-						<Typography
+						{ attributes.minuteShow && <Typography
 							identifier="minute"
 							tagName="p"
 							className={ labelClassNames }
 							attrNameTemplate="minute%s"
 							placeholder={ __( 'Minutes', i18n ) }
-						/>
+						/> }
 					</ContainerDiv>
 					{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
 					<ContainerDiv className={ contentClassNames }>
@@ -351,13 +353,13 @@ const Edit = props => {
 							type={ 'seconds' }
 							datetime={ attributes.date }
 						/>
-						<Typography
+						{ attributes.secondShow && <Typography
 							identifier="second"
 							tagName="p"
 							className={ labelClassNames }
 							attrNameTemplate="second%s"
 							placeholder={ __( 'Seconds', i18n ) }
-						/>
+						/> }
 					</ContainerDiv>
 				</div>
 				{ attributes.actionOnExpiration === 'showMessage' &&
@@ -378,3 +380,60 @@ export default compose(
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
+
+// Add meta controls.
+addFilter( 'stackable.block-component.typography.before', 'stackable/posts', ( output, props ) => {
+	const { name } = useBlockEditContext()
+	if ( name !== 'stackable/countdown' ) {
+		return output
+	}
+
+	if ( props.attrNameTemplate !== 'label%s' ) {
+		return output
+	}
+
+	return (
+		<>
+			<AdvancedToggleControl
+				label={ __( 'Show Days', i18n ) }
+				attribute="dayShow"
+			/>
+			<AdvancedTextControl
+				label={ __( 'Days', i18n ) }
+				attribute="dayText"
+				placeholder="Days"
+				help={ __( 'This is the string appended to the URL when changing pages.', i18n ) }
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Show Hours', i18n ) }
+				attribute="hourShow"
+			/>
+			<AdvancedTextControl
+				label={ __( 'Hours', i18n ) }
+				attribute="hourText"
+				placeholder="Hours"
+				help={ __( 'This is the string appended to the URL when changing pages.', i18n ) }
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Show Minutes', i18n ) }
+				attribute="minuteShow"
+			/>
+			<AdvancedTextControl
+				label={ __( 'Minutes', i18n ) }
+				attribute="minuteText"
+				placeholder="Minutes"
+				help={ __( 'This is the string appended to the URL when changing pages.', i18n ) }
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Show Seconds', i18n ) }
+				attribute="secondShow"
+			/>
+			<AdvancedTextControl
+				label={ __( 'Seconds', i18n ) }
+				attribute="secondText"
+				placeholder="Seconds"
+				help={ __( 'This is the string appended to the URL when changing pages.', i18n ) }
+			/>
+		</>
+	)
+} )

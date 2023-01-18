@@ -1,10 +1,10 @@
 import { CountdownStyles } from './style'
 import { CountdownNumber } from './countdown-number'
+import { Divider } from './divider'
 
 import {
 	BlockDiv,
 	ContainerDiv,
-	Divider,
 	getResponsiveClasses,
 	getTypographyClasses,
 	Typography,
@@ -111,38 +111,38 @@ const Save = props => {
 				<CountdownStyles.Content version={ props.version } attributes={ attributes } />
 				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 					<CountdownNumber.Content className={ dayDigitClassNames } />
-					<Typography.Content
+					{ attributes.dayShow && <Typography.Content
 						className={ labelClassNames }
 						attrNameTemplate="day%s"
 						attributes={ attributes }
-					/>
+					/> }
 				</ContainerDiv.Content>
 				{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
 				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 					<CountdownNumber.Content className={ hourDigitClassNames } />
-					<Typography.Content
+					{ attributes.hourShow && <Typography.Content
 						className={ labelClassNames }
 						attrNameTemplate="hour%s"
 						attributes={ attributes }
-					/>
+					/> }
 				</ContainerDiv.Content>
 				{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
 				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 					<CountdownNumber.Content className={ minuteDigitClassNames } />
-					<Typography.Content
+					{ attributes.minuteShow && <Typography.Content
 						className={ labelClassNames }
 						attrNameTemplate="minute%s"
 						attributes={ attributes }
-					/>
+					/> }
 				</ContainerDiv.Content>
 				{ attributes?.hasDivider && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
 				<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 					<CountdownNumber.Content className={ secondDigitClassNames } />
-					<Typography.Content
+					{ attributes.secondShow && <Typography.Content
 						className={ labelClassNames }
 						attrNameTemplate="second%s"
 						attributes={ attributes }
-					/>
+					/> }
 				</ContainerDiv.Content>
 			</div>
 			{ attributes.actionOnExpiration === 'showMessage' &&
