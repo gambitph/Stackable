@@ -6,7 +6,7 @@ const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60
 const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
 
 export const CountdownNumber = props => {
-	const [ value, setValue ] = useState( '' )
+	const [ value, setValue ] = useState( '00' )
 	useEffect( () => {
 		if ( ! props.datetime ) {
 			setValue( 0 )
@@ -21,23 +21,39 @@ export const CountdownNumber = props => {
 
 			switch ( props.type ) {
 				case 'days':
-					setValue( Math.floor( difference / SECONDS_IN_DAY ) )
-				  break
+					if ( props.countdownType === 'recurring' ) {
+						setValue( props.daysLeft )
+					} else {
+						setValue( Math.floor( difference / SECONDS_IN_DAY ) )
+					}
+					break
 				case 'hours':
-					setValue( Math.floor( ( difference % SECONDS_IN_DAY ) / SECONDS_IN_HOUR ) )
-				  break
+					if ( props.countdownType === 'recurring' ) {
+						setValue( props.hoursLeft )
+					} else {
+						setValue( Math.floor( ( difference % SECONDS_IN_DAY ) / SECONDS_IN_HOUR ) )
+					}
+					break
 				case 'minutes':
-					setValue( Math.floor( ( difference % SECONDS_IN_HOUR ) / SECONDS_IN_MINUTE ) )
+					if ( props.countdownType === 'recurring' ) {
+						setValue( props.minutesLeft )
+					} else {
+						setValue( Math.floor( ( difference % SECONDS_IN_HOUR ) / SECONDS_IN_MINUTE ) )
+					}
 					break
 				default:
-					setValue( Math.floor( ( difference % SECONDS_IN_MINUTE ) / SECONDS ) )
+					if ( props.countdownType === 'recurring' ) {
+						setValue( props.secondsLeft )
+					} else {
+						setValue( Math.floor( ( difference % SECONDS_IN_MINUTE ) / SECONDS ) )
+					}
 				  // code block
 			  }
 		}, 1000 )
 		return () => {
 			clearInterval( interval )
 		}
-	}, [ props.value, props.datetime ] )
+	}, [ props.value, props.datetime, props.countdownType, props.daysLeft, props.hoursLeft, props.minutesLeft, props.secondsLeft ] )
 
 	return <div className={ props.className }>{ value }</div>
 }
