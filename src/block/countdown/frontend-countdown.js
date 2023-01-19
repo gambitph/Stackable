@@ -67,7 +67,7 @@ class StackableCountdown {
 			if ( countdownType === 'recurring' ) {
 				const a = isRestarting ? restartLeft : restartInterval
 				setTimeout( () => {
-					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, Date.now(), duration, countdownType, restartInterval, timezone )
+					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, Date.now(), '', '', duration, countdownType, restartInterval, timezone )
 				}, a * 1000 ).bind( this )
 			}
 			if ( action === 'hide' ) {
@@ -92,7 +92,7 @@ class StackableCountdown {
 		if ( countdownType === 'dueDate' ) {
 			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, timezone, action )
 		} else {
-			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, '', '', date, duration, countdownType, restartInterval )
+			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, '', '', duration, countdownType, restartInterval )
 		}
 	}
 }
