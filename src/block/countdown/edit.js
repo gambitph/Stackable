@@ -140,7 +140,7 @@ const Edit = props => {
 
 	useEffect( () => {
 		if ( attributes.countdownType === 'recurring' ) {
-			setAttributes( { timezone: '' } )
+			setAttributes( { actionOnExpiration: '' } )
 		}
 	}, [ attributes.countdownType ] )
 
@@ -307,6 +307,8 @@ const Edit = props => {
 							className={ dayDigitClassNames }
 							type={ 'days' }
 							datetime={ attributes.date }
+							countdownType={ attributes.countdownType }
+							daysLeft={ attributes.daysLeft }
 						/>
 						{ attributes.dayShow && <Typography
 							identifier="day"
@@ -322,6 +324,8 @@ const Edit = props => {
 							className={ hourDigitClassNames }
 							type={ 'hours' }
 							datetime={ attributes.date }
+							countdownType={ attributes.countdownType }
+							hoursLeft={ attributes.hoursLeft }
 						/>
 						{ attributes.hourShow && <Typography
 							identifier="hour"
@@ -337,6 +341,8 @@ const Edit = props => {
 							className={ minuteDigitClassNames }
 							type={ 'minutes' }
 							datetime={ attributes.date }
+							countdownType={ attributes.countdownType }
+							minutesLeft={ attributes.minutesLeft }
 						/>
 						{ attributes.minuteShow && <Typography
 							identifier="minute"
@@ -352,6 +358,8 @@ const Edit = props => {
 							className={ secondDigitClassNames }
 							type={ 'seconds' }
 							datetime={ attributes.date }
+							countdownType={ attributes.countdownType }
+							secondsLeft={ attributes.secondsLeft }
 						/>
 						{ attributes.secondShow && <Typography
 							identifier="second"
