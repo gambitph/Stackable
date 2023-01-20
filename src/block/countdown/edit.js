@@ -163,17 +163,20 @@ const Edit = props => {
 								default={ 'dueDate' }
 								isSmall={ false }
 							/>
+							<span>
+								{ attributes.countdownType === 'dueDate' ? 'End Date' : 'Start Date' }
+							</span>
+							<DateTimePicker
+								currentDate={ attributes.date }
+								is12Hour={ true }
+								onChange={ currentDate => {
+									// Do not include seconds
+									setAttributes( { date: currentDate.slice( 0, currentDate.length - 3 ) } )
+								} }
+								__nextRemoveResetButton={ true }
+							/>
 							{	attributes.countdownType === 'dueDate' && (
-								<Fragment>
-									<DateTimePicker
-										label={ __( 'Start Date', i18n ) }
-										currentDate={ attributes.date }
-										is12Hour={ true }
-										onChange={ currentDate => {
-											// Do not include seconds
-											setAttributes( { date: currentDate.slice( 0, currentDate.length - 3 ) } )
-										} }
-									/>
+								<>
 									<AdvancedSelectControl
 										label={ __( 'Timezone', i18n ) }
 										value={ attributes.timezone }
@@ -189,19 +192,10 @@ const Edit = props => {
 										attribute="actionOnExpiration"
 									/>
 									{ attributes.actionOnExpiration === 'showMessage' }
-								</Fragment>
+								</>
 							) }
 							{ attributes.countdownType === 'recurring' && (
 								<Fragment>
-									<DateTimePicker
-										label={ __( 'Start Date', i18n ) }
-										currentDate={ attributes.date }
-										is12Hour={ true }
-										onChange={ currentDate => {
-											// Do not include seconds
-											setAttributes( { date: currentDate.slice( 0, currentDate.length - 3 ) } )
-										} }
-									/>
 									<AdvancedRangeControl
 										label={ __( 'Days', i18n ) }
 										min={ 0 }
@@ -252,6 +246,7 @@ const Edit = props => {
 								sliderMax={ 50 }
 								value={ attributes.labelMarginTop }
 								attribute="labelMarginTop"
+								placeholder="8"
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
@@ -302,73 +297,81 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				<div className="stk-block-countdown__container">
-					<ContainerDiv className={ contentClassNames }>
-						<CountdownNumber
-							className={ dayDigitClassNames }
-							type={ 'days' }
-							datetime={ attributes.date }
-							countdownType={ attributes.countdownType }
-							daysLeft={ attributes.daysLeft }
-						/>
-						{ attributes.dayShow && <Typography
-							identifier="day"
-							tagName="p"
-							className={ labelClassNames }
-							attrNameTemplate="day%s"
-							placeholder={ __( 'Days', i18n ) }
-						/> }
-					</ContainerDiv>
-					{ props.attributes.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
-					<ContainerDiv className={ contentClassNames }>
-						<CountdownNumber
-							className={ hourDigitClassNames }
-							type={ 'hours' }
-							datetime={ attributes.date }
-							countdownType={ attributes.countdownType }
-							hoursLeft={ attributes.hoursLeft }
-						/>
-						{ attributes.hourShow && <Typography
-							identifier="hour"
-							tagName="p"
-							className={ labelClassNames }
-							attrNameTemplate="hour%s"
-							placeholder={ __( 'Hours', i18n ) }
-						/> }
-					</ContainerDiv>
-					{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
-					<ContainerDiv className={ contentClassNames }>
-						<CountdownNumber
-							className={ minuteDigitClassNames }
-							type={ 'minutes' }
-							datetime={ attributes.date }
-							countdownType={ attributes.countdownType }
-							minutesLeft={ attributes.minutesLeft }
-						/>
-						{ attributes.minuteShow && <Typography
-							identifier="minute"
-							tagName="p"
-							className={ labelClassNames }
-							attrNameTemplate="minute%s"
-							placeholder={ __( 'Minutes', i18n ) }
-						/> }
-					</ContainerDiv>
-					{ props.attributes?.hasDivider && <Divider attributes={ attributes } className={ dividerClassNames } /> }
-					<ContainerDiv className={ contentClassNames }>
-						<CountdownNumber
-							className={ secondDigitClassNames }
-							type={ 'seconds' }
-							datetime={ attributes.date }
-							countdownType={ attributes.countdownType }
-							secondsLeft={ attributes.secondsLeft }
-						/>
-						{ attributes.secondShow && <Typography
-							identifier="second"
-							tagName="p"
-							className={ labelClassNames }
-							attrNameTemplate="second%s"
-							placeholder={ __( 'Seconds', i18n ) }
-						/> }
-					</ContainerDiv>
+					{ attributes.dayShow &&
+						<ContainerDiv className={ contentClassNames }>
+							<CountdownNumber
+								className={ dayDigitClassNames }
+								type={ 'days' }
+								datetime={ attributes.date }
+								countdownType={ attributes.countdownType }
+								daysLeft={ attributes.daysLeft }
+							/>
+							<Typography
+								identifier="day"
+								tagName="p"
+								className={ labelClassNames }
+								attrNameTemplate="day%s"
+								placeholder={ __( 'Days', i18n ) }
+							/>
+						</ContainerDiv>
+					}
+					{ attributes.hasDivider && attributes.dayShow && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					{ attributes.hourShow &&
+						<ContainerDiv className={ contentClassNames }>
+							<CountdownNumber
+								className={ hourDigitClassNames }
+								type={ 'hours' }
+								datetime={ attributes.date }
+								countdownType={ attributes.countdownType }
+								hoursLeft={ attributes.hoursLeft }
+							/>
+							<Typography
+								identifier="hour"
+								tagName="p"
+								className={ labelClassNames }
+								attrNameTemplate="hour%s"
+								placeholder={ __( 'Hours', i18n ) }
+							/>
+						</ContainerDiv>
+					}
+					{ attributes.hasDivider && attributes.hourShow && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					{ attributes.minuteShow &&
+						<ContainerDiv className={ contentClassNames }>
+							<CountdownNumber
+								className={ minuteDigitClassNames }
+								type={ 'minutes' }
+								datetime={ attributes.date }
+								countdownType={ attributes.countdownType }
+								minutesLeft={ attributes.minutesLeft }
+							/>
+							<Typography
+								identifier="minute"
+								tagName="p"
+								className={ labelClassNames }
+								attrNameTemplate="minute%s"
+								placeholder={ __( 'Minutes', i18n ) }
+							/>
+						</ContainerDiv>
+					}
+					{ attributes.hasDivider && attributes.minuteShow && attributes.secondShow && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					{ attributes.secondShow &&
+						<ContainerDiv className={ contentClassNames }>
+							<CountdownNumber
+								className={ secondDigitClassNames }
+								type={ 'seconds' }
+								datetime={ attributes.date }
+								countdownType={ attributes.countdownType }
+								secondsLeft={ attributes.secondsLeft }
+							/>
+							<Typography
+								identifier="second"
+								tagName="p"
+								className={ labelClassNames }
+								attrNameTemplate="second%s"
+								placeholder={ __( 'Seconds', i18n ) }
+							/>
+						</ContainerDiv>
+					}
 				</div>
 				{ attributes.actionOnExpiration === 'showMessage' &&
 					<Typography
@@ -389,7 +392,7 @@ export default compose(
 	withBlockAttributeContext,
 )( Edit )
 
-// Add meta controls.
+// Add meta controls for labels.
 addFilter( 'stackable.block-component.typography.before', 'stackable/posts', ( output, props ) => {
 	const { name } = useBlockEditContext()
 	if ( name !== 'stackable/countdown' ) {
@@ -403,44 +406,51 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/posts', ( o
 	return (
 		<>
 			<AdvancedToggleControl
-				label={ __( 'Show Days', i18n ) }
+				label={ __( 'Days', i18n ) }
 				attribute="dayShow"
+				defaultValue={ true }
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Hours', i18n ) }
+				attribute="hourShow"
+				defaultValue={ true }
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Minutes', i18n ) }
+				attribute="minuteShow"
+				defaultValue={ true }
+			/>
+			<AdvancedToggleControl
+				label={ __( 'Seconds', i18n ) }
+				attribute="secondShow"
+				defaultValue={ true }
 			/>
 			<AdvancedTextControl
-				label={ __( 'Days', i18n ) }
+				label={ __( 'Days Label', i18n ) }
 				attribute="dayText"
 				placeholder="Days"
-				help={ __( 'This is the string appended to the URL when changing pages.', i18n ) }
+				default={ __( 'Days', i18n ) }
 			/>
-			<AdvancedToggleControl
-				label={ __( 'Show Hours', i18n ) }
-				attribute="hourShow"
-			/>
+
 			<AdvancedTextControl
-				label={ __( 'Hours', i18n ) }
+				label={ __( 'Hours Label', i18n ) }
 				attribute="hourText"
 				placeholder="Hours"
-				help={ __( 'This is the string appended to the URL when changing pages.', i18n ) }
+				default={ __( 'Hours', i18n ) }
 			/>
-			<AdvancedToggleControl
-				label={ __( 'Show Minutes', i18n ) }
-				attribute="minuteShow"
-			/>
+
 			<AdvancedTextControl
-				label={ __( 'Minutes', i18n ) }
+				label={ __( 'Minutes Label', i18n ) }
 				attribute="minuteText"
 				placeholder="Minutes"
-				help={ __( 'This is the string appended to the URL when changing pages.', i18n ) }
+				default={ __( 'Minutes', i18n ) }
 			/>
-			<AdvancedToggleControl
-				label={ __( 'Show Seconds', i18n ) }
-				attribute="secondShow"
-			/>
+
 			<AdvancedTextControl
-				label={ __( 'Seconds', i18n ) }
+				label={ __( 'Seconds Label', i18n ) }
 				attribute="secondText"
 				placeholder="Seconds"
-				help={ __( 'This is the string appended to the URL when changing pages.', i18n ) }
+				default={ __( 'Seconds', i18n ) }
 			/>
 		</>
 	)
