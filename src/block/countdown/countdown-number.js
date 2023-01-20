@@ -22,28 +22,28 @@ export const CountdownNumber = props => {
 			switch ( props.type ) {
 				case 'days':
 					if ( props.countdownType === 'recurring' ) {
-						setValue( props.daysLeft )
+						setValue( props.daysLeft || '00' )
 					} else {
 						setValue( Math.floor( difference / SECONDS_IN_DAY ) )
 					}
 					break
 				case 'hours':
 					if ( props.countdownType === 'recurring' ) {
-						setValue( props.hoursLeft )
+						setValue( props.hoursLeft || '00' )
 					} else {
 						setValue( Math.floor( ( difference % SECONDS_IN_DAY ) / SECONDS_IN_HOUR ) )
 					}
 					break
 				case 'minutes':
 					if ( props.countdownType === 'recurring' ) {
-						setValue( props.minutesLeft )
+						setValue( props.minutesLeft || '00' )
 					} else {
 						setValue( Math.floor( ( difference % SECONDS_IN_HOUR ) / SECONDS_IN_MINUTE ) )
 					}
 					break
 				default:
 					if ( props.countdownType === 'recurring' ) {
-						setValue( props.secondsLeft )
+						setValue( props.secondsLeft || '00' )
 					} else {
 						setValue( Math.floor( ( difference % SECONDS_IN_MINUTE ) / SECONDS ) )
 					}
