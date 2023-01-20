@@ -57,10 +57,22 @@ class StackableCountdown {
 		const minutesLeft = Math.floor( ( timer % SECONDS_IN_HOUR ) / SECONDS_IN_MINUTE )
 		const secondsLeft = Math.floor( ( timer % SECONDS_IN_MINUTE ) / SECONDS )
 
-		day.textContent = daysLeft <= 0 ? '00' : daysLeft
-		hour.textContent = hoursLeft <= 0 ? '00' : hoursLeft
-		minute.textContent = minutesLeft <= 0 ? '00' : minutesLeft
-		second.textContent = secondsLeft <= 0 ? '00' : secondsLeft
+		// If null, do not show text
+		if ( day ) {
+			day.textContent = daysLeft <= 0 ? '00' : daysLeft
+		}
+
+		if ( hour ) {
+			hour.textContent = hoursLeft <= 0 ? '00' : hoursLeft
+		}
+
+		if ( minute ) {
+			minute.textContent = minutesLeft <= 0 ? '00' : minutesLeft
+		}
+
+		if ( second ) {
+			second.textContent = secondsLeft <= 0 ? '00' : secondsLeft
+		}
 
 		if ( timer <= 0 ) {
 			this.clearTimer()
@@ -75,7 +87,9 @@ class StackableCountdown {
 			}
 			if ( action === 'showMessage' ) {
 				const timer = this.el.querySelector( '.stk-block-countdown__container' )
+				const message = this.el.querySelector( '.stk-block-countdown__message' )
 				timer.style.display = 'none'
+				message.style.display = 'block'
 			}
 		}
 	}
@@ -102,4 +116,3 @@ const test = document.querySelectorAll( '.stk-block-countdown' )
 test.forEach( el => {
 	domReady( new StackableCountdown( el ).init )
 } )
-
