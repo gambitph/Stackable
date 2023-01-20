@@ -1,3 +1,10 @@
-.ugb-panel--countdown .components-datetime__time-wrapper .components-base-control {
-	margin-bottom: 0px !important;
+.ugb-panel--countdown .components-datetime__time-wrapper {
+	.components-base-control {
+		margin-bottom: 0px !important;
+	}
+
+	.components-datetime__timezone {
+		display: none;
+	}
 }
+
