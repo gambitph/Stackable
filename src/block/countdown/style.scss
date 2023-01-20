@@ -1,21 +1,28 @@
-.stk-block-countdown {
+.stk-block.stk-block-countdown {
+	text-align: center;
+}
+
+.stk-block-countdown__container {
 	display: flex;
 	flex-shrink: 0;
+
+	.stk-block-content {
+		flex: auto auto auto;
+	}
 }
 
-.stk-block-countdown__digit_day,
-.stk-block-countdown__digit_hour,
-.stk-block-countdown__digit_minute,
-.stk-block-countdown__digit_second {
-	text-align: center;
-}
-
-.stk-block-countdown__label {
-	text-align: center;
-	margin-bottom: 0;
+.stk-block-countdown__label,
+.stk-block-countdown__digit {
+	line-height: 1;
+	margin: 0;
 }
 
 .stk-block-countdown__divider {
-	margin-top: auto;
-	margin-bottom: auto;
+	flex-shrink: 0;
+	line-height: 1;
+	width: 1px;
+}
+
+.stk-block-countdown__message {
+	display: none;
 }
