@@ -37,7 +37,11 @@ const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-			dividerSize: {
+			dividerSizeLine: {
+				type: 'number',
+				default: '',
+			},
+			dividerSizeColon: {
 				type: 'number',
 				default: '',
 			},
@@ -58,12 +62,9 @@ const DIVIDER_TYPE_CONTROLS = [
 	},
 ]
 
-export const Edit = props => {
-	const {
-		// attributes,
-	} = props
-
+export const Edit = () => {
 	const hasDivider = useBlockAttributesContext( attributes => attributes.hasDivider )
+	const dividerType = useBlockAttributesContext( attributes => attributes.dividerType )
 	const setAttributes = useBlockSetAttributesContext()
 
 	return (
@@ -82,12 +83,21 @@ export const Edit = props => {
 					default={ ':' }
 					isSmall={ false }
 				/>
-				<AdvancedRangeControl
+				{ dividerType === ':' && <AdvancedRangeControl
 					label={ __( 'Size', i18n ) }
-					min={ 0 }
+					min={ 1 }
+					sliderMin={ 1 }
 					sliderMax={ 100 }
-					attribute="dividerSize"
-				/>
+					attribute="dividerSizeColon"
+				/> }
+				{ dividerType === '|' && <AdvancedRangeControl
+					label={ __( 'Size', i18n ) }
+					min={ 1 }
+					max={ 100 }
+					sliderMin={ 1 }
+					sliderMax={ 100 }
+					attribute="dividerSizeLine"
+				/> }
 				<ColorPaletteControl
 					label={ __( 'Color', i18n ) }
 					attribute="dividerColor"
@@ -104,11 +114,14 @@ export const Divider = props => {
 	} = props
 
 	return (
-		<div className={ className }>
-			{ attributes.dividerType === ':' && (
-				<> : </>
-			) }
+		<div className="stk-countdown-block__divider-wrapper">
+			<div className={ className }>
+				{ attributes.dividerType === ':' && (
+					<> : </>
+				) }
+			</div>
 		</div>
+
 	)
 }
 
@@ -119,8 +132,12 @@ Divider.Content = props => {
 	} = props
 
 	return (
-		<div className={ className }>
-			{ attributes?.dividerType }
+		<div className="stk-countdown-block__divider-wrapper">
+			<div className={ className }>
+				{ attributes.dividerType === ':' && (
+					<> : </>
+				) }
+			</div>
 		</div>
 	)
 }
@@ -154,12 +171,23 @@ const Styles = props => {
 				{ ...propsToPass }
 				selector={ selector }
 				selectorCallback={ selectorCallback }
-				styleRuleCallback={ getAttribute => getAttribute( 'dividerType' ) === ':' ? 'fontSize' : 'height' }
-				attrName="dividerSize"
-				key="dividerSize"
+				styleRule="height"
+				attrName="dividerSizeLine"
+				key="dividerSizeLine"
+				hasUnits="%"
+				responsive="all"
+				dependencies={ [ 'dividerType', 'dividerSizeLine' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				selectorCallback={ selectorCallback }
+				styleRule="fontSize"
+				attrName="dividerSizeColon"
+				key="dividerSizeColon"
 				hasUnits="px"
 				responsive="all"
-				dependencies={ [ 'dividerType', 'dividerSize' ] }
+				dependencies={ [ 'dividerType', 'dividerSizeColon' ] }
 			/>
 		</>
 	)
