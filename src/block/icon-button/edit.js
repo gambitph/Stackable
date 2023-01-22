@@ -35,7 +35,9 @@ import { blockStyles } from './block-styles'
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -49,36 +51,47 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
-			<BlockDiv.InspectorControls />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
+					<BlockDiv.InspectorControls />
 
-			<BlockStyle.InspectorControls styles={ blockStyles }>
-				<Button.InspectorControls.HoverEffects />
-			</BlockStyle.InspectorControls>
-			<Button.InspectorControls.Link />
-			<Button.InspectorControls.Colors
-				hasTextColor={ false }
-				hasIconColor={ true }
+					<BlockStyle.InspectorControls styles={ blockStyles }>
+						<Button.InspectorControls.HoverEffects />
+					</BlockStyle.InspectorControls>
+					<Button.InspectorControls.Link />
+					<Button.InspectorControls.Colors
+						hasTextColor={ false }
+						hasIconColor={ true }
+					/>
+					<Button.InspectorControls.Icon hasColor={ false } defaultValue={ defaultIcon } />
+					<Button.InspectorControls.Size hasWidth={ true } />
+					<Button.InspectorControls.Borders
+						borderSelector=".stk-button"
+						placeholder="24"
+					/>
+
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-button" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
+
+			<IconButtonStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
 			/>
-			<Button.InspectorControls.Icon hasColor={ false } defaultValue={ defaultIcon } />
-			<Button.InspectorControls.Size hasWidth={ true } />
-			<Button.InspectorControls.Borders
-				borderSelector=".stk-button"
-				placeholder="24"
-			/>
-
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-button" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<IconButtonStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-icon-button" />
 
 			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
 				className={ blockClassNames }
 				applyAdvancedAttributes={ false }
 				applyCustomAttributes={ false }

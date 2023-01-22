@@ -1,8 +1,4 @@
 /**
- * Internal dependencies
- */
-
-/**
  * External dependencies
  */
 import {
@@ -13,40 +9,48 @@ import {
 	EffectsAnimations,
 	Transform,
 } from '~stackable/block-components'
-import { Style as StyleComponent } from '~stackable/components'
-import {
-	getUniqueBlockClass, useStyles, getStyles,
-} from '~stackable/util'
+import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { memo, renderToString } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 
-const getStyleParams = () => {
-	return [
-		{
-			renderIn: 'save',
-			selector: '.stk-block-icon',
-			attrName: 'iconGap',
-			styleRule: 'flexBasis',
-			format: '%spx',
-			responsive: 'all',
-		},
-		{
-			renderIn: 'edit',
-			selector: '.stk-inner-blocks [data-block][data-type="stackable/icon"]',
-			attrName: 'iconGap',
-			styleRule: 'flexBasis',
-			format: '%spx',
-			responsive: 'all',
-		},
-	]
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
+
+	return (
+		<>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-block-icon"
+				attrName="iconGap"
+				key="iconGap-save"
+				styleRule="flexBasis"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector={ `.stk-inner-blocks [data-block][data-type="stackable/icon"]` }
+				attrName="iconGap"
+				key="iconGap"
+				styleRule="flexBasis"
+				format="%spx"
+				responsive="all"
+			/>
+		</>
+	)
 }
 
 export const IconLabelStyles = memo( props => {
-	const styles = useStyles( getStyleParams() )
-
 	return (
 		<>
 			{ /* Alignment has been removed in 3.3.0, but retained here to prevent block errors */ }
@@ -56,53 +60,35 @@ export const IconLabelStyles = memo( props => {
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
-			<StyleComponent
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
+			<Styles { ...props } />
 		</>
 	)
 } )
 
 IconLabelStyles.defaultProps = {
-	isEditor: false,
+	version: '',
 }
 
 IconLabelStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const styles = getStyles( propsToPass.attributes, getStyleParams() )
-
-	const stylesToRender = (
-		<>
+	return (
+		<BlockCssCompiler>
 			{ /* Alignment has been removed in 3.3.0, but retained here to prevent block errors */ }
-			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Column.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<StyleComponent.Content
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</>
+			<Alignment.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<Column.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<Styles { ...props } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
 IconLabelStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
 }

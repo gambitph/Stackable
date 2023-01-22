@@ -33,7 +33,9 @@ import {
 } from '~stackable/block-components'
 import { getVideoProviderFromURL, urlIsVideo } from '~stackable/util'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapperIsHovered,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -41,7 +43,6 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
@@ -56,9 +57,11 @@ const TEMPLATE = [
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		attributes,
 		setAttributes,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -80,66 +83,79 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
-			<InspectorTabs />
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<ImageControl2
-						isDynamic={ false }
-						label={ __( 'Popup Option #1: Upload Video', i18n ) }
-						help={ __( 'Use .mp4 format for videos', i18n ) }
-						onRemove={ () => setAttributes( {
-							videoLink: '',
-							videoId: '',
-						} ) }
-						onChange={ media => {
-							setAttributes( {
-								videoLink: media.url,
-								videoId: media.url,
-							} )
-						} }
-						imageId={ urlIsVideo( attributes.videoLink ) ? attributes.videoId : '' }
-						imageURL={ urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
-						allowedTypes={ [ 'video' ] }
-					/>
-					<AdvancedTextControl
-						label={ __( 'Popup Option #2: Video URL', i18n ) }
-						help={ __( 'Paste a Youtube / Vimeo URL', i18n ) }
-						isDynamic={ true }
-						isFormatType={ false }
-						placeholder="https://"
-						value={ ! urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
-						onChange={ videoLink => setAttributes( {
-							videoLink,
-							videoId: getVideoProviderFromURL( videoLink ).id,
-						} ) }
-					/>
-				</PanelAdvancedSettings>
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<ImageControl2
+								isDynamic={ false }
+								label={ __( 'Popup Option #1: Upload Video', i18n ) }
+								help={ __( 'Use .mp4 format for videos', i18n ) }
+								onRemove={ () => setAttributes( {
+									videoLink: '',
+									videoId: '',
+								} ) }
+								onChange={ media => {
+									setAttributes( {
+										videoLink: media.url,
+										videoId: media.url,
+									} )
+								} }
+								imageId={ urlIsVideo( attributes.videoLink ) ? attributes.videoId : '' }
+								imageURL={ urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
+								allowedTypes={ [ 'video' ] }
+							/>
+							<AdvancedTextControl
+								label={ __( 'Popup Option #2: Video URL', i18n ) }
+								help={ __( 'Paste a Youtube / Vimeo URL', i18n ) }
+								isDynamic={ true }
+								isFormatType={ false }
+								placeholder="https://"
+								value={ ! urlIsVideo( attributes.videoLink ) ? attributes.videoLink : '' }
+								onChange={ videoLink => setAttributes( {
+									videoLink,
+									videoId: getVideoProviderFromURL( videoLink ).id,
+								} ) }
+							/>
+						</PanelAdvancedSettings>
 
-			</InspectorStyleControls>
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-video-popup" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					</InspectorStyleControls>
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-video-popup" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
-			<IconLabelStyles version={ VERSION } />
+			<IconLabelStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-video-popup" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<div className={ contentClassNames }>
 					<InnerBlocks
 						template={ TEMPLATE }
@@ -147,13 +163,13 @@ const Edit = props => {
 					/>
 				</div>
 			</BlockDiv>
-			<MarginBottom />
-		</Fragment>
+			{ props.isHovered && <MarginBottom /> }
+		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

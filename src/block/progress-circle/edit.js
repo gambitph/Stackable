@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import md5 from 'md5'
 import ProgressCircleStyles from './style'
 import { DEFAULT_PROGRESS } from './schema'
 
@@ -27,9 +26,8 @@ import {
 	getAlignmentClasses,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -37,10 +35,16 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
 
-const Edit = ( {
-	className, attributes,
-} ) => {
+const Edit = props => {
+	const {
+		clientId,
+		className,
+		attributes,
+		isSelected,
+	} = props
+
 	useGeneratedCss( attributes )
 
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -72,36 +76,50 @@ const Edit = ( {
 	const color1 = attributes.progressColor1 || ''
 	const color2 = attributes.progressColor2 || ''
 	const direction = attributes.progressColorGradientDirection || ''
-	const customGradientId = md5( color1 + color2 + direction )
+	const customGradientId = ( color1 + color2 + direction ).replace( /[^0-9A-Z]+/gi, '' )
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
 
-			{ /** Advanced controls */ }
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					{ /** Advanced controls */ }
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<ProgressBar.InspectorControls isCircle />
-			<Typography.InspectorControls
-				initialOpen={ false }
-				hasTextTag={ false }
-				hasTextContent={ false }
-				hasTextShadow
-				hasToggle
-				label={ __( 'Label', i18n ) }
-			/>
+					<ProgressBar.InspectorControls isCircle />
+					<Typography.InspectorControls
+						{ ...props }
+						initialOpen={ false }
+						hasTextTag={ false }
+						hasTextContent={ false }
+						hasTextShadow
+						hasToggle
+						label={ __( 'Label', i18n ) }
+					/>
+				</>
+			) }
 
-			<BlockDiv className={ blockClassNames }>
-				<ProgressCircleStyles version={ VERSION } />
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
+				<ProgressCircleStyles
+					version={ VERSION }
+					blockState={ props.blockState }
+					clientId={ clientId }
+				/>
 				<CustomCSS mainBlockClass="stk-block-progress-circle" />
 				<div className={ containerClassNames }>
 					<div className="stk-progress-circle stk-animate">
@@ -133,13 +151,13 @@ const Edit = ( {
 					</div>
 				</div>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

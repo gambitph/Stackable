@@ -14,9 +14,10 @@ import classnames from 'classnames'
  */
 import { useInstanceId } from '@wordpress/compose'
 import { FormToggle } from '@wordpress/components'
+import { memo } from '@wordpress/element'
 import { useControlHandlers } from '../base-control2/hooks'
 
-const AdvancedToggleControl = props => {
+const AdvancedToggleControl = memo( props => {
 	const {
 		label,
 		help,
@@ -65,7 +66,7 @@ const AdvancedToggleControl = props => {
 			</label>
 		</BaseControl>
 	)
-}
+} )
 
 AdvancedToggleControl.defaultProps = {
 	className: '',

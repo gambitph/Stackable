@@ -16,6 +16,11 @@ import {
 /**
  * External dependencies
  */
+import { isEqual } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { memo } from '@wordpress/element'
 
 const AdvancedRangeControl = props => {
@@ -122,4 +127,4 @@ AdvancedRangeControl.defaultProps = {
 	onChange: undefined,
 }
 
-export default memo( AdvancedRangeControl )
+export default memo( AdvancedRangeControl, isEqual )

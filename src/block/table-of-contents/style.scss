@@ -13,6 +13,7 @@
 		-moz-column-break-inside: avoid;
 		-o-column-break-inside: avoid;
 		-ms-column-break-inside: avoid;
+		/* stylelint-disable-next-line property-no-unknown */
 		column-break-inside: avoid;
 	}
 

@@ -12,7 +12,7 @@
  * Internal dependencies
  */
 import { BlockWrapper } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -23,10 +23,21 @@ import { useEffect, useState } from '@wordpress/element'
 const withBlockWrapper = createHigherOrderComponent(
 	WrappedComponent => props => {
 		const isDisplayed = useDevicePreviewOptimization( props )
+		const [ blockState, blockHoverClass ] = useBlockHoverState()
 
 		return (
-			<BlockWrapper attributes={ props.attributes }>
-				{ isDisplayed && <WrappedComponent { ...props } /> }
+			<BlockWrapper
+				align={ props.attributes.align }
+				className={ props.attributes.className }
+				blockHoverClass={ blockHoverClass }
+			>
+				{ isDisplayed && (
+					<WrappedComponent
+						{ ...props }
+						blockState={ blockState }
+						blockHoverClass={ blockHoverClass }
+					/>
+				) }
 			</BlockWrapper>
 		)
 	},
@@ -57,7 +68,7 @@ let selectedBlock = null
  *
  * @param {Object} blockProps Block props
  */
-const useDevicePreviewOptimization = blockProps => {
+export const useDevicePreviewOptimization = blockProps => {
 	const { clientId, isSelected } = blockProps
 	const { rootBlockClientId } = useBlockContext()
 

@@ -16,7 +16,7 @@ import classnames from 'classnames'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	select, useSelect, useDispatch,
+	select, useSelect, dispatch,
 } from '@wordpress/data'
 import { addFilter } from '@wordpress/hooks'
 import { useMemo, useState } from '@wordpress/element'
@@ -36,7 +36,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/default-blocks', ou
 	}, [] )
 
 	const { getBlockStyle } = useSelect( 'stackable/block-styles' )
-	const { deleteBlockDefaultStyle } = useDispatch( 'stackable/block-styles' )
 
 	// This is needed to force the block list to rerender if a block style has changed.
 	useSelect( select => {
@@ -79,7 +78,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/default-blocks', ou
 							allowReset={ true }
 							showReset={ hasStyle }
 							onReset={ () => {
-								deleteBlockDefaultStyle( block.name, sprintf( __( 'Default %s Block Deleted!', i18n ), block.title ) )
+								dispatch( 'stackable/block-styles' ).deleteBlockDefaultStyle( block.name, sprintf( __( 'Default %s Block Deleted!', i18n ), block.title ) )
 									.then( () => {
 										setForceUpdate( forceUpdate + 1 )
 									} )

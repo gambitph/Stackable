@@ -12,15 +12,12 @@ import {
 	ContentAlign,
 } from '~stackable/block-components'
 import { useBlockAttributesContext } from '~stackable/hooks'
-import {
-	getUniqueBlockClass, useStyles, getStyles,
-} from '~stackable/util'
-import { Style as StyleComponent } from '~stackable/components'
+import { BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { memo, renderToString } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 const alignmentOptions = {
@@ -29,11 +26,9 @@ const alignmentOptions = {
 
 const BlockStyles = memo( props => {
 	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
-	const columnStyleOptions = {
-		numColumns: ( columnArrangement || '' ).split( ',' ).length,
-	}
+	const numColumns = ( columnArrangement || '' ).split( ',' ).length
 
-	const columnsStyles = useStyles( applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
+	const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
 
 	return (
 		<>
@@ -45,63 +40,40 @@ const BlockStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<Separator.Style { ...props } />
 			<ContentAlign.Style { ...props } />
-			<StyleComponent
-				styles={ columnsStyles }
-				versionAdded="3.1.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
+			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 		</>
 	)
 } )
 
 BlockStyles.defaultProps = {
-	isEditor: false,
+	version: '',
 }
 
 BlockStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	propsToPass.options = {
-		...propsToPass.options,
-	}
+	const numColumns = ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet || '' ).split( ',' ).length
+	const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
 
-	const columnStyleOptions = {
-		numColumns: ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet || '' ).split( ',' ).length,
-	}
-
-	const columnsStyles = getStyles( props.attributes, applyFilters( 'stackable.block-component.columns.get-style-params', [], columnStyleOptions, '' ) )
-
-	const stylesToRender = (
-		<>
-			<Alignment.Style.Content { ...propsToPass } options={ alignmentOptions } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<MarginBottom.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<Separator.Style.Content { ...propsToPass } />
-			<ContentAlign.Style.Content { ...propsToPass } />
-			<StyleComponent.Content
-				styles={ columnsStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } { ...alignmentOptions } />
+			<BlockDiv.Style.Content { ...props } />
+			<MarginBottom.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<Separator.Style.Content { ...props } />
+			<ContentAlign.Style.Content { ...props } />
+			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
+		</BlockCssCompiler>
 	)
-
-	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
 BlockStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
 }
 

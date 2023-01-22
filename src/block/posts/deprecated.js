@@ -9,6 +9,7 @@ import { Save } from './save'
  */
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
+import { Image } from '~stackable/block-components'
 
 /**
  * WordPress dependencies
@@ -26,9 +27,14 @@ const addUndefinedAttributes = ( attributes, version ) => {
 	return attributes
 }
 
+const determineFeatureImage = ( featuredImage, version ) => {
+	return ( compareVersions( '3.6.3', version ) === -1 ) ? featuredImage : <Image.Content />
+}
+
 addFilter( 'stackable.posts.title.typography-content', 'stackable/3_0_2', addUndefinedAttributes )
 addFilter( 'stackable.posts.title.category-content', 'stackable/3_0_2', addUndefinedAttributes )
 addFilter( 'stackable.posts.title.readmore-content', 'stackable/3_0_2', addUndefinedAttributes )
+addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureImage )
 
 const deprecated = [
 	{

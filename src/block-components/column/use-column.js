@@ -1,14 +1,13 @@
 /**
  * WordPress Dependencies
  */
-import { useDispatch, select } from '@wordpress/data'
+import { dispatch, select } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import classnames from 'classnames'
 import { getRowsFromColumns } from './util'
 
 export const useColumn = () => {
 	const { clientId } = useBlockEditContext()
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const onChangeDesktop = widths => {
 		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
@@ -26,7 +25,7 @@ export const useColumn = () => {
 				return results
 			}, [ [], {} ] )
 
-			updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
+			dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 		}
 	}
 
@@ -53,7 +52,7 @@ export const useColumn = () => {
 			} )
 		}
 
-		updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
+		dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 	}
 
 	const onChangeMobile = ( width, widths ) => {
@@ -79,7 +78,7 @@ export const useColumn = () => {
 			} )
 		}
 
-		updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
+		dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 	}
 
 	const onResetDesktop = () => {
@@ -88,7 +87,7 @@ export const useColumn = () => {
 
 		if ( adjacentBlocks.length ) {
 			const clientIds = adjacentBlocks.map( block => block.clientId )
-			updateBlockAttributes( clientIds, { columnWidth: '' } ) // eslint-disable-line stackable/no-update-block-attributes
+			dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, { columnWidth: '' } ) // eslint-disable-line stackable/no-update-block-attributes
 		}
 	}
 

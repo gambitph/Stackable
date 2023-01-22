@@ -6,11 +6,6 @@
  */
 
 /**
- * Internal dependencies
- */
-import { useBlockHoverClass } from '~stackable/hooks'
-
-/**
  * External dependencies
  */
 import classnames from 'classnames'
@@ -19,10 +14,17 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { useBlockProps } from '@wordpress/block-editor'
+import { memo } from '@wordpress/element'
 
-const BlockWrapper = props => {
-	const align = props.attributes.align
-	const blockHoverClass = useBlockHoverClass()
+const BlockWrapper = memo( props => {
+	const {
+		align = undefined,
+		className: blockClassName = '',
+		blockHoverClass = '',
+		children,
+		hoverRef,
+		...propsToPass
+	} = props
 
 	const className = classnames(
 		blockHoverClass,
@@ -32,23 +34,22 @@ const BlockWrapper = props => {
 	)
 
 	const blockProps = useBlockProps( {
-		...( props.blockProps || {} ),
+		...( propsToPass || {} ),
+		ref: hoverRef,
 		className,
 		// We force-removed the block alignment wrapper div (see src/blocks.js),
 		// so we need to add our own data-align attribute.
-		'data-align': props.attributes.align,
+		'data-align': align,
 	} )
 
 	// Remove the custom CSS names here because we will be adding it in the BlockDiv component, we need to do this for our current styles to work.
-	blockProps.className = blockProps.className.replace( props.attributes.className, '' ).trim()
+	blockProps.className = blockProps.className.replace( blockClassName, '' ).trim()
 
 	return <div { ...blockProps } >
-		{ props.children }
+		{ children }
 	</div>
-}
+} )
 
-BlockWrapper.defaultProps = {
-	blockProps: null,
-}
+BlockWrapper.displayName = 'BlockWrapper'
 
 export default BlockWrapper

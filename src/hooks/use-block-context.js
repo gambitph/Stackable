@@ -12,7 +12,9 @@
 /**
  * External depedencies
  */
-import { nth, cloneDeep, isEmpty } from 'lodash'
+import {
+	nth, cloneDeep, isEmpty,
+} from 'lodash'
 
 /**
  * WordPress dependencies

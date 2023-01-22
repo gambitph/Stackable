@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	DeprecatedButtonContent_1_15_5,
-} from '../../components/button-edit'
+import { DeprecatedButtonContent_1_15_5 } from '../../components/button-edit'
 import { range } from '~stackable/util'
 import { i18n } from 'stackable'
 

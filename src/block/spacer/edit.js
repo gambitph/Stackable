@@ -51,6 +51,7 @@ const isDefined = ( value = '' ) => {
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		attributes,
 		setAttributes,
@@ -88,36 +89,49 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
-			<BlockDiv.InspectorControls hasSizeSpacing={ false } />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
+					<BlockDiv.InspectorControls hasSizeSpacing={ false } />
 
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Height', i18n ) }
-						responsive="all"
-						attribute="height"
-						sliderMin="0"
-						sliderMax="500"
-						placeholder={ defaultMinHeight }
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-spacer" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Height', i18n ) }
+								responsive="all"
+								attribute="height"
+								sliderMin="0"
+								sliderMax="500"
+								placeholder={ defaultMinHeight }
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-spacer" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
-			<SpacerStyles version={ VERSION } />
+			<SpacerStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-spacer" />
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<ResizableBox
 					ref={ resizableRef }
 					showHandle={ isHovered || isSelected }

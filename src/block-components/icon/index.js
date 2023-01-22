@@ -21,7 +21,7 @@ import { Style } from './style'
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
-	useMemo, Fragment, useState, useRef, useEffect,
+	useMemo, useState, useRef, useEffect, renderToString,
 } from '@wordpress/element'
 
 const LinearGradient = ( {
@@ -107,7 +107,7 @@ export const Icon = props => {
 		return () => clearTimeout( t )
 	}, [ isSelected ] )
 
-	const attributes = useBlockAttributesContext()
+	const uniqueId = useBlockAttributesContext( attributes => attributes.uniqueId )
 
 	const {
 		getAttribute,
@@ -121,12 +121,12 @@ export const Icon = props => {
 	}
 
 	const linearGradient = hasLinearGradient ? (
-		<LinearGradient
-			id={ 'linear-gradient-' + attributes.uniqueId }
+		renderToString( <LinearGradient
+			id={ 'linear-gradient-' + uniqueId }
 			iconColor1={ getAttribute( 'iconColor1' ) }
 			iconColor2={ getAttribute( 'iconColor2' ) }
-		/>
-	) : <Fragment />
+		/> )
+	) : undefined
 
 	const classNames = classnames(
 		[ 'stk--svg-wrapper' ],
@@ -152,7 +152,7 @@ export const Icon = props => {
 			{ getAttribute( 'icon' ) && (
 				<SvgIcon
 					className="stk--inner-svg"
-					prependRender={ linearGradient }
+					prependRenderString={ linearGradient }
 					value={ getAttribute( 'icon' ) }
 					ariaLabel={ getAttribute( 'ariaLabel' ) }
 				/>
@@ -160,7 +160,8 @@ export const Icon = props => {
 			{ getAttribute( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
 			{ isOpen && (
 				<IconSearchPopover
-					useRef={ popoverEl }
+					__hasPopover={ true }
+					__deprecateUseRef={ popoverEl }
 					onChange={ icon => {
 						updateAttributeHandler( 'icon' )( icon )
 						setIsOpen( false )
@@ -170,7 +171,7 @@ export const Icon = props => {
 			{ getAttribute( 'icon2' ) && (
 				<SvgIcon
 					className="stk--inner-svg stk--icon-2"
-					prependRender={ linearGradient }
+					prependRenderString={ linearGradient }
 					value={ getAttribute( 'icon2' ) }
 					ariaLabel={ getAttribute( 'ariaLabel' ) }
 					style={ { display: 'none' } }
@@ -194,12 +195,12 @@ Icon.Content = props => {
 	const ShapeComp = getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' )
 
 	const linearGradient = hasLinearGradient ? (
-		<LinearGradient
+		renderToString( <LinearGradient
 			id={ 'linear-gradient-' + attributes.uniqueId }
 			iconColor1={ getValue( 'iconColor1' ) }
 			iconColor2={ getValue( 'iconColor2' ) }
-		/>
-	) : <Fragment />
+		/> )
+	) : undefined
 
 	const className = classnames(
 		[ 'stk--svg-wrapper' ],
@@ -215,7 +216,7 @@ Icon.Content = props => {
 			{ getValue( 'icon' ) && (
 				<SvgIcon.Content
 					className="stk--inner-svg"
-					prependRender={ linearGradient }
+					prependRenderString={ linearGradient }
 					value={ getValue( 'icon' ) }
 					ariaLabel={ getValue( 'ariaLabel' ) }
 				/>
@@ -226,7 +227,7 @@ Icon.Content = props => {
 			{ getValue( 'icon2' ) && ( // This is a second icon that's only outputted for reference. It's up to the parent block to decide what to do with it.
 				<SvgIcon.Content
 					className="stk--inner-svg stk--icon-2"
-					prependRender={ linearGradient }
+					prependRenderString={ linearGradient }
 					value={ getValue( 'icon2' ) }
 					ariaLabel={ getValue( 'ariaLabel' ) }
 					style={ { display: 'none' } }

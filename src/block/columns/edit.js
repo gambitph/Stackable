@@ -37,7 +37,9 @@ import {
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapperIsHovered,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -48,11 +50,13 @@ import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
+const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
 const Edit = props => {
 	const {
 		className,
+		clientId,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -79,25 +83,36 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls hasRowAlignment={ true } />
-			<BlockDiv.InspectorControls />
-			<Separator.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-			<ContentAlign.InspectorControls hasColumnCount={ true } />
+					<Alignment.InspectorControls hasRowAlignment={ true } />
+					<BlockDiv.InspectorControls />
+					<Separator.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+					<ContentAlign.InspectorControls hasColumnCount={ true } />
+				</>
+			) }
 
 			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
-				<BlockStyles version={ VERSION } />
+				<BlockStyles
+					version={ VERSION }
+					blockState={ props.blockState }
+					clientId={ clientId }
+				/>
 				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
@@ -118,13 +133,13 @@ const Edit = props => {
 					</div>
 				</Separator>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
+			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

@@ -22,7 +22,13 @@ export const Edit = () => {
 		hideDesktop,
 		hideTablet,
 		hideMobile,
-	} = useBlockAttributesContext()
+	} = useBlockAttributesContext( attributes => {
+		return {
+			hideDesktop: attributes.hideDesktop,
+			hideTablet: attributes.hideTablet,
+			hideMobile: attributes.hideMobile,
+		}
+	} )
 
 	return (
 		<Fragment>

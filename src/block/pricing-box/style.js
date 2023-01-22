@@ -11,12 +11,12 @@ import {
 	Transform,
 	ContentAlign,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
+import { BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { memo, renderToString } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 
 const BlockStyles = memo( props => {
 	return (
@@ -34,37 +34,30 @@ const BlockStyles = memo( props => {
 } )
 
 BlockStyles.defaultProps = {
-	isEditor: false,
+	version: '',
 }
 
 BlockStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-
-	const stylesToRender = (
-		<>
-			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ContainerDiv.Style.Content { ...propsToPass } />
-			<MarginBottom.Style.Content { ...propsToPass } />
-			<ContentAlign.Style.Content { ...propsToPass } />
-		</>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<ContainerDiv.Style.Content { ...props } />
+			<MarginBottom.Style.Content { ...props } />
+			<ContentAlign.Style.Content { ...props } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
 BlockStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
 }
 

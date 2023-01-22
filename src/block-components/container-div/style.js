@@ -6,11 +6,6 @@ import {
 } from '../helpers'
 import { useBlockAttributesContext } from '~stackable/hooks'
 
-/**
- * WordPress dependencies
- */
-import { Fragment } from '@wordpress/element'
-
 export const Style = props => {
 	const {
 		backgroundSelector = '.%s-container',
@@ -26,7 +21,7 @@ export const Style = props => {
 	const hasContainer = useBlockAttributesContext( attributes => attributes.hasContainer )
 
 	return (
-		<Fragment>
+		<>
 			{ hasContainer &&
 				<BackgroundStyle
 					{ ...props }
@@ -50,7 +45,7 @@ export const Style = props => {
 				horizontalAlignRule={ sizeHorizontalAlignRule }
 				wrapperSelector={ wrapperSelector }
 			/>
-		</Fragment>
+		</>
 	)
 }
 
@@ -68,43 +63,35 @@ Style.Content = props => {
 		wrapperSelector = '',
 		sizeVerticalAlignSelector = '',
 		sizeVerticalAlignSelectorEdit = '',
-	} = props.options
+		attributes,
+	} = props
 
 	return (
-		<Fragment>
-			{ props.attributes.hasContainer &&
+		<>
+			{ attributes.hasContainer &&
 				<BackgroundStyle.Content
 					{ ...props }
-					options={ {
-						attrNameTemplate: 'container%s',
-						selector: backgroundSelector,
-					} }
+					attrNameTemplate="container%s"
+					selector={ backgroundSelector }
 				/>
 			}
 			<BorderStyle.Content
 				{ ...props }
-				options={ {
-					attrNameTemplate: 'container%s',
-					selector: borderSelector,
-					hoverSelector: `${ borderSelector }:hover`,
-				} }
+				attrNameTemplate="container%s"
+				selector={ borderSelector }
+				hoverSelector={ `${ borderSelector }:hover` }
 			/>
 			<SizeStyle.Content
 				{ ...props }
-				options={ {
-					attrNameTemplate: 'container%s',
-					selector: sizeSelector,
-					verticalAlignRule: sizeVerticalAlignRule,
-					verticalAlignSelector: sizeVerticalAlignSelector,
-					verticalAlignSelectorEdit: sizeVerticalAlignSelectorEdit,
-					horizontalAlignRule: sizeHorizontalAlignRule,
-					wrapperSelector,
-				} }
+				attrNameTemplate="container%s"
+				selector={ sizeSelector }
+				verticalAlignRule={ sizeVerticalAlignRule }
+				verticalAlignSelector={ sizeVerticalAlignSelector }
+				verticalAlignSelectorEdit={ sizeVerticalAlignSelectorEdit }
+				horizontalAlignRule={ sizeHorizontalAlignRule }
+				wrapperSelector={ wrapperSelector }
 			/>
-		</Fragment>
+		</>
 	)
 }
 
-Style.Content.defaultProps = {
-	options: {},
-}

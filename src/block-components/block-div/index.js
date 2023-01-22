@@ -5,12 +5,10 @@ import { Edit } from './edit'
 
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
-import {
-	useBlockAttributesContext, useBlockHoverClass, useVariationPicker,
-} from '~stackable/hooks'
+import { useVariationPicker } from '~stackable/hooks'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
 
-import { useBlockEditContext, useBlockProps } from '@wordpress/block-editor'
+import { useBlockProps } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { getHtmlTag } from '../advanced/use-html-tag'
 import { CustomAttributes } from '../custom-attributes'
@@ -25,12 +23,11 @@ export const BlockDiv = props => {
 		renderHtmlTag,
 		enableVariationPicker,
 		withUniqueClass,
+		blockHoverClass,
+		clientId,
+		attributes,
 		...propsToPass
 	} = props
-
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributesContext()
-	const blockHoverClass = useBlockHoverClass()
 
 	useUniqueId( attributes, ! enableVariationPicker )
 
@@ -40,6 +37,7 @@ export const BlockDiv = props => {
 	const instanceId = useQueryLoopInstanceId( attributes.uniqueId || tempUniqueId )
 	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId || tempUniqueId )
 	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass
+	uniqueBlockClass = applyFilters( 'stackable.block-div.uniqueClass.edit', uniqueBlockClass )
 
 	// Variation picker will show up if there's no uniqueId yet (which will be
 	// the case when enableVariationPicker = true)
@@ -88,6 +86,7 @@ BlockDiv.defaultProps = {
 	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
 	enableVariationPicker: false,
 	withUniqueClass: true,
+	blockHoverClass: '',
 }
 
 BlockDiv.Content = props => {
@@ -102,11 +101,13 @@ BlockDiv.Content = props => {
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
 	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
+	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
+	uniqueBlockClass = applyFilters( 'stackable.block-div.uniqueClass.save', uniqueBlockClass, attributes )
 
 	const classNames = classnames( [
 		className,
 		'stk-block',
-		getUniqueBlockClass( attributes.uniqueId ),
+		uniqueBlockClass,
 	],
 	applyFilters( 'stackable.block-components.block-div.classnames.content', [], attributes ),
 	{

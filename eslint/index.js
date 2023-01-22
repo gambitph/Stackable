@@ -6,6 +6,7 @@ module.exports = {
 		'no-import-use-stk-api': require( './rules/no-import-use-stk-api' ),
 		'no-deprecated-use-styles': require( './rules/no-deprecated-use-styles' ),
 		'no-get-block-parents': require( './rules/no-get-block-parents' ),
+		'no-use-dispatch': require( './rules/no-use-dispatch' ),
 	},
 	configs: {
 		recommended: {
@@ -19,6 +20,7 @@ module.exports = {
 				'stackable/no-import-use-stk-api': 'error',
 				'stackable/no-deprecated-use-styles': 'error',
 				'stackable/no-get-block-parents': 'error',
+				'stackable/no-use-dispatch': 'error',
 			},
 		},
 	},

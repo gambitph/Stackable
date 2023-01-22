@@ -32,7 +32,9 @@ import {
 } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext,
+	withBlockWrapperIsHovered,
+	withQueryLoopContext,
 } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
 
@@ -63,6 +65,8 @@ const Edit = props => {
 		onRemove,
 		mergeBlocks,
 		attributes,
+		clientId,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -112,60 +116,73 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
+					{ enableColumns &&
+						<InspectorStyleControls>
+							<PanelAdvancedSettings
+								title={ __( 'General', i18n ) }
+								initialOpen={ true }
+								id="general"
+							>
+								<AdvancedRangeControl
+									label={ __( 'Columns', i18n ) }
+									allowReset={ true }
+									attribute="columns"
+									min="1"
+									sliderMax="3"
+									step="1"
+									placeholder="1"
+									responsive="all"
+								/>
 
-			{ enableColumns &&
-				<InspectorStyleControls>
-					<PanelAdvancedSettings
-						title={ __( 'General', i18n ) }
-						initialOpen={ true }
-						id="general"
-					>
-						<AdvancedRangeControl
-							label={ __( 'Columns', i18n ) }
-							allowReset={ true }
-							attribute="columns"
-							min="1"
-							sliderMax="3"
-							step="1"
-							placeholder="1"
-							responsive="all"
-						/>
+								<AdvancedRangeControl
+									label={ __( 'Column Gap', i18n ) }
+									allowReset={ true }
+									attribute="columnGap"
+									min="0"
+									sliderMax="50"
+									responsive="all"
+								/>
+							</PanelAdvancedSettings>
+						</InspectorStyleControls>
+					}
 
-						<AdvancedRangeControl
-							label={ __( 'Column Gap', i18n ) }
-							allowReset={ true }
-							attribute="columnGap"
-							min="0"
-							sliderMax="50"
-							responsive="all"
-						/>
-					</PanelAdvancedSettings>
-				</InspectorStyleControls>
-			}
+					<Typography.InspectorControls
+						{ ...props }
+						hasTextTag={ false }
+						isMultiline={ true }
+						initialOpen={ ! enableColumns }
+						hasTextShadow={ true }
+					/>
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
-			<Typography.InspectorControls
-				hasTextTag={ false }
-				isMultiline={ true }
-				initialOpen={ ! enableColumns }
-				hasTextShadow={ true }
+			<TextStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
 			/>
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<TextStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-text" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Typography
 					tagName={ props.attributes.innerTextTag || 'p' }
 					className={ textClassNames }
@@ -176,13 +193,13 @@ const Edit = props => {
 					onSplit={ onSplit }
 				/>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

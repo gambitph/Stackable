@@ -1,24 +1,24 @@
 /**
  * External dependencies
  */
-import {
-	ColorPaletteControl, AdvancedToolbarControl, Button,
-} from '~stackable/components'
-import { isElementDescendant, whiteIfDarkBlackIfLight } from '~stackable/util'
+import { ColorPaletteControl, AdvancedToolbarControl } from '~stackable/components'
+import { whiteIfDarkBlackIfLight } from '~stackable/util'
 import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { Popover, ToolbarGroup } from '@wordpress/components'
+import {
+	Dropdown,
+	Toolbar,
+	ToolbarButton,
+} from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
 } from '@wordpress/rich-text'
 import { BlockControls, useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-import {
-	useState, useEffect, useRef,
-} from '@wordpress/element'
+import { useState } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import {
 	dispatch, select, useSelect,
@@ -120,31 +120,18 @@ export const extractColors = styleString => {
 	}
 }
 
+const popoverProps = {
+	placement: 'bottom',
+	offset: 16,
+	shift: true,
+}
+
 const HighlightButton = props => {
 	const { clientId } = useBlockEditContext()
-	const [ isOpen, setIsOpen ] = useState( false )
-	const popoverEl = useRef( null )
 	const [ colorType, setColorType ] = useState( null )
 	const { getBlock } = useSelect( 'core/block-editor' )
 
 	const block = getBlock( clientId )
-
-	// Assign the outside click listener.
-	useEffect( () => {
-		// Close the window if the user clicks outside.
-		const clickOutsideListener = event => {
-			const isOutside = ! isElementDescendant( popoverEl.current, event.target )
-			const isToolbarButton = event.target.closest( '.stk-components-toolbar__highlight' )
-			const isColorPicker = event.target.closest( '.components-color-picker' )
-			const isSuggestion = event.target.closest( '.react-autosuggest__suggestions-container' )
-			if ( isOpen && isOutside && ! isToolbarButton && ! isColorPicker && ! isSuggestion ) {
-				setIsOpen( false )
-			}
-		}
-
-		document.body.addEventListener( 'mousedown', clickOutsideListener )
-		return () => document.body.removeEventListener( 'mousedown', clickOutsideListener )
-	}, [ popoverEl.current, isOpen ] )
 
 	const {
 		activeAttributes,
@@ -156,14 +143,6 @@ const HighlightButton = props => {
 	// Backward compatibility for ugb/highlight.
 	let isActive = _isActive
 	let highlightStyles = activeAttributes?.style
-
-	// Open the popup according to the highlight type.
-	useEffect( () => {
-		const {
-			colorType = '',
-		} = isActive ? extractColors( highlightStyles ) : {}
-		setColorType( colorType )
-	}, [ isOpen ] )
 
 	if ( value ) {
 		( value.activeFormats || [] ).some( format => {
@@ -190,82 +169,90 @@ const HighlightButton = props => {
 
 	return (
 		<BlockControls>
-			<ToolbarGroup className="stackable-components-toolbar">
-				<Button
-					label={ __( 'Color & Highlight', i18n ) }
-					className="components-toolbar__control stk-toolbar-button stk-components-toolbar__highlight"
-					icon="editor-textcolor"
-					aria-haspopup="true"
-					tooltip={ __( 'Color & Highlight', i18n ) }
-					onClick={ () => {
-						setIsOpen( ! isOpen )
-					} }
-					isPressed={ isActive }
-				>
-					<span className="components-stackable-highlight-color__indicator" style={ { backgroundColor: displayIconColor } } />
-				</Button>
-				{ isOpen &&
-					<Popover
-						position="bottom center"
-						className="components-stackable-highlight__popover"
-						focusOnMount="container"
-						ref={ popoverEl }
-						isAlternate
-					>
-						<div className="components-stackable-highlight__inner">
-							<AdvancedToolbarControl
-								controls={ [
-									{
-										value: '',
-										title: __( 'Normal', i18n ),
-									},
-									{
-										value: 'highlight',
-										title: __( 'Highlight', i18n ),
-									},
-									{
-										value: 'low',
-										title: __( 'Low', i18n ),
-									},
-								] }
-								value={ colorType }
-								onChange={ colorType => {
-								// Pick default colors for when the highlight type changes.
-									const defaultHighlightColor = highlightColor ? highlightColor
-										: colorType !== '' ? ( textColor || '#f34957' ) : highlightColor
-									const defaultTextColor = colorType === 'highlight' ? whiteIfDarkBlackIfLight( '', defaultHighlightColor )
-										: colorType === 'low' ? ''
-											: highlightColor || textColor || ''
-
-									onChange( createApplyFormat( value, colorType, defaultTextColor, defaultHighlightColor ), { withoutHistory: true } )
+			<Toolbar className="stackable-components-toolbar">
+				<Dropdown
+					popoverProps={ popoverProps }
+					className="block-editor-tools-panel-color-gradient-settings__dropdown"
+					renderToggle={ ( { isOpen, onToggle } ) => (
+						<ToolbarButton
+							label={ __( 'Color & Highlight', i18n ) }
+							className="components-toolbar__control stk-toolbar-button stk-components-toolbar__highlight"
+							icon="editor-textcolor"
+							aria-haspopup="true"
+							tooltip={ __( 'Color & Highlight', i18n ) }
+							onClick={ () => {
+								if ( ! isOpen ) {
+									const {
+										colorType = '',
+									} = isActive ? extractColors( highlightStyles ) : {}
 									setColorType( colorType )
-								} }
-								isSmall
-							/>
-							<div className="stk-highlight-format__color-picker">
-								<ColorPaletteControl
-									label={ __( 'Text Color', i18n ) }
-									value={ textColor }
-									onChange={ textColor => {
-										onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
+								}
+								onToggle()
+							} }
+							isActive={ isActive }
+						>
+							<span className="components-stackable-highlight-color__indicator" style={ { backgroundColor: displayIconColor } } />
+						</ToolbarButton>
+					) }
+					renderContent={ () => (
+						<div className="stk-color-palette-control__popover-content">
+							<div className="components-stackable-highlight__inner">
+								<AdvancedToolbarControl
+									controls={ [
+										{
+											value: '',
+											title: __( 'Normal', i18n ),
+										},
+										{
+											value: 'highlight',
+											title: __( 'Highlight', i18n ),
+										},
+										{
+											value: 'low',
+											title: __( 'Low', i18n ),
+										},
+									] }
+									value={ colorType }
+									onChange={ colorType => {
+										// Pick default colors for when the highlight type changes.
+										const defaultHighlightColor = highlightColor ? highlightColor
+											: colorType !== '' ? ( textColor || '#f34957' ) : highlightColor
+										const defaultTextColor = colorType === 'highlight' ? whiteIfDarkBlackIfLight( '', defaultHighlightColor )
+											: colorType === 'low' ? ''
+												: highlightColor || textColor || ''
+
+										onChange( createApplyFormat( value, colorType, defaultTextColor, defaultHighlightColor ), { withoutHistory: true } )
+										setColorType( colorType )
 									} }
+									isSmall
 								/>
-							</div>
-							{ colorType !== '' &&
 								<div className="stk-highlight-format__color-picker">
 									<ColorPaletteControl
-										label={ __( 'Highlight Color', i18n ) }
-										value={ highlightColor }
-										onChange={ highlightColor => {
+										isExpanded
+										label={ __( 'Text Color', i18n ) }
+										value={ textColor }
+										onChange={ textColor => {
 											onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
 										} }
 									/>
 								</div>
-							}
+								{ colorType !== '' &&
+									<div className="stk-highlight-format__color-picker">
+										<ColorPaletteControl
+											isExpanded
+											label={ __( 'Highlight Color', i18n ) }
+											value={ highlightColor }
+											onChange={ highlightColor => {
+												onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
+											} }
+										/>
+									</div>
+								}
+							</div>
 						</div>
-					</Popover>
-				}
-			</ToolbarGroup>
+					) }
+				/>
+			</Toolbar>
 		</BlockControls>
 	)
 }

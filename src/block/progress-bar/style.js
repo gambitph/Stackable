@@ -11,12 +11,11 @@ import {
 	Typography,
 } from '~stackable/block-components'
 
-import { getUniqueBlockClass } from '~stackable/util'
-
 /**
  * WordPress dependencies
  */
-import { memo, renderToString } from '@wordpress/element'
+import { memo } from '@wordpress/element'
+import { BlockCssCompiler } from '~stackable/components'
 
 const typographyOptions = {
 	selector: '.stk-progress-bar__inner-text',
@@ -37,38 +36,29 @@ const ProgressBarStyles = memo( props => {
 } )
 
 ProgressBarStyles.defaultProps = {
-	isCircle: false,
-	isEditor: false,
+	version: '',
 }
 
 ProgressBarStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-
-	const stylesToRender = (
-		<>
-			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ProgressBar.Style.Content { ...propsToPass } />
-			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
-		</>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<ProgressBar.Style.Content { ...props } />
+			<Typography.Style.Content { ...props } { ...typographyOptions } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
 ProgressBarStyles.Content.defaultProps = {
-	isCircle: false,
+	version: '',
 	attributes: {},
 }
 
