@@ -191,8 +191,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Load our main frontend scripts if there's a Stackable block loaded in the
 			// frontend.
 			if ( ! $this->is_main_script_loaded && ! is_admin() ) {
+				$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 				if (
-					stripos( $block['blockName'], 'stackable/' ) === 0 ||
+					stripos( $block_name, 'stackable/' ) === 0 ||
 					stripos( $block_content, '<!-- wp:stackable/' ) !==  false ||
 					stripos( $block_content, 'stk-highlight' ) !==  false
 				) {
@@ -203,8 +204,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Load our individual block script if they're used in the page.
 			$stackable_block = '';
-			if ( stripos( $block['blockName'], 'stackable/' ) === 0 ) {
-				if ( preg_match( '#stackable/([\w\d-]+)#', $block['blockName'], $matches ) ) {
+			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
+				if ( preg_match( '#stackable/([\w\d-]+)#', $block_name, $matches ) ) {
 					$stackable_block = $matches[1];
 				}
 			} else if ( stripos( $block_content, '<!-- wp:stackable/' ) !==  false ) {
