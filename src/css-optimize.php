@@ -140,7 +140,8 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 */
 		public function parse_blocks( $blocks, &$style_arr ) {
 			foreach ( $blocks as $block ) {
-				if ( stripos( $block['blockName'], 'stackable/' ) !== false ) {
+				$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+				if ( stripos( $block_name, 'stackable/' ) !== false ) {
 					$this->parse_block_style( $block, $style_arr );
 				}
 
@@ -262,7 +263,8 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			}
 
 			// Only do this to our blocks.
-			if ( ! empty( $block ) && is_array( $block ) && stripos( $block['blockName'], 'stackable/' ) === 0 ) {
+			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+			if ( ! empty( $block ) && is_array( $block ) && stripos( $block_name, 'stackable/' ) === 0 ) {
 				if ( stripos( $block_content, '<style' ) !== false ) {
 
 					// We need the unique id for tracking.

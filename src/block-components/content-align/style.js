@@ -11,6 +11,10 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 
+	const {
+		dependencies = [],
+	} = props
+
 	return (
 		<>
 			<BlockCss
@@ -62,7 +66,10 @@ const Styles = props => {
 				key="columnFitAlign-save"
 				responsive="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
-				dependencies={ [ 'columnFit' ] }
+				dependencies={ [
+					'columnFit',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -73,7 +80,10 @@ const Styles = props => {
 				key="columnFitAlign"
 				responsive="all"
 				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
-				dependencies={ [ 'columnFit' ] }
+				dependencies={ [
+					'columnFit',
+					...dependencies,
+				] }
 			/>
 		</>
 	)

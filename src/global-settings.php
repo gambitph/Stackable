@@ -754,6 +754,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return string Rendered block
 		 */
 		public function typography_detect_native_blocks( $block_content, $block ) {
+			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+
 			// Only do this when we need to style native blocks.
 			if ( ! in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
 				return $block_content;
@@ -765,22 +767,22 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			// Only do this for native blocks.
-			if ( stripos( $block['blockName'], 'core/' ) !== 0 ) {
+			if ( stripos( $block_name, 'core/' ) !== 0 ) {
 				return $block_content;
 			}
 
 			// Only do the native paragraph blocks only if body text is used.
-			if ( $block['blockName'] === 'core/paragraph' && ! $this->generated_body_typography_css ) {
+			if ( $block_name === 'core/paragraph' && ! $this->generated_body_typography_css ) {
 				return $block_content;
 			}
 
 			// Only do the native hedaing blocks only if headings is used.
-			if ( $block['blockName'] === 'core/heading' && ! $this->generated_heading_typography_css ) {
+			if ( $block_name === 'core/heading' && ! $this->generated_heading_typography_css ) {
 				return $block_content;
 			}
 
 			// Don't do this for custom HTML blocks.
-			if ( in_array( $block['blockName'], array( 'core/html', 'core/embed' ) ) ) {
+			if ( in_array( $block_name, array( 'core/html', 'core/embed' ) ) ) {
 				return $block_content;
 			}
 

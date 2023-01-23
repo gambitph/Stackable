@@ -96,11 +96,7 @@ const readmoreTypographyOptions = {
 }
 
 const _imageOptions = {
-	selector: `${ itemSelector } .stk-img-wrapper`,
-	hoverSelectorCallback: getAttribute => getAttribute( 'imageHoverStateInContainer' )
-		? `${ itemSelector }:hover .stk-img-wrapper img`
-		: `${ itemSelector } .stk-img-wrapper:hover img`,
-	dependencies: [ 'imageHoverStateInContainer' ],
+	dependencies: [ 'imageHoverStateInContainer', 'imageOverlayColorType' ],
 }
 
 const Styles = props => {

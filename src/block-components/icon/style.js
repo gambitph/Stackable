@@ -18,6 +18,7 @@ const Styles = props => {
 	const {
 		selector = '',
 		hoverSelector = '',
+		dependencies = [],
 	} = props
 
 	const getSvgSelector = ( getAttribute, _selector = selector, suffixes = [], fallback = selector ) => {
@@ -86,7 +87,10 @@ const Styles = props => {
 				attrName="iconGap"
 				key="iconGap"
 				format={ `%spx` }
-				dependencies={ [ 'iconPosition' ] }
+				dependencies={ [
+					'iconPosition',
+					...dependencies,
+				 ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -106,7 +110,13 @@ const Styles = props => {
 
 					return undefined
 				} }
-				dependencies={ [ 'iconColorType', 'iconColor1', 'iconColor2', 'uniqueId' ] }
+				dependencies={ [
+					'iconColorType',
+					'iconColor1',
+					'iconColor2',
+					'uniqueId',
+					...dependencies,
+				] }
 				hover="all"
 			/>
 			<BlockCss
@@ -134,7 +144,12 @@ const Styles = props => {
 					return value
 				} }
 				hoverSelectorCallback={ getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
-				dependencies={ [ 'iconColorType', 'iconColor1', 'iconColor2' ] }
+				dependencies={ [
+					'iconColorType',
+					'iconColor1',
+					'iconColor2',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -152,7 +167,12 @@ const Styles = props => {
 					return value
 				} }
 				hoverSelectorCallback={ getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
-				dependencies={ [ 'iconColorType', 'iconColor1', 'iconColor2' ] }
+				dependencies={ [
+					'iconColorType',
+					'iconColor1',
+					'iconColor2',
+					...dependencies,
+				] }
 			/>
 
 			{ /* Shape Styles */ }
@@ -172,7 +192,13 @@ const Styles = props => {
 
 					return value
 				} }
-				dependencies={ [ 'shapeColorType', 'shapeColor2', 'shapeColorType', 'shapeGradientDirection' ] }
+				dependencies={ [
+					'shapeColorType',
+					 'shapeColor2',
+					 'shapeColorType',
+					 'shapeGradientDirection',
+					 ...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -222,7 +248,10 @@ const Styles = props => {
 					return 'solid'
 				} }
 				hover="all"
-				dependencies={ [ 'shapeOutlineWidth' ] }
+				dependencies={ [
+					'shapeOutlineWidth',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
