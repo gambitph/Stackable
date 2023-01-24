@@ -53,7 +53,8 @@ if ( ! function_exists( 'stackable_jetpack_photon_render_block' ) ) {
 		}
 
 		// Only for Stackable blocks.
-		if ( strpos( $block['blockName'], 'ugb/', 0 ) === false ) {
+		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+		if ( strpos( $block_name, 'ugb/', 0 ) === false ) {
 			return $block_content;
 		}
 

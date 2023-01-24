@@ -20,7 +20,7 @@ if ( ! class_exists( 'Stackable_Onboarding_Wizard' ) ) {
         public function add_dashboard_page() {
 			// Our wizard page.
 			add_submenu_page(
-				isset( $_GET['page'] ) && $_GET['page'] === 'stackable-settings-wizard' ? 'options-general.php' : null, // Parent slug. Only show when in the page.
+				isset( $_GET['page'] ) && $_GET['page'] === 'stackable-settings-wizard' ? 'options-general.php' : '', // Parent slug. Only show when in the page.
 				__( 'Wizard', STACKABLE_I18N ), // Page title.
 				'<span class="fs-submenu-item fs-sub"></span>' . __( 'Wizard', STACKABLE_I18N ), // Menu title.
 				'manage_options', // Capability.

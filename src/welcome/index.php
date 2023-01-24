@@ -36,7 +36,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 			// Our getting started page.
 			add_submenu_page(
-				isset( $_GET['page'] ) && $_GET['page'] === 'stackable-getting-started' ? 'options-general.php' : null, // Parent slug. Only show when in the page.
+				isset( $_GET['page'] ) && $_GET['page'] === 'stackable-getting-started' ? 'options-general.php' : '', // Parent slug. Only show when in the page.
 				__( 'Get Started', STACKABLE_I18N ), // Page title.
 				'<span class="fs-submenu-item fs-sub"></span>' . __( 'Get Started', STACKABLE_I18N ), // Menu title.
 				'manage_options', // Capability.

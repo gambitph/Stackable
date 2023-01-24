@@ -27,6 +27,7 @@ export const SeparatorStyles = props => {
 		enableFlipHorizontally = true,
 		enableFlipVertically = false,
 		isInitiallyFlippedVertically = true,
+		dependencies = [],
 	} = props
 
 	const selector = _selector !== undefined ? _selector : ` > .stk-separator__${ location }`
@@ -76,7 +77,10 @@ export const SeparatorStyles = props => {
 						shouldApplyScaleY ? 'scaleY(-1)' : undefined,
 					] ).join( ' ' )
 				} }
-				dependencies={ [ 'separatorFlipVertically' ] }
+				dependencies={ [
+					 'separatorFlipVertically',
+					 ...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

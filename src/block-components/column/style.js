@@ -13,6 +13,7 @@ const ColumnStyles = props => {
 	}
 	const {
 		selector = '',
+		dependencies = [],
 	} = props
 
 	return (
@@ -26,7 +27,10 @@ const ColumnStyles = props => {
 				key="columnWidth-flex"
 				responsive={ [ 'desktopTablet', 'tabletOnly', 'mobile' ] }
 				format="1 1 %s%"
-				dependencies={ [ 'columnAdjacentCount' ] }
+				dependencies={ [
+					'columnAdjacentCount',
+					...dependencies,
+				] }
 				valueCallback={ ( value, getAttribute, device ) => {
 					if ( device === 'desktop' ) {
 						return value
@@ -50,7 +54,10 @@ const ColumnStyles = props => {
 				key="columnWidth-maxwidth"
 				responsive={ [ 'desktopTablet', 'tabletOnly', 'mobile' ] }
 				format="%s%"
-				dependencies={ [ 'columnAdjacentCount' ] }
+				dependencies={ [
+					'columnAdjacentCount',
+					...dependencies,
+				] }
 				valueCallback={ ( value, getAttribute, device ) => {
 					const adjacentCount = getAttribute( 'columnAdjacentCount', device )
 					if ( adjacentCount ) {
@@ -68,7 +75,10 @@ const ColumnStyles = props => {
 				key="columnWidth-save-flex"
 				responsive={ [ 'desktopTablet', 'tabletOnly', 'mobile' ] }
 				format="1 1 %s%"
-				dependencies={ [ 'columnAdjacentCount' ] }
+				dependencies={ [
+					'columnAdjacentCount',
+					...dependencies,
+				 ] }
 				valueCallback={ ( _value, getAttribute, device ) => {
 					// Flex grow should be turned on in desktop, so negative margins
 					// can make the columns expand. (e.g. 50% 50% then -200px margin

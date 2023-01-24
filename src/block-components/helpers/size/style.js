@@ -18,6 +18,7 @@ const Styles = props => {
 		verticalAlignSelectorEdit = '',
 		verticalAlignSelector = '',
 		wrapperSelector = '', // The outer wrapper element that where the outer flex alignments, widths and margins are applied to.
+		dependencies = [],
 	} = props
 
 	return (
@@ -168,7 +169,11 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value.startsWith( 'auto' ) ? 'auto' : value
 				} }
-				dependencies={ [ 'horizontalAlign', 'width' ] }
+				dependencies={ [
+					'horizontalAlign',
+					 'width',
+					 ...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -213,7 +218,11 @@ const Styles = props => {
 				valueCallback={ value => {
 					return value.startsWith( 'auto' ) ? 'auto' : value
 				} }
-				dependencies={ [ 'horizontalAlign', 'width' ] }
+				dependencies={ [
+					'horizontalAlign',
+					 'width',
+					 ...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

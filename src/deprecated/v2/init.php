@@ -273,7 +273,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'block/blog-posts/index.php' );
 // Used in Fonts.
 if ( ! function_exists( 'stackable_is_stackable_block_v2' ) ) {
 	function stackable_is_stackable_block_v2( $is_stackable_block, $block_name ) {
-		if ( ! $is_stackable_block ) {
+		if ( ! $is_stackable_block && ! empty( $block_name ) ) {
 			return strpos( $block_name, 'ugb/' ) === 0;
 		}
 		return $is_stackable_block;
