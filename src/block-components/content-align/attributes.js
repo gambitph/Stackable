@@ -1,9 +1,10 @@
-export const addAttributes = attrObject => {
+export const addAttributes = ( attrObject, options = {} ) => {
+	const { columnFit = '' } = options
 	attrObject.add( {
 		attributes: {
 			columnFit: {
 				type: 'boolean',
-				default: '',
+				default: columnFit,
 			},
 			columnFitAlign: {
 				type: 'string',
