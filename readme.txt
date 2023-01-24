@@ -250,6 +250,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.6.4 =
+* New: Inversed the behavior of the Heading's margins (it now doesn't use the theme's margins by default) #2190
+* Fixed: Editor performance improvements #2446
+* Fixed: Better PHP 8.1 compatibility #2560
+* Fixed: Max content width doesn't show correctly in the editor #2531
+* Fixed: Posts block not showing hover colors correctly in the editor #2351 #2473
+
 = 3.6.3 =
 * New: The Table of Contents block can now have a title #2346
 * Fixed: In Conditional Display, added support for named and 0 timezones #2530
