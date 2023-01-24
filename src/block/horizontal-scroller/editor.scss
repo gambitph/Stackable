@@ -27,4 +27,11 @@
 	> * {
 		scroll-snap-align: var(--stk-snapping, center);
 	}
+	&::-webkit-scrollbar {
+		height: 10px;
+		background: #eee;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: #d3d3d3;
+	}
 }
