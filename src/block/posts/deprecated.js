@@ -38,6 +38,10 @@ addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureI
 
 const deprecated = [
 	{
+		attributes: attributes( '3.6.3' ),
+		save: withVersion( '3.6.3' )( Save ),
+	},
+	{
 		attributes: attributes( '3.0.2' ),
 		save: withVersion( '3.0.2' )( Save ),
 	},
