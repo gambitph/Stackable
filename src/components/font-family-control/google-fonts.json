@@ -110,9 +110,22 @@
       "regular",
       "500",
       "600",
-      "700"
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "greek",
       "latin",
       "latin-ext"
@@ -1656,7 +1669,8 @@
   {
     "family": "BIZ UDMincho",
     "variants": [
-      "regular"
+      "regular",
+      "700"
     ],
     "subsets": [
       "cyrillic",
@@ -1683,7 +1697,8 @@
   {
     "family": "BIZ UDPMincho",
     "variants": [
-      "regular"
+      "regular",
+      "700"
     ],
     "subsets": [
       "cyrillic",
@@ -12646,6 +12661,17 @@
     ]
   },
   {
+    "family": "Noto Sans SignWriting",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "signwriting"
+    ]
+  },
+  {
     "family": "Noto Sans Sinhala",
     "variants": [
       "100",
@@ -12872,6 +12898,20 @@
     ],
     "subsets": [
       "tamil-supplement"
+    ]
+  },
+  {
+    "family": "Noto Sans Tangsa",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tangsa"
     ]
   },
   {
@@ -13620,6 +13660,20 @@
     ]
   },
   {
+    "family": "Noto Serif Toto",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "toto"
+    ]
+  },
+  {
     "family": "Noto Serif Yezidi",
     "variants": [
       "regular",
@@ -14261,6 +14315,17 @@
       "latin",
       "latin-ext",
       "myanmar"
+    ]
+  },
+  {
+    "family": "Padyakke Expanded One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "kannada",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -17164,6 +17229,133 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Sofia Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Sofia Sans Condensed",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Sofia Sans Extra Condensed",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Sofia Sans Semi Condensed",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Solitreo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext"
     ]
   },
   {
