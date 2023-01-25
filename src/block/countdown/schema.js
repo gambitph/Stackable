@@ -65,25 +65,25 @@ const countdownAttributes = {
 	dayText: {
 		type: 'string',
 		selector: '.stk-block-countdown__digit_day .stk-block-countdown__label',
-		source: 'text',
+		source: 'html',
 		default: __( 'Days', i18n ),
 	},
 	hourText: {
 		type: 'string',
 		selector: '.stk-block-countdown__digit_hour .stk-block-countdown__label',
-		source: 'text',
+		source: 'html',
 		default: __( 'Hours', i18n ),
 	},
 	minuteText: {
 		type: 'string',
 		selector: '.stk-block-countdown__digit_minute .stk-block-countdown__label',
-		source: 'text',
+		source: 'html',
 		default: __( 'Minutes', i18n ),
 	},
 	secondText: {
 		type: 'string',
 		selector: '.stk-block-countdown__digit_second .stk-block-countdown__label',
-		source: 'text',
+		source: 'html',
 		default: __( 'Seconds', i18n ),
 	},
 	daysLeft: {
