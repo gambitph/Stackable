@@ -102,7 +102,6 @@ const countdownAttributes = {
 		type: 'number',
 		default: '',
 	},
-
 	boxGap: {
 		type: 'number',
 		default: '16',
@@ -178,6 +177,15 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: countdownAttributes,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.addDefaultValues( {
+		attributes: {
+			boxGap: 16,
+			labelMarginTop: 8,
+		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )

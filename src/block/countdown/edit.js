@@ -237,16 +237,16 @@ const Edit = props => {
 								label={ __( 'Box Gap', i18n ) }
 								min={ 0 }
 								sliderMax={ 50 }
-								value={ attributes.boxGap }
 								attribute="boxGap"
+								default={ 16 }
 							/>
 							<AdvancedRangeControl
 								label={ __( 'Label Top Margin', i18n ) }
 								min={ 0 }
 								sliderMax={ 50 }
-								value={ attributes.labelMarginTop }
 								attribute="labelMarginTop"
 								placeholder="8"
+								default={ 8 }
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
@@ -256,18 +256,21 @@ const Edit = props => {
 							attrNameTemplate="message%s"
 							hasTextTag={ true }
 							hasTextContent={ true }
+							initialOpen={ false }
 						/> }
 					<Typography.InspectorControls
 						label={ __( 'Digits', i18n ) }
 						attrNameTemplate="digit%s"
 						hasTextTag={ false }
 						hasTextContent={ false }
+						initialOpen={ false }
 					/>
 					<Typography.InspectorControls
 						label={ __( 'Labels', i18n ) }
 						attrNameTemplate="label%s"
 						hasTextTag={ false }
 						hasTextContent={ false }
+						initialOpen={ false }
 					/>
 					<Divider.InspectorControls />
 					<Alignment.InspectorControls />
