@@ -12329,11 +12329,13 @@
     ]
   },
   {
-    "family": "Noto Sans N Ko",
+    "family": "Noto Sans NKo",
     "variants": [
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "nko"
     ]
   },
@@ -13485,18 +13487,6 @@
     ],
     "subsets": [
       "latin",
-      "nyiakeng-puachue-hmong"
-    ]
-  },
-  {
-    "family": "Noto Serif Nyiakeng Puachue Hmong",
-    "variants": [
-      "regular",
-      "500",
-      "600",
-      "700"
-    ],
-    "subsets": [
       "nyiakeng-puachue-hmong"
     ]
   },

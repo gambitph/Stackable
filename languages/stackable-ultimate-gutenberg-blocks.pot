@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-24T16:52:41+00:00\n"
+"POT-Creation-Date: 2023-01-25T04:21:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -3403,16 +3403,16 @@ msgid "Icon Box"
 msgstr ""
 
 #: dist/translation-strings.php:463
-#: src/block/icon-button/block-styles.js:82
-msgid "Pill"
-msgstr ""
-
-#: dist/translation-strings.php:464
 #: src/block-components/icon/edit.js:164
 #: src/block/icon-label/edit.js:90
 #: src/block/icon-list/edit.js:241
 #: src/block/table-of-contents/edit.js:401
 msgid "Icon Gap"
+msgstr ""
+
+#: dist/translation-strings.php:464
+#: src/block/icon-button/block-styles.js:82
+msgid "Pill"
 msgstr ""
 
 #: dist/translation-strings.php:465
@@ -5098,6 +5098,15 @@ msgid "Columns Alignment"
 msgstr ""
 
 #: dist/translation-strings.php:700
+#: src/block-components/custom-attributes/edit.js:29
+#: src/block-components/custom-attributes/edit.js:33
+#: src/components/custom-attributes-control/index.js:91
+#: src/deprecated/v2/modules/advanced-custom-attributes/index.js:82
+#: src/deprecated/v2/modules/advanced-custom-attributes/index.js:87
+msgid "Custom Attributes"
+msgstr ""
+
+#: dist/translation-strings.php:701
 #: pro__premium_only/src/block-components/custom-css/custom-css-control.js:19
 #: pro__premium_only/src/components/panel-custom-css-settings/index.js:42
 #: src/block-components/custom-css/edit.js:29
@@ -5105,24 +5114,15 @@ msgstr ""
 msgid "Custom CSS"
 msgstr ""
 
-#: dist/translation-strings.php:701
+#: dist/translation-strings.php:702
 #: src/block-components/custom-css/edit.js:34
 #: src/deprecated/v2/modules/custom-css/index.js:26
 msgid "Say Hello to Custom CSS 👋"
 msgstr ""
 
-#: dist/translation-strings.php:702
+#: dist/translation-strings.php:703
 #: src/block-components/custom-css/edit.js:35
 msgid "Further tweak this block by adding custom CSS rules. This feature is only available on Stackable Premium"
-msgstr ""
-
-#: dist/translation-strings.php:703
-#: src/block-components/custom-attributes/edit.js:29
-#: src/block-components/custom-attributes/edit.js:33
-#: src/components/custom-attributes-control/index.js:91
-#: src/deprecated/v2/modules/advanced-custom-attributes/index.js:82
-#: src/deprecated/v2/modules/advanced-custom-attributes/index.js:87
-msgid "Custom Attributes"
 msgstr ""
 
 #: dist/translation-strings.php:704
@@ -5812,25 +5812,25 @@ msgid "Align Right"
 msgstr ""
 
 #: dist/translation-strings.php:798
-#: src/components/align-buttons-control/index.js:31
-msgid "Justified"
-msgstr ""
-
-#: dist/translation-strings.php:799
 #: src/components/advanced-toolbar-control/index.js:51
 #: src/components/advanced-toolbar-control/index.js:74
 msgid "Align Top"
 msgstr ""
 
-#: dist/translation-strings.php:800
+#: dist/translation-strings.php:799
 #: src/components/advanced-toolbar-control/index.js:61
 #: src/components/advanced-toolbar-control/index.js:84
 msgid "Align Bottom"
 msgstr ""
 
-#: dist/translation-strings.php:801
+#: dist/translation-strings.php:800
 #: src/components/advanced-toolbar-control/index.js:66
 msgid "Stretch"
+msgstr ""
+
+#: dist/translation-strings.php:801
+#: src/components/align-buttons-control/index.js:31
+msgid "Justified"
 msgstr ""
 
 #: dist/translation-strings.php:802
@@ -10367,28 +10367,28 @@ msgid "Hover & Active Colors"
 msgstr ""
 
 #: dist/translation-strings.php:1561
-#: pro__premium_only/src/deprecated/v2/block/columns/index.js:43
-msgid "Reverse columns"
-msgstr ""
-
-#: dist/translation-strings.php:1562
-#: pro__premium_only/src/deprecated/v2/block/columns/index.js:64
-msgid "Collapsed Row Gap"
-msgstr ""
-
-#: dist/translation-strings.php:1563
-#: pro__premium_only/src/deprecated/v2/block/columns/index.js:73
-msgid "Collapsed Col. Arrangement"
-msgstr ""
-
-#: dist/translation-strings.php:1564
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:166
 msgid "Collapse image on Mobile"
 msgstr ""
 
-#: dist/translation-strings.php:1565
+#: dist/translation-strings.php:1562
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:172
 msgid "Collapse image height"
+msgstr ""
+
+#: dist/translation-strings.php:1563
+#: pro__premium_only/src/deprecated/v2/block/columns/index.js:43
+msgid "Reverse columns"
+msgstr ""
+
+#: dist/translation-strings.php:1564
+#: pro__premium_only/src/deprecated/v2/block/columns/index.js:64
+msgid "Collapsed Row Gap"
+msgstr ""
+
+#: dist/translation-strings.php:1565
+#: pro__premium_only/src/deprecated/v2/block/columns/index.js:73
+msgid "Collapsed Col. Arrangement"
 msgstr ""
 
 #: dist/translation-strings.php:1566
@@ -10467,21 +10467,21 @@ msgid "Number Background"
 msgstr ""
 
 #: dist/translation-strings.php:1577
+#: pro__premium_only/src/deprecated/v2/block/separator/index.js:69
+#: pro__premium_only/src/deprecated/v2/block/separator/index.js:132
+msgid "Layer Color"
+msgstr ""
+
+#: dist/translation-strings.php:1578
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:128
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:137
 msgid "Column Header"
 msgstr ""
 
-#: dist/translation-strings.php:1578
+#: dist/translation-strings.php:1579
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:137
 msgctxt "Nth Title"
 msgid "%s #%d"
-msgstr ""
-
-#: dist/translation-strings.php:1579
-#: pro__premium_only/src/deprecated/v2/block/separator/index.js:69
-#: pro__premium_only/src/deprecated/v2/block/separator/index.js:132
-msgid "Layer Color"
 msgstr ""
 
 #: dist/translation-strings.php:1580
