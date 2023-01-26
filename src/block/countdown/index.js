@@ -19,6 +19,9 @@ export const settings = {
 	edit,
 	save,
 	attributes: schema,
+	supports: {
+		anchor: true,
+	},
 	icon: CountdownIcon,
 }
 
