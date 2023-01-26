@@ -7,9 +7,7 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 } from '~stackable/components'
-import {
-	useAttributeEditHandlers, useDeviceType,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
 
 /**
  * WordPress dependencies

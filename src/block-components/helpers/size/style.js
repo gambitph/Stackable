@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { BlockCss } from '~stackable/components'
+import compareVersions from 'compare-versions'
 
 const Styles = props => {
 	const propsToPass = {
@@ -63,6 +64,21 @@ const Styles = props => {
 				responsive="all"
 				hasUnits="px"
 			/>
+			{ /* style width property was added after plugin version 3.6.4 */ }
+			{ compareVersions( '3.6.4', props.version ) === -1 && (
+				<BlockCss
+					{ ...propsToPass }
+					selector={ wrapperSelector || selector }
+					styleRule="width"
+					attrName="width"
+					key="component-width"
+					attrNameTemplate={ attrNameTemplate }
+					valueCallback={ ( _, getAttribute ) => {
+						const widthUnit = getAttribute( 'widthUnit' )
+						return ( widthUnit === 'px' ) ? '100%' : undefined
+					} }
+				/>
+			) }
 			<BlockCss
 				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
