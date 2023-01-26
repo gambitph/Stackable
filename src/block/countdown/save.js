@@ -8,6 +8,7 @@ import {
 	getResponsiveClasses,
 	getTypographyClasses,
 	Typography,
+	CustomCSS,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -82,7 +83,26 @@ const Save = props => {
 		digitTextClasses,
 	] )
 
-	const labelClassNames = classnames( [
+	const dayLabelClassNames = classnames( [
+		'stk-block-countdown__label_day',
+		'stk-block-countdown__label',
+		labelTextClasses,
+	] )
+
+	const hourLabelClassNames = classnames( [
+		'stk-block-countdown__label_hour',
+		'stk-block-countdown__label',
+		labelTextClasses,
+	] )
+
+	const minuteLabelClassNames = classnames( [
+		'stk-block-countdown__label_minute',
+		'stk-block-countdown__label',
+		labelTextClasses,
+	] )
+
+	const secondLabelClassNames = classnames( [
+		'stk-block-countdown__label_second',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
@@ -107,13 +127,14 @@ const Save = props => {
 			data-stk-countdown-action={ attributes.actionOnExpiration }
 			data-stk-countdown-timezone={ attributes.timezone }
 		>
+			<CustomCSS.Content attributes={ attributes } />
 			<div className="stk-block-countdown__container">
 				<CountdownStyles.Content version={ props.version } attributes={ attributes } />
 				{ attributes.dayShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 						<CountdownNumber.Content className={ dayDigitClassNames } />
 						<Typography.Content
-							className={ labelClassNames }
+							className={ dayLabelClassNames }
 							attrNameTemplate="day%s"
 							attributes={ attributes }
 						/>
@@ -124,7 +145,7 @@ const Save = props => {
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 						<CountdownNumber.Content className={ hourDigitClassNames } />
 						<Typography.Content
-							className={ labelClassNames }
+							className={ hourLabelClassNames }
 							attrNameTemplate="hour%s"
 							attributes={ attributes }
 						/>
@@ -135,7 +156,7 @@ const Save = props => {
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 						<CountdownNumber.Content className={ minuteDigitClassNames } />
 						<Typography.Content
-							className={ labelClassNames }
+							className={ minuteLabelClassNames }
 							attrNameTemplate="minute%s"
 							attributes={ attributes }
 						/>
@@ -146,7 +167,7 @@ const Save = props => {
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 						<CountdownNumber.Content className={ secondDigitClassNames } />
 						<Typography.Content
-							className={ labelClassNames }
+							className={ secondLabelClassNames }
 							attrNameTemplate="second%s"
 							attributes={ attributes }
 						/>

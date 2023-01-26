@@ -124,7 +124,26 @@ const Edit = props => {
 		digitTextClasses,
 	] )
 
-	const labelClassNames = classnames( [
+	const dayLabelClassNames = classnames( [
+		'stk-block-countdown__label_day',
+		'stk-block-countdown__label',
+		labelTextClasses,
+	] )
+
+	const hourLabelClassNames = classnames( [
+		'stk-block-countdown__label_hour',
+		'stk-block-countdown__label',
+		labelTextClasses,
+	] )
+
+	const minuteLabelClassNames = classnames( [
+		'stk-block-countdown__label_minute',
+		'stk-block-countdown__label',
+		labelTextClasses,
+	] )
+
+	const secondLabelClassNames = classnames( [
+		'stk-block-countdown__label_second',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
@@ -312,7 +331,7 @@ const Edit = props => {
 							<Typography
 								identifier="day"
 								tagName="p"
-								className={ labelClassNames }
+								className={ dayLabelClassNames }
 								attrNameTemplate="day%s"
 								placeholder={ __( 'Days', i18n ) }
 							/>
@@ -331,7 +350,7 @@ const Edit = props => {
 							<Typography
 								identifier="hour"
 								tagName="p"
-								className={ labelClassNames }
+								className={ hourLabelClassNames }
 								attrNameTemplate="hour%s"
 								placeholder={ __( 'Hours', i18n ) }
 							/>
@@ -350,7 +369,7 @@ const Edit = props => {
 							<Typography
 								identifier="minute"
 								tagName="p"
-								className={ labelClassNames }
+								className={ minuteLabelClassNames }
 								attrNameTemplate="minute%s"
 								placeholder={ __( 'Minutes', i18n ) }
 							/>
@@ -369,7 +388,7 @@ const Edit = props => {
 							<Typography
 								identifier="second"
 								tagName="p"
-								className={ labelClassNames }
+								className={ secondLabelClassNames }
 								attrNameTemplate="second%s"
 								placeholder={ __( 'Seconds', i18n ) }
 							/>
