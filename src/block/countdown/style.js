@@ -22,7 +22,7 @@ import { memo } from '@wordpress/element'
 
 const digitTypographyOptions = {
 	selector: '.stk-block-countdown__digit',
-	hoverSelector: '.stk-block-countdown__label:hover',
+	hoverSelector: '.stk-block-countdown__digit:hover',
 	attrNameTemplate: 'digit%s',
 }
 
