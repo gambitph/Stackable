@@ -47,7 +47,7 @@ const ColorPaletteControl = memo( props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const themeColors = useSetting( 'color.palette.theme' )
+	const themeColors = useSetting( 'color.palette.theme' ) || [] // This can be undefined.
 	const colors = useMemo( () => {
 		const colors = compact( themeColors.map( color => {
 			// Make sure to only get color objects. If null, also return null.
