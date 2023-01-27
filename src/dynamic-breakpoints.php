@@ -153,8 +153,9 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function adjust_block_styles( $block_content, $block ) {
+			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if (
-				stripos( $block['blockName'], 'stackable/' ) === 0 ||
+				stripos( $block_name, 'stackable/' ) === 0 ||
 				stripos( $block_content, '<!-- wp:stackable/' ) !==  false
 			) {
 				$block_content = apply_filters( 'stackable_frontend_css', $block_content );
