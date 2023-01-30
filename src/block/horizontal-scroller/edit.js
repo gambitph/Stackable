@@ -47,6 +47,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 
+const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
 	[ 'stackable/column' ],
 	[ 'stackable/column' ],
@@ -175,6 +176,7 @@ const Edit = props => {
 						orientation="horizontal"
 						renderAppender={ false }
 						template={ TEMPLATE }
+						allowedBlocks={ ALLOWED_INNER_BLOCKS }
 						templateLock={ props.attributes.templateLock || false }
 					/>
 				</div>
