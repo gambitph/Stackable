@@ -12,6 +12,7 @@ import classnames from 'classnames'
 import {
 	 BlockDiv,
 	 CustomCSS,
+	 getRowClasses,
 	 getAlignmentClasses,
 	 getResponsiveClasses,
 	 getContentAlignmentClasses,
@@ -28,6 +29,7 @@ export const Save = props => {
 		 attributes,
 	 } = props
 
+	 const rowClass = getRowClasses( props.attributes )
 	 const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	 const responsiveClass = getResponsiveClasses( props.attributes )
 
@@ -39,6 +41,7 @@ export const Save = props => {
 
 	 const contentClassNames = classnames( applyFilters( 'stackable.columns.save.contentClassNames', [
 		 [
+			rowClass,
 			 'stk-inner-blocks',
 			 blockAlignmentClass,
 			 'stk-block-content',
