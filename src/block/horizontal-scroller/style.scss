@@ -1,21 +1,25 @@
-.stk-block-horizontal-scroller:not(.editor) > .stk-block-content {
-	--stk-column-gap: 0px; // For nested columns, this takes precedence.
-	scroll-behavior: smooth;
-	display: grid;
-	overflow-x: auto;
-	overscroll-behavior-inline: contain;
-	scroll-snap-type: inline mandatory;
-	grid-auto-flow: column;
-	grid-auto-columns: var(--stk-column-width, 300px);
-	gap: var(--stk-column-gap);
-	height: var(--stk-column-height);
-	padding-inline-start: var(--stk-left-offset);
-	overflow-x: -moz-scrollbars-none;
-	-ms-overflow-style: none;
-	> * {
-		scroll-snap-align: var(--stk-snapping, center);
-	}
-	&::-webkit-scrollbar {
-		height: 0 !important;
+.stk-block-horizontal-scroller:not(.editor) {
+	overflow: hidden;
+	.stk-block-content {
+		--stk-column-gap: 0px; // For nested columns, this takes precedence.
+		scroll-behavior: smooth;
+		display: grid;
+		overflow-x: auto;
+		overscroll-behavior-inline: contain;
+		scroll-snap-type: inline mandatory;
+		grid-auto-flow: column;
+		grid-auto-columns: var(--stk-column-width, 300px);
+		gap: var(--stk-column-gap);
+		height: var(--stk-column-height);
+		padding-inline-start: var(--stk-left-offset);
+		overflow-x: -moz-scrollbars-none;
+		-ms-overflow-style: none;
+		box-sizing: border-box;
+		> * {
+			scroll-snap-align: var(--stk-snapping, center);
+		}
+		&::-webkit-scrollbar {
+			height: 0 !important;
+		}
 	}
 }
