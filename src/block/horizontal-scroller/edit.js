@@ -176,7 +176,7 @@ const Edit = props => {
 						providerValue={ columnProviderValue }
 						orientation="horizontal"
 						renderAppender={ false }
-						template={ TEMPLATE }
+						template={ props.attributes.templateLock ? undefined : TEMPLATE }
 						allowedBlocks={ ALLOWED_INNER_BLOCKS }
 						templateLock={ props.attributes.templateLock || false }
 					/>
