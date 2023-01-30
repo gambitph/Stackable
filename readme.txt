@@ -250,6 +250,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.6.6 =
+* Fixed: Right clicking on an Image block now triggers on the image itself
+
 = 3.6.5 =
 * Fixed: Possible error if the theme color palette is unavailable
 
