@@ -109,7 +109,8 @@ const Edit = props => {
 									{ value: 'center', label: __( 'Snap to Center', i18n ) },
 									{ value: 'none', label: __( 'No Snapping', i18n ) },
 								] }
-								value={ props.attributes.horizontalScrollerSnap || 'center' }
+								value={ props.attributes.horizontalScrollerSnap }
+								default="center"
 							/>
 							<AdvancedRangeControl
 								label={ __( 'Item Width', i18n ) }
