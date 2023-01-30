@@ -26,6 +26,8 @@
 	padding-inline-start: var(--stk-left-offset);
 	> * {
 		scroll-snap-align: var(--stk-snapping, center);
+		width: 100% !important;
+
 	}
 	&::-webkit-scrollbar {
 		height: 10px;

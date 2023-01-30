@@ -1,6 +1,6 @@
 .stk-block-horizontal-scroller:not(.editor) {
 	overflow: hidden;
-	.stk-block-content {
+	> .stk-block-content {
 		--stk-column-gap: 0px; // For nested columns, this takes precedence.
 		scroll-behavior: smooth;
 		display: grid;
@@ -15,8 +15,9 @@
 		overflow-x: -moz-scrollbars-none;
 		-ms-overflow-style: none;
 		box-sizing: border-box;
-		> * {
+		> .stk-block-column {
 			scroll-snap-align: var(--stk-snapping, center);
+			width: 100% !important;
 		}
 		&::-webkit-scrollbar {
 			height: 0 !important;
