@@ -17,12 +17,20 @@
 	margin: 0;
 }
 
-.stk-block-countdown__divider {
-	flex-shrink: 0;
-	line-height: 1;
-	width: 1px;
+.stk-block-countdown__divider-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.stk-block-countdown__divider {
+		display: flex;
+		position: absolute;
+		justify-content: center;
+		line-height: 1;
+		width: 1px;
+	}
 }
 
 .stk-block-countdown__message {
 	display: none;
+	margin: 0;
 }
