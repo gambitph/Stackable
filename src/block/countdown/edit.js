@@ -163,6 +163,14 @@ const Edit = props => {
 		}
 	}, [ attributes.countdownType ] )
 
+	useEffect( () => {
+		if ( attributes.dividerType === '|' ) {
+			setAttributes( { dividerTopOffset: 3, dividerSizeColon: 45 } )
+		} else {
+			setAttributes( { dividerSizeLine: 50 } )
+		}
+	}, [ attributes.dividerType ] )
+
 	return (
 		<>
 			{ isSelected && (
@@ -269,14 +277,6 @@ const Edit = props => {
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
-					{ attributes.actionOnExpiration === 'showMessage' &&
-						<Typography.InspectorControls
-							label={ __( 'Message', i18n ) }
-							attrNameTemplate="message%s"
-							hasTextTag={ true }
-							hasTextContent={ true }
-							initialOpen={ false }
-						/> }
 					<Typography.InspectorControls
 						label={ __( 'Digits', i18n ) }
 						attrNameTemplate="digit%s"
@@ -297,6 +297,14 @@ const Edit = props => {
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-countdown__content" />
+					{ attributes.actionOnExpiration === 'showMessage' &&
+						<Typography.InspectorControls
+							label={ __( 'Message', i18n ) }
+							attrNameTemplate="message%s"
+							hasTextTag={ true }
+							hasTextContent={ true }
+							initialOpen={ false }
+						/> }
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-countdown" />
