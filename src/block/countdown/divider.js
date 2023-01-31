@@ -45,6 +45,10 @@ const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
+			dividerTopOffset: {
+				type: 'number',
+				default: '',
+			},
 		},
 		versionAdded: '3.6.0',
 		versionDeprecated: '',
@@ -89,6 +93,14 @@ export const Edit = () => {
 					sliderMin={ 1 }
 					sliderMax={ 100 }
 					attribute="dividerSizeColon"
+					default={ 45 }
+				/> }
+				{ dividerType === ':' && <AdvancedRangeControl
+					label={ __( 'Top Offset', i18n ) }
+					sliderMin={ 0 }
+					sliderMax={ 50 }
+					attribute="dividerTopOffset"
+					default={ 3 }
 				/> }
 				{ dividerType === '|' && <AdvancedRangeControl
 					label={ __( 'Size', i18n ) }
@@ -97,6 +109,7 @@ export const Edit = () => {
 					sliderMin={ 1 }
 					sliderMax={ 100 }
 					attribute="dividerSizeLine"
+					default={ 50 }
 				/> }
 				<ColorPaletteControl
 					label={ __( 'Color', i18n ) }
@@ -114,7 +127,7 @@ export const Divider = props => {
 	} = props
 
 	return (
-		<div className="stk-countdown-block__divider-wrapper">
+		<div className="stk-block-countdown__divider-wrapper">
 			<div className={ className }>
 				{ attributes.dividerType === ':' && (
 					<> : </>
@@ -132,7 +145,7 @@ Divider.Content = props => {
 	} = props
 
 	return (
-		<div className="stk-countdown-block__divider-wrapper">
+		<div className="stk-block-countdown__divider-wrapper">
 			<div className={ className }>
 				{ attributes.dividerType === ':' && (
 					<> : </>
@@ -188,6 +201,17 @@ const Styles = props => {
 				hasUnits="px"
 				responsive="all"
 				dependencies={ [ 'dividerType', 'dividerSizeColon' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				selectorCallback={ selectorCallback }
+				styleRule="top"
+				attrName="dividerTopOffset"
+				key="dividerTopOffset"
+				hasUnits="px"
+				responsive="all"
+				dependencies={ [ 'dividerType', 'dividerTopOffset' ] }
 			/>
 		</>
 	)
