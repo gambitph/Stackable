@@ -185,6 +185,10 @@ export const attributes = ( version = VERSION ) => {
 		attributes: {
 			boxGap: 16,
 			labelMarginTop: 8,
+			dividerColor: '#000000',
+			dividerSizeLine: 50,
+			dividerSizeColon: 45,
+			dividerTopOffset: 3,
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
