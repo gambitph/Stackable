@@ -16,7 +16,7 @@ import {
 	CustomCSS,
 	Responsive,
 	Advanced,
-	Alignment,
+	// Alignment,
 	MarginBottom,
 	CustomAttributes,
 	EffectsAnimations,
@@ -260,6 +260,11 @@ const Edit = props => {
 									/>
 								</Fragment>
 							) }
+							<AdvancedToggleControl
+								label={ __( 'Enable Double Digit', i18n ) }
+								attribute="isDoubleDigit"
+								defaultValue={ true }
+							/>
 							<AdvancedRangeControl
 								label={ __( 'Box Gap', i18n ) }
 								min={ 0 }
@@ -292,7 +297,7 @@ const Edit = props => {
 						initialOpen={ false }
 					/>
 					<Divider.InspectorControls />
-					<Alignment.InspectorControls />
+					{ /* <Alignment.InspectorControls /> */ }
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
@@ -335,6 +340,10 @@ const Edit = props => {
 								datetime={ attributes.date }
 								countdownType={ attributes.countdownType }
 								daysLeft={ attributes.daysLeft }
+								hoursLeft={ attributes.hoursLeft }
+								minutesLeft={ attributes.minutesLeft }
+								secondsLeft={ attributes.secondsLeft }
+								isDoubleDigit={ attributes.isDoubleDigit }
 							/>
 							<Typography
 								identifier="day"
@@ -353,7 +362,11 @@ const Edit = props => {
 								type={ 'hours' }
 								datetime={ attributes.date }
 								countdownType={ attributes.countdownType }
+								daysLeft={ attributes.daysLeft }
 								hoursLeft={ attributes.hoursLeft }
+								minutesLeft={ attributes.minutesLeft }
+								secondsLeft={ attributes.secondsLeft }
+								isDoubleDigit={ attributes.isDoubleDigit }
 							/>
 							<Typography
 								identifier="hour"
@@ -372,7 +385,11 @@ const Edit = props => {
 								type={ 'minutes' }
 								datetime={ attributes.date }
 								countdownType={ attributes.countdownType }
+								daysLeft={ attributes.daysLeft }
+								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
+								secondsLeft={ attributes.secondsLeft }
+								isDoubleDigit={ attributes.isDoubleDigit }
 							/>
 							<Typography
 								identifier="minute"
@@ -391,7 +408,11 @@ const Edit = props => {
 								type={ 'seconds' }
 								datetime={ attributes.date }
 								countdownType={ attributes.countdownType }
+								daysLeft={ attributes.daysLeft }
+								hoursLeft={ attributes.hoursLeft }
+								minutesLeft={ attributes.minutesLeft }
 								secondsLeft={ attributes.secondsLeft }
+								isDoubleDigit={ attributes.isDoubleDigit }
 							/>
 							<Typography
 								identifier="second"
