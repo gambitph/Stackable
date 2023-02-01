@@ -7,6 +7,7 @@ import domReady from '@wordpress/dom-ready'
 class StackableHorizontalScroller {
 	init = () => {
 		const els = document.querySelectorAll( '.stk-block-horizontal-scroller > .stk-block-content' )
+		let dragTimeout = null
 		const pos = Array( els.length ).fill().map( ( ) => ( {
 			top: 0,
 			left: 0,
@@ -22,21 +23,42 @@ class StackableHorizontalScroller {
 
 				// Scroll the element
 				el.scrollTop = pos[ i ].top - dy
-				el.scrollLeft = pos[ i ].left - dx
+				el.scrollTo( {
+					left: pos[ i ].left - dx,
+				} )
 			}
 
 			const mouseUpHandler = function() {
-				document.removeEventListener( 'mousemove', mouseMoveHandler )
-				document.removeEventListener( 'mouseup', mouseUpHandler )
+				document.body.removeEventListener( 'mousemove', mouseMoveHandler )
+				document.body.removeEventListener( 'mouseup', mouseUpHandler )
 
 				el.style.cursor = 'grab'
 				el.style.removeProperty( 'user-select' )
+
+				// This smooth scrolls to the place where we're supposed to snap.
+				const oldScrollLeft = el.scrollLeft
+				el.classList.remove( 'stk--snapping-deactivated' )
+				const newScrollLeft = el.scrollLeft
+				el.classList.add( 'stk--snapping-deactivated' )
+
+				el.scrollLeft = oldScrollLeft
+				el.scrollTo( {
+					left: newScrollLeft,
+					behavior: 'smooth',
+				} )
+
+				dragTimeout = setTimeout( () => {
+					el.classList.remove( 'stk--snapping-deactivated' )
+				}, 500 )
 			}
 
 			const mouseDownHandler = function( e ) {
 				// Change the cursor and prevent user from selecting the text
 				el.style.cursor = 'grabbing'
 				el.style.userSelect = 'none'
+
+				clearTimeout( dragTimeout )
+				el.classList.add( 'stk--snapping-deactivated' )
 
 				pos[ i ] = {
 					// The current scroll
@@ -47,8 +69,8 @@ class StackableHorizontalScroller {
 					y: e.clientY,
 				}
 
-				document.addEventListener( 'mousemove', mouseMoveHandler )
-				document.addEventListener( 'mouseup', mouseUpHandler )
+				document.body.addEventListener( 'mousemove', mouseMoveHandler )
+				document.body.addEventListener( 'mouseup', mouseUpHandler )
 			}
 
 			el.addEventListener( 'mousedown', mouseDownHandler )
