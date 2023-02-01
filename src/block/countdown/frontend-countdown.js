@@ -19,7 +19,14 @@ class StackableCountdown {
 		clearInterval( this.countdownInterval )
 	}
 
-	countDown = ( countdownDate, timezone, action, duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
+	addZero = ( number, isDoubleDigit ) => {
+		if ( isDoubleDigit ) {
+			return number < 10 ? '0' + number : number
+		}
+		return number
+	}
+
+	countDown = ( countdownDate, isDoubleDigit, timezone, action, duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
 		const day = this.el.querySelector( '.stk-block-countdown__digit_day' )
 		const hour = this.el.querySelector( '.stk-block-countdown__digit_hour' )
 		const minute = this.el.querySelector( '.stk-block-countdown__digit_minute' )
@@ -59,19 +66,19 @@ class StackableCountdown {
 
 		// If null, do not show text
 		if ( day ) {
-			day.textContent = daysLeft <= 0 ? '00' : daysLeft
+			day.textContent = this.addZero( daysLeft, isDoubleDigit )
 		}
 
 		if ( hour ) {
-			hour.textContent = hoursLeft <= 0 ? '00' : hoursLeft
+			hour.textContent = this.addZero( hoursLeft, isDoubleDigit )
 		}
 
 		if ( minute ) {
-			minute.textContent = minutesLeft <= 0 ? '00' : minutesLeft
+			minute.textContent = this.addZero( minutesLeft, isDoubleDigit )
 		}
 
 		if ( second ) {
-			second.textContent = secondsLeft <= 0 ? '00' : secondsLeft
+			second.textContent = this.addZero( secondsLeft, isDoubleDigit )
 		}
 
 		if ( timer <= 0 ) {
@@ -79,8 +86,8 @@ class StackableCountdown {
 			if ( countdownType === 'recurring' ) {
 				const a = isRestarting ? restartLeft : restartInterval
 				setTimeout( () => {
-					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, Date.now(), '', '', duration, countdownType, restartInterval, timezone )
-				}, a * 1000 ).bind( this )
+					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, Date.now(), isDoubleDigit, '', '', duration, countdownType, restartInterval, timezone )
+				}, a * 3600000 )
 			}
 			if ( action === 'hide' ) {
 				this.el.style.display = 'none'
@@ -102,11 +109,12 @@ class StackableCountdown {
 		const restartInterval = parseInt( this.el.getAttribute( 'data-stk-countdown-restart-interval' ) ) || 0
 		const action = this.el.getAttribute( 'data-stk-countdown-action' )
 		const timezone = this.el.getAttribute( 'data-stk-countdown-timezone' )
+		const isDoubleDigit = this.el.getAttribute( 'data-stk-countdown-is-double-digit' ) === 'true' ? true : false
 
 		if ( countdownType === 'dueDate' ) {
-			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, timezone, action )
+			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, isDoubleDigit, timezone, action )
 		} else {
-			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, '', '', duration, countdownType, restartInterval )
+			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, isDoubleDigit, '', '', duration, countdownType, restartInterval )
 		}
 	}
 }
