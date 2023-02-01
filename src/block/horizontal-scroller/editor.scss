@@ -37,3 +37,8 @@
 		background: #d3d3d3;
 	}
 }
+
+// When inside a row block.
+.editor-styles-wrapper [data-type="core/group"] > [data-type="stackable/horizontal-scroller"] {
+	max-width: 100%;
+}
