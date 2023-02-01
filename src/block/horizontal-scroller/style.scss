@@ -2,11 +2,9 @@
 	overflow: hidden;
 	> .stk-block-content {
 		--stk-column-gap: 0px; // For nested columns, this takes precedence.
-		scroll-behavior: smooth;
 		display: grid;
 		overflow-x: auto;
 		overscroll-behavior-inline: contain;
-		scroll-snap-type: inline mandatory;
 		grid-auto-flow: column;
 		grid-auto-columns: var(--stk-column-width, 300px);
 		gap: var(--stk-column-gap);
@@ -21,6 +19,10 @@
 		}
 		&::-webkit-scrollbar {
 			height: 0 !important;
+		}
+		&:not(.stk--snapping-deactivated) {
+			scroll-behavior: smooth;
+			scroll-snap-type: inline mandatory;
 		}
 	}
 }
