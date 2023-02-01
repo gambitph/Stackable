@@ -1,4 +1,3 @@
-/* eslint-disable @wordpress/no-global-event-listener */
 /**
  * WordPress dependencies
  */
@@ -8,23 +7,17 @@ class StackableHorizontalScroller {
 	init = () => {
 		const els = document.querySelectorAll( '.stk-block-horizontal-scroller > .stk-block-content' )
 		let dragTimeout = null
-		const pos = Array( els.length ).fill().map( ( ) => ( {
-			top: 0,
-			left: 0,
-			x: 0,
-			y: 0,
-		} ) )
+		let initialScrollLeft = 0
+		let initialClientX = 0
 
-		els.forEach( ( el, i ) => {
+		els.forEach( el => {
 			const mouseMoveHandler = function( e ) {
 				// How far the mouse has been moved
-				const dx = e.clientX - pos[ i ].x
-				const dy = e.clientY - pos[ i ].y
+				const dx = e.clientX - initialClientX
 
 				// Scroll the element
-				el.scrollTop = pos[ i ].top - dy
 				el.scrollTo( {
-					left: pos[ i ].left - dx,
+					left: initialScrollLeft - dx,
 				} )
 			}
 
@@ -32,7 +25,7 @@ class StackableHorizontalScroller {
 				document.body.removeEventListener( 'mousemove', mouseMoveHandler )
 				document.body.removeEventListener( 'mouseup', mouseUpHandler )
 
-				el.style.cursor = 'grab'
+				el.style.cursor = ''
 				el.style.removeProperty( 'user-select' )
 
 				// This smooth scrolls to the place where we're supposed to snap.
@@ -60,14 +53,10 @@ class StackableHorizontalScroller {
 				clearTimeout( dragTimeout )
 				el.classList.add( 'stk--snapping-deactivated' )
 
-				pos[ i ] = {
-					// The current scroll
-					left: el.scrollLeft,
-					top: el.scrollTop,
-					// Get the current mouse position
-					x: e.clientX,
-					y: e.clientY,
-				}
+				// The current scroll
+				initialScrollLeft = el.scrollLeft
+				// Get the current mouse position
+				initialClientX = e.clientX
 
 				document.body.addEventListener( 'mousemove', mouseMoveHandler )
 				document.body.addEventListener( 'mouseup', mouseUpHandler )

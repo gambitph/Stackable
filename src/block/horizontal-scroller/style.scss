@@ -1,6 +1,7 @@
 .stk-block-horizontal-scroller:not(.editor) {
 	overflow: hidden;
 	> .stk-block-content {
+		cursor: grab;
 		--stk-column-gap: 0px; // For nested columns, this takes precedence.
 		display: grid;
 		overflow-x: auto;
