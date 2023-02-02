@@ -29,6 +29,10 @@
 	}
 }
 
+.editor-styles-wrapper .wp-block-stackable-column {
+	overflow: hidden;
+}
+
 // FIXME: Temporarily removed this since the frontend is having issues with the Accordion block when it's nested inside a container.
 // // We need this to make position sticky to work inside columns.
 // .stk-block.stk-block-column > .stk-inner-blocks {
