@@ -62,12 +62,16 @@ const countdownAttributes = {
 		attribute: 'data-stk-countdown-timezone',
 		default: '',
 	},
-	isDoubleDigit: {
-		type: 'boolean',
+	isDoubleDigitAttribute: {
+		type: 'string',
 		selector: '[data-stk-countdown-is-double-digit]',
 		source: 'attribute',
 		attribute: 'data-stk-countdown-is-double-digit',
-		default: true,
+		default: '',
+	},
+	isDoubleDigitHidden: {
+		type: 'boolean',
+		default: false,
 	},
 	dayText: {
 		type: 'string',

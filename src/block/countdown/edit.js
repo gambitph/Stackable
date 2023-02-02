@@ -262,8 +262,8 @@ const Edit = props => {
 							) }
 							<AdvancedToggleControl
 								label={ __( 'Enable Double Digit', i18n ) }
-								attribute="isDoubleDigit"
-								defaultValue={ true }
+								attribute="isDoubleDigitHidden"
+								defaultValue={ false }
 							/>
 							<AdvancedRangeControl
 								label={ __( 'Box Gap', i18n ) }
@@ -304,7 +304,7 @@ const Edit = props => {
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-countdown__content" />
 					{ attributes.actionOnExpiration === 'showMessage' &&
 						<Typography.InspectorControls
-							label={ __( 'Message', i18n ) }
+							label={ __( 'Expired Message', i18n ) }
 							attrNameTemplate="message%s"
 							hasTextTag={ true }
 							hasTextContent={ true }
@@ -343,7 +343,7 @@ const Edit = props => {
 								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
 								secondsLeft={ attributes.secondsLeft }
-								isDoubleDigit={ attributes.isDoubleDigit }
+								isDoubleDigit={ attributes.isDoubleDigitHidden }
 							/>
 							<Typography
 								identifier="day"
@@ -351,6 +351,7 @@ const Edit = props => {
 								className={ dayLabelClassNames }
 								attrNameTemplate="day%s"
 								placeholder={ __( 'Days', i18n ) }
+								withoutInteractiveFormatting={ true }
 							/>
 						</ContainerDiv>
 					}
@@ -366,7 +367,7 @@ const Edit = props => {
 								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
 								secondsLeft={ attributes.secondsLeft }
-								isDoubleDigit={ attributes.isDoubleDigit }
+								isDoubleDigit={ attributes.isDoubleDigitHidden }
 							/>
 							<Typography
 								identifier="hour"
@@ -374,6 +375,7 @@ const Edit = props => {
 								className={ hourLabelClassNames }
 								attrNameTemplate="hour%s"
 								placeholder={ __( 'Hours', i18n ) }
+								withoutInteractiveFormatting={ true }
 							/>
 						</ContainerDiv>
 					}
@@ -389,7 +391,7 @@ const Edit = props => {
 								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
 								secondsLeft={ attributes.secondsLeft }
-								isDoubleDigit={ attributes.isDoubleDigit }
+								isDoubleDigit={ attributes.isDoubleDigitHidden }
 							/>
 							<Typography
 								identifier="minute"
@@ -397,6 +399,7 @@ const Edit = props => {
 								className={ minuteLabelClassNames }
 								attrNameTemplate="minute%s"
 								placeholder={ __( 'Minutes', i18n ) }
+								withoutInteractiveFormatting={ true }
 							/>
 						</ContainerDiv>
 					}
@@ -412,7 +415,7 @@ const Edit = props => {
 								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
 								secondsLeft={ attributes.secondsLeft }
-								isDoubleDigit={ attributes.isDoubleDigit }
+								isDoubleDigit={ attributes.isDoubleDigitHidden }
 							/>
 							<Typography
 								identifier="second"
@@ -420,6 +423,7 @@ const Edit = props => {
 								className={ secondLabelClassNames }
 								attrNameTemplate="second%s"
 								placeholder={ __( 'Seconds', i18n ) }
+								withoutInteractiveFormatting={ true }
 							/>
 						</ContainerDiv>
 					}
