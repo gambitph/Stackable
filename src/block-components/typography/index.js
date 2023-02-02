@@ -40,6 +40,8 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 		editable,
 		identifier,
 		defaultValue,
+		withoutInteractiveFormatting = null,
+		allowedFormats = [],
 		...propsToPass
 	} = props
 
@@ -100,6 +102,8 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 			value={ dynamicContentText }
 			onChange={ setDebouncedText }
 			ref={ ref }
+			withoutInteractiveFormatting={ withoutInteractiveFormatting }
+			allowedFormats={ allowedFormats }
 			{ ...propsToPass }
 		>
 			{ children }
