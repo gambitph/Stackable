@@ -1,6 +1,6 @@
 import { useEffect, useState } from '@wordpress/element'
 
-const SECONDS = 1000
+const SECONDS = 1
 const SECONDS_IN_MINUTE = SECONDS * 60
 const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60
 const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
@@ -27,21 +27,25 @@ const getDuration = ( days, hours, minutes, seconds ) => {
 		a = a + ( seconds * SECONDS )
 	}
 
-	return a + Date.now()
+	return a + Math.floor( Date.now() / 1000 )
 }
 
 export const CountdownNumber = props => {
-	const [ value, setValue ] = useState( '00' )
+	const [ value, setValue ] = useState( '' )
+
 	useEffect( () => {
 		if ( ! props.datetime ) {
 			setValue( 0 )
 		}
+
 		const dueDate = isNaN( props.datetime ) ? Date.parse( props.datetime ) : props.datetime
 		const duration = getDuration( props.daysLeft, props.hoursLeft, props.minutesLeft, props.secondsLeft )
+
 		const interval = setInterval( () => {
-			const difference = props.countdownType === 'dueDate' ? dueDate - Date.now() : duration - Date.now()
+			let difference = props.countdownType === 'dueDate' ? Math.floor( ( dueDate / 1000 ) - ( Date.now() / 1000 ) ) : duration - Math.floor( Date.now() / 1000 )
+
 			if ( difference <= 0 ) {
-				return
+				difference = 0
 			}
 
 			switch ( props.type ) {
@@ -56,10 +60,9 @@ export const CountdownNumber = props => {
 					break
 				default:
 					setValue( addZero( Math.floor( ( difference % SECONDS_IN_MINUTE ) / SECONDS ), props.isDoubleDigit ) )
-				  // code block
-			  }
-			  difference - 1000
+			}
 		}, 1000 )
+
 		return () => {
 			clearInterval( interval )
 		}
