@@ -47,7 +47,9 @@ export const Save = props => {
 			 'stk-block-content',
 		 ],
 		 getContentAlignmentClasses( props.attributes, 'horizontal-scroller' ),
-	 ], props ) )
+	 ], props ), {
+		'stk--with-scrollbar': props.attributes.scrollbar,
+	 } )
 
 	 return (
 		 <BlockDiv.Content

@@ -16,6 +16,7 @@ import {
 	 InspectorStyleControls,
 	 PanelAdvancedSettings,
 	 AdvancedSelectControl,
+	 AdvancedToggleControl,
 } from '~stackable/components'
 
 import {
@@ -146,6 +147,10 @@ const Edit = props => {
 								min={ [ 0, 0, 0 ] }
 								sliderMax={ [ 500, 40, 50 ] }
 								step={ [ 1, 0.1, 1 ] }
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Frontend scrollbar', i18n ) }
+								attribute="scrollbar"
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>

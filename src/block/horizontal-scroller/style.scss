@@ -18,8 +18,10 @@
 			scroll-snap-align: var(--stk-snapping, center);
 			width: 100% !important;
 		}
-		&::-webkit-scrollbar {
-			height: 0 !important;
+		&:not(.stk--with-scrollbar) {
+			&::-webkit-scrollbar {
+				height: 0 !important;
+			}
 		}
 		&:not(.stk--snapping-deactivated) {
 			scroll-behavior: smooth;

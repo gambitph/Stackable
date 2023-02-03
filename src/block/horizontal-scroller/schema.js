@@ -69,6 +69,10 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			scrollbar: {
+				type: 'boolean',
+				default: false,
+			},
 		},
 		versionAdded: '3.6.1',
 		versionDeprecated: '',
