@@ -27,7 +27,6 @@
 	> * {
 		scroll-snap-align: var(--stk-snapping, center);
 		width: 100% !important;
-
 	}
 	&::-webkit-scrollbar {
 		height: 10px;
@@ -40,9 +39,10 @@
 
 // When inside a row block.
 .editor-styles-wrapper [data-type="core/group"] {
-	&.is-layout-flex {
-		display: flex;
-	}
+	// compatibility for twenty-twenty-one theme
+	// &.is-layout-flex {
+	// 	display: flex;
+	// }
 	[data-type="stackable/horizontal-scroller"] {
 		overflow: hidden;
 		max-width: 100% !important;
