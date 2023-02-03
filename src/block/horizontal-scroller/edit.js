@@ -100,7 +100,7 @@ const Edit = props => {
 							id="horizontal-scroll"
 							initialOpen={ true }
 						>
-							<ColumnsControl />
+							<ColumnsControl sliderMax={ 10 } />
 							<AdvancedSelectControl
 								label={ __( 'Snapping', i18n ) }
 								attribute="horizontalScrollerSnap"
