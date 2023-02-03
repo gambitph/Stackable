@@ -339,6 +339,7 @@ const Edit = props => {
 								type={ 'days' }
 								datetime={ attributes.date }
 								countdownType={ attributes.countdownType }
+								timezone={ attributes.timezone }
 								daysLeft={ attributes.daysLeft }
 								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
@@ -351,7 +352,7 @@ const Edit = props => {
 								className={ dayLabelClassNames }
 								attrNameTemplate="day%s"
 								placeholder={ __( 'Days', i18n ) }
-								withoutInteractiveFormatting={ true }
+								allowedFormats={ [] }
 							/>
 						</ContainerDiv>
 					}
@@ -363,6 +364,7 @@ const Edit = props => {
 								type={ 'hours' }
 								datetime={ attributes.date }
 								countdownType={ attributes.countdownType }
+								timezone={ attributes.timezone }
 								daysLeft={ attributes.daysLeft }
 								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
@@ -375,7 +377,7 @@ const Edit = props => {
 								className={ hourLabelClassNames }
 								attrNameTemplate="hour%s"
 								placeholder={ __( 'Hours', i18n ) }
-								withoutInteractiveFormatting={ true }
+								allowedFormats={ [] }
 							/>
 						</ContainerDiv>
 					}
@@ -387,6 +389,7 @@ const Edit = props => {
 								type={ 'minutes' }
 								datetime={ attributes.date }
 								countdownType={ attributes.countdownType }
+								timezone={ attributes.timezone }
 								daysLeft={ attributes.daysLeft }
 								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
@@ -399,7 +402,7 @@ const Edit = props => {
 								className={ minuteLabelClassNames }
 								attrNameTemplate="minute%s"
 								placeholder={ __( 'Minutes', i18n ) }
-								withoutInteractiveFormatting={ true }
+								allowedFormats={ [] }
 							/>
 						</ContainerDiv>
 					}
@@ -411,6 +414,7 @@ const Edit = props => {
 								type={ 'seconds' }
 								datetime={ attributes.date }
 								countdownType={ attributes.countdownType }
+								timezone={ attributes.timezone }
 								daysLeft={ attributes.daysLeft }
 								hoursLeft={ attributes.hoursLeft }
 								minutesLeft={ attributes.minutesLeft }
@@ -423,7 +427,7 @@ const Edit = props => {
 								className={ secondLabelClassNames }
 								attrNameTemplate="second%s"
 								placeholder={ __( 'Seconds', i18n ) }
-								withoutInteractiveFormatting={ true }
+								allowedFormats={ [] }
 							/>
 						</ContainerDiv>
 					}
