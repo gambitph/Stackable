@@ -12,6 +12,7 @@ const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
 class StackableCountdown {
 	constructor( el ) {
 		this.el = el
+		this.blockId = el.getAttribute( 'data-block-id' )
 		this.countdownInterval
 	}
 
@@ -21,21 +22,61 @@ class StackableCountdown {
 
 	addZero = ( number, isDoubleDigit ) => {
 		if ( isDoubleDigit ) {
-			return number < 10 ? '0' + number : number
+			const a = number <= 0 ? 0 : number
+			return number < 10 ? '0' + a : number
 		}
 		return number
 	}
 
-	countDown = ( countdownDate, isDoubleDigit, timezone, action, duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
+	saveTimeRemaining = number => {
+		sessionStorage.setItem( this.blockId, number )
+	}
+
+	preCountDown = isDoubleDigit => {
 		const day = this.el.querySelector( '.stk-block-countdown__digit_day' )
 		const hour = this.el.querySelector( '.stk-block-countdown__digit_hour' )
 		const minute = this.el.querySelector( '.stk-block-countdown__digit_minute' )
 		const second = this.el.querySelector( '.stk-block-countdown__digit_second' )
 
-		// Convert to chosen timezone
-		const endDate = timezone ? Date.parse( date( 'Y-m-d\\TH:i', countdownDate, timezone ) ) : countdownDate
+		const timer = sessionStorage.getItem( this.blockId )
 
-		let timer = Math.floor( endDate / 1000 ) - Math.floor( Date.parse( date( 'Y-m-d\\TH:i:s', Date.now(), timezone ) ) / 1000 )
+		const daysLeft = Math.floor( timer / SECONDS_IN_DAY )
+		const hoursLeft = Math.floor( ( timer % SECONDS_IN_DAY ) / SECONDS_IN_HOUR )
+		const minutesLeft = Math.floor( ( timer % SECONDS_IN_HOUR ) / SECONDS_IN_MINUTE )
+		const secondsLeft = Math.floor( ( timer % SECONDS_IN_MINUTE ) / SECONDS )
+
+		if ( day ) {
+			day.textContent = this.addZero( daysLeft, isDoubleDigit )
+		}
+
+		if ( hour ) {
+			hour.textContent = this.addZero( hoursLeft, isDoubleDigit )
+		}
+
+		if ( minute ) {
+			minute.textContent = this.addZero( minutesLeft, isDoubleDigit )
+		}
+
+		if ( second ) {
+			second.textContent = this.addZero( secondsLeft, isDoubleDigit )
+		}
+	}
+
+	countDown = ( countdownDate, blockId, isDoubleDigit, timezone, action, duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
+		const day = this.el.querySelector( '.stk-block-countdown__digit_day' )
+		const hour = this.el.querySelector( '.stk-block-countdown__digit_hour' )
+		const minute = this.el.querySelector( '.stk-block-countdown__digit_minute' )
+		const second = this.el.querySelector( '.stk-block-countdown__digit_second' )
+		let tempTimezone = timezone
+
+		// Timezone can be a string number
+		if ( ! isNaN( timezone ) ) {
+			tempTimezone = parseInt( timezone )
+		}
+		const endDate = countdownDate
+
+		// Convert date being compared to to desired timezone
+		let timer = Math.floor( endDate / 1000 ) - Math.floor( Date.parse( date( 'Y-m-d\\TH:i:s', Date.now(), tempTimezone ) ) / 1000 )
 		let isRestarting = false
 		let restartLeft = 0
 
@@ -44,11 +85,12 @@ class StackableCountdown {
 			const diff = Date.now() > endDate
 			if ( diff ) {
 				// Calculate where to start the timer since this is an open timer
-				const interval = ( duration / 1000 ) + ( restartInterval )
+				const interval = ( duration / 1000 ) + ( restartInterval * SECONDS_IN_HOUR )
 				const index = Math.floor( ( ( ( Date.now() / 1000 ) - ( endDate / 1000 ) ) ) / ( interval ) ) + 1
 				const b = Math.floor( ( ( index * interval ) + Math.floor( endDate / 1000 ) ) - Math.floor( Date.now() / 1000 ) )
-				if ( b > restartInterval ) {
-					timer = b - restartInterval
+				// console.log( b )
+				if ( b > ( restartInterval * SECONDS_IN_HOUR ) ) {
+					timer = b - ( restartInterval * SECONDS_IN_HOUR )
 				} else {
 					isRestarting = true
 					restartLeft = b
@@ -58,6 +100,8 @@ class StackableCountdown {
 				timer = diff ? Math.floor( ( duration + endDate ) / 1000 ) - Math.floor( Date.now() / 1000 ) : Math.floor( duration / 1000 )
 			}
 		}
+
+		this.saveTimeRemaining( timer )
 
 		const daysLeft = Math.floor( timer / SECONDS_IN_DAY )
 		const hoursLeft = Math.floor( ( timer % SECONDS_IN_DAY ) / SECONDS_IN_HOUR )
@@ -85,9 +129,10 @@ class StackableCountdown {
 			this.clearTimer()
 			if ( countdownType === 'recurring' ) {
 				const a = isRestarting ? restartLeft : restartInterval
-				setTimeout( () => {
+				const tempCallback = () => {
 					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, Date.now(), isDoubleDigit, '', '', duration, countdownType, restartInterval, timezone )
-				}, a * 3600000 )
+				}
+				setTimeout( tempCallback, a * 1000 )
 			}
 			if ( action === 'hide' ) {
 				this.el.style.display = 'none'
@@ -112,6 +157,7 @@ class StackableCountdown {
 		const isDoubleDigit = this.el.getAttribute( 'data-stk-countdown-is-double-digit' ) === 'true' ? true : false
 
 		if ( countdownType === 'dueDate' ) {
+			this.preCountDown( isDoubleDigit )
 			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, isDoubleDigit, timezone, action )
 		} else {
 			this.countdownInterval = setInterval( this.countDown.bind( this ), 1000, date, isDoubleDigit, '', '', duration, countdownType, restartInterval )
