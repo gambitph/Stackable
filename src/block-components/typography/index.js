@@ -40,8 +40,8 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 		editable,
 		identifier,
 		defaultValue,
-		withoutInteractiveFormatting = null,
-		allowedFormats = [],
+		withoutInteractiveFormatting = false,
+		allowedFormats = null,
 		...propsToPass
 	} = props
 
