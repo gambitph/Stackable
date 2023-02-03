@@ -16,12 +16,12 @@ import metadata from './block.json'
 
 export const settings = {
 	...metadata,
+	icon: CountdownIcon,
 	edit,
 	save,
 	attributes: schema,
 	supports: {
 		anchor: true,
 	},
-	icon: CountdownIcon,
 }
 
