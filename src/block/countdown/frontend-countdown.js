@@ -25,7 +25,7 @@ class StackableCountdown {
 			const a = number <= 0 ? 0 : number
 			return number < 10 ? '0' + a : number
 		}
-		return number
+		return number <= 0 ? 0 : number
 	}
 
 	saveTimeRemaining = number => {
@@ -62,7 +62,7 @@ class StackableCountdown {
 		}
 	}
 
-	countDown = ( countdownDate, blockId, isDoubleDigit, timezone, action, duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
+	countDown = ( countdownDate, isDoubleDigit, timezone, action, duration = 0, countdownType = 'dueDate', restartInterval = 0 ) => {
 		const day = this.el.querySelector( '.stk-block-countdown__digit_day' )
 		const hour = this.el.querySelector( '.stk-block-countdown__digit_hour' )
 		const minute = this.el.querySelector( '.stk-block-countdown__digit_minute' )
@@ -73,22 +73,21 @@ class StackableCountdown {
 		if ( ! isNaN( timezone ) ) {
 			tempTimezone = parseInt( timezone )
 		}
-		const endDate = countdownDate
 
 		// Convert date being compared to to desired timezone
-		let timer = Math.floor( endDate / 1000 ) - Math.floor( Date.parse( date( 'Y-m-d\\TH:i:s', Date.now(), tempTimezone ) ) / 1000 )
+		let timer = Math.floor( countdownDate / 1000 ) - Math.floor( Date.parse( date( 'Y-m-d\\TH:i:s', Date.now(), tempTimezone ) ) / 1000 )
 		let isRestarting = false
 		let restartLeft = 0
 
 		if ( countdownType === 'recurring' ) {
-			// endDate becomes startDate for recurring
-			const diff = Date.now() > endDate
+			// countdownDate becomes startDate for recurring
+			const diff = Date.now() > countdownDate
+
 			if ( diff ) {
 				// Calculate where to start the timer since this is an open timer
-				const interval = ( duration / 1000 ) + ( restartInterval * SECONDS_IN_HOUR )
-				const index = Math.floor( ( ( ( Date.now() / 1000 ) - ( endDate / 1000 ) ) ) / ( interval ) ) + 1
-				const b = Math.floor( ( ( index * interval ) + Math.floor( endDate / 1000 ) ) - Math.floor( Date.now() / 1000 ) )
-				// console.log( b )
+				const interval = duration + ( restartInterval * SECONDS_IN_HOUR )
+				const index = Math.floor( ( ( ( Date.now() / 1000 ) - ( countdownDate / 1000 ) ) ) / ( interval ) ) + 1
+				const b = Math.floor( ( ( index * interval ) + Math.floor( countdownDate / 1000 ) ) - Math.floor( Date.now() / 1000 ) )
 				if ( b > ( restartInterval * SECONDS_IN_HOUR ) ) {
 					timer = b - ( restartInterval * SECONDS_IN_HOUR )
 				} else {
@@ -97,7 +96,7 @@ class StackableCountdown {
 					timer = 0
 				}
 			} else {
-				timer = diff ? Math.floor( ( duration + endDate ) / 1000 ) - Math.floor( Date.now() / 1000 ) : Math.floor( duration / 1000 )
+				timer = diff ? ( duration + Math.floor( countdownDate / 1000 ) ) - Math.floor( Date.now() / 1000 ) : duration
 			}
 		}
 
