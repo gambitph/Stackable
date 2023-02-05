@@ -19,7 +19,7 @@ import { withVersion } from '~stackable/higher-order'
  */
 import { compose } from '@wordpress/compose'
 
-const SECONDS = 1000
+const SECONDS = 1
 const SECONDS_IN_MINUTE = SECONDS * 60
 const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60
 const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
@@ -112,10 +112,6 @@ const Save = props => {
 		messageTextClasses,
 	] )
 
-	const dividerClassNames = classnames( [
-		'stk-block-countdown__divider',
-	] )
-
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
@@ -141,7 +137,7 @@ const Save = props => {
 						/>
 					</ContainerDiv.Content>
 				}
-				{ attributes.hasDivider && attributes.dayShow && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
+				{ attributes.hasDivider && attributes.dayShow && <Divider.Content attributes={ attributes } /> }
 				{ attributes.hourShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 						<CountdownNumber.Content className={ hourDigitClassNames } />
@@ -152,7 +148,7 @@ const Save = props => {
 						/>
 					</ContainerDiv.Content>
 				}
-				{ attributes.hasDivider && attributes.hourShow && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
+				{ attributes.hasDivider && attributes.hourShow && <Divider.Content attributes={ attributes } /> }
 				{ attributes.minuteShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 						<CountdownNumber.Content className={ minuteDigitClassNames } />
@@ -163,7 +159,7 @@ const Save = props => {
 						/>
 					</ContainerDiv.Content>
 				}
-				{ attributes.hasDivider && attributes.minuteShow && attributes.secondShow && <Divider.Content className={ dividerClassNames } attributes={ attributes } /> }
+				{ attributes.hasDivider && attributes.minuteShow && attributes.secondShow && <Divider.Content attributes={ attributes } /> }
 				{ attributes.secondShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
 						<CountdownNumber.Content className={ secondDigitClassNames } />
