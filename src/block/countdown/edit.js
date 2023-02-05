@@ -153,23 +153,11 @@ const Edit = props => {
 		messageTextClasses,
 	] )
 
-	const dividerClassNames = classnames( [
-		'stk-block-countdown__divider',
-	] )
-
 	useEffect( () => {
 		if ( attributes.countdownType === 'recurring' ) {
 			setAttributes( { actionOnExpiration: '' } )
 		}
 	}, [ attributes.countdownType ] )
-
-	useEffect( () => {
-		if ( attributes.dividerType === '|' ) {
-			setAttributes( { dividerTopOffset: 3, dividerSizeColon: 45 } )
-		} else {
-			setAttributes( { dividerSizeLine: 50 } )
-		}
-	}, [ attributes.dividerType ] )
 
 	return (
 		<>
@@ -270,7 +258,7 @@ const Edit = props => {
 								min={ 0 }
 								sliderMax={ 50 }
 								attribute="boxGap"
-								default={ 16 }
+								placeholder="16"
 							/>
 							<AdvancedRangeControl
 								label={ __( 'Label Top Margin', i18n ) }
@@ -278,7 +266,6 @@ const Edit = props => {
 								sliderMax={ 50 }
 								attribute="labelMarginTop"
 								placeholder="8"
-								default={ 8 }
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
@@ -356,7 +343,7 @@ const Edit = props => {
 							/>
 						</ContainerDiv>
 					}
-					{ attributes.hasDivider && attributes.dayShow && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					{ attributes.hasDivider && attributes.dayShow && <Divider attributes={ attributes } /> }
 					{ attributes.hourShow &&
 						<ContainerDiv className={ contentClassNames }>
 							<CountdownNumber
@@ -381,7 +368,7 @@ const Edit = props => {
 							/>
 						</ContainerDiv>
 					}
-					{ attributes.hasDivider && attributes.hourShow && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					{ attributes.hasDivider && attributes.hourShow && <Divider attributes={ attributes } /> }
 					{ attributes.minuteShow &&
 						<ContainerDiv className={ contentClassNames }>
 							<CountdownNumber
@@ -406,7 +393,7 @@ const Edit = props => {
 							/>
 						</ContainerDiv>
 					}
-					{ attributes.hasDivider && attributes.minuteShow && attributes.secondShow && <Divider attributes={ attributes } className={ dividerClassNames } /> }
+					{ attributes.hasDivider && attributes.minuteShow && attributes.secondShow && <Divider attributes={ attributes } /> }
 					{ attributes.secondShow &&
 						<ContainerDiv className={ contentClassNames }>
 							<CountdownNumber
