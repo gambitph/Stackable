@@ -38,10 +38,6 @@ const messageTypographyOptions = {
 	attrNameTemplate: 'message%s',
 }
 
-const dividerOptions = {
-	selector: '.stk-block-countdown__divider',
-}
-
 const Styles = props => {
 	const propsToPass = {
 		...props,
@@ -77,7 +73,7 @@ const Styles = props => {
 export const CountdownStyles = memo( props => {
 	return (
 		<>
-			<Divider.Style { ...props } { ...dividerOptions } />
+			<Divider.Style { ...props } />
 			<ContainerDiv.Style { ...props } />
 			<Typography.Style { ...props } { ...digitTypographyOptions } />
 			<Typography.Style { ...props } { ...labelTypographyOptions } />
@@ -103,7 +99,7 @@ CountdownStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
-			<Divider.Style.Content { ...props } { ...dividerOptions } />
+			<Divider.Style.Content { ...props } />
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<ContainerDiv.Style.Content { ...props } />
