@@ -12,6 +12,8 @@ import {
 	Row,
 	Transform,
 	ContentAlign,
+	HorizontalScroller,
+	Scrollbar,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -32,51 +34,8 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	ContentAlign.addAttributes( attrObject, { columnFit: true } )
-
-	attrObject.add( {
-		attributes: {
-			horizontalScrollerColumnWidth: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-				stkUnits: 'px',
-			},
-			horizontalScrollerHeight: {
-				type: 'number',
-				default: '',
-			},
-			horizontalScrollerColumnGap: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			horizontalScrollerSnap: {
-				type: 'string',
-				default: '',
-			},
-			horizontalScrollerLeftOffset: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-				stkUnits: 'px',
-			},
-			templateLock: {
-				type: 'string',
-				default: '',
-			},
-			columnArrangement: {
-				stkResponsive: true,
-				type: 'string',
-				default: '',
-			},
-			scrollbar: {
-				type: 'boolean',
-				default: false,
-			},
-		},
-		versionAdded: '3.6.1',
-		versionDeprecated: '',
-	} )
+	HorizontalScroller.addAttributes( attrObject )
+	Scrollbar.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }

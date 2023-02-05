@@ -48,7 +48,7 @@ export const Save = props => {
 		 ],
 		 getContentAlignmentClasses( props.attributes, 'horizontal-scroller' ),
 	 ], props ), {
-		'stk--with-scrollbar': props.attributes.scrollbar,
+		'stk--with-scrollbar': attributes.showScrollbar,
 	 } )
 
 	 return (
@@ -66,4 +66,3 @@ export const Save = props => {
 }
 
 export default withVersion( VERSION )( Save )
-

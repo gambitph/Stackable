@@ -30,10 +30,24 @@
 	}
 	&::-webkit-scrollbar {
 		height: 10px;
+	}
+	&::-webkit-scrollbar-track {
 		background: #eee;
 	}
 	&::-webkit-scrollbar-thumb {
 		background: #d3d3d3;
+	}
+}
+
+.stk-block-horizontal-scroller > .stk-block-content.stk--with-scrollbar > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	&::-webkit-scrollbar {
+		height: var(--stk-scrollbar-height, 10px);
+	}
+	&::-webkit-scrollbar-track {
+		background: var(--stk-scrollbar-track-color, #eee);
+	}
+	&::-webkit-scrollbar-thumb {
+		background: var(--stk-scrollbar-thumb-color, #d3d3d3);
 	}
 }
 

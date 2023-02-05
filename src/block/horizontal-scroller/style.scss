@@ -18,6 +18,17 @@
 			scroll-snap-align: var(--stk-snapping, center);
 			width: 100% !important;
 		}
+		&.stk--with-scrollbar {
+			&::-webkit-scrollbar {
+				height: var(--stk-scrollbar-height, 10px);
+			}
+			&::-webkit-scrollbar-track {
+				background: var(--stk-scrollbar-track-color, #eee);
+			}
+			&::-webkit-scrollbar-thumb {
+				background: var(--stk-scrollbar-thumb-color, #d3d3d3);
+			}
+		}
 		&:not(.stk--with-scrollbar) {
 			&::-webkit-scrollbar {
 				height: 0 !important;

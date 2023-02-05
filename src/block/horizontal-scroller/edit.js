@@ -6,17 +6,12 @@ import BlockStyles from './style'
 /**
  * External dependencies
  */
-import { version as VERSION, i18n } from 'stackable'
+import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	 ColumnInnerBlocks,
 	 GroupPlaceholder,
 	 InspectorTabs,
-	 AdvancedRangeControl,
-	 InspectorStyleControls,
-	 PanelAdvancedSettings,
-	 AdvancedSelectControl,
-	 AdvancedToggleControl,
 } from '~stackable/components'
 
 import {
@@ -32,8 +27,9 @@ import {
 	 EffectsAnimations,
 	 ConditionalDisplay,
 	 Transform,
-	 ColumnsControl,
 	 getContentAlignmentClasses,
+	 HorizontalScroller,
+	 Scrollbar,
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -78,14 +74,15 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
-	 ], getContentAlignmentClasses( props.attributes, 'horizontal-scroller' ) )
+	 ], getContentAlignmentClasses( props.attributes, 'horizontal-scroller' ), {
+		'stk--with-scrollbar': props.attributes.showScrollbar,
+	 } )
 
 	 return (
 		 <>
 			 { isSelected && (
 				 <>
 					 <InspectorTabs />
-
 					 <Alignment.InspectorControls hasRowAlignment={ true } />
 					 <BlockDiv.InspectorControls />
 					 <Advanced.InspectorControls />
@@ -95,65 +92,8 @@ const Edit = props => {
 					 <CustomCSS.InspectorControls mainBlockClass="stk-block-horizontal-scroller" />
 					 <Responsive.InspectorControls />
 					 <ConditionalDisplay.InspectorControls />
-					 <InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'Horizontal Scroll', i18n ) }
-							id="horizontal-scroll"
-							initialOpen={ true }
-						>
-							<ColumnsControl sliderMax={ 10 } />
-							<AdvancedSelectControl
-								label={ __( 'Snapping', i18n ) }
-								attribute="horizontalScrollerSnap"
-								options={ [
-									{ value: 'start', label: __( 'Snap to Start', i18n ) },
-									{ value: 'center', label: __( 'Snap to Center', i18n ) },
-									{ value: 'none', label: __( 'No Snapping', i18n ) },
-								] }
-								value={ props.attributes.horizontalScrollerSnap }
-								default="center"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Item Width', i18n ) }
-								attribute="horizontalScrollerColumnWidth"
-								responsive="all"
-								units={ [ 'px', 'em', '%' ] }
-								min={ [ 0, 0, 0 ] }
-								sliderMax={ [ 500, 40, 50 ] }
-								step={ [ 1, 0.1, 1 ] }
-								placeholder={ 300 }
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Height', i18n ) }
-								attribute="horizontalScrollerHeight"
-								min="0"
-								sliderMin={ 0 }
-								sliderMax={ 500 }
-								step="1"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Gap', i18n ) }
-								attribute="horizontalScrollerColumnGap"
-								responsive="all"
-								min={ 0 }
-								sliderMax={ 100 }
-								placeholder="0"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Left Offset', i18n ) }
-								attribute="horizontalScrollerLeftOffset"
-								responsive="all"
-								units={ [ 'px', 'em', '%' ] }
-								min={ [ 0, 0, 0 ] }
-								sliderMax={ [ 500, 40, 50 ] }
-								step={ [ 1, 0.1, 1 ] }
-							/>
-							<AdvancedToggleControl
-								label={ __( 'Frontend scrollbar', i18n ) }
-								attribute="scrollbar"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
+					 <HorizontalScroller.InspectorControls />
+					 <Scrollbar.InspectorControls />
 				 </>
 			 ) }
 
