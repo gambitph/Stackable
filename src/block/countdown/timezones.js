@@ -1,10 +1,5 @@
-import { getSettings } from '@wordpress/date'
-
-const WORDPRESS_LOCAL_TIMEZONE = getSettings().timezone.offset
-
 // Taken from https://gist.github.com/ykessler/3349960
 export const timezones = [
-	{ value: WORDPRESS_LOCAL_TIMEZONE, label: 'Wordpress Timezone' },
 	{ value: 'America/Puerto_Rico', label: 'Puerto Rico (Atlantic)' },
 	{ value: 'America/New_York', label: 'New York (Eastern)' },
 	{ value: 'America/Chicago', label: 'Chicago (Central)' },

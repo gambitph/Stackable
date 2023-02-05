@@ -60,7 +60,7 @@ const countdownAttributes = {
 		selector: '[data-stk-countdown-timezone]',
 		source: 'attribute',
 		attribute: 'data-stk-countdown-timezone',
-		default: '',
+		default: 'America/Puerto_Rico',
 	},
 	isDoubleDigitAttribute: {
 		type: 'string',
@@ -115,11 +115,11 @@ const countdownAttributes = {
 	},
 	boxGap: {
 		type: 'number',
-		default: '16',
+		default: '',
 	},
 	labelMarginTop: {
 		type: 'number',
-		default: '8',
+		default: '',
 	},
 	dayShow: {
 		type: 'boolean',
@@ -136,14 +136,6 @@ const countdownAttributes = {
 	secondShow: {
 		type: 'boolean',
 		default: true,
-	},
-	digitFontSize: {
-		type: 'number',
-		default: '40',
-	},
-	dividerType: {
-		type: 'string',
-		default: ':',
 	},
 }
 
@@ -184,19 +176,6 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: countdownAttributes,
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
-
-	attrObject.addDefaultValues( {
-		attributes: {
-			boxGap: 16,
-			labelMarginTop: 8,
-			dividerColor: '#000000',
-			dividerSizeLine: 50,
-			dividerSizeColon: 45,
-			dividerTopOffset: 3,
-		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
