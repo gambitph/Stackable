@@ -39,12 +39,18 @@
 
 // When inside a row block.
 .editor-styles-wrapper [data-type="core/group"] {
-	// compatibility for twenty-twenty-one theme
-	// &.is-layout-flex {
-	// 	display: flex;
-	// }
 	[data-type="stackable/horizontal-scroller"] {
 		overflow: hidden;
 		max-width: 100% !important;
+	}
+}
+
+// When inside a row block.
+// compatibility for twenty-twenty-one theme
+.stk--is-twentytwentyone-theme {
+	.editor-styles-wrapper [data-type="core/group"] {
+		&.is-layout-flex:has([data-type="stackable/horizontal-scroller"]) {
+			display: flex;
+		}
 	}
 }
