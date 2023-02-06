@@ -175,6 +175,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/block/table-of-contents/index.p
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/map/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-bar/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-circle/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block/horizontal-scroller/index.php' );
 
 /**
  * Welcome screen.

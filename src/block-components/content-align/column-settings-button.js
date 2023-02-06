@@ -10,7 +10,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { dispatch, select } from '@wordpress/data'
 import { useLocalStorage } from '~stackable/util'
 
-export const ColumnsControl = () => {
+export const ColumnsControl = ( { sliderMax = 6 } ) => {
 	const { clientId } = useBlockEditContext()
 	const {
 		numInnerBlocks, innerBlocks,
@@ -51,7 +51,7 @@ export const ColumnsControl = () => {
 		<AdvancedRangeControl
 			label={ __( 'Columns', i18n ) }
 			min={ 1 }
-			sliderMax={ 6 }
+			sliderMax={ sliderMax }
 			placeholder="1"
 			value={ numInnerBlocks }
 			onChange={ setColumns }

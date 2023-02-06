@@ -19,6 +19,7 @@ import SVGFeatureGridIcon from './images/feature-grid-icon.svg'
 import SVGFeatureIcon from './images/feature-icon.svg'
 import SVGHeroIcon from './images/hero-icon.svg'
 import SVGHeadingIcon from './images/heading-icon.svg'
+import SVGHorizontalScrollerIcon from './images/horizontal-scroller-icon.svg'
 import SVGIconIcon from './images/icon-icon.svg'
 import SVGIconButtonIcon from './images/icon-button-icon.svg'
 import SVGIconButtonsIcon from './images/icon-buttons.svg'
@@ -165,6 +166,10 @@ export function HeroIcon() {
 
 export function HeadingIcon() {
 	return colorizeIcon( <SVGHeadingIcon width="20" height="20" /> )
+}
+
+export function HorizontalScrollerIcon() {
+	return colorizeIcon( <SVGHorizontalScrollerIcon width="20" height="20" /> )
 }
 
 export function GroupContainerIcon() {
