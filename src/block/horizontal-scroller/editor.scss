@@ -23,31 +23,21 @@
 	grid-auto-columns: var(--stk-column-width, 300px);
 	gap: var(--stk-column-gap, 0);
 	height: var(--stk-column-height);
-	padding-inline-start: var(--stk-left-offset);
+	padding-inline-start: var(--stk-left-offset, 0px);
 	> * {
 		scroll-snap-align: var(--stk-snapping, center);
 		width: 100% !important;
 	}
 	&::-webkit-scrollbar {
-		height: 10px;
-	}
-	&::-webkit-scrollbar-track {
-		background: #eee;
-	}
-	&::-webkit-scrollbar-thumb {
-		background: #d3d3d3;
-	}
-}
-
-.stk-block-horizontal-scroller > .stk-block-content.stk--with-scrollbar > .block-editor-inner-blocks > .block-editor-block-list__layout {
-	&::-webkit-scrollbar {
 		height: var(--stk-scrollbar-height, 10px);
 	}
 	&::-webkit-scrollbar-track {
 		background: var(--stk-scrollbar-track-color, #eee);
+		border-radius: var(--stk-scrollbar-thumb-radius, 0px);
 	}
 	&::-webkit-scrollbar-thumb {
 		background: var(--stk-scrollbar-thumb-color, #d3d3d3);
+		border-radius: var(--stk-scrollbar-thumb-radius, 0px);
 	}
 }
 

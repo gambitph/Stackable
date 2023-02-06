@@ -10,7 +10,7 @@
 		grid-auto-columns: var(--stk-column-width, 300px);
 		gap: var(--stk-column-gap);
 		height: var(--stk-column-height);
-		padding-inline-start: var(--stk-left-offset);
+		padding-inline-start: var(--stk-left-offset, 0px);
 		overflow-x: -moz-scrollbars-none;
 		-ms-overflow-style: none;
 		box-sizing: border-box;
@@ -24,9 +24,11 @@
 			}
 			&::-webkit-scrollbar-track {
 				background: var(--stk-scrollbar-track-color, #eee);
+				border-radius: var(--stk-scrollbar-thumb-radius, 0px);
 			}
 			&::-webkit-scrollbar-thumb {
 				background: var(--stk-scrollbar-thumb-color, #d3d3d3);
+				border-radius: var(--stk-scrollbar-thumb-radius, 0px);
 			}
 		}
 		&:not(.stk--with-scrollbar) {
