@@ -176,7 +176,6 @@ const Styles = props => {
 					) {
 						return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
 					}
-          
 					return undefined
 				} }
 				dependencies={ [
