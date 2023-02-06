@@ -56,7 +56,7 @@ const Save = props => {
 	] )
 
 	const contentClassNames = classnames( [
-		'stk-block-content',
+		'stk-block-countdown__content-container',
 	] )
 
 	const dayDigitClassNames = classnames( [
@@ -129,45 +129,53 @@ const Save = props => {
 				<CountdownStyles.Content version={ props.version } attributes={ attributes } />
 				{ attributes.dayShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-						<CountdownNumber.Content className={ dayDigitClassNames } />
-						<Typography.Content
-							className={ dayLabelClassNames }
-							attrNameTemplate="day%s"
-							attributes={ attributes }
-						/>
+						<div className="stk-block-countdown__container-wrapper">
+							<CountdownNumber.Content className={ dayDigitClassNames } />
+							<Typography.Content
+								className={ dayLabelClassNames }
+								attrNameTemplate="day%s"
+								attributes={ attributes }
+							/>
+						</div>
 					</ContainerDiv.Content>
 				}
 				{ attributes.hasDivider && attributes.dayShow && <Divider.Content attributes={ attributes } /> }
 				{ attributes.hourShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-						<CountdownNumber.Content className={ hourDigitClassNames } />
-						<Typography.Content
-							className={ hourLabelClassNames }
-							attrNameTemplate="hour%s"
-							attributes={ attributes }
-						/>
+						<div className="stk-block-countdown__container-wrapper">
+							<CountdownNumber.Content className={ hourDigitClassNames } />
+							<Typography.Content
+								className={ hourLabelClassNames }
+								attrNameTemplate="hour%s"
+								attributes={ attributes }
+							/>
+						</div>
 					</ContainerDiv.Content>
 				}
 				{ attributes.hasDivider && attributes.hourShow && <Divider.Content attributes={ attributes } /> }
 				{ attributes.minuteShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-						<CountdownNumber.Content className={ minuteDigitClassNames } />
-						<Typography.Content
-							className={ minuteLabelClassNames }
-							attrNameTemplate="minute%s"
-							attributes={ attributes }
-						/>
+						<div className="stk-block-countdown__container-wrapper">
+							<CountdownNumber.Content className={ minuteDigitClassNames } />
+							<Typography.Content
+								className={ minuteLabelClassNames }
+								attrNameTemplate="minute%s"
+								attributes={ attributes }
+							/>
+						</div>
 					</ContainerDiv.Content>
 				}
 				{ attributes.hasDivider && attributes.minuteShow && attributes.secondShow && <Divider.Content attributes={ attributes } /> }
 				{ attributes.secondShow &&
 					<ContainerDiv.Content className={ contentClassNames } attributes={ attributes }>
-						<CountdownNumber.Content className={ secondDigitClassNames } />
-						<Typography.Content
-							className={ secondLabelClassNames }
-							attrNameTemplate="second%s"
-							attributes={ attributes }
-						/>
+						<div className="stk-block-countdown__container-wrapper">
+							<CountdownNumber.Content className={ secondDigitClassNames } />
+							<Typography.Content
+								className={ secondLabelClassNames }
+								attrNameTemplate="second%s"
+								attributes={ attributes }
+							/>
+						</div>
 					</ContainerDiv.Content>
 				}
 			</div>

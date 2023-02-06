@@ -16,7 +16,6 @@ import {
 	CustomCSS,
 	Responsive,
 	Advanced,
-	// Alignment,
 	MarginBottom,
 	CustomAttributes,
 	EffectsAnimations,
@@ -68,7 +67,7 @@ const ACTION_ON_EXPIRATION_OPTIONS = [
 		value: 'hide',
 	},
 	{
-		label: __( 'Display Message', i18n ),
+		label: __( 'Display Message Upon Expiration', i18n ),
 		value: 'showMessage',
 	},
 
@@ -97,7 +96,7 @@ const Edit = props => {
 	] )
 
 	const contentClassNames = classnames( [
-		'stk-block-content',
+		'stk-block-countdown__content-container',
 	] )
 
 	const dayDigitClassNames = classnames( [
@@ -284,7 +283,6 @@ const Edit = props => {
 						initialOpen={ false }
 					/>
 					<Divider.InspectorControls />
-					{ /* <Alignment.InspectorControls /> */ }
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
@@ -321,101 +319,111 @@ const Edit = props => {
 				<div className="stk-block-countdown__container">
 					{ attributes.dayShow &&
 						<ContainerDiv className={ contentClassNames }>
-							<CountdownNumber
-								className={ dayDigitClassNames }
-								type={ 'days' }
-								datetime={ attributes.date }
-								countdownType={ attributes.countdownType }
-								timezone={ attributes.timezone }
-								daysLeft={ attributes.daysLeft }
-								hoursLeft={ attributes.hoursLeft }
-								minutesLeft={ attributes.minutesLeft }
-								secondsLeft={ attributes.secondsLeft }
-								isDoubleDigit={ attributes.isDoubleDigitHidden }
-							/>
-							<Typography
-								identifier="day"
-								tagName="p"
-								className={ dayLabelClassNames }
-								attrNameTemplate="day%s"
-								placeholder={ __( 'Days', i18n ) }
-								allowedFormats={ [] }
-							/>
+							<div className="stk-block-countdown__container-wrapper">
+								<CountdownNumber
+									className={ dayDigitClassNames }
+									type={ 'days' }
+									datetime={ attributes.date }
+									countdownType={ attributes.countdownType }
+									timezone={ attributes.timezone }
+									daysLeft={ attributes.daysLeft }
+									hoursLeft={ attributes.hoursLeft }
+									minutesLeft={ attributes.minutesLeft }
+									secondsLeft={ attributes.secondsLeft }
+									isDoubleDigit={ attributes.isDoubleDigitHidden }
+								/>
+								<Typography
+									identifier="day"
+									tagName="p"
+									className={ dayLabelClassNames }
+									attrNameTemplate="day%s"
+									placeholder={ __( 'Days', i18n ) }
+									allowedFormats={ [] }
+								/>
+							</div>
 						</ContainerDiv>
 					}
 					{ attributes.hasDivider && attributes.dayShow && <Divider attributes={ attributes } /> }
 					{ attributes.hourShow &&
 						<ContainerDiv className={ contentClassNames }>
-							<CountdownNumber
-								className={ hourDigitClassNames }
-								type={ 'hours' }
-								datetime={ attributes.date }
-								countdownType={ attributes.countdownType }
-								timezone={ attributes.timezone }
-								daysLeft={ attributes.daysLeft }
-								hoursLeft={ attributes.hoursLeft }
-								minutesLeft={ attributes.minutesLeft }
-								secondsLeft={ attributes.secondsLeft }
-								isDoubleDigit={ attributes.isDoubleDigitHidden }
-							/>
-							<Typography
-								identifier="hour"
-								tagName="p"
-								className={ hourLabelClassNames }
-								attrNameTemplate="hour%s"
-								placeholder={ __( 'Hours', i18n ) }
-								allowedFormats={ [] }
-							/>
+							<div className="stk-block-countdown__container-wrapper">
+								<CountdownNumber
+									className={ hourDigitClassNames }
+									type={ 'hours' }
+									datetime={ attributes.date }
+									countdownType={ attributes.countdownType }
+									timezone={ attributes.timezone }
+									daysLeft={ attributes.daysLeft }
+									hoursLeft={ attributes.hoursLeft }
+									minutesLeft={ attributes.minutesLeft }
+									secondsLeft={ attributes.secondsLeft }
+									isDoubleDigit={ attributes.isDoubleDigitHidden }
+								/>
+								<Typography
+									identifier="hour"
+									tagName="p"
+									className={ hourLabelClassNames }
+									attrNameTemplate="hour%s"
+									placeholder={ __( 'Hours', i18n ) }
+									allowedFormats={ [] }
+								/>
+							</div>
+
 						</ContainerDiv>
 					}
 					{ attributes.hasDivider && attributes.hourShow && <Divider attributes={ attributes } /> }
 					{ attributes.minuteShow &&
 						<ContainerDiv className={ contentClassNames }>
-							<CountdownNumber
-								className={ minuteDigitClassNames }
-								type={ 'minutes' }
-								datetime={ attributes.date }
-								countdownType={ attributes.countdownType }
-								timezone={ attributes.timezone }
-								daysLeft={ attributes.daysLeft }
-								hoursLeft={ attributes.hoursLeft }
-								minutesLeft={ attributes.minutesLeft }
-								secondsLeft={ attributes.secondsLeft }
-								isDoubleDigit={ attributes.isDoubleDigitHidden }
-							/>
-							<Typography
-								identifier="minute"
-								tagName="p"
-								className={ minuteLabelClassNames }
-								attrNameTemplate="minute%s"
-								placeholder={ __( 'Minutes', i18n ) }
-								allowedFormats={ [] }
-							/>
+							<div className="stk-block-countdown__container-wrapper">
+								<CountdownNumber
+									className={ minuteDigitClassNames }
+									type={ 'minutes' }
+									datetime={ attributes.date }
+									countdownType={ attributes.countdownType }
+									timezone={ attributes.timezone }
+									daysLeft={ attributes.daysLeft }
+									hoursLeft={ attributes.hoursLeft }
+									minutesLeft={ attributes.minutesLeft }
+									secondsLeft={ attributes.secondsLeft }
+									isDoubleDigit={ attributes.isDoubleDigitHidden }
+								/>
+								<Typography
+									identifier="minute"
+									tagName="p"
+									className={ minuteLabelClassNames }
+									attrNameTemplate="minute%s"
+									placeholder={ __( 'Minutes', i18n ) }
+									allowedFormats={ [] }
+								/>
+							</div>
 						</ContainerDiv>
 					}
 					{ attributes.hasDivider && attributes.minuteShow && attributes.secondShow && <Divider attributes={ attributes } /> }
 					{ attributes.secondShow &&
 						<ContainerDiv className={ contentClassNames }>
-							<CountdownNumber
-								className={ secondDigitClassNames }
-								type={ 'seconds' }
-								datetime={ attributes.date }
-								countdownType={ attributes.countdownType }
-								timezone={ attributes.timezone }
-								daysLeft={ attributes.daysLeft }
-								hoursLeft={ attributes.hoursLeft }
-								minutesLeft={ attributes.minutesLeft }
-								secondsLeft={ attributes.secondsLeft }
-								isDoubleDigit={ attributes.isDoubleDigitHidden }
-							/>
-							<Typography
-								identifier="second"
-								tagName="p"
-								className={ secondLabelClassNames }
-								attrNameTemplate="second%s"
-								placeholder={ __( 'Seconds', i18n ) }
-								allowedFormats={ [] }
-							/>
+							<div className="stk-block-countdown__container-wrapper">
+								<CountdownNumber
+									className={ secondDigitClassNames }
+									type={ 'seconds' }
+									datetime={ attributes.date }
+									countdownType={ attributes.countdownType }
+									timezone={ attributes.timezone }
+									daysLeft={ attributes.daysLeft }
+									hoursLeft={ attributes.hoursLeft }
+									minutesLeft={ attributes.minutesLeft }
+									secondsLeft={ attributes.secondsLeft }
+									isDoubleDigit={ attributes.isDoubleDigitHidden }
+								/>
+								<Typography
+									identifier="second"
+									tagName="p"
+									className={ secondLabelClassNames }
+									attrNameTemplate="second%s"
+									placeholder={ __( 'Seconds', i18n ) }
+									allowedFormats={ [] }
+								/>
+							</div>
+
 						</ContainerDiv>
 					}
 				</div>
