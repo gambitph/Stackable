@@ -19,6 +19,9 @@ class StackableHorizontalScroller {
 				el.scrollTo( {
 					left: initialScrollLeft - dx,
 				} )
+
+				// Prevent selection of contents because of dragging.
+				e.preventDefault()
 			}
 
 			const mouseUpHandler = function() {
@@ -26,7 +29,6 @@ class StackableHorizontalScroller {
 				document.body.removeEventListener( 'mouseup', mouseUpHandler )
 
 				el.style.cursor = ''
-				el.style.removeProperty( 'user-select' )
 
 				// This smooth scrolls to the place where we're supposed to snap.
 				const oldScrollLeft = el.scrollLeft
@@ -48,7 +50,6 @@ class StackableHorizontalScroller {
 			const mouseDownHandler = function( e ) {
 				// Change the cursor and prevent user from selecting the text
 				el.style.cursor = 'grabbing'
-				el.style.userSelect = 'none'
 
 				clearTimeout( dragTimeout )
 				el.classList.add( 'stk--snapping-deactivated' )
