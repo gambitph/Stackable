@@ -100,6 +100,7 @@ if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
 			'team-member',
 			'testimonial',
 			'video-popup',
+			'horizontal-scroller',
 		);
 
 		return stackable_get_metadata_by_folders( $stk_wrapper_block_folders, 'stk-wrapper-block-folders' );
