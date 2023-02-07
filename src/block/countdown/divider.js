@@ -2,7 +2,8 @@
  * Internal dependencies
  */
 import {
-	BlockCss, 	InspectorStyleControls,
+	BlockCss,
+	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedToolbarControl,
 	ColorPaletteControl,

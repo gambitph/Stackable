@@ -6,8 +6,7 @@
 	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
-		"Countdown",
-		"Count"
+		"Timer"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",
