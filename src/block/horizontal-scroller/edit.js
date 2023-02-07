@@ -191,7 +191,7 @@ const Edit = props => {
 								min="0"
 								units={ [ 'px', '%', 'rem' ] }
 								step="1"
-								sliderMax={ Math.ceil( scrollbarHeight / 2 ) }
+								sliderMax={ Math.ceil( ( scrollbarHeight || 10 ) / 2 ) }
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
