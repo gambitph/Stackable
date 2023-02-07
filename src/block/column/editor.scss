@@ -39,3 +39,10 @@
 // .stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
 // 	align-self: auto;
 // }
+
+// Allow columns to shrink below their content size (If you add a horizontal
+// scroller block inside a column, the horizontal scroller will be too wide.)
+// @see https://dfmcphee.com/flex-items-and-min-width-0/
+.wp-block-stackable-column {
+	min-width: 0;
+}

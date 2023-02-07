@@ -16,3 +16,10 @@
 // 	// This is needed for the Container Content Vertical Align to work.
 // 	min-height: 100%;
 // }
+
+// Allow columns to shrink below their content size (If you add a horizontal
+// scroller block inside a column, the horizontal scroller will be too wide.)
+// @see https://dfmcphee.com/flex-items-and-min-width-0/
+.stk-block.stk-block-column--v3 > .stk-column-wrapper {
+	min-width: 0;
+}
