@@ -5,8 +5,8 @@
 		.stk-inner-blocks {
 			z-index: 5;
 		}
-		> *:not(.stk-video-background) { // Don't change the order of any video backgrounds, they stay at the back.
-			z-index: 2;
+		> *:not(.stk-video-background, .stk-inner-blocks) { // Don't change the order of any video backgrounds, they stay at the back.
+			z-index: -5;
 		}
 	}
 
