@@ -38,7 +38,7 @@ export const Save = props => {
 	const blockClassNames = classnames( applyFilters( 'stackable.column.save.blockClassNames', [
 		props.className,
 		'stk-block-column',
-		'stk-block-column--v2',
+		'stk-block-column--v3',
 		columnClass,
 		responsiveClass,
 	], props ) )

@@ -15,9 +15,19 @@ import compareVersions from 'compare-versions'
  */
 import { addFilter } from '@wordpress/hooks'
 
+// Version 3.7 Deprecations, we now have a stk-block-column--v3 class and removed the --v2 class
+addFilter( 'stackable.column.save.blockClassNames', 'stackable/3.7.0', ( output, props ) => {
+	if ( compareVersions( props.version, '3.7.0' ) >= 0 ) {
+		return output
+	}
+
+	return output.filter( s => s !== 'stk-block-column--v3' )
+} )
+
 // Version 3.4.3 Deprecations, we now have a stk-block-column--v2 class.
 addFilter( 'stackable.column.save.blockClassNames', 'stackable/3.4.3', ( output, props ) => {
 	if ( compareVersions( props.version, '3.4.3' ) >= 0 ) {
+		output.push( 'stk-block-column--v2' )
 		return output
 	}
 
@@ -34,6 +44,10 @@ addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.4.3', ( output,
 } )
 
 const deprecated = [
+	{
+		attributes: attributes(),
+		save: withVersion( '3.6.6' )( Save ),
+	},
 	{
 		attributes: attributes(),
 		save: withVersion( '3.4.2' )( Save ),
