@@ -22,17 +22,6 @@
 	}
 }
 
-.editor-styles-wrapper .stk-block.stk-block-column {
-	overflow: hidden;
-	.stk-block-content {
-		overflow: hidden;
-	}
-}
-
-.editor-styles-wrapper .wp-block-stackable-column {
-	overflow: hidden;
-}
-
 // FIXME: Temporarily removed this since the frontend is having issues with the Accordion block when it's nested inside a container.
 // // We need this to make position sticky to work inside columns.
 // .stk-block.stk-block-column > .stk-inner-blocks {
@@ -50,3 +39,10 @@
 // .stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
 // 	align-self: auto;
 // }
+
+// Allow columns to shrink below their content size (If you add a horizontal
+// scroller block inside a column, the horizontal scroller will be too wide.)
+// @see https://dfmcphee.com/flex-items-and-min-width-0/
+.wp-block-stackable-column {
+	min-width: 0;
+}

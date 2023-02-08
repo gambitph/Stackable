@@ -71,7 +71,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-column',
-		'stk-block-column--v2',
+		'stk-block-column--v3',
 		columnClass,
 	] )
 
