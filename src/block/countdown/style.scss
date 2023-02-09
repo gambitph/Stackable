@@ -1,5 +1,10 @@
 .stk-block.stk-block-countdown {
 	text-align: center;
+	&.stk-block-countdown--aligned {
+		.stk-block-countdown__content-container {
+			width: unset;
+		}
+	}
 }
 
 .stk-block-countdown__container {
@@ -11,6 +16,7 @@
 .stk-block-countdown__content-container {
 	width: 100%;
 	justify-content: center;
+	word-wrap: break-word;
 }
 
 .stk-block-countdown__label {
