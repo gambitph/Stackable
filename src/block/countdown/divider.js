@@ -85,7 +85,7 @@ export const Edit = () => {
 					controls={ DIVIDER_TYPE_CONTROLS }
 					attribute="dividerType"
 					fullwidth={ true }
-					default={ ':' }
+					default=":"
 					isSmall={ false }
 				/>
 				{ dividerType === ':' && <AdvancedRangeControl
@@ -129,17 +129,8 @@ export const Divider = props => {
 
 	return (
 		<div className="stk-block-countdown__divider-wrapper">
-			{ attributes.dividerType === ':' &&
-				( <div className="stk-block-countdown__divider-colon">
-					<> : </>
-				</div>
-				)
-			}
-			{ attributes.dividerType === '|' &&
-				( <div className="stk-block-countdown__divider-line">
-				</div>
-				)
-			}
+			{ attributes.dividerType === ':' && <div className="stk-block-countdown__divider-colon">:</div> }
+			{ attributes.dividerType === '|' && <div className="stk-block-countdown__divider-line"></div> }
 		</div>
 
 	)
@@ -148,25 +139,12 @@ export const Divider = props => {
 Divider.Content = props => {
 	const {
 		attributes,
-		className,
 	} = props
 
 	return (
 		<div className="stk-block-countdown__divider-wrapper">
-			<div className={ className }>
-				{ attributes.dividerType === ':' &&
-				( <div className={ className }>
-					<> : </>
-				</div>
-				)
-				}
-				{ attributes.dividerType === '|' &&
-				( <div className={ className }>
-					<> : </>
-				</div>
-				)
-				}
-			</div>
+			{ attributes.dividerType === ':' && <div className="stk-block-countdown__divider-colon">:</div> }
+			{ attributes.dividerType === '|' && <div className="stk-block-countdown__divider-line"></div> }
 		</div>
 	)
 }
@@ -188,7 +166,7 @@ const Styles = props => {
 				attrName="dividerColor"
 				key="dividerColor"
 				responsive="all"
-				dependencies={ [ 'dividerType', 'dividerColor' ] }
+				dependencies={ [ 'dividerType' ] }
 			/> }
 			<BlockCss
 				{ ...propsToPass }
@@ -198,7 +176,6 @@ const Styles = props => {
 				key="dividerSizeLine"
 				hasUnits="%"
 				responsive="all"
-				dependencies={ [ 'dividerType', 'dividerSizeLine' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -208,18 +185,15 @@ const Styles = props => {
 				key="dividerSizeColon"
 				hasUnits="px"
 				responsive="all"
-				dependencies={ [ 'dividerType', 'dividerSizeColon' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
-
 				selector=".stk-block-countdown__divider-colon"
 				styleRule="top"
 				attrName="dividerTopOffset"
 				key="dividerTopOffset"
 				hasUnits="px"
 				responsive="all"
-				dependencies={ [ 'dividerType', 'dividerTopOffset' ] }
 			/>
 		</>
 	)
