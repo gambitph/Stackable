@@ -51,6 +51,24 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector=".%s.stk-block-countdown .stk-block-countdown__container"
+				styleRule="display"
+				responsive="all"
+				attrName="contentAlignment"
+				valueCallback={ () => {
+					return 'flex'
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s.stk-block-countdown .stk-block-countdown__container"
+				styleRule="justifyContent"
+				attrName="contentAlignment"
+				key="contentAlignment"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s.stk-block-countdown .stk-block-countdown__container"
 				styleRule="gap"
 				attrName="boxGap"
 				key="boxGap"

@@ -1,6 +1,7 @@
 import { CountdownStyles } from './style'
 import { CountdownNumber } from './countdown-number'
 import { Divider } from './divider'
+import { getCountdownAlignment } from './edit'
 
 import {
 	BlockDiv,
@@ -53,6 +54,7 @@ const Save = props => {
 		className,
 		'stk-block-countdown',
 		responsiveClass,
+		getCountdownAlignment( attributes ),
 	] )
 
 	const contentClassNames = classnames( [
@@ -61,48 +63,48 @@ const Save = props => {
 
 	const dayDigitClassNames = classnames( [
 		'stk-block-countdown__digit',
-		'stk-block-countdown__digit_day',
+		'stk-block-countdown__digit-day',
 		digitTextClasses,
 	] )
 
 	const hourDigitClassNames = classnames( [
 		'stk-block-countdown__digit',
-		'stk-block-countdown__digit_hour',
+		'stk-block-countdown__digit-hour',
 		digitTextClasses,
 	] )
 
 	const minuteDigitClassNames = classnames( [
 		'stk-block-countdown__digit',
-		'stk-block-countdown__digit_minute',
+		'stk-block-countdown__digit-minute',
 		digitTextClasses,
 	] )
 
 	const secondDigitClassNames = classnames( [
 		'stk-block-countdown__digit',
-		'stk-block-countdown__digit_second',
+		'stk-block-countdown__digit-second',
 		digitTextClasses,
 	] )
 
 	const dayLabelClassNames = classnames( [
-		'stk-block-countdown__label_day',
+		'stk-block-countdown__label-day',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
 
 	const hourLabelClassNames = classnames( [
-		'stk-block-countdown__label_hour',
+		'stk-block-countdown__label-hour',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
 
 	const minuteLabelClassNames = classnames( [
-		'stk-block-countdown__label_minute',
+		'stk-block-countdown__label-minute',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
 
 	const secondLabelClassNames = classnames( [
-		'stk-block-countdown__label_second',
+		'stk-block-countdown__label-second',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )

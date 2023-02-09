@@ -27,8 +27,8 @@ import {
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
-	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
-	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl,
+	InspectorBlockControls, InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
+	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl, AlignButtonsControl,
 } from '~stackable/components'
 import {
 	 withBlockAttributeContext,
@@ -40,7 +40,7 @@ import {
  * WordPress dependencies
  */
 import { __, i18n } from '@wordpress/i18n'
-import { useEffect, Fragment } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { DateTimePicker } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -73,6 +73,12 @@ const ACTION_ON_EXPIRATION_OPTIONS = [
 
 ]
 
+export const getCountdownAlignment = attributes => {
+	if ( attributes.contentAlignment ) {
+		return 'stk-block-countdown--aligned'
+	}
+}
+
 const Edit = props => {
 	const {
 		className,
@@ -93,6 +99,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-countdown',
+		getCountdownAlignment( attributes ),
 	] )
 
 	const contentClassNames = classnames( [
@@ -101,48 +108,48 @@ const Edit = props => {
 
 	const dayDigitClassNames = classnames( [
 		'stk-block-countdown__digit',
-		'stk-block-countdown__digit_day',
+		'stk-block-countdown__digit-day',
 		digitTextClasses,
 	] )
 
 	const hourDigitClassNames = classnames( [
 		'stk-block-countdown__digit',
-		'stk-block-countdown__digit_hour',
+		'stk-block-countdown__digit-hour',
 		digitTextClasses,
 	] )
 
 	const minuteDigitClassNames = classnames( [
 		'stk-block-countdown__digit',
-		'stk-block-countdown__digit_minute',
+		'stk-block-countdown__digit-minute',
 		digitTextClasses,
 	] )
 
 	const secondDigitClassNames = classnames( [
 		'stk-block-countdown__digit',
-		'stk-block-countdown__digit_second',
+		'stk-block-countdown__digit-second',
 		digitTextClasses,
 	] )
 
 	const dayLabelClassNames = classnames( [
-		'stk-block-countdown__label_day',
+		'stk-block-countdown__label-day',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
 
 	const hourLabelClassNames = classnames( [
-		'stk-block-countdown__label_hour',
+		'stk-block-countdown__label-hour',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
 
 	const minuteLabelClassNames = classnames( [
-		'stk-block-countdown__label_minute',
+		'stk-block-countdown__label-minute',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
 
 	const secondLabelClassNames = classnames( [
-		'stk-block-countdown__label_second',
+		'stk-block-countdown__label-second',
 		'stk-block-countdown__label',
 		labelTextClasses,
 	] )
@@ -151,12 +158,6 @@ const Edit = props => {
 		'stk-block-countdown__message',
 		messageTextClasses,
 	] )
-
-	useEffect( () => {
-		if ( attributes.countdownType === 'recurring' ) {
-			setAttributes( { actionOnExpiration: '' } )
-		}
-	}, [ attributes.countdownType ] )
 
 	return (
 		<>
@@ -172,13 +173,23 @@ const Edit = props => {
 							<AdvancedToolbarControl
 								controls={ COUNTDOWN_TYPE_OPTIONS }
 								attribute="countdownType"
-								value={ attributes.countdownType }
 								fullwidth={ true }
-								default={ 'dueDate' }
 								isSmall={ false }
+								allowReset={ false }
+								onChange={ value => {
+									if ( value === 'recurring' ) {
+										setAttributes( {
+											countdownType: 'recurring', actionOnExpiration: '', timezone: '',
+										} )
+									} else {
+										setAttributes( {
+											countdownType: 'dueDate', daysLeft: '', hoursLeft: '', minutesLeft: '', secondsLeft: '', restartInterval: '',
+										} )
+									}
+								} }
 							/>
 							<span>
-								{ attributes.countdownType === 'dueDate' ? 'End Date' : 'Start Date' }
+								{ attributes.countdownType === 'dueDate' ? __( 'End Date', i18n ) : __( 'Start Date', i18n ) }
 							</span>
 							<DateTimePicker
 								currentDate={ attributes.date }
@@ -193,16 +204,14 @@ const Edit = props => {
 								<>
 									<AdvancedSelectControl
 										label={ __( 'Timezone', i18n ) }
-										value={ attributes.timezone }
 										options={ TIMEZONE_OPTIONS }
-										defaultValue={ '' }
 										attribute="timezone"
+										allowReset={ false }
 									/>
 									<AdvancedSelectControl
 										label={ __( 'Action on Expiration', i18n ) }
-										value={ attributes.actionOnExpiration }
 										options={ ACTION_ON_EXPIRATION_OPTIONS }
-										defaultValue={ '' }
+										defaultValue=""
 										attribute="actionOnExpiration"
 									/>
 									{ attributes.actionOnExpiration === 'showMessage' }
@@ -214,35 +223,30 @@ const Edit = props => {
 										label={ __( 'Days', i18n ) }
 										min={ 0 }
 										max={ 364 }
-										value={ attributes.daysLeft }
 										attribute="daysLeft"
 									/>
 									<AdvancedRangeControl
 										label={ __( 'Hours', i18n ) }
 										min={ 0 }
 										max={ 23 }
-										value={ attributes.hoursLeft }
 										attribute="hoursLeft"
 									/>
 									<AdvancedRangeControl
 										label={ __( 'Minutes', i18n ) }
 										min={ 0 }
 										max={ 59 }
-										value={ attributes.minutesLeft }
 										attribute="minutesLeft"
 									/>
 									<AdvancedRangeControl
 										label={ __( 'Seconds', i18n ) }
 										min={ 0 }
 										max={ 59 }
-										value={ attributes.secondsLeft }
 										attribute="secondsLeft"
 									/>
 									<AdvancedRangeControl
 										label={ __( 'Restart Countdown After no. of Hours', i18n ) }
 										min={ 0 }
 										maxSlider={ 10 }
-										value={ attributes.restartInterval }
 										attribute="restartInterval"
 									/>
 								</Fragment>
@@ -282,6 +286,18 @@ const Edit = props => {
 						hasTextContent={ false }
 						initialOpen={ false }
 					/>
+					<InspectorBlockControls>
+						<PanelAdvancedSettings
+							title={ __( 'Alignment', i18n ) }
+							id="alignment"
+						>
+							<AlignButtonsControl
+								label={ __( 'Content Alignment', i18n ) }
+								responsive="all"
+								attribute="contentAlignment"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorBlockControls>
 					<Divider.InspectorControls />
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />

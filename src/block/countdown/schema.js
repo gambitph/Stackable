@@ -137,6 +137,10 @@ const countdownAttributes = {
 		type: 'boolean',
 		default: true,
 	},
+	contentAlignment: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const attributes = ( version = VERSION ) => {
