@@ -137,8 +137,8 @@ class StackableCountdown {
 				this.el.style.display = 'none'
 			}
 			if ( this.action === 'showMessage' ) {
-				this.timer.style.display = 'none'
-				this.message.style.display = 'block'
+				this.timer.setAttribute( 'style', 'display:none !important' )
+				this.message.setAttribute( 'style', 'display:block !important' )
 			}
 		}
 	}
