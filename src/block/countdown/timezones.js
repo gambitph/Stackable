@@ -1,5 +1,6 @@
 // Taken from https://gist.github.com/ykessler/3349960
 export const timezones = [
+	{ value: '', label: 'Local Timezone' },
 	{ value: 'America/Puerto_Rico', label: 'Puerto Rico (Atlantic)' },
 	{ value: 'America/New_York', label: 'New York (Eastern)' },
 	{ value: 'America/Chicago', label: 'Chicago (Central)' },

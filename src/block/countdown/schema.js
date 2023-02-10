@@ -60,7 +60,7 @@ const countdownAttributes = {
 		selector: '[data-stk-countdown-timezone]',
 		source: 'attribute',
 		attribute: 'data-stk-countdown-timezone',
-		default: 'America/Puerto_Rico',
+		default: '',
 	},
 	isDoubleDigitAttribute: {
 		type: 'string',
