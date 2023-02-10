@@ -28,7 +28,7 @@ import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorBlockControls, InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
-	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl, AlignButtonsControl,
+	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl, AlignButtonsControl, ControlSeparator,
 } from '~stackable/components'
 import {
 	 withBlockAttributeContext,
@@ -219,6 +219,7 @@ const Edit = props => {
 							) }
 							{ attributes.countdownType === 'recurring' && (
 								<Fragment>
+									<ControlSeparator />
 									<h3 className="components-base-control__label">{ __( 'Countdown Duration', i18n ) }</h3>
 									<AdvancedRangeControl
 										label={ __( 'Days', i18n ) }
@@ -244,6 +245,7 @@ const Edit = props => {
 										max={ 59 }
 										attribute="secondsLeft"
 									/>
+									<ControlSeparator />
 									<AdvancedRangeControl
 										label={ __( 'Restart Countdown After no. of Hours', i18n ) }
 										min={ 0 }
