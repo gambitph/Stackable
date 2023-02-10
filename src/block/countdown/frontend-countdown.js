@@ -16,7 +16,7 @@ class StackableCountdown {
 		this.date = Date.parse( el.getAttribute( 'data-stk-countdown-date' ) )
 		this.countdownType = el.getAttribute( 'data-stk-countdown-type' )
 		this.duration = parseInt( el.getAttribute( 'data-stk-countdown-duration' ), 10 )
-		this.restartInterval = parseInt( el.getAttribute( 'data-stk-countdown-restart-interval' ), 10 ) || 0
+		this.restartInterval = parseFloat( el.getAttribute( 'data-stk-countdown-restart-interval' ) ) || 0
 		this.action = el.getAttribute( 'data-stk-countdown-action' )
 		this.timezone = el.getAttribute( 'data-stk-countdown-timezone' ) ? { timezone: el.getAttribute( 'data-stk-countdown-timezone' ) } : {}
 		this.isDoubleDigit = el.getAttribute( 'data-stk-countdown-is-double-digit' ) === 'true' ? true : false
