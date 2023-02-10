@@ -17,6 +17,7 @@
 	width: 100%;
 	justify-content: center;
 	word-wrap: break-word;
+	box-sizing: content-box; // Prevent blocksy theme from overriding this
 }
 
 .stk-block-countdown__label {
