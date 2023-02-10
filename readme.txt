@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.9
 Tested up to: 6.1.1
 Requires PHP: 5.7
-Stable tag: 3.6.5
+Stable tag: 3.7.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -35,7 +35,7 @@ Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to j
 
 ## Powerful Custom Blocks
 
-Get 39 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 41 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 You can choose which of these blocks you need, depending on your workflow.
 
@@ -50,6 +50,8 @@ Essential Blocks
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 Special Blocks
+- Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -150,7 +152,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
-- [v3.7 Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.7 Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-the-countdown-block-and-the-horizontal-scroller/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.6 Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -252,7 +254,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.7.0 =
-[Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+[Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-the-countdown-block-and-the-horizontal-scroller/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Horizontal Scroller block #2494
 * New: Countdown block #2501
