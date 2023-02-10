@@ -11,6 +11,7 @@ import SVGCardIcon from './images/card-icon.svg'
 import SVGColumnsIcon from './images/columns-icon.svg'
 import SVGColumnIcon from './images/column-icon.svg'
 import SVGContainerIcon from './images/container-icon.svg'
+import SVGCountdownIcon from './images/countdown-icon.svg'
 import SVGCountUpIcon from './images/count-up-icon.svg'
 import SVGCTAIcon from './images/cta-icon.svg'
 import SVGDividerIcon from './images/divider-icon.svg'
@@ -134,6 +135,10 @@ export function ColumnIcon() {
 
 export function ContainerIcon() {
 	return colorizeIcon( <SVGContainerIcon width="20" height="20" /> )
+}
+
+export function CountdownIcon() {
+	return colorizeIcon( <SVGCountdownIcon width="20" height="20" /> )
 }
 
 export function CountUpIcon() {
