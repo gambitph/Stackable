@@ -183,7 +183,7 @@ const Edit = props => {
 										} )
 									} else {
 										setAttributes( {
-											countdownType: 'dueDate', daysLeft: '', hoursLeft: '', minutesLeft: '', secondsLeft: '', restartInterval: '',
+											countdownType: 'dueDate', daysLeft: '', hoursLeft: '', minutesLeft: '', secondsLeft: '', restartInterval: '', timezone: '',
 										} )
 									}
 								} }
@@ -200,14 +200,14 @@ const Edit = props => {
 								} }
 								__nextRemoveResetButton={ true }
 							/>
+							<AdvancedSelectControl
+								label={ __( 'Timezone', i18n ) }
+								options={ TIMEZONE_OPTIONS }
+								attribute="timezone"
+								allowReset={ false }
+							/>
 							{	attributes.countdownType === 'dueDate' && (
 								<>
-									<AdvancedSelectControl
-										label={ __( 'Timezone', i18n ) }
-										options={ TIMEZONE_OPTIONS }
-										attribute="timezone"
-										allowReset={ false }
-									/>
 									<AdvancedSelectControl
 										label={ __( 'Action on Expiration', i18n ) }
 										options={ ACTION_ON_EXPIRATION_OPTIONS }

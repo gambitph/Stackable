@@ -18,11 +18,12 @@ class StackableCountdown {
 		this.duration = parseInt( el.getAttribute( 'data-stk-countdown-duration' ), 10 )
 		this.restartInterval = parseFloat( el.getAttribute( 'data-stk-countdown-restart-interval' ) ) || 0
 		this.action = el.getAttribute( 'data-stk-countdown-action' )
-		this.timezone = el.getAttribute( 'data-stk-countdown-timezone' ) ? { timezone: el.getAttribute( 'data-stk-countdown-timezone' ) } : {}
+		this.timezone = el.getAttribute( 'data-stk-countdown-timezone' ) ? { timeZone: el.getAttribute( 'data-stk-countdown-timezone' ) } : {}
 		this.isDoubleDigit = el.getAttribute( 'data-stk-countdown-is-double-digit' ) === 'true' ? true : false
 
 		// This will check if the timer reaches 0 since calculating remaining time left prevents the timer from going to 0
 		this.tempDate = undefined
+		this.counter = false
 
 		this.day = el.querySelector( '.stk-block-countdown__digit-day' )
 		this.hour = el.querySelector( '.stk-block-countdown__digit-hour' )
@@ -83,26 +84,28 @@ class StackableCountdown {
 
 		checker: if ( this.countdownType === 'recurring' ) {
 			// countdownDate becomes startDate for recurring
-			const hasStarted = Date.now() > this.date
-			const left = this.tempDate - Date.now()
+			const hasStarted = Date.parse( new Date().toLocaleString( 'en-US', this.timezone ) ) > this.date
+			const left = this.tempDate - Date.now() - Math.floor( this.restartInterval * SECONDS_IN_HOUR * 1000 )
 
 			if ( left <= 0 ) {
+				this.counter = true
 				timer = 0
 				break checker
 			}
 
 			if ( hasStarted ) {
 				// Calculate where to start the timer since this is an open timer
-				const interval = this.duration + ( this.restartInterval * SECONDS_IN_HOUR )
+				const interval = this.duration + Math.floor( this.restartInterval * SECONDS_IN_HOUR )
 				const index = Math.floor( ( ( ( Date.now() / 1000 ) - ( this.date / 1000 ) ) ) / ( interval ) ) + 1
 				const b = ( ( index * interval ) + Math.floor( this.date / 1000 ) ) - Math.floor( Date.now() / 1000 )
 				this.tempDate = this.date + ( ( index * interval * 1000 ) )
 				if ( b > ( this.restartInterval * SECONDS_IN_HOUR ) ) {
-					timer = b - ( this.restartInterval * SECONDS_IN_HOUR )
+					timer = b - Math.floor( this.restartInterval * SECONDS_IN_HOUR )
 				} else {
 					isRestarting = true
 					restartLeft = b
 					timer = 0
+					this.counter = true
 				}
 			} else {
 				timer = hasStarted ? ( this.duration + Math.floor( this.date / 1000 ) ) - Math.floor( Date.now() / 1000 ) : this.duration
@@ -133,12 +136,15 @@ class StackableCountdown {
 			this.second.textContent = this.addZero( secondsLeft )
 		}
 
-		if ( timer <= 0 ) {
+		if ( timer <= 0 || this.counter ) {
 			this.clearTimer()
 			if ( this.countdownType === 'recurring' ) {
 				this.tempDate = undefined
-				const a = isRestarting ? restartLeft : this.restartInterval
+				this.counter = false
+				const a = isRestarting ? restartLeft : this.restartInterval * SECONDS_IN_HOUR
+				this.saveTimeRemaining( this.duration )
 				const tempCallback = () => {
+					this.preCountDown()
 					this.countdownInterval = setInterval( this.countDown.bind( this ), 1000 )
 				}
 				setTimeout( tempCallback, a * 1000 )
