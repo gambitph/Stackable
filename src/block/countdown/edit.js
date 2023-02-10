@@ -188,9 +188,9 @@ const Edit = props => {
 									}
 								} }
 							/>
-							<span>
+							<h3 className="components-base-control__label">
 								{ attributes.countdownType === 'dueDate' ? __( 'End Date', i18n ) : __( 'Start Date', i18n ) }
-							</span>
+							</h3>
 							<DateTimePicker
 								currentDate={ attributes.date }
 								is12Hour={ true }
@@ -219,6 +219,7 @@ const Edit = props => {
 							) }
 							{ attributes.countdownType === 'recurring' && (
 								<Fragment>
+									<h3 className="components-base-control__label">{ __( 'Countdown Duration', i18n ) }</h3>
 									<AdvancedRangeControl
 										label={ __( 'Days', i18n ) }
 										min={ 0 }
