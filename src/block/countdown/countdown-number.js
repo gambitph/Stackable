@@ -1,5 +1,4 @@
 import { useEffect, useState } from '@wordpress/element'
-import { date } from '@wordpress/date'
 
 const SECONDS = 1
 const SECONDS_IN_MINUTE = SECONDS * 60
@@ -43,7 +42,8 @@ export const CountdownNumber = props => {
 		const duration = getDuration( props.daysLeft, props.hoursLeft, props.minutesLeft, props.secondsLeft )
 
 		const interval = setInterval( () => {
-			let difference = props.countdownType === 'dueDate' ? Math.floor( ( dueDate / 1000 ) - ( Date.parse( date( 'Y-m-d\\TH:i:s', Date.now(), props.timezone ) ) / 1000 ) ) : duration - Math.floor( Date.now() / 1000 )
+			const timezone = props.timezone !== '' ? { timeZone: props.timezone } : ''
+			let difference = props.countdownType === 'dueDate' ? Math.floor( ( dueDate / 1000 ) - Math.floor( Date.parse( new Date().toLocaleString( 'en-US', timezone ) ) / 1000 ) ) : duration - Math.floor( Date.now() / 1000 )
 
 			if ( difference <= 0 ) {
 				difference = 0
