@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import { i18n } from 'stackable'
 import {
 	BlockCss,
 	InspectorStyleControls,
@@ -21,7 +22,7 @@ import {
 /**
  * WordPress dependencies
  */
-import { __, i18n } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 
 const addAttributes = attrObject => {
 	attrObject.add( {
