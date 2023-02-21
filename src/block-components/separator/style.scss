@@ -6,6 +6,12 @@
 			z-index: 5;
 		}
 		> *:not(.stk-video-background, .stk-inner-blocks) { // Don't change the order of any video backgrounds, they stay at the back.
+			z-index: 2;
+		}
+	}
+
+	&:is(.stk-block-call-to-action, .stk-block-columns, .stk-block-feature-grid, .stk-block-feature, .stk-block-hero) {
+		> *:is(.stk-separator) { // Don't change the order of any video backgrounds, they stay at the back.
 			z-index: -1;
 		}
 	}
