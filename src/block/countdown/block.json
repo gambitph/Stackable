@@ -2,7 +2,7 @@
 	"apiVersion": 2,
 	"name": "stackable/countdown",
 	"title": "Countdown",
-	"description": "Display a countdown timer on your website. This is a great tool for promoting limited-time offers, creating urgency for events, and more.",
+	"description": "Display a countdown timer on your website.",
 	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
 	"keywords": [
