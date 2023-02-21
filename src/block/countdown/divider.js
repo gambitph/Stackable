@@ -1,7 +1,10 @@
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { i18n } from 'stackable'
+import {
+	 useBlockAttributesContext,
+	 useBlockSetAttributesContext,
+} from '~stackable/hooks'
 import {
 	BlockCss,
 	InspectorStyleControls,
@@ -10,14 +13,7 @@ import {
 	ColorPaletteControl,
 	AdvancedRangeControl,
 } from '~stackable/components'
-
-/**
- * External dependencies
- */
-import {
-	 useBlockAttributesContext,
-	 useBlockSetAttributesContext,
-} from '~stackable/hooks'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
