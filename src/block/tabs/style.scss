@@ -1,0 +1,28 @@
+.stk-block-tabs__tab:not(.stk-block-tabs__tab-appender) {
+	position: relative;
+	width: 100px;
+	border-style: solid;
+	border-width: 1px 1px 0px 1px;
+	padding: 1px;
+	display: grid;
+	justify-items: center;
+	align-items: center;
+}
+
+.stk-block-tabs__tab-appender {
+	outline: 1px solid; /* use instead of border */
+	margin-left: -1px;
+	padding: 4px;
+	width: 100px;
+}
+
+.stk-block-tabs__group {
+	display: flex;
+}
+
+.stk-block-tabs__content {
+	padding: 10px;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	position: relative;
+}
