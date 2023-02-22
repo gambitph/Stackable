@@ -347,6 +347,8 @@ const BlockCss = props => {
 
 	if ( ! props.editorMode ) {
 		blockUniqueClassName = applyFilters( 'stackable.block-css.uniqueClass.save', blockUniqueClassName, attributes )
+	} else {
+		blockUniqueClassName = applyFilters( 'stackable.block-css.uniqueClass.edit', blockUniqueClassName )
 	}
 
 	// Selectors can be arrays, flatten them.
