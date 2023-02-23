@@ -345,6 +345,12 @@ const BlockCss = props => {
 		collapsedSelector = collapsedSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
 	}
 
+	if ( ! props.editorMode ) {
+		blockUniqueClassName = applyFilters( 'stackable.block-css.uniqueClass.save', blockUniqueClassName, attributes )
+	} else {
+		blockUniqueClassName = applyFilters( 'stackable.block-css.uniqueClass.edit', blockUniqueClassName )
+	}
+
 	// Selectors can be arrays, flatten them.
 	if ( Array.isArray( selector ) ) {
 		selector = selector.join( ', ' )
@@ -410,6 +416,7 @@ const BlockCss = props => {
 	// the save function, the edit does the filter in the BlockCssEdit
 	// component.
 	if ( ! props.editorMode ) {
+		// Note that the original css value is always empty, see addCssToCssSaveObject.
 		css = applyFilters( 'stackable.block-styles.save', css, blockUniqueClassName, attributes )
 	}
 
