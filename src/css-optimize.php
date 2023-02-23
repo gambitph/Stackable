@@ -87,6 +87,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				// If the optimized CSS was loaded, then strip out the styles which were in the CSS.
 				add_filter( 'render_block', array( $this, 'strip_optimized_block_styles' ), 10, 2 );
 			}
+
+			// Hide the CSS optimization custom fields because this will clutter the Block Editor.
+			add_filter( 'is_protected_meta', array( $this, 'protect_optimized_css_meta' ), 10, 2 );
 		}
 
 		/**
@@ -446,6 +449,20 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			}
 
 			return $css;
+		}
+
+		/**
+		 * Hide the CSS optimization custom fields because this will clutter the Block Editor.
+		 *
+		 * @param boolean $protected
+		 * @param string $meta_key
+		 * @return boolean
+		 */
+		public function protect_optimized_css_meta( $protected, $meta_key ) {
+			if ( $meta_key === 'stackable_optimized_css' || $meta_key === 'stackable_optimized_css_raw' ) {
+				return true;
+			}
+			return $protected;
 		}
 	}
 
