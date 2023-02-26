@@ -35,6 +35,19 @@ addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.1.0', ( o
 
 const deprecated = [
 	{
+		attributes: attributes(),
+		save: withVersion( '3.8.0' )( Save ),
+		isEligible: attributes => !! attributes.columnFit,
+		migrate: attributes => {
+			return {
+				...attributes,
+				columnFit: '',
+				columnFitAlign: '',
+				columnJustify: attributes.columnFitAlign,
+			}
+		},
+	},
+	{
 		attributes: attributes( '3.1.0' ),
 		save: withVersion( '3.1.0' )( Save ),
 	},

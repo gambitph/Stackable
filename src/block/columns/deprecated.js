@@ -34,6 +34,19 @@ addFilter( 'stackable.columns.save.contentClassNames', 'stackable/3.6.2', ( clas
 const deprecated = [
 	{
 		attributes: attributes(),
+		save: withVersion( '3.8.0' )( Save ),
+		isEligible: attributes => !! attributes.columnFit,
+		migrate: attributes => {
+			return {
+				...attributes,
+				columnFit: '',
+				columnFitAlign: '',
+				columnJustify: attributes.columnFitAlign,
+			}
+		},
+	},
+	{
+		attributes: attributes(),
 		save: withVersion( '3.6.1' )( Save ),
 	},
 ]
