@@ -9,7 +9,7 @@ import ControlIconToggle from '../control-icon-toggle'
 import ResponsiveToggle from '../responsive-toggle'
 import HoverStateToggle from './hover-state-toggle'
 import {
-	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext,
+	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext, useDeviceType,
 } from '~stackable/hooks'
 
 /**
@@ -31,10 +31,14 @@ export { useControlHandlers } from './hooks'
 const ALL_SCREENS = [ 'desktop', 'tablet', 'mobile' ]
 
 export const BaseControl = props => {
+	const deviceType = useDeviceType()
+
 	const className = classnames( [
 		'stk-control',
 		props.className,
-	] )
+	], {
+		'stk-control--disabled': ( props.disableTablet && deviceType === 'Tablet' ) || ( props.disableMobile && deviceType === 'Mobile' ),
+	} )
 
 	const hasRepsonsive = !! props.responsive?.length
 	const hasHover = !! props.hover?.length
@@ -102,6 +106,9 @@ BaseControl.defaultProps = {
 	onChangeUnit: null,
 
 	after: null,
+
+	disableTablet: false, // If true, then the control will be disabled in tablet preview.
+	disableMobile: false, // If true, then the control will be disabled in mobile preview.
 }
 
 const AdvancedControl = props => {
@@ -140,6 +147,9 @@ AdvancedControl.defaultProps = {
 	unit: null,
 
 	after: null,
+
+	disableTablet: false, // If true, then the control will be disabled in tablet preview.
+	disableMobile: false, // If true, then the control will be disabled in mobile preview.
 }
 
 export default AdvancedControl

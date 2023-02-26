@@ -13,6 +13,11 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
+			columnJustify: {
+				type: 'string',
+				default: '',
+				stkResponsive: true,
+			},
 			columnAlign: {
 				stkResponsive: true,
 				type: 'string',

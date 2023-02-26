@@ -9,8 +9,6 @@ import { ColumnsControl } from './column-settings-button'
 import { i18n } from 'stackable'
 import {
 	AdvancedRangeControl,
-	AdvancedToggleControl,
-	AdvancedToolbarControl,
 	ColumnsWidthControl,
 	ColumnsWidthMultiControl,
 	ControlSeparator,
@@ -26,7 +24,7 @@ import { range } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { sprintf, __ } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { select, dispatch } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useState } from '@wordpress/element'
@@ -38,7 +36,6 @@ export const Controls = props => {
 	const { numInnerBlocks, innerBlocks } = useBlockContext()
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
-			columnFit: attributes.columnFit,
 			columnArrangementTablet: attributes.columnArrangementTablet,
 			columnArrangementMobile: attributes.columnArrangementMobile,
 		}
@@ -128,40 +125,6 @@ export const Controls = props => {
 				/>
 			) }
 			<ControlSeparator />
-			{ props.hasColumnFit && (
-				<>
-					<AdvancedToggleControl
-						label={ __( 'Fit all columns to content', i18n ) }
-						checked={ attributes.columnFit }
-						onChange={ value => {
-							const attributesToSave = { columnFit: value ? true : '' }
-
-							// When columnFit is changed, remove all column widths.
-							if ( value ) {
-								const { getBlock } = select( 'core/block-editor' )
-								getBlock( clientId ).innerBlocks.forEach( block => {
-									if ( block.name === 'stackable/column' ) {
-									// eslint-disable-next-line stackable/no-update-block-attributes
-										attributesToSave[ getAttributeName( 'columnWidth', 'desktop' ) ] = ''
-										attributesToSave[ getAttributeName( 'columnWidth', 'tablet' ) ] = ''
-										attributesToSave[ getAttributeName( 'columnWidth', 'mobile' ) ] = ''
-									}
-								} )
-							}
-
-							setAttributes( attributesToSave )
-						} }
-					/>
-					{ attributes.columnFit &&
-						<AdvancedToolbarControl
-							label={ sprintf( __( '%s Justify', i18n ), __( 'Columns', i18n ) ) }
-							attribute="columnFitAlign"
-							responsive="all"
-							controls="flex-horizontal"
-						/>
-					}
-				</>
-			) }
 			{ props.hasGap && (
 				<>
 					<AdvancedRangeControl
@@ -206,7 +169,6 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	hasColumnsControl: true,
-	hasColumnFit: true,
 	hasGap: true,
 }
 

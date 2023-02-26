@@ -1,9 +1,12 @@
-.stk--fit-content > .stk-block-column {
+@import "./deprecated-style";
+
+.stk--flex > .stk-block-column {
 	width: fit-content;
 	flex: 0 1 auto !important;
 	min-width: 24px;
 	max-width: none;
 }
+
 .stk-block-columns > .stk-block-content {
 	--stk-column-gap: 0px; // For nested columns, this takes precedence.
 	column-gap: var(--stk-column-gap, 0px);

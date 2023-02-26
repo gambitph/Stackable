@@ -17,7 +17,12 @@ import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 
 export const Edit = props => {
-	const contentAlign = useBlockAttributesContext( attributes => attributes.contentAlign )
+	const { contentAlign, columnJustify } = useBlockAttributesContext( attributes => {
+		return {
+			contentAlign: attributes.contentAlign,
+			columnJustify: attributes.columnJustify,
+		}
+	} )
 	const setAttributes = useBlockSetAttributesContext()
 
 	const {
@@ -37,6 +42,15 @@ export const Edit = props => {
 					label={ labelContentAlign }
 					attribute="contentAlign"
 					responsive="all"
+				/>
+				<AdvancedToolbarControl
+					label={ sprintf( __( '%s Justify', i18n ), __( 'Column', i18n ) ) }
+					attribute="columnJustify"
+					responsive="all"
+					controls="flex-horizontal"
+					className="ugb--help-tip-advanced-block-horizontal-align"
+					disableTablet={ ! columnJustify }
+					disableMobile={ ! columnJustify }
 				/>
 				{ props.hasColumnAlignment &&
 					<AdvancedToolbarControl

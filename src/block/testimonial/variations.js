@@ -68,7 +68,7 @@ const variations = applyFilters(
 			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
-				[ 'stackable/columns', { columnFit: true }, [
+				[ 'stackable/columns', { columnJustify: 'flex-start' }, [
 					[ 'stackable/column', {}, [
 						[ 'stackable/image', {
 							imageHeight: 75, imageWidth: 75, imageWidthUnit: 'px', imageShape: 'circle',

@@ -1,15 +1,10 @@
+import { deprecatedAddAttributes } from './deprecated'
+
 export const addAttributes = attrObject => {
+	deprecatedAddAttributes( attrObject )
+
 	attrObject.add( {
 		attributes: {
-			columnFit: {
-				type: 'boolean',
-				default: '',
-			},
-			columnFitAlign: {
-				type: 'string',
-				default: '',
-				stkResponsive: true,
-			},
 			columnSpacing: {
 				stkResponsive: true,
 				stkUnits: 'px',

@@ -81,22 +81,18 @@ const Styles = props => {
 				renderIn="save"
 				selector=".%s-column"
 				styleRule="justifyContent"
-				attrName="columnFitAlign"
-				key="columnFitAlign-save"
+				attrName="columnJustify"
+				key="columnJustify-save"
 				responsive="all"
-				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
-				dependencies={ [ 'columnFit' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="edit"
 				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
 				styleRule="justifyContent"
-				attrName="columnFitAlign"
-				key="columnFitAlign"
+				attrName="columnJustify"
+				key="columnJustify"
 				responsive="all"
-				enabledCallback={ getAttribute => !! getAttribute( 'columnFit' ) }
-				dependencies={ [ 'columnFit' ] }
 			/>
 
 			{ range( 1, numColumns + 1 ).map( i => {

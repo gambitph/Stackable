@@ -86,3 +86,9 @@ $right-space: 28px;
 		margin-top: 16px !important;
 	}
 }
+
+// Disabled controls in tablet/mobile
+.stk-control.stk-control--disabled .stk-control-content {
+	opacity: 0.3 !important;
+	pointer-events: none !important;
+}

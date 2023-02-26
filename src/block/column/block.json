@@ -4,7 +4,7 @@
 	"title": "Column",
 	"description": "A single column within an advanced columns block. Get advanced options on how you want your column to look.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId", "stackable/columnFit" ],
+	"usesContext": [ "postId", "postType", "queryId", "stackable/columnJustify" ],
 	"keywords": [
 		"Section rows"
 	],

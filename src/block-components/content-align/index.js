@@ -1,3 +1,4 @@
+import './deprecated'
 import { addAttributes } from './attributes'
 import { Edit } from './edit'
 
