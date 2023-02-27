@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.9
-Tested up to: 6.1
+Tested up to: 6.1.1
 Requires PHP: 5.7
-Stable tag: 3.6.1
+Stable tag: 3.7.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -35,7 +35,7 @@ Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to j
 
 ## Powerful Custom Blocks
 
-Get 39 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 41 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 You can choose which of these blocks you need, depending on your workflow.
 
@@ -50,6 +50,8 @@ Essential Blocks
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 Special Blocks
+- Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -150,6 +152,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 ### News Article Updates
 
+- [v3.7 Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.6 Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -194,7 +197,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 = Minimum Requirements =
 
-You'll need WordPress version 5.8.3 or higher for this to work.
+You'll need WordPress version 5.9 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -249,6 +252,51 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.7.0 =
+[Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Horizontal Scroller block #2494
+* New: Countdown block #2501
+* Fixed: Dynamic Content database performance, no more duplicate db calls #2569
+* Fixed: Some tablet and mobile styling options were being overwritten by desktop values #2571
+* Fixed: Right clicking on an Image block now triggers on the image itself
+
+= 3.6.5 =
+* Fixed: Possible error if the theme color palette is unavailable
+
+= 3.6.4 =
+* New: Inversed the behavior of the Heading's margins (it now doesn't use the theme's margins by default) #2190
+* Fixed: Editor performance improvements #2446
+* Fixed: Better PHP 8.1 compatibility #2560
+* Fixed: Max content width doesn't show correctly in the editor #2531
+* Fixed: Posts block not showing hover colors correctly in the editor #2351 #2473
+
+= 3.6.3 =
+* New: The Table of Contents block can now have a title #2346
+* Fixed: In Conditional Display, added support for named and 0 timezones #2530
+* Fixed: FontAwesome script loading is now delayed in the editor
+* Fixed: Possible error in the Accordion block's icon #2546
+* Fixed: Tablet and mobile units are not being followed in the editor #2547
+* Fixed: Added missing translation strings #2399 #2402 #2472 #2498 (Thanks DAnn2012)
+* Fixed: Table of Contents block now support the Stackable v2 Heading block #2376
+* Fixed: Content vertical align option in the Column block doesn't appear correctly in the editor #2408
+* Fixed: Using a custom SVG in the Icon block can result in it losing its colors  #2137
+* Fixed: Image Box block selection goes past its container in the editor #2369
+* Fixed: Block example show a "no blocks in the group" placeholder #2405
+* Fixed: Image alt now no longer gets overridden when picking images #2524
+
+= 3.6.2 =
+* New: (Freemius) Granular opt-out controls
+* New: (Freemius) Support for anonymous license activation
+* New: (Freemius) New opt-in screen
+* New: (Freemius) User IP is no longer sent during opt-in
+* New: (Freemius) No data is now sent when skipping the opt-in screen
+* New: (Freemius) Admin query strings no longer include a Freemius flag
+* New: (Freemius) Better PHP 8 compatibility
+* Fixed: Some PHP 8 warning messages with Twenty Twenty Three theme and Dynamic Content #2508 #2503
+* Fixed: Design Library button text label now shows properly #2486
+* Fixed: Possible Block error with v2 Button blocks and Blocksy #2484
 
 = 3.6.1 =
 * New: WordPress 6.1 compatibility

@@ -95,15 +95,7 @@ const readmoreTypographyOptions = {
 }
 
 const _imageOptions = {
-	selector: `${ itemSelector } .stk-img-wrapper`,
-	hoverSelectorCallback: getAttribute => getAttribute( 'imageHoverStateInContainer' )
-		? `${ itemSelector }:hover .stk-img-wrapper img`
-		: `${ itemSelector } .stk-img-wrapper:hover img`,
-	dependencies: [ 'imageHoverStateInContainer' ],
-}
-
-const advancedOptions = {
-	positionSelector: itemSelector,
+	dependencies: [ 'imageHoverStateInContainer', 'imageOverlayColorType' ],
 }
 
 const Styles = props => {
@@ -339,7 +331,7 @@ export const PostsStyles = memo( props => {
 			<BlockDiv.Style { ...props } />
 			<Column.Style { ...props } />
 			<Transform.Style { ...props } />
-			<Advanced.Style { ...props } { ...advancedOptions } />
+			<Advanced.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<Image.Style
@@ -384,7 +376,7 @@ PostsStyles.Content = props => {
 			<Column.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
-			<Advanced.Style.Content { ...props } { ...advancedOptions } />
+			<Advanced.Style.Content { ...props } />
 			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
 			<Image.Style.Content { ...props } { ...imageOptions } />
 			<Typography.Style.Content { ...props } { ...titleTypographyOptions } />

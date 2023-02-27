@@ -61,8 +61,8 @@ export const Separator = ( { children } ) => {
 					<div className="stk-separator stk-separator__bottom">
 						<div className="stk-separator__wrapper">
 							<Separator2
-								deseparatorAign={ separatorAttributes.bottomSeparatorDesign }
-								inseparatorAerted={ separatorAttributes.bottomSeparatorInverted }
+								design={ separatorAttributes.bottomSeparatorDesign }
+								inverted={ separatorAttributes.bottomSeparatorInverted }
 							/>
 							{ applyFilters( 'stackable.block-component.separator.output.bottom.after', null, separatorAttributes ) }
 						</div>

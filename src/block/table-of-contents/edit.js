@@ -284,12 +284,23 @@ const Edit = props => {
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
+	const titleTextClasses = getTypographyClasses( attributes, 'title%s' )
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-table-of-contents',
 		blockAlignmentClass,
+	] )
+
+	const tableOfContentsClassNames = classnames( [
+		'stk-table-of-contents__table',
 		textClasses,
 	] )
+
+	const titleClassNames = classnames(
+		'stk-table-of-contents__title',
+		titleTextClasses
+	)
 
 	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
 		n => attributes[ `includeH${ n }` ]
@@ -304,6 +315,7 @@ const Edit = props => {
 		const BLOCK_ANCHOR_CONTENT = applyFilters( 'stackable.table-of-contents.block-anchor-content', {
 			'core/heading': 'content',
 			'stackable/heading': 'text',
+			'ugb/heading': 'title',
 		} )
 
 		const supportedBlocks = Object.keys( BLOCK_ANCHOR_CONTENT )
@@ -431,10 +443,20 @@ const Edit = props => {
 
 					<Typography.InspectorControls
 						{ ...props }
+						label={ __( 'Table of Contents', i18n ) }
 						isMultiline={ true }
 						initialOpen={ false }
 						hasTextTag={ false }
 						hasTextContent={ false }
+					/>
+
+					<Typography.InspectorControls
+						{ ...props }
+						label={ __( 'Title', i18n ) }
+						attrNameTemplate="title%s"
+						initialOpen={ false }
+						hasToggle={ true }
+						hasTextTag={ false }
 					/>
 
 					<Advanced.InspectorControls />
@@ -460,11 +482,16 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
+				{ attributes.titleShow && <Typography
+					className={ titleClassNames }
+					attrNameTemplate="title%s"
+					placeholder={ __( 'Title for This Block', i18n ) }
+				/> }
 				{ !! headings.length && hasEmptyAnchor && (
 					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
 				) }
 				<TableOfContentsList
-					className="stk-table-of-contents__table"
+					className={ tableOfContentsClassNames }
 					nestedHeadingList={ nestedHeadingList }
 					isSelected={ isSelected }
 					listTag={ tagName }

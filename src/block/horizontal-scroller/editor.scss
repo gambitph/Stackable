@@ -1,0 +1,60 @@
+.stk-control .stk-control-columns__settings-button {
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	min-width: auto;
+	justify-content: center !important;
+	.dashicon {
+		font-size: 16px;
+		margin: 0 !important;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.stk-block-horizontal-scroller > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	scroll-behavior: smooth;
+	display: grid;
+	overflow-x: auto;
+	overscroll-behavior-inline: contain;
+	scroll-snap-type: inline mandatory;
+	grid-auto-flow: column;
+	grid-auto-columns: var(--stk-column-width, 300px);
+	gap: var(--stk-column-gap, 0);
+	height: var(--stk-column-height);
+	padding-inline-start: var(--stk-left-offset, 0px);
+	> * {
+		scroll-snap-align: var(--stk-snapping, center);
+		width: 100% !important;
+	}
+	&::-webkit-scrollbar {
+		height: var(--stk-scrollbar-height, 10px);
+	}
+	&::-webkit-scrollbar-track {
+		background: var(--stk-scrollbar-track-color, #eee);
+		border-radius: var(--stk-scrollbar-thumb-radius, 0px);
+	}
+	&::-webkit-scrollbar-thumb {
+		background: var(--stk-scrollbar-thumb-color, #d3d3d3);
+		border-radius: var(--stk-scrollbar-thumb-radius, 0px);
+	}
+}
+
+// When inside a row block.
+.editor-styles-wrapper [data-type="core/group"] {
+	[data-type="stackable/horizontal-scroller"] {
+		overflow: hidden;
+		max-width: 100% !important;
+	}
+}
+
+// When inside a row block.
+// compatibility for twenty-twenty-one theme
+.stk--is-twentytwentyone-theme {
+	.editor-styles-wrapper [data-type="core/group"] {
+		&.is-layout-flex:has([data-type="stackable/horizontal-scroller"]) {
+			display: flex;
+		}
+	}
+}

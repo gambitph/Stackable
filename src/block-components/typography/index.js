@@ -15,9 +15,7 @@ import {
 import {
 	getAttributeName, getAttrName, getAttrNameFunction,
 } from '~stackable/util'
-import {
-	getDynamicContent, hasDynamicContent, useQueryLoopContext,
-} from '~stackable/components/dynamic-content-control'
+import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
 /**
  * WordPress dependencies
@@ -27,7 +25,6 @@ import {
 	useEffect,
 	useState,
 	forwardRef,
-	useMemo,
 	memo,
 } from '@wordpress/element'
 
@@ -43,6 +40,8 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 		editable,
 		identifier,
 		defaultValue,
+		withoutInteractiveFormatting = false,
+		allowedFormats = null,
 		...propsToPass
 	} = props
 
@@ -89,14 +88,7 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 		return () => clearTimeout( timeout )
 	}, [ debouncedText, onChange ] ) // Don't include `value` in the dependency list because it will cause a double triggering of the `onChange`.
 
-	// Dynamic content
-	const queryLoopContext = useQueryLoopContext()
-	const dynamicContentText = useMemo( () => {
-		if ( hasDynamicContent( debouncedText ) ) {
-			return getDynamicContent( debouncedText, queryLoopContext )
-		}
-		return debouncedText
-	}, [ debouncedText, queryLoopContext ] )
+	const dynamicContentText = useDynamicContent( debouncedText )
 
 	if ( ! editable ) {
 		return <TagName className={ className }>{ dynamicContentText }</TagName>
@@ -110,6 +102,8 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 			value={ dynamicContentText }
 			onChange={ setDebouncedText }
 			ref={ ref }
+			withoutInteractiveFormatting={ withoutInteractiveFormatting }
+			allowedFormats={ allowedFormats }
 			{ ...propsToPass }
 		>
 			{ children }

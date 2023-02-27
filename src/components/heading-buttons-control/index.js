@@ -69,7 +69,8 @@ const HeadingButtonsControl = memo( props => {
 			{ ...props }
 			className="ugb-heading-buttons-control"
 			controls={ props.hasP ? TAG_OPTIONS : TAG_OPTIONS_NOP }
-			placeholder={ TAG_OPTIONS[ 0 ].value }
+			placeholder={ TAG_OPTIONS[ 1 ].value }
+			default={ TAG_OPTIONS[ 1 ].value }
 		/>
 	)
 } )

@@ -25,6 +25,7 @@ import { i18n, showProNotice } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { useMemo } from '@wordpress/element'
 
 const SEPARATOR_SHADOWS = [
 	'none',
@@ -111,10 +112,10 @@ SeparatorControls.defaultProps = {
 	hasFlipVertically: false,
 }
 
-const PremiumTopSeparatorControls = applyFilters( 'stackable.block-component.separator.top.after', null )
-const PremiumBottomSeparatorControls = applyFilters( 'stackable.block-component.separator.bottom.after', null )
-
 export const Edit = props => {
+	const PremiumTopSeparatorControls = useMemo( () => applyFilters( 'stackable.block-component.separator.top.after', null ), [] )
+	const PremiumBottomSeparatorControls = useMemo( () => applyFilters( 'stackable.block-component.separator.bottom.after', null ), [] )
+
 	const setAttributes = useBlockSetAttributesContext()
 	const attributes = useBlockAttributesContext( attributes => {
 		return {

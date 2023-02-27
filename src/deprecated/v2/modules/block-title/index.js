@@ -90,6 +90,7 @@ const addInspectorPanel = ( output, props ) => {
 					'blockTitleColor',
 					...createResponsiveAttributeNames( 'blockTitle%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showBlockTitle"
 			>
 				<HeadingButtonsControl
@@ -190,6 +191,7 @@ const addInspectorPanel = ( output, props ) => {
 					'blockDescriptionColor',
 					...createResponsiveAttributeNames( 'blockDescription%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showBlockDescription"
 			>
 				<TypographyControlHelper

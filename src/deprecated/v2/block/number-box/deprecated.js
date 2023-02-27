@@ -3,6 +3,7 @@
  */
 import { descriptionPlaceholder, isDarkColor } from '~stackable/util'
 import { range } from 'lodash'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -31,17 +32,17 @@ const deprecatedSchema_1_15 = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-number-box__item:nth-of-type(1) .ugb-number-box__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-number-box__item:nth-of-type(2) .ugb-number-box__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-number-box__item:nth-of-type(3) .ugb-number-box__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	description1: {
 		source: 'html',
@@ -187,21 +188,21 @@ const deprecatedSave_1_15 = props => {
 					},
 					number: {
 						backgroundColor: numberBGColor,
-						color: numberColor ? numberColor :
-						       ! numberBGColor ? undefined :
-						       isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
+						color: numberColor ? numberColor
+						       : ! numberBGColor ? undefined
+						       : isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
 					},
 					title: {
-						color: titleColor ? titleColor :
-						       design === 'plain' ? undefined :
-						       ! backgroundColor ? undefined :
-						       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+						color: titleColor ? titleColor
+						       : design === 'plain' ? undefined
+						       : ! backgroundColor ? undefined
+						       : isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
 					},
 					description: {
-						color: descriptionColor ? descriptionColor :
-						       design === 'plain' ? undefined :
-						       ! backgroundColor ? undefined :
-						       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+						color: descriptionColor ? descriptionColor
+						       : design === 'plain' ? undefined
+						       : ! backgroundColor ? undefined
+						       : isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
 					},
 				}, design, props )
 

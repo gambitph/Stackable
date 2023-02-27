@@ -14,7 +14,12 @@ import { useBlockAttributesContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 export const Controls = () => {
-	const align = useBlockAttributesContext( attributes => attributes.align )
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			align: attributes.align,
+			columnFit: attributes.columnFit,
+		}
+	} )
 
 	return (
 		<>
@@ -43,7 +48,7 @@ export const Controls = () => {
 			<AdvancedToolbarControl
 				label={ __( 'Content Width', i18n ) }
 				attribute="innerBlockContentAlign"
-				default={ align ? `align${ align }` : '' }
+				default={ attributes.align ? `align${ attributes.align }` : '' }
 				controls={ [
 					{
 						value: '',

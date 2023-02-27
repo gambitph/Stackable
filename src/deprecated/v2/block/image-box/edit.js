@@ -352,6 +352,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					...createBackgroundAttributeNames( 'overlay%s' ),
 					'overlayOpacity',
 				] }
+				hasToggle
 				toggleAttributeName="showOverlay"
 				className="ugb--help-tip-image-box-overlay"
 			>
@@ -386,6 +387,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					...createBackgroundAttributeNames( 'overlayHover%s' ),
 					'overlayHoverOpacity',
 				] }
+				hasToggle
 				toggleAttributeName="showOverlayHover"
 				className="ugb--help-tip-image-box-overlay-hover"
 			>
@@ -434,7 +436,6 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 			{ show.line &&
 				<PanelAdvancedSettings
 					title={ __( 'Line', i18n ) }
-					hasToggle={ false }
 				>
 					<ColorPaletteControl
 						value={ lineColor }
@@ -463,6 +464,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					'subtitleColor',
 					...createResponsiveAttributeNames( 'subtitle%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showSubtitle"
 			>
 				<TypographyControlHelper
@@ -499,6 +501,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					'titleColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showTitle"
 			>
 				<HeadingButtonsControl
@@ -539,6 +542,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					'descriptionColor',
 					...createResponsiveAttributeNames( 'description%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showDescription"
 			>
 				<TypographyControlHelper
@@ -573,6 +577,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					...createResponsiveAttributeNames( 'Arrow%sSize' ),
 					...createResponsiveAttributeNames( 'Arrow%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showArrow"
 			>
 				<ColorPaletteControl

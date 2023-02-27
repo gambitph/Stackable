@@ -1,3 +1,13 @@
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
 export default {
 	attributes: {
 		uniqueId: '5c36ce5', hasBackground: false, hasBorders: false, hasContainer: true, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], displayCondition: {}, hideDesktop: false, hideTablet: false, hideMobile: false, blockLinkHasLink: true, blockLinkNewTab: false, blockLinkHasTitle: true, isDismissible: true, blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', containerBackgroundCustomSizeUnit: '%', containerBackgroundCustomSizeUnitTablet: '%', containerBackgroundCustomSizeUnitMobile: '%', className: 'is-style-default',
@@ -7,11 +17,11 @@ export default {
 		}, innerBlocks: [],
 	}, {
 		name: 'stackable/heading', attributes: {
-			uniqueId: 'c114813', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, textRemoveTextMargins: true, hasP: false, show: true, showText: true, text: 'Title for This Block', textTag: 'h3', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
+			uniqueId: 'c114813', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, textRemoveTextMargins: true, hasP: false, show: true, showText: true, text: __( 'Title for This Block', i18n ), textTag: 'h3', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 		}, innerBlocks: [],
 	}, {
 		name: 'stackable/text', attributes: {
-			uniqueId: '3d45ff0', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
+			uniqueId: '3d45ff0', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: __( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', i18n ), blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 		}, innerBlocks: [],
 	}, {
 		name: 'stackable/button-group', attributes: {
@@ -20,7 +30,7 @@ export default {
 			name: 'stackable/button', attributes: {
 				uniqueId: '4319436', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, buttonBackgroundColor: 'transparent', buttonBorderType: 'solid', buttonBorderColor: '#FFFFFF', buttonBorderWidth: {
 					top: 1, right: 1, bottom: 1, left: 1,
-				}, linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, textColorClass: 'has-white-color', textColor1: '#FFFFFF', hasP: false, show: true, showText: true, text: 'Button', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
+				}, linkHasLink: true, linkNewTab: false, linkHasTitle: true, showBackgroundShape: false, textColorClass: 'has-white-color', textColor1: '#FFFFFF', hasP: false, show: true, showText: true, text: __( 'Button', i18n ), blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 			}, innerBlocks: [],
 		} ],
 	} ],

@@ -231,7 +231,7 @@ const Edit = props => {
 							<SortControl
 								label={ __( 'Content Arrangement', i18n ) }
 								axis="y"
-								values={ contentOrderOptions.join( ',' ) }
+								values={ contentOrderOptions }
 								num={ contentOrderOptions.length }
 								allowReset={ ! isEqual( contentOrder, defaultContentOrder ) }
 								onChange={ order => {

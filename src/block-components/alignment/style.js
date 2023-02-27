@@ -14,6 +14,7 @@ const AlignmentStyles = props => {
 		selectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		columnAlignSelectorCallback = ( () => '' ),
+		dependencies = [],
 	} = props
 
 	return (
@@ -35,7 +36,10 @@ const AlignmentStyles = props => {
 				key="rowAlign-save"
 				responsive="all"
 				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
-				dependencies={ [ 'innerBlockOrientation' ] }
+				dependencies={ [
+					'innerBlockOrientation',
+					...dependencies,
+				 ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -46,7 +50,10 @@ const AlignmentStyles = props => {
 				key="rowAlign"
 				responsive="all"
 				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
-				dependencies={ [ 'innerBlockOrientation' ] }
+				dependencies={ [
+					'innerBlockOrientation',
+					...dependencies,
+				] }
 			/>
 		</>
 	)

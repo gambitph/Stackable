@@ -49,7 +49,9 @@
 	.components-base-control.ugb-advanced-text-control {
 		width: 100%;
 		margin-bottom: 0;
-
+		.components-text-control__input {
+			margin-inline: 0;
+		}
 	}
 
 	.block-editor-url-input__input {

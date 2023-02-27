@@ -1,0 +1,61 @@
+.stk-block.stk-block-countdown {
+	text-align: center;
+	&.stk-block-countdown--aligned {
+		.stk-block-countdown__content-container {
+			width: unset;
+		}
+	}
+}
+
+.stk-block-countdown__container {
+	display: flex;
+	gap: 16px;
+	flex: 1 0 auto;
+}
+
+.stk-block-countdown__content-container {
+	width: 100%;
+	justify-content: center;
+	word-wrap: break-word;
+	box-sizing: content-box; // Prevent blocksy theme from overriding this
+}
+
+.stk-block-countdown__label {
+	margin: 8px 0px 0px;
+}
+
+.stk-block-countdown__digit {
+	font-size: 40px;
+	height: 50%;
+}
+
+.stk-block-countdown__label,
+.stk-block-countdown__digit {
+	line-height: 1;
+}
+
+.stk-block-countdown__divider-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.stk-block-countdown__divider-colon {
+		color: #000;
+		display: flex;
+		position: relative;
+		justify-content: center;
+		line-height: 1;
+		font-size: 45px;
+		top: -12px;
+	}
+
+	.stk-block-countdown__divider-line {
+		background-color: #000;
+		width: 1px;
+		height: 50%;
+	}
+}
+
+.stk-block-countdown__message {
+	display: none;
+	margin: 0;
+}

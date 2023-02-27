@@ -110,9 +110,22 @@
       "regular",
       "500",
       "600",
-      "700"
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "greek",
       "latin",
       "latin-ext"
@@ -202,6 +215,7 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -381,6 +395,26 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Alexandria",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -1304,14 +1338,24 @@
   {
     "family": "Asap",
     "variants": [
+      "100",
+      "200",
+      "300",
       "regular",
       "500",
       "600",
       "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
       "italic",
       "500italic",
       "600italic",
-      "700italic"
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -1322,6 +1366,10 @@
   {
     "family": "Asap Condensed",
     "variants": [
+      "200",
+      "200italic",
+      "300",
+      "300italic",
       "regular",
       "italic",
       "500",
@@ -1329,7 +1377,11 @@
       "600",
       "600italic",
       "700",
-      "700italic"
+      "700italic",
+      "800",
+      "800italic",
+      "900",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -1617,7 +1669,8 @@
   {
     "family": "BIZ UDMincho",
     "variants": [
-      "regular"
+      "regular",
+      "700"
     ],
     "subsets": [
       "cyrillic",
@@ -1644,7 +1697,8 @@
   {
     "family": "BIZ UDPMincho",
     "variants": [
-      "regular"
+      "regular",
+      "700"
     ],
     "subsets": [
       "cyrillic",
@@ -3049,7 +3103,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -3070,7 +3125,8 @@
       "700italic"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -3481,18 +3537,57 @@
   {
     "family": "Chivo",
     "variants": [
+      "100",
+      "200",
       "300",
-      "300italic",
       "regular",
-      "italic",
+      "500",
+      "600",
       "700",
-      "700italic",
+      "800",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Chivo Mono",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -5235,7 +5330,14 @@
       "600",
       "700",
       "800",
-      "900"
+      "900",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -5522,6 +5624,18 @@
     ]
   },
   {
+    "family": "Fragment Mono",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Francois One",
     "variants": [
       "regular"
@@ -5538,7 +5652,9 @@
       "300",
       "regular",
       "500",
+      "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
@@ -6563,6 +6679,35 @@
     ]
   },
   {
+    "family": "Hanken Grotesk",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Hanuman",
     "variants": [
       "100",
@@ -6939,6 +7084,24 @@
     "subsets": [
       "cyrillic-ext",
       "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "IBM Plex Sans JP",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
       "latin",
       "latin-ext"
     ]
@@ -9554,7 +9717,10 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9621,6 +9787,21 @@
     ]
   },
   {
+    "family": "Marhey",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Markazi Text",
     "variants": [
       "regular",
@@ -9651,8 +9832,10 @@
     ],
     "subsets": [
       "cyrillic",
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9685,6 +9868,23 @@
     ],
     "subsets": [
       "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Martian Mono",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
@@ -9828,12 +10028,18 @@
   {
     "family": "Merienda",
     "variants": [
+      "300",
       "regular",
-      "700"
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -10936,6 +11142,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "music"
     ]
   },
@@ -10948,7 +11156,9 @@
       "700"
     ],
     "subsets": [
-      "arabic"
+      "arabic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11124,16 +11334,23 @@
       "700"
     ],
     "subsets": [
-      "bamum"
+      "bamum",
+      "latin",
+      "latin-ext"
     ]
   },
   {
     "family": "Noto Sans Bassa Vah",
     "variants": [
-      "regular"
+      "regular",
+      "500",
+      "600",
+      "700"
     ],
     "subsets": [
-      "bassa-vah"
+      "bassa-vah",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11190,7 +11407,9 @@
       "regular"
     ],
     "subsets": [
-      "buginese"
+      "buginese",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11247,7 +11466,9 @@
       "regular"
     ],
     "subsets": [
-      "chakma"
+      "chakma",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11551,7 +11772,9 @@
       "700"
     ],
     "subsets": [
-      "hanifi-rohingya"
+      "hanifi-rohingya",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11560,7 +11783,9 @@
       "regular"
     ],
     "subsets": [
-      "hanunoo"
+      "hanunoo",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11708,7 +11933,9 @@
       "700"
     ],
     "subsets": [
-      "kayah-li"
+      "kayah-li",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11745,7 +11972,9 @@
       "regular"
     ],
     "subsets": [
-      "khojki"
+      "khojki",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11777,11 +12006,32 @@
     ]
   },
   {
+    "family": "Noto Sans Lao Looped",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "lao",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Noto Sans Lepcha",
     "variants": [
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "lepcha"
     ]
   },
@@ -11907,6 +12157,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "masaram-gondi"
     ]
   },
@@ -11937,6 +12189,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "medefaidrin"
     ]
   },
@@ -11957,6 +12211,17 @@
       "latin",
       "latin-ext",
       "meetei-mayek"
+    ]
+  },
+  {
+    "family": "Noto Sans Mende Kikakui",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "mende-kikakui"
     ]
   },
   {
@@ -11985,6 +12250,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "modi"
     ]
   },
@@ -11994,6 +12261,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "mongolian"
     ]
   },
@@ -12026,6 +12295,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "mro"
     ]
   },
@@ -12035,6 +12306,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "multani"
     ]
   },
@@ -12056,11 +12329,13 @@
     ]
   },
   {
-    "family": "Noto Sans N Ko",
+    "family": "Noto Sans NKo",
     "variants": [
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "nko"
     ]
   },
@@ -12076,9 +12351,14 @@
   {
     "family": "Noto Sans New Tai Lue",
     "variants": [
-      "regular"
+      "regular",
+      "500",
+      "600",
+      "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "new-tai-lue"
     ]
   },
@@ -12088,6 +12368,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "newa"
     ]
   },
@@ -12118,6 +12400,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "ol-chiki"
     ]
   },
@@ -12218,6 +12502,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "osage"
     ]
   },
@@ -12227,6 +12513,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "osmanya"
     ]
   },
@@ -12236,6 +12524,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "pahawh-hmong"
     ]
   },
@@ -12254,6 +12544,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "pau-cin-hau"
     ]
   },
@@ -12290,6 +12582,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "rejang"
     ]
   },
@@ -12332,6 +12626,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "saurashtra"
     ]
   },
@@ -12341,6 +12637,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "sharada"
     ]
   },
@@ -12359,7 +12657,20 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "siddham"
+    ]
+  },
+  {
+    "family": "Noto Sans SignWriting",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "signwriting"
     ]
   },
   {
@@ -12399,6 +12710,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "sora-sompeng"
     ]
   },
@@ -12420,6 +12733,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "sundanese"
     ]
   },
@@ -12429,6 +12744,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "syloti-nagri"
     ]
   },
@@ -12457,6 +12774,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "symbols"
     ]
   },
@@ -12492,6 +12811,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tagalog"
     ]
   },
@@ -12501,6 +12822,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tagbanwa"
     ]
   },
@@ -12510,6 +12833,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tai-le"
     ]
   },
@@ -12522,6 +12847,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tai-tham"
     ]
   },
@@ -12531,6 +12858,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tai-viet"
     ]
   },
@@ -12540,6 +12869,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "takri"
     ]
   },
@@ -12569,6 +12900,20 @@
     ],
     "subsets": [
       "tamil-supplement"
+    ]
+  },
+  {
+    "family": "Noto Sans Tangsa",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tangsa"
     ]
   },
   {
@@ -12604,6 +12949,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "thaana"
     ]
   },
@@ -12649,6 +12996,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tifinagh"
     ]
   },
@@ -12709,6 +13058,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "yi"
     ]
   },
@@ -12718,6 +13069,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "zanabazar-square"
     ]
   },
@@ -13056,6 +13409,20 @@
     ]
   },
   {
+    "family": "Noto Serif Khojki",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "khojki",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Noto Serif Lao",
     "variants": [
       "100",
@@ -13111,7 +13478,7 @@
     ]
   },
   {
-    "family": "Noto Serif Nyiakeng Puachue Hmong",
+    "family": "Noto Serif NP Hmong",
     "variants": [
       "regular",
       "500",
@@ -13119,7 +13486,22 @@
       "700"
     ],
     "subsets": [
+      "latin",
       "nyiakeng-puachue-hmong"
+    ]
+  },
+  {
+    "family": "Noto Serif Oriya",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "oriya"
     ]
   },
   {
@@ -13262,7 +13644,23 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tibetan"
+    ]
+  },
+  {
+    "family": "Noto Serif Toto",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "toto"
     ]
   },
   {
@@ -13907,6 +14305,17 @@
       "latin",
       "latin-ext",
       "myanmar"
+    ]
+  },
+  {
+    "family": "Padyakke Expanded One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "kannada",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -15187,7 +15596,9 @@
     ],
     "subsets": [
       "arabic",
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -15610,6 +16021,19 @@
     ]
   },
   {
+    "family": "Rubik 80s Fade",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Rubik Beastly",
     "variants": [
       "regular"
@@ -15663,6 +16087,19 @@
   },
   {
     "family": "Rubik Distressed",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Gemstones",
     "variants": [
       "regular"
     ],
@@ -15765,6 +16202,45 @@
   },
   {
     "family": "Rubik Puddles",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Spray Paint",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Storm",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Vinyl",
     "variants": [
       "regular"
     ],
@@ -16746,6 +17222,137 @@
     ]
   },
   {
+    "family": "Sofia Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Sofia Sans Condensed",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Sofia Sans Extra Condensed",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Sofia Sans Semi Condensed",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Solitreo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Solway",
     "variants": [
       "300",
@@ -16766,6 +17373,23 @@
     "subsets": [
       "korean",
       "latin"
+    ]
+  },
+  {
+    "family": "Sono",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -18146,6 +18770,26 @@
     ]
   },
   {
+    "family": "Unbounded",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Uncial Antiqua",
     "variants": [
       "regular"
@@ -18972,6 +19616,8 @@
     "family": "Zen Old Mincho",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700",
       "900"
     ],

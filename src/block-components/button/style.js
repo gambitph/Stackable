@@ -20,6 +20,7 @@ const Styles = props => {
 	const {
 		selector,
 		hoverSelector,
+		dependencies = [],
 	} = props
 
 	return (
@@ -76,7 +77,10 @@ const Styles = props => {
 				key="buttonWidth"
 				format="%spx"
 				enabledCallback={ getAttribute => ! getAttribute( 'buttonFullWidth' ) }
-				dependencies={ [ 'buttonFullWidth' ] }
+				dependencies={ [
+					'buttonFullWidth',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -135,7 +139,13 @@ const Styles = props => {
 
 					return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
 				} }
-				dependencies={ [ 'buttonBackgroundGradientDirection', 'buttonBackgroundColor', 'buttonBackgroundColor2', 'buttonBackgroundColorType' ] }
+				dependencies={ [
+					'buttonBackgroundGradientDirection',
+					'buttonBackgroundColor',
+					'buttonBackgroundColor2',
+					'buttonBackgroundColorType',
+					...dependencies,
+				 ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -166,10 +176,15 @@ const Styles = props => {
 					) {
 						return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
 					}
-
 					return undefined
 				} }
-				dependencies={ [ 'buttonBackgroundGradientDirection', 'buttonBackgroundColor', 'buttonBackgroundColor2', 'buttonBackgroundColorType' ] }
+				dependencies={ [
+					'buttonBackgroundGradientDirection',
+					'buttonBackgroundColor',
+					'buttonBackgroundColor2',
+					'buttonBackgroundColorType',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

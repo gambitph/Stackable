@@ -47,7 +47,7 @@ const ColorPaletteControl = memo( props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const themeColors = useSetting( 'color.palette.theme' )
+	const themeColors = useSetting( 'color.palette.theme' ) || [] // This can be undefined.
 	const colors = useMemo( () => {
 		const colors = compact( themeColors.map( color => {
 			// Make sure to only get color objects. If null, also return null.
@@ -82,10 +82,11 @@ const ColorPaletteControl = memo( props => {
 
 	const colorObject = getColorObjectByColorValue( colors, value )
 	const colorName = colorObject && colorObject.name
+	const colorLabel = colorName || ( value === 'transparent' ? 'Transparent' : value )
 
 	const toggleSettings = {
 		colorValue: value,
-		label: colorName || value,
+		label: colorLabel,
 	}
 
 	const colorPalette = (
@@ -96,7 +97,7 @@ const ColorPaletteControl = memo( props => {
 				const colorObject = getColorObjectByColorValue( colors, value )
 				onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
 			} }
-			label={ colorName || value }
+			label={ colorLabel }
 			clearable={ false }
 			{ ...{ colors, disableCustomColors } }
 		/>

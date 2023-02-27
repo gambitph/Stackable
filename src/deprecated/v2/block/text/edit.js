@@ -203,6 +203,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					onChange={ showColumnRule => setAttributes( { showColumnRule } ) }
 					toggleOnSetAttributes={ [
 					] }
+					hasToggle
 					toggleAttributeName="showColumnRule"
 				>
 					<ColorPaletteControl
@@ -234,7 +235,6 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 			<PanelAdvancedSettings
 				title={ __( 'Text', i18n ) }
 				id="text"
-				hasToggle={ false }
 			>
 				<TypographyControlHelper
 					attrNameTemplate="text%s"
@@ -317,6 +317,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					'subtitleTag',
 					...createResponsiveAttributeNames( 'subtitle%sAlign' ),
 				] }
+				hasToggle
 				toggleAttributeName="showSubtitle"
 			>
 				<AdvancedToggleControl

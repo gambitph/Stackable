@@ -87,8 +87,9 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
 			if ( ! $this->is_script_loaded ) {
 				if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
+					$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 					if (
-						stripos( $block['blockName'], 'ugb/' ) === 0 ||
+						stripos( $block_name, 'ugb/' ) === 0 ||
 						stripos( $block_content, '<!-- wp:ugb/' ) !==  false ||
 						stripos( $block_content, 'ugb-highlight' ) !==  false
 					) {

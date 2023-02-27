@@ -11,7 +11,8 @@
 	"parent": [
 		"stackable/columns",
 		"stackable/feature",
-		"stackable/feature-grid"
+		"stackable/feature-grid",
+		"stackable/horizontal-scroller"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "hidden"

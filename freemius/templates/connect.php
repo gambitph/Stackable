@@ -41,7 +41,7 @@
 		$first_name = $current_user->nickname;
 	}
 
-	$site_url     = get_site_url();
+	$site_url     = Freemius::get_unfiltered_site_url();
 	$protocol_pos = strpos( $site_url, '://' );
 	if ( false !== $protocol_pos ) {
 		$site_url = substr( $site_url, $protocol_pos + 3 );
@@ -127,6 +127,14 @@
     if ( is_null( $is_gdpr_required ) ) {
         $is_gdpr_required = $fs->fetch_and_store_current_user_gdpr_anonymously();
     }
+
+    $activation_state = array(
+        'is_license_activation'       => $require_license_key,
+        'is_pending_activation'       => $is_pending_activation,
+        'is_gdpr_required'            => $is_gdpr_required,
+        'is_network_level_activation' => $is_network_level_activation,
+        'is_dialog'                   => $is_optin_dialog,
+    );
 ?>
 <?php
 	if ( $is_optin_dialog ) { ?>
@@ -147,26 +155,54 @@
 		 * @author Vova Feldman
 		 * @since 2.3.2
 		 */
-		$fs->do_action( 'connect/before' );
+		$fs->do_action( 'connect/before', $activation_state );
 	?>
 	<div id="fs_connect"
 	     class="wrap<?php if ( ! fs_is_network_admin() && ( ! $fs->is_enable_anonymous() || $is_pending_activation || $require_license_key ) ) {
 		     echo ' fs-anonymous-disabled';
 	     } ?><?php echo $require_license_key ? ' require-license-key' : '' ?>">
-		<div class="fs-visual">
-			<b class="fs-site-icon"><i class="dashicons dashicons-wordpress"></i></b>
-			<i class="dashicons dashicons-plus fs-first"></i>
-			<?php
-				$vars = array( 'id' => $fs->get_id() );
-				fs_require_once_template( 'plugin-icon.php', $vars );
-			?>
-			<i class="dashicons dashicons-plus fs-second"></i>
-			<img class="fs-connect-logo" width="80" height="80" src="//img.freemius.com/logo/connect.svg"/>
-		</div>
+        <div class="fs-header">
+            <!--			<b class="fs-site-icon"><i class="dashicons dashicons-wordpress-alt"></i></b>-->
+            <?php
+                $size = 50;
+                $vars = array(
+                    'id'   => $fs->get_id(),
+                    'size' => $size,
+                );
+
+                fs_require_once_template( 'plugin-icon.php', $vars );
+            ?>
+            <!--			<img class="fs-connect-logo" width="--><?php //echo $size ?><!--" height="--><?php //echo $size ?><!--" src="//img.freemius.com/logo/connect.svg"/>-->
+        </div>
+        <div class="fs-box-container">
 		<div class="fs-content">
+            <?php $fs->do_action( 'connect/before_message', $activation_state ) ?>
+
 			<?php if ( ! empty( $error ) ) : ?>
 				<p class="fs-error"><?php echo $fs->apply_filters( 'connect_error_esc_html', esc_html( $error ) ) ?></p>
 			<?php endif ?>
+            <?php
+                if ( ! $is_pending_activation && ! $require_license_key ) {
+                    if ( ! $fs->is_plugin_update() ) {
+                        echo $fs->apply_filters( 'connect-header', sprintf(
+                            '<h2 style="text-align: center">%s</h2>',
+                            esc_html( fs_text_inline( 'Never miss an important update', 'connect-header' ) )
+                        ) );
+                    } else {
+                        echo $fs->apply_filters( 'connect-header_on-update', sprintf(
+                            '<h2>%s</h2>',
+                            sprintf(
+                                esc_html(
+                                /* translators: %1$s: plugin name (e.g., "Awesome Plugin"); %2$s: version (e.g., "1.2.3") */
+                                    fs_text_inline('Thank you for updating to %1$s v%2$s!', 'connect-header_on-update' )
+                                ),
+                                esc_html( $fs->get_plugin_name() ),
+                                $fs->get_plugin_version()
+                            )
+                        ) );
+                    }
+                }
+            ?>
 			<p><?php
 					$button_label = fs_text_inline( 'Allow & Continue', 'opt-in-connect', $slug );
 					$message = '';
@@ -177,16 +213,14 @@
 						$message = $fs->apply_filters( 'pending_activation_message', sprintf(
 						    /* translators: %s: name (e.g. Thanks John!) */
 							fs_text_inline( 'Thanks %s!', 'thanks-x', $slug ) . '<br>' .
-							fs_text_inline( 'You should receive an activation email for %s to your mailbox at %s. Please make sure you click the activation button in that email to %s.', 'pending-activation-message', $slug ),
+							fs_text_inline( 'You should receive a confirmation email for %s to your mailbox at %s. Please make sure you click the button in that email to %s.', 'pending-activation-message', $slug ),
 							$first_name,
 							'<b>' . $fs->get_plugin_name() . '</b>',
 							'<b>' . $current_user->user_email . '</b>',
-							fs_text_inline( 'complete the install', 'complete-the-install', $slug )
+							fs_text_inline( 'complete the opt-in', 'complete-the-opt-in', $slug )
 						) );
 					} else if ( $require_license_key ) {
-						$button_label = $is_network_upgrade_mode ?
-                            fs_text_inline( 'Activate License', 'agree-activate-license', $slug ) :
-                            fs_text_inline( 'Agree & Activate License', 'agree-activate-license', $slug );
+						$button_label = fs_text_inline( 'Activate License', 'activate-license', $slug );
 
 						$message = $fs->apply_filters(
 						    'connect-message_on-premium',
@@ -195,21 +229,32 @@
 							$fs->get_plugin_name()
 						);
 					} else {
-						$filter                = 'connect_message';
-						$default_optin_message = $is_gdpr_required ?
-							fs_text_inline( 'Never miss an important update - opt in to our security & feature updates notifications, educational content, offers, and non-sensitive diagnostic tracking with %4$s.', 'connect-message', $slug) :
-							fs_text_inline( 'Never miss an important update - opt in to our security and feature updates notifications, and non-sensitive diagnostic tracking with %4$s.', 'connect-message', $slug);
+                        $filter = 'connect_message';
 
-						if ( $fs->is_plugin_update() ) {
+						if ( ! $fs->is_plugin_update() ) {
+                            $default_optin_message = esc_html( sprintf( ( $is_gdpr_required ?
+                                /* translators: %s: module type (plugin, theme, or add-on) */
+                                fs_text_inline( 'Opt in to get email notifications for security & feature updates, educational content, and occasional offers, and to share some basic WordPress environment info. This will help us make the %s more compatible with your site and better at doing what you need it to.', 'connect-message', $slug ) :
+                                /* translators: %s: module type (plugin, theme, or add-on) */
+                                fs_text_inline( 'Opt in to get email notifications for security & feature updates, and to share some basic WordPress environment info. This will help us make the %s more compatible with your site and better at doing what you need it to.', 'connect-message', $slug ) ), $fs->get_module_label( true ) ) );
+                        } else {
 							// If Freemius was added on a plugin update, set different
 							// opt-in message.
-							$default_optin_message = $is_gdpr_required ?
-								fs_text_inline( 'Never miss an important update - opt in to our security & feature updates notifications, educational content, offers, and non-sensitive diagnostic tracking with %4$s. If you skip this, that\'s okay! %1$s will still work just fine.', 'connect-message_on-update', $slug ) :
-								fs_text_inline( 'Never miss an important update - opt in to our security & feature updates notifications, and non-sensitive diagnostic tracking with %4$s. If you skip this, that\'s okay! %1$s will still work just fine.', 'connect-message_on-update', $slug );
 
-							// If user customized the opt-in message on update, use
+                            /* translators: %s: module type (plugin, theme, or add-on) */
+                            $default_optin_message = esc_html( sprintf( fs_text_inline( 'We have introduced this opt-in so you never miss an important update and help us make the %s more compatible with your site and better at doing what you need it to.', 'connect-message_on-update_why' ), $fs->get_module_label( true ) ) );
+
+							$default_optin_message .= '<br><br>' . esc_html( $is_gdpr_required ?
+								fs_text_inline( 'Opt in to get email notifications for security & feature updates, educational content, and occasional offers, and to share some basic WordPress environment info.', 'connect-message_on-update', $slug ) :
+								fs_text_inline( 'Opt in to get email notifications for security & feature updates, and to share some basic WordPress environment info.', 'connect-message_on-update', $slug ) );
+
+                            if ( $fs->is_enable_anonymous() ) {
+                                $default_optin_message .= ' ' . esc_html( fs_text_inline( 'If you skip this, that\'s okay! %1$s will still work just fine.', 'connect-message_on-update_skip', $slug ) );
+                            }
+
+                            // If user customized the opt-in message on update, use
 							// that message. Otherwise, fallback to regular opt-in
-							// custom message if exist.
+							// custom message if exists.
 							if ( $fs->has_filter( 'connect_message_on_update' ) ) {
 								$filter = 'connect_message_on_update';
 							}
@@ -218,11 +263,11 @@
 						$message = $fs->apply_filters(
 						    $filter,
 							sprintf(
-								esc_html( $default_optin_message ),
+								$default_optin_message,
 								'<b>' . esc_html( $fs->get_plugin_name() ) . '</b>',
 								'<b>' . $current_user->user_login . '</b>',
 								'<a href="' . $site_url . '" target="_blank" rel="noopener noreferrer">' . $site_url . '</a>',
-								$freemius_link
+                                $freemius_link
 							),
 							$first_name,
 							$fs->get_plugin_name(),
@@ -270,7 +315,7 @@
 				 * @author Vova Feldman
 				 * @since 2.1.2
 				 */
-				 $fs->do_action( 'connect/after_license_input' );
+				 $fs->do_action( 'connect/after_license_input', $activation_state );
 				?>
 
                 <?php
@@ -315,8 +360,12 @@
                 echo fs_get_template( 'partials/network-activation.php', $vars );
             ?>
 			<?php endif ?>
+
+            <?php $fs->do_action( 'connect/after_message', $activation_state ) ?>
 		</div>
 		<div class="fs-actions">
+            <?php $fs->do_action( 'connect/before_actions', $activation_state ) ?>
+
 			<?php if ( $fs->is_enable_anonymous() && ! $is_pending_activation && ( ! $require_license_key || $is_network_upgrade_mode ) ) : ?>
 				<a id="skip_activation" href="<?php echo fs_nonce_url( $fs->_get_admin_page_url( '', array( 'fs_action' => $fs->get_unique_affix() . '_skip_activation' ), $is_network_level_activation ), $fs->get_unique_affix() . '_skip_activation' ) ?>"
 				   class="button button-secondary" tabindex="2"><?php fs_esc_html_echo_x_inline( 'Skip', 'verb', 'skip', $slug ) ?></a>
@@ -330,6 +379,7 @@
 					       value="<?php echo $fs->get_unique_affix() ?>_activate_existing">
 					<?php wp_nonce_field( 'activate_existing_' . $fs->get_public_key() ) ?>
 					<input type="hidden" name="is_extensions_tracking_allowed" value="1">
+					<input type="hidden" name="is_diagnostic_tracking_allowed" value="1">
 					<button class="button button-primary" tabindex="1"
 					        type="submit"><?php echo esc_html( $button_label ) ?></button>
 				</form>
@@ -340,6 +390,7 @@
 						<input type="hidden" name="<?php echo $name ?>" value="<?php echo esc_attr( $value ) ?>">
 					<?php endforeach ?>
 					<input type="hidden" name="is_extensions_tracking_allowed" value="1">
+                    <input type="hidden" name="is_diagnostic_tracking_allowed" value="1">
 					<button class="button button-primary" tabindex="1"
 					        type="submit"<?php if ( $require_license_key ) {
 						echo ' disabled="disabled"';
@@ -349,110 +400,42 @@
             <?php if ( $require_license_key ) : ?>
                 <a id="license_issues_link" href="<?php echo $fs->apply_filters( 'known_license_issues_url', 'https://freemius.com/help/documentation/wordpress-sdk/license-activation-issues/' ) ?>" target="_blank"><?php fs_esc_html_echo_inline( 'License issues?', 'license-issues', $slug ) ?></a>
             <?php endif ?>
+
+            <?php $fs->do_action( 'connect/after_actions', $activation_state ) ?>
 		</div><?php
+            $permission_manager = FS_Permission_Manager::instance( $fs );
 
 			// Set core permission list items.
 			$permissions = array();
 
-			/**
-			 * When activating a license key the information of the admin is not collected, we gather the user info from the license.
-			 *
-			 * @since 2.3.2
-			 * @author Vova Feldman
-			 */
-			if ( ! $require_license_key ) {
-				$permissions['profile'] = array(
-					'icon-class' => 'dashicons dashicons-admin-users',
-					'label'      => $fs->get_text_inline( 'Your Profile Overview', 'permissions-profile' ),
-					'desc'       => $fs->get_text_inline( 'Name and email address', 'permissions-profile_desc' ),
-					'priority'   => 5,
-				);
-			}
-
-            $permissions['site'] = array(
-                'icon-class' => 'dashicons dashicons-admin-settings',
-                'tooltip'    => ( $require_license_key ? sprintf( $fs->get_text_inline( 'So you can manage and control your license remotely from the User Dashboard.', 'permissions-site_tooltip' ), $fs->get_module_type() ) : '' ),
-                'label'      => $fs->get_text_inline( 'Your Site Overview', 'permissions-site' ),
-                'desc'       => $fs->get_text_inline( 'Site URL, WP version, PHP version', 'permissions-site_desc' ),
-                'priority'   => 10,
-            );
-
-            if ( ! $require_license_key ) {
-                $permissions['notices'] = array(
-                    'icon-class' => 'dashicons dashicons-testimonial',
-                    'label'      => $fs->get_text_inline( 'Admin Notices', 'permissions-admin-notices' ),
-                    'desc'       => $fs->get_text_inline( 'Updates, announcements, marketing, no spam', 'permissions-newsletter_desc' ),
-                    'priority'   => 13,
-                );
-            }
-
-            $permissions['events'] = array(
-                'icon-class' => 'dashicons dashicons-admin-' . ( $fs->is_plugin() ? 'plugins' : 'appearance' ),
-                'tooltip'    => ( $require_license_key ? sprintf( $fs->get_text_inline( 'So you can reuse the license when the %s is no longer active.', 'permissions-events_tooltip' ), $fs->get_module_type() ) : '' ),
-                'label'      => sprintf( $fs->get_text_inline( 'Current %s Status', 'permissions-events' ), ucfirst( $fs->get_module_type() ) ),
-                'desc'       => $fs->get_text_inline( 'Active, deactivated, or uninstalled', 'permissions-events_desc' ),
-                'priority'   => 20,
-            );
-
 			// Add newsletter permissions if enabled.
 			if ( $is_gdpr_required || $fs->is_permission_requested( 'newsletter' ) ) {
-				$permissions['newsletter'] = array(
-					'icon-class' => 'dashicons dashicons-email-alt',
-					'label'      => $fs->get_text_inline( 'Newsletter', 'permissions-newsletter' ),
-					'desc'       => $fs->get_text_inline( 'Updates, announcements, marketing, no spam', 'permissions-newsletter_desc' ),
-					'priority'   => 15,
-				);
+				$permissions[] = $permission_manager->get_newsletter_permission();
 			}
 
-            $permissions['extensions'] = array(
-                'icon-class' => 'dashicons dashicons-menu',
-                'label'      => $fs->get_text_inline( 'Plugins & Themes', 'permissions-extensions' ) . ( $require_license_key ? ' (' . $fs->get_text_inline( 'optional' ) . ')' : '' ),
-                'tooltip'    => $fs->get_text_inline( 'To help us troubleshoot any potential issues that may arise from other plugin or theme conflicts.', 'permissions-events_tooltip' ),
-                'desc'       => $fs->get_text_inline( 'Title, slug, version, and is active', 'permissions-extensions_desc' ),
-                'priority'   => 25,
-                'optional'   => true,
-                'default'    => $fs->apply_filters( 'permission_extensions_default', ! $require_license_key )
+            $permissions = $permission_manager->get_permissions(
+                $require_license_key,
+                $permissions
             );
-
-			// Allow filtering of the permissions list.
-			$permissions = $fs->apply_filters( 'permission_list', $permissions );
-
-			// Sort by priority.
-			uasort( $permissions, 'fs_sort_by_priority' );
 
 			if ( ! empty( $permissions ) ) : ?>
 				<div class="fs-permissions">
-					<?php if ( $require_license_key ) : ?>
-						<p class="fs-license-sync-disclaimer"><?php
-                                echo sprintf(
-									fs_esc_html_inline( 'The %1$s will periodically send %2$s to %3$s for security & feature updates delivery, and license management.', 'license-sync-disclaimer', $slug ),
-									$fs->get_module_label( true ),
-									sprintf('<a class="fs-trigger" href="#" tabindex="1">%s</a>', fs_esc_html_inline('diagnostic data', 'send-data')),
-									'<a class="fs-tooltip-trigger' . (is_rtl() ? ' rtl' : '') . '" href="' . $freemius_site_url . '" target="_blank" rel="noopener" tabindex="1">freemius.com <i class="dashicons dashicons-editor-help" style="text-decoration: none;"><span class="fs-tooltip" style="width: 170px">' . $fs->get_text_inline( 'Freemius is our licensing and software updates engine', 'permissions-extensions_desc' ) . '</span></i></a>'
-								) ?></p>
-					<?php else : ?>
-					<a class="fs-trigger" href="#" tabindex="1"><?php fs_esc_html_echo_inline( 'What permissions are being granted?', 'what-permissions', $slug ) ?></a>
+                    <?php if ( $require_license_key ) : ?>
+                        <a class="fs-trigger wp-core-ui" href="#" tabindex="1" style="color: inherit;"><?php echo sprintf(
+                                fs_esc_html_inline( 'For delivery of security & feature updates, and license management, %s needs to', 'license-sync-disclaimer', $slug ) . '<b class="fs-arrow"></b>',
+                                sprintf( '<nobr class="button-link" style="color: inherit;">%s</nobr>', $fs->get_plugin_title() )
+                            ) ?></a>
+                    <?php else : ?>
+                        <a class="fs-trigger wp-core-ui" href="#" tabindex="1" style="color: inherit;"><?php printf(
+                                fs_esc_html_inline( 'This will allow %s to', 'this-will-allow-x', $slug ) . '<b class="fs-arrow"></b>',
+                                sprintf( '<nobr class="button-link" style="color: inherit;">%s</nobr>', $fs->get_plugin_title() )
+                            ) ?></a>
                     <?php endif ?>
 					<ul><?php
-							foreach ( $permissions as $id => $permission ) : ?>
-                                <?php $is_permission_on = ( ! isset( $permission['default'] ) || true === $permission['default'] ); ?>
-								<li id="fs-permission-<?php echo esc_attr( $id ); ?>"
-								    class="fs-permission fs-<?php echo esc_attr( $id ); ?><?php echo ( ! $is_permission_on ) ? ' fs-disabled' : ''; ?>">
-									<i class="<?php echo esc_attr( $permission['icon-class'] ); ?>"></i>
-									<?php if ( isset( $permission['optional'] ) && true === $permission['optional'] ) : ?>
-										<div class="fs-switch fs-small fs-round fs-<?php echo $is_permission_on ? 'on' : 'off' ?>">
-											<div class="fs-toggle"></div>
-										</div>
-									<?php endif ?>
-
-									<div class="fs-permission-description">
-										<span<?php if ( ! empty($permission['tooltip']) ) : ?> class="fs-tooltip-trigger"<?php endif ?>><?php echo esc_html( $permission['label'] ); ?><?php if ( ! empty($permission['tooltip']) ) : ?><i class="dashicons dashicons-editor-help"><span class="fs-tooltip" style="width: 200px"><?php echo $permission['tooltip'] ?></span></i><?php endif ?></span>
-
-										<p><?php echo esc_html( $permission['desc'] ); ?></p>
-									</div>
-								</li>
-							<?php endforeach; ?>
-					</ul>
+                            foreach ( $permissions as $permission ) {
+                                $permission_manager->render_permission( $permission );
+                            }
+                    ?></ul>
 				</div>
 			<?php endif ?>
 		<?php if ( $is_premium_code && $is_freemium ) : ?>
@@ -468,7 +451,10 @@
 				</p>
 			</div>
 		<?php endif ?>
+        </div>
 		<div class="fs-terms">
+            <a class="fs-tooltip-trigger<?php echo is_rtl() ? ' rtl' : '' ?>" href="<?php echo $freemius_site_url ?>" target="_blank" rel="noopener" tabindex="1">Powered by Freemius<?php if ( $require_license_key ) : ?> <span class="fs-tooltip" style="width: 170px"><?php echo $fs->get_text_inline( 'Freemius is our licensing and software updates engine', 'permissions-extensions_desc' ) ?></span><?php endif ?></a>
+            &nbsp;&nbsp;-&nbsp;&nbsp;
 			<a href="https://freemius.com/privacy/" target="_blank" rel="noopener"
 			   tabindex="1"><?php fs_esc_html_echo_inline( 'Privacy Policy', 'privacy-policy', $slug ) ?></a>
 			&nbsp;&nbsp;-&nbsp;&nbsp;
@@ -482,7 +468,7 @@
 		 * @author Vova Feldman
 		 * @since 2.3.2
 		 */
-		$fs->do_action( 'connect/after' );
+		$fs->do_action( 'connect/after', $activation_state );
 
 		if ( $is_optin_dialog ) { ?>
 </div>
@@ -536,13 +522,12 @@
                 // Reset loading mode.
                 $primaryCta.html(primaryCtaLabel);
                 $primaryCta.prop('disabled', false);
-                $(document.body).css({'cursor': 'auto'});
-                $('.fs-loading').removeClass('fs-loading');
+                $( '.fs-loading' ).removeClass( 'fs-loading' );
 
                 console.log('resetLoadingMode - Primary button was enabled');
             },
 			setLoadingMode = function () {
-				$(document.body).css({'cursor': 'wait'});
+				$( document.body ).addClass( 'fs-loading' );
 			};
 
 		$('.fs-actions .button').on('click', function () {
@@ -717,15 +702,25 @@
 		var ajaxOptin = ( requireLicenseKey || isNetworkActive );
 
 		$form.on('submit', function () {
-            var $extensionsPermission = $('#fs-permission-extensions .fs-switch'),
-                isExtensionsTrackingAllowed = ($extensionsPermission.length > 0) ?
-                    $extensionsPermission.hasClass('fs-on') :
+            var $extensionsPermission = $( '#fs_permission_extensions .fs-switch' ),
+                isExtensionsTrackingAllowed = ( $extensionsPermission.length > 0 ) ?
+                    $extensionsPermission.hasClass( 'fs-on' ) :
                     null;
 
-            if (null === isExtensionsTrackingAllowed) {
-                $('input[name=is_extensions_tracking_allowed]').remove();
+            var $diagnosticPermission = $( '#fs_permission_diagnostic .fs-switch' ),
+                isDiagnosticTrackingAllowed = ( $diagnosticPermission.length > 0 ) ?
+                    $diagnosticPermission.hasClass( 'fs-on' ) :
+                    null;
+
+            if ( null === isExtensionsTrackingAllowed ) {
+                $( 'input[name=is_extensions_tracking_allowed]' ).remove();
             } else {
-                $('input[name=is_extensions_tracking_allowed]').val(isExtensionsTrackingAllowed ? 1 : 0);
+                $( 'input[name=is_extensions_tracking_allowed]' ).val( isExtensionsTrackingAllowed ? 1 : 0 );
+            }
+
+            // We are not showing switch to enable/disable diagnostic tracking while activating free version. So, don't remove hidden `is_diagnostic_tracking_allowed` element from DOM and change the value only if switch is available.
+            if ( null !== isDiagnosticTrackingAllowed ) {
+                $( 'input[name=is_diagnostic_tracking_allowed]' ).val( isDiagnosticTrackingAllowed ? 1 : 0 );
             }
 
 			/**
@@ -782,6 +777,8 @@
                         data.is_marketing_allowed = isMarketingAllowed;
 
 						data.is_extensions_tracking_allowed = isExtensionsTrackingAllowed;
+
+						data.is_diagnostic_tracking_allowed = isDiagnosticTrackingAllowed;
                     }
 
                     $marketingOptin.removeClass( 'error' );
@@ -804,7 +801,6 @@
 								url     : $this.find( '.url' ).val(),
 								title   : $this.find( '.title' ).val(),
 								language: $this.find( '.language' ).val(),
-								charset : $this.find( '.charset' ).val(),
 								blog_id : $this.find( '.blog-id' ).find( 'span' ).text()
 							};
 
@@ -832,7 +828,7 @@
 					 * @since 1.2.1.5
 					 */
 					$.ajax({
-						url    : ajaxurl,
+						url    : <?php echo Freemius::ajax_url() ?>,
 						method : 'POST',
 						data   : data,
 						success: function (result) {
@@ -868,6 +864,15 @@
 			return true;
 		});
 
+        $( '#fs_connect .fs-permissions .fs-switch' ).on( 'click', function () {
+            $( this )
+                .toggleClass( 'fs-on' )
+                .toggleClass( 'fs-off' );
+
+            $( this ).closest( '.fs-permission' )
+                .toggleClass( 'fs-disabled' );
+        });
+
 		$primaryCta.on('click', function () {
 			console.log('Primary button was clicked');
 
@@ -882,14 +887,6 @@
 			$('.fs-permissions').toggleClass('fs-open');
 
 			return false;
-		});
-
-		$( '.fs-switch' ).click( function () {
-			$(this)
-				.toggleClass( 'fs-on' )
-				.toggleClass( 'fs-off' );
-
-            $( this ).parent().toggleClass( 'fs-disabled' );
 		});
 
 		if (requireLicenseKey) {
@@ -1017,7 +1014,7 @@
                         $primaryCta.html('<?php fs_esc_js_echo_inline( 'Please wait', 'please-wait', $slug ) ?>...');
 
                         $.ajax({
-                            url    : ajaxurl,
+                            url    : <?php echo Freemius::ajax_url() ?>,
                             method : 'POST',
                             data   : {
                                 action     : '<?php echo $fs->get_ajax_action( 'fetch_is_marketing_required_flag_value' ) ?>',

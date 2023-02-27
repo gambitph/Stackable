@@ -34,6 +34,7 @@ const Styles = props => {
 		widthStyleRule = null,
 		widthUnitCallback = null,
 		heightUnitCallback = null,
+		dependencies = [],
 	} = props
 
 	return (
@@ -201,7 +202,12 @@ const Styles = props => {
 				valueCallback={ ( value, getAttribute ) => {
 					return getShapeCSS( value, getAttribute( 'imageShapeFlipX' ), getAttribute( 'imageShapeFlipY' ), getAttribute( 'imageShapeStretch' ) )
 				} }
-				dependencies={ [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ] }
+				dependencies={ [
+					'imageShapeFlipX',
+					'imageShapeFlipY',
+					'imageShapeStretch',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -220,7 +226,12 @@ const Styles = props => {
 				valueCallback={ ( value, getAttribute ) => {
 					return getShapeCSS( value, getAttribute( 'imageShapeFlipX' ), getAttribute( 'imageShapeFlipY' ), getAttribute( 'imageShapeStretch' ) )
 				} }
-				dependencies={ [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ] }
+				dependencies={ [
+					'imageShapeFlipX',
+					'imageShapeFlipY',
+					'imageShapeStretch',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -233,7 +244,10 @@ const Styles = props => {
 				key="imageOverlayColor-save"
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient' }
-				dependencies={ [ 'imageOverlayColorType' ] }
+				dependencies={ [
+					'imageOverlayColorType',
+					...dependencies,
+				 ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -246,13 +260,16 @@ const Styles = props => {
 				key="imageOverlayColor"
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient' }
-				dependencies={ [ 'imageOverlayColorType' ] }
+				dependencies={ [
+					'imageOverlayColorType',
+					 ...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"
 				selector={ `${ selector }::after` }
-				hoverSelector={ `${ selector }::before` }
+				hoverSelector={ `${ hoverSelector }::before` }
 				styleRule="backgroundImage"
 				attrName="imageOverlayColor"
 				key="imageOverlayColor-save-image"
@@ -315,13 +332,22 @@ const Styles = props => {
 
 					return `linear-gradient(${ angle }, ${ color1 || defaultColor1 } ${ color1Location }, ${ color2 || defaultColor2 } ${ color2Location })`
 				} }
-				dependencies={ [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection', 'imageOverlayOpacity' ] }
+				dependencies={ [
+					'imageOverlayColorType',
+					'imageOverlayColor2',
+					'imageOverlayColor',
+					'imageOverlayGradientLocation1',
+					'imageOverlayGradientLocation2',
+					'imageOverlayGradientDirection',
+					'imageOverlayOpacity',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="edit"
 				selector={ `${ selector } .stk-img-resizer-wrapper::after` }
-				hoverSelector={ `${ selector } .stk-img-resizer-wrapper::before` }
+				hoverSelector={ `${ hoverSelector } .stk-img-resizer-wrapper::before` }
 				hoverSelectorCallback={ hoverSelectorCallback }
 				styleRule="backgroundImage"
 				attrName="imageOverlayColor"
@@ -385,7 +411,16 @@ const Styles = props => {
 
 					return `linear-gradient(${ angle }, ${ color1 || defaultColor1 } ${ color1Location }, ${ color2 || defaultColor2 } ${ color2Location })`
 				} }
-				dependencies={ [ 'imageOverlayColorType', 'imageOverlayColor2', 'imageOverlayColor', 'imageOverlayGradientLocation1', 'imageOverlayGradientLocation2', 'imageOverlayGradientDirection', 'imageOverlayOpacity' ] }
+				dependencies={ [
+					'imageOverlayColorType',
+					 'imageOverlayColor2',
+					 'imageOverlayColor',
+					 'imageOverlayGradientLocation1',
+					 'imageOverlayGradientLocation2',
+					 'imageOverlayGradientDirection',
+					 'imageOverlayOpacity',
+					  ...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

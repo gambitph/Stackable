@@ -129,8 +129,8 @@ export const getDependencyAttrnamesFast = styleParams => {
 
 // These are all the possible suffixes used.
 const ATTR_NAME_MATRIX = [
-	[ '', 'Tablet', 'Mobile' ],
 	[ '', 'Unit' ],
+	[ '', 'Tablet', 'Mobile' ],
 	[ '', 'Hover', 'ParentHover', 'Collapsed' ],
 ]
 
