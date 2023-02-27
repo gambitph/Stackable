@@ -10,9 +10,8 @@ import classnames from 'classnames'
 import { i18n, version as VERSION } from 'stackable'
 import {
 	FourRangeControl,
-	InspectorStyleControls,
+	InspectorLayoutControls,
 	InspectorTabs,
-	PanelAdvancedSettings,
 } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -90,6 +89,20 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
+					<InspectorLayoutControls>
+						<FourRangeControl
+							label={ __( 'Column Spacing', i18n ) }
+							attribute={ 'columnSpacing' }
+							responsive="all"
+							units={ [ 'px', 'em' ] }
+							defaultLocked={ true }
+							min={ [ 0, 0 ] }
+							sliderMax={ [ 200, 30 ] }
+							placeholder={ isOnlyBlock ? '0' : '12' }
+							className="ugb--help-tip-advanced-block-paddings"
+						/>
+					</InspectorLayoutControls>
+
 					<Alignment.InspectorControls hasColumnAlignment={ true } />
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
@@ -101,25 +114,6 @@ const Edit = props => {
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'Column Spacing', i18n ) }
-							id="column-spacing"
-							initialOpen={ true }
-						>
-							<FourRangeControl
-								label={ __( 'Spacing', i18n ) }
-								attribute={ 'columnSpacing' }
-								responsive="all"
-								units={ [ 'px', 'em' ] }
-								defaultLocked={ true }
-								min={ [ 0, 0 ] }
-								sliderMax={ [ 200, 30 ] }
-								placeholder={ isOnlyBlock ? '0' : '12' }
-								className="ugb--help-tip-advanced-block-paddings"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 				</>
 			) }
