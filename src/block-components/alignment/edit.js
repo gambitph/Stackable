@@ -43,15 +43,17 @@ export const Edit = props => {
 					attribute="contentAlign"
 					responsive="all"
 				/>
-				<AdvancedToolbarControl
-					label={ sprintf( __( '%s Justify', i18n ), __( 'Column', i18n ) ) }
-					attribute="columnJustify"
-					responsive="all"
-					controls="flex-horizontal"
-					className="ugb--help-tip-advanced-block-horizontal-align"
-					disableTablet={ ! columnJustify }
-					disableMobile={ ! columnJustify }
-				/>
+				{ props.hasColumnJustify &&
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Justify', i18n ), __( 'Column', i18n ) ) }
+						attribute="columnJustify"
+						responsive="all"
+						controls="flex-horizontal"
+						className="ugb--help-tip-advanced-block-horizontal-align"
+						disableTablet={ ! columnJustify }
+						disableMobile={ ! columnJustify }
+					/>
+				}
 				{ props.hasColumnAlignment &&
 					<AdvancedToolbarControl
 						label={ sprintf( __( '%s Alignment', i18n ), __( 'Column', i18n ) ) }
@@ -92,6 +94,7 @@ export const Edit = props => {
 }
 
 Edit.defaultProps = {
+	hasColumnJustify: false,
 	hasRowAlignment: false,
 	hasColumnAlignment: false,
 	hasBlockAlignment: false,
