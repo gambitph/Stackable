@@ -8,7 +8,7 @@ const SECONDS_IN_MINUTE = SECONDS * 60
 const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60
 const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
 
-class StackableCountdown {
+class _StackableCountdown {
 	constructor( el ) {
 		this.el = el
 		this.blockId = el.getAttribute( 'data-block-id' )
@@ -167,8 +167,14 @@ class StackableCountdown {
 	}
 }
 
-const countdownBlocks = document.querySelectorAll( '.stk-block-countdown' )
+class StackableCountdown {
+	init = () => {
+		const countdownBlocks = document.querySelectorAll( '.stk-block-countdown' )
+		countdownBlocks.forEach( el => {
+			new _StackableCountdown( el ).init()
+		} )
+	}
+}
 
-countdownBlocks.forEach( el => {
-	domReady( new StackableCountdown( el ).init )
-} )
+window.stackableCountdown = new StackableCountdown()
+domReady( window.stackableCountdown.init )

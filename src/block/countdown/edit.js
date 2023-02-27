@@ -24,7 +24,7 @@ import {
 	Typography,
 	getTypographyClasses,
 } from '~stackable/block-components'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorBlockControls, InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
@@ -39,7 +39,7 @@ import {
 /**
  * WordPress dependencies
  */
-import { __, i18n } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { DateTimePicker } from '@wordpress/components'

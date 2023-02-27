@@ -4,7 +4,7 @@ import { Divider } from './divider'
  * External dependencies
  */
 import { AttributeObject } from '~stackable/util'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import {
 	BlockDiv,
 	Style,
@@ -21,7 +21,7 @@ import {
 	Typography,
 } from '~stackable/block-components'
 
-import { __, i18n } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { date } from '@wordpress/date'
 
 const DEFAULT_DATE = date( 'Y-m-d\\TH:i', Date.now() + 345600000 )
