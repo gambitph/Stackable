@@ -10,7 +10,7 @@ import {
 	Popover, ToggleControl, PanelBody,
 } from '@wordpress/components'
 import {
-	memo, useEffect, useState,
+	useEffect, useState, memo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
