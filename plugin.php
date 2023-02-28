@@ -140,6 +140,31 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
  * END Activation & PHP version checks.
  ********************************************************************************************/
 
+/********************************************************************************************
+ * Deactivation & cleanup
+ ********************************************************************************************/
+
+ if ( ! function_exists( 'stackable_deactivation_cleanup' ) ) {
+
+	/**
+	 * Upon deactivation, delete some Stackable database entries which are no
+	 * longer needed (even if re-activating).
+	 *
+	 * @since 3.7.1
+	 */
+	function stackable_deactivation_cleanup() {
+		// Delete deprecated cached dynamic content auto-detected fields.
+		delete_option( 'stackable_dynamic_content_other_fields_frontend' );
+		// Delete cached dynamic content auto-detected fields.
+		delete_option( 'stackable_dynamic_content_meta_keys_frontend' );
+	}
+	register_deactivation_hook( __FILE__, 'stackable_deactivation_cleanup' );
+}
+
+/********************************************************************************************
+ * END Deactivation & cleanup
+ ********************************************************************************************/
+
 /**
  * Freemius.
  * This needs to be first.
