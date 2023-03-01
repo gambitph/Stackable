@@ -258,6 +258,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Shape separators were always covering some content in some blocks #2268
 * Fixed: Cannot select a color for shape separator layers
 * Fixed: Custom roles did not appear in the Conditional Display role picker #2409
+* Fixed: Shape separator layer 2 options were not visible
 * Fixed: Block error that resulted when using a Display Condition taxonomy that was deleted
 * Fixed: CSS optimization post meta options are now hidden from the custom fields view
 * Fixed: Some strings in the Countdown block were not translated #2585

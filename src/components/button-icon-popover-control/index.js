@@ -10,7 +10,7 @@ import {
 	Popover, ToggleControl, PanelBody,
 } from '@wordpress/components'
 import {
-	useEffect, useState, memo,
+	useEffect, useState, memo, useRef,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -22,6 +22,7 @@ import { i18n } from 'stackable'
 
 const ButtonIconPopoverControl = memo( props => {
 	const [ isOpen, setIsOpen ] = useState( false )
+	const buttonRef = useRef( null )
 
 	useEffect( () => {
 		if ( isOpen ) {
@@ -33,7 +34,8 @@ const ButtonIconPopoverControl = memo( props => {
 				}
 
 				if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) &&
-					! ev.target.closest( '.ugb-button-icon-control__edit' ) &&
+					// The popup should toggle when the control's button is clicked.
+					buttonRef?.current !== ev.target.closest( '.ugb-button-icon-control__edit' ) &&
 					! ev.target.closest( '.components-color-picker' ) &&
 					! ev.target.closest( '.react-autosuggest__suggestions-container' ) &&
 					! ev.target.closest( '.components-dropdown__content' ) ) {
@@ -76,6 +78,7 @@ const ButtonIconPopoverControl = memo( props => {
 					label={ __( 'Edit', i18n ) }
 					isSecondary
 					icon="edit"
+					ref={ buttonRef }
 				/>
 				{ isOpen && (
 					<Popover
