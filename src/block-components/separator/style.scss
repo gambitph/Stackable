@@ -2,11 +2,13 @@
 
 .stk-block {
 	&:is(.stk-has-top-separator, .stk-has-bottom-separator) {
-		.stk-inner-blocks {
-			z-index: 5;
-		}
 		> *:not(.stk-video-background) { // Don't change the order of any video backgrounds, they stay at the back.
 			z-index: 2;
+		}
+
+		.stk-separator ~ *:not(.stk-separator, .stk-video-background) {
+			z-index: 5;
+			position: relative;
 		}
 	}
 
