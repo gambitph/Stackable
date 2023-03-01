@@ -256,6 +256,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 3.7.1 =
 * Fixed: Dynamic Content issue where ACF image fields sometimes did not output correctly
 * Fixed: Shape separators were always covering some content in some blocks #2268
+* Fixed: Cannot select a color for shape separator layers
 * Fixed: Custom roles did not appear in the Conditional Display role picker #2409
 * Fixed: Block error that resulted when using a Display Condition taxonomy that was deleted
 * Fixed: CSS optimization post meta options are now hidden from the custom fields view
