@@ -35,7 +35,8 @@ const ButtonIconPopoverControl = memo( props => {
 				if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) &&
 					! ev.target.closest( '.ugb-button-icon-control__edit' ) &&
 					! ev.target.closest( '.components-color-picker' ) &&
-					! ev.target.closest( '.react-autosuggest__suggestions-container' ) ) {
+					! ev.target.closest( '.react-autosuggest__suggestions-container' ) &&
+					! ev.target.closest( '.components-dropdown__content' ) ) {
 					setIsOpen( false )
 				}
 			}
