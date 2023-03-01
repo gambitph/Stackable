@@ -13,7 +13,6 @@ import {
 import { i18n } from 'stackable'
 import {
 	InspectorBlockControls,
-	InspectorLayoutControls,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
@@ -38,20 +37,16 @@ export const Edit = props => {
 
 	return (
 		<>
-			<InspectorLayoutControls>
-				{ hasSizeSpacing && (
-					<SizeControls.Layout
-						attrNameTemplate="block%s"
-						blockEl={ blockEl }
-					/>
-				) }
-			</InspectorLayoutControls>
 			<InspectorBlockControls>
 				{ hasSizeSpacing && (
 					<PanelAdvancedSettings
-						title={ __( 'Spacing', i18n ) }
+						title={ __( 'Size & Spacing', i18n ) }
 						id="spacing"
 					>
+						<SizeControls.Layout
+							attrNameTemplate="block%s"
+							blockEl={ blockEl }
+						/>
 						<SizeControls.Spacing
 							attrNameTemplate="block%s"
 							blockEl={ blockEl }
