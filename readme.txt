@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.9
 Tested up to: 6.1.1
 Requires PHP: 5.7
-Stable tag: 3.7.0
+Stable tag: 3.7.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -252,6 +252,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.7.1 =
+* Fixed: Dynamic Content issue where ACF image fields sometimes did not output correctly
+* Fixed: Shape separators were always covering some content in some blocks #2268
+* Fixed: Cannot select a color for shape separator layers
+* Fixed: Custom roles did not appear in the Conditional Display role picker #2409
+* Fixed: Shape separator layer 2 options were not visible
+* Fixed: Block error that resulted when using a Display Condition taxonomy that was deleted
+* Fixed: CSS optimization post meta options are now hidden from the custom fields view
+* Fixed: Some strings in the Countdown block were not translated #2585
+* Fixed: Some JS hook tweaks #2588
 
 = 3.7.0 =
 [Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
