@@ -178,6 +178,7 @@ module.exports = [
 		'frontend_block_progress_circle': path.resolve( __dirname, '../src/block/progress-circle/frontend-progress-circle.js' ),
 		'frontend_block_progress_bar': path.resolve( __dirname, '../src/block/progress-bar/frontend-progress-bar.js' ),
 		'frontend_block_horizontal_scroller': path.resolve( __dirname, '../src/block/horizontal-scroller/frontend-horizontal-scroller.js' ),
+		'frontend_block_horizontal_scroller': path.resolve( __dirname, '../src/block/tabs/frontend-tabs.js' ),
 	},
 
 	output: {
