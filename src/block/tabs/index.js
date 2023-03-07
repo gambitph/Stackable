@@ -1,5 +1,5 @@
 /**
- * BLOCK: Button Block
+ * BLOCK: Tabs Block
  */
 /**
  * Internal dependencies

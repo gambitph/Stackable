@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { InspectorTabs } from '~stackable/components'
+import { InspectorTabs, ColumnInnerBlocks } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -26,7 +26,6 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
-import { InnerBlocks } from '@wordpress/block-editor'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
@@ -37,12 +36,18 @@ const Edit = props => {
 	const {
 		className,
 		isSelected,
+		context,
 	} = props
+
+	const tabCount = context[ 'stackable/tabCount' ]
 
 	useGeneratedCss( props.attributes )
 
+	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+
 	const blockClassNames = classnames( [
 		className,
+		columnTooltipClass,
 		'stk-block-tab-content',
 	] )
 
@@ -69,12 +74,16 @@ const Edit = props => {
 				clientId={ props.clientId }
 				attributes={ props.attributes }
 				className={ blockClassNames }
+				data-tab={ tabCount }
 			>
 				<div className="stk-block-tab-content__wrapper">
-					<InnerBlocks
-						allowedBlocks={ ALLOWED_INNER_BLOCKS }
+					<ColumnInnerBlocks
+						providerValue={ columnProviderValue }
 						orientation="horizontal"
+						renderAppender={ false }
 						template={ TEMPLATE }
+						allowedBlocks={ ALLOWED_INNER_BLOCKS }
+						templateLock={ props.attributes.templateLock || false }
 					/>
 				</div>
 			</BlockDiv>

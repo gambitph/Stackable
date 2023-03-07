@@ -19,6 +19,8 @@ const Save = props => {
 		attributes,
 	} = props
 
+	const tabCount = attributes.tabCount
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-tab-content',
@@ -29,6 +31,7 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			data-tab={ tabCount }
 		>
 			<div className="stk-block-tab-content__wrapper">
 				<InnerBlocks.Content />

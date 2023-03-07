@@ -4,7 +4,6 @@
 
 import {
 	BlockDiv,
-	CustomCSS,
 	getResponsiveClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
@@ -26,7 +25,7 @@ const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-block-text',
+		'stk-block-tab-labels',
 		responsiveClass,
 	] )
 
@@ -36,7 +35,17 @@ const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<CustomCSS.Content attributes={ attributes } />
+			<div className="stk-block-tab-labels__wrapper">
+				<div className="stk-block-tabs__tab stk-tabs__tab-desktop" aria-selected="true">
+					Tab 1
+				</div>
+				<div className="stk-block-tabs__tab stk-tabs__tab-desktop" >
+					Tab 2
+				</div>
+				<div className="stk-block-tabs__tab stk-tabs__tab-desktop" >
+					Tab 3
+				</div>
+			</div>
 		</BlockDiv.Content>
 	)
 }

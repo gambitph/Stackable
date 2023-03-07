@@ -21,11 +21,15 @@ import {
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
+
 /**
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { dispatch, select } from '@wordpress/data'
+import { attributes } from '../tabs/schema'
+import { getBlockFromExample } from '@wordpress/blocks'
 
 const Edit = props => {
 	const {
@@ -34,6 +38,17 @@ const Edit = props => {
 	} = props
 
 	useGeneratedCss( props.attributes )
+
+	const {
+		insertBlock, updateBlockAttributes,
+	} = dispatch( 'core/block-editor' )
+
+	const {
+		getBlockRootClientId, getNextBlockClientId,
+	} = select( 'core/block-editor' )
+
+	const tabContent = getNextBlockClientId( props.clientId )
+	const tabsBlock = getBlockRootClientId( props.clientId )
 
 	const blockClassNames = classnames( [
 		className,
@@ -74,6 +89,25 @@ const Edit = props => {
 					<div className="stk-block-tabs__tab stk-tabs__tab-desktop" >
 						Tab 3
 					</div>
+					<button
+						className="stk-block-tabs__tab stk-tabs__tab-desktop stk-tabs__add-tab"
+						onClick={ () => {
+							const tabsInnerBlocksClientIds = []
+							tabsInnerBlocksClientIds.push( tabsBlock, tabContent, props.clientId )
+							const tabsUpdatedAttributes = {}
+							const block = getBlockFromExample( 'stackable/column', {} ) // eslint-disable-line
+
+							tabsInnerBlocksClientIds.push( props.clientId )
+
+							tabsInnerBlocksClientIds.forEach( clientId => {
+								tabsUpdatedAttributes[ clientId ] = { tabCount: props.attributes.tabCount + 1 }
+							} )
+							updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
+							insertBlock( block, attributes.tabCount, tabContent, false )
+						} }
+					>
+						+
+					</button>
 				</div>
 			</BlockDiv>
 		</>
