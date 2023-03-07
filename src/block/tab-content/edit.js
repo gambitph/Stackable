@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
-	[ 'stackable/column' ],
+
 ]
 
 const Edit = props => {
