@@ -51,6 +51,8 @@ const Edit = props => {
 		attributes,
 	} = props
 
+	// const [ tabsOptions, setTabsOptions ] = useState( [] )
+
 	useGeneratedCss( props.attributes )
 
 	const {
@@ -65,8 +67,26 @@ const Edit = props => {
 		'stk-block-tabs',
 	] )
 
-	useEffect( () => {
+	// useEffect( () => {
+	// 	for ( let i = 0; i < attributes.tabCount; i++ ) {
+	// 		setTabsOptions( [
+	// 			...tabsContent,
+	// 			{ value: i + 1, label: 'Tab' + ( i + 1 ) },
+	// 		]
+	// 		)
+	// 	}
+	// }, [ ] )
 
+	useEffect( () => {
+		if ( props.attributes.tabCount ) {
+			const tabContentBlock = document.querySelector( `[data-block="${ innerBlocks[ 1 ].clientId }"]` )
+			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
+			columns.forEach( ( element, index ) => {
+				if ( index !== 0 ) {
+					element.style.display = 'none'
+				}
+			} )
+		}
 	}, [ props.attributes.tabCount ] )
 
 	return (
@@ -110,6 +130,11 @@ const Edit = props => {
 									}
 								} }
 							/>
+							{ /* <AdvancedSelectControl
+								label={ __( 'Initial Tab Open', i18n ) }
+								options={ tabsOptions }
+								attribute="inititalTabOpen"
+							/> */ }
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 					<Alignment.InspectorControls hasRowAlignment={ true } />

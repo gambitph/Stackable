@@ -14,6 +14,7 @@ import { withVersion } from '~stackable/higher-order'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
 
 const Save = props => {
 	const {
@@ -21,13 +22,26 @@ const Save = props => {
 		attributes,
 	} = props
 
-	const responsiveClass = getResponsiveClasses( props.attributes )
+	const responsiveClass = getResponsiveClasses( attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-tab-labels',
 		responsiveClass,
 	] )
+
+	const tabs = []
+
+	for ( let i = 1; i <= attributes.tabCount; i++ ) {
+		tabs.push(
+			<button
+				data-tab={ i }
+				className="stk-block-tabs__tab stk-tabs__tab-desktop"
+			>
+				Tab { i }
+			</button>
+		)
+	}
 
 	//this is the thing
 	return (
@@ -36,15 +50,7 @@ const Save = props => {
 			attributes={ attributes }
 		>
 			<div className="stk-block-tab-labels__wrapper">
-				<div className="stk-block-tabs__tab stk-tabs__tab-desktop" aria-selected="true">
-					Tab 1
-				</div>
-				<div className="stk-block-tabs__tab stk-tabs__tab-desktop" >
-					Tab 2
-				</div>
-				<div className="stk-block-tabs__tab stk-tabs__tab-desktop" >
-					Tab 3
-				</div>
+				{ tabs }
 			</div>
 		</BlockDiv.Content>
 	)

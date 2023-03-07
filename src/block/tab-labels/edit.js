@@ -21,6 +21,7 @@ import {
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
+// import { version as VERSION, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -30,6 +31,13 @@ import { __ } from '@wordpress/i18n'
 import { dispatch, select } from '@wordpress/data'
 import { attributes } from '../tabs/schema'
 import { getBlockFromExample } from '@wordpress/blocks'
+
+export const checkOpen = i => {
+	if ( i === 1 ) {
+		return true
+	}
+	return false
+}
 
 const Edit = props => {
 	const {
@@ -54,6 +62,32 @@ const Edit = props => {
 		className,
 		'stk-block-tab-labels',
 	] )
+
+	const handleClick = el => {
+		const dataTab = parseInt( el.target.getAttribute( 'data-tab' ), 10 )
+		const tabContentBlock = document.querySelector( `[data-block="${ tabContent }"]` )
+		const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
+		columns.forEach( ( element, index ) => {
+			if ( dataTab === index + 1 ) {
+				element.style.display = 'flex'
+			} else {
+				element.style.display = 'none'
+			}
+		} )
+	}
+
+	const tabs = []
+
+	for ( let i = 1; i <= props.attributes.tabCount; i++ ) {
+		tabs.push(
+			<button className="stk-block-tabs__tab stk-tabs__tab-desktop"
+				data-tab={ i }
+				onClick={ handleClick }
+			>
+				Tab { i }
+			</button>
+		)
+	}
 
 	return (
 		<>
@@ -80,27 +114,19 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				<div className="stk-block-tab-labels__wrapper">
-					<div className="stk-block-tabs__tab stk-tabs__tab-desktop" aria-selected="true">
-						Tab 1
-					</div>
-					<div className="stk-block-tabs__tab stk-tabs__tab-desktop" >
-						Tab 2
-					</div>
-					<div className="stk-block-tabs__tab stk-tabs__tab-desktop" >
-						Tab 3
-					</div>
+					{ tabs }
 					<button
 						className="stk-block-tabs__tab stk-tabs__tab-desktop stk-tabs__add-tab"
 						onClick={ () => {
+							const tabCount = props.attributes.tabCount || 0
 							const tabsInnerBlocksClientIds = []
 							tabsInnerBlocksClientIds.push( tabsBlock, tabContent, props.clientId )
 							const tabsUpdatedAttributes = {}
 							const block = getBlockFromExample( 'stackable/column', {} ) // eslint-disable-line
 
 							tabsInnerBlocksClientIds.push( props.clientId )
-
 							tabsInnerBlocksClientIds.forEach( clientId => {
-								tabsUpdatedAttributes[ clientId ] = { tabCount: props.attributes.tabCount + 1 }
+								tabsUpdatedAttributes[ clientId ] = { tabCount: parseInt( tabCount, 10 ) + 1 }
 							} )
 							updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 							insertBlock( block, attributes.tabCount, tabContent, false )
