@@ -21,6 +21,10 @@ const tabLabelsAttributes = {
 		type: 'number',
 		default: '',
 	},
+	initialTabOpen: {
+		type: 'number',
+		default: '1',
+	},
 }
 
 export const attributes = ( version = VERSION ) => {
