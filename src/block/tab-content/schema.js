@@ -16,7 +16,14 @@ import {
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 
-const tabLabelsAttributes = {
+const tabContentAttributes = {
+	tabData: {
+		type: 'string',
+		selector: '[data-tab]',
+		source: 'attribute',
+		attribute: 'data-tab',
+		default: '',
+	},
 	tabCount: {
 		type: 'number',
 		default: '',
@@ -41,9 +48,7 @@ export const attributes = ( version = VERSION ) => {
 	Separator.addAttributes( attrObject )
 
 	attrObject.add( {
-		attributes: {
-			tabLabelsAttributes,
-		},
+		attributes: tabContentAttributes,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )

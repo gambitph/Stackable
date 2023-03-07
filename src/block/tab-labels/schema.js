@@ -41,9 +41,7 @@ export const attributes = ( version = VERSION ) => {
 	Separator.addAttributes( attrObject )
 
 	attrObject.add( {
-		attributes: {
-			tabLabelsAttributes,
-		},
+		attributes: tabLabelsAttributes,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )

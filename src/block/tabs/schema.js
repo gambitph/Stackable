@@ -17,6 +17,13 @@ import {
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 
+const tabLabelsAttributes = {
+	tabCount: {
+		type: 'number',
+		default: '',
+	},
+}
+
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
@@ -36,17 +43,7 @@ export const attributes = ( version = VERSION ) => {
 	ContentAlign.addAttributes( attrObject )
 
 	attrObject.add( {
-		attributes: {
-			templateLock: {
-				type: 'string',
-				default: '',
-			},
-			columnArrangement: {
-				stkResponsive: true,
-				type: 'string',
-				default: '',
-			},
-		},
+		attributes: tabLabelsAttributes,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
