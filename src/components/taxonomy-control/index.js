@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	i18n, isPro,
-} from 'stackable'
+import { i18n, isPro } from 'stackable'
 import { AdvancedSelectControl, AdvancedTokenField } from '~stackable/components'
 import { find, compact } from 'lodash'
 
@@ -106,10 +104,12 @@ class TaxonomyControl extends Component {
 
 		const taxonomySuggestionOptions = taxonomyOptions.map( value => value.name )
 		// Parse the taxonomy value to array as passed prop value.
-		let taxonomyValue = taxonomy !== '' ? taxonomy.split( ',' ).map( value => {
-			const { name } = find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === parseInt( value ) ) || {}
-			return name
-		} ) : undefined
+		let taxonomyValue = taxonomy !== ''
+			? taxonomy.split( ',' ).map( value => {
+				const { name } = find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === parseInt( value ) ) || {}
+				return name
+			} ).filter( value => value ) // Remove all undefined values because this will make the TokenField error.
+			: undefined
 
 		// If the taxonomy value is not included in the list of options, force value as undefined
 		if ( ! compact( taxonomyValue ).length ) {
