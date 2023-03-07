@@ -4,6 +4,7 @@
 	"title": "Tab Labels",
 	"description": "Container for Tabs Block labels",
 	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"parent": [
 		"stackable/tabs"
 	],
