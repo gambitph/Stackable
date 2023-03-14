@@ -13,12 +13,17 @@ class _StackableTabs {
 	}
 
 	getDefaultState = () => {
-		this.activeTab = '1'
+		this.tabsLabels.forEach( element => {
+			if ( element.getAttribute( 'data-initial-open' ) === 'true' ) {
+				this.activeTab = element.getAttribute( 'data-tab' ).toString()
+			}
+		} )
 	}
 
 	hideTabs = () => {
 		this.tabsContent.forEach( ( element, index ) => {
-			if ( this.activeTab === ( index + 1 ).toString() ) {
+			const defaultOpenTab = this.tabsLabels[ index ].getAttribute( 'data-initial-open' )
+			if ( defaultOpenTab === 'true' ) {
 				element.style.display = 'flex'
 			} else {
 				element.style.display = 'none'

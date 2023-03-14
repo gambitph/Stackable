@@ -23,7 +23,7 @@ const tabLabelsAttributes = {
 		default: '',
 	},
 	initialTabOpen: {
-		type: 'number',
+		type: 'string',
 		default: '1',
 	},
 }

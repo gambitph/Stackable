@@ -30,6 +30,7 @@ import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { dispatch, select } from '@wordpress/data'
 import { attributes } from '../tabs/schema'
+import { useCallback } from '@wordpress/element'
 import { getBlockFromExample } from '@wordpress/blocks'
 
 export const checkOpen = i => {
@@ -55,26 +56,26 @@ const Edit = props => {
 		getBlockRootClientId, getNextBlockClientId,
 	} = select( 'core/block-editor' )
 
-	const tabContent = getNextBlockClientId( props.clientId )
-	const tabsBlock = getBlockRootClientId( props.clientId )
-
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-tab-labels',
 	] )
 
-	const handleClick = el => {
+	const handleClick = useCallback( el => {
+		const tabContent = getNextBlockClientId( props.clientId )
 		const dataTab = parseInt( el.target.getAttribute( 'data-tab' ), 10 )
 		const tabContentBlock = document.querySelector( `[data-block="${ tabContent }"]` )
 		const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
 		columns.forEach( ( element, index ) => {
 			if ( dataTab === index + 1 ) {
-				element.style.display = 'flex'
+				element.classList.remove( 'stk-block-tabs__content--hidden' )
+				element.classList.add( 'stk-block-tabs__content--shown' )
 			} else {
-				element.style.display = 'none'
+				element.classList.remove( 'stk-block-tabs__content--shown' )
+				element.classList.add( 'stk-block-tabs__content--hidden' )
 			}
 		} )
-	}
+	} )
 
 	const tabs = []
 
@@ -82,6 +83,7 @@ const Edit = props => {
 		tabs.push(
 			<button className="stk-block-tabs__tab stk-tabs__tab-desktop"
 				data-tab={ i }
+				data-initial-open={ props.attributes.initialTabOpen === i.toString() ? true : false }
 				onClick={ handleClick }
 			>
 				Tab { i }
@@ -118,6 +120,8 @@ const Edit = props => {
 					<button
 						className="stk-block-tabs__tab stk-tabs__tab-desktop stk-tabs__add-tab"
 						onClick={ () => {
+							const tabContent = getNextBlockClientId( props.clientId )
+							const tabsBlock = getBlockRootClientId( props.clientId )
 							const tabCount = props.attributes.tabCount || 0
 							const tabsInnerBlocksClientIds = []
 							tabsInnerBlocksClientIds.push( tabsBlock, tabContent, props.clientId )

@@ -36,6 +36,7 @@ const Save = props => {
 		tabs.push(
 			<button
 				data-tab={ i }
+				data-initial-open={ attributes.initialTabOpen === i.toString() ? true : false }
 				className="stk-block-tabs__tab stk-tabs__tab-desktop"
 			>
 				Tab { i }
