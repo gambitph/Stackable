@@ -36,10 +36,7 @@ const Edit = props => {
 	const {
 		className,
 		isSelected,
-		context,
 	} = props
-
-	const tabCount = context[ 'stackable/tabCount' ]
 
 	useGeneratedCss( props.attributes )
 
@@ -74,7 +71,6 @@ const Edit = props => {
 				clientId={ props.clientId }
 				attributes={ props.attributes }
 				className={ blockClassNames }
-				data-tab={ tabCount }
 			>
 				<div className="stk-block-tab-content__wrapper">
 					<ColumnInnerBlocks

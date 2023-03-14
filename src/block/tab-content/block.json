@@ -4,7 +4,7 @@
 	"title": "Tab Content",
 	"description": "Container for Tabs Block content",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId", "stackable/tabCount" ],
+	"usesContext": [ "postId", "postType", "queryId" ],
 	"parent": [
 		"stackable/tabs"
 	],
