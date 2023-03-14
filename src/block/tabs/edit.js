@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames'
 import {
-	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedRangeControl,
+	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedRangeControl, AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -35,7 +35,7 @@ import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { TabsStyle } from './style'
-import { useEffect } from '@wordpress/element'
+import { useEffect, useState } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 import { getBlockFromExample } from '@wordpress/blocks'
 
@@ -51,7 +51,9 @@ const Edit = props => {
 		attributes,
 	} = props
 
-	// const [ tabsOptions, setTabsOptions ] = useState( [] )
+	const [ tabsOptions, setTabsOptions ] = useState( [] )
+	const [ isReduced, setIsReduced ] = useState( false )
+	const [ isRendered, setIsRendered ] = useState( false )
 
 	useGeneratedCss( props.attributes )
 
@@ -65,25 +67,48 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-tabs',
+		'stk-classnames',
 	] )
 
-	// useEffect( () => {
-	// 	for ( let i = 0; i < attributes.tabCount; i++ ) {
-	// 		setTabsOptions( [
-	// 			...tabsContent,
-	// 			{ value: i + 1, label: 'Tab' + ( i + 1 ) },
-	// 		]
-	// 		)
-	// 	}
-	// }, [ ] )
+	useEffect( () => {
+		const tempOptions = []
+		for ( let i = 0; i < attributes.tabCount; i++ ) {
+			tempOptions.push( { label: `Tab ${ i + 1 }`, value: i + 1 } )
+		}
+		setTabsOptions( tempOptions )
+	}, [ props.attributes.tabCount ] )
 
 	useEffect( () => {
-		if ( props.attributes.tabCount ) {
+		if ( ! isRendered ) {
 			const tabContentBlock = document.querySelector( `[data-block="${ innerBlocks[ 1 ].clientId }"]` )
 			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
 			columns.forEach( ( element, index ) => {
-				if ( index !== 0 ) {
-					element.style.display = 'none'
+				if ( index + 1 !== parseInt( props.attributes.initialTabOpen, 10 ) ) {
+					element.classList.add( 'stk-block-tabs__content--hidden' )
+				} else {
+					element.classList.add( 'stk-block-tabs__content--shown' )
+				}
+			} )
+		}
+		setIsRendered( true )
+	}, [ props.attributes.tabCount ] )
+
+	useEffect( () => {
+		if ( isRendered ) {
+			let a = false
+			const tabContentBlock = document.querySelector( `[data-block="${ innerBlocks[ 1 ].clientId }"]` )
+			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
+			columns.forEach( ( element, index, array ) => {
+				if ( ! element.classList.contains( 'stk-block-tabs__content--shown' ) ) {
+					element.classList.add( 'stk-block-tabs__content--hidden' )
+					a = true
+				} else {
+					a = false
+				}
+
+				if ( isReduced && a && index === array.length - 1 ) {
+					element.classList.remove( 'stk-block-tabs__content--hidden' )
+					element.classList.add( 'stk-block-tabs__content--shown' )
 				}
 			} )
 		}
@@ -115,12 +140,11 @@ const Edit = props => {
 									tabsInnerBlocksClientIds.forEach( clientId => {
 										tabsUpdatedAttributes[ clientId ] = { tabCount: value }
 									} )
-									updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 									// insertBlock( block, innerBlocks[ 1 ].innerBlocks.length, innerBlocks[ 1 ].clientId, false )
 									if ( value < attributes.tabCount ) {
 										const tabsInnerColumns = innerBlocks[ 1 ].innerBlocks.slice( value ).map( ( { clientId } ) => clientId )
 										removeBlocks( tabsInnerColumns, false )
-										// Add a blank column.
+										setIsReduced( true )
 									} else {
 										const columnsSize = innerBlocks[ 1 ].innerBlocks.length
 										for ( let i = columnsSize; i < value; i++ ) {
@@ -128,13 +152,24 @@ const Edit = props => {
 											insertBlock( block, i, innerBlocks[ 1 ].clientId, false )
 										}
 									}
+									updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 								} }
 							/>
-							{ /* <AdvancedSelectControl
+							<AdvancedSelectControl
 								label={ __( 'Initial Tab Open', i18n ) }
 								options={ tabsOptions }
-								attribute="inititalTabOpen"
-							/> */ }
+								value={ attributes.initialTabOpen }
+								attribute="initialTabOpen"
+								onChange={ value => {
+									const tabsInnerBlocksClientIds = innerBlocks.filter( innerBlock => innerBlock.name === 'stackable/tab-labels' ).map( ( { clientId } ) => clientId )
+									tabsInnerBlocksClientIds.push( props.clientId )
+									const tabsUpdatedAttributes = {}
+									tabsInnerBlocksClientIds.forEach( clientId => {
+										tabsUpdatedAttributes[ clientId ] = { initialTabOpen: value }
+									} )
+									updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
+								} }
+							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 					<Alignment.InspectorControls hasRowAlignment={ true } />
