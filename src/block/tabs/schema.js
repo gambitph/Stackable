@@ -20,7 +20,7 @@ import { version as VERSION } from 'stackable'
 const tabLabelsAttributes = {
 	tabCount: {
 		type: 'number',
-		default: '',
+		default: 3,
 	},
 	initialTabOpen: {
 		type: 'string',
