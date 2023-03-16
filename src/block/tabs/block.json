@@ -5,7 +5,9 @@
 	"description": "Insert your content inside tabs like a browser",
 	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
-	"keywords": [],
+	"keywords": [
+		"toggle"
+	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",
 	"stk-demo": "https://wpstackable.com/table-of-contents-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
