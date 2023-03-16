@@ -9,16 +9,13 @@ import {
 	BlockDiv,
 	useGeneratedCss,
 	MarginBottom,
-	Alignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
-	ConditionalDisplay,
-	Separator,
 	Transform,
-	ContentAlign,
+	BlockStyle,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -38,10 +35,30 @@ import { TabsStyle } from './style'
 import { useEffect, useState } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 import { getBlockFromExample } from '@wordpress/blocks'
+import { isEmpty } from 'lodash'
 
 const TEMPLATE = [
 	[ 'stackable/tab-labels', {} ],
 	[ 'stackable/tab-content', {} ],
+]
+
+const tabLabelStyles = [
+	{
+		name: 'top',
+		label: __( 'Top', i18n ),
+	},
+	{
+		name: 'bottom',
+		label: __( 'Bottom', i18n ),
+	},
+	{
+		name: 'left',
+		label: __( 'Left', i18n ),
+	},
+	{
+		name: 'right',
+		label: __( 'Right', i18n ),
+	},
 ]
 
 const Edit = props => {
@@ -79,9 +96,13 @@ const Edit = props => {
 	}, [ props.attributes.tabCount ] )
 
 	useEffect( () => {
-		if ( ! isRendered ) {
+		if ( ! isRendered && ! isEmpty( innerBlocks ) ) {
 			const tabContentBlock = document.querySelector( `[data-block="${ innerBlocks[ 1 ].clientId }"]` )
-			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
+			if ( tabContentBlock === null ) {
+				return
+			}
+			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' ) || []
+			// console.log( columns, tabContentBlock )
 			columns.forEach( ( element, index ) => {
 				if ( index + 1 !== parseInt( props.attributes.initialTabOpen, 10 ) ) {
 					element.classList.add( 'stk-block-tabs__content--hidden' )
@@ -89,26 +110,26 @@ const Edit = props => {
 					element.classList.add( 'stk-block-tabs__content--shown' )
 				}
 			} )
+			setIsRendered( true )
 		}
-		setIsRendered( true )
-	}, [ props.attributes.tabCount ] )
+	}, [ innerBlocks ] )
 
 	useEffect( () => {
 		if ( isRendered ) {
-			let a = false
+			let a = true
 			const tabContentBlock = document.querySelector( `[data-block="${ innerBlocks[ 1 ].clientId }"]` )
 			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
 			columns.forEach( ( element, index, array ) => {
 				if ( ! element.classList.contains( 'stk-block-tabs__content--shown' ) ) {
 					element.classList.add( 'stk-block-tabs__content--hidden' )
-					a = true
 				} else {
 					a = false
 				}
 
 				if ( isReduced && a && index === array.length - 1 ) {
-					element.classList.remove( 'stk-block-tabs__content--hidden' )
-					element.classList.add( 'stk-block-tabs__content--shown' )
+					element.classList.remove( 'stk-block-tabs__content--shown' )
+					element.classList.add( 'stk-block-tabs__content--hidden' )
+					setIsReduced( false )
 				}
 			} )
 		}
@@ -133,7 +154,6 @@ const Edit = props => {
 								onChange={ value => {
 									const tabsInnerBlocksClientIds = innerBlocks.map( ( { clientId } ) => clientId )
 									const tabsUpdatedAttributes = {}
-									const block = getBlockFromExample( 'stackable/column', {} ) // eslint-disable-line
 
 									tabsInnerBlocksClientIds.push( props.clientId )
 
@@ -146,6 +166,7 @@ const Edit = props => {
 										removeBlocks( tabsInnerColumns, false )
 										setIsReduced( true )
 									} else {
+										setIsReduced( false )
 										const columnsSize = innerBlocks[ 1 ].innerBlocks.length
 										for ( let i = columnsSize; i < value; i++ ) {
 											const block = getBlockFromExample( 'stackable/column', {} )
@@ -172,17 +193,14 @@ const Edit = props => {
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
-					<Alignment.InspectorControls hasRowAlignment={ true } />
+					<BlockStyle.InspectorControls styles={ tabLabelStyles } />
 					<BlockDiv.InspectorControls />
-					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-tabs" />
 					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-					<ContentAlign.InspectorControls hasColumnCount={ true } />
 				</>
 			) }
 
@@ -198,12 +216,14 @@ const Edit = props => {
 					clientId={ props.clientId }
 				/>
 				<CustomCSS mainBlockClass="stk-block-tabs" />
-				<InnerBlocks
-					orientation="horizontal"
-					template={ TEMPLATE }
-					templateInsertUpdatesSelection={ true }
-					templateLock="all"
-				/>
+				<div className="stk-block-tabs__wrapper">
+					<InnerBlocks
+						orientation="horizontal"
+						template={ TEMPLATE }
+						templateInsertUpdatesSelection={ true }
+						templateLock="all"
+					/>
+				</div>
 			</BlockDiv>
 			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>

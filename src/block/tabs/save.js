@@ -34,7 +34,10 @@ const Save = props => {
 				version={ props.version }
 			/>
 			<CustomCSS.Content attributes={ props.attributes } />
-			<InnerBlocks.Content />
+			<div className="stk-block-tabs__wrapper">
+				<InnerBlocks.Content />
+			</div>
+
 		</BlockDiv.Content>
 	)
 }
