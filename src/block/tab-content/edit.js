@@ -6,15 +6,8 @@ import { InspectorTabs, ColumnInnerBlocks } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
-	Alignment,
-	Advanced,
 	CustomCSS,
-	Responsive,
 	CustomAttributes,
-	EffectsAnimations,
-	ConditionalDisplay,
-	Separator,
-	Transform,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -29,7 +22,9 @@ import { __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
-
+	[ 'stackable/column' ],
+	[ 'stackable/column' ],
+	[ 'stackable/column' ],
 ]
 
 const Edit = props => {
@@ -53,16 +48,9 @@ const Edit = props => {
 			{ isSelected && (
 				<>
 					<InspectorTabs />
-					<Alignment.InspectorControls hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />
-					<Separator.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-tab-content" />
 				</>
 			) }
 

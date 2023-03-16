@@ -9,11 +9,8 @@ import {
 	Alignment,
 	Advanced,
 	CustomCSS,
-	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
-	ConditionalDisplay,
-	Separator,
 	Transform,
 } from '~stackable/block-components'
 import {
@@ -98,14 +95,11 @@ const Edit = props => {
 					<InspectorTabs />
 					<Alignment.InspectorControls hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />
-					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-labels" />
 				</>
 			) }
 
