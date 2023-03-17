@@ -11,6 +11,7 @@ import save from './save'
 import metadata from './block.json'
 import schema from './schema'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
@@ -25,7 +26,7 @@ export const settings = {
 		anchor: true,
 	},
 	example,
-
+	deprecated,
 	edit,
 	save,
 	merge( attributes, attributesToMerge ) {

@@ -53,6 +53,7 @@ export const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 			data-video={ attributes.videoLink }
+			version={ props.version }
 		>
 			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

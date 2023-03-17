@@ -125,6 +125,7 @@ const Save = props => {
 			data-stk-countdown-action={ attributes.actionOnExpiration }
 			data-stk-countdown-timezone={ attributes.timezone }
 			data-stk-countdown-is-double-digit={ attributes.isDoubleDigitHidden }
+			version={ props.version }
 		>
 			<CustomCSS.Content attributes={ attributes } />
 			<div className="stk-block-countdown__container">

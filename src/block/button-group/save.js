@@ -8,7 +8,7 @@ import { ButtonGroupStyles } from './style'
  */
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 
 /**
  * WordPress dependencies
@@ -56,6 +56,7 @@ export const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassName }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<ButtonGroupStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

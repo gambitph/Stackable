@@ -6,7 +6,7 @@ import { CardStyles } from './style'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
@@ -56,17 +56,20 @@ export const Save = props => {
 	)
 
 	const innerClassNames = classnames(
-		applyFilters( 'stackable.card.save.innerClassNames', {
-			'stk-block-content': true,
-			'stk-inner-blocks': true,
-			[ blockAlignmentClass ]: blockAlignmentClass,
-
-		}, props ) )
+		applyFilters( 'stackable.card.save.innerClassNames', [
+			{
+				'stk-block-content': true,
+				'stk-inner-blocks': true,
+				[ blockAlignmentClass ]: blockAlignmentClass,
+			},
+			`stk-${ attributes.uniqueId }-inner-blocks`,
+		], props ) )
 
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<CardStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

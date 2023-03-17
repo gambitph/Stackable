@@ -6,6 +6,7 @@ import save from './save'
 import schema from './schema'
 import example from './example'
 import metadata from './block.json'
+import deprecated from './deprecated'
 
 import { HorizontalScrollerIcon } from '~stackable/icons'
 
@@ -21,6 +22,7 @@ export const settings = {
 		stkSaveBlockStyle: false,
 	},
 	example,
+	deprecated,
 	edit,
 	save,
 }

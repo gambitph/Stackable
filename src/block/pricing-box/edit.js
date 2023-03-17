@@ -6,7 +6,7 @@ import variations from './variations'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import {
@@ -66,6 +66,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		`stk-${ props.attributes.uniqueId }-container`,
+		`stk-${ props.attributes.uniqueId }-inner-blocks`,
 		'stk-block-pricing-box__content',
 	], getContentAlignmentClasses( props.attributes ) )
 

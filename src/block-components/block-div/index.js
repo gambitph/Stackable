@@ -1,9 +1,10 @@
+import './deprecated'
 import { addAttributes } from './attributes'
 import { createUniqueClass, useUniqueId } from './use-unique-id'
 import { Style } from './style'
 import { Edit } from './edit'
 
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { Div } from '~stackable/components'
 import { useVariationPicker } from '~stackable/hooks'
 import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
@@ -12,6 +13,7 @@ import { useBlockProps } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { getHtmlTag } from '../advanced/use-html-tag'
 import { CustomAttributes } from '../custom-attributes'
+import { version as VERSION } from 'stackable'
 
 export { useUniqueId }
 
@@ -26,6 +28,7 @@ export const BlockDiv = props => {
 		blockHoverClass,
 		clientId,
 		attributes,
+		version: _version,
 		...propsToPass
 	} = props
 
@@ -49,19 +52,27 @@ export const BlockDiv = props => {
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
 	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
-	const classNames = classnames( [
-		className,
-		'stk-block',
-		blockHoverClass,
-		attributes.className, // Custom CSS classes.
-		{
-			[ uniqueBlockClass ]: withUniqueClass,
-		},
-	],
-	applyFilters( 'stackable.block-components.block-div.classnames', [], attributes ),
-	{
-		'stk-block-background': attributes.hasBackground,
-	} )
+	const classNames = classnames( applyFilters( 'stackable.block-components.block-div.classnames',
+		[
+			className,
+			'stk-block',
+			blockHoverClass,
+			attributes.className, // Custom CSS classes.
+			{
+				[ uniqueBlockClass ]: withUniqueClass,
+				'stk-block-background': attributes.hasBackground,
+				// When the block has auto margins, we need to "add" those margins to
+				// the main block div so we can simulate the effect inside the editor.
+				// This works in conjunction with the styles in
+				// block-components/alignment/editor.scss
+				'stk--block-margin-top-auto': attributes.blockMargin?.top === 'auto',
+				'stk--block-margin-right-auto': attributes.blockMargin?.right === 'auto',
+				'stk--block-margin-bottom-auto': attributes.blockMargin?.bottom === 'auto',
+				'stk--block-margin-left-auto': attributes.blockMargin?.left === 'auto',
+			},
+		],
+		props
+	) )
 
 	return <Div
 		{ ...propsToPass }
@@ -95,6 +106,7 @@ BlockDiv.Content = props => {
 		attributes,
 		applyCustomAttributes,
 		applyAdvancedAttributes,
+		version: _version,
 		...propsToPass
 	} = props
 
@@ -104,15 +116,22 @@ BlockDiv.Content = props => {
 	let uniqueBlockClass = getUniqueBlockClass( attributes.uniqueId )
 	uniqueBlockClass = applyFilters( 'stackable.block-div.uniqueClass.save', uniqueBlockClass, attributes )
 
-	const classNames = classnames( [
-		className,
-		'stk-block',
-		uniqueBlockClass,
-	],
-	applyFilters( 'stackable.block-components.block-div.classnames.content', [], attributes ),
-	{
-		'stk-block-background': attributes.hasBackground,
-	} )
+	const classNames = classnames( applyFilters( 'stackable.block-components.block-div.classnames.content',
+		[
+			className,
+			'stk-block',
+			uniqueBlockClass,
+			{
+				'stk-block-background': attributes.hasBackground,
+				// When the block has auto top/bottom margins, we need to force the
+				// parent container to be 100% height or else the auto won't have any
+				// effect in the frontend. This is okay in the editor-side.
+				'stk--block-margin-top-auto': attributes.blockMargin?.top === 'auto',
+				'stk--block-margin-bottom-auto': attributes.blockMargin?.bottom === 'auto',
+			},
+		],
+		props
+	) )
 
 	return <Div.Content
 		{ ...propsToPass }
@@ -131,6 +150,7 @@ BlockDiv.Content = props => {
 }
 
 BlockDiv.Content.defaultProps = {
+	version: VERSION,
 	className: '',
 	attributes: {},
 	applyCustomAttributes: true,

@@ -63,6 +63,7 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<ProgressBarStyles.Content { ...props } />
 			<CustomCSS.Content attributes={ attributes } />

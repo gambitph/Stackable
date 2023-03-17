@@ -68,8 +68,8 @@
 }
 
 // Block spacing when horizontally oriented.
-.stk--block-orientation-horizontal > * + * {
-	margin-left: cssvar(block-margin-bottom);
+.stk--block-horizontal-flex {
+	column-gap: cssvar(block-margin-bottom);
 }
 
 // Containers

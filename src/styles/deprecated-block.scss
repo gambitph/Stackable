@@ -31,3 +31,25 @@
 		}
 	}
 }
+
+// Block spacing when horizontally oriented. This has been replaced by .stk--block-horizontal-flex.
+// We still need to keep this just in case someone is using the old block in the frontend.
+.stk--block-orientation-horizontal > * + * {
+	margin-left: cssvar(block-margin-bottom);
+}
+
+.stk--block-orientation-horizontal .stk-block {
+	width: auto;
+}
+.stk-inner-blocks {
+	&:not(.stk-row) {
+		// Inner block orientation.
+		&.stk--block-orientation-horizontal {
+			flex-direction: row;
+			> * {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+		}
+	}
+}

@@ -80,6 +80,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-notification__content',
+		`stk-${ attributes.uniqueId }-inner-blocks`,
 	], getContentAlignmentClasses( attributes ) )
 
 	const lastBlockName = last( innerBlocks )?.name

@@ -5,7 +5,9 @@ import { addAttributes } from './attributes'
 import { Style } from './style'
 import { ResizableBottomMargin } from '~stackable/components'
 import { getUniqueBlockClass } from '~stackable/util'
-import { useBlockAttributesContext, useBlockContext } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockContext, useBlockContextContext,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -28,7 +30,18 @@ export const MarginBottom = memo( props => {
 			blockMarginUnitMobile: attributes.blockMarginUnitMobile,
 		}
 	} )
+
 	const { isLastBlock, parentBlock } = useBlockContext( clientId )
+
+	// Check if the parent block (like a Column block) is displaying blocks
+	// horizontally, we don't want to show the margin bottom draggable
+	// indicator.
+	const parentInnerBlockOrientation = useBlockContextContext( context => {
+		return context[ 'stackable/innerBlockOrientation' ]
+	} )
+	if ( parentInnerBlockOrientation === 'horizontal' ) {
+		return null
+	}
 
 	// Don't show the margin bottom draggable indicator if this is in a row block.
 	const isRowBlock = parentBlock &&

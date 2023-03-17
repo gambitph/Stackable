@@ -1,0 +1,12 @@
+.wp-block:has(> .stk--block-margin-top-auto) {
+	margin-top: auto !important;
+}
+.wp-block:has(> .stk--block-margin-right-auto) {
+	margin-right: auto !important;
+}
+.wp-block:has(> .stk--block-margin-bottom-auto) {
+	margin-bottom: auto !important;
+}
+.wp-block:has(> .stk--block-margin-left-auto) {
+	margin-left: auto !important;
+}

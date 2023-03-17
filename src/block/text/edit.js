@@ -28,7 +28,6 @@ import {
 	InspectorTabs,
 	AdvancedRangeControl,
 	InspectorLayoutControls,
-	ControlSeparator,
 } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -149,8 +148,6 @@ const Edit = props => {
 								sliderMax="50"
 								responsive="all"
 							/>
-
-							<ControlSeparator />
 						</InspectorLayoutControls>
 					) }
 

@@ -4,7 +4,7 @@
 	"title": "Icon Button",
 	"description": "Add a customizable button.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"parent": [
 		"stackable/button-group"
 	],

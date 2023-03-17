@@ -4,7 +4,7 @@
 	"title": "Horizontal Scroller",
 	"description": "A slider that scrolls horizontally.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId"],
+	"usesContext": [ "postId", "postType", "queryId", "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"Slider",
 		"Carousel"

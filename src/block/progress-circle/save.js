@@ -60,6 +60,7 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<ProgressCircleStyles.Content { ...props } />
 			<CustomCSS.Content attributes={ attributes } />

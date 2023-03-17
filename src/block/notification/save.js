@@ -9,7 +9,7 @@ import SVGCloseIcon from './images/close-icon.svg'
  */
 import { version as VERSION } from 'stackable'
 import { withVersion } from '~stackable/higher-order'
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import {
 	BlockDiv,
 	ContainerDiv,
@@ -25,6 +25,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -48,16 +49,21 @@ export const Save = props => {
 		'stk-block-notification__content',
 	], getContentAlignmentClasses( attributes ) )
 
-	const innerClassNames = classnames( [
-		'stk-block-content',
-		'stk-inner-blocks',
-		blockAlignmentClass,
-	] )
+	const innerClassNames = classnames( applyFilters( 'stackable.notification.save.innerClassNames',
+		[
+			'stk-block-content',
+			'stk-inner-blocks',
+			blockAlignmentClass,
+			`stk-${ attributes.uniqueId }-inner-blocks`,
+		],
+		props
+	) )
 
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<ContainerStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

@@ -4,7 +4,10 @@
 	"title": "Notification",
 	"description": "Show a notice to your readers. People can dismiss the notice to permanently hide it.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"providesContext": {
+		"stackable/innerBlockOrientation": "innerBlockOrientation"
+	},
 	"keywords": [
 		"Notice",
 		"Alert"

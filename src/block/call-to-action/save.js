@@ -8,7 +8,7 @@ import { ContainerStyles } from './style'
  */
 import { version as VERSION } from 'stackable'
 import { withVersion } from '~stackable/higher-order'
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import {
 	BlockDiv,
 	ContainerDiv,
@@ -26,6 +26,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { applyFilters } from '@wordpress/hooks'
 
 export const Save = props => {
 	const {
@@ -48,16 +49,21 @@ export const Save = props => {
 		'stk-block-call-to-action__content',
 	], getContentAlignmentClasses( attributes ) )
 
-	const innnerClassNames = classnames( [
-		blockAlignmentClass,
-		'stk-block-content',
-		'stk-inner-blocks',
-	] )
+	const innerClassNames = classnames( applyFilters( 'stackable.call-to-action.save.innerClassNames',
+		[
+			blockAlignmentClass,
+			'stk-block-content',
+			'stk-inner-blocks',
+			`stk-${ attributes.uniqueId }-inner-blocks`,
+		],
+		props
+	) )
 
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<ContainerStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
@@ -66,7 +72,7 @@ export const Save = props => {
 					className={ contentClassNames }
 					attributes={ attributes }
 				>
-					<div className={ innnerClassNames }>
+					<div className={ innerClassNames }>
 						<InnerBlocks.Content />
 					</div>
 					<BlockLink.Content attributes={ attributes } />

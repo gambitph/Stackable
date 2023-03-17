@@ -14,7 +14,7 @@
 		"Container"
 	],
 	"providesContext": {
-		"stackable/columnJustify": "columnJustify"
+		"stackable/innerBlockOrientation": "columnJustify"
 	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "essential",

@@ -32,6 +32,11 @@ addFilter( 'stackable.table-of-contents.save.tableOfContentsClasses', 'stackable
 } )
 
 const deprecated = [
+	// Support new margin-top/bottom classes.
+	{
+		attributes: attributes( '3.7.9' ),
+		save: withVersion( '3.7.9' )( Save ),
+	},
 	 {
 		 attributes: attributes( '3.6.2' ),
 		 migrate: attributes => {

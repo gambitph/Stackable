@@ -14,9 +14,9 @@ Columns.Style = Style
 Columns.addAttributes = addAttributes
 
 // We need to add a special class for column orders.
-addFilter( 'stackable.block-components.block-div.classnames.content', 'stackable/column-order', ( classes, attributes ) => {
-	if ( attributes.columnArrangementMobile || attributes.columnArrangementTablet ) {
-		return [ ...classes, 'stk--has-column-order' ]
+addFilter( 'stackable.block-components.block-div.classnames.content', 'stackable/column-order', ( classes, props ) => {
+	if ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet ) {
+		classes.push( 'stk--has-column-order' )
 	}
 	return classes
 } )

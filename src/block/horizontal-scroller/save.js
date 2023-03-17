@@ -55,6 +55,7 @@ export const Save = props => {
 		 <BlockDiv.Content
 			 className={ blockClassName }
 			 attributes={ attributes }
+			 version={ props.version }
 		 >
 			 <BlockStyles.Content version={ props.version } attributes={ attributes } />
 			 <CustomCSS.Content attributes={ attributes } />

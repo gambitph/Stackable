@@ -93,6 +93,39 @@ const FLEX_VERTICAL_ALIGN_OPTIONS = [
 	},
 ]
 
+const FLEX_VERTICAL_JUSTIFY_OPTIONS = [
+	{
+		value: 'flex-start',
+		title: __( 'Start', i18n ),
+		icon: <SVGIconTop />,
+	},
+	{
+		value: 'center',
+		title: __( 'Center', i18n ),
+		icon: <SVGIconVerticalCenter />,
+	},
+	{
+		value: 'flex-end',
+		title: __( 'End', i18n ),
+		icon: <SVGIconBottom />,
+	},
+	{
+		value: 'space-between',
+		title: __( 'Space Between', i18n ),
+		icon: <SVGIconSpaceBetween style={ { transform: 'rotate(90deg)' } } />,
+	},
+	{
+		value: 'space-around',
+		title: __( 'Space Around', i18n ),
+		icon: <SVGIconSpaceAround style={ { transform: 'rotate(90deg)' } } />,
+	},
+	{
+		value: 'space-evenly',
+		title: __( 'Space Evenly', i18n ),
+		icon: <SVGIconSpaceEvenly style={ { transform: 'rotate(90deg)' } } />,
+	},
+]
+
 const HORIZONTAL_ALIGN_OPTIONS = [
 	{
 		value: 'flex-start',
@@ -132,6 +165,7 @@ const VERTICAL_ALIGN_OPTIONS = [
 const CONTROLS = applyFilters( 'stackable.toolbar-control.controls', {
 	'flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
 	'flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
+	'flex-justify-vertical': FLEX_VERTICAL_JUSTIFY_OPTIONS,
 	horizontal: HORIZONTAL_ALIGN_OPTIONS,
 	vertical: VERTICAL_ALIGN_OPTIONS,
 } )

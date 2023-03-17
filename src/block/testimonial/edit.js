@@ -52,6 +52,7 @@ const Edit = props => {
 		clientId,
 		className,
 		isSelected,
+		attributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -69,6 +70,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-testimonial__content',
+		`stk-${ attributes.uniqueId }-inner-blocks`,
 	], getContentAlignmentClasses( props.attributes ) )
 
 	const lastBlockName = last( innerBlocks )?.name

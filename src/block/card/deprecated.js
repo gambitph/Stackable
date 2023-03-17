@@ -15,7 +15,22 @@ import compareVersions from 'compare-versions'
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { addFilter } from '@wordpress/hooks'
-import { getAlignmentClasses } from '~stackable/block-components'
+import { Alignment, getAlignmentClasses } from '~stackable/block-components'
+
+// Version 3.8 added horizontal flex, this changes the stk--block-orientation-* to stk--block-horizontal-flex.
+addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {
+	if ( compareVersions( props.version, '3.8.0' ) >= 0 ) {
+		return output
+	}
+
+	output.push( {
+		[ `stk-${ props.attributes.uniqueId }-inner-blocks` ]: false,
+		'stk--block-horizontal-flex': false,
+		[ `stk--block-orientation-${ props.attributes.innerBlockOrientation }` ]: props.attributes.innerBlockOrientation,
+	} )
+
+	return output
+} )
 
 // Version 3.0.2 Deprecations
 addFilter( 'stackable.card.save.container-div.content', 'stackable/3.0.2', ( output, props, innerClassNames ) => {
@@ -56,15 +71,22 @@ addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.0.2', ( output, p
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
-	return {
+	output.push( {
 		'stk-block-content': true,
 		'stk-inner-blocks': true,
 		[ blockAlignmentClass ]: blockAlignmentClass,
 		'stk-container-padding': props.attributes.hasContainer,
-	}
+	} )
+
+	return output
 } )
 
 const deprecated = [
+	{
+		attributes: attributes(),
+		save: withVersion( '3.7.9' )( Save ),
+		migrate: Alignment.deprecated.horizontalOrientationMigrate,
+	},
 	{
 		attributes: attributes(),
 		save: withVersion( '3.0.2' )( Save ),

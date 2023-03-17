@@ -37,6 +37,11 @@ addFilter( 'stackable.posts.title.readmore-content', 'stackable/3_0_2', addUndef
 addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureImage )
 
 const deprecated = [
+	// Support new margin-top/bottom classes.
+	{
+		attributes: attributes( '3.7.9' ),
+		save: withVersion( '3.7.9' )( Save ),
+	},
 	{
 		attributes: attributes( '3.6.3' ),
 		save: withVersion( '3.6.3' )( Save ),

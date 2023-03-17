@@ -37,7 +37,6 @@ export const settings = {
 	deprecated,
 	//  styles: blockStyles,
 
-	// deprecated,
 	variations,
 	edit,
 	save,

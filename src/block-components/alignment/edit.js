@@ -5,7 +5,9 @@ import { i18n } from 'stackable'
 import {
 	AdvancedToolbarControl,
 	AlignButtonsControl,
+	ControlSeparator,
 	InspectorLayoutControls,
+	AdvancedRangeControl,
 } from '~stackable/components'
 import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
@@ -17,10 +19,17 @@ import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 
 export const Edit = props => {
-	const { contentAlign, columnJustify } = useBlockAttributesContext( attributes => {
+	const {
+		contentAlign,
+		columnJustify,
+		innerBlockOrientation,
+		innerBlockWrap,
+	} = useBlockAttributesContext( attributes => {
 		return {
 			contentAlign: attributes.contentAlign,
 			columnJustify: attributes.columnJustify,
+			innerBlockOrientation: attributes.innerBlockOrientation,
+			innerBlockWrap: attributes.innerBlockWrap,
 		}
 	} )
 	const setAttributes = useBlockSetAttributesContext()
@@ -72,9 +81,10 @@ export const Edit = props => {
 						className="ugb--help-tip-advanced-block-vertical-align"
 					/>
 				}
+				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) && <ControlSeparator /> }
 				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
 					<AdvancedToolbarControl
-						label={ sprintf( __( '%s Alignment', i18n ), __( 'Inner Block', i18n ) ) }
+						label={ sprintf( __( '%s Direction', i18n ), __( 'Inner Block', i18n ) ) }
 						controls={ [
 							{
 								value: 'horizontal',
@@ -86,6 +96,69 @@ export const Edit = props => {
 							},
 						] }
 						attribute="innerBlockOrientation"
+						onChange={ value => {
+							const newAttributes = {
+								innerBlockOrientation: value,
+							}
+							if ( value === '' ) { // Vertical.
+								newAttributes.innerBlockJustify = ''
+							} else { // Horizontal
+								newAttributes.innerBlockAlign = ''
+							}
+							setAttributes( newAttributes )
+						} }
+					/>
+				}
+				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Justify', i18n ), __( 'Inner Block', i18n ) ) }
+						attribute="innerBlockJustify"
+						responsive="all"
+						controls={ innerBlockOrientation ? 'flex-horizontal' : 'horizontal' }
+					/>
+				}
+				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
+					<AdvancedToolbarControl
+						label={ sprintf( __( '%s Alignment', i18n ), __( 'Inner Block', i18n ) ) }
+						attribute="innerBlockAlign"
+						responsive="all"
+						controls={ innerBlockOrientation ? 'vertical' : 'flex-justify-vertical' }
+					/>
+				}
+				{ innerBlockOrientation &&
+					<AdvancedToolbarControl
+						label={ __( 'Inner Block Wrapping', i18n ) }
+						controls={ [
+							{
+								value: '',
+								title: __( 'No Wrap', i18n ),
+							},
+							{
+								value: 'wrap',
+								title: __( 'Wrap', i18n ),
+							},
+						] }
+						attribute="innerBlockWrap"
+					/>
+				}
+				{ innerBlockOrientation &&
+					<AdvancedRangeControl
+						label={ __( 'Column Gap', i18n ) }
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder="24"
+						attribute="innerBlockColumnGap"
+					/>
+				}
+				{ ( innerBlockOrientation && innerBlockWrap === 'wrap' ) &&
+					<AdvancedRangeControl
+						label={ __( 'Row Gap', i18n ) }
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder="0"
+						attribute="innerBlockRowGap"
 					/>
 				}
 			</InspectorLayoutControls>

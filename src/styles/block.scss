@@ -12,7 +12,7 @@
 	position: relative;
 	box-sizing: border-box;
 }
-.stk--block-orientation-horizontal .stk-block {
+.stk--block-horizontal-flex .stk-block {
 	width: auto;
 }
 // .site-content - support for OceanWP
@@ -152,10 +152,7 @@
 		justify-content: flex-start;
 
 		// Inner block orientation.
-		&:not(.stk--block-orientation-horizontal) {
-			flex-direction: column;
-		}
-		&.stk--block-orientation-horizontal {
+		&.stk--block-horizontal-flex {
 			flex-direction: row;
 			> * {
 				margin-top: 0;
@@ -265,7 +262,7 @@
 	-o-text-fill-color: transparent;
 }
 
-// Button alignment.
+// Deprecated styles.
 @import "deprecated-block";
 
 .stk-block .stk-button-group {

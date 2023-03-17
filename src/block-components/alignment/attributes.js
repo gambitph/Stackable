@@ -27,6 +27,31 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
+			// Flex.
+			innerBlockJustify: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+			innerBlockAlign: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+			innerBlockWrap: {
+				type: 'string',
+				default: '',
+			},
+			innerBlockColumnGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			innerBlockRowGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

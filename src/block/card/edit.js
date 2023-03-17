@@ -7,7 +7,7 @@ import variations from './variations'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import {
@@ -89,6 +89,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-card__content',
+		`stk-${ props.attributes.uniqueId }-inner-blocks`,
 	], {
 		'stk-container-padding': hasContainer,
 	} )
