@@ -25,7 +25,7 @@ const SECONDS_IN_MINUTE = SECONDS * 60
 const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60
 const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24
 
-const Save = props => {
+export const Save = props => {
 	const {
 		className,
 		attributes,

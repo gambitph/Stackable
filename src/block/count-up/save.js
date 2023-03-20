@@ -20,7 +20,7 @@ import { withVersion } from '~stackable/higher-order'
  */
 import { compose } from '@wordpress/compose'
 
-const Save = props => {
+export const Save = props => {
 	const {
 		className,
 		attributes,

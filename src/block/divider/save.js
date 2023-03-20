@@ -20,7 +20,7 @@ import { getBlockStyle } from '~stackable/hooks'
  */
 import { compose } from '@wordpress/compose'
 
-const Save = props => {
+export const Save = props => {
 	const {
 		className,
 		attributes,
