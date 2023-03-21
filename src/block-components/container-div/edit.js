@@ -43,19 +43,14 @@ export const Edit = props => {
 		<>
 			<InspectorBlockControls>
 				<PanelAdvancedSettings
-					title={ __( 'Container Layout', i18n ) }
-					id="container-layout"
+					title={ __( 'Container Size & Spacing', i18n ) }
+					id="container-size"
 				>
 					<SizeControls.Layout
 						attrNameTemplate="container%s"
 						blockEl={ blockElSize }
 						enableMargin={ false }
 					/>
-				</PanelAdvancedSettings>
-				<PanelAdvancedSettings
-					title={ __( 'Container Spacing', i18n ) }
-					id="container-size"
-				>
 					<SizeControls.Spacing
 						attrNameTemplate="container%s"
 						blockEl={ blockElSize }
