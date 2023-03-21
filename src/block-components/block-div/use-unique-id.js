@@ -34,7 +34,14 @@ export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 			// If there's one already, check whether the we need to re-create one.
 			// Duplicating a block or copy pasting a block may give us duplicate IDs.
 		} else if ( uniqueClass !== attributes.uniqueId ) {
-			if ( document.querySelectorAll( `[data-block-id="${ attributes.uniqueId }"]` ).length > 1 ) {
+			// There should only be one block each with the same unique ID, or
+			// else we'll have styling conflicts.
+			const els = Array.prototype.filter.call( document.querySelectorAll( `[data-block-id="${ attributes.uniqueId }"]` ), el => {
+				// Exclude reusable blocks because they can have the same unique ID.
+				return ! el.closest( '[data-type="core/block"]' )
+			} )
+
+			if ( els.length > 1 ) {
 				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 				setAttributes( { uniqueId: uniqueClass } )
 			}

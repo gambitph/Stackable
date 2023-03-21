@@ -9,6 +9,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import example from './example'
 import { ProgressBarIcon } from '~stackable/icons'
 
 /**
@@ -20,6 +21,7 @@ export const settings = {
 	...metadata,
 	icon: ProgressBarIcon,
 	attributes: schema,
+	example,
 	edit,
 	save,
 	supports: {
