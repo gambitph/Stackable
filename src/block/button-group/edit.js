@@ -11,8 +11,7 @@ import classnames from 'classnames'
 import {
 	GroupPlaceholder,
 	InspectorTabs,
-	InspectorStyleControls,
-	PanelAdvancedSettings,
+	InspectorLayoutControls,
 	AdvancedSelectControl,
 	AdvancedToggleControl,
 } from '~stackable/components'
@@ -96,92 +95,86 @@ const Edit = props => {
 					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="general"
-							initialOpen={ true }
-						>
-							<AdvancedSelectControl
-								label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
-								attribute="buttonAlign"
-								responsive="all"
-								options={ deviceType === 'Desktop'
-									? [
-										{
-											label: __( 'Horizontal', i18n ),
-											value: '',
-										},
-										{
-											label: __( 'Vertical', i18n ),
-											value: 'vertical',
-										},
-									]
-									: [
-										{
-											label: __( 'Inherit', i18n ),
-											value: '',
-										},
-										{
-											label: __( 'Horizontal', i18n ),
-											value: 'horizontal',
-										},
-										{
-											label: __( 'Vertical', i18n ),
-											value: 'vertical',
-										},
-									]
-								}
-							/>
-							<AdvancedToggleControl
-								label={ __( 'Full Width Buttons', i18n ) }
-								attribute="buttonFullWidth"
-								defaultValue={ false }
-							/>
-							<FlexGapControls />
-							<AdvancedSelectControl
-								label={ __( 'Flex Wrap', i18n ) }
-								attribute="flexWrap"
-								options={ [
+					<InspectorLayoutControls>
+						<AdvancedSelectControl
+							label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
+							attribute="buttonAlign"
+							responsive="all"
+							options={ deviceType === 'Desktop'
+								? [
 									{
-										label: __( 'No Wrap', i18n ),
+										label: __( 'Horizontal', i18n ),
 										value: '',
 									},
 									{
-										label: __( 'Wrap', i18n ),
-										value: 'wrap',
+										label: __( 'Vertical', i18n ),
+										value: 'vertical',
+									},
+								]
+								: [
+									{
+										label: __( 'Inherit', i18n ),
+										value: '',
 									},
 									{
-										label: __( 'Wrap Reverse', i18n ),
-										value: 'wrap-reverse',
+										label: __( 'Horizontal', i18n ),
+										value: 'horizontal',
 									},
-								] }
-								responsive="all"
-							/>
-							{ /* <AdvancedSelectControl
-						label={ __( 'Collapse Buttons On', i18n ) }
-						attribute="collapseOn"
-						options={ [
-							{
-								label: __( 'Don\'t collapse', i18n ),
-								value: '',
-							},
-							{
-								label: __( 'Desktop', i18n ),
-								value: 'desktop',
-							},
-							{
-								label: __( 'Tablet', i18n ),
-								value: 'tablet',
-							},
-							{
-								label: __( 'Mobile', i18n ),
-								value: 'mobile',
-							},
-						] }
-					/> */ }
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
+									{
+										label: __( 'Vertical', i18n ),
+										value: 'vertical',
+									},
+								]
+							}
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Full Width Buttons', i18n ) }
+							attribute="buttonFullWidth"
+							defaultValue={ false }
+						/>
+						<FlexGapControls />
+						<AdvancedSelectControl
+							label={ __( 'Flex Wrap', i18n ) }
+							attribute="flexWrap"
+							options={ [
+								{
+									label: __( 'No Wrap', i18n ),
+									value: '',
+								},
+								{
+									label: __( 'Wrap', i18n ),
+									value: 'wrap',
+								},
+								{
+									label: __( 'Wrap Reverse', i18n ),
+									value: 'wrap-reverse',
+								},
+							] }
+							responsive="all"
+						/>
+						{ /* <AdvancedSelectControl
+					label={ __( 'Collapse Buttons On', i18n ) }
+					attribute="collapseOn"
+					options={ [
+						{
+							label: __( 'Don\'t collapse', i18n ),
+							value: '',
+						},
+						{
+							label: __( 'Desktop', i18n ),
+							value: 'desktop',
+						},
+						{
+							label: __( 'Tablet', i18n ),
+							value: 'tablet',
+						},
+						{
+							label: __( 'Mobile', i18n ),
+							value: 'mobile',
+						},
+					] }
+				/> */ }
+					</InspectorLayoutControls>
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
