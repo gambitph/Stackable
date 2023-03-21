@@ -105,9 +105,9 @@ const Edit = props => {
 
 					<Alignment.InspectorControls hasColumnAlignment={ true } />
 					<BlockDiv.InspectorControls />
+					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-column" />

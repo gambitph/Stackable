@@ -88,10 +88,10 @@ const Edit = props => {
 					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls hasBlockAlignment={ true } />
 					<BlockDiv.InspectorControls />
+					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<Separator.InspectorControls />
-					<BlockLink.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-call-to-action" />

@@ -94,9 +94,9 @@ const Edit = props => {
 
 					<Alignment.InspectorControls hasBlockAlignment={ true } />
 					<BlockDiv.InspectorControls />
+					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />

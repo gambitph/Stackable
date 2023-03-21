@@ -3,7 +3,7 @@
  */
 import { i18n } from 'stackable'
 import {
-	InspectorBlockControls,
+	InspectorAdvancedControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
 
@@ -16,14 +16,14 @@ import { LinkControls } from '../helpers/link'
 export const Edit = ( { hasLink, hasTitle } ) => {
 	return (
 		<>
-			<InspectorBlockControls>
+			<InspectorAdvancedControls>
 				<PanelAdvancedSettings
 					title={ __( 'Link', i18n ) }
 					id="link"
 				>
 					<LinkControls attrNameTemplate="blockLink%s" hasLink={ hasLink } hasTitle={ hasTitle } />
 				</PanelAdvancedSettings>
-			</InspectorBlockControls>
+			</InspectorAdvancedControls>
 		</>
 	)
 }
