@@ -14,13 +14,15 @@ import {
 	InspectorLayoutControls,
 	AdvancedSelectControl,
 	AdvancedToggleControl,
+	AlignButtonsControl,
+	advancedToolbarControlControls,
+	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
-	Alignment,
 	getAlignmentClasses,
 	Advanced,
 	CustomCSS,
@@ -42,7 +44,9 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { InnerBlocks } from '@wordpress/block-editor'
+import {
+	AlignmentToolbar, BlockControls, InnerBlocks,
+} from '@wordpress/block-editor'
 import { sprintf, __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button', 'stackable/icon-button' ]
@@ -51,12 +55,52 @@ const TEMPLATE = [
 	[ 'stackable/button' ],
 ]
 
+const ALIGN_OPTIONS = advancedToolbarControlControls[ 'flex-horizontal' ].map( option => {
+	return {
+		...option,
+		value: option.value === 'flex-start' ? 'left'
+			: option.value === 'flex-end' ? 'right'
+				: option.value,
+	}
+} )
+
+const TOOLBAR_ALIGN_OPTIONS = ALIGN_OPTIONS.map( control => {
+	return {
+		align: control.value,
+		icon: control.icon,
+		title: control.title,
+	}
+} )
+
+const ALIGNMENT_CONTROLS_DESKTOP = [
+	{
+		title: __( 'Horizontal', i18n ),
+		value: '',
+	},
+	{
+		title: __( 'Vertical', i18n ),
+		value: 'vertical',
+	},
+]
+
+const ALIGNMENT_CONTROLS_TABLET_MOBILE = [
+	{
+		title: __( 'Horizontal', i18n ),
+		value: 'horizontal',
+	},
+	{
+		title: __( 'Vertical', i18n ),
+		value: 'vertical',
+	},
+]
+
 const Edit = props => {
 	const {
 		className,
 		attributes,
 		clientId,
 		isSelected,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -86,46 +130,52 @@ const Edit = props => {
 		},
 	] )
 
+	let contentAlignControls = null
+	if ( attributes.buttonAlign === '' ) {
+		contentAlignControls = ALIGN_OPTIONS
+	}
+	if ( deviceType === 'Tablet' || deviceType === 'Mobile' ) {
+		if ( attributes.buttonAlignTablet === 'horizontal' ) {
+			contentAlignControls = ALIGN_OPTIONS
+		} else if ( attributes.buttonAlignTablet === 'vertical' ) {
+			contentAlignControls = null
+		}
+	}
+	if ( deviceType === 'Mobile' ) {
+		if ( attributes.buttonAlignMobile === 'horizontal' ) {
+			contentAlignControls = ALIGN_OPTIONS
+		} else if ( attributes.buttonAlignMobile === 'vertical' ) {
+			contentAlignControls = null
+		}
+	}
+
 	return (
 		<>
 			{ isSelected && (
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
 
+					<BlockControls>
+						<AlignmentToolbar
+							value={ attributes.contentAlign }
+							onChange={ contentAlign => setAttributes( { contentAlign } ) }
+							alignmentControls={ TOOLBAR_ALIGN_OPTIONS }
+						/>
+					</BlockControls>
 					<InspectorLayoutControls>
-						<AdvancedSelectControl
+						<AlignButtonsControl
+							label={ sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ) }
+							attribute="contentAlign"
+							responsive="all"
+							controls={ contentAlignControls }
+						/>
+						<AdvancedToolbarControl
 							label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
+							controls={ deviceType === 'Desktop' ? ALIGNMENT_CONTROLS_DESKTOP : ALIGNMENT_CONTROLS_TABLET_MOBILE }
 							attribute="buttonAlign"
 							responsive="all"
-							options={ deviceType === 'Desktop'
-								? [
-									{
-										label: __( 'Horizontal', i18n ),
-										value: '',
-									},
-									{
-										label: __( 'Vertical', i18n ),
-										value: 'vertical',
-									},
-								]
-								: [
-									{
-										label: __( 'Inherit', i18n ),
-										value: '',
-									},
-									{
-										label: __( 'Horizontal', i18n ),
-										value: 'horizontal',
-									},
-									{
-										label: __( 'Vertical', i18n ),
-										value: 'vertical',
-									},
-								]
-							}
 						/>
 						<AdvancedToggleControl
 							label={ __( 'Full Width Buttons', i18n ) }
@@ -152,28 +202,6 @@ const Edit = props => {
 							] }
 							responsive="all"
 						/>
-						{ /* <AdvancedSelectControl
-					label={ __( 'Collapse Buttons On', i18n ) }
-					attribute="collapseOn"
-					options={ [
-						{
-							label: __( 'Don\'t collapse', i18n ),
-							value: '',
-						},
-						{
-							label: __( 'Desktop', i18n ),
-							value: 'desktop',
-						},
-						{
-							label: __( 'Tablet', i18n ),
-							value: 'tablet',
-						},
-						{
-							label: __( 'Mobile', i18n ),
-							value: 'mobile',
-						},
-					] }
-				/> */ }
 					</InspectorLayoutControls>
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />

@@ -162,7 +162,7 @@ const VERTICAL_ALIGN_OPTIONS = [
 	},
 ]
 
-const CONTROLS = applyFilters( 'stackable.toolbar-control.controls', {
+export const CONTROLS = applyFilters( 'stackable.toolbar-control.controls', {
 	'flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
 	'flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
 	'flex-justify-vertical': FLEX_VERTICAL_JUSTIFY_OPTIONS,

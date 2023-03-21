@@ -355,6 +355,18 @@
 	text-align: var(--stk-alignment-text-align, start);
 }
 
+@mixin align-space-between-styles {
+	--stk-alignment-justify-content: space-between;
+}
+
+@mixin align-space-around-styles {
+	--stk-alignment-justify-content: space-around;
+}
+
+@mixin align-space-evenly-styles {
+	--stk-alignment-justify-content: space-evenly;
+}
+
 // Default text direction, we need to add this for RTL support.
 .stk-block {
 	text-align: start;
@@ -379,6 +391,15 @@
 	&-right {
 		@include align-right-styles;
 	}
+	&-space-between {
+		@include align-space-between-styles;
+	}
+	&-space-around {
+		@include align-space-around-styles;
+	}
+	&-space-evenly {
+		@include align-space-evenly-styles;
+	}
 }
 
 @include tablet-mobile {
@@ -391,6 +412,15 @@
 	.has-text-align-right-tablet {
 		@include align-right-styles;
 	}
+	.has-text-align-space-between-tablet {
+		@include align-space-between-styles;
+	}
+	.has-text-align-space-around-tablet {
+		@include align-space-around-styles;
+	}
+	.has-text-align-space-evenly-tablet {
+		@include align-space-evenly-styles;
+	}
 }
 
 @include mobile {
@@ -402,6 +432,15 @@
 	}
 	.has-text-align-right-mobile {
 		@include align-right-styles;
+	}
+	.has-text-align-space-between-mobile {
+		@include align-space-between-styles;
+	}
+	.has-text-align-space-around-mobile {
+		@include align-space-around-styles;
+	}
+	.has-text-align-space-evenly-mobile {
+		@include align-space-evenly-styles;
 	}
 }
 

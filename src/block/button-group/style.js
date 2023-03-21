@@ -122,13 +122,15 @@ const Styles = props => {
 				attrName="buttonAlign"
 				key="buttonAlign-save-button-group"
 				responsive="all"
-				valuePreCallback={ ( value, getAttribute ) => {
+				valuePreCallback={ ( value, getAttribute, device ) => {
+					const getInherited = true
+					const contentAlign = getAttribute( 'contentAlign', device, 'normal', getInherited )
+
 					if ( value === 'vertical' ) {
 						const buttonFullWidth = getAttribute( 'buttonFullWidth' )
 						if ( buttonFullWidth ) {
 							return 'stretch'
 						}
-						const contentAlign = getAttribute( 'contentAlign' )
 						if ( contentAlign === 'center' ) {
 							return 'center'
 						} else if ( contentAlign === 'right' ) {
@@ -150,13 +152,15 @@ const Styles = props => {
 				attrName="buttonAlign"
 				key="buttonAlign-group-list-layout"
 				responsive="all"
-				valuePreCallback={ ( value, getAttribute ) => {
+				valuePreCallback={ ( value, getAttribute, device ) => {
+					const getInherited = true
+					const contentAlign = getAttribute( 'contentAlign', device, 'normal', getInherited )
+
 					if ( value === 'vertical' ) {
 						const buttonFullWidth = getAttribute( 'buttonFullWidth' )
 						if ( buttonFullWidth ) {
 							return 'stretch'
 						}
-						const contentAlign = getAttribute( 'contentAlign' )
 						if ( contentAlign === 'center' ) {
 							return 'center'
 						} else if ( contentAlign === 'right' ) {
