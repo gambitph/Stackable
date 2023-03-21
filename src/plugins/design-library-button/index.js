@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { isContentOnlyMode } from 'stackable'
+import { throttle } from 'lodash'
 
 /**
  * Internal dependencies
@@ -21,31 +22,26 @@ const mountDesignLibrary = () => {
 		return
 	}
 
-	let timeout = null
-	const unsubscribe = subscribe( () => {
+	const createButton = toolbar => {
+		const buttonDiv = document.createElement( 'div' )
+		buttonDiv.classList.add( 'ugb-insert-library-button__wrapper' )
+
+		render( <DesignLibraryButton />, buttonDiv )
+		toolbar.appendChild( buttonDiv )
+	}
+
+	// Just keep on checking because there are times when the toolbar gets
+	// unmounted.
+	subscribe( throttle( () => {
 		const toolbar = document.querySelector( '.edit-post-header-toolbar' )
 		if ( ! toolbar ) {
 			return
 		}
 
-		const buttonDiv = document.createElement( 'div' )
-		buttonDiv.classList.add( 'ugb-insert-library-button__wrapper' )
-
 		if ( ! toolbar.querySelector( '.ugb-insert-library-button__wrapper' ) ) {
-			render( <DesignLibraryButton />, buttonDiv )
-			toolbar.appendChild( buttonDiv )
+			createButton( toolbar )
 		}
-
-		if ( timeout ) {
-			clearTimeout( timeout )
-		}
-
-		timeout = setTimeout( () => {
-			if ( document.querySelector( '.ugb-insert-library-button__wrapper' ) ) {
-				unsubscribe()
-			}
-		}, 0 )
-	} )
+	}, 200, { trailing: true } ) )
 }
 
 domReady( mountDesignLibrary )
