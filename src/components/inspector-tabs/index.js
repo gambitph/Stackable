@@ -76,13 +76,15 @@ const InspectorTabs = props => {
 		<>
 			{ /* Make sure the layout panel is the very first one */ }
 			<InspectorBlockControls>
-				<PanelAdvancedSettings
-					title={ __( 'Layout', i18n ) }
-					id="layout"
-					initialOpen={ true }
-				>
-					<LayoutPanelSlot />
-				</PanelAdvancedSettings>
+				{ props.hasLayoutPanel && (
+					<PanelAdvancedSettings
+						title={ __( 'Layout', i18n ) }
+						id="layout"
+						initialOpen={ true }
+					>
+						<LayoutPanelSlot />
+					</PanelAdvancedSettings>
+				) }
 			</InspectorBlockControls>
 
 			<InspectorControls>
@@ -105,6 +107,7 @@ const InspectorTabs = props => {
 
 InspectorTabs.defaultProps = {
 	tabs: [ 'layout', 'style', 'advanced' ],
+	hasLayoutPanel: true,
 }
 
 export default memo( InspectorTabs )

@@ -87,8 +87,7 @@ const Edit = props => {
 						/>
 					</BlockControls>
 
-					<InspectorTabs />
-					<BlockDiv.InspectorControls />
+					<InspectorTabs hasLayoutPanel={ false } />
 
 					<BlockStyle.InspectorControls styles={ blockStyles }>
 						<Button.InspectorControls.HoverEffects />
@@ -104,6 +103,8 @@ const Edit = props => {
 						initialOpen={ false }
 						hasColor={ false }
 					/>
+
+					<BlockDiv.InspectorControls initialOpen="spacing" />
 
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />

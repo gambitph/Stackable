@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n'
 export const Edit = props => {
 	const {
 		hasSizeSpacing,
+		initialOpen,
 	} = props
 	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
 	const setAttributes = useBlockSetAttributesContext()
@@ -42,6 +43,7 @@ export const Edit = props => {
 					<PanelAdvancedSettings
 						title={ __( 'Size & Spacing', i18n ) }
 						id="spacing"
+						initialOpen={ initialOpen === 'spacing' }
 					>
 						<SizeControls.Layout
 							attrNameTemplate="block%s"
@@ -61,12 +63,14 @@ export const Edit = props => {
 					hasToggle={ true }
 					checked={ hasBackground }
 					onChange={ hasBackground => setAttributes( { hasBackground } ) }
+					initialOpen={ initialOpen === 'background' }
 				>
 					<BackgroundControls attrNameTemplate="block%s" />
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					title={ __( 'Borders & Shadows', i18n ) }
 					id="borders"
+					initialOpen={ initialOpen === 'borders' }
 				>
 					<BorderControls
 						attrNameTemplate="block%s"
@@ -80,4 +84,5 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	hasSizeSpacing: true,
+	initialOpen: false,
 }
