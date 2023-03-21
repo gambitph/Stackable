@@ -6,6 +6,7 @@
  */
 import edit from './edit'
 import save from './save'
+import example from './example'
 import schema from './schema'
 import metadata from './block.json'
 import transforms from './transforms'
@@ -31,6 +32,7 @@ export const settings = {
 	transforms,
 
 	deprecated,
+	example,
 	edit,
 	save,
 }

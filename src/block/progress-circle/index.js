@@ -10,6 +10,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import deprecated from './deprecated'
+import example from './example'
 import { ProgressCircleIcon } from '~stackable/icons'
 
 /**
@@ -21,6 +22,7 @@ export const settings = {
 	...metadata,
 	icon: ProgressCircleIcon,
 	attributes: schema,
+	example,
 	edit,
 	save,
 	deprecated,

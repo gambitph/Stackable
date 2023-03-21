@@ -58,3 +58,8 @@
 		}
 	}
 }
+
+// Style Book: prevent scroller from overflowing.
+[id="example-stackable/horizontal-scroller"] {
+	overflow: hidden !important;
+}
