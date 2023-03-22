@@ -46,24 +46,31 @@ const getDocumentHead = () => {
  * @param {string} fontName The name of the font
  */
 export const loadGoogleFont = fontName => {
-	setTimeout( () => {
-		const _loadGoogleFont = head => {
-			if ( head && isWebFont( fontName ) ) {
-				if ( isGoogleFontEnqueued( fontName, head ) ) {
-					return
-				}
-
-				const link = createLinkTagWithGoogleFont( fontName )
-				head.appendChild( link )
+	const _loadGoogleFont = head => {
+		if ( head && isWebFont( fontName ) ) {
+			if ( isGoogleFontEnqueued( fontName, head ) ) {
+				return
 			}
-		}
 
+			const link = createLinkTagWithGoogleFont( fontName )
+			head.appendChild( link )
+		}
+	}
+
+	let index = 0
+
+	const interval = setInterval( () => {
+		index++
+		if ( index === 8 ) {
+			clearInterval( interval )
+		}
 		const headElement = getDocumentHead()
+
 		_loadGoogleFont( headElement )
 		if ( headElement !== document.querySelector( 'head' ) ) {
 			_loadGoogleFont( document.querySelector( 'head' ) )
 		}
-	}, 50 )
+	}, 250 )
 }
 
 export const createLinkTagWithGoogleFont = ( fontName = '' ) => {
