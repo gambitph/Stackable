@@ -8,11 +8,10 @@ export const useDeviceType = () => {
 
 		// In some editors, there is no edit-post / preview device type. If that
 		// happens, we just set our own internal device type.
-		if ( select( 'core/edit-post' ) ) {
-			deviceType = select( 'core/edit-post' ).__experimentalGetPreviewDeviceType()
-		} else {
-			deviceType = select( 'stackable/device-type' ).getDeviceType()
-		}
+		deviceType = select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType() ||
+			select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType() ||
+			select( 'stackable/device-type' ).getDeviceType()
+
 		return { deviceType }
 	}, [] )
 
