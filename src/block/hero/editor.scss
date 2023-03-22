@@ -1,3 +1,13 @@
 .editor-styles-wrapper .stk-block-hero__content [data-block] {
 	max-width: none;
 }
+
+.stk-block-hero__content.stk--column-flex > .block-editor-inner-blocks {
+	&,
+	> .block-editor-block-list__layout {
+		min-height: inherit;
+	}
+}
+.stk-block-hero__content.stk--column-flex:not(.stk--block-horizontal-flex) > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	justify-content: center;
+}

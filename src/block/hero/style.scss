@@ -1,1 +1,6 @@
 @import "common";
+
+.stk-block-hero__content > .stk-inner-blocks.stk--column-flex:not(.stk--block-horizontal-flex) {
+	justify-content: center;
+	align-items: center;
+}
