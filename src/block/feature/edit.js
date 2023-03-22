@@ -83,7 +83,7 @@ const Edit = props => {
 
 					<Columns.InspectorControls hasColumnsControl={ false } hasGap={ false } />
 					<ContentAlign.InspectorControls />
-					<Alignment.InspectorControls hasRowAlignment={ true } />
+					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
 					<ContainerDiv.InspectorControls />
 					<Separator.InspectorControls />
