@@ -110,13 +110,9 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasBlockAlignment={ true } />
-					<BlockDiv.InspectorControls />
-					<BlockLink.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
 					<Image.InspectorControls
 						{ ...props }
+						initialOpen={ true }
 						hasWidth={ blockStyle === 'horizontal' }
 						hasHeight={ hasHeight }
 						widthUnits={ widthUnit }
@@ -126,6 +122,11 @@ const Edit = props => {
 						hasShadow={ false }
 					/>
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
+					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<BlockDiv.InspectorControls />
+					<BlockLink.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />

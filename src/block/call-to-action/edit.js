@@ -85,6 +85,7 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls hasBlockAlignment={ true } />
 					<BlockDiv.InspectorControls />
@@ -97,8 +98,6 @@ const Edit = props => {
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-call-to-action" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />
