@@ -10,7 +10,7 @@ import variations from './variations'
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
 import {
-	ColumnInnerBlocks, InspectorBottomTip, InspectorStyleControls, InspectorTabs,
+	ColumnInnerBlocks, ControlSeparator, InspectorBottomTip, InspectorLayoutControls, InspectorStyleControls, InspectorTabs,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -83,8 +83,11 @@ const Edit = props => {
 					<InspectorTabs />
 
 					<Columns.InspectorControls />
+					<InspectorLayoutControls>
+						<ControlSeparator />
+					</InspectorLayoutControls>
 					<ContentAlign.InspectorControls />
-					<Alignment.InspectorControls hasRowAlignment={ true } />
+					<Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />
 					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
