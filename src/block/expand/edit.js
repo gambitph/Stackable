@@ -62,8 +62,6 @@ const TEMPLATE = [
 	} ],
 ]
 
-const TABS = [ 'layout', 'advanced' ]
-
 const Edit = props => {
 	const {
 		clientId,
@@ -88,9 +86,9 @@ const Edit = props => {
 	return (
 		<>
 
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
-			<Alignment.InspectorControls hasRowAlignment={ true } />
+			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
