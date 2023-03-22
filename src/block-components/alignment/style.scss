@@ -1,5 +1,6 @@
 .stk--column-flex {
 	height: 100%;
+	min-height: inherit; // This is needed by some blocks to make the height 100%.
 }
 
 // If a direct inner block has a top/bottom margin-auto, then we need to set the
