@@ -27,8 +27,8 @@ import {
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
-	InspectorBlockControls, InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
-	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl, AlignButtonsControl, ControlSeparator,
+	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedSelectControl, AdvancedToolbarControl,
+	AdvancedRangeControl, AdvancedToggleControl, AdvancedTextControl, AlignButtonsControl, ControlSeparator, InspectorLayoutControls,
 } from '~stackable/components'
 import {
 	 withBlockAttributeContext,
@@ -289,18 +289,13 @@ const Edit = props => {
 						hasTextContent={ false }
 						initialOpen={ false }
 					/>
-					<InspectorBlockControls>
-						<PanelAdvancedSettings
-							title={ __( 'Alignment', i18n ) }
-							id="alignment"
-						>
-							<AlignButtonsControl
-								label={ __( 'Content Alignment', i18n ) }
-								responsive="all"
-								attribute="contentAlignment"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorBlockControls>
+					<InspectorLayoutControls>
+						<AlignButtonsControl
+							label={ __( 'Content Alignment', i18n ) }
+							responsive="all"
+							attribute="contentAlignment"
+						/>
+					</InspectorLayoutControls>
 					<Divider.InspectorControls />
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
