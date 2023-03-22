@@ -154,6 +154,7 @@
 		// Inner block orientation.
 		&.stk--block-horizontal-flex {
 			flex-direction: row;
+			justify-content: space-evenly; // Default justification for horizontal blocks.
 			> * {
 				margin-top: 0;
 				margin-bottom: 0;

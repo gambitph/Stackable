@@ -8,4 +8,5 @@
 // effect.
 :is(.stk-block-content, .stk-inner-blocks):not(.stk--column-flex):has(> :is(.stk--block-margin-top-auto, .stk--block-margin-bottom-auto)) {
 	height: 100%;
+	min-height: inherit; // This makes sure the height is 100%.
 }

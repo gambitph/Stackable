@@ -1,12 +1,18 @@
-.wp-block:has(> .stk--block-margin-top-auto) {
+.editor-styles-wrapper .wp-block:has(> .stk--block-margin-top-auto) {
 	margin-top: auto !important;
+	margin-bottom: 0; // This makes sure the margin auto would work.
 }
-.wp-block:has(> .stk--block-margin-right-auto) {
+.editor-styles-wrapper .wp-block:has(> .stk--block-margin-right-auto) {
 	margin-right: auto !important;
+	margin-left: 0; // This makes sure the margin auto would work.
+	width: fit-content; // Make sure that the block would stick to the side.
 }
-.wp-block:has(> .stk--block-margin-bottom-auto) {
+.editor-styles-wrapper .wp-block:has(> .stk--block-margin-bottom-auto) {
 	margin-bottom: auto !important;
+	margin-top: 0; // This makes sure the margin auto would work.
 }
-.wp-block:has(> .stk--block-margin-left-auto) {
+.editor-styles-wrapper .wp-block:has(> .stk--block-margin-left-auto) {
 	margin-left: auto !important;
+	margin-right: 0; // This makes sure the margin auto would work.
+	width: fit-content; // Make sure that the block would stick to the side.
 }
