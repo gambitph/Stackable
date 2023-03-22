@@ -21,6 +21,13 @@ const { Slot: AdvancedInspectorTabSlot, Fill: AdvancedInspectorTabFill } = creat
 const { Slot: LayoutPanelSlot, Fill: LayoutPanelFill } = createSlotFill( 'StackableLayoutPanel' )
 
 const InspectorLayoutControls = ( { children } ) => {
+	const { isSelected, name } = useBlockEditContext()
+	const [ activeTab ] = useGlobalState( `tabCache-${ name }`, 'layout' )
+
+	if ( ! isSelected || activeTab !== 'layout' ) {
+		return null
+	}
+
 	return <LayoutPanelFill>{ children }</LayoutPanelFill>
 }
 
