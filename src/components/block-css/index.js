@@ -373,7 +373,7 @@ const BlockCss = props => {
 	let css = ''
 
 	// If rendering for the ditor, output the css, if saving, compile css to an object.
-	const createCssFunc = editorMode ? createCss : addCssToCssSaveObject
+	const createCssFunc = editorMode ? createCssEdit : addCssToCssSaveObject
 
 	css += createCssFunc( selector, styleRule, valueDesktop, desktopQuery, vendorPrefixes, compileCssTo )
 	if ( hasHover ) {
@@ -485,27 +485,31 @@ export default _BlockCss
  *
  * @return {string} The generated css style
  */
-function createCss( selector, rule, value, device = 'desktop', vendorPrefixes = [] ) {
-	 if ( typeof value === 'undefined' ) {
-		 return ''
-	 }
+function createCssEdit( selector, rule, value, device = 'desktop', vendorPrefixes = [] ) {
+	if ( typeof value === 'undefined' ) {
+		return ''
+	}
 
-	 // KebabCase the style rule, but support custom CSS properties (double dashes) and vendor prefixes (one dash).
-	 const cleanedRuleName = rule.replace( /^(--?)?(.*?$)/, ( matches, dashes, rule ) => `${ dashes || '' }${ kebabCase( rule ) }` )
-	 let css = `${ cleanedRuleName }: ${ value } !important`
-	 if ( vendorPrefixes.length ) {
-		 vendorPrefixes.forEach( vendorPrefx => {
-			 css += `;${ vendorPrefx }${ cleanedRuleName }: ${ value } !important`
-		 } )
-	 }
-	 css = `\n${ selector } {\n\t${ css }\n}`
+	// KebabCase the style rule, but support custom CSS properties (double dashes) and vendor prefixes (one dash).
+	const cleanedRuleName = rule.replace( /^(--?)?(.*?$)/, ( matches, dashes, rule ) => `${ dashes || '' }${ kebabCase( rule ) }` )
+	let css = `${ cleanedRuleName }: ${ value } !important`
+	if ( vendorPrefixes.length ) {
+		vendorPrefixes.forEach( vendorPrefx => {
+			css += `;${ vendorPrefx }${ cleanedRuleName }: ${ value } !important`
+		} )
+	}
+	css = `\n${ selector } {\n\t${ css }\n}`
 
-	 const mediaQuery = getMediaQuery( device )
-	 if ( mediaQuery ) {
-		 css = `\n${ mediaQuery } {${ css }\n}`
-	 }
+	// The Block Editor has these fixed breakpoints.
+	const tabletBreakpoint = 781
+	const mobileBreakpoint = 361
 
-	 return css
+	const mediaQuery = getMediaQuery( device, tabletBreakpoint, mobileBreakpoint )
+	if ( mediaQuery ) {
+		css = `\n${ mediaQuery } {${ css }\n}`
+	}
+
+	return css
 }
 
 /**

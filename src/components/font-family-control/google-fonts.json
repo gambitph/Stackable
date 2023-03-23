@@ -473,6 +473,22 @@
     ]
   },
   {
+    "family": "Alkatra",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "bengali",
+      "devanagari",
+      "latin",
+      "latin-ext",
+      "oriya"
+    ]
+  },
+  {
     "family": "Allan",
     "variants": [
       "regular",
@@ -1219,25 +1235,6 @@
       "latin",
       "latin-ext",
       "malayalam",
-      "tamil",
-      "vietnamese"
-    ]
-  },
-  {
-    "family": "Arima Madurai",
-    "variants": [
-      "100",
-      "200",
-      "300",
-      "regular",
-      "500",
-      "700",
-      "800",
-      "900"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
       "tamil",
       "vietnamese"
     ]
@@ -4355,6 +4352,16 @@
     ]
   },
   {
+    "family": "Delicious Handrawn",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Delius",
     "variants": [
       "regular"
@@ -5237,7 +5244,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -5737,15 +5745,6 @@
     ]
   },
   {
-    "family": "Fredoka One",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin"
-    ]
-  },
-  {
     "family": "Freehand",
     "variants": [
       "regular"
@@ -6024,19 +6023,6 @@
       "latin",
       "latin-ext",
       "vietnamese"
-    ]
-  },
-  {
-    "family": "Gentium Book Basic",
-    "variants": [
-      "regular",
-      "italic",
-      "700",
-      "700italic"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext"
     ]
   },
   {
@@ -8085,17 +8071,6 @@
     ]
   },
   {
-    "family": "Kantumruy",
-    "variants": [
-      "300",
-      "regular",
-      "700"
-    ],
-    "subsets": [
-      "khmer"
-    ]
-  },
-  {
     "family": "Kantumruy Pro",
     "variants": [
       "100",
@@ -8319,7 +8294,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -8619,7 +8595,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math"
     ]
   },
   {
@@ -10000,6 +9977,96 @@
     ]
   },
   {
+    "family": "Material Icons",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Material Icons Outlined",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Material Icons Round",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Material Icons Sharp",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Material Icons Two Tone",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Material Symbols Outlined",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Material Symbols Rounded",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Material Symbols Sharp",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Maven Pro",
     "variants": [
       "regular",
@@ -10119,15 +10186,6 @@
       "latin",
       "latin-ext",
       "vietnamese"
-    ]
-  },
-  {
-    "family": "Merienda One",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin"
     ]
   },
   {
@@ -13947,7 +14005,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -14916,7 +14975,11 @@
   {
     "family": "Pontano Sans",
     "variants": [
-      "regular"
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
     ],
     "subsets": [
       "latin",
@@ -18034,7 +18097,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -18996,7 +19060,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -19270,7 +19335,9 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {

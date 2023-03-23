@@ -59,6 +59,7 @@ const includeEditorContentAlignClassName = attributes => {
 	const previewDeviceType = select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType() ||
 		select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType() ||
 		'Desktop'
+
 	const alignment = (
 		previewDeviceType === 'Desktop' ? contentAlign : previewDeviceType === 'Tablet' ? tabletContentAlign : mobileContentAlign
 	) || 'left'
