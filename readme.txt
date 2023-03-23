@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 5.9
-Tested up to: 6.1.1
+Requires at least: 6.0
+Tested up to: 6.2
 Requires PHP: 5.7
-Stable tag: 3.7.1
+Stable tag: 3.7.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -273,6 +273,16 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.7.2 =
+* New: WordPress 6.2 compatibility
+* New: Stackable blocks now appear in the new Style Book
+* New: Stackable global settings are now available in the Site Editor / FSE
+* Fixed: Responsive block settings now working in the Site Editor
+* Fixed: Tablet styles sometimes show up in the editor when the screen is small
+* Fixed: Reusable blocks performance improvements
+* Fixed: Blocksy theme responsive breakpoints conflict
+* Change: Removed v2 editor migration helper (it's been 1.5 years since it was introduced)
 
 = 3.7.1 =
 * Fixed: Dynamic Content issue where ACF image fields sometimes did not output correctly
