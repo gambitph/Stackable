@@ -2,6 +2,10 @@
  * Common SCSS
 */
 
+// We use these breakpoint values. Allow the editor to override these values.
+$desktop-width: 1024px !default;
+$tablet-width: 768px !default;
+
 // Initialize the design system, but don't print it out.
 @import "styles/block-design-system";
 @import "styles/cssvars";
