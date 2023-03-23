@@ -85,16 +85,6 @@ const Edit = props => {
 					<InspectorTabs />
 
 					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-
-					{ /** Advanced controls */ }
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
 
 					<ProgressBar.InspectorControls isCircle />
 					<Typography.InspectorControls
@@ -106,6 +96,16 @@ const Edit = props => {
 						hasToggle
 						label={ __( 'Label', i18n ) }
 					/>
+
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+
 				</>
 			) }
 

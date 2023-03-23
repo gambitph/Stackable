@@ -10,7 +10,6 @@ import { DEFAULT_PROGRESS } from './schema'
 import { InspectorTabs, useDynamicContent } from '~stackable/components'
 import {
 	BlockDiv,
-	Alignment,
 	Advanced,
 	Responsive,
 	MarginBottom,
@@ -78,19 +77,7 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-
-					{ /** Advanced controls */ }
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-bar" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+					<InspectorTabs hasLayoutPanel={ false } />
 
 					<ProgressBar.InspectorControls />
 					<Typography.InspectorControls
@@ -102,6 +89,16 @@ const Edit = props => {
 						hasToggle
 						label={ __( 'Label', i18n ) }
 					/>
+
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-bar" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+
 				</>
 			) }
 
