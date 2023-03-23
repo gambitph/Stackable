@@ -194,9 +194,6 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'General', i18n ) }
@@ -330,6 +327,8 @@ const Edit = props => {
 						hasTextContent={ false }
 					/>
 
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
