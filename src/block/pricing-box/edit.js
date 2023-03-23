@@ -81,6 +81,7 @@ const Edit = props => {
 
 					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 					<BlockDiv.InspectorControls />
 					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
@@ -90,7 +91,6 @@ const Edit = props => {
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />
