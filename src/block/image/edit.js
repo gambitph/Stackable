@@ -14,7 +14,6 @@ import {
 	BlockDiv,
 	useGeneratedCss,
 	Image,
-	Alignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -67,18 +66,17 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
+					<InspectorTabs hasLayoutPanel={ false } />
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
 					<Image.InspectorControls
 						{ ...props }
 						initialOpen={ true }
 						heightUnits={ heightUnit }
 					/>
-					{ enableLink && <Link.InspectorControls hasTitle={ true } /> }
+					{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />

@@ -21,7 +21,6 @@ import {
 	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
-	Alignment,
 	getAlignmentClasses,
 	Advanced,
 	CustomCSS,
@@ -86,10 +85,8 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
+					<InspectorTabs hasLayoutPanel={ false } />
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'General', i18n ) }
@@ -129,6 +126,7 @@ const Edit = props => {
 						</PanelAdvancedSettings>
 
 					</InspectorStyleControls>
+					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />

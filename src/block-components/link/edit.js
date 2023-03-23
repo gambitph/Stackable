@@ -2,7 +2,9 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { InspectorStyleControls, PanelAdvancedSettings } from '~stackable/components'
+import {
+	InspectorAdvancedControls, InspectorStyleControls, PanelAdvancedSettings,
+} from '~stackable/components'
 import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
 /**
@@ -26,8 +28,10 @@ export const Edit = props => {
 		setAttributes( { [ attrName ]: value } )
 	}
 
+	const Tab = props.isAdvancedTab ? InspectorAdvancedControls : InspectorStyleControls
+
 	return (
-		<InspectorStyleControls>
+		<Tab>
 			<PanelAdvancedSettings
 				title={ __( 'Link', i18n ) }
 				id="link"
@@ -37,10 +41,11 @@ export const Edit = props => {
 			>
 				<LinkControls attrNameTemplate="link%s" />
 			</PanelAdvancedSettings>
-		</InspectorStyleControls>
+		</Tab>
 	)
 }
 
 Edit.defaultProps = {
 	hasToggle: false,
+	isAdvancedTab: false,
 }

@@ -21,7 +21,6 @@ import {
 	useGeneratedCss,
 	Icon,
 	getAlignmentClasses,
-	Alignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -65,12 +64,11 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
+					<InspectorTabs hasLayoutPanel={ false } />
 
-					<Alignment.InspectorControls />
+					<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
 					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
+					<Link.InspectorControls hasToggle={ true } isAdvancedTab={ true } />
 
 					<InspectorAdvancedControls>
 						<PanelAdvancedSettings
@@ -85,9 +83,10 @@ const Edit = props => {
 						</PanelAdvancedSettings>
 					</InspectorAdvancedControls>
 
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+
 					<EffectsAnimations.InspectorControls />
-					<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
-					<Link.InspectorControls hasToggle={ true } />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
 					<Responsive.InspectorControls />
