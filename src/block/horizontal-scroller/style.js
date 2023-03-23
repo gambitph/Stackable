@@ -35,6 +35,15 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector=".%s-horizontal-scroller"
+				styleRule="--stk-columns-spacing"
+				attrName="columnSpacing"
+				key="columnSpacing"
+				hasUnits="px"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s-horizontal-scroller"
 				styleRule="--stk-column-gap"
 				attrName="horizontalScrollerColumnGap"
 				key="horizontalScrollerColumnGap-save"

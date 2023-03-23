@@ -21,6 +21,13 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			columnSpacing: {
+				stkResponsive: true,
+				stkUnits: 'px',
+				type: 'number',
+				default: '',
+			},
+
 			horizontalScrollerColumnWidth: {
 				stkResponsive: true,
 				type: 'number',
