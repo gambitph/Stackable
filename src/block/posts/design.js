@@ -7,6 +7,7 @@ import { compact } from 'lodash'
  * WordPress dependencies
  */
 import { addFilter } from '@wordpress/hooks'
+import { Fragment } from '@wordpress/element'
 
 // List Output
 const list = ( output, style, attributes, comps ) => {
@@ -32,7 +33,7 @@ const list = ( output, style, attributes, comps ) => {
 		<>
 			{ comps[ 'featured-image' ] }
 			<article className="stk-container-padding">
-				{ compact( contents ).map( content => content ) }
+				{ compact( contents ).map( ( content, i ) => <Fragment key={ i }>{ content }</Fragment> ) }
 			</article>
 		</>
 	)

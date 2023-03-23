@@ -92,7 +92,7 @@ const Styles = props => {
 				selector="li"
 				styleRule="marginBottom"
 				attrName="rowGap"
-				key="rowGap"
+				key="rowGapSave"
 				responsive="all"
 				format="%spx"
 			/>
@@ -102,7 +102,7 @@ const Styles = props => {
 				selector=".stk-block-table-of-contents__list-item-inner"
 				styleRule="marginBottom"
 				attrName="rowGap"
-				key="rowGap"
+				key="rowGapEdit"
 				responsive="all"
 				format="%spx"
 			/>

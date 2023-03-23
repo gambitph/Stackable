@@ -37,6 +37,36 @@ addFilter( 'stackable.posts.title.readmore-content', 'stackable/3_0_2', addUndef
 addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureImage )
 
 const deprecated = [
+	{
+		attributes: attributes( '3.7.9' ),
+		save: withVersion( '3.7.9' )( Save ),
+		isEligible: attributes => {
+			return attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
+		},
+		migrate: attributes => {
+			return {
+				...attributes,
+				innerBlockContentWidth: '',
+				innerBlockContentWidthTablet: '',
+				innerBlockContentWidthMobile: '',
+				innerBlockContentWidthUnit: 'px',
+				innerBlockContentWidthUnitTablet: '',
+				innerBlockContentWidthUnitMobile: '',
+				blockWidth: attributes.innerBlockContentWidth,
+				blockWidthTablet: attributes.innerBlockContentWidthTablet,
+				blockWidthMobile: attributes.innerBlockContentWidthMobile,
+				blockWidthUnit: attributes.innerBlockContentWidthUnit,
+				blockWidthUnitTablet: attributes.innerBlockContentWidthUnitTablet,
+				blockWidthUnitMobile: attributes.innerBlockContentWidthUnitMobile,
+				innerBlockAlign: '',
+				innerBlockAlignTablet: '',
+				innerBlockAlignMobile: '',
+				blockHorizontalAlign: attributes.innerBlockAlign,
+				blockHorizontalAlignTablet: attributes.innerBlockAlignTablet,
+				blockHorizontalAlignMobile: attributes.innerBlockAlignMobile,
+			}
+		},
+	},
 	// Support new margin-top/bottom classes.
 	{
 		attributes: attributes( '3.7.9' ),
