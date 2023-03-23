@@ -3639,6 +3639,16 @@
     ]
   },
   {
+    "family": "Climate Crisis",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Coda",
     "variants": [
       "regular",
@@ -5864,6 +5874,17 @@
     ]
   },
   {
+    "family": "Gajraj One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Galada",
     "variants": [
       "regular"
@@ -6192,6 +6213,17 @@
     ]
   },
   {
+    "family": "Gloock",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Gloria Hallelujah",
     "variants": [
       "regular"
@@ -6273,6 +6305,23 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Golos Text",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -8596,6 +8645,34 @@
     ]
   },
   {
+    "family": "Labrada",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Lacquer",
     "variants": [
       "regular"
@@ -9885,6 +9962,8 @@
       "800"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext"
     ]
@@ -10779,6 +10858,18 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Mynerve",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "greek",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -14585,6 +14676,24 @@
     ]
   },
   {
+    "family": "Phudu",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Piazzolla",
     "variants": [
       "100",
@@ -15901,7 +16010,16 @@
       "600",
       "700",
       "800",
-      "900"
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -16846,6 +16964,30 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Shantell Sans",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -18816,7 +18958,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {

@@ -474,6 +474,16 @@ export const addStackableBlockCategory = () => {
 export const registerBlockType = ( name, _settings ) => {
 	let settings = applyFilters( `stackable.block.metadata`, _settings || {} )
 
+	// If there is no variation title, then some labels in the editor will show
+	// up as "undefined", add a default title for all variations.
+	if ( settings.variations ) {
+		settings.variations.forEach( variation => {
+			if ( ! variation.title ) {
+				variation.title = settings.title
+			}
+		} )
+	}
+
 	// Workaround to remove the .wp-block[data-align] div wrapper for wide and full
 	// width alignments.  Since we removed this, we add our own data-align attribute
 	// in the BlockWrapper in src/components/block-wrapper (this is used by all our
