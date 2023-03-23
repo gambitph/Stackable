@@ -1,5 +1,7 @@
-$desktop-width: 1024px;
-$tablet-width: 768px;
+// Allow these to be overridden by editor.scss since Gutenberg has fixed
+// breakpoints for tablet and mobile preview.
+$desktop-width: 1024px !default;
+$tablet-width: 768px !default;
 
 @mixin desktop {
 	@media only screen and (min-width: #{$desktop-width}) {
