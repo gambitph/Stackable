@@ -5,10 +5,6 @@
 // 	transition: $effect-transition;
 // }
 
-// The editor breakpoints are fixed to these values.
-$desktop-width: 781px;
-$tablet-width: 361px;
-
 @import "common";
 @import "styles/editor-block-design-system";
 @import "styles/editor-block";

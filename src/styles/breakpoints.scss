@@ -1,20 +1,21 @@
-// Allow these to be overridden by editor.scss since Gutenberg has fixed
-// breakpoints for tablet and mobile preview.
-$desktop-width: 1024px !default;
-$tablet-width: 768px !default;
+// These breakpoints are also overridden by gulpfile.js when building styles for
+// the editor. We need to define these as integers here because in our
+// definition in gulpfile.js, we cannot use px.
+$desktop-width: 1024 !default;
+$tablet-width: 768 !default;
 
 @mixin desktop {
-	@media only screen and (min-width: #{$desktop-width}) {
+	@media only screen and (min-width: #{$desktop-width + 0px}) {
 		@content;
 	}
 }
 @mixin desktop-tablet {
-	@media only screen and (min-width: #{$tablet-width}) {
+	@media only screen and (min-width: #{$tablet-width + 0px}) {
 		@content;
 	}
 }
 @mixin tablet {
-	@media only screen and (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+	@media only screen and (min-width: #{$tablet-width + 0px}) and (max-width: #{$desktop-width - 1px}) {
 		@content;
 	}
 }
