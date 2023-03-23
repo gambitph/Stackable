@@ -352,9 +352,7 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-
-					<BlockDiv.InspectorControls />
+					<InspectorTabs hasLayoutPanel={ false } />
 
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
@@ -438,12 +436,8 @@ const Edit = props => {
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
-					<InspectorStyleControls>
-					</InspectorStyleControls>
-
 					<Typography.InspectorControls
 						{ ...props }
-						label={ __( 'Table of Contents', i18n ) }
 						isMultiline={ true }
 						initialOpen={ false }
 						hasTextTag={ false }
@@ -459,6 +453,7 @@ const Edit = props => {
 						hasTextTag={ false }
 					/>
 
+					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
