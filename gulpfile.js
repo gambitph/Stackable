@@ -20,6 +20,7 @@ const autoprefixer = require( 'autoprefixer' ),
 	rename = require( 'gulp-rename' ),
 	replace = require( 'gulp-replace' ),
 	sass = require( 'gulp-sass' )( require( 'sass' ) ),
+	sassVariables = require( 'gulp-sass-variables' ),
 	zip = require( 'gulp-zip' )
 
 // These files are the ones which will be included in the `package` task.
@@ -233,6 +234,13 @@ exit;
 
 gulp.task( 'style-editor', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/**/editor.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/editor.scss' ) ] )
+		// Override the breakpoints in the editor in
+		// src/styles/breakpoints.scss, we do it here because there are various
+		// files that use the breakpoints and it's easier to override it here.
+		.pipe( sassVariables( {
+			'$desktop-width': 781,
+			'$tablet-width': 361,
+		} ) )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks.css' ) )
 		// @see https://make.wordpress.org/core/2020/08/04/new-editor-preview-options/
