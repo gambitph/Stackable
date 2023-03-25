@@ -45,6 +45,10 @@ export const attributes = ( version = VERSION ) => {
 				stkUnits: 'px',
 				type: 'object',
 			},
+			alignLastBlockToBottom: {
+				type: 'boolean',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

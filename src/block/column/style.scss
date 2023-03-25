@@ -10,6 +10,15 @@
 	margin-bottom: 0;
 }
 
+// Align the last block to the bottom.
+.stk-block .stk--align-last-block-to-bottom {
+	height: 100%;
+	min-height: inherit; // This makes sure the height is 100%.
+	> *:last-child {
+		margin-top: auto;
+	}
+}
+
 // FIXME: Temporarily removed this since the frontend is having issues with the Accordion block when it's nested inside a container.
 // // we need this to make position sticky to work inside columns.
 // .stk-block.stk-block-column--v2 > * > .stk-inner-blocks {

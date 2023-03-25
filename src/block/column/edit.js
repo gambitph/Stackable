@@ -9,6 +9,7 @@ import BlockStyles from './style'
 import classnames from 'classnames'
 import { i18n, version as VERSION } from 'stackable'
 import {
+	AdvancedToggleControl,
 	FourRangeControl,
 	InspectorLayoutControls,
 	InspectorTabs,
@@ -81,6 +82,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-column__content',
 		`stk-${ props.attributes.uniqueId }-inner-blocks`,
+		{ 'stk--align-last-block-to-bottom': props.attributes.alignLastBlockToBottom },
 	] )
 
 	return (
@@ -113,6 +115,14 @@ const Edit = props => {
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-column" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
+
+					<InspectorLayoutControls>
+						<AdvancedToggleControl
+							label={ __( 'Align Last Block to Bottom', i18n ) }
+							checked={ props.attributes.alignLastBlockToBottom }
+							onChange={ alignLastBlockToBottom => props.setAttributes( { alignLastBlockToBottom } ) }
+						/>
+					</InspectorLayoutControls>
 
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 				</>

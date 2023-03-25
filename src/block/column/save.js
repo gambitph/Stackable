@@ -54,6 +54,7 @@ export const Save = props => {
 			'stk-block-content',
 			'stk-inner-blocks',
 			`stk-${ attributes.uniqueId }-inner-blocks`,
+			{ 'stk--align-last-block-to-bottom': props.attributes.alignLastBlockToBottom },
 		] ),
 		props
 	)

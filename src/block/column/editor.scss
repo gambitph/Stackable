@@ -12,6 +12,14 @@
 	width: 100%;
 }
 
+// Align the last block to the bottom.
+.stk-block .stk--align-last-block-to-bottom {
+	height: auto;
+	> .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block]:nth-last-child(2) {
+		margin-top: auto;
+	}
+}
+
 // Ensure that only directly hovered columns will show their resizer. Nested
 // columns should not show their resizer if they are not directly hovered.
 .components-resizable-box__container.has-show-handle {
