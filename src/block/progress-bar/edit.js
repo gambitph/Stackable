@@ -23,6 +23,7 @@ import {
 	Typography,
 	getTypographyClasses,
 	getAlignmentClasses,
+	Alignment,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import {
@@ -77,8 +78,9 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+					<InspectorTabs />
 
+					<Alignment.InspectorControls />
 					<ProgressBar.InspectorControls />
 					<Typography.InspectorControls
 						{ ...props }

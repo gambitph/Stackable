@@ -24,6 +24,7 @@ import {
 	Transform,
 	getAlignmentClasses,
 	Link,
+	Alignment,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -66,8 +67,9 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+					<InspectorTabs />
 
+					<Alignment.InspectorControls />
 					<Image.InspectorControls
 						{ ...props }
 						initialOpen={ true }

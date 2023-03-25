@@ -30,6 +30,7 @@ import {
 	MarginBottom,
 	Link,
 	Transform,
+	Alignment,
 } from '~stackable/block-components'
 
 /**
@@ -64,8 +65,9 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+					<InspectorTabs />
 
+					<Alignment.InspectorControls />
 					<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
 					<BlockDiv.InspectorControls />
 					<Link.InspectorControls hasToggle={ true } isAdvancedTab={ true } />
