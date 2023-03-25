@@ -37,11 +37,15 @@ export const ColumnsControl = ( { sliderMax = 6 } ) => {
 		} else if ( numColumns > numInnerBlocks ) {
 			// This is not guaranteed to have the latest attributes and values
 			const lastColumnBlock = last( innerBlocks )
-			// Retrieve block details to get the latest attributes and values
-			const latestColumnBlockDetails = select( 'core/block-editor' ).getBlock( lastColumnBlock.clientId )
+			// Retrieve block details to get the latest attributes and values,
+			// If there's no block, then use a blank column.
+			const newBlock = lastColumnBlock
+				? select( 'core/block-editor' ).getBlock( lastColumnBlock.clientId )
+				: {}
+
 			const numToAdd = numColumns - numInnerBlocks
 			for ( let i = 0; i < numToAdd; i++ ) {
-				const block = getBlockFromExample( 'stackable/column', pick( latestColumnBlockDetails, [ 'attributes', 'innerBlocks' ] ) )
+				const block = getBlockFromExample( 'stackable/column', pick( newBlock, [ 'attributes', 'innerBlocks' ] ) )
 				insertBlock( block, numInnerBlocks + i + 1, clientId, false )
 			}
 		}
