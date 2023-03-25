@@ -305,6 +305,7 @@ const Edit = props => {
 					</InspectorStyleControls>
 
 					<BlockDiv.InspectorControls />
+					<ContainerDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<Image.InspectorControls
@@ -367,7 +368,6 @@ const Edit = props => {
 						hasAlign={ true }
 						initialOpen={ false }
 					/>
-					<ContainerDiv.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-posts" />

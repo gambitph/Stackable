@@ -88,8 +88,8 @@ const Edit = props => {
 
 					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls hasBlockAlignment={ true } />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 					<BlockDiv.InspectorControls />
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
