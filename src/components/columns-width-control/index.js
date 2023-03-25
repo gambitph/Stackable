@@ -64,6 +64,12 @@ const COLUMN_PRESET_OPTIONS = {
 const isBlank = columns => columns.every( column => ! column )
 
 const ColumnsWidthControl = props => {
+	const sliderValues = isBlank( props.values ) && COLUMN_PRESETS[ `${ props.columns }-1` ]
+		? COLUMN_PRESETS[ `${ props.columns }-1` ]
+		: ( props.values || [] ).every( value => value !== '' )
+			? props.values
+			: Array( props.columns ).fill( 100 / props.columns ) // Array of equal column widths for the number of props.column
+
 	return (
 		<BaseControl
 			label={ props.label }
@@ -79,10 +85,12 @@ const ColumnsWidthControl = props => {
 					} }
 				/>
 			}
-			<ColumnSlider
-				value={ isBlank( props.values ) ? COLUMN_PRESETS[ `${ props.columns }-1` ] : props.values }
-				onChange={ props.onChange }
-			/>
+			{ props.columns <= 7 &&
+				<ColumnSlider
+					value={ sliderValues }
+					onChange={ props.onChange }
+				/>
+			}
 			<ColumnsInputs
 				value={ isBlank( props.values ) ? ( props.forceBlank ? props.values : COLUMN_PRESETS[ `${ props.columns }-1` ] ) : props.values }
 				onChange={ props.onChange }
