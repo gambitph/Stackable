@@ -22,6 +22,7 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 	const {
+		hasRowGap = true,
 		numColumns,
 	} = props
 
@@ -56,26 +57,28 @@ const Styles = props => {
 				format="%spx"
 				responsive="all"
 			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="save"
-				selector=".%s-column"
-				styleRule="rowGap"
-				attrName="rowGap"
-				key="rowGap-save"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
-				styleRule="rowGap"
-				attrName="rowGap"
-				key="rowGap"
-				format="%spx"
-				responsive="all"
-			/>
+			{ hasRowGap && <>
+				<BlockCss
+					{ ...propsToPass }
+					renderIn="save"
+					selector=".%s-column"
+					styleRule="rowGap"
+					attrName="rowGap"
+					key="rowGap-save"
+					format="%spx"
+					responsive="all"
+				/>
+				<BlockCss
+					{ ...propsToPass }
+					renderIn="edit"
+					selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
+					styleRule="rowGap"
+					attrName="rowGap"
+					key="rowGap"
+					format="%spx"
+					responsive="all"
+				/>
+			</> }
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"
