@@ -25,6 +25,7 @@ export const settings = {
 		anchor: true,
 		align: true,
 		stkAlign: true,
+		stkDefaultTab: 'layout',
 	},
 	attributes: schema,
 	example,
