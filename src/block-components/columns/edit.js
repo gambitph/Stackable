@@ -128,7 +128,7 @@ export const Controls = props => {
 			{ props.hasGap && (
 				<>
 					<AdvancedRangeControl
-						label={ __( 'Column Inner Spacing', i18n ) }
+						label={ __( 'Inner Column Spacing', i18n ) }
 						attribute="columnSpacing"
 						responsive="all"
 						units={ [ 'px', 'em' ] }
