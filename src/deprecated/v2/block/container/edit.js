@@ -98,7 +98,11 @@ addFilter( 'stackable.container.edit.inspector.layout.before', 'stackable/contai
 				options={ applyFilters( 'stackable.container.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)
@@ -297,29 +301,29 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 					}
 
 					{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
 					}
 
 					{ show.columnBackground &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ shadow }
+							onChange={ shadow => setAttributes( { shadow } ) }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="3"
+							className="ugb--help-tip-general-shadow"
+						/>
 					}
 				</PanelAdvancedSettings>
 			}

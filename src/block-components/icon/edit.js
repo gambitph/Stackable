@@ -85,10 +85,7 @@ export const Edit = props => {
 				help={ iconControlHelp }
 			/>
 
-			{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton
-				title={ __( 'Say Hello to Gorgeous Icons 👋', i18n ) }
-				description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
-			/> }
+			{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton type="icon-colors" /> }
 
 			{ applyFilters( 'stackable.block-component.icon.after', null ) }
 
@@ -235,12 +232,7 @@ export const Edit = props => {
 		</>
 	)
 
-	const iconBackgroundShapeControls = (
-		<ProControl
-			title={ __( 'Say Hello to Background Shapes 👋', i18n ) }
-			description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
-		/>
-	)
+	const iconBackgroundShapeControls = <ProControl type="icon-background-shape" />
 
 	const Wrapper = wrapInPanels ? InspectorStyleControls : Fragment
 
@@ -259,7 +251,7 @@ export const Edit = props => {
 				<>
 					{ showProNotice && ! isPro && (
 						wrapInPanels
-							? <PanelAdvancedSettings title={ __( 'Background Shape', i18n ) } id="icon-background-shape" > { iconBackgroundShapeControls }</PanelAdvancedSettings>
+							? <PanelAdvancedSettings title={ __( 'Background Shape', i18n ) } id="icon-background-shape" isPremiumPanel> { iconBackgroundShapeControls }</PanelAdvancedSettings>
 							: iconBackgroundShapeControls
 					) }
 

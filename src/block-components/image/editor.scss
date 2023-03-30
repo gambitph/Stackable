@@ -194,8 +194,7 @@
 	// Make the option wide.
 	.ugb-design-control {
 		margin: 0 !important;
-		height: 300px !important;
-		max-height: 50vh !important;
+		max-height: min(300px, 50vh) !important;
 	}
 	// Make the option 3 columns.
 	.components-radio-control__option {

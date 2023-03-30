@@ -217,7 +217,11 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 						setAttributes( applyFilters( 'stackable.columns.edit.inspector.layout.attributes', { design, columns } ) )
 					} }
 				/>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
@@ -404,8 +408,9 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 					blockAttributes={ props.attributes }
 				/>
 				{ showProNotice && <ProControlButton
-					title={ __( 'Say Hello to More Column Options 👋', i18n ) }
-					description={ __( 'Swap columns and adjust column gaps. This feature is only available on Stackable Premium', i18n ) }
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
 				/> }
 			</PanelAdvancedSettings>
 
@@ -444,8 +449,9 @@ addFilter( 'stackable.columns.edit.advanced.responsive.after', 'stackable/column
 		<Fragment>
 			{ output }
 			{ showProNotice && <ProControlButton
-				title={ __( 'Say Hello to More Responsive Options 👋', i18n ) }
-				description={ __( 'Adjust the arrangement of your columns when collapsed on mobile. This feature is only available on Stackable Premium', i18n ) }
+				// Generic label, no translations to keep old text out of the translation files.
+				title="Upgrade to Premium"
+				description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
 			/> }
 		</Fragment>
 	)

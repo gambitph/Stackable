@@ -63,10 +63,7 @@ const IconControls = props => {
 				/>
 			}
 
-			{ showProNotice && <ProControlButton
-				title={ __( 'Say Hello to Gorgeous Icons 👋', i18n ) }
-				description={ __( 'Liven up your icons with gradient fills, multiple colors and background shapes. This feature is only available on Stackable Premium', i18n ) }
-			/> }
+			{ showProNotice && <ProControlButton type="icon-colors" /> }
 
 			{ showProNotice &&
 				<BaseControl

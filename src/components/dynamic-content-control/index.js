@@ -378,14 +378,9 @@ export const DynamicContentButton = memo( props => {
 			{ props.isPopoverOpen && (
 				<Popover
 					position="top right"
-					className="stackable-dynamic-content__popover"
+					className={ classnames( 'stackable-dynamic-content__popover', { 'stk-dynamic-content__popover--is-premium': ! isPro } ) }
 				>
-					{ ! isPro && (
-						<ProControl
-							title={ __( 'Say Hello to Dynamic Attributes 👋', i18n ) }
-							description={ __( 'Add dynamic values to your Stackable blocks. This feature is only available on Stackable Premium.', i18n ) }
-						/>
-					) }
+					{ ! isPro && <ProControl type="dynamic-attributes" /> }
 
 					{ isPro && (
 						<DynamicContentFields

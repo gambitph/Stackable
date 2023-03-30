@@ -160,6 +160,7 @@ const ChooseBlocks = () => {
 										setDisabledBlocks( newDisabledBlocks )
 										save( newDisabledBlocks )
 									} }
+									className="s-welcome-wizard__option-main-toggle"
 									disabled={ __( 'All blocks disabled', i18n ) }
 									enabled={ allBlocksEnabled ? __( 'All blocks enabled', i18n ) : __( 'Some blocks enabled', i18n ) }
 								/>
