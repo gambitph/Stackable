@@ -70,11 +70,10 @@ body[class*="page_stk-"] {
 }
 .s-settings-field,
 .ugb-admin-setting {
-	--label-width: 270px;
+	--label-width: clamp(150px, 270px, 30%);
 }
 .s-settings-field {
 	margin-bottom: 16px;
-	--label-width: 270px;
 	label {
 		margin-top: 16px;
 		.s-settings-field__title {
@@ -111,7 +110,8 @@ body[class*="page_stk-"] {
 	[type="url"],
 	select {
 		padding: 0.5em 1em;
-		width: calc(100% - 300px);
+		max-width: 400px;
+		width: 100%;
 		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		margin: 0;
