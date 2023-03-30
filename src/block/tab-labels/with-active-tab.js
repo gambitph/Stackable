@@ -28,7 +28,7 @@ const withActiveTab = createHigherOrderComponent(
 		const classNames = classnames( props.className, `stk--active-tab-${ activeTab }` )
 
 		return (
-			<SetActiveTabContext.Provider value={ setActiveTab }>
+			<SetActiveTabContext.Provider value={ [ activeTab, setActiveTab ] }>
 				<WrappedComponent { ...props } className={ classNames } />
 			</SetActiveTabContext.Provider>
 		)

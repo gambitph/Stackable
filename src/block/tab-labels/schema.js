@@ -14,16 +14,25 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
-import { version as VERSION } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
+import { __ } from '@wordpress/i18n'
 
 const tabLabelsAttributes = {
-	tabCount: {
+	tabCount: { // TOOD: Delete this, use tabs attribute instead.
 		type: 'number',
 		default: 3,
 	},
 	initialTabOpen: {
 		type: 'string',
 		default: '1',
+	},
+	tabs: {
+		type: 'array',
+		default: [
+			{ label: __( 'Tab', i18n ) + ' 1', icon: '' },
+			{ label: __( 'Tab', i18n ) + ' 2', icon: '' },
+			{ label: __( 'Tab', i18n ) + ' 3', icon: '' },
+		],
 	},
 }
 

@@ -1,10 +1,13 @@
+/**
+ * Internal dependencies
+ */
 import { TabLabelStyle } from './style'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { InspectorTabs } from '~stackable/components'
+import { InspectorTabs, Button } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
@@ -27,7 +30,9 @@ import { dispatch, select } from '@wordpress/data'
 import { attributes } from '../tabs/schema'
 import { useEffect } from '@wordpress/element'
 import { getBlockFromExample } from '@wordpress/blocks'
+import { BlockControls } from '@wordpress/block-editor'
 import { useSetActiveTabContext } from './with-active-tab'
+import { ToolbarGroup } from '@wordpress/components'
 
 export const checkOpen = i => {
 	if ( i === 1 ) {
@@ -44,7 +49,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const setActiveTab = useSetActiveTabContext()
+	const [ activeTab, setActiveTab ] = useSetActiveTabContext()
 	const initialTabOpen = props.context[ 'stackable/initialTabOpen' ]
 
 	// In charge of setting the active tab class - used for displaying the
@@ -92,6 +97,19 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
+					<BlockControls>
+						<ToolbarGroup className="stackable-dynamic-content">
+							<Button
+								icon="arrow-left-alt2"
+							/>
+							<Button
+								icon="arrow-right-alt2"
+							/>
+							<Button
+								icon="no-alt"
+							/>
+						</ToolbarGroup>
+					</BlockControls>
 					<InspectorTabs />
 					<BlockDiv.InspectorControls />
 					<CustomAttributes.InspectorControls />
