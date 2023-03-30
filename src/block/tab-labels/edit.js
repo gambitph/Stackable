@@ -25,8 +25,9 @@ import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { dispatch, select } from '@wordpress/data'
 import { attributes } from '../tabs/schema'
-import { useCallback } from '@wordpress/element'
+import { useEffect } from '@wordpress/element'
 import { getBlockFromExample } from '@wordpress/blocks'
+import { useSetActiveTabContext } from './with-active-tab'
 
 export const checkOpen = i => {
 	if ( i === 1 ) {
@@ -43,6 +44,22 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
+	const setActiveTab = useSetActiveTabContext()
+	const initialTabOpen = props.context[ 'stackable/initialTabOpen' ]
+
+	// In charge of setting the active tab class - used for displaying the
+	// current tab content.
+	useEffect( () => {
+		setActiveTab( currentActiveTab => {
+			if ( currentActiveTab === null ) {
+				return initialTabOpen
+			} else if ( currentActiveTab > props.attributes.tabCount ) {
+				return props.attributes.tabCount
+			}
+			return currentActiveTab
+		} )
+	}, [ initialTabOpen, props.attributes.tabCount ] )
+
 	const {
 		insertBlock, updateBlockAttributes,
 	} = dispatch( 'core/block-editor' )
@@ -56,30 +73,15 @@ const Edit = props => {
 		'stk-block-tab-labels',
 	] )
 
-	const handleClick = useCallback( el => {
-		const tabContent = getNextBlockClientId( props.clientId )
-		const dataTab = parseInt( el.target.getAttribute( 'data-tab' ), 10 )
-		const tabContentBlock = document.querySelector( `[data-block="${ tabContent }"]` )
-		const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
-		columns.forEach( ( element, index ) => {
-			if ( dataTab === index + 1 ) {
-				element.classList.remove( 'stk-block-tabs__content--hidden' )
-				element.classList.add( 'stk-block-tabs__content--shown' )
-			} else {
-				element.classList.remove( 'stk-block-tabs__content--shown' )
-				element.classList.add( 'stk-block-tabs__content--hidden' )
-			}
-		} )
-	} )
-
 	const tabs = []
 
 	for ( let i = 1; i <= props.attributes.tabCount; i++ ) {
 		tabs.push(
 			<button className="stk-block-tabs__tab stk-tabs__tab-desktop"
+				key={ i }
 				data-tab={ i }
 				data-initial-open={ props.attributes.initialTabOpen === i.toString() ? true : false }
-				onClick={ handleClick }
+				onClick={ () => setActiveTab( i ) }
 			>
 				Tab { i }
 			</button>
@@ -121,12 +123,15 @@ const Edit = props => {
 							const tabsUpdatedAttributes = {}
 							const block = getBlockFromExample( 'stackable/column', {} ) // eslint-disable-line
 
+							const newTabCount = parseInt( tabCount, 10 ) + 1
 							tabsInnerBlocksClientIds.push( props.clientId )
 							tabsInnerBlocksClientIds.forEach( clientId => {
-								tabsUpdatedAttributes[ clientId ] = { tabCount: parseInt( tabCount, 10 ) + 1 }
+								tabsUpdatedAttributes[ clientId ] = { tabCount: newTabCount }
 							} )
 							updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 							insertBlock( block, attributes.tabCount, tabContent, false )
+
+							setActiveTab( newTabCount )
 						} }
 					>
 						+

@@ -1,0 +1,5 @@
+@for $i from 1 through 20 {
+	[data-type="stackable/tab-labels"].stk--active-tab-#{$i} ~ [data-type="stackable/tab-content"] > * > * > * > .block-editor-block-list__layout > [data-block]:not(:nth-child(#{$i})) {
+		display: none;
+	}
+}

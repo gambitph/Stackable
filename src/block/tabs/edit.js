@@ -68,8 +68,6 @@ const Edit = props => {
 	} = props
 
 	const [ tabsOptions, setTabsOptions ] = useState( [] )
-	const [ isReduced, setIsReduced ] = useState( false )
-	const [ isRendered, setIsRendered ] = useState( false )
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{ className: 'stk-block-tabs__wrapper' },
@@ -112,45 +110,6 @@ const Edit = props => {
 
 	// console.log( document.querySelector( `[data-block="${ props.clientId }"]` ), document.querySelector( `[data-block="${ props.clientId }"]` ).querySelectorAll( '[data-type="stackable/column"]' ) )
 
-	useEffect( () => {
-		if ( ! isRendered ) {
-			const tabContentBlock = document.querySelector( `[data-block="${ props.clientId }"]` )
-			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
-			if ( columns.length === 0 ) {
-				return
-			}
-			columns.forEach( ( element, index ) => {
-				if ( index + 1 !== parseInt( props.attributes.initialTabOpen, 10 ) ) {
-					element.classList.add( 'stk-block-tabs__content--hidden' )
-				} else {
-					element.classList.add( 'stk-block-tabs__content--shown' )
-				}
-			} )
-			setIsRendered( true )
-		}
-	} )
-
-	useEffect( () => {
-		if ( isRendered ) {
-			let a = true
-			const tabContentBlock = document.querySelector( `[data-block="${ innerBlocks[ 1 ].clientId }"]` )
-			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
-			columns.forEach( ( element, index, array ) => {
-				if ( ! element.classList.contains( 'stk-block-tabs__content--shown' ) ) {
-					element.classList.add( 'stk-block-tabs__content--hidden' )
-				} else {
-					a = false
-				}
-
-				if ( isReduced && a && index === array.length - 1 ) {
-					element.classList.remove( 'stk-block-tabs__content--shown' )
-					element.classList.add( 'stk-block-tabs__content--hidden' )
-					setIsReduced( false )
-				}
-			} )
-		}
-	}, [ props.attributes.tabCount ] )
-
 	return (
 		<>
 			{ isSelected && (
@@ -180,9 +139,7 @@ const Edit = props => {
 									if ( value < attributes.tabCount ) {
 										const tabsInnerColumns = innerBlocks[ 1 ].innerBlocks.slice( value ).map( ( { clientId } ) => clientId )
 										removeBlocks( tabsInnerColumns, false )
-										setIsReduced( true )
 									} else {
-										setIsReduced( false )
 										const columnsSize = innerBlocks[ 1 ].innerBlocks.length
 										for ( let i = columnsSize; i < value; i++ ) {
 											const block = getBlockFromExample( 'stackable/column', {} )

@@ -5,6 +5,9 @@
 	"description": "Insert your content inside tabs like a browser",
 	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" ],
+	"providesContext": {
+		"stackable/initialTabOpen": "initialTabOpen"
+	},
 	"keywords": [
 		"toggle"
 	],

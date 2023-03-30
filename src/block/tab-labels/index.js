@@ -8,6 +8,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import './with-active-tab'
 
 /**
  * WordPress dependencies
