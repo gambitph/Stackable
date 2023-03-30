@@ -15,12 +15,12 @@ import metadata from './block.json'
 import { __ } from '@wordpress/i18n'
 
 export const settings = {
-	 ...metadata,
-	 attributes: schema,
-	 supports: {
-		 anchor: true,
-	 },
-	 edit,
-	 save,
+	...metadata,
+	attributes: schema,
+	supports: {
+		anchor: true,
+	},
+	edit,
+	save,
 }
 
