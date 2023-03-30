@@ -1,3 +1,5 @@
+import { TabLabelStyle } from './style'
+
 /**
  * Internal dependencies
  */
@@ -50,6 +52,11 @@ const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
+			<TabLabelStyle.Content
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ props.clientId }
+			/>
 			<div className="stk-block-tab-labels__wrapper">
 				{ tabs }
 			</div>

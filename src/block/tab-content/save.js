@@ -1,3 +1,5 @@
+import { TabContentStyle } from './style'
+
 /**
  * Internal dependencies
  */
@@ -33,6 +35,10 @@ const Save = props => {
 			attributes={ attributes }
 			data-tab={ tabCount }
 		>
+			<TabContentStyle.Content
+				attributes={ attributes }
+				version={ props.version }
+			/>
 			<div className="stk-block-tab-content__wrapper">
 				<InnerBlocks.Content />
 			</div>

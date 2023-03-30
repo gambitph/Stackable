@@ -1,3 +1,5 @@
+import { TabLabelStyle } from './style'
+
 /**
  * External dependencies
  */
@@ -6,19 +8,15 @@ import { InspectorTabs } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
-	Alignment,
-	Advanced,
 	CustomCSS,
 	CustomAttributes,
-	EffectsAnimations,
-	Transform,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
-// import { version as VERSION, i18n } from 'stackable'
+import { version as VERSION } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -93,11 +91,7 @@ const Edit = props => {
 			{ isSelected && (
 				<>
 					<InspectorTabs />
-					<Alignment.InspectorControls hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-labels" />
 				</>
@@ -109,6 +103,11 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
+				<TabLabelStyle
+					version={ VERSION }
+					blockState={ props.blockState }
+					clientId={ props.clientId }
+				/>
 				<div className="stk-block-tab-labels__wrapper">
 					{ tabs }
 					<button

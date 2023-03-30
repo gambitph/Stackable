@@ -12,7 +12,7 @@ import { BlockCssCompiler } from '~stackable/components'
  */
 import { memo } from '@wordpress/element'
 
-export const TabLabelStyle = memo( props => {
+export const TabContentStyle = memo( props => {
 	return (
 		<>
 			<BlockDiv.Style { ...props } />
@@ -21,11 +21,11 @@ export const TabLabelStyle = memo( props => {
 	)
 } )
 
-TabLabelStyle.defaultProps = {
+TabContentStyle.defaultProps = {
 	version: '',
 }
 
-TabLabelStyle.Content = props => {
+TabContentStyle.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
@@ -38,7 +38,7 @@ TabLabelStyle.Content = props => {
 	)
 }
 
-TabLabelStyle.Content.defaultProps = {
+TabContentStyle.Content.defaultProps = {
 	version: '',
 	attributes: {},
 }

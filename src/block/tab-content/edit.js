@@ -1,3 +1,5 @@
+import { TabContentStyle } from './style'
+
 /**
  * External dependencies
  */
@@ -14,6 +16,8 @@ import {
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
+import { version as VERSION } from 'stackable'
+
 /**
  * WordPress dependencies
  */
@@ -60,6 +64,11 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
+				<TabContentStyle
+					version={ VERSION }
+					blockState={ props.blockState }
+					clientId={ props.clientId }
+				/>
 				<div className="stk-block-tab-content__wrapper">
 					<ColumnInnerBlocks
 						providerValue={ columnProviderValue }
