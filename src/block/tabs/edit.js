@@ -1,3 +1,5 @@
+import { TabsStyle } from './style'
+
 /**
  * External dependencies
  */
@@ -15,7 +17,6 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	Transform,
-	BlockStyle,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -30,33 +31,31 @@ import { version as VERSION, i18n } from 'stackable'
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
-import { InnerBlocks } from '@wordpress/block-editor'
-import { TabsStyle } from './style'
+import { useInnerBlocksProps } from '@wordpress/block-editor'
 import { useEffect, useState } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 import { getBlockFromExample } from '@wordpress/blocks'
-import { isEmpty } from 'lodash'
 
 const TEMPLATE = [
 	[ 'stackable/tab-labels', {} ],
 	[ 'stackable/tab-content', {} ],
 ]
 
-const tabLabelStyles = [
+const tabsLayoutOptions = [
 	{
-		name: 'top',
+		value: '',
 		label: __( 'Top', i18n ),
 	},
 	{
-		name: 'bottom',
+		value: 'bottom',
 		label: __( 'Bottom', i18n ),
 	},
 	{
-		name: 'left',
+		value: 'left',
 		label: __( 'Left', i18n ),
 	},
 	{
-		name: 'right',
+		value: 'right',
 		label: __( 'Right', i18n ),
 	},
 ]
@@ -72,11 +71,21 @@ const Edit = props => {
 	const [ isReduced, setIsReduced ] = useState( false )
 	const [ isRendered, setIsRendered ] = useState( false )
 
+	const innerBlocksProps = useInnerBlocksProps(
+		{ className: 'stk-block-tabs__wrapper' },
+		{
+			template: TEMPLATE,
+			orientation: 'horizontal',
+			templateLock: 'all',
+		}
+	)
+
 	useGeneratedCss( props.attributes )
 
 	const {
 		hasInnerBlocks, innerBlocks,
 	} = useBlockContext()
+
 	const {
 		insertBlock, removeBlocks, updateBlockAttributes,
 	} = dispatch( 'core/block-editor' )
@@ -87,6 +96,12 @@ const Edit = props => {
 		'stk-classnames',
 	] )
 
+	// if ( attributes?.className ) {
+	// 	if ( attributes.className === 'wp-block-stackable-column' ) {
+	// 		setAttributes( { className: '' } )
+	// 	}
+	// }
+
 	useEffect( () => {
 		const tempOptions = []
 		for ( let i = 0; i < attributes.tabCount; i++ ) {
@@ -95,14 +110,15 @@ const Edit = props => {
 		setTabsOptions( tempOptions )
 	}, [ props.attributes.tabCount ] )
 
+	// console.log( document.querySelector( `[data-block="${ props.clientId }"]` ), document.querySelector( `[data-block="${ props.clientId }"]` ).querySelectorAll( '[data-type="stackable/column"]' ) )
+
 	useEffect( () => {
-		if ( ! isRendered && ! isEmpty( innerBlocks ) ) {
-			const tabContentBlock = document.querySelector( `[data-block="${ innerBlocks[ 1 ].clientId }"]` )
-			if ( tabContentBlock === null ) {
+		if ( ! isRendered ) {
+			const tabContentBlock = document.querySelector( `[data-block="${ props.clientId }"]` )
+			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' )
+			if ( columns.length === 0 ) {
 				return
 			}
-			const columns = tabContentBlock.querySelectorAll( '[data-type="stackable/column"]' ) || []
-			// console.log( columns, tabContentBlock )
 			columns.forEach( ( element, index ) => {
 				if ( index + 1 !== parseInt( props.attributes.initialTabOpen, 10 ) ) {
 					element.classList.add( 'stk-block-tabs__content--hidden' )
@@ -112,7 +128,7 @@ const Edit = props => {
 			} )
 			setIsRendered( true )
 		}
-	}, [ innerBlocks ] )
+	} )
 
 	useEffect( () => {
 		if ( isRendered ) {
@@ -191,9 +207,17 @@ const Edit = props => {
 									updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 								} }
 							/>
+							<AdvancedSelectControl
+								label={ __( 'Tabs Layout', i18n ) }
+								options={ tabsLayoutOptions }
+								attribute="tabLayout"
+							/>
+							{ /* <ToggleGroupControl>
+								<ToggleGroupControlOption value="horizontal" label="Horizontal" />
+								<ToggleGroupControlOption value="vertical" label="Vertical" />
+							</ToggleGroupControl> */ }
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
-					<BlockStyle.InspectorControls styles={ tabLabelStyles } />
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
@@ -216,13 +240,13 @@ const Edit = props => {
 					clientId={ props.clientId }
 				/>
 				<CustomCSS mainBlockClass="stk-block-tabs" />
-				<div className="stk-block-tabs__wrapper">
-					<InnerBlocks
+				<div className="stk-block-tabs__wrapper" { ...innerBlocksProps }>
+					{ /* <InnerBlocks
 						orientation="horizontal"
 						template={ TEMPLATE }
 						templateInsertUpdatesSelection={ true }
 						templateLock="all"
-					/>
+					/> */ }
 				</div>
 			</BlockDiv>
 			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }

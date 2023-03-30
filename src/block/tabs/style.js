@@ -28,20 +28,57 @@ const Styles = props => {
 		<>
 			<BlockCss
 				{ ...propsToPass }
-				selector=""
-				styleRule="columnCount"
-				attrName="columns"
-				key="columns"
+				selector=".%s .stk-block-tabs__wrapper"
+				styleRule="display"
+				attrName="tabLayout"
+				key="tabLayout"
+				valueCallback={ () => {
+					return 'flex'
+				} }
 				responsive="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=""
-				styleRule="columnGap"
-				attrName="columnGap"
-				key="columnGap"
+				selector=".%s .stk-block-tabs__wrapper .wp-block-stackable-tab-labels"
+				styleRule="width"
+				attrName="tabLayout"
+				key="tabLayout"
+				valueCallback={ () => {
+					return 'max-content'
+				} }
 				responsive="all"
-				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s .stk-block-tabs__wrapper .wp-block-stackable-tab-labels .stk-block-tab-labels__wrapper"
+				styleRule="flexDirection"
+				attrName="tabLayout"
+				key="tabLayout"
+				valueCallback={ value => {
+					if ( value === 'left' || value === 'right' ) {
+						return 'column'
+					}
+				} }
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s .stk-block-tabs__wrapper"
+				styleRule="flexDirection"
+				attrName="tabLayout"
+				key="tabLayout"
+				valueCallback={ value => {
+					if ( value === 'bottom' ) {
+						return 'column-reverse'
+					}
+					if ( value === 'left' ) {
+						return 'row'
+					}
+					if ( value === 'right' ) {
+						return 'row-reverse'
+					}
+				} }
+				responsive="all"
 			/>
 		</>
 	)

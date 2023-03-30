@@ -26,6 +26,10 @@ const tabLabelsAttributes = {
 		type: 'string',
 		default: '1',
 	},
+	tabLayout: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const attributes = ( version = VERSION ) => {
