@@ -1,5 +1,5 @@
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { register, createReduxStore, useSelect, useDispatch } from '@wordpress/data'
+import { register, createReduxStore, useSelect } from '@wordpress/data'
 // import { useMemo } from '@wordpress/element'
 
 // Include all the stored state.
@@ -116,8 +116,6 @@ register( createReduxStore( 'stackable/hover-state', {
 export const useBlockHoverState = () => {
 	const { clientId } = useBlockEditContext()
 
-	const { updateHoverState } = useDispatch( 'stackable/hover-state' )
-
 	const {
 		hoverState,
 		hoverStateClientId,
@@ -192,7 +190,7 @@ export const useBlockHoverState = () => {
 			}
 		}
 
-		return [ currentHoverState, updateHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
+		return [ currentHoverState, blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ]
 	// }, [ hoverState, clientId, hoverStateClientId, hasParentHoverState, parentHoverClientId, hasCollapsedState, collapsedClientId ] )
 }
 

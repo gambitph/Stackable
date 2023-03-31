@@ -166,15 +166,19 @@
 
             $contents = ob_get_clean();
 
-            $update_button_id_attribute_pos = strpos( $contents, 'id="plugin_update_from_iframe"' );
+            $install_or_update_button_id_attribute_pos = strpos( $contents, 'id="plugin_install_from_iframe"' );
 
-            if ( false !== $update_button_id_attribute_pos ) {
-                $update_button_start_pos = strrpos(
-                    substr( $contents, 0, $update_button_id_attribute_pos ),
+            if ( false === $install_or_update_button_id_attribute_pos ) {
+                $install_or_update_button_id_attribute_pos = strpos( $contents, 'id="plugin_update_from_iframe"' );
+            }
+
+            if ( false !== $install_or_update_button_id_attribute_pos ) {
+                $install_or_update_button_start_pos = strrpos(
+                    substr( $contents, 0, $install_or_update_button_id_attribute_pos ),
                     '<a'
                 );
 
-                $update_button_end_pos = ( strpos( $contents, '</a>', $update_button_id_attribute_pos ) + strlen( '</a>' ) );
+                $install_or_update_button_end_pos = ( strpos( $contents, '</a>', $install_or_update_button_id_attribute_pos ) + strlen( '</a>' ) );
 
                 /**
                  * The part of the contents without the update button.
@@ -182,20 +186,20 @@
                  * @author Leo Fajardo (@leorw)
                  * @since 2.2.5
                  */
-                $modified_contents = substr( $contents, 0, $update_button_start_pos );
+                $modified_contents = substr( $contents, 0, $install_or_update_button_start_pos );
 
-                $update_button = substr( $contents, $update_button_start_pos, ( $update_button_end_pos - $update_button_start_pos ) );
+                $install_or_update_button = substr( $contents, $install_or_update_button_start_pos, ( $install_or_update_button_end_pos - $install_or_update_button_start_pos ) );
 
                 /**
                  * Replace the plugin information dialog's "Install Update Now" button's text and URL. If there's a license,
                  * the text will be "Renew license" and will link to the checkout page with the license's billing cycle
                  * and quota. If there's no license, the text will be "Buy license" and will link to the pricing page.
                  */
-                $update_button = preg_replace(
-                    '/(\<a.+)(id="plugin_update_from_iframe")(.+href=")([^\s]+)(".*\>)(.+)(\<\/a>)/is',
+                $install_or_update_button = preg_replace(
+                    '/(\<a.+)(id="plugin_(install|update)_from_iframe")(.+href=")([^\s]+)(".*\>)(.+)(\<\/a>)/is',
                     is_object( $license ) ?
                         sprintf(
-                            '$1$3%s$5%s$7',
+                            '$1$4%s$6%s$8',
                             $this->_fs->checkout_url(
                                 is_object( $subscription ) ?
                                     ( 1 == $subscription->billing_cycle ? WP_FS__PERIOD_MONTHLY : WP_FS__PERIOD_ANNUALLY ) :
@@ -206,11 +210,11 @@
                             fs_text_inline( 'Renew license', 'renew-license', $this->_fs->get_slug() )
                         ) :
                         sprintf(
-                            '$1$3%s$5%s$7',
+                            '$1$4%s$6%s$8',
                             $this->_fs->pricing_url(),
                             fs_text_inline( 'Buy license', 'buy-license', $this->_fs->get_slug() )
                         ),
-                    $update_button
+                    $install_or_update_button
                 );
 
                 /**
@@ -219,7 +223,7 @@
                  * @author Leo Fajardo (@leorw)
                  * @since 2.2.5
                  */
-                $modified_contents .= $update_button;
+                $modified_contents .= $install_or_update_button;
 
                 /**
                  * Append the remaining part of the contents after the update button.
@@ -227,7 +231,7 @@
                  * @author Leo Fajardo (@leorw)
                  * @since 2.2.5
                  */
-                $modified_contents .= substr( $contents, $update_button_end_pos );
+                $modified_contents .= substr( $contents, $install_or_update_button_end_pos );
 
                 $contents = $modified_contents;
             }
@@ -417,7 +421,7 @@
 
             $themes_update = get_site_transient( 'update_themes' );
             if ( ! isset( $themes_update->response[ $theme_basename ] ) ||
-                empty( $themes_update->response[ $theme_basename ]['package'] )
+                 empty( $themes_update->response[ $theme_basename ]['package'] )
             ) {
                 return $prepared_themes;
             }
@@ -636,7 +640,7 @@
                     foreach ( $this->_translation_updates as $translation_update ) {
                         $lang = $translation_update['language'];
                         if ( ! isset( $current_plugin_translation_updates_map[ $lang ] ) ||
-                            version_compare( $translation_update['version'], $current_plugin_translation_updates_map[ $lang ]['version'], '>' )
+                             version_compare( $translation_update['version'], $current_plugin_translation_updates_map[ $lang ]['version'], '>' )
                         ) {
                             $current_plugin_translation_updates_map[ $lang ] = $translation_update;
                         }
@@ -660,13 +664,14 @@
          * @return object
          */
         function get_update_details( FS_Plugin_Tag $new_version ) {
-            $update              = new stdClass();
-            $update->slug        = $this->_fs->get_slug();
-            $update->new_version = $new_version->version;
-            $update->url         = WP_FS__ADDRESS;
-            $update->package     = $new_version->url;
-            $update->tested      = $new_version->tested_up_to_version;
-            $update->requires    = $new_version->requires_platform_version;
+            $update               = new stdClass();
+            $update->slug         = $this->_fs->get_slug();
+            $update->new_version  = $new_version->version;
+            $update->url          = WP_FS__ADDRESS;
+            $update->package      = $new_version->url;
+            $update->tested       = self::get_tested_wp_version( $new_version->tested_up_to_version );
+            $update->requires     = $new_version->requires_platform_version;
+            $update->requires_php = $new_version->requires_programming_language_version;
 
             $icon = $this->_fs->get_local_icon_url();
 
@@ -808,9 +813,9 @@
             $basename = $this->_fs->get_plugin_basename();
 
             if ( ! is_object( $transient_data ) ||
-                ! isset( $transient_data->response ) ||
+                 ! isset( $transient_data->response ) ||
                  ! is_array( $transient_data->response ) ||
-                empty( $transient_data->response[ $basename ] )
+                 empty( $transient_data->response[ $basename ] )
             ) {
                 return;
             }
@@ -837,28 +842,34 @@
          * @return bool|mixed
          */
         static function _fetch_plugin_info_from_repository( $action, $args ) {
-            $url = $http_url = 'http://api.wordpress.org/plugins/info/1.0/';
-            if ( $ssl = wp_http_supports( array( 'ssl' ) ) ) {
+            $url = $http_url = 'http://api.wordpress.org/plugins/info/1.2/';
+            $url = add_query_arg(
+                array(
+                    'action'  => $action,
+                    'request' => $args,
+                ),
+                $url
+            );
+
+            if ( wp_http_supports( array( 'ssl' ) ) ) {
                 $url = set_url_scheme( $url, 'https' );
             }
 
-            $args = array(
-                'timeout' => 15,
-                'body'    => array(
-                    'action'  => $action,
-                    'request' => serialize( $args )
-                )
-            );
-
-            $request = wp_remote_post( $url, $args );
+            // The new endpoint version serves only GET requests.
+            $request = wp_remote_get( $url, array( 'timeout' => 15 ) );
 
             if ( is_wp_error( $request ) ) {
                 return false;
             }
 
-            $res = maybe_unserialize( wp_remote_retrieve_body( $request ) );
+            $res = json_decode( wp_remote_retrieve_body( $request ), true );
 
-            if ( ! is_object( $res ) && ! is_array( $res ) ) {
+            if ( is_array( $res ) ) {
+                // Object casting is required in order to match the info/1.0 format. We are not decoding directly into an object as we need some fields to remain an array (e.g., $res->sections).
+                $res = (object) $res;
+            }
+
+            if ( ! is_object( $res ) || isset( $res->error ) ) {
                 return false;
             }
 
@@ -1095,6 +1106,7 @@ if ( !isset($info->error) ) {
                 if ( ! $plugin_in_repo ) {
                     $data->last_updated = ! is_null( $new_version->updated ) ? $new_version->updated : $new_version->created;
                     $data->requires     = $new_version->requires_platform_version;
+                    $data->requires_php = $new_version->requires_programming_language_version;
                     $data->tested       = $new_version->tested_up_to_version;
                 }
 
@@ -1148,7 +1160,26 @@ if ( !isset($info->error) ) {
                 }
             }
 
+            if ( ! empty( $data->tested ) ) {
+                $data->tested = self::get_tested_wp_version( $data->tested );
+            }
+
             return $data;
+        }
+
+        /**
+         * @since 2.5.3 If the current WordPress version is a patch of the tested version (e.g., 6.1.2 is a patch of 6.1), then override the tested version with the patch so developers won't need to release a new version just to bump the latest supported WP version.
+         *
+         * @param string|null $tested_up_to
+         *
+         * @return string|null
+         */
+        private static function get_tested_wp_version( $tested_up_to ) {
+            $current_wp_version = get_bloginfo( 'version' );
+
+            return ( ! empty($tested_up_to) && fs_starts_with( $current_wp_version, $tested_up_to . '.' ) ) ?
+                $current_wp_version :
+                $tested_up_to;
         }
 
         /**

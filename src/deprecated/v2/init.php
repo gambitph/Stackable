@@ -273,7 +273,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'block/blog-posts/index.php' );
 // Used in Fonts.
 if ( ! function_exists( 'stackable_is_stackable_block_v2' ) ) {
 	function stackable_is_stackable_block_v2( $is_stackable_block, $block_name ) {
-		if ( ! $is_stackable_block ) {
+		if ( ! $is_stackable_block && ! empty( $block_name ) ) {
 			return strpos( $block_name, 'ugb/' ) === 0;
 		}
 		return $is_stackable_block;
@@ -312,8 +312,9 @@ if ( ! function_exists( 'stackable_add_required_block_styles_v2' ) ) {
 if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 
 	function load_frontend_scripts_conditionally_v2( $block_content, $block ) {
+		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
-			stripos( $block['blockName'], 'ugb/' ) === 0 ||
+			stripos( $block_name, 'ugb/' ) === 0 ||
 			stripos( $block_content, '<!-- wp:ugb/' ) !==  false
 		) {
 			stackable_block_enqueue_frontend_assets_v2();
@@ -363,8 +364,9 @@ if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
 	 * @return string The block content
 	 */
 	function stackable_frontend_v2_try_migration( $block_content, $block ) {
+		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
-			stripos( $block['blockName'], 'ugb/' ) === 0 ||
+			stripos( $block_name, 'ugb/' ) === 0 ||
 			stripos( $block_content, '<!-- wp:ugb/' ) !==  false
 		) {
 			stackable_frontend_v2_try_migration_detected();

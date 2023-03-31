@@ -223,6 +223,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					...createResponsiveAttributeNames( 'quote%sX' ),
 					...createResponsiveAttributeNames( 'quote%sY' ),
 				] }
+				hasToggle
 				toggleAttributeName="showQuote"
 			>
 				<AdvancedToolbarControl
@@ -292,7 +293,6 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 			<PanelAdvancedSettings
 				title={ __( 'Text', i18n ) }
 				id="text"
-				hasToggle={ false }
 			>
 				<TypographyControlHelper
 					attrNameTemplate="text%s"

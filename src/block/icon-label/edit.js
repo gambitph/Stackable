@@ -30,7 +30,7 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -51,7 +51,10 @@ export const TEMPLATE = [
 
 const Edit = props => {
 	const {
-		className, attributes, clientId,
+		className,
+		attributes,
+		clientId,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -72,61 +75,72 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
-			<InspectorTabs />
-			<BlockDiv.InspectorControls />
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Icon Gap', i18n ) }
-						attribute="iconGap"
-						responsive="all"
-						min={ 0 }
-						sliderMax={ 300 }
-						placeholder="64"
-					/>
-				</PanelAdvancedSettings>
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
+					<BlockDiv.InspectorControls />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Icon Gap', i18n ) }
+								attribute="iconGap"
+								responsive="all"
+								min={ 0 }
+								sliderMax={ 300 }
+								placeholder="64"
+							/>
+						</PanelAdvancedSettings>
 
-			</InspectorStyleControls>
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					</InspectorStyleControls>
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-label" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
-			<IconLabelStyles version={ VERSION } />
+			<IconLabelStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-icon-label" />
 
-			<BlockDiv className={ blockClassNames }>
-				<Fragment>
-					<div className={ contentClassNames }>
-						<InnerBlocks
-							orientation="horizontal"
-							template={ TEMPLATE }
-							templateLock="insert"
-							templateInsertUpdatesSelection={ true }
-						/>
-					</div>
-				</Fragment>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
+				<div className={ contentClassNames }>
+					<InnerBlocks
+						orientation="horizontal"
+						template={ TEMPLATE }
+						templateLock="insert"
+						templateInsertUpdatesSelection={ true }
+					/>
+				</div>
 			</BlockDiv>
 			{ /* Hack, somehow the icon list doesn't have a uniqueId when it's just added, so the data-block-id isn't populated and isn't detected, this fixes that. */ }
-			<MarginBottom previewSelector={ `[data-block="${ clientId }"] > .stk-block` } />
-		</Fragment>
+			{ props.isHovered && <MarginBottom previewSelector={ `[data-block="${ clientId }"] > .stk-block` } /> }
+		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

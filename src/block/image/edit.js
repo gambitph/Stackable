@@ -28,7 +28,7 @@ import {
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 
@@ -44,6 +44,7 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -64,40 +65,55 @@ const Edit = props => {
 
 	return (
 		<>
-			<InspectorTabs />
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<Image.InspectorControls
-				initialOpen={ true }
-				heightUnits={ heightUnit }
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<Image.InspectorControls
+						{ ...props }
+						initialOpen={ true }
+						heightUnits={ heightUnit }
+					/>
+					{ enableLink && <Link.InspectorControls hasTitle={ true } /> }
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
+
+			<BlockStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
 			/>
-			{ enableLink && <Link.InspectorControls hasTitle={ true } /> }
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<BlockStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-image" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Image
+					showTooltips
 					heightUnits={ heightUnit }
 					defaultWidth="100"
 					defaultHeight="auto"
 				/>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

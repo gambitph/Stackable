@@ -20,7 +20,7 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor'
 import { ResizableBox } from '@wordpress/components'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useSelect, dispatch } from '@wordpress/data'
 import { addFilter } from '@wordpress/hooks'
 import { useState } from '@wordpress/element'
 
@@ -29,7 +29,6 @@ const MIN_HEIGHT = 38
 export const Edit = props => {
 	const { clientId, isSelected } = props
 	const [ isResizing, setIsResizing ] = useState( false )
-	const { updateHeight, updateIsOpen } = useDispatch( 'stackable/navigation-view' )
 
 	const {
 		height,
@@ -87,7 +86,7 @@ export const Edit = props => {
 				onResizeStop={ ( e, direction, ref, d ) => {
 					const newHeight = height + d.height
 					// There may be times that the height goes negative, prevent that.
-					updateHeight( newHeight < MIN_HEIGHT ? MIN_HEIGHT : newHeight )
+					dispatch( 'stackable/navigation-view' ).updateHeight( newHeight < MIN_HEIGHT ? MIN_HEIGHT : newHeight )
 					setIsResizing( false )
 				} }
 				minHeight={ MIN_HEIGHT }
@@ -97,7 +96,7 @@ export const Edit = props => {
 					title={ __( 'Navigation', i18n ) }
 					id="navigation-view"
 					isOpen={ isOpen }
-					onToggle={ () => updateIsOpen( ! isOpen ) }
+					onToggle={ () => dispatch( 'stackable/navigation-view' ).updateIsOpen( ! isOpen ) }
 				>
 					<div className="stk-panel--navigation-view__wrapper">
 						<ListView

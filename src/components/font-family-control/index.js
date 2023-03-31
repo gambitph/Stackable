@@ -1,14 +1,13 @@
 /**
  * External dependencies
  */
-import { AdvancedAutosuggestControl } from '~stackable/components'
+import { i18n } from 'stackable'
 
 /**
  * Internal dependencies
  */
 import fonts from './google-fonts.json'
 import { loadGoogleFont } from '~stackable/util'
-import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -16,6 +15,7 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
+import AdvancedAutosuggestControl from '../advanced-autosuggest-control'
 
 const fontOptions = fonts.map( font => {
 	return { label: font.family, value: font.family }

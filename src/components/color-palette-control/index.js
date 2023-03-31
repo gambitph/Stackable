@@ -1,10 +1,4 @@
 /**
- * Color Palette Control
- *
- * We need to implement our own until this is resolved:
- * https://github.com/WordPress/gutenberg/issues/13018
- */
-/**
  * Internal dependencies
  */
 import AdvancedControl, { extractControlProps } from '../base-control2'
@@ -13,14 +7,21 @@ import { useControlHandlers } from '../base-control2/hooks'
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import {
-	ColorIndicator, ColorPalette,
-} from '@wordpress/components'
-import { compose, ifCondition } from '@wordpress/compose'
-import { getColorObjectByColorValue, withColorContext } from '@wordpress/block-editor'
-import { Fragment, memo } from '@wordpress/element'
+	getColorObjectByColorValue,
+	useSetting,
+} from '@wordpress/block-editor'
+import { memo, useMemo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+import {
+	Button,
+	ColorIndicator,
+	ColorPalette,
+	Dropdown,
+	FlexItem,
+	__experimentalHStack as HStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
+} from '@wordpress/components'
 
 /**
  * External dependencies
@@ -28,9 +29,13 @@ import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
 import { isPlainObject, compact } from 'lodash'
+import { ResetButton } from '../base-control2/reset-button'
 
-// translators: first %s: The type of color (e.g. background color), second %s: the color name or value (e.g. red or #ff0000)
-const colorIndicatorAriaLabel = __( '(current %s: %s)', i18n )
+const popoverProps = {
+	placement: 'left-start',
+	offset: 36,
+	shift: true,
+}
 
 const ColorPaletteControl = memo( props => {
 	const {
@@ -42,72 +47,139 @@ const ColorPaletteControl = memo( props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const colors = compact( props.colors.map( color => {
-		// Make sure to only get color objects. If null, also return null.
-		// This will be removed by lodash's `compact` function.
-		if ( ! isPlainObject( color ) ) {
-			return null
+	const themeColors = useSetting( 'color.palette.theme' ) || [] // This can be undefined.
+	const colors = useMemo( () => {
+		const colors = compact( themeColors.map( color => {
+			// Make sure to only get color objects. If null, also return null.
+			// This will be removed by lodash's `compact` function.
+			if ( ! isPlainObject( color ) ) {
+				return null
+			}
+
+			return {
+				...color,
+				name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
+			}
+		} ) )
+
+		if ( props.hasTransparent ) {
+			colors.push( {
+				name: __( 'Transparent', i18n ),
+				slug: '_stk-transparent', // Make it unique to prevent conflict.
+				color: 'transparent',
+			} )
 		}
 
-		return {
-			...color,
-			name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
-		}
-	} ) )
-
-	if ( props.hasTransparent ) {
-		colors.push( {
-			name: __( 'Transparent', i18n ),
-			slug: '_stk-transparent', // Make it unique to prevent conflict.
-			color: 'transparent',
-		} )
-	}
+		return colors
+	}, [ themeColors, props.hasTransparent ] )
 
 	let value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
-
-	const colorObject = getColorObjectByColorValue( colors, value )
-	const colorName = colorObject && colorObject.name
-	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || _value )
 
 	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6}/ ) ) {
 		value = value.match( /#[\d\w]{6}/ )[ 0 ]
 	}
 
-	const labelElement = (
-		<Fragment>
-			{ label }
-			{ value && (
-				<ColorIndicator
-					colorValue={ value }
-					aria-label={ ariaLabel }
-				/>
-			) }
-		</Fragment>
+	const colorObject = getColorObjectByColorValue( colors, value )
+	const colorName = colorObject && colorObject.name
+	const colorLabel = colorName || ( value === 'transparent' ? 'Transparent' : value )
+
+	const toggleSettings = {
+		colorValue: value,
+		label: colorLabel,
+	}
+
+	const colorPalette = (
+		<ColorPalette
+			value={ value }
+			onChange={ value => {
+				// Allow the selected color to be overridden.
+				const colorObject = getColorObjectByColorValue( colors, value )
+				onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
+			} }
+			label={ colorLabel }
+			clearable={ false }
+			{ ...{ colors, disableCustomColors } }
+		/>
 	)
 
 	return (
 		<AdvancedControl
 			{ ...controlProps }
 			className={ classnames( [ className, 'editor-color-palette-control', 'stk-color-palette-control' ] ) }
-			id="editor-color-palette-control"
-			label={ labelElement }
+			label={ label }
 		>
-			<ColorPalette
-				className="editor-color-palette-control__color-palette"
+			{ props.isExpanded && colorPalette }
+			{ ! props.isExpanded && (
+				<Dropdown
+					popoverProps={ popoverProps }
+					className="block-editor-tools-panel-color-gradient-settings__dropdown"
+					renderToggle={ renderToggle( toggleSettings ) }
+					renderContent={ () => (
+						<div className="stk-color-palette-control__popover-content">
+							{ colorPalette }
+						</div>
+					) }
+				/>
+			) }
+			<ResetButton
+				allowReset={ props.allowReset }
 				value={ value }
-				onChange={ value => {
-					// Allow the selected color to be overridden.
-					const colorObject = getColorObjectByColorValue( colors, value )
-					onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
-				} }
-				{ ... { colors, disableCustomColors } }
+				default={ props.default }
+				onChange={ onChange }
 			/>
 		</AdvancedControl>
 	)
 } )
 
-export default compose( [
-	withColorContext,
-	ifCondition( ( { hasColorsToChoose } ) => hasColorsToChoose ),
-] )( ColorPaletteControl )
+ColorPaletteControl.defaultProps = {
+	allowReset: true,
+	default: '',
+
+	attribute: '',
+
+	value: undefined,
+	onChange: undefined,
+	isExpanded: false,
+}
+
+export default ColorPaletteControl
+
+const renderToggle =
+	settings =>
+		( { onToggle, isOpen } ) => {
+			const { colorValue, label } = settings
+
+			const toggleProps = {
+				onClick: onToggle,
+				className: classnames(
+					'block-editor-panel-color-gradient-settings__dropdown',
+					{ 'is-open': isOpen }
+				),
+				'aria-expanded': isOpen,
+			}
+
+			return (
+				<Button { ...toggleProps }>
+					<LabeledColorIndicator
+						colorValue={ colorValue }
+						label={ label }
+					/>
+				</Button>
+			)
+		}
+
+const LabeledColorIndicator = ( { colorValue, label } ) => (
+	<HStack justify="flex-start">
+		<ColorIndicator
+			className="block-editor-panel-color-gradient-settings__color-indicator"
+			colorValue={ colorValue }
+		/>
+		<FlexItem
+			className="block-editor-panel-color-gradient-settings__color-name"
+			title={ label }
+		>
+			{ label }
+		</FlexItem>
+	</HStack>
+)

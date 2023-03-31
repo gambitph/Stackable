@@ -30,9 +30,11 @@ import {
 	MarginBottom,
 	Transform,
 } from '~stackable/block-components'
-import { useAttributeEditHandlers, useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
+} from '~stackable/hooks'
+import {
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -58,6 +60,7 @@ const Edit = props => {
 	const {
 		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -114,67 +117,80 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-accordion" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+							initialOpen={ true }
+						>
+							<AdvancedToggleControl
+								label={ __( 'Open at the start', i18n ) }
+								attribute="startOpen"
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Close adjacent on open', i18n ) }
+								attribute="onlyOnePanelOpen"
+								className="ugb--help-tip-accordion-adjacent-open"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
 
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-					initialOpen={ true }
-				>
-					<AdvancedToggleControl
-						label={ __( 'Open at the start', i18n ) }
-						attribute="startOpen"
-					/>
-					<AdvancedToggleControl
-						label={ __( 'Close adjacent on open', i18n ) }
-						attribute="onlyOnePanelOpen"
-						className="ugb--help-tip-accordion-adjacent-open"
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
-
-			<BlockStyles version={ VERSION } />
+			<BlockStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-accordion" />
 
-			<BlockDiv className={ blockClassNames } renderHtmlTag={ false } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				renderHtmlTag={ false }
+				enableVariationPicker={ true }
+			>
 				<InnerBlocks
 					template={ TEMPLATE }
 					templateLock="insert"
 				/>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
+			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
 
 // Add another icon picker to the Icon block for picking the icon for the opened accordion.
 addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', output => {
-	const {
-		getAttribute,
-		updateAttributeHandler,
-	} = useAttributeEditHandlers()
+	const icon2 = useBlockAttributesContext( attributes => attributes.icon2 )
+	const setAttributes = useBlockSetAttributesContext()
+
 	const { parentTree } = useBlockContext()
 	const { getBlock } = useSelect( 'core/block-editor' )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
@@ -192,15 +208,15 @@ addFilter( 'stackable.block-component.icon.after', 'stackable/blockquote', outpu
 
 	if ( isAccordionIcon && accordionBlockDetails ) {
 		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
-		const defaultValue = activeVariation.name === 'plus' ? applyFilters( 'stackable.block-component.plus.icon-close' ) : undefined
+		const defaultValue = activeVariation?.name === 'plus' ? applyFilters( 'stackable.block-component.plus.icon-close' ) : undefined
 		return (
 			<>
 				{ output }
 				<IconControl
 					label={ __( 'Open Icon', i18n ) }
-					value={ getAttribute( 'icon2' ) }
+					value={ icon2 }
 					defaultValue={ defaultValue }
-					onChange={ updateAttributeHandler( 'icon2' ) }
+					onChange={ icon2 => setAttributes( { icon2 } ) }
 					help={ __( 'The open icon will appear when the accordion is opened', i18n ) }
 				/>
 			</>
@@ -236,7 +252,7 @@ addFilter( 'stackable.block-component.icon.default', 'stackable/accordion', star
 
 	if ( isAccordionIcon && accordionBlockDetails ) {
 		const activeVariation = getActiveBlockVariation( accordionBlockDetails.name, accordionBlockDetails.attributes )
-		return ( activeVariation.name === 'plus' )
+		return ( activeVariation?.name === 'plus' )
 			? applyFilters( 'stackable.block-component.plus.icon-open' ) : defaultIcon
 	}
 	return starIcon

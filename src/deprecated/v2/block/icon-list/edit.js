@@ -53,11 +53,13 @@ const includeEditorContentAlignClassName = attributes => {
 		tabletContentAlign,
 		mobileContentAlign,
 	} = attributes
-	const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' ) || {}
 
 	const addedAlignmentClass = {}
 
-	const previewDeviceType = getPreviewDeviceType ? getPreviewDeviceType() : 'Desktop'
+	const previewDeviceType = select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType() ||
+		select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType() ||
+		'Desktop'
+
 	const alignment = (
 		previewDeviceType === 'Desktop' ? contentAlign : previewDeviceType === 'Tablet' ? tabletContentAlign : mobileContentAlign
 	) || 'left'
@@ -242,8 +244,9 @@ const Edit = props => {
 		 */
 
 		// Different icon sizes per device preview.
-		const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' ) || {}
-		const previewDeviceType = getPreviewDeviceType ? getPreviewDeviceType() : 'Desktop'
+		const previewDeviceType = select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType() ||
+			select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType() ||
+			'Desktop'
 		const currentIconSize = (
 			previewDeviceType === 'Desktop' ? props.attributes.iconSize
 				: previewDeviceType === 'Tablet' ? ( props.attributes.iconTabletSize || props.attributes.iconSize )
@@ -307,8 +310,9 @@ const Edit = props => {
 					/>
 					{ ! isTyping && isSelected && isOpenIconSearch &&
 						<IconSearchPopover
-							position="bottom left"
-							anchorRef={ iconSearchAnchor }
+							__deprecatedAnchorRef={ iconSearchAnchor }
+							__deprecatedPosition="bottom left"
+							__hasPopover={ true }
 							onClose={ () => {
 								if ( selectedEvent ) {
 									selectedEvent.target.parentElement.currentlyOpenIndex = undefined

@@ -13,7 +13,7 @@ import {
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	useAttributeEditHandlers, useBlockContext, useBlockHoverState,
+	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import { extractColor } from '~stackable/util'
 
@@ -21,7 +21,7 @@ import { extractColor } from '~stackable/util'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { useSelect } from '@wordpress/data'
+import { select } from '@wordpress/data'
 import { getColorClassName } from '@wordpress/block-editor'
 
 /**
@@ -100,14 +100,14 @@ export const HoverEffects = () => {
 }
 
 export const Colors = props => {
-	const [ state ] = useBlockHoverState()
-
 	const {
-		getAttribute,
-		updateAttribute,
-	} = useAttributeEditHandlers()
+		blockState,
+		hasIconColor,
+		hasTextColor,
+	} = props
 
-	const colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors ) || []
+	const buttonBackgroundColorType = useBlockAttributesContext( attributes => attributes.buttonBackgroundColorType )
+	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<InspectorStyleControls>
@@ -131,15 +131,15 @@ export const Colors = props => {
 					fullwidth={ false }
 				/>
 				<ColorPaletteControl
-					label={ getAttribute( 'buttonBackgroundColorType' ) === 'gradient'
+					label={ buttonBackgroundColorType === 'gradient'
 						? sprintf( __( 'Button Color #%s', i18n ), 1 )
 						: __( 'Button Color', i18n )
 					}
 					attribute="buttonBackgroundColor"
-					hasTransparent={ state === 'normal' && getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' }
+					hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
 					hover="all"
 				/>
-				{ getAttribute( 'buttonBackgroundColorType' ) === 'gradient' && (
+				{ buttonBackgroundColorType === 'gradient' && (
 					<>
 						<ColorPaletteControl
 							label={ __( 'Button Color #2', i18n ) }
@@ -159,15 +159,16 @@ export const Colors = props => {
 					</>
 				) }
 
-				{ props.hasTextColor && (
+				{ hasTextColor && (
 					<ColorPaletteControl
 						changeCallback={ _value => {
-							if ( state !== 'normal' ) {
+							if ( blockState !== 'normal' ) {
 								return _value
 							}
 							const value = extractColor( _value )
+							const colors = select( select => select( 'core/block-editor' ).getSettings().colors ) || []
 							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-							updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
+							setAttributes( { textColorClass: colorSlug ? getColorClassName( 'color', colorSlug ) : '' } )
 
 							return _value
 						} }
@@ -177,7 +178,7 @@ export const Colors = props => {
 					/>
 				) }
 
-				{ props.hasIconColor && (
+				{ hasIconColor && (
 					<ColorPaletteControl
 						label={ __( 'Icon Color', i18n ) }
 						attribute="iconColor1"
@@ -288,6 +289,7 @@ export const Edit = props => {
 		hasIconPosition,
 		borderRadiusPlaceholder,
 		hasFullWidth,
+		...propsToPass
 	} = props
 
 	const { parentBlock } = useBlockContext()
@@ -297,7 +299,7 @@ export const Edit = props => {
 	return (
 		<>
 			{ ( hasLink || enableLink ) && <Link /> }
-			<Colors hasTextColor={ hasTextColor } />
+			<Colors hasTextColor={ hasTextColor } { ...propsToPass } />
 			<Size hasFullWidth={ hasFullWidth } />
 			<Borders
 				borderSelector={ borderSelector }

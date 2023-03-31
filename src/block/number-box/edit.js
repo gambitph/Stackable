@@ -33,21 +33,23 @@ import {
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
+import { } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		attributes,
 		setAttributes,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -68,67 +70,84 @@ const Edit = props => {
 	] )
 
 	return (
-		<Fragment>
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-number-box" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-number-box" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'Shape', i18n ) }
-					id="shape"
-					initialOpen={ true }
-					checked={ attributes.hasShape }
-					onChange={ hasShape => setAttributes( { hasShape } ) }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Size', i18n ) }
-						attribute="shapeSize"
-						responsive="all"
-						min="0"
-						sliderMax="200"
-						placeholder="96"
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'Shape', i18n ) }
+							id="shape"
+							initialOpen={ true }
+							hasToggle={ true }
+							checked={ attributes.hasShape }
+							onChange={ hasShape => setAttributes( { hasShape } ) }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Size', i18n ) }
+								attribute="shapeSize"
+								responsive="all"
+								min="0"
+								sliderMax="200"
+								placeholder="96"
+							/>
+							<BackgroundControls
+								attrNameTemplate="shape%s"
+								hasGradient={ false }
+								hasBackgroundImage={ false }
+								hasBackgroundGradientBlendMode={ false }
+							/>
+							<BorderControls
+								attrNameTemplate="shape%s"
+								borderSliderMax="100"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+					<Typography.InspectorControls
+						{ ...props }
+						hasTextTag={ false }
+						sizePlaceholder="56"
 					/>
-					<BackgroundControls
-						attrNameTemplate="shape%s"
-						hasGradient={ false }
-						hasBackgroundImage={ false }
-						hasBackgroundGradientBlendMode={ false }
-					/>
-					<BorderControls
-						attrNameTemplate="shape%s"
-						borderSliderMax="100"
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-			<Typography.InspectorControls hasTextTag={ false } sizePlaceholder="56" />
+				</>
+			) }
 
-			<HeadingStyles version={ VERSION } />
+			<HeadingStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-number-box" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Typography
 					tagName="div"
 					placeholder="1"
 					className={ textClassNames }
 				/>
 			</BlockDiv>
-			<MarginBottom />
-		</Fragment>
+			{ props.isHovered && <MarginBottom /> }
+		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

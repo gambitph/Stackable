@@ -1,43 +1,43 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 5.9
-Tested up to: 6.1
+Requires at least: 6.0
+Tested up to: 6.2
 Requires PHP: 5.7
-Stable tag: 3.6.2
+Stable tag: 3.7.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-All-in-one solution for creating stunning websites with Gutenberg.
+Custom Blocks that transform your WordPress Block Editor into a page builder
 
 == Description ==
 
-**The Ultimate Companion to Gutenberg**
+**The Ultimate Companion to the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted Gutenberg companion you've been waiting for. Build dynamic websites with our powerful yet lightweight custom blocks, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
+
+> [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 [youtube https://www.youtube.com/watch?v=yzmk0qoW880]
 
-## Transforming Gutenberg into a Page Builder. Discover a Whole New Experience of Web Design With the WordPress Block Editor.
+## Transform Gutenberg into a Page Builder.
 
-Stackable is the all-in-one solution for creating stunning websites by transforming Gutenberg into a Page Builder. With over 100K websites using (and growing!) Stackable, Stackable has helped thousands of bloggers, merchants, designers and web development professionals make the most out of the WordPress Block Editor through fast, powerful and intuitive features.
+Stackable is the all-in-one block plugin for creating stunning websites by transforming the WordPress Block Editor into a Page Builder. Stackable has helped thousands of bloggers, merchants, marketers, designers and web development professionals make the most out of the WordPress Block Editor through fast, powerful and intuitive features.
 
-> [Try our live demos](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+## Ready Made Templates, Block Designs and Wireframes
 
-## Ready Made Block Designs and UI Kits
+Enjoy an impressive Design Library to jumpstart your designing process. Never start from scratch and design like a pro with the help of our stunning and professionally-made designs.
 
-Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to jumpstart your designing process. Never start from scratch and design like a pro with the help of our stunning and professionally-made designs.
-
-- Dozens of UI Kit Designs
-- Hundreds of ready-made Block Designs
-- Dozens of block layout variations
-- Various built-in Separator Designs
+- Dozens of UI Kit designs
+- Hundreds of ready-made block designs
+- Dozens of block layouts
+- Various shape separator designs
 
 ## Powerful Custom Blocks
 
-Get 39 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 41 flexible custom WordPress blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
-You can choose which of these blocks you need, depending on your workflow.
+You can choose which of these blocks you need, depending on your workflow. You can also disable blocks if you don't need them.
 
 Essential Blocks
 - Advanced Columns Block — [View Block](https://wpstackable.com/columns-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -50,6 +50,8 @@ Essential Blocks
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 Special Blocks
+- Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -66,8 +68,6 @@ Special Blocks
 - Notification Block — [View Block](https://wpstackable.com/notification-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Expand / Show More Block — [View Block](https://wpstackable.com/expand-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Separator Block — [View Block](https://wpstackable.com/separator-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Load More Block (for the Blog Posts Block)
-- Pagination Block (for the Blog Posts Block)
 - Subtitle Block
 - Price Block
 - Divider Block
@@ -86,11 +86,11 @@ Section Blocks
 
 ## Page Builder-like Design Options
 
-Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
+Turn the WordPress Block Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
 
 - Multiple Block Layouts
 - Save Block Defaults
-- Animate Blocks on Hover
+- Customize block hover styles
 - Block Background and Image Color Settings
 - Block Typography Settings
 - Image Shapes and Settings
@@ -100,40 +100,10 @@ Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a w
 - Responsiveness
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
-	- Specify how Columns collapse in Tablet and Mobile
+    - Specify how Columns collapse in Tablet and Mobile
     - Hide / Show Specific Blocks on Desktop, Tablet or Mobile
-- Custom data-* attributes
-- Scroll and Entrance Animations**
-
-## Dynamic Content
-
-Create dynamic WordPress websites that cater to the specific interests of visitors.
-
-- Dynamic Content**
-- Fully Customize your Query Loops**
-- Built-in Custom Fields**
-- Block Conditional Display**
-
-
-## Agency Tools
-
-Cater to more clients effectively and efficiently with our Agency Tools, which were specially made for web design professionals.
-
-- Block CSS Customizer **
-- Role Manager **
-
-## Integrations
-
-Make your page building experience more well-rounded by using other popular tools. We've seamlessly integrated with these essential third-party plugins and tools:
-
-- ACF **
-- Metabox **
-- JetEngine **
-- WPML
-- Blocksy
-- Toolset
-- Font Awesome
-- Google Fonts
+    - Custom Tablet and Mobile breakpoints
+- Custom `data-*` attributes
 
 ## Fast Page Loading Speed
 
@@ -146,10 +116,64 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 - Responsive image loading for faster browsing speeds in mobile devices
 - Compatible with Optimization Plugins and use optimization techniques such as combining CSS and JS files and minification
 
+## Integrations & Compatibility
+
+Make your page building experience more well-rounded by using other popular tools. We've seamlessly integrated with these essential third-party plugins and tools:
+
+- WPML
+- Weglot
+- Blocksy
+- Toolset
+- Font Awesome
+- Google Fonts
+- [see our full list of integrations and compatibility](https://wpstackable.com/compatibility/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+## Premium Features
+
+Take web designing to the next level. Stackable Premium helps you unlock the full potential of the WordPress Block Editor with awesome advanced features that will give you the ability to create high-end websites.
+
+### Dynamic Content (Premium)
+
+Create dynamic WordPress websites that cater to the specific interests of visitors.
+
+- Dynamic content
+- Fully customize your query loops
+- Site Custom Fields
+- Conditionally display blocks
+
+### More Integrations (Premium)
+
+In premium, you get more integrations.
+
+- ACF
+- Metabox
+- JetEngine
+
+### Agency Tools (Premium)
+
+Cater to more clients effectively and efficiently with our Agency Tools, which were specially made for web design professionals.
+
+- Block CSS Customizer
+- Role Manager
+
+### Motion Effects (Premium)
+
+Add animations that will bring your site to life and make it more visually engaging.
+
+- Scroll Animations
+- Entrance Animations
+- Transform & Transition Effects
+
+### More Blocks (Premium)
+
+- Load More Block (for the Blog Posts Block)
+- Pagination Block (for the Blog Posts Block)
+
 > [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Learn more](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ### News Article Updates
 
+- [v3.7 Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.6 Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -194,7 +218,7 @@ Optimize your website’s performance, and get lightning fast page loading to ma
 
 = Minimum Requirements =
 
-You'll need WordPress version 5.8.3 or higher for this to work.
+You'll need WordPress version 5.9 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -249,6 +273,60 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.7.2 =
+* New: WordPress 6.2 compatibility
+* New: Stackable blocks now appear in the new Style Book
+* New: Stackable global settings are now available in the Site Editor / FSE
+* Fixed: Responsive block settings now working in the Site Editor
+* Fixed: Tablet styles sometimes show up in the editor when the screen is small
+* Fixed: Reusable blocks performance improvements
+* Fixed: Blocksy theme responsive breakpoints conflict
+* Change: Removed v2 editor migration helper (it's been 1.5 years since it was introduced)
+
+= 3.7.1 =
+* Fixed: Dynamic Content issue where ACF image fields sometimes did not output correctly
+* Fixed: Shape separators were always covering some content in some blocks #2268
+* Fixed: Cannot select a color for shape separator layers
+* Fixed: Custom roles did not appear in the Conditional Display role picker #2409
+* Fixed: Shape separator layer 2 options were not visible
+* Fixed: Block error that resulted when using a Display Condition taxonomy that was deleted
+* Fixed: CSS optimization post meta options are now hidden from the custom fields view
+* Fixed: Some strings in the Countdown block were not translated #2585
+* Fixed: Some JS hook tweaks #2588
+
+= 3.7.0 =
+[Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Horizontal Scroller block #2494
+* New: Countdown block #2501
+* Fixed: Dynamic Content database performance, no more duplicate db calls #2569
+* Fixed: Some tablet and mobile styling options were being overwritten by desktop values #2571
+* Fixed: Right clicking on an Image block now triggers on the image itself
+
+= 3.6.5 =
+* Fixed: Possible error if the theme color palette is unavailable
+
+= 3.6.4 =
+* New: Inversed the behavior of the Heading's margins (it now doesn't use the theme's margins by default) #2190
+* Fixed: Editor performance improvements #2446
+* Fixed: Better PHP 8.1 compatibility #2560
+* Fixed: Max content width doesn't show correctly in the editor #2531
+* Fixed: Posts block not showing hover colors correctly in the editor #2351 #2473
+
+= 3.6.3 =
+* New: The Table of Contents block can now have a title #2346
+* Fixed: In Conditional Display, added support for named and 0 timezones #2530
+* Fixed: FontAwesome script loading is now delayed in the editor
+* Fixed: Possible error in the Accordion block's icon #2546
+* Fixed: Tablet and mobile units are not being followed in the editor #2547
+* Fixed: Added missing translation strings #2399 #2402 #2472 #2498 (Thanks DAnn2012)
+* Fixed: Table of Contents block now support the Stackable v2 Heading block #2376
+* Fixed: Content vertical align option in the Column block doesn't appear correctly in the editor #2408
+* Fixed: Using a custom SVG in the Icon block can result in it losing its colors  #2137
+* Fixed: Image Box block selection goes past its container in the editor #2369
+* Fixed: Block example show a "no blocks in the group" placeholder #2405
+* Fixed: Image alt now no longer gets overridden when picking images #2524
 
 = 3.6.2 =
 * New: (Freemius) Granular opt-out controls

@@ -49,13 +49,25 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return Array
 		 */
 		public function get_dynamic_breakpoints() {
-			$breakpoints = get_option( 'stackable_dynamic_breakpoints' );
-			$breakpoints = ! empty( $breakpoints ) ? $breakpoints :
-				array(
-					'tablet' => '',
-					'mobile' => '',
-				);
-			return apply_filters( 'stackable_responsive_breakpoints', $breakpoints );
+			// Allow others to set default breakpoints.
+			$breakpoints = apply_filters( 'stackable_responsive_breakpoints', array(
+				'tablet' => '',
+				'mobile' => '',
+			) );
+
+			// Check if there are saved custom breakpoints from our settings.
+			$saved_breakpoints = get_option( 'stackable_dynamic_breakpoints' );
+			if ( ! empty( $saved_breakpoints ) ) {
+				// Set breakpoints for tablet and mobile if they are set.
+				if ( ! empty( $saved_breakpoints['tablet'] ) ) {
+					$breakpoints['tablet'] = $saved_breakpoints['tablet'];
+				}
+				if ( ! empty( $saved_breakpoints['mobile'] ) ) {
+					$breakpoints['mobile'] = $saved_breakpoints['mobile'];
+				}
+			}
+
+			return $breakpoints;
 		}
 
 		/**
@@ -153,8 +165,9 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function adjust_block_styles( $block_content, $block ) {
+			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if (
-				stripos( $block['blockName'], 'stackable/' ) === 0 ||
+				stripos( $block_name, 'stackable/' ) === 0 ||
 				stripos( $block_content, '<!-- wp:stackable/' ) !==  false
 			) {
 				$block_content = apply_filters( 'stackable_frontend_css', $block_content );

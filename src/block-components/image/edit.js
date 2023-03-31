@@ -23,7 +23,6 @@ import {
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
-	useBlockHoverState,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
@@ -53,9 +52,32 @@ const IMAGE_SHADOWS = [
 ]
 
 const Controls = props => {
-	const attributes = useBlockAttributesContext()
+	const {
+		blockState = 'normal',
+	} = props
+
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			imageId: attributes.imageId,
+			imageWidthUnit: attributes.imageWidthUnit,
+			imageHeightUnit: attributes.imageHeightUnit,
+			imageWidth: attributes.imageWidth,
+			imageHeight: attributes.imageHeight,
+			imageSize: attributes.imageSize,
+			imageAlt: attributes.imageAlt,
+			imageOverlayColorType: attributes.imageOverlayColorType,
+			imageOverlayGradientDirection: attributes.imageOverlayGradientDirection,
+			imageOverlayGradientLocation1: attributes.imageOverlayGradientLocation1,
+			imageOverlayGradientLocation2: attributes.imageOverlayGradientLocation2,
+			imageUrl: attributes.imageUrl,
+			imageShapeFlipX: attributes.imageShapeFlipX,
+			imageShapeFlipY: attributes.imageShapeFlipY,
+			imageShapeStretch: attributes.imageShapeStretch,
+			imageShape: attributes.imageShape,
+			imageFilter: attributes.imageFilter,
+		}
+	} )
 	const setAttributes = useBlockSetAttributesContext()
-	const [ state ] = useBlockHoverState()
 
 	// Get the image size urls.
 	const { imageData } = useSelect( select => {
@@ -95,7 +117,6 @@ const Controls = props => {
 						imageUrl: '',
 						imageWidthAttribute: '',
 						imageHeightAttribute: '',
-						imageAlt: '',
 					} ) }
 					onChange={ image => {
 						// Get the URL of the currently selected image size.
@@ -115,7 +136,7 @@ const Controls = props => {
 							imageUrl: url,
 							imageWidthAttribute: width,
 							imageHeightAttribute: height,
-							imageAlt: image.alt || '',
+							...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only set the alt if it's empty.
 						} )
 					} }
 				/>
@@ -269,27 +290,27 @@ const Controls = props => {
 					label={ __( 'Gradient Overlay Settings', i18n ) }
 					onReset={ () => {
 						setAttributes( {
-							[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', state ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', state ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', blockState ) ]: '',
+							[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', blockState ) ]: '',
 						} )
 					} }
 					allowReset={
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', state ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', state ) ]
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', blockState ) ] ||
+						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', blockState ) ]
 					}
 				>
 					<AdvancedRangeControl
@@ -432,7 +453,7 @@ Controls.defaultProps = {
 }
 
 export const Edit = props => {
-	const attributes = useBlockAttributesContext()
+	const imageShow = useBlockAttributesContext( attributes => attributes.imageShow )
 	const setAttributes = useBlockSetAttributesContext()
 
 	return (
@@ -441,8 +462,9 @@ export const Edit = props => {
 				title={ props.label }
 				id="image"
 				initialOpen={ props.initialOpen }
+				hasToggle={ props.hasToggle }
 				{ ...( props.hasToggle ? {
-					checked: attributes.imageShow,
+					checked: imageShow,
 					onChange: imageShow => setAttributes( { imageShow } ),
 				} : {} ) }
 			>

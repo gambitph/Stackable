@@ -17,7 +17,7 @@ import { ResetButton } from '../base-control2/reset-button'
  * External dependencies
  */
 import classnames from 'classnames'
-import { omit } from 'lodash'
+import { omit, isEqual } from 'lodash'
 import { i18n } from 'stackable'
 
 /**
@@ -132,7 +132,7 @@ const AdvancedToolbarControl = props => {
 								}
 								onChange( option.value !== value ? option.value : '' )
 							},
-							isPrimary: value === option.value,
+							isPrimary: value ? value === option.value : props.placeholder === option.value,
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
 						}
@@ -167,6 +167,7 @@ AdvancedToolbarControl.defaultProps = {
 
 	value: undefined,
 	onChange: undefined,
+	placeholder: '',
 }
 
-export default memo( AdvancedToolbarControl )
+export default memo( AdvancedToolbarControl, isEqual )

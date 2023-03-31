@@ -27,7 +27,7 @@ import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
 import {
 	withBlockAttributeContext,
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 import { createBlockCompleter } from '~stackable/util'
@@ -54,10 +54,12 @@ addFilter( 'editor.Autocomplete.completers', 'stackable/subtitle', ( filteredCom
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
 		onReplace,
 		onRemove,
 		mergeBlocks,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -79,29 +81,42 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<Typography.InspectorControls
+						{ ...props }
+						hasTextTag={ false }
+						isMultiline={ false }
+						initialOpen={ true }
+						hasTextShadow={ true }
+					/>
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<Typography.InspectorControls
-				hasTextTag={ false }
-				isMultiline={ false }
-				initialOpen={ true }
-				hasTextShadow={ true }
+			<SubtitleStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
 			/>
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-subtitle" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<SubtitleStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-block-subtitle" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Typography
 					tagName="p"
 					className={ textClassNames }
@@ -130,13 +145,13 @@ const Edit = props => {
 					} }
 				/>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

@@ -25,7 +25,7 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -54,7 +54,9 @@ const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
-		className, attributes,
+		clientId,
+		className,
+		attributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -83,24 +85,31 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
-			<PriceStyles version={ VERSION } />
+			<PriceStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-price" />
 
-			<BlockDiv className={ blockClassNames }>
-				<>
-					<InnerBlocks
-						template={ TEMPLATE }
-						templateLock="all"
-					/>
-				</>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
+				<InnerBlocks
+					template={ TEMPLATE }
+					templateLock="all"
+				/>
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

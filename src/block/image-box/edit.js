@@ -17,7 +17,7 @@ import {
 } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -54,6 +54,7 @@ const Edit = props => {
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
 	const {
+		clientId,
 		className,
 	} = props
 
@@ -100,10 +101,20 @@ const Edit = props => {
 				<InspectorBottomTip />
 			</InspectorBlockControls>
 
-			<ImageBoxStyles version={ VERSION } />
+			<ImageBoxStyles
+				version={ VERSION }
+				clientId={ clientId }
+				blockState={ props.blockState }
+			/>
 			<CustomCSS mainBlockClass="stk-block-image-box" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<div className={ contentClassNames }>
 					<InnerBlocks
 						templateLock="insert"
@@ -113,13 +124,13 @@ const Edit = props => {
 					/>
 				</div>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
+			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</Fragment>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

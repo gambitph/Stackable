@@ -1,0 +1,14 @@
+{
+	"apiVersion": 2,
+	"name": "stackable/countdown",
+	"title": "Countdown",
+	"description": "Display a countdown timer on your website.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" ],
+	"keywords": [
+		"Timer"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/countdown-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+}

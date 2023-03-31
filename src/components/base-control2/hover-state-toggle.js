@@ -17,6 +17,7 @@ import { i18n } from 'stackable'
  */
 import { useMemo, memo } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
+import { dispatch } from '@wordpress/data'
 
 const HOVER_OPTIONS = [
 	{
@@ -44,8 +45,7 @@ const HOVER_OPTIONS = [
 const ALL_HOVER = [ 'normal', 'hover', 'parent-hovered', 'collapsed' ]
 
 const HoverStateToggle = props => {
-	const [ currentHoverState, setCurrentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
-
+	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
 	const stateOptions = useMemo( () => {
 		const hover = props.hover === 'all' ? ALL_HOVER : props.hover
 		return HOVER_OPTIONS.filter( ( { value } ) => {
@@ -75,7 +75,7 @@ const HoverStateToggle = props => {
 		<ControlIconToggle
 			value={ currentHoverState }
 			options={ stateOptions }
-			onChange={ state => setCurrentHoverState( state ) }
+			onChange={ state => dispatch( 'stackable/hover-state' ).updateHoverState( state ) }
 			buttonLabel={ __( 'Hover State', i18n ) }
 		/>
 	)

@@ -13,7 +13,8 @@ import {
 	ConditionalDisplay,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
+import { __ } from '@wordpress/i18n'
 
 export const tableofContentsAttributes = {
 	// Used to generate a simple example
@@ -125,6 +126,25 @@ export const attributes = ( version = VERSION ) => {
 			htmlTag: 'nav',
 		},
 		versionAdded: '3.2.0',
+		versionDeprecated: '',
+	} )
+
+	//Does not generate titleShow, generates titleShowText. That is why we added titleShow manually below
+	Typography.addAttributes( attrObject, '.stk-table-of-contents__title', {
+		hasTextTag: false,
+		hasTextContent: true,
+		attrNameTemplate: 'title%s',
+		defaultText: __( 'Table of Contents', i18n ),
+	} )
+
+	attrObject.add( {
+		attributes: {
+			titleShow: {
+				type: 'boolean',
+				default: true,
+			},
+		},
+		versionAdded: '3.6.3',
 		versionDeprecated: '',
 	} )
 

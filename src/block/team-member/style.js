@@ -11,14 +11,12 @@ import {
 	Transform,
 	ContentAlign,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
+import { BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import {
-	memo, Fragment, renderToString,
-} from '@wordpress/element'
+import { memo } from '@wordpress/element'
 
 const containerDivOptions = {
 	sizeSelector: '.stk-block-team-member__content',
@@ -27,7 +25,7 @@ const containerDivOptions = {
 
 export const TeamMemberStyles = memo( props => {
 	return (
-		<Fragment>
+		<>
 			<Alignment.Style { ...props } />
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
@@ -36,41 +34,34 @@ export const TeamMemberStyles = memo( props => {
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<MarginBottom.Style { ...props } />
 			<ContentAlign.Style { ...props } />
-		</Fragment>
+		</>
 	)
 } )
 
 TeamMemberStyles.defaultProps = {
-	isEditor: false,
+	version: '',
 }
 
 TeamMemberStyles.Content = props => {
-	const {
-		...propsToPass
-	} = props
-
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
-	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-
-	const styles = (
-		<Fragment>
-			<Alignment.Style.Content { ...propsToPass } />
-			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
-			<Transform.Style.Content { ...propsToPass } />
-			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
-			<MarginBottom.Style.Content { ...propsToPass } />
-			<ContentAlign.Style.Content { ...propsToPass } />
-		</Fragment>
+	return (
+		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } />
+			<Advanced.Style.Content { ...props } />
+			<Transform.Style.Content { ...props } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
+			<MarginBottom.Style.Content { ...props } />
+			<ContentAlign.Style.Content { ...props } />
+		</BlockCssCompiler>
 	)
-
-	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
 TeamMemberStyles.Content.defaultProps = {
+	version: '',
 	attributes: {},
 }

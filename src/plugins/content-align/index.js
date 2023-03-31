@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useSelect, dispatch } from '@wordpress/data'
 import { useEffect } from '@wordpress/element'
 import { usePrevious } from '@wordpress/compose'
 
@@ -21,8 +21,6 @@ export const ContentAlign = () => {
 	}, [] )
 
 	const previousClientId = usePrevious( clientId )
-
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	useEffect( () => {
 		if ( hasStkAlign && align !== innerBlockContentAlign && previousClientId === clientId ) {
@@ -45,7 +43,7 @@ export const ContentAlign = () => {
 			}
 
 			if ( typeof newContentAlign !== 'undefined' ) {
-				updateBlockAttributes( clientId, { innerBlockContentAlign: newContentAlign } ) // eslint-disable-line stackable/no-update-block-attributes
+				dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, { innerBlockContentAlign: newContentAlign } ) // eslint-disable-line stackable/no-update-block-attributes
 			}
 		}
 	}, [ align ] )

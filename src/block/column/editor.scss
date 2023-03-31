@@ -4,6 +4,10 @@
 	z-index: 2;
 }
 
+// Fixes horizontal scrolling on content align
+.editor-styles-wrapper .stk-block.stk-block-column .stk-column-wrapper {
+	width: auto;
+}
 .editor-styles-wrapper .stk-column-wrapper > .block-editor-inner-blocks {
 	width: 100%;
 }
@@ -35,3 +39,10 @@
 // .stk-block.stk-block-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
 // 	align-self: auto;
 // }
+
+// Allow columns to shrink below their content size (If you add a horizontal
+// scroller block inside a column, the horizontal scroller will be too wide.)
+// @see https://dfmcphee.com/flex-items-and-min-width-0/
+.wp-block-stackable-column {
+	min-width: 0;
+}

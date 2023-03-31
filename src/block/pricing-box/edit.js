@@ -32,7 +32,7 @@ import {
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -46,7 +46,9 @@ const TEMPLATE = variations[ 0 ].innerBlocks
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -72,30 +74,43 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<BlockLink.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+					<ContentAlign.InspectorControls />
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
-			<Alignment.InspectorControls hasBlockAlignment={ true } />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-			<ContentAlign.InspectorControls />
-			<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<InspectorStyleControls>
+						<InspectorBottomTip />
+					</InspectorStyleControls>
+				</>
+			) }
 
-			<InspectorStyleControls>
-				<InspectorBottomTip />
-			</InspectorStyleControls>
-
-			<BlockStyles version={ VERSION } />
+			<BlockStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-pricing-box" />
 
-			<BlockDiv className={ blockClassNames } enableVariationPicker={ true }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+				enableVariationPicker={ true }
+			>
 				<ContainerDiv className={ contentClassNames }>
 					<ColumnInnerBlocks
 						template={ TEMPLATE }
@@ -104,13 +119,13 @@ const Edit = props => {
 					/>
 				</ContainerDiv>
 			</BlockDiv>
-			{ hasInnerBlocks && <MarginBottom /> }
+			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

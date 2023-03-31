@@ -11,6 +11,7 @@ import SVGCardIcon from './images/card-icon.svg'
 import SVGColumnsIcon from './images/columns-icon.svg'
 import SVGColumnIcon from './images/column-icon.svg'
 import SVGContainerIcon from './images/container-icon.svg'
+import SVGCountdownIcon from './images/countdown-icon.svg'
 import SVGCountUpIcon from './images/count-up-icon.svg'
 import SVGCTAIcon from './images/cta-icon.svg'
 import SVGDividerIcon from './images/divider-icon.svg'
@@ -19,6 +20,7 @@ import SVGFeatureGridIcon from './images/feature-grid-icon.svg'
 import SVGFeatureIcon from './images/feature-icon.svg'
 import SVGHeroIcon from './images/hero-icon.svg'
 import SVGHeadingIcon from './images/heading-icon.svg'
+import SVGHorizontalScrollerIcon from './images/horizontal-scroller-icon.svg'
 import SVGIconIcon from './images/icon-icon.svg'
 import SVGIconButtonIcon from './images/icon-button-icon.svg'
 import SVGIconButtonsIcon from './images/icon-buttons.svg'
@@ -135,6 +137,10 @@ export function ContainerIcon() {
 	return colorizeIcon( <SVGContainerIcon width="20" height="20" /> )
 }
 
+export function CountdownIcon() {
+	return colorizeIcon( <SVGCountdownIcon width="20" height="20" /> )
+}
+
 export function CountUpIcon() {
 	return colorizeIcon( <SVGCountUpIcon width="20" height="20" /> )
 }
@@ -165,6 +171,10 @@ export function HeroIcon() {
 
 export function HeadingIcon() {
 	return colorizeIcon( <SVGHeadingIcon width="20" height="20" /> )
+}
+
+export function HorizontalScrollerIcon() {
+	return colorizeIcon( <SVGHorizontalScrollerIcon width="20" height="20" /> )
 }
 
 export function GroupContainerIcon() {

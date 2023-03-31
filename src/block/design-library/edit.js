@@ -13,7 +13,7 @@ import { SVGStackableIcon } from '~stackable/icons'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { useDispatch } from '@wordpress/data'
+import { dispatch } from '@wordpress/data'
 import {
 	createBlock, parse, createBlocksFromInnerBlocksTemplate, getBlockVariations,
 } from '@wordpress/blocks'
@@ -70,7 +70,6 @@ const Edit = props => {
 		attributes,
 	} = props
 
-	const { replaceBlocks } = useDispatch( 'core/block-editor' )
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false )
 
 	if ( attributes.previewMode ) {
@@ -127,7 +126,7 @@ const Edit = props => {
 						}, [] )
 
 						if ( blocks.length ) {
-							replaceBlocks( clientId, blocks )
+							dispatch( 'core/block-editor' ).replaceBlocks( clientId, blocks )
 							if ( callback ) {
 								callback()
 							}

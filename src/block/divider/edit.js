@@ -33,7 +33,7 @@ import {
 } from '~stackable/components'
 import { useBlockStyle } from '~stackable/hooks'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 
 /**
@@ -44,7 +44,9 @@ import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
+		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -60,53 +62,65 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
+					<BlockStyle.InspectorControls styles={ blockStyles } />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							id="general"
+						>
+							<ColorPaletteControl
+								label={ __( 'Color', i18n ) }
+								attribute="color"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Height / Size', i18n ) }
+								responsive="all"
+								attribute="height"
+								min={ 1 }
+								sliderMax={ 100 }
+								placeholder=""
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Width', i18n ) + ' (%)' }
+								responsive="all"
+								attribute="width"
+								min={ 1 }
+								max={ 100 }
+								placeholder=""
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
 
-			<BlockStyle.InspectorControls styles={ blockStyles } />
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					id="general"
-				>
-					<ColorPaletteControl
-						label={ __( 'Color', i18n ) }
-						attribute="color"
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Height / Size', i18n ) }
-						responsive="all"
-						attribute="height"
-						min={ 1 }
-						sliderMax={ 100 }
-						placeholder=""
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Width', i18n ) + ' (%)' }
-						responsive="all"
-						attribute="width"
-						min={ 1 }
-						max={ 100 }
-						placeholder=""
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-divider" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-divider" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<DividerStyles version={ VERSION } />
+			<DividerStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-divider" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				{ [ 'dots', 'asterisks' ].includes( blockStyle ) ? (
 					<div className="stk-block-divider__dots" aria-hidden="true">
 						<div className="stk-block-divider__dot" />
@@ -115,13 +129,13 @@ const Edit = props => {
 					</div>
 				) : <hr className="stk-block-divider__hr" /> }
 			</BlockDiv>
-			<MarginBottom />
+			{ props.isHovered && <MarginBottom /> }
 		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

@@ -144,7 +144,7 @@ const ResetButton = props => {
 				<Popover
 					className="ugb-global-settings-color-picker__reset-button-popover"
 					onFocusOutside={ () => setIsResetPopoverOpen( false ) }
-					position="bottom center"
+					position="middle left"
 				>
 					<h4 className="ugb-global-settings-color-picker__title">
 						{ __( 'Reset Color Palette', i18n ) }

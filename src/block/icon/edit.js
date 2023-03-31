@@ -14,7 +14,7 @@ import {
 	AdvancedTextControl,
 } from '~stackable/components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	BlockDiv,
@@ -37,13 +37,17 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { defaultIcon } from './schema'
 
 const Edit = props => {
-	const { className, attributes } = props
+	const {
+		clientId,
+		className,
+		attributes,
+		isSelected,
+	} = props
 
 	useGeneratedCss( props.attributes )
 
@@ -58,49 +62,62 @@ const Edit = props => {
 	const derivedIcon = applyFilters( 'stackable.block-component.icon.default', defaultIcon )
 
 	return (
-		<Fragment>
-			<InspectorTabs />
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<Alignment.InspectorControls />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 
-			<InspectorAdvancedControls>
-				<PanelAdvancedSettings
-					title={ __( 'Accessibility', i18n ) }
-					id="accessibility"
-				>
-					<AdvancedTextControl
-						isDynamic={ false }
-						label={ __( 'Icon Label', i18n ) }
-						attribute="ariaLabel"
-					/>
-				</PanelAdvancedSettings>
-			</InspectorAdvancedControls>
+					<InspectorAdvancedControls>
+						<PanelAdvancedSettings
+							title={ __( 'Accessibility', i18n ) }
+							id="accessibility"
+						>
+							<AdvancedTextControl
+								isDynamic={ false }
+								label={ __( 'Icon Label', i18n ) }
+								attribute="ariaLabel"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorAdvancedControls>
 
-			<EffectsAnimations.InspectorControls />
-			<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
-			<Link.InspectorControls hasToggle={ true } />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<Icon.InspectorControls initialOpen={ true } hasMultiColor={ true } defaultValue={ derivedIcon } />
+					<Link.InspectorControls hasToggle={ true } />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
-			<IconStyles version={ VERSION } />
+			<IconStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
+			/>
 			<CustomCSS mainBlockClass="stk-block-icon" />
-			<BlockDiv className={ blockClassNames } >
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
 				<Link linkTrigger=".stk--inner-svg">
 					<Icon />
 				</Link>
 			</BlockDiv>
-			<MarginBottom />
-		</Fragment>
+			{ props.isHovered && <MarginBottom /> }
+		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

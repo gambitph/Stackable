@@ -17,7 +17,6 @@ import { pickBy } from 'lodash'
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 export const Image = props => {
@@ -28,7 +27,41 @@ export const Image = props => {
 	} = props
 
 	const { isSelected } = useBlockEditContext()
-	const attributes = useBlockAttributesContext()
+	const attributes = useBlockAttributesContext( attributes => {
+		return {
+			imageOverlayColorType: attributes.imageOverlayColorType,
+			imageOverlayColorHover: attributes.imageOverlayColorHover,
+			imageOverlayColorParentHover: attributes.imageOverlayColorParentHover,
+			imageOverlayColor2Hover: attributes.imageOverlayColor2Hover,
+			imageOverlayColor2ParentHover: attributes.imageOverlayColor2ParentHover,
+			imageOverlayOpacityHover: attributes.imageOverlayOpacityHover,
+			imageOverlayOpacityParentHover: attributes.imageOverlayOpacityParentHover,
+			imageOverlayGradientLocation1Hover: attributes.imageOverlayGradientLocation1Hover,
+			imageOverlayGradientLocation1ParentHover: attributes.imageOverlayGradientLocation1ParentHover,
+			imageOverlayGradientLocation2Hover: attributes.imageOverlayGradientLocation2Hover,
+			imageOverlayGradientLocation2ParentHover: attributes.imageOverlayGradientLocation2ParentHover,
+			imageOverlayGradientDirectionHover: attributes.imageOverlayGradientDirectionHover,
+			imageOverlayGradientDirectionParentHover: attributes.imageOverlayGradientDirectionParentHover,
+			imageId: attributes.imageId,
+			imageUrl: attributes.imageUrl,
+			imageSize: attributes.imageSize,
+			imageWidth: attributes.imageWidth,
+			imageWidthTablet: attributes.imageWidthTablet,
+			imageWidthMobile: attributes.imageWidthMobile,
+			imageWidthUnit: attributes.imageWidthUnit,
+			imageWidthUnitTablet: attributes.imageWidthUnitTablet,
+			imageWidthUnitMobile: attributes.imageWidthUnitMobile,
+			imageHeight: attributes.imageHeight,
+			imageHeightTablet: attributes.imageHeightTablet,
+			imageHeightMobile: attributes.imageHeightMobile,
+			imageHeightUnit: attributes.imageHeightUnit,
+			imageHeightUnitTablet: attributes.imageHeightUnitTablet,
+			imageHeightUnitMobile: attributes.imageHeightUnitMobile,
+			imageShape: attributes.imageShape,
+			imageShapeStretch: attributes.imageShapeStretch,
+			imageShadow: attributes.imageShadow,
+		}
+	} )
 	const { parentBlock } = useBlockContext()
 
 	const { setImage } = useImage()
@@ -36,23 +69,6 @@ export const Image = props => {
 	const defaultHeight = _defaultHeight === 'auto' ? 'auto' : _defaultHeight !== undefined ? _defaultHeight : ''
 
 	const enableHandlers = applyFilters( 'stackable.image.enable-handlers', true, parentBlock )
-
-	// Enable editing of the image only when the current block that implements
-	// it is selected. We need to use setTimeout since the isSelected is
-	// changed earlier.
-	const [ debouncedIsSelected, setDebouncedIsSelected ] = useState( false )
-	useEffect( () => {
-		if ( ! isSelected ) {
-			setDebouncedIsSelected( false )
-			return
-		}
-		const t = setTimeout( () => {
-			if ( isSelected ) {
-				setDebouncedIsSelected( isSelected )
-			}
-		}, 1 )
-		return () => clearTimeout( t )
-	}, [ isSelected ] )
 
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
 		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
@@ -64,7 +80,6 @@ export const Image = props => {
 
 	return <Image_
 		{ ...setImage }
-		enableClickToEdit={ debouncedIsSelected }
 		showHandles={ enableHandlers && isSelected }
 
 		imageId={ attributes.imageId }
@@ -103,6 +118,7 @@ Image.defaultProps = {
 	defaultWidth: 150,
 	defaultHeight: 300,
 	enableHandles: true,
+	showTooltips: false,
 }
 
 Image.Content = props => {

@@ -1,75 +1,68 @@
 /**
  * Internal dependencies
  */
-import { Style as StyleComponent } from '~stackable/components'
-import { getStyles, useStyles } from '~stackable/util'
+import { BlockCss } from '~stackable/components'
 
-const getStyleParams = ( options = {} ) => {
+const AlignmentStyles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
 	const {
 		selectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		editorSelectorCallback = getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 		columnAlignSelectorCallback = ( () => '' ),
-	} = options
-	return [
-		{
-			selectorCallback: columnAlignSelectorCallback,
-			responsive: 'all',
-			styles: {
-				alignSelf: 'columnAlign',
-			},
-		},
-		{
-			renderIn: 'save',
-			selectorCallback,
-			styles: {
-				alignItems: 'rowAlign',
-			},
-			responsive: 'all',
-			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
-			dependencies: [ 'innerBlockOrientation' ],
-		},
+		dependencies = [],
+	} = props
 
-		{
-			renderIn: 'edit',
-			selectorCallback: editorSelectorCallback,
-			styles: {
-				alignItems: 'rowAlign',
-			},
-			responsive: 'all',
-			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
-			dependencies: [ 'innerBlockOrientation' ],
-		},
-	]
+	return (
+		<>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ columnAlignSelectorCallback }
+				responsive="all"
+				styleRule="alignSelf"
+				attrName="columnAlign"
+				key="columnAlign"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selectorCallback={ selectorCallback }
+				styleRule="alignItems"
+				attrName="rowAlign"
+				key="rowAlign-save"
+				responsive="all"
+				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
+				dependencies={ [
+					'innerBlockOrientation',
+					...dependencies,
+				 ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selectorCallback={ editorSelectorCallback }
+				styleRule="alignItems"
+				attrName="rowAlign"
+				key="rowAlign"
+				responsive="all"
+				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal' }
+				dependencies={ [
+					'innerBlockOrientation',
+					...dependencies,
+				] }
+			/>
+		</>
+	)
 }
 
 export const Style = props => {
-	const styles = useStyles( getStyleParams( props ) )
-
-	return (
-		<StyleComponent
-			styles={ styles }
-			versionAdded="3.0.0"
-			versionDeprecated=""
-			{ ...props }
-		/>
-	)
+	return <AlignmentStyles { ...props } />
 }
 
 Style.Content = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
-
-	const styles = getStyles( attributes, getStyleParams( options ) )
-
-	return (
-		<StyleComponent.Content
-			styles={ styles }
-			versionAdded="3.0.0"
-			versionDeprecated=""
-			{ ...propsToPass }
-		/>
-	)
+	return <AlignmentStyles { ...props } />
 }

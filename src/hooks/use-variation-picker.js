@@ -11,7 +11,7 @@ import { VariationPicker } from '~stackable/components'
  * WordPress dependencies
  */
 import {
-	select, useSelect, useDispatch,
+	select, useSelect, dispatch,
 } from '@wordpress/data'
 import { applyFilters } from '@wordpress/hooks'
 import { createBlocksFromInnerBlocksTemplate, cloneBlock } from '@wordpress/blocks'
@@ -60,7 +60,6 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 		},
 		[ clientId, uniqueId ]
 	)
-	const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const { getActiveBlockVariation } = useSelect( 'core/blocks' )
 
 	return uniqueId ? null : (
@@ -101,7 +100,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 					uniqueId: createUniqueClass( clientId ),
 				}
 
-				updateBlockAttributes( clientId, newAttributes ) // eslint-disable-line stackable/no-update-block-attributes
+				dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, newAttributes ) // eslint-disable-line stackable/no-update-block-attributes
 
 				// Add the inner blocks of the layout / variation.
 				if ( nextVariation.innerBlocks ) {
@@ -176,7 +175,7 @@ export const useVariationPicker = ( clientId, uniqueId ) => {
 						} )
 					}
 
-					replaceInnerBlocks(
+					dispatch( 'core/block-editor' ).replaceInnerBlocks(
 						clientId,
 						innerBlocks,
 						! activeVariation // If we are switching to another variation, keep the selection on the block so the user can switch back.

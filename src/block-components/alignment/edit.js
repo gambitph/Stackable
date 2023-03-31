@@ -18,14 +18,14 @@ import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 export const Edit = props => {
-	const attributes = useBlockAttributesContext()
+	const contentAlign = useBlockAttributesContext( attributes => attributes.contentAlign )
 	const setAttributes = useBlockSetAttributesContext()
 
 	return (
 		<Fragment>
 			<BlockControls>
 				<AlignmentToolbar
-					value={ attributes.contentAlign }
+					value={ contentAlign }
 					onChange={ contentAlign => setAttributes( { contentAlign } ) }
 				/>
 			</BlockControls>

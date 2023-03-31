@@ -1,13 +1,3 @@
-.components-stackable-highlight__popover .components-popover__content {
-	padding: 16px;
-	width: 280px;
-}
-.ugb-component-inline-color-popover {
-	padding: 16px;
-}
-.stk-highlight-format__color-picker {
-	margin-bottom: 16px;
-}
 .components-stackable-highlight-color__indicator {
 	position: absolute;
 	background: #000;
@@ -19,6 +9,7 @@
 	margin: 9px 0 0;
 	transform: translateX(-50%);
 }
-.ugb-advanced-toolbar-control .components-base-control__field {
-	margin-bottom: 24px;
+.stk-components-toolbar__highlight > .dashicon {
+	margin: 0 !important;
+	flex: 1 !important;
 }

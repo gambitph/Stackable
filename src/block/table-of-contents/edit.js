@@ -27,7 +27,7 @@ import {
 	AdvancedSelectControl,
 } from '~stackable/components'
 import {
-	withBlockAttributeContext, withBlockWrapper, withQueryLoopContext,
+	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
 } from '~stackable/higher-order'
 import {
 	Typography,
@@ -54,9 +54,9 @@ import {
 	Card,
 	CardBody,
 } from '@wordpress/components'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useSelect, dispatch } from '@wordpress/data'
 import {
-	Fragment, useEffect, useState, useCallback,
+	useEffect, useState, useCallback,
 } from '@wordpress/element'
 import {
 	__, _x, sprintf,
@@ -145,6 +145,7 @@ const Notice = ( { autoGenerateAnchors } ) => {
 
 const Edit = props => {
 	const {
+		clientId,
 		attributes,
 		setAttributes,
 		className,
@@ -155,7 +156,6 @@ const Edit = props => {
 	const [ headings, setHeadings ] = useState( attributes.headings )
 	const { getEditedPostContent } = useSelect( 'core/editor' )
 	const { getBlocks } = useSelect( 'core/block-editor' )
-	const { __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' )
 	// This is used by the generate anchors button to force the update of heading data.
 	const [ forceUpdateHeadings, setForceUpdateHeadings ] = useState( 0 )
 
@@ -271,7 +271,7 @@ const Edit = props => {
 	// Update headings attribute when the headings state changes
 	useEffect( debounce( () => {
 		if ( ! isEqual( attributes.headings, headings ) ) {
-			__unstableMarkNextChangeAsNotPersistent()
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { headings } )
 		}
 	}, 301 ), [ headings ] )
@@ -284,12 +284,23 @@ const Edit = props => {
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
+	const titleTextClasses = getTypographyClasses( attributes, 'title%s' )
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-table-of-contents',
 		blockAlignmentClass,
+	] )
+
+	const tableOfContentsClassNames = classnames( [
+		'stk-table-of-contents__table',
 		textClasses,
 	] )
+
+	const titleClassNames = classnames(
+		'stk-table-of-contents__title',
+		titleTextClasses
+	)
 
 	const allowedLevels = [ 1, 2, 3, 4, 5, 6 ].filter(
 		n => attributes[ `includeH${ n }` ]
@@ -304,6 +315,7 @@ const Edit = props => {
 		const BLOCK_ANCHOR_CONTENT = applyFilters( 'stackable.table-of-contents.block-anchor-content', {
 			'core/heading': 'content',
 			'stackable/heading': 'text',
+			'ugb/heading': 'title',
 		} )
 
 		const supportedBlocks = Object.keys( BLOCK_ANCHOR_CONTENT )
@@ -337,120 +349,149 @@ const Edit = props => {
 	}
 
 	return (
-		<Fragment>
-			<InspectorTabs />
+		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<BlockDiv.InspectorControls />
+					<BlockDiv.InspectorControls />
 
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'General', i18n ) }
-					initialOpen={ true }
-					id="general"
-				>
-					<HeadingsControls />
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'General', i18n ) }
+							initialOpen={ true }
+							id="general"
+						>
+							<HeadingsControls />
 
-					<AdvancedSelectControl
-						label={ __( 'List Type', i18n ) }
-						attribute="listType"
-						options={ listTypeOptions }
+							<AdvancedSelectControl
+								label={ __( 'List Type', i18n ) }
+								attribute="listType"
+								options={ listTypeOptions }
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Columns', i18n ) }
+								attribute="columns"
+								min="1"
+								sliderMax="3"
+								step="1"
+								placeholder="1"
+								responsive="all"
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Column Gap', i18n ) }
+								attribute="columnGap"
+								min="0"
+								default="32"
+								sliderMax="50"
+								responsive="all"
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Row Gap', i18n ) }
+								attribute="rowGap"
+								min="0"
+								sliderMax="50"
+								responsive="all"
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Icon Gap', i18n ) }
+								attribute="iconGap"
+								min="0"
+								sliderMax="20"
+								responsive="all"
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Indentation', i18n ) }
+								attribute="indentation"
+								min="0"
+								sliderMax="50"
+								responsive="all"
+								placeholder=""
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'Scrolling', i18n ) }
+							initialOpen={ false }
+							id="scrolling"
+						>
+							<AdvancedToggleControl
+								label={ __( 'Use smooth scroll', i18n ) }
+								attribute="isSmoothScroll"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Scroll Top Offset ', i18n ) }
+								attribute="scrollTopOffset"
+								min={ 0 }
+								max={ 200 }
+								step={ 1 }
+								responsive="all"
+								placeholder="0"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+
+					<InspectorStyleControls>
+					</InspectorStyleControls>
+
+					<Typography.InspectorControls
+						{ ...props }
+						label={ __( 'Table of Contents', i18n ) }
+						isMultiline={ true }
+						initialOpen={ false }
+						hasTextTag={ false }
+						hasTextContent={ false }
 					/>
 
-					<AdvancedRangeControl
-						label={ __( 'Columns', i18n ) }
-						attribute="columns"
-						min="1"
-						sliderMax="3"
-						step="1"
-						placeholder="1"
-						responsive="all"
+					<Typography.InspectorControls
+						{ ...props }
+						label={ __( 'Title', i18n ) }
+						attrNameTemplate="title%s"
+						initialOpen={ false }
+						hasToggle={ true }
+						hasTextTag={ false }
 					/>
 
-					<AdvancedRangeControl
-						label={ __( 'Column Gap', i18n ) }
-						attribute="columnGap"
-						min="0"
-						default="32"
-						sliderMax="50"
-						responsive="all"
-					/>
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-table-of-contents" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+				</>
+			) }
 
-					<AdvancedRangeControl
-						label={ __( 'Row Gap', i18n ) }
-						attribute="rowGap"
-						min="0"
-						sliderMax="50"
-						responsive="all"
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Icon Gap', i18n ) }
-						attribute="iconGap"
-						min="0"
-						sliderMax="20"
-						responsive="all"
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Indentation', i18n ) }
-						attribute="indentation"
-						min="0"
-						sliderMax="50"
-						responsive="all"
-						placeholder=""
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'Scrolling', i18n ) }
-					initialOpen={ false }
-					id="scrolling"
-				>
-					<AdvancedToggleControl
-						label={ __( 'Use smooth scroll', i18n ) }
-						attribute="isSmoothScroll"
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Scroll Top Offset ', i18n ) }
-						attribute="scrollTopOffset"
-						min={ 0 }
-						max={ 200 }
-						step={ 1 }
-						responsive="all"
-						placeholder="0"
-					/>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-
-			<InspectorStyleControls>
-			</InspectorStyleControls>
-
-			<Typography.InspectorControls
-				isMultiline={ true }
-				initialOpen={ false }
-				hasTextTag={ false }
-				hasTextContent={ false }
+			<TableOfContentsStyles
+				version={ VERSION }
+				blockState={ props.blockState }
+				clientId={ clientId }
 			/>
-
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-table-of-contents" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<TableOfContentsStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-table-of-contents" />
 
-			<BlockDiv className={ blockClassNames }>
+			<BlockDiv
+				blockHoverClass={ props.blockHoverClass }
+				clientId={ props.clientId }
+				attributes={ props.attributes }
+				className={ blockClassNames }
+			>
+				{ attributes.titleShow && <Typography
+					className={ titleClassNames }
+					attrNameTemplate="title%s"
+					placeholder={ __( 'Title for This Block', i18n ) }
+				/> }
 				{ !! headings.length && hasEmptyAnchor && (
 					<Notice autoGenerateAnchors={ autoGenerateAnchors } />
 				) }
 				<TableOfContentsList
-					className="stk-table-of-contents__table"
+					className={ tableOfContentsClassNames }
 					nestedHeadingList={ nestedHeadingList }
 					isSelected={ isSelected }
 					listTag={ tagName }
@@ -461,13 +502,13 @@ const Edit = props => {
 					<Placeholder />
 				) }
 			</BlockDiv>
-			<MarginBottom />
-		</Fragment>
+			{ props.isHovered && <MarginBottom /> }
+		</>
 	)
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )

@@ -2,13 +2,9 @@
  * External dependencies
  */
 import { Tooltip, TypographyControl } from '~stackable/components'
-import {
-	createTypographyStyles, loadGoogleFont,
-} from '~stackable/util'
+import { createTypographyStyles, loadGoogleFont } from '~stackable/util'
 import { i18n } from 'stackable'
-import {
-	upperFirst, omit,
-} from 'lodash'
+import { upperFirst, omit } from 'lodash'
 import classnames from 'classnames'
 import { generateStyles } from '~stackable/block-components'
 
@@ -161,9 +157,9 @@ const TypographyPreview = props => {
 	} )
 	const { device } = useSelect(
 		select => ( {
-			device: select(
-				'core/edit-post'
-			)?.__experimentalGetPreviewDeviceType()?.toLowerCase() || 'Desktop',
+			device: select( 'core/edit-site' )?.__experimentalGetPreviewDeviceType()?.toLowerCase() ||
+				select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType()?.toLowerCase() ||
+				'Desktop',
 		} ),
 		[]
 	)

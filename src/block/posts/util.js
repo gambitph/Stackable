@@ -61,7 +61,7 @@ export const CONTENTS = [
 	},
 ]
 
-export const generateRenderPostItem = attributes => {
+export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 	const {
 		className = '',
 		categoryHighlighted = false,
@@ -131,6 +131,7 @@ export const generateRenderPostItem = attributes => {
 
 		const featuredImage = !! featuredImgSrc && (
 			<Image
+				showTooltips={ isHovered }
 				src={ featuredImgSrc }
 				alt={ __( 'featured', i18n ) }
 				hasRemove={ false }
@@ -321,7 +322,10 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 		getTypographyClasses( attributes, 'readmore%s' )
 	)
 
-	let featuredImage = <Image.Content />
+	// attributes property was added after plugin version 3.6.3
+	let featuredImage = <Image.Content attributes={ attributes } />
+	featuredImage = applyFilters( 'stackable.posts.feature-image', featuredImage, version )
+
 	if ( imageHasLink ) {
 		featuredImage = <a href="!#postLink!#" className="stk-block-posts__image-link">{ featuredImage }</a>
 	}

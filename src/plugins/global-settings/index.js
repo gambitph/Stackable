@@ -15,9 +15,7 @@ import { useDeviceType } from '~stackable/hooks'
 /** WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins'
-import {
-	Fragment, render, useEffect,
-} from '@wordpress/element'
+import { render, useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addAction } from '@wordpress/hooks'
 import {
@@ -61,27 +59,20 @@ const GlobalSettings = () => {
 		}
 	}, [ deviceType, editorDom ] )
 
-	// TODO: PluginSidebar doesn't work in the Widget Editor since
-	// @wordpress/edit-post isn't loaded in there. In the future, Gutenberg will
-	// add a @wordpress/edit-site that will have a PluginSidebar, so we can use
-	// that instead when it arrives.
-	// @see https://github.com/WordPress/gutenberg/pull/34460
-	// This is a workaround to make PluginSidebar work without @wordpress/edit-post.
-	if ( ! window.wp.editPost?.PluginSidebar ) {
+	const PluginSidebar = window.wp.editSite?.PluginSidebar || window.wp.editPost?.PluginSidebar
+	if ( ! PluginSidebar ) {
 		return null
 	}
-	const PluginSidebar = window.wp.editPost.PluginSidebar
 
 	return (
-		<Fragment>
-			<PluginSidebar
-				name="sidebar"
-				title={ __( 'Stackable Settings', i18n ) }
-				className="ugb-global-settings__inspector"
-				icon={ <SVGStackableIcon /> } >
-				{ applyFilters( 'stackable.global-settings.inspector', null ) }
-			</PluginSidebar>
-		</Fragment> )
+		<PluginSidebar
+			name="sidebar"
+			title={ __( 'Stackable Settings', i18n ) }
+			className="ugb-global-settings__inspector"
+			icon={ <SVGStackableIcon /> } >
+			{ applyFilters( 'stackable.global-settings.inspector', null ) }
+		</PluginSidebar>
+	)
 }
 
 if ( ! isContentOnlyMode ) {

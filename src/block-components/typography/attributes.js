@@ -31,10 +31,6 @@ const typographyAttributes = {
 		type: 'number',
 		default: '',
 	},
-	textRemoveTextMargins: {
-		type: 'boolean',
-		default: '',
-	},
 	textColorType: {
 		type: 'string',
 		default: '',
@@ -86,6 +82,7 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 	attrObject.add( {
 		attributes: {
 			...typographyAttributes,
+			// TODO:Add 'show' attribute if attributeNameTemplate is not the default
 			...( hasTextContent ? {
 				showText: {
 					type: 'boolean',

@@ -1,19 +1,25 @@
 /**
  * External dependencies
  */
-import { useStyles, getStyles } from '~stackable/util'
-import { Style as StyleComponent } from '~stackable/components'
+import { BlockCss } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
 
-const getStyleParams = ( options = {} ) => {
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
 	const {
 		selector = '',
 		hoverSelector = '',
-	} = options
+		dependencies = [],
+	} = props
 
 	const getSvgSelector = ( getAttribute, _selector = selector, suffixes = [], fallback = selector ) => {
 		const svgSelector = `${ _selector || fallback } .stk--inner-svg svg:last-child`
@@ -31,245 +37,284 @@ const getStyleParams = ( options = {} ) => {
 	const shapeSelector = `${ selector } .stk--inner-svg`
 	const shapeHoverSelector = `${ hoverSelector } .stk--inner-svg`
 
-	return [
-		// Icon Styles
-		{
-			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
-			hoverSelectorCallback: getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ),
-			styles: {
-				height: 'iconSize',
-				width: 'iconSize',
-			},
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
-			hoverSelectorCallback: getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ),
-			styleRule: 'opacity',
-			attrName: 'iconOpacity',
-			hover: 'all',
-		},
-		{
-			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
-			hoverSelectorCallback: getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ),
-			styleRule: 'transform',
-			attrName: 'iconRotation',
-			hover: 'all',
-			format: 'rotate(%sdeg)',
-		},
-		{
-			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
-			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector ),
-			styleRuleCallback: getAttribute => getAttribute( 'iconPosition' ) === 'right' ? 'marginInlineStart' : 'marginInlineEnd',
-			attrName: 'iconGap',
-			format: `%spx`,
-			dependencies: [ 'iconPosition' ],
-		},
-		{
-			selectorCallback: getAttribute => getSvgSelector( getAttribute, selector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ),
-			hoverSelectorCallback: getAttribute => getSvgHoverSelector( getAttribute, hoverSelector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ),
-			styleRule: 'fill',
-			attrName: 'iconColor1',
-			valuePreCallback: ( value, getAttribute, device, state ) => {
-				if ( getAttribute( 'iconColorType' ) === 'gradient' && getAttribute( 'iconColor1', 'desktop', state ) && getAttribute( 'iconColor2', 'desktop', state ) ) {
-					return `url(#linear-gradient-${ getAttribute( 'uniqueId' ) })`
-				}
+	return (
+		<>
+			{ /* Icon Styles */ }
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => getSvgSelector( getAttribute ) }
+				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ) }
+				styleRule="height"
+				attrName="iconSize"
+				key="iconSize"
+				responsive="all"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => getSvgSelector( getAttribute ) }
+				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ) }
+				styleRule="width"
+				attrName="iconSize"
+				key="iconSize-width"
+				responsive="all"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => getSvgSelector( getAttribute ) }
+				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ) }
+				styleRule="opacity"
+				attrName="iconOpacity"
+				key="iconOpacity"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => getSvgSelector( getAttribute ) }
+				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector ) }
+				styleRule="transform"
+				attrName="iconRotation"
+				key="iconRotation"
+				hover="all"
+				format="rotate(%sdeg)"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => getSvgSelector( getAttribute ) }
+				hoverSelectorCallback={ getAttribute => getSvgSelector( getAttribute, hoverSelector ) }
+				styleRuleCallback={ getAttribute => getAttribute( 'iconPosition' ) === 'right' ? 'marginInlineStart' : 'marginInlineEnd' }
+				attrName="iconGap"
+				key="iconGap"
+				format={ `%spx` }
+				dependencies={ [
+					'iconPosition',
+					...dependencies,
+				 ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => getSvgSelector( getAttribute, selector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ) }
+				hoverSelectorCallback={ getAttribute => getSvgHoverSelector( getAttribute, hoverSelector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ) }
+				styleRule="fill"
+				attrName="iconColor1"
+				key="iconColor1-fill"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					if ( getAttribute( 'iconColorType' ) === 'gradient' && getAttribute( 'iconColor1', 'desktop', state ) && getAttribute( 'iconColor2', 'desktop', state ) ) {
+						return `url(#linear-gradient-${ getAttribute( 'uniqueId' ) })`
+					}
 
-				if ( ! getAttribute( 'iconColorType' ) ) {
+					if ( ! getAttribute( 'iconColorType' ) ) {
+						return value
+					}
+
+					return undefined
+				} }
+				dependencies={ [
+					'iconColorType',
+					'iconColor1',
+					'iconColor2',
+					'uniqueId',
+					...dependencies,
+				] }
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
+				styleRule="transform"
+				format="rotate(%sdeg)"
+				attrName="iconColorGradientDirection"
+				key="iconColorGradientDirection"
+				hoverSelectorCallback={ getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
+				styleRuleCallback={ getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-1` }
+				attrName="iconColor1"
+				key="iconColor1"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
+					     ! getAttribute( 'iconColor1', 'desktop', state ) ||
+					     ! getAttribute( 'iconColor2', 'desktop', state )
+					) {
+						return undefined
+					}
 					return value
-				}
-
-				return undefined
-			},
-			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2', 'uniqueId' ],
-			hover: 'all',
-		},
-		{
-			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
-			styleRule: 'transform',
-			format: 'rotate(%sdeg)',
-			attrName: 'iconColorGradientDirection',
-			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
-		},
-		{
-			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
-			styleRuleCallback: getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-1`,
-			attrName: 'iconColor1',
-			valuePreCallback: ( value, getAttribute, device, state ) => {
-				if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
+				} }
+				hoverSelectorCallback={ getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
+				dependencies={ [
+					'iconColorType',
+					'iconColor1',
+					'iconColor2',
+					...dependencies,
+				] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selectorCallback={ getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
+				styleRuleCallback={ getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-2` }
+				attrName="iconColor2"
+				key="iconColor2"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
 					! getAttribute( 'iconColor1', 'desktop', state ) ||
 					! getAttribute( 'iconColor2', 'desktop', state )
-				) {
-					return undefined
-				}
-				return value
-			},
-			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
-			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
-		},
-		{
-			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
-			styleRuleCallback: getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-2`,
-			attrName: 'iconColor2',
-			valuePreCallback: ( value, getAttribute, device, state ) => {
-				if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
-					! getAttribute( 'iconColor1', 'desktop', state ) ||
-					! getAttribute( 'iconColor2', 'desktop', state )
-				) {
-					return undefined
-				}
-				return value
-			},
-			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
-			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
-		},
+					) {
+						return undefined
+					}
+					return value
+				} }
+				hoverSelectorCallback={ getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }` }
+				dependencies={ [
+					'iconColorType',
+					'iconColor1',
+					'iconColor2',
+					...dependencies,
+				] }
+			/>
 
-		// Shape Styles
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'backgroundColor',
-			attrName: 'shapeColor1',
-			hover: 'all',
-			valuePreCallback: ( value, getAttribute, device, state ) => {
-				const shapeColorType = getAttribute( 'shapeColorType' )
-				if ( state !== 'normal' && shapeColorType === 'gradient' ) {
-					return undefined
-				}
+			{ /* Shape Styles */ }
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="backgroundColor"
+				attrName="shapeColor1"
+				key="shapeColor1"
+				hover="all"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					const shapeColorType = getAttribute( 'shapeColorType' )
+					if ( state !== 'normal' && shapeColorType === 'gradient' ) {
+						return undefined
+					}
 
-				return value
-			},
-			dependencies: [ 'shapeColorType', 'shapeColor2', 'shapeColorType', 'shapeGradientDirection' ],
-		},
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'borderRadius',
-			attrName: 'shapeBorderRadius',
-			format: `%s%`,
-			hover: 'all',
-		},
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'padding',
-			attrName: 'shapePadding',
-			format: `%spx`,
-		},
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'borderColor',
-			attrName: 'shapeOutlineColor',
-			hover: 'all',
-		},
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'borderStyle',
-			attrName: 'borderStyle',
-			valuePreCallback: ( value, getAttribute, device, state ) => {
-				if (
-					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.top ||
-					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.right ||
-					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.bottom ||
-					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.left
-				) {
-					return undefined
-				}
+					return value
+				} }
+				dependencies={ [
+					'shapeColorType',
+					 'shapeColor2',
+					 'shapeColorType',
+					 'shapeGradientDirection',
+					 ...dependencies,
+				] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="borderRadius"
+				attrName="shapeBorderRadius"
+				key="shapeBorderRadius"
+				format={ `%s%` }
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="padding"
+				attrName="shapePadding"
+				key="shapePadding"
+				format={ `%spx` }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="borderColor"
+				attrName="shapeOutlineColor"
+				key="shapeOutlineColor"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="borderStyle"
+				attrName="borderStyle"
+				key="borderStyle"
+				valuePreCallback={ ( value, getAttribute, device, state ) => {
+					if (
+						! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.top ||
+						! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.right ||
+						! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.bottom ||
+						! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.left
+					) {
+						return undefined
+					}
 
-				return 'solid'
-			},
-			hover: 'all',
-			dependencies: [ 'shapeOutlineWidth' ],
-		},
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'borderTopWidth',
-			attrName: 'shapeOutlineWidth',
-			responsive: 'all',
-			format: '%spx',
-			valuePreCallback: value => value?.top,
-		},
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'borderRightWidth',
-			attrName: 'shapeOutlineWidth',
-			responsive: 'all',
-			format: '%spx',
-			valuePreCallback: value => value?.right,
-		},
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'borderBottomWidth',
-			attrName: 'shapeOutlineWidth',
-			responsive: 'all',
-			format: '%spx',
-			valuePreCallback: value => value?.bottom,
-		},
-		{
-			selector: shapeSelector,
-			hoverSelector: shapeHoverSelector,
-			styleRule: 'borderLeftWidth',
-			attrName: 'shapeOutlineWidth',
-			responsive: 'all',
-			format: '%spx',
-			valuePreCallback: value => value?.left,
-		},
-
-	]
+					return 'solid'
+				} }
+				hover="all"
+				dependencies={ [
+					'shapeOutlineWidth',
+					...dependencies,
+				] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="borderTopWidth"
+				attrName="shapeOutlineWidth"
+				key="shapeOutlineWidth-top"
+				responsive="all"
+				format="%spx"
+				valuePreCallback={ value => value?.top }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="borderRightWidth"
+				attrName="shapeOutlineWidth"
+				key="shapeOutlineWidth-right"
+				responsive="all"
+				format="%spx"
+				valuePreCallback={ value => value?.right }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="borderBottomWidth"
+				attrName="shapeOutlineWidth"
+				key="shapeOutlineWidth-bottom"
+				responsive="all"
+				format="%spx"
+				valuePreCallback={ value => value?.bottom }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ shapeSelector }
+				hoverSelector={ shapeHoverSelector }
+				styleRule="borderLeftWidth"
+				attrName="shapeOutlineWidth"
+				key="shapeOutlineWidth-left"
+				responsive="all"
+				format="%spx"
+				valuePreCallback={ value => value?.left }
+			/>
+		</>
+	)
 }
 
 export const Style = props => {
-	const styles = useStyles( getStyleParams( props ) )
-	const premiumStyles = useStyles( applyFilters( 'stackable.block-component.icon.get-style-params', [], props ) )
+	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style', null )
 
-	return (
-		<>
-			<StyleComponent
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
-			<StyleComponent
-				styles={ premiumStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...props }
-			/>
-		</>
-	)
+	return <>
+		<Styles { ...props } />
+		{ IndivIconStyles && <IndivIconStyles { ...props } /> }
+	</>
 }
 
 Style.Content = props => {
-	const {
-		attributes,
-		options = {},
-		...propsToPass
-	} = props
+	const IndivIconStyles = applyFilters( 'stackable.block-component.icon.indiv-icon-style', null )
 
-	const styles = getStyles( attributes, getStyleParams( options ) )
-	const premiumStyles = getStyles( attributes, applyFilters( 'stackable.block-component.icon.get-style-params', [], options ) )
-
-	return (
-		<>
-			<StyleComponent.Content
-				styles={ styles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ premiumStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</>
-	)
+	return <>
+		<Styles { ...props } />
+		{ IndivIconStyles && <IndivIconStyles { ...props } /> }
+	</>
 }
