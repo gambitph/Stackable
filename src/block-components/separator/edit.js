@@ -135,12 +135,7 @@ export const Edit = props => {
 			>
 				<SeparatorControls attrNameTemplate="top%s" />
 				{ PremiumTopSeparatorControls && <PremiumTopSeparatorControls { ...props } /> }
-				{ showProNotice && (
-					<ProControlButton
-						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
-						description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
-					/>
-				) }
+				{ showProNotice && <ProControlButton type="separator" /> }
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator', i18n ) }
@@ -151,12 +146,7 @@ export const Edit = props => {
 			>
 				<SeparatorControls attrNameTemplate="bottom%s" />
 				{ PremiumBottomSeparatorControls && <PremiumBottomSeparatorControls { ...props } /> }
-				{ showProNotice && (
-					<ProControlButton
-						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
-						description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
-					/>
-				) }
+				{ showProNotice && <ProControlButton type="separator" /> }
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)

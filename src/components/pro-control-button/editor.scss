@@ -13,9 +13,8 @@
 	outline: none;
 
 	.ugb-pro-control-more-dots__dot {
-		width: 6px;
-		height: 6px;
-		background: #aaa;
+		width: 8px;
+		height: 8px;
 		border-radius: 100%;
 		margin: 0 2px;
 		transition: all 0.3s ease-in-out;
@@ -23,10 +22,7 @@
 
 	&:hover,
 	&:focus {
-		background: #eee;
-		.ugb-pro-control-more-dots__dot {
-			background: #555;
-		}
+		background: rgba(240, 0, 105, 0.3);
 	}
 }
 
@@ -34,12 +30,7 @@
 	max-height: 800px;
 	transition: all 0.3s ease-in-out;
 	overflow: hidden;
-	margin: 0 -16px;
 	&.ugb-pro-control-button--hidden {
 		max-height: 0;
-	}
-	.ugb-design-control-pro-note {
-		margin-left: 16px;
-		margin-right: 16px;
 	}
 }

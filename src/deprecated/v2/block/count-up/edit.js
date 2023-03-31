@@ -103,7 +103,11 @@ addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-u
 				options={ applyFilters( 'stackable.count-up.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)

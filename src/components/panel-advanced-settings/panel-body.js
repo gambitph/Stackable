@@ -38,6 +38,7 @@ const PanelBody = (
 		checked,
 		hasToggle = undefined,
 		onChange = noop,
+		isPremiumPanel = false,
 	},
 	ref
 ) => {
@@ -85,6 +86,7 @@ const PanelBody = (
 	const classes = classnames( 'components-panel__body', 'ugb-toggle-panel-body', className, {
 		'is-opened': isOpened,
 		[ `ugb-panel--${ id }` ]: id,
+		'stk--premium-panel': isPremiumPanel,
 	} )
 
 	return (
@@ -98,6 +100,7 @@ const PanelBody = (
 				hasToggle={ typeof hasToggle === 'undefined' ? !! onChange : hasToggle }
 				onChange={ onChange }
 				setIsOpened={ setIsOpened }
+				isPremiumPanel={ isPremiumPanel }
 				{ ...buttonProps }
 			/>
 			{ typeof children === 'function'
@@ -109,7 +112,7 @@ const PanelBody = (
 
 const PanelBodyTitle = forwardRef(
 	( {
-		isOpened, icon, title,
+		isOpened, icon, title, isPremiumPanel,
 		checked, hasToggle, onChange, setIsOpened, // For the toggle.
 		...props
 	}, ref ) => {
@@ -156,6 +159,9 @@ const PanelBodyTitle = forwardRef(
 						/>
 					) }
 					{ title }
+					{ isPremiumPanel && (
+						<div className="stk-pulsating-circle" />
+					) }
 					{ icon && (
 						<Icon
 							icon={ icon }

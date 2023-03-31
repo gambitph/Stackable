@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import './global-settings'
-import './premium-notice'
 import './design-library-button'
 import './layout-picker-reset'
 // import './v2-migration-popup' // Probably 1.5yrs of checking for backward compatibility is enough.

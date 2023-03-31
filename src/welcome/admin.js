@@ -13,7 +13,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
 import { __ } from '@wordpress/i18n'
 import { pick } from 'lodash'
 import {
-	render, useEffect, useState, Fragment, createRef, useCallback,
+	render, useEffect, useState, Fragment, useCallback,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
@@ -52,62 +52,6 @@ export const BLOCK_CATEROGIES = [
 		Icon: SVGSectionIcon,
 	},
 ]
-
-const BlockToggle = props => {
-	const {
-		onChange,
-		value = '',
-		label = '',
-		demo = '',
-		...propsToPass
-	} = props
-	const ref = createRef()
-
-	return (
-		<label // eslint-disable-line
-			onClick={ ev => {
-				onChange( value )
-				ev.preventDefault()
-				ref.current.focus()
-			} }
-			{ ...propsToPass }
-		>
-			<h4>{ label }</h4>
-			{ demo && (
-				<span className="s-block-demo">
-					<a
-						href={ demo }
-						target="_blank"
-						rel="noopener noreferrer"
-						onClick={ ev => ev.stopPropagation() }
-					>
-						{ __( 'view demo', i18n ) }
-					</a>
-				</span>
-			) }
-			<button
-				className="s-toggle-button"
-				ref={ ref }
-				data-value={ value }
-				onClick={ ev => {
-					onChange( value )
-					ev.stopPropagation()
-					ev.preventDefault()
-				} }
-			>
-				<span>{ __( 'Disabled', i18n ) }</span>
-				<span>{ __( 'Enabled', i18n ) }</span>
-			</button>
-		</label>
-	)
-}
-
-BlockToggle.defaultProps = {
-	label: '',
-	value: '',
-	onChange: () => {},
-	demo: '',
-}
 
 const BlockList = () => {
 	const DERIVED_BLOCKS = getAllBlocks()
@@ -215,23 +159,34 @@ const BlockToggler = () => {
 						<div className="s-settings-grid">
 							{ DERIVED_BLOCKS[ id ].map( ( block, i ) => {
 								const isDisabled = disabledBlocks.includes( block.name )
-								const mainClasses = classnames( [
-									's-block',
-								], {
-									's-is-disabled': isDisabled,
-								} )
+
+								const demoLink = block[ 'stk-demo' ] && (
+									<a
+										href={ block[ 'stk-demo' ] }
+										target="_blank"
+										rel="noopener noreferrer"
+										onClick={ ev => ev.stopPropagation() }
+									>
+										{ __( 'view demo', i18n ) }
+									</a>
+								)
+
+								const title = <>
+									<span>{ __( block.title, i18n ) }</span> { /* eslint-disable-line @wordpress/i18n-no-variables */ }
+									{ demoLink }
+								</>
 
 								return (
-									<BlockToggle
-										key={ i + 1 }
-										// We need to run the title through the translation function, we have translations ready for this.
-										label={ __( block.title, i18n ) } // eslint-disable-line @wordpress/i18n-no-variables
-										value={ block.name }
-										className={ mainClasses }
-										demo={ block[ 'stk-demo' ] }
-										onChange={ value => {
-											toggleBlock( value, id )
+									<AdminToggleSetting
+										key={ i }
+										label={ title }
+										value={ ! isDisabled }
+										onChange={ () => {
+											toggleBlock( block.name, id )
 										} }
+										size="small"
+										disabled={ __( 'Disabled', i18n ) }
+										enabled={ __( 'Enabled', i18n ) }
 									/>
 								)
 							} ) }
@@ -267,37 +222,6 @@ const EditorSettings = () => {
 	}, [] )
 
 	return <>
-		<AdminTextSetting
-			label={ __( 'Google Maps API Key', i18n ) }
-			value={ settings.stackable_google_maps_api_key }
-			type="text"
-			onChange={ value => {
-				clearTimeout( saveTimeout )
-				setSettings( {
-					...settings,
-					stackable_google_maps_api_key: value, // eslint-disable-line camelcase
-				} )
-				setSaveTimeout(
-					setTimeout( () => {
-						setIsBusy( true )
-						const model = new models.Settings( {
-							stackable_google_maps_api_key: value, // eslint-disable-line camelcase
-						} )
-						model.save().then( () => setIsBusy( false ) )
-					}, 400 )
-				)
-			} }
-			help={
-				<>
-					{ __(
-						'Adding a Google API Key enables additional features of the Stackable Map Block.',
-						i18n
-					) }
-						&nbsp;
-					<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">{ __( 'Learn more', i18n ) }</a>
-				</>
-				 }
-		></AdminTextSetting>
 		<AdminToggleSetting
 			label={ __( 'Design Library', i18n ) }
 			value={ settings.stackable_enable_design_library }
@@ -311,8 +235,6 @@ const EditorSettings = () => {
 				} )
 			} }
 			help={ __( 'Adds a button on the top of the editor which gives access to a collection of pre-made block designs.', i18n ) }
-			disabled={ __( 'Disable feature', i18n ) }
-			enabled={ __( 'Enable feature', i18n ) }
 		/>
 		<AdminToggleSetting
 			label={ __( 'Optimize Inline CSS', i18n ) }
@@ -327,8 +249,6 @@ const EditorSettings = () => {
 				} )
 			} }
 			help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
-			disabled={ __( 'Disable feature', i18n ) }
-			enabled={ __( 'Enable feature', i18n ) }
 		/>
 		<AdminToggleSetting
 			label={ __( 'Navigation Panel', i18n ) }
@@ -343,8 +263,40 @@ const EditorSettings = () => {
 				} )
 			} }
 			help={ __( 'A block Navigation panel that floats at the bottom of the inspector that helps with adjusting the different blocks in your column layout.', i18n ) }
-			disabled={ __( 'Disable feature', i18n ) }
-			enabled={ __( 'Enable feature', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Auto-Collapse Panels', i18n ) }
+			value={ settings.stackable_auto_collapse_panels }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_auto_collapse_panels: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Block Linking (Beta)', i18n ) }
+			value={ settings.stackable_enable_block_linking }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_block_linking: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={
+				<>
+					{ __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', i18n ) }
+					&nbsp;
+					<a target="_docs" href="https://docs.wpstackable.com/article/462-migrating-from-version-2-to-version-3?utm_source=wp-settings-migrating&utm_campaign=learnmore&utm_medium=wp-dashboard">{ __( 'Learn more', i18n ) }</a>
+				</>
+			}
 		/>
 		<AdminTextSetting
 			label={ __( 'Nested Block Width', i18n ) }
@@ -381,44 +333,37 @@ const EditorSettings = () => {
 				}, 400 ) )
 			} }
 			help={ __( 'The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula.', i18n ) }
-		></AdminTextSetting>
-		<AdminToggleSetting
-			label={ __( 'Auto-Collapse Panels', i18n ) }
-			value={ settings.stackable_auto_collapse_panels }
-			onChange={ value => {
-				setIsBusy( true )
-				const model = new models.Settings( { stackable_auto_collapse_panels: value } ) // eslint-disable-line camelcase
-				model.save().then( () => setIsBusy( false ) )
-				setSettings( {
-					...settings,
-					stackable_auto_collapse_panels: value, // eslint-disable-line camelcase
-				} )
-			} }
-			help={ __( 'Collapse other inspector panels when opening another, keeping only one open at a time.', i18n ) }
-			disabled={ __( 'Disable feature', i18n ) }
-			enabled={ __( 'Enable feature', i18n ) }
 		/>
-		<AdminToggleSetting
-			label={ __( 'Block Linking (Beta)', i18n ) }
-			value={ settings.stackable_enable_block_linking }
+		<AdminTextSetting
+			label={ __( 'Google Maps API Key', i18n ) }
+			value={ settings.stackable_google_maps_api_key }
+			type="text"
 			onChange={ value => {
-				setIsBusy( true )
-				const model = new models.Settings( { stackable_enable_block_linking: value } ) // eslint-disable-line camelcase
-				model.save().then( () => setIsBusy( false ) )
+				clearTimeout( saveTimeout )
 				setSettings( {
 					...settings,
-					stackable_enable_block_linking: value, // eslint-disable-line camelcase
+					stackable_google_maps_api_key: value, // eslint-disable-line camelcase
 				} )
+				setSaveTimeout(
+					setTimeout( () => {
+						setIsBusy( true )
+						const model = new models.Settings( {
+							stackable_google_maps_api_key: value, // eslint-disable-line camelcase
+						} )
+						model.save().then( () => setIsBusy( false ) )
+					}, 400 )
+				)
 			} }
 			help={
 				<>
-					{ __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', i18n ) }
-					&nbsp;
-					<a target="_docs" href="https://docs.wpstackable.com/article/462-migrating-from-version-2-to-version-3?utm_source=wp-settings-migrating&utm_campaign=learnmore&utm_medium=wp-dashboard">{ __( 'Learn more', i18n ) }</a>
+					{ __(
+						'Adding a Google API Key enables additional features of the Stackable Map Block.',
+						i18n
+					) }
+						&nbsp;
+					<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">{ __( 'Learn more', i18n ) }</a>
 				</>
-			}
-			disabled={ __( 'Disable feature', i18n ) }
-			enabled={ __( 'Enable feature', i18n ) }
+				 }
 		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">

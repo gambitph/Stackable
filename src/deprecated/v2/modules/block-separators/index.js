@@ -144,10 +144,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					/>
 				}
 				{ applyFilters( 'stackable.block-separators.edit.top', null, props ) }
-				{ showProNotice && <ProControlButton
-					title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
-					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
-				/> }
+				{ showProNotice && <ProControlButton type="separator" /> }
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator', i18n ) }
@@ -245,10 +242,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					/>
 				}
 				{ applyFilters( 'stackable.block-separators.edit.bottom', null, props ) }
-				{ showProNotice && <ProControlButton
-					title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
-					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
-				/> }
+				{ showProNotice && <ProControlButton type="separator" /> }
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

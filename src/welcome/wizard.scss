@@ -125,19 +125,26 @@
 		max-height: 0 !important;
 		transition: all 0.3s ease-in-out;
 		&.s--show-all-blocks {
-			max-height: 1000px !important;
+			max-height: 1500px !important;
 		}
 		.ugb-admin-setting__label {
 			width: auto;
+			text-align: start !important;
 		}
 		.ugb-admin-setting__field {
 			text-align: right;
 		}
 		.ugb-admin-setting {
-			margin-top: 16px;
+			margin: 24px 0 !important;
+			padding: 0 !important;
+			border: none !important;
 		}
 		.ugb-admin-toggle-setting__button {
 			margin-right: 5px !important;
+		}
+
+		.ugb-admin-setting__field {
+			justify-content: flex-end !important;
 		}
 	}
 }
@@ -154,6 +161,19 @@
 	}
 	&:focus {
 		outline: 1px dashed #888;
+	}
+
+	.ugb-admin-setting__field {
+		justify-content: center !important;
+	}
+	.ugb-admin-setting {
+		margin: 16px 0 0 !important;
+		padding: 0 !important;
+		border: none !important;
+	}
+
+	.s-welcome-wizard__option-main-toggle {
+		margin: 30px 0 !important;
 	}
 }
 .s-welcome-wizard__option-check-icon {
