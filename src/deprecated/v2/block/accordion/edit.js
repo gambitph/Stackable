@@ -50,9 +50,7 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import {
-	RichText, InnerBlocks,
-} from '@wordpress/block-editor'
+import { RichText, InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
@@ -96,7 +94,11 @@ addFilter( 'stackable.accordion.edit.inspector.layout.before', 'stackable/accord
 				options={ applyFilters( 'stackable.accordion.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)

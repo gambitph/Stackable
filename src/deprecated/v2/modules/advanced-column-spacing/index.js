@@ -11,9 +11,7 @@ import { i18n, showProNotice } from 'stackable'
 /**
  * WordPress dependencies
  */
-import {
-	addFilter, doAction,
-} from '@wordpress/hooks'
+import { addFilter, doAction } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
@@ -26,7 +24,11 @@ const fineGrainedProPanel = output => {
 				initialOpen={ false }
 				className="ugb--help-tip-advanced-column-spacing"
 			>
-				{ <ProControl type="advanced" /> }
+				<ProControl
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/>
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

@@ -28,13 +28,9 @@ export const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'Motion Effects', i18n ) }
 					id="effects-animations"
+					isPremiumPanel={ ! isPro }
 				>
-					{ ! isPro &&
-						<ProControl
-							title={ __( 'Say Hello to Motion Effects 👋', i18n ) }
-							description={ __( 'Add entrance fade ins and animations when you scroll. This feature is only available on Stackable Premium', i18n ) }
-						/>
-					}
+					{ ! isPro && <ProControl type="motion-effects" /> }
 					{ isPro &&
 						applyFilters( 'stackable.block-component.effects-animations.control', null, {
 							mainBlockClass: props.mainBlockClass,

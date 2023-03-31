@@ -7,47 +7,38 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import { Component } from '@wordpress/element'
+import { useState } from '@wordpress/element'
 
-class ProControlButton extends Component {
-	constructor() {
-		super( ...arguments )
-		this.state = {
-			isOpen: this.props.initialOpen ? this.props.initialOpen : false,
-		}
-		this.onClick = this.onClick.bind( this )
-	}
+const ProControlButton = props => {
+	const {
+		initialOpen,
+		...propsToPass
+	} = props
 
-	onClick() {
-		this.setState( { isOpen: ! this.state.isOpen } )
-	}
+	const [ isOpen, setIsOpen ] = useState( initialOpen )
 
-	render() {
-		const wrapperClasses = classnames( [
-			'ugb-pro-control-button__wrapper',
-		], {
-			'ugb-pro-control-button--hidden': ! this.state.isOpen,
-		} )
+	const wrapperClasses = classnames( [
+		'ugb-pro-control-button__wrapper',
+	], {
+		'ugb-pro-control-button--hidden': ! isOpen,
+	} )
 
-		return (
-			<div className="components-base-control">
-				<button className="ugb-pro-control-more-dots" onClick={ this.onClick }>
-					<div className="ugb-pro-control-more-dots__dot"></div>
-					<div className="ugb-pro-control-more-dots__dot"></div>
-					<div className="ugb-pro-control-more-dots__dot"></div>
-				</button>
-				<div className={ wrapperClasses } >
-					<ProControl
-						type={ this.props.type }
-						title={ this.props.title }
-						description={ this.props.description }
-						button={ this.props.button }
-						showButton={ this.props.showButton }
-					/>
-				</div>
+	return (
+		<div className="components-base-control">
+			<button className="ugb-pro-control-more-dots" onClick={ () => setIsOpen( v => ! v ) }>
+				<div className="ugb-pro-control-more-dots__dot stk-pulsating-circle"></div>
+				<div className="ugb-pro-control-more-dots__dot stk-pulsating-circle"></div>
+				<div className="ugb-pro-control-more-dots__dot stk-pulsating-circle"></div>
+			</button>
+			<div className={ wrapperClasses } >
+				<ProControl { ...propsToPass } />
 			</div>
-		)
-	}
+		</div>
+	)
+}
+
+ProControlButton.defaultProps = {
+	initialOpen: false,
 }
 
 export default ProControlButton
