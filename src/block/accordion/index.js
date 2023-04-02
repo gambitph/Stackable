@@ -28,6 +28,7 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
+		stkColumnResize: false,
 	},
 	example,
 	//  styles: blockStyles,

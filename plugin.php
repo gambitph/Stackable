@@ -157,6 +157,8 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
 		delete_option( 'stackable_dynamic_content_other_fields_frontend' );
 		// Delete cached dynamic content auto-detected fields.
 		delete_option( 'stackable_dynamic_content_meta_keys_frontend' );
+		// Delete old v2 go premium notice status.
+		delete_option( 'stackable_inspector_premium_notice_status' );
 	}
 	register_deactivation_hook( __FILE__, 'stackable_deactivation_cleanup' );
 }
@@ -190,7 +192,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/premium-notice/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/countdown/index.php' );

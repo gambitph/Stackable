@@ -26,20 +26,14 @@ if ( showProNotice ) {
 					title={ sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Layer', i18n ), 2 ) }
 					className="ugb--help-tip-separator-layer2"
 				>
-					<ProControl
-						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
-						description={ __( 'Add a second layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
-					/>
+					<ProControl type="separator" />
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					initialOpen={ false }
 					title={ sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Layer', i18n ), 3 ) }
 					className="ugb--help-tip-separator-layer3"
 				>
-					<ProControl
-						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
-						description={ __( 'Add a third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
-					/>
+					<ProControl type="separator" />
 				</PanelAdvancedSettings>
 			</Fragment>
 		)

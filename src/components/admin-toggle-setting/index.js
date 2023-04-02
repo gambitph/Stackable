@@ -2,6 +2,7 @@ import { i18n } from 'stackable'
 import AdminBaseSetting from '../admin-base-setting'
 import { createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import classnames from 'classnames'
 
 const AdminToggleSetting = props => {
 	const ref = createRef()
@@ -13,10 +14,14 @@ const AdminToggleSetting = props => {
 				ref.current.focus()
 			} }
 			{ ...props }
+			className={ classnames( props.className, 'ugb-admin-toggle-setting' ) }
 		>
 			<button
 				ref={ ref }
-				className="ugb-admin-toggle-setting__button"
+				className={ classnames(
+					'ugb-admin-toggle-setting__button',
+					{ 'ugb-admin-toggle-setting__button--enabled': !! props.value }
+				) }
 				type="button"
 				role="switch"
 				aria-checked={ !! props.value }
@@ -28,9 +33,11 @@ const AdminToggleSetting = props => {
 				style={ { minWidth: props.width || undefined } }
 				disabled={ props.isDisabled ? 'disabled' : '' }
 			>
-				<span>{ props.disabled }</span>
-				<span>{ props.enabled }</span>
 			</button>
+			<span className="ugb-admin-toggle-setting__label">
+				<span style={ { visibility: props.value ? 'visible' : 'hidden' } }>{ props.enabled }</span>
+				<span style={ { visibility: ! props.value ? 'visible' : 'hidden' } }>{ props.disabled }</span>
+			</span>
 		</AdminBaseSetting>
 	)
 }

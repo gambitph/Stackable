@@ -1,7 +1,18 @@
 @import "common";
 
-.stackable-dynamic-content__popover > .components-popover__content {
-	width: 250px;
+.stackable-dynamic-content__popover {
+	> .components-popover__content {
+		width: 250px;
+	}
+	&.stk-dynamic-content__popover--is-premium {
+		> .components-popover__content {
+			width: 300px;
+			padding: 16px;
+		}
+		.ugb-design-control-pro-note__logo {
+			width: 100px;
+		}
+	}
 }
 
 .stk-dynamic-content-control {

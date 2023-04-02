@@ -22,10 +22,7 @@ const customCSSProPanel = output => {
 				initialOpen={ false }
 				title={ __( 'Custom CSS', i18n ) }
 			>
-				<ProControl
-					title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
-					description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
-				/>
+				<ProControl type="custom-css" />
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

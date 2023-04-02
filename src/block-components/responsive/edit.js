@@ -72,12 +72,7 @@ addFilter( 'stackable.block-components.responsive.control', 'stackable/premium',
 	}
 
 	if ( showProNotice && ! isPro ) {
-		return (
-			<ProControlButton
-				title={ __( 'Say Hello to More Responsive Options 👋', i18n ) }
-				description={ __( 'Adjust the arrangement of your columns when collapsed on mobile. This feature is only available on Stackable Premium', i18n ) }
-			/>
-		)
+		return <ProControlButton type="column-arrangement" />
 	} else if ( isPro ) {
 		return applyFilters( 'stackable.block.columns.column-arrangement', output )
 	}

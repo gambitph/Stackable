@@ -28,13 +28,9 @@ export const Edit = () => {
 				<PanelAdvancedSettings
 					title={ __( 'Conditional Display', i18n ) }
 					id="conditional-display"
+					isPremiumPanel={ ! isPro }
 				>
-					{ ! isPro &&
-						<ProControl
-							title={ __( 'Say Hello to Display Conditions 👋', i18n ) }
-							description={ __( 'Show/hide this block based on one or more conditions. This feature is only available on Stackable Premium', i18n ) }
-						/>
-					}
+					{ ! isPro && <ProControl type="conditional-display" /> }
 					{ isPro &&
 						applyFilters( 'stackable.block-component.conditional-display.control', null )
 					}

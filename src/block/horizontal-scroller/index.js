@@ -19,6 +19,7 @@ export const settings = {
 		stkAlign: true,
 		stkLayoutReset: false,
 		stkSaveBlockStyle: false,
+		stkColumnResize: false,
 	},
 	example,
 	edit,
