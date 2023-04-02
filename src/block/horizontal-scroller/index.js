@@ -21,6 +21,7 @@ export const settings = {
 		stkLayoutReset: false,
 		stkSaveBlockStyle: false,
 		stkDefaultTab: 'layout',
+		stkColumnResize: false,
 	},
 	example,
 	deprecated,
