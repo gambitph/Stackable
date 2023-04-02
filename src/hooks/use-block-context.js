@@ -64,7 +64,8 @@ const STORE_REDUCER = ( state = {}, action ) => {
 						// elements (like column width drag handlers) do not
 						// show up.
 						if ( block.name === 'stackable/column' ) {
-							if ( [ 'stackable/accordion', 'stackable/image-box' ].includes( parentBlock.name ) ) {
+							const supportsColumnResize = select( 'core/blocks' ).getBlockSupport( parentBlock.name, 'stkColumnResize' ) !== false
+							if ( ! supportsColumnResize ) {
 								blocks[ block.clientId ] = {
 									blockIndex: index,
 									parentBlock,
