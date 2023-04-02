@@ -101,7 +101,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
-	ContentAlign.addAttributes( attrObject, { columnFit: true } )
+	ContentAlign.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }
