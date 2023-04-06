@@ -26,7 +26,7 @@ const detectIfVideo = url => {
 }
 
 const isButtonBlock = el => {
-	return el.classList.contains( 'stk-block-button' ) || el.classList.contains( 'stk-block-icon' )
+	return el.classList.contains( 'stk-block-button' ) || el.classList.contains( 'stk-block-icon-button' ) || el.classList.contains( 'stk-block-icon' )
 }
 
 class StackableImageLightbox {
@@ -43,7 +43,7 @@ class StackableImageLightbox {
 			// Look for the anchor link where we can get the link to open in the
 			// lightbox.
 			let link = el.querySelector( '.stk-link:not(.stk-button)' )
-			if ( el.classList.contains( 'stk-block-button' ) ) {
+			if ( isButtonBlock( el ) ) {
 				link = el.querySelector( '.stk-link' )
 			}
 			if ( imageBlock && ! link ) {
