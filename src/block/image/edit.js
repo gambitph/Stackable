@@ -74,6 +74,7 @@ const Edit = props => {
 						{ ...props }
 						initialOpen={ true }
 						heightUnits={ heightUnit }
+						hasLightbox
 					/>
 					{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
 					<BlockDiv.InspectorControls />

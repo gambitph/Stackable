@@ -36,6 +36,10 @@ export const linkAttributes = ( selector = 'a' ) => {
 			attribute: 'title',
 			default: '',
 		},
+		hasLightbox: {
+			type: 'boolean',
+			default: false,
+		},
 	}
 }
 

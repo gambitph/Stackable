@@ -128,6 +128,8 @@ BlockDiv.Content = props => {
 				// effect in the frontend. This is okay in the editor-side.
 				'stk--block-margin-top-auto': attributes.blockMargin?.top === 'auto',
 				'stk--block-margin-bottom-auto': attributes.blockMargin?.bottom === 'auto',
+				// Advanced > Link > Has Lightbox support.
+				'stk--has-lightbox': attributes.blockLinkHasLightbox || attributes.linkHasLightbox,
 			},
 		],
 		props

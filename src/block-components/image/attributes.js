@@ -108,6 +108,10 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				type: 'number',
 				default: '',
 			},
+			imageHasLightbox: {
+				type: 'boolean',
+				default: false,
+			},
 			imageZoom: {
 				stkHover: true,
 				type: 'number',
