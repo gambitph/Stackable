@@ -43,8 +43,10 @@ const Styles = props => {
 				styleRule="width"
 				attrName="tabLayout"
 				key="tabLayout"
-				valueCallback={ () => {
-					return 'max-content'
+				valueCallback={ value => {
+					if ( value === 'left' || value === 'right' ) {
+						return 'max-content'
+					}
 				} }
 				responsive="all"
 			/>
