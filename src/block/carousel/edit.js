@@ -44,7 +44,6 @@ import {
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
-import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -103,7 +102,7 @@ const Edit = props => {
 	], getContentAlignmentClasses( props.attributes ) )
 
 	const deviceType = useDeviceType()
-	const { numInnerBlocks, innerBlocks } = useBlockContext()
+	const { numInnerBlocks } = useBlockContext()
 	const [ activeSlide, setActiveSlide ] = useState( 1 )
 	const [ dotActiveSlide, setDotActiveSlide ] = useState( 1 )
 	const sliderRef = useRef()
@@ -111,7 +110,13 @@ const Edit = props => {
 
 	let maxSlides = numInnerBlocks
 	if ( carouselType === 'slide' ) {
-		const slidesToShow = attributes[ getAttributeName( 'slidesToShow', deviceType ) ]
+		let slidesToShow = attributes.slidesToShow || 1
+		if ( ( deviceType === 'Tablet' || deviceType === 'Mobile' ) && attributes.slidesToShowTablet ) {
+			slidesToShow = attributes.slidesToShowTablet
+		}
+		if ( deviceType === 'Mobile' && attributes.slidesToShowMobile ) {
+			slidesToShow = attributes.slidesToShowMobile
+		}
 		maxSlides -= ( slidesToShow - 1 )
 	}
 
@@ -245,7 +250,7 @@ const Edit = props => {
 									sliderMax={ 4 }
 									min={ 1 }
 									attribute="slidesToShow"
-									placeholder="3"
+									placeholder="1"
 									responsive="all"
 								/>
 								<AdvancedRangeControl
