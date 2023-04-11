@@ -17,6 +17,7 @@ import { withVersion } from '~stackable/higher-order'
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { RichText } from '@wordpress/block-editor'
 
 const Save = props => {
 	const {
@@ -32,19 +33,18 @@ const Save = props => {
 		responsiveClass,
 	] )
 
-	const tabs = []
-
-	for ( let i = 1; i <= attributes.tabCount; i++ ) {
-		tabs.push(
-			<button
-				data-tab={ i }
-				data-initial-open={ attributes.initialTabOpen === i.toString() ? true : false }
-				className="stk-block-tabs__tab stk-tabs__tab-desktop"
+	const tabs = props.attributes.tabs.map( ( tab, index ) => {
+		return (
+			<button className="stk-block-tabs__tab stk-tabs__tab-desktop"
+				key={ index }
 			>
-				Tab { i }
+				<RichText.Content
+					tagName="p"
+					value={ tab.label }
+				/>
 			</button>
-		)
-	}
+		 )
+	} )
 
 	//this is the thing
 	return (

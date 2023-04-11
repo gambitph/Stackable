@@ -26,6 +26,14 @@ const tabLabelsAttributes = {
 		type: 'string',
 		default: '1',
 	},
+	fullWidth: {
+		type: 'boolean',
+		default: false,
+	},
+	gap: {
+		type: 'number',
+		default: '',
+	},
 	tabs: {
 		type: 'array',
 		default: [
