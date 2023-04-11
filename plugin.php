@@ -193,6 +193,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block/carousel/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/countdown/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php' );

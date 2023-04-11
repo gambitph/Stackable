@@ -1,0 +1,57 @@
+
+.stk-block-carousel__slider {
+	// display: flex;
+	// flex-direction: row;
+	// cursor: grab;
+	// width: 100%;
+	// // This will make our slider draggable if columns do not have backgrounds or
+	// // do not occupy the entire width.
+	// background: transparent;
+	// margin: 0 auto;
+	// position: relative;
+	overflow-y: visible !important;
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		overflow-y: visible !important;
+	}
+}
+.stk-block-carousel {
+	.stk-block-carousel__slider > .block-editor-inner-blocks {
+		width: 100%;
+	}
+	.stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		display: flex;
+	}
+}
+.stk-block-carousel.stk--is-fade {
+	.stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block-stackable-column {
+		// transition: opacity 0s;
+		width: 100%;
+		flex: 1 0 100%;
+		// opacity: 1;
+		// visibility: hidden;
+		opacity: 0;
+		// &:not(:first-child) {
+		// 	position: absolute;
+		// 	inset: 0;
+		// }
+	}
+}
+
+.stk-block-carousel.stk--is-slide {
+	.stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		// overflow-y: hidden;
+		// overflow-x: scroll;
+		gap: var(--gap);
+		overscroll-behavior-inline: contain;
+		overflow-x: -moz-scrollbars-none;
+		-ms-overflow-style: none;
+		&::-webkit-scrollbar {
+			height: 0 !important;
+			display: none !important;
+		}
+	}
+	.stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"] {
+		scroll-snap-align: start;
+		flex: 1 0 calc(100% / var(--slides-to-show) - var(--gap) / var(--slides-to-show) * (var(--slides-to-show) - 1));
+	}
+}

@@ -1,0 +1,164 @@
+.stk-block-carousel {
+	--gap: 30px;
+	--slides-to-show: 3;
+}
+.stk-block-carousel__slider {
+	display: flex;
+	flex-direction: row;
+	cursor: grab;
+	width: 100%;
+	// This will make our slider draggable if columns do not have backgrounds or
+	// do not occupy the entire width.
+	background: transparent;
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+}
+.stk-block-carousel__slider-wrapper {
+	position: relative;
+}
+.stk-block-carousel__button,
+.stk-block-carousel__dot {
+	all: unset;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out, outline-offset 0s, outline 0s;
+	&::before {
+		transition: all 0.3s ease-in-out;
+	}
+}
+
+.stk-block-carousel__buttons {
+	z-index: 9999;
+	position: absolute;
+	inset: 12px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	pointer-events: none;
+}
+.stk-block-carousel__button {
+	pointer-events: all;
+	user-select: none;
+}
+.stk-block-carousel__dots {
+	min-height: 24px;
+	margin-top: 12px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	// gap: 8px;
+	li {
+		list-style: none;
+	}
+}
+
+.stk-block-carousel.stk--is-fade {
+	.stk-block-carousel__slider > .stk-block-column {
+		transition: opacity 0.3s ease-in-out;
+		width: 100%;
+		flex: 1 0 100%;
+		opacity: 1;
+		height: auto;
+		&:not(:first-child) {
+			// position: absolute;
+			// inset: 0;
+			position: relative;
+			left: 0;
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
+}
+
+.stk-block-carousel {
+	&.stk--is-slide {
+		.stk-block-carousel__slider:not(.stk--snapping-deactivated) {
+			scroll-behavior: smooth;
+			scroll-snap-type: inline mandatory;
+		}
+	}
+	.stk-block-carousel__slider.stk--snapping-deactivated {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+}
+
+.stk-block-carousel.stk--is-slide {
+	.stk-block-carousel__slider {
+		overflow-y: hidden;
+		overflow-x: scroll;
+		gap: var(--gap);
+		overscroll-behavior-inline: contain;
+		overflow-x: -moz-scrollbars-none;
+		-ms-overflow-style: none;
+		&::-webkit-scrollbar {
+			height: 0 !important;
+			display: none !important;
+		}
+	}
+	.stk-block-carousel__slider > * {
+		scroll-snap-align: start;
+		flex: 1 0 calc(100% / var(--slides-to-show) - var(--gap) / var(--slides-to-show) * (var(--slides-to-show) - 1));
+	}
+}
+
+.stk-block-carousel .stk--hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
+}
+
+.stk-block-carousel__button {
+	height: 32px;
+	width: 32px;
+	opacity: 0.9;
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba(255, 255, 255, 0.8);
+	&:hover {
+		background: #fff;
+	}
+}
+.stk-block-carousel__dot {
+	height: 24px;
+	width: 24px;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	will-change: margin, width;
+	&::before {
+		position: absolute;
+		content: "";
+		width: 8px;
+		height: 8px;
+		border-radius: 8px;
+		background: #aaa;
+	}
+	&:hover::before {
+		background: #1b1b1b;
+	}
+	&.stk-block-carousel__dot--active {
+		margin-inline: 6px;
+		&::before {
+			background: #1b1b1b;
+			width: 30px;
+		}
+	}
+}
