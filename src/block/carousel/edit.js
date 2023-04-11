@@ -222,7 +222,6 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					{ /* <Columns.InspectorControls /> */ }
 					<InspectorLayoutControls>
 						<ColumnsControl
 							label={ __( 'Slides', i18n ) }
@@ -240,8 +239,6 @@ const Edit = props => {
 								},
 							] }
 							attribute="carouselType"
-							// isSmall={ true }
-							// fullwidth={ false }
 						/>
 						{ carouselType === 'slide' && (
 							<>
@@ -274,7 +271,7 @@ const Edit = props => {
 						<ControlSeparator />
 					</InspectorLayoutControls>
 					<ContentAlign.InspectorControls />
-					<Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } />
+					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
 					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
@@ -292,7 +289,6 @@ const Edit = props => {
 				clientId={ props.clientId }
 				attributes={ props.attributes }
 				className={ blockClassNames }
-				// enableVariationPicker={ true }
 			>
 				<BlockStyles
 					version={ VERSION }

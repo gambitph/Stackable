@@ -1,19 +1,18 @@
 
 .stk-block-carousel__slider {
-	// display: flex;
-	// flex-direction: row;
-	// cursor: grab;
-	// width: 100%;
-	// // This will make our slider draggable if columns do not have backgrounds or
-	// // do not occupy the entire width.
-	// background: transparent;
-	// margin: 0 auto;
-	// position: relative;
-	overflow-y: visible !important;
+	// Column outlines should be offset inside or else they will be cut.
 	> .block-editor-inner-blocks > .block-editor-block-list__layout {
-		overflow-y: visible !important;
+		> [data-type="stackable/column"] {
+			outline-offset: -2px;
+		}
+	}
+	// Inner block outlines should be inside or else they will overlap with the
+	// column outlines.
+	.stk-column-wrapper > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-block]:not([data-type*="/column"]):not(:focus)::after {
+		outline-offset: -2px !important;
 	}
 }
+
 .stk-block-carousel {
 	.stk-block-carousel__slider > .block-editor-inner-blocks {
 		width: 100%;
@@ -24,23 +23,14 @@
 }
 .stk-block-carousel.stk--is-fade {
 	.stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block-stackable-column {
-		// transition: opacity 0s;
 		width: 100%;
 		flex: 1 0 100%;
-		// opacity: 1;
-		// visibility: hidden;
 		opacity: 0;
-		// &:not(:first-child) {
-		// 	position: absolute;
-		// 	inset: 0;
-		// }
 	}
 }
 
 .stk-block-carousel.stk--is-slide {
 	.stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout {
-		// overflow-y: hidden;
-		// overflow-x: scroll;
 		gap: var(--gap);
 		overscroll-behavior-inline: contain;
 		overflow-x: -moz-scrollbars-none;
