@@ -103,7 +103,6 @@ const Edit = props => {
 	], getContentAlignmentClasses( props.attributes ) )
 
 	const deviceType = useDeviceType()
-	// const getAttributeName = ( attrName, state = 'normal' ) => _getAttributeName( attrName, 'Desktop', state )
 	const { numInnerBlocks, innerBlocks } = useBlockContext()
 	const [ activeSlide, setActiveSlide ] = useState( 1 )
 	const [ dotActiveSlide, setDotActiveSlide ] = useState( 1 )
@@ -162,12 +161,12 @@ const Edit = props => {
 		setDotActiveSlide( 1 )
 	}, [ carouselType ] )
 
-	// Update the active dot when the slider is scrolled.  This checks the
-	// scroll position and finds the closest slide to the left. This is the best
-	// way here because there are a number of ways to change the slide position.
-	// (e.g. changing column order)
 	useEffect( () => {
 		const timeout = setInterval( () => {
+			// Update the active dot when the slider is scrolled.  This checks the
+			// scroll position and finds the closest slide to the left. This is the best
+			// way here because there are a number of ways to change the slide position.
+			// (e.g. changing column order)
 			if ( carouselType === 'slide' ) {
 				const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
 				const scrollLeft = sliderRef.current.scrollLeft
@@ -186,10 +185,31 @@ const Edit = props => {
 					setActiveSlide( slide )
 					setDotActiveSlide( slide )
 				}
+
+			// Bring the current slide into view if the selected column changes
+			// in fade (this only happens in fade because it cannot slide into
+			// view).
+			} else { // fade
+				const selectedSlideEl = sliderRef.current.querySelector( ':scope > .block-editor-inner-blocks > .block-editor-block-list__layout > .is-selected' )
+				if ( selectedSlideEl ) {
+					const slide = Array.from( selectedSlideEl.parentElement.children ).indexOf( selectedSlideEl ) + 1
+					if ( slide !== activeSlide ) {
+						if ( ! dotActiveJustChanged.current ) {
+							setActiveSlide( slide )
+							setDotActiveSlide( slide )
+						}
+					}
+				}
 			}
 		}, 500 )
 		return () => clearInterval( timeout )
-	}, [ carouselType ] )
+	}, [ carouselType, activeSlide ] )
+
+	useEffect( () => {
+		if ( activeSlide > maxSlides ) {
+			setActiveSlide( maxSlides )
+		}
+	}, [ maxSlides, activeSlide ] )
 
 	return (
 		<>
@@ -286,26 +306,22 @@ const Edit = props => {
 					>
 						{ carouselType === 'fade' && (
 							<style>
-								{ `.stk-${ attributes.uniqueId }-column .stk-block-carousel__slider .block-editor-inner-blocks .block-editor-block-list__layout [data-type="stackable/column"]:nth-child(${ activeSlide }) {
+								{ range( maxSlides ).map( i => {
+									return `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ i + 1 }) {
+										opacity: 0;
+										visibility: hidden;
+										left: -${ 100 * ( i ) }%;
+									}`
+								} ) }
+								{ `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ activeSlide }) {
 									opacity: 1;
 									visibility: visible;
-									left: -${ 100 * ( activeSlide - 1 ) }%;
-								}` }
-							</style>
-						) }
-						{ carouselType === 'slide' && (
-							<style>
-								{ `.stk-${ attributes.uniqueId }-column .stk-block-carousel__slider .block-editor-inner-blocks .block-editor-block-list__layout [data-type="stackable/column"]:nth-child(${ activeSlide }) {
-									// opacity: 1;
-									// visibility: visible;
-									// left: -${ 100 * ( activeSlide - 1 ) }%;
 								}` }
 							</style>
 						) }
 						<div
 							className="stk-block-carousel__slider"
 							ref={ sliderRef }
-							// this.sliderEl.scrollLeft = this.slideEls[ slide - 1 ].offsetLeft
 							role="list"
 						>
 							<ColumnInnerBlocks
@@ -315,7 +331,6 @@ const Edit = props => {
 								allowedBlocks={ ALLOWED_INNER_BLOCKS }
 								renderAppender={ false }
 								templateLock={ props.attributes.templateLock || false }
-								// ref={ sliderRef }
 							/>
 						</div>
 						{ attributes.showButtons && (
