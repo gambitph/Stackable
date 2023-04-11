@@ -108,8 +108,6 @@ const Edit = props => {
 		setTabsOptions( tempOptions )
 	}, [ props.attributes.tabCount ] )
 
-	// console.log( document.querySelector( `[data-block="${ props.clientId }"]` ), document.querySelector( `[data-block="${ props.clientId }"]` ).querySelectorAll( '[data-type="stackable/column"]' ) )
-
 	return (
 		<>
 			{ isSelected && (
