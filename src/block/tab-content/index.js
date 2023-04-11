@@ -19,6 +19,7 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
+		stkColumnResize: false,
 	},
 	edit,
 	save,
