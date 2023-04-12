@@ -1,3 +1,5 @@
+@import "common";
+
 .stk-block-carousel {
 	--gap: 30px;
 	--slides-to-show: 1;
@@ -160,5 +162,15 @@
 			background: #1b1b1b;
 			width: 30px;
 		}
+	}
+}
+
+// Hide arrows and dots on mobile
+@include mobile {
+	.stk-block-carousel.stk--hide-mobile-arrows > * > .stk-block-carousel__buttons {
+		display: none;
+	}
+	.stk-block-carousel.stk--hide-mobile-dots > .stk-block-carousel__dots {
+		display: none;
 	}
 }

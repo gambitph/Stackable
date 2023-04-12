@@ -46,6 +46,8 @@ export const Save = props => {
 			'stk--is-slide': attributes.carouselType === '',
 			'stk--is-fade': attributes.carouselType === 'fade',
 			'stk--hide-others': attributes.carouselType === 'fade' && attributes.fadeOutOtherSlides,
+			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
+			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 		},
 	] )
 
@@ -73,7 +75,7 @@ export const Save = props => {
 					<div className="stk-block-carousel__slider" role="list">
 						<InnerBlocks.Content />
 					</div>
-					{ attributes.showButtons && (
+					{ attributes.showArrows && (
 						<div className="stk-block-carousel__buttons">
 							<button className="stk-block-carousel__button stk-block-carousel__button__prev" aria-label="Previous item">{ '<' }</button>
 							<button className="stk-block-carousel__button stk-block-carousel__button__next" aria-label="Next item">{ '>' }</button>

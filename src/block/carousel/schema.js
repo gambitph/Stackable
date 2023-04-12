@@ -43,11 +43,19 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
-			showButtons: {
+			showArrows: {
+				type: 'boolean',
+				default: true,
+			},
+			showArrowsOnMobile: {
 				type: 'boolean',
 				default: true,
 			},
 			showDots: {
+				type: 'boolean',
+				default: true,
+			},
+			showDotsOnMobile: {
 				type: 'boolean',
 				default: true,
 			},
@@ -65,12 +73,6 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkResponsive: true,
 			},
-			// TODO: Define other attributes specific for this block here.
-			// columnArrangement: {
-			// 	stkResponsive: true,
-			// 	type: 'string',
-			// 	default: '',
-			// },
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

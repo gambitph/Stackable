@@ -17,6 +17,8 @@ import {
 	AdvancedToolbarControl,
 	AdvancedRangeControl,
 	AdvancedToggleControl,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -52,7 +54,7 @@ import {
 	useState, useRef, useEffect,
 } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { range } from 'lodash'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
@@ -69,6 +71,7 @@ const Edit = props => {
 		clientId,
 		isSelected,
 		attributes,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -91,6 +94,8 @@ const Edit = props => {
 			'stk--is-slide': carouselType === 'slide',
 			'stk--is-fade': carouselType === 'fade',
 			'stk--hide-others': carouselType === 'fade' && attributes.fadeOutOtherSlides,
+			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
+			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 		},
 	] )
 
@@ -270,6 +275,48 @@ const Edit = props => {
 						) }
 						<ControlSeparator />
 					</InspectorLayoutControls>
+
+					<InspectorStyleControls>
+						<PanelAdvancedSettings
+							title={ __( 'Arrows', i18n ) }
+							id="arrows"
+							hasToggle={ true }
+							checked={ attributes.showArrows }
+							onChange={ showArrows => setAttributes( { showArrows } ) }
+						>
+							<AdvancedToggleControl
+								label={ sprintf(
+									// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
+									__( 'Show %s on mobile', i18n ),
+									// Translators: lower caps "arrows" is the name of the setting.
+									__( 'arrows', i18n )
+								) }
+								checked={ attributes.showArrowsOnMobile }
+								onChange={ showArrowsOnMobile => setAttributes( { showArrowsOnMobile } ) }
+								defaultValue={ true }
+							/>
+						</PanelAdvancedSettings>
+						<PanelAdvancedSettings
+							title={ __( 'Dots', i18n ) }
+							id="dots"
+							hasToggle={ true }
+							checked={ attributes.showDots }
+							onChange={ showDots => setAttributes( { showDots } ) }
+						>
+							<AdvancedToggleControl
+								label={ sprintf(
+									// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
+									__( 'Show %s on mobile', i18n ),
+									// Translators: lower caps "dots" is the name of the setting.
+									__( 'dots', i18n )
+								) }
+								checked={ attributes.showDotsOnMobile }
+								onChange={ showDotsOnMobile => setAttributes( { showDotsOnMobile } ) }
+								defaultValue={ true }
+							/>
+						</PanelAdvancedSettings>
+					</InspectorStyleControls>
+
 					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
@@ -278,7 +325,7 @@ const Edit = props => {
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-carousel" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
 				</>
@@ -334,7 +381,7 @@ const Edit = props => {
 								templateLock={ props.attributes.templateLock || false }
 							/>
 						</div>
-						{ attributes.showButtons && (
+						{ attributes.showArrows && (
 							<div className="stk-block-carousel__buttons">
 								<button
 									className="stk-block-carousel__button stk-block-carousel__button__prev"
