@@ -124,11 +124,13 @@ export const attributes = ( version = VERSION ) => {
 			arrowHeight: {
 				type: 'number',
 				default: '',
+				stkUnits: 'px',
 				stkResponsive: true,
 			},
 			arrowWidth: {
 				type: 'number',
 				default: '',
+				stkUnits: 'px',
 				stkResponsive: true,
 			},
 			arrowBorderRadius: {

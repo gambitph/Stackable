@@ -104,20 +104,18 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".stk-block-carousel__button"
 				styleRule="--button-width"
 				attrName="arrowWidth"
 				key="arrowWidth"
-				format="%spx"
+				hasUnits="px"
 				responsive="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".stk-block-carousel__button"
 				styleRule="--button-height"
 				attrName="arrowHeight"
 				key="arrowHeight"
-				format="%spx"
+				hasUnits="px"
 				responsive="all"
 			/>
 			<BlockCss

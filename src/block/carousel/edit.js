@@ -377,16 +377,18 @@ const Edit = props => {
 							<AdvancedRangeControl
 								label={ sprintf( __( '%s Width', i18n ), __( 'Button', i18n ) ) }
 								attribute="arrowWidth"
-								sliderMax={ 200 }
-								min={ 0 }
+								units={ [ 'px', '%' ] }
+								sliderMax={ [ 200, 100 ] }
+								min={ [ 0, 0 ] }
 								responsive="all"
 								placeholder="40"
 							/>
 							<AdvancedRangeControl
 								label={ sprintf( __( '%s Height', i18n ), __( 'Button', i18n ) ) }
 								attribute="arrowHeight"
-								sliderMax={ 200 }
-								min={ 0 }
+								units={ [ 'px', '%' ] }
+								sliderMax={ [ 200, 100 ] }
+								min={ [ 0, 0 ] }
 								responsive="all"
 								placeholder="40"
 							/>
