@@ -68,8 +68,6 @@
 		opacity: 1;
 		height: auto;
 		&:not(:first-child) {
-			// position: absolute;
-			// inset: 0;
 			position: relative;
 			left: 0;
 			visibility: hidden;
@@ -186,13 +184,6 @@
 
 // Outside arrows.
 .stk-block-carousel.stk--arrows-outside.stk--arrows-justify-space-between.stk--arrows-align-center {
-	// .stk-block-carousel__slider-wrapper {
-	// 	justify-content: center;
-	// 	align-items: center;
-	// }
-	// .stk-block-carousel__buttons {
-	// 	position: static;
-	// }
 	.stk-block-carousel__buttons {
 		inset: 0;
 	}
