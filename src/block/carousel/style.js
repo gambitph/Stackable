@@ -56,7 +56,6 @@ const Styles = props => {
 				styleRule="justifyContent"
 				attrName="arrowJustify"
 				key="arrowJustify"
-				responsive="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -64,7 +63,6 @@ const Styles = props => {
 				styleRule="alignItems"
 				attrName="arrowAlign"
 				key="arrowAlign"
-				responsive="all"
 				enabledCallback={ getAttribute => getAttribute( 'arrowPosition' ) !== 'outside' }
 				dependencies={ [ 'arrowPosition' ] }
 			/>
@@ -154,6 +152,75 @@ const Styles = props => {
 				hover="all"
 			/>
 
+			{ /* Dots */ }
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__dots"
+				styleRule="justifyContent"
+				attrName="dotsJustify"
+				key="dotsJustify"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__dots"
+				styleRule="--dot-offset"
+				attrName="dotsOffset"
+				key="dotsOffset"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				styleRule="--dot-gap"
+				attrName="dotsGap"
+				key="dotsGap"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__dot:before"
+				hoverSelector=".stk-block-carousel__dot:not(.stk-block-carousel__dot--active):hover:before"
+				styleRule="backgroundColor"
+				attrName="dotsColor"
+				key="dotsColor"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__dot.stk-block-carousel__dot--active:before"
+				styleRule="backgroundColor"
+				attrName="dotsActiveColor"
+				key="dotsActiveColor"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				styleRule="--dot-size"
+				attrName="dotsSize"
+				key="dotsSize"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__dot:before"
+				styleRule="borderRadius"
+				attrName="dotsBorderRadius"
+				key="dotsBorderRadius"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				styleRule="--dot-active-width"
+				attrName="dotsActiveWidth"
+				key="dotsActiveWidth"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				styleRule="--dot-active-height"
+				attrName="dotsActiveHeight"
+				key="dotsActiveHeight"
+				format="%spx"
+			/>
 		</>
 	)
 }

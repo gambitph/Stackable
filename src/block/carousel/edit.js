@@ -323,7 +323,7 @@ const Edit = props => {
 							<AdvancedToolbarControl
 								label={ sprintf( __( '%s Justify', i18n ), __( 'Button', i18n ) ) }
 								attribute="arrowJustify"
-								controls={ 'flex-horizontal-alt' }
+								controls="flex-horizontal-alt"
 								placeholder="space-between"
 								disabled={ attributes.arrowPosition === 'outside' && [ '', 'center' ].includes( attributes.arrowAlign ) ? [ 'flex-start', 'center', 'flex-end' ] : [] }
 							/>
@@ -345,7 +345,7 @@ const Edit = props => {
 								} }
 							/>
 							<AdvancedRangeControl
-								label={ __( 'Button Offset', i18n ) }
+								label={ sprintf( __( '%s Offset', i18n ), __( 'Button', i18n ) ) }
 								attribute="arrowButtonOffset"
 								sliderMin={ attributes.arrowPosition === 'outside' ? 0 : -100 }
 								sliderMax={ 100 }
@@ -428,6 +428,7 @@ const Edit = props => {
 								defaultValue={ true }
 							/>
 						</PanelAdvancedSettings>
+
 						<PanelAdvancedSettings
 							title={ __( 'Dots', i18n ) }
 							id="dots"
@@ -435,6 +436,71 @@ const Edit = props => {
 							checked={ attributes.showDots }
 							onChange={ showDots => setAttributes( { showDots } ) }
 						>
+
+							<AdvancedToolbarControl
+								label={ sprintf( __( '%s Justify', i18n ), __( 'Dots', i18n ) ) }
+								attribute="dotsJustify"
+								controls="horizontal"
+								placeholder="center"
+							/>
+							<AdvancedRangeControl
+								label={ sprintf( __( '%s Offset', i18n ), __( 'Dots', i18n ) ) }
+								attribute="dotsOffset"
+								sliderMin={ -100 }
+								sliderMax={ 100 }
+								responsive="all"
+								placeholder="12"
+							/>
+							<ControlSeparator />
+							<ColorPaletteControl
+								label={ sprintf( __( '%s Color', i18n ), __( 'Dot', i18n ) ) }
+								attribute="dotsColor"
+								hasTransparent={ true }
+								hover="all"
+							/>
+							<ColorPaletteControl
+								label={ sprintf( __( '%s Color', i18n ), __( 'Active Dot', i18n ) ) }
+								attribute="dotsActiveColor"
+								hasTransparent={ true }
+							/>
+							<AdvancedRangeControl
+								label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
+								attribute="dotsSize"
+								sliderMin={ 1 }
+								sliderMax={ 40 }
+								placeholder="8"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Border Radius', i18n ) }
+								attribute="dotsBorderRadius"
+								sliderMax={ attributes.dotsSize || 8 }
+								min={ 0 }
+								placeholder={ attributes.dotsSize || '8' }
+							/>
+							<AdvancedRangeControl
+								label={ sprintf( __( '%s Gap', i18n ), __( 'Dots', i18n ) ) }
+								attribute="dotsGap"
+								sliderMin={ 0 }
+								sliderMax={ 40 }
+								placeholder="16"
+								help={ ( attributes.dotsSize || 8 ) + ( attributes.dotsGap || 16 ) < 24 ? sprintf( __( 'To improve accessibility, the clickable area of the dots will not go below %s.', i18n ), '24px' ) : undefined }
+							/>
+							<ControlSeparator />
+							<AdvancedRangeControl
+								label={ sprintf( __( '%s Width', i18n ), __( 'Active Dot', i18n ) ) }
+								attribute="dotsActiveWidth"
+								sliderMin={ 1 }
+								sliderMax={ 40 }
+								placeholder="30"
+							/>
+							<AdvancedRangeControl
+								label={ sprintf( __( '%s Height', i18n ), __( 'Active Dot', i18n ) ) }
+								attribute="dotsActiveHeight"
+								sliderMin={ 1 }
+								sliderMax={ 40 }
+								placeholder={ attributes.dotsSize || '8' }
+							/>
+
 							<AdvancedToggleControl
 								label={ sprintf(
 									// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".

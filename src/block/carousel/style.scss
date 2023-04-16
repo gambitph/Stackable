@@ -7,6 +7,11 @@
 	--button-gap: 12px;
 	--button-height: 40px;
 	--button-width: 40px;
+	--dot-size: 8px;
+	--dot-gap: 16px;
+	--dot-active-width: 30px;
+	--dot-active-height: var(--dot-size, 8px);
+	--dot-offset: 12px;
 }
 .stk-block-carousel__slider {
 	display: flex;
@@ -22,6 +27,7 @@
 }
 .stk-block-carousel__slider-wrapper {
 	position: relative;
+	z-index: 1; // For when the dots overlap the slider.
 }
 .stk-block-carousel__button,
 .stk-block-carousel__dot {
@@ -50,11 +56,15 @@
 }
 .stk-block-carousel__dots {
 	min-height: 24px;
-	margin-top: 12px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	// gap: 8px;
+	gap: min(var(--dot-gap), calc(var(--dot-gap) - (24px - var(--dot-size))));
+	// Dot offset.
+	z-index: 2;
+	position: relative;
+	margin-top: max(var(--dot-offset), -24px);
+	top: min(0px, calc(var(--dot-offset) + 24px));
 	li {
 		list-style: none;
 	}
@@ -145,29 +155,31 @@
 	}
 }
 .stk-block-carousel__dot {
-	height: 24px;
-	width: 24px;
+	height: max(24px, var(--dot-size, 8px));
+	width: max(24px, var(--dot-size, 8px));
 	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	will-change: margin, width;
+	will-change: margin, margin-inline, width;
 	&::before {
 		position: absolute;
 		content: "";
-		width: 8px;
-		height: 8px;
-		border-radius: 8px;
+		width: var(--dot-size, 8px);
+		height: var(--dot-size, 8px);
+		border-radius: var(--dot-size, 8px);
 		background: #aaa;
 	}
 	&:hover::before {
 		background: #1b1b1b;
 	}
 	&.stk-block-carousel__dot--active {
-		margin-inline: 6px;
+		margin-inline: max(0px, calc((24px - var(--dot-size)) / 2));
+		width: var(--dot-active-width, 30px);
 		&::before {
 			background: #1b1b1b;
-			width: 30px;
+			height: var(--dot-active-height);
+			width: var(--dot-active-width, 30px);
 		}
 	}
 }

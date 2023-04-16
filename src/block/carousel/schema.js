@@ -46,14 +46,6 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
-			showDots: {
-				type: 'boolean',
-				default: true,
-			},
-			showDotsOnMobile: {
-				type: 'boolean',
-				default: true,
-			},
 			slidesToShow: {
 				type: 'number',
 				default: '',
@@ -69,6 +61,9 @@ export const attributes = ( version = VERSION ) => {
 				stkResponsive: true,
 			},
 
+			/**
+			 * Arrows.
+			 */
 			showArrows: {
 				type: 'boolean',
 				default: true,
@@ -146,6 +141,56 @@ export const attributes = ( version = VERSION ) => {
 				type: 'number',
 				default: '',
 				stkHover: true,
+			},
+
+			/**
+			 * Dots.
+			 */
+			showDots: {
+				type: 'boolean',
+				default: true,
+			},
+			dotsJustify: {
+				type: 'string',
+				default: '',
+			},
+			dotsOffset: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
+			dotsGap: {
+				type: 'number',
+				default: '',
+			},
+			dotsColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			dotsActiveColor: {
+				type: 'string',
+				default: '',
+			},
+			dotsSize: {
+				type: 'number',
+				default: '',
+			},
+			dotsBorderRadius: {
+				type: 'number',
+				default: '',
+			},
+			dotsActiveWidth: {
+				type: 'number',
+				default: '',
+			},
+			dotsActiveHeight: {
+				type: 'number',
+				default: '',
+			},
+			showDotsOnMobile: {
+				type: 'boolean',
+				default: true,
 			},
 		},
 		versionAdded: '3.0.0',
