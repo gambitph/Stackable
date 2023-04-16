@@ -15,6 +15,7 @@ import {
 	useGeneratedCss,
 	CustomCSS,
 	CustomAttributes,
+	Icon,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -92,6 +93,7 @@ const Edit = props => {
 				key={ index }
 				onClick={ () => setActiveTab( index + 1 ) }
 			>
+				<Icon />
 				<RichText
 					key={ index }
 					tagName="p"
@@ -188,6 +190,15 @@ const Edit = props => {
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
+					<Icon.InspectorControls
+						hasColor={ true }
+						hasGradient={ false }
+						hasShape={ false }
+						hasBackgroundShape={ false }
+						hasIconGap={ true }
+						hasIconPosition={ true }
+						defaultValue=""
+					/>
 					<BlockDiv.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-tab-labels" />

@@ -1,7 +1,7 @@
 .stk-block-tab-labels__wrapper {
 	display: flex;
 	flex-wrap: wrap;
-	width: max-content;
+	// width: max-content;
 	.tabs-tabs {
 		margin: 0;
 	}
@@ -13,6 +13,12 @@
 	cursor: pointer;
 	padding: 10px 20px 10px 20px;
 	font-size: 18px;
+	display: flex;
+	align-items: center;
+
+	> p {
+		margin: 0;
+	}
 }
 
 .stk-block-tabs .block-editor-inner-blocks  .stk-block-tab-labels.stk-block {
@@ -21,5 +27,10 @@
 
 .stk-tabs__add-tab {
 	background-color: #979494;
+	border: 1px solid;
+	margin: 10px;
+	cursor: pointer;
+	padding: 10px 20px 10px 20px;
+	font-size: 18px;
 }
 

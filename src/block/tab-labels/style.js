@@ -4,6 +4,7 @@
 import {
 	BlockDiv,
 	Advanced,
+	Icon,
 } from '~stackable/block-components'
 import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
@@ -65,6 +66,7 @@ export const TabLabelStyle = memo( props => {
 		<>
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
+			<Icon.Style { ...props } />
 			<Styles { ...props } />
 		</>
 	)
