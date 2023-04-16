@@ -61,9 +61,7 @@ class _StackableCarousel {
 			const dotEl = document.createElement( 'button' )
 			listEl.setAttribute( 'role', 'listitem' )
 			dotEl.classList.add( 'stk-block-carousel__dot' )
-			// dotEl.setAttribute('role', 'button')
 			dotEl.setAttribute( 'aria-label', dotLabel.replace( '%d', ( i + 1 ) ) )
-			// dotEl.setAttribute('tabindex', '0')
 			if ( this.currentSlide === i + 1 ) {
 				dotEl.classList.add( 'stk-block-carousel__dot--active' )
 			}
@@ -200,7 +198,7 @@ class _StackableCarousel {
 	setSlideToVisible = slide => {
 		const slideEl = this.slideEls[ slide - 1 ]
 		// Remove all tabindex="-1" on all input elements
-		slideEl.querySelectorAll( 'button, a, input' ).forEach( el => {
+		slideEl.querySelectorAll( 'button, a, input, [role="button"]' ).forEach( el => {
 			el.removeAttribute( 'tabindex' )
 		} )
 		// Set aria-hidden="false"
@@ -210,7 +208,7 @@ class _StackableCarousel {
 	setSlideToHide = slide => {
 		const slideEl = this.slideEls[ slide - 1 ]
 		// Set all input elements to tabindex="-1"
-		slideEl.querySelectorAll( 'button, a, input' ).forEach( el => {
+		slideEl.querySelectorAll( 'button, a, input, [role="button"]' ).forEach( el => {
 			el.setAttribute( 'tabindex', '-1' )
 		} )
 		// Set aria-hidden="true"
