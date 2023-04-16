@@ -45,6 +45,9 @@ class _StackableCarousel {
 	}
 
 	updateDots = () => {
+		if ( ! this.dotsEl ) {
+			return
+		}
 		this.dotEls = []
 		this.dotsEl.innerHTML = ''
 
