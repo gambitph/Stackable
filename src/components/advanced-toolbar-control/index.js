@@ -65,6 +65,29 @@ const FLEX_HORIZONTAL_ALIGN_OPTIONS = [
 	},
 ]
 
+const FLEX_HORIZONTAL_ALIGN_OPTIONS_ALT = [
+	{
+		value: 'flex-start',
+		title: __( 'Start', i18n ),
+		icon: <SVGIconLeft />,
+	},
+	{
+		value: 'center',
+		title: __( 'Center', i18n ),
+		icon: <SVGIconHorizontalCenter />,
+	},
+	{
+		value: 'flex-end',
+		title: __( 'End', i18n ),
+		icon: <SVGIconRight />,
+	},
+	{
+		value: 'space-between',
+		title: __( 'Space Between', i18n ),
+		icon: <SVGIconSpaceBetween />,
+	},
+]
+
 const FLEX_VERTICAL_ALIGN_OPTIONS = [
 	{
 		value: 'flex-start',
@@ -164,6 +187,7 @@ const VERTICAL_ALIGN_OPTIONS = [
 
 export const CONTROLS = applyFilters( 'stackable.toolbar-control.controls', {
 	'flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
+	'flex-horizontal-alt': FLEX_HORIZONTAL_ALIGN_OPTIONS_ALT,
 	'flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
 	'flex-justify-vertical': FLEX_VERTICAL_JUSTIFY_OPTIONS,
 	horizontal: HORIZONTAL_ALIGN_OPTIONS,
@@ -213,6 +237,7 @@ const AdvancedToolbarControl = props => {
 							isPrimary: value ? value === option.value : props.placeholder === option.value,
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
+							disabled: props.disabled.includes( option.value ),
 						}
 						return <Button key={ option.value } { ...controlProps } />
 					} )
@@ -246,6 +271,7 @@ AdvancedToolbarControl.defaultProps = {
 	value: undefined,
 	onChange: undefined,
 	placeholder: '',
+	disabled: [],
 }
 
 export default memo( AdvancedToolbarControl, isEqual )

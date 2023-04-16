@@ -56,3 +56,10 @@
 		display: none;
 	}
 }
+
+// The div before the SVG should not affect the styles.
+.stk-block-carousel__button > div {
+	height: fit-content;
+	width: fit-content;
+	display: flex;
+}

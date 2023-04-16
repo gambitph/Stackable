@@ -26,6 +26,8 @@ import {
 import { InnerBlocks } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
+import { SvgIcon } from '~stackable/components'
+import { defaultIconNext, defaultIconPrev } from './schema'
 
 export const Save = props => {
 	const {
@@ -48,6 +50,10 @@ export const Save = props => {
 			'stk--hide-others': attributes.carouselType === 'fade' && attributes.fadeOutOtherSlides,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
+
+			'stk--arrows-outside': attributes.arrowPosition === 'outside',
+			[ `stk--arrows-justify-${ attributes.arrowJustify || 'space-between' }` ]: attributes.arrowJustify || 'space-between',
+			[ `stk--arrows-align-${ attributes.arrowAlign || 'center' }` ]: attributes.arrowAlign || 'center',
 		},
 	] )
 
@@ -77,12 +83,20 @@ export const Save = props => {
 					</div>
 					{ attributes.showArrows && (
 						<div className="stk-block-carousel__buttons">
-							<button className="stk-block-carousel__button stk-block-carousel__button__prev" aria-label="Previous item">{ '<' }</button>
-							<button className="stk-block-carousel__button stk-block-carousel__button__next" aria-label="Next item">{ '>' }</button>
+							<button className="stk-block-carousel__button stk-block-carousel__button__prev" aria-label="Previous item">
+								<SvgIcon.Content
+									value={ attributes.arrowIconPrev || defaultIconPrev }
+								/>
+							</button>
+							<button className="stk-block-carousel__button stk-block-carousel__button__next" aria-label="Next item">
+								<SvgIcon.Content
+									value={ attributes.arrowIconNext || defaultIconNext }
+								/>
+							</button>
 						</div>
 					) }
 				</div>
-				{ attributes.showDots && <div className="stk-block-carousel__dots" role="list" data-label="Slide %d"></div> }
+				{ attributes.showDots && <div className="stk-block-carousel__dots" role="list" data-label="Slide %%d"></div> }
 			</Separator.Content>
 		</BlockDiv.Content>
 	)

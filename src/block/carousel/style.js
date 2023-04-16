@@ -48,6 +48,114 @@ const Styles = props => {
 				format="%spx"
 				responsive="all"
 			/>
+
+			{ /* Arrows */ }
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__buttons"
+				styleRule="justifyContent"
+				attrName="arrowJustify"
+				key="arrowJustify"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__buttons"
+				styleRule="alignItems"
+				attrName="arrowAlign"
+				key="arrowAlign"
+				responsive="all"
+				enabledCallback={ getAttribute => getAttribute( 'arrowPosition' ) !== 'outside' }
+				dependencies={ [ 'arrowPosition' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				styleRule="--button-offset"
+				attrName="arrowButtonOffset"
+				key="arrowButtonOffset"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				styleRule="--button-gap"
+				attrName="arrowButtonGap"
+				key="arrowButtonGap"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__button"
+				hoverSelector=".stk-block-carousel__button:hover"
+				styleRule="background"
+				attrName="arrowButtonColor"
+				key="arrowButtonColor"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__button"
+				hoverSelector=".stk-block-carousel__button:hover"
+				styleRule="color"
+				attrName="arrowIconColor"
+				key="arrowIconColor"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__button"
+				styleRule="--button-width"
+				attrName="arrowWidth"
+				key="arrowWidth"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__button"
+				styleRule="--button-height"
+				attrName="arrowHeight"
+				key="arrowHeight"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__button"
+				styleRule="borderRadius"
+				attrName="arrowBorderRadius"
+				key="arrowBorderRadius"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__button svg"
+				styleRule="width"
+				attrName="arrowIconSize"
+				key="arrowIconSize-width"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__button svg"
+				styleRule="height"
+				attrName="arrowIconSize"
+				key="arrowIconSize-height"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-carousel__button"
+				hoverSelector=".stk-block-carousel__button:hover"
+				styleRule="opacity"
+				attrName="arrowOpacity"
+				key="arrowOpacity"
+				hover="all"
+			/>
+
 		</>
 	)
 }

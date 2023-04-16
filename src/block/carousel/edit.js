@@ -19,6 +19,9 @@ import {
 	AdvancedToggleControl,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
+	IconControl,
+	SvgIcon,
+	ColorPaletteControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -56,6 +59,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { __, sprintf } from '@wordpress/i18n'
 import { range } from 'lodash'
+import { defaultIconNext, defaultIconPrev } from './schema'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -96,6 +100,10 @@ const Edit = props => {
 			'stk--hide-others': carouselType === 'fade' && attributes.fadeOutOtherSlides,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
+
+			'stk--arrows-outside': attributes.arrowPosition === 'outside',
+			[ `stk--arrows-justify-${ attributes.arrowJustify || 'space-between' }` ]: attributes.arrowJustify || 'space-between',
+			[ `stk--arrows-align-${ attributes.arrowAlign || 'center' }` ]: attributes.arrowAlign || 'center',
 		},
 	] )
 
@@ -233,6 +241,7 @@ const Edit = props => {
 							sliderMax={ 10 }
 						/>
 						<AdvancedToolbarControl
+							label={ __( 'Carousel Type', i18n ) }
 							controls={ [
 								{
 									value: '',
@@ -284,6 +293,127 @@ const Edit = props => {
 							checked={ attributes.showArrows }
 							onChange={ showArrows => setAttributes( { showArrows } ) }
 						>
+							<IconControl
+								label={ __( 'Previous Slide Icon', i18n ) }
+								value={ attributes.arrowIconPrev }
+								defaultValue={ defaultIconPrev }
+								onChange={ arrowIconPrev => setAttributes( { arrowIconPrev } ) }
+							/>
+							<IconControl
+								label={ __( 'Next Slide Icon', i18n ) }
+								value={ attributes.arrowIconNext }
+								defaultValue={ defaultIconNext }
+								onChange={ arrowIconNext => setAttributes( { arrowIconNext } ) }
+							/>
+							<AdvancedToolbarControl
+								label={ __( 'Arrow Position', i18n ) }
+								attribute="arrowPosition"
+								controls={ [
+									{ value: '', title: __( 'Inside', i18n ) },
+									{ value: 'outside', title: __( 'Outside', i18n ) },
+								] }
+								onChange={ arrowPosition => {
+									setAttributes( {
+										arrowPosition,
+										arrowJustify: '',
+										arrowAlign: '',
+									} )
+								} }
+							/>
+							<AdvancedToolbarControl
+								label={ sprintf( __( '%s Justify', i18n ), __( 'Button', i18n ) ) }
+								attribute="arrowJustify"
+								controls={ 'flex-horizontal-alt' }
+								placeholder="space-between"
+								disabled={ attributes.arrowPosition === 'outside' && [ '', 'center' ].includes( attributes.arrowAlign ) ? [ 'flex-start', 'center', 'flex-end' ] : [] }
+							/>
+							<AdvancedToolbarControl
+								label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
+								attribute="arrowAlign"
+								controls={ 'vertical' }
+								placeholder="center"
+								disabled={ attributes.arrowPosition === 'outside' && [ 'flex-start', 'center', 'flex-end' ].includes( attributes.arrowJustify ) ? [ 'center' ] : [] }
+								onChange={ arrowAlign => {
+									if ( ! arrowAlign && attributes.arrowPosition === 'outside' ) {
+										setAttributes( {
+											arrowAlign,
+											arrowJustify: '',
+										} )
+									} else {
+										setAttributes( { arrowAlign } )
+									}
+								} }
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Button Offset', i18n ) }
+								attribute="arrowButtonOffset"
+								sliderMin={ attributes.arrowPosition === 'outside' ? 0 : -100 }
+								sliderMax={ 100 }
+								responsive="all"
+								placeholder="12"
+							/>
+							{ [ 'flex-start', 'center', 'flex-end' ].includes( attributes.arrowJustify ) &&
+								<AdvancedRangeControl
+									label={ __( 'Button Gap', i18n ) }
+									attribute="arrowButtonGap"
+									min={ 0 }
+									sliderMax={ 100 }
+									responsive="all"
+									placeholder="12"
+								/>
+							}
+							<ControlSeparator />
+							<ColorPaletteControl
+								label={ sprintf( __( '%s Color', i18n ), __( 'Button', i18n ) ) }
+								attribute="arrowButtonColor"
+								hasTransparent={ true }
+								hover="all"
+							/>
+							<ColorPaletteControl
+								label={ sprintf( __( '%s Color', i18n ), __( 'Icon', i18n ) ) }
+								attribute="arrowIconColor"
+								hover="all"
+							/>
+							<AdvancedRangeControl
+								label={ sprintf( __( '%s Width', i18n ), __( 'Button', i18n ) ) }
+								attribute="arrowWidth"
+								sliderMax={ 200 }
+								min={ 0 }
+								responsive="all"
+								placeholder="40"
+							/>
+							<AdvancedRangeControl
+								label={ sprintf( __( '%s Height', i18n ), __( 'Button', i18n ) ) }
+								attribute="arrowHeight"
+								sliderMax={ 200 }
+								min={ 0 }
+								responsive="all"
+								placeholder="40"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Border Radius', i18n ) }
+								attribute="arrowBorderRadius"
+								sliderMax={ Math.max( attributes.arrowHeight, attributes.arrowWidth, 40 ) }
+								min={ 0 }
+								placeholder="40"
+							/>
+							<AdvancedRangeControl
+								label={ sprintf( __( '%s Size', i18n ), __( 'Icon', i18n ) ) }
+								attribute="arrowIconSize"
+								sliderMax={ 100 }
+								min={ 0 }
+								responsive="all"
+								placeholder="16"
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Opacity', i18n ) }
+								attribute="arrowOpacity"
+								hover="all"
+								min={ 0 }
+								max={ 1 }
+								step={ 0.01 }
+								placeholder="0.9"
+							/>
 							<AdvancedToggleControl
 								label={ sprintf(
 									// Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
@@ -385,13 +515,15 @@ const Edit = props => {
 							<div className="stk-block-carousel__buttons">
 								<button
 									className="stk-block-carousel__button stk-block-carousel__button__prev"
-									onClick={ prevSlide }>
-									{ '<' }
+									onClick={ prevSlide }
+								>
+									<SvgIcon value={ attributes.arrowIconPrev } />
 								</button>
 								<button
 									className="stk-block-carousel__button stk-block-carousel__button__next"
-									onClick={ nextSlide }>
-									{ '>' }
+									onClick={ nextSlide }
+								>
+									<SvgIcon value={ attributes.arrowIconNext } />
 								</button>
 							</div>
 						) }
