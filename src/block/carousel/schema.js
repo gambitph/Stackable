@@ -50,6 +50,14 @@ export const attributes = ( version = VERSION ) => {
 				type: 'number',
 				default: '',
 			},
+			autoplay: {
+				type: 'boolean',
+				default: true,
+			},
+			autoplaySpeed: {
+				type: 'number',
+				default: '',
+			},
 			slidesToShow: {
 				type: 'number',
 				default: '',

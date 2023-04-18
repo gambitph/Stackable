@@ -77,7 +77,11 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			<Separator.Content attributes={ attributes }>
 				<div className={ contentClassNames }>
-					<div className="stk-block-carousel__slider" role="list">
+					<div
+						className="stk-block-carousel__slider"
+						role="list"
+						data-autoplay={ attributes.autoplay ? ( attributes.autoplaySpeed || '4000' ) : undefined }
+					>
 						<InnerBlocks.Content />
 					</div>
 					{ attributes.showArrows && (

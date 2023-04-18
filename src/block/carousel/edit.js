@@ -133,7 +133,7 @@ const Edit = props => {
 	}
 
 	const nextSlide = ev => {
-		ev.preventDefault()
+		ev?.preventDefault()
 
 		let newSlide = activeSlide + 1
 		if ( newSlide > maxSlides ) {
@@ -228,6 +228,43 @@ const Edit = props => {
 		}
 	}, [ maxSlides, activeSlide ] )
 
+	/**
+	 * Autoplay
+	 */
+	// We need to keep this nextSlide function in a ref so we can always call
+	// it.
+	const nextSlideRef = useRef()
+	nextSlideRef.current = nextSlide
+
+	useEffect( () => {
+		let interval
+
+		if ( attributes.autoplay ) {
+			interval = setInterval( () => {
+				nextSlideRef.current()
+			}, attributes.autoplaySpeed || 4000 )
+		}
+
+		const onMouseEnter = () => {
+			clearInterval( interval )
+		}
+		const onMouseLeave = () => {
+			if ( attributes.autoplay ) {
+				interval = setInterval( () => {
+					nextSlideRef.current()
+				}, attributes.autoplaySpeed || 4000 )
+			}
+		}
+
+		sliderRef.current.parentElement.addEventListener( 'mouseenter', onMouseEnter )
+		sliderRef.current.parentElement.addEventListener( 'mouseleave', onMouseLeave )
+		return () => {
+			clearInterval( interval )
+			sliderRef.current.parentElement.removeEventListener( 'mouseenter', onMouseEnter )
+			sliderRef.current.parentElement.removeEventListener( 'mouseleave', onMouseLeave )
+		}
+	}, [ attributes.autoplay, attributes.autoplaySpeed ] )
+
 	return (
 		<>
 			{ isSelected && (
@@ -281,6 +318,25 @@ const Edit = props => {
 								min={ 0 }
 								step={ 0.1 }
 								placeholder="0.3"
+							/>
+						) }
+						<ControlSeparator />
+
+						<AdvancedToggleControl
+							label={ __( 'Autoplay', i18n ) }
+							checked={ attributes.autoplay }
+							onChange={ autoplay => setAttributes( { autoplay } ) }
+							defaultValue={ true }
+						/>
+						{ attributes.autoplay && (
+							<AdvancedRangeControl
+								label={ __( 'Speed', i18n ) }
+								attribute="autoplaySpeed"
+								sliderMax={ 6000 }
+								sliderMin={ 1000 }
+								min={ 0 }
+								step={ 100 }
+								placeholder="4000"
 							/>
 						) }
 						<ControlSeparator />

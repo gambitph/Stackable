@@ -20,7 +20,6 @@ class _StackableCarousel {
 		this.prevEl = this.el.querySelector( '.stk-block-carousel__button__prev' )
 		this.nextEl = this.el.querySelector( '.stk-block-carousel__button__next' )
 		this.dotsEl = this.el.querySelector( '.stk-block-carousel__dots' )
-		// this.dotEls = Array.from( this.el.querySelectorAll('.stk-block-carousel__dot') || [] )
 
 		// Add a live region to announce the slide number when using the previous/next buttons
 		this.liveregion = document.createElement( 'div' )
@@ -41,7 +40,7 @@ class _StackableCarousel {
 
 	initProperties = () => {
 		this.slidesToShow = this.type === 'slide' ? parseInt( getComputedStyle( this.el ).getPropertyValue( '--slides-to-show' ), 10 ) : 1
-		this.autoplay = this.el.dataset.autoplay
+		this.autoplay = this.sliderEl.dataset.autoplay
 		this.updateDots()
 	}
 
