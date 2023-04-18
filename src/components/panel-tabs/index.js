@@ -22,7 +22,7 @@ const TABS = [
 		value: 'layout',
 		title: __( 'Layout', i18n ),
 		label: __( 'Layout Tab', i18n ),
-		icon: 'layout',
+		icon: 'align-left',
 	},
 	{
 		value: 'style',
@@ -34,7 +34,7 @@ const TABS = [
 		value: 'advanced',
 		title: __( 'Advanced', i18n ),
 		label: __( 'Advanced Tab', i18n ),
-		icon: 'ellipsis',
+		icon: 'admin-generic',
 	},
 ]
 
