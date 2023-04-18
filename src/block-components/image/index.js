@@ -57,6 +57,7 @@ export const Image = props => {
 			imageHeightUnit: attributes.imageHeightUnit,
 			imageHeightUnitTablet: attributes.imageHeightUnitTablet,
 			imageHeightUnitMobile: attributes.imageHeightUnitMobile,
+			imageHasLightbox: attributes.imageHasLightbox,
 			imageShape: attributes.imageShape,
 			imageShapeStretch: attributes.imageShapeStretch,
 			imageShadow: attributes.imageShadow,
@@ -106,6 +107,7 @@ export const Image = props => {
 		shadow={ attributes.imageShadow }
 
 		hasGradientOverlay={ hasHoverOverlay }
+		hasLightbox={ attributes.imageHasLightbox }
 
 		defaultWidth={ props.defaultWidth }
 		defaultHeight={ props.defaultHeight }
@@ -157,6 +159,7 @@ Image.Content = props => {
 		shadow={ attributes.imageShadow }
 
 		hasGradientOverlay={ hasHoverOverlay }
+		hasLightbox={ attributes.imageHasLightbox }
 
 		{ ...propsToPass }
 	/>

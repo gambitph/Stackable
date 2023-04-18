@@ -39,7 +39,7 @@ export const Edit = props => {
 				checked={ props.hasToggle ? hasLink : undefined }
 				onChange={ props.hasToggle ? onChange : undefined }
 			>
-				<LinkControls attrNameTemplate="link%s" />
+				<LinkControls attrNameTemplate="link%s" hasLightbox />
 			</PanelAdvancedSettings>
 		</Tab>
 	)

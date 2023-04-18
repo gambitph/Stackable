@@ -49,6 +49,8 @@ const getImageWrapperClasses = props => {
 		[ `stk--shadow-${ props.shadow }` ]: ! props.shape && props.shadow,
 
 		'stk-img--gradient-overlay': props.hasGradientOverlay,
+
+		'stk--has-lightbox': props.hasLightbox,
 	} )
 }
 

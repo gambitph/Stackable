@@ -63,6 +63,7 @@ const Controls = props => {
 			imageHeightUnit: attributes.imageHeightUnit,
 			imageWidth: attributes.imageWidth,
 			imageHeight: attributes.imageHeight,
+			imageHasLightbox: attributes.imageHasLightbox,
 			imageSize: attributes.imageSize,
 			imageAlt: attributes.imageAlt,
 			imageOverlayColorType: attributes.imageOverlayColorType,
@@ -168,6 +169,13 @@ const Controls = props => {
 					allowReset={ true }
 					placeholder=""
 					responsive="all"
+				/>
+			}
+
+			{ props.hasLightbox &&
+				<AdvancedToggleControl
+					label={ __( 'Open Image in Lightbox', i18n ) }
+					attribute="imageHasLightbox"
 				/>
 			}
 
