@@ -51,7 +51,7 @@ class _StackableCarousel {
 		this.dotEls = []
 		this.dotsEl.innerHTML = ''
 
-		const dotLabel = this.dotsEl.getAttribute( 'data-label' )
+		const dotLabel = this.dotsEl.dataset.label
 		this.slideEls.forEach( ( slideEl, i ) => {
 			if ( i >= this.slideEls.length - this.slidesToShow + 1 ) {
 				return
@@ -61,7 +61,7 @@ class _StackableCarousel {
 			const dotEl = document.createElement( 'button' )
 			listEl.setAttribute( 'role', 'listitem' )
 			dotEl.classList.add( 'stk-block-carousel__dot' )
-			dotEl.setAttribute( 'aria-label', dotLabel.replace( '%d', ( i + 1 ) ) )
+			dotEl.setAttribute( 'aria-label', dotLabel.replace( /%+d/, ( i + 1 ) ) )
 			if ( this.currentSlide === i + 1 ) {
 				dotEl.classList.add( 'stk-block-carousel__dot--active' )
 			}
@@ -158,7 +158,12 @@ class _StackableCarousel {
 		this.setDotActive( slide )
 		this.currentSlide = slide
 
-		this.liveregion.textContent = 'Item ' + slide + ' of ' + this.maxSlides()
+		try {
+			this.liveregion.textContent = this.sliderEl.dataset.labelSlideOf.replace( /%+d/, slide ).replace( /%+d/, this.maxSlides() )
+		} catch ( err ) {
+			// eslint-disable-next-line no-console
+			console.error( 'Carousel Slide N of N accessibility label is of invalid format' )
+		}
 
 		clearTimeout( this.tempDisableOnScroll )
 		this.tempDisableOnScroll = setTimeout( () => {

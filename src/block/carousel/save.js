@@ -81,17 +81,18 @@ export const Save = props => {
 						className="stk-block-carousel__slider"
 						role="list"
 						data-autoplay={ attributes.autoplay ? ( attributes.autoplaySpeed || '4000' ) : undefined }
+						data-label-slide-of={ attributes.ariaLabelPrev || 'Slide %%d of %%d' }
 					>
 						<InnerBlocks.Content />
 					</div>
 					{ attributes.showArrows && (
 						<div className="stk-block-carousel__buttons">
-							<button className="stk-block-carousel__button stk-block-carousel__button__prev" aria-label="Previous item">
+							<button className="stk-block-carousel__button stk-block-carousel__button__prev" aria-label={ attributes.ariaLabelPrev || 'Previous slide' }>
 								<SvgIcon.Content
 									value={ attributes.arrowIconPrev || defaultIconPrev }
 								/>
 							</button>
-							<button className="stk-block-carousel__button stk-block-carousel__button__next" aria-label="Next item">
+							<button className="stk-block-carousel__button stk-block-carousel__button__next" aria-label={ attributes.ariaLabelNext || 'Next slide' }>
 								<SvgIcon.Content
 									value={ attributes.arrowIconNext || defaultIconNext }
 								/>
@@ -99,7 +100,7 @@ export const Save = props => {
 						</div>
 					) }
 				</div>
-				{ attributes.showDots && <div className="stk-block-carousel__dots" role="list" data-label="Slide %%d"></div> }
+				{ attributes.showDots && <div className="stk-block-carousel__dots" role="list" data-label={ attributes.ariaLabelSlide || 'Slide %%d' }></div> }
 			</Separator.Content>
 		</BlockDiv.Content>
 	)

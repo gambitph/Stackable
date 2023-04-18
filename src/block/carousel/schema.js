@@ -200,6 +200,26 @@ export const attributes = ( version = VERSION ) => {
 				type: 'boolean',
 				default: true,
 			},
+
+			/**
+			 * Accessibility
+			 */
+			ariaLabelPrev: {
+				type: 'string',
+				default: '',
+			},
+			ariaLabelNext: {
+				type: 'string',
+				default: '',
+			},
+			ariaLabelSlide: {
+				type: 'string',
+				default: '',
+			},
+			ariaLabelSlideOf: {
+				type: 'string',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

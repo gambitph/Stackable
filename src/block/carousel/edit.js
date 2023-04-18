@@ -22,6 +22,8 @@ import {
 	IconControl,
 	SvgIcon,
 	ColorPaletteControl,
+	InspectorAdvancedControls,
+	AdvancedTextControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -577,6 +579,54 @@ const Edit = props => {
 					<BlockDiv.InspectorControls />
 					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
+
+					<InspectorAdvancedControls>
+						<PanelAdvancedSettings
+							title={ __( 'Accessibility', i18n ) }
+							id="accessibility"
+						>
+							<AdvancedTextControl
+								label={ sprintf(
+									// Translators: %s is the name of the setting. e.g. "Previous Slide".
+									__( '%s label', i18n ),
+									__( 'Previous slide', i18n )
+								) }
+								attribute="ariaLabelPrev"
+								placeholder="Previous slide"
+							/>
+							<AdvancedTextControl
+								label={ sprintf(
+									// Translators: %s is the name of the setting. e.g. "Previous Slide".
+									__( '%s label', i18n ),
+									__( 'Next slide', i18n )
+								) }
+								attribute="ariaLabelNext"
+								placeholder="Next slide"
+							/>
+							<AdvancedTextControl
+								label={ sprintf(
+									// Translators: %s is the name of the setting. e.g. "Previous Slide".
+									__( '%s label', i18n ),
+									__( 'Slide', i18n )
+								) }
+								attribute="ariaLabelSlide"
+								placeholder="Slide %%d"
+								help={ __( 'Use %%d to show the slide number.', i18n ) }
+							/>
+							<AdvancedTextControl
+								label={ sprintf(
+									// Translators: %s is the name of the setting. e.g. "Previous Slide".
+									__( '%s label', i18n ),
+									// Translators: This is for the "Slide 1 of 3" option label.
+									__( 'Slide N of N', i18n )
+								) }
+								attribute="ariaLabelSlideOf"
+								placeholder="Slide %%d of %%d"
+								help={ __( 'Use two %%d to show the slide number and the total slides. e.g. Slide 1 of 3.', i18n ) }
+							/>
+						</PanelAdvancedSettings>
+					</InspectorAdvancedControls>
+
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
