@@ -53,7 +53,7 @@ const Save = props => {
 	let progressValue = attributes.progressValue
 	if ( attributes.progressValue === '' ) {
 		progressValue = DEFAULT_PROGRESS
-	} else if ( attributes.progressValue.match( /^[\d.]+$/ ) ) {
+	} else if ( attributes.progressValue?.match( /^[\d.]+$/ ) ) {
 		progressValue = parseFloat( progressValue )
 	}
 
