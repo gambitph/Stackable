@@ -7,6 +7,7 @@ import { TabLabelStyle } from './style'
 import {
 	BlockDiv,
 	getResponsiveClasses,
+	Icon,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -38,10 +39,12 @@ const Save = props => {
 			<button className="stk-block-tabs__tab stk-tabs__tab-desktop"
 				key={ index }
 			>
+				{ attributes.iconPosition !== 'right' && <Icon.Content attributes={ attributes } /> }
 				<RichText.Content
 					tagName="p"
 					value={ tab.label }
 				/>
+				{ attributes.iconPosition === 'right' && <Icon.Content attributes={ attributes } /> }
 			</button>
 		 )
 	} )
@@ -53,9 +56,8 @@ const Save = props => {
 			attributes={ attributes }
 		>
 			<TabLabelStyle.Content
-				version={ VERSION }
-				blockState={ props.blockState }
-				clientId={ props.clientId }
+				version={ props.version }
+				attributes={ attributes }
 			/>
 			<div className="stk-block-tab-labels__wrapper">
 				{ tabs }
