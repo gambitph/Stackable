@@ -97,7 +97,6 @@ const Edit = props => {
 		{
 			'stk--is-slide': carouselType === 'slide',
 			'stk--is-fade': carouselType === 'fade',
-			'stk--hide-others': carouselType === 'fade' && attributes.fadeOutOtherSlides,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 
@@ -273,14 +272,6 @@ const Edit = props => {
 									responsive="all"
 								/>
 							</>
-						) }
-						{ carouselType === 'fade' && (
-							<AdvancedToggleControl
-								label={ __( 'Fade out previous slide', i18n ) }
-								attribute="fadeOutOtherSlides"
-								help={ __( 'Useful for backgroundless slides. May cause unwanted white fadeout on slides with a background', i18n ) }
-								defaultValue={ true }
-							/>
 						) }
 						<ControlSeparator />
 					</InspectorLayoutControls>

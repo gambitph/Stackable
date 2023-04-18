@@ -51,10 +51,6 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkResponsive: true,
 			},
-			fadeOutOtherSlides: {
-				type: 'boolean',
-				default: true,
-			},
 			slideColumnGap: {
 				type: 'number',
 				default: '',

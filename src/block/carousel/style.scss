@@ -12,6 +12,7 @@
 	--dot-active-width: 30px;
 	--dot-active-height: var(--dot-size, 8px);
 	--dot-offset: 12px;
+	--transition-duration: 0.3s;
 }
 .stk-block-carousel__slider {
 	display: flex;
@@ -77,6 +78,12 @@
 		flex: 1 0 100%;
 		opacity: 1;
 		height: auto;
+		transition-duration: calc(var(--transition-duration, 0.3s) * 1.15);
+		transition-delay: calc(var(--transition-duration, 0.3s) * 0.3);
+		&.stk-block-carousel__slide--active {
+			transition-duration: var(--transition-duration, 0.3s);
+			transition-delay: 0s;
+		}
 		&:not(:first-child) {
 			position: relative;
 			left: 0;

@@ -13,7 +13,6 @@ class _StackableCarousel {
 		this.currentZIndex = 1
 		this.wrapper = this.el.querySelector( '.stk-block-carousel__slider-wrapper' )
 		this.type = this.el.classList.contains( 'stk--is-fade' ) ? 'fade' : 'slide'
-		this.hideOthers = this.el.classList.contains( 'stk--hide-others' )
 		this.sliderEl = this.el.querySelector( '.stk-block-carousel__slider' )
 		this.slideEls = Array.from( this.sliderEl.children )
 
@@ -29,6 +28,8 @@ class _StackableCarousel {
 		this.liveregion.setAttribute( 'aria-atomic', 'true' )
 		this.liveregion.setAttribute( 'class', 'liveregion stk--hidden' )
 		this.wrapper.appendChild( this.liveregion )
+
+		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
 
 		this.initProperties()
 		this.addEventListeners()
@@ -134,13 +135,14 @@ class _StackableCarousel {
 			return
 		}
 
+		this.slideEls[ this.currentSlide - 1 ].classList.remove( 'stk-block-carousel__slide--active' )
+		this.slideEls[ slide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
+
 		if ( this.type === 'slide' ) {
 			this.sliderEl.scrollLeft = this.slideEls[ slide - 1 ].offsetLeft
 		} else { // fade
-			if ( this.hideOthers ) {
-				const slideEl = this.slideEls[ this.currentSlide - 1 ]
-				slideEl.style.opacity = 0
-			}
+			const slidePrevEl = this.slideEls[ this.currentSlide - 1 ]
+			slidePrevEl.style.opacity = 0
 
 			const slideEl = this.slideEls[ slide - 1 ]
 			slideEl.style.zIndex = ++this.currentZIndex

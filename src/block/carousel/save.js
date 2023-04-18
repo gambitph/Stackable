@@ -47,7 +47,6 @@ export const Save = props => {
 		{
 			'stk--is-slide': attributes.carouselType === '',
 			'stk--is-fade': attributes.carouselType === 'fade',
-			'stk--hide-others': attributes.carouselType === 'fade' && attributes.fadeOutOtherSlides,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 
