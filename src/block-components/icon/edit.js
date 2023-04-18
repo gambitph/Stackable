@@ -44,6 +44,7 @@ export const Edit = props => {
 		responsive = 'all',
 		hover = 'all',
 		defaultValue,
+		blockName = '',
 	} = props
 
 	const PremiumColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.color-controls', null ), [] )
@@ -149,10 +150,12 @@ export const Edit = props => {
 				<AdvancedSelectControl
 					label={ __( 'Icon Position', i18n ) }
 					attribute="iconPosition"
-					options={ [
-						{ value: '', label: __( 'Left', i18n ) },
-						{ value: 'right', label: __( 'Right', i18n ) },
-					] }
+					options={
+						applyFilters( 'stackable.icon-position-options', [
+							{ value: '', label: __( 'Left', i18n ) },
+							{ value: 'right', label: __( 'Right', i18n ) },
+						], blockName )
+					}
 				/>
 			) }
 
