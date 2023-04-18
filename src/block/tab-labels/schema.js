@@ -13,6 +13,9 @@ import {
 	Separator,
 	Transform,
 	Icon,
+	addBackgroundAttributes,
+	addSizeAttributes,
+	addBorderAttributes,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { i18n, version as VERSION } from 'stackable'
@@ -62,6 +65,9 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Separator.addAttributes( attrObject )
 	Icon.addAttributes( attrObject )
+	addBackgroundAttributes( attrObject, 'tabLabels%s' )
+	addSizeAttributes( attrObject, 'tabLabels%s' )
+	addBorderAttributes( attrObject, 'tabLabels%s' )
 
 	attrObject.add( {
 		attributes: tabLabelsAttributes,

@@ -5,6 +5,9 @@ import {
 	BlockDiv,
 	Advanced,
 	Icon,
+	BackgroundStyle,
+	SizeStyle,
+	BorderStyle,
 } from '~stackable/block-components'
 import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
@@ -28,7 +31,7 @@ const Styles = props => {
 				selector=".%s .stk-block-tab-labels__wrapper"
 				styleRule="flexWrap"
 				attrName="fullWidth"
-				key="fullWidth"
+				key="fullWidthFlexWrap"
 				valueCallback={ value => {
 					if ( ! value ) {
 						return
@@ -57,6 +60,20 @@ const Styles = props => {
 				key="gap"
 				hasUnits="px"
 			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s .stk-block-tabs__tab"
+				styleRule="flexDirection"
+				attrName="iconPosition"
+				valueCallback={ value => {
+					if ( value === 'top' ) {
+						return 'column'
+					} else if ( value === 'bottom' ) {
+						return 'column-reverse'
+					}
+				} }
+				key="iconPosition"
+			/>
 		</>
 	)
 }
@@ -67,6 +84,21 @@ export const TabLabelStyle = memo( props => {
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Icon.Style { ...props } />
+			<BackgroundStyle
+				{ ...props }
+				attrNameTemplate="tabLabels%s"
+				selector=".stk-block-tabs__tab"
+			/>
+			<SizeStyle
+				{ ...props }
+				attrNameTemplate="tabLabels%s"
+				selector=".stk-block-tabs__tab"
+			/>
+			<BorderStyle
+				{ ...props }
+				attrNameTemplate="tabLabels%s"
+				selector=".stk-block-tabs__tab"
+			/>
 			<Styles { ...props } />
 		</>
 	)
@@ -85,6 +117,21 @@ TabLabelStyle.Content = props => {
 		<BlockCssCompiler>
 			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
+			<BackgroundStyle.Content
+				{ ...props }
+				attrNameTemplate="tabLabels%s"
+				selector=".stk-block-tabs__tab"
+			/>
+			<SizeStyle.Content
+				{ ...props }
+				attrNameTemplate="tabLabels%s"
+				selector=".stk-block-tabs__tab"
+			/>
+			<BorderStyle.Content
+				{ ...props }
+				attrNameTemplate="tabLabels%s"
+				selector=".stk-block-tabs__tab"
+			/>
 			<Styles { ...props } />
 		</BlockCssCompiler>
 	)

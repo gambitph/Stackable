@@ -16,6 +16,9 @@ import {
 	CustomCSS,
 	CustomAttributes,
 	Icon,
+	BackgroundControls,
+	SizeControls,
+	BorderControls,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -36,6 +39,7 @@ import { getBlockFromExample } from '@wordpress/blocks'
 import { BlockControls, RichText } from '@wordpress/block-editor'
 import { useSetActiveTabContext } from './with-active-tab'
 import { ToolbarGroup } from '@wordpress/components'
+import { addFilter } from '@wordpress/hooks'
 
 export const checkOpen = i => {
 	if ( i === 1 ) {
@@ -43,6 +47,20 @@ export const checkOpen = i => {
 	}
 	return false
 }
+
+addFilter( 'stackable.icon-position-options', 'tab-labels', ( output, blockName ) => {
+	if ( blockName !== 'stackable/tab-labels' ) {
+		return output
+	}
+
+	return (
+		[
+			...output,
+			{ value: 'top', label: __( 'Top', i18n ) },
+			{ value: 'bottom', label: __( 'Bottom', i18n ) },
+		]
+	)
+} )
 
 const Edit = props => {
 	const {
@@ -89,11 +107,11 @@ const Edit = props => {
 
 	const tabs = props.attributes.tabs.map( ( tab, index ) => {
 		return (
-			<button className="stk-block-tabs__tab stk-tabs__tab-desktop"
+			<button className="stk-block-tabs__tab"
 				key={ index }
 				onClick={ () => setActiveTab( index + 1 ) }
 			>
-				<Icon />
+				{ props.attributes.iconPosition !== 'right' && <Icon /> }
 				<RichText
 					key={ index }
 					tagName="p"
@@ -104,6 +122,7 @@ const Edit = props => {
 					withoutInteractiveFormatting
 					allowedFormats={ [] }
 				/>
+				{ props.attributes.iconPosition === 'right' && <Icon /> }
 			</button>
 		 )
 	} )
@@ -189,6 +208,24 @@ const Edit = props => {
 								default={ false }
 							/>
 						</PanelAdvancedSettings>
+						<PanelAdvancedSettings
+							title={ __( 'Labels Background', i18n ) }
+							id="tabLabelsBackground"
+						>
+							<BackgroundControls attrNameTemplate="tabLabels%s" />
+						</PanelAdvancedSettings>
+						<PanelAdvancedSettings
+							title={ __( 'Labels Spacing', i18n ) }
+							id="tabLabelsSpacing"
+						>
+							<SizeControls attrNameTemplate="tabLabels%s" />
+						</PanelAdvancedSettings>
+						<PanelAdvancedSettings
+							title={ __( 'Labels Borders & Shadows', i18n ) }
+							id="tabLabelsBorderAndShadows"
+						>
+							<BorderControls attrNameTemplate="tabLabels%s" />
+						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 					<Icon.InspectorControls
 						hasColor={ true }
@@ -198,6 +235,7 @@ const Edit = props => {
 						hasIconGap={ true }
 						hasIconPosition={ true }
 						defaultValue=""
+						blockName={ props.name }
 					/>
 					<BlockDiv.InspectorControls />
 					<CustomAttributes.InspectorControls />
@@ -219,7 +257,7 @@ const Edit = props => {
 				<div className="stk-block-tab-labels__wrapper">
 					{ tabs }
 					{ isSelected && <button
-						className="stk-block-tabs__tab stk-tabs__tab-desktop stk-tabs__add-tab"
+						className="stk-tabs__add-tab"
 						onClick={ () => {
 							const tabContent = getNextBlockClientId( props.clientId )
 							const tabsBlock = getBlockRootClientId( props.clientId )
