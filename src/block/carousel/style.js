@@ -48,6 +48,13 @@ const Styles = props => {
 				format="%spx"
 				responsive="all"
 			/>
+			<BlockCss
+				{ ...propsToPass }
+				styleRule="--transition-duration"
+				attrName="fadeDuration"
+				key="fadeDuration"
+				format="%ss"
+			/>
 
 			{ /* Arrows */ }
 			<BlockCss

@@ -273,6 +273,16 @@ const Edit = props => {
 								/>
 							</>
 						) }
+						{ carouselType === 'fade' && (
+							<AdvancedRangeControl
+								label={ __( 'Fade duration', i18n ) }
+								attribute="fadeDuration"
+								sliderMax={ 2 }
+								min={ 0 }
+								step={ 0.1 }
+								placeholder="0.3"
+							/>
+						) }
 						<ControlSeparator />
 					</InspectorLayoutControls>
 

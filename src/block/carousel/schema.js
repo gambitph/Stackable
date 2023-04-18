@@ -46,6 +46,10 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			fadeDuration: {
+				type: 'number',
+				default: '',
+			},
 			slidesToShow: {
 				type: 'number',
 				default: '',

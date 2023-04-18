@@ -78,7 +78,9 @@
 		flex: 1 0 100%;
 		opacity: 1;
 		height: auto;
-		transition-duration: calc(var(--transition-duration, 0.3s) * 1.15);
+		// Use max so that the minimum delay is 0.01s. If the transition
+		// duration is 0, this prevents the slides from blinking.
+		transition-duration: max(calc(var(--transition-duration, 0.3s) * 1.15), 0.01s);
 		transition-delay: calc(var(--transition-duration, 0.3s) * 0.3);
 		&.stk-block-carousel__slide--active {
 			transition-duration: var(--transition-duration, 0.3s);
