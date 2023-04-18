@@ -8,6 +8,7 @@ import {
 	BlockDiv,
 	getResponsiveClasses,
 	Icon,
+	getTypographyClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -28,10 +29,17 @@ const Save = props => {
 
 	const responsiveClass = getResponsiveClasses( attributes )
 
+	const labelTextClasses = getTypographyClasses( attributes )
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-tab-labels',
 		responsiveClass,
+	] )
+
+	const labelClassNames = classnames( [
+		labelTextClasses,
+		'stk-block-tab-labels__text',
 	] )
 
 	const tabs = props.attributes.tabs.map( ( tab, index ) => {
@@ -40,10 +48,12 @@ const Save = props => {
 				key={ index }
 			>
 				{ attributes.iconPosition !== 'right' && <Icon.Content attributes={ attributes } /> }
-				<RichText.Content
-					tagName="p"
-					value={ tab.label }
-				/>
+				<div className={ labelClassNames }>
+					<RichText.Content
+						tagName="p"
+						value={ tab.label }
+					/>
+				</div>
 				{ attributes.iconPosition === 'right' && <Icon.Content attributes={ attributes } /> }
 			</button>
 		 )

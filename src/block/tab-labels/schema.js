@@ -16,6 +16,7 @@ import {
 	addBackgroundAttributes,
 	addSizeAttributes,
 	addBorderAttributes,
+	Typography,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { i18n, version as VERSION } from 'stackable'
@@ -65,6 +66,7 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Separator.addAttributes( attrObject )
 	Icon.addAttributes( attrObject )
+	Typography.addAttributes( attrObject, 'stk-block-tab-labels__text' )
 	addBackgroundAttributes( attrObject, 'tabLabels%s' )
 	addSizeAttributes( attrObject, 'tabLabels%s' )
 	addBorderAttributes( attrObject, 'tabLabels%s' )

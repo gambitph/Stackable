@@ -19,6 +19,8 @@ import {
 	BackgroundControls,
 	SizeControls,
 	BorderControls,
+	Typography,
+	getTypographyClasses,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -69,6 +71,8 @@ const Edit = props => {
 		setAttributes,
 	} = props
 
+	const labelTextClasses = getTypographyClasses( props.attributes )
+
 	useGeneratedCss( props.attributes )
 	const [ activeTab, setActiveTab ] = useSetActiveTabContext()
 	const initialTabOpen = props.context[ 'stackable/initialTabOpen' ]
@@ -105,6 +109,11 @@ const Edit = props => {
 		'stk-block-tab-labels',
 	] )
 
+	const labelClassNames = classnames( [
+		labelTextClasses,
+		'stk-block-tab-labels__text',
+	] )
+
 	const tabs = props.attributes.tabs.map( ( tab, index ) => {
 		return (
 			<button className="stk-block-tabs__tab"
@@ -112,16 +121,18 @@ const Edit = props => {
 				onClick={ () => setActiveTab( index + 1 ) }
 			>
 				{ props.attributes.iconPosition !== 'right' && <Icon /> }
-				<RichText
-					key={ index }
-					tagName="p"
-					value={ tab.label }
-					onChange={ content => {
-						updateTabLabel( content, index )
-					} }
-					withoutInteractiveFormatting
-					allowedFormats={ [] }
-				/>
+				<div className={ labelClassNames }>
+					<RichText
+						key={ index }
+						tagName="p"
+						value={ tab.label }
+						onChange={ content => {
+							updateTabLabel( content, index )
+						} }
+						withoutInteractiveFormatting
+						allowedFormats={ [] }
+					/>
+				</div>
 				{ props.attributes.iconPosition === 'right' && <Icon /> }
 			</button>
 		 )
@@ -227,6 +238,12 @@ const Edit = props => {
 							<BorderControls attrNameTemplate="tabLabels%s" />
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
+					<Typography.InspectorControls
+						label={ __( 'Label', i18n ) }
+						hasTextTag={ false }
+						hasTextContent={ false }
+						initialOpen={ false }
+					/>
 					<Icon.InspectorControls
 						hasColor={ true }
 						hasGradient={ false }

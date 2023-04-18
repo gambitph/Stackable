@@ -8,6 +8,7 @@ import {
 	BackgroundStyle,
 	SizeStyle,
 	BorderStyle,
+	Typography,
 } from '~stackable/block-components'
 import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
@@ -99,6 +100,7 @@ export const TabLabelStyle = memo( props => {
 				attrNameTemplate="tabLabels%s"
 				selector=".stk-block-tabs__tab"
 			/>
+			<Typography.Style { ...props } selector=".stk-block-tab-labels__text" />
 			<Styles { ...props } />
 		</>
 	)
@@ -132,6 +134,7 @@ TabLabelStyle.Content = props => {
 				attrNameTemplate="tabLabels%s"
 				selector=".stk-block-tabs__tab"
 			/>
+			<Typography.Style.Content { ...props } selector=".stk-block-tab-labels__text" />
 			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
