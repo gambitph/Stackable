@@ -31,7 +31,7 @@ const Styles = props => {
 				selector=".%s .stk-block-tabs__wrapper"
 				styleRule="display"
 				attrName="tabLayout"
-				key="tabLayout"
+				key="tabLayoutDisplay"
 				valueCallback={ () => {
 					return 'flex'
 				} }
@@ -42,7 +42,7 @@ const Styles = props => {
 				selector=".%s .stk-block-tabs__wrapper .wp-block-stackable-tab-labels"
 				styleRule="width"
 				attrName="tabLayout"
-				key="tabLayout"
+				key="tabLayoutWidth"
 				valueCallback={ value => {
 					if ( value === 'left' || value === 'right' ) {
 						return 'max-content'
@@ -55,7 +55,7 @@ const Styles = props => {
 				selector=".%s .stk-block-tabs__wrapper .wp-block-stackable-tab-labels .stk-block-tab-labels__wrapper"
 				styleRule="flexDirection"
 				attrName="tabLayout"
-				key="tabLayout"
+				key="tabLayoutInnerFlexDirection"
 				valueCallback={ value => {
 					if ( value === 'left' || value === 'right' ) {
 						return 'column'
@@ -68,7 +68,7 @@ const Styles = props => {
 				selector=".%s .stk-block-tabs__wrapper"
 				styleRule="flexDirection"
 				attrName="tabLayout"
-				key="tabLayout"
+				key="tabLayoutOuterFlexDirection"
 				valueCallback={ value => {
 					if ( value === 'bottom' ) {
 						return 'column-reverse'
