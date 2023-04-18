@@ -563,6 +563,9 @@ const Edit = props => {
 								{ `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ activeSlide }) {
 									opacity: 1;
 									visibility: visible;
+									z-index: 2;
+									transition-duration: var(--transition-duration, 0.3s);
+									transition-delay: 0s;
 								}` }
 							</style>
 						) }

@@ -27,6 +27,9 @@
 		width: 100%;
 		flex: 1 0 100%;
 		opacity: 0;
+		z-index: 1;
+		transition-duration: max(calc(var(--transition-duration, 0.3s) * 1.15), 0.01s);
+		transition-delay: calc(var(--transition-duration, 0.3s) * 0.3);
 	}
 }
 
