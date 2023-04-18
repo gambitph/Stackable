@@ -4,7 +4,7 @@
 /**
  * External dependencies
  */
-import { TextIcon } from '~stackable/icons'
+import { CarouselIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -17,8 +17,7 @@ import example from './example'
 
 export const settings = {
 	...metadata,
-	// TODO: Change the icon to match the block.
-	icon: TextIcon,
+	icon: CarouselIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
