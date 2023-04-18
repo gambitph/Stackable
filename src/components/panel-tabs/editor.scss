@@ -19,16 +19,16 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		height: 80px;
+		height: 72px;
 		padding: 0 !important;
 		flex: 1;
 		margin: 0 !important;
 		cursor: pointer;
 		color: #1e1e1e;
 		border: 0 !important;
-		.dashicon {
-			margin: 5px;
-			height: 20px;
+		gap: 4px;
+		.dashicon::before {
+			font-size: 20px;
 		}
 		&.is-active {
 			border-bottom: 0;

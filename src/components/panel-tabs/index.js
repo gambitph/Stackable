@@ -32,8 +32,8 @@ const TABS = [
 	},
 	{
 		value: 'advanced',
-		title: __( 'More', i18n ),
-		label: __( 'More Tab', i18n ),
+		title: __( 'Advanced', i18n ),
+		label: __( 'Advanced Tab', i18n ),
 		icon: 'ellipsis',
 	},
 ]
