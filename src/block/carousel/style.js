@@ -185,9 +185,10 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".stk-block-carousel__dot:before"
-				hoverSelector=".stk-block-carousel__dot:not(.stk-block-carousel__dot--active):hover:before"
-				styleRule="backgroundColor"
+				selector=".stk-block-carousel__dot"
+				hoverSelector=".stk-block-carousel__dot"
+				styleRule="--dot-color"
+				hoverStyleRule="--dot-color-hover"
 				attrName="dotsColor"
 				key="dotsColor"
 				hover="all"

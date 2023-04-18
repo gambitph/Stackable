@@ -103,6 +103,7 @@ const Edit = props => {
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 
 			'stk--arrows-outside': attributes.arrowPosition === 'outside',
+			'stk--dots-outline': attributes.dotsStyle === 'outline',
 			[ `stk--arrows-justify-${ attributes.arrowJustify || 'space-between' }` ]: attributes.arrowJustify || 'space-between',
 			[ `stk--arrows-align-${ attributes.arrowAlign || 'center' }` ]: attributes.arrowAlign || 'center',
 		},
@@ -511,6 +512,15 @@ const Edit = props => {
 								placeholder="12"
 							/>
 							<ControlSeparator />
+							<AdvancedToolbarControl
+								label={ __( 'Dot Style', i18n ) }
+								attribute="dotsStyle"
+								controls={ [
+									{ value: '', title: __( 'Solid', i18n ) },
+									{ value: 'outline', title: __( 'Outline', i18n ) },
+								] }
+								isSmall
+							/>
 							<ColorPaletteControl
 								label={ sprintf( __( '%s Color', i18n ), __( 'Dot', i18n ) ) }
 								attribute="dotsColor"

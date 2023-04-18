@@ -171,6 +171,10 @@ export const attributes = ( version = VERSION ) => {
 				type: 'number',
 				default: '',
 			},
+			dotsStyle: {
+				type: 'string',
+				default: '',
+			},
 			dotsColor: {
 				type: 'string',
 				default: '',

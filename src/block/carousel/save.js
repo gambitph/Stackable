@@ -51,6 +51,7 @@ export const Save = props => {
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 
 			'stk--arrows-outside': attributes.arrowPosition === 'outside',
+			'stk--dots-outline': attributes.dotsStyle === 'outline',
 			[ `stk--arrows-justify-${ attributes.arrowJustify || 'space-between' }` ]: attributes.arrowJustify || 'space-between',
 			[ `stk--arrows-align-${ attributes.arrowAlign || 'center' }` ]: attributes.arrowAlign || 'center',
 		},

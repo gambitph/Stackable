@@ -7,6 +7,8 @@
 	--button-gap: 12px;
 	--button-height: 40px;
 	--button-width: 40px;
+	--dot-color: #aaa;
+	--dot-color-hover: #1b1b1b;
 	--dot-size: 8px;
 	--dot-gap: 16px;
 	--dot-active-width: 30px;
@@ -177,10 +179,10 @@
 		width: var(--dot-size, 8px);
 		height: var(--dot-size, 8px);
 		border-radius: var(--dot-size, 8px);
-		background: #aaa;
+		background: var(--dot-color, #aaa);
 	}
 	&:hover::before {
-		background: #1b1b1b;
+		background: var(--dot-color-hover, #1b1b1b);
 	}
 	&.stk-block-carousel__dot--active {
 		margin-inline: max(0px, calc((24px - var(--dot-size)) / 2));
@@ -189,6 +191,14 @@
 			background: #1b1b1b;
 			height: var(--dot-active-height);
 			width: var(--dot-active-width, 30px);
+		}
+	}
+}
+.stk-block-carousel.stk--dots-outline {
+	.stk-block-carousel__dot:not(.stk-block-carousel__dot--active, :hover) {
+		&::before {
+			background: transparent;
+			box-shadow: inset 0 0 0 1px var(--dot-color, #aaa);
 		}
 	}
 }

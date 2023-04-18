@@ -42,6 +42,7 @@ const BlockCss = props => {
 	const {
 		selector: _selector = '',
 		styleRule: _styleRule = '',
+		hoverStyleRule: _hoverStyleRule = '',
 		attrName: _attrName = '',
 		format = '%s',
 		hasUnits = false, // False, or the default unit e.g. 'px' or '%'
@@ -276,6 +277,7 @@ const BlockCss = props => {
 	if ( styleRuleCallback ) {
 		styleRule = styleRuleCallback( getAttribute, attributes )
 	}
+	const hoverStyleRule = _hoverStyleRule || styleRule
 
 	let selector = selectorCallback ? selectorCallback( getAttribute, attributes, clientId ) : _selector
 	let hoverSelector = hoverSelectorCallback ? hoverSelectorCallback( getAttribute, attributes, clientId ) : _hoverSelector
@@ -377,10 +379,10 @@ const BlockCss = props => {
 
 	css += createCssFunc( selector, styleRule, valueDesktop, desktopQuery, vendorPrefixes, compileCssTo )
 	if ( hasHover ) {
-		css += createCssFunc( hoverSelector, styleRule, valueDesktopHover, desktopQuery, vendorPrefixes, compileCssTo )
+		css += createCssFunc( hoverSelector, hoverStyleRule, valueDesktopHover, desktopQuery, vendorPrefixes, compileCssTo )
 	}
 	if ( hasParentHover ) {
-		css += createCssFunc( parentHoverSelector, styleRule, valueDesktopParentHover, desktopQuery, vendorPrefixes, compileCssTo )
+		css += createCssFunc( parentHoverSelector, hoverStyleRule, valueDesktopParentHover, desktopQuery, vendorPrefixes, compileCssTo )
 	}
 	if ( hasCollapsed ) {
 		css += createCssFunc( collapsedSelector, styleRule, valueDesktopCollapsed, desktopQuery, vendorPrefixes, compileCssTo )
@@ -389,10 +391,10 @@ const BlockCss = props => {
 	if ( hasTablet ) {
 		css += createCssFunc( selector, styleRule, valueTablet, tabletQuery, vendorPrefixes, compileCssTo )
 		if ( hasHover ) {
-			css += createCssFunc( hoverSelector, styleRule, valueTabletHover, tabletQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( hoverSelector, hoverStyleRule, valueTabletHover, tabletQuery, vendorPrefixes, compileCssTo )
 		}
 		if ( hasParentHover ) {
-			css += createCssFunc( parentHoverSelector, styleRule, valueTabletParentHover, tabletQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( parentHoverSelector, hoverStyleRule, valueTabletParentHover, tabletQuery, vendorPrefixes, compileCssTo )
 		}
 		if ( hasCollapsed ) {
 			css += createCssFunc( collapsedSelector, styleRule, valueTabletCollapsed, desktopQuery, vendorPrefixes, compileCssTo )
@@ -402,10 +404,10 @@ const BlockCss = props => {
 	if ( hasMobile ) {
 		css += createCssFunc( selector, styleRule, valueMobile, mobileQuery, vendorPrefixes, compileCssTo )
 		if ( hasHover ) {
-			css += createCssFunc( hoverSelector, styleRule, valueMobileHover, mobileQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( hoverSelector, hoverStyleRule, valueMobileHover, mobileQuery, vendorPrefixes, compileCssTo )
 		}
 		if ( hasParentHover ) {
-			css += createCssFunc( parentHoverSelector, styleRule, valueMobileParentHover, mobileQuery, vendorPrefixes, compileCssTo )
+			css += createCssFunc( parentHoverSelector, hoverStyleRule, valueMobileParentHover, mobileQuery, vendorPrefixes, compileCssTo )
 		}
 		if ( hasCollapsed ) {
 			css += createCssFunc( collapsedSelector, styleRule, valueMobileCollapsed, desktopQuery, vendorPrefixes, compileCssTo )
