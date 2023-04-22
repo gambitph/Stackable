@@ -66,8 +66,20 @@ export const BaseControl = props => {
 			<div className={ labelClassName }>
 				<div className="components-base-control__label">{ label }</div>
 				<div className="stk-control-label__toggles">
-					{ hasRepsonsive && <ResponsiveToggle screens={ responsive } /> }
-					{ hasHover && <HoverStateToggle hover={ props.hover } /> }
+					{ hasRepsonsive && (
+						<ResponsiveToggle
+							screens={ responsive }
+							attribute={ props.attribute }
+							hasTabletValue={ props.hasTabletValue }
+							hasMobileValue={ props.hasMobileValue }
+						/>
+					) }
+					{ hasHover && (
+						<HoverStateToggle
+							hover={ props.hover }
+							attribute={ props.attribute }
+						/>
+					) }
 				</div>
 				<div className="stk-control-label__after">
 					{ hasUnits &&
@@ -97,6 +109,7 @@ BaseControl.defaultProps = {
 	label: '',
 	help: '',
 	boldLabel: false,
+	attribute: '',
 
 	responsive: false,
 	hover: false,
@@ -109,6 +122,9 @@ BaseControl.defaultProps = {
 
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
+
+	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
+	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
 }
 
 const AdvancedControl = props => {
@@ -120,11 +136,9 @@ const AdvancedControl = props => {
 	const setAttributes = useBlockSetAttributesContext()
 	const onChangeUnit = unit => setAttributes( { [ unitAttrName ]: unit } )
 
-	const propsToPass = omit( props, [ 'attribute' ] )
-
 	return (
 		<BaseControl
-			{ ...propsToPass }
+			{ ...props }
 			unit={ unit }
 			onChangeUnit={ props.onChangeUnit || onChangeUnit }
 		/>
@@ -150,6 +164,9 @@ AdvancedControl.defaultProps = {
 
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
+
+	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
+	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
 }
 
 export default AdvancedControl

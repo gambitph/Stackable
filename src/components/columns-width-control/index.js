@@ -75,6 +75,8 @@ const ColumnsWidthControl = props => {
 			label={ props.label }
 			help={ props.help }
 			responsive={ props.responsive }
+			hasTabletValue={ props.hasTabletValue }
+			hasMobileValue={ props.hasMobileValue }
 			className={ classnames( [ 'ugb-columns-width-control', 'ugb--help-tip-column-width', props.className ] ) }
 		>
 			{ COLUMN_PRESET_OPTIONS[ props.columns ] &&
@@ -107,6 +109,10 @@ ColumnsWidthControl.defaultProps = {
 	label: __( 'Column Widths', i18n ),
 	className: '',
 	responsive: false,
+	attribute: '',
+
+	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
+	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
 }
 
 export default ColumnsWidthControl

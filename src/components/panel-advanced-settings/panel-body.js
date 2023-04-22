@@ -39,6 +39,7 @@ const PanelBody = (
 		hasToggle = undefined,
 		onChange = noop,
 		isPremiumPanel = false,
+		showModifiedIndicator = false,
 	},
 	ref
 ) => {
@@ -101,18 +102,19 @@ const PanelBody = (
 				onChange={ onChange }
 				setIsOpened={ setIsOpened }
 				isPremiumPanel={ isPremiumPanel }
+				showModifiedIndicator={ showModifiedIndicator }
 				{ ...buttonProps }
 			/>
 			{ typeof children === 'function'
-				? children( { opened: isOpened } )
-				: isOpened && children }
+				? children( { opened: true } )
+				: children }
 		</div>
 	)
 }
 
 const PanelBodyTitle = forwardRef(
 	( {
-		isOpened, icon, title, isPremiumPanel,
+		isOpened, icon, title, isPremiumPanel, showModifiedIndicator,
 		checked, hasToggle, onChange, setIsOpened, // For the toggle.
 		...props
 	}, ref ) => {
@@ -159,6 +161,10 @@ const PanelBodyTitle = forwardRef(
 						/>
 					) }
 					{ title }
+					<span className={ classnames( [
+						'stk-panel-modified-indicator',
+						{ 'stk--visible': showModifiedIndicator },
+					] ) } />
 					{ isPremiumPanel && (
 						<div className="stk-pulsating-circle" />
 					) }

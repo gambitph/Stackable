@@ -35,6 +35,13 @@
 	}
 }
 
+.components-panel__body.ugb-toggle-panel-body {
+	padding: 16px;
+}
+.components-panel__body.ugb-toggle-panel-body > .components-panel__body-title {
+	margin: -16px;
+}
+
 // Icon size.
 .ugb-toggle-panel-body {
 	.components-panel__arrow {
@@ -145,4 +152,32 @@ div :has(> .stk--premium-panel) {
 }
 .components-panel__body.stk--premium-panel {
 	order: 2 !important;
+}
+
+/**
+ * Modified controls indicator.
+ */
+.stk-panel-modified-indicator {
+	width: 8px;
+	height: 8px;
+	border-radius: 100%;
+	margin-inline: 12px;
+	background: #ffc107;
+}
+
+/**
+ * Hide contents when not open.
+ */
+.ugb-toggle-panel-body:not(.is-opened) > *:not(.components-panel__body-title) {
+	display: none;
+}
+
+.stk-panel-modified-indicator:not(.stk--visible) {
+	display: none;
+}
+// Reset button = .stk-control__reset-button & .stk-inspector-control__reset-button
+// Highlighted responsive & hover state toggle = .stk-label-unit-toggle .has-value
+// Conditional display = .stk-condition-component
+.ugb-toggle-panel-body:has(.stk-control__reset-button:not(.stk-control__reset-button--no-modified), .stk-inspector-control__reset-button:not(.stk-control__reset-button--no-modified), .stk-label-unit-toggle .has-value, .stk-condition-component) .stk-panel-modified-indicator {
+	display: block;
 }
