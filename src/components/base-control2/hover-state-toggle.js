@@ -61,7 +61,7 @@ const HoverStateToggle = props => {
 		return ALL_HOVER.reduce( ( states, state, i ) => {
 			return {
 				...states,
-				[ state ]: attributes[ `${ props.attribute }${ deviceType === 'Desktop' ? '' : deviceType }${ ALL_HOVER_ATTRIBUTE_SUFFIX[ i ] }` ],
+				[ state ]: attributes[ `${ props.attribute }${ props.hasRepsonsive && deviceType !== 'Desktop' ? deviceType : '' }${ ALL_HOVER_ATTRIBUTE_SUFFIX[ i ] }` ],
 			}
 		}, {} )
 	} )
@@ -114,6 +114,7 @@ const HoverStateToggle = props => {
 HoverStateToggle.defaultProps = {
 	hover: false,
 	attribute: '',
+	hasRepsonsive: false, // Wether the attribute has responsive attributes (where we have hover states per device type)
 }
 
 export default memo( HoverStateToggle )

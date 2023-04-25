@@ -78,6 +78,7 @@ export const BaseControl = props => {
 						<HoverStateToggle
 							hover={ props.hover }
 							attribute={ props.attribute }
+							hasRepsonsive={ hasRepsonsive }
 						/>
 					) }
 				</div>
