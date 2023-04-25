@@ -157,6 +157,7 @@ const ImageControl = memo( props => {
 				value={ imageUrl }
 				default={ props.default }
 				onChange={ onRemove }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 			/>
 		</AdvancedControl>
 	)
@@ -174,6 +175,8 @@ ImageControl.defaultProps = {
 	value: undefined,
 	onChange: undefined,
 	allowReset: true,
+
+	hasPanelModifiedIndicator: true,
 }
 
 export default ImageControl

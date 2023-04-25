@@ -43,6 +43,7 @@ const ImageSizeControl = ( {
 		options={ imageSizeOptions }
 		className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
 		defaultValue={ defaultValue || 'large' }
+		default={ defaultValue || 'large' }
 	/>
 }
 
