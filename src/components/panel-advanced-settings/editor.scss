@@ -176,8 +176,15 @@ div :has(> .stk--premium-panel) {
 	display: none;
 }
 // Reset button = .stk-control__reset-button & .stk-inspector-control__reset-button
+// (We had to split this into multiple lines because of a compiler bug where the :not selector goes empty)
+.ugb-toggle-panel-body:has(.stk-control__reset-button:not(.stk-control__reset-button--no-modified)) .stk-panel-modified-indicator {
+	display: block;
+}
+.ugb-toggle-panel-body:has(.stk-inspector-control__reset-button:not(.stk-control__reset-button--no-modified)) .stk-panel-modified-indicator {
+	display: block;
+}
 // Highlighted responsive & hover state toggle = .stk-label-unit-toggle .has-value
 // Conditional display = .stk-condition-component
-.ugb-toggle-panel-body:has(.stk-control__reset-button:not(.stk-control__reset-button--no-modified), .stk-inspector-control__reset-button:not(.stk-control__reset-button--no-modified), .stk-label-unit-toggle .has-value, .stk-condition-component) .stk-panel-modified-indicator {
+.ugb-toggle-panel-body:has(.stk-label-unit-toggle .has-value, .stk-condition-component) .stk-panel-modified-indicator {
 	display: block;
 }
