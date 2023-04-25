@@ -338,11 +338,13 @@ const BlockCss = props => {
 			blockUniqueClassName = blockUniqueClassName + `-${ instanceId }`
 		}
 
+		if ( ! Array.isArray( selector ) ) {
 		// Add instance id to classes. ( e.g. `stk-abc123` -> `stk-abc123-2`, where 2 is `instanceId`. )
-		selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-		hoverSelector = hoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-		parentHoverSelector = parentHoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
-		collapsedSelector = collapsedSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+			selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+			hoverSelector = hoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+			parentHoverSelector = parentHoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+			collapsedSelector = collapsedSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
+		}
 	}
 
 	if ( ! props.editorMode ) {
