@@ -338,7 +338,7 @@ const BlockCss = props => {
 			blockUniqueClassName = blockUniqueClassName + `-${ instanceId }`
 		}
 
-		if ( typeof selector === 'string' || selector instanceof String ) {
+		if ( typeof selector === 'string' ) {
 		// Add instance id to classes. ( e.g. `stk-abc123` -> `stk-abc123-2`, where 2 is `instanceId`. )
 			selector = selector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
 			hoverSelector = hoverSelector.replace( /[^^?](.%s)([^-])/g, `$1-${ instanceId }$2` )
