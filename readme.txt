@@ -89,6 +89,7 @@ Section Blocks
 Turn the WordPress Block Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
 
 - Multiple Block Layouts
+- Flexbox Controls
 - Save Block Defaults
 - Customize block hover styles
 - Block Background and Image Color Settings
@@ -98,6 +99,7 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
 - Advanced Column and Spacing Settings
 - Global Colors & Typography Settings
 - Responsiveness
+	- Tablet and Mobile Column Arrangement
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
     - Specify how Columns collapse in Tablet and Mobile
