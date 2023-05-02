@@ -3,6 +3,10 @@ import GLightbox from 'glightbox'
 
 // Gets the highest resolution image from the srcset.
 const getImageFromSrcset = el => {
+	if ( ! el || ! el.getAttribute( 'srcset' ) ) {
+		return null
+	}
+
 	const src = el.getAttribute( 'srcset' ).split( ',' ).map( v => v.trim().split( ' ' ) ).reduce( ( largestImgData, imgData ) => {
 		const size = parseInt( imgData[ 1 ], 10 )
 		if ( largestImgData.size < size ) {
@@ -57,7 +61,7 @@ class StackableImageLightbox {
 
 	gatherImages = () => {
 		document.querySelectorAll( '.stk--has-lightbox' ).forEach( el => {
-			const imageBlock = el.querySelector( 'img[srcset]' )
+			const imageBlock = el.querySelector( 'img[srcset], img[src]' )
 
 			// Look for the anchor link where we can get the link to open in the
 			// lightbox.
@@ -74,7 +78,7 @@ class StackableImageLightbox {
 			// The link to open either comes from the href, or from the srcset
 			// of an image block.
 			const linkToOpen = link && href ? href
-				: imageBlock ? getImageFromSrcset( imageBlock )
+				: imageBlock ? ( getImageFromSrcset( imageBlock ) || imageBlock.getAttribute( 'src' ) )
 					: null
 
 			if ( ! linkToOpen ) {
