@@ -159,6 +159,7 @@ class StackableImageLightbox {
 					element, href, type,
 				} ) => {
 					return {
+						skin: 'stk', // Add a class to hide the lightbox description.
 						elements: [ element ],
 						href,
 						// We'll need to detect the type because auto-detect
@@ -178,6 +179,7 @@ class StackableImageLightbox {
 				} = elementGroup
 
 				const lightbox = GLightbox( {
+					skin: 'stk', // Add a class to hide the lightbox description.
 					elements: [ element ],
 					href,
 					type,

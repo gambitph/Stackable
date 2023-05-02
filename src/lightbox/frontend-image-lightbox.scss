@@ -1,1 +1,6 @@
 @import "glightbox/dist/css/glightbox";
+
+// Don't show the description in the lightbox.
+.glightbox-stk .gslide-description {
+	display: none !important;
+}
