@@ -1,6 +1,21 @@
 @import "glightbox/dist/css/glightbox";
 
-// Don't show the description in the lightbox.
-.glightbox-stk .gslide-description {
-	display: none !important;
+.glightbox-clean.glightbox-stk {
+	.gslide-description {
+		background: transparent;
+	}
+	.gdesc-inner {
+		padding: 0;
+	}
+	.gslide-title:empty {
+		display: none;
+	}
+	.gslide-title {
+		padding: 24px;
+		text-align: center;
+		margin: 0;
+		font-size: 1rem;
+		line-height: 1.7;
+		color: #fff;
+	}
 }

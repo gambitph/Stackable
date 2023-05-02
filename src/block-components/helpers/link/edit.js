@@ -59,6 +59,7 @@ export const LinkControls = props => {
 					onChange={ updateAttributeHandler( 'title' ) }
 					isDynamic={ true }
 					isFormatType={ false }
+					help={ __( 'Also used for lightbox caption', i18n ) }
 				/>
 			) }
 		</>

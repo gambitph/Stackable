@@ -89,6 +89,11 @@ class StackableImageLightbox {
 				link = el
 			}
 
+			let title = link && href ? link.getAttribute( 'title' ) : null
+			if ( ! title && imageBlock ) {
+				title = imageBlock.getAttribute( 'alt' ) || null
+			}
+
 			const isUsingImageBlock = ( ! link || ! href ) && imageBlock
 
 			this.elements.push( {
@@ -98,6 +103,7 @@ class StackableImageLightbox {
 				// If we're using an image block as the source, the link to open
 				// isn't sometimes detected as an image.
 				type: isUsingImageBlock ? 'image' : undefined,
+				title,
 			} )
 		} )
 	}
@@ -156,33 +162,37 @@ class StackableImageLightbox {
 			// If the blocks are beside each other, display as a gallery.
 			if ( Array.isArray( elementGroup ) ) {
 				const elements = elementGroup.map( ( {
-					element, href, type,
+					element, href, type, title,
 				} ) => {
 					return {
-						skin: 'stk', // Add a class to hide the lightbox description.
 						elements: [ element ],
 						href,
 						// We'll need to detect the type because auto-detect
 						// doesn't work here for some unknown reason.
 						type: type || ( detectIfVideo( href ) ? 'video' : 'image' ),
+						title,
 					}
 				} )
 
-				const lightbox = GLightbox( { elements } )
+				const lightbox = GLightbox( {
+					skin: 'clean glightbox-stk', // Add a class to style lightbox description.
+					elements,
+				} )
 
 				elementGroup.forEach( ( { element }, i ) => {
 					this.addClickHandler( element, lightbox, i )
 				} )
 			} else {
 				const {
-					element, href, type,
+					element, href, type, title,
 				} = elementGroup
 
 				const lightbox = GLightbox( {
-					skin: 'stk', // Add a class to hide the lightbox description.
+					skin: 'clean glightbox-stk', // Add a class to style lightbox description.
 					elements: [ element ],
 					href,
 					type,
+					title,
 				} )
 
 				this.addClickHandler( element, lightbox, 0 )
