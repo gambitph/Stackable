@@ -25,8 +25,27 @@ const detectIfVideo = url => {
 	return false
 }
 
+// Get the outermost container block element.
+const getRootColumnsBlock = el => {
+	let currentEl = el
+	let parentColumnsBlock = null
+	while ( currentEl ) {
+		// We need to add .entry-content here so that we treat the root block as
+		// the outermost block.
+		currentEl = currentEl.parentElement && currentEl.parentElement.closest( '.entry-content .stk-block, .entry-content .wp-block-columns, .entry-content .wp-block-group' )
+		if ( currentEl ) {
+			parentColumnsBlock = currentEl
+		}
+	}
+	return parentColumnsBlock
+}
+
 const isButtonBlock = el => {
-	return el.classList.contains( 'stk-block-button' ) || el.classList.contains( 'stk-block-icon-button' ) || el.classList.contains( 'stk-block-icon' )
+	return el && ( el.classList.contains( 'stk-block-button' ) || el.classList.contains( 'stk-block-icon-button' ) || el.classList.contains( 'stk-block-icon' ) )
+}
+
+const isImageBlock = el => {
+	return el && el.classList.contains( 'stk-block-image' )
 }
 
 class StackableImageLightbox {
@@ -98,6 +117,24 @@ class StackableImageLightbox {
 			if ( isButtonBlock( block ) ) {
 				isNextBlockAdjacent = false
 				isPrevBlockAdjacent = false
+			}
+
+			// Image blocks placed in the same Columns block are grouped
+			// together. Even if there's another block between the image blocks
+			// inside the same column, that should still be okay.
+			if ( isImageBlock( block ) && isImageBlock( nextElementBlock ) ) {
+				const blockRootColumns = getRootColumnsBlock( block )
+				const nextBlockRootColumns = getRootColumnsBlock( nextElementBlock )
+				if ( blockRootColumns && blockRootColumns === nextBlockRootColumns ) {
+					isNextBlockAdjacent = true
+				}
+			}
+			if ( isImageBlock( block ) && isImageBlock( prevElementBlock ) ) {
+				const blockRootColumns = getRootColumnsBlock( block )
+				const prevBlockRootColumns = getRootColumnsBlock( prevElementBlock )
+				if ( blockRootColumns && blockRootColumns === prevBlockRootColumns ) {
+					isPrevBlockAdjacent = true
+				}
 			}
 
 			if ( ! isPrevBlockAdjacent && isNextBlockAdjacent ) {
