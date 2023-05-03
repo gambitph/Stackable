@@ -162,13 +162,13 @@ const VERTICAL_ALIGN_OPTIONS = [
 	},
 ]
 
-export const CONTROLS = applyFilters( 'stackable.toolbar-control.controls', {
+export const CONTROLS = {
 	'flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
 	'flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
 	'flex-justify-vertical': FLEX_VERTICAL_JUSTIFY_OPTIONS,
 	horizontal: HORIZONTAL_ALIGN_OPTIONS,
 	vertical: VERTICAL_ALIGN_OPTIONS,
-} )
+}
 
 const AdvancedToolbarControl = props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
@@ -182,7 +182,8 @@ const AdvancedToolbarControl = props => {
 		isToggleOnly,
 	} = _propsToPass
 
-	const controls = typeof _controls === 'string' ? CONTROLS[ _controls ] : _controls
+	const _CONTROLS = applyFilters( 'stackable.toolbar-control.controls', CONTROLS )
+	const controls = typeof _controls === 'string' ? _CONTROLS[ _controls ] : _controls
 
 	const toolbarClasses = classnames( {
 		'ugb-toolbar--full-width': fullwidth,

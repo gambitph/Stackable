@@ -70,7 +70,7 @@ const FLEX_VERTICAL_ALIGN_OPTIONS = [
 	},
 ]
 
-addFilter( 'stackable.toolbar-control.controls', controls => {
+addFilter( 'stackable.toolbar-control.controls', 'stackable/deprecated-options', controls => {
 	return {
 		...controls,
 		'__flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
