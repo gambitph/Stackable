@@ -23,6 +23,7 @@ addFilter( 'stackable.notification.save.innerClassNames', 'stackable/3.8.0', ( o
 	}
 
 	output.push( {
+		[ `stk-${ props.attributes.uniqueId }-inner-blocks` ]: false,
 		'stk--block-horizontal-flex': false,
 		[ `stk--block-orientation-${ props.attributes.innerBlockOrientation }` ]: props.attributes.innerBlockOrientation,
 	} )
