@@ -10,6 +10,10 @@
  * @return {Object} New attributes and inner blocks
  */
 export const horizontalOrientationMigrate = ( attributes, innerBlocks ) => {
+	if ( attributes.innerBlockOrientation !== 'horizontal' ) {
+		return [ attributes, innerBlocks ]
+	}
+
 	innerBlocks.forEach( ( block, index ) => {
 		if ( index ) {
 			if ( ! block.attributes.blockMargin ) {
@@ -20,7 +24,7 @@ export const horizontalOrientationMigrate = ( attributes, innerBlocks ) => {
 					left: '',
 				}
 			}
-			if ( ! block.attributes.blockMargin.left ) {
+			if ( block.attributes.blockMargin.left === '' ) {
 				block.attributes.blockMargin.left = 24
 			}
 		}
