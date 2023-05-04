@@ -6,8 +6,8 @@
 }
 
 // Remove the margins if it's only 1 block.
-[data-type="stackable/column"]:first-child:last-child > * > .stk-block-column > .stk-column-wrapper {
-	margin: 0;
+.stk-block-columns:has(> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:first-child:last-child) {
+	--stk-columns-spacing: 0;
 }
 
 .stk-button-group {
