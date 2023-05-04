@@ -9,7 +9,7 @@ const {
 	clearTimeout,
 	setTimeout,
 } = window
-const DEBOUNCE_TIMEOUT = 50
+const DEBOUNCE_TIMEOUT = 100
 
 /**
  * Hook that creates a showMover state, as well as debounced show/hide callbacks.
