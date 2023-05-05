@@ -6,13 +6,12 @@ import classnames from 'classnames'
 /**
  * Internal dependencies
  */
-import { useUpdateEffect } from './utils'
 import { useGlobalState } from '~stackable/util/global-state'
 
 /**
  * WordPress dependencies
  */
-import { useReducedMotion, useMergeRefs } from '@wordpress/compose'
+import { useMergeRefs } from '@wordpress/compose'
 import { forwardRef, useRef } from '@wordpress/element'
 import { chevronUp, chevronDown } from '@wordpress/icons'
 import {
@@ -21,6 +20,20 @@ import {
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const noop = () => {}
+
+const scrollIntoViewIfNeeded = el => {
+	if ( el ) {
+		// 200 is an estimate of the top of the panel when it will be hidden from view.
+		const isAboveView = el.getBoundingClientRect().top < 200
+		if ( isAboveView ) {
+			el.scrollIntoView( {
+				inline: 'start',
+				block: 'start',
+				behavior: 'instant',
+			} )
+		}
+	}
+}
 
 const PanelBody = (
 	{
@@ -32,7 +45,6 @@ const PanelBody = (
 		onToggle = noop,
 		// opened,
 		title,
-		scrollAfterOpen = true,
 		id = '', // Used for remembering whether this is currently open or closed
 		// Toggle options.
 		checked,
@@ -47,41 +59,19 @@ const PanelBody = (
 
 	const nodeRef = useRef()
 
-	// Defaults to 'smooth' scrolling
-	// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
-	const scrollBehavior = useReducedMotion() ? 'auto' : 'smooth'
-
 	const handleOnToggle = event => {
 		event.preventDefault()
-		const next = ! isOpened
-		setIsOpened( next )
-		onToggle( next )
-	}
+		const newIsOpened = ! isOpened
+		setIsOpened( newIsOpened )
+		onToggle( newIsOpened )
 
-	// Ref is used so that the effect does not re-run upon scrollAfterOpen changing value.
-	const scrollAfterOpenRef = useRef()
-	scrollAfterOpenRef.current = scrollAfterOpen
-	// Runs after initial render.
-	useUpdateEffect( () => {
-		if (
-			isOpened &&
-			scrollAfterOpenRef.current &&
-			nodeRef.current?.scrollIntoView
-		) {
-			/*
-			 * Scrolls the content into view when visible.
-			 * This improves the UX when there are multiple stacking <PanelBody />
-			 * components in a scrollable container.
-			 */
+		// If just opened, scroll into view if needed.
+		if ( newIsOpened ) {
 			setTimeout( () => {
-				nodeRef?.current?.scrollIntoView( {
-					inline: 'nearest',
-					block: 'start',
-					behavior: scrollBehavior,
-				} )
+				scrollIntoViewIfNeeded( nodeRef.current )
 			}, 1 )
 		}
-	}, [ isOpened, scrollBehavior ] )
+	}
 
 	const classes = classnames( 'components-panel__body', 'ugb-toggle-panel-body', className, {
 		'is-opened': isOpened,
