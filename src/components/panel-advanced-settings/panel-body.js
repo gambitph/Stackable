@@ -44,6 +44,7 @@ const PanelBody = (
 		initialOpen,
 		onToggle = noop,
 		// opened,
+		isOpen: isForcedOpen = null, // Override whether the panel should be open or closed based on this prop.
 		title,
 		id = '', // Used for remembering whether this is currently open or closed
 		// Toggle options.
@@ -55,7 +56,9 @@ const PanelBody = (
 	ref
 ) => {
 	const { name } = useBlockEditContext()
-	const [ isOpened, setIsOpened ] = useGlobalState( `panelCache-${ name }-${ id }-${ title }`, initialOpen === undefined ? false : initialOpen )
+	const [ _isOpened, setIsOpened ] = useGlobalState( `panelCache-${ name }-${ id }-${ title }`, initialOpen === undefined ? false : initialOpen )
+
+	const isOpened = isForcedOpen === null ? _isOpened : isForcedOpen
 
 	const nodeRef = useRef()
 
