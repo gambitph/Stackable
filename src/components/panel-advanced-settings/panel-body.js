@@ -18,10 +18,13 @@ import {
 	Button, Icon, FormToggle,
 } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { debounce } from 'lodash'
 
 const noop = () => {}
 
-const scrollIntoViewIfNeeded = el => {
+// Debounced so this can be called multiple times by the closing panel and
+// opening panel and it will only scroll once.
+const scrollIntoViewIfNeeded = debounce( el => {
 	if ( el ) {
 		// 200 is an estimate of the top of the panel when it will be hidden from view.
 		const isAboveView = el.getBoundingClientRect().top < 200
@@ -33,7 +36,7 @@ const scrollIntoViewIfNeeded = el => {
 			} )
 		}
 	}
-}
+}, 0, { leading: false, trailing: true } ) // We use 0 here because it works and it minimizes the screen blinking.
 
 const PanelBody = (
 	{
@@ -68,11 +71,17 @@ const PanelBody = (
 		setIsOpened( newIsOpened )
 		onToggle( newIsOpened )
 
-		// If just opened, scroll into view if needed.
-		if ( newIsOpened ) {
+		// Scroll into view if needed.  This is called twice (first on the panel
+		// being closed, and second on the panel that's being openeed) we have
+		// debounced this so that the function is only called once, there's a
+		// delay on the open so that it's called last (and the first call on the
+		// panel that's being closed doesn't run).
+		if ( ! newIsOpened ) {
+			scrollIntoViewIfNeeded( nodeRef.current )
+		} else {
 			setTimeout( () => {
 				scrollIntoViewIfNeeded( nodeRef.current )
-			}, 1 )
+			}, 0 ) // We use 0 here because it works and it minimizes the screen blinking.
 		}
 	}
 
