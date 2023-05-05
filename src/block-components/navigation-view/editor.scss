@@ -53,6 +53,18 @@
 		}
 	}
 
+	// The resizer should be available only when the navigation view is open.
+	&:has(.ugb-panel--navigation-view:not(.is-opened)) {
+		.components-resizable-box__handle {
+			display: none !important;
+		}
+	}
+	&:has(.ugb-panel--navigation-view.is-opened) {
+		.components-resizable-box__handle {
+			display: block !important;
+		}
+	}
+
 	// Hide the circle resize indicator.
 	.components-resizable-box__handle::after {
 		display: none !important;
@@ -63,7 +75,14 @@
 	}
 }
 
-:is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area).ugb--has-panel-tabs {
+// Add a padding bottomto make way for the navigation view if we have it enabled.
+:is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area).ugb--has-panel-tabs:has(.ugb-panel--navigation-view) {
+	padding-bottom: 50px;
+}
+
+// If the navigation view is open, then add more padding to the bottom so that
+// the entire inspector area is still scrollable.
+:is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area).ugb--has-panel-tabs:has(.ugb-panel--navigation-view.is-opened) {
 	padding-bottom: var(--stk-inspector-navigation-view);
 	> .components-panel {
 		height: 100%;
