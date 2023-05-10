@@ -23,6 +23,7 @@ import { pick, omit } from 'lodash'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { Fragment } from '@wordpress/element'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
 import { BlockHighlighter } from './use-block-highlight'
 
@@ -60,15 +61,14 @@ export const BaseControl = props => {
 
 	const label = props.boldLabel ? <h3>{ props.label }</h3> : props.label
 
+	const VisualGuide = props.blockHighlight !== EMPTY_OBJ ? BlockHighlighter : Fragment
+
 	return (
 		<GutBaseControl
 			help={ props.help }
 			className={ className }
 		>
-			<BlockHighlighter
-				enabled={ props.blockHighlight !== EMPTY_OBJ }
-				{ ...props.blockHighlight }
-			>
+			<VisualGuide { ...props.blockHighlight }>
 				<div className={ labelClassName }>
 					<div className="components-base-control__label">{ label }</div>
 					<div className="stk-control-label__toggles">
@@ -94,7 +94,7 @@ export const BaseControl = props => {
 				<div className="stk-control-content">
 					{ props.children }
 				</div>
-			</BlockHighlighter>
+			</VisualGuide>
 		</GutBaseControl>
 	)
 }

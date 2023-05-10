@@ -12,7 +12,7 @@ import {
 } from '@wordpress/element'
 import { useRafState } from '~stackable/hooks'
 
-const BlockHighlightContext = createContext( [ null, () => {} ] )
+const BlockHighlightContext = createContext( null )
 
 export const useBlockHighlightContext = () => {
 	return useContext( BlockHighlightContext )
