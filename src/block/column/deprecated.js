@@ -54,7 +54,9 @@ addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.4.3', ( output,
 		return output
 	}
 
-	return output.filter( s => ! s.match( /^stk-[\d\w]+-inner-blocks$/ ) )
+	return classnames( output, {
+		[ `stk--${ props.attributes.uniqueId }-inner-blocks` ]: false,
+	} )
 } )
 
 const deprecated = [
