@@ -96,7 +96,10 @@ const Edit = props => {
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
 
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<ContainerDiv.InspectorControls
+						sizeSelector=".stk-block-content"
+						hasContentVerticalAlign={ true }
+					/>
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />

@@ -102,10 +102,15 @@ const Edit = props => {
 							sliderMax={ [ 200, 30 ] }
 							placeholder={ isOnlyBlock ? '0' : '12' }
 							className="ugb--help-tip-advanced-block-paddings"
+							blockHighlight={ {
+								selector: '.stk-%s-container',
+								highlight: 'column-spacing',
+								defaultValue: '12px',
+							} }
 						/>
 					</InspectorLayoutControls>
 
-					<Alignment.InspectorControls hasColumnAlignment={ true } />
+					<Alignment.InspectorControls hasContainerSize={ true } hasColumnAlignment={ true } />
 					<BlockDiv.InspectorControls />
 					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />

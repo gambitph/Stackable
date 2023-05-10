@@ -139,7 +139,7 @@ export const HeadingStyles = memo( props => {
 	return (
 		<>
 			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } verticalAlignRule="justifyContent" />
+			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<Typography.Style { ...props } selector=".stk-block-heading__text" />
@@ -161,7 +161,7 @@ HeadingStyles.Content = props => {
 	return (
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } verticalAlignRule="justifyContent" />
+			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Typography.Style.Content { ...props } selector=".stk-block-heading__text" />

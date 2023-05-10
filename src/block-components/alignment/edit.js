@@ -9,7 +9,11 @@ import {
 	InspectorLayoutControls,
 	AdvancedRangeControl,
 } from '~stackable/components'
-import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
+import {
+	useBlockAttributesContext,
+	useBlockSetAttributesContext,
+	useDeviceType,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -24,15 +28,28 @@ export const Edit = props => {
 		columnJustify,
 		innerBlockOrientation,
 		innerBlockWrap,
+		containerWidth,
+		containerWidthTablet,
+		containerWidthMobile,
+		alignLastBlockToBottom,
+		innerBlockRowGap,
+		innerBlockColumnGap,
 	} = useBlockAttributesContext( attributes => {
 		return {
 			contentAlign: attributes.contentAlign,
 			columnJustify: attributes.columnJustify,
 			innerBlockOrientation: attributes.innerBlockOrientation,
 			innerBlockWrap: attributes.innerBlockWrap,
+			containerWidth: attributes.containerWidth,
+			containerWidthTablet: attributes.containerWidthTablet,
+			containerWidthMobile: attributes.containerWidthMobile,
+			alignLastBlockToBottom: attributes.alignLastBlockToBottom,
+			innerBlockRowGap: attributes.innerBlockRowGap,
+			innerBlockColumnGap: attributes.innerBlockColumnGap,
 		}
 	} )
 	const setAttributes = useBlockSetAttributesContext()
+	const deviceType = useDeviceType()
 
 	const {
 		labelContentAlign = sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ),
@@ -61,6 +78,11 @@ export const Edit = props => {
 						className="ugb--help-tip-advanced-block-horizontal-align"
 						disableTablet={ ! columnJustify }
 						disableMobile={ ! columnJustify }
+						blockHighlight={ {
+							selector: '.stk-%s-column > * > * > [data-type]',
+							highlight: 'outline',
+						} }
+						help={ __( 'Column contents need to be narrow for effect to show.', i18n ) }
 					/>
 				}
 				{ props.hasColumnAlignment &&
@@ -70,6 +92,13 @@ export const Edit = props => {
 						responsive="all"
 						controls="flex-vertical"
 						className="ugb--help-tip-advanced-block-vertical-align"
+						blockHighlight={ {
+							// The 2nd selector (after the comma) is to select
+							// the parent Columns block where this Inner Column
+							// block belongs to.
+							selector: ', .stk-block-columns:has( > .stk-inner-blocks > * > * > [data-type="stackable/column"] > * > .stk-%s)',
+							highlight: 'outline-second-offset',
+						} }
 					/>
 				}
 				{ props.hasRowAlignment &&
@@ -79,8 +108,53 @@ export const Edit = props => {
 						responsive="all"
 						controls="flex-vertical"
 						className="ugb--help-tip-advanced-block-vertical-align"
+						blockHighlight={ { selector: '.stk-%s-column > * > * > [data-type]', highlight: 'outline' } }
 					/>
 				}
+				{ props.hasContainerSize && <>
+					<ControlSeparator />
+					<AdvancedRangeControl
+						label={ __( 'Content Min. Height', i18n ) }
+						attribute="containerHeight"
+						responsive="all"
+						units={ [ 'px', 'vh' ] }
+						min={ [ 0, 0 ] }
+						sliderMax={ [ 1000, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						placeholder="0"
+						blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Content Max Width', i18n ) }
+						attribute="containerWidth"
+						responsive="all"
+						units={ [ 'px', '%' ] }
+						min={ [ 0, 0 ] }
+						sliderMax={ [ 1500, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						placeholder=""
+						initialPosition="1500"
+						blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+					/>
+
+					{ (
+						( containerWidth !== '' && deviceType === 'Desktop' ) ||
+						( ( containerWidth !== '' || containerWidthTablet !== '' ) && deviceType === 'Tablet' ) ||
+						( ( containerWidth !== '' || containerWidthTablet !== '' || containerWidthMobile !== '' ) && deviceType === 'Mobile' )
+					) &&
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							attribute="containerHorizontalAlign"
+							responsive="all"
+							controls="horizontal"
+							className="ugb--help-tip-advanced-block-horizontal-align"
+							blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+						/>
+					}
+				</> }
+
 				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) && <ControlSeparator /> }
 				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
 					<AdvancedToolbarControl
@@ -115,6 +189,10 @@ export const Edit = props => {
 						attribute="innerBlockJustify"
 						responsive="all"
 						controls={ innerBlockOrientation ? 'flex-horizontal' : 'horizontal' }
+						blockHighlight={ {
+							selector: '.stk-%s-container, .stk-%s-container > * > .block-editor-block-list__layout > [data-type]',
+							highlight: 'outline-first-offset',
+						} }
 					/>
 				}
 				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
@@ -123,6 +201,12 @@ export const Edit = props => {
 						attribute="innerBlockAlign"
 						responsive="all"
 						controls={ innerBlockOrientation ? 'vertical' : 'flex-justify-vertical' }
+						disabled={ alignLastBlockToBottom ? 'all' : undefined }
+						blockHighlight={ {
+							selector: '.stk-%s-container, .stk-%s-container > * > .block-editor-block-list__layout > [data-type]',
+							highlight: 'outline-first-offset',
+						} }
+						help={ __( 'Set Content Min. Height for alignment to display properly', i18n ) }
 					/>
 				}
 				{ innerBlockOrientation &&
@@ -141,19 +225,46 @@ export const Edit = props => {
 						attribute="innerBlockWrap"
 					/>
 				}
-				{ innerBlockOrientation &&
+				{ innerBlockOrientation && // This is "column gap" when the blocks are horizontal.
 					<AdvancedRangeControl
-						label={ __( 'Column Gap', i18n ) }
+						label={ innerBlockWrap === 'wrap'
+							? sprintf( __( '%s %s', i18n ), __( 'Inner Block', i18n ), __( 'Column Gap', i18n ) )
+							: sprintf( __( '%s %s', i18n ), __( 'Inner Block', i18n ), __( 'Gap', i18n ) )
+						}
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 100 }
 						placeholder="24"
 						attribute="innerBlockColumnGap"
+						blockHighlight={
+							innerBlockWrap !== 'wrap'
+								? {
+									selector: '.stk-%s-container > * > .block-editor-block-list__layout',
+									highlight: 'column-gap',
+									value: innerBlockColumnGap,
+								}
+								: null
+						}
+					/>
+				}
+				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) && ! innerBlockOrientation && // This is "row gap" when the blocks are vertical.
+					<AdvancedRangeControl
+						label={ sprintf( __( '%s %s', i18n ), __( 'Inner Block', i18n ), __( 'Gap', i18n ) ) }
+						responsive="all"
+						min={ 0 }
+						sliderMax={ 100 }
+						placeholder="0"
+						attribute="innerBlockRowGap"
+						blockHighlight={ {
+							selector: '.stk-%s-container > * > .block-editor-block-list__layout',
+							highlight: 'row-gap',
+							value: innerBlockRowGap,
+						} }
 					/>
 				}
 				{ ( innerBlockOrientation && innerBlockWrap === 'wrap' ) &&
 					<AdvancedRangeControl
-						label={ __( 'Row Gap', i18n ) }
+						label={ sprintf( __( '%s %s', i18n ), __( 'Inner Block', i18n ), __( 'Row Gap', i18n ) ) }
 						responsive="all"
 						min={ 0 }
 						sliderMax={ 100 }
@@ -171,4 +282,5 @@ Edit.defaultProps = {
 	hasRowAlignment: false,
 	hasColumnAlignment: false,
 	hasBlockAlignment: false,
+	hasContainerSize: false,
 }

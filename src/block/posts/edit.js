@@ -305,7 +305,7 @@ const Edit = props => {
 					</InspectorStyleControls>
 
 					<BlockDiv.InspectorControls />
-					<ContainerDiv.InspectorControls />
+					<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<Image.InspectorControls

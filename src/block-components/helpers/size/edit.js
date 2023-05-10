@@ -42,15 +42,22 @@ const Layout = props => {
 				allowReset={ true }
 				placeholder="0"
 				className="ugb--help-tip-advanced-block-height"
+				blockHighlight={ props.blockHighlight }
 			/>
 
-			<AdvancedToolbarControl
-				label={ labelVerticalAlign }
-				attribute={ getAttrName( 'verticalAlign' ) }
-				responsive="all"
-				controls="vertical"
-				className="ugb--help-tip-advanced-block-vertical-align"
-			/>
+			{ props.hasContentVerticalAlign &&
+				<AdvancedToolbarControl
+					label={ labelVerticalAlign }
+					attribute={ getAttrName( 'verticalAlign' ) }
+					responsive="all"
+					controls="vertical"
+					className="ugb--help-tip-advanced-block-vertical-align"
+					blockHighlight={ ! props.blockHighlight ? null : {
+						...props.blockHighlight,
+						selector: ( props.blockHighlight.selector || '' ) + ', .stk-%s > *',
+					} }
+				/>
+			}
 
 			<AdvancedRangeControl
 				label={ labelContentWidth }
@@ -64,34 +71,21 @@ const Layout = props => {
 				placeholder=""
 				initialPosition="1500"
 				className="ugb--help-tip-advanced-block-content-width"
+				blockHighlight={ props.blockHighlight }
 			/>
 
-			{ getAttribute( 'width' ) !== '' && deviceType === 'Desktop' &&
-				<AdvancedToolbarControl
-					label={ labelHorizontalAlign }
-					attribute={ getAttrName( 'HorizontalAlign' ) }
-					responsive="all"
-					controls="horizontal"
-					value={ getAttribute( 'HorizontalAlign' ) }
-					className="ugb--help-tip-advanced-block-horizontal-align"
-				/>
-			}
-			{ ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' ) && deviceType === 'Tablet' &&
+			{ (
+				( getAttribute( 'width' ) !== '' && deviceType === 'Desktop' ) ||
+			    ( ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' ) && deviceType === 'Tablet' ) ||
+			    ( ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' || getAttribute( 'widthMobile' ) !== '' ) && deviceType === 'Mobile' )
+			  ) &&
 				<AdvancedToolbarControl
 					label={ labelHorizontalAlign }
 					attribute={ getAttrName( 'HorizontalAlign' ) }
 					responsive="all"
 					controls="horizontal"
 					className="ugb--help-tip-advanced-block-horizontal-align"
-				/>
-			}
-			{ ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' || getAttribute( 'widthMobile' ) !== '' ) && deviceType === 'Mobile' &&
-				<AdvancedToolbarControl
-					label={ labelHorizontalAlign }
-					attribute={ getAttrName( 'HorizontalAlign' ) }
-					responsive="all"
-					controls="horizontal"
-					className="ugb--help-tip-advanced-block-horizontal-align"
+					blockHighlight={ props.blockHighlight }
 				/>
 			}
 		</>
@@ -100,6 +94,8 @@ const Layout = props => {
 
 Layout.defaultProps = {
 	attrNameTemplate: '%s',
+	hasContentVerticalAlign: true,
+	blockHighlight: null,
 	labels: {},
 }
 
@@ -113,6 +109,16 @@ const Spacing = props => {
 		labelMargins = __( 'Margins', i18n ),
 	} = props.labels
 
+	const paddingBlockHighlight = ! props.blockHighlight ? null : {
+		...props.blockHighlight,
+		highlight: 'padding',
+	}
+
+	const marginBlockHighlight = ! props.blockHighlight ? null : {
+		...props.blockHighlight,
+		highlight: 'margin',
+	}
+
 	return (
 		<>
 			<FourRangeControl
@@ -125,6 +131,8 @@ const Spacing = props => {
 				min={ [ 0, 0, 0 ] }
 				sliderMax={ [ 200, 30, 100 ] }
 				className="ugb--help-tip-advanced-block-paddings"
+				blockHighlight={ paddingBlockHighlight }
+				placeholder={ props.paddingPlaceholder }
 			/>
 
 			{ props.enableMargin &&
@@ -138,6 +146,7 @@ const Spacing = props => {
 					sliderMax={ [ 200, 100 ] }
 					placeholder="0"
 					className="ugb--help-tip-advanced-block-margins"
+					blockHighlight={ marginBlockHighlight }
 				/>
 			}
 		</>
@@ -146,7 +155,9 @@ const Spacing = props => {
 
 Spacing.defaultProps = {
 	attrNameTemplate: '%s',
+	paddingPlaceholder: '',
 	enableMargin: true,
+	blockHighlight: null,
 	labels: {},
 }
 export const SizeControls = {

@@ -6,7 +6,9 @@
 }
 
 // Remove the margins if it's only 1 block.
-.stk-block-columns:has(> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:first-child:last-child) {
+.stk-block-columns:has(> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:first-child:last-child),
+// The block visual guides will have a style tag at the start, but still have only 1 column.
+.stk-block-columns:has(> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > style:first-child):has(> .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(2):last-child) {
 	--stk-columns-spacing: 0;
 }
 

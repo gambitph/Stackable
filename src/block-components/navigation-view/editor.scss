@@ -75,8 +75,11 @@
 	}
 }
 
-// Add a padding bottomto make way for the navigation view if we have it enabled.
-:is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area).ugb--has-panel-tabs:has(.ugb-panel--navigation-view) {
+// Just add a padding bottom to make way for the navigation view. We do this all
+// the time because FF doesn't have support for :has selector. Uncomment below
+// when FF finally supports :has selector
+// :is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area).ugb--has-panel-tabs:has(.ugb-panel--navigation-view) {
+:is(.edit-post-sidebar, .edit-widgets-sidebar, .interface-complementary-area).ugb--has-panel-tabs {
 	padding-bottom: 50px;
 }
 

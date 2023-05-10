@@ -44,6 +44,7 @@ export const Controls = () => {
 						icon: 'align-full-width',
 					},
 				] }
+				blockHighlight={ { highlight: 'outline' } }
 			/>
 			<AdvancedToolbarControl
 				label={ __( 'Content Width', i18n ) }
@@ -66,6 +67,11 @@ export const Controls = () => {
 						icon: 'align-full-width',
 					},
 				] }
+				help={ __( 'Set the content to be smaller than the block width', i18n ) }
+				blockHighlight={ {
+					selector: ', .stk-%s-column',
+					highlight: 'outline-first-offset',
+				} }
 			/>
 		</>
 	)

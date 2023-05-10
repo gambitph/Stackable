@@ -240,7 +240,10 @@ const AlignmentStyles = props => {
 				key="innerBlockRowGapEdit"
 				format={ `%spx` }
 				responsive="all"
-				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal' && getAttribute( 'innerBlockWrap' ) === 'wrap' }
+				enabledCallback={ getAttribute => {
+					return getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ||
+						( getAttribute( 'innerBlockOrientation' ) === 'horizontal' && getAttribute( 'innerBlockWrap' ) === 'wrap' )
+				} }
 				dependencies={ [
 					'innerBlockOrientation',
 					'innerBlockWrap',
@@ -256,7 +259,10 @@ const AlignmentStyles = props => {
 				key="innerBlockRowGapSave"
 				format={ `%spx` }
 				responsive="all"
-				enabledCallback={ getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal' && getAttribute( 'innerBlockWrap' ) === 'wrap' }
+				enabledCallback={ getAttribute => {
+					return getAttribute( 'innerBlockOrientation' ) !== 'horizontal' ||
+						( getAttribute( 'innerBlockOrientation' ) === 'horizontal' && getAttribute( 'innerBlockWrap' ) === 'wrap' )
+				} }
 				dependencies={ [
 					'innerBlockOrientation',
 					'innerBlockWrap',

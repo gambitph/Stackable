@@ -41,17 +41,23 @@ export const Edit = props => {
 			<InspectorBlockControls>
 				{ hasSizeSpacing && (
 					<PanelAdvancedSettings
-						title={ __( 'Size & Spacing', i18n ) }
+						title={ __( 'Block Size & Spacing', i18n ) }
 						id="spacing"
 						initialOpen={ initialOpen === 'spacing' }
 					>
 						<SizeControls.Layout
 							attrNameTemplate="block%s"
 							blockEl={ blockEl }
+							blockHighlight={ {
+								highlight: 'outline',
+							} }
 						/>
 						<SizeControls.Spacing
 							attrNameTemplate="block%s"
 							blockEl={ blockEl }
+							blockHighlight={ {
+								highlight: 'padding',
+							} }
 						/>
 					</PanelAdvancedSettings>
 				) }

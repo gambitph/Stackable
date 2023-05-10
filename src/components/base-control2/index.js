@@ -24,11 +24,13 @@ import { pick, omit } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
+import { BlockHighlighter } from './use-block-highlight'
 
 // Expose useControlHandlers to our API.
 export { useControlHandlers } from './hooks'
 
 const ALL_SCREENS = [ 'desktop', 'tablet', 'mobile' ]
+const EMPTY_OBJ = {}
 
 export const BaseControl = props => {
 	const deviceType = useDeviceType()
@@ -63,31 +65,36 @@ export const BaseControl = props => {
 			help={ props.help }
 			className={ className }
 		>
-			<div className={ labelClassName }>
-				<div className="components-base-control__label">{ label }</div>
-				<div className="stk-control-label__toggles">
-					{ hasRepsonsive && <ResponsiveToggle screens={ responsive } /> }
-					{ hasHover && <HoverStateToggle hover={ props.hover } /> }
+			<BlockHighlighter
+				enabled={ props.blockHighlight !== EMPTY_OBJ }
+				{ ...props.blockHighlight }
+			>
+				<div className={ labelClassName }>
+					<div className="components-base-control__label">{ label }</div>
+					<div className="stk-control-label__toggles">
+						{ hasRepsonsive && <ResponsiveToggle screens={ responsive } /> }
+						{ hasHover && <HoverStateToggle hover={ props.hover } /> }
+					</div>
+					<div className="stk-control-label__after">
+						{ hasUnits &&
+							<ControlIconToggle
+								className="stk-control-label__units"
+								value={ props.unit }
+								options={ units }
+								onChange={ unit => props.onChangeUnit( unit ) }
+								buttonLabel={ __( 'Unit', i18n ) }
+								hasLabels={ false }
+								hasColors={ false }
+								labelPosition="left"
+							/>
+						}
+						{ props.after }
+					</div>
 				</div>
-				<div className="stk-control-label__after">
-					{ hasUnits &&
-						<ControlIconToggle
-							className="stk-control-label__units"
-							value={ props.unit }
-							options={ units }
-							onChange={ unit => props.onChangeUnit( unit ) }
-							buttonLabel={ __( 'Unit', i18n ) }
-							hasLabels={ false }
-							hasColors={ false }
-							labelPosition="left"
-						/>
-					}
-					{ props.after }
+				<div className="stk-control-content">
+					{ props.children }
 				</div>
-			</div>
-			<div className="stk-control-content">
-				{ props.children }
-			</div>
+			</BlockHighlighter>
 		</GutBaseControl>
 	)
 }
@@ -109,6 +116,8 @@ BaseControl.defaultProps = {
 
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
+
+	blockHighlight: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 }
 
 const AdvancedControl = props => {
@@ -150,6 +159,8 @@ AdvancedControl.defaultProps = {
 
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
+
+	blockHighlight: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 }
 
 export default AdvancedControl

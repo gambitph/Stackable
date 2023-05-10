@@ -90,8 +90,7 @@
 }
 
 // Columns
-.stk-block-columns,
-.stk-block-horizontal-scroller {
+.stk-block:not(.stk-block-column) {
 	#{ '--stk-columns-spacing' }: cssvar(column-margin);
 }
 body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-column:first-child:last-child) { // Remove the margins if it's only 1 block.

@@ -136,6 +136,11 @@ export const Controls = props => {
 						min={ [ 0, 0 ] }
 						sliderMax={ [ 200, 30 ] }
 						placeholder={ numInnerBlocks === 1 ? '0' : '12' }
+						blockHighlight={ {
+							selector: '.stk-%s-column > * > * > [data-type="stackable/column"] > * > .stk-column > .stk-inner-blocks',
+							highlight: 'column-spacing',
+							defaultValue: '12px',
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
@@ -144,6 +149,11 @@ export const Controls = props => {
 						min={ 0 }
 						sliderMax={ 100 }
 						placeholder="0"
+						blockHighlight={ {
+							selector: '.stk-%s-column > * > *',
+							highlight: 'columns:column-gap',
+							responsive: [ 'desktop' ],
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
