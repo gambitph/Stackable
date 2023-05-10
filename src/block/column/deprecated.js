@@ -66,8 +66,7 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasOldColumnFit = !! attributes.columnFit
 
-			const hasOldVerticalAlign = !! attributes.blockVerticalAlign || // Column only, this was changed to flexbox
-				!! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+			const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
 
 			const hasContainerPaddings = values( attributes.containerPadding ).some( padding => padding !== '' )
 
@@ -84,15 +83,13 @@ const deprecated = [
 			let newAttributes = { ...attributes }
 
 			// Update the vertical align into flexbox
-			const hasOldVerticalAlign = !! attributes.blockVerticalAlign || // Column only, this was changed to flexbox
-				!! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+			const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
 
 			if ( hasOldVerticalAlign ) {
 				newAttributes = {
 					...newAttributes,
-					blockVerticalAlign: '',
 					containerVerticalAlign: '',
-					innerBlockAlign: attributes.blockVerticalAlign || attributes.containerVerticalAlign,
+					innerBlockAlign: attributes.containerVerticalAlign,
 				}
 			}
 
