@@ -59,30 +59,39 @@ addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.4.3', ( output,
 	} )
 } )
 
+// Version 3.8 Deprecations, we now don't have any --v2 --v3 classes anymore.
+addFilter( 'stackable.column.save.blockClassNames', 'stackable/3.8.0', ( output, props ) => {
+	if ( compareVersions( props.version, '3.8.0' ) >= 0 ) {
+		output.push( {
+			'stk-block-column--v2': false,
+			'stk-block-column--v3': false,
+		} )
+		return output
+	}
+
+	return output
+} )
+
 const deprecated = [
 	{
 		// This deprecation entry is for the New UI where we changed how the
 		// layout & containers work.
-		attributes: attributes(),
+		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
 		isEligible: attributes => {
-			const hasOldColumnFit = !! attributes.columnFit
+			const isNotV4 = attributes.version < 4 || typeof attributes.version === 'undefined'
 
-			const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
-
-			const hasContainerPaddings = values( attributes.containerPadding ).some( padding => padding !== '' )
-
-			const hasContainerBorders = !! attributes.containerBorderType ||
-				( typeof attributes.containerBorderRadius !== 'undefined' && attributes.containerBorderRadius !== '' ) ||
-				!! attributes.containerShadow
-
-			return hasOldColumnFit ||
-				hasOldVerticalAlign ||
-				( ! attributes.hasContainer && hasContainerPaddings ) ||
-				( ! attributes.hasContainer && hasContainerBorders )
+			return isNotV4
 		},
 		migrate: ( attributes, innerBlocks ) => {
-			let newAttributes = { ...attributes }
+			let newAttributes = {
+				...attributes,
+				version: 4,
+				className: classnames( attributes.className, {
+					'stk-block-column--v2': false,
+					'stk-block-column--v3': false,
+				} ),
+			}
 
 			// Update the vertical align into flexbox
 			const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
@@ -130,6 +139,7 @@ const deprecated = [
 					hasContainer: true,
 					containerPadding: newContainerPadding,
 					containerBackgroundColor: 'transparent',
+					containerShadow: newAttributes.containerShadow || 'none',
 				}
 			}
 

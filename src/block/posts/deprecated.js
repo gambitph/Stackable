@@ -41,23 +41,18 @@ const deprecated = [
 	{
 		// This deprecation entry is for the New UI where we changed how the
 		// layout & containers work.
-		attributes: attributes(),
+		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
 		isEligible: attributes => {
-			const hasOldInnerContentWidth = attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			const hasContainerPaddings = values( attributes.containerPadding ).some( padding => padding !== '' )
-
-			const hasContainerBorders = !! attributes.containerBorderType ||
-				( typeof attributes.containerBorderRadius !== 'undefined' && attributes.containerBorderRadius !== '' ) ||
-				!! attributes.containerShadow
-
-			return hasOldInnerContentWidth ||
-				( ! attributes.hasContainer && hasContainerPaddings ) ||
-				( ! attributes.hasContainer && hasContainerBorders )
+			return isNotV4
 		},
 		migrate: attributes => {
-			let newAttributes = { ...attributes }
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
 
 			// We used to have an "Inner content width" which is now just the block width
 			const hasOldInnerContentWidth = attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
@@ -121,6 +116,7 @@ const deprecated = [
 					hasContainer: true,
 					containerPadding: newContainerPadding,
 					containerBackgroundColor: 'transparent',
+					containerShadow: newAttributes.containerShadow || 'none',
 				}
 			}
 
