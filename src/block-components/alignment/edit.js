@@ -55,6 +55,52 @@ export const Edit = props => {
 		labelContentAlign = sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ),
 	} = props
 
+	const containerSize = props.hasContainerSize && <>
+		<ControlSeparator />
+		{ props.hasContainerHeight &&
+			<AdvancedRangeControl
+				label={ __( 'Content Min. Height', i18n ) }
+				attribute="containerHeight"
+				responsive="all"
+				units={ [ 'px', 'vh' ] }
+				min={ [ 0, 0 ] }
+				sliderMax={ [ 1000, 100 ] }
+				step={ [ 1, 1 ] }
+				allowReset={ true }
+				placeholder="0"
+				blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+			/>
+		}
+		<AdvancedRangeControl
+			label={ __( 'Content Max Width', i18n ) }
+			attribute="containerWidth"
+			responsive="all"
+			units={ [ 'px', '%' ] }
+			min={ [ 0, 0 ] }
+			sliderMax={ [ 1500, 100 ] }
+			step={ [ 1, 1 ] }
+			allowReset={ true }
+			placeholder=""
+			initialPosition="1500"
+			blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+		/>
+
+		{ (
+			( containerWidth !== '' && deviceType === 'Desktop' ) ||
+			( ( containerWidth !== '' || containerWidthTablet !== '' ) && deviceType === 'Tablet' ) ||
+			( ( containerWidth !== '' || containerWidthTablet !== '' || containerWidthMobile !== '' ) && deviceType === 'Mobile' )
+		) &&
+			<AdvancedToolbarControl
+				label={ __( 'Content Horizontal Align', i18n ) }
+				attribute="containerHorizontalAlign"
+				responsive="all"
+				controls="horizontal"
+				className="ugb--help-tip-advanced-block-horizontal-align"
+				blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+			/>
+		}
+	</>
+
 	return (
 		<Fragment>
 			<BlockControls>
@@ -64,6 +110,7 @@ export const Edit = props => {
 				/>
 			</BlockControls>
 			<InspectorLayoutControls>
+				{ props.containerSizePriority < 5 && containerSize }
 				<AlignButtonsControl
 					label={ labelContentAlign }
 					attribute="contentAlign"
@@ -111,50 +158,7 @@ export const Edit = props => {
 						blockHighlight={ { selector: '.stk-%s-column > * > * > [data-type]', highlight: 'outline' } }
 					/>
 				}
-				{ props.hasContainerSize && <>
-					<ControlSeparator />
-					<AdvancedRangeControl
-						label={ __( 'Content Min. Height', i18n ) }
-						attribute="containerHeight"
-						responsive="all"
-						units={ [ 'px', 'vh' ] }
-						min={ [ 0, 0 ] }
-						sliderMax={ [ 1000, 100 ] }
-						step={ [ 1, 1 ] }
-						allowReset={ true }
-						placeholder="0"
-						blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Content Max Width', i18n ) }
-						attribute="containerWidth"
-						responsive="all"
-						units={ [ 'px', '%' ] }
-						min={ [ 0, 0 ] }
-						sliderMax={ [ 1500, 100 ] }
-						step={ [ 1, 1 ] }
-						allowReset={ true }
-						placeholder=""
-						initialPosition="1500"
-						blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
-					/>
-
-					{ (
-						( containerWidth !== '' && deviceType === 'Desktop' ) ||
-						( ( containerWidth !== '' || containerWidthTablet !== '' ) && deviceType === 'Tablet' ) ||
-						( ( containerWidth !== '' || containerWidthTablet !== '' || containerWidthMobile !== '' ) && deviceType === 'Mobile' )
-					) &&
-						<AdvancedToolbarControl
-							label={ __( 'Content Horizontal Align', i18n ) }
-							attribute="containerHorizontalAlign"
-							responsive="all"
-							controls="horizontal"
-							className="ugb--help-tip-advanced-block-horizontal-align"
-							blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
-						/>
-					}
-				</> }
-
+				{ props.containerSizePriority === 5 && containerSize }
 				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) && <ControlSeparator /> }
 				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
 					<AdvancedToolbarControl
@@ -283,4 +287,6 @@ Edit.defaultProps = {
 	hasColumnAlignment: false,
 	hasBlockAlignment: false,
 	hasContainerSize: false,
+	hasContainerHeight: true,
+	containerSizePriority: 5,
 }
