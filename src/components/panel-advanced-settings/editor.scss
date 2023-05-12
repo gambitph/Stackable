@@ -196,7 +196,7 @@ div :has(> .stk--premium-panel) {
 }
 
 // Design panel selection
-.ugb-toggle-panel-body:has(.components-base-control.has-value.stk-control) .stk-panel-modified-indicator {
+.ugb-toggle-panel-body:has(.components-base-control.has-value.stk-control, .has-value.ugb-image-shape-control) .stk-panel-modified-indicator {
 	display: block;
 }
 
