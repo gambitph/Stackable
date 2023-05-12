@@ -272,6 +272,7 @@ const ShadowControl = memo( props => {
 		<>
 			<AdvancedRangeControl
 				{ ...propsToPass }
+				attribute={ props.attribute }
 				label={ label }
 				value={ value }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
