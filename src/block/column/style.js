@@ -148,6 +148,7 @@ const ColumnStyles = props => {
 const BlockStyles = memo( props => {
 	return (
 		<>
+			<ColumnStyles { ...props } />
 			<Alignment.Style
 				{ ...props }
 				columnAlignSelectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
@@ -158,7 +159,6 @@ const BlockStyles = memo( props => {
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
-			<ColumnStyles { ...props } />
 		</>
 	)
 } )
@@ -174,6 +174,7 @@ BlockStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
+			<ColumnStyles { ...props } />
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<Column.Style.Content { ...props } />
@@ -181,7 +182,6 @@ BlockStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<ColumnStyles { ...props } />
 		</BlockCssCompiler>
 	)
 }
