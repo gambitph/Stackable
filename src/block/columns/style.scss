@@ -17,7 +17,7 @@
 // The problem with flexbox and paddings is better explained here: https://css-tricks.com/equal-columns-with-flexbox-its-more-complicated-than-you-might-think/
 @for $columns from 2 through 6 {
 	@for $index from 1 through $columns {
-		body:not(.wp-admin) .stk-block-column:nth-child(#{ $index }):nth-last-child(#{ $columns - $index + 1 }) {
+		:where(body:not(.wp-admin) .stk-block-column:nth-child(#{ $index }):nth-last-child(#{ $columns - ($index - 1) })) {
 			flex: 1 1 calc(( 100% / #{ $columns } ) - var(--stk-column-gap, 0px) * 1 / #{ $columns }) !important;
 		}
 	}
