@@ -47,7 +47,8 @@ const HOVER_OPTIONS = [
 ]
 
 const ALL_HOVER = [ 'normal', 'hover', 'parent-hovered', 'collapsed' ]
-const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.map( s => upperFirst( camelCase( s ) ) )
+const _ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
+const ALL_HOVER_ATTRIBUTE_SUFFIX = _ALL_HOVER.map( s => upperFirst( camelCase( s ) ) )
 
 const HoverStateToggle = props => {
 	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
@@ -61,7 +62,7 @@ const HoverStateToggle = props => {
 		return ALL_HOVER.reduce( ( states, state, i ) => {
 			return {
 				...states,
-				[ state ]: attributes[ `${ props.attribute }${ props.hasRepsonsive && deviceType !== 'Desktop' ? deviceType : '' }${ ALL_HOVER_ATTRIBUTE_SUFFIX[ i ] }` ],
+				[ state ]: attributes[ `${ props.attribute }${ props.hasResponsive && deviceType !== 'Desktop' ? deviceType : '' }${ ALL_HOVER_ATTRIBUTE_SUFFIX[ i ] }` ],
 			}
 		}, {} )
 	} )
