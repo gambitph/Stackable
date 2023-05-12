@@ -18,7 +18,7 @@
 @for $columns from 2 through 6 {
 	@for $index from 1 through $columns {
 		:where(body:not(.wp-admin) .stk-block-column:nth-child(#{ $index }):nth-last-child(#{ $columns - ($index - 1) })) {
-			flex: 1 1 calc(( 100% / #{ $columns } ) - var(--stk-column-gap, 0px) * 1 / #{ $columns }) !important;
+			flex: 1 1 calc(( 100% / #{ $columns } ) - var(--stk-column-gap, 0px) * #{ $columns - 1 } / #{ $columns }) !important;
 		}
 	}
 }
