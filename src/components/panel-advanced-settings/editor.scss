@@ -175,6 +175,12 @@ div :has(> .stk--premium-panel) {
 .stk-panel-modified-indicator:not(.stk--visible) {
 	display: none;
 }
+
+// Prevent text control and image control from having orange indicator
+.ugb-toggle-panel-body:has(.stk-control__reset-button.stk-control__reset-button--no-modified.ugb-button-component) .stk-panel-modified-indicator {
+	display: none;
+}
+
 // Reset button = .stk-control__reset-button & .stk-inspector-control__reset-button
 // (We had to split this into multiple lines because of a compiler bug where the :not selector goes empty)
 .ugb-toggle-panel-body:has(.stk-control__reset-button:not(.stk-control__reset-button--no-modified)) .stk-panel-modified-indicator {
@@ -186,5 +192,15 @@ div :has(> .stk--premium-panel) {
 // Highlighted responsive & hover state toggle = .stk-label-unit-toggle .has-value
 // Conditional display = .stk-condition-component
 .ugb-toggle-panel-body:has(.stk-label-unit-toggle .has-value, .stk-condition-component) .stk-panel-modified-indicator {
+	display: block;
+}
+
+// Design panel selection
+.ugb-toggle-panel-body:has(.components-base-control.has-value.stk-control) .stk-panel-modified-indicator {
+	display: block;
+}
+
+// For Button Style Selection
+.ugb-toggle-panel-body:has(.stk-style-control__option.stk-block-editor-block-styles__item.is-active) .stk-panel-modified-indicator {
 	display: block;
 }
