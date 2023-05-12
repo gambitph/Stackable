@@ -179,7 +179,7 @@ const deprecated = [
 		},
 	},
 	{
-		attributes: attributes(),
+		attributes: attributes( '3.0.2' ),
 		save: withVersion( '3.0.2' )( Save ),
 	},
 ]

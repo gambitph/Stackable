@@ -71,7 +71,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-column',
-		'stk-block-column--v3',
 		columnClass,
 	] )
 
@@ -147,6 +146,7 @@ const Edit = props => {
 					clientId={ props.clientId }
 					attributes={ props.attributes }
 					className={ blockClassNames }
+					data-v={ props.attributes.version }
 				>
 					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks

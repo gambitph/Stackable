@@ -9,59 +9,59 @@ import { attributes } from './schema'
  */
 import { values } from 'lodash'
 import { withVersion } from '~stackable/higher-order'
-import compareVersions from 'compare-versions'
 import classnames from 'classnames/dedupe'
 
 /**
  * WordPress dependencies
  */
 import { addFilter } from '@wordpress/hooks'
+import { semverCompare } from '~stackable/util'
 
 // Version 3.8 added horizontal flex, this changes the stk--block-orientation-* to stk--block-horizontal-flex.
 addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {
-	if ( compareVersions( props.version, '3.8.0' ) >= 0 ) {
-		return output
+	if ( semverCompare( props.version, '>=', '3.7.9' ) ) {
+		return classnames( output, {
+			'stk--block-horizontal-flex': false,
+			[ `stk--block-orientation-${ props.attributes.innerBlockOrientation }` ]: props.attributes.innerBlockOrientation,
+		} )
 	}
 
-	return classnames( output, {
-		'stk--block-horizontal-flex': false,
-		[ `stk--block-orientation-${ props.attributes.innerBlockOrientation }` ]: props.attributes.innerBlockOrientation,
-	} )
+	return output
 } )
 
 // Version 3.7 Deprecations, we now have a stk-block-column--v3 class and removed the --v2 class
 addFilter( 'stackable.column.save.blockClassNames', 'stackable/3.7.0', ( output, props ) => {
-	if ( compareVersions( props.version, '3.7.0' ) >= 0 ) {
-		return output
+	if ( semverCompare( props.version, '>=', '3.7.0' ) ) {
+		return output.filter( s => s !== 'stk-block-column--v3' )
 	}
 
-	return output.filter( s => s !== 'stk-block-column--v3' )
+	return output
 } )
 
 // Version 3.4.3 Deprecations, we now have a stk-block-column--v2 class.
 addFilter( 'stackable.column.save.blockClassNames', 'stackable/3.4.3', ( output, props ) => {
-	if ( compareVersions( props.version, '3.4.3' ) >= 0 ) {
-		output.push( 'stk-block-column--v2' )
-		return output
+	if ( semverCompare( props.version, '>=', '3.4.3' ) ) {
+		return output.filter( s => s !== 'stk-block-column--v2' )
 	}
 
-	return output.filter( s => s !== 'stk-block-column--v2' )
+	output.push( 'stk-block-column--v2' )
+	return output
 } )
 
 // Version 3.4.3 Deprecations, we now have a stk-123abc-inner-blocks class.
 addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.4.3', ( output, props ) => {
-	if ( compareVersions( props.version, '3.4.3' ) >= 0 ) {
-		return output
+	if ( semverCompare( props.version, '>=', '3.4.3' ) ) {
+		return classnames( output, {
+			[ `stk-${ props.attributes.uniqueId }-inner-blocks` ]: false,
+		} )
 	}
 
-	return classnames( output, {
-		[ `stk--${ props.attributes.uniqueId }-inner-blocks` ]: false,
-	} )
+	return output
 } )
 
 // Version 3.8 Deprecations, we now don't have any --v2 --v3 classes anymore.
 addFilter( 'stackable.column.save.blockClassNames', 'stackable/3.8.0', ( output, props ) => {
-	if ( compareVersions( props.version, '3.8.0' ) >= 0 ) {
+	if ( semverCompare( props.version, '>=', '3.7.9' ) ) {
 		output.push( {
 			'stk-block-column--v2': false,
 			'stk-block-column--v3': false,
@@ -173,11 +173,11 @@ const deprecated = [
 		},
 	},
 	{
-		attributes: attributes(),
+		attributes: attributes( '3.6.6' ),
 		save: withVersion( '3.6.6' )( Save ),
 	},
 	{
-		attributes: attributes(),
+		attributes: attributes( '3.4.2' ),
 		save: withVersion( '3.4.2' )( Save ),
 	},
 ]

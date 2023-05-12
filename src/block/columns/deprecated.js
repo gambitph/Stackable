@@ -33,7 +33,7 @@ addFilter( 'stackable.columns.save.contentClassNames', 'stackable/3.6.2', ( clas
 
 const deprecated = [
 	{
-		attributes: attributes(),
+		attributes: attributes( '3.7.3' ),
 		save: withVersion( '3.7.3' )( Save ),
 		isEligible: attributes => !! attributes.columnFit,
 		migrate: attributes => {
@@ -46,7 +46,7 @@ const deprecated = [
 		},
 	},
 	{
-		attributes: attributes(),
+		attributes: attributes( '3.6.1' ),
 		save: withVersion( '3.6.1' )( Save ),
 	},
 ]

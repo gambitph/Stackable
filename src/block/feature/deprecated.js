@@ -118,19 +118,6 @@ const deprecated = [
 		},
 	},
 	{
-		attributes: attributes(),
-		save: withVersion( '3.8.0' )( Save ),
-		isEligible: attributes => !! attributes.columnFit,
-		migrate: attributes => {
-			return {
-				...attributes,
-				columnFit: '',
-				columnFitAlign: '',
-				columnJustify: attributes.columnFitAlign,
-			}
-		},
-	},
-	{
 		attributes: attributes( '3.0.2' ),
 		save: withVersion( '3.0.2' )( Save ),
 	},
