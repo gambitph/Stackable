@@ -46,7 +46,7 @@ export const Style = props => {
 				// verticalAlignSelectorEdit={ sizeVerticalAlignSelectorEdit }
 				horizontalAlignRule={ sizeHorizontalAlignRule }
 				wrapperSelector={ wrapperSelector }
-				hasPaddings={ hasContainer }
+				// hasPaddings={ hasContainer }
 			/>
 		</>
 	)
@@ -95,7 +95,7 @@ Style.Content = props => {
 				// verticalAlignSelectorEdit={ sizeVerticalAlignSelectorEdit }
 				horizontalAlignRule={ sizeHorizontalAlignRule }
 				wrapperSelector={ wrapperSelector }
-				hasPaddings={ attributes.hasContainer }
+				// hasPaddings={ attributes.hasContainer }
 			/>
 		</>
 	)

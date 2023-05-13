@@ -14,7 +14,6 @@ import compareVersions from 'compare-versions'
  * WordPress dependencies
  */
 import { addFilter } from '@wordpress/hooks'
-import { values } from 'lodash'
 
 // Version 3.8 added horizontal flex, this changes the stk--block-orientation-* to stk--block-horizontal-flex.
 addFilter( 'stackable.hero.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {
@@ -76,27 +75,6 @@ const deprecated = [
 					},
 					containerBackgroundColorOpacity: 0,
 					// containerBackgroundColor: 'transparent',
-				}
-			}
-
-			// Container paddings while the container was turned off was allowed
-			// before, now it's not allowed. Turn on the container to mimic the
-			// effect.
-			const hasContainerPaddings = values( attributes.containerPadding ).some( padding => padding !== '' )
-
-			if ( ! attributes.hasContainer && hasContainerPaddings ) {
-				const newContainerPadding = Object.keys( attributes.containerPadding ).reduce( ( paddings, key ) => {
-					paddings[ key ] = attributes.containerPadding[ key ] || 0
-					return paddings
-				}, {} )
-
-				newAttributes = {
-					...newAttributes,
-					hasContainer: true,
-					containerPadding: newContainerPadding,
-					containerBackgroundColorOpacity: 0,
-					// containerBackgroundColor: 'transparent',
-					containerShadow: newAttributes.containerShadow || 'none',
 				}
 			}
 

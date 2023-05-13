@@ -17,7 +17,6 @@ import {
  * WordPress dependencies
  */
 import { addFilter } from '@wordpress/hooks'
-import { values } from 'lodash'
 
 // Version 3.0.2 Deprecations
 addFilter( 'stackable.feature.save.contentClassNames', 'stackable/3.0.2', ( output, props ) => {
@@ -91,26 +90,6 @@ const deprecated = [
 						top: 0, right: 0, bottom: 0, left: 0,
 					},
 					containerBackgroundColor: 'transparent',
-				}
-			}
-
-			// Container paddings while the container was turned off was allowed
-			// before, now it's not allowed. Turn on the container to mimic the
-			// effect.
-			const hasContainerPaddings = values( attributes.containerPadding ).some( padding => padding !== '' )
-
-			if ( ! attributes.hasContainer && hasContainerPaddings ) {
-				const newContainerPadding = Object.keys( attributes.containerPadding ).reduce( ( paddings, key ) => {
-					paddings[ key ] = attributes.containerPadding[ key ] || 0
-					return paddings
-				}, {} )
-
-				newAttributes = {
-					...newAttributes,
-					hasContainer: true,
-					containerPadding: newContainerPadding,
-					containerBackgroundColor: 'transparent',
-					containerShadow: newAttributes.containerShadow || 'none',
 				}
 			}
 

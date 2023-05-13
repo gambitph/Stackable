@@ -1,4 +1,3 @@
-import { values } from 'lodash'
 import { Save } from './save'
 import { attributes } from './schema'
 
@@ -34,26 +33,6 @@ const deprecated = [
 						top: 0, right: 0, bottom: 0, left: 0,
 					},
 					containerBackgroundColor: 'transparent',
-				}
-			}
-
-			// Container paddings while the container was turned off was allowed
-			// before, now it's not allowed. Turn on the container to mimic the
-			// effect.
-			const hasContainerPaddings = values( attributes.containerPadding ).some( padding => padding !== '' )
-
-			if ( ! attributes.hasContainer && hasContainerPaddings ) {
-				const newContainerPadding = Object.keys( attributes.containerPadding ).reduce( ( paddings, key ) => {
-					paddings[ key ] = attributes.containerPadding[ key ] || 0
-					return paddings
-				}, {} )
-
-				newAttributes = {
-					...newAttributes,
-					hasContainer: true,
-					containerPadding: newContainerPadding,
-					containerBackgroundColor: 'transparent',
-					containerShadow: newAttributes.containerShadow || 'none',
 				}
 			}
 

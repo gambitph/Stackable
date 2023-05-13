@@ -10,6 +10,8 @@
 .stk-block-columns > .stk-block-content {
 	--stk-column-gap: 0px; // For nested columns, this takes precedence.
 	column-gap: var(--stk-column-gap, 0px);
+	margin-left: auto;
+	margin-right: auto;
 }
 
 // Make sure that columns are of the correct width even if there's paddings on the column.
