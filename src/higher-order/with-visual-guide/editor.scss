@@ -1,0 +1,7 @@
+// Force the transitions to be disabled in the editor while visual guides are
+// enabled because they will lag.
+.editor-styles-wrapper {
+	.stk-block.stk-has-visual-guide {
+		--stk-transition-duration: 0s !important;
+	}
+}

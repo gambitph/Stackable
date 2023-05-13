@@ -10,6 +10,7 @@ import { createHigherOrderComponent } from '@wordpress/compose'
 import {
 	createContext, useContext, useEffect,
 } from '@wordpress/element'
+import classNames from 'classnames'
 import { useRafState } from '~stackable/hooks'
 
 const VisualGuideContext = createContext( null )
@@ -24,12 +25,6 @@ const withVisualGuideContext = createHigherOrderComponent(
 		const [ highlightStyles, setHighlightStyles ] = useRafState( null )
 
 		useEffect( () => {
-			if ( highlightStyles ) {
-
-			}
-		}, [ highlightStyles ] )
-
-		useEffect( () => {
 			if ( ! props.isSelected ) {
 				setHighlightStyles( null )
 			}
@@ -38,7 +33,13 @@ const withVisualGuideContext = createHigherOrderComponent(
 		return (
 			<VisualGuideContext.Provider value={ setHighlightStyles }>
 				{ highlightStyles && <VisualGuideer uniqueId={ uniqueId } { ...( highlightStyles || {} ) } /> }
-				<WrappedComponent { ...props } />
+				<WrappedComponent
+					className={ classNames(
+						props.className,
+						{ 'stk-has-visual-guide': !! highlightStyles }
+					) }
+					{ ...props }
+				/>
 			</VisualGuideContext.Provider>
 		)
 	},
