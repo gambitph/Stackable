@@ -62,7 +62,7 @@ export const Edit = props => {
 							labelVerticalAlign: __( 'Container Vertical Align', i18n ),
 						} }
 						hasContentVerticalAlign={ hasContentVerticalAlign }
-						blockHighlight={ {
+						visualGuide={ {
 							selector: '.stk-%s-container',
 							highlight: 'outline',
 						} }
@@ -72,7 +72,7 @@ export const Edit = props => {
 						blockEl={ blockElSize }
 						enableMargin={ false }
 						paddingPlaceholder="32"
-						blockHighlight={ {
+						visualGuide={ {
 							selector: '.stk-%s-container',
 						} }
 					/>

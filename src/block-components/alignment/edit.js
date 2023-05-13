@@ -68,7 +68,7 @@ export const Edit = props => {
 				step={ [ 1, 1 ] }
 				allowReset={ true }
 				placeholder="0"
-				blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+				visualGuide={ { selector: '.stk-%s-container', highlight: 'outline' } }
 			/>
 		}
 		<AdvancedRangeControl
@@ -82,7 +82,7 @@ export const Edit = props => {
 			allowReset={ true }
 			placeholder=""
 			initialPosition="1500"
-			blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+			visualGuide={ { selector: '.stk-%s-container', highlight: 'outline' } }
 		/>
 
 		{ (
@@ -96,7 +96,7 @@ export const Edit = props => {
 				responsive="all"
 				controls="horizontal"
 				className="ugb--help-tip-advanced-block-horizontal-align"
-				blockHighlight={ { selector: '.stk-%s-container', highlight: 'outline' } }
+				visualGuide={ { selector: '.stk-%s-container', highlight: 'outline' } }
 			/>
 		}
 	</>
@@ -125,7 +125,7 @@ export const Edit = props => {
 						className="ugb--help-tip-advanced-block-horizontal-align"
 						disableTablet={ ! columnJustify }
 						disableMobile={ ! columnJustify }
-						blockHighlight={ {
+						visualGuide={ {
 							selector: '.stk-%s-column > * > * > [data-type]',
 							highlight: 'outline',
 						} }
@@ -139,7 +139,7 @@ export const Edit = props => {
 						responsive="all"
 						controls="flex-vertical"
 						className="ugb--help-tip-advanced-block-vertical-align"
-						blockHighlight={ {
+						visualGuide={ {
 							// The 2nd selector (after the comma) is to select
 							// the parent Columns block where this Inner Column
 							// block belongs to.
@@ -155,7 +155,7 @@ export const Edit = props => {
 						responsive="all"
 						controls="flex-vertical"
 						className="ugb--help-tip-advanced-block-vertical-align"
-						blockHighlight={ { selector: '.stk-%s-column > * > * > [data-type]', highlight: 'outline' } }
+						visualGuide={ { selector: '.stk-%s-column > * > * > [data-type]', highlight: 'outline' } }
 					/>
 				}
 				{ props.containerSizePriority === 5 && containerSize }
@@ -193,7 +193,7 @@ export const Edit = props => {
 						attribute="innerBlockJustify"
 						responsive="all"
 						controls={ innerBlockOrientation ? 'flex-horizontal' : 'horizontal' }
-						blockHighlight={ {
+						visualGuide={ {
 							selector: '.stk-%s-container, .stk-%s-container > * > .block-editor-block-list__layout > [data-type]',
 							highlight: 'outline-first-offset',
 						} }
@@ -206,7 +206,7 @@ export const Edit = props => {
 						responsive="all"
 						controls={ innerBlockOrientation ? 'vertical' : 'flex-justify-vertical' }
 						disabled={ alignLastBlockToBottom ? 'all' : undefined }
-						blockHighlight={ {
+						visualGuide={ {
 							selector: '.stk-%s-container, .stk-%s-container > * > .block-editor-block-list__layout > [data-type]',
 							highlight: 'outline-first-offset',
 						} }
@@ -240,7 +240,7 @@ export const Edit = props => {
 						sliderMax={ 100 }
 						placeholder="24"
 						attribute="innerBlockColumnGap"
-						blockHighlight={
+						visualGuide={
 							innerBlockWrap !== 'wrap'
 								? {
 									selector: '.stk-%s-container > * > .block-editor-block-list__layout',
@@ -259,7 +259,7 @@ export const Edit = props => {
 						sliderMax={ 100 }
 						placeholder="0"
 						attribute="innerBlockRowGap"
-						blockHighlight={ {
+						visualGuide={ {
 							selector: '.stk-%s-container > * > .block-editor-block-list__layout',
 							highlight: 'row-gap',
 							value: innerBlockRowGap,

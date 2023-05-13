@@ -48,14 +48,14 @@ export const Edit = props => {
 						<SizeControls.Layout
 							attrNameTemplate="block%s"
 							blockEl={ blockEl }
-							blockHighlight={ {
+							visualGuide={ {
 								highlight: 'outline',
 							} }
 						/>
 						<SizeControls.Spacing
 							attrNameTemplate="block%s"
 							blockEl={ blockEl }
-							blockHighlight={ {
+							visualGuide={ {
 								highlight: 'padding',
 							} }
 						/>

@@ -25,7 +25,7 @@ import { pick, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
-import { BlockHighlighter } from './use-block-highlight'
+import { VisualGuideer } from './use-visual-guide'
 
 // Expose useControlHandlers to our API.
 export { useControlHandlers } from './hooks'
@@ -61,14 +61,14 @@ export const BaseControl = props => {
 
 	const label = props.boldLabel ? <h3>{ props.label }</h3> : props.label
 
-	const VisualGuide = props.blockHighlight !== EMPTY_OBJ ? BlockHighlighter : Fragment
+	const VisualGuide = props.visualGuide !== EMPTY_OBJ ? VisualGuideer : Fragment
 
 	return (
 		<GutBaseControl
 			help={ props.help }
 			className={ className }
 		>
-			<VisualGuide { ...props.blockHighlight }>
+			<VisualGuide { ...props.visualGuide }>
 				<div className={ labelClassName }>
 					<div className="components-base-control__label">{ label }</div>
 					<div className="stk-control-label__toggles">
@@ -117,7 +117,7 @@ BaseControl.defaultProps = {
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
 
-	blockHighlight: EMPTY_OBJ, // If supplied, displays a highlight on the block.
+	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 }
 
 const AdvancedControl = props => {
@@ -160,7 +160,7 @@ AdvancedControl.defaultProps = {
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
 
-	blockHighlight: EMPTY_OBJ, // If supplied, displays a highlight on the block.
+	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 }
 
 export default AdvancedControl

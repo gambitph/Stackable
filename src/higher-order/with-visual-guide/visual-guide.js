@@ -3,7 +3,7 @@ import { useSelect } from '@wordpress/data'
 import { useDeviceType } from '~stackable/hooks'
 import { first, last } from 'lodash'
 
-const BlockHighlighter = props => {
+const VisualGuideer = props => {
 	const {
 		uniqueId,
 		selector = '',
@@ -45,12 +45,12 @@ const BlockHighlighter = props => {
 	return <style>{ styles }</style>
 }
 
-BlockHighlighter.defaultProps = {
+VisualGuideer.defaultProps = {
 	uniqueId: '',
 	highlightStyles: {},
 }
 
-export default BlockHighlighter
+export default VisualGuideer
 
 const OUTLINE_COLOR = `var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba))`
 const PADDING_COLOR = `rgba(162, 201, 68, 0.5)`

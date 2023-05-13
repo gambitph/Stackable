@@ -15,7 +15,7 @@ import './disabled-blocks'
  */
 import { i18n } from 'stackable'
 import { addStackableBlockCategory, registerBlockType } from '~stackable/util'
-import { withBlockHighlightContext } from '~stackable/higher-order'
+import { withVisualGuideContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -56,7 +56,7 @@ const importAllAndRegister = r => {
 // Add some HOCs that should be applied to all our blocks.
 addFilter( 'stackable.registerBlockType.edit', 'stackable', edit => {
 	// This allows controls to show highlighted areas in the block.
-	return withBlockHighlightContext( edit )
+	return withVisualGuideContext( edit )
 } )
 
 importAllAndRegister( require.context( './block', true, /index\.js$/ ) )

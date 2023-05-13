@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import BlockHighlighter from './block-highlight'
+import VisualGuideer from './visual-guide'
 
 /**
  * WordPress dependencies
@@ -12,13 +12,13 @@ import {
 } from '@wordpress/element'
 import { useRafState } from '~stackable/hooks'
 
-const BlockHighlightContext = createContext( null )
+const VisualGuideContext = createContext( null )
 
-export const useBlockHighlightContext = () => {
-	return useContext( BlockHighlightContext )
+export const useVisualGuideContext = () => {
+	return useContext( VisualGuideContext )
 }
 
-const withBlockHighlightContext = createHigherOrderComponent(
+const withVisualGuideContext = createHigherOrderComponent(
 	WrappedComponent => props => {
 		const uniqueId = props.attributes.uniqueId
 		const [ highlightStyles, setHighlightStyles ] = useRafState( null )
@@ -36,14 +36,14 @@ const withBlockHighlightContext = createHigherOrderComponent(
 		}, [ props.isSelected ] )
 
 		return (
-			<BlockHighlightContext.Provider value={ setHighlightStyles }>
-				{ highlightStyles && <BlockHighlighter uniqueId={ uniqueId } { ...( highlightStyles || {} ) } /> }
+			<VisualGuideContext.Provider value={ setHighlightStyles }>
+				{ highlightStyles && <VisualGuideer uniqueId={ uniqueId } { ...( highlightStyles || {} ) } /> }
 				<WrappedComponent { ...props } />
-			</BlockHighlightContext.Provider>
+			</VisualGuideContext.Provider>
 		)
 	},
-	'withBlockHighlightContext'
+	'withVisualGuideContext'
 )
 
-export default withBlockHighlightContext
+export default withVisualGuideContext
 

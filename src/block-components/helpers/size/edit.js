@@ -42,7 +42,7 @@ const Layout = props => {
 				allowReset={ true }
 				placeholder="0"
 				className="ugb--help-tip-advanced-block-height"
-				blockHighlight={ props.blockHighlight }
+				visualGuide={ props.visualGuide }
 			/>
 
 			{ props.hasContentVerticalAlign &&
@@ -52,9 +52,9 @@ const Layout = props => {
 					responsive="all"
 					controls="vertical"
 					className="ugb--help-tip-advanced-block-vertical-align"
-					blockHighlight={ ! props.blockHighlight ? null : {
-						...props.blockHighlight,
-						selector: ( props.blockHighlight.selector || '' ) + ', .stk-%s > *',
+					visualGuide={ ! props.visualGuide ? null : {
+						...props.visualGuide,
+						selector: ( props.visualGuide.selector || '' ) + ', .stk-%s > *',
 					} }
 				/>
 			}
@@ -71,7 +71,7 @@ const Layout = props => {
 				placeholder=""
 				initialPosition="1500"
 				className="ugb--help-tip-advanced-block-content-width"
-				blockHighlight={ props.blockHighlight }
+				visualGuide={ props.visualGuide }
 			/>
 
 			{ (
@@ -85,7 +85,7 @@ const Layout = props => {
 					responsive="all"
 					controls="horizontal"
 					className="ugb--help-tip-advanced-block-horizontal-align"
-					blockHighlight={ props.blockHighlight }
+					visualGuide={ props.visualGuide }
 				/>
 			}
 		</>
@@ -95,7 +95,7 @@ const Layout = props => {
 Layout.defaultProps = {
 	attrNameTemplate: '%s',
 	hasContentVerticalAlign: true,
-	blockHighlight: null,
+	visualGuide: null,
 	labels: {},
 }
 
@@ -109,13 +109,13 @@ const Spacing = props => {
 		labelMargins = __( 'Margins', i18n ),
 	} = props.labels
 
-	const paddingBlockHighlight = ! props.blockHighlight ? null : {
-		...props.blockHighlight,
+	const paddingVisualGuide = ! props.visualGuide ? null : {
+		...props.visualGuide,
 		highlight: 'padding',
 	}
 
-	const marginBlockHighlight = ! props.blockHighlight ? null : {
-		...props.blockHighlight,
+	const marginVisualGuide = ! props.visualGuide ? null : {
+		...props.visualGuide,
 		highlight: 'margin',
 	}
 
@@ -131,7 +131,7 @@ const Spacing = props => {
 				min={ [ 0, 0, 0 ] }
 				sliderMax={ [ 200, 30, 100 ] }
 				className="ugb--help-tip-advanced-block-paddings"
-				blockHighlight={ paddingBlockHighlight }
+				visualGuide={ paddingVisualGuide }
 				placeholder={ props.paddingPlaceholder }
 			/>
 
@@ -146,7 +146,7 @@ const Spacing = props => {
 					sliderMax={ [ 200, 100 ] }
 					placeholder="0"
 					className="ugb--help-tip-advanced-block-margins"
-					blockHighlight={ marginBlockHighlight }
+					visualGuide={ marginVisualGuide }
 				/>
 			}
 		</>
@@ -157,7 +157,7 @@ Spacing.defaultProps = {
 	attrNameTemplate: '%s',
 	paddingPlaceholder: '',
 	enableMargin: true,
-	blockHighlight: null,
+	visualGuide: null,
 	labels: {},
 }
 export const SizeControls = {

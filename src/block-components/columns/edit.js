@@ -136,7 +136,7 @@ export const Controls = props => {
 						min={ [ 0, 0 ] }
 						sliderMax={ [ 200, 30 ] }
 						placeholder={ numInnerBlocks === 1 ? '0' : '12' }
-						blockHighlight={ {
+						visualGuide={ {
 							selector: '.stk-%s-column > * > * > [data-type="stackable/column"] > * > .stk-column > .stk-inner-blocks',
 							highlight: 'column-spacing',
 							defaultValue: '12px',
@@ -149,7 +149,7 @@ export const Controls = props => {
 						min={ 0 }
 						sliderMax={ 100 }
 						placeholder="0"
-						blockHighlight={ {
+						visualGuide={ {
 							selector: '.stk-%s-column > * > *',
 							highlight: 'columns:column-gap',
 							responsive: [ 'desktop' ],

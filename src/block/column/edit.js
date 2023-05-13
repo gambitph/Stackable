@@ -101,7 +101,7 @@ const Edit = props => {
 							sliderMax={ [ 200, 30 ] }
 							placeholder={ isOnlyBlock ? '0' : '12' }
 							className="ugb--help-tip-advanced-block-paddings"
-							blockHighlight={ {
+							visualGuide={ {
 								selector: '.stk-%s-container',
 								highlight: 'column-spacing',
 								defaultValue: '12px',

@@ -1,14 +1,14 @@
 import {
 	useState, useEffect, useRef,
 } from '@wordpress/element'
-import { useBlockHighlightContext } from '~stackable/higher-order/with-block-highlight'
+import { useVisualGuideContext } from '~stackable/higher-order/with-visual-guide'
 
-// This updates the block highlighter.
-export const BlockHighlighter = props => {
+// This updates the block visual guide.
+export const VisualGuideer = props => {
 	const [ isShow, setIsShow ] = useState( false )
 	const leftAlready = useRef( false )
 
-	const setHighlightStyles = useBlockHighlightContext()
+	const setHighlightStyles = useVisualGuideContext()
 
 	useEffect( () => {
 		if ( ! isShow && setHighlightStyles ) {
@@ -20,7 +20,7 @@ export const BlockHighlighter = props => {
 		return props.children
 	}
 
-	// Always update the highlighted block when this component is rerendered.
+	// Always update the block when this component is rerendered.
 	// This makes sure that the highlighted block always has the latest styles.
 	if ( isShow ) {
 		setHighlightStyles( props )
@@ -28,11 +28,11 @@ export const BlockHighlighter = props => {
 
 	return (
 		<div
-			className="stk-block-highlighter-trigger"
+			className="stk-visual-guideer-trigger"
 			onMouseEnter={ () => {
 				leftAlready.current = false
 
-				// Add a delay to make sure that the block is highlighted.
+				// Add a delay to make sure that the block visual guides are on.
 				// Moving fast between options can cause the highlight to not
 				// show.
 				setTimeout( () => {
