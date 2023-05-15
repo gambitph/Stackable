@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { ColumnsControl } from './column-settings-button'
+import { getRowsFromColumns } from '../column/util'
 
 /**
  * External dependencies
@@ -69,10 +70,12 @@ export const Controls = props => {
 						const clientIds = []
 						const attributes = {}
 						const columnWidthName = getAttributeName( 'columnWidth', deviceType )
+						const columnAdjacentCount = getAttributeName( 'columnAdjacentCount', deviceType )
 						innerBlocks.forEach( ( block, i ) => {
 							clientIds.push( block.clientId )
 							attributes[ block.clientId ] = {
 								[ columnWidthName ]: columnWidths[ i ],
+								[ columnAdjacentCount ]: columnWidths.length,
 							}
 						} )
 						dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
@@ -88,13 +91,17 @@ export const Controls = props => {
 					placeholders={ deviceType === 'Tablet' ? columnWidths : Array( numInnerBlocks ).fill( '100' ) }
 					allowReset={ true }
 					onChange={ columnWidths => {
+						const columnRows = getRowsFromColumns( columnWidths )
+
 						const clientIds = []
 						const attributes = {}
 						const columnWidthName = getAttributeName( 'columnWidth', deviceType )
+						const columnAdjacentCount = getAttributeName( 'columnAdjacentCount', deviceType )
 						innerBlocks.forEach( ( block, i ) => {
 							clientIds.push( block.clientId )
 							attributes[ block.clientId ] = {
 								[ columnWidthName ]: columnWidths[ i ],
+								[ columnAdjacentCount ]: columnRows.filter( n => n === columnRows[ i ] ).length,
 							}
 						} )
 						dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
