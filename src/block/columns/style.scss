@@ -14,6 +14,13 @@
 	margin-right: auto;
 }
 
+// Column order.
+@for $i from 1 through 20 {
+	.stk-block-column:nth-child(#{ $i }) {
+		order: var(--stk-col-order-#{ $i }, initial);
+	}
+}
+
 // Make sure that columns are of the correct width even if there's paddings on the column.
 // Default percentages to make columns even because flexbox makes columns with paddings weird.
 // The problem with flexbox and paddings is better explained here: https://css-tricks.com/equal-columns-with-flexbox-its-more-complicated-than-you-might-think/
