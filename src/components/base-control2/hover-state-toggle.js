@@ -115,7 +115,7 @@ const HoverStateToggle = props => {
 HoverStateToggle.defaultProps = {
 	hover: false,
 	attribute: '',
-	hasRepsonsive: false, // Wether the attribute has responsive attributes (where we have hover states per device type)
+	hasResponsive: false, // Wether the attribute has responsive attributes (where we have hover states per device type)
 }
 
 export default memo( HoverStateToggle )

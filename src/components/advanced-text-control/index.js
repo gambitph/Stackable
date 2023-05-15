@@ -49,6 +49,7 @@ const AdvancedTextControl = memo( props => {
 		>
 			<DynamicContentControl
 				enable={ isDynamic }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 				{ ...dynamicContentProps }
 			>
 				<TextInput

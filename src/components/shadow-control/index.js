@@ -309,6 +309,7 @@ const ShadowControl = memo( props => {
 }, isEqual )
 
 ShadowControl.defaultProps = {
+	attribute: '',
 	label: __( 'Shadow / Outline', i18n ),
 	placeholder: '',
 	options: null,

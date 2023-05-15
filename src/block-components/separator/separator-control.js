@@ -58,7 +58,9 @@ const SeparatorControl = props => {
 	const [ propsToPass, controlProps ] = extractControlProps( _propsToPass )
 
 	return (
-		<AdvancedControl { ...controlProps } className={ value !== '' ? 'has-value' : undefined }>
+		<AdvancedControl
+			{ ...controlProps }
+		>
 			<DesignControl
 				{ ...propsToPass }
 				options={ options }

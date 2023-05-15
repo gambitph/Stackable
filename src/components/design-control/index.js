@@ -28,6 +28,7 @@ const DesignControl = props => {
 					imageHeight={ option.imageHeight }
 					isPro={ option.isPro }
 					label={ option.label }
+					isActive={ option.value === props.selected }
 				/>
 			),
 			title: option.label,

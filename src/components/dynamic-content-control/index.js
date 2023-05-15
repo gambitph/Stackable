@@ -428,6 +428,7 @@ const DynamicContentControl = ( {
 				allowReset={ true }
 				value={ otherProps.activeAttribute }
 				default=""
+				hasPanelModifiedIndicator={ otherProps.hasPanelModifiedIndicator }
 				onChange={ otherProps.onReset }
 			/>
 		</Fragment>

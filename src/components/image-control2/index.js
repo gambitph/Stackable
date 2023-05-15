@@ -87,6 +87,7 @@ const ImageControl = memo( props => {
 		>
 			<DynamicContentControl
 				enable={ props.isDynamic }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 				type="image-url"
 				{ ...dynamicContentProps }
 			>

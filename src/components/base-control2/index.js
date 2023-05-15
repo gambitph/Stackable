@@ -40,7 +40,7 @@ export const BaseControl = props => {
 		'stk-control--disabled': ( props.disableTablet && deviceType === 'Tablet' ) || ( props.disableMobile && deviceType === 'Mobile' ),
 	} )
 
-	const hasRepsonsive = !! props.responsive?.length
+	const hasResponsive = !! props.responsive?.length
 	const hasHover = !! props.hover?.length
 	const hasUnits = !! props.units?.length
 
@@ -66,7 +66,7 @@ export const BaseControl = props => {
 			<div className={ labelClassName }>
 				<div className="components-base-control__label">{ label }</div>
 				<div className="stk-control-label__toggles">
-					{ hasRepsonsive && (
+					{ hasResponsive && (
 						<ResponsiveToggle
 							screens={ responsive }
 							attribute={ props.attribute }
@@ -78,7 +78,7 @@ export const BaseControl = props => {
 						<HoverStateToggle
 							hover={ props.hover }
 							attribute={ props.attribute }
-							hasRepsonsive={ hasRepsonsive }
+							hasResponsive={ hasResponsive }
 						/>
 					) }
 				</div>
