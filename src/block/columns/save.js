@@ -8,7 +8,7 @@ import BlockStyles from './style'
  */
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import {
 	BlockDiv,
 	CustomCSS,

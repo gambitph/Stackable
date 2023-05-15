@@ -17,6 +17,7 @@ import {
  * WordPress dependencies
  */
 import { addFilter } from '@wordpress/hooks'
+import { semverCompare } from '~stackable/util'
 
 // Version 3.0.2 Deprecations
 addFilter( 'stackable.feature.save.contentClassNames', 'stackable/3.0.2', ( output, props ) => {
@@ -44,6 +45,17 @@ addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.0.2', ( output
 		[ blockAlignmentClass ]: blockAlignmentClass,
 		'stk-block-content': true,
 	}
+} )
+
+addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {
+	if ( semverCompare( props.version, '<', '3.8.0' ) ) {
+		return {
+			...output,
+			'stk--has-column-order': props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet,
+		}
+	}
+
+	return output
 } )
 
 const deprecated = [
