@@ -1061,6 +1061,25 @@
     ]
   },
   {
+    "family": "Anuphan",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "thai",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Anybody",
     "variants": [
       "100",
@@ -2785,6 +2804,18 @@
     ]
   },
   {
+    "family": "Braah One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "gurmukhi",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Brawler",
     "variants": [
       "regular",
@@ -2796,6 +2827,26 @@
   },
   {
     "family": "Bree Serif",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bruno Ace",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Bruno Ace SC",
     "variants": [
       "regular"
     ],
@@ -3193,6 +3244,24 @@
     ]
   },
   {
+    "family": "Carlito",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Carme",
     "variants": [
       "regular"
@@ -3233,6 +3302,16 @@
     "variants": [
       "regular",
       "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Castoro Titling",
+    "variants": [
+      "regular"
     ],
     "subsets": [
       "latin",
@@ -3528,6 +3607,7 @@
     ],
     "subsets": [
       "latin",
+      "latin-ext",
       "malayalam"
     ]
   },
@@ -3762,6 +3842,24 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Comme",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -4295,6 +4393,17 @@
     ]
   },
   {
+    "family": "Darumadrop One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "David Libre",
     "variants": [
       "regular",
@@ -4404,8 +4513,10 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -5526,8 +5637,10 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -5604,6 +5717,25 @@
     "subsets": [
       "cyrillic",
       "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Foldit",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
       "latin",
       "latin-ext",
       "vietnamese"
@@ -5847,7 +5979,8 @@
     "subsets": [
       "cyrillic",
       "cyrillic-ext",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -7508,6 +7641,34 @@
     ]
   },
   {
+    "family": "Instrument Sans",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Instrument Serif",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Inter",
     "variants": [
       "100",
@@ -7862,7 +8023,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -8408,6 +8570,17 @@
     ]
   },
   {
+    "family": "Konkhmer Sleokchher",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "khmer",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Kosugi",
     "variants": [
       "regular"
@@ -8840,7 +9013,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -9964,7 +10138,8 @@
       "italic"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -9973,7 +10148,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12005,15 +12181,21 @@
     "family": "Noto Sans JP",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
+      "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
+      "cyrillic",
       "japanese",
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -12093,7 +12275,9 @@
       "regular"
     ],
     "subsets": [
-      "kharoshthi"
+      "kharoshthi",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12498,6 +12682,31 @@
     ]
   },
   {
+    "family": "Noto Sans Nag Mundari",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "nag-mundari"
+    ]
+  },
+  {
+    "family": "Noto Sans Nandinagari",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "nandinagari"
+    ]
+  },
+  {
     "family": "Noto Sans New Tai Lue",
     "variants": [
       "regular",
@@ -12528,6 +12737,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "nushu"
     ]
   },
@@ -12932,10 +13143,18 @@
     "family": "Noto Sans Syriac",
     "variants": [
       "100",
+      "200",
+      "300",
       "regular",
+      "500",
+      "600",
+      "700",
+      "800",
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "syriac"
     ]
   },
@@ -13136,6 +13355,8 @@
       "900"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "thai"
     ]
   },
@@ -13947,18 +14168,20 @@
     "family": "Nunito Sans",
     "variants": [
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
+      "500",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -14220,7 +14443,8 @@
       "900"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -14558,6 +14782,34 @@
     "family": "Passions Conflict",
     "variants": [
       "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Pathway Extreme",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -14951,6 +15203,24 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Poltawski Nowy",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -15408,6 +15678,7 @@
       "700italic"
     ],
     "subsets": [
+      "canadian-aboriginal",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -16003,6 +16274,7 @@
       "900italic"
     ],
     "subsets": [
+      "cyrillic",
       "cyrillic-ext",
       "latin",
       "latin-ext",
@@ -16370,6 +16642,19 @@
   },
   {
     "family": "Rubik Moonrocks",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Pixels",
     "variants": [
       "regular"
     ],
@@ -16897,6 +17182,27 @@
     ]
   },
   {
+    "family": "Schibsted Grotesk",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Schoolbell",
     "variants": [
       "regular"
@@ -17185,6 +17491,17 @@
     ],
     "subsets": [
       "khmer"
+    ]
+  },
+  {
+    "family": "Sigmar",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -18542,6 +18859,39 @@
     ]
   },
   {
+    "family": "Tilt Neon",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Tilt Prism",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Tilt Warp",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Timmana",
     "variants": [
       "regular"
@@ -19267,6 +19617,17 @@
     ]
   },
   {
+    "family": "Vina Sans",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Voces",
     "variants": [
       "regular"
@@ -19463,6 +19824,45 @@
     ]
   },
   {
+    "family": "Wix Madefor Display",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Wix Madefor Text",
+    "variants": [
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic",
+      "800",
+      "800italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Work Sans",
     "variants": [
       "100",
@@ -19631,6 +20031,37 @@
       "700italic"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Ysabeau",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
       "latin",
       "latin-ext",
       "vietnamese"

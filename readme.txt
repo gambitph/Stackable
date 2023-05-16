@@ -90,6 +90,7 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
 
 - Multiple Block Layouts
 - Flexbox Controls
+- Image and Video Lightbox
 - Save Block Defaults
 - Customize block hover styles
 - Block Background and Image Color Settings
@@ -275,6 +276,31 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.8.0 =
+* New: New Block Inspector UI - reorganized and added new options
+* New: Visual Guides - helps visualize layout options like justify and paddings
+* New: Flexbox options
+* New: Lightbox option in Image blocks and in containers with links - check the Advanced tab > Link panel. Lightbox supports: images, videos, YouTube, Vimeo and web pages.
+* New: Typing 'auto' in block margins now works visually in the block editor
+* Change: Renamed to "Adv. Copy and Paste" styles to make it different from the native copy and paste option
+* Change: Removed "Fit all columns to content" option in Columns, this has been replaced with flexbox controls
+* Fixed: Some blocks encounter a block error when inside a Query Loop block
+* Fixed: Some textarea Dynamic Content fields do not show line breaks correctly
+* Fixed: Better inspector panel scrolling when opening and closing panels
+* Fixed: Inner Column blocks with paddings made the column widths uneven
+* Fixed: Missing meta option in the Posts Block content order option
+* Fixed: Video backgrounds now show up as one network request
+* Fixed: Block titles and descriptions are now translated correctly in the Getting Started page
+* Fixed: Navigation panel cannot be resized properly
+* Fixed: Navigation panel closes when selecting another block
+* Fixed: Dragging the margin bottom of blocks quickly will stop the current drag
+* Fixed: The Block Linking learn more link redirects to the wrong page
+* Fixed: Some blocks with icons encounter an error when used in a Query Loop block
+* Fixed: Block titles and descriptions in the Getting Started area are now translated properly
+* Fixed: Post meta is missing in the Image Card layout in the Posts block
+* Fixed: In the free version, premium notices have lower priority
+* Fixed: Dynamic Content can now be used in the Progress Bar and Progress Circle percentage value
 
 = 3.7.2 =
 * New: WordPress 6.2 compatibility
