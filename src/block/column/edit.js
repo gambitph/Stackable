@@ -146,7 +146,7 @@ const Edit = props => {
 					clientId={ props.clientId }
 					attributes={ props.attributes }
 					className={ blockClassNames }
-					data-v={ props.attributes.version }
+					data-v={ props.attributes.version || 4 }
 				>
 					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks
