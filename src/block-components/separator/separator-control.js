@@ -58,9 +58,7 @@ const SeparatorControl = props => {
 	const [ propsToPass, controlProps ] = extractControlProps( _propsToPass )
 
 	return (
-		<AdvancedControl
-			{ ...controlProps }
-		>
+		<AdvancedControl { ...controlProps }>
 			<DesignControl
 				{ ...propsToPass }
 				options={ options }
