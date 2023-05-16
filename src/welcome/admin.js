@@ -68,8 +68,14 @@ const BlockList = () => {
 										key={ i }
 										className="s-box"
 									>
-										<h4>{ __( block.title, i18n ) }</h4>
-										<p>{ __( block.description, i18n ) }</p>
+										<h4>{
+											// eslint-disable-next-line @wordpress/i18n-no-variables
+											__( block.title, i18n )
+										}</h4>
+										<p>{
+											// eslint-disable-next-line @wordpress/i18n-no-variables
+											__( block.description, i18n )
+										}</p>
 										{ block[ 'stk-demo' ] && <a href={ block[ 'stk-demo' ] } target="_example">{ __( 'See example', i18n ) }</a> }
 									</div>
 								)
