@@ -95,7 +95,6 @@ export const Edit = props => {
 				attribute="containerHorizontalAlign"
 				responsive="all"
 				controls="horizontal"
-				className="ugb--help-tip-advanced-block-horizontal-align"
 				visualGuide={ { selector: '.stk-%s-container', highlight: 'outline' } }
 			/>
 		}
@@ -122,7 +121,6 @@ export const Edit = props => {
 						attribute="columnJustify"
 						responsive="all"
 						controls="flex-horizontal"
-						className="ugb--help-tip-advanced-block-horizontal-align"
 						disableTablet={ ! columnJustify }
 						disableMobile={ ! columnJustify }
 						visualGuide={ {
@@ -138,7 +136,6 @@ export const Edit = props => {
 						attribute="columnAlign"
 						responsive="all"
 						controls="flex-vertical"
-						className="ugb--help-tip-advanced-block-vertical-align"
 						visualGuide={ {
 							// The 2nd selector (after the comma) is to select
 							// the parent Columns block where this Inner Column
@@ -154,7 +151,6 @@ export const Edit = props => {
 						attribute="rowAlign"
 						responsive="all"
 						controls="flex-vertical"
-						className="ugb--help-tip-advanced-block-vertical-align"
 						visualGuide={ { selector: '.stk-%s-column > * > * > [data-type]', highlight: 'outline' } }
 					/>
 				}
