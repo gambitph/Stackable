@@ -185,14 +185,14 @@ const VERTICAL_ALIGN_OPTIONS = [
 	},
 ]
 
-export const CONTROLS = applyFilters( 'stackable.toolbar-control.controls', {
+export const CONTROLS = {
 	'flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
 	'flex-horizontal-alt': FLEX_HORIZONTAL_ALIGN_OPTIONS_ALT,
 	'flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
 	'flex-justify-vertical': FLEX_VERTICAL_JUSTIFY_OPTIONS,
 	horizontal: HORIZONTAL_ALIGN_OPTIONS,
 	vertical: VERTICAL_ALIGN_OPTIONS,
-} )
+}
 
 const AdvancedToolbarControl = props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
@@ -206,7 +206,8 @@ const AdvancedToolbarControl = props => {
 		isToggleOnly,
 	} = _propsToPass
 
-	const controls = typeof _controls === 'string' ? CONTROLS[ _controls ] : _controls
+	const _CONTROLS = applyFilters( 'stackable.toolbar-control.controls', CONTROLS )
+	const controls = typeof _controls === 'string' ? _CONTROLS[ _controls ] : _controls
 
 	const toolbarClasses = classnames( {
 		'ugb-toolbar--full-width': fullwidth,
@@ -225,6 +226,7 @@ const AdvancedToolbarControl = props => {
 			<ButtonGroup
 				children={
 					controls.map( option => {
+						const defaultValue = props.default || ''
 						const controlProps = {
 							...( omit( option, 'controls', 'show' ) ),
 							onClick: () => {
@@ -232,12 +234,12 @@ const AdvancedToolbarControl = props => {
 								if ( isToggleOnly && option.value === value ) {
 									return
 								}
-								onChange( option.value !== value ? option.value : '' )
+								onChange( option.value !== value ? option.value : defaultValue )
 							},
 							isPrimary: value ? value === option.value : props.placeholder === option.value,
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
-							disabled: props.disabled.includes( option.value ),
+							disabled: props.disabled === 'all' ? true : props.disabled.includes( option.value ),
 						}
 						return <Button key={ option.value } { ...controlProps } />
 					} )

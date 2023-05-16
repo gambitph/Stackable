@@ -15,7 +15,7 @@ export const Style = props => {
 		sizeHorizontalAlignRule = 'margin',
 		wrapperSelector = '',
 		sizeVerticalAlignSelector = '',
-		sizeVerticalAlignSelectorEdit = '',
+		// sizeVerticalAlignSelectorEdit = '',
 	} = props
 
 	const hasContainer = useBlockAttributesContext( attributes => attributes.hasContainer )
@@ -29,21 +29,24 @@ export const Style = props => {
 					selector={ backgroundSelector }
 				/>
 			}
-			<BorderStyle
-				{ ...props }
-				attrNameTemplate="container%s"
-				selector={ borderSelector }
-				hoverSelector={ `${ borderSelector }:hover` }
-			/>
+			{ hasContainer &&
+				<BorderStyle
+					{ ...props }
+					attrNameTemplate="container%s"
+					selector={ borderSelector }
+					hoverSelector={ `${ borderSelector }:hover` }
+				/>
+			}
 			<SizeStyle
 				{ ...props }
 				attrNameTemplate="container%s"
 				selector={ sizeSelector }
 				verticalAlignRule={ sizeVerticalAlignRule }
 				verticalAlignSelector={ sizeVerticalAlignSelector }
-				verticalAlignSelectorEdit={ sizeVerticalAlignSelectorEdit }
+				// verticalAlignSelectorEdit={ sizeVerticalAlignSelectorEdit }
 				horizontalAlignRule={ sizeHorizontalAlignRule }
 				wrapperSelector={ wrapperSelector }
+				// hasPaddings={ hasContainer }
 			/>
 		</>
 	)
@@ -62,7 +65,7 @@ Style.Content = props => {
 		sizeHorizontalAlignRule = 'margin',
 		wrapperSelector = '',
 		sizeVerticalAlignSelector = '',
-		sizeVerticalAlignSelectorEdit = '',
+		// sizeVerticalAlignSelectorEdit = '',
 		attributes,
 	} = props
 
@@ -75,21 +78,24 @@ Style.Content = props => {
 					selector={ backgroundSelector }
 				/>
 			}
-			<BorderStyle.Content
-				{ ...props }
-				attrNameTemplate="container%s"
-				selector={ borderSelector }
-				hoverSelector={ `${ borderSelector }:hover` }
-			/>
+			{ attributes.hasContainer &&
+				<BorderStyle.Content
+					{ ...props }
+					attrNameTemplate="container%s"
+					selector={ borderSelector }
+					hoverSelector={ `${ borderSelector }:hover` }
+				/>
+			}
 			<SizeStyle.Content
 				{ ...props }
 				attrNameTemplate="container%s"
 				selector={ sizeSelector }
 				verticalAlignRule={ sizeVerticalAlignRule }
 				verticalAlignSelector={ sizeVerticalAlignSelector }
-				verticalAlignSelectorEdit={ sizeVerticalAlignSelectorEdit }
+				// verticalAlignSelectorEdit={ sizeVerticalAlignSelectorEdit }
 				horizontalAlignRule={ sizeHorizontalAlignRule }
 				wrapperSelector={ wrapperSelector }
+				// hasPaddings={ attributes.hasContainer }
 			/>
 		</>
 	)

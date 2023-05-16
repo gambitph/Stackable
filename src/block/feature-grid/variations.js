@@ -45,7 +45,7 @@ const variations = applyFilters(
 				[ 'stackable/column', { hasContainer: true }, [
 					[ 'stackable/image' ],
 					[ 'stackable/heading', {
-						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3',
 					} ],
 					[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 					[ 'stackable/button-group', {}, [
@@ -59,7 +59,7 @@ const variations = applyFilters(
 				[ 'stackable/column', { hasContainer: true }, [
 					[ 'stackable/image' ],
 					[ 'stackable/heading', {
-						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3',
 					} ],
 					[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 					[ 'stackable/button-group', {}, [
@@ -73,7 +73,7 @@ const variations = applyFilters(
 				[ 'stackable/column', { hasContainer: true }, [
 					[ 'stackable/image' ],
 					[ 'stackable/heading', {
-						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3',
 					} ],
 					[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 					[ 'stackable/button-group', {}, [
@@ -115,7 +115,7 @@ const variations = applyFilters(
 						imageWidthUnit: 'px',
 					} ],
 					[ 'stackable/heading', {
-						text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						text: __( 'Title', i18n ), textTag: 'h3',
 					} ],
 					[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 					[ 'stackable/button-group', {}, [
@@ -145,7 +145,7 @@ const variations = applyFilters(
 						imageWidthUnit: 'px',
 					} ],
 					[ 'stackable/heading', {
-						text: __( 'Title', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+						text: __( 'Title', i18n ), textTag: 'h3',
 					} ],
 					[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],
 					[ 'stackable/button-group', {}, [

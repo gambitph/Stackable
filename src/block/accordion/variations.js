@@ -8,7 +8,7 @@ import ImageColored from './images/colored.svg'
 import ImagePlus from './images/plus.svg'
 
 /**
- * WorddPress dependencies
+ * WordPress dependencies
  */
 import {
 	__, _x, sprintf,

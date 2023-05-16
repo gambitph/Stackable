@@ -13,7 +13,13 @@ import {
 import { __ } from '@wordpress/i18n'
 import { LinkControls } from '../helpers/link'
 
-export const Edit = ( { hasLink, hasTitle } ) => {
+export const Edit = props => {
+	const {
+		hasLink,
+		hasTitle,
+		hasLightbox,
+	} = props
+
 	return (
 		<>
 			<InspectorAdvancedControls>
@@ -21,7 +27,13 @@ export const Edit = ( { hasLink, hasTitle } ) => {
 					title={ __( 'Link', i18n ) }
 					id="link"
 				>
-					<LinkControls attrNameTemplate="blockLink%s" hasLink={ hasLink } hasTitle={ hasTitle } />
+					<LinkControls
+						attrNameTemplate="blockLink%s"
+						hasLink={ hasLink }
+						hasTitle={ hasTitle }
+						hasLightbox={ hasLightbox }
+						lightboxHelp={ __( 'Supports links to images, videos, YouTube, Vimeo, and web pages that allow embedding. Opens inner image block if no link is provided', i18n ) }
+					/>
 				</PanelAdvancedSettings>
 			</InspectorAdvancedControls>
 		</>
@@ -31,4 +43,5 @@ export const Edit = ( { hasLink, hasTitle } ) => {
 Edit.defaultProps = {
 	hasLink: true,
 	hasTitle: true,
+	hasLightbox: true,
 }

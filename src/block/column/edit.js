@@ -71,7 +71,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-column',
-		'stk-block-column--v3',
 		columnClass,
 	] )
 
@@ -102,10 +101,15 @@ const Edit = props => {
 							sliderMax={ [ 200, 30 ] }
 							placeholder={ isOnlyBlock ? '0' : '12' }
 							className="ugb--help-tip-advanced-block-paddings"
+							visualGuide={ {
+								selector: '.stk-%s-container',
+								highlight: 'column-spacing',
+								defaultValue: '12px',
+							} }
 						/>
 					</InspectorLayoutControls>
 
-					<Alignment.InspectorControls hasColumnAlignment={ true } />
+					<Alignment.InspectorControls hasContainerSize={ true } hasColumnAlignment={ true } />
 					<BlockDiv.InspectorControls />
 					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
@@ -142,6 +146,7 @@ const Edit = props => {
 					clientId={ props.clientId }
 					attributes={ props.attributes }
 					className={ blockClassNames }
+					data-v={ props.attributes.version || 4 }
 				>
 					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks

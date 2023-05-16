@@ -90,7 +90,7 @@ export const Edit = props => {
 					setIsResizing( false )
 				} }
 				minHeight={ MIN_HEIGHT }
-				maxHeight={ 1000 }
+				maxHeight={ 500 }
 			>
 				<PanelAdvancedSettings
 					title={ __( 'Navigation', i18n ) }

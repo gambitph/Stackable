@@ -151,6 +151,7 @@ module.exports = [
 	target: [ 'web', 'es2017' ],
 
 	entry: {
+		'frontend_image_lightbox': path.resolve( __dirname, '../src/lightbox/frontend-image-lightbox.js' ),
 		'frontend_blocks': path.resolve( __dirname, '../src/block-frontend.js' ),
 		'frontend_block_accordion': path.resolve( __dirname, '../src/block/accordion/frontend-accordion.js' ),
 		'frontend_block_accordion_polyfill': path.resolve( __dirname, '../src/block/accordion/frontend-accordion-polyfill.js' ),

@@ -9,3 +9,8 @@
 		padding-top: cssvar(block-margin-bottom);
 	}
 }
+
+.stk-block-card__content {
+	display: flex;
+	flex-direction: column;
+}
