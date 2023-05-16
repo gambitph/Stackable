@@ -82,16 +82,16 @@ const Edit = props => {
 							</AdvancedRangeControl>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
 					<Typography.InspectorControls
 						{ ...props }
 						hasTextTag={ false }
 						hasTextShadow={ true }
 						initialOpen={ false }
 					/>
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-count-up" />

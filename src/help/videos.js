@@ -138,7 +138,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 
 const VIDEOS = {
 	fullHeight: {
@@ -253,37 +253,37 @@ const VIDEOS = {
 	},
 	alignmentImage: {
 		video: alignmentImage,
-		title: __( 'Image alignment', i18n ),
+		title: sprintf( __( '%s Alignment', i18n ), __( 'Image', i18n ) ),
 		description: __( 'Adjusts the placement of the image to align left, center or right', i18n ),
 	},
 	alignmentNumber: {
 		video: alignmentImage,
-		title: __( 'Number alignment', i18n ),
+		title: sprintf( __( '%s Alignment', i18n ), __( 'Number', i18n ) ),
 		description: __( 'Adjusts the placement of the number to align left, center or right', i18n ),
 	},
 	alignmentIcon: {
 		video: alignmentImage,
-		title: __( 'Icon alignment', i18n ),
+		title: sprintf( __( '%s Alignment', i18n ), __( 'Icon', i18n ) ),
 		description: __( 'Adjusts the placement of the icon to align left, center or right', i18n ),
 	},
 	alignmentTitle: {
 		video: alignmentTitle,
-		title: __( 'Title / subtitle alignment', i18n ),
+		title: sprintf( __( '%s Alignment', i18n ), __( 'Title', i18n ) ),
 		description: __( 'Adjusts the placement of the title or subtitle to align left, center or right', i18n ),
 	},
 	alignmentName: {
 		video: alignmentTitle,
-		title: __( 'Name / position alignment', i18n ),
+		title: sprintf( __( '%s Alignment', i18n ), __( 'Name', i18n ) ),
 		description: __( 'Adjusts the placement of the name or position to align left, center or right', i18n ),
 	},
 	alignmentDescription: {
 		video: alignmentDescription,
-		title: __( 'Description / text alignment', i18n ),
+		title: sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ),
 		description: __( 'Adjusts the placement of the text to align left, center or right', i18n ),
 	},
 	alignmentButton: {
 		video: alignmentButton,
-		title: __( 'Button / link alignment', i18n ),
+		title: sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ),
 		description: __( 'Adjusts the placement of the button or link to align left, center or right', i18n ),
 	},
 	buttonPadding: {

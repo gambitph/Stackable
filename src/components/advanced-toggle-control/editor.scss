@@ -9,3 +9,8 @@
 		margin-inline-end: 12px;
 	}
 }
+
+// A little more gap when the prior control is not a toggle.
+.stk-control:not(.stk-toggle-control) + .stk-toggle-control {
+	margin-top: 20px;
+}

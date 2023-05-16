@@ -400,7 +400,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 				>
 					<AdvancedToolbarControl
 						label={ __( 'Column Vertical Align', i18n ) }
-						controls="flex-vertical-with-stretch"
+						controls="__flex-vertical-with-stretch"
 					/>
 				</ResponsiveControl>
 				<ContentAlignControl

@@ -1,5 +1,14 @@
 @import "common";
 
+.stk-block-feature {
+	--stk-column-gap: 0px; // For nested columns, this takes precedence.
+	--stk-row-gap: 0px;
+}
+.stk-block-feature > * > .stk-block-content {
+	column-gap: var(--stk-column-gap);
+	row-gap: var(--stk-row-gap);
+}
+
 .stk-block.stk-block-feature:is(.is-style-default, .is-style-horizontal) {
 	> .stk-container > .stk-inner-blocks.stk-block-content {
 		@include mobile {

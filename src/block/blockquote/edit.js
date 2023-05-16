@@ -84,6 +84,10 @@ const Edit = props => {
 
 					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
+					<ContainerDiv.InspectorControls
+						sizeSelector=".stk-block-content"
+						hasContentVerticalAlign={ true }
+					/>
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
@@ -91,8 +95,6 @@ const Edit = props => {
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-blockquote" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />

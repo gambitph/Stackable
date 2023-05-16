@@ -6,7 +6,8 @@
 	"usesContext": [
 		"postId",
 		"postType",
-		"queryId"
+		"queryId",
+		"stackable/innerBlockOrientation"
 	],
 	"keywords": [
 		"Template"

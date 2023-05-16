@@ -3,6 +3,12 @@ export const addAttributes = attrObject => {
 	// uniqueId attribute
 	attrObject.add( {
 		attributes: {
+			// We need to add this in because a deprecated wide/full width block
+			// will lose its align attribute (Gutenberg issue)
+			// @see https://github.com/WordPress/gutenberg/issues/50281
+			align: {
+				type: 'string',
+			},
 			contentAlign: {
 				stkResponsive: true,
 				type: 'string',
@@ -13,6 +19,11 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
+			columnJustify: {
+				type: 'string',
+				default: '',
+				stkResponsive: true,
+			},
 			columnAlign: {
 				stkResponsive: true,
 				type: 'string',
@@ -20,6 +31,31 @@ export const addAttributes = attrObject => {
 			},
 			innerBlockOrientation: {
 				type: 'string',
+				default: '',
+			},
+			// Flex.
+			innerBlockJustify: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+			innerBlockAlign: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+			innerBlockWrap: {
+				type: 'string',
+				default: '',
+			},
+			innerBlockColumnGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			innerBlockRowGap: {
+				stkResponsive: true,
+				type: 'number',
 				default: '',
 			},
 		},

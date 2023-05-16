@@ -1,0 +1,17 @@
+// Add custom properties so that we can assign custom ordering of columns in
+// tablet and mobile. To change the order, the custom properties should be
+// changed by the block.
+//
+// We do it this way because we cannot use the direct descendent selector ">" in
+// the saved CSS or else non-admin users in multisite will encounter block
+// errors (this is a WP issue)
+//
+// This method ensures that only columns blocks with custom order will get their
+// order rules changed by the custom properties.
+.stk--has-column-order {
+	@for $i from 1 through 20 {
+		.stk-block-column:nth-child(#{ $i }) {
+			order: var(--stk-col-order-#{ $i }, initial);
+		}
+	}
+}

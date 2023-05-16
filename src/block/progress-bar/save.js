@@ -16,7 +16,7 @@ import striptags from 'striptags'
 
 import { compose } from '@wordpress/compose'
 
-const Save = props => {
+export const Save = props => {
 	const { className, attributes } = props
 	const responsiveClass = getResponsiveClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -64,6 +64,7 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<ProgressBarStyles.Content { ...props } />
 			<CustomCSS.Content attributes={ attributes } />

@@ -20,6 +20,7 @@ import { dateI18n, format } from '@wordpress/date'
 import { decodeEntities } from '@wordpress/html-entities'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { Fragment } from '@wordpress/element'
 
 /**
  * Internal dependencies
@@ -249,7 +250,7 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 
 		let output = (
 			<article>
-				{ compact( contents ).map( content => content ) }
+				{ compact( contents ).map( ( content, i ) => <Fragment key={ i }>{ content }</Fragment> ) }
 			</article>
 		)
 
@@ -407,7 +408,7 @@ generateRenderPostItem.save = ( attributes, version = VERSION ) => {
 
 	let output = (
 		<article>
-			{ compact( contents ).map( content => content ) }
+			{ compact( contents ).map( ( content, i ) => <Fragment key={ i }>{ content }</Fragment> ) }
 		</article>
 	)
 

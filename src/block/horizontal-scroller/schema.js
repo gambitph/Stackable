@@ -21,6 +21,13 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			columnSpacing: {
+				stkResponsive: true,
+				stkUnits: 'px',
+				type: 'number',
+				default: '',
+			},
+
 			horizontalScrollerColumnWidth: {
 				stkResponsive: true,
 				type: 'number',
@@ -94,7 +101,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
-	ContentAlign.addAttributes( attrObject, { columnFit: true } )
+	ContentAlign.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }

@@ -1,0 +1,14 @@
+.stk--column-flex {
+	height: 100%;
+}
+
+// If a direct inner block has a top/bottom margin-auto, then we need to set the
+// height to full (similar to .stk--column-flex) so the margin auto would take
+// effect.
+:is(.stk-block-content, .stk-inner-blocks):not(.stk--column-flex):has(> :is(.stk--block-margin-top-auto, .stk--block-margin-bottom-auto)) {
+	height: 100%;
+}
+.stk-container:has(> .stk--column-flex) {
+	display: flex;
+	flex-direction: column;
+}

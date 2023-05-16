@@ -19,10 +19,10 @@ import { Icon } from '@wordpress/components'
 
 const TABS = [
 	{
-		value: 'block',
-		title: __( 'Block', i18n ),
-		label: __( 'Block Tab', i18n ),
-		icon: 'block-default',
+		value: 'layout',
+		title: __( 'Layout', i18n ),
+		label: __( 'Layout Tab', i18n ),
+		icon: 'align-left',
 	},
 	{
 		value: 'style',
@@ -34,11 +34,11 @@ const TABS = [
 		value: 'advanced',
 		title: __( 'Advanced', i18n ),
 		label: __( 'Advanced Tab', i18n ),
-		icon: 'admin-tools',
+		icon: 'admin-generic',
 	},
 ]
 
-const DEFAULT_TABS = [ 'block', 'style', 'advanced' ]
+const DEFAULT_TABS = [ 'layout', 'style', 'advanced' ]
 
 export const closeAllOpenPanels = clickedEl => {
 	[].forEach.call( document.querySelector( '.edit-post-sidebar, .edit-widgets-sidebar' )?.querySelectorAll( '.components-panel__body .components-panel__body-toggle' ) || [], el => {
@@ -119,11 +119,6 @@ class PanelTabs extends Component {
 
 		// Allow other panels to override the auto-closing behavior.
 		if ( ! applyFilters( 'stackable.panel.tabs.panel-auto-close', true, toggle ) ) {
-			return
-		}
-
-		// Don't auto-close panels in the layout tab. (v2)
-		if ( this.state.activeTab === 'layout' ) {
 			return
 		}
 

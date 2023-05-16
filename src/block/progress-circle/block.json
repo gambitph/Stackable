@@ -4,7 +4,7 @@
 	"title": "Progress Circle",
 	"description": "Visualize a progress value or percentage in a circle.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"percentage status"
 	],

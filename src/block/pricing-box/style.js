@@ -9,7 +9,6 @@ import {
 	EffectsAnimations,
 	MarginBottom,
 	Transform,
-	ContentAlign,
 } from '~stackable/block-components'
 import { BlockCssCompiler } from '~stackable/components'
 
@@ -28,7 +27,6 @@ const BlockStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<ContainerDiv.Style { ...props } />
 			<MarginBottom.Style { ...props } />
-			<ContentAlign.Style { ...props } />
 		</>
 	)
 } )
@@ -51,7 +49,6 @@ BlockStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<ContainerDiv.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
-			<ContentAlign.Style.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

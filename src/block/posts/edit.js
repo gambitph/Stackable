@@ -13,7 +13,6 @@ import { version as VERSION, i18n } from 'stackable'
 import { first, isEqual } from 'lodash'
 import {
 	InspectorTabs,
-	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
@@ -22,12 +21,13 @@ import {
 	AdvancedToggleControl,
 	ColorPaletteControl,
 	ImageSizeControl,
-	AdvancedToolbarControl,
+	InspectorLayoutControls,
+	InspectorStyleControls,
+	ControlSeparator,
 } from '~stackable/components'
 import {
 	useBlockStyle,
 	usePostsQuery,
-	useDeviceType,
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
@@ -94,8 +94,6 @@ const Edit = props => {
 	} = props
 
 	useGeneratedCss( props.attributes )
-
-	const deviceType = useDeviceType()
 
 	const {
 		stkQueryId,
@@ -169,83 +167,42 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
+					<InspectorLayoutControls>
+						<AdvancedRangeControl
+							label={ __( 'Columns', i18n ) }
+							attribute="columns"
+							responsive="all"
+							min={ 1 }
+							sliderMax={ 4 }
+							placeholder="2"
+						/>
+						<FlexGapControls />
+						<ControlSeparator />
+						<SortControl
+							label={ __( 'Content Arrangement', i18n ) }
+							axis="y"
+							values={ contentOrderOptions }
+							num={ contentOrderOptions.length }
+							allowReset={ ! isEqual( contentOrder, defaultContentOrder ) }
+							onChange={ order => {
+								if ( order ) {
+									setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
+								} else {
+									setAttributes( { contentOrder: defaultContentOrder } )
+								}
+							} }
+						/>
+						<ControlSeparator />
+					</InspectorLayoutControls>
+
+					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
+
 					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="general"
-						>
-							<AdvancedRangeControl
-								label={ __( 'Columns', i18n ) }
-								attribute="columns"
-								responsive="all"
-								min={ 1 }
-								sliderMax={ 4 }
-								placeholder="2"
-							/>
-							<ContentAlign.InspectorControls.Controls />
-							<AdvancedRangeControl
-								label={ __( 'Content Width', i18n ) }
-								attribute="innerBlockContentWidth"
-								responsive="all"
-								units={ [ 'px', '%' ] }
-								min={ [ 0, 0 ] }
-								sliderMax={ [ 1500, 100 ] }
-								step={ [ 1, 1 ] }
-								allowReset={ true }
-								placeholder=""
-								initialPosition="1500"
-								className="ugb--help-tip-advanced-block-content-width"
-							/>
-							{ attributes.innerBlockContentWidth !== '' && deviceType === 'Desktop' &&
-								<AdvancedToolbarControl
-									label={ __( 'Content Horizontal Align', i18n ) }
-									attribute="innerBlockAlign"
-									responsive="all"
-									controls="flex-horizontal"
-									className="ugb--help-tip-advanced-block-horizontal-align"
-								/>
-							}
-							{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' ) && deviceType === 'Tablet' &&
-								<AdvancedToolbarControl
-									label={ __( 'Content Horizontal Align', i18n ) }
-									attribute="innerBlockAlign"
-									responsive="all"
-									controls="flex-horizontal"
-									className="ugb--help-tip-advanced-block-horizontal-align"
-								/>
-							}
-							{ ( attributes.innerBlockContentWidth !== '' || attributes.innerBlockContentWidthTablet !== '' || attributes.innerBlockContentWidthMobile !== '' ) && deviceType === 'Mobile' &&
-								<AdvancedToolbarControl
-									label={ __( 'Content Horizontal Align', i18n ) }
-									attribute="innerBlockAlign"
-									responsive="all"
-									controls="flex-horizontal"
-									className="ugb--help-tip-advanced-block-horizontal-align"
-								/>
-							}
-							<FlexGapControls />
-							<SortControl
-								label={ __( 'Content Arrangement', i18n ) }
-								axis="y"
-								values={ contentOrderOptions }
-								num={ contentOrderOptions.length }
-								allowReset={ ! isEqual( contentOrder, defaultContentOrder ) }
-								onChange={ order => {
-									if ( order ) {
-										setAttributes( { contentOrder: order.map( label => CONTENTS.find( content => content.label === label )?.value ) } )
-									} else {
-										setAttributes( { contentOrder: defaultContentOrder } )
-									}
-								} }
-							/>
-						</PanelAdvancedSettings>
 						<PanelAdvancedSettings
 							title={ __( 'Query', i18n ) }
 							id="query"
+							initialOpen={ true }
 						>
 							<AdvancedRangeControl
 								label={ __( 'Number of items', i18n ) }
@@ -346,6 +303,11 @@ const Edit = props => {
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
+
+					<BlockDiv.InspectorControls />
+					<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 					<Image.InspectorControls
 						{ ...props }
 						label={ __( 'Featured Image', i18n ) }
@@ -406,7 +368,6 @@ const Edit = props => {
 						hasAlign={ true }
 						initialOpen={ false }
 					/>
-					<ContainerDiv.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-posts" />

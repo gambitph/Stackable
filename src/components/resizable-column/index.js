@@ -47,7 +47,7 @@ const ResizableColumn = props => {
 	} = blockContext
 
 	// Block context is provided from the parent Columns block.
-	const allowResize = ! props.context[ 'stackable/columnFit' ]
+	const allowResize = ! props.context[ 'stackable/innerBlockOrientation' ]
 
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.

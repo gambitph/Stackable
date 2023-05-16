@@ -83,6 +83,17 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				format="url(%s)"
 				responsive="all"
+				valuePreCallback={ value => {
+					// If it's a video, don't print out the style because
+					// it's handled by a video element. And this will cause
+					// the video to show up twice in the network requests.
+					if ( typeof value === 'string' ) {
+						if ( value.match( /\.(mp4|ogg|webm)$/i ) ) {
+							return undefined
+						}
+					}
+					return value
+				} }
 			/>
 			<BlockCss
 				{ ...propsToPass }

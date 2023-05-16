@@ -40,6 +40,7 @@ const AdvancedToggleControl = memo( props => {
 	const className = classnames( [
 		'components-toggle-control',
 		'stk-toggle-control',
+		'stk-control',
 		props.className,
 	] )
 

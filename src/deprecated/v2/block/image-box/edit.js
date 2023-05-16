@@ -230,7 +230,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				>
 					<AdvancedToolbarControl
 						label={ __( 'Content Vertical Align', i18n ) }
-						controls="flex-vertical"
+						controls="__flex-vertical"
 						className="ugb--help-tip-advanced-column-content-vertical-align"
 					/>
 				</ResponsiveControl>

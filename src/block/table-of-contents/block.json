@@ -4,6 +4,12 @@
 	"title": "Table of Contents",
 	"description": "Automatically generated table of contents based on Heading blocks.",
 	"category": "stackable",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"stackable/innerBlockOrientation"
+	],
 	"keywords": [
 		"ToC",
 		"Index",

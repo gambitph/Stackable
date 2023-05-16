@@ -220,6 +220,12 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$this->scripts_loaded[] = $stackable_block;
 			}
 
+			// Check whether the current block needs to enqueue some scripts.
+			// This gets called across all the blocks.
+			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
+				do_action( 'stackable/enqueue_scripts', $block_content, $block );
+			}
+
 			return $block_content;
 		}
 

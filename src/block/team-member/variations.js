@@ -71,7 +71,7 @@ const variations = applyFilters(
 					imageHeight: 150, imageWidth: 150, imageWidthUnit: 'px', imageShape: 'circle',
 				} ],
 				[ 'stackable/heading', {
-					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+					text: __( 'Name', i18n ), textTag: 'h3',
 				} ],
 				[ 'stackable/subtitle', {
 					text: __( 'Position', i18n ),
@@ -93,7 +93,7 @@ const variations = applyFilters(
 			innerBlocks: [
 				[ 'stackable/image', {} ],
 				[ 'stackable/heading', {
-					text: __( 'Name', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+					text: __( 'Name', i18n ), textTag: 'h3',
 				} ],
 				[ 'stackable/subtitle', {
 					text: __( 'Position', i18n ),

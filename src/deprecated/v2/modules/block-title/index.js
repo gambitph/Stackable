@@ -157,7 +157,7 @@ const addInspectorPanel = ( output, props ) => {
 				{ ( blockTitleWidth || blockTitleTabletWidth || blockTitleMobileWidth ) &&
 					<AdvancedToolbarControl
 						label={ __( 'Horizontal Align', i18n ) }
-						controls="flex-horizontal"
+						controls="__flex-horizontal"
 						value={ blockTitleHorizontalAlign }
 						onChange={ blockTitleHorizontalAlign => setAttributes( { blockTitleHorizontalAlign } ) }
 					/>
@@ -252,7 +252,7 @@ const addInspectorPanel = ( output, props ) => {
 				{ ( blockDescriptionWidth || blockDescriptionTabletWidth || blockDescriptionMobileWidth ) &&
 					<AdvancedToolbarControl
 						label={ __( 'Horizontal Align', i18n ) }
-						controls="flex-horizontal"
+						controls="__flex-horizontal"
 						value={ blockDescriptionHorizontalAlign }
 						onChange={ blockDescriptionHorizontalAlign => setAttributes( { blockDescriptionHorizontalAlign } ) }
 					/>

@@ -4,7 +4,7 @@
 	"title": "Number Box",
 	"description": "Display steps or methods that your users will do in your service.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"Steps"
 	],

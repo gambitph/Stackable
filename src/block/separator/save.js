@@ -14,9 +14,7 @@ import {
 	CustomCSS,
 	getResponsiveClasses,
 } from '~stackable/block-components'
-import {
-	Separator2,
-} from '~stackable/components'
+import { Separator2 } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -51,6 +49,7 @@ export const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<SeparatorStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

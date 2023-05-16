@@ -17,7 +17,6 @@ import {
 	Typography,
 	FlexGapStyles,
 	Transform,
-	ContentAlign,
 } from '~stackable/block-components'
 import { useBlockStyle, getBlockStyle } from '~stackable/hooks'
 import { BlockCss, BlockCssCompiler } from '~stackable/components'
@@ -345,7 +344,6 @@ export const PostsStyles = memo( props => {
 			<Typography.Style { ...props } { ...excerptTypographyOptions } />
 			<Typography.Style { ...props } { ...metaTypographyOptions } />
 			<Typography.Style { ...props } { ...readmoreTypographyOptions } />
-			<ContentAlign.Style { ...props } />
 			<FlexGapStyles { ...props } { ...flexGapOptions } />
 			<Styles { ...props }
 				// TODO: Check, it seems that blockStyle is supposed to be passed here but it wasn't??
@@ -386,7 +384,6 @@ PostsStyles.Content = props => {
 			<Typography.Style.Content { ...props } { ...excerptTypographyOptions } />
 			<Typography.Style.Content { ...props } { ...metaTypographyOptions } />
 			<Typography.Style.Content { ...props } { ...readmoreTypographyOptions } />
-			<ContentAlign.Style.Content { ...props } />
 			<FlexGapStyles.Content { ...props } { ...flexGapOptions } />
 			<Styles { ...props } blockStyle={ blockStyle?.name } />
 		</BlockCssCompiler>

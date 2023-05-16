@@ -78,8 +78,8 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-					<BlockDiv.InspectorControls />
+					<InspectorTabs hasLayoutPanel={ false } />
+
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'General', i18n ) }
@@ -97,6 +97,7 @@ const Edit = props => {
 						</PanelAdvancedSettings>
 
 					</InspectorStyleControls>
+					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />

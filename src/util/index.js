@@ -29,6 +29,7 @@ import { i18n } from 'stackable'
 import striptags from 'striptags'
 import { inRange } from 'lodash'
 import { getBlockVariations } from '@wordpress/blocks'
+import { compare } from 'compare-versions'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
@@ -367,3 +368,15 @@ export const sanitizeIdAttr = str => {
 }
 
 export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
+
+/**
+ * A more human-readable style of semantic version compare
+ *
+ * @param {string} version1
+ * @param {string} operator
+ * @param {string} version2
+ * @return {boolean} True if the operator is met.
+ */
+export const semverCompare = ( version1, operator, version2 ) => {
+	return compare( version1, version2, operator )
+}

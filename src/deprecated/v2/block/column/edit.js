@@ -41,9 +41,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import {
-	__,
-} from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
@@ -128,7 +126,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 				>
 					<AdvancedToolbarControl
 						label={ __( 'Content Vertical Align', i18n ) }
-						controls="flex-vertical"
+						controls="__flex-vertical"
 					/>
 				</ResponsiveControl>
 
@@ -182,7 +180,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					<WhenResponsiveScreen>
 						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
-							controls="flex-horizontal"
+							controls="__flex-horizontal"
 							value={ contentHorizontalAlign }
 							onChange={ value => setAttributes( { contentHorizontalAlign: value } ) }
 						/>
@@ -192,7 +190,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
-							controls="flex-horizontal"
+							controls="__flex-horizontal"
 							value={ contentTabletHorizontalAlign }
 							onChange={ value => setAttributes( { contentTabletHorizontalAlign: value } ) }
 						/>
@@ -202,7 +200,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
-							controls="flex-horizontal"
+							controls="__flex-horizontal"
 							value={ contentMobileHorizontalAlign }
 							onChange={ value => setAttributes( { contentMobileHorizontalAlign: value } ) }
 						/>
@@ -261,29 +259,29 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					}
 
 					{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
 					}
 
 					{ show.columnBackground &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ shadow }
+							onChange={ shadow => setAttributes( { shadow } ) }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="3"
+							className="ugb--help-tip-general-shadow"
+						/>
 					}
 				</PanelAdvancedSettings>
 			}

@@ -47,6 +47,7 @@ export const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 			open={ attributes.startOpen || undefined }
+			version={ props.version }
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

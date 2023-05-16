@@ -6,7 +6,7 @@
 	justify-content: center !important;
 	.dashicon {
 		font-size: 16px;
-		margin: 0;
+		margin: 0 !important;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -19,7 +19,7 @@
 	}
 }
 
-.editor-styles-wrapper .stk--fit-content > * > * > [data-type="stackable/column"] {
+.editor-styles-wrapper .stk--flex > * > * > [data-type="stackable/column"] {
 	width: fit-content !important;
 	flex: 0 1 auto !important;
 	min-width: 24px;

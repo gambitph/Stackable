@@ -52,6 +52,7 @@ const Edit = props => {
 		clientId,
 		className,
 		isSelected,
+		attributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -69,6 +70,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-testimonial__content',
+		`stk-${ attributes.uniqueId }-inner-blocks`,
 	], getContentAlignmentClasses( props.attributes ) )
 
 	const lastBlockName = last( innerBlocks )?.name
@@ -80,19 +82,18 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<ContentAlign.InspectorControls />
+					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
 					<BlockDiv.InspectorControls />
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-testimonial" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-
-					<ContentAlign.InspectorControls />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />

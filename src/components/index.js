@@ -15,7 +15,7 @@ export { default as AdvancedRangeControl } from './advanced-range-control'
 export { default as AdvancedSelectControl } from './advanced-select-control'
 export { default as AdvancedTextControl } from './advanced-text-control'
 export { default as AdvancedAutosuggestControl } from './advanced-autosuggest-control'
-export { default as AdvancedToolbarControl } from './advanced-toolbar-control'
+export { default as AdvancedToolbarControl, CONTROLS as advancedToolbarControlControls } from './advanced-toolbar-control'
 export { default as FontSizeControl } from './font-size-control'
 export { default as FontFamilyControl } from './font-family-control'
 export { default as SortControl } from './sort-control'
@@ -108,6 +108,7 @@ export { default as ResizableBottomMargin } from './resizable-bottom-margin'
 export {
 	default as InspectorTabs,
 	PreInspectorTabFill,
+	InspectorLayoutControls,
 	InspectorBlockControls,
 	InspectorStyleControls,
 	InspectorAdvancedControls,
@@ -121,4 +122,6 @@ export { default as VariationPicker } from './variation-picker'
 export { default as InspectorBottomTip } from './inspector-bottom-tip'
 export { default as BlockWrapper } from './block-wrapper'
 export { default as BlockCss, BlockCssCompiler } from './block-css'
+export { default as ColumnsWidthControl } from './columns-width-control'
+export { default as ColumnsWidthMultiControl } from './columns-width-multi-control'
 export { default as Popover } from './popover'
