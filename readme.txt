@@ -176,10 +176,11 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
-- [v3.7 Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v3.6 Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.8 New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.7 New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.6 New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.4 Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.1 Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -192,8 +193,8 @@ Add animations that will bring your site to life and make it more visually engag
 - [v2.12 Better User Interface and User Experience](https://wpstackable.com/blog/better-user-interface-and-user-experience/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.11 Introducing Global Colors and Global Typography](https://wpstackable.com/blog/global-colors-and-global-typography/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.10 Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v2.9 Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v2.8 Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.9 Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.8 Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.7 New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.6 New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.5 Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -224,6 +225,10 @@ Add animations that will bring your site to life and make it more visually engag
 You'll need WordPress version 5.9 or higher for this to work.
 
 == Frequently Asked Questions ==
+
+**Did you just upgrade? Learn here about the New Inspector UI in v3.8**
+
+[youtube https://www.youtube.com/watch?v=RukT93hvzn8]
 
 **Is Stackable Free?**
 
@@ -278,6 +283,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.8.0 =
+[Introducing: New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: New Block Inspector UI - reorganized and added new options
 * New: Visual Guides - helps visualize layout options like justify and paddings
 * New: Flexbox options
