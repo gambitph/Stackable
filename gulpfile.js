@@ -35,6 +35,8 @@ const buildInclude = [
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.
 	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './src/__*/**/*' ), // Development templates.
 ]
 
 const postCSSOptions = [
