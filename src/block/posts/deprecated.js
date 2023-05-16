@@ -38,33 +38,68 @@ addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureI
 
 const deprecated = [
 	{
+		// This deprecation entry is for the New UI where we changed how the
+		// layout & containers work.
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
 		isEligible: attributes => {
-			return attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			return isNotV4
 		},
 		migrate: attributes => {
-			return {
+			let newAttributes = {
 				...attributes,
-				innerBlockContentWidth: '',
-				innerBlockContentWidthTablet: '',
-				innerBlockContentWidthMobile: '',
-				innerBlockContentWidthUnit: 'px',
-				innerBlockContentWidthUnitTablet: '',
-				innerBlockContentWidthUnitMobile: '',
-				blockWidth: attributes.innerBlockContentWidth,
-				blockWidthTablet: attributes.innerBlockContentWidthTablet,
-				blockWidthMobile: attributes.innerBlockContentWidthMobile,
-				blockWidthUnit: attributes.innerBlockContentWidthUnit,
-				blockWidthUnitTablet: attributes.innerBlockContentWidthUnitTablet,
-				blockWidthUnitMobile: attributes.innerBlockContentWidthUnitMobile,
-				innerBlockAlign: '',
-				innerBlockAlignTablet: '',
-				innerBlockAlignMobile: '',
-				blockHorizontalAlign: attributes.innerBlockAlign,
-				blockHorizontalAlignTablet: attributes.innerBlockAlignTablet,
-				blockHorizontalAlignMobile: attributes.innerBlockAlignMobile,
+				version: 2,
 			}
+
+			// We used to have an "Inner content width" which is now just the block width
+			const hasOldInnerContentWidth = attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
+
+			if ( hasOldInnerContentWidth ) {
+				newAttributes = {
+					...newAttributes,
+					innerBlockContentWidth: '',
+					innerBlockContentWidthTablet: '',
+					innerBlockContentWidthMobile: '',
+					innerBlockContentWidthUnit: 'px',
+					innerBlockContentWidthUnitTablet: '',
+					innerBlockContentWidthUnitMobile: '',
+					blockWidth: attributes.innerBlockContentWidth,
+					blockWidthTablet: attributes.innerBlockContentWidthTablet,
+					blockWidthMobile: attributes.innerBlockContentWidthMobile,
+					blockWidthUnit: attributes.innerBlockContentWidthUnit,
+					blockWidthUnitTablet: attributes.innerBlockContentWidthUnitTablet,
+					blockWidthUnitMobile: attributes.innerBlockContentWidthUnitMobile,
+					innerBlockAlign: '',
+					innerBlockAlignTablet: '',
+					innerBlockAlignMobile: '',
+					blockHorizontalAlign: attributes.innerBlockAlign,
+					blockHorizontalAlignTablet: attributes.innerBlockAlignTablet,
+					blockHorizontalAlignMobile: attributes.innerBlockAlignMobile,
+				}
+			}
+
+			// Container borders while the container was turned off was allowed
+			// before, now it's not allowed. Turn on the container to mimic the
+			// effect. This goes first before the container paddings check below
+			// because we need to set the paddings to zero for this to work.
+			const hasContainerBorders = !! attributes.containerBorderType ||
+				( typeof attributes.containerBorderRadius !== 'undefined' && attributes.containerBorderRadius !== '' ) ||
+				!! attributes.containerShadow
+
+			if ( ! attributes.hasContainer && hasContainerBorders ) {
+				newAttributes = {
+					...newAttributes,
+					hasContainer: true,
+					containerPadding: {
+						top: 0, right: 0, bottom: 0, left: 0,
+					},
+					containerBackgroundColor: 'transparent',
+				}
+			}
+
+			return newAttributes
 		},
 	},
 	// Support new margin-top/bottom classes.

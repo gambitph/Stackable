@@ -38,7 +38,7 @@ const variations = applyFilters(
 			isActive: [ 'className' ],
 			innerBlocks: [
 				[ 'stackable/heading', {
-					text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+					text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3',
 				} ],
 				[ 'stackable/price', {} ],
 				[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],
@@ -70,7 +70,7 @@ const variations = applyFilters(
 						columnAlign: 'center',
 					}, [
 						[ 'stackable/heading', {
-							text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3', textRemoveTextMargins: true,
+							text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h3',
 						} ],
 						[ 'stackable/price', {} ],
 						[ 'stackable/subtitle', { text: _x( 'Subtitle for This Block', 'Subtitle placeholder', i18n ) } ],

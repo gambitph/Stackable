@@ -300,7 +300,10 @@ const Edit = props => {
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-countdown__content" />
+					<ContainerDiv.InspectorControls
+						hasContentVerticalAlign={ true }
+						sizeSelector=".stk-block-countdown__content"
+					/>
 					{ attributes.actionOnExpiration === 'showMessage' &&
 						<Typography.InspectorControls
 							label={ __( 'Expired Message', i18n ) }

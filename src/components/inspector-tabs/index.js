@@ -13,6 +13,7 @@ import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
 import { useGlobalState } from '~stackable/util/global-state'
 import { __ } from '@wordpress/i18n'
 import { getBlockSupport } from '@wordpress/blocks'
+import { Hints } from './hints'
 
 const { Slot: PreInspectorTabSlot, Fill: PreInspectorTabFill } = createSlotFill( 'StackablePreInspectorTab' )
 const { Slot: BlockInspectorTabSlot, Fill: BlockInspectorTabFill } = createSlotFill( 'StackableBlockInspectorTab' )
@@ -106,6 +107,8 @@ const InspectorTabs = props => {
 				<BlockInspectorTabSlot />
 				<StyleInspectorTabSlot />
 				<AdvancedInspectorTabSlot />
+
+				<Hints activeTab={ activeTab } />
 
 			</InspectorControls>
 		</>

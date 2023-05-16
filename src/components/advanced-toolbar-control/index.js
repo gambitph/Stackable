@@ -182,7 +182,8 @@ const AdvancedToolbarControl = props => {
 		isToggleOnly,
 	} = _propsToPass
 
-	const controls = typeof _controls === 'string' ? CONTROLS[ _controls ] : _controls
+	const _CONTROLS = applyFilters( 'stackable.toolbar-control.controls', CONTROLS )
+	const controls = typeof _controls === 'string' ? _CONTROLS[ _controls ] : _controls
 
 	const toolbarClasses = classnames( {
 		'ugb-toolbar--full-width': fullwidth,
@@ -201,6 +202,7 @@ const AdvancedToolbarControl = props => {
 			<ButtonGroup
 				children={
 					controls.map( option => {
+						const defaultValue = props.default || ''
 						const controlProps = {
 							...( omit( option, 'controls', 'show' ) ),
 							onClick: () => {
@@ -208,11 +210,12 @@ const AdvancedToolbarControl = props => {
 								if ( isToggleOnly && option.value === value ) {
 									return
 								}
-								onChange( option.value !== value ? option.value : '' )
+								onChange( option.value !== value ? option.value : defaultValue )
 							},
 							isPrimary: value ? value === option.value : props.placeholder === option.value,
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
+							disabled: props.disabled === 'all' ? true : props.disabled.includes( option.value ),
 						}
 						return <Button key={ option.value } { ...controlProps } />
 					} )
@@ -246,6 +249,7 @@ AdvancedToolbarControl.defaultProps = {
 	value: undefined,
 	onChange: undefined,
 	placeholder: '',
+	disabled: [],
 }
 
 export default memo( AdvancedToolbarControl, isEqual )

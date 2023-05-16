@@ -1,1 +1,21 @@
 @import "glightbox/dist/css/glightbox";
+
+.glightbox-clean.glightbox-stk {
+	.gslide-description {
+		background: transparent;
+	}
+	.gdesc-inner {
+		padding: 0;
+	}
+	.gslide-title:empty {
+		display: none;
+	}
+	.gslide-title {
+		padding: 24px;
+		text-align: center;
+		margin: 0;
+		font-size: 1rem;
+		line-height: 1.7;
+		color: #fff;
+	}
+}

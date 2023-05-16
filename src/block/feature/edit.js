@@ -85,7 +85,7 @@ const Edit = props => {
 					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
-					<ContainerDiv.InspectorControls />
+					<ContainerDiv.InspectorControls hasContentVerticalAlign={ true } />
 					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />

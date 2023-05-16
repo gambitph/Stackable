@@ -49,13 +49,14 @@ export const Save = props => {
 		'stk--has-background-overlay': attributes.progressColorType === 'gradient' && attributes.progressColor2,
 	} )
 
-	// this is to handle dynamic content; only show valid value
+	// Check if progressValue is an int/float/empty, if NaN, assume its dynamic content
 	let progressValue = attributes.progressValue
-	const isDynamicContent = !! attributes.progressValue?.startsWith( '!#stk_dynamic/' )
-	if ( ! isDynamicContent ) {
-		progressValue = parseFloat( attributes.progressValue )
-		progressValue = isNaN( progressValue ) ? DEFAULT_PROGRESS : progressValue
+	if ( attributes.progressValue === '' ) {
+		progressValue = DEFAULT_PROGRESS
+	} else if ( attributes.progressValue?.match( /^[\d.]+$/ ) ) {
+		progressValue = parseFloat( progressValue )
 	}
+
 	const derivedValue = `${ attributes.progressValuePrefix }${ progressValue }${ attributes.progressValueSuffix }`.trim()
 	const derivedAriaValue = attributes.showText ? attributes.progressAriaValueText || attributes.text : undefined
 

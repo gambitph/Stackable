@@ -6,21 +6,37 @@ import classnames from 'classnames'
 /**
  * Internal dependencies
  */
-import { useUpdateEffect } from './utils'
 import { useGlobalState } from '~stackable/util/global-state'
 
 /**
  * WordPress dependencies
  */
-import { useReducedMotion, useMergeRefs } from '@wordpress/compose'
+import { useMergeRefs } from '@wordpress/compose'
 import { forwardRef, useRef } from '@wordpress/element'
 import { chevronUp, chevronDown } from '@wordpress/icons'
 import {
 	Button, Icon, FormToggle,
 } from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { debounce } from 'lodash'
 
 const noop = () => {}
+
+// Debounced so this can be called multiple times by the closing panel and
+// opening panel and it will only scroll once.
+const scrollIntoViewIfNeeded = debounce( el => {
+	if ( el ) {
+		// 200 is an estimate of the top of the panel when it will be hidden from view.
+		const isAboveView = el.getBoundingClientRect().top < 200
+		if ( isAboveView ) {
+			el.scrollIntoView( {
+				inline: 'start',
+				block: 'start',
+				behavior: 'instant',
+			} )
+		}
+	}
+}, 0, { leading: false, trailing: true } ) // We use 0 here because it works and it minimizes the screen blinking.
 
 const PanelBody = (
 	{
@@ -31,8 +47,8 @@ const PanelBody = (
 		initialOpen,
 		onToggle = noop,
 		// opened,
+		isOpen: isForcedOpen = null, // Override whether the panel should be open or closed based on this prop.
 		title,
-		scrollAfterOpen = true,
 		id = '', // Used for remembering whether this is currently open or closed
 		// Toggle options.
 		checked,
@@ -44,45 +60,31 @@ const PanelBody = (
 	ref
 ) => {
 	const { name } = useBlockEditContext()
-	const [ isOpened, setIsOpened ] = useGlobalState( `panelCache-${ name }-${ id }-${ title }`, initialOpen === undefined ? false : initialOpen )
+	const [ _isOpened, setIsOpened ] = useGlobalState( `panelCache-${ name }-${ id }-${ title }`, initialOpen === undefined ? false : initialOpen )
+
+	const isOpened = isForcedOpen === null ? _isOpened : isForcedOpen
 
 	const nodeRef = useRef()
 
-	// Defaults to 'smooth' scrolling
-	// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
-	const scrollBehavior = useReducedMotion() ? 'auto' : 'smooth'
-
 	const handleOnToggle = event => {
 		event.preventDefault()
-		const next = ! isOpened
-		setIsOpened( next )
-		onToggle( next )
-	}
+		const newIsOpened = ! isOpened
+		setIsOpened( newIsOpened )
+		onToggle( newIsOpened )
 
-	// Ref is used so that the effect does not re-run upon scrollAfterOpen changing value.
-	const scrollAfterOpenRef = useRef()
-	scrollAfterOpenRef.current = scrollAfterOpen
-	// Runs after initial render.
-	useUpdateEffect( () => {
-		if (
-			isOpened &&
-			scrollAfterOpenRef.current &&
-			nodeRef.current?.scrollIntoView
-		) {
-			/*
-			 * Scrolls the content into view when visible.
-			 * This improves the UX when there are multiple stacking <PanelBody />
-			 * components in a scrollable container.
-			 */
+		// Scroll into view if needed.  This is called twice (first on the panel
+		// being closed, and second on the panel that's being openeed) we have
+		// debounced this so that the function is only called once, there's a
+		// delay on the open so that it's called last (and the first call on the
+		// panel that's being closed doesn't run).
+		if ( ! newIsOpened ) {
+			scrollIntoViewIfNeeded( nodeRef.current )
+		} else {
 			setTimeout( () => {
-				nodeRef?.current?.scrollIntoView( {
-					inline: 'nearest',
-					block: 'start',
-					behavior: scrollBehavior,
-				} )
-			}, 1 )
+				scrollIntoViewIfNeeded( nodeRef.current )
+			}, 0 ) // We use 0 here because it works and it minimizes the screen blinking.
 		}
-	}, [ isOpened, scrollBehavior ] )
+	}
 
 	const classes = classnames( 'components-panel__body', 'ugb-toggle-panel-body', className, {
 		'is-opened': isOpened,

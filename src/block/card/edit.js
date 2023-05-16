@@ -121,7 +121,7 @@ const Edit = props => {
 						hasShape={ false }
 						hasShadow={ false }
 					/>
-					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
 					<BlockDiv.InspectorControls />
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
 					<BlockLink.InspectorControls />

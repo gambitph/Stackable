@@ -23,12 +23,15 @@ import { pick, omit } from 'lodash'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { Fragment } from '@wordpress/element'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
+import { VisualGuideer } from './use-visual-guide'
 
 // Expose useControlHandlers to our API.
 export { useControlHandlers } from './hooks'
 
 const ALL_SCREENS = [ 'desktop', 'tablet', 'mobile' ]
+const EMPTY_OBJ = {}
 
 export const BaseControl = props => {
 	const deviceType = useDeviceType()
@@ -58,49 +61,53 @@ export const BaseControl = props => {
 
 	const label = props.boldLabel ? <h3>{ props.label }</h3> : props.label
 
+	const VisualGuide = props.visualGuide !== EMPTY_OBJ ? VisualGuideer : Fragment
+
 	return (
 		<GutBaseControl
 			help={ props.help }
 			className={ className }
 		>
-			<div className={ labelClassName }>
-				<div className="components-base-control__label">{ label }</div>
-				<div className="stk-control-label__toggles">
-					{ hasResponsive && (
-						<ResponsiveToggle
-							screens={ responsive }
-							attribute={ props.attribute }
-							hasTabletValue={ props.hasTabletValue }
-							hasMobileValue={ props.hasMobileValue }
-						/>
-					) }
-					{ hasHover && (
-						<HoverStateToggle
-							hover={ props.hover }
-							attribute={ props.attribute }
-							hasResponsive={ hasResponsive }
-						/>
-					) }
+			<VisualGuide { ...props.visualGuide }>
+				<div className={ labelClassName }>
+					<div className="components-base-control__label">{ label }</div>
+					<div className="stk-control-label__toggles">
+						{ hasResponsive && (
+							<ResponsiveToggle
+								screens={ responsive }
+								attribute={ props.attribute }
+								hasTabletValue={ props.hasTabletValue }
+								hasMobileValue={ props.hasMobileValue }
+							/>
+						) }
+						{ hasHover && (
+							<HoverStateToggle
+								hover={ props.hover }
+								attribute={ props.attribute }
+								hasResponsive={ hasResponsive }
+							/>
+						) }
+					</div>
+					<div className="stk-control-label__after">
+						{ hasUnits &&
+							<ControlIconToggle
+								className="stk-control-label__units"
+								value={ props.unit }
+								options={ units }
+								onChange={ unit => props.onChangeUnit( unit ) }
+								buttonLabel={ __( 'Unit', i18n ) }
+								hasLabels={ false }
+								hasColors={ false }
+								labelPosition="left"
+							/>
+						}
+						{ props.after }
+					</div>
 				</div>
-				<div className="stk-control-label__after">
-					{ hasUnits &&
-						<ControlIconToggle
-							className="stk-control-label__units"
-							value={ props.unit }
-							options={ units }
-							onChange={ unit => props.onChangeUnit( unit ) }
-							buttonLabel={ __( 'Unit', i18n ) }
-							hasLabels={ false }
-							hasColors={ false }
-							labelPosition="left"
-						/>
-					}
-					{ props.after }
+				<div className="stk-control-content">
+					{ props.children }
 				</div>
-			</div>
-			<div className="stk-control-content">
-				{ props.children }
-			</div>
+			</VisualGuide>
 		</GutBaseControl>
 	)
 }
@@ -126,6 +133,8 @@ BaseControl.defaultProps = {
 
 	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
 	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
+
+	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 }
 
 const AdvancedControl = props => {
@@ -168,6 +177,8 @@ AdvancedControl.defaultProps = {
 
 	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
 	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
+
+	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 }
 
 export default AdvancedControl

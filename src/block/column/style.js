@@ -23,7 +23,7 @@ const containerDivOptions = {
 	sizeVerticalAlignRule: 'justifyContent',
 	sizeVerticalAlignSelector: '.%s-inner-blocks',
 	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout',
-	sizeVerticalAlignSelectorEdit: '.%s-inner-blocks',
+	// sizeVerticalAlignSelectorEdit: '.%s-inner-blocks',
 }
 
 const callbacks = {
@@ -91,6 +91,56 @@ const ColumnStyles = props => {
 				hasUnits="px"
 				valuePreCallback={ callbacks.marginLeft.valuePreCallback }
 			/>
+
+			{
+			// The styles below are used purely for the block highligher feature
+			// where the edges of the element where the padding will be applied
+			// is highlighted.
+			}
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector=".%s-container"
+				styleRule="--column-spacing-top"
+				attrName="columnSpacing"
+				key="columnSpacing-top-edit-for-highlight"
+				responsive="all"
+				hasUnits="px"
+				valuePreCallback={ callbacks.marginTop.valuePreCallback }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector=".%s-container"
+				styleRule="--column-spacing-right"
+				attrName="columnSpacing"
+				key="columnSpacing-right-edit-for-highlight"
+				responsive="all"
+				hasUnits="px"
+				valuePreCallback={ callbacks.marginRight.valuePreCallback }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector=".%s-container"
+				styleRule="--column-spacing-bottom"
+				attrName="columnSpacing"
+				key="columnSpacing-bottom-edit-for-highlight"
+				responsive="all"
+				hasUnits="px"
+				valuePreCallback={ callbacks.marginBottom.valuePreCallback }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector=".%s-container"
+				styleRule="--column-spacing-left"
+				attrName="columnSpacing"
+				key="columnSpacing-left-edit-for-highlight"
+				responsive="all"
+				hasUnits="px"
+				valuePreCallback={ callbacks.marginLeft.valuePreCallback }
+			/>
 		</>
 	)
 }
@@ -98,17 +148,17 @@ const ColumnStyles = props => {
 const BlockStyles = memo( props => {
 	return (
 		<>
+			<ColumnStyles { ...props } />
 			<Alignment.Style
 				{ ...props }
 				columnAlignSelectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 			/>
-			<BlockDiv.Style { ...props } verticalAlignSelectorEdit="> .stk-inner-blocks" />
+			<BlockDiv.Style { ...props } />
 			<Column.Style { ...props } />
 			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
-			<ColumnStyles { ...props } />
 		</>
 	)
 } )
@@ -124,6 +174,7 @@ BlockStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
+			<ColumnStyles { ...props } />
 			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<Column.Style.Content { ...props } />
@@ -131,7 +182,6 @@ BlockStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<ColumnStyles { ...props } />
 		</BlockCssCompiler>
 	)
 }

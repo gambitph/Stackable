@@ -21,7 +21,7 @@ export default {
 		}, innerBlocks: [],
 	}, {
 		name: 'stackable/heading', attributes: {
-			uniqueId: '3688a95', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, textRemoveTextMargins: true, hasP: false, show: true, showText: true, text: __( 'Name', i18n ), textTag: 'h3', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
+			uniqueId: '3688a95', hasBackground: false, hasBorders: false, effectAnimationOut: {}, effectAnimationIn: {}, customAttributes: [], hideDesktop: false, hideTablet: false, hideMobile: false, displayCondition: {}, hasP: false, show: true, showText: true, text: __( 'Name', i18n ), textTag: 'h3', blockBackgroundCustomSizeUnit: '%', blockBackgroundCustomSizeUnitTablet: '%', blockBackgroundCustomSizeUnitMobile: '%', lineHeightUnit: 'em', lineHeightUnitTablet: 'em', lineHeightUnitMobile: 'em',
 		}, innerBlocks: [],
 	}, {
 		name: 'stackable/subtitle', attributes: {

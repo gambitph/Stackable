@@ -494,6 +494,9 @@ export const registerBlockType = ( name, _settings ) => {
 		}
 	}
 
+	// Add HOCs here that are present for all our blocks.
+	settings.edit = applyFilters( 'stackable.registerBlockType.edit', settings.edit )
+
 	settings = applyFilters( `stackable.${ name.replace( 'stackable/', '' ) }.settings`, settings )
 	_registerBlockType( name, settings )
 }

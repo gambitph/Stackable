@@ -166,9 +166,12 @@
 		flex: 1 1 100%;
 	}
 }
-[data-type^="stackable/"] .stk-row,
-.stk-column > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+[data-type^="stackable/"] .stk-row {
 	display: block;
+}
+:where(.stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout) {
+	display: flex;
+	flex-direction: column;
 }
 
 // Inner block orientation
@@ -215,7 +218,7 @@
 }
 // Mobile auto-collapses all columns.
 @include mobile {
-	.stk-row .block-editor-block-list__layout > div {
+	.stk-row > * > * > .block-editor-block-list__layout > div {
 		flex: 1 1 100%;
 		max-width: 100%;
 	}
@@ -249,6 +252,9 @@
 // Block appender in latest Gutenberg adds margins on the appender.
 .stk-block .block-list-appender {
 	margin: 0px;
+}
+.stk-block .block-editor-block-list__block .block-list-appender:only-child {
+	align-self: stretch;
 }
 
 // Block float alignment.

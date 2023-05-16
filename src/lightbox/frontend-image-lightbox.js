@@ -3,6 +3,10 @@ import GLightbox from 'glightbox'
 
 // Gets the highest resolution image from the srcset.
 const getImageFromSrcset = el => {
+	if ( ! el || ! el.getAttribute( 'srcset' ) ) {
+		return null
+	}
+
 	const src = el.getAttribute( 'srcset' ).split( ',' ).map( v => v.trim().split( ' ' ) ).reduce( ( largestImgData, imgData ) => {
 		const size = parseInt( imgData[ 1 ], 10 )
 		if ( largestImgData.size < size ) {
@@ -25,8 +29,27 @@ const detectIfVideo = url => {
 	return false
 }
 
+// Get the outermost container block element.
+const getRootColumnsBlock = el => {
+	let currentEl = el
+	let parentColumnsBlock = null
+	while ( currentEl ) {
+		// We need to add .entry-content here so that we treat the root block as
+		// the outermost block.
+		currentEl = currentEl.parentElement && currentEl.parentElement.closest( '.entry-content .stk-block, .entry-content .wp-block-columns, .entry-content .wp-block-group' )
+		if ( currentEl ) {
+			parentColumnsBlock = currentEl
+		}
+	}
+	return parentColumnsBlock
+}
+
 const isButtonBlock = el => {
-	return el.classList.contains( 'stk-block-button' ) || el.classList.contains( 'stk-block-icon-button' ) || el.classList.contains( 'stk-block-icon' )
+	return el && ( el.classList.contains( 'stk-block-button' ) || el.classList.contains( 'stk-block-icon-button' ) || el.classList.contains( 'stk-block-icon' ) )
+}
+
+const isImageBlock = el => {
+	return el && el.classList.contains( 'stk-block-image' )
 }
 
 class StackableImageLightbox {
@@ -38,7 +61,7 @@ class StackableImageLightbox {
 
 	gatherImages = () => {
 		document.querySelectorAll( '.stk--has-lightbox' ).forEach( el => {
-			const imageBlock = el.querySelector( 'img[srcset]' )
+			const imageBlock = el.querySelector( 'img[srcset], img[src]' )
 
 			// Look for the anchor link where we can get the link to open in the
 			// lightbox.
@@ -55,7 +78,7 @@ class StackableImageLightbox {
 			// The link to open either comes from the href, or from the srcset
 			// of an image block.
 			const linkToOpen = link && href ? href
-				: imageBlock ? getImageFromSrcset( imageBlock )
+				: imageBlock ? ( getImageFromSrcset( imageBlock ) || imageBlock.getAttribute( 'src' ) )
 					: null
 
 			if ( ! linkToOpen ) {
@@ -64,6 +87,11 @@ class StackableImageLightbox {
 
 			if ( ! link ) {
 				link = el
+			}
+
+			let title = link && href ? link.getAttribute( 'title' ) : null
+			if ( ! title && imageBlock ) {
+				title = imageBlock.getAttribute( 'alt' ) || null
 			}
 
 			const isUsingImageBlock = ( ! link || ! href ) && imageBlock
@@ -75,6 +103,7 @@ class StackableImageLightbox {
 				// If we're using an image block as the source, the link to open
 				// isn't sometimes detected as an image.
 				type: isUsingImageBlock ? 'image' : undefined,
+				title,
 			} )
 		} )
 	}
@@ -100,6 +129,24 @@ class StackableImageLightbox {
 				isPrevBlockAdjacent = false
 			}
 
+			// Image blocks placed in the same Columns block are grouped
+			// together. Even if there's another block between the image blocks
+			// inside the same column, that should still be okay.
+			if ( isImageBlock( block ) && isImageBlock( nextElementBlock ) ) {
+				const blockRootColumns = getRootColumnsBlock( block )
+				const nextBlockRootColumns = getRootColumnsBlock( nextElementBlock )
+				if ( blockRootColumns && blockRootColumns === nextBlockRootColumns ) {
+					isNextBlockAdjacent = true
+				}
+			}
+			if ( isImageBlock( block ) && isImageBlock( prevElementBlock ) ) {
+				const blockRootColumns = getRootColumnsBlock( block )
+				const prevBlockRootColumns = getRootColumnsBlock( prevElementBlock )
+				if ( blockRootColumns && blockRootColumns === prevBlockRootColumns ) {
+					isPrevBlockAdjacent = true
+				}
+			}
+
 			if ( ! isPrevBlockAdjacent && isNextBlockAdjacent ) {
 				elements.push( [ element ] )
 			} else if ( isPrevBlockAdjacent ) {
@@ -115,7 +162,7 @@ class StackableImageLightbox {
 			// If the blocks are beside each other, display as a gallery.
 			if ( Array.isArray( elementGroup ) ) {
 				const elements = elementGroup.map( ( {
-					element, href, type,
+					element, href, type, title,
 				} ) => {
 					return {
 						elements: [ element ],
@@ -123,23 +170,29 @@ class StackableImageLightbox {
 						// We'll need to detect the type because auto-detect
 						// doesn't work here for some unknown reason.
 						type: type || ( detectIfVideo( href ) ? 'video' : 'image' ),
+						title,
 					}
 				} )
 
-				const lightbox = GLightbox( { elements } )
+				const lightbox = GLightbox( {
+					skin: 'clean glightbox-stk', // Add a class to style lightbox description.
+					elements,
+				} )
 
 				elementGroup.forEach( ( { element }, i ) => {
 					this.addClickHandler( element, lightbox, i )
 				} )
 			} else {
 				const {
-					element, href, type,
+					element, href, type, title,
 				} = elementGroup
 
 				const lightbox = GLightbox( {
+					skin: 'clean glightbox-stk', // Add a class to style lightbox description.
 					elements: [ element ],
 					href,
 					type,
+					title,
 				} )
 
 				this.addClickHandler( element, lightbox, 0 )

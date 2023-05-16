@@ -39,6 +39,15 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			// This keeps track of the version of the block, just when we need
+			// to force update the block with new attributes and the save markup
+			// doesn't change.
+			version: {
+				type: 'number',
+				source: 'attribute',
+				attribute: 'data-v',
+				default: undefined,
+			},
 			alignVertical: {
 				type: 'boolean',
 				default: '',
@@ -50,6 +59,14 @@ export const attributes = ( version = VERSION ) => {
 			},
 		},
 		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.addDefaultValues( {
+		attributes: {
+			version: 2,
+		},
+		versionAdded: '3.8.0',
 		versionDeprecated: '',
 	} )
 

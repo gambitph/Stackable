@@ -35,15 +35,15 @@ addFilter( 'stackable.feature-grid.save.blockClassNames', 'stackable/3.1.0', ( o
 
 const deprecated = [
 	{
-		attributes: attributes(),
-		save: withVersion( '3.8.0' )( Save ),
+		attributes: attributes( '3.7.3' ),
+		save: withVersion( '3.7.3' )( Save ),
 		isEligible: attributes => !! attributes.columnFit,
 		migrate: attributes => {
 			return {
 				...attributes,
 				columnFit: '',
 				columnFitAlign: '',
-				columnJustify: attributes.columnFitAlign,
+				columnJustify: !! attributes.columnFit ? ( attributes.columnFitAlign || 'flex-start' ) : '',
 			}
 		},
 	},

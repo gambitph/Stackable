@@ -6,7 +6,7 @@ import BlockStyles from './style'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
@@ -57,7 +57,6 @@ export const Save = props => {
 			[ blockAlignmentClass ]: blockAlignmentClass,
 			'stk-block-content': true,
 			[ rowClass ]: [ rowClass ],
-			'stk--has-column-order': attributes.columnArrangementMobile || props.attributes.columnArrangementTablet,
 		}, props )
 	)
 
@@ -66,6 +65,7 @@ export const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 			version={ props.version }
+			data-v={ props.attributes.version }
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

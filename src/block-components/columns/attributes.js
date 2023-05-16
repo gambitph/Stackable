@@ -1,8 +1,4 @@
-import { deprecatedAddAttributes } from './deprecated'
-
 export const addAttributes = attrObject => {
-	deprecatedAddAttributes( attrObject )
-
 	attrObject.add( {
 		attributes: {
 			columnSpacing: {
