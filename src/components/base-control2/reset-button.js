@@ -10,7 +10,7 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { Dashicon } from '@wordpress/components'
 import { memo } from '@wordpress/element'
-import classNames from 'classnames'
+import classnames from 'classnames'
 
 const icon = <Dashicon icon="image-rotate" />
 
@@ -23,7 +23,7 @@ export const ResetButton = memo( props => {
 		props.onChange( typeof props.default === 'undefined' ? '' : props.default )
 	}
 
-	const className = classNames( [
+	const className = classnames( [
 		'stk-control__reset-button',
 		{ 'stk-control__reset-button--no-modified': ! props.hasPanelModifiedIndicator },
 	] )
