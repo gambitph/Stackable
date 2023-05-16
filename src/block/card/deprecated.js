@@ -32,21 +32,6 @@ addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.8.0', ( output, p
 	return output
 } )
 
-// Version 3.8 added horizontal flex, this changes the stk--block-orientation-* to stk--block-horizontal-flex.
-addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {
-	if ( compareVersions( props.version, '3.8.0' ) >= 0 ) {
-		return output
-	}
-
-	output.push( {
-		[ `stk-${ props.attributes.uniqueId }-inner-blocks` ]: false,
-		'stk--block-horizontal-flex': false,
-		[ `stk--block-orientation-${ props.attributes.innerBlockOrientation }` ]: props.attributes.innerBlockOrientation,
-	} )
-
-	return output
-} )
-
 // Version 3.0.2 Deprecations
 addFilter( 'stackable.card.save.container-div.content', 'stackable/3.0.2', ( output, props, innerClassNames ) => {
 	if ( compareVersions( props.version, '3.0.2' ) === 1 ) {

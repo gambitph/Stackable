@@ -8,7 +8,6 @@ import { attributes } from './schema'
  * External dependencies
  */
 import { withVersion } from '~stackable/higher-order'
-import compareVersions from 'compare-versions'
 import classnames from 'classnames/dedupe'
 
 /**
@@ -27,18 +26,6 @@ addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.8.0', ( output,
 	}
 
 	return output
-} )
-
-// Version 3.8 added horizontal flex, this changes the stk--block-orientation-* to stk--block-horizontal-flex.
-addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {
-	if ( compareVersions( props.version, '3.8.0' ) >= 0 ) {
-		return output
-	}
-
-	return classnames( output, {
-		'stk--block-horizontal-flex': false,
-		[ `stk--block-orientation-${ props.attributes.innerBlockOrientation }` ]: props.attributes.innerBlockOrientation,
-	} )
 } )
 
 // Version 3.7 Deprecations, we now have a stk-block-column--v3 class and removed the --v2 class
