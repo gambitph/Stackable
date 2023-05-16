@@ -100,7 +100,7 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
 - Advanced Column and Spacing Settings
 - Global Colors & Typography Settings
 - Responsiveness
-	- Tablet and Mobile Column Arrangement
+    - Tablet and Mobile Column Arrangement
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
     - Specify how Columns collapse in Tablet and Mobile
