@@ -83,6 +83,7 @@ const ImageControl = memo( props => {
 	return (
 		<AdvancedControl
 			{ ...controlProps }
+			suffix="Url"
 			className={ classnames( 'ugb-image-control', props.className ) }
 		>
 			<DynamicContentControl

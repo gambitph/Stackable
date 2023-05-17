@@ -30,7 +30,7 @@ export const ContainerDiv = props => {
 		'stk-container',
 		uniqueContainerClass,
 	], {
-		'stk-hover-parent': attributes.hasContainer && attributes.triggerHoverState, // This is needed to trigger parent-hovered hover styles.
+		'stk-hover-parent': attributes.hasContainer && attributes.triggerHoverState, // This is needed to trigger parent-hover hover styles.
 		'stk--no-background': ! attributes.hasContainer,
 		'stk--no-padding': ! attributes.hasContainer,
 	} )
@@ -63,7 +63,7 @@ ContainerDiv.Content = props => {
 		'stk-container',
 		uniqueContainerClass,
 	], {
-		'stk-hover-parent': attributes.hasContainer && attributes.triggerHoverState, // This is needed to trigger parent-hovered hover styles.
+		'stk-hover-parent': attributes.hasContainer && attributes.triggerHoverState, // This is needed to trigger parent-hover hover styles.
 		'stk--no-background': ! attributes.hasContainer,
 		'stk--no-padding': ! attributes.hasContainer,
 	} )

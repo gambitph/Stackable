@@ -45,7 +45,7 @@ const DEVICE_OPTIONS = [
 	},
 ]
 
-const ALL_HOVER = [ 'normal', 'hover', 'parent-hovered', 'collapsed' ]
+const ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
 const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.filter( s => s !== 'normal' ).map( s => upperFirst( camelCase( s ) ) )
 
 const ResponsiveToggle = props => {
@@ -70,14 +70,22 @@ const ResponsiveToggle = props => {
 			return {}
 		}
 
-		const tabletAttributes = [ attributes[ `${ props.attribute }Tablet` ] ]
+		// const attribute = props.attribute
+
+		// console.log( props.attribute, attributes, props.suffix )
+
+		// if ( attribute === 'backgroundMedia' ) {
+		// 	ret
+		// }
+
+		const tabletAttributes = [ attributes[ `${ props.attribute }${ props.suffix }Tablet` ] ]
 		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
-			tabletAttributes.push( attributes[ `${ props.attribute }Tablet${ suffix }` ] )
+			tabletAttributes.push( attributes[ `${ props.attribute }${ props.suffix }Tablet${ suffix }` ] )
 		} )
 
-		const mobileAttributes = [ attributes[ `${ props.attribute }Mobile` ] ]
+		const mobileAttributes = [ attributes[ `${ props.attribute }${ props.suffix }Mobile` ] ]
 		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
-			mobileAttributes.push( attributes[ `${ props.attribute }Mobile${ suffix }` ] )
+			mobileAttributes.push( attributes[ `${ props.attribute }${ props.suffix }Mobile${ suffix }` ] )
 		} )
 
 		return {
@@ -107,6 +115,8 @@ const ResponsiveToggle = props => {
 		}
 	} )
 
+	// console.log( screens, props.attribute, responsiveValues )
+
 	if ( screens <= 1 ) {
 		return null
 	}
@@ -129,6 +139,7 @@ const ResponsiveToggle = props => {
 ResponsiveToggle.defaultProps = {
 	screens: [ 'desktop' ],
 	attribute: '',
+	suffix: '',
 	hasTabletValue: undefined, // If true, then the toggle for tablet will be highlighted to show that the tablet value has been set.
 	hasMobileValue: undefined, // If true, then the toggle for mobile will be highlighted to show that the mobile value has been set.
 }
