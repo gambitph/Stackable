@@ -36,15 +36,16 @@
 		overflow: hidden !important;
 		white-space: nowrap !important;
 		background: transparent !important;
+		display: flex !important;
+		justify-content: flex-start !important;
 		&::before,
 		&::after {
 			display: none !important;
 		}
 	}
 	.dashicons-editor-help {
-		position: absolute;
-		top: 0;
-		right: 0;
+		display: flex !important;
+		align-self: center !important;
 	}
 	// Themes may cut the preview of the heading text.
 	> .editor-styles-wrapper {
