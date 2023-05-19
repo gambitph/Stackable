@@ -369,7 +369,7 @@
 }
 
 @mixin align-justify-styles {
-	text-align: justify !important;
+	--stk-alignment-text-align: justify;
 }
 
 // Default text direction, we need to add this for RTL support.
@@ -420,6 +420,9 @@
 	.has-text-align-right-tablet {
 		@include align-right-styles;
 	}
+	.has-text-align-justify-tablet {
+		@include align-justify-styles;
+	}
 	.has-text-align-space-between-tablet {
 		@include align-space-between-styles;
 	}
@@ -440,6 +443,9 @@
 	}
 	.has-text-align-right-mobile {
 		@include align-right-styles;
+	}
+	.has-text-align-justify-mobile {
+		@include align-justify-styles;
 	}
 	.has-text-align-space-between-mobile {
 		@include align-space-between-styles;
