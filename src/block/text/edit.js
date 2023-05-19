@@ -126,7 +126,10 @@ const Edit = props => {
 						initialOpen={ true }
 						hasTextShadow={ true }
 					/>
-					<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
+					<Alignment.InspectorControls
+						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) }
+						hasContentJustify={ true }
+					/>
 					{ enableColumns && (
 						<InspectorLayoutControls>
 							<AdvancedRangeControl

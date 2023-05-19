@@ -368,6 +368,10 @@
 	--stk-alignment-justify-content: space-evenly;
 }
 
+@mixin align-justify-styles {
+	text-align: justify !important;
+}
+
 // Default text direction, we need to add this for RTL support.
 .stk-block {
 	text-align: start;
@@ -391,6 +395,9 @@
 	}
 	&-right {
 		@include align-right-styles;
+	}
+	&-justify {
+		@include align-justify-styles;
 	}
 	&-space-between {
 		@include align-space-between-styles;

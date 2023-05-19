@@ -19,6 +19,7 @@ import {
  * WordPress dependencies
  */
 import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
+import { ToolbarButton } from '@wordpress/components'
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 
@@ -107,6 +108,15 @@ export const Edit = props => {
 					value={ contentAlign }
 					onChange={ contentAlign => setAttributes( { contentAlign } ) }
 				/>
+
+				{ props.hasContentJustify && <ToolbarButton
+					icon="editor-justify"
+					label="Justify"
+					value={ contentAlign }
+					onClick={ () => setAttributes( { contentAlign: 'justify' } ) }
+				/>
+				}
+
 			</BlockControls>
 			<InspectorLayoutControls>
 				{ props.containerSizePriority < 5 && containerSize }
@@ -114,6 +124,7 @@ export const Edit = props => {
 					label={ labelContentAlign }
 					attribute="contentAlign"
 					responsive="all"
+					justified={ props.hasContentJustify }
 				/>
 				{ props.hasColumnJustify &&
 					<AdvancedToolbarControl
