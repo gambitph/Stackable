@@ -11,6 +11,12 @@ class StackableHorizontalScroller {
 		let initialClientX = 0
 
 		els.forEach( el => {
+			const children = el.querySelectorAll( '.stk-block-link' )
+
+			const onClickHandler = function( e ) {
+				e.preventDefault()
+			}
+
 			const mouseMoveHandler = function( e ) {
 				// How far the mouse has been moved
 				const dx = e.clientX - initialClientX
@@ -22,6 +28,9 @@ class StackableHorizontalScroller {
 
 				// Prevent selection of contents because of dragging.
 				e.preventDefault()
+				children.forEach( child => {
+					child.addEventListener( 'click', onClickHandler )
+				 } )
 			}
 
 			const mouseUpHandler = function() {
@@ -44,6 +53,9 @@ class StackableHorizontalScroller {
 
 				dragTimeout = setTimeout( () => {
 					el.classList.remove( 'stk--snapping-deactivated' )
+					children.forEach( child => {
+						child.removeEventListener( 'click', onClickHandler )
+					 } )
 				}, 500 )
 			}
 
