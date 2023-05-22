@@ -37,7 +37,7 @@
 		white-space: nowrap !important;
 		background: transparent !important;
 		display: flex !important;
-		justify-content: flex-start !important;
+		gap: 12px;
 		&::before,
 		&::after {
 			display: none !important;
