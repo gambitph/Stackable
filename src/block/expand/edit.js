@@ -62,12 +62,11 @@ const TEMPLATE = [
 	} ],
 ]
 
-const TABS = [ 'block', 'advanced' ]
-
 const Edit = props => {
 	const {
 		clientId,
 		className,
+		isSelected,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -87,22 +86,25 @@ const Edit = props => {
 
 	return (
 		<>
+			{ isSelected && (
+				<>
+					<InspectorTabs />
 
-			<InspectorTabs tabs={ TABS } />
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-expand" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 
-			<Alignment.InspectorControls hasRowAlignment={ true } />
-			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Transform.InspectorControls />
-			<EffectsAnimations.InspectorControls />
-			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-block-expand" />
-			<Responsive.InspectorControls />
-			<ConditionalDisplay.InspectorControls />
-
-			<InspectorBlockControls>
-				<InspectorBottomTip />
-			</InspectorBlockControls>
+					<InspectorBlockControls>
+						<InspectorBottomTip />
+					</InspectorBlockControls>
+				</>
+			) }
 
 			<BlockStyles
 				version={ VERSION }

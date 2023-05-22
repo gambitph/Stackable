@@ -16,6 +16,7 @@ import schema from './schema'
 import metadata from './block.json'
 import example from './example'
 import transforms from './transforms'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
@@ -33,7 +34,7 @@ export const settings = {
 	example,
 	transforms,
 
-	// deprecated,
+	deprecated,
 	edit,
 	save,
 }

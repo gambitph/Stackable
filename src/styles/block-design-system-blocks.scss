@@ -68,8 +68,8 @@
 }
 
 // Block spacing when horizontally oriented.
-.stk--block-orientation-horizontal > * + * {
-	margin-left: cssvar(block-margin-bottom);
+.stk--block-horizontal-flex {
+	column-gap: cssvar(block-margin-bottom);
 }
 
 // Containers
@@ -90,11 +90,11 @@
 }
 
 // Columns
-.stk-block.stk-block-column.stk-column > .stk-column-wrapper {
-	margin: cssvar(column-margin);
+.stk-block:not(.stk-block-column) {
+	#{ '--stk-columns-spacing' }: cssvar(column-margin);
 }
-body:not(.wp-admin) .stk-block-column:first-child:last-child > .stk-column-wrapper { // Remove the margins if it's only 1 block.
-	margin: 0;
+body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-column:first-child:last-child) { // Remove the margins if it's only 1 block.
+	--stk-columns-spacing: 0;
 }
 
 // Block Background

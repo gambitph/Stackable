@@ -10,9 +10,9 @@ import {
 	Separator,
 	Transform,
 	ContainerDiv,
-	ContentAlign,
+	Columns,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockCss, BlockCssCompiler } from '~stackable/components'
 import { useBlockAttributesContext } from '~stackable/hooks'
 
 /**
@@ -20,6 +20,40 @@ import { useBlockAttributesContext } from '~stackable/hooks'
  */
 import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
+
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
+
+	return (
+		<>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".%s-column"
+				styleRule="--stk-row-gap"
+				attrName="rowGap"
+				key="rowGap-save"
+				format="%spx"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
+				styleRule="--stk-row-gap"
+				attrName="rowGap"
+				key="rowGap"
+				format="%spx"
+				responsive="all"
+			/>
+		</>
+	)
+}
 
 const BlockStyles = memo( props => {
 	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
@@ -37,8 +71,9 @@ const BlockStyles = memo( props => {
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Separator.Style { ...props } />
-			<ContentAlign.Style { ...props } />
+			<Columns.Style { ...props } hasRowGap={ false } />
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
+			<Styles { ...props } />
 		</>
 	)
 } )
@@ -65,8 +100,9 @@ BlockStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
-			<ContentAlign.Style.Content { ...props } />
+			<Columns.Style.Content { ...props } hasRowGap={ false } />
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
+			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }

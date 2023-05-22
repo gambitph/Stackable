@@ -16,6 +16,8 @@ export const LinkControls = props => {
 	const {
 		hasLink,
 		hasTitle,
+		hasLightbox,
+		lightboxHelp,
 	} = props
 
 	const {
@@ -37,6 +39,14 @@ export const LinkControls = props => {
 				checked={ getAttribute( 'newTab' ) }
 				onChange={ updateAttributeHandler( 'newTab' ) }
 			/>
+			{ hasLightbox &&
+				<AdvancedToggleControl
+					label={ __( 'Open Link in Lightbox', i18n ) }
+					help={ lightboxHelp }
+					checked={ getAttribute( 'hasLightbox' ) }
+					onChange={ updateAttributeHandler( 'hasLightbox' ) }
+				/>
+			}
 			<AdvancedTextControl
 				label={ __( 'Link rel', i18n ) }
 				value={ getAttribute( 'rel' ) }
@@ -49,6 +59,7 @@ export const LinkControls = props => {
 					onChange={ updateAttributeHandler( 'title' ) }
 					isDynamic={ true }
 					isFormatType={ false }
+					help={ __( 'Also used for lightbox caption', i18n ) }
 				/>
 			) }
 		</>
@@ -59,4 +70,6 @@ LinkControls.defaultProps = {
 	attrNameTemplate: '%s',
 	hasLink: true,
 	hasTitle: false,
+	hasLightbox: false,
+	lightboxHelp: __( 'Supports links to images, videos, YouTube, Vimeo, and web pages that allow embedding', i18n ),
 }

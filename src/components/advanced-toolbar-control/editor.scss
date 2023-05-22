@@ -6,14 +6,13 @@
 		button {
 			min-width: auto;
 		}
-		> button,
-		> button > svg {
+		> button {
 			width: 100% !important;
 		}
 	}
 	svg {
 		height: 20px !important;
-		width: auto;
+		width: 20px !important;
 	}
 	&.ugb-toolbar--multiline {
 		flex-wrap: wrap;

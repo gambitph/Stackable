@@ -9,7 +9,8 @@ import {
 	MarginBottom,
 	Separator,
 	Transform,
-	ContentAlign,
+	Columns,
+	ContainerDiv,
 } from '~stackable/block-components'
 import { useBlockAttributesContext } from '~stackable/hooks'
 import { BlockCssCompiler } from '~stackable/components'
@@ -24,6 +25,12 @@ const alignmentOptions = {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 }
 
+const containerDivOptions = {
+	sizeSelector: '.%s-column',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeVerticalAlignSelector: '.%s-column',
+}
+
 const BlockStyles = memo( props => {
 	const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
 	const numColumns = ( columnArrangement || '' ).split( ',' ).length
@@ -35,11 +42,12 @@ const BlockStyles = memo( props => {
 			<Alignment.Style { ...props } { ...alignmentOptions } />
 			<BlockDiv.Style { ...props } />
 			<MarginBottom.Style { ...props } />
+			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Separator.Style { ...props } />
-			<ContentAlign.Style { ...props } />
+			<Columns.Style { ...props } />
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 		</>
 	)
@@ -62,11 +70,12 @@ BlockStyles.Content = props => {
 			<Alignment.Style.Content { ...props } { ...alignmentOptions } />
 			<BlockDiv.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
+			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
-			<ContentAlign.Style.Content { ...props } />
+			<Columns.Style.Content { ...props } />
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 		</BlockCssCompiler>
 	)

@@ -20,7 +20,7 @@ import { withVersion } from '~stackable/higher-order'
  */
 import { compose } from '@wordpress/compose'
 
-const Save = props => {
+export const Save = props => {
 	const {
 		className,
 		attributes,
@@ -48,6 +48,7 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<HeadingStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

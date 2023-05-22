@@ -76,3 +76,14 @@ $right-space: 28px;
 		transform: none !important;
 	}
 }
+
+// Disabled controls in tablet/mobile
+.stk-control.stk-control--disabled .stk-control-content {
+	opacity: 0.3 !important;
+	pointer-events: none !important;
+}
+
+// Smaller spacing betweek controls.
+.stk-control {
+	margin-bottom: 12px !important;
+}

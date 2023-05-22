@@ -20,7 +20,7 @@ import { getBlockStyle } from '~stackable/hooks'
  */
 import { compose } from '@wordpress/compose'
 
-const Save = props => {
+export const Save = props => {
 	const {
 		className,
 		attributes,
@@ -41,6 +41,7 @@ const Save = props => {
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
 		>
 			<DividerStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

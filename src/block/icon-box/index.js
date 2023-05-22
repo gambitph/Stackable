@@ -9,6 +9,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * External dependencies
@@ -30,7 +31,7 @@ export const settings = {
 		align: true,
 	},
 	example,
-
+	deprecated,
 	edit,
 	save,
 }

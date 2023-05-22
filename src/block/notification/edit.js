@@ -80,6 +80,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-notification__content',
+		`stk-${ attributes.uniqueId }-inner-blocks`,
 	], getContentAlignmentClasses( attributes ) )
 
 	const lastBlockName = last( innerBlocks )?.name
@@ -91,16 +92,8 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasBlockAlignment={ true } />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
+					<ContentAlign.InspectorControls />
+					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
 
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
@@ -108,7 +101,6 @@ const Edit = props => {
 							id="general"
 							initialOpen={ true }
 						>
-							<ContentAlign.InspectorControls.Controls />
 							<AdvancedSelectControl
 								label={ __( 'Notification Type', i18n ) }
 								attribute="notificationType"
@@ -134,7 +126,6 @@ const Edit = props => {
 						</PanelAdvancedSettings>
 						<PanelAdvancedSettings
 							title={ __( 'Dismissible', i18n ) }
-							initialOpen={ props.attributes.isDismissible }
 							id="dismissible"
 							hasToggle={ true }
 							checked={ props.attributes.isDismissible }
@@ -154,7 +145,17 @@ const Edit = props => {
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
+
+					<BlockDiv.InspectorControls />
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<BlockLink.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-notification" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 				</>
 			) }
 

@@ -355,7 +355,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<div class="s-getting-started__two-column reverse">
 							<div class="s-getting-started__entry">
 								<h3><?php _e( '1. Inspector', STACKABLE_I18N )?></h3>
-								<p><?php _e( 'The Inspector is the main styling area consisting of Block, Style and Advanced tabs.', STACKABLE_I18N )?></p>
+								<p><?php _e( 'The Inspector is the main styling area consisting of Layout, Style and Advanced tabs.', STACKABLE_I18N )?></p>
 								<div class="s-getting-started__help-tip secondary">
 									<img draggable="false" src="<?php echo plugins_url( 'images/star.svg', __FILE__ )?>">
 									<span>

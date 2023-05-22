@@ -7,17 +7,14 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 } from '~stackable/components'
-import {
-	useAttributeEditHandlers, useDeviceType,
-} from '~stackable/hooks'
+import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-export const SizeControls = props => {
+const Layout = props => {
 	const deviceType = useDeviceType()
 
 	const {
@@ -30,12 +27,10 @@ export const SizeControls = props => {
 		labelContentWidth = __( 'Max. Content Width', i18n ),
 		labelHorizontalAlign = __( 'Content Horizontal Align', i18n ),
 		labelVerticalAlign = __( 'Content Vertical Align', i18n ),
-		labelPaddings = __( 'Paddings', i18n ),
-		labelMargins = __( 'Margins', i18n ),
 	} = props.labels
 
 	return (
-		<Fragment>
+		<>
 			<AdvancedRangeControl
 				label={ labelHeight }
 				attribute={ getAttrName( 'height' ) }
@@ -47,15 +42,22 @@ export const SizeControls = props => {
 				allowReset={ true }
 				placeholder="0"
 				className="ugb--help-tip-advanced-block-height"
+				visualGuide={ props.visualGuide }
 			/>
 
-			<AdvancedToolbarControl
-				label={ labelVerticalAlign }
-				attribute={ getAttrName( 'verticalAlign' ) }
-				responsive="all"
-				controls="flex-vertical"
-				className="ugb--help-tip-advanced-block-vertical-align"
-			/>
+			{ props.hasContentVerticalAlign &&
+				<AdvancedToolbarControl
+					label={ labelVerticalAlign }
+					attribute={ getAttrName( 'verticalAlign' ) }
+					responsive="all"
+					controls="vertical"
+					className="ugb--help-tip-advanced-block-vertical-align"
+					visualGuide={ ! props.visualGuide ? null : {
+						...props.visualGuide,
+						selector: ( props.visualGuide.selector || '' ) + ', .stk-%s > *',
+					} }
+				/>
+			}
 
 			<AdvancedRangeControl
 				label={ labelContentWidth }
@@ -69,37 +71,56 @@ export const SizeControls = props => {
 				placeholder=""
 				initialPosition="1500"
 				className="ugb--help-tip-advanced-block-content-width"
+				visualGuide={ props.visualGuide }
 			/>
 
-			{ getAttribute( 'width' ) !== '' && deviceType === 'Desktop' &&
+			{ (
+				( getAttribute( 'width' ) !== '' && deviceType === 'Desktop' ) ||
+			    ( ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' ) && deviceType === 'Tablet' ) ||
+			    ( ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' || getAttribute( 'widthMobile' ) !== '' ) && deviceType === 'Mobile' )
+			  ) &&
 				<AdvancedToolbarControl
 					label={ labelHorizontalAlign }
 					attribute={ getAttrName( 'HorizontalAlign' ) }
 					responsive="all"
-					controls="flex-horizontal"
-					value={ getAttribute( 'HorizontalAlign' ) }
+					controls="horizontal"
 					className="ugb--help-tip-advanced-block-horizontal-align"
+					visualGuide={ props.visualGuide }
 				/>
 			}
-			{ ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' ) && deviceType === 'Tablet' &&
-				<AdvancedToolbarControl
-					label={ labelHorizontalAlign }
-					attribute={ getAttrName( 'HorizontalAlign' ) }
-					responsive="all"
-					controls="flex-horizontal"
-					className="ugb--help-tip-advanced-block-horizontal-align"
-				/>
-			}
-			{ ( getAttribute( 'width' ) !== '' || getAttribute( 'widthTablet' ) !== '' || getAttribute( 'widthMobile' ) !== '' ) && deviceType === 'Mobile' &&
-				<AdvancedToolbarControl
-					label={ labelHorizontalAlign }
-					attribute={ getAttrName( 'HorizontalAlign' ) }
-					responsive="all"
-					controls="flex-horizontal"
-					className="ugb--help-tip-advanced-block-horizontal-align"
-				/>
-			}
+		</>
+	)
+}
 
+Layout.defaultProps = {
+	attrNameTemplate: '%s',
+	hasContentVerticalAlign: true,
+	visualGuide: null,
+	labels: {},
+}
+
+const Spacing = props => {
+	const {
+		getAttrName,
+	} = useAttributeEditHandlers( props.attrNameTemplate )
+
+	const {
+		labelPaddings = __( 'Paddings', i18n ),
+		labelMargins = __( 'Margins', i18n ),
+	} = props.labels
+
+	const paddingVisualGuide = ! props.visualGuide ? null : {
+		...props.visualGuide,
+		highlight: 'padding',
+	}
+
+	const marginVisualGuide = ! props.visualGuide ? null : {
+		...props.visualGuide,
+		highlight: 'margin',
+	}
+
+	return (
+		<>
 			<FourRangeControl
 				label={ labelPaddings }
 				attribute={ getAttrName( 'padding' ) }
@@ -110,6 +131,8 @@ export const SizeControls = props => {
 				min={ [ 0, 0, 0 ] }
 				sliderMax={ [ 200, 30, 100 ] }
 				className="ugb--help-tip-advanced-block-paddings"
+				visualGuide={ paddingVisualGuide }
+				placeholder={ props.paddingPlaceholder }
 			/>
 
 			{ props.enableMargin &&
@@ -123,16 +146,21 @@ export const SizeControls = props => {
 					sliderMax={ [ 200, 100 ] }
 					placeholder="0"
 					className="ugb--help-tip-advanced-block-margins"
+					visualGuide={ marginVisualGuide }
 				/>
 			}
-
-		</Fragment>
+		</>
 	)
 }
 
-SizeControls.defaultProps = {
+Spacing.defaultProps = {
 	attrNameTemplate: '%s',
-	blockEl: null,
+	paddingPlaceholder: '',
 	enableMargin: true,
+	visualGuide: null,
 	labels: {},
+}
+export const SizeControls = {
+	Layout,
+	Spacing,
 }

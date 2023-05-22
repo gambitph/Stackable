@@ -14,6 +14,7 @@ import example from './example'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import deprecated from './deprecated'
 
 export const settings = {
 	...metadata,
@@ -21,6 +22,7 @@ export const settings = {
 	edit,
 	save,
 	example,
+	deprecated,
 	attributes: schema,
 	supports: {
 		anchor: true,

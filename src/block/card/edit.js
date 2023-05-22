@@ -7,7 +7,7 @@ import variations from './variations'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import {
@@ -89,6 +89,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-card__content',
+		`stk-${ props.attributes.uniqueId }-inner-blocks`,
 	], {
 		'stk-container-padding': hasContainer,
 	} )
@@ -109,13 +110,9 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasBlockAlignment={ true } />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
 					<Image.InspectorControls
 						{ ...props }
+						initialOpen={ true }
 						hasWidth={ blockStyle === 'horizontal' }
 						hasHeight={ hasHeight }
 						widthUnits={ widthUnit }
@@ -124,7 +121,12 @@ const Edit = props => {
 						hasShape={ false }
 						hasShadow={ false }
 					/>
+					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+					<BlockDiv.InspectorControls />
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
+					<BlockLink.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />

@@ -4,7 +4,10 @@
 	"title": "Pricing Box",
 	"description": "Display the different pricing tiers of your business.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"providesContext": {
+		"stackable/innerBlockOrientation": "innerBlockOrientation"
+	},
 	"keywords": [
 		"Currency",
 		"Price",

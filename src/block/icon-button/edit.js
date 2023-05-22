@@ -53,8 +53,7 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-					<BlockDiv.InspectorControls />
+					<InspectorTabs hasLayoutPanel={ false } />
 
 					<BlockStyle.InspectorControls styles={ blockStyles }>
 						<Button.InspectorControls.HoverEffects />
@@ -70,6 +69,8 @@ const Edit = props => {
 						borderSelector=".stk-button"
 						placeholder="24"
 					/>
+
+					<BlockDiv.InspectorControls initialOpen="spacing" />
 
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />

@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.0
 Tested up to: 6.2
 Requires PHP: 5.7
-Stable tag: 3.7.2
+Stable tag: 3.8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -89,6 +89,8 @@ Section Blocks
 Turn the WordPress Block Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
 
 - Multiple Block Layouts
+- Flexbox Controls
+- Image and Video Lightbox
 - Save Block Defaults
 - Customize block hover styles
 - Block Background and Image Color Settings
@@ -98,6 +100,7 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
 - Advanced Column and Spacing Settings
 - Global Colors & Typography Settings
 - Responsiveness
+    - Tablet and Mobile Column Arrangement
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
     - Specify how Columns collapse in Tablet and Mobile
@@ -173,10 +176,11 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
-- [v3.7 Introducing: New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v3.6 Introducing: New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.8 New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.7 New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.6 New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.5 No Bloat & Improved Performance](https://wpstackable.com/blog/improved-performance/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v3.4 Introducing: Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v3.4 Map Block](https://wpstackable.com/blog/introducing-map-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.3 Saving Block Defaults](https://wpstackable.com/blog/saving-block-defaults/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.2 Table of Contents Block](https://wpstackable.com/blog/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.1 Wireframes](https://wpstackable.com/blog/introducing-wireframes/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -189,8 +193,8 @@ Add animations that will bring your site to life and make it more visually engag
 - [v2.12 Better User Interface and User Experience](https://wpstackable.com/blog/better-user-interface-and-user-experience/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.11 Introducing Global Colors and Global Typography](https://wpstackable.com/blog/global-colors-and-global-typography/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.10 Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v2.9 Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v2.8 Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.9 Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.8 Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.7 New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.6 New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.5 Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -221,6 +225,10 @@ Add animations that will bring your site to life and make it more visually engag
 You'll need WordPress version 5.9 or higher for this to work.
 
 == Frequently Asked Questions ==
+
+**Did you just upgrade? Learn here about the New Inspector UI in v3.8**
+
+[youtube https://www.youtube.com/watch?v=RukT93hvzn8]
 
 **Is Stackable Free?**
 
@@ -273,6 +281,33 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.8.0 =
+[Introducing: New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: New Block Inspector UI - reorganized and added new options
+* New: Visual Guides - helps visualize layout options like justify and paddings
+* New: Flexbox options
+* New: Lightbox option in Image blocks and in containers with links - check the Advanced tab > Link panel. Lightbox supports: images, videos, YouTube, Vimeo and web pages.
+* New: Typing 'auto' in block margins now works visually in the block editor
+* Change: Renamed to "Adv. Copy and Paste" styles to make it different from the native copy and paste option
+* Change: Removed "Fit all columns to content" option in Columns, this has been replaced with flexbox controls
+* Fixed: Some blocks encounter a block error when inside a Query Loop block
+* Fixed: Some textarea Dynamic Content fields do not show line breaks correctly
+* Fixed: Better inspector panel scrolling when opening and closing panels
+* Fixed: Inner Column blocks with paddings made the column widths uneven
+* Fixed: Missing meta option in the Posts Block content order option
+* Fixed: Video backgrounds now show up as one network request
+* Fixed: Block titles and descriptions are now translated correctly in the Getting Started page
+* Fixed: Navigation panel cannot be resized properly
+* Fixed: Navigation panel closes when selecting another block
+* Fixed: Dragging the margin bottom of blocks quickly will stop the current drag
+* Fixed: The Block Linking learn more link redirects to the wrong page
+* Fixed: Some blocks with icons encounter an error when used in a Query Loop block
+* Fixed: Block titles and descriptions in the Getting Started area are now translated properly
+* Fixed: Post meta is missing in the Image Card layout in the Posts block
+* Fixed: In the free version, premium notices have lower priority
+* Fixed: Dynamic Content can now be used in the Progress Bar and Progress Circle percentage value
 
 = 3.7.2 =
 * New: WordPress 6.2 compatibility

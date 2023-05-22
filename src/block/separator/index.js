@@ -9,6 +9,7 @@ import edit from './edit'
 import schema from './schema'
 import metadata from './block.json'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * External dependencies
@@ -25,6 +26,7 @@ export const settings = {
 	example,
 
 	attributes: schema,
+	deprecated,
 	edit,
 	save,
 }

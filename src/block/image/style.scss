@@ -2,3 +2,16 @@
 	margin-left: var(--stk-alignment-margin-left, auto);
 	margin-right: var(--stk-alignment-margin-right, auto);
 }
+
+// Placeholder images will collapse if flex is used.
+.stk--block-horizontal-flex > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	[data-type="stackable/image"]:has(.stk-img-placeholder) {
+		width: 150px;
+		.stk-block-image:not(.stk--is-resizing) .stk-img-placeholder.stk--never-resized {
+			height: 200px !important;
+		}
+		> .stk-block-image {
+			width: 100%;
+		}
+	}
+}

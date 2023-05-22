@@ -166,9 +166,12 @@
 		flex: 1 1 100%;
 	}
 }
-[data-type^="stackable/"] .stk-row,
-.stk-column > .stk-inner-blocks:not(.stk--block-orientation-horizontal) > .block-editor-inner-blocks > .block-editor-block-list__layout {
+[data-type^="stackable/"] .stk-row {
 	display: block;
+}
+:where(.stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout) {
+	display: flex;
+	flex-direction: column;
 }
 
 // Inner block orientation
@@ -179,15 +182,23 @@
 		width: 100%;
 	}
 }
-.stk--block-orientation-horizontal > .block-editor-inner-blocks > .block-editor-block-list__layout {
-	display: flex;
-	flex-direction: row;
-	> * {
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-	> [data-block] {
-		width: auto;
+.stk--block-horizontal-flex > .block-editor-inner-blocks {
+	width: 100%;
+	> .block-editor-block-list__layout {
+		display: flex !important;
+		flex-direction: row;
+		justify-content: space-evenly; // Default justify-content for horizontal flex.
+		> * {
+			margin-top: 0;
+			margin-bottom: 0;
+			> .stk-block {
+				margin-bottom: 0;
+			}
+		}
+		> [data-block] {
+			width: auto;
+			margin-inline: revert;
+		}
 	}
 }
 
@@ -207,7 +218,7 @@
 }
 // Mobile auto-collapses all columns.
 @include mobile {
-	.stk-row .block-editor-block-list__layout > div {
+	.stk-row > * > * > .block-editor-block-list__layout > div {
 		flex: 1 1 100%;
 		max-width: 100%;
 	}
@@ -242,6 +253,9 @@
 .stk-block .block-list-appender {
 	margin: 0px;
 }
+.stk-block .block-editor-block-list__block .block-list-appender:only-child {
+	align-self: stretch;
+}
 
 // Block float alignment.
 [data-type^="stackable/"] {
@@ -272,7 +286,7 @@
 	margin-top: 0;
 }
 
-// Button alignment.
+// Deprecated styles.
 @import "deprecated-editor-block";
 
 .stk-block .stk-button-group .block-editor-block-list__layout {

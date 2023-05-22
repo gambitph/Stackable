@@ -73,6 +73,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-call-to-action__content',
+		`stk-${ props.attributes.uniqueId }-inner-blocks`,
 	], getContentAlignmentClasses( props.attributes ) )
 
 	const lastBlockName = last( innerBlocks )?.name
@@ -84,20 +85,19 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<ContentAlign.InspectorControls />
+					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
 					<BlockDiv.InspectorControls />
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<Separator.InspectorControls />
-					<BlockLink.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-call-to-action" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-
-					<ContentAlign.InspectorControls />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />

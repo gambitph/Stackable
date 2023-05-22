@@ -15,8 +15,9 @@ const Styles = props => {
 		attrNameTemplate = '%s',
 		horizontalAlignRule = 'margin',
 		verticalAlignRule = 'alignItems',
-		verticalAlignSelectorEdit = '',
+		// verticalAlignSelectorEdit = '',
 		verticalAlignSelector = '',
+		hasPaddings = true, // Disallow the padding styles
 		wrapperSelector = '', // The outer wrapper element that where the outer flex alignments, widths and margins are applied to.
 		dependencies = [],
 	} = props
@@ -35,21 +36,10 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				renderIn="save"
 				selector={ verticalAlignSelector || selector }
 				styleRule={ verticalAlignRule || 'alignItems' }
 				attrName="verticalAlign"
 				key="verticalAlign-save"
-				attrNameTemplate={ attrNameTemplate }
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector={ verticalAlignSelectorEdit || verticalAlignSelector || selector }
-				styleRule="justifyContent"
-				attrName="verticalAlign"
-				key="verticalAlign"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 			/>
@@ -78,54 +68,56 @@ const Styles = props => {
 					return value !== '' ? 'auto' : undefined
 				} }
 			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ selector }
-				styleRule="paddingTop"
-				attrName="padding"
-				key="padding-top"
-				attrNameTemplate={ attrNameTemplate }
-				responsive="all"
-				hover="all"
-				hasUnits="px"
-				valuePreCallback={ value => value?.top }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ selector }
-				styleRule="paddingRight"
-				attrName="padding"
-				key="padding-right"
-				attrNameTemplate={ attrNameTemplate }
-				responsive="all"
-				hover="all"
-				hasUnits="px"
-				valuePreCallback={ value => value?.right }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ selector }
-				styleRule="paddingBottom"
-				attrName="padding"
-				key="padding-bottom"
-				attrNameTemplate={ attrNameTemplate }
-				responsive="all"
-				hover="all"
-				hasUnits="px"
-				valuePreCallback={ value => value?.bottom }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ selector }
-				styleRule="paddingLeft"
-				attrName="padding"
-				key="padding-left"
-				attrNameTemplate={ attrNameTemplate }
-				responsive="all"
-				hover="all"
-				hasUnits="px"
-				valuePreCallback={ value => value?.left }
-			/>
+			{ hasPaddings && <>
+				<BlockCss
+					{ ...propsToPass }
+					selector={ selector }
+					styleRule="paddingTop"
+					attrName="padding"
+					key="padding-top"
+					attrNameTemplate={ attrNameTemplate }
+					responsive="all"
+					hover="all"
+					hasUnits="px"
+					valuePreCallback={ value => value?.top }
+				/>
+				<BlockCss
+					{ ...propsToPass }
+					selector={ selector }
+					styleRule="paddingRight"
+					attrName="padding"
+					key="padding-right"
+					attrNameTemplate={ attrNameTemplate }
+					responsive="all"
+					hover="all"
+					hasUnits="px"
+					valuePreCallback={ value => value?.right }
+				/>
+				<BlockCss
+					{ ...propsToPass }
+					selector={ selector }
+					styleRule="paddingBottom"
+					attrName="padding"
+					key="padding-bottom"
+					attrNameTemplate={ attrNameTemplate }
+					responsive="all"
+					hover="all"
+					hasUnits="px"
+					valuePreCallback={ value => value?.bottom }
+				/>
+				<BlockCss
+					{ ...propsToPass }
+					selector={ selector }
+					styleRule="paddingLeft"
+					attrName="padding"
+					key="padding-left"
+					attrNameTemplate={ attrNameTemplate }
+					responsive="all"
+					hover="all"
+					hasUnits="px"
+					valuePreCallback={ value => value?.left }
+				/>
+			</> }
 			<BlockCss
 				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
@@ -236,7 +228,7 @@ const Styles = props => {
 					return 'flex'
 				} }
 			/>
-			<BlockCss
+			{ /* <BlockCss
 				{ ...propsToPass }
 				renderIn="save"
 				selector={ selector }
@@ -261,7 +253,7 @@ const Styles = props => {
 				valueCallback={ () => {
 					return 'column'
 				} }
-			/>
+			/> */ }
 			{ horizontalAlignRule !== 'margin' &&
 				<BlockCss
 					{ ...propsToPass }

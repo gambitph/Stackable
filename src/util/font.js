@@ -59,7 +59,7 @@ export const loadGoogleFont = fontName => {
 
 	let index = 0
 
-	// There are cases when the content area has delayed loading (the content 
+	// There are cases when the content area has delayed loading (the content
 	// area is in an iframe in FSE), so keep trying to load the font a few times.
 	const interval = setInterval( () => {
 		index++

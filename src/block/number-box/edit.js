@@ -75,16 +75,6 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-number-box" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'Shape', i18n ) }
@@ -116,9 +106,21 @@ const Edit = props => {
 					</InspectorStyleControls>
 					<Typography.InspectorControls
 						{ ...props }
+						initialOpen={ false }
 						hasTextTag={ false }
 						sizePlaceholder="56"
 					/>
+
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-number-box" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+
 				</>
 			) }
 

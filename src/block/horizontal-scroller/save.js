@@ -39,7 +39,7 @@ export const Save = props => {
 		 responsiveClass,
 	 ] )
 
-	 const contentClassNames = classnames( applyFilters( 'stackable.columns.save.contentClassNames', [
+	 const contentClassNames = classnames( applyFilters( 'stackable.horizontal-scroller.save.contentClassNames', [
 		 [
 			rowClass,
 			 'stk-inner-blocks',
@@ -55,6 +55,7 @@ export const Save = props => {
 		 <BlockDiv.Content
 			 className={ blockClassName }
 			 attributes={ attributes }
+			 version={ props.version }
 		 >
 			 <BlockStyles.Content version={ props.version } attributes={ attributes } />
 			 <CustomCSS.Content attributes={ attributes } />

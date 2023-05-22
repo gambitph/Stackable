@@ -39,14 +39,20 @@ const AlignButtonsControl = props => {
 	const {
 		justified,
 		className,
+		controls: _controls,
 		...propsToPass
 	} = props
+
+	let controls = _controls
+	if ( ! controls ) {
+		controls = justified ? ALIGN_OPTIONS : ALIGN_OPTIONS_NO_JUSTIFY
+	}
 
 	return (
 		<AdvancedToolbarControl
 			{ ...propsToPass }
+			controls={ controls }
 			className={ classnames( [ className, 'ugb-align-buttons-control' ] ) }
-			controls={ justified ? ALIGN_OPTIONS : ALIGN_OPTIONS_NO_JUSTIFY }
 		/>
 	)
 }
@@ -55,6 +61,7 @@ AlignButtonsControl.defaultProps = {
 	className: '',
 	label: __( 'Align', i18n ),
 	justified: false,
+	controls: null,
 }
 
 export default AlignButtonsControl

@@ -35,6 +35,8 @@ const buildInclude = [
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.
 	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './src/__*/**/*' ), // Development templates.
 ]
 
 const postCSSOptions = [
@@ -47,6 +49,7 @@ const sassOptions = {
 	includePaths: [
 		path.resolve( __dirname, './src/' ),
 		path.resolve( __dirname, './src/styles' ),
+		'./node_modules',
 	],
 }
 
@@ -266,6 +269,17 @@ gulp.task( 'style', gulp.series(
 			// which are added to force correct sorting of media queries by
 			// mqpacker
 			.pipe( replace( /.z\s?{\s?opacity:\s?1;?}/g, '' ) )
+			.pipe( gulp.dest( 'dist/' ) )
+	},
+	// Build the lightbox specific styles.
+	function styleImageLightboxCSS() {
+		return gulp.src( [ path.resolve( __dirname, './src/lightbox/frontend-image-lightbox.scss' ) ] )
+			.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+			.pipe( postcss( postCSSOptions ) )
+			.pipe( rename( {
+				basename: 'frontend_image_lightbox',
+				dirname: '',
+			} ) )
 			.pipe( gulp.dest( 'dist/' ) )
 	},
 	function generateResponsiveCSS() {

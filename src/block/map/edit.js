@@ -68,6 +68,8 @@ import {
 } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 
+const TABS = [ 'style', 'advanced' ]
+
 const Edit = props => {
 	const {
 		attributes,
@@ -261,8 +263,7 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-					<BlockDiv.InspectorControls hasSizeSpacing={ false } />
+					<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
 
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
@@ -462,6 +463,7 @@ const Edit = props => {
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
+					<BlockDiv.InspectorControls hasSizeSpacing={ false } />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />

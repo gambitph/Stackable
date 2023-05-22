@@ -7,6 +7,11 @@
 		}
 	}
 
+	&:not(.stk--is-resizing).stk-img-placeholder {
+		// Add default height to image placeholders in case the default height is `auto`.
+		height: 300px !important;
+	}
+
 	// If there's no image selected yet.
 	&.stk-img-placeholder {
 		/* stylelint-disable function-url-quotes */
@@ -17,9 +22,6 @@
 		position: relative;
 		margin-left: auto;
 		margin-right: auto;
-
-		// Add default height to image placeholders in case the default height is `auto`.
-		height: 300px !important;
 
 		img {
 			display: none !important;

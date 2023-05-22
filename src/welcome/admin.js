@@ -68,8 +68,14 @@ const BlockList = () => {
 										key={ i }
 										className="s-box"
 									>
-										<h4>{ block.title }</h4>
-										<p>{ block.description }</p>
+										<h4>{
+											// eslint-disable-next-line @wordpress/i18n-no-variables
+											__( block.title, i18n )
+										}</h4>
+										<p>{
+											// eslint-disable-next-line @wordpress/i18n-no-variables
+											__( block.description, i18n )
+										}</p>
 										{ block[ 'stk-demo' ] && <a href={ block[ 'stk-demo' ] } target="_example">{ __( 'See example', i18n ) }</a> }
 									</div>
 								)
@@ -294,7 +300,7 @@ const EditorSettings = () => {
 				<>
 					{ __( 'Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns.', i18n ) }
 					&nbsp;
-					<a target="_docs" href="https://docs.wpstackable.com/article/462-migrating-from-version-2-to-version-3?utm_source=wp-settings-migrating&utm_campaign=learnmore&utm_medium=wp-dashboard">{ __( 'Learn more', i18n ) }</a>
+					<a target="_docs" href="https://docs.wpstackable.com/article/452-how-to-use-block-linking">{ __( 'Learn more', i18n ) }</a>
 				</>
 			}
 		/>

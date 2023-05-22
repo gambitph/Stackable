@@ -16,6 +16,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
@@ -30,12 +31,13 @@ export const settings = {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 		stkAlign: true,
+		stkDefaultTab: 'layout',
 	},
 	example,
 	//  styles: blockStyles,
 
-	// deprecated,
 	variations,
+	deprecated,
 	edit,
 	save,
 }
