@@ -97,6 +97,9 @@ module.exports = {
 
 		// Require tabbed indentation in jsx.
 		'react/jsx-indent': [ 2, 'tab', { indentLogicalExpressions: true } ],
+
+		// Disallow unnecessary JSX expressions when literals alone are sufficient.
+		'react/jsx-curly-brace-presence': [ 'error', { props: 'never', children: 'never' } ],
 	},
 	globals: {
 		localStorage: true,
