@@ -45,7 +45,7 @@ const DEVICE_OPTIONS = [
 	},
 ]
 
-const ALL_HOVER = [ 'normal', 'hover', 'parent-hovered', 'collapsed' ]
+const ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
 const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.filter( s => s !== 'normal' ).map( s => upperFirst( camelCase( s ) ) )
 
 const ResponsiveToggle = props => {
@@ -66,18 +66,20 @@ const ResponsiveToggle = props => {
 	const _screens = DEVICE_OPTIONS.filter( ( { value } ) => props.screens?.includes( value ) )
 
 	const responsiveValues = useBlockAttributesContext( attributes => {
-		if ( ! props.attribute ) {
+		const attributeName = props.valueCheckAttribute || props.attribute
+
+		if ( ! attributeName ) {
 			return {}
 		}
 
-		const tabletAttributes = [ attributes[ `${ props.attribute }Tablet` ] ]
+		const tabletAttributes = [ attributes[ `${ attributeName }Tablet` ] ]
 		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
-			tabletAttributes.push( attributes[ `${ props.attribute }Tablet${ suffix }` ] )
+			tabletAttributes.push( attributes[ `${ attributeName }Tablet${ suffix }` ] )
 		} )
 
-		const mobileAttributes = [ attributes[ `${ props.attribute }Mobile` ] ]
+		const mobileAttributes = [ attributes[ `${ attributeName }Mobile` ] ]
 		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
-			mobileAttributes.push( attributes[ `${ props.attribute }Mobile${ suffix }` ] )
+			mobileAttributes.push( attributes[ `${ attributeName }Mobile${ suffix }` ] )
 		} )
 
 		return {
@@ -129,6 +131,7 @@ const ResponsiveToggle = props => {
 ResponsiveToggle.defaultProps = {
 	screens: [ 'desktop' ],
 	attribute: '',
+	suffix: '',
 	hasTabletValue: undefined, // If true, then the toggle for tablet will be highlighted to show that the tablet value has been set.
 	hasMobileValue: undefined, // If true, then the toggle for mobile will be highlighted to show that the mobile value has been set.
 }

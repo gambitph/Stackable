@@ -36,7 +36,7 @@ const HOVER_OPTIONS = [
 	},
 	{
 		label: __( 'Parent Hovered', i18n ),
-		value: 'parent-hovered',
+		value: 'parent-hover',
 		icon: <SVGStateParentHover />,
 	},
 	{
@@ -46,9 +46,9 @@ const HOVER_OPTIONS = [
 	},
 ]
 
-const ALL_HOVER = [ 'normal', 'hover', 'parent-hovered', 'collapsed' ]
+const ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
 const _ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
-const ALL_HOVER_ATTRIBUTE_SUFFIX = _ALL_HOVER.map( s => upperFirst( camelCase( s ) ) )
+const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.map( s => upperFirst( camelCase( s ) ) )
 
 const HoverStateToggle = props => {
 	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
@@ -78,7 +78,7 @@ const HoverStateToggle = props => {
 	} )
 
 	const stateOptions = _stateOptions.map( state => {
-		if ( state.value === 'parent-hovered' ) {
+		if ( state.value === 'parent-hover' ) {
 			return {
 				disabled: ! hasParentHoverState,
 				tooltip: ! hasParentHoverState

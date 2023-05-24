@@ -272,7 +272,7 @@ const Styles = props => {
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( ( ! value || value.top === '' ) && state === 'normal' ) {
 						const hoverValue = getAttribute( 'positionNum', device, 'hover' )
-						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hover' )
 						if ( ( hoverValue && hoverValue.top !== '' ) || ( parentHoverValue && parentHoverValue.top !== '' ) ) {
 							return 0
 						}
@@ -290,7 +290,7 @@ const Styles = props => {
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( ( ! value || value.right === '' ) && state === 'normal' ) {
 						const hoverValue = getAttribute( 'positionNum', device, 'hover' )
-						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hover' )
 						if ( ( hoverValue && hoverValue.right !== '' ) || ( parentHoverValue && parentHoverValue.right !== '' ) ) {
 							return 0
 						}
@@ -308,7 +308,7 @@ const Styles = props => {
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( ( ! value || value.bottom === '' ) && state === 'normal' ) {
 						const hoverValue = getAttribute( 'positionNum', device, 'hover' )
-						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hover' )
 						if ( ( hoverValue && hoverValue.bottom !== '' ) || ( parentHoverValue && parentHoverValue.bottom !== '' ) ) {
 							return 0
 						}
@@ -326,7 +326,7 @@ const Styles = props => {
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( ( ! value || value.left === '' ) && state === 'normal' ) {
 						const hoverValue = getAttribute( 'positionNum', device, 'hover' )
-						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+						const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hover' )
 						if ( ( hoverValue && hoverValue.left !== '' ) || ( parentHoverValue && parentHoverValue.left !== '' ) ) {
 							return 0
 						}
