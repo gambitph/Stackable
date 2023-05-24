@@ -36,16 +36,18 @@
 		overflow: hidden !important;
 		white-space: nowrap !important;
 		background: transparent !important;
-		display: flex !important;
-		gap: 12px;
 		&::before,
 		&::after {
 			display: none !important;
 		}
 	}
+	.editor-styles-wrapper {
+		display: flex !important;
+		gap: 12px;
+		align-items: center;
+	}
 	.dashicons-editor-help {
 		display: flex !important;
-		align-self: center !important;
 	}
 	// Themes may cut the preview of the heading text.
 	> .editor-styles-wrapper {
