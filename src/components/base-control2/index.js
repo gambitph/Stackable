@@ -173,7 +173,7 @@ AdvancedControl.defaultProps = {
 
 	after: null,
 
-	valueCheckAttribute: '', // Checks if the
+	valueCheckAttribute: '', // Checks the value of different variations of the attribute name i.e. backgroundMedia -> backgroundMediaUrl
 
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
