@@ -45,7 +45,7 @@ const ALIGN_OPTIONS = [
 	},
 ]
 
-const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.value !== 'justify' )
+const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.align !== 'justify' )
 
 export const Edit = props => {
 	const {
