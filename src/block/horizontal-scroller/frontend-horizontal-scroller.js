@@ -11,8 +11,8 @@ class StackableHorizontalScroller {
 		let initialClientX = 0
 
 		els.forEach( el => {
-			// get all <a> tags for inner columns
-			const children = el.querySelectorAll( '.stk-block-link' )
+			// get all links, because we will need to disable them during drag
+			const children = el.querySelectorAll( '.stk-block-link, a' )
 
 			// prevents redirecting to the inner column link
 			const onClickHandler = function( e ) {
@@ -30,7 +30,7 @@ class StackableHorizontalScroller {
 
 				// Prevent selection of contents because of dragging.
 				e.preventDefault()
-				// adds the on click event listener to each inner column
+				// links will trigger while dragging, this disabled the links
 				children.forEach( child => {
 					child.addEventListener( 'click', onClickHandler )
 				 } )
@@ -56,7 +56,7 @@ class StackableHorizontalScroller {
 
 				dragTimeout = setTimeout( () => {
 					el.classList.remove( 'stk--snapping-deactivated' )
-					// removed the on click event listeners to allow redirecting to inner column links
+					// this enables the links after dragging
 					children.forEach( child => {
 						child.removeEventListener( 'click', onClickHandler )
 					 } )
