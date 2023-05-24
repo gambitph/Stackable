@@ -233,7 +233,7 @@ export const Size = props => {
 					attribute="buttonPadding"
 					sliderMin={ [ 0, 0 ] }
 					sliderMax={ [ 40, 100 ] }
-					splitMode={ true }
+					vhMode={ true }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>

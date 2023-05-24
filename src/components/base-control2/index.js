@@ -78,7 +78,7 @@ export const BaseControl = props => {
 								attribute={ props.attribute }
 								hasTabletValue={ props.hasTabletValue }
 								hasMobileValue={ props.hasMobileValue }
-								suffix={ props.suffix }
+								valueCheckAttribute={ props.valueCheckAttribute }
 							/>
 						) }
 						{ hasHover && (
@@ -173,7 +173,7 @@ AdvancedControl.defaultProps = {
 
 	after: null,
 
-	suffix: '', // Contains the proper suffix for backgroundMedia attribute
+	valueCheckAttribute: '', // Checks if the
 
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.

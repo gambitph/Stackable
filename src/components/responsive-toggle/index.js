@@ -66,18 +66,20 @@ const ResponsiveToggle = props => {
 	const _screens = DEVICE_OPTIONS.filter( ( { value } ) => props.screens?.includes( value ) )
 
 	const responsiveValues = useBlockAttributesContext( attributes => {
-		if ( ! props.attribute ) {
+		const attributeName = props.valueCheckAttribute || props.attribute
+
+		if ( ! attributeName ) {
 			return {}
 		}
 
-		const tabletAttributes = [ attributes[ `${ props.attribute }${ props.suffix }Tablet` ] ]
+		const tabletAttributes = [ attributes[ `${ attributeName }Tablet` ] ]
 		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
-			tabletAttributes.push( attributes[ `${ props.attribute }${ props.suffix }Tablet${ suffix }` ] )
+			tabletAttributes.push( attributes[ `${ attributeName }Tablet${ suffix }` ] )
 		} )
 
-		const mobileAttributes = [ attributes[ `${ props.attribute }${ props.suffix }Mobile` ] ]
+		const mobileAttributes = [ attributes[ `${ attributeName }Mobile` ] ]
 		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
-			mobileAttributes.push( attributes[ `${ props.attribute }${ props.suffix }Mobile${ suffix }` ] )
+			mobileAttributes.push( attributes[ `${ attributeName }Mobile${ suffix }` ] )
 		} )
 
 		return {

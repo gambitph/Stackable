@@ -198,7 +198,7 @@ const FourRangeControl = memo( props => {
 
 	return (
 		<AdvancedControl { ...controlProps }>
-			{ isLocked && ! props.splitMode && (
+			{ isLocked && ! props.vhMode && (
 				<Fragment>
 					<RangeControl
 						{ ...propsToPass }
@@ -214,7 +214,7 @@ const FourRangeControl = memo( props => {
 					/>
 				</Fragment>
 			) }
-			{ isLocked && props.splitMode && (
+			{ isLocked && props.vhMode && (
 				<Fragment>
 					<div className="ugb-four-range-control__range">
 						<Tooltip text={ __( 'Top and Bottom', i18n ) }>
@@ -243,7 +243,7 @@ const FourRangeControl = memo( props => {
 							value={ value.left }
 							onChange={ onChangeHorizontal }
 							allowReset={ false }
-							placeholder={ typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop }
+							placeholder={ typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft }
 						/>
 						<ResetButton
 							allowReset={ props.allowReset }
@@ -360,7 +360,7 @@ FourRangeControl.defaultProps = {
 	placeholderLeft: '',
 	initialPosition: '',
 
-	splitMode: undefined,
+	vhMode: undefined,
 
 	allowReset: true,
 	default: '',
