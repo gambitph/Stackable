@@ -19,9 +19,33 @@ import {
  * WordPress dependencies
  */
 import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
-import { ToolbarButton } from '@wordpress/components'
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
+
+const ALIGN_OPTIONS = [
+	{
+		align: 'left',
+		title: __( 'Align Left', i18n ),
+		icon: 'editor-alignleft',
+	},
+	{
+		align: 'center',
+		title: __( 'Align Center', i18n ),
+		icon: 'editor-aligncenter',
+	},
+	{
+		align: 'right',
+		title: __( 'Align Right', i18n ),
+		icon: 'editor-alignright',
+	},
+	{
+		align: 'justify',
+		title: __( 'Justified', i18n ),
+		icon: 'editor-justify',
+	},
+]
+
+const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.value !== 'justify' )
 
 export const Edit = props => {
 	const {
@@ -107,15 +131,8 @@ export const Edit = props => {
 				<AlignmentToolbar
 					value={ contentAlign }
 					onChange={ contentAlign => setAttributes( { contentAlign } ) }
+					alignmentControls={ props.hasContentJustify ? ALIGN_OPTIONS : ALIGN_OPTIONS_NO_JUSTIFY }
 				/>
-
-				{ props.hasContentJustify && <ToolbarButton
-					icon="editor-justify"
-					label="Justify"
-					value={ contentAlign }
-					onClick={ () => setAttributes( { contentAlign: 'justify' } ) }
-				/>
-				}
 
 			</BlockControls>
 			<InspectorLayoutControls>
