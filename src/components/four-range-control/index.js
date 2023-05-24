@@ -247,7 +247,7 @@ const FourRangeControl = memo( props => {
 						/>
 						<ResetButton
 							allowReset={ props.allowReset }
-							value={ value.top }
+							value={ value.left }
 							default={ props.defaultLeft }
 							onChange={ onChangeHorizontal }
 						/>
