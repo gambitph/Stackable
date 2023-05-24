@@ -162,7 +162,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					] }
 					value={ applySettingsTo }
 					onChange={ changeApplySettingsTo }
-					default={ 'blocks-stackable-native' }
+					default="blocks-stackable-native"
 				/>
 				<ControlSeparator />
 				{ TYPOGRAPHY_TAGS.map( ( {
