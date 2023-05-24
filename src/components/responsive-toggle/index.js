@@ -70,14 +70,6 @@ const ResponsiveToggle = props => {
 			return {}
 		}
 
-		// const attribute = props.attribute
-
-		// console.log( props.attribute, attributes, props.suffix )
-
-		// if ( attribute === 'backgroundMedia' ) {
-		// 	ret
-		// }
-
 		const tabletAttributes = [ attributes[ `${ props.attribute }${ props.suffix }Tablet` ] ]
 		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
 			tabletAttributes.push( attributes[ `${ props.attribute }${ props.suffix }Tablet${ suffix }` ] )
@@ -114,8 +106,6 @@ const ResponsiveToggle = props => {
 			hasValue: hasDeviceValue || hasAttributeValue,
 		}
 	} )
-
-	// console.log( screens, props.attribute, responsiveValues )
 
 	if ( screens <= 1 ) {
 		return null
