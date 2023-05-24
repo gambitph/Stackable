@@ -360,7 +360,7 @@ FourRangeControl.defaultProps = {
 	placeholderLeft: '',
 	initialPosition: '',
 
-	vhMode: undefined,
+	vhMode: false,
 
 	allowReset: true,
 	default: '',
