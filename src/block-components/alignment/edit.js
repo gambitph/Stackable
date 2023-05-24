@@ -310,6 +310,7 @@ Edit.defaultProps = {
 	hasRowAlignment: false,
 	hasColumnAlignment: false,
 	hasBlockAlignment: false,
+	hasContentJustify: false,
 	hasContainerSize: false,
 	hasContainerHeight: true,
 	containerSizePriority: 5,
