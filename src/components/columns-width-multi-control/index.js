@@ -22,8 +22,10 @@ const ColumnsWidthMultiControl = props => {
 		<BaseControl
 			label={ props.label }
 			help={ props.help }
-			responsive={ props.responsive }
 			className={ classnames( [ 'ugb-columns-width-multi-control', 'ugb--help-tip-column-width', props.className ] ) }
+			responsive={ props.responsive }
+			hasTabletValue={ props.hasTabletValue }
+			hasMobileValue={ props.hasMobileValue }
 		>
 			{ range( props.columns ).map( i => {
 				return (
@@ -74,6 +76,9 @@ ColumnsWidthMultiControl.defaultProps = {
 	className: '',
 	responsive: false,
 	placeholders: null,
+
+	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
+	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
 }
 
 export default ColumnsWidthMultiControl

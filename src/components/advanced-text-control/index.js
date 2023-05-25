@@ -43,9 +43,13 @@ const AdvancedTextControl = memo( props => {
 	const TextInput = isMultiline ? TextareaControl : TextControl
 
 	return (
-		<AdvancedControl { ...controlProps }>
+		<AdvancedControl
+			className={ props.className }
+			{ ...controlProps }
+		>
 			<DynamicContentControl
 				enable={ isDynamic }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 				{ ...dynamicContentProps }
 			>
 				<TextInput
@@ -56,16 +60,18 @@ const AdvancedTextControl = memo( props => {
 				/>
 			</DynamicContentControl>
 			<ResetButton
-				allowReset={ allowReset && ! props.dynamic }
+				allowReset={ allowReset && ! props.isDynamic }
 				value={ typeof props.value === 'undefined' ? value : props.value }
 				default={ props.default }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 			/>
 		</AdvancedControl>
 	)
 }, isEqual )
 
 AdvancedTextControl.defaultProps = {
+	className: '',
 	isMultiline: false,
 	allowReset: true,
 	default: '',
@@ -80,6 +86,8 @@ AdvancedTextControl.defaultProps = {
 	onChange: undefined,
 	// Allow custom onChange when dynamic content is changed.
 	changeDynamicContent: undefined,
+
+	hasPanelModifiedIndicator: true,
 }
 
 export default AdvancedTextControl

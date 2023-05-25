@@ -83,10 +83,12 @@ const ImageControl = memo( props => {
 	return (
 		<AdvancedControl
 			{ ...controlProps }
+			valueCheckAttribute={ props.attribute + 'Url' }
 			className={ classnames( 'ugb-image-control', props.className ) }
 		>
 			<DynamicContentControl
 				enable={ props.isDynamic }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 				type="image-url"
 				{ ...dynamicContentProps }
 			>
@@ -157,6 +159,7 @@ const ImageControl = memo( props => {
 				value={ imageUrl }
 				default={ props.default }
 				onChange={ onRemove }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 			/>
 		</AdvancedControl>
 	)
@@ -174,6 +177,8 @@ ImageControl.defaultProps = {
 	value: undefined,
 	onChange: undefined,
 	allowReset: true,
+
+	hasPanelModifiedIndicator: true,
 }
 
 export default ImageControl

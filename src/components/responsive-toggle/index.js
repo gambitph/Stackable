@@ -9,7 +9,7 @@ import ControlIconToggle from '../control-icon-toggle'
 /**
  * External dependencies
  */
-import { useDeviceType } from '~stackable/hooks'
+import { useBlockAttributesContext, useDeviceType } from '~stackable/hooks'
 import { i18n } from 'stackable'
 
 /**
@@ -18,6 +18,8 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { memo } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
+import { isEmptyAttributes } from '~stackable/util'
+import { upperFirst, camelCase } from 'lodash'
 
 const DEVICE_TYPES = {
 	desktop: 'Desktop',
@@ -43,6 +45,9 @@ const DEVICE_OPTIONS = [
 	},
 ]
 
+const ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
+const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.filter( s => s !== 'normal' ).map( s => upperFirst( camelCase( s ) ) )
+
 const ResponsiveToggle = props => {
 	const deviceType = useDeviceType()
 
@@ -58,7 +63,51 @@ const ResponsiveToggle = props => {
 		}
 	}
 
-	const screens = DEVICE_OPTIONS.filter( ( { value } ) => props.screens?.includes( value ) )
+	const _screens = DEVICE_OPTIONS.filter( ( { value } ) => props.screens?.includes( value ) )
+
+	const responsiveValues = useBlockAttributesContext( attributes => {
+		const attributeName = props.valueCheckAttribute || props.attribute
+
+		if ( ! attributeName ) {
+			return {}
+		}
+
+		const tabletAttributes = [ attributes[ `${ attributeName }Tablet` ] ]
+		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
+			tabletAttributes.push( attributes[ `${ attributeName }Tablet${ suffix }` ] )
+		} )
+
+		const mobileAttributes = [ attributes[ `${ attributeName }Mobile` ] ]
+		ALL_HOVER_ATTRIBUTE_SUFFIX.forEach( suffix => {
+			mobileAttributes.push( attributes[ `${ attributeName }Mobile${ suffix }` ] )
+		} )
+
+		return {
+			tablet: tabletAttributes,
+			mobile: mobileAttributes,
+		}
+	} )
+
+	// Add the hasValue option if the hover state is styled.
+	const screens = _screens.map( option => {
+		if ( option.value === 'desktop' ) {
+			return option
+		}
+
+		let hasAttributeValue = false
+		if ( props.attribute ) {
+			hasAttributeValue = ! isEmptyAttributes( responsiveValues[ option.value ] )
+		}
+
+		const hasDeviceValue = option.value === 'desktop' ? false
+			: option.value === 'tablet' ? props.hasTabletValue
+				: props.hasMobileValue
+
+		return {
+			...option,
+			hasValue: hasDeviceValue || hasAttributeValue,
+		}
+	} )
 
 	if ( screens <= 1 ) {
 		return null
@@ -81,6 +130,10 @@ const ResponsiveToggle = props => {
 
 ResponsiveToggle.defaultProps = {
 	screens: [ 'desktop' ],
+	attribute: '',
+	suffix: '',
+	hasTabletValue: undefined, // If true, then the toggle for tablet will be highlighted to show that the tablet value has been set.
+	hasMobileValue: undefined, // If true, then the toggle for mobile will be highlighted to show that the mobile value has been set.
 }
 
 export default memo( ResponsiveToggle )

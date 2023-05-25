@@ -43,7 +43,7 @@ export const BaseControl = props => {
 		'stk-control--disabled': ( props.disableTablet && deviceType === 'Tablet' ) || ( props.disableMobile && deviceType === 'Mobile' ),
 	} )
 
-	const hasRepsonsive = !! props.responsive?.length
+	const hasResponsive = !! props.responsive?.length
 	const hasHover = !! props.hover?.length
 	const hasUnits = !! props.units?.length
 
@@ -72,8 +72,22 @@ export const BaseControl = props => {
 				<div className={ labelClassName }>
 					<div className="components-base-control__label">{ label }</div>
 					<div className="stk-control-label__toggles">
-						{ hasRepsonsive && <ResponsiveToggle screens={ responsive } /> }
-						{ hasHover && <HoverStateToggle hover={ props.hover } /> }
+						{ hasResponsive && (
+							<ResponsiveToggle
+								screens={ responsive }
+								attribute={ props.attribute }
+								hasTabletValue={ props.hasTabletValue }
+								hasMobileValue={ props.hasMobileValue }
+								valueCheckAttribute={ props.valueCheckAttribute }
+							/>
+						) }
+						{ hasHover && (
+							<HoverStateToggle
+								hover={ props.hover }
+								attribute={ props.attribute }
+								hasResponsive={ hasResponsive }
+							/>
+						) }
 					</div>
 					<div className="stk-control-label__after">
 						{ hasUnits &&
@@ -104,6 +118,7 @@ BaseControl.defaultProps = {
 	label: '',
 	help: '',
 	boldLabel: false,
+	attribute: '',
 
 	responsive: false,
 	hover: false,
@@ -117,6 +132,9 @@ BaseControl.defaultProps = {
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
 
+	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
+	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
+
 	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 }
 
@@ -129,11 +147,9 @@ const AdvancedControl = props => {
 	const setAttributes = useBlockSetAttributesContext()
 	const onChangeUnit = unit => setAttributes( { [ unitAttrName ]: unit } )
 
-	const propsToPass = omit( props, [ 'attribute' ] )
-
 	return (
 		<BaseControl
-			{ ...propsToPass }
+			{ ...props }
 			unit={ unit }
 			onChangeUnit={ props.onChangeUnit || onChangeUnit }
 		/>
@@ -157,8 +173,13 @@ AdvancedControl.defaultProps = {
 
 	after: null,
 
+	valueCheckAttribute: '', // Checks the value of different variations of the attribute name i.e. backgroundMedia -> backgroundMediaUrl. This is mainly used for the modified indicator.
+
 	disableTablet: false, // If true, then the control will be disabled in tablet preview.
 	disableMobile: false, // If true, then the control will be disabled in mobile preview.
+
+	hasTabletValue: undefined, // If true, then the responsive toggle for tablet will be highlighted to show that the tablet value has been set.
+	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
 
 	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
 }
