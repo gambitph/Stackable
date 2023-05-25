@@ -205,10 +205,6 @@ class StackableImageLightbox {
 		element.setAttribute( 'aria-role', 'button' )
 
 		element.addEventListener( 'click', ev => {
-			// this prevents the lightbox to open during drag in the horizontal scroller block
-			if ( element.hasAttribute( 'isDragging' ) ) {
-				return
-			}
 			lightbox.openAt( i )
 			ev.preventDefault()
 			ev.stopImmediatePropagation()

@@ -17,6 +17,7 @@ class StackableHorizontalScroller {
 			// prevents redirecting to the inner column link
 			const onClickHandler = function( e ) {
 				e.preventDefault()
+				e.stopPropagation()
 			}
 
 			const mouseMoveHandler = function( e ) {
@@ -31,10 +32,10 @@ class StackableHorizontalScroller {
 				// Prevent selection of contents because of dragging.
 				e.preventDefault()
 				children.forEach( child => {
-					// lightbox opens while dragging, this prevents opening the lightbox
-					child.setAttribute( 'isDragging', true )
 					// links will trigger while dragging, this disabled the links
-					child.addEventListener( 'click', onClickHandler )
+					// set the third parameter to true to prevent triggering the on click event for lightbox
+					// check useCapture parameter: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+					child.addEventListener( 'click', onClickHandler, true )
 				 } )
 			}
 
@@ -58,18 +59,11 @@ class StackableHorizontalScroller {
 
 				dragTimeout = setTimeout( () => {
 					el.classList.remove( 'stk--snapping-deactivated' )
-				}, 500 )
-
-				// if timeout is set to 500 ms, lightbox and links won't open when user
-				// immediately clicks the column block after drag
-				setTimeout( () => {
 					children.forEach( child => {
-						// this allows lightbox to open after dragging
-						child.removeAttribute( 'isDragging' )
 						// this enables the links after dragging
-						child.removeEventListener( 'click', onClickHandler )
+						child.removeEventListener( 'click', onClickHandler, true )
 					 } )
-				}, 50 )
+				}, 500 )
 			}
 
 			const mouseDownHandler = function( e ) {
