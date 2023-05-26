@@ -3,11 +3,19 @@ import GLightbox from 'glightbox'
 
 // Gets the highest resolution image from the srcset.
 const getImageFromSrcset = el => {
-	if ( ! el || ! el.getAttribute( 'srcset' ) ) {
+	if ( ! el ) {
 		return null
 	}
 
-	const src = el.getAttribute( 'srcset' ).split( ',' ).map( v => v.trim().split( ' ' ) ).reduce( ( largestImgData, imgData ) => {
+	// Support for NitroPack lazy loading.
+	const srcset = el.getAttribute( 'nitro-lazy-srcset' ) ||
+		el.getAttribute( 'srcset' )
+
+	if ( ! srcset ) {
+		return null
+	}
+
+	const src = srcset.split( ',' ).map( v => v.trim().split( ' ' ) ).reduce( ( largestImgData, imgData ) => {
 		const size = parseInt( imgData[ 1 ], 10 )
 		if ( largestImgData.size < size ) {
 			return { url: imgData[ 0 ], size }
