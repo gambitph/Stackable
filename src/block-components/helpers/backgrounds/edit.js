@@ -13,7 +13,11 @@ import {
 	AdvancedRangeControl,
 	ImageControl2,
 } from '~stackable/components'
-import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers,
+	useDeviceType,
+	useBlockSetAttributesContext,
+} from '~stackable/hooks'
 import { getAttributeName, urlIsVideo } from '~stackable/util'
 
 /**
@@ -49,6 +53,8 @@ export const BackgroundControls = props => {
 		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const setAttributes = useBlockSetAttributesContext()
+
 	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) || getAttribute( 'backgroundMediaUrlTablet' ) || getAttribute( 'backgroundMediaUrlMobile' )
 	const isBackgroundVideo = () => {
 		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
@@ -74,6 +80,12 @@ export const BackgroundControls = props => {
 						: __( 'Background Color', i18n )
 				}
 				attribute={ getAttrName( 'backgroundColor' ) }
+				onChange={ value => {
+					setAttributes( {
+						[ getAttrName( 'backgroundColor' ) ]: value,
+						hasBackground: true,
+					} )
+				} }
 				hasTransparent={ true }
 				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
 			/>
@@ -168,6 +180,23 @@ export const BackgroundControls = props => {
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 					allowedTypes={ props.backgroundMediaAllowVideo ? IMAGE_AND_VIDEO_TYPES : IMAGE_TYPES }
 					attribute={ getAttrName( 'backgroundMedia' ) }
+					onChange={ image => {
+						const attrNameId = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Id`, deviceType )
+						const attrNameUrl = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Url`, deviceType )
+						const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
+						const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
+						const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
+
+						setAttributes( {
+							[ attrNameId ]: image.id,
+							[ attrNameUrl ]: image.url,
+							[ attrWidthAttribute ]: image.width || '',
+							[ attrHeightAttribute ]: image.height || '',
+							[ attrAlt ]: image.alt || '',
+							hasBackground: true,
+						} )
+					}
+					}
 					responsive="all"
 				/>
 			}
