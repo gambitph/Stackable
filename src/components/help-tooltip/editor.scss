@@ -1,0 +1,54 @@
+.stk-control-help-tooltip {
+	.components-panel__body {
+		width: 300px;
+
+	}
+	h4 {
+		margin: 0 0 8px;
+		line-height: 1.2;
+		color: #fff;
+		padding-right: 30px;
+	}
+	p {
+		margin: 0;
+		line-height: 1.6;
+		color: #ccc;
+	}
+	.ugb-help-tooltip__checkbox {
+		color: #ccc;
+		margin: 32px 0 -10px;
+	}
+
+	.components-panel__body,
+	.components-popover__arrow::before {
+		background: #111;
+		border: none;
+	}
+	.components-popover__triangle-bg {
+		fill: #111;
+	}
+
+	.components-popover__content {
+		box-shadow: none;
+		border-radius: 4px;
+		max-height: none !important;
+	}
+	.components-checkbox-control__input[type="checkbox"]:not(:checked) {
+		background: #111;
+	}
+	.components-checkbox-control__input[type="checkbox"] {
+		border: 1px solid #fff;
+	}
+
+	.stk-control-help-tooltip__remove {
+		all: unset;
+		cursor: pointer;
+		color: #fff;
+		float: right;
+		margin: -2px;
+	}
+
+	video {
+		margin: 8px 0 16px;
+	}
+}

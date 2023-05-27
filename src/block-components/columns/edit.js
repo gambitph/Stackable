@@ -163,6 +163,12 @@ export const Controls = props => {
 							highlight: 'column-spacing',
 							defaultValue: '12px',
 						} }
+						// TODO: Sample of how to use the new helpTooltip
+						helpTooltip={ {
+							video: 'inner-column-spacing',
+							title: 'Override title',
+							description: __( 'Inner Column spacingn of the bkasj kqwbcqh', i18n ),
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
@@ -175,6 +181,9 @@ export const Controls = props => {
 							selector: '.stk-%s-column > * > *',
 							highlight: 'columns:column-gap',
 							responsive: [ 'desktop' ],
+						} }
+						helpTooltip={ {
+							description: __( 'Inner Column spacingn of the bkasj kqwbcqh', i18n ),
 						} }
 					/>
 					<AdvancedRangeControl
