@@ -49,6 +49,7 @@ const variations = [
 	{
 		name: 'social-buttons',
 		title: __( 'Social Buttons', i18n ),
+		description: __( 'Add social buttons.', i18n ),
 		icon: SocialButtonsIcon,
 		'stk-type': 'special',
 		scope: [
