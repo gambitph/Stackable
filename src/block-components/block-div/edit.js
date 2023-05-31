@@ -71,7 +71,7 @@ export const Edit = props => {
 					onChange={ hasBackground => setAttributes( { hasBackground } ) }
 					initialOpen={ initialOpen === 'background' }
 				>
-					<BackgroundControls attrNameTemplate="block%s" />
+					<BackgroundControls attrNameTemplate="block%s" isBlockBackground={ true } />
 				</PanelAdvancedSettings>
 				<PanelAdvancedSettings
 					title={ __( 'Borders & Shadows', i18n ) }

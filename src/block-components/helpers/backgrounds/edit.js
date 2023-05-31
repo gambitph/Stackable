@@ -81,10 +81,16 @@ export const BackgroundControls = props => {
 				}
 				attribute={ getAttrName( 'backgroundColor' ) }
 				onChange={ value => {
-					setAttributes( {
+					const attributes = {
 						[ getAttrName( 'backgroundColor' ) ]: value,
 						hasBackground: true,
-					} )
+					}
+
+					const attributesNoHasBackground = Object.fromEntries(
+						Object.entries( attributes ).filter( ( [ key ] ) => key !== 'hasBackground' )
+					  )
+
+					setAttributes( props.isBlockBackground ? attributes : attributesNoHasBackground )
 				} }
 				hasTransparent={ true }
 				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
@@ -187,14 +193,20 @@ export const BackgroundControls = props => {
 						const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
 						const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
 
-						setAttributes( {
+						const attributes = {
 							[ attrNameId ]: image.id,
 							[ attrNameUrl ]: image.url,
 							[ attrWidthAttribute ]: image.width || '',
 							[ attrHeightAttribute ]: image.height || '',
 							[ attrAlt ]: image.alt || '',
 							hasBackground: true,
-						} )
+						}
+
+						const attributesNoHasBackground = Object.fromEntries(
+							Object.entries( attributes ).filter( ( [ key ] ) => key !== 'hasBackground' )
+						  )
+
+						setAttributes( props.isBlockBackground ? attributes : attributesNoHasBackground )
 					}
 					}
 					responsive="all"
