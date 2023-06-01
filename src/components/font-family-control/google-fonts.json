@@ -1108,6 +1108,17 @@
     ]
   },
   {
+    "family": "Aoboshi One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Arapey",
     "variants": [
       "regular",
@@ -3562,6 +3573,18 @@
     ]
   },
   {
+    "family": "Cherry Bomb One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Cherry Cream Soda",
     "variants": [
       "regular"
@@ -3662,6 +3685,18 @@
       "900italic"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Chokokutai",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -6205,6 +6240,28 @@
     ]
   },
   {
+    "family": "Geologica",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Georama",
     "variants": [
       "100",
@@ -6903,6 +6960,8 @@
     "family": "Harmattan",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700"
     ],
     "subsets": [
@@ -9799,11 +9858,13 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
       "arabic",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10679,7 +10740,19 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Monomaniac One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11835,6 +11908,17 @@
     ]
   },
   {
+    "family": "Noto Sans Chorasmian",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "chorasmian",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Noto Sans Coptic",
     "variants": [
       "regular"
@@ -11947,7 +12031,9 @@
       "regular"
     ],
     "subsets": [
-      "elbasan"
+      "elbasan",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12174,7 +12260,9 @@
       "regular"
     ],
     "subsets": [
-      "inscriptional-parthian"
+      "inscriptional-parthian",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -13386,6 +13474,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "ugaritic"
     ]
   },
@@ -13447,10 +13537,24 @@
   {
     "family": "Noto Serif",
     "variants": [
+      "100",
+      "200",
+      "300",
       "regular",
-      "italic",
+      "500",
+      "600",
       "700",
-      "700italic"
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "cyrillic",
@@ -13959,6 +14063,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tangut"
     ]
   },
@@ -14048,9 +14154,15 @@
   {
     "family": "Noto Traditional Nushu",
     "variants": [
-      "regular"
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "nushu"
     ]
   },
@@ -14724,6 +14836,16 @@
     ]
   },
   {
+    "family": "Palette Mosaic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin"
+    ]
+  },
+  {
     "family": "Pangolin",
     "variants": [
       "regular"
@@ -15098,6 +15220,32 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Playfair",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -16314,6 +16462,16 @@
     ]
   },
   {
+    "family": "Rock 3D",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin"
+    ]
+  },
+  {
     "family": "Rock Salt",
     "variants": [
       "regular"
@@ -17173,6 +17331,8 @@
     "family": "Scheherazade New",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700"
     ],
     "subsets": [
@@ -17455,6 +17615,16 @@
     ]
   },
   {
+    "family": "Shizuru",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin"
+    ]
+  },
+  {
     "family": "Shojumaru",
     "variants": [
       "regular"
@@ -17645,6 +17815,17 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Slackside One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -19220,6 +19401,21 @@
     ]
   },
   {
+    "family": "Tsukimi Rounded",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Tulpen One",
     "variants": [
       "regular"
@@ -20074,6 +20270,28 @@
     ],
     "subsets": [
       "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Yuji Hentaigana Akari",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Yuji Hentaigana Akebono",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
       "japanese",
       "latin",
       "latin-ext"
