@@ -83,14 +83,13 @@ export const BackgroundControls = props => {
 				onChange={ value => {
 					const attributes = {
 						[ getAttrName( 'backgroundColor' ) ]: value,
-						hasBackground: true,
 					}
 
-					const attributesNoHasBackground = Object.fromEntries(
-						Object.entries( attributes ).filter( ( [ key ] ) => key !== 'hasBackground' )
-					  )
+					if ( props.onBackgroundEnableAttribute ) {
+						attributes[ props.onBackgroundEnableAttribute ] = true
+					}
 
-					setAttributes( props.isBlockBackground ? attributes : attributesNoHasBackground )
+					setAttributes( attributes )
 				} }
 				hasTransparent={ true }
 				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
@@ -199,14 +198,13 @@ export const BackgroundControls = props => {
 							[ attrWidthAttribute ]: image.width || '',
 							[ attrHeightAttribute ]: image.height || '',
 							[ attrAlt ]: image.alt || '',
-							hasBackground: true,
 						}
 
-						const attributesNoHasBackground = Object.fromEntries(
-							Object.entries( attributes ).filter( ( [ key ] ) => key !== 'hasBackground' )
-						  )
+						if ( props.onBackgroundEnableAttribute ) {
+							attributes[ props.onBackgroundEnableAttribute ] = true
+						}
 
-						setAttributes( props.isBlockBackground ? attributes : attributesNoHasBackground )
+						setAttributes( attributes )
 					}
 					}
 					responsive="all"
@@ -340,4 +338,5 @@ BackgroundControls.defaultProps = {
 	hasGradient: true,
 	hasBackgroundImage: true,
 	hasBackgroundGradientBlendMode: true,
+	onBackgroundEnableAttribute: '',
 }
