@@ -16,7 +16,7 @@
 	--dot-offset: 12px;
 	--transition-duration: 0.3s;
 
-	// 2021 Theme is adding background-color to buttons, this is to remove it
+	// Remove background-color to buttons set by theme
 	.stk-block-carousel__content-wrapper {
 		.stk-block-carousel__dots {
 			> div .stk-block-carousel__dot {
