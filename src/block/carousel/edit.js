@@ -261,13 +261,9 @@ const Edit = props => {
 		sliderRef.current.parentElement.addEventListener( 'mouseenter', onMouseEnter )
 		sliderRef.current.parentElement.addEventListener( 'mouseleave', onMouseLeave )
 		return () => {
-			try {
-				clearInterval( interval )
-				sliderRef.current.parentElement.removeEventListener( 'mouseenter', onMouseEnter )
-				sliderRef.current.parentElement.removeEventListener( 'mouseleave', onMouseLeave )
-			  } catch ( err ) {
-
-			  }
+			clearInterval( interval )
+			sliderRef.current?.parentElement.removeEventListener( 'mouseenter', onMouseEnter )
+			sliderRef.current?.parentElement.removeEventListener( 'mouseleave', onMouseLeave )
 		}
 	}, [ attributes.autoplay, attributes.autoplaySpeed ] )
 
