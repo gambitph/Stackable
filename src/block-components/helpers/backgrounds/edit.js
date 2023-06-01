@@ -17,6 +17,7 @@ import {
 	useAttributeEditHandlers,
 	useDeviceType,
 	useBlockSetAttributesContext,
+	useBlockHoverState,
 } from '~stackable/hooks'
 import { getAttributeName, urlIsVideo } from '~stackable/util'
 
@@ -54,6 +55,7 @@ export const BackgroundControls = props => {
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
 	const setAttributes = useBlockSetAttributesContext()
+	const [ currentHoverState ] = useBlockHoverState()
 
 	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) || getAttribute( 'backgroundMediaUrlTablet' ) || getAttribute( 'backgroundMediaUrlMobile' )
 	const isBackgroundVideo = () => {
@@ -82,7 +84,7 @@ export const BackgroundControls = props => {
 				attribute={ getAttrName( 'backgroundColor' ) }
 				onChange={ value => {
 					const attributes = {
-						[ getAttrName( 'backgroundColor' ) ]: value,
+						[ getAttrName( 'backgroundColor', 'desktop', currentHoverState ) ]: value,
 					}
 
 					if ( props.onBackgroundEnableAttribute ) {
