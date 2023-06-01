@@ -68,7 +68,7 @@
 		}
 	}
 	&.is-opened .components-panel__body-title {
-		margin-bottom: 12px;
+		margin-bottom: 12px !important;
 		border-bottom: 1px solid #e1e1e1;
 		// Sticky.
 		position: sticky;
