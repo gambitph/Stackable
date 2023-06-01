@@ -36,7 +36,6 @@ import {
 	CustomCSS,
 	Responsive,
 	CustomAttributes,
-	EffectsAnimations,
 	ConditionalDisplay,
 	Separator,
 	getSeparatorClasses,
@@ -642,7 +641,6 @@ const Edit = props => {
 					</InspectorAdvancedControls>
 
 					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-carousel" />
 					<Responsive.InspectorControls />
