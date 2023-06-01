@@ -15,6 +15,15 @@
 	--dot-active-height: var(--dot-size, 8px);
 	--dot-offset: 12px;
 	--transition-duration: 0.3s;
+
+	// 2021 Theme is adding background-color to buttons, this is to remove it
+	.stk-block-carousel__content-wrapper {
+		.stk-block-carousel__dots {
+			> div .stk-block-carousel__dot {
+				background-color: unset;
+			}
+		}
+	}
 }
 .stk-block-carousel__slider {
 	display: flex;
@@ -52,6 +61,11 @@
 	align-items: center;
 	gap: var(--button-gap, 12px);
 	pointer-events: none;
+
+	// Svg size does not match backend, overflow set by unknown source, remove it
+	svg {
+		overflow: unset;
+	}
 }
 .stk-block-carousel__button {
 	pointer-events: all;
