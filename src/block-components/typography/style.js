@@ -204,8 +204,8 @@ const Styles = props => {
 				styleRule="letterSpacing"
 				attrName="letterSpacing"
 				key="letterSpacing"
+				format="%spx"
 				responsive="all"
-				hasUnits="px"
 				dependencies={ dependencies }
 			/>
 		</>

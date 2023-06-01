@@ -235,7 +235,6 @@ export const Controls = props => {
 				<AdvancedRangeControl
 					label={ __( 'Letter Spacing', i18n ) }
 					attribute={ attributeName( 'letterSpacing' ) }
-					units={ [ 'px', 'em', 'rem' ] }
 					min={ -5 }
 					sliderMax={ 10 }
 					step={ 0.1 }
