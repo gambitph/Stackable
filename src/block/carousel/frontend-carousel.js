@@ -19,8 +19,8 @@ class _StackableCarousel {
 		const dataId = this.el.getAttribute( 'data-block-id' )
 
 		// Init buttons.
-		this.prevEl = this.el.querySelector( `[data-block-id="${ dataId }"] > .stk-block-carousel__slider-wrapper > .stk-block-carousel__buttons > .stk-block-carousel__button__prev` )
-		this.nextEl = this.el.querySelector( `[data-block-id="${ dataId }"] > .stk-block-carousel__slider-wrapper > .stk-block-carousel__buttons > .stk-block-carousel__button__next` )
+		this.prevEl = this.el.querySelector( `[data-block-id="${ dataId }"] > .stk-block-carousel__content-wrapper > .stk-block-carousel__slider-wrapper > .stk-block-carousel__buttons > .stk-block-carousel__button__prev` )
+		this.nextEl = this.el.querySelector( `[data-block-id="${ dataId }"] > .stk-block-carousel__content-wrapper > .stk-block-carousel__slider-wrapper > .stk-block-carousel__buttons > .stk-block-carousel__button__next` )
 		this.dotsEl = this.el.querySelector( '.stk-block-carousel__dots' )
 
 		// Add a live region to announce the slide number when using the previous/next buttons

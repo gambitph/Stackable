@@ -665,81 +665,83 @@ const Edit = props => {
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Separator>
-					<div
-						className={ contentClassNames }
-						data-align={ ! props.attributes.contentAlign ? undefined // Only needed in the backend
-							: props.attributes.contentAlign === 'alignwide' ? 'wide'
-								: props.attributes.contentAlign === 'alignfull' ? 'full' : undefined }
-					>
-						{ carouselType === 'fade' && (
-							<style>
-								{ range( maxSlides ).map( i => {
-									return `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ i + 1 }) {
+					<div className="stk-block-carousel__content-wrapper">
+						<div
+							className={ contentClassNames }
+							data-align={ ! props.attributes.contentAlign ? undefined // Only needed in the backend
+								: props.attributes.contentAlign === 'alignwide' ? 'wide'
+									: props.attributes.contentAlign === 'alignfull' ? 'full' : undefined }
+						>
+							{ carouselType === 'fade' && (
+								<style>
+									{ range( maxSlides ).map( i => {
+										return `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ i + 1 }) {
 										opacity: 0;
 										visibility: hidden;
 										left: -${ 100 * ( i ) }%;
 									}`
-								} ) }
-								{ `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ activeSlide }) {
+									} ) }
+									{ `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ activeSlide }) {
 									opacity: 1;
 									visibility: visible;
 									z-index: 2;
 									transition-duration: var(--transition-duration, 0.3s);
 									transition-delay: 0s;
 								}` }
-							</style>
-						) }
-						<div
-							className="stk-block-carousel__slider"
-							ref={ sliderRef }
-							role="list"
-						>
-							<ColumnInnerBlocks
-								providerValue={ columnProviderValue }
-								orientation="horizontal"
-								template={ props.attributes.templateLock ? undefined : TEMPLATE }
-								allowedBlocks={ ALLOWED_INNER_BLOCKS }
-								renderAppender={ false }
-								templateLock={ props.attributes.templateLock || false }
-							/>
+								</style>
+							) }
+							<div
+								className="stk-block-carousel__slider"
+								ref={ sliderRef }
+								role="list"
+							>
+								<ColumnInnerBlocks
+									providerValue={ columnProviderValue }
+									orientation="horizontal"
+									template={ props.attributes.templateLock ? undefined : TEMPLATE }
+									allowedBlocks={ ALLOWED_INNER_BLOCKS }
+									renderAppender={ false }
+									templateLock={ props.attributes.templateLock || false }
+								/>
+							</div>
+							{ attributes.showArrows && (
+								<div className="stk-block-carousel__buttons">
+									<button
+										className="stk-block-carousel__button stk-block-carousel__button__prev"
+										onClick={ prevSlide }
+									>
+										<SvgIcon value={ attributes.arrowIconPrev } />
+									</button>
+									<button
+										className="stk-block-carousel__button stk-block-carousel__button__next"
+										onClick={ nextSlide }
+									>
+										<SvgIcon value={ attributes.arrowIconNext } />
+									</button>
+								</div>
+							) }
 						</div>
-						{ attributes.showArrows && (
-							<div className="stk-block-carousel__buttons">
-								<button
-									className="stk-block-carousel__button stk-block-carousel__button__prev"
-									onClick={ prevSlide }
-								>
-									<SvgIcon value={ attributes.arrowIconPrev } />
-								</button>
-								<button
-									className="stk-block-carousel__button stk-block-carousel__button__next"
-									onClick={ nextSlide }
-								>
-									<SvgIcon value={ attributes.arrowIconNext } />
-								</button>
+						{ attributes.showDots && (
+							<div className="stk-block-carousel__dots" role="list" data-label="Slide %d">
+								{ range( maxSlides ).map( i => {
+									const className = classnames( 'stk-block-carousel__dot', {
+										'stk-block-carousel__dot--active': i + 1 === dotActiveSlide,
+									} )
+									return (
+										<div key={ i } role="listitem">
+											<button
+												className={ className }
+												onClick={ ev => {
+													ev.preventDefault()
+													goToSlide( i + 1 )
+												} }
+											/>
+										</div>
+									)
+								} ) }
 							</div>
 						) }
 					</div>
-					{ attributes.showDots && (
-						<div className="stk-block-carousel__dots" role="list" data-label="Slide %d">
-							{ range( maxSlides ).map( i => {
-								const className = classnames( 'stk-block-carousel__dot', {
-									'stk-block-carousel__dot--active': i + 1 === dotActiveSlide,
-								} )
-								return (
-									<div key={ i } role="listitem">
-										<button
-											className={ className }
-											onClick={ ev => {
-												ev.preventDefault()
-												goToSlide( i + 1 )
-											} }
-										/>
-									</div>
-								)
-							} ) }
-						</div>
-					) }
 				</Separator>
 			</BlockDiv>
 			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
