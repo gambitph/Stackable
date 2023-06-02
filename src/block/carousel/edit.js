@@ -655,7 +655,7 @@ const Edit = props => {
 					blockState={ props.blockState }
 					clientId={ clientId }
 				/>
-				<CustomCSS mainBlockClass="stk-block-columns" />
+				<CustomCSS mainBlockClass="stk-block-carousel" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Separator>
