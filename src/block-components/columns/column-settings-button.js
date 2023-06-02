@@ -92,7 +92,7 @@ const ColumnButton = props => {
 	)
 }
 
-ColumnButton.defaultProps = {
+ColumnsControl.defaultProps = {
 	isPressed: false,
 	onClick: null,
 	label: __( 'Columns', i18n ),
