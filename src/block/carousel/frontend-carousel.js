@@ -16,12 +16,13 @@ class _StackableCarousel {
 		this.sliderEl = this.el.querySelector( '.stk-block-carousel__slider' )
 		this.slideEls = Array.from( this.sliderEl.children )
 
-		const dataId = this.el.getAttribute( 'data-block-id' )
+		const tempDotsEls = this.el.querySelectorAll( '.stk-block-carousel__dots' )
+		const tempPrevEls = this.el.querySelectorAll( '.stk-block-carousel__button__prev' )
+		const tempNextEls = this.el.querySelectorAll( '.stk-block-carousel__button__next' )
 
-		// Init buttons.
-		this.prevEl = this.el.querySelector( `[data-block-id="${ dataId }"] > .stk-block-carousel__content-wrapper > .stk-block-carousel__slider-wrapper > .stk-block-carousel__buttons > .stk-block-carousel__button__prev` )
-		this.nextEl = this.el.querySelector( `[data-block-id="${ dataId }"] > .stk-block-carousel__content-wrapper > .stk-block-carousel__slider-wrapper > .stk-block-carousel__buttons > .stk-block-carousel__button__next` )
-		this.dotsEl = this.el.querySelector( '.stk-block-carousel__dots' )
+		this.dotsEl = tempDotsEls[ tempDotsEls.length - 1 ]
+		this.prevEl = tempPrevEls[ tempPrevEls.length - 1 ]
+		this.nextEl = tempNextEls[ tempNextEls.length - 1 ]
 
 		// Add a live region to announce the slide number when using the previous/next buttons
 		this.liveregion = document.createElement( 'div' )
