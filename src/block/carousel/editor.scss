@@ -47,6 +47,7 @@
 	.stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"] {
 		scroll-snap-align: start;
 		flex: 1 0 calc(100% / var(--slides-to-show) - var(--gap) / var(--slides-to-show) * (var(--slides-to-show) - 1));
+		max-width: 100%; // Slides may overflow if block is set to full width in some themes, prevent that
 	}
 }
 
