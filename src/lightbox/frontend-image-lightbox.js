@@ -9,6 +9,8 @@ const getImageFromSrcset = el => {
 
 	// Support for NitroPack lazy loading.
 	const srcset = el.getAttribute( 'nitro-lazy-srcset' ) ||
+		// Support for Perfmatters lazy loading.
+		el.getAttribute( 'data-srcset' ) ||
 		el.getAttribute( 'srcset' )
 
 	if ( ! srcset ) {
@@ -86,7 +88,7 @@ class StackableImageLightbox {
 			// The link to open either comes from the href, or from the srcset
 			// of an image block.
 			const linkToOpen = link && href ? href
-				: imageBlock ? ( getImageFromSrcset( imageBlock ) || imageBlock.getAttribute( 'src' ) )
+				: imageBlock ? ( getImageFromSrcset( imageBlock ) || imageBlock.getAttribute( 'data-src' ) || imageBlock.getAttribute( 'src' ) )
 					: null
 
 			if ( ! linkToOpen ) {
