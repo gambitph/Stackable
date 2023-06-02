@@ -15,15 +15,6 @@
 	--dot-active-height: var(--dot-size, 8px);
 	--dot-offset: 12px;
 	--transition-duration: 0.3s;
-
-	// Remove background-color to buttons set by theme
-	.stk-block-carousel__content-wrapper {
-		.stk-block-carousel__dots {
-			> div .stk-block-carousel__dot {
-				background-color: unset;
-			}
-		}
-	}
 }
 .stk-block-carousel__slider {
 	display: flex;
@@ -43,8 +34,8 @@
 }
 .stk-block-carousel__button,
 .stk-block-carousel__dot {
-	all: unset;
-	cursor: pointer;
+	all: unset !important;
+	cursor: pointer !important;
 	transition: all 0.3s ease-in-out, outline-offset 0s, outline 0s;
 	&::before {
 		transition: all 0.3s ease-in-out;
@@ -64,11 +55,11 @@
 
 	// Svg size does not match backend, overflow set by unknown source, remove it
 	svg {
-		overflow: unset;
+		overflow: visible;
 	}
 }
 .stk-block-carousel__button {
-	pointer-events: all;
+	pointer-events: all !important;
 	user-select: none;
 }
 .stk-block-carousel__dots {
@@ -143,7 +134,7 @@
 	}
 	.stk-block-carousel__slider > * {
 		scroll-snap-align: start;
-		flex: 1 0 calc(100% / var(--slides-to-show) - var(--gap) / var(--slides-to-show) * (var(--slides-to-show) - 1));
+		flex: 1 0 calc(100% / var(--slides-to-show) - var(--gap) / var(--slides-to-show) * (var(--slides-to-show) - 1)) !important;
 	}
 }
 
@@ -161,15 +152,18 @@
 	white-space: nowrap;
 }
 
+// Added !important to prevent themes from overriding button styling i.e. Kimono theme
 .stk-block-carousel__button {
-	height: var(--button-height, 40px);
-	width: var(--button-width, 40px);
-	opacity: 0.9;
-	border-radius: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: #fff;
+	padding: initial !important;
+	color: initial !important;
+	height: var(--button-height, 40px) !important;
+	width: var(--button-width, 40px) !important;
+	opacity: 0.9 !important;
+	border-radius: 100% !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	background: #fff !important;
 	&:hover {
 		background: #fff;
 		opacity: 1;
@@ -180,12 +174,12 @@
 	}
 }
 .stk-block-carousel__dot {
-	height: max(24px, var(--dot-size, 8px));
-	width: max(24px, var(--dot-size, 8px));
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	height: max(24px, var(--dot-size, 8px)) !important;
+	width: max(24px, var(--dot-size, 8px)) !important;
+	position: relative !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
 	will-change: margin, margin-inline, width;
 	&::before {
 		position: absolute;
@@ -199,8 +193,8 @@
 		background: var(--dot-color-hover, #1b1b1b);
 	}
 	&.stk-block-carousel__dot--active {
-		margin-inline: max(0px, calc((24px - var(--dot-size)) / 2));
-		width: var(--dot-active-width, 30px);
+		margin-inline: max(0px, calc((24px - var(--dot-size)) / 2)) !important;
+		width: var(--dot-active-width, 30px) !important;
 		&::before {
 			background: #1b1b1b;
 			height: var(--dot-active-height);
