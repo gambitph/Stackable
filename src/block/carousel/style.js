@@ -169,7 +169,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".%s > .stk-block-carousel__content-wrapper > .stk-block-carousel__dots"
+				selector=".stk-block-carousel__dots"
 				styleRule="--dot-offset"
 				attrName="dotsOffset"
 				key="dotsOffset"
