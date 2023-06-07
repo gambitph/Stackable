@@ -32,6 +32,7 @@ const IconControl = props => {
 			allowReset={ true }
 			value={ props.value }
 			onChange={ props.onChange }
+			hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 		>
 			<div className="ugb-icon-control__wrapper">
 				<div className="ugb-icon-control__button-wrapper">
@@ -68,6 +69,7 @@ IconControl.defaultProps = {
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	onChange: () => {},
 	defaultValue: '',
+	hasPanelModifiedIndicator: true,
 }
 
 export default IconControl

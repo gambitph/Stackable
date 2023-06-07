@@ -182,14 +182,6 @@ const TypographyPreview = props => {
 
 	return (
 		<div className="ugb-global-typography-preview">
-			{ props.help && (
-				<Tooltip
-					position="bottom"
-					text={ props.help }
-				>
-					<Dashicon icon="editor-help" />
-				</Tooltip>
-			) }
 			<div className="editor-styles-wrapper">
 				<div className="block-editor-block-list__layout">
 					<div className="wp-block block-editor-block-list__block">
@@ -197,6 +189,14 @@ const TypographyPreview = props => {
 						<Tag className={ tagClassName } data-selector={ props.selector } data-device={ device }>{ props.children }</Tag>
 					</div>
 				</div>
+				{ props.help && (
+					<Tooltip
+						position="bottom"
+						text={ props.help }
+					>
+						<Dashicon icon="editor-help" />
+					</Tooltip>
+				) }
 			</div>
 			{ description && <p className="ugb-global-typography-preview__description">{ description }</p> }
 		</div>

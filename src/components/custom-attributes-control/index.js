@@ -15,7 +15,8 @@ import {
 	useRef,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { TextControl, ExternalLink } from '@wordpress/components'
+import { ExternalLink } from '@wordpress/components'
+import AdvancedTextControl from '../advanced-text-control'
 
 const sanitizeString = str => {
 	return _escape( // Escape html symbols <, /, > (Lodash)
@@ -84,7 +85,7 @@ const CustomAttributesControl = props => {
 	}
 
 	return (
-		<TextControl
+		<AdvancedTextControl
 			ref={ inputRef }
 			data-testid="custom-attributes"
 			className="ugb-custom-attributes-control"

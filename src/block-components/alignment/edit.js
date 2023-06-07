@@ -22,6 +22,31 @@ import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 
+const ALIGN_OPTIONS = [
+	{
+		align: 'left',
+		title: __( 'Align Left', i18n ),
+		icon: 'editor-alignleft',
+	},
+	{
+		align: 'center',
+		title: __( 'Align Center', i18n ),
+		icon: 'editor-aligncenter',
+	},
+	{
+		align: 'right',
+		title: __( 'Align Right', i18n ),
+		icon: 'editor-alignright',
+	},
+	{
+		align: 'justify',
+		title: __( 'Justified', i18n ),
+		icon: 'editor-justify',
+	},
+]
+
+const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.align !== 'justify' )
+
 export const Edit = props => {
 	const {
 		contentAlign,
@@ -95,7 +120,6 @@ export const Edit = props => {
 				attribute="containerHorizontalAlign"
 				responsive="all"
 				controls="horizontal"
-				className="ugb--help-tip-advanced-block-horizontal-align"
 				visualGuide={ { selector: '.stk-%s-container', highlight: 'outline' } }
 			/>
 		}
@@ -107,7 +131,9 @@ export const Edit = props => {
 				<AlignmentToolbar
 					value={ contentAlign }
 					onChange={ contentAlign => setAttributes( { contentAlign } ) }
+					alignmentControls={ props.hasContentJustify ? ALIGN_OPTIONS : ALIGN_OPTIONS_NO_JUSTIFY }
 				/>
+
 			</BlockControls>
 			<InspectorLayoutControls>
 				{ props.containerSizePriority < 5 && containerSize }
@@ -115,6 +141,7 @@ export const Edit = props => {
 					label={ labelContentAlign }
 					attribute="contentAlign"
 					responsive="all"
+					justified={ props.hasContentJustify }
 				/>
 				{ props.hasColumnJustify &&
 					<AdvancedToolbarControl
@@ -122,7 +149,6 @@ export const Edit = props => {
 						attribute="columnJustify"
 						responsive="all"
 						controls="flex-horizontal"
-						className="ugb--help-tip-advanced-block-horizontal-align"
 						disableTablet={ ! columnJustify }
 						disableMobile={ ! columnJustify }
 						visualGuide={ {
@@ -138,7 +164,6 @@ export const Edit = props => {
 						attribute="columnAlign"
 						responsive="all"
 						controls="flex-vertical"
-						className="ugb--help-tip-advanced-block-vertical-align"
 						visualGuide={ {
 							// The 2nd selector (after the comma) is to select
 							// the parent Columns block where this Inner Column
@@ -154,7 +179,6 @@ export const Edit = props => {
 						attribute="rowAlign"
 						responsive="all"
 						controls="flex-vertical"
-						className="ugb--help-tip-advanced-block-vertical-align"
 						visualGuide={ { selector: '.stk-%s-column > * > * > [data-type]', highlight: 'outline' } }
 					/>
 				}
@@ -286,6 +310,7 @@ Edit.defaultProps = {
 	hasRowAlignment: false,
 	hasColumnAlignment: false,
 	hasBlockAlignment: false,
+	hasContentJustify: false,
 	hasContainerSize: false,
 	hasContainerHeight: true,
 	containerSizePriority: 5,

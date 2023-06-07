@@ -7,6 +7,8 @@ import SVGLeftImage from './images/left.svg'
 import SVGRightImage from './images/right.svg'
 import SVGTopImage from './images/top.svg'
 import SVGFullImage from './images/full.svg'
+import SVGVerticalImage from './images/vertical.svg'
+import SVGHorizontalImage from './images/horizontal.svg'
 import RangeControl from '../advanced-range-control/range-control'
 import { ResetButton } from '../base-control2/reset-button'
 import AdvancedControl, { extractControlProps } from '../base-control2'
@@ -176,9 +178,27 @@ const FourRangeControl = memo( props => {
 		} )
 	}
 
+	const onChangeVertical = newValue => {
+		onChange( {
+			top: newValue,
+			right: value.right,
+			bottom: newValue,
+			left: value.left,
+		} )
+	}
+
+	const onChangeHorizontal = newValue => {
+		onChange( {
+			top: value.top,
+			right: newValue,
+			bottom: value.bottom,
+			left: newValue,
+		} )
+	}
+
 	return (
 		<AdvancedControl { ...controlProps }>
-			{ isLocked && (
+			{ isLocked && ! props.vhMode && (
 				<Fragment>
 					<RangeControl
 						{ ...propsToPass }
@@ -192,6 +212,46 @@ const FourRangeControl = memo( props => {
 						default={ props.defaultTop }
 						onChange={ onChangeAll }
 					/>
+				</Fragment>
+			) }
+			{ isLocked && props.vhMode && (
+				<Fragment>
+					<div className="ugb-four-range-control__range">
+						<Tooltip text={ __( 'Top and Bottom', i18n ) }>
+							<span className="ugb-four-range-control__icon"><SVGVerticalImage /></span>
+						</Tooltip>
+						<RangeControl
+							{ ...propsToPass }
+							value={ value.top }
+							onChange={ onChangeVertical }
+							allowReset={ false }
+							placeholder={ typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop }
+						/>
+						<ResetButton
+							allowReset={ props.allowReset }
+							value={ value.top }
+							default={ props.defaultTop }
+							onChange={ onChangeVertical }
+						/>
+					</div>
+					<div className="ugb-four-range-control__range">
+						<Tooltip text={ __( 'Left and Right', i18n ) }>
+							<span className="ugb-four-range-control__icon"><SVGHorizontalImage /></span>
+						</Tooltip>
+						<RangeControl
+							{ ...propsToPass }
+							value={ value.left }
+							onChange={ onChangeHorizontal }
+							allowReset={ false }
+							placeholder={ typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft }
+						/>
+						<ResetButton
+							allowReset={ props.allowReset }
+							value={ value.left }
+							default={ props.defaultLeft }
+							onChange={ onChangeHorizontal }
+						/>
+					</div>
 				</Fragment>
 			) }
 			{ ! isLocked &&
@@ -299,6 +359,8 @@ FourRangeControl.defaultProps = {
 	placeholderBottom: '',
 	placeholderLeft: '',
 	initialPosition: '',
+
+	vhMode: false,
 
 	allowReset: true,
 	default: '',
