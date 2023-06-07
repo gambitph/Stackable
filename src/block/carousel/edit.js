@@ -230,43 +230,6 @@ const Edit = props => {
 		}
 	}, [ maxSlides, activeSlide ] )
 
-	/**
-	 * Autoplay
-	 */
-	// We need to keep this nextSlide function in a ref so we can always call
-	// it.
-	const nextSlideRef = useRef()
-	nextSlideRef.current = nextSlide
-
-	useEffect( () => {
-		let interval
-
-		if ( attributes.autoplay ) {
-			interval = setInterval( () => {
-				nextSlideRef.current()
-			}, attributes.autoplaySpeed || 4000 )
-		}
-
-		const onMouseEnter = () => {
-			clearInterval( interval )
-		}
-		const onMouseLeave = () => {
-			if ( attributes.autoplay ) {
-				interval = setInterval( () => {
-					nextSlideRef.current()
-				}, attributes.autoplaySpeed || 4000 )
-			}
-		}
-
-		sliderRef.current.parentElement.addEventListener( 'mouseenter', onMouseEnter )
-		sliderRef.current.parentElement.addEventListener( 'mouseleave', onMouseLeave )
-		return () => {
-			clearInterval( interval )
-			sliderRef.current?.parentElement.removeEventListener( 'mouseenter', onMouseEnter )
-			sliderRef.current?.parentElement.removeEventListener( 'mouseleave', onMouseLeave )
-		}
-	}, [ attributes.autoplay, attributes.autoplaySpeed ] )
-
 	return (
 		<>
 			{ isSelected && (
@@ -332,7 +295,7 @@ const Edit = props => {
 						/>
 						{ attributes.autoplay && (
 							<AdvancedRangeControl
-								label={ __( 'Speed', i18n ) }
+								label={ __( 'Speed (ms)', i18n ) }
 								attribute="autoplaySpeed"
 								sliderMax={ 6000 }
 								sliderMin={ 1000 }
@@ -389,7 +352,7 @@ const Edit = props => {
 							<AdvancedToolbarControl
 								label={ sprintf( __( '%s Alignment', i18n ), __( 'Button', i18n ) ) }
 								attribute="arrowAlign"
-								controls={ 'vertical' }
+								controls="vertical"
 								placeholder="center"
 								disabled={ attributes.arrowPosition === 'outside' && [ 'flex-start', 'center', 'flex-end' ].includes( attributes.arrowJustify ) ? [ 'center' ] : [] }
 								onChange={ arrowAlign => {
