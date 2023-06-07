@@ -8,8 +8,6 @@ class StackableExpand {
 		const els = document.querySelectorAll( '.stk-block-expand .stk-button' )
 		const onClick = event => {
 			const el = event.target.closest( '.stk-block-expand' )
-			const expanded = el.getAttribute( 'aria-expanded' ) === 'true'
-			el.setAttribute( 'aria-expanded', ! expanded )
 
 			// Invert the hidden text.
 			const visibles = el.querySelectorAll( '[aria-hidden="false"]' )

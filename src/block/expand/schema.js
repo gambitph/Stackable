@@ -30,9 +30,7 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 
 	attrObject.addDefaultValues( {
-		attributes: {
-			customAttributes: [ [ 'aria-expanded', 'false' ] ],
-		},
+		attributes: {},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
