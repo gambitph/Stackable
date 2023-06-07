@@ -121,6 +121,7 @@ export const Controls = props => {
 			{ hasTextContent && (
 				<AdvancedTextControl
 					label={ __( 'Content', i18n ) }
+					hasPanelModifiedIndicator={ false }
 					isMultiline={ isMultiline }
 					value={ unescape( debouncedText ) }
 					onChange={ onChangeContent }

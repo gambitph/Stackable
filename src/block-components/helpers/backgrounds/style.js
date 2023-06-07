@@ -271,7 +271,7 @@ const Styles = props => {
 					getAttribute( 'backgroundColorType' ) === 'gradient' ||
 					getAttribute( 'backgroundColor' ) ||
 					getAttribute( 'backgroundColor', 'desktop', 'hover' ) ||
-					getAttribute( 'backgroundColor', 'desktop', 'parent-hovered' ) }
+					getAttribute( 'backgroundColor', 'desktop', 'parent-hover' ) }
 				dependencies={ [
 					'backgroundColorType',
 					'backgroundColor',

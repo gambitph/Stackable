@@ -299,7 +299,7 @@ const BlockCss = props => {
 	}
 
 	if ( hasParentHover ) {
-		if ( blockState === 'parent-hovered' ) {
+		if ( blockState === 'parent-hover' ) {
 			parentHoverSelector = prependClass( selector, '.%s.stk--is-hovered' )
 		} else {
 			parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover, .stk-hover-parent.stk--is-hovered) .%s' )

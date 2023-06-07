@@ -11,6 +11,15 @@ class StackableHorizontalScroller {
 		let initialClientX = 0
 
 		els.forEach( el => {
+			// get all links, because we will need to disable them during drag
+			const children = el.querySelectorAll( '.stk-block-link, a' )
+
+			// prevents redirecting to the inner column link
+			const onClickHandler = function( e ) {
+				e.preventDefault()
+				e.stopPropagation()
+			}
+
 			const mouseMoveHandler = function( e ) {
 				// How far the mouse has been moved
 				const dx = e.clientX - initialClientX
@@ -22,6 +31,12 @@ class StackableHorizontalScroller {
 
 				// Prevent selection of contents because of dragging.
 				e.preventDefault()
+				children.forEach( child => {
+					// links will trigger while dragging, this disabled the links
+					// set the third parameter to true to prevent triggering the on click event for lightbox
+					// check useCapture parameter: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+					child.addEventListener( 'click', onClickHandler, true )
+				 } )
 			}
 
 			const mouseUpHandler = function() {
@@ -44,6 +59,10 @@ class StackableHorizontalScroller {
 
 				dragTimeout = setTimeout( () => {
 					el.classList.remove( 'stk--snapping-deactivated' )
+					children.forEach( child => {
+						// this enables the links after dragging
+						child.removeEventListener( 'click', onClickHandler, true )
+					 } )
 				}, 500 )
 			}
 

@@ -35,6 +35,8 @@ const buildInclude = [
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.
 	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './src/__*/**/*' ), // Development templates.
 ]
 
 const postCSSOptions = [
@@ -136,6 +138,18 @@ gulp.task( 'generate-translations-js', gulp.series(
 					strings.push( keyword )
 				}
 			} )
+
+			// Gather all variants translatable strings.
+			if ( blockData[ 'stk-variants' ] ) {
+				blockData[ 'stk-variants' ].forEach( variant => {
+					if ( variant.title && ! strings.includes( variant.title ) ) {
+						strings.push( variant.title )
+					}
+					if ( variant.description && ! strings.includes( variant.description ) ) {
+						strings.push( variant.description )
+					}
+				} )
+			}
 		} )
 
 		// Append all the strings to the translation-strings.js file.

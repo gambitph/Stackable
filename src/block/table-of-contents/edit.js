@@ -382,7 +382,7 @@ const Edit = props => {
 								label={ __( 'Column Gap', i18n ) }
 								attribute="columnGap"
 								min="0"
-								default="32"
+								placeholder="32"
 								sliderMax="50"
 								responsive="all"
 							/>

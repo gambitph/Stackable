@@ -24,30 +24,37 @@ export const ColumnsControl = props => {
 	const setColumns = numColumns => {
 		const { insertBlock, removeBlocks } = dispatch( 'core/block-editor' )
 
-		// Remove the columns.
-		if ( numColumns < numInnerBlocks ) {
+		// do nothing if input field is blank
+		if ( numColumns === '' ) {
+
+			// Remove the columns.
+		} else if ( numColumns < numInnerBlocks ) {
 			const columnClientIds = innerBlocks.slice( numColumns ).map( ( { clientId } ) => clientId )
 			removeBlocks( columnClientIds, false )
 
-		// Add a blank column.
+			// Add a blank column.
 		} else if ( numColumns > numInnerBlocks && ! isDuplicate ) {
 			const numToAdd = numColumns - numInnerBlocks
+
+			// add more empty columns if necessary
 			for ( let i = 0; i < numToAdd; i++ ) {
 				const block = getBlockFromExample( 'stackable/column', {} )
 				insertBlock( block, numInnerBlocks + i + 1, clientId, false )
 			}
 
-		// Duplicate the last column.
+			// Duplicate the last column.
 		} else if ( numColumns > numInnerBlocks ) {
+			const numToAdd = numColumns - numInnerBlocks
+
 			// This is not guaranteed to have the latest attributes and values
 			const lastColumnBlock = last( innerBlocks )
+
 			// Retrieve block details to get the latest attributes and values,
 			// If there's no block, then use a blank column.
 			const newBlock = lastColumnBlock
 				? select( 'core/block-editor' ).getBlock( lastColumnBlock.clientId )
 				: {}
 
-			const numToAdd = numColumns - numInnerBlocks
 			for ( let i = 0; i < numToAdd; i++ ) {
 				const block = getBlockFromExample( 'stackable/column', pick( newBlock, [ 'attributes', 'innerBlocks' ] ) )
 				insertBlock( block, numInnerBlocks + i + 1, clientId, false )

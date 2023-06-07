@@ -100,7 +100,6 @@ const Edit = props => {
 							min={ [ 0, 0 ] }
 							sliderMax={ [ 200, 30 ] }
 							placeholder={ isOnlyBlock ? '0' : '12' }
-							className="ugb--help-tip-advanced-block-paddings"
 							visualGuide={ {
 								selector: '.stk-%s-container',
 								highlight: 'column-spacing',
