@@ -15,6 +15,9 @@
 	--dot-active-height: var(--dot-size, 8px);
 	--dot-offset: 12px;
 	--transition-duration: 0.3s;
+	.stk-block-carousel__content-wrapper {
+		max-width: 100%;
+	}
 }
 .stk-block-carousel__slider {
 	display: flex;
@@ -82,7 +85,7 @@
 	.stk-block-carousel__slider > .stk-block-column {
 		transition: opacity 0.3s ease-in-out;
 		width: 100%;
-		flex: 1 0 100%;
+		flex: 1 0 100% !important;
 		opacity: 1;
 		height: auto;
 		// Use max so that the minimum delay is 0.01s. If the transition
@@ -213,10 +216,10 @@
 
 // Hide arrows and dots on mobile
 @include mobile {
-	.stk-block-carousel.stk--hide-mobile-arrows > * > .stk-block-carousel__buttons {
+	.stk-block-carousel.stk--hide-mobile-arrows > .stk-block-carousel__content-wrapper > * > .stk-block-carousel__buttons {
 		display: none;
 	}
-	.stk-block-carousel.stk--hide-mobile-dots > .stk-block-carousel__dots {
+	.stk-block-carousel.stk--hide-mobile-dots > .stk-block-carousel__content-wrapper > .stk-block-carousel__dots {
 		display: none;
 	}
 }
