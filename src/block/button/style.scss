@@ -5,6 +5,10 @@
 	--stk-block-margin-bottom: 0;
 }
 
+.stk-link {
+	text-decoration: underline;
+}
+
 // This makes it so that when the button becomes too small for the viewport,
 // that's the time we wrap text. If the button is fullwidth, and other
 // non-fullwidth button presses against it, this stops the button text from
