@@ -279,7 +279,9 @@ const ShadowControl = memo( props => {
 				min={ 0 }
 				max={ shadows.length - 1 }
 				allowReset={ true }
-				className="ugb--help-tip-general-shadow"
+				helpTooltip={ {
+					description: __( 'Shadow', i18n ),
+				} }
 				hover={ props.hover }
 				placeholder={ value === 'custom' ? __( 'Custom', i18n ) : '' }
 				after={ (
