@@ -96,7 +96,9 @@ export const Edit = () => {
 						step={ 0.1 }
 						allowReset={ true }
 						placeholder="1"
-						className="ugb--help-tip-advanced-opacity"
+						helpTooltip={ {
+							description: __( 'Opacity', i18n ),
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Z-Index', i18n ) }
@@ -106,7 +108,9 @@ export const Edit = () => {
 						sliderMax={ 10 }
 						allowReset={ true }
 						placeholder="1"
-						className="ugb--help-tip-advanced-zindex"
+						helpTooltip={ {
+							description: __( 'Z-index', i18n ),
+						} }
 					/>
 					<AdvancedSelectControl
 						label={ __( 'Position', i18n ) }
@@ -136,7 +140,9 @@ export const Edit = () => {
 						hasLock={ false }
 						sliderMin={ -100 }
 						sliderMax={ 100 }
-						className="ugb--help-tip-advanced-block-paddings"
+						helpTooltip={ {
+							description: __( 'Position', i18n ),
+						} }
 					/>
 				</PanelAdvancedSettings>
 			</InspectorAdvancedControls>
