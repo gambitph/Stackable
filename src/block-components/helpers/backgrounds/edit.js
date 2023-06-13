@@ -87,7 +87,9 @@ export const BackgroundControls = props => {
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="1.0"
-					className="ugb--help-tip-background-color-opacity"
+					helpTooltip={ {
+						description: __( 'Background Color Opacity', i18n ),
+					} }
 				/>
 			) }
 			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
@@ -123,7 +125,9 @@ export const BackgroundControls = props => {
 						step={ 10 }
 						allowReset={ true }
 						placeholder="90"
-						className="ugb--help-tip-gradient-direction"
+						helpTooltip={ {
+							description: __( 'Gradient Direction (degrees)', i18n ),
+						} }
 					/>
 
 					<AdvancedRangeControl
@@ -134,7 +138,9 @@ export const BackgroundControls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="0"
-						className="ugb--help-tip-gradient-location"
+						helpTooltip={ {
+							description: __( 'Color Location (degrees)', i18n ),
+						} }
 					/>
 
 					<AdvancedRangeControl
@@ -145,14 +151,18 @@ export const BackgroundControls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="100"
-						className="ugb--help-tip-gradient-location"
+						helpTooltip={ {
+							description: __( 'Gradient Direction 2(degrees)', i18n ),
+						} }
 					/>
 
 					{ props.hasBackgroundGradientBlendMode &&
 						<BlendModeControl
 							label={ __( 'Background Gradient Blend Mode', i18n ) }
 							attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
-							className="ugb--help-tip-background-blend-mode"
+							helpTooltip={ {
+								description: __( 'Background Gradient Blend Mode (degrees)', i18n ),
+							} }
 						/>
 					}
 				</ButtonIconPopoverControl>
@@ -182,7 +192,9 @@ export const BackgroundControls = props => {
 					step={ 1 }
 					allowReset={ true }
 					placeholder={ getAttribute( 'backgroundColor' ) ? '5' : '0' }
-					className="ugb--help-tip-background-tint"
+					helpTooltip={ {
+						description: __( 'Background Media Tint Strength', i18n ),
+					} }
 				/>
 			}
 
@@ -190,7 +202,9 @@ export const BackgroundControls = props => {
 				<AdvancedToggleControl
 					label={ __( 'Fixed Background', i18n ) }
 					attribute={ getAttrName( 'fixedBackground' ) }
-					className="ugb--help-tip-background-fixed"
+					helpTooltip={ {
+						description: __( 'Fixed', i18n ),
+					} }
 				/>
 			}
 
@@ -240,7 +254,9 @@ export const BackgroundControls = props => {
 							{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
 							{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 						] }
-						className="ugb--help-tip-background-image-position"
+						helpTooltip={ {
+							description: __( 'Image Position', i18n ),
+						} }
 						responsive="all"
 					/>
 
@@ -254,7 +270,9 @@ export const BackgroundControls = props => {
 							{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
 							{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 						] }
-						className="ugb--help-tip-background-image-repeat"
+						helpTooltip={ {
+							description: __( 'Image Repeat', i18n ),
+						} }
 						responsive="all"
 					/>
 
@@ -268,7 +286,9 @@ export const BackgroundControls = props => {
 							{ label: __( 'Contain', i18n ), value: 'contain' },
 							{ label: __( 'Custom', i18n ), value: 'custom' },
 						] }
-						className="ugb--help-tip-background-image-size"
+						helpTooltip={ {
+							description: __( 'Image Size', i18n ),
+						} }
 						responsive="all"
 					/>
 
