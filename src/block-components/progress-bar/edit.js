@@ -187,7 +187,9 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									step={ 10 }
 									allowReset={ true }
 									placeholder="90"
-									className="ugb--help-tip-gradient-direction"
+									helpTooltip={ {
+										description: __( 'Gradient', i18n ),
+									} }
 								/>
 								<AdvancedRangeControl
 									label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
@@ -197,7 +199,9 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									step={ 1 }
 									allowReset={ true }
 									placeholder="0"
-									className="ugb--help-tip-gradient-location"
+									helpTooltip={ {
+										description: __( 'Color 1', i18n ),
+									} }
 								/>
 								<AdvancedRangeControl
 									label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
@@ -207,12 +211,16 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									step={ 1 }
 									allowReset={ true }
 									placeholder="100"
-									className="ugb--help-tip-gradient-location"
+									helpTooltip={ {
+										description: __( 'Color 2', i18n ),
+									} }
 								/>
 								<BlendModeControl
 									label={ __( 'Background Gradient Blend Mode', i18n ) }
 									attribute="progressColorGradientBlendMode"
-									className="ugb--help-tip-background-blend-mode"
+									helpTooltip={ {
+										description: __( 'BG Gradient', i18n ),
+									} }
 								/>
 							</ButtonIconPopoverControl>
 						) }
