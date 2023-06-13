@@ -224,7 +224,9 @@ const Controls = props => {
 						} )
 					} }
 					defaultValue="full"
-					className="ugb--help-tip-image-size"
+					helpTooltip={ {
+						description: __( 'Image Size', i18n ),
+					} }
 				/>
 			) }
 
@@ -237,7 +239,9 @@ const Controls = props => {
 					placeholder="0"
 					defaultValue={ 0 }
 					allowReset={ true }
-					className="ugb--help-tip-general-border-radius"
+					helpTooltip={ {
+						description: __( 'Border Radius', i18n ),
+					} }
 				/>
 			}
 
@@ -291,7 +295,9 @@ const Controls = props => {
 			<BlendModeControl
 				label={ __( 'Overlay Blend Mode', i18n ) }
 				attribute="imageOverlayBlendMode"
-				className="ugb--help-tip-background-blend-mode"
+				helpTooltip={ {
+					description: __( 'Overlay BM', i18n ),
+				} }
 			/>
 
 			{ attributes.imageOverlayColorType === 'gradient' && (
@@ -331,7 +337,9 @@ const Controls = props => {
 						step={ 10 }
 						allowReset={ true }
 						placeholder="90"
-						className="ugb--help-tip-gradient-direction"
+						helpTooltip={ {
+							description: __( 'Gradient Direct', i18n ),
+						} }
 					/>
 
 					<AdvancedRangeControl
@@ -343,7 +351,9 @@ const Controls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="0"
-						className="ugb--help-tip-gradient-location"
+						helpTooltip={ {
+							description: __( 'Gradient 1', i18n ),
+						} }
 					/>
 
 					<AdvancedRangeControl
@@ -355,7 +365,9 @@ const Controls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="100"
-						className="ugb--help-tip-gradient-location"
+						helpTooltip={ {
+							description: __( 'Gradient 2', i18n ),
+						} }
 					/>
 				</ButtonIconPopoverControl>
 			) }
@@ -381,7 +393,9 @@ const Controls = props => {
 					{ label: __( 'None', i18n ), value: 'none' },
 					{ label: __( 'Scale Down', i18n ), value: 'scale-down' },
 				] }
-				className="ugb--help-tip-background-image-size"
+				helpTooltip={ {
+					description: __( 'Image Fit', i18n ),
+				} }
 				responsive="all"
 			/>
 
