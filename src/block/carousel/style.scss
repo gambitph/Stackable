@@ -18,6 +18,8 @@
 	.stk-block-carousel__content-wrapper {
 		max-width: 100%;
 	}
+	--stk-columns-spacing: 0px !important;
+
 }
 .stk-block-carousel__slider {
 	display: flex;
@@ -39,9 +41,9 @@
 .stk-block-carousel__dot {
 	all: unset !important;
 	cursor: pointer !important;
-	transition: all 0.3s ease-in-out, outline-offset 0s, outline 0s;
+	transition: all 0.3s ease-in-out, outline-offset 0s, outline 0s !important;
 	&::before {
-		transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out !important;
 	}
 }
 
