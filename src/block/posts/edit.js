@@ -557,7 +557,9 @@ addFilter( 'stackable.block-component.image.before', 'stackable/posts', output =
 				value={ imageSize }
 				onChange={ imageSize => setAttributes( { imageSize } ) }
 				default="full"
-				className="ugb--help-tip-image-size"
+				helpTooltip={ {
+					description: __( 'Image Size', i18n ),
+				} }
 			/>
 			<AdvancedToggleControl
 				label={ __( 'Apply hover effect when container is hovered', i18n ) }
