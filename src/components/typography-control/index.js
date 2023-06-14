@@ -41,7 +41,7 @@ const TypographyControl = props => {
 					props.fontWeight ||
 					props.textTransform ||
 					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
-					props.letterSpacing
+					props.letterSpacing || props.tabletLetterSpacing || props.mobileLetterSpacing
 				}
 				resetPopoverTitle={ props.resetPopoverTitle }
 				resetPopoverDescription={ props.resetPopoverDescription }
