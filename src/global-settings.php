@@ -205,6 +205,12 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					'letterSpacing' => array(
 						'type' => 'number',
 					),
+					'tabletLetterSpacing' => array(
+						'type' => 'number',
+					),
+					'mobileLetterSpacing' => array(
+						'type' => 'number',
+					),
 				)
 			);
 
@@ -630,6 +636,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( array_key_exists( 'tabletLineHeight', $styles ) ) {
 				$css['tablet'][] = $this->create_style( 'line-height', $styles['tabletLineHeight'] . $styles['tabletLineHeightUnit'] );
 			}
+			if ( array_key_exists( 'tabletLetterSpacing', $styles ) ) {
+				$css['tablet'][] = $this->create_style( 'letter-spacing', $styles['tabletLetterSpacing'] . 'px' );
+			}
 			$font_size = '';
 			if ( $inherit ) {
 				if ( array_key_exists( 'fontSize', $styles ) ) {
@@ -651,6 +660,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 */
 			if ( array_key_exists( 'mobileLineHeight', $styles ) ) {
 				$css['mobile'][] = $this->create_style( 'line-height', $styles['mobileLineHeight'] . $styles['mobileLineHeightUnit'] );
+			}
+			if ( array_key_exists( 'mobileLetterSpacing', $styles ) ) {
+				$css['mobile'][] = $this->create_style( 'letter-spacing', $styles['mobileLetterSpacing'] . 'px' );
 			}
 
 			$font_size = '';
