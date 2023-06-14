@@ -10,7 +10,11 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { dispatch, select } from '@wordpress/data'
 import { useLocalStorage } from '~stackable/util'
 
-export const ColumnsControl = ( { sliderMax = 6 } ) => {
+export const ColumnsControl = props => {
+	const {
+		label,
+		sliderMax = 6,
+	} = props
 	const { clientId } = useBlockEditContext()
 	const {
 		numInnerBlocks, innerBlocks,
@@ -60,7 +64,7 @@ export const ColumnsControl = ( { sliderMax = 6 } ) => {
 
 	return (
 		<AdvancedRangeControl
-			label={ __( 'Columns', i18n ) }
+			label={ label }
 			min={ 1 }
 			sliderMax={ sliderMax }
 			placeholder="1"
@@ -93,6 +97,10 @@ const ColumnButton = props => {
 			/>
 		</Tooltip>
 	)
+}
+
+ColumnsControl.defaultProps = {
+	label: __( 'Columns', i18n ),
 }
 
 ColumnButton.defaultProps = {

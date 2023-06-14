@@ -195,6 +195,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/lightbox/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/compatibility/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block/carousel/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/countdown/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php' );

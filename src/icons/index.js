@@ -7,6 +7,7 @@ import SVGBlockquoteIcon from './images/blockquote-icon.svg'
 import SVGBlogPostsIcon from './images/blog-posts-icon.svg'
 import SVGButtonGroupIcon from './images/button-group-icon.svg'
 import SVGButtonIcon from './images/button-icon.svg'
+import SVGCarouselIcon from './images/carousel-icon.svg'
 import SVGCardIcon from './images/card-icon.svg'
 import SVGColumnsIcon from './images/columns-icon.svg'
 import SVGColumnIcon from './images/column-icon.svg'
@@ -119,6 +120,10 @@ export function ButtonIcon() {
 
 export function ButtonGroupIcon() {
 	return colorizeIcon( <SVGButtonGroupIcon width="16" height="16" /> )
+}
+
+export function CarouselIcon() {
+	return colorizeIcon( <SVGCarouselIcon width="16" height="16" /> )
 }
 
 export function CardIcon() {

@@ -65,6 +65,29 @@ const FLEX_HORIZONTAL_ALIGN_OPTIONS = [
 	},
 ]
 
+const FLEX_HORIZONTAL_ALIGN_OPTIONS_ALT = [
+	{
+		value: 'flex-start',
+		title: __( 'Start', i18n ),
+		icon: <SVGIconLeft />,
+	},
+	{
+		value: 'center',
+		title: __( 'Center', i18n ),
+		icon: <SVGIconHorizontalCenter />,
+	},
+	{
+		value: 'flex-end',
+		title: __( 'End', i18n ),
+		icon: <SVGIconRight />,
+	},
+	{
+		value: 'space-between',
+		title: __( 'Space Between', i18n ),
+		icon: <SVGIconSpaceBetween />,
+	},
+]
+
 const FLEX_VERTICAL_ALIGN_OPTIONS = [
 	{
 		value: 'flex-start',
@@ -164,6 +187,7 @@ const VERTICAL_ALIGN_OPTIONS = [
 
 export const CONTROLS = {
 	'flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
+	'flex-horizontal-alt': FLEX_HORIZONTAL_ALIGN_OPTIONS_ALT,
 	'flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
 	'flex-justify-vertical': FLEX_VERTICAL_JUSTIFY_OPTIONS,
 	horizontal: HORIZONTAL_ALIGN_OPTIONS,
