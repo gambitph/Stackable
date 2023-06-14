@@ -72,7 +72,9 @@ class _StackableCarousel {
 			this.dotsEl.appendChild( listEl )
 
 			dotEl.addEventListener( 'click', () => {
+				this.pauseAutoplay()
 				this.goToSlide( i + 1 )
+				this.unpauseAutoplay()
 			} )
 
 			this.dotEls.push( dotEl )

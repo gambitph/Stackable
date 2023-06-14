@@ -19,7 +19,9 @@
 		max-width: 100%;
 	}
 	--stk-columns-spacing: 0px !important;
-
+	&.stk--is-slide[data-slides-to-show="1"] {
+		--gap: 0px;
+	}
 }
 .stk-block-carousel__slider {
 	display: flex;

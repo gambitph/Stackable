@@ -73,6 +73,7 @@ export const Save = props => {
 			className={ blockClassName }
 			attributes={ attributes }
 			version={ props.version }
+			data-slides-to-show={ attributes.slidesToShow }
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
