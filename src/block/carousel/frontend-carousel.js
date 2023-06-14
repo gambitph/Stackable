@@ -195,7 +195,7 @@ class _StackableCarousel {
 	}
 
 	setDotActive = slide => {
-		this.dotEls.forEach( ( dotEl, i ) => {
+		this.dotEls?.forEach( ( dotEl, i ) => {
 			if ( slide === i + 1 ) {
 				dotEl.classList.add( 'stk-block-carousel__dot--active' )
 			} else {
