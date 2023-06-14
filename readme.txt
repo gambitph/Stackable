@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.0
 Tested up to: 6.2.2
 Requires PHP: 5.7
-Stable tag: 3.8.1
+Stable tag: 3.8.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -281,6 +281,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.8.2 =
+* Fixed: Dynamic Content sometimes not displaying in the frontend
+* Fixed: Dynamic Content backend field picker issues with ACF
+* Fixed: Lightbox now works with PerfMatter's Image Lazy Loading option
+* Fixed: Lightbox compatibility issues with Twenty Twenty One theme
+* Fixed: Feature Grid Column gap option resets
 
 = 3.8.1 =
 * New: Added orange modified indicators to panels and controls - know which options you've modified in your blocks!
