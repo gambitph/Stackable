@@ -56,6 +56,20 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector={ wrapperSelector || selector }
+				styleRule="width"
+				attrName="width"
+				key="width"
+				attrNameTemplate={ attrNameTemplate }
+				responsive="all"
+				hasUnits="px"
+				valueCallback={ ( value, getAttribute ) => {
+					const blockWidth = getAttribute( 'width' )
+					return blockWidth ? 'inherit' : ''
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ wrapperSelector || selector }
 				styleRule="minWidth"
 				attrName="width"
 				key="width-minwidth"
