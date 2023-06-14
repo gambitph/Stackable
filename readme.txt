@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.0
 Tested up to: 6.2.2
 Requires PHP: 5.7
-Stable tag: 3.8.2
+Stable tag: 3.9.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -281,6 +281,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.9.0 =
+[Introducing: New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Carousel block
+* New: Typography Letter Spacing is now responsive #2674
+* Fixed: The first entry in the Icon list block can get misaligned #2636
 
 = 3.8.2 =
 * Fixed: Dynamic Content sometimes not displaying in the frontend
