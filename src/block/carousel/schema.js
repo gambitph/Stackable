@@ -80,15 +80,11 @@ export const attributes = ( version = VERSION ) => {
 			},
 			arrowIconPrev: {
 				type: 'string',
-				source: 'html',
-				selector: '.stk-block-carousel__button__prev',
-				default: defaultIconPrev,
+				default: '',
 			},
 			arrowIconNext: {
 				type: 'string',
-				source: 'html',
-				selector: '.stk-block-carousel__button__next',
-				default: defaultIconNext,
+				default: '',
 			},
 			arrowPosition: {
 				type: 'string',

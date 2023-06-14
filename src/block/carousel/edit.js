@@ -317,13 +317,13 @@ const Edit = props => {
 						>
 							<IconControl
 								label={ __( 'Previous Slide Icon', i18n ) }
-								value={ attributes.arrowIconPrev }
+								value={ attributes.arrowIconPrev || defaultIconPrev }
 								defaultValue={ defaultIconPrev }
 								onChange={ arrowIconPrev => setAttributes( { arrowIconPrev } ) }
 							/>
 							<IconControl
 								label={ __( 'Next Slide Icon', i18n ) }
-								value={ attributes.arrowIconNext }
+								value={ attributes.arrowIconNext || defaultIconNext }
 								defaultValue={ defaultIconNext }
 								onChange={ arrowIconNext => setAttributes( { arrowIconNext } ) }
 							/>
@@ -667,13 +667,13 @@ const Edit = props => {
 										className="stk-block-carousel__button stk-block-carousel__button__prev"
 										onClick={ prevSlide }
 									>
-										<SvgIcon value={ attributes.arrowIconPrev } />
+										<SvgIcon value={ attributes.arrowIconPrev || defaultIconPrev } />
 									</button>
 									<button
 										className="stk-block-carousel__button stk-block-carousel__button__next"
 										onClick={ nextSlide }
 									>
-										<SvgIcon value={ attributes.arrowIconNext } />
+										<SvgIcon value={ attributes.arrowIconNext || defaultIconNext } />
 									</button>
 								</div>
 							) }
