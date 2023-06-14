@@ -564,7 +564,7 @@ const Edit = props => {
 									__( 'Previous slide', i18n )
 								) }
 								attribute="ariaLabelPrev"
-								placeholder="Previous slide"
+								placeholder={ __( 'Previous slide', i18n ) }
 							/>
 							<AdvancedTextControl
 								label={ sprintf(
@@ -573,7 +573,7 @@ const Edit = props => {
 									__( 'Next slide', i18n )
 								) }
 								attribute="ariaLabelNext"
-								placeholder="Next slide"
+								placeholder={ __( 'Next slide', i18n ) }
 							/>
 							<AdvancedTextControl
 								label={ sprintf(
@@ -582,7 +582,7 @@ const Edit = props => {
 									__( 'Slide', i18n )
 								) }
 								attribute="ariaLabelSlide"
-								placeholder="Slide %%d"
+								placeholder={ __( 'Slide %%d', i18n ) }
 								help={ __( 'Use %%d to show the slide number.', i18n ) }
 							/>
 							<AdvancedTextControl
@@ -593,7 +593,7 @@ const Edit = props => {
 									__( 'Slide N of N', i18n )
 								) }
 								attribute="ariaLabelSlideOf"
-								placeholder="Slide %%d of %%d"
+								placeholder={ __( 'Slide %%d of %%d', i18n ) }
 								help={ __( 'Use two %%d to show the slide number and the total slides. e.g. Slide 1 of 3.', i18n ) }
 							/>
 						</PanelAdvancedSettings>
