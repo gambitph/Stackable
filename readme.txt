@@ -50,6 +50,7 @@ Essential Blocks
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 Special Blocks
+- Carousel Block - [View Block](https://wpstackable.com/carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -176,6 +177,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.9 New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.8 New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.7 New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.6 New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
