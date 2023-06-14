@@ -188,13 +188,19 @@
 	justify-content: center !important;
 	align-items: center !important;
 	will-change: margin, margin-inline, width;
+	&,
+	&:hover {
+		background: transparent !important;
+	}
 	&::before {
 		position: absolute;
-		content: "";
+		content: "" !important;
 		width: var(--dot-size, 8px);
 		height: var(--dot-size, 8px);
 		border-radius: var(--dot-size, 8px);
 		background: var(--dot-color, #aaa);
+		opacity: 1 !important;
+		inset: auto !important;
 	}
 	&:hover::before {
 		background: var(--dot-color-hover, #1b1b1b);
