@@ -113,6 +113,7 @@ const Controls = props => {
 					label={ __( 'Select Image', i18n ) }
 					allowedTypes={ [ 'image' ] }
 					attribute="image"
+					hasPanelModifiedIndicator={ false }
 					onRemove={ () => setAttributes( {
 						imageId: '',
 						imageUrl: '',

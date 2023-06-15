@@ -46,11 +46,21 @@ export const Controls = props => {
 	const columnWidths = []
 	const columnWidthsTablet = []
 	const columnWidthsMobile = []
+	let hasTabletColumnWidths = false
+	let hasMobileColumnWidths = false
+
 	innerBlocks.forEach( ( { clientId } ) => {
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
 		columnWidths.push( attributes.columnWidth )
 		columnWidthsTablet.push( attributes.columnWidthTablet )
 		columnWidthsMobile.push( attributes.columnWidthMobile )
+
+		if ( attributes.columnWidthTablet ) {
+			hasTabletColumnWidths = true
+		}
+		if ( attributes.columnWidthMobile ) {
+			hasMobileColumnWidths = true
+		}
 	} )
 
 	const defaultArrangement = range( numInnerBlocks ).map( i => ( i + 1 ).toString() ).join( ',' )
@@ -65,6 +75,8 @@ export const Controls = props => {
 				<ColumnsWidthControl
 					columns={ numInnerBlocks }
 					values={ columnWidths }
+					hasTabletValue={ hasTabletColumnWidths }
+					hasMobileValue={ hasMobileColumnWidths }
 					responsive="all"
 					onChange={ columnWidths => {
 						const clientIds = []
@@ -88,6 +100,8 @@ export const Controls = props => {
 					columns={ numInnerBlocks }
 					values={ deviceType === 'Tablet' ? columnWidthsTablet : columnWidthsMobile }
 					responsive="all"
+					hasTabletValue={ hasTabletColumnWidths }
+					hasMobileValue={ hasMobileColumnWidths }
 					placeholders={ deviceType === 'Tablet' ? columnWidths : Array( numInnerBlocks ).fill( '100' ) }
 					allowReset={ true }
 					onChange={ columnWidths => {
@@ -112,6 +126,7 @@ export const Controls = props => {
 			{ numInnerBlocks > 1 && (
 				<SortControl
 					responsive="all"
+					attribute="columnArrangement"
 					axis={ deviceType !== 'Mobile' ? 'x' : 'y' }
 					values={ sortValues }
 					num={ numInnerBlocks }

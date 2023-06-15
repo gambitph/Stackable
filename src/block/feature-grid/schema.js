@@ -12,6 +12,7 @@ import {
 	Separator,
 	Transform,
 	ContentAlign,
+	Columns,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -20,6 +21,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	Columns.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
 	Row.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )

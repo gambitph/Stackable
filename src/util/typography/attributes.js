@@ -24,6 +24,8 @@ const createTypographyAttributes = attrNameTemplate => {
 			},
 			[
 				'LetterSpacing',
+				'TabletLetterSpacing',
+				'MobileLetterSpacing',
 				'FontSize',
 				'TabletFontSize',
 				'MobileFontSize',

@@ -71,6 +71,8 @@ const TypographyPicker = props => {
 			tabletLineHeightUnit={ value.tabletLineHeightUnit }
 			mobileLineHeightUnit={ value.mobileLineHeightUnit }
 			letterSpacing={ value.letterSpacing }
+			tabletLetterSpacing={ value.tabletLetterSpacing }
+			mobileLetterSpacing={ value.mobileLetterSpacing }
 			onChangeFontFamily={ value => onChange( 'fontFamily', value ) }
 			onChangeFontSize={ value => onChange( 'fontSize', value ) }
 			onChangeTabletFontSize={ value => onChange( 'tabletFontSize', value ) }
@@ -87,6 +89,8 @@ const TypographyPicker = props => {
 			onChangeTabletLineHeightUnit={ value => onChange( 'tabletLineHeightUnit', value ) }
 			onChangeMobileLineHeightUnit={ value => onChange( 'mobileLineHeightUnit', value ) }
 			onChangeLetterSpacing={ value => onChange( 'letterSpacing', value ) }
+			onChangeTabletLetterSpacing={ value => onChange( 'tabletLetterSpacing', value ) }
+			onChangeMobileLetterSpacing={ value => onChange( 'mobileLetterSpacing', value ) }
 			onReset={ () => props.onReset( props.selector ) }
 			resetPopoverTitle={ sprintf( __( 'Reset %s Global Typography Style', i18n ), props.selector === 'p' ? __( 'Body Text', i18n ) : props.selector.toUpperCase() ) }
 			resetPopoverDescription={ __( 'Resetting this typography style will revert all typography to its original style. Proceed?', i18n ) }
@@ -182,14 +186,6 @@ const TypographyPreview = props => {
 
 	return (
 		<div className="ugb-global-typography-preview">
-			{ props.help && (
-				<Tooltip
-					position="bottom"
-					text={ props.help }
-				>
-					<Dashicon icon="editor-help" />
-				</Tooltip>
-			) }
 			<div className="editor-styles-wrapper">
 				<div className="block-editor-block-list__layout">
 					<div className="wp-block block-editor-block-list__block">
@@ -197,6 +193,14 @@ const TypographyPreview = props => {
 						<Tag className={ tagClassName } data-selector={ props.selector } data-device={ device }>{ props.children }</Tag>
 					</div>
 				</div>
+				{ props.help && (
+					<Tooltip
+						position="bottom"
+						text={ props.help }
+					>
+						<Dashicon icon="editor-help" />
+					</Tooltip>
+				) }
 			</div>
 			{ description && <p className="ugb-global-typography-preview__description">{ description }</p> }
 		</div>

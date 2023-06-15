@@ -27,11 +27,12 @@ const popoverProps = {
 const IconControl = props => {
 	return (
 		<BaseControl
-			className="ugb-icon-control"
+			className="ugb-icon-control stk-control"
 			{ ...omit( props, [ 'onChange', 'value' ] ) }
 			allowReset={ true }
 			value={ props.value }
 			onChange={ props.onChange }
+			hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
 		>
 			<div className="ugb-icon-control__wrapper">
 				<div className="ugb-icon-control__button-wrapper">
@@ -68,6 +69,7 @@ IconControl.defaultProps = {
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	onChange: () => {},
 	defaultValue: '',
+	hasPanelModifiedIndicator: true,
 }
 
 export default IconControl

@@ -74,6 +74,12 @@ const ControlIconToggle = props => {
 						const tooltip = ! isOpen
 							? props.buttonLabel || label
 							: ( props.hasLabels ? label : '' )
+
+						const className = classnames( {
+							'is-active': value === option.value,
+							'has-value': option.hasValue,
+						} )
+
 						return (
 							<div
 								key={ i }
@@ -85,7 +91,7 @@ const ControlIconToggle = props => {
 								} }
 							>
 								<Button
-									className={ value === option.value ? 'is-active' : '' }
+									className={ className }
 									data-index={ i }
 									data-value={ option.value }
 									disabled={ option.disabled }

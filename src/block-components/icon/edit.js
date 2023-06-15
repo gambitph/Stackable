@@ -84,6 +84,7 @@ export const Edit = props => {
 				defaultValue={ defaultValue }
 				onChange={ icon => setAttributes( { icon } ) }
 				help={ iconControlHelp }
+				hasPanelModifiedIndicator={ false }
 			/>
 
 			{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton type="icon-colors" /> }

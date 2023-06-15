@@ -11,10 +11,13 @@ import {
 	useEffect, useState, useMemo, useRef, useCallback,
 } from '@wordpress/element'
 import deepmerge from 'deepmerge'
+import { useOnScreenOnce } from '~stackable/hooks'
 
 const CodeTextarea = props => {
 	const [ value, setValue ] = useState( props.value )
 	const [ codeMirror, setCodeMirror ] = useState( null )
+	const textAeraRef = useRef()
+	const isOnScreen = useOnScreenOnce( textAeraRef )
 
 	const uniqueId = useMemo( () => _uniqueId( 'ugb-code-textarea-' ), [] )
 
@@ -28,9 +31,9 @@ const CodeTextarea = props => {
 		debouncedOnChange.current( value )
 	}, [] )
 
-	// Initialize CodeMirror
+	// Initialize CodeMirror - we need to initialize it if it's on screen or else it will look broken.
 	useEffect( () => {
-		if ( initialize ) {
+		if ( initialize && isOnScreen ) {
 			const codeMirror = initialize( uniqueId, deepmerge( defaultSettings, props.editorSettings ) )
 			setCodeMirror( codeMirror )
 			codeMirror.codemirror.on( 'change', onChangeHandler )
@@ -40,9 +43,10 @@ const CodeTextarea = props => {
 			debouncedOnChange?.current?.cancel()
 			codeMirror?.codemirror.off( 'change', onChangeHandler )
 		}
-	}, [] )
+	}, [ isOnScreen ] )
 
 	return <textarea
+		ref={ textAeraRef }
 		className="ugb-code-textarea"
 		id={ uniqueId }
 		value={ value }

@@ -22,6 +22,31 @@ import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 
+const ALIGN_OPTIONS = [
+	{
+		align: 'left',
+		title: __( 'Align Left', i18n ),
+		icon: 'editor-alignleft',
+	},
+	{
+		align: 'center',
+		title: __( 'Align Center', i18n ),
+		icon: 'editor-aligncenter',
+	},
+	{
+		align: 'right',
+		title: __( 'Align Right', i18n ),
+		icon: 'editor-alignright',
+	},
+	{
+		align: 'justify',
+		title: __( 'Justified', i18n ),
+		icon: 'editor-justify',
+	},
+]
+
+const ALIGN_OPTIONS_NO_JUSTIFY = ALIGN_OPTIONS.filter( option => option.align !== 'justify' )
+
 export const Edit = props => {
 	const {
 		contentAlign,
@@ -106,7 +131,9 @@ export const Edit = props => {
 				<AlignmentToolbar
 					value={ contentAlign }
 					onChange={ contentAlign => setAttributes( { contentAlign } ) }
+					alignmentControls={ props.hasContentJustify ? ALIGN_OPTIONS : ALIGN_OPTIONS_NO_JUSTIFY }
 				/>
+
 			</BlockControls>
 			<InspectorLayoutControls>
 				{ props.containerSizePriority < 5 && containerSize }
@@ -114,6 +141,7 @@ export const Edit = props => {
 					label={ labelContentAlign }
 					attribute="contentAlign"
 					responsive="all"
+					justified={ props.hasContentJustify }
 				/>
 				{ props.hasColumnJustify &&
 					<AdvancedToolbarControl
@@ -282,6 +310,7 @@ Edit.defaultProps = {
 	hasRowAlignment: false,
 	hasColumnAlignment: false,
 	hasBlockAlignment: false,
+	hasContentJustify: false,
 	hasContainerSize: false,
 	hasContainerHeight: true,
 	containerSizePriority: 5,

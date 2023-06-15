@@ -121,6 +121,7 @@ export const Controls = props => {
 			{ hasTextContent && (
 				<AdvancedTextControl
 					label={ __( 'Content', i18n ) }
+					hasPanelModifiedIndicator={ false }
 					isMultiline={ isMultiline }
 					value={ unescape( debouncedText ) }
 					onChange={ onChangeContent }
@@ -156,6 +157,8 @@ export const Controls = props => {
 						[ getAttributeName( 'fontWeight', 'desktop', blockState ) ]: '',
 						[ getAttributeName( 'textTransform', 'desktop', blockState ) ]: '',
 						[ getAttributeName( 'letterSpacing', 'desktop', blockState ) ]: '',
+						[ getAttributeName( 'letterSpacing', 'tablet', blockState ) ]: '',
+						[ getAttributeName( 'letterSpacing', 'mobile', blockState ) ]: '',
 						[ getAttributeName( 'lineHeight', 'desktop', blockState ) ]: '',
 						[ getAttributeName( 'lineHeight', 'tablet', blockState ) ]: '',
 						[ getAttributeName( 'lineHeight', 'mobile', blockState ) ]: '',
@@ -166,6 +169,8 @@ export const Controls = props => {
 						getAttribute( 'fontWeight', 'desktop', blockState ) ||
 						getAttribute( 'textTransform', 'desktop', blockState ) ||
 						getAttribute( 'letterSpacing', 'desktop', blockState ) ||
+						getAttribute( 'letterSpacing', 'tablet', blockState ) ||
+						getAttribute( 'letterSpacing', 'mobile', blockState ) ||
 						getAttribute( 'lineHeight', 'desktop', blockState ) ||
 						getAttribute( 'lineHeight', 'tablet', blockState ) ||
 						getAttribute( 'lineHeight', 'mobile', blockState ) )
@@ -235,6 +240,7 @@ export const Controls = props => {
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="0"
+					responsive="all"
 				/>
 			</ButtonIconPopoverControl>
 

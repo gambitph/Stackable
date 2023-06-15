@@ -226,28 +226,15 @@ export const Size = props => {
 					/>
 				) }
 				<FourRangeControl
-					label={ __( 'Vertical Padding', i18n ) }
+					label={ __( 'Button Padding', i18n ) }
 					units={ [ 'px', '%' ] }
 					responsive="all"
 					defaultLocked={ true }
 					attribute="buttonPadding"
 					sliderMin={ [ 0, 0 ] }
 					sliderMax={ [ 40, 100 ] }
-					enableLeft={ false }
-					enableRight={ false }
+					vhMode={ true }
 				/>
-				<FourRangeControl
-					label={ __( 'Horizontal Padding', i18n ) }
-					units={ [ 'px', '%' ] }
-					responsive="all"
-					defaultLocked={ true }
-					attribute="buttonPadding"
-					sliderMin={ [ 0, 0 ] }
-					sliderMax={ [ 40, 100 ] }
-					enableTop={ false }
-					enableBottom={ false }
-				/>
-
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)
