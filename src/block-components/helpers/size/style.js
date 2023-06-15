@@ -62,9 +62,9 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
 				hasUnits="px"
-				valueCallback={ ( value, getAttribute ) => {
-					const blockWidth = getAttribute( 'width' )
-					return blockWidth ? 'inherit' : ''
+				valueCallback={ ( value, getAttribute, device ) => {
+					const blockWidth = getAttribute( 'width', device )
+					return blockWidth ? 'inherit' : undefined
 				} }
 			/>
 			<BlockCss
