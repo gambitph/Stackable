@@ -34,7 +34,7 @@ export const attributes = ( version = VERSION ) => {
 			customAttributes: [ [ 'aria-expanded', 'false' ] ],
 		},
 		versionAdded: '3.0.0',
-		versionDeprecated: '3.9.0',
+		versionDeprecated: '3.9.1',
 	} )
 
 	return attrObject.getMerged( version )
