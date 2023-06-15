@@ -54,9 +54,9 @@ const ResponsiveToggle = props => {
 	const changeScreen = screen => {
 		// In some editors, there is no edit-post / preview device type. If that
 		// happens, we just set our own internal device type.
-		if ( dispatch( 'core/edit-site' ) ) {
+		if ( dispatch( 'core/edit-site' ) && dispatch( 'core/edit-site' ).__experimentalSetPreviewDeviceType ) {
 			dispatch( 'core/edit-site' ).__experimentalSetPreviewDeviceType( DEVICE_TYPES[ screen ] )
-		} else if ( dispatch( 'core/edit-post' ) ) {
+		} else if ( dispatch( 'core/edit-post' ) && dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType ) {
 			dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType( DEVICE_TYPES[ screen ] )
 		} else {
 			dispatch( 'stackable/device-type' ).setDeviceType( DEVICE_TYPES[ screen ] )

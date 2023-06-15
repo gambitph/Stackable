@@ -138,6 +138,18 @@ gulp.task( 'generate-translations-js', gulp.series(
 					strings.push( keyword )
 				}
 			} )
+
+			// Gather all variants translatable strings.
+			if ( blockData[ 'stk-variants' ] ) {
+				blockData[ 'stk-variants' ].forEach( variant => {
+					if ( variant.title && ! strings.includes( variant.title ) ) {
+						strings.push( variant.title )
+					}
+					if ( variant.description && ! strings.includes( variant.description ) ) {
+						strings.push( variant.description )
+					}
+				} )
+			}
 		} )
 
 		// Append all the strings to the translation-strings.js file.

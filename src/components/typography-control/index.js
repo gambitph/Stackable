@@ -15,9 +15,7 @@ import { getDefaultFontSize } from '~stackable/util'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import {
-	Fragment, useMemo,
-} from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { i18n } from 'stackable'
 
 const TypographyControl = props => {
@@ -43,7 +41,7 @@ const TypographyControl = props => {
 					props.fontWeight ||
 					props.textTransform ||
 					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
-					props.letterSpacing
+					props.letterSpacing || props.tabletLetterSpacing || props.mobileLetterSpacing
 				}
 				resetPopoverTitle={ props.resetPopoverTitle }
 				resetPopoverDescription={ props.resetPopoverDescription }
@@ -192,17 +190,48 @@ const TypographyControl = props => {
 					</Fragment>
 				) }
 				{ props.onChangeLetterSpacing && (
-					<AdvancedRangeControl
-						label={ __( 'Letter Spacing', i18n ) }
-						min={ -5 }
-						max={ 10 }
-						step={ 0.1 }
-						allowReset={ true }
-						onChange={ props.onChangeLetterSpacing }
-						value={ props.letterSpacing }
-						placeholder="0"
-						className="ugb--help-tip-typography-letter-spacing"
-					/>
+					<Fragment>
+						<WhenResponsiveScreen>
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								onChange={ props.onChangeLetterSpacing }
+								value={ props.letterSpacing }
+								placeholder="0"
+								className="ugb--help-tip-typography-letter-spacing"
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								value={ props.tabletLetterSpacing }
+								onChange={ props.onChangeTabletLetterSpacing }
+								placeholder="0"
+								className="ugb--help-tip-typography-letter-spacing"
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								value={ props.mobileLetterSpacing }
+								onChange={ props.onChangeMobileLetterSpacing }
+								placeholder="0"
+								className="ugb--help-tip-typography-letter-spacing"
+							/>
+						</WhenResponsiveScreen>
+					</Fragment>
+
 				) }
 			</ButtonIconPopoverControl>
 			{ /* A second font size option. */ }
@@ -273,6 +302,8 @@ TypographyControl.defaultProps = {
 	tabletLineHeightUnit: 'em',
 	mobileLineHeightUnit: 'em',
 	letterSpacing: '',
+	tabletLetterSpacing: '',
+	mobileLetterSpacing: '',
 	fontSizeProps: {},
 	resetPopoverTitle: '',
 	resetPopoverDescription: '',
@@ -298,6 +329,8 @@ TypographyControl.defaultProps = {
 	onChangeTabletLineHeightUnit: () => {},
 	onChangeMobileLineHeightUnit: () => {},
 	onChangeLetterSpacing: () => {},
+	onChangeTabletLetterSpacing: () => {},
+	onChangeMobileLetterSpacing: () => {},
 }
 
 export default TypographyControl

@@ -27,7 +27,7 @@ const popoverProps = {
 const IconControl = props => {
 	return (
 		<BaseControl
-			className="ugb-icon-control"
+			className="ugb-icon-control stk-control"
 			{ ...omit( props, [ 'onChange', 'value' ] ) }
 			allowReset={ true }
 			value={ props.value }

@@ -155,6 +155,7 @@ module.exports = [
 		'frontend_blocks': path.resolve( __dirname, '../src/block-frontend.js' ),
 		'frontend_block_accordion': path.resolve( __dirname, '../src/block/accordion/frontend-accordion.js' ),
 		'frontend_block_accordion_polyfill': path.resolve( __dirname, '../src/block/accordion/frontend-accordion-polyfill.js' ),
+		'frontend_block_carousel': path.resolve( __dirname, '../src/block/carousel/frontend-carousel.js' ),
 		'frontend_block_count_up': path.resolve( __dirname, '../src/block/count-up/frontend-count-up.js' ),
 		'frontend_block_countdown': path.resolve( __dirname, '../src/block/countdown/frontend-countdown.js' ),
 		'frontend_block_expand': path.resolve( __dirname, '../src/block/expand/frontend-expand.js' ),

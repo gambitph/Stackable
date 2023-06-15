@@ -46,6 +46,7 @@ export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'deskt
 	} else if ( screen === 'tablet' ) { // Tablet.
 		styles = {
 			lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit' ) || 'em' }` : undefined,
+			letterSpacing: getValue( 'TabletLetterSpacing' ) !== '' ? `${ getValue( 'TabletLetterSpacing' ) }px` : undefined,
 		}
 
 		if ( inherit ) {
@@ -60,6 +61,7 @@ export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'deskt
 	} else { // Mobile.
 		styles = {
 			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
+			letterSpacing: getValue( 'MobileLetterSpacing' ) !== '' ? `${ getValue( 'MobileLetterSpacing' ) }px` : undefined,
 		}
 
 		if ( inherit ) {

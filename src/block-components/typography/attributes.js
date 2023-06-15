@@ -28,6 +28,7 @@ const typographyAttributes = {
 		default: '',
 	},
 	letterSpacing: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},

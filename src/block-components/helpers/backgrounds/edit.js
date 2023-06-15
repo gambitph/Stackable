@@ -13,7 +13,12 @@ import {
 	AdvancedRangeControl,
 	ImageControl2,
 } from '~stackable/components'
-import { useAttributeEditHandlers, useDeviceType } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers,
+	useDeviceType,
+	useBlockSetAttributesContext,
+	useBlockHoverState,
+} from '~stackable/hooks'
 import { getAttributeName, urlIsVideo } from '~stackable/util'
 
 /**
@@ -49,6 +54,9 @@ export const BackgroundControls = props => {
 		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const setAttributes = useBlockSetAttributesContext()
+	const [ currentHoverState ] = useBlockHoverState()
+
 	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) || getAttribute( 'backgroundMediaUrlTablet' ) || getAttribute( 'backgroundMediaUrlMobile' )
 	const isBackgroundVideo = () => {
 		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
@@ -74,6 +82,17 @@ export const BackgroundControls = props => {
 						: __( 'Background Color', i18n )
 				}
 				attribute={ getAttrName( 'backgroundColor' ) }
+				onChange={ value => {
+					const attributes = {
+						[ getAttrName( 'backgroundColor', 'desktop', currentHoverState ) ]: value,
+					}
+
+					if ( props.onBackgroundEnableAttribute ) {
+						attributes[ props.onBackgroundEnableAttribute ] = true
+					}
+
+					setAttributes( attributes )
+				} }
 				hasTransparent={ true }
 				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
 			/>
@@ -178,6 +197,28 @@ export const BackgroundControls = props => {
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 					allowedTypes={ props.backgroundMediaAllowVideo ? IMAGE_AND_VIDEO_TYPES : IMAGE_TYPES }
 					attribute={ getAttrName( 'backgroundMedia' ) }
+					onChange={ image => {
+						const attrNameId = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Id`, deviceType )
+						const attrNameUrl = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Url`, deviceType )
+						const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
+						const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
+						const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
+
+						const attributes = {
+							[ attrNameId ]: image.id,
+							[ attrNameUrl ]: image.url,
+							[ attrWidthAttribute ]: image.width || '',
+							[ attrHeightAttribute ]: image.height || '',
+							[ attrAlt ]: image.alt || '',
+						}
+
+						if ( props.onBackgroundEnableAttribute ) {
+							attributes[ props.onBackgroundEnableAttribute ] = true
+						}
+
+						setAttributes( attributes )
+					}
+					}
 					responsive="all"
 				/>
 			}
@@ -319,4 +360,5 @@ BackgroundControls.defaultProps = {
 	hasGradient: true,
 	hasBackgroundImage: true,
 	hasBackgroundGradientBlendMode: true,
+	onBackgroundEnableAttribute: '',
 }
