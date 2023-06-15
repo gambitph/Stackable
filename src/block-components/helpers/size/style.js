@@ -61,7 +61,6 @@ const Styles = props => {
 				key="width"
 				attrNameTemplate={ attrNameTemplate }
 				responsive="all"
-				hasUnits="px"
 				valueCallback={ ( value, getAttribute, device ) => {
 					const blockWidth = getAttribute( 'width', device )
 					return blockWidth ? 'inherit' : undefined
