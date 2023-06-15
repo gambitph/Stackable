@@ -30,9 +30,11 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 
 	attrObject.addDefaultValues( {
-		attributes: {},
+		attributes: {
+			customAttributes: [ [ 'aria-expanded', 'false' ] ],
+		},
 		versionAdded: '3.0.0',
-		versionDeprecated: '',
+		versionDeprecated: '3.9.0',
 	} )
 
 	return attrObject.getMerged( version )

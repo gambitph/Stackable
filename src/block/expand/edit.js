@@ -47,7 +47,7 @@ const TEMPLATE = [
 		text: __( 'Show more', i18n ),
 		linkUrl: '#',
 		className: 'is-style-link stk-block-expand__show-button',
-		customAttributes: [ [ 'aria-hidden', 'false' ], [ 'role', 'button' ] ],
+		customAttributes: [ [ 'aria-hidden', 'false' ], [ 'role', 'button' ], [ 'aria-expanded', 'true' ] ],
 	} ],
 	[ 'stackable/text', {
 		text: __( 'Some long text that will be expanded when the show more button is clicked by the visitor.', i18n ),
@@ -58,7 +58,7 @@ const TEMPLATE = [
 		text: __( 'Show less', i18n ),
 		linkUrl: '#',
 		className: 'is-style-link stk-block-expand__hide-button',
-		customAttributes: [ [ 'aria-hidden', 'true' ], [ 'role', 'button' ] ],
+		customAttributes: [ [ 'aria-hidden', 'true' ], [ 'role', 'button' ], [ 'aria-expanded', 'false' ] ],
 	} ],
 ]
 
