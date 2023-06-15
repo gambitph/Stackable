@@ -10298,7 +10298,20 @@
         function get_usage_tracking_terms_url() {
             return $this->apply_filters(
                 'usage_tracking_terms_url',
-                "https://freemius.com/wordpress/usage-tracking/{$this->_plugin->id}/{$this->_slug}/"
+                "https://freemius.com/product/opt-in/{$this->_plugin->id}/{$this->_slug}/"
+            );
+        }
+
+        /**
+         * @todo (For LiteSDK) We can refactor this and other related functions giving links to several landing pages on freemius.com to come from a separate class like `FS_Terms_Pages`. This would get a `FS_WP_Hook` (hypothetical) instance as a dependency and use it to hook into the `license_activation_terms_url` or related filters. The entry level instance from `ms_fs()` would hold a public read-only variable `my_fs()->terms_pages` which would be an instance of `FS_Terms_Pages` and would hold all the links to the terms pages.
+         * @since 2.5.8
+         *
+         * @return string
+         */
+        function get_license_activation_terms_url() {
+            return $this->apply_filters(
+                'license_activation_terms_url',
+                "https://freemius.com/product/license-activation/{$this->_plugin->id}/{$this->_slug}/"
             );
         }
 
@@ -25872,7 +25885,7 @@
                 '%s %s %s',
                 $thank_you,
                 $already_opted_in,
-                sprintf( $this->get_text_inline( 'Due to the new %sEU General Data Protection Regulation (GDPR)%s compliance requirements it is required that you provide your explicit consent, again, confirming that you are onboard :-)', 'due-to-gdpr-compliance-requirements' ), '<a href="https://eugdpr.org/" target="_blank" rel="noopener noreferrer">', '</a>' ) .
+                sprintf( $this->get_text_inline( 'Due to the new %sEU General Data Protection Regulation (GDPR)%s compliance requirements it is required that you provide your explicit consent, again, confirming that you are onboard :-)', 'due-to-gdpr-compliance-requirements' ), '<a href="https://ec.europa.eu/info/law/law-topic/data-protection_en/" target="_blank" rel="noopener noreferrer">', '</a>' ) .
                 '<br><br>' .
                 '<b>' . $this->get_text_inline( "Please let us know if you'd like us to contact you for security & feature updates, educational content, and occasional offers:", 'contact-for-updates' ) . '</b>' .
                 $actions .

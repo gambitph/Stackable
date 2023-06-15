@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.0
-Tested up to: 6.2
+Tested up to: 6.2.2
 Requires PHP: 5.7
-Stable tag: 3.8.0
+Stable tag: 3.9.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -50,6 +50,7 @@ Essential Blocks
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 Special Blocks
+- Carousel Block - [View Block](https://wpstackable.com/carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -176,6 +177,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.9 New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.8 New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.7 New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.6 New Progress Circle and Progress Bar Blocks](https://wpstackable.com/blog/introducing-new-progress-circle-and-progress-bar-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -282,6 +284,33 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.9.0 =
+[Introducing: New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Carousel block
+* New: Typography Letter Spacing is now responsive #2674
+* Fixed: The first entry in the Icon list block can get misaligned #2636
+
+= 3.8.2 =
+* Fixed: Dynamic Content sometimes not displaying in the frontend
+* Fixed: Dynamic Content backend field picker issues with ACF
+* Fixed: Lightbox now works with PerfMatter's Image Lazy Loading option
+* Fixed: Lightbox compatibility issues with Twenty Twenty One theme
+* Fixed: Feature Grid Column gap option resets
+
+= 3.8.1 =
+* New: Added orange modified indicators to panels and controls - know which options you've modified in your blocks!
+* New: Added justify text option for the Advanced Text block #2528
+* Fixed: Better backspace handling when typing in the number of columns #2675
+* Fixed: Scrolling the Horizontal Scroller block now doesn't open links #2657
+* Fixed: When adding background color or a background image, it now auto-enables the block's background option #2673
+* Fixed: Better Dynamic Content support for template/layout CPTs
+* Fixed: Lightbox now works with NitroPack's Image Lazy Loading option
+* Fixed: Reset button in Global Typography now resets correctly #2667
+* Fixed: Subtitle help icon alignment issue in Global Typography #1903
+* Fixed: Handled case when the responsive toggle button doesn't work when site editor files are loaded in the post editor
+* Fixed: Minor translation issues #2596
+
 = 3.8.0 =
 [Introducing: New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
@@ -292,22 +321,19 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Typing 'auto' in block margins now works visually in the block editor
 * Change: Renamed to "Adv. Copy and Paste" styles to make it different from the native copy and paste option
 * Change: Removed "Fit all columns to content" option in Columns, this has been replaced with flexbox controls
-* Fixed: Some blocks encounter a block error when inside a Query Loop block
-* Fixed: Some textarea Dynamic Content fields do not show line breaks correctly
+* Fixed: Some blocks encounter a block error when inside a Query Loop block #2577
+* Fixed: Some textarea Dynamic Content fields do not show line breaks correctly #2602
 * Fixed: Better inspector panel scrolling when opening and closing panels
 * Fixed: Inner Column blocks with paddings made the column widths uneven
-* Fixed: Missing meta option in the Posts Block content order option
+* Fixed: Missing meta option in the Posts Block content order option #2646
 * Fixed: Video backgrounds now show up as one network request
-* Fixed: Block titles and descriptions are now translated correctly in the Getting Started page
-* Fixed: Navigation panel cannot be resized properly
+* Fixed: Block titles and descriptions are now translated correctly in the Getting Started page #2597
+* Fixed: Navigation panel cannot be resized properly #2640
 * Fixed: Navigation panel closes when selecting another block
 * Fixed: Dragging the margin bottom of blocks quickly will stop the current drag
-* Fixed: The Block Linking learn more link redirects to the wrong page
-* Fixed: Some blocks with icons encounter an error when used in a Query Loop block
-* Fixed: Block titles and descriptions in the Getting Started area are now translated properly
-* Fixed: Post meta is missing in the Image Card layout in the Posts block
+* Fixed: The Block Linking learn more link redirects to the wrong page #2564
 * Fixed: In the free version, premium notices have lower priority
-* Fixed: Dynamic Content can now be used in the Progress Bar and Progress Circle percentage value
+* Fixed: Dynamic Content can now be used in the Progress Bar and Progress Circle percentage value #2647
 
 = 3.7.2 =
 * New: WordPress 6.2 compatibility

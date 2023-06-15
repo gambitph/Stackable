@@ -205,6 +205,7 @@ const Styles = props => {
 				attrName="letterSpacing"
 				key="letterSpacing"
 				format="%spx"
+				responsive="all"
 				dependencies={ dependencies }
 			/>
 		</>

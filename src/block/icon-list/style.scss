@@ -38,6 +38,7 @@
 
 // Prevents theme's css from affecting the icon list.
 .stk-block-icon-list :is(ul, ol) {
+	margin-top: 0;
 	margin-bottom: 0;
 
 	li:last-child {
