@@ -44,7 +44,6 @@ export const Edit = props => {
 		responsive = 'all',
 		hover = 'all',
 		defaultValue,
-		blockName = '',
 	} = props
 
 	const PremiumColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.color-controls', null ), [] )
@@ -152,10 +151,17 @@ export const Edit = props => {
 					label={ __( 'Icon Position', i18n ) }
 					attribute="iconPosition"
 					options={
-						applyFilters( 'stackable.icon-position-options', [
-							{ value: '', label: __( 'Left', i18n ) },
-							{ value: 'right', label: __( 'Right', i18n ) },
-						], blockName )
+						props.iconPositionMode === 'horizontal'
+							? [
+								{ value: '', label: __( 'Left', i18n ) },
+								{ value: 'right', label: __( 'Right', i18n ) },
+							]
+							: [
+								{ value: '', label: __( 'Left', i18n ) },
+								{ value: 'right', label: __( 'Right', i18n ) },
+								{ value: 'top', label: __( 'Top', i18n ) },
+								{ value: 'bottom', label: __( 'Bottom', i18n ) },
+							]
 					}
 				/>
 			) }
@@ -276,6 +282,7 @@ Edit.defaultProps = {
 	initialOpen: false,
 	hasIconGap: false,
 	hasIconPosition: false,
+	iconPositionMode: 'horizontal', // or 'all'
 	hasMultiColor: false,
 	defaultValue: '',
 }

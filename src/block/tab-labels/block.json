@@ -2,14 +2,13 @@
 	"apiVersion": 2,
 	"name": "stackable/tab-labels",
 	"title": "Tab Labels",
-	"description": "Container for Tabs Block labels",
+	"description": "Create interactive navigation within tabs.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId", "stackable/initialTabOpen" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/initialTabOpen", "stackable/tabOrientation" ],
+	"keywords": [],
 	"parent": [
 		"stackable/tabs"
 	],
-	"keywords": [],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special",
-	"stk-demo": "https://wpstackable.com/table-of-contents-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+	"stk-type": "hidden"
 }

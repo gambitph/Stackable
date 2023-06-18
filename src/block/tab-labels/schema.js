@@ -1,78 +1,50 @@
+/**
+ * External dependencies
+ */
+import { AttributeObject } from '~stackable/util'
+import { version as VERSION } from 'stackable'
 import {
-	Advanced,
-	Alignment,
 	BlockDiv,
 	Style,
-	ConditionalDisplay,
-	CustomAttributes,
 	CustomCSS,
-	EffectsAnimations,
-	MarginBottom,
 	Responsive,
-	Row,
-	Separator,
-	Transform,
-	Icon,
-	addBackgroundAttributes,
-	addSizeAttributes,
-	addBorderAttributes,
+	Advanced,
 	Typography,
+	Alignment,
+	MarginBottom,
+	CustomAttributes,
+	EffectsAnimations,
+	ConditionalDisplay,
+	Transform,
 } from '~stackable/block-components'
-import { AttributeObject } from '~stackable/util'
-import { i18n, version as VERSION } from 'stackable'
-import { __ } from '@wordpress/i18n'
-
-const tabLabelsAttributes = {
-	tabCount: { // TOOD: Delete this, use tabs attribute instead.
-		type: 'number',
-		default: 3,
-	},
-	initialTabOpen: {
-		type: 'string',
-		default: '1',
-	},
-	fullWidth: {
-		type: 'boolean',
-		default: false,
-	},
-	gap: {
-		type: 'number',
-		default: '',
-	},
-	tabs: {
-		type: 'array',
-		default: [
-			{ label: __( 'Tab', i18n ) + ' 1', icon: '' },
-			{ label: __( 'Tab', i18n ) + ' 2', icon: '' },
-			{ label: __( 'Tab', i18n ) + ' 3', icon: '' },
-		],
-	},
-}
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
-	MarginBottom.addAttributes( attrObject )
-	Row.addAttributes( attrObject )
-	Alignment.addAttributes( attrObject )
-	Advanced.addAttributes( attrObject )
-	Transform.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
-	Separator.addAttributes( attrObject )
-	Icon.addAttributes( attrObject )
-	Typography.addAttributes( attrObject, 'stk-block-tab-labels__text' )
-	addBackgroundAttributes( attrObject, 'tabLabels%s' )
-	addSizeAttributes( attrObject, 'tabLabels%s' )
-	addBorderAttributes( attrObject, 'tabLabels%s' )
+	Advanced.addAttributes( attrObject )
+	Transform.addAttributes( attrObject )
+	Alignment.addAttributes( attrObject )
+	MarginBottom.addAttributes( attrObject )
+	Typography.addAttributes( attrObject, '.stk-block-tab-labels__text', { hasTextTag: false } )
 
 	attrObject.add( {
-		attributes: tabLabelsAttributes,
+		attributes: {
+			tabLabels: {
+				type: 'array',
+				default: [
+					{ label: '', icon: '' },
+					{ label: '', icon: '' },
+					{ label: '', icon: '' },
+				],
+			},
+		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )

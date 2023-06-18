@@ -1,43 +1,79 @@
-import { BlockDiv, CustomCSS } from '~stackable/block-components'
+/**
+ * Internal dependencies
+ */
+import BlockStyles from './style'
+
+/**
+ * External dependencies
+ */
+import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
-import { withVersion } from '~stackable/higher-order'
-import { TabsStyle } from './style'
+import {
+	BlockDiv,
+	CustomCSS,
+	getAlignmentClasses,
+	getResponsiveClasses,
+	getRowClasses,
+	Separator,
+	getSeparatorClasses,
+	getContentAlignmentClasses,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
-import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
+import { applyFilters } from '@wordpress/hooks'
+import { compose } from '@wordpress/compose'
 
-const Save = props => {
+export const Save = props => {
 	const {
-		className,
 		attributes,
 	} = props
 
-	// const responsiveClass = getResponsiveClasses( props.attributes )
-	// const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const rowClass = getRowClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const responsiveClass = getResponsiveClasses( props.attributes )
 
-	const blockClassNames = classnames( [
-		className,
+	const blockClassName = classnames( [
+		props.className,
 		'stk-block-tabs',
+		responsiveClass,
+		separatorClass,
 	] )
+
+	const contentClassNames = classnames( applyFilters( 'stackable.tabs.save.contentClassNames', [
+		[
+			rowClass,
+			'stk-inner-blocks',
+			blockAlignmentClass,
+			'stk-block-content',
+			{
+				'stk-block-tabs--vertical': props.attributes.tabOrientation === 'vertical',
+				'stk-block-tabs--horizontal': props.attributes.tabOrientation !== 'vertical',
+				'stk-block-tabs--fade': props.attributes.tabPanelEffect !== 'immediate',
+				'stk-block-tabs--immediate': props.attributes.tabPanelEffect === 'immediate',
+			},
+		],
+		getContentAlignmentClasses( props.attributes ),
+	], props ) )
 
 	return (
 		<BlockDiv.Content
-			className={ blockClassNames }
-			attributes={ props.attributes }
+			className={ blockClassName }
+			attributes={ attributes }
+			version={ props.version }
+			data-initial-tab={ props.attributes.initialTabOpen || '1' }
 		>
-			<TabsStyle.Content
-				attributes={ attributes }
-				version={ props.version }
-			/>
-			<CustomCSS.Content attributes={ props.attributes } />
-			<div className="stk-block-tabs__wrapper">
-				<InnerBlocks.Content />
-			</div>
-
+			<BlockStyles.Content version={ props.version } attributes={ attributes } />
+			<CustomCSS.Content attributes={ attributes } />
+			<Separator.Content attributes={ attributes }>
+				<div className={ contentClassNames }>
+					<InnerBlocks.Content />
+				</div>
+			</Separator.Content>
 		</BlockDiv.Content>
 	)
 }

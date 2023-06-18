@@ -2,19 +2,27 @@
  * External dependencies
  */
 import {
-	BlockDiv,
 	Advanced,
-	Alignment,
-	MarginBottom,
+	// Alignment,
+	BlockDiv,
 	EffectsAnimations,
+	MarginBottom,
+	Separator,
 	Transform,
+	// Columns,
 } from '~stackable/block-components'
+// import { useBlockAttributesContext } from '~stackable/hooks'
 import { BlockCss, BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+// import { applyFilters } from '@wordpress/hooks'
+
+// const alignmentOptions = {
+// 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+// }
 
 const Styles = props => {
 	const propsToPass = {
@@ -28,101 +36,70 @@ const Styles = props => {
 		<>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".%s .stk-block-tabs__wrapper"
-				styleRule="display"
-				attrName="tabLayout"
-				key="tabLayoutDisplay"
-				valueCallback={ () => {
-					return 'flex'
-				} }
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s .stk-block-tabs__wrapper .wp-block-stackable-tab-labels"
-				styleRule="width"
-				attrName="tabLayout"
-				key="tabLayoutWidth"
-				valueCallback={ value => {
-					if ( value === 'left' || value === 'right' ) {
-						return 'max-content'
-					}
-				} }
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s .stk-block-tabs__wrapper .wp-block-stackable-tab-labels .stk-block-tab-labels__wrapper"
-				styleRule="flexDirection"
-				attrName="tabLayout"
-				key="tabLayoutInnerFlexDirection"
-				valueCallback={ value => {
-					if ( value === 'left' || value === 'right' ) {
-						return 'column'
-					}
-				} }
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s .stk-block-tabs__wrapper"
-				styleRule="flexDirection"
-				attrName="tabLayout"
-				key="tabLayoutOuterFlexDirection"
-				valueCallback={ value => {
-					if ( value === 'bottom' ) {
-						return 'column-reverse'
-					}
-					if ( value === 'left' ) {
-						return 'row'
-					}
-					if ( value === 'right' ) {
-						return 'row-reverse'
-					}
-				} }
+				selector=""
+				styleRule="--tabs-gap"
+				attrName="tabPanelOffset"
+				key="tabPanelOffset"
+				format="%spx"
 				responsive="all"
 			/>
 		</>
 	)
 }
 
-export const TabsStyle = memo( props => {
+const BlockStyles = memo( props => {
+	// const columnArrangement = useBlockAttributesContext( attributes => attributes.columnArrangementMobile || attributes.columnArrangementTablet )
+	// const numColumns = ( columnArrangement || '' ).split( ',' ).length
+
+	// const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
+
 	return (
 		<>
-			<Alignment.Style { ...props } />
+			{ /* <Alignment.Style { ...props } { ...alignmentOptions } /> */ }
 			<BlockDiv.Style { ...props } />
+			<MarginBottom.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
-			<Styles { ...props } />
 			<EffectsAnimations.Style { ...props } />
+			<Separator.Style { ...props } />
+			{ /* <Columns.Style { ...props } /> */ }
+			<Styles { ...props } />
+			{ /* { ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> } */ }
 		</>
 	)
 } )
 
-TabsStyle.defaultProps = {
+BlockStyles.defaultProps = {
 	version: '',
 }
 
-TabsStyle.Content = props => {
+BlockStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
+	// const numColumns = ( props.attributes.columnArrangementMobile || props.attributes.columnArrangementTablet || '' ).split( ',' ).length
+	// const ColumnOrderStyle = applyFilters( 'stackable.block-component.columns.column-order-style', null )
+
 	return (
 		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
+			{ /* <Alignment.Style.Content { ...props } { ...alignmentOptions } /> */ }
 			<BlockDiv.Style.Content { ...props } />
+			<MarginBottom.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
-			<MarginBottom.Style.Content { ...props } />
+			<Separator.Style.Content { ...props } />
+			{ /* <Columns.Style.Content { ...props } /> */ }
 			<Styles { ...props } />
+			{ /* { ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> } */ }
 		</BlockCssCompiler>
 	)
 }
 
-TabsStyle.Content.defaultProps = {
+BlockStyles.Content.defaultProps = {
 	version: '',
 	attributes: {},
 }
 
+export default BlockStyles

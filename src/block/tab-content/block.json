@@ -2,14 +2,13 @@
 	"apiVersion": 2,
 	"name": "stackable/tab-content",
 	"title": "Tab Content",
-	"description": "Container for Tabs Block content",
+	"description": "A wrapper for tab panels.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/tabPanelEffect" ],
+	"keywords": [],
 	"parent": [
 		"stackable/tabs"
 	],
-	"keywords": [],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
-	"stk-type": "special",
-	"stk-demo": "https://wpstackable.com/table-of-contents-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+	"stk-type": "hidden"
 }

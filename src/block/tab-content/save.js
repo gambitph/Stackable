@@ -1,47 +1,72 @@
-import { TabContentStyle } from './style'
-
 /**
  * Internal dependencies
  */
+import BlockStyles from './style'
 
-import { BlockDiv } from '~stackable/block-components'
+/**
+ * External dependencies
+ */
+import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
-import { withVersion } from '~stackable/higher-order'
+import {
+	BlockDiv,
+	CustomCSS,
+	getAlignmentClasses,
+	getResponsiveClasses,
+	getRowClasses,
+	Separator,
+	getSeparatorClasses,
+	getContentAlignmentClasses,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
-import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
+import { applyFilters } from '@wordpress/hooks'
+import { compose } from '@wordpress/compose'
 
-const Save = props => {
+export const Save = props => {
 	const {
-		className,
 		attributes,
 	} = props
 
-	const tabCount = attributes.tabCount
+	const rowClass = getRowClasses( props.attributes )
+	const separatorClass = getSeparatorClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const responsiveClass = getResponsiveClasses( props.attributes )
 
-	const blockClassNames = classnames( [
-		className,
+	const blockClassName = classnames( [
+		props.className,
 		'stk-block-tab-content',
+		responsiveClass,
+		separatorClass,
 	] )
 
-	//this is the thing
+	const contentClassNames = classnames( applyFilters( 'stackable.tab-content.save.contentClassNames', [
+		[
+			rowClass,
+			'stk-inner-blocks',
+			blockAlignmentClass,
+			'stk-block-content',
+		],
+		getContentAlignmentClasses( props.attributes ),
+	], props ) )
+
 	return (
 		<BlockDiv.Content
-			className={ blockClassNames }
+			className={ blockClassName }
 			attributes={ attributes }
-			data-tab={ tabCount }
+			version={ props.version }
 		>
-			<TabContentStyle.Content
-				attributes={ attributes }
-				version={ props.version }
-			/>
-			<div className="stk-block-tab-content__wrapper">
-				<InnerBlocks.Content />
-			</div>
+			<BlockStyles.Content version={ props.version } attributes={ attributes } />
+			<CustomCSS.Content attributes={ attributes } />
+			<Separator.Content attributes={ attributes }>
+				<div className={ contentClassNames }>
+					<InnerBlocks.Content />
+				</div>
+			</Separator.Content>
 		</BlockDiv.Content>
 	)
 }

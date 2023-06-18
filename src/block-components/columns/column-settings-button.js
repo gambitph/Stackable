@@ -10,56 +10,65 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { dispatch, select } from '@wordpress/data'
 import { useLocalStorage } from '~stackable/util'
 
+const PASSTHRU = ( func, numColumns ) => func( numColumns )
+
 export const ColumnsControl = props => {
 	const {
 		label,
 		sliderMax = 6,
+		rootClientId = null,
+		onChangeCallback,
 	} = props
-	const { clientId } = useBlockEditContext()
+	const { clientId: _clientId } = useBlockEditContext()
+	const clientId = rootClientId || _clientId
 	const {
 		numInnerBlocks, innerBlocks,
-	} = useBlockContext()
+	} = useBlockContext( rootClientId )
 	const [ isDuplicate, setIsDuplicate ] = useLocalStorage( 'stk__columns_new_duplicate', false )
 
 	const setColumns = numColumns => {
-		const { insertBlock, removeBlocks } = dispatch( 'core/block-editor' )
+		const changeColumnsFunc = numColumns => {
+			const { insertBlock, removeBlocks } = dispatch( 'core/block-editor' )
 
-		// do nothing if input field is blank
-		if ( numColumns === '' ) {
+			// do nothing if input field is blank
+			if ( numColumns === '' ) {
 
-			// Remove the columns.
-		} else if ( numColumns < numInnerBlocks ) {
-			const columnClientIds = innerBlocks.slice( numColumns ).map( ( { clientId } ) => clientId )
-			removeBlocks( columnClientIds, false )
+				// Remove the columns.
+			} else if ( numColumns < numInnerBlocks ) {
+				const columnClientIds = innerBlocks.slice( numColumns ).map( ( { clientId } ) => clientId )
+				removeBlocks( columnClientIds, false )
 
-			// Add a blank column.
-		} else if ( numColumns > numInnerBlocks && ! isDuplicate ) {
-			const numToAdd = numColumns - numInnerBlocks
+				// Add a blank column.
+			} else if ( numColumns > numInnerBlocks && ! isDuplicate ) {
+				const numToAdd = numColumns - numInnerBlocks
 
-			// add more empty columns if necessary
-			for ( let i = 0; i < numToAdd; i++ ) {
-				const block = getBlockFromExample( 'stackable/column', {} )
-				insertBlock( block, numInnerBlocks + i + 1, clientId, false )
-			}
+				// add more empty columns if necessary
+				for ( let i = 0; i < numToAdd; i++ ) {
+					const block = getBlockFromExample( 'stackable/column', {} )
+					insertBlock( block, numInnerBlocks + i + 1, clientId, false )
+				}
 
-			// Duplicate the last column.
-		} else if ( numColumns > numInnerBlocks ) {
-			const numToAdd = numColumns - numInnerBlocks
+				// Duplicate the last column.
+			} else if ( numColumns > numInnerBlocks ) {
+				const numToAdd = numColumns - numInnerBlocks
 
-			// This is not guaranteed to have the latest attributes and values
-			const lastColumnBlock = last( innerBlocks )
+				// This is not guaranteed to have the latest attributes and values
+				const lastColumnBlock = last( innerBlocks )
 
-			// Retrieve block details to get the latest attributes and values,
-			// If there's no block, then use a blank column.
-			const newBlock = lastColumnBlock
-				? select( 'core/block-editor' ).getBlock( lastColumnBlock.clientId )
-				: {}
+				// Retrieve block details to get the latest attributes and values,
+				// If there's no block, then use a blank column.
+				const newBlock = lastColumnBlock
+					? select( 'core/block-editor' ).getBlock( lastColumnBlock.clientId )
+					: {}
 
-			for ( let i = 0; i < numToAdd; i++ ) {
-				const block = getBlockFromExample( 'stackable/column', pick( newBlock, [ 'attributes', 'innerBlocks' ] ) )
-				insertBlock( block, numInnerBlocks + i + 1, clientId, false )
+				for ( let i = 0; i < numToAdd; i++ ) {
+					const block = getBlockFromExample( 'stackable/column', pick( newBlock, [ 'attributes', 'innerBlocks' ] ) )
+					insertBlock( block, numInnerBlocks + i + 1, clientId, false )
+				}
 			}
 		}
+
+		onChangeCallback( changeColumnsFunc, numColumns )
 	}
 
 	return (
@@ -72,7 +81,7 @@ export const ColumnsControl = props => {
 			onChange={ setColumns }
 			allowReset={ false }
 			after={ (
-				<ColumnButton
+				<CloneButton
 					isPressed={ isDuplicate }
 					onClick={ () => setIsDuplicate( ! isDuplicate ) }
 				/>
@@ -81,7 +90,7 @@ export const ColumnsControl = props => {
 	)
 }
 
-const ColumnButton = props => {
+export const CloneButton = props => {
 	return (
 		<Tooltip
 			text={ __( 'When enabled, the last column will be cloned instead of adding a blank column.', i18n ) }
@@ -101,9 +110,11 @@ const ColumnButton = props => {
 
 ColumnsControl.defaultProps = {
 	label: __( 'Columns', i18n ),
+	rootClientId: null,
+	onChangeCallback: PASSTHRU,
 }
 
-ColumnButton.defaultProps = {
+CloneButton.defaultProps = {
 	isPressed: false,
 	onClick: null,
 }

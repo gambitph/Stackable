@@ -12,28 +12,17 @@ import {
 	Row,
 	Separator,
 	Transform,
+	ContentAlign,
+	Columns,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
-
-const tabContentAttributes = {
-	tabData: {
-		type: 'string',
-		selector: '[data-tab]',
-		source: 'attribute',
-		attribute: 'data-tab',
-		default: '',
-	},
-	tabCount: {
-		type: 'number',
-		default: '',
-	},
-}
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	Columns.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	Row.addAttributes( attrObject )
@@ -46,9 +35,21 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Separator.addAttributes( attrObject )
+	ContentAlign.addAttributes( attrObject )
 
 	attrObject.add( {
-		attributes: tabContentAttributes,
+		attributes: {
+			templateLock: {
+				type: 'string',
+				default: '',
+			},
+			// TODO: Define other attributes specific for this block here.
+			// columnArrangement: {
+			// 	stkResponsive: true,
+			// 	type: 'string',
+			// 	default: '',
+			// },
+		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )

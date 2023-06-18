@@ -1,0 +1,23 @@
+.stk-block-tabs > .stk-inner-blocks {
+	> * > .block-editor-block-list__layout {
+		display: grid;
+		gap: var(--tabs-gap, 16px);
+	}
+	&.stk-block-tabs--vertical {
+		> * > .block-editor-block-list__layout {
+			grid-template-columns: auto 1fr auto;
+			> [data-type="stackable/tab-labels"]:first-child {
+				grid-column: 1 / 2;
+			}
+			> [data-type="stackable/tab-content"]:last-child {
+				grid-column: 2 / 4;
+			}
+			> [data-type="stackable/tab-content"]:first-child {
+				grid-column: 1 / 3;
+			}
+			> [data-type="stackable/tab-labels"]:last-child {
+				grid-column: 3 / 4;
+			}
+		}
+	}
+}

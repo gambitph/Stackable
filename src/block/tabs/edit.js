@@ -1,185 +1,211 @@
-import { TabsStyle } from './style'
+/**
+ * Internal dependencies
+ */
+import BlockStyles from './style'
+import { withActiveTab } from './with-active-tab'
 
 /**
  * External dependencies
  */
+import { i18n, version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
-	InspectorStyleControls, InspectorTabs, PanelAdvancedSettings, AdvancedRangeControl, AdvancedSelectControl,
+	AdvancedRangeControl,
+	AdvancedSelectControl,
+	AdvancedToolbarControl,
+	ControlSeparator,
+	GroupPlaceholder,
+	InspectorLayoutControls,
+	InspectorTabs,
 } from '~stackable/components'
 import {
 	BlockDiv,
 	useGeneratedCss,
 	MarginBottom,
+	getAlignmentClasses,
 	Advanced,
 	CustomCSS,
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
+	ConditionalDisplay,
+	Separator,
+	getSeparatorClasses,
 	Transform,
+	ContentAlign,
+	getContentAlignmentClasses,
+	ColumnsControl,
 } from '~stackable/block-components'
+import { InnerBlocks } from '@wordpress/block-editor'
+import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
-import { useBlockContext } from '~stackable/hooks'
-import { version as VERSION, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { __ } from '@wordpress/i18n'
-import { useInnerBlocksProps } from '@wordpress/block-editor'
-import { useEffect, useState } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
-import { getBlockFromExample } from '@wordpress/blocks'
+import { __, sprintf } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/tab-labels', {} ],
+	[ 'stackable/tab-labels', {
+		tabLabels: [
+			{ label: sprintf( __( 'Tab %d', i18n ), 1 ), icon: '' },
+			{ label: sprintf( __( 'Tab %d', i18n ), 2 ), icon: '' },
+			{ label: sprintf( __( 'Tab %d', i18n ), 3 ), icon: '' },
+		],
+	} ],
 	[ 'stackable/tab-content', {} ],
-]
-
-const tabsLayoutOptions = [
-	{
-		value: '',
-		label: __( 'Top', i18n ),
-	},
-	{
-		value: 'bottom',
-		label: __( 'Bottom', i18n ),
-	},
-	{
-		value: 'left',
-		label: __( 'Left', i18n ),
-	},
-	{
-		value: 'right',
-		label: __( 'Right', i18n ),
-	},
 ]
 
 const Edit = props => {
 	const {
 		className,
+		clientId,
 		isSelected,
-		attributes,
 	} = props
-
-	const [ tabsOptions, setTabsOptions ] = useState( [] )
-
-	const innerBlocksProps = useInnerBlocksProps(
-		{ className: 'stk-block-tabs__wrapper' },
-		{
-			template: TEMPLATE,
-			orientation: 'horizontal',
-			templateLock: 'all',
-		}
-	)
 
 	useGeneratedCss( props.attributes )
 
-	const {
-		hasInnerBlocks, innerBlocks,
-	} = useBlockContext()
+	const separatorClass = getSeparatorClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const { innerBlocks, hasInnerBlocks } = useBlockContext()
 
-	const {
-		insertBlock, removeBlocks, updateBlockAttributes,
-	} = dispatch( 'core/block-editor' )
+	let tabContentBlock = null,
+		tabLabelsBlock = null
+	if ( innerBlocks?.length ) {
+		tabLabelsBlock = innerBlocks[ 0 ].name === 'stackable/tab-labels' ? innerBlocks[ 0 ] : innerBlocks[ 1 ]
+		tabContentBlock = innerBlocks[ 0 ].name === 'stackable/tab-content' ? innerBlocks[ 0 ] : innerBlocks[ 1 ]
+	}
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-tabs',
-		'stk-classnames',
+		separatorClass,
 	] )
 
-	// if ( attributes?.className ) {
-	// 	if ( attributes.className === 'wp-block-stackable-column' ) {
-	// 		setAttributes( { className: '' } )
-	// 	}
-	// }
-
-	useEffect( () => {
-		const tempOptions = []
-		for ( let i = 0; i < attributes.tabCount; i++ ) {
-			tempOptions.push( { label: `Tab ${ i + 1 }`, value: i + 1 } )
-		}
-		setTabsOptions( tempOptions )
-	}, [ props.attributes.tabCount ] )
+	const contentClassNames = classnames( [
+		'stk-inner-blocks',
+		blockAlignmentClass,
+		'stk-block-content',
+		{
+			'stk-block-tabs--vertical': props.attributes.tabOrientation === 'vertical',
+			'stk-block-tabs--horizontal': props.attributes.tabOrientation !== 'vertical',
+			'stk-block-tabs--fade': props.attributes.tabPanelEffect !== 'immediate',
+			'stk-block-tabs--immediate': props.attributes.tabPanelEffect === 'immediate',
+		},
+	], getContentAlignmentClasses( props.attributes ) )
 
 	return (
 		<>
 			{ isSelected && (
 				<>
 					<InspectorTabs />
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="countdown"
-							initialOpen={ true }
-						>
-							<AdvancedRangeControl
-								label={ __( 'Tabs', i18n ) }
-								min={ 1 }
-								sliderMax={ 10 }
-								attribute="tabCount"
-								onChange={ value => {
-									const tabsInnerBlocksClientIds = innerBlocks.map( ( { clientId } ) => clientId )
-									const tabsUpdatedAttributes = {}
+					<InspectorLayoutControls>
+						<ColumnsControl
+							label={ __( 'Tabs', i18n ) }
+							rootClientId={ tabContentBlock.clientId }
+							onChangeCallback={ ( changeColumnsFunc, numColumns ) => {
+								props.setTemplateLock( false )
+								setTimeout( () => {
+									changeColumnsFunc( numColumns )
+									props.setTemplateLock( true )
+								}, 1 )
 
-									tabsInnerBlocksClientIds.push( props.clientId )
+								// Update the number of tab labels
+								const clientId = tabLabelsBlock.clientId
+								const tabLabels = tabLabelsBlock.attributes.tabLabels
 
-									tabsInnerBlocksClientIds.forEach( clientId => {
-										tabsUpdatedAttributes[ clientId ] = { tabCount: value }
-									} )
-									// insertBlock( block, innerBlocks[ 1 ].innerBlocks.length, innerBlocks[ 1 ].clientId, false )
-									if ( value < attributes.tabCount ) {
-										const tabsInnerColumns = innerBlocks[ 1 ].innerBlocks.slice( value ).map( ( { clientId } ) => clientId )
-										removeBlocks( tabsInnerColumns, false )
-									} else {
-										const columnsSize = innerBlocks[ 1 ].innerBlocks.length
-										for ( let i = columnsSize; i < value; i++ ) {
-											const block = getBlockFromExample( 'stackable/column', {} )
-											insertBlock( block, i, innerBlocks[ 1 ].clientId, false )
-										}
+								// If we added a new tab, then add a new tab label
+								if ( numColumns > tabLabels.length ) {
+									const newTabLabels = [ ...tabLabels ]
+									while ( newTabLabels.length < numColumns ) {
+										newTabLabels.push( { label: '', icon: '' } )
 									}
-									updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
-								} }
-							/>
-							<AdvancedSelectControl
-								label={ __( 'Initial Tab Open', i18n ) }
-								options={ tabsOptions }
-								value={ attributes.initialTabOpen }
-								attribute="initialTabOpen"
-								onChange={ value => {
-									const tabsInnerBlocksClientIds = innerBlocks.filter( innerBlock => innerBlock.name === 'stackable/tab-labels' ).map( ( { clientId } ) => clientId )
-									tabsInnerBlocksClientIds.push( props.clientId )
-									const tabsUpdatedAttributes = {}
-									tabsInnerBlocksClientIds.forEach( clientId => {
-										tabsUpdatedAttributes[ clientId ] = { initialTabOpen: value }
+									// Quietly update the tab labels
+									dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+									dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
+										tabLabels: newTabLabels,
 									} )
-									updateBlockAttributes( tabsInnerBlocksClientIds, tabsUpdatedAttributes, true ) // eslint-disable-line stackable/no-update-block-attributes
-								} }
-							/>
-							<AdvancedSelectControl
-								label={ __( 'Tabs Layout', i18n ) }
-								options={ tabsLayoutOptions }
-								attribute="tabLayout"
-							/>
-							{ /* <ToggleGroupControl>
-								<ToggleGroupControlOption value="horizontal" label="Horizontal" />
-								<ToggleGroupControlOption value="vertical" label="Vertical" />
-							</ToggleGroupControl> */ }
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
+								} else if ( numColumns < tabLabels.length ) {
+									// If we removed a tab, then remove the last tab label
+									const newTabLabels = [ ...tabLabels ].slice( 0, numColumns )
+									// Quietly update the tab labels
+									dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+									dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
+										tabLabels: newTabLabels,
+									} )
+								}
+							} }
+						/>
+						<AdvancedSelectControl
+							label={ __( 'Initial Tab Open', i18n ) }
+							attribute="initialTabOpen"
+							options={ tabContentBlock?.innerBlocks?.map( ( block, index ) => {
+								return {
+									value: index === 0 ? '' : index + 1,
+									label: index + 1,
+								}
+							} ) }
+						/>
+						<ControlSeparator />
+						<AdvancedToolbarControl
+							label={ __( 'Tab Orientation', i18n ) }
+							controls={ [
+								{
+									value: '',
+									title: __( 'Horizontal', i18n ),
+								},
+								{
+									value: 'vertical',
+									title: __( 'Vertical', i18n ),
+								},
+							] }
+							attribute="tabOrientation"
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Tab Panel Offset', i18n ) }
+							min={ 0 }
+							sliderMax={ 100 }
+							placeholder="16"
+							attribute="tabPanelOffset"
+							responsive="all"
+						/>
+						<AdvancedToolbarControl
+							label={ __( 'Tab Panel Effect', i18n ) }
+							controls={ [
+								{
+									value: '',
+									title: __( 'Fade', i18n ),
+								},
+								{
+									value: 'immediate',
+									title: __( 'Immediate', i18n ),
+								},
+							] }
+							attribute="tabPanelEffect"
+						/>
+					</InspectorLayoutControls>
+
+					{ /* <Columns.InspectorControls /> */ }
+					<InspectorLayoutControls>
+						<ControlSeparator />
+					</InspectorLayoutControls>
+					<ContentAlign.InspectorControls />
+					{ /* <Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } /> */ }
 					<BlockDiv.InspectorControls />
+					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-tabs" />
 					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
 				</>
 			) }
 
@@ -189,20 +215,28 @@ const Edit = props => {
 				attributes={ props.attributes }
 				className={ blockClassNames }
 			>
-				<TabsStyle
+				<BlockStyles
 					version={ VERSION }
 					blockState={ props.blockState }
-					clientId={ props.clientId }
+					clientId={ clientId }
 				/>
 				<CustomCSS mainBlockClass="stk-block-tabs" />
-				<div className="stk-block-tabs__wrapper" { ...innerBlocksProps }>
-					{ /* <InnerBlocks
-						orientation="horizontal"
-						template={ TEMPLATE }
-						templateInsertUpdatesSelection={ true }
-						templateLock="all"
-					/> */ }
-				</div>
+
+				{ ! hasInnerBlocks && <GroupPlaceholder /> }
+				<Separator>
+					<div
+						className={ contentClassNames }
+						data-align={ ! props.attributes.contentAlign ? undefined // Only needed in the backend
+							: props.attributes.contentAlign === 'alignwide' ? 'wide'
+								: props.attributes.contentAlign === 'alignfull' ? 'full' : undefined }
+					>
+						<InnerBlocks
+							template={ TEMPLATE }
+							templateLock="insert"
+							orientation={ props.attributes.tabOrientation !== '' ? 'horizontal' : 'vertical' }
+						/>
+					</div>
+				</Separator>
 			</BlockDiv>
 			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>
@@ -213,10 +247,5 @@ export default compose(
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
+	withActiveTab( 'initialTabOpen' ),
 )( Edit )
-
-/**
- *  clientIds []
- *
- *
- */

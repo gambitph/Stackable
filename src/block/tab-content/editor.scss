@@ -1,0 +1,15 @@
+.stk-block-tab-content > .stk-inner-blocks > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: grid;
+	> [data-block] {
+		grid-column: 1 / 1;
+		grid-row: 1 / 1;
+		z-index: 2; // The active panel should be on top.
+	}
+}
+.stk-block-tab-content > .stk-inner-blocks {
+	&,
+	> .block-editor-inner-blocks,
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		height: 100%;
+	}
+}

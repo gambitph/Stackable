@@ -1,6 +1,6 @@
 import {
 	Advanced,
-	Alignment,
+	// Alignment,
 	BlockDiv,
 	Style,
 	ConditionalDisplay,
@@ -13,33 +13,20 @@ import {
 	Separator,
 	Transform,
 	ContentAlign,
+	// Columns,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
-
-const tabLabelsAttributes = {
-	tabCount: {
-		type: 'number',
-		default: 3,
-	},
-	initialTabOpen: {
-		type: 'string',
-		default: '1',
-	},
-	tabLayout: {
-		type: 'string',
-		default: '',
-	},
-}
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	// Columns.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	Row.addAttributes( attrObject )
-	Alignment.addAttributes( attrObject )
+	// Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Transform.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
@@ -51,7 +38,25 @@ export const attributes = ( version = VERSION ) => {
 	ContentAlign.addAttributes( attrObject )
 
 	attrObject.add( {
-		attributes: tabLabelsAttributes,
+		attributes: {
+			initialTabOpen: {
+				type: 'string',
+				default: '',
+			},
+			tabOrientation: {
+				type: 'string',
+				default: '',
+			},
+			tabPanelOffset: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
+			tabPanelEffect: {
+				type: 'string',
+				default: '',
+			},
+		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )

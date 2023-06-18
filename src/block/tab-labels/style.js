@@ -4,143 +4,88 @@
 import {
 	BlockDiv,
 	Advanced,
-	Icon,
-	BackgroundStyle,
-	SizeStyle,
-	BorderStyle,
 	Typography,
+	Alignment,
+	MarginBottom,
+	EffectsAnimations,
+	Transform,
 } from '~stackable/block-components'
-import { BlockCss, BlockCssCompiler } from '~stackable/components'
+import {
+	// BlockCss,
+	BlockCssCompiler,
+} from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
 
-const Styles = props => {
-	const propsToPass = {
-		...props,
-		version: props.version,
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	}
+const typographyOptions = {
+	selector: '.stk-block-text__text',
+	hoverSelector: '.stk-block-text__text:hover',
+}
+
+const Styles = () => {
+	// const propsToPass = {
+	// 	...props,
+	// 	version: props.version,
+	// 	versionAdded: '3.0.0',
+	// 	versionDeprecated: '',
+	// }
 
 	return (
 		<>
-			<BlockCss
+			{ /* <BlockCss
 				{ ...propsToPass }
-				selector=".%s .stk-block-tab-labels__wrapper"
-				styleRule="flexWrap"
-				attrName="fullWidth"
-				key="fullWidthFlexWrap"
-				valueCallback={ value => {
-					if ( ! value ) {
-						return
-					}
-					return 'nowrap'
-				} }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s .stk-block-tabs__tab"
-				styleRule="width"
-				attrName="fullWidth"
-				key="fullWidth"
-				valueCallback={ value => {
-					if ( ! value ) {
-						return
-					}
-					return '100%'
-				} }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s .stk-block-tab-labels__wrapper"
-				styleRule="gap"
-				attrName="gap"
-				key="gap"
-				hasUnits="px"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".%s .stk-block-tabs__tab"
-				styleRule="flexDirection"
-				attrName="iconPosition"
-				valueCallback={ value => {
-					if ( value === 'top' ) {
-						return 'column'
-					} else if ( value === 'bottom' ) {
-						return 'column-reverse'
-					}
-				} }
-				key="iconPosition"
-			/>
+				selector=""
+				styleRule="columnGap"
+				attrName="columnGap"
+				key="columnGap"
+				responsive="all"
+				format="%spx"
+			/> */ }
 		</>
 	)
 }
 
-export const TabLabelStyle = memo( props => {
+export const TextStyles = memo( props => {
 	return (
 		<>
+			<Alignment.Style { ...props } />
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
-			<Icon.Style { ...props } />
-			<BackgroundStyle
-				{ ...props }
-				attrNameTemplate="tabLabels%s"
-				selector=".stk-block-tabs__tab"
-			/>
-			<SizeStyle
-				{ ...props }
-				attrNameTemplate="tabLabels%s"
-				selector=".stk-block-tabs__tab"
-			/>
-			<BorderStyle
-				{ ...props }
-				attrNameTemplate="tabLabels%s"
-				selector=".stk-block-tabs__tab"
-			/>
-			<Typography.Style { ...props } selector=".stk-block-tab-labels__text" />
+			<Transform.Style { ...props } />
+			<Typography.Style { ...props } { ...typographyOptions } />
 			<Styles { ...props } />
+			<EffectsAnimations.Style { ...props } />
 		</>
 	)
 } )
 
-TabLabelStyle.defaultProps = {
+TextStyles.defaultProps = {
 	version: '',
 }
 
-TabLabelStyle.Content = props => {
+TextStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 
 	return (
 		<BlockCssCompiler>
+			<Alignment.Style.Content { ...props } />
 			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
-			<BackgroundStyle.Content
-				{ ...props }
-				attrNameTemplate="tabLabels%s"
-				selector=".stk-block-tabs__tab"
-			/>
-			<SizeStyle.Content
-				{ ...props }
-				attrNameTemplate="tabLabels%s"
-				selector=".stk-block-tabs__tab"
-			/>
-			<BorderStyle.Content
-				{ ...props }
-				attrNameTemplate="tabLabels%s"
-				selector=".stk-block-tabs__tab"
-			/>
-			<Typography.Style.Content { ...props } selector=".stk-block-tab-labels__text" />
+			<Transform.Style.Content { ...props } />
+			<Typography.Style.Content { ...props } { ...typographyOptions } />
+			<EffectsAnimations.Style.Content { ...props } />
+			<MarginBottom.Style.Content { ...props } />
 			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }
 
-TabLabelStyle.Content.defaultProps = {
+TextStyles.Content.defaultProps = {
 	version: '',
 	attributes: {},
 }

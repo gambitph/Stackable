@@ -2,17 +2,18 @@
 	"apiVersion": 2,
 	"name": "stackable/tabs",
 	"title": "Tabs",
-	"description": "Insert your content inside tabs like a browser",
+	"description": "Organize and display content in multiple tabs.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
-	"providesContext": {
-		"stackable/initialTabOpen": "initialTabOpen"
-	},
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"toggle"
 	],
+	"providesContext": {
+		"stackable/initialTabOpen": "initialTabOpen",
+		"stackable/tabOrientation": "tabOrientation",
+		"stackable/tabPanelEffect": "tabPanelEffect"
+	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",
-	"stk-demo": "https://wpstackable.com/table-of-contents-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
-
+	"stk-demo": "https://wpstackable.com/tabs-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 }

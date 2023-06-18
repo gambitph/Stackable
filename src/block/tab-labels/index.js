@@ -1,27 +1,31 @@
 /**
- * BLOCK: Tabs Block
+ * BLOCK: New Block.
  */
+/**
+ * External dependencies
+ */
+// import { TextIcon } from '~stackable/icons'
+
 /**
  * Internal dependencies
  */
+// import transforms from './transforms'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
-import './with-active-tab'
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n'
 
 export const settings = {
-	 ...metadata,
-	 attributes: schema,
-	 supports: {
-		 anchor: true,
-	 },
-	 edit,
-	 save,
-}
+	...metadata,
 
+	// TODO: Change the icon to match the block.
+	// icon: TextIcon,
+	attributes: schema,
+	supports: {
+		anchor: true,
+		reusable: false,
+		stkSaveBlockStyle: false,
+	},
+	edit,
+	save,
+}
