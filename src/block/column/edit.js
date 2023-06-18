@@ -93,13 +93,16 @@ const Edit = props => {
 					<InspectorLayoutControls>
 						<FourRangeControl
 							label={ __( 'Column Spacing', i18n ) }
-							attribute={ 'columnSpacing' }
+							attribute="columnSpacing"
 							responsive="all"
 							units={ [ 'px', 'em' ] }
 							defaultLocked={ true }
 							min={ [ 0, 0 ] }
 							sliderMax={ [ 200, 30 ] }
 							placeholder={ isOnlyBlock ? '0' : '12' }
+							helpTooltip={ {
+								description: __( 'Sets the paddings between the column content and the border.', i18n ),
+							} }
 							visualGuide={ {
 								selector: '.stk-%s-container',
 								highlight: 'column-spacing',
