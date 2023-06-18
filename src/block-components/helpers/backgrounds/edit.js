@@ -107,7 +107,8 @@ export const BackgroundControls = props => {
 					allowReset={ true }
 					placeholder="1.0"
 					helpTooltip={ {
-						description: __( 'Background Color Opacity', i18n ),
+						video: 'background-color-opacity',
+						description: __( 'Adjusts the transparency of the background color', i18n ),
 					} }
 				/>
 			) }
@@ -145,7 +146,8 @@ export const BackgroundControls = props => {
 						allowReset={ true }
 						placeholder="90"
 						helpTooltip={ {
-							description: __( 'Gradient Direction (degrees)', i18n ),
+							video: 'gradient-direction',
+							description: __( 'Sets the direction (in degrees) of the colors', i18n ),
 						} }
 					/>
 
@@ -158,7 +160,8 @@ export const BackgroundControls = props => {
 						allowReset={ true }
 						placeholder="0"
 						helpTooltip={ {
-							description: __( 'Color Location (degrees)', i18n ),
+							video: 'gradient-location',
+							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
 						} }
 					/>
 
@@ -171,7 +174,8 @@ export const BackgroundControls = props => {
 						allowReset={ true }
 						placeholder="100"
 						helpTooltip={ {
-							description: __( 'Gradient Direction 2(degrees)', i18n ),
+							video: 'gradient-location',
+							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
 						} }
 					/>
 
@@ -180,7 +184,8 @@ export const BackgroundControls = props => {
 							label={ __( 'Background Gradient Blend Mode', i18n ) }
 							attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
 							helpTooltip={ {
-								description: __( 'Background Gradient Blend Mode (degrees)', i18n ),
+								video: 'background-blend-mode',
+								description: __( 'Sets how this background gradient/image blends into the other background', i18n ),
 							} }
 						/>
 					}
@@ -234,7 +239,8 @@ export const BackgroundControls = props => {
 					allowReset={ true }
 					placeholder={ getAttribute( 'backgroundColor' ) ? '5' : '0' }
 					helpTooltip={ {
-						description: __( 'Background Media Tint Strength', i18n ),
+						video: 'background-tint',
+						description: __( 'Adjusts the intensity of the background media tint', i18n ),
 					} }
 				/>
 			}
@@ -244,7 +250,8 @@ export const BackgroundControls = props => {
 					label={ __( 'Fixed Background', i18n ) }
 					attribute={ getAttrName( 'fixedBackground' ) }
 					helpTooltip={ {
-						description: __( 'Fixed', i18n ),
+						video: 'background-fixed',
+						description: __( 'Keeps the background image fixed in place while scrolling', i18n ),
 					} }
 				/>
 			}
@@ -296,7 +303,8 @@ export const BackgroundControls = props => {
 							{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 						] }
 						helpTooltip={ {
-							description: __( 'Image Position', i18n ),
+							video: 'background-image-position',
+							description: __( 'Chooses which part of the background image will be the focal point', i18n ),
 						} }
 						responsive="all"
 					/>
@@ -312,7 +320,8 @@ export const BackgroundControls = props => {
 							{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 						] }
 						helpTooltip={ {
-							description: __( 'Image Repeat', i18n ),
+							video: 'background-image-repeat',
+							description: __( 'Covers the background with tiled images', i18n ),
 						} }
 						responsive="all"
 					/>
@@ -328,7 +337,8 @@ export const BackgroundControls = props => {
 							{ label: __( 'Custom', i18n ), value: 'custom' },
 						] }
 						helpTooltip={ {
-							description: __( 'Image Size', i18n ),
+							video: 'background-image-size',
+							description: __( 'Sets the display image size', i18n ),
 						} }
 						responsive="all"
 					/>

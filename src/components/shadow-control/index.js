@@ -280,7 +280,9 @@ const ShadowControl = memo( props => {
 				max={ shadows.length - 1 }
 				allowReset={ true }
 				helpTooltip={ {
-					description: __( 'Shadow', i18n ),
+					video: 'general-shadow',
+					title: __( 'Shadow/Outline', i18n ),
+					description: __( 'Adjusts the intensity of the shadow/outline of the block and the appearance of the block border', i18n ),
 				} }
 				hover={ props.hover }
 				placeholder={ value === 'custom' ? __( 'Custom', i18n ) : '' }

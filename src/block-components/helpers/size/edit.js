@@ -42,7 +42,8 @@ const Layout = props => {
 				allowReset={ true }
 				placeholder="0"
 				helpTooltip={ {
-					description: __( 'height', i18n ),
+					video: 'block-height',
+					description: __( 'Adjusts the minimum allowable height of the block', i18n ),
 				} }
 				visualGuide={ props.visualGuide }
 			/>
@@ -54,7 +55,9 @@ const Layout = props => {
 					responsive="all"
 					controls="vertical"
 					helpTooltip={ {
-						description: __( 'vertical align', i18n ),
+						video: 'content-vertical-align',
+						description: __( 'Sets the placement of the content to top, center or bottom. Available when the min. block height is set to higher than default.', i18n ),
+
 					} }
 					visualGuide={ ! props.visualGuide ? null : {
 						...props.visualGuide,
@@ -75,7 +78,8 @@ const Layout = props => {
 				placeholder=""
 				initialPosition="1500"
 				helpTooltip={ {
-					description: __( 'width', i18n ),
+					video: 'max-content-width',
+					description: __( 'Adjusts the maximum allowable width of the block. The settings will depend on the block width you set on the toolbar.', i18n ),
 				} }
 				visualGuide={ props.visualGuide }
 			/>
@@ -91,7 +95,8 @@ const Layout = props => {
 					responsive="all"
 					controls="horizontal"
 					helpTooltip={ {
-						description: __( 'horizontal align', i18n ),
+						video: 'content-horizontal-align',
+						description: __( 'Sets the placement of the content to left, center or right. Not available when block width is set to full width.', i18n ),
 					} }
 					visualGuide={ props.visualGuide }
 				/>
@@ -139,7 +144,8 @@ const Spacing = props => {
 				min={ [ 0, 0, 0 ] }
 				sliderMax={ [ 200, 30, 100 ] }
 				helpTooltip={ {
-					description: __( 'padding', i18n ),
+					video: 'inner-block-padding',
+					description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
 				} }
 				visualGuide={ paddingVisualGuide }
 				placeholder={ props.paddingPlaceholder }
@@ -156,7 +162,8 @@ const Spacing = props => {
 					sliderMax={ [ 200, 100 ] }
 					placeholder="0"
 					helpTooltip={ {
-						description: __( 'margins', i18n ),
+						video: 'advanced-block-margin',
+						description: __( 'Sets the block margin, i.e. the space outside the block between the block border and the next block.', i18n ),
 					} }
 					visualGuide={ marginVisualGuide }
 				/>

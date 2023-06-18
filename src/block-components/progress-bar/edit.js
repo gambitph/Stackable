@@ -188,7 +188,9 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									allowReset={ true }
 									placeholder="90"
 									helpTooltip={ {
-										description: __( 'Gradient', i18n ),
+										video: 'gradient-direction',
+										title: __( 'Gradient Direction', i18n ),
+										description: __( 'Sets the direction (in degrees) of the colors', i18n ),
 									} }
 								/>
 								<AdvancedRangeControl
@@ -200,7 +202,8 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									allowReset={ true }
 									placeholder="0"
 									helpTooltip={ {
-										description: __( 'Color 1', i18n ),
+										video: 'gradient-location',
+										description: __( 'Sets the placement of each color in relation to the other color', i18n ),
 									} }
 								/>
 								<AdvancedRangeControl
@@ -212,14 +215,16 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									allowReset={ true }
 									placeholder="100"
 									helpTooltip={ {
-										description: __( 'Color 2', i18n ),
+										video: 'gradient-location',
+										description: __( 'Sets the placement of each color in relation to the other color', i18n ),
 									} }
 								/>
 								<BlendModeControl
 									label={ __( 'Background Gradient Blend Mode', i18n ) }
 									attribute="progressColorGradientBlendMode"
 									helpTooltip={ {
-										description: __( 'BG Gradient', i18n ),
+										video: 'background-blend-mode',
+										description: __( 'Sets how this background gradient/image blends into the other background', i18n ),
 									} }
 								/>
 							</ButtonIconPopoverControl>

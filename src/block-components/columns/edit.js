@@ -165,9 +165,8 @@ export const Controls = props => {
 						} }
 						// TODO: Sample of how to use the new helpTooltip
 						helpTooltip={ {
-							video: 'inner-column-spacing',
-							title: 'Override title',
-							description: __( 'Inner Column spacingn of the bkasj kqwbcqh', i18n ),
+							video: 'inner-block-padding',
+							description: __( 'Sets column paddings, the space inside the block between the block elements and the column container border', i18n ),
 						} }
 					/>
 					<AdvancedRangeControl
@@ -183,7 +182,8 @@ export const Controls = props => {
 							responsive: [ 'desktop' ],
 						} }
 						helpTooltip={ {
-							description: __( 'Inner Column spacingn of the bkasj kqwbcqh', i18n ),
+							video: 'column-gap',
+							description: __( 'Sets the distance between two or more columns', i18n ),
 						} }
 					/>
 					<AdvancedRangeControl

@@ -225,7 +225,8 @@ const Controls = props => {
 					} }
 					defaultValue="full"
 					helpTooltip={ {
-						description: __( 'Image Size', i18n ),
+						video: 'image-size',
+						description: __( 'Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster.', i18n ),
 					} }
 				/>
 			) }
@@ -240,7 +241,8 @@ const Controls = props => {
 					defaultValue={ 0 }
 					allowReset={ true }
 					helpTooltip={ {
-						description: __( 'Border Radius', i18n ),
+						video: 'image-border-radius',
+						description: __( 'Adjusts the radius of image corners to make them more rounded', i18n ),
 					} }
 				/>
 			}
@@ -296,7 +298,8 @@ const Controls = props => {
 				label={ __( 'Overlay Blend Mode', i18n ) }
 				attribute="imageOverlayBlendMode"
 				helpTooltip={ {
-					description: __( 'Overlay BM', i18n ),
+					video: '',
+					description: __( 'Sets the overlay color of all image boxes', i18n ),
 				} }
 			/>
 
@@ -338,7 +341,8 @@ const Controls = props => {
 						allowReset={ true }
 						placeholder="90"
 						helpTooltip={ {
-							description: __( 'Gradient Direct', i18n ),
+							video: 'gradient-direction',
+							description: __( 'Sets the direction (in degrees) of the colors', i18n ),
 						} }
 					/>
 
@@ -352,7 +356,8 @@ const Controls = props => {
 						allowReset={ true }
 						placeholder="0"
 						helpTooltip={ {
-							description: __( 'Gradient 1', i18n ),
+							video: 'gradient-location',
+							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
 						} }
 					/>
 
@@ -366,7 +371,8 @@ const Controls = props => {
 						allowReset={ true }
 						placeholder="100"
 						helpTooltip={ {
-							description: __( 'Gradient 2', i18n ),
+							video: 'gradient-location',
+							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
 						} }
 					/>
 				</ButtonIconPopoverControl>
@@ -394,7 +400,9 @@ const Controls = props => {
 					{ label: __( 'Scale Down', i18n ), value: 'scale-down' },
 				] }
 				helpTooltip={ {
-					description: __( 'Image Fit', i18n ),
+					title: __( 'Image size', i18n ),
+					description: __( 'Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster.', i18n ),
+
 				} }
 				responsive="all"
 			/>

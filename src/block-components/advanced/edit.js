@@ -97,7 +97,8 @@ export const Edit = () => {
 						allowReset={ true }
 						placeholder="1"
 						helpTooltip={ {
-							description: __( 'Opacity', i18n ),
+							video: 'advanced-opacity',
+							description: __( 'Adjusts the transparency of the entire block', i18n ),
 						} }
 					/>
 					<AdvancedRangeControl
@@ -109,7 +110,9 @@ export const Edit = () => {
 						allowReset={ true }
 						placeholder="1"
 						helpTooltip={ {
-							description: __( 'Z-index', i18n ),
+							video: 'advanced-zindex',
+							description: __( 'Sets the stack order of different blocks to make one appear in front of another. A block with a higher z-index will show up on top of another block with a lower z-index.', i18n ),
+
 						} }
 					/>
 					<AdvancedSelectControl
@@ -140,9 +143,6 @@ export const Edit = () => {
 						hasLock={ false }
 						sliderMin={ -100 }
 						sliderMax={ 100 }
-						helpTooltip={ {
-							description: __( 'Position', i18n ),
-						} }
 					/>
 				</PanelAdvancedSettings>
 			</InspectorAdvancedControls>

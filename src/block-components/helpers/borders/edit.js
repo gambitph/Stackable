@@ -84,7 +84,8 @@ export const BorderControls = props => {
 				responsive="all"
 				hover={ props.hasBorderRadiusHover }
 				helpTooltip={ {
-					description: __( 'Border Radius', i18n ),
+					video: 'general-border-radius',
+					description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
 				} }
 				min={ 0 }
 				sliderMax={ props.borderSliderMax }

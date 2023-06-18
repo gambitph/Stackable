@@ -121,7 +121,9 @@ export const Edit = props => {
 				responsive="all"
 				controls="horizontal"
 				helpTooltip={ {
-					description: __( 'Content Horizontal Align', i18n ),
+					video: 'content-horizontal-align',
+					description: __( 'Sets the placement of the column container to left, center or right. Not available when block width is set to full width.', i18n ),
+
 				} }
 				visualGuide={ { selector: '.stk-%s-container', highlight: 'outline' } }
 			/>
@@ -155,7 +157,8 @@ export const Edit = props => {
 						disableTablet={ ! columnJustify }
 						disableMobile={ ! columnJustify }
 						helpTooltip={ {
-							description: __( 'Column Justify', i18n ),
+							video: 'content-horizontal-align',
+							description: __( 'Sets the horizontal position and spacing of the inner columns.', i18n ),
 						} }
 						visualGuide={ {
 							selector: '.stk-%s-column > * > * > [data-type]',
@@ -171,7 +174,8 @@ export const Edit = props => {
 						responsive="all"
 						controls="flex-vertical"
 						helpTooltip={ {
-							description: __( 'Column Alignment', i18n ),
+							video: 'column-vertical-align',
+							description: __( 'Sets the vertical position of the inner columns relative to the columns block.', i18n ),
 						} }
 						visualGuide={ {
 							// The 2nd selector (after the comma) is to select
@@ -189,7 +193,8 @@ export const Edit = props => {
 						responsive="all"
 						controls="flex-vertical"
 						helpTooltip={ {
-							description: __( 'Column Justify', i18n ),
+							video: 'column-vertical-align',
+							description: __( 'Sets the vertical position of the inner columns relative to the columns block.', i18n ),
 						} }
 						visualGuide={ { selector: '.stk-%s-column > * > * > [data-type]', highlight: 'outline' } }
 					/>
