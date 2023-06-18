@@ -558,7 +558,8 @@ addFilter( 'stackable.block-component.image.before', 'stackable/posts', output =
 				onChange={ imageSize => setAttributes( { imageSize } ) }
 				default="full"
 				helpTooltip={ {
-					description: __( 'Image Size', i18n ),
+					video: 'image-size',
+					description: __( 'Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster.', i18n ),
 				} }
 			/>
 			<AdvancedToggleControl
