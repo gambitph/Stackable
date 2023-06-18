@@ -108,7 +108,7 @@ const Edit = props => {
 					<InspectorLayoutControls>
 						<ColumnsControl
 							label={ __( 'Tabs', i18n ) }
-							rootClientId={ tabContentBlock.clientId }
+							rootClientId={ tabContentBlock?.clientId }
 							onChangeCallback={ ( changeColumnsFunc, numColumns ) => {
 								props.setTemplateLock( false )
 								setTimeout( () => {

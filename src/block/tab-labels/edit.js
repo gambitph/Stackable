@@ -26,6 +26,9 @@ import classnames from 'classnames'
 import {
 	InspectorTabs,
 	InspectorLayoutControls,
+	AdvancedToggleControl,
+	AdvancedRangeControl,
+	InspectorStyleControls,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
@@ -54,6 +57,7 @@ const Edit = props => {
 		clientId,
 		isSelected,
 		setAttributes,
+		context,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -241,8 +245,34 @@ const Edit = props => {
 					</BlockControls>
 
 					<InspectorLayoutControls>
-						{ /** Add Layout controls specific for this block here */ }
+						{ context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
+							<AdvancedToggleControl
+								label={ __( 'Full Width', i18n ) }
+								attribute="fullWidth"
+								default={ false }
+							/>
+							<AdvancedRangeControl
+								label={ __( 'Column Gap', i18n ) }
+								attribute="columnGap"
+								min={ 0 }
+								sliderMax={ 50 }
+								placeholder="12"
+								responsive="all"
+							/>
+						</> }
+						<AdvancedRangeControl
+							label={ __( 'Row Gap', i18n ) }
+							attribute="rowGap"
+							min={ 0 }
+							sliderMax={ 50 }
+							placeholder="8"
+							responsive="all"
+						/>
 					</InspectorLayoutControls>
+
+					<InspectorStyleControls>
+						{ /* TODO: styles, button baclground, button borders, active state, icons */ }
+					</InspectorStyleControls>
 
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />

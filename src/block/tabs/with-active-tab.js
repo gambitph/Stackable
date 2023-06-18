@@ -18,7 +18,7 @@ export const useSetActiveTabContext = () => {
 export const withActiveTab = ( initialTabAttribute = '' ) => createHigherOrderComponent(
 	WrappedComponent => props => {
 		const initialValue = initialTabAttribute ? parseInt( props.attributes[ initialTabAttribute ], 10 ) : null
-		const [ activeTab, setActiveTab ] = useState( initialValue )
+		const [ activeTab, setActiveTab ] = useState( initialValue || 1 )
 		const [ templateLock, setTemplateLock ] = useState( true )
 
 		return (

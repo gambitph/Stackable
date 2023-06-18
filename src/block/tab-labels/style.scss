@@ -1,17 +1,22 @@
 .stk-block-tab-labels {
 	--stk-block-margin-bottom: 0;
+	--tabs-flex: none;
+	--tabs-column-gap: 12px;
+	--tabs-row-gap: 8px;
 }
 .stk-block-tabs__tab {
 	all: unset;
 	outline: revert;
 	cursor: pointer;
 	padding: 12px;
+	flex: var(--tabs-flex, none);
 }
 .stk-block-tab-labels__wrapper {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-start;
-	gap: 12px;
+	column-gap: var(--tabs-column-gap, 12px);
+	row-gap: var(--tabs-row-gap, 8px);
 }
 .stk-block-tabs--horizontal .stk-block-tab-labels__wrapper {
 	flex-direction: row;

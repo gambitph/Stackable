@@ -44,6 +44,20 @@ export const attributes = ( version = VERSION ) => {
 					{ label: '', icon: '' },
 				],
 			},
+			fullWidth: {
+				type: 'boolean',
+				default: false,
+			},
+			columnGap: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
+			rowGap: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

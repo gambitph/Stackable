@@ -10,9 +10,7 @@ import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInnerBlocks,
-	ControlSeparator,
 	GroupPlaceholder,
-	InspectorLayoutControls,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -30,9 +28,7 @@ import {
 	Separator,
 	getSeparatorClasses,
 	Transform,
-	ContentAlign,
 	getContentAlignmentClasses,
-	Columns,
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -100,11 +96,6 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Columns.InspectorControls />
-					<InspectorLayoutControls>
-						<ControlSeparator />
-					</InspectorLayoutControls>
-					<ContentAlign.InspectorControls />
 					<Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />
 					<Separator.InspectorControls />
@@ -123,7 +114,6 @@ const Edit = props => {
 				clientId={ props.clientId }
 				attributes={ props.attributes }
 				className={ blockClassNames }
-				// enableVariationPicker={ true }
 			>
 				<BlockStyles
 					version={ VERSION }

@@ -11,7 +11,7 @@ import {
 	Transform,
 } from '~stackable/block-components'
 import {
-	// BlockCss,
+	BlockCss,
 	BlockCssCompiler,
 } from '~stackable/components'
 
@@ -25,25 +25,45 @@ const typographyOptions = {
 	hoverSelector: '.stk-block-text__text:hover',
 }
 
-const Styles = () => {
-	// const propsToPass = {
-	// 	...props,
-	// 	version: props.version,
-	// 	versionAdded: '3.0.0',
-	// 	versionDeprecated: '',
-	// }
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
 
 	return (
 		<>
-			{ /* <BlockCss
+			<BlockCss
 				{ ...propsToPass }
 				selector=""
-				styleRule="columnGap"
+				styleRule="--tabs-flex"
+				attrName="fullWidth"
+				key="fullWidth"
+				responsive="all"
+				valuePreCallback={ value => {
+					return value ? '1 1 auto' : undefined
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=""
+				styleRule="--tabs-column-gap"
 				attrName="columnGap"
 				key="columnGap"
 				responsive="all"
 				format="%spx"
-			/> */ }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=""
+				styleRule="--tabs-row-gap"
+				attrName="rowGap"
+				key="rowGap"
+				responsive="all"
+				format="%spx"
+			/>
 		</>
 	)
 }
