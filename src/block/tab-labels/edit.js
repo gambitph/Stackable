@@ -307,8 +307,6 @@ const Edit = props => {
 						</Toolbar>
 					</BlockControls>
 
-					{ /* <Alignment.InspectorControls /> */ }
-
 					<BlockControls>
 						<Toolbar>
 							<ToolbarButton
@@ -432,20 +430,10 @@ const Edit = props => {
 							<Button.InspectorControls.Borders.Controls
 								attrNameTemplate="tab%s"
 							/>
-							{ /* <Typography.InspectorControls.Controls
-								{ ...props }
-								hasTextContent={ false }
-								hasTextTag={ false }
-								isMultiline={ true }
-								initialOpen={ true }
-								hasTextShadow={ true }
-								// attrNameTemplate={ editState === 'normal' ? '' : 'active%s' }
-							/> */ }
 						</PanelAdvancedSettings>
 
 						<PanelAdvancedSettings
 							title={ __( 'Tab Active State', i18n ) }
-							// initialOpen={ false }
 							id="tab-active-state"
 						>
 							<Button.InspectorControls.Colors.Controls
@@ -459,12 +447,6 @@ const Edit = props => {
 								borderTypeValue={ props.attributes.tabBorderType } // Change this to the value of the border type control
 								hasBorderRadius={ false }
 							/>
-							{ /*
-							<ColorPaletteControl
-								label={ __( 'Background Color', i18n ) }
-								attribute="activeBackgroundColor"
-								hover="all"
-							/> */ }
 						</PanelAdvancedSettings>
 
 						<PanelAdvancedSettings
@@ -480,8 +462,6 @@ const Edit = props => {
 								initialOpen={ true }
 								hasTextShadow={ true }
 								hasGradient={ false }
-								// hasColor={ false }
-								// attrNameTemplate={ editState === 'normal' ? '' : 'active%s' }
 							/>
 						</PanelAdvancedSettings>
 
@@ -501,8 +481,7 @@ const Edit = props => {
 								hasIconGap={ true }
 								hasIconPosition={ false }
 								defaultValue={ defaultIcon }
-								// blockName={ props.name }
-								// iconPositionMode="all"
+								iconControlHelp={ __( 'Change icons individually by clicking on each tab\'s icon.', i18n ) }
 								iconGapPlaceholder="8"
 								onChangeIcon={ icon => {
 									// Reset all tab label icons.
