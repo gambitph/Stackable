@@ -6,7 +6,6 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	BlockContainer,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	ColorPaletteControl,
@@ -27,6 +26,7 @@ import {
 	DivBackground,
 	ContentAlignControl,
 	ResponsiveControl,
+	BackgroundControlsHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,
@@ -721,7 +721,7 @@ const edit = props => {
 								}
 								{ showButton &&
 									<ButtonEditHelper
-										attrNameTemplate={ `button%s` }
+										attrNameTemplate="button%s"
 										setAttributes={ setAttributes }
 										blockAttributes={ props.attributes }
 										text={ buttonText }

@@ -8,7 +8,6 @@ import {
 	ProControlButton,
 	BlockContainer,
 	ColorPaletteControl,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	AlignButtonsControl,
@@ -21,7 +20,9 @@ import {
 	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
-import { ContentAlignControl, ResponsiveControl } from '../../components'
+import {
+	ContentAlignControl, ResponsiveControl, BackgroundControlsHelper,
+} from '../../components'
 import {
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,

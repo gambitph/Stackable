@@ -17,7 +17,6 @@ import {
 	BlockContainer,
 	DesignPanelBody,
 	ProControlButton,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
@@ -39,6 +38,7 @@ import {
 	DivBackground,
 	ResponsiveControl,
 	SvgIconPlaceholder,
+	BackgroundControlsHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,

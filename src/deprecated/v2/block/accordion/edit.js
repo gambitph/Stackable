@@ -19,7 +19,6 @@ import {
 	ColorPaletteControl,
 	DesignPanelBody,
 	ProControlButton,
-	BackgroundControlsHelper,
 	BlockContainer,
 	AlignButtonsControl,
 	PanelAdvancedSettings,
@@ -32,7 +31,7 @@ import {
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl,
+	DivBackground, ContentAlignControl, ResponsiveControl, BackgroundControlsHelper,
 } from '../../components'
 import {
 	withBlockStyles,

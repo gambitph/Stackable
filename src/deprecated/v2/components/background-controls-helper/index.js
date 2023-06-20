@@ -1,11 +1,11 @@
 /**
  * External dependencies
  */
-import { BackgroundControls } from '~stackable/components'
+import { BackgroundControls } from '..'
 import { camelCase } from 'lodash'
 
 /**
- * WordPress dependencies
+ * WordPress dependenciess
  */
 import { sprintf } from '@wordpress/i18n'
 

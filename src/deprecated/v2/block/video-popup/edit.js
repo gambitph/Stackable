@@ -3,7 +3,6 @@
  */
 import {
 	AdvancedRangeControl,
-	BackgroundControlsHelper,
 	BlockContainer,
 	ColorPaletteControl,
 	ImageControl,
@@ -13,7 +12,9 @@ import {
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
-import { DivBackground, ResponsiveControl } from '../../components'
+import {
+	DivBackground, ResponsiveControl, BackgroundControlsHelper,
+} from '../../components'
 import {
 	getVideoProviderFromURL,
 	urlIsVideo,
@@ -40,9 +41,7 @@ import createStyles from './style'
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
-import {
-	SelectControl, TextControl,
-} from '@wordpress/components'
+import { SelectControl, TextControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
@@ -193,11 +192,11 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 				</ResponsiveControl>
 
 				{ show.border &&
-				<BorderControlsHelper
-					attrNameTemplate="column%s"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
+					<BorderControlsHelper
+						attrNameTemplate="column%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
 				}
 
 				{ show.borderRadius &&

@@ -8,7 +8,6 @@ import {
 	BlockContainer,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
-	BackgroundControlsHelper,
 	ImageControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
@@ -27,6 +26,7 @@ import {
 	DivBackground,
 	Image,
 	ResponsiveControl,
+	BackgroundControlsHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,
@@ -592,7 +592,7 @@ const edit = props => {
 								}
 								{ showButton &&
 									<ButtonEditHelper
-										attrNameTemplate={ `button%s` }
+										attrNameTemplate="button%s"
 										setAttributes={ setAttributes }
 										blockAttributes={ props.attributes }
 										designDefault="plain"

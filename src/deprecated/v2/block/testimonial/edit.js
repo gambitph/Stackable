@@ -20,7 +20,6 @@ import {
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	AlignButtonsControl,
@@ -38,6 +37,7 @@ import {
 	DivBackground,
 	Image,
 	ResponsiveControl,
+	BackgroundControlsHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,

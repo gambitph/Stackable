@@ -18,9 +18,7 @@ import { urlIsVideo } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import {
-	BaseControl,
-} from '@wordpress/components'
+import { BaseControl } from '@wordpress/components'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
@@ -74,7 +72,7 @@ const BackgroundControls = props => {
 			) }
 			{ props.onChangeBackgroundColorOpacity && props.backgroundColorType !== 'gradient' &&
 				( ! props.backgroundMediaURL && ! props.tabletBackgroundMediaURL && ! props.mobileBackgroundMediaURL ) && (
-				<AdvancedRangeControl
+					<AdvancedRangeControl
 					label={ __( 'Background Color Opacity', i18n ) }
 					value={ props.backgroundColorOpacity }
 					onChange={ props.onChangeBackgroundColorOpacity }
@@ -204,9 +202,9 @@ const BackgroundControls = props => {
 			{ props.onChangeBackgroundTintStrength && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) && (
 				<AdvancedRangeControl
-					label={ __( 'Background Media Tint Strength', i18n ) }
-					value={ props.backgroundTintStrength }
-					onChange={ value => {
+						label={ __( 'Background Media Tint Strength', i18n ) }
+						value={ props.backgroundTintStrength }
+						onChange={ value => {
 						const noValue = typeof value === 'undefined' || value === ''
 						// If the tint is changed, but on background color yet, make it black. Fixes #136.
 						if ( props.backgroundColor === '' && ! noValue ) {
@@ -218,12 +216,12 @@ const BackgroundControls = props => {
 							props.onChangeBackgroundTintStrength( value, props.backgroundColor )
 						}
 					} }
-					min={ 0 }
-					max={ 10 }
-					step={ 1 }
-					allowReset={ true }
-					placeholder={ props.backgroundColor ? '5' : '0' }
-					className="ugb--help-tip-background-tint"
+						min={ 0 }
+						max={ 10 }
+						step={ 1 }
+						allowReset={ true }
+						placeholder={ props.backgroundColor ? '5' : '0' }
+						className="ugb--help-tip-background-tint"
 				/>
 			) }
 
@@ -231,233 +229,233 @@ const BackgroundControls = props => {
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
 				! isBackgroundVideo() && (
 				<AdvancedToggleControl
-					label={ __( 'Fixed Background', i18n ) }
-					checked={ props.fixedBackground }
-					onChange={ props.onChangeFixedBackground }
-					className="ugb--help-tip-background-fixed"
+						label={ __( 'Fixed Background', i18n ) }
+						checked={ props.fixedBackground }
+						onChange={ props.onChangeFixedBackground }
+						className="ugb--help-tip-background-fixed"
 				/>
 			) }
 
 			{ props.hasAdvancedBackground && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
-				<ButtonIconPopoverControl
-					label={ __( 'Adv. Background Image Settings', i18n ) }
-					onReset={ props.onResetAdvancedBackground }
-					allowReset={
-						props.backgroundPosition || props.tabletBackgroundPosition || props.mobileBackgroundPosition ||
+					<ButtonIconPopoverControl
+						label={ __( 'Adv. Background Image Settings', i18n ) }
+						onReset={ props.onResetAdvancedBackground }
+						allowReset={
+							props.backgroundPosition || props.tabletBackgroundPosition || props.mobileBackgroundPosition ||
 						props.backgroundRepeat || props.tabletBackgroundRepeat || props.mobileBackgroundRepeat ||
 						props.backgroundSize || props.tabletBackgroundSize || props.mobileBackgroundSize ||
 						props.backgroundImageBlendMode
-					}
-				>
+						}
+					>
 
-					<WhenResponsiveScreen>
-						<AdvancedSelectControl
-							label={ __( 'Image Position', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Top Left', i18n ), value: 'top left' },
-								{ label: __( 'Top Center', i18n ), value: 'top center' },
-								{ label: __( 'Top Right', i18n ), value: 'top right' },
-								{ label: __( 'Center Left', i18n ), value: 'center left' },
-								{ label: __( 'Center Center', i18n ), value: 'center center' },
-								{ label: __( 'Center Right', i18n ), value: 'center right' },
-								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
-								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
-								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
-							] }
-							value={ props.backgroundPosition }
-							onChange={ props.onChangeBackgroundPosition }
-							className="ugb--help-tip-background-image-position"
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedSelectControl
-							label={ __( 'Image Position', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Top Left', i18n ), value: 'top left' },
-								{ label: __( 'Top Center', i18n ), value: 'top center' },
-								{ label: __( 'Top Right', i18n ), value: 'top right' },
-								{ label: __( 'Center Left', i18n ), value: 'center left' },
-								{ label: __( 'Center Center', i18n ), value: 'center center' },
-								{ label: __( 'Center Right', i18n ), value: 'center right' },
-								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
-								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
-								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
-							] }
-							value={ props.tabletBackgroundPosition }
-							onChange={ props.onChangeTabletBackgroundPosition }
-							className="ugb--help-tip-background-image-position"
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedSelectControl
-							label={ __( 'Image Position', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Top Left', i18n ), value: 'top left' },
-								{ label: __( 'Top Center', i18n ), value: 'top center' },
-								{ label: __( 'Top Right', i18n ), value: 'top right' },
-								{ label: __( 'Center Left', i18n ), value: 'center left' },
-								{ label: __( 'Center Center', i18n ), value: 'center center' },
-								{ label: __( 'Center Right', i18n ), value: 'center right' },
-								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
-								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
-								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
-							] }
-							value={ props.mobileBackgroundPosition }
-							onChange={ props.onChangeMobileBackgroundPosition }
-							className="ugb--help-tip-background-image-position"
-						/>
-					</WhenResponsiveScreen>
-
-					<WhenResponsiveScreen>
-						<AdvancedSelectControl
-							label={ __( 'Image Repeat', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
-								{ label: __( 'Repeat', i18n ), value: 'repeat' },
-								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
-							] }
-							value={ props.backgroundRepeat }
-							onChange={ props.onChangeBackgroundRepeat }
-							className="ugb--help-tip-background-image-repeat"
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedSelectControl
-							label={ __( 'Image Repeat', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
-								{ label: __( 'Repeat', i18n ), value: 'repeat' },
-								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
-							] }
-							value={ props.tabletBackgroundRepeat }
-							onChange={ props.onChangeTabletBackgroundRepeat }
-							className="ugb--help-tip-background-image-repeat"
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedSelectControl
-							label={ __( 'Image Repeat', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
-								{ label: __( 'Repeat', i18n ), value: 'repeat' },
-								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
-							] }
-							value={ props.mobileBackgroundRepeat }
-							onChange={ props.onChangeMobileBackgroundRepeat }
-							className="ugb--help-tip-background-image-repeat"
-						/>
-					</WhenResponsiveScreen>
-
-					<WhenResponsiveScreen>
-						<AdvancedSelectControl
-							label={ __( 'Image Size', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Auto', i18n ), value: 'auto' },
-								{ label: __( 'Cover', i18n ), value: 'cover' },
-								{ label: __( 'Contain', i18n ), value: 'contain' },
-								{ label: __( 'Custom', i18n ), value: 'custom' },
-							] }
-							value={ props.backgroundSize }
-							onChange={ props.onChangeBackgroundSize }
-							className="ugb--help-tip-background-image-size"
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedSelectControl
-							label={ __( 'Image Size', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Auto', i18n ), value: 'auto' },
-								{ label: __( 'Cover', i18n ), value: 'cover' },
-								{ label: __( 'Contain', i18n ), value: 'contain' },
-								{ label: __( 'Custom', i18n ), value: 'custom' },
-							] }
-							value={ props.tabletBackgroundSize }
-							onChange={ props.onChangeTabletBackgroundSize }
-							className="ugb--help-tip-background-image-size"
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedSelectControl
-							label={ __( 'Image Size', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Auto', i18n ), value: 'auto' },
-								{ label: __( 'Cover', i18n ), value: 'cover' },
-								{ label: __( 'Contain', i18n ), value: 'contain' },
-								{ label: __( 'Custom', i18n ), value: 'custom' },
-							] }
-							value={ props.mobileBackgroundSize }
-							onChange={ props.onChangeMobileBackgroundSize }
-							className="ugb--help-tip-background-image-size"
-						/>
-					</WhenResponsiveScreen>
-
-					{ props.backgroundSize === 'custom' && (
 						<WhenResponsiveScreen>
-							<AdvancedRangeControl
-								label={ __( 'Custom Size', i18n ) }
-								units={ [ 'px', '%', 'vw' ] }
-								min={ [ 0, 0, 0 ] }
-								max={ [ 1000, 100, 100 ] }
-								unit={ props.backgroundCustomSizeUnit }
-								onChangeUnit={ props.onChangeBackgroundCustomSizeUnit }
-								value={ props.backgroundCustomSize }
-								onChange={ props.onChangeBackgroundCustomSize }
-								allowReset={ true }
+							<AdvancedSelectControl
+								label={ __( 'Image Position', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'Top Left', i18n ), value: 'top left' },
+									{ label: __( 'Top Center', i18n ), value: 'top center' },
+									{ label: __( 'Top Right', i18n ), value: 'top right' },
+									{ label: __( 'Center Left', i18n ), value: 'center left' },
+									{ label: __( 'Center Center', i18n ), value: 'center center' },
+									{ label: __( 'Center Right', i18n ), value: 'center right' },
+									{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
+									{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
+									{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
+								] }
+								value={ props.backgroundPosition }
+								onChange={ props.onChangeBackgroundPosition }
+								className="ugb--help-tip-background-image-position"
 							/>
 						</WhenResponsiveScreen>
-					) }
-					{ props.tabletBackgroundSize === 'custom' && (
 						<WhenResponsiveScreen screen="tablet">
-							<AdvancedRangeControl
-								label={ __( 'Custom Size', i18n ) }
-								units={ [ 'px', '%', 'vw' ] }
-								min={ [ 0, 0, 0 ] }
-								max={ [ 1000, 100, 100 ] }
-								unit={ props.tabletBackgroundCustomSizeUnit }
-								onChangeUnit={ props.onChangeTabletBackgroundCustomSizeUnit }
-								value={ props.tabletBackgroundCustomSize }
-								onChange={ props.onChangeTabletBackgroundCustomSize }
-								allowReset={ true }
+							<AdvancedSelectControl
+								label={ __( 'Image Position', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'Top Left', i18n ), value: 'top left' },
+									{ label: __( 'Top Center', i18n ), value: 'top center' },
+									{ label: __( 'Top Right', i18n ), value: 'top right' },
+									{ label: __( 'Center Left', i18n ), value: 'center left' },
+									{ label: __( 'Center Center', i18n ), value: 'center center' },
+									{ label: __( 'Center Right', i18n ), value: 'center right' },
+									{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
+									{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
+									{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
+								] }
+								value={ props.tabletBackgroundPosition }
+								onChange={ props.onChangeTabletBackgroundPosition }
+								className="ugb--help-tip-background-image-position"
 							/>
 						</WhenResponsiveScreen>
-					) }
-					{ props.mobileBackgroundSize === 'custom' && (
 						<WhenResponsiveScreen screen="mobile">
-							<AdvancedRangeControl
-								label={ __( 'Custom Size', i18n ) }
-								units={ [ 'px', '%', 'vw' ] }
-								min={ [ 0, 0, 0 ] }
-								max={ [ 1000, 100, 100 ] }
-								unit={ props.mobileBackgroundCustomSizeUnit }
-								onChangeUnit={ props.onChangeMobileBackgroundCustomSizeUnit }
-								value={ props.mobileBackgroundCustomSize }
-								onChange={ props.onChangeMobileBackgroundCustomSize }
-								allowReset={ true }
+							<AdvancedSelectControl
+								label={ __( 'Image Position', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'Top Left', i18n ), value: 'top left' },
+									{ label: __( 'Top Center', i18n ), value: 'top center' },
+									{ label: __( 'Top Right', i18n ), value: 'top right' },
+									{ label: __( 'Center Left', i18n ), value: 'center left' },
+									{ label: __( 'Center Center', i18n ), value: 'center center' },
+									{ label: __( 'Center Right', i18n ), value: 'center right' },
+									{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
+									{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
+									{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
+								] }
+								value={ props.mobileBackgroundPosition }
+								onChange={ props.onChangeMobileBackgroundPosition }
+								className="ugb--help-tip-background-image-position"
 							/>
 						</WhenResponsiveScreen>
-					) }
 
-					{ props.onChangeBackgroundImageBlendMode && (
-						<BlendModeControl
-							label={ __( 'Image Blend Mode', i18n ) }
-							value={ props.backgroundImageBlendMode }
-							onChange={ props.onChangeBackgroundImageBlendMode }
-						/>
-					) }
-				</ButtonIconPopoverControl>
+						<WhenResponsiveScreen>
+							<AdvancedSelectControl
+								label={ __( 'Image Repeat', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
+									{ label: __( 'Repeat', i18n ), value: 'repeat' },
+									{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
+									{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
+								] }
+								value={ props.backgroundRepeat }
+								onChange={ props.onChangeBackgroundRepeat }
+								className="ugb--help-tip-background-image-repeat"
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedSelectControl
+								label={ __( 'Image Repeat', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
+									{ label: __( 'Repeat', i18n ), value: 'repeat' },
+									{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
+									{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
+								] }
+								value={ props.tabletBackgroundRepeat }
+								onChange={ props.onChangeTabletBackgroundRepeat }
+								className="ugb--help-tip-background-image-repeat"
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedSelectControl
+								label={ __( 'Image Repeat', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
+									{ label: __( 'Repeat', i18n ), value: 'repeat' },
+									{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
+									{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
+								] }
+								value={ props.mobileBackgroundRepeat }
+								onChange={ props.onChangeMobileBackgroundRepeat }
+								className="ugb--help-tip-background-image-repeat"
+							/>
+						</WhenResponsiveScreen>
+
+						<WhenResponsiveScreen>
+							<AdvancedSelectControl
+								label={ __( 'Image Size', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'Auto', i18n ), value: 'auto' },
+									{ label: __( 'Cover', i18n ), value: 'cover' },
+									{ label: __( 'Contain', i18n ), value: 'contain' },
+									{ label: __( 'Custom', i18n ), value: 'custom' },
+								] }
+								value={ props.backgroundSize }
+								onChange={ props.onChangeBackgroundSize }
+								className="ugb--help-tip-background-image-size"
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedSelectControl
+								label={ __( 'Image Size', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'Auto', i18n ), value: 'auto' },
+									{ label: __( 'Cover', i18n ), value: 'cover' },
+									{ label: __( 'Contain', i18n ), value: 'contain' },
+									{ label: __( 'Custom', i18n ), value: 'custom' },
+								] }
+								value={ props.tabletBackgroundSize }
+								onChange={ props.onChangeTabletBackgroundSize }
+								className="ugb--help-tip-background-image-size"
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedSelectControl
+								label={ __( 'Image Size', i18n ) }
+								options={ [
+									{ label: __( 'Default', i18n ), value: '' },
+									{ label: __( 'Auto', i18n ), value: 'auto' },
+									{ label: __( 'Cover', i18n ), value: 'cover' },
+									{ label: __( 'Contain', i18n ), value: 'contain' },
+									{ label: __( 'Custom', i18n ), value: 'custom' },
+								] }
+								value={ props.mobileBackgroundSize }
+								onChange={ props.onChangeMobileBackgroundSize }
+								className="ugb--help-tip-background-image-size"
+							/>
+						</WhenResponsiveScreen>
+
+						{ props.backgroundSize === 'custom' && (
+							<WhenResponsiveScreen>
+								<AdvancedRangeControl
+									label={ __( 'Custom Size', i18n ) }
+									units={ [ 'px', '%', 'vw' ] }
+									min={ [ 0, 0, 0 ] }
+									max={ [ 1000, 100, 100 ] }
+									unit={ props.backgroundCustomSizeUnit }
+									onChangeUnit={ props.onChangeBackgroundCustomSizeUnit }
+									value={ props.backgroundCustomSize }
+									onChange={ props.onChangeBackgroundCustomSize }
+									allowReset={ true }
+								/>
+							</WhenResponsiveScreen>
+						) }
+						{ props.tabletBackgroundSize === 'custom' && (
+							<WhenResponsiveScreen screen="tablet">
+								<AdvancedRangeControl
+									label={ __( 'Custom Size', i18n ) }
+									units={ [ 'px', '%', 'vw' ] }
+									min={ [ 0, 0, 0 ] }
+									max={ [ 1000, 100, 100 ] }
+									unit={ props.tabletBackgroundCustomSizeUnit }
+									onChangeUnit={ props.onChangeTabletBackgroundCustomSizeUnit }
+									value={ props.tabletBackgroundCustomSize }
+									onChange={ props.onChangeTabletBackgroundCustomSize }
+									allowReset={ true }
+								/>
+							</WhenResponsiveScreen>
+						) }
+						{ props.mobileBackgroundSize === 'custom' && (
+							<WhenResponsiveScreen screen="mobile">
+								<AdvancedRangeControl
+									label={ __( 'Custom Size', i18n ) }
+									units={ [ 'px', '%', 'vw' ] }
+									min={ [ 0, 0, 0 ] }
+									max={ [ 1000, 100, 100 ] }
+									unit={ props.mobileBackgroundCustomSizeUnit }
+									onChangeUnit={ props.onChangeMobileBackgroundCustomSizeUnit }
+									value={ props.mobileBackgroundCustomSize }
+									onChange={ props.onChangeMobileBackgroundCustomSize }
+									allowReset={ true }
+								/>
+							</WhenResponsiveScreen>
+						) }
+
+						{ props.onChangeBackgroundImageBlendMode && (
+							<BlendModeControl
+								label={ __( 'Image Blend Mode', i18n ) }
+								value={ props.backgroundImageBlendMode }
+								onChange={ props.onChangeBackgroundImageBlendMode }
+							/>
+						) }
+					</ButtonIconPopoverControl>
 			}
 		</Fragment>
 	)

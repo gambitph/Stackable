@@ -23,7 +23,6 @@ import {
 	WhenResponsiveScreen,
 	AdvancedRangeControl,
 	ControlSeparator,
-	BackgroundControlsHelper,
 	ColorPaletteControl,
 	PanelAdvancedSettings,
 	ButtonIconPopoverControl,
@@ -32,6 +31,7 @@ import {
 } from '~stackable/components'
 import {
 	DivBackground, ContentAlignControl, ResponsiveControl,
+	BackgroundControlsHelper,
 } from '../../components'
 import {
 	withUniqueClass,

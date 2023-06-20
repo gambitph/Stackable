@@ -4,7 +4,6 @@
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
-	BackgroundControlsHelper,
 	BlockContainer,
 	ColorPaletteControl,
 	DesignPanelBody,
@@ -19,6 +18,7 @@ import {
 } from '~stackable/components'
 import {
 	ContentAlignControl, DivBackground, ResponsiveControl,
+	BackgroundControlsHelper,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,

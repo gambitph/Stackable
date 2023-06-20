@@ -8,7 +8,6 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	BlockContainer,
-	BackgroundControlsHelper,
 	ButtonIconPopoverControl,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
@@ -29,6 +28,7 @@ import {
 	DivBackground,
 	Image,
 	ResponsiveControl,
+	BackgroundControlsHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,
