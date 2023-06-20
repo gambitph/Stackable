@@ -11,7 +11,6 @@ import {
 	AdvancedToggleControl,
 	BlockContainer,
 	AdvancedRangeControl,
-	IconControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
@@ -27,6 +26,7 @@ import {
 	ResponsiveControl,
 	SvgIconPlaceholder,
 	ColumnPaddingControl,
+	IconControlsHelper,
 } from '../../components'
 import {
 	withUniqueClass,

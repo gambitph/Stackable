@@ -14,12 +14,16 @@ import {
 	PanelSpacingBody,
 	ProControlButton,
 	TypographyControlHelper,
-	IconControlsHelper,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl, SvgIconPlaceholder,
-	BackgroundControlsHelper, ColumnPaddingControl,
+	DivBackground,
+	ContentAlignControl,
+	ResponsiveControl,
+	SvgIconPlaceholder,
+	BackgroundControlsHelper,
+	ColumnPaddingControl,
+	IconControlsHelper,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,
