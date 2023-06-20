@@ -9,7 +9,7 @@
 }
 
 // Make sure the blocks in inner columns have the correct width when max content width is set
-.stk-block-columns > .stk-inner-blocks > .stk-block-column .stk-inner-blocks > .stk-block {
+.stk-column-wrapper > .stk-inner-blocks > .stk-block {
 	width: inherit;
 }
 
