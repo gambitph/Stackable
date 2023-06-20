@@ -44,6 +44,8 @@ export const Edit = props => {
 		responsive = 'all',
 		hover = 'all',
 		defaultValue,
+		onChangeIcon,
+		iconGapPlaceholder = '0',
 	} = props
 
 	const PremiumColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.color-controls', null ), [] )
@@ -81,10 +83,18 @@ export const Edit = props => {
 				label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
 				value={ attributes.icon }
 				defaultValue={ defaultValue }
-				onChange={ icon => setAttributes( { icon } ) }
+				onChange={ icon => {
+					if ( onChangeIcon ) {
+						onChangeIcon( icon )
+					} else {
+						setAttributes( { icon } )
+					}
+				} }
 				help={ iconControlHelp }
 				hasPanelModifiedIndicator={ false }
 			/>
+
+			{ props.children }
 
 			{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton type="icon-colors" /> }
 
@@ -150,19 +160,10 @@ export const Edit = props => {
 				<AdvancedSelectControl
 					label={ __( 'Icon Position', i18n ) }
 					attribute="iconPosition"
-					options={
-						props.iconPositionMode === 'horizontal'
-							? [
-								{ value: '', label: __( 'Left', i18n ) },
-								{ value: 'right', label: __( 'Right', i18n ) },
-							]
-							: [
-								{ value: '', label: __( 'Left', i18n ) },
-								{ value: 'right', label: __( 'Right', i18n ) },
-								{ value: 'top', label: __( 'Top', i18n ) },
-								{ value: 'bottom', label: __( 'Bottom', i18n ) },
-							]
-					}
+					options={ [
+						{ value: '', label: __( 'Left', i18n ) },
+						{ value: 'right', label: __( 'Right', i18n ) },
+					] }
 				/>
 			) }
 
@@ -173,7 +174,7 @@ export const Edit = props => {
 					min={ 0 }
 					sliderMax={ 50 }
 					allowReset={ true }
-					placeholder="0"
+					placeholder={ iconGapPlaceholder }
 				/>
 			) }
 		</>
@@ -282,7 +283,7 @@ Edit.defaultProps = {
 	initialOpen: false,
 	hasIconGap: false,
 	hasIconPosition: false,
-	iconPositionMode: 'horizontal', // or 'all'
 	hasMultiColor: false,
 	defaultValue: '',
+	onChangeIcon: null,
 }

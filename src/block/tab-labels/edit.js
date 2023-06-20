@@ -2,6 +2,12 @@
  * Internal dependencies
  */
 import { TextStyles } from './style'
+import { useSetActiveTabContext } from '../tabs/with-active-tab'
+
+import SVGIconLeft from './images/icon-left.svg'
+import SVGIconRight from './images/icon-right.svg'
+import SVGIconTop from './images/icon-top.svg'
+import SVGIconBottom from './images/icon-bottom.svg'
 
 /**
  * External dependencies
@@ -15,11 +21,13 @@ import {
 	Typography,
 	getTypographyClasses,
 	getAlignmentClasses,
-	Alignment,
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	Icon,
+	BlockStyle,
+	Button,
 } from '~stackable/block-components'
 import { i18n, version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -29,6 +37,10 @@ import {
 	AdvancedToggleControl,
 	AdvancedRangeControl,
 	InspectorStyleControls,
+	PanelAdvancedSettings,
+	ControlSeparator,
+	AdvancedToolbarControl,
+	AlignButtonsControl,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
@@ -46,10 +58,38 @@ import {
 import { dispatch } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { BlockControls, RichText } from '@wordpress/block-editor'
-import { useSetActiveTabContext } from '../tabs/with-active-tab'
 import { Toolbar, ToolbarButton } from '@wordpress/components'
 import { useBlockContext } from '~stackable/hooks'
 import { getBlockFromExample } from '@wordpress/blocks'
+import { defaultIcon } from './schema'
+import { blockStyles as _blockStyles } from './block-styles'
+
+// These are the style names (in block-styles.js) that are only available if the
+// parent tabs block orientation is horizontal.
+const HORIZONTAL_STYLES = [ 'centered-buttons' ]
+
+const ICON_ALIGN_OPTIONS = [
+	{
+		value: '',
+		title: __( 'Left', i18n ),
+		icon: <SVGIconLeft />,
+	},
+	{
+		value: 'right',
+		title: __( 'Right', i18n ),
+		icon: <SVGIconRight />,
+	},
+	{
+		value: 'top',
+		title: __( 'Top', i18n ),
+		icon: <SVGIconTop />,
+	},
+	{
+		value: 'bottom',
+		title: __( 'Bottom', i18n ),
+		icon: <SVGIconBottom />,
+	},
+]
 
 const Edit = props => {
 	const {
@@ -79,6 +119,12 @@ const Edit = props => {
 	const updateTabLabel = ( content, index ) => {
 		const updatedLabels = [ ...props.attributes.tabLabels ]
 		updatedLabels[ index ].label = content
+		setAttributes( { tabLabels: updatedLabels } )
+	}
+
+	const updateTabIcon = ( icon, index ) => {
+		const updatedLabels = [ ...props.attributes.tabLabels ]
+		updatedLabels[ index ].icon = icon
 		setAttributes( { tabLabels: updatedLabels } )
 	}
 
@@ -147,6 +193,36 @@ const Edit = props => {
 		setActiveTab( index + 1 )
 	}
 
+	const duplicateTab = index => {
+		// Duplicate the tab label
+		const updatedLabels = [ ...props.attributes.tabLabels ]
+		updatedLabels.splice( index, 0, { label: updatedLabels[ index - 1 ].label, icon: updatedLabels[ index - 1 ].icon } )
+		setAttributes( { tabLabels: updatedLabels } )
+
+		// Duplicate the tab content
+		setTemplateLock( false )
+		setTimeout( () => { // We need to wait a bit for the templateLock to get applied to the tabContent component.
+			const tabContentBlock = parentBlock.innerBlocks[ 0 ].name === 'stackable/tab-content' ? parentBlock.innerBlocks[ 0 ] : parentBlock.innerBlocks[ 1 ]
+
+			dispatch( 'core/block-editor' ).duplicateBlocks( [ tabContentBlock.innerBlocks[ index - 1 ].clientId ], false )
+			setTemplateLock( true )
+		}, 1 )
+
+		// Focus on the new tab label
+		setTimeout( () => {
+			const range = document.createRange()
+			range.selectNodeContents( getRef( index ).current )
+			range.collapse( false )
+
+			const selection = window.getSelection() // eslint-disable-line
+			selection.removeAllRanges()
+			selection.addRange( range )
+		}, 1 )
+
+		// Change the active tab
+		setActiveTab( index + 1 )
+	}
+
 	const deleteActiveTab = () => {
 		const index = activeTab - 1
 		// Delete the tab label
@@ -180,9 +256,26 @@ const Edit = props => {
 		setActiveTab( newIndex + 1 )
 	}
 
+	// Filter the available styles depending on the context.
+	const blockStyles = _blockStyles.map( style => {
+		let disabled = false
+		if ( context[ 'stackable/tabOrientation' ] === 'vertical' ) {
+			if ( HORIZONTAL_STYLES.includes( style.name ) ) {
+				disabled = true
+			}
+		}
+		return {
+			...style,
+			disabled,
+		}
+	} )
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-tab-labels',
+		{
+			'stk-block-tab-labels--wrap-mobile': ! props.attributes.scrollableOnMobile,
+		},
 	] )
 
 	const textClassNames = classnames( [
@@ -214,14 +307,7 @@ const Edit = props => {
 						</Toolbar>
 					</BlockControls>
 
-					<Typography.InspectorControls
-						{ ...props }
-						hasTextTag={ false }
-						isMultiline={ true }
-						initialOpen={ true }
-						hasTextShadow={ true }
-					/>
-					<Alignment.InspectorControls />
+					{ /* <Alignment.InspectorControls /> */ }
 
 					<BlockControls>
 						<Toolbar>
@@ -229,6 +315,11 @@ const Edit = props => {
 								label={ __( 'Add tab', i18n ) }
 								icon="plus-alt2"
 								onClick={ () => addNewTab( activeTab ) }
+							/>
+							<ToolbarButton
+								label={ __( 'Duplicate tab', i18n ) }
+								icon="admin-page"
+								onClick={ () => duplicateTab( activeTab ) }
 							/>
 							<ToolbarButton
 								label={ __( 'Delete tab', i18n ) }
@@ -249,8 +340,40 @@ const Edit = props => {
 							<AdvancedToggleControl
 								label={ __( 'Full Width', i18n ) }
 								attribute="fullWidth"
-								default={ false }
+								defaultValue={ false }
 							/>
+						</> }
+
+						{ props.attributes.showIcon &&
+							<AdvancedToolbarControl
+								label={ __( 'Icon Position', i18n ) }
+								controls={ ICON_ALIGN_OPTIONS }
+								attribute="iconPosition"
+							/>
+						}
+
+						{ context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
+							{ ! props.attributes.fullWidth && (
+								<AdvancedToolbarControl
+									label={ __( 'Tab Alignment', i18n ) }
+									attribute="tabAlignment"
+									controls="horizontal"
+									// default="flex-start"
+									responsive="all"
+									// value={ props.attributes.tabAlignment |' }
+								/>
+							) }
+						</> }
+
+						{ ( props.attributes.fullWidth || context[ 'stackable/tabOrientation' ] === 'vertical' || props.attributes.iconPosition === 'top' || props.attributes.iconPosition === 'bottom' ) && <>
+							<AlignButtonsControl
+								label={ __( 'Text Alignment', i18n ) }
+								attribute="contentAlign"
+								responsive="all"
+							/>
+						</> }
+
+						{ context[ 'stackable/tabOrientation' ] !== 'vertical' && <>
 							<AdvancedRangeControl
 								label={ __( 'Column Gap', i18n ) }
 								attribute="columnGap"
@@ -260,6 +383,7 @@ const Edit = props => {
 								responsive="all"
 							/>
 						</> }
+
 						<AdvancedRangeControl
 							label={ __( 'Row Gap', i18n ) }
 							attribute="rowGap"
@@ -268,10 +392,139 @@ const Edit = props => {
 							placeholder="8"
 							responsive="all"
 						/>
+
+						{ props.attributes.showIcon &&
+							<AdvancedRangeControl
+								label={ __( 'Icon Gap', i18n ) }
+								attribute="iconGap"
+								min={ 0 }
+								sliderMax={ 50 }
+								placeholder="8"
+							/>
+						}
+
+						<AdvancedToggleControl
+							label={ __( 'Scrollable Tabs on Mobile', i18n ) }
+							attribute="scrollableOnMobile"
+							defaultValue={ true }
+
+						/>
+
 					</InspectorLayoutControls>
 
 					<InspectorStyleControls>
 						{ /* TODO: styles, button baclground, button borders, active state, icons */ }
+						<PanelAdvancedSettings
+							title={ __( 'Tab', i18n ) }
+							initialOpen={ true }
+							id="tab"
+						>
+							<BlockStyle.InspectorControls.Controls styles={ blockStyles } />
+							<ControlSeparator />
+
+							<Button.InspectorControls.Colors.Controls
+								hasTextColor
+								hasIconColor={ props.attributes.showIcon }
+							/>
+							<ControlSeparator />
+							<Button.InspectorControls.Size.Controls />
+							<ControlSeparator />
+							<Button.InspectorControls.Borders.Controls
+								attrNameTemplate="tab%s"
+							/>
+							{ /* <Typography.InspectorControls.Controls
+								{ ...props }
+								hasTextContent={ false }
+								hasTextTag={ false }
+								isMultiline={ true }
+								initialOpen={ true }
+								hasTextShadow={ true }
+								// attrNameTemplate={ editState === 'normal' ? '' : 'active%s' }
+							/> */ }
+						</PanelAdvancedSettings>
+
+						<PanelAdvancedSettings
+							title={ __( 'Tab Active State', i18n ) }
+							// initialOpen={ false }
+							id="tab-active-state"
+						>
+							<Button.InspectorControls.Colors.Controls
+								hasTextColor
+								hasIconColor={ props.attributes.showIcon }
+							/>
+							<ControlSeparator />
+							<Button.InspectorControls.Borders.Controls
+								attrNameTemplate="activeTab%s"
+								hasBorderType={ false }
+								borderTypeValue={ props.attributes.tabBorderType } // Change this to the value of the border type control
+								hasBorderRadius={ false }
+							/>
+							{ /*
+							<ColorPaletteControl
+								label={ __( 'Background Color', i18n ) }
+								attribute="activeBackgroundColor"
+								hover="all"
+							/> */ }
+						</PanelAdvancedSettings>
+
+						<PanelAdvancedSettings
+							title={ __( 'Typography', i18n ) }
+							initialOpen={ false }
+							id="typography"
+						>
+							<Typography.InspectorControls.Controls
+								{ ...props }
+								hasTextContent={ false }
+								hasTextTag={ false }
+								isMultiline={ true }
+								initialOpen={ true }
+								hasTextShadow={ true }
+								hasGradient={ false }
+								// hasColor={ false }
+								// attrNameTemplate={ editState === 'normal' ? '' : 'active%s' }
+							/>
+						</PanelAdvancedSettings>
+
+						<PanelAdvancedSettings
+							title={ __( 'Icon', i18n ) }
+							initialOpen={ false }
+							hasToggle={ true }
+							checked={ props.attributes.showIcon }
+							onChange={ showIcon => setAttributes( { showIcon } ) }
+							id="icon"
+						>
+							<Icon.InspectorControls
+								wrapInPanels={ false }
+								hasGradient={ false }
+								hasShape={ false }
+								hasBackgroundShape={ false }
+								hasIconGap={ true }
+								hasIconPosition={ false }
+								defaultValue={ defaultIcon }
+								// blockName={ props.name }
+								// iconPositionMode="all"
+								iconGapPlaceholder="8"
+								onChangeIcon={ icon => {
+									// Reset all tab label icons.
+									const newTabLabels = props.attributes.tabLabels.map(
+										tab => ( {
+											...tab,
+											icon: '',
+										} )
+									)
+									setAttributes( {
+										icon,
+										tabLabels: newTabLabels,
+									} )
+								} }
+							>
+								<AdvancedToolbarControl
+									label={ __( 'Icon Position', i18n ) }
+									controls={ ICON_ALIGN_OPTIONS }
+									attribute="iconPosition"
+								/>
+							</Icon.InspectorControls>
+						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
 					<BlockDiv.InspectorControls />
@@ -304,12 +557,19 @@ const Edit = props => {
 						return (
 							// eslint-disable-next-line jsx-a11y/role-supports-aria-props
 							<button
-								className="stk-block-tabs__tab"
+								className={ classnames( 'stk-block-tabs__tab', {
+									'stk-block-tabs__tab--active': activeTab === index + 1,
+								} ) }
 								aria-selected={ activeTab === index + 1 ? 'true' : 'false' }
 								key={ index }
 								onClick={ () => onClick( index + 1 ) }
 							>
-								{ /* { props.attributes.iconPosition !== 'right' && <Icon /> } */ }
+								{ props.attributes.showIcon && (
+									<Icon
+										onChange={ icon => updateTabIcon( icon, index ) }
+										value={ props.attributes.tabLabels[ index ].icon }
+									/>
+								) }
 								<div className={ textClassNames }>
 									<RichText
 										key={ index }

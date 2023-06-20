@@ -16,7 +16,10 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	Transform,
+	Icon,
 } from '~stackable/block-components'
+
+export const defaultIcon = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>'
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
@@ -33,6 +36,7 @@ export const attributes = ( version = VERSION ) => {
 	Alignment.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-block-tab-labels__text', { hasTextTag: false } )
+	Icon.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {
@@ -44,9 +48,18 @@ export const attributes = ( version = VERSION ) => {
 					{ label: '', icon: '' },
 				],
 			},
+			tabAlignment: {
+				type: 'string',
+				default: '',
+				stkResponsive: true,
+			},
 			fullWidth: {
 				type: 'boolean',
 				default: false,
+			},
+			scrollableOnMobile: {
+				type: 'boolean',
+				default: true,
 			},
 			columnGap: {
 				type: 'number',
@@ -58,6 +71,29 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkResponsive: true,
 			},
+
+			showIcon: {
+				type: 'boolean',
+				default: false,
+			},
+			iconPosition: {
+				type: 'string',
+				default: '',
+			},
+
+			activeBackgroundColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.addDefaultValues( {
+		attributes: {
+			icon: defaultIcon,
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

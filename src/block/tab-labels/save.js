@@ -9,6 +9,7 @@ import {
 	getResponsiveClasses,
 	getTypographyClasses,
 	getAlignmentClasses,
+	Icon,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -35,6 +36,9 @@ export const Save = props => {
 		className,
 		'stk-block-tab-labels',
 		responsiveClass,
+		{
+			'stk-block-tab-labels--wrap-mobile': ! props.attributes.scrollableOnMobile,
+		},
 	] )
 
 	const textClassNames = classnames( [
@@ -62,7 +66,12 @@ export const Save = props => {
 							role="tab"
 							key={ index }
 						>
-							{ /* { attributes.iconPosition !== 'right' && <Icon.Content attributes={ attributes } /> } */ }
+							{ props.attributes.showIcon && (
+								<Icon.Content
+									attributes={ attributes }
+									value={ props.attributes.tabLabels[ index ].icon }
+								/>
+							) }
 							<div className={ textClassNames }>
 								<RichText.Content
 									tagName="span"

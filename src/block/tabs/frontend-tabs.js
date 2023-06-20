@@ -27,6 +27,10 @@ class _StackableTabs {
 			tab.setAttribute( 'aria-selected', this.activeTab === ( index + 1 ) ? 'true' : 'false' )
 			tab.setAttribute( 'tabindex', this.activeTab === ( index + 1 ) ? '0' : '-1' )
 
+			if ( this.activeTab === ( index + 1 ) ) {
+				tab.classList.add( 'stk-block-tabs__tab--active' )
+			}
+
 			// Add the click event.
 			tab.addEventListener( 'click', () => {
 				this.changeTab( index + 1 )
@@ -84,6 +88,12 @@ class _StackableTabs {
 		Array.from( this.tabs ).forEach( ( tab, index ) => {
 			tab.setAttribute( 'aria-selected', tabIndex === ( index + 1 ) ? 'true' : 'false' )
 			tab.setAttribute( 'tabindex', tabIndex === ( index + 1 ) ? '0' : '-1' )
+
+			if ( tabIndex === ( index + 1 ) ) {
+				tab.classList.add( 'stk-block-tabs__tab--active' )
+			} else {
+				tab.classList.remove( 'stk-block-tabs__tab--active' )
+			}
 		} )
 
 		Array.from( this.contents ).forEach( ( content, index ) => {

@@ -16,6 +16,7 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 	const {
+		hasIconGap = true,
 		selector = '',
 		hoverSelector = '',
 		dependencies = [],
@@ -79,19 +80,21 @@ const Styles = props => {
 				hover="all"
 				format="rotate(%sdeg)"
 			/>
-			<BlockCss
-				{ ...propsToPass }
-				selectorCallback={ getAttribute => getSvgSelector( getAttribute ) }
-				hoverSelectorCallback={ getAttribute => getSvgSelector( getAttribute, hoverSelector ) }
-				styleRuleCallback={ getAttribute => getAttribute( 'iconPosition' ) === 'right' ? 'marginInlineStart' : 'marginInlineEnd' }
-				attrName="iconGap"
-				key="iconGap"
-				format={ `%spx` }
-				dependencies={ [
-					'iconPosition',
-					...dependencies,
-				 ] }
-			/>
+			{ hasIconGap &&
+				<BlockCss
+					{ ...propsToPass }
+					selectorCallback={ getAttribute => getSvgSelector( getAttribute ) }
+					hoverSelectorCallback={ getAttribute => getSvgSelector( getAttribute, hoverSelector ) }
+					styleRuleCallback={ getAttribute => getAttribute( 'iconPosition' ) === 'right' ? 'marginInlineStart' : 'marginInlineEnd' }
+					attrName="iconGap"
+					key="iconGap"
+					format="%spx"
+					dependencies={ [
+						'iconPosition',
+						...dependencies,
+					] }
+				/>
+			}
 			<BlockCss
 				{ ...propsToPass }
 				selectorCallback={ getAttribute => getSvgSelector( getAttribute, selector, [ 'g', 'path', 'rect', 'polygon', 'ellipse' ] ) }
@@ -207,7 +210,7 @@ const Styles = props => {
 				styleRule="borderRadius"
 				attrName="shapeBorderRadius"
 				key="shapeBorderRadius"
-				format={ `%s%` }
+				format="%s%"
 				hover="all"
 			/>
 			<BlockCss
@@ -217,7 +220,7 @@ const Styles = props => {
 				styleRule="padding"
 				attrName="shapePadding"
 				key="shapePadding"
-				format={ `%spx` }
+				format="%spx"
 			/>
 			<BlockCss
 				{ ...propsToPass }

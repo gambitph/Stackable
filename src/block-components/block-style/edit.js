@@ -33,6 +33,8 @@ export const Edit = memo( props => {
 	)
 } )
 
+Edit.Controls = BlockStyles
+
 Edit.defaultProps = {
 	initialOpen: true,
 	styles: [],
