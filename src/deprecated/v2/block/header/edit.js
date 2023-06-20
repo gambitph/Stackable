@@ -6,7 +6,6 @@ import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
 	BlockContainer,
-	ButtonControlsHelper,
 	ColumnPaddingControl,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
@@ -25,6 +24,7 @@ import {
 	DivBackground,
 	ResponsiveControl,
 	BackgroundControlsHelper,
+	ButtonControlsHelper,
 } from '../../components'
 import {
 	createButtonAttributeNames,

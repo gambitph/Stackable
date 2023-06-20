@@ -22,7 +22,6 @@ import {
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
-	ButtonControlsHelper,
 	ControlSeparator,
 	PanelSpacingBody,
 	AdvancedRangeControl,
@@ -39,6 +38,7 @@ import {
 	ResponsiveControl,
 	SvgIconPlaceholder,
 	BackgroundControlsHelper,
+	ButtonControlsHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,

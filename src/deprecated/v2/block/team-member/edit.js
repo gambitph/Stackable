@@ -16,7 +16,6 @@ import {
 	AdvancedRangeControl,
 	ImageBackgroundControlsHelper,
 	ImageControlsHelper,
-	SocialControlsHelper,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
 	BorderControlsHelper,
@@ -60,6 +59,7 @@ import {
 	Image,
 	ResponsiveControl,
 	BackgroundControlsHelper,
+	SocialControlsHelper,
 } from '../../components'
 
 /**

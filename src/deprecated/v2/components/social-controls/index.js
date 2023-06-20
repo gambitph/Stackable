@@ -13,9 +13,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import {
-	TextControl,
-} from '@wordpress/components'
+import { TextControl } from '@wordpress/components'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
