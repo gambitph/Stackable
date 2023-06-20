@@ -17,11 +17,10 @@ import {
 	ImageBackgroundControlsHelper,
 	AdvancedToolbarControl,
 	UrlInputPopover,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	ContentAlignControl, ResponsiveControl, BackgroundControlsHelper,
+	ContentAlignControl, ResponsiveControl, BackgroundControlsHelper, ColumnPaddingControl,
 } from '../../components'
 import {
 	createTypographyAttributeNames,

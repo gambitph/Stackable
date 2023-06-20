@@ -7,7 +7,6 @@ import {
 	ProControlButton,
 	BlockContainer,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	ImageControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
@@ -27,6 +26,7 @@ import {
 	ResponsiveControl,
 	BackgroundControlsHelper,
 	ButtonControlsHelper,
+	ColumnPaddingControl,
 } from '../../components'
 import {
 	descriptionPlaceholder,

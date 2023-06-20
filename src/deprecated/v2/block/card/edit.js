@@ -16,7 +16,6 @@ import {
 	AdvancedRangeControl,
 	ImageBackgroundControlsHelper,
 	WhenResponsiveScreen,
-	ColumnPaddingControl,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
@@ -27,6 +26,7 @@ import {
 	ResponsiveControl,
 	BackgroundControlsHelper,
 	ButtonControlsHelper,
+	ColumnPaddingControl,
 } from '../../components'
 import {
 	descriptionPlaceholder,

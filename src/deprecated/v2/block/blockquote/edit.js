@@ -24,12 +24,11 @@ import {
 	AlignButtonsControl,
 	AdvancedToolbarControl,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	PanelSpacingBody,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl, BackgroundControlsHelper,
+	DivBackground, ContentAlignControl, ResponsiveControl, BackgroundControlsHelper, ColumnPaddingControl,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,

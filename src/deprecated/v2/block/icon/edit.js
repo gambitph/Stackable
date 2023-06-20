@@ -20,10 +20,13 @@ import {
 	ControlSeparator,
 	PanelSpacingBody,
 	UrlInputPopover,
-	ColumnPaddingControl,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl, SvgIconPlaceholder,
+	DivBackground,
+	ContentAlignControl,
+	ResponsiveControl,
+	SvgIconPlaceholder,
+	ColumnPaddingControl,
 } from '../../components'
 import {
 	withUniqueClass,

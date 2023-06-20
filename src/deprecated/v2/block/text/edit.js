@@ -22,9 +22,10 @@ import {
 	AlignButtonsControl,
 	PanelSpacingBody,
 	AdvancedToolbarControl,
-	ColumnPaddingControl,
 } from '~stackable/components'
-import { ContentAlignControl, ResponsiveControl } from '../../components'
+import {
+	ContentAlignControl, ResponsiveControl, ColumnPaddingControl,
+} from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,

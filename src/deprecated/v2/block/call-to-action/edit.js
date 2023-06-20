@@ -6,7 +6,6 @@ import {
 	AlignButtonsControl,
 	BlockContainer,
 	ColorPaletteControl,
-	ColumnPaddingControl,
 	ControlSeparator,
 	DesignPanelBody,
 	HeadingButtonsControl,
@@ -24,6 +23,7 @@ import {
 	ResponsiveControl,
 	BackgroundControlsHelper,
 	ButtonControlsHelper,
+	ColumnPaddingControl,
 } from '../../components'
 import {
 	createButtonAttributeNames,

@@ -19,13 +19,12 @@ import {
 	PanelAdvancedSettings,
 	DesignControl,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	PanelSpacingBody,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	DivBackground, ContentAlignControl, ResponsiveControl,
-	BackgroundControlsHelper,
+	BackgroundControlsHelper, ColumnPaddingControl,
 } from '../../components'
 import {
 	withUniqueClass,

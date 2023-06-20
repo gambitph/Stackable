@@ -17,7 +17,6 @@ import {
 	ImageBackgroundControlsHelper,
 	ImageControlsHelper,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -60,6 +59,7 @@ import {
 	ResponsiveControl,
 	BackgroundControlsHelper,
 	SocialControlsHelper,
+	ColumnPaddingControl,
 } from '../../components'
 
 /**

@@ -29,7 +29,6 @@ import {
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -38,6 +37,7 @@ import {
 	Image,
 	ResponsiveControl,
 	BackgroundControlsHelper,
+	ColumnPaddingControl,
 } from '../../components'
 import {
 	descriptionPlaceholder,

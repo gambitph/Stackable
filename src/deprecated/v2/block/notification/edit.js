@@ -28,7 +28,6 @@ import {
 	FourRangeControl,
 	IconControlsHelper,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -39,6 +38,7 @@ import {
 	SvgIconPlaceholder,
 	BackgroundControlsHelper,
 	ButtonControlsHelper,
+	ColumnPaddingControl,
 } from '../../components'
 import {
 	descriptionPlaceholder,

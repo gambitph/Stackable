@@ -21,7 +21,6 @@ import {
 	ProControlButton,
 	ProControl,
 	BlockContainer,
-	ColumnPaddingControl,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	ImageSizeControl,
@@ -41,6 +40,7 @@ import {
 	ContentAlignControl,
 	ResponsiveControl,
 	BackgroundControlsHelper,
+	ColumnPaddingControl,
 } from '../../components'
 import {
 	createTypographyAttributeNames,

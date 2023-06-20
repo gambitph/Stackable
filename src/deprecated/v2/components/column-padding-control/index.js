@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	SpacingControl,
-} from '~stackable/components'
+import { SpacingControl } from '~stackable/components'
 import { i18n } from 'stackable'
 
 /**

@@ -14,7 +14,6 @@ import ImageDesignImage3 from './images/image3.png'
  */
 import {
 	AdvancedToggleControl,
-	ColumnPaddingControl,
 	BlockContainer,
 	DesignPanelBody,
 	ProControlButton,
@@ -31,7 +30,7 @@ import {
 } from '~stackable/components'
 import {
 	DivBackground, ContentAlignControl, ResponsiveControl,
-	BackgroundControlsHelper,
+	BackgroundControlsHelper, ColumnPaddingControl,
 } from '../../components'
 import {
 	withUniqueClass,
