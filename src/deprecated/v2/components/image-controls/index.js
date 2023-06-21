@@ -10,8 +10,8 @@ import {
 	ImageAltControl,
 	WhenResponsiveScreen,
 	ImageSizeControl,
-	ImageShapeControls,
 } from '~stackable/components'
+import { 	ImageShapeControls } from '..'
 import { i18n } from 'stackable'
 import { getImageSize, cacheImageData } from '~stackable/util'
 
