@@ -156,6 +156,11 @@ const Controls = props => {
 					allowReset={ true }
 					placeholder="250" // TODO: This should be referenced somewher instead of just a static number
 					responsive="all"
+					helpTooltip={ {
+						video: 'image-width-crop',
+						title: __( 'Image width', i18n ),
+						description: __( 'Adjusts the image width', i18n ),
+					} }
 				/>
 			}
 
@@ -170,6 +175,11 @@ const Controls = props => {
 					allowReset={ true }
 					placeholder=""
 					responsive="all"
+					helpTooltip={ {
+						video: 'image-height-crop',
+						title: __( 'Image height', i18n ),
+						description: __( 'Adjusts the image height', i18n ),
+					} }s
 				/>
 			}
 
@@ -205,6 +215,11 @@ const Controls = props => {
 					attribute="imageShadow"
 					hover="all"
 					isFilter={ true }
+					helpTooltip={ {
+						video: 'image-shadow',
+						title: __( 'Shadow (of image)', i18n ),
+						description: __( 'Adjusts the intensity of the image shadow', i18n ),
+					} }
 				/>
 			) }
 
