@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { IconControls } from '~stackable/components'
+import { IconControls } from '..'
 import { __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
 
