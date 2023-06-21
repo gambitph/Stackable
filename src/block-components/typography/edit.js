@@ -180,6 +180,10 @@ export const Controls = props => {
 					label={ __( 'Font Family', i18n ) }
 					onChange={ updateAttributeHandler( 'fontFamily' ) }
 					value={ getAttribute( 'fontFamily' ) }
+					helpTooltip={ {
+						video: 'typography-family',
+						description: __( 'Sets the font set to be used for the element', i18n ),
+					} }
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Weight', i18n ) }
@@ -198,6 +202,11 @@ export const Controls = props => {
 						{ label: __( 'Bold', i18n ), value: 'bold' },
 					] }
 					attribute={ attributeName( 'fontWeight' ) }
+					helpTooltip={ {
+						video: 'typography-weight',
+						title: __( 'Font weight', i18n ),
+						description: __( 'Sets the thinness or thickness of text characters', i18n ),
+					} }
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Transform', i18n ) }
@@ -209,6 +218,11 @@ export const Controls = props => {
 						{ label: __( 'None', i18n ), value: 'none' },
 					] }
 					attribute={ attributeName( 'textTransform' ) }
+					helpTooltip={ {
+						video: 'typography-transform',
+						title: __( 'Transform', i18n ),
+						description: __( 'Sets the usage of upper or lower case', i18n ),
+					} }
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Font Style', i18n ) }
@@ -231,6 +245,11 @@ export const Controls = props => {
 					allowReset={ true }
 					initialPosition={ [ 37, 1.8 ] }
 					responsive="all"
+					helpTooltip={ {
+						video: 'typography-line-height',
+						title: __( 'Line height', i18n ),
+						description: __( 'Sets the vertical distance between lines of text', i18n ),
+					} }
 				/>
 				<AdvancedRangeControl
 					label={ __( 'Letter Spacing', i18n ) }
@@ -241,6 +260,11 @@ export const Controls = props => {
 					allowReset={ true }
 					placeholder="0"
 					responsive="all"
+					helpTooltip={ {
+						video: 'typography-letter-spacing',
+						title: __( 'Letter spacing', i18n ),
+						description: __( 'Sets the distance or space between letters', i18n ),
+					} }
 				/>
 			</ButtonIconPopoverControl>
 
@@ -254,6 +278,11 @@ export const Controls = props => {
 				step={ [ 1, 0.05 ] }
 				placeholder={ props.sizePlaceholder }
 				responsive="all"
+				helpTooltip={ {
+					video: '', // TODO: Add a working video.
+					title: __( 'Font size', i18n ),
+					description: __( 'Sets the size of text characters', i18n ),
+				} }
 			/>
 
 			{ hasColor && (

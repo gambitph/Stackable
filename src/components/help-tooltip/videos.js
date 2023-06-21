@@ -25,6 +25,11 @@ import advancedBlockHorizontalAlign from './videos/advanced-block-horizontal-ali
 import advancedColumnPaddings from './videos/advanced-column-paddings.mp4'
 import advancedColumnGap from './videos/advanced-column-gap.mp4'
 import advancedColumnContentVerticalAlign from './videos/advanced-column-content-vertical-align.mp4'
+import typographyFamily from './videos/typography-family.mp4'
+import typographyWeight from './videos/typography-weight.mp4'
+import typographyTransform from './videos/typography-transform.mp4'
+import typographyLineHeight from './videos/typography-line-height.mp4'
+import typographyLetterSpacing from './videos/typography-letter-spacing.mp4'
 
 /**
  * External dependencies
@@ -64,6 +69,12 @@ const VIDEOS = {
 	'general-border-radius': generalBorderRadius,
 
 	'general-shadow': generalShadow,
+
+	'typography-family': typographyFamily,
+	'typography-weight': typographyWeight,
+	'typography-transform': typographyTransform,
+	'typography-line-height': typographyLineHeight,
+	'typography-letter-spacing': typographyLetterSpacing,
 
 }
 
