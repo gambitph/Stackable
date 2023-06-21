@@ -4,6 +4,7 @@
 import ControlIconToggle from '../control-icon-toggle'
 import ResponsiveToggle from '~stackable/components/responsive-toggle'
 import { i18n } from 'stackable'
+import LabelTooltip from '../base-control2/label-tooltip'
 
 /**
  * External dependencies
@@ -19,7 +20,10 @@ const BaseControlMultiLabel = props => {
 
 	return (
 		<div className="ugb-base-control-multi-label">
-			<div className="ugb-base-control-multi-label__label components-base-control__label">{ props.label }</div>
+			<LabelTooltip
+				label={ props.label }
+				{ ...props.helpTooltip }
+			/>
 			<ResponsiveToggle screens={ screens } />
 			<div className="ugb-base-control-multi-label__units">
 				<ControlIconToggle
