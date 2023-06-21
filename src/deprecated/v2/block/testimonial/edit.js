@@ -24,7 +24,6 @@ import {
 	TypographyControlHelper,
 	AlignButtonsControl,
 	ControlSeparator,
-	ImageControlsHelper,
 	HeadingButtonsControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
@@ -38,6 +37,7 @@ import {
 	ResponsiveControl,
 	BackgroundControlsHelper,
 	ColumnPaddingControl,
+	ImageControlsHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,

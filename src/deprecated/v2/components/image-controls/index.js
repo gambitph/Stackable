@@ -12,9 +12,7 @@ import {
 	ImageSizeControl,
 	ImageShapeControls,
 } from '~stackable/components'
-import {
-	i18n,
-} from 'stackable'
+import { i18n } from 'stackable'
 import { getImageSize, cacheImageData } from '~stackable/util'
 
 /**
@@ -170,39 +168,39 @@ const ImageControls = props => {
 			}
 
 			{ props.onChangeSquare &&
-			<Fragment>
-				{ ( typeof props.width === 'number' || props.width ) &&
-					<WhenResponsiveScreen>
-						<AdvancedToggleControl
-							label={ __( 'Force square image', i18n ) }
-							checked={ props.square }
-							onChange={ props.onChangeSquare }
-							className="ugb--help-tip-image-square"
-						/>
-					</WhenResponsiveScreen>
-				}
-				{ ( typeof props.tabletWidth === 'number' || props.tabletWidth ) &&
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedToggleControl
-							label={ __( 'Force square image', i18n ) }
-							checked={ props.tabletSquare }
-							onChange={ props.onChangeTabletSquare }
-							className="ugb--help-tip-image-square"
-						/>
-					</WhenResponsiveScreen>
-				}
-				{ ( typeof props.mobileWidth === 'number' || props.mobileWidth ) &&
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedToggleControl
-							label={ __( 'Force square image', i18n ) }
-							checked={ props.mobileSquare }
-							onChange={ props.onChangeMobileSquare }
-							className="ugb--help-tip-image-square"
-							defaultValue={ true }
-						/>
-					</WhenResponsiveScreen>
-				}
-			</Fragment>
+				<Fragment>
+					{ ( typeof props.width === 'number' || props.width ) &&
+						<WhenResponsiveScreen>
+							<AdvancedToggleControl
+								label={ __( 'Force square image', i18n ) }
+								checked={ props.square }
+								onChange={ props.onChangeSquare }
+								className="ugb--help-tip-image-square"
+							/>
+						</WhenResponsiveScreen>
+					}
+					{ ( typeof props.tabletWidth === 'number' || props.tabletWidth ) &&
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedToggleControl
+								label={ __( 'Force square image', i18n ) }
+								checked={ props.tabletSquare }
+								onChange={ props.onChangeTabletSquare }
+								className="ugb--help-tip-image-square"
+							/>
+						</WhenResponsiveScreen>
+					}
+					{ ( typeof props.mobileWidth === 'number' || props.mobileWidth ) &&
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedToggleControl
+								label={ __( 'Force square image', i18n ) }
+								checked={ props.mobileSquare }
+								onChange={ props.onChangeMobileSquare }
+								className="ugb--help-tip-image-square"
+								defaultValue={ true }
+							/>
+						</WhenResponsiveScreen>
+					}
+				</Fragment>
 			}
 
 			{ props.onChangeBorderRadius && props.shape === '' &&

@@ -18,7 +18,6 @@ import {
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
-	ImageControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
@@ -39,6 +38,7 @@ import {
 	BackgroundControlsHelper,
 	ButtonControlsHelper,
 	ColumnPaddingControl,
+	ImageControlsHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,

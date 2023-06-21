@@ -14,7 +14,6 @@ import {
 	ControlSeparator,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	ImageControlsHelper,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
@@ -60,6 +59,7 @@ import {
 	SocialControlsHelper,
 	ColumnPaddingControl,
 	ImageBackgroundControlsHelper,
+	ImageControlsHelper,
 } from '../../components'
 
 /**
