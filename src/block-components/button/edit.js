@@ -13,6 +13,7 @@ import {
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
+	useAttributeEditHandlers,
 	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
 } from '~stackable/hooks'
 import { extractColor } from '~stackable/util'
@@ -104,9 +105,16 @@ export const ColorsControls = props => {
 		blockState,
 		hasIconColor,
 		hasTextColor,
+		attrNameTemplate = 'button%s',
 	} = props
 
-	const buttonBackgroundColorType = useBlockAttributesContext( attributes => attributes.buttonBackgroundColorType )
+	const {
+		getAttrName,
+	} = useAttributeEditHandlers( attrNameTemplate )
+
+	const buttonBackgroundColorType = useBlockAttributesContext( attributes => {
+		return attributes[ getAttrName( 'backgroundColorType' ) ]
+	} )
 	const setAttributes = useBlockSetAttributesContext()
 
 	return ( <>
@@ -121,7 +129,7 @@ export const ColorsControls = props => {
 					title: __( 'Gradient', i18n ),
 				},
 			] }
-			attribute="buttonBackgroundColorType"
+			attribute={ getAttrName( 'backgroundColorType' ) }
 			isSmall={ true }
 			fullwidth={ false }
 		/>
@@ -130,7 +138,7 @@ export const ColorsControls = props => {
 				? sprintf( __( 'Button Color #%s', i18n ), 1 )
 				: __( 'Button Color', i18n )
 			}
-			attribute="buttonBackgroundColor"
+			attribute={ getAttrName( 'backgroundColor' ) }
 			hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
 			hover="all"
 		/>
@@ -138,13 +146,13 @@ export const ColorsControls = props => {
 			<>
 				<ColorPaletteControl
 					label={ __( 'Button Color #2', i18n ) }
-					attribute="buttonBackgroundColor2"
+					attribute={ getAttrName( 'backgroundColor2' ) }
 					hover="all"
 				/>
 
 				<AdvancedRangeControl
 					label={ __( 'Gradient Direction (degrees)', i18n ) }
-					attribute="buttonBackgroundGradientDirection"
+					attribute={ getAttrName( 'backgroundGradientDirection' ) }
 					min={ 0 }
 					max={ 360 }
 					step={ 10 }
@@ -202,17 +210,25 @@ Colors.defaultProps = {
 }
 
 const SizeControls = props => {
+	const {
+		attrNameTemplate = 'button%s',
+	} = props
+
+	const {
+		getAttrName,
+	} = useAttributeEditHandlers( attrNameTemplate )
+
 	return ( <>
 		{ props.hasFullWidth && (
 			<AdvancedToggleControl
 				label={ __( 'Full Width', i18n ) }
-				attribute="buttonFullWidth"
+				attribute={ getAttrName( 'fullWidth' ) }
 			/>
 		) }
 		<AdvancedRangeControl
 			label={ __( 'Min. Button Height', i18n ) }
 			responsive="all"
-			attribute="buttonMinHeight"
+			attribute={ getAttrName( 'minHeight' ) }
 			min={ 0 }
 			max={ 100 }
 		/>
@@ -220,7 +236,7 @@ const SizeControls = props => {
 			<AdvancedRangeControl
 				label={ __( 'Button Width', i18n ) }
 				responsive="all"
-				attribute="buttonWidth"
+				attribute={ getAttrName( 'width' ) }
 				min={ 0 }
 				max={ 100 }
 				placeholder=""
@@ -231,7 +247,7 @@ const SizeControls = props => {
 			units={ [ 'px', '%' ] }
 			responsive="all"
 			defaultLocked={ true }
-			attribute="buttonPadding"
+			attribute={ getAttrName( 'padding' ) }
 			sliderMin={ [ 0, 0 ] }
 			sliderMax={ [ 40, 100 ] }
 			vhMode={ true }

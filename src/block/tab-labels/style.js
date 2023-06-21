@@ -10,6 +10,7 @@ import {
 	EffectsAnimations,
 	Transform,
 	Icon,
+	Button,
 } from '~stackable/block-components'
 import {
 	BlockCss,
@@ -24,6 +25,23 @@ import { memo } from '@wordpress/element'
 const typographyOptions = {
 	selector: '.stk-block-tab-labels__text',
 	hoverSelector: '.stk-block-tabs__tab:hover .stk-block-tab-labels__text',
+}
+
+const buttonOptions = {
+	selector: '.stk-block-tabs__tab',
+	hoverSelector: '.stk-block-tabs__tab:not(.stk-block-tabs__tab--active):hover',
+	backgroundSelector: '.stk-block-tabs__tab',
+	borderSelector: '.stk-block-tabs__tab',
+	borderHoverSelector: '.stk-block-tabs__tab:not(.stk-block-tabs__tab--active):hover',
+}
+
+const activeButtonOptions = {
+	selector: '.stk-block-tabs__tab.stk-block-tabs__tab--active',
+	hoverSelector: '.stk-block-tabs__tab.stk-block-tabs__tab--active:hover',
+	backgroundSelector: '.stk-block-tabs__tab.stk-block-tabs__tab--active',
+	borderSelector: '.stk-block-tabs__tab.stk-block-tabs__tab--active',
+	borderHoverSelector: '.stk-block-tabs__tab.stk-block-tabs__tab--active:hover',
+	borderEnabledCallback: null, // If this is enabled, then we should be able to render the border attributes for the active tab.
 }
 
 const Styles = props => {
@@ -136,14 +154,23 @@ const Styles = props => {
 				format="%spx"
 			/>
 
-			{ /* Hover colors */ }
+			{ /* Tab text colors */ }
 			<BlockCss
 				{ ...propsToPass }
-				selector=".stk-block-tabs__tab--active"
-				hoverSelector=".stk-block-tabs__tab--active:hover"
-				styleRule="backgroundColor"
-				attrName="activeBackgroundColor"
-				key="activeBackgroundColor"
+				selector=".stk-block-tabs__tab"
+				hoverSelector=".stk-block-tabs__tab:hover"
+				styleRule="color"
+				attrName="tabTextColor"
+				key="tabTextColor"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-tabs__tab.stk-block-tabs__tab--active"
+				hoverSelector=".stk-block-tabs__tab.stk-block-tabs__tab--active:hover"
+				styleRule="color"
+				attrName="activeTabTextColor"
+				key="activeTabTextColor"
 				hover="all"
 			/>
 
@@ -162,6 +189,8 @@ export const TextStyles = memo( props => {
 			<Icon.Style { ...props } hasIconGap={ false } />
 			<Styles { ...props } />
 			<EffectsAnimations.Style { ...props } />
+			<Button.Style { ...props } { ...buttonOptions } attrNameTemplate="tab%s" />
+			<Button.Style { ...props } { ...activeButtonOptions } attrNameTemplate="activeTab%s" />
 		</>
 	)
 } )
@@ -186,6 +215,8 @@ TextStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
 			<Styles { ...props } />
+			<Button.Style.Content { ...props } { ...buttonOptions } attrNameTemplate="tab%s" />
+			<Button.Style.Content { ...props } { ...activeButtonOptions } attrNameTemplate="activeTab%s" />
 		</BlockCssCompiler>
 	)
 }

@@ -6,7 +6,7 @@ import {
 	compact, isNumber, isEqual,
 } from 'lodash'
 import {
-	AdvancedRangeControl, ColorPaletteControl, Popover,
+	AdvancedRangeControl, AdvancedToggleControl, ColorPaletteControl, Popover,
 } from '~stackable/components'
 import { hexToRgba, extractColor } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
@@ -41,6 +41,14 @@ const getShadows = () => {
 }
 
 const FILTERS = [
+	{
+		component: AdvancedToggleControl,
+		key: 'inset',
+		props: {
+			label: __( 'Inset', i18n ),
+		},
+		default: false,
+	},
 	{
 		component: AdvancedRangeControl,
 		key: 'horizontalOffset',
@@ -130,6 +138,10 @@ const filterToValue = ( props, filters ) => {
 	const newValue = compact( FILTERS.map( filterItem => {
 		const { key } = filterItem
 
+		if ( key === 'inset' ) {
+			return filters[ key ] ? 'inset' : ''
+		}
+
 		if ( key === 'opacity' ) {
 			return undefined
 		}
@@ -171,7 +183,14 @@ const ShadowFilterControl = props => {
 				opacity = value.match( /[\d| ||\.]*\)$/g )[ 0 ]
 				opacity = parseFloat( opacity )
 				return ''
-			} )
+			} ).trim()
+
+			if ( _value.startsWith( 'inset' ) ) {
+				filters.inset = true
+				_value = _value.replace( /^inset\s*/, '' )
+			} else {
+				filters.inset = false
+			}
 
 			const [ horizontalOffset, verticalOffset, blur, spread ] = _value.split( ' ' )
 			filters.horizontalOffset = parseInt( horizontalOffset )
@@ -197,16 +216,22 @@ const ShadowFilterControl = props => {
 					boldLabel={ true }
 				>
 					{ FILTERS.map( filter => {
+						const propsToPass = { ...filter.props }
+
 						const Component = filter.component
 						if ( filter.show && ! filter.show( props.parentProps ) ) {
 							return null
+						}
+
+						if ( filter.key === 'inset' ) {
+							propsToPass.checked = !! filters[ filter.key ]
 						}
 
 						return (
 							<Component
 								key={ filter.key }
 								allowReset={ true }
-								{ ...filter.props }
+								{ ...propsToPass }
 								value={ filters[ filter.key ] || '' }
 								onChange={ value => {
 									const newValue = ( filter.changeCallback || ( v => v ) )( value )

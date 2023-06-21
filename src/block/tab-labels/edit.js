@@ -41,6 +41,7 @@ import {
 	ControlSeparator,
 	AdvancedToolbarControl,
 	AlignButtonsControl,
+	ColorPaletteControl,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
@@ -421,11 +422,28 @@ const Edit = props => {
 							<ControlSeparator />
 
 							<Button.InspectorControls.Colors.Controls
-								hasTextColor
-								hasIconColor={ props.attributes.showIcon }
+								// We add our own text color and icon color
+								hasTextColor={ false }
+								hasIconColor={ false }
+								attrNameTemplate="tab%s"
 							/>
+							<ColorPaletteControl
+								label={ __( 'Text Color', i18n ) }
+								attribute="tabTextColor"
+								hover="all"
+							/>
+							{ props.attributes.showIcon &&
+								<ColorPaletteControl
+									label={ __( 'Icon Color', i18n ) }
+									// We need this name because the Button Block Component uses this.
+									attribute="tabIconColor1"
+									hover="all"
+								/>
+							}
 							<ControlSeparator />
-							<Button.InspectorControls.Size.Controls />
+							<Button.InspectorControls.Size.Controls
+								attrNameTemplate="tab%s"
+							/>
 							<ControlSeparator />
 							<Button.InspectorControls.Borders.Controls
 								attrNameTemplate="tab%s"
@@ -437,9 +455,23 @@ const Edit = props => {
 							id="tab-active-state"
 						>
 							<Button.InspectorControls.Colors.Controls
-								hasTextColor
-								hasIconColor={ props.attributes.showIcon }
+								hasTextColor={ false }
+								hasIconColor={ false }
+								attrNameTemplate="activeTab%s"
 							/>
+							<ColorPaletteControl
+								label={ __( 'Text Color', i18n ) }
+								attribute="activeTabTextColor"
+								hover="all"
+							/>
+							{ props.attributes.showIcon &&
+								<ColorPaletteControl
+									label={ __( 'Icon Color', i18n ) }
+									// We need this name because the Button Block Component uses this.
+									attribute="activeTabIconColor1"
+									hover="all"
+								/>
+							}
 							<ControlSeparator />
 							<Button.InspectorControls.Borders.Controls
 								attrNameTemplate="activeTab%s"

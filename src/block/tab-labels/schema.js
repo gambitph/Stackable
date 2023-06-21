@@ -17,6 +17,7 @@ import {
 	ConditionalDisplay,
 	Transform,
 	Icon,
+	Button,
 } from '~stackable/block-components'
 
 export const defaultIcon = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>'
@@ -37,6 +38,8 @@ export const attributes = ( version = VERSION ) => {
 	MarginBottom.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-block-tab-labels__text', { hasTextTag: false } )
 	Icon.addAttributes( attrObject )
+	Button.addAttributes( attrObject, { attrNameTemplate: 'tab%s' } )
+	Button.addAttributes( attrObject, { attrNameTemplate: 'activeTab%s' } )
 
 	attrObject.add( {
 		attributes: {
@@ -70,6 +73,27 @@ export const attributes = ( version = VERSION ) => {
 				type: 'number',
 				default: '',
 				stkResponsive: true,
+			},
+
+			tabTextColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			tabIconColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			activeTabTextColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			activeTabIconColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
 			},
 
 			showIcon: {
