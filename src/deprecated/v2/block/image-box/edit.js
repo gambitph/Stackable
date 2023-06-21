@@ -12,7 +12,6 @@ import {
 	TypographyControlHelper,
 	AlignButtonsControl,
 	HeadingButtonsControl,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	AdvancedToolbarControl,
 	UrlInputPopover,
@@ -24,6 +23,7 @@ import {
 	BackgroundControlsHelper,
 	ColumnPaddingControl,
 	ImageBackgroundControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	createTypographyAttributeNames,

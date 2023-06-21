@@ -12,7 +12,6 @@ import {
 	HeadingButtonsControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
@@ -60,6 +59,7 @@ import {
 	ColumnPaddingControl,
 	ImageBackgroundControlsHelper,
 	ImageControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 
 /**

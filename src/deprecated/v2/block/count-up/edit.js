@@ -11,7 +11,6 @@ import {
 	HeadingButtonsControl,
 	IconControl,
 	PanelAdvancedSettings,
-	PanelSpacingBody,
 	ProControlButton,
 	TypographyControlHelper,
 	BorderControlsHelper,
@@ -24,6 +23,7 @@ import {
 	BackgroundControlsHelper,
 	ColumnPaddingControl,
 	IconControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,

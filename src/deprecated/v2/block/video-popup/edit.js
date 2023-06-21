@@ -6,14 +6,16 @@ import {
 	BlockContainer,
 	ColorPaletteControl,
 	ImageControl,
-	PanelSpacingBody,
 	WhenResponsiveScreen,
 	PanelAdvancedSettings,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	DivBackground, ResponsiveControl, BackgroundControlsHelper,
+	DivBackground,
+	ResponsiveControl,
+	BackgroundControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	getVideoProviderFromURL,

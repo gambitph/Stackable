@@ -27,7 +27,6 @@ import {
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	ButtonIconPopoverControl,
@@ -41,6 +40,7 @@ import {
 	ResponsiveControl,
 	BackgroundControlsHelper,
 	ColumnPaddingControl,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	createTypographyAttributeNames,

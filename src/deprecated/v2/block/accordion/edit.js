@@ -26,12 +26,15 @@ import {
 	AdvancedRangeControl,
 	HeadingButtonsControl,
 	FourRangeControl,
-	PanelSpacingBody,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl, BackgroundControlsHelper,
+	DivBackground,
+	ContentAlignControl,
+	ResponsiveControl,
+	BackgroundControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	withBlockStyles,

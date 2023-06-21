@@ -12,7 +12,6 @@ import {
 	HeadingButtonsControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	WhenResponsiveScreen,
 	ButtonIconPopoverControl,
@@ -27,6 +26,7 @@ import {
 	ButtonControlsHelper,
 	ColumnPaddingControl,
 	ImageBackgroundControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	descriptionPlaceholder,

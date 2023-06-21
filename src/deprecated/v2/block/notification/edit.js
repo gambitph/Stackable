@@ -23,7 +23,6 @@ import {
 	ColorPaletteControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	FourRangeControl,
 	ButtonIconPopoverControl,
@@ -39,6 +38,7 @@ import {
 	ButtonControlsHelper,
 	ColumnPaddingControl,
 	IconControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	descriptionPlaceholder,

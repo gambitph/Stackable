@@ -10,7 +10,6 @@ import {
 	DesignPanelBody,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
-	PanelSpacingBody,
 	ProControlButton,
 	TypographyControlHelper,
 	ButtonIconPopoverControl,
@@ -24,6 +23,7 @@ import {
 	BackgroundControlsHelper,
 	ButtonControlsHelper,
 	ColumnPaddingControl,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	createButtonAttributeNames,

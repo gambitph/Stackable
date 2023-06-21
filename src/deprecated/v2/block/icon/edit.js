@@ -17,7 +17,6 @@ import {
 	ColorPaletteControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	PanelSpacingBody,
 	UrlInputPopover,
 } from '~stackable/components'
 import {
@@ -27,6 +26,7 @@ import {
 	SvgIconPlaceholder,
 	ColumnPaddingControl,
 	IconControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	withUniqueClass,

@@ -20,11 +20,13 @@ import {
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
-	PanelSpacingBody,
 	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
-	ContentAlignControl, ResponsiveControl, ColumnPaddingControl,
+	ContentAlignControl,
+	ResponsiveControl,
+	ColumnPaddingControl,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	withUniqueClass,

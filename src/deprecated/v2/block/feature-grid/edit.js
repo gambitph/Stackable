@@ -13,7 +13,6 @@ import {
 	HeadingButtonsControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	BorderControlsHelper,
 } from '~stackable/components'
@@ -27,6 +26,7 @@ import {
 	ButtonControlsHelper,
 	ColumnPaddingControl,
 	ImageControlsHelper,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	descriptionPlaceholder,

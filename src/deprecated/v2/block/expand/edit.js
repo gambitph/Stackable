@@ -13,10 +13,13 @@ import {
 	AlignButtonsControl,
 	PanelAdvancedSettings,
 	HeadingButtonsControl,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 } from '~stackable/components'
-import { ContentAlignControl, ResponsiveControl } from '../../components'
+import {
+	ContentAlignControl,
+	ResponsiveControl,
+	PanelSpacingBody,
+} from '../../components'
 import {
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,

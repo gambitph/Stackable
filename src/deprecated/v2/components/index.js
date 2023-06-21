@@ -33,3 +33,4 @@ export { default as ImageBackgroundControlsHelper } from './image-background-con
 export { default as ImageControls } from './image-controls'
 export { default as ImageControlsHelper } from './image-controls-helper'
 export { default as ImageShapeControls } from './image-shape-controls'
+export { default as PanelSpacingBody } from './panel-spacing-body'
