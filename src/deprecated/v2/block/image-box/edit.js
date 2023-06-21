@@ -14,13 +14,16 @@ import {
 	HeadingButtonsControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	ImageBackgroundControlsHelper,
 	AdvancedToolbarControl,
 	UrlInputPopover,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	ContentAlignControl, ResponsiveControl, BackgroundControlsHelper, ColumnPaddingControl,
+	ContentAlignControl,
+	ResponsiveControl,
+	BackgroundControlsHelper,
+	ColumnPaddingControl,
+	ImageBackgroundControlsHelper,
 } from '../../components'
 import {
 	createTypographyAttributeNames,
