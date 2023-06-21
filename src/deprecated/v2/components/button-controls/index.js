@@ -10,11 +10,11 @@ import {
 	FourRangeControl,
 	IconControl,
 	AdvancedToolbarControl,
-	TypographyControlHelper,
 	URLInputControl,
 	AdvancedSelectControl,
 	AdvancedToggleControl,
 } from '~stackable/components'
+import { TypographyControlHelper } from '..'
 
 /**
  * Internal dependencies

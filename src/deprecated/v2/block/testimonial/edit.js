@@ -21,7 +21,6 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	AlignButtonsControl,
 	ControlSeparator,
 	HeadingButtonsControl,
@@ -38,6 +37,7 @@ import {
 	ColumnPaddingControl,
 	ImageControlsHelper,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,

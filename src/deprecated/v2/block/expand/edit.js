@@ -8,7 +8,6 @@ import createStyles from './style'
  */
 import {
 	BlockContainer,
-	TypographyControlHelper,
 	ColorPaletteControl,
 	AlignButtonsControl,
 	PanelAdvancedSettings,
@@ -19,6 +18,7 @@ import {
 	ContentAlignControl,
 	ResponsiveControl,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,

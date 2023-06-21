@@ -16,7 +16,6 @@ import {
 	DesignPanelBody,
 	AdvancedRangeControl,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
@@ -27,6 +26,7 @@ import {
 	ResponsiveControl,
 	ColumnPaddingControl,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	withUniqueClass,

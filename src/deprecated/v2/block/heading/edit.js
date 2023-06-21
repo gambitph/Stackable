@@ -11,7 +11,6 @@ import {
 	BlockContainer,
 	AdvancedRangeControl,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
@@ -20,6 +19,7 @@ import {
 	ContentAlignControl,
 	ResponsiveControl,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	withUniqueClass,

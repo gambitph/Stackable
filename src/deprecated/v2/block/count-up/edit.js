@@ -12,7 +12,6 @@ import {
 	IconControl,
 	PanelAdvancedSettings,
 	ProControlButton,
-	TypographyControlHelper,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -24,6 +23,7 @@ import {
 	ColumnPaddingControl,
 	IconControlsHelper,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,

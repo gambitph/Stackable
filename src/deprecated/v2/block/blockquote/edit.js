@@ -20,7 +20,6 @@ import {
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
 	ColorPaletteControl,
-	TypographyControlHelper,
 	AlignButtonsControl,
 	AdvancedToolbarControl,
 	ButtonIconPopoverControl,
@@ -33,6 +32,7 @@ import {
 	BackgroundControlsHelper,
 	ColumnPaddingControl,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,

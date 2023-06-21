@@ -15,7 +15,6 @@ import {
 	AdvancedRangeControl,
 	BlockContainer,
 	ColorPaletteControl,
-	TypographyControlHelper,
 	PanelAdvancedSettings,
 	ControlSeparator,
 	IconControl,
@@ -25,6 +24,7 @@ import {
 	ContentAlignControl,
 	ResponsiveControl,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import classnames from 'classnames'
 import { i18n } from 'stackable'

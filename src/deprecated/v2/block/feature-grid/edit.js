@@ -8,7 +8,6 @@ import {
 	BlockContainer,
 	ButtonIconPopoverControl,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
@@ -27,6 +26,7 @@ import {
 	ColumnPaddingControl,
 	ImageControlsHelper,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,

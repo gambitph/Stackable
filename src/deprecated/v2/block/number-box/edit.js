@@ -10,7 +10,6 @@ import {
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
 	ProControlButton,
-	TypographyControlHelper,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
@@ -21,6 +20,7 @@ import {
 	BackgroundControlsHelper,
 	ColumnPaddingControl,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,

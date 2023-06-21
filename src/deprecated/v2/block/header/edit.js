@@ -13,7 +13,6 @@ import {
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
 	ProControlButton,
-	TypographyControlHelper,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -25,6 +24,7 @@ import {
 	ButtonControlsHelper,
 	ColumnPaddingControl,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createButtonAttributeNames,

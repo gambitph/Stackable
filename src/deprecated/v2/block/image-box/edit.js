@@ -9,7 +9,6 @@ import {
 	BlockContainer,
 	ColorPaletteControl,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	AlignButtonsControl,
 	HeadingButtonsControl,
 	AdvancedRangeControl,
@@ -24,6 +23,7 @@ import {
 	ColumnPaddingControl,
 	ImageBackgroundControlsHelper,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createTypographyAttributeNames,

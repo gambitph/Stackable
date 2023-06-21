@@ -22,7 +22,6 @@ import {
 	BlockContainer,
 	AlignButtonsControl,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	AdvancedRangeControl,
 	HeadingButtonsControl,
 	FourRangeControl,
@@ -35,6 +34,7 @@ import {
 	ResponsiveControl,
 	BackgroundControlsHelper,
 	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	withBlockStyles,
