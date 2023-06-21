@@ -30,6 +30,16 @@ import typographyWeight from './videos/typography-weight.mp4'
 import typographyTransform from './videos/typography-transform.mp4'
 import typographyLineHeight from './videos/typography-line-height.mp4'
 import typographyLetterSpacing from './videos/typography-letter-spacing.mp4'
+import buttonHoverEffect from './videos/button-hover-effect.mp4'
+import imageWidthCrop from './videos/image-width-crop.mp4'
+import imageHeightCrop from './videos/image-height-crop.mp4'
+import imageShadow from './videos/image-shadow.mp4'
+import separatorHeight from './videos/separator-height.mp4'
+import separatorWidth from './videos/separator-width.mp4'
+import separatorShadow from './videos/separator-shadow.mp4'
+import separatorBringToFront from './videos/separator-bring-to-front.mp4'
+import separatorLayerOpacity from './videos/separator-layer-opacity.mp4'
+import separatorLayerBlendMode from './videos/separator-layer-blend-mode.mp4'
 
 /**
  * External dependencies
@@ -75,6 +85,19 @@ const VIDEOS = {
 	'typography-transform': typographyTransform,
 	'typography-line-height': typographyLineHeight,
 	'typography-letter-spacing': typographyLetterSpacing,
+
+	'button-hover-effect': buttonHoverEffect,
+
+	'image-width-crop': imageWidthCrop, // Doesnt play
+	'image-height-crop': imageHeightCrop, // Doesnt play
+	'image-shadow': imageShadow,
+
+	'separator-height': separatorHeight,
+	'separator-width': separatorWidth,
+	'separator-shadow': separatorShadow,
+	'separator-bring-to-front': separatorBringToFront,
+	'separator-layer-opacity': separatorLayerOpacity, //Doesnt play
+	'separator-layer-blend-mode': separatorLayerBlendMode,
 
 }
 
