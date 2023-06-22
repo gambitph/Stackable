@@ -67,6 +67,10 @@ const ATTRIBUTES_TO_CLEAR = {
 		bottom: '',
 		left: '',
 	},
+	tabIconColor1: '',
+	activeTabIconColor1: '',
+	tabIconColor1Hover: '',
+	activeTabIconColor1Hover: '',
 }
 
 export const blockStyles = [
@@ -90,6 +94,10 @@ export const blockStyles = [
 				tabTextColor: '#999999',
 				activeTabTextColor: '#000000',
 				tabTextColorHover: '#000000',
+				tabIconColor1: '#909090',
+				activeTabIconColor1: '#000000',
+				tabIconColor1Hover: '#909090',
+				activeTabIconColor1Hover: '#000000',
 			}
 
 			const willSetAttributesVertical = {
@@ -107,6 +115,10 @@ export const blockStyles = [
 				tabTextColor: '#999999',
 				activeTabTextColor: '#000000',
 				tabTextColorHover: '#000000',
+				tabIconColor1: '#909090',
+				activeTabIconColor1: '#000000',
+				tabIconColor1Hover: '#909090',
+				activeTabIconColor1Hover: '#000000',
 			}
 
 			return {
@@ -136,6 +148,7 @@ export const blockStyles = [
 				activeTabBorderColor: '#000000',
 				tabTextColor: '#000000',
 				activeTabTextColor: '#000000',
+				tabIconColor1: '#000000',
 				activeTabBorderWidth: {
 					top: 1,
 					right: 1,
@@ -160,6 +173,7 @@ export const blockStyles = [
 				activeTabBorderColor: '#000000',
 				tabTextColor: '#000000',
 				activeTabTextColor: '#000000',
+				tabIconColor1: '#000000',
 				activeTabBorderWidth: {
 					top: 1,
 					right: 0,
@@ -193,6 +207,8 @@ export const blockStyles = [
 				activeTabBorderColor: '#000000',
 				activeTabTextColor: '#ffffff',
 				tabBackgroundColorHover: '#eeeeee',
+				tabIconColor1: '#000000',
+				activeTabIconColor1: '#ffffff',
 			}
 
 			return {
@@ -234,6 +250,9 @@ export const blockStyles = [
 					bottom: 8,
 					left: 8,
 				},
+				tabIconColor1: '#777777',
+				activeTabIconColor1: '#ffffff',
+				tabIconColor1Hover: '#000000',
 			}
 
 			return {

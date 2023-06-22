@@ -71,6 +71,10 @@ const TEMPLATE = [
 		tabTextColor: '#999999',
 		activeTabTextColor: '#000000',
 		tabTextColorHover: '#000000',
+		tabIconColor1: '#909090',
+		activeTabIconColor1: '#000000',
+		tabIconColor1Hover: '#909090',
+		activeTabIconColor1Hover: '#000000',
 	} ],
 	[ 'stackable/tab-content', {} ],
 ]
