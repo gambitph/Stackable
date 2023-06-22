@@ -279,7 +279,7 @@ export const Controls = props => {
 				placeholder={ props.sizePlaceholder }
 				responsive="all"
 				helpTooltip={ {
-					video: '', // TODO: Add a working video.
+					// TODO: Add a working video.
 					title: __( 'Font size', i18n ),
 					description: __( 'Sets the size of text characters', i18n ),
 				} }

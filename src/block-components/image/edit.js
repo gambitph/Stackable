@@ -157,7 +157,7 @@ const Controls = props => {
 					placeholder="250" // TODO: This should be referenced somewher instead of just a static number
 					responsive="all"
 					helpTooltip={ {
-						video: 'image-width-crop',
+						//TODO: Add a working video
 						title: __( 'Image width', i18n ),
 						description: __( 'Adjusts the image width', i18n ),
 					} }
@@ -176,7 +176,7 @@ const Controls = props => {
 					placeholder=""
 					responsive="all"
 					helpTooltip={ {
-						video: 'image-height-crop',
+						//TODO: Add a working video
 						title: __( 'Image height', i18n ),
 						description: __( 'Adjusts the image height', i18n ),
 					} }s
