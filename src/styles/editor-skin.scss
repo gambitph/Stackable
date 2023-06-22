@@ -1,0 +1,143 @@
+:root {
+	--stk-skin-dark: #293056;
+	--stk-skin-light: #667085;
+	--stk-skin-lighter: #98a2b3;
+	--stk-skin-bg-default: #fff;
+	--stk-skin-bg-primary: #eaecf5;
+	--stk-skin-bg-secondary: #f2f4f7;
+	--stk-skin-border-dark: #1e1e1e;
+	--stk-skin-error: #f97066;
+}
+
+.components-panel,
+.components-popover__content {
+	.ugb-panel-tabs button:focus,
+	.components-panel__body-toggle.components-button:focus {
+		box-shadow: inset 0 0 0 1px var(--stk-skin-border-dark);
+	}
+
+	.ugb-toggle-panel-body {
+		background: var(--stk-skin-bg-default) !important;
+	}
+
+	.components-panel__body.ugb-panel-tabs {
+		border-top: none;
+	}
+
+	.block-editor-block-card:has(~ div .ugb-panel-tabs),
+	.ugb-panel-tabs .ugb-panel-tabs__wrapper,
+	.ugb-panel-tabs .ugb-panel-tabs__wrapper > button {
+		background-color: var(--stk-skin-bg-primary) !important;
+		color: var(--stk-skin-light);
+	}
+
+	.ugb-panel-tabs__wrapper > button.is-active {
+		background-color: var(--stk-skin-bg-default) !important;
+		color: var(--stk-skin-dark);
+	}
+
+	// button group
+	.components-button-group .components-button {
+		box-shadow: inset 0 0 0 1px var(--stk-skin-bg-primary);
+	}
+
+	// selected button
+	.components-button.ugb-button-component.is-primary {
+		background-color: var(--stk-skin-bg-primary);
+		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
+		color: var(--stk-skin-dark);
+	}
+
+	// hover on selected button
+	.components-button.ugb-button-component.is-primary:hover {
+		background-color: var(--stk-skin-bg-primary);
+	}
+
+	// unselected buttons
+	.components-button-group .components-button.ugb-button-component:not(.is-primary) {
+		background-color: var(--stk-skin-bg-default);
+		color: var(--stk-skin-lighter);
+	}
+
+	.components-button.is-secondary,
+	.components-button.is-tertiary {
+		color: var(--stk-skin-dark);
+	}
+
+	.components-button.is-secondary {
+		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
+	}
+
+	.components-button.is-tertiary:focus {
+		outline-color: var(--stk-skin-border-dark) !important;
+		outline-width: 1px !important;
+	}
+
+	.components-button.is-tertiary.is-pressed {
+		color: var(--stk-skin-bg-primary);
+	}
+
+	.components-button.is-tertiary.is-pressed:hover {
+		color: var(--stk-skin-dark);
+		background-color: var(--stk-skin-bg-default);
+		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
+	}
+
+	.components-button.is-tertiary.stk-dynamic-content-control__button {
+		border: 1px solid var(--stk-skin-border-dark);
+	}
+
+	.components-button.is-tertiary.stk-dynamic-content-control__button:hover,
+	.components-button.is-tertiary.stk-dynamic-content-control__button.is-pressed {
+		color: var(--stk-skin-dark) !important;
+		background-color: var(--stk-skin-bg-secondary) !important;
+	}
+
+	.components-button.ugb-button-component:hover:not(:disabled),
+	.components-button.is-tertiary:hover:not(:disabled):not(.is-pressed) {
+		color: var(--stk-skin-dark);
+		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
+		z-index: 1;
+	}
+
+	.components-button.ugb-button-component.stk-control__reset-button,
+	.components-button.ugb-button-component.stk-inspector-control__reset-button {
+		color: var(--stk-skin-error);
+	}
+
+	.stk-control-label__units.stk-label-unit-toggle {
+		background-color: var(--stk-skin-bg-secondary);
+		color: var(--stk-skin-dark);
+	}
+
+	.components-range-control__wrapper {
+		color: var(--stk-skin-dark) !important;
+	}
+
+	.components-range-control__thumb-wrapper span,
+	.stk-column-widths-control__columns-slider .slider-handles button {
+		background-color: var(--stk-skin-dark) !important;
+	}
+
+	.components-form-toggle.is-checked .components-form-toggle__track {
+		background-color: var(--stk-skin-dark);
+	}
+
+	.components-form-toggle {
+		.components-form-toggle__track {
+			background-color: var(--stk-skin-bg-secondary);
+			border: none;
+		}
+
+		.components-form-toggle__thumb {
+			background-color: var(--stk-skin-bg-default);
+			border: 5px solid var(--stk-skin-bg-default);
+		}
+	}
+
+	.stk-label-unit-toggle__colored button.is-active:not([data-index="0"]) {
+		background-color: var(--stk-skin-bg-secondary);
+		color: var(--stk-skin-dark);
+		border-color: var(--stk-skin-bg-secondary) !important;
+	}
+}

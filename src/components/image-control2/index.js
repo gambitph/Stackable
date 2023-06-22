@@ -1,7 +1,8 @@
 /**
  * Internal dependencies
  */
-import SVGImageIcon from './images/image.svg'
+// import SVGImageIcon from './images/image.svg'
+import SVGUploadIcon from './images/upload.svg'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import { ResetButton } from '../base-control2/reset-button'
@@ -68,7 +69,7 @@ const ImageControl = memo( props => {
 	const imageId = typeof props.imageId !== 'undefined' ? props.imageId : attributes[ attrNameId ]
 	const imageUrl = typeof props.imageURL !== 'undefined' ? props.imageURL : dynamicContentProps.value || attributes[ attrNameUrl ]
 
-	const type = imageUrl && imageUrl.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
+	// const type = imageUrl && imageUrl.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
 
 	const onRemove = () => {
 		onChange( {
@@ -99,7 +100,20 @@ const ImageControl = memo( props => {
 					render={ obj => {
 						return (
 							<Fragment>
-								{ imageUrl &&
+								<div className="ugb-image-upload"
+									onClick={ obj.open }
+									onKeyDown={ event => {
+										if ( event.keyCode === 13 ) {
+											obj.open()
+										}
+									} }
+									role="button"
+									tabIndex={ 0 }>
+									<p className="ugb-image-upload__label"> { __( 'Upload', i18n ) } </p>
+									<SVGUploadIcon />
+								</div>
+
+								{ /* { imageUrl &&
 									<div className="ugb-image-preview-wrapper">
 										{ type === 'video' && (
 											<video
@@ -117,7 +131,7 @@ const ImageControl = memo( props => {
 											/>
 										) }
 										{ type === 'image' && (
-										/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
+										// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
 											<img
 												className="ugb-image-preview"
 												draggable="false"
@@ -147,7 +161,7 @@ const ImageControl = memo( props => {
 									>
 										<SVGImageIcon />
 									</div>
-								) }
+								) } */ }
 
 							</Fragment>
 						)

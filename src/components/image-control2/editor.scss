@@ -57,4 +57,41 @@
 		width: auto;
 		height: auto;
 	}
+
+	.stk-dynamic-content-control {
+		display: flex;
+
+		.ugb-image-upload {
+			display: flex;
+			flex-grow: 1;
+			border-radius: 2px;
+			border: 1px solid #293056;
+			justify-content: center;
+			align-items: center;
+			height: 30px;
+			cursor: pointer;
+			&:hover {
+				background: #fafafa;
+			}
+			&:focus {
+				background: #fafafa;
+				box-shadow: 0 0 0 2px rgba(30, 140, 190, 0.8);
+			}
+
+			.ugb-image-upload__label {
+				margin-top: 0;
+				margin-bottom: 0;
+				padding-right: 2px;
+			}
+
+			svg {
+				height: 24px;
+				width: 24px;
+			}
+		}
+
+		.stk-dynamic-content-control__button {
+			position: unset;
+		}
+	}
 }
