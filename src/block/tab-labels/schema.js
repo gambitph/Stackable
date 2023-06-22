@@ -80,7 +80,7 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkHover: true,
 			},
-			tabIconColor: {
+			tabIconColor1: {
 				type: 'string',
 				default: '',
 				stkHover: true,
@@ -90,7 +90,7 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkHover: true,
 			},
-			activeTabIconColor: {
+			activeTabIconColor1: {
 				type: 'string',
 				default: '',
 				stkHover: true,

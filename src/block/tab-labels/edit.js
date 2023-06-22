@@ -26,7 +26,6 @@ import {
 	ConditionalDisplay,
 	Transform,
 	Icon,
-	BlockStyle,
 	Button,
 } from '~stackable/block-components'
 import { i18n, version as VERSION } from 'stackable'
@@ -42,6 +41,7 @@ import {
 	AdvancedToolbarControl,
 	AlignButtonsControl,
 	ColorPaletteControl,
+	BlockStyles,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
@@ -418,7 +418,7 @@ const Edit = props => {
 							initialOpen={ true }
 							id="tab"
 						>
-							<BlockStyle.InspectorControls.Controls styles={ blockStyles } />
+							<BlockStyles styles={ blockStyles } context={ context } />
 							<ControlSeparator />
 
 							<Button.InspectorControls.Colors.Controls

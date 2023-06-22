@@ -72,6 +72,7 @@ export { default as AdminToggleSetting } from './admin-toggle-setting'
 export { default as AdminSelectSetting } from './admin-select-setting'
 export { default as TaxonomyControl } from './taxonomy-control'
 export { default as Tooltip } from './tooltip'
+export { default as BlockStyles } from './block-styles'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'

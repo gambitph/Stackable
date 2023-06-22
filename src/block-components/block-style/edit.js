@@ -1,13 +1,13 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './block-styles'
 
 /**
  * External dependencies
  */
 import { i18n } from 'stackable'
 import {
+	BlockStyles,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
@@ -32,8 +32,6 @@ export const Edit = memo( props => {
 		</InspectorStyleControls>
 	)
 } )
-
-Edit.Controls = BlockStyles
 
 Edit.defaultProps = {
 	initialOpen: true,
