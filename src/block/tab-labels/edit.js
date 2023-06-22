@@ -412,7 +412,6 @@ const Edit = props => {
 					</InspectorLayoutControls>
 
 					<InspectorStyleControls>
-						{ /* TODO: styles, button baclground, button borders, active state, icons */ }
 						<PanelAdvancedSettings
 							title={ __( 'Tab', i18n ) }
 							initialOpen={ true }
