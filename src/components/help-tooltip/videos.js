@@ -41,6 +41,7 @@ import separatorBringToFront from './videos/separator-bring-to-front.mp4'
 import separatorLayerOpacity from './videos/separator-layer-opacity.mp4'
 import separatorLayerBlendMode from './videos/separator-layer-blend-mode.mp4'
 import accordionAdjacentOpen from './videos/accordion-adjacent-open.mp4'
+import alignmentAll from './videos/alignment-all.mp4'
 
 /**
  * External dependencies
@@ -102,6 +103,7 @@ const VIDEOS = {
 
 	'accordion-adjacent-open': accordionAdjacentOpen,
 
+	'alignment-all': alignmentAll,
 }
 
 const getVideoUrl = id => {

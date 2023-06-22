@@ -193,6 +193,10 @@ export const Controls = props => {
 						min={ 0 }
 						sliderMax={ 100 }
 						placeholder="0"
+						helpTooltip={ {
+							// TODO: Add a working video
+							description: __( 'Sets the distance between two or more columns', i18n ),
+						} }
 					/>
 				</>
 			) }

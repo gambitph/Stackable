@@ -147,6 +147,10 @@ export const Edit = props => {
 					attribute="contentAlign"
 					responsive="all"
 					justified={ props.hasContentJustify }
+					helpTooltip={ {
+						video: 'alignment-all',
+						description: __( 'Adjusts the placement of all content in the block to align left, center or right', i18n ),
+					} }
 				/>
 				{ props.hasColumnJustify &&
 					<AdvancedToolbarControl
@@ -238,6 +242,9 @@ export const Edit = props => {
 							selector: '.stk-%s-container, .stk-%s-container > * > .block-editor-block-list__layout > [data-type]',
 							highlight: 'outline-first-offset',
 						} }
+						helpTooltip={ {
+							description: __( 'Sets the horizontal/vertical position and spacing of the inner blocks.', i18n ),
+						} }
 					/>
 				}
 				{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
@@ -250,6 +257,9 @@ export const Edit = props => {
 						visualGuide={ {
 							selector: '.stk-%s-container, .stk-%s-container > * > .block-editor-block-list__layout > [data-type]',
 							highlight: 'outline-first-offset',
+						} }
+						helpTooltip={ {
+							description: __( 'Aligns the horizontal/vertical position of the inner blocks.', i18n ),
 						} }
 						help={ __( 'Set Content Min. Height for alignment to display properly', i18n ) }
 					/>
@@ -281,6 +291,9 @@ export const Edit = props => {
 						sliderMax={ 100 }
 						placeholder="24"
 						attribute="innerBlockColumnGap"
+						helpTooltip={ {
+							description: __( 'Sets the gap between the columns of inner blocks.', i18n ),
+						} }
 						visualGuide={
 							innerBlockWrap !== 'wrap'
 								? {
@@ -300,6 +313,9 @@ export const Edit = props => {
 						sliderMax={ 100 }
 						placeholder="0"
 						attribute="innerBlockRowGap"
+						helpTooltip={ {
+							description: __( 'Sets the gap between inner blocks.', i18n ),
+						} }
 						visualGuide={ {
 							selector: '.stk-%s-container > * > .block-editor-block-list__layout',
 							highlight: 'row-gap',
@@ -315,6 +331,9 @@ export const Edit = props => {
 						sliderMax={ 100 }
 						placeholder="0"
 						attribute="innerBlockRowGap"
+						helpTooltip={ {
+							description: __( 'Sets the gap between the rows of inner blocks.', i18n ),
+						} }
 					/>
 				}
 			</InspectorLayoutControls>
