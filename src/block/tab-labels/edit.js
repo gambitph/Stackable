@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TextStyles } from './style'
+import { TabStyles } from './style'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
 
 import SVGIconLeft from './images/icon-left.svg'
@@ -550,7 +550,7 @@ const Edit = props => {
 				</>
 			) }
 
-			<TextStyles
+			<TabStyles
 				version={ VERSION }
 				blockState={ props.blockState }
 				clientId={ clientId }

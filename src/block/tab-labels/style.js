@@ -178,7 +178,7 @@ const Styles = props => {
 	)
 }
 
-export const TextStyles = memo( props => {
+export const TabStyles = memo( props => {
 	return (
 		<>
 			<Alignment.Style { ...props } />
@@ -195,11 +195,11 @@ export const TextStyles = memo( props => {
 	)
 } )
 
-TextStyles.defaultProps = {
+TabStyles.defaultProps = {
 	version: '',
 }
 
-TextStyles.Content = props => {
+TabStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
@@ -221,7 +221,7 @@ TextStyles.Content = props => {
 	)
 }
 
-TextStyles.Content.defaultProps = {
+TabStyles.Content.defaultProps = {
 	version: '',
 	attributes: {},
 }
