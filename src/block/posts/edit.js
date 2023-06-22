@@ -191,6 +191,10 @@ const Edit = props => {
 									setAttributes( { contentOrder: defaultContentOrder } )
 								}
 							} }
+							helpTooltip={ {
+								video: 'posts-content-order',
+								description: __( 'Sets the order of the items displayed (category, title, meta, excerpt, read more button, image) for each post', i18n ),
+							} }
 						/>
 						<ControlSeparator />
 					</InspectorLayoutControls>
@@ -531,6 +535,10 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/posts', ( o
 					{ label: __( 'Pipe', i18n ), value: 'pipe' },
 				] }
 				attribute="metaSeparator"
+				helpTooltip={ {
+					video: 'posts-meta-separator',
+					description: __( 'Sets the separators between meta items (dot, space, comma, dash, pipe)', i18n ),
+				} }
 			/>
 		</>
 	)
