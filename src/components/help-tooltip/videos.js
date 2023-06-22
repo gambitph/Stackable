@@ -40,6 +40,7 @@ import separatorShadow from './videos/separator-shadow.mp4'
 import separatorBringToFront from './videos/separator-bring-to-front.mp4'
 import separatorLayerOpacity from './videos/separator-layer-opacity.mp4'
 import separatorLayerBlendMode from './videos/separator-layer-blend-mode.mp4'
+import accordionAdjacentOpen from './videos/accordion-adjacent-open.mp4'
 
 /**
  * External dependencies
@@ -98,6 +99,8 @@ const VIDEOS = {
 	'separator-bring-to-front': separatorBringToFront,
 	'separator-layer-opacity': separatorLayerOpacity, //Doesnt play
 	'separator-layer-blend-mode': separatorLayerBlendMode,
+
+	'accordion-adjacent-open': accordionAdjacentOpen,
 
 }
 
