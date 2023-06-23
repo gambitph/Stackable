@@ -11,7 +11,6 @@ import {
 	isEmpty,
 	map,
 } from 'lodash'
-import classnames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -41,7 +40,7 @@ const ImageSizeControl = ( {
 		{ ...propsToPass }
 		value={ value || 'large' }
 		options={ imageSizeOptions }
-		className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
+		className={ className }
 		defaultValue={ defaultValue || 'large' }
 		default={ defaultValue || 'large' }
 	/>

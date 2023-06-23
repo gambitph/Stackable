@@ -156,6 +156,11 @@ const Controls = props => {
 					allowReset={ true }
 					placeholder="250" // TODO: This should be referenced somewher instead of just a static number
 					responsive="all"
+					helpTooltip={ {
+						//TODO: Add a working video
+						title: __( 'Image width', i18n ),
+						description: __( 'Adjusts the image width', i18n ),
+					} }
 				/>
 			}
 
@@ -170,6 +175,11 @@ const Controls = props => {
 					allowReset={ true }
 					placeholder=""
 					responsive="all"
+					helpTooltip={ {
+						//TODO: Add a working video
+						title: __( 'Image height', i18n ),
+						description: __( 'Adjusts the image height', i18n ),
+					} }s
 				/>
 			}
 
@@ -205,6 +215,11 @@ const Controls = props => {
 					attribute="imageShadow"
 					hover="all"
 					isFilter={ true }
+					helpTooltip={ {
+						video: 'image-shadow',
+						title: __( 'Shadow (of image)', i18n ),
+						description: __( 'Adjusts the intensity of the image shadow', i18n ),
+					} }
 				/>
 			) }
 
@@ -224,7 +239,10 @@ const Controls = props => {
 						} )
 					} }
 					defaultValue="full"
-					className="ugb--help-tip-image-size"
+					helpTooltip={ {
+						video: 'image-size',
+						description: __( 'Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster.', i18n ),
+					} }
 				/>
 			) }
 
@@ -237,7 +255,10 @@ const Controls = props => {
 					placeholder="0"
 					defaultValue={ 0 }
 					allowReset={ true }
-					className="ugb--help-tip-general-border-radius"
+					helpTooltip={ {
+						video: 'image-border-radius',
+						description: __( 'Adjusts the radius of image corners to make them more rounded', i18n ),
+					} }
 				/>
 			}
 
@@ -291,7 +312,10 @@ const Controls = props => {
 			<BlendModeControl
 				label={ __( 'Overlay Blend Mode', i18n ) }
 				attribute="imageOverlayBlendMode"
-				className="ugb--help-tip-background-blend-mode"
+				helpTooltip={ {
+					video: '',
+					description: __( 'Sets the overlay color of all image boxes', i18n ),
+				} }
 			/>
 
 			{ attributes.imageOverlayColorType === 'gradient' && (
@@ -331,7 +355,10 @@ const Controls = props => {
 						step={ 10 }
 						allowReset={ true }
 						placeholder="90"
-						className="ugb--help-tip-gradient-direction"
+						helpTooltip={ {
+							video: 'gradient-direction',
+							description: __( 'Sets the direction (in degrees) of the colors', i18n ),
+						} }
 					/>
 
 					<AdvancedRangeControl
@@ -343,7 +370,10 @@ const Controls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="0"
-						className="ugb--help-tip-gradient-location"
+						helpTooltip={ {
+							video: 'gradient-location',
+							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
+						} }
 					/>
 
 					<AdvancedRangeControl
@@ -355,7 +385,10 @@ const Controls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="100"
-						className="ugb--help-tip-gradient-location"
+						helpTooltip={ {
+							video: 'gradient-location',
+							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
+						} }
 					/>
 				</ButtonIconPopoverControl>
 			) }
@@ -381,7 +414,11 @@ const Controls = props => {
 					{ label: __( 'None', i18n ), value: 'none' },
 					{ label: __( 'Scale Down', i18n ), value: 'scale-down' },
 				] }
-				className="ugb--help-tip-background-image-size"
+				helpTooltip={ {
+					title: __( 'Image size', i18n ),
+					description: __( 'Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster.', i18n ),
+
+				} }
 				responsive="all"
 			/>
 

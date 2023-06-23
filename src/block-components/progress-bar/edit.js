@@ -187,7 +187,11 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									step={ 10 }
 									allowReset={ true }
 									placeholder="90"
-									className="ugb--help-tip-gradient-direction"
+									helpTooltip={ {
+										video: 'gradient-direction',
+										title: __( 'Gradient Direction', i18n ),
+										description: __( 'Sets the direction (in degrees) of the colors', i18n ),
+									} }
 								/>
 								<AdvancedRangeControl
 									label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
@@ -197,7 +201,10 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									step={ 1 }
 									allowReset={ true }
 									placeholder="0"
-									className="ugb--help-tip-gradient-location"
+									helpTooltip={ {
+										video: 'gradient-location',
+										description: __( 'Sets the placement of each color in relation to the other color', i18n ),
+									} }
 								/>
 								<AdvancedRangeControl
 									label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
@@ -207,12 +214,18 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									step={ 1 }
 									allowReset={ true }
 									placeholder="100"
-									className="ugb--help-tip-gradient-location"
+									helpTooltip={ {
+										video: 'gradient-location',
+										description: __( 'Sets the placement of each color in relation to the other color', i18n ),
+									} }
 								/>
 								<BlendModeControl
 									label={ __( 'Background Gradient Blend Mode', i18n ) }
 									attribute="progressColorGradientBlendMode"
-									className="ugb--help-tip-background-blend-mode"
+									helpTooltip={ {
+										video: 'background-blend-mode',
+										description: __( 'Sets how this background gradient/image blends into the other background', i18n ),
+									} }
 								/>
 							</ButtonIconPopoverControl>
 						) }

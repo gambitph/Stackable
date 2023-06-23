@@ -229,6 +229,7 @@ class AdvancedAutosuggestControl extends Component {
 					}
 				} }
 				allowReset={ this.props.allowReset }
+				helpTooltip={ this.props.helpTooltip }
 			>
 				<div className="ugb-advanced-autosuggest-control__select" ref={ this.autosuggestDiv }>
 					{ /** This style is used to update the suggestion dropdown location,
@@ -332,6 +333,7 @@ AdvancedAutosuggestControl.defaultProps = {
 	onSuggestionSelected: () => {},
 	renderInputComponent: null,
 	inputProps: {},
+	helpTooltip: {},
 }
 
 export default AdvancedAutosuggestControl

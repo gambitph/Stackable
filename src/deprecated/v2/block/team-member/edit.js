@@ -6,20 +6,13 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	BlockContainer,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
-	ImageBackgroundControlsHelper,
-	ImageControlsHelper,
-	SocialControlsHelper,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -60,6 +53,13 @@ import {
 	DivBackground,
 	Image,
 	ResponsiveControl,
+	BackgroundControlsHelper,
+	SocialControlsHelper,
+	ColumnPaddingControl,
+	ImageBackgroundControlsHelper,
+	ImageControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 
 /**
@@ -772,7 +772,7 @@ const edit = props => {
 								{ showSocial && show.social &&
 									<div className="ugb-team-member__buttons">
 										<SocialButtonEditHelper
-											attrNameTemplate={ `social%s` }
+											attrNameTemplate="social%s"
 											setAttributes={ setAttributes }
 											blockAttributes={ props.attributes }
 											onChangeNewTab={ false }

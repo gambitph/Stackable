@@ -106,7 +106,10 @@ export const BackgroundControls = props => {
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="1.0"
-					className="ugb--help-tip-background-color-opacity"
+					helpTooltip={ {
+						video: 'background-color-opacity',
+						description: __( 'Adjusts the transparency of the background color', i18n ),
+					} }
 				/>
 			) }
 			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
@@ -142,7 +145,10 @@ export const BackgroundControls = props => {
 						step={ 10 }
 						allowReset={ true }
 						placeholder="90"
-						className="ugb--help-tip-gradient-direction"
+						helpTooltip={ {
+							video: 'gradient-direction',
+							description: __( 'Sets the direction (in degrees) of the colors', i18n ),
+						} }
 					/>
 
 					<AdvancedRangeControl
@@ -153,7 +159,10 @@ export const BackgroundControls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="0"
-						className="ugb--help-tip-gradient-location"
+						helpTooltip={ {
+							video: 'gradient-location',
+							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
+						} }
 					/>
 
 					<AdvancedRangeControl
@@ -164,14 +173,20 @@ export const BackgroundControls = props => {
 						step={ 1 }
 						allowReset={ true }
 						placeholder="100"
-						className="ugb--help-tip-gradient-location"
+						helpTooltip={ {
+							video: 'gradient-location',
+							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
+						} }
 					/>
 
 					{ props.hasBackgroundGradientBlendMode &&
 						<BlendModeControl
 							label={ __( 'Background Gradient Blend Mode', i18n ) }
 							attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
-							className="ugb--help-tip-background-blend-mode"
+							helpTooltip={ {
+								video: 'background-blend-mode',
+								description: __( 'Sets how this background gradient/image blends into the other background', i18n ),
+							} }
 						/>
 					}
 				</ButtonIconPopoverControl>
@@ -223,7 +238,10 @@ export const BackgroundControls = props => {
 					step={ 1 }
 					allowReset={ true }
 					placeholder={ getAttribute( 'backgroundColor' ) ? '5' : '0' }
-					className="ugb--help-tip-background-tint"
+					helpTooltip={ {
+						video: 'background-tint',
+						description: __( 'Adjusts the intensity of the background media tint', i18n ),
+					} }
 				/>
 			}
 
@@ -231,7 +249,10 @@ export const BackgroundControls = props => {
 				<AdvancedToggleControl
 					label={ __( 'Fixed Background', i18n ) }
 					attribute={ getAttrName( 'fixedBackground' ) }
-					className="ugb--help-tip-background-fixed"
+					helpTooltip={ {
+						video: 'background-fixed',
+						description: __( 'Keeps the background image fixed in place while scrolling', i18n ),
+					} }
 				/>
 			}
 
@@ -281,7 +302,10 @@ export const BackgroundControls = props => {
 							{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
 							{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 						] }
-						className="ugb--help-tip-background-image-position"
+						helpTooltip={ {
+							video: 'background-image-position',
+							description: __( 'Chooses which part of the background image will be the focal point', i18n ),
+						} }
 						responsive="all"
 					/>
 
@@ -295,7 +319,10 @@ export const BackgroundControls = props => {
 							{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
 							{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 						] }
-						className="ugb--help-tip-background-image-repeat"
+						helpTooltip={ {
+							video: 'background-image-repeat',
+							description: __( 'Covers the background with tiled images', i18n ),
+						} }
 						responsive="all"
 					/>
 
@@ -309,7 +336,10 @@ export const BackgroundControls = props => {
 							{ label: __( 'Contain', i18n ), value: 'contain' },
 							{ label: __( 'Custom', i18n ), value: 'custom' },
 						] }
-						className="ugb--help-tip-background-image-size"
+						helpTooltip={ {
+							video: 'background-image-size',
+							description: __( 'Sets the display image size', i18n ),
+						} }
 						responsive="all"
 					/>
 
