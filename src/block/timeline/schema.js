@@ -65,7 +65,15 @@ export const attributes = ( version = VERSION ) => {
 				type: 'number',
 				default: '',
 			},
+			timelineAccentColorType: {
+				type: 'string',
+				default: '',
+			},
 			timelineAccentColor: {
+				type: 'string',
+				default: '',
+			},
+			timelineAccentColor2: {
 				type: 'string',
 				default: '',
 			},

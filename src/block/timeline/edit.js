@@ -56,11 +56,29 @@ import { InnerBlocks } from '@wordpress/block-editor'
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
 const TEMPLATE = [
-	[ 'stackable/column', {}, [
+	[ 'stackable/column', {
+		columnSpacing: {
+			top: 0,
+			right: 0,
+			bottom: 0,
+			left: 0,
+		},
+	}, [
 		[ 'stackable/text', {
 			text: _x( 'Description for this block. Use this space for describing your block. Any text will do.', 'Content placeholder', i18n ),
 		} ],
 	] ],
+]
+
+const COLOR_TYPE_CONTROLS = [
+	{
+		value: '',
+		title: __( 'Single', i18n ),
+	},
+	{
+		value: 'gradient',
+		title: __( 'Gradient', i18n ),
+	},
 ]
 
 const Edit = props => {
@@ -142,7 +160,7 @@ const Edit = props => {
 								sliderMax={ 100 }
 								sliderMin={ props.attributes.timelineThickness || 3 }
 								min={ 1 }
-								placeholder="12"
+								placeholder="11"
 							/>
 							<AdvancedRangeControl
 								label={ sprintf( __( '%s Border Radius', i18n ), __( 'Dot', i18n ) ) }
@@ -168,11 +186,28 @@ const Edit = props => {
 
 							<ControlSeparator />
 
+							<AdvancedToolbarControl
+								controls={ COLOR_TYPE_CONTROLS }
+								attribute="timelineAccentColorType"
+								fullwidth={ false }
+								isSmall={ true }
+							/>
 							<ColorPaletteControl
-								label={ __( 'Timeline Accent Color', i18n ) }
+								label={
+									props.attributes.timelineAccentColorType === 'gradient'
+										? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 1 )
+										: __( 'Timeline Accent Color', i18n )
+								}
 								attribute="timelineAccentColor"
 								hasTransparent={ true }
 							/>
+							{ props.attributes.timelineAccentColorType === 'gradient' &&
+								<ColorPaletteControl
+									label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 2 ) }
+									attribute="timelineAccentColor2"
+									hasTransparent={ true }
+								/>
+							}
 							<ColorPaletteControl
 								label={ __( 'Timeline Background Color', i18n ) }
 								attribute="timelineBackgroundColor"

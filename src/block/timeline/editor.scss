@@ -5,7 +5,6 @@
 	grid-template-columns: 1fr var(--line-dot-size, 16px) 1fr;
 	grid-template-rows: auto;
 	gap: var(--gap, 16px);
-	position: relative;
 	align-items: center;
 }
 .stk-block-timeline--left > .stk-inner-blocks > * {
@@ -42,13 +41,14 @@
 	// In tablet and mobile, fixed background shows weirdly, so we remove it.
 	.stk-block-timeline__middle,
 	.stk-block-timeline > .stk-inner-blocks::after {
-		--fixed-bg: var(--line-accent-bg-color);
+		--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
 	}
 }
 
 @include mobile {
 	.editor-styles-wrapper .stk-block.stk-block-timeline {
 		--content-line: 0 !important;
+		padding-top: 0;
 	}
 	.stk-block-timeline > .stk-inner-blocks {
 		grid-template-columns: var(--line-dot-size, 16px) 1fr;
@@ -60,7 +60,8 @@
 	}
 	.stk-block-timeline .stk-block-timeline__middle {
 		grid-column: 1 / 2;
-		grid-row: 1 / 3;
+		grid-row: 1 / 2;
+		align-self: center;
 	}
 	.stk-block-timeline .stk-block-timeline__content {
 		grid-column: 2 / 3;
@@ -75,22 +76,13 @@
 
 	/** Trim the top-most line and the bottom-most line */
 	.stk-block-timeline > .stk-inner-blocks::after {
-		top: calc(var(--line-dot-size, 16px) / 2);
-		bottom: calc(100% - calc(var(--line-dot-size, 16px) / 2));
+		top: calc(var(--line-dot-size, 16px) / 2 + 0.5em);
+		bottom: calc(100% - calc(var(--line-dot-size, 16px) / 2) - 0.5em);
 	}
 	[data-type="stackable/timeline"] + [data-type="stackable/timeline"] > .stk-block-timeline > .stk-inner-blocks::after {
 		top: -16px;
 	}
 	[data-type="stackable/timeline"]:has(+ [data-type="stackable/timeline"]) > .stk-block-timeline > .stk-inner-blocks::after {
 		bottom: 0;
-	}
-
-	// Collapsed timeline sticks too much to the side.
-	.stk-block-timeline {
-		padding-inline-start: 16px;
-	}
-	// Better spacing when multiple timelines are stacked.
-	[data-type="stackable/timeline"] + [data-type="stackable/timeline"] > .stk-block-timeline {
-		padding-top: 16px;
 	}
 }

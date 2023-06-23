@@ -90,6 +90,15 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector=""
+				styleRule="--line-accent-bg-color-2"
+				attrName="timelineAccentColor2"
+				key="timelineAccentColor2"
+				enabledCallback={ getAttribute => getAttribute( 'timelineAccentColorType' ) === 'gradient' }
+				dependencies={ [ 'timelineAccentColorType' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=""
 				styleRule="--line-bg-color"
 				attrName="timelineBackgroundColor"
 				key="timelineBackgroundColor"
