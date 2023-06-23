@@ -7,6 +7,9 @@
 	gap: var(--gap, 16px);
 	align-items: center;
 }
+.stk-block-timeline {
+	position: relative !important;
+}
 .stk-block-timeline--left > .stk-inner-blocks > * {
 	grid-row: 1 / 2;
 }
