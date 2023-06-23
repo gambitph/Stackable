@@ -1,0 +1,96 @@
+@import "common";
+
+.stk-block-timeline > .stk-inner-blocks {
+	display: grid !important;
+	grid-template-columns: 1fr var(--line-dot-size, 16px) 1fr;
+	grid-template-rows: auto;
+	gap: var(--gap, 16px);
+	position: relative;
+	align-items: center;
+}
+.stk-block-timeline--left > .stk-inner-blocks > * {
+	grid-row: 1 / 2;
+}
+.stk-block-timeline > .stk-inner-blocks::after {
+	content: "";
+	position: absolute;
+	inset-inline-start: calc(50% - var(--line-bg-width, 3px) / 2);
+	width: var(--line-bg-width, 3px);
+	top: 0;
+	bottom: 0;
+	background: var(--fixed-bg);
+	background-attachment: fixed;
+}
+/** Trim the top-most line and the bottom-most line */
+.stk-block-timeline > .stk-inner-blocks::after {
+	top: 50%;
+	bottom: 50%;
+}
+[data-type="stackable/timeline"] + [data-type="stackable/timeline"] > .stk-block-timeline > .stk-inner-blocks::after {
+	top: 0;
+}
+[data-type="stackable/timeline"]:has(+ [data-type="stackable/timeline"]) > .stk-block-timeline > .stk-inner-blocks::after {
+	bottom: 0;
+}
+
+// Remove the top 8px gap.
+[data-type="stackable/timeline"] + [data-type="stackable/timeline"] {
+	margin-top: 0 !important;
+}
+
+@include tablet-mobile {
+	// In tablet and mobile, fixed background shows weirdly, so we remove it.
+	.stk-block-timeline__middle,
+	.stk-block-timeline > .stk-inner-blocks::after {
+		--fixed-bg: var(--line-accent-bg-color);
+	}
+}
+
+@include mobile {
+	.editor-styles-wrapper .stk-block.stk-block-timeline {
+		--content-line: 0 !important;
+	}
+	.stk-block-timeline > .stk-inner-blocks {
+		grid-template-columns: var(--line-dot-size, 16px) 1fr;
+		grid-template-rows: auto 1fr;
+		align-items: flex-start;
+	}
+	.stk-block-timeline > .stk-inner-blocks::after {
+		inset-inline-start: calc(var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2);
+	}
+	.stk-block-timeline .stk-block-timeline__middle {
+		grid-column: 1 / 2;
+		grid-row: 1 / 3;
+	}
+	.stk-block-timeline .stk-block-timeline__content {
+		grid-column: 2 / 3;
+		grid-row: 2 / 3;
+		text-align: start;
+	}
+	.stk-block-timeline .stk-block-timeline__date {
+		grid-column: 2 / 3;
+		grid-row: 1 / 2;
+		text-align: start;
+	}
+
+	/** Trim the top-most line and the bottom-most line */
+	.stk-block-timeline > .stk-inner-blocks::after {
+		top: calc(var(--line-dot-size, 16px) / 2);
+		bottom: calc(100% - calc(var(--line-dot-size, 16px) / 2));
+	}
+	[data-type="stackable/timeline"] + [data-type="stackable/timeline"] > .stk-block-timeline > .stk-inner-blocks::after {
+		top: -16px;
+	}
+	[data-type="stackable/timeline"]:has(+ [data-type="stackable/timeline"]) > .stk-block-timeline > .stk-inner-blocks::after {
+		bottom: 0;
+	}
+
+	// Collapsed timeline sticks too much to the side.
+	.stk-block-timeline {
+		padding-inline-start: 16px;
+	}
+	// Better spacing when multiple timelines are stacked.
+	[data-type="stackable/timeline"] + [data-type="stackable/timeline"] > .stk-block-timeline {
+		padding-top: 16px;
+	}
+}

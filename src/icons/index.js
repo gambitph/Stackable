@@ -45,6 +45,7 @@ import SVGTableOfContentsIcon from './images/table-of-contents.svg'
 import SVGTeamMemberIcon from './images/team-member-icon.svg'
 import SVGTestimonialIcon from './images/testimonial-icon.svg'
 import SVGTextIcon from './images/text-icon.svg'
+import SVGTimelineIcon from './images/timeline-icon.svg'
 import SVGVideoPopupIcon from './images/video-popup-icon.svg'
 import SVGUngroupContainerIcon from './images/ungroup-container-icon.svg'
 
@@ -276,6 +277,10 @@ export function TestimonialIcon() {
 
 export function TextIcon() {
 	return colorizeIcon( <SVGTextIcon width="20" height="20" /> )
+}
+
+export function TimelineIcon() {
+	return colorizeIcon( <SVGTimelineIcon width="16" height="16" /> )
 }
 
 export function VideoPopupIcon() {
