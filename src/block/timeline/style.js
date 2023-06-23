@@ -33,7 +33,7 @@ const Styles = props => {
 		<>
 			<BlockCss
 				{ ...propsToPass }
-				selector=""
+				selector={ [ '', '~ .stk-block-timeline' ] } // Also set the succeeding ones.
 				styleRule="--line-accent-bg-location"
 				attrName="timelineAnchor"
 				key="timelineAnchor"

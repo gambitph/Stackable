@@ -150,6 +150,7 @@ const Edit = props => {
 								min={ 0 }
 								placeholder="50"
 								responsive="all"
+								help={ __( 'Succeeding timeline blocks will also use this value.', i18n ) }
 							/>
 
 							<ControlSeparator />
