@@ -1,12 +1,12 @@
 :root {
 	--stk-skin-dark: #293056;
-	--stk-skin-light: #667085;
+	--stk-skin-light: #485164;
 	--stk-skin-bg-default: #fff;
 	--stk-skin-bg-primary: #eaecf5;
 	--stk-skin-bg-secondary: #f2f4f7;
 	--stk-skin-border-dark: #1e1e1e;
 	--stk-skin-border-light: #d7d9dc;
-	--stk-skin-error: #f97066;
+	--stk-skin-error: #f15449;
 }
 
 .components-panel {
@@ -25,7 +25,6 @@
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper > button:hover {
 		background-color: var(--stk-skin-bg-default) !important;
 		color: var(--stk-skin-dark);
-		box-shadow: inset 0 0 0 1px var(--stk-skin-border-dark);
 	}
 
 	.ugb-panel-tabs button:focus {
@@ -123,20 +122,24 @@
 		background-color: var(--stk-skin-dark) !important;
 	}
 
-	.components-form-toggle.is-checked .components-form-toggle__track {
-		background-color: var(--stk-skin-dark);
-	}
-
 	.components-form-toggle {
 		.components-form-toggle__track {
-			background-color: var(--stk-skin-bg-secondary);
-			border: 1px solid var(--stk-skin-border-light);
+			border: 1px solid var(--stk-skin-light);
+		}
+		.components-form-toggle__thumb {
+			background-color: var(--stk-skin-light);
+			border: 5px solid var(--stk-skin-light);
 		}
 
-		.components-form-toggle__thumb {
-			background-color: var(--stk-skin-bg-default);
-			border: 5px solid var(--stk-skin-bg-default);
-			box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.26);
+		&.is-checked {
+			.components-form-toggle__track {
+				background-color: var(--stk-skin-dark);
+				border: 1px solid var(--stk-skin-dark);
+			}
+			.components-form-toggle__thumb {
+				background-color: var(--stk-skin-bg-default);
+				border: 5px solid var(--stk-skin-bg-default);
+			}
 		}
 	}
 
