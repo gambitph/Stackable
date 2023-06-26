@@ -38,11 +38,18 @@ class StackableExpand {
 			hideBtn.setAttribute( 'aria-controls', moreText.getAttribute( 'data-block-id' ) )
 		}
 
+		const fixAriaAttributes = el => {
+			if ( el.hasAttribute( 'aria-expanded' ) ) {
+				el.removeAttribute( 'aria-expanded' )
+			}
+		}
+
 		els.forEach( el => {
 			el.addEventListener( 'click', onClick )
 		} )
 
 		blocks.forEach( block => {
+			fixAriaAttributes( block )
 			addAriaAttributes( block )
 		} )
 	}
