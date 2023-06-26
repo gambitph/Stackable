@@ -9,8 +9,8 @@
 	--stk-skin-error: #f15449;
 }
 
-.components-panel {
-	.block-editor-block-card:has(~ div .ugb-panel-tabs),
+.ugb--has-panel-tabs .components-panel {
+	.block-editor-block-card,
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper,
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper > button {
 		background-color: #f5f5f5 !important;

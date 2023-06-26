@@ -69,7 +69,7 @@ const ImageControl = memo( props => {
 	const imageId = typeof props.imageId !== 'undefined' ? props.imageId : attributes[ attrNameId ]
 	const imageUrl = typeof props.imageURL !== 'undefined' ? props.imageURL : dynamicContentProps.value || attributes[ attrNameUrl ]
 
-	// const type = imageUrl && imageUrl.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
+	const type = imageUrl && imageUrl.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
 
 	const onRemove = () => {
 		onChange( {
@@ -109,65 +109,61 @@ const ImageControl = memo( props => {
 									} }
 									role="button"
 									tabIndex={ 0 }>
-									<p className="ugb-image-upload__label"> { __( 'Upload', i18n ) } </p>
+									<p className="ugb-image-upload__label"> { ! imageUrl ? __( 'Upload', i18n ) : __( 'Replace', i18n ) } </p>
 									<SVGUploadIcon />
 								</div>
-
-								{ /* { imageUrl &&
-									<div className="ugb-image-preview-wrapper">
-										{ type === 'video' && (
-											<video
-												className="ugb-image-preview"
-												autoPlay
-												muted
-												loop
-												src={ imageUrl }
-												onClick={ obj.open }
-												onKeyDown={ event => {
-													if ( event.keyCode === 13 ) {
-														obj.open()
-													}
-												} }
-											/>
-										) }
-										{ type === 'image' && (
-										// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-											<img
-												className="ugb-image-preview"
-												draggable="false"
-												src={ imageUrl }
-												onClick={ obj.open }
-												onKeyDown={ event => {
-													if ( event.keyCode === 13 ) {
-														obj.open()
-													}
-												} }
-												alt={ __( 'preview', i18n ) }
-											/>
-										) }
-									</div>
-								}
-								{ ! imageUrl && (
-									<div
-										className="ugb-placeholder"
-										onClick={ obj.open }
-										onKeyDown={ event => {
-											if ( event.keyCode === 13 ) {
-												obj.open()
-											}
-										} }
-										role="button"
-										tabIndex={ 0 }
-									>
-										<SVGImageIcon />
-									</div>
-								) } */ }
-
 							</Fragment>
 						)
 					} }
 				/>
 			</DynamicContentControl>
+
+			{ imageUrl &&
+				<MediaUpload
+					onSelect={ onChange }
+					allowedTypes={ props.allowedTypes }
+					value={ imageId }
+					render={ obj => {
+						return (
+							<Fragment>
+								<div className="ugb-image-preview-wrapper">
+									{ type === 'video' && (
+										<video
+											className="ugb-image-preview"
+											autoPlay
+											muted
+											loop
+											src={ imageUrl }
+											onClick={ obj.open }
+											onKeyDown={ event => {
+												if ( event.keyCode === 13 ) {
+													obj.open()
+												}
+											} }
+										/>
+									) }
+									{ type === 'image' && (
+									// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+										<img
+											className="ugb-image-preview"
+											draggable="false"
+											src={ imageUrl }
+											onClick={ obj.open }
+											onKeyDown={ event => {
+												if ( event.keyCode === 13 ) {
+													obj.open()
+												}
+											} }
+											alt={ __( 'preview', i18n ) }
+										/>
+									) }
+								</div>
+							</Fragment>
+						)
+					} }
+				/>
+			}
+
 			<ResetButton
 				allowReset={ props.allowReset && ! props.dynamic }
 				value={ imageUrl }
