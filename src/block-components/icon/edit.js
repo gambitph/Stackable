@@ -115,7 +115,7 @@ export const Edit = props => {
 					{ ( attributes.iconColorType || '' ) === '' && (
 						<ColorPaletteControl
 							label={ __( 'Icon Color', i18n ) }
-							attribute="iconColor1"
+							attribute={ props.attrNameTemplate }
 							hover={ hover }
 						/>
 					) }
@@ -274,6 +274,7 @@ export const Edit = props => {
 }
 
 Edit.defaultProps = {
+	attrNameTemplate: 'iconColor1',
 	label: __( 'Icon', i18n ),
 	hasColor: true,
 	hasGradient: true,
