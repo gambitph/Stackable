@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TextStyles } from './style'
+import { TabStyles } from './style'
 
 import {
 	BlockDiv,
@@ -53,7 +53,7 @@ export const Save = props => {
 			attributes={ attributes }
 			version={ props.version }
 		>
-			<TextStyles.Content version={ props.version } attributes={ attributes } />
+			<TabStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<div
 				className="stk-block-tab-labels__wrapper"
@@ -69,6 +69,7 @@ export const Save = props => {
 							{ props.attributes.showIcon && (
 								<Icon.Content
 									attributes={ attributes }
+									attrNameTemplate="tabIconColor1"
 									value={ props.attributes.tabLabels[ index ].icon }
 								/>
 							) }
