@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { ButtonControls } from '~stackable/components'
+import { ButtonControls } from '..'
 import { __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
 import { i18n } from 'stackable'
