@@ -169,7 +169,7 @@ export const Controls = props => {
 						} }
 						// TODO: Sample of how to use the new helpTooltip
 						helpTooltip={ {
-							video: 'inner-block-padding',
+							// Add a working video
 							description: __( 'Sets column paddings, the space inside the block between the block elements and the column container border', i18n ),
 						} }
 					/>
