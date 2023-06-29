@@ -356,7 +356,7 @@ const Controls = props => {
 						allowReset={ true }
 						placeholder="90"
 						helpTooltip={ {
-							video: 'gradient-direction',
+							// TODO: Add a working video
 							description: __( 'Sets the direction (in degrees) of the colors', i18n ),
 						} }
 					/>

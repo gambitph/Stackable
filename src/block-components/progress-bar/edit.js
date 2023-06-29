@@ -188,7 +188,7 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 									allowReset={ true }
 									placeholder="90"
 									helpTooltip={ {
-										video: 'gradient-direction',
+										// TODO: Add a working video
 										title: __( 'Gradient Direction', i18n ),
 										description: __( 'Sets the direction (in degrees) of the colors', i18n ),
 									} }

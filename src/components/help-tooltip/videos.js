@@ -3,12 +3,12 @@
  */
 import generalBorderRadius from './videos/general-border-radius.mp4'
 import generalShadow from './videos/general-shadow.mp4'
+import imageShape from './videos/image-shape.mp4'
 import imageSizeNoCrop from './videos/image-size-no-crop.mp4'
 import imageBorderRadius from './videos/image-border-radius.mp4'
 import backgroundColorOpacity from './videos/background-color-opacity.mp4'
 import backgroundTint from './videos/background-tint.mp4'
 import backgroundFixed from './videos/background-fixed.mp4'
-import gradientDirection from './videos/gradient-direction.mp4' // video is just still
 import gradientLocation from './videos/gradient-location.mp4'
 import backgroundImagePosition from './videos/background-image-position.mp4'
 import backgroundImageRepeat from './videos/background-image-repeat.mp4'
@@ -54,6 +54,7 @@ const VIDEOS = {
 	'column-gap': advancedColumnGap,
 	'advanced-block-paddings': advancedBlockPaddings,
 
+	'image-shape': imageShape,
 	'image-size': imageSizeNoCrop,
 	'image-border-radius': imageBorderRadius,
 
@@ -67,7 +68,6 @@ const VIDEOS = {
 	'column-vertical-align': advancedBlockVerticalAlign,
 	'max-content-width': advancedBlockContentWidth,
 
-	'gradient-direction': gradientDirection,
 	'gradient-location': gradientLocation,
 
 	'background-color-opacity': backgroundColorOpacity,
