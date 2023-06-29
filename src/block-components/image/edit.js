@@ -217,7 +217,7 @@ const Controls = props => {
 					isFilter={ true }
 					helpTooltip={ {
 						video: 'image-shadow',
-						title: __( 'Shadow (of image)', i18n ),
+						title: __( 'Image Shadow', i18n ),
 						description: __( 'Adjusts the intensity of the image shadow', i18n ),
 					} }
 				/>
@@ -313,8 +313,8 @@ const Controls = props => {
 				label={ __( 'Overlay Blend Mode', i18n ) }
 				attribute="imageOverlayBlendMode"
 				helpTooltip={ {
-					video: '',
-					description: __( 'Sets the overlay color of all image boxes', i18n ),
+					// Add a working video
+					description: __( 'Sets how the overlay color blends with the image', i18n ),
 				} }
 			/>
 
@@ -415,8 +415,8 @@ const Controls = props => {
 					{ label: __( 'Scale Down', i18n ), value: 'scale-down' },
 				] }
 				helpTooltip={ {
-					title: __( 'Image size', i18n ),
-					description: __( 'Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster.', i18n ),
+					video: 'image-size',
+					description: __( 'Sets the fit to default, contain, cover, fill, none, and scale down. Image fit specifies how an image resizes in a container.', i18n ),
 
 				} }
 				responsive="all"
@@ -443,6 +443,11 @@ const Controls = props => {
 					<ImageShapeControl
 						selected={ attributes.imageShape }
 						onChange={ imageShape => setAttributes( { imageShape } ) }
+						helpTooltip={ {
+							video: 'image-shape',
+							title: __( 'Shape', i18n ),
+							description: __( 'Change the shape of the image', i18n ),
+						} }
 					/>
 					<AdvancedToggleControl
 						label={ __( 'Flip Shape Horizontally', i18n ) }
