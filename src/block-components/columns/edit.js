@@ -93,6 +93,10 @@ export const Controls = props => {
 						dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, attributes, true ) // eslint-disable-line stackable/no-update-block-attributes
 						setColumnsUpdate( Math.random() )
 					} }
+					helpTooltip={ {
+						// Add a working video
+						description: __( 'Adjust the individual widths of each column', i18n ),
+					} }
 				/>
 			}
 			{ numInnerBlocks > 1 && ( deviceType === 'Tablet' || deviceType === 'Mobile' ) &&
