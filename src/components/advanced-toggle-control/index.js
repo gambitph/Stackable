@@ -63,7 +63,9 @@ const AdvancedToggleControl = memo( props => {
 				onChange={ event => onChange( event.target.checked ) }
 				aria-describedby={ describedBy }
 			/>
-			<LabelTooltip label={ props.label } { ...props.helpTooltip } />
+			<label htmlFor={ id } className="components-toggle-control__label">
+				<LabelTooltip label={ props.label } { ...props.helpTooltip } />
+			</label>
 		</BaseControl>
 	)
 } )

@@ -101,6 +101,7 @@ const Edit = props => {
 							sliderMax={ [ 200, 30 ] }
 							placeholder={ isOnlyBlock ? '0' : '12' }
 							helpTooltip={ {
+								video: 'inner-block-padding',
 								description: __( 'Sets the paddings between the column content and the border.', i18n ),
 							} }
 							visualGuide={ {

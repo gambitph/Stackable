@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { SocialControls } from '~stackable/components'
+import { SocialControls } from '..'
 import { camelCase } from 'lodash'
 
 /**

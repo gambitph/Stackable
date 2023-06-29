@@ -4,8 +4,8 @@
 import {
 	AdvancedToggleControl,
 	ControlSeparator,
-	ButtonControlsHelper,
 } from '~stackable/components'
+import { ButtonControlsHelper } from '..'
 import { SOCIAL_SITES } from '~stackable/util'
 import { upperFirst } from 'lodash'
 import { i18n } from 'stackable'

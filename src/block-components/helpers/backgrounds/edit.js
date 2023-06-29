@@ -357,6 +357,10 @@ export const BackgroundControls = props => {
 					<BlendModeControl
 						label={ __( 'Image Blend Mode', i18n ) }
 						attribute={ getAttrName( 'backgroundImageBlendMode' ) }
+						helpTooltip={ {
+							video: 'background-blend-mode',
+							description: __( 'Sets how this background gradient/image blends into the other background', i18n ),
+						} }
 					/>
 				</ButtonIconPopoverControl>
 			}
