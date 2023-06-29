@@ -243,6 +243,7 @@ export const Edit = props => {
 							highlight: 'outline-first-offset',
 						} }
 						helpTooltip={ {
+							// TODO: Add a working video
 							description: __( 'Sets the horizontal/vertical position and spacing of the inner blocks.', i18n ),
 						} }
 					/>
@@ -259,6 +260,7 @@ export const Edit = props => {
 							highlight: 'outline-first-offset',
 						} }
 						helpTooltip={ {
+							// TODO: Add a working video
 							description: __( 'Aligns the horizontal/vertical position of the inner blocks.', i18n ),
 						} }
 						help={ __( 'Set Content Min. Height for alignment to display properly', i18n ) }
@@ -292,6 +294,7 @@ export const Edit = props => {
 						placeholder="24"
 						attribute="innerBlockColumnGap"
 						helpTooltip={ {
+							// TODO: Add a working video
 							description: __( 'Sets the gap between the columns of inner blocks.', i18n ),
 						} }
 						visualGuide={
@@ -314,6 +317,7 @@ export const Edit = props => {
 						placeholder="0"
 						attribute="innerBlockRowGap"
 						helpTooltip={ {
+							// TODO: Add a working video
 							description: __( 'Sets the gap between inner blocks.', i18n ),
 						} }
 						visualGuide={ {
@@ -332,6 +336,7 @@ export const Edit = props => {
 						placeholder="0"
 						attribute="innerBlockRowGap"
 						helpTooltip={ {
+							// TODO: Add a working video
 							description: __( 'Sets the gap between the rows of inner blocks.', i18n ),
 						} }
 					/>

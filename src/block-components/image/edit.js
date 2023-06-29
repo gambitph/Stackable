@@ -313,7 +313,7 @@ const Controls = props => {
 				label={ __( 'Overlay Blend Mode', i18n ) }
 				attribute="imageOverlayBlendMode"
 				helpTooltip={ {
-					// Add a working video
+					// TODO: Add a working video
 					description: __( 'Sets how the overlay color blends with the image', i18n ),
 				} }
 			/>

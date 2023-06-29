@@ -240,7 +240,7 @@ export const Size = props => {
 					sliderMax={ [ 40, 100 ] }
 					vhMode={ true }
 					helpTooltip={ {
-						// Add a working video
+						// TODO: Add a working video
 						title: __( 'Button padding', i18n ),
 						description: __( 'Adjusts the space between the button text and button borders', i18n ),
 					} }
