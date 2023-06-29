@@ -72,7 +72,7 @@ const TypographyControl = props => {
 								{ ...props.fontSizeProps }
 								placeholder={ placeholder }
 								helpTooltip={ {
-									video: '', // TODO: Add a working video.
+									// TODO: Add a working video.
 									title: __( 'Font size', i18n ),
 									description: __( 'Sets the size of text characters', i18n ),
 								} }
@@ -88,7 +88,7 @@ const TypographyControl = props => {
 								onChangeUnit={ props.onChangeTabletFontSizeUnit }
 								{ ...props.fontSizeProps }
 								helpTooltip={ {
-									video: '', // TODO: Add a working video.
+									// TODO: Add a working video.
 									title: __( 'Font size', i18n ),
 									description: __( 'Sets the size of text characters', i18n ),
 								} }
@@ -104,7 +104,7 @@ const TypographyControl = props => {
 								onChangeUnit={ props.onChangeMobileFontSizeUnit }
 								{ ...props.fontSizeProps }
 								helpTooltip={ {
-									video: '', // TODO: Add a working video.
+									// TODO: Add a working video.
 									title: __( 'Font size', i18n ),
 									description: __( 'Sets the size of text characters', i18n ),
 								} }
@@ -295,7 +295,7 @@ const TypographyControl = props => {
 							{ ...props.fontSizeProps }
 							placeholder={ placeholder }
 							helpTooltip={ {
-								video: '', // TODO: Add a working video.
+								// TODO: Add a working video.
 								title: __( 'Font size', i18n ),
 								description: __( 'Sets the size of text characters', i18n ),
 							} }
@@ -311,7 +311,7 @@ const TypographyControl = props => {
 							onChangeUnit={ props.onChangeTabletFontSizeUnit }
 							{ ...props.fontSizeProps }
 							helpTooltip={ {
-								video: '', // TODO: Add a working video.
+								// TODO: Add a working video.
 								title: __( 'Font size', i18n ),
 								description: __( 'Sets the size of text characters', i18n ),
 							} }
@@ -327,7 +327,7 @@ const TypographyControl = props => {
 							onChangeUnit={ props.onChangeMobileFontSizeUnit }
 							{ ...props.fontSizeProps }
 							helpTooltip={ {
-								video: '', // TODO: Add a working video.
+								 // TODO: Add a working video.
 								title: __( 'Font size', i18n ),
 								description: __( 'Sets the size of text characters', i18n ),
 							} }
