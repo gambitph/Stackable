@@ -1,11 +1,11 @@
 /**
  * Internal dependencies
  */
-// import SVGImageIcon from './images/image.svg'
 import SVGUploadIcon from './images/upload.svg'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import { ResetButton } from '../base-control2/reset-button'
+import Button from '../button'
 
 /**
  * External dependencies
@@ -87,37 +87,6 @@ const ImageControl = memo( props => {
 			valueCheckAttribute={ props.attribute + 'Url' }
 			className={ classnames( 'ugb-image-control', props.className ) }
 		>
-			<DynamicContentControl
-				enable={ props.isDynamic }
-				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
-				type="image-url"
-				{ ...dynamicContentProps }
-			>
-				<MediaUpload
-					onSelect={ onChange }
-					allowedTypes={ props.allowedTypes }
-					value={ imageId }
-					render={ obj => {
-						return (
-							<Fragment>
-								<div className="ugb-image-upload"
-									onClick={ obj.open }
-									onKeyDown={ event => {
-										if ( event.keyCode === 13 ) {
-											obj.open()
-										}
-									} }
-									role="button"
-									tabIndex={ 0 }>
-									<p className="ugb-image-upload__label"> { ! imageUrl ? __( 'Upload', i18n ) : __( 'Replace', i18n ) } </p>
-									<SVGUploadIcon />
-								</div>
-							</Fragment>
-						)
-					} }
-				/>
-			</DynamicContentControl>
-
 			{ imageUrl &&
 				<MediaUpload
 					onSelect={ onChange }
@@ -163,6 +132,36 @@ const ImageControl = memo( props => {
 					} }
 				/>
 			}
+			<DynamicContentControl
+				enable={ props.isDynamic }
+				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
+				type="image-url"
+				{ ...dynamicContentProps }
+			>
+				<MediaUpload
+					onSelect={ onChange }
+					allowedTypes={ props.allowedTypes }
+					value={ imageId }
+					render={ obj => {
+						return (
+							<Fragment>
+								<Button
+									className="ugb-image-upload"
+									onClick={ obj.open }
+									onKeyDown={ event => {
+										if ( event.keyCode === 13 ) {
+											obj.open()
+										}
+									} }
+								>
+									<span className="ugb-image-upload__label">{ ! imageUrl ? __( 'Upload', i18n ) : __( 'Replace', i18n ) } </span>
+									<SVGUploadIcon />
+								</Button>
+							</Fragment>
+						)
+					} }
+				/>
+			</DynamicContentControl>
 
 			<ResetButton
 				allowReset={ props.allowReset && ! props.dynamic }
