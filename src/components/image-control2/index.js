@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-// import SVGImageIcon from './images/image.svg'
 import SVGUploadIcon from './images/upload.svg'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
