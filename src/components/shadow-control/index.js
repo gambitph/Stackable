@@ -287,7 +287,7 @@ const ShadowControl = memo( props => {
 						className="stk-shadow-control__more-button"
 						ref={ buttonRef }
 						isSmall
-						variation="tertiary"
+						isTertiary
 						isPressed={ isPopoverOpen || value === 'custom' }
 						label={ __( 'Shadow Settings', i18n ) }
 						onClick={ () => setIsPopoverOpen( ! isPopoverOpen ) }
