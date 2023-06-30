@@ -40,6 +40,11 @@
 	+ .stk-label-unit-toggle {
 		margin-left: 0;
 	}
+
+	// If focused on while closed, show an outline.
+	&:not(.is-open):focus-within {
+		outline: var(--wp-admin-border-width-focus) solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
+	}
 }
 .stk-label-unit-toggle__wrapper {
 	position: absolute;

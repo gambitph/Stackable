@@ -54,6 +54,7 @@ const ControlIconToggle = props => {
 		'stk-label-unit-toggle',
 	], {
 		'stk-label-unit-toggle__colored': props.hasColors,
+		'is-open': isOpen,
 	} )
 
 	return (
@@ -77,29 +78,28 @@ const ControlIconToggle = props => {
 						} )
 
 						return (
-							<div key={ i }>
-								<Button
-									className={ className }
-									data-index={ i }
-									data-value={ option.value }
-									disabled={ option.disabled }
-									tabindex={ isActive ? '0' : '-1' }
-									onClick={ () => {
-										if ( ! isOpen ) {
-											setIsOpen( true )
-										} else {
-											props.onChange( option.value )
-											setIsOpen( false )
-										}
-									} }
-									icon={ option.icon }
-									label={ props.hasLabels ? label : '' }
-									aria-haspopup="true"
-									tooltipPosition="middle right"
-								>
-									{ ! option.icon ? label : undefined }
-								</Button>
-							</div>
+							<Button
+								key={ i }
+								className={ className }
+								data-index={ i }
+								data-value={ option.value }
+								disabled={ option.disabled }
+								tabindex={ isActive ? '0' : '-1' }
+								onClick={ () => {
+									if ( ! isOpen ) {
+										setIsOpen( true )
+									} else {
+										props.onChange( option.value )
+										setIsOpen( false )
+									}
+								} }
+								icon={ option.icon }
+								label={ props.hasLabels ? label : '' }
+								aria-haspopup="true"
+								tooltipPosition="middle right"
+							>
+								{ ! option.icon ? label : undefined }
+							</Button>
 						)
 					} )
 				}
