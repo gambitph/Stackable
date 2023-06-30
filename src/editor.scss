@@ -156,6 +156,11 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 	font-size: 12px;
 }
 
+// Focal point picker goes past container.
+.stk-control .components-focal-point-picker__icon_container {
+	z-index: 3 !important;
+}
+
 // Fix WP 6.1 makes the control into 1 column only.
 .ugb-design-control .components-flex {
 	display: inline-block;
