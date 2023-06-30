@@ -191,6 +191,10 @@ const Edit = props => {
 									setAttributes( { contentOrder: defaultContentOrder } )
 								}
 							} }
+							helpTooltip={ {
+								video: 'posts-content-order',
+								description: __( 'Sets the order of the items displayed (category, title, meta, excerpt, read more button, image) for each post', i18n ),
+							} }
 						/>
 						<ControlSeparator />
 					</InspectorLayoutControls>
@@ -531,6 +535,10 @@ addFilter( 'stackable.block-component.typography.before', 'stackable/posts', ( o
 					{ label: __( 'Pipe', i18n ), value: 'pipe' },
 				] }
 				attribute="metaSeparator"
+				helpTooltip={ {
+					video: 'posts-meta-separator',
+					description: __( 'Sets the separators between meta items (dot, space, comma, dash, pipe)', i18n ),
+				} }
 			/>
 		</>
 	)
@@ -557,7 +565,10 @@ addFilter( 'stackable.block-component.image.before', 'stackable/posts', output =
 				value={ imageSize }
 				onChange={ imageSize => setAttributes( { imageSize } ) }
 				default="full"
-				className="ugb--help-tip-image-size"
+				helpTooltip={ {
+					video: 'image-size',
+					description: __( 'Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster.', i18n ),
+				} }
 			/>
 			<AdvancedToggleControl
 				label={ __( 'Apply hover effect when container is hovered', i18n ) }

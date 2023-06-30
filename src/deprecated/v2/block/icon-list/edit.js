@@ -15,14 +15,17 @@ import {
 	AdvancedRangeControl,
 	BlockContainer,
 	ColorPaletteControl,
-	PanelSpacingBody,
-	TypographyControlHelper,
 	PanelAdvancedSettings,
 	ControlSeparator,
 	IconControl,
 	IconSearchPopover,
 } from '~stackable/components'
-import { ContentAlignControl, ResponsiveControl } from '../../components'
+import {
+	ContentAlignControl,
+	ResponsiveControl,
+	PanelSpacingBody,
+	TypographyControlHelper,
+} from '../../components'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 

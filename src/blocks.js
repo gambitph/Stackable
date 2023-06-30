@@ -6,7 +6,6 @@
  */
 import './format-types'
 import './plugins'
-import './help'
 import './compatibility'
 import './disabled-blocks'
 

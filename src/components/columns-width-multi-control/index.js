@@ -22,7 +22,7 @@ const ColumnsWidthMultiControl = props => {
 		<BaseControl
 			label={ props.label }
 			help={ props.help }
-			className={ classnames( [ 'ugb-columns-width-multi-control', 'ugb--help-tip-column-width', props.className ] ) }
+			className={ classnames( [ 'ugb-columns-width-multi-control', props.className ] ) }
 			responsive={ props.responsive }
 			hasTabletValue={ props.hasTabletValue }
 			hasMobileValue={ props.hasMobileValue }

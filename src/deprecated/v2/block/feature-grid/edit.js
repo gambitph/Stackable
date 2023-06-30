@@ -7,17 +7,11 @@ import {
 	ProControlButton,
 	BlockContainer,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
-	BackgroundControlsHelper,
-	ImageControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	ButtonControlsHelper,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	BorderControlsHelper,
 } from '~stackable/components'
@@ -27,6 +21,12 @@ import {
 	DivBackground,
 	Image,
 	ResponsiveControl,
+	BackgroundControlsHelper,
+	ButtonControlsHelper,
+	ColumnPaddingControl,
+	ImageControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,
@@ -592,7 +592,7 @@ const edit = props => {
 								}
 								{ showButton &&
 									<ButtonEditHelper
-										attrNameTemplate={ `button%s` }
+										attrNameTemplate="button%s"
 										setAttributes={ setAttributes }
 										blockAttributes={ props.attributes }
 										designDefault="plain"

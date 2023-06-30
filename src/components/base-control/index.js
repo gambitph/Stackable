@@ -46,6 +46,7 @@ const BaseControl = props => {
 					onChangeUnit={ props.onChangeUnit }
 					screens={ props.screens }
 					afterButton={ props.afterButton }
+					helpTooltip={ props.helpTooltip }
 				/>
 			}
 			{ props.children }

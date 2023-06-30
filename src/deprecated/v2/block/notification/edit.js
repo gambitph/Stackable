@@ -17,20 +17,14 @@ import {
 	BlockContainer,
 	DesignPanelBody,
 	ProControlButton,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
-	ButtonControlsHelper,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	FourRangeControl,
-	IconControlsHelper,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -39,6 +33,12 @@ import {
 	DivBackground,
 	ResponsiveControl,
 	SvgIconPlaceholder,
+	BackgroundControlsHelper,
+	ButtonControlsHelper,
+	ColumnPaddingControl,
+	IconControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,

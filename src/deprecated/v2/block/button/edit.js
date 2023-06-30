@@ -3,13 +3,14 @@
  */
 import {
 	BlockContainer,
-	ButtonControlsHelper,
 	DesignPanelBody,
 	PanelAdvancedSettings,
 	ProControlButton,
 	AdvancedRangeControl,
 } from '~stackable/components'
-import { ButtonEditHelper, ContentAlignControl } from '../../components'
+import {
+	ButtonEditHelper, ContentAlignControl, ButtonControlsHelper,
+} from '../../components'
 import {
 	withBlockStyles,
 	withContentAlignReseter,
