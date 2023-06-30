@@ -18,7 +18,6 @@
 .stk-dynamic-content-control {
 	display: flex;
 	align-items: flex-start;
-	overflow: hidden;
 
 	&.stk--has-control-tooltip {
 		overflow: visible;
@@ -36,15 +35,6 @@
 		[data-icon="database"] {
 			width: 14px;
 			height: 16px;
-		}
-
-		&:hover {
-			color: #fff !important;
-			background: var(--wp-admin-theme-color) !important;
-		}
-
-		&.is-pressed {
-			background: var(--wp-admin-theme-color);
 		}
 	}
 
@@ -81,7 +71,6 @@
 
 	.stk-dynamic-content-control__button {
 		position: absolute;
-		border: 1px solid var(--wp-admin-theme-color);
 		z-index: 3;
 		top: 0;
 		right: 0;

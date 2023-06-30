@@ -25,17 +25,17 @@ import { isEmptyAttribute } from '~stackable/util'
 
 const HOVER_OPTIONS = [
 	{
-		label: __( 'Normal', i18n ),
+		label: __( 'Normal State', i18n ),
 		value: 'normal',
 		icon: <SVGStateNormal />,
 	},
 	{
-		label: __( 'Hover', i18n ),
+		label: __( 'Hovered State', i18n ),
 		value: 'hover',
 		icon: <SVGStateHover />,
 	},
 	{
-		label: __( 'Parent Hovered', i18n ),
+		label: __( 'Parent Hovered State', i18n ),
 		value: 'parent-hover',
 		icon: <SVGStateParentHover />,
 	},
@@ -107,7 +107,6 @@ const HoverStateToggle = props => {
 			value={ currentHoverState }
 			options={ stateOptions }
 			onChange={ state => dispatch( 'stackable/hover-state' ).updateHoverState( state ) }
-			buttonLabel={ __( 'Hover State', i18n ) }
 		/>
 	)
 }

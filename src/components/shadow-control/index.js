@@ -287,9 +287,9 @@ const ShadowControl = memo( props => {
 						className="stk-shadow-control__more-button"
 						ref={ buttonRef }
 						isSmall
-						isTertiary
+						variation="tertiary"
 						isPressed={ isPopoverOpen || value === 'custom' }
-						aria-label={ __( 'Shadow Settings', i18n ) }
+						label={ __( 'Shadow Settings', i18n ) }
 						onClick={ () => setIsPopoverOpen( ! isPopoverOpen ) }
 						icon={ <Dashicon icon="admin-generic" /> }
 					/>
