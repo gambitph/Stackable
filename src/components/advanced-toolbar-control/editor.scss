@@ -1,5 +1,7 @@
-.ugb-advanced-toolbar-control .components-button-group {
+.ugb-advanced-toolbar-control .components-button-group:not(.ugb-toolbar--small) {
 	width: 100%;
+}
+.ugb-advanced-toolbar-control .components-button-group {
 	&.ugb-toolbar--full-width {
 		display: flex;
 		flex-wrap: nowrap;
@@ -27,8 +29,8 @@
 	}
 
 	&:focus-within {
-		outline: var(--wp-admin-border-width-focus) solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
-		border-radius: 2px;
+		box-shadow: 0 0 0 0.5px var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
+		border-radius: 1px;
 	}
 }
 

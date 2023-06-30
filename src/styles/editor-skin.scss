@@ -10,6 +10,9 @@
 }
 
 .ugb--has-panel-tabs .components-panel {
+	--wp-admin-theme-color: var(--stk-skin-dark);
+	--wp-components-color-accent-inverted: var(--stk-skin-dark);
+
 	.block-editor-block-card,
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper,
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper > button {
@@ -25,10 +28,6 @@
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper > button:hover {
 		background-color: var(--stk-skin-bg-default) !important;
 		color: var(--stk-skin-dark);
-	}
-
-	.ugb-panel-tabs button:focus {
-		box-shadow: inset 0 0 0 1px var(--stk-skin-border-dark);
 	}
 }
 
@@ -55,31 +54,12 @@
 	}
 
 	// unselected buttons
+	.components-button-group .components-button {
+		color: var(--stk-skin-light);
+	}
 	.components-button-group .components-button:not(.is-primary) {
 		background-color: var(--stk-skin-bg-default);
 		color: var(--stk-skin-light);
-	}
-
-	.components-button.is-secondary,
-	.components-button.is-tertiary {
-		color: var(--stk-skin-dark);
-	}
-
-	.components-button.is-secondary {
-		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
-	}
-
-	.components-button.is-tertiary:focus {
-		box-shadow: none;
-		outline: 1px solid transparent !important;
-	}
-
-	.components-button.is-tertiary.is-pressed {
-		color: var(--stk-skin-bg-primary);
-	}
-
-	.components-button.is-tertiary.stk-dynamic-content-control__button {
-		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
 	}
 
 	.ugb-button-component {
@@ -96,7 +76,6 @@
 
 	.stk-control-content .components-button:hover:not(:disabled),
 	.components-button.is-tertiary:hover:not(:disabled):not(.is-pressed) {
-		color: var(--stk-skin-dark);
 		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
 		z-index: 1;
 	}
@@ -106,6 +85,9 @@
 		color: var(--stk-skin-error);
 	}
 
+	.stk-label-unit-toggle:focus-within {
+		box-shadow: 0 0 0 0.5px var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
+	}
 	.stk-label-unit-toggle,
 	.stk-label-unit-toggle__wrapper {
 		border-radius: 2px !important;
