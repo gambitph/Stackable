@@ -86,7 +86,7 @@ const FourRangeControl = memo( props => {
 	controlProps.after = props.hasLock && <Button
 		className={ lockClassNames }
 		onClick={ () => setIsLocked( ! isLocked ) }
-		isSecondary
+		variation="tertiary"
 		icon={ isLocked ? <SVGAllImage /> : <SVGFullImage /> }
 		label={ isLocked ? __( 'Individual sides', i18n ) : __( 'All sides', i18n ) }
 	/>
