@@ -9,9 +9,17 @@
 	--stk-skin-error: #f15449;
 }
 
-.ugb--has-panel-tabs .components-panel {
+
+.ugb--has-panel-tabs .components-panel,
+.components-panel .ugb-toggle-panel-body,
+.components-popover.ugb-button-icon-control__popover,
+.components-popover.stk-popover {
 	--wp-admin-theme-color: var(--stk-skin-dark);
+	--wp-admin-theme-color-darker-10: var(--stk-skin-dark);
 	--wp-components-color-accent-inverted: var(--stk-skin-dark);
+}
+
+.ugb--has-panel-tabs .components-panel {
 
 	.block-editor-block-card,
 	.ugb-panel-tabs .ugb-panel-tabs__wrapper,
@@ -62,9 +70,6 @@
 		color: var(--stk-skin-light);
 	}
 
-	.ugb-button-component {
-		border-radius: 2px !important;
-	}
 	.components-button.is-tertiary.stk-dynamic-content-control__button:hover,
 	.stk-control-label__toggles .components-button:hover,
 	.components-button.is-tertiary.stk-dynamic-content-control__button.is-pressed,
@@ -99,11 +104,6 @@
 
 	.components-range-control__wrapper {
 		color: var(--stk-skin-dark) !important;
-	}
-
-	.components-range-control__thumb-wrapper span,
-	.stk-column-widths-control__columns-slider .slider-handles button {
-		background-color: var(--stk-skin-dark) !important;
 	}
 
 	.components-form-toggle {
