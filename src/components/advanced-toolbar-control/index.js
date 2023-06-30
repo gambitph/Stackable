@@ -218,6 +218,11 @@ const AdvancedToolbarControl = props => {
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
+	const isNothingSelected = controls.every( option => {
+		const isSelected = value ? value === option.value : props.placeholder === option.value
+		return ! isSelected
+	} )
+
 	return (
 		<AdvancedControl
 			{ ...controlProps }
@@ -225,8 +230,10 @@ const AdvancedToolbarControl = props => {
 		>
 			<ButtonGroup
 				children={
-					controls.map( option => {
+					controls.map( ( option, i ) => {
 						const defaultValue = props.default || ''
+						const isSelected = value ? value === option.value : props.placeholder === option.value
+						const tabindex = isSelected ? '0' : '-1'
 						const controlProps = {
 							...( omit( option, 'controls', 'show' ) ),
 							onClick: () => {
@@ -236,10 +243,12 @@ const AdvancedToolbarControl = props => {
 								}
 								onChange( option.value !== value ? option.value : defaultValue )
 							},
-							isPrimary: value ? value === option.value : props.placeholder === option.value,
+							isPrimary: isSelected,
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
 							disabled: props.disabled === 'all' ? true : props.disabled.includes( option.value ),
+							tabindex: isNothingSelected && i === 0 ? '0' : tabindex,
+							label: option.title || props.label,
 						}
 						return <Button key={ option.value } { ...controlProps } />
 					} )

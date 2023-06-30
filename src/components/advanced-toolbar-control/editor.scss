@@ -25,6 +25,11 @@
 			width: auto !important;
 		}
 	}
+
+	&:focus-within {
+		outline: var(--wp-admin-border-width-focus) solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
+		border-radius: 2px;
+	}
 }
 
 .ugb-advanced-toolbar-control__text-button {
