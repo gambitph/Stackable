@@ -119,6 +119,12 @@ const ControlIconToggle = props => {
 										if ( e.key === 'Tab' ) {
 											setIsOpen( false )
 										}
+
+										// On escape, just close the panel, don't lose focus.
+										if ( e.key === 'Escape' ) {
+											e.preventDefault()
+											setIsOpen( false )
+										}
 									}
 								} }
 							>
