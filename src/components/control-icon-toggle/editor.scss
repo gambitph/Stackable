@@ -28,13 +28,16 @@
 		justify-content: center;
 		font-size: 10px; // For text only toggles
 		font-weight: 400; // For text only toggles
+		position: relative;
 		svg {
 			height: 100%;
 			width: 100%;
 		}
-		&:hover,
 		&.is-active {
-			box-shadow: none !important;
+			z-index: 2;
+		}
+		&:hover {
+			z-index: 3;
 		}
 	}
 	+ .stk-label-unit-toggle {

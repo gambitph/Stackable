@@ -97,6 +97,30 @@ const ControlIconToggle = props => {
 								label={ props.hasLabels ? label : '' }
 								aria-haspopup="true"
 								tooltipPosition="middle right"
+								onKeyDown={ e => {
+									const el = e.target
+									if ( el && isOpen ) {
+										if ( e.key === 'ArrowUp' || e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' ) {
+											e.preventDefault()
+											if ( e.key === 'ArrowUp' || e.key === 'ArrowLeft' ) {
+												const prev = el.previousElementSibling || el.parentElement.lastElementChild
+												if ( prev ) {
+													prev.focus()
+												}
+											} else {
+												const next = el.nextElementSibling || el.parentElement.firstElementChild
+												if ( next ) {
+													next.focus()
+												}
+											}
+										}
+
+										// On tab, close the panel
+										if ( e.key === 'Tab' ) {
+											setIsOpen( false )
+										}
+									}
+								} }
 							>
 								{ ! option.icon ? label : undefined }
 							</Button>
