@@ -46,6 +46,12 @@
 			stroke-width: 1px;
 			fill: #fff;
 		}
+
+		+ .stk-dynamic-content-control {
+			.components-button {
+				margin-top: 8px;
+			}
+		}
 	}
 	.ugb-image-preview {
 		min-width: 100px;
@@ -69,7 +75,6 @@
 			justify-content: center;
 			align-items: center;
 			height: 30px;
-			margin-top: 8px;
 			cursor: pointer;
 			&:hover,
 			&:focus {
