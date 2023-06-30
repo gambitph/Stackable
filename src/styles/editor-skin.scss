@@ -47,6 +47,10 @@
 	// button group
 	.components-button-group .components-button {
 		box-shadow: inset 0 0 0 1px var(--stk-skin-border-light);
+		color: var(--stk-skin-light);
+	}
+	.components-button-group .components-button:not(.is-primary) {
+		color: var(--stk-skin-light);
 	}
 
 	// selected button
@@ -54,20 +58,9 @@
 		background-color: var(--stk-skin-bg-primary);
 		box-shadow: inset 0 0 0 1px var(--stk-skin-dark);
 		color: var(--stk-skin-dark);
-	}
-
-	// hover on selected button
-	.components-button.is-primary:hover {
-		background-color: var(--stk-skin-bg-primary);
-	}
-
-	// unselected buttons
-	.components-button-group .components-button {
-		color: var(--stk-skin-light);
-	}
-	.components-button-group .components-button:not(.is-primary) {
-		background-color: var(--stk-skin-bg-default);
-		color: var(--stk-skin-light);
+		&:hover {
+			background-color: var(--stk-skin-bg-primary);
+		}
 	}
 
 	.components-button.is-tertiary.stk-dynamic-content-control__button:hover,
@@ -134,8 +127,6 @@
 	}
 
 	.stk-block-editor-block-styles__item {
-		width: calc(33% - 4px);
-
 		&:hover,
 		&.is-active {
 			.stk-block-editor-block-styles__item-preview {
