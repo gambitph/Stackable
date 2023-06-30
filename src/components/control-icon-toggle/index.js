@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import Button from '../button'
-import Popover from '../popover'
 
 /**
  * External dependencies
@@ -22,7 +21,6 @@ const ControlIconToggle = props => {
 		options,
 	} = props
 
-	const [ isMouseOver, setIsMouseOver ] = useState( false )
 	const [ isOpen, setIsOpen ] = useState( false )
 	const buttonRef = useRef( null )
 
@@ -71,30 +69,21 @@ const ControlIconToggle = props => {
 				{ options.length > 1 &&
 					options.map( ( option, i ) => {
 						const label = option.label || option.value
-						const tooltip = ! isOpen
-							? props.buttonLabel || label
-							: ( props.hasLabels ? label : '' )
+						const isActive = value === option.value
 
 						const className = classnames( {
-							'is-active': value === option.value,
+							'is-active': isActive,
 							'has-value': option.hasValue,
 						} )
 
 						return (
-							<div
-								key={ i }
-								onMouseEnter={ () => {
-									setIsMouseOver( option.value )
-								} }
-								onMouseLeave={ () => {
-									setIsMouseOver( false )
-								} }
-							>
+							<div key={ i }>
 								<Button
 									className={ className }
 									data-index={ i }
 									data-value={ option.value }
 									disabled={ option.disabled }
+									tabindex={ isActive ? '0' : '-1' }
 									onClick={ () => {
 										if ( ! isOpen ) {
 											setIsOpen( true )
@@ -104,21 +93,12 @@ const ControlIconToggle = props => {
 										}
 									} }
 									icon={ option.icon }
-									showTooltip={ false }
-									label={ label }
+									label={ props.hasLabels ? label : '' }
+									aria-haspopup="true"
+									tooltipPosition="middle right"
 								>
 									{ ! option.icon ? label : undefined }
 								</Button>
-								{ tooltip && isMouseOver === option.value &&
-									<Popover
-										focusOnMount={ false }
-										position={ `middle ${ props.labelPosition }` }
-										className="components-tooltip stk-label-unit-toggle__popup"
-										aria-hidden="true"
-									>
-										{ option.tooltip || tooltip }
-									</Popover>
-								}
 							</div>
 						)
 					} )

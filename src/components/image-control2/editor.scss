@@ -70,21 +70,15 @@
 		.ugb-image-upload {
 			display: flex;
 			flex-grow: 1;
-			box-shadow: inset 0 0 0 1px #1e1e1e;
 			gap: 4px;
 			justify-content: center;
 			align-items: center;
 			height: 30px;
-			cursor: pointer;
-			&:hover,
-			&:focus {
-				background: #eaecf5;
-			}
 			svg {
 				fill: none;
 				color: transparent;
-				width: 20px;
-				height: 20px;
+				width: 16px;
+				height: 16px;
 			}
 		}
 

@@ -148,6 +148,8 @@ const ImageControl = memo( props => {
 								<Button
 									className="ugb-image-upload"
 									onClick={ obj.open }
+									icon={ <SVGUploadIcon viewBox="0 0 20 20" /> }
+									isSecondary
 									onKeyDown={ event => {
 										if ( event.keyCode === 13 ) {
 											obj.open()
@@ -155,7 +157,6 @@ const ImageControl = memo( props => {
 									} }
 								>
 									<span className="ugb-image-upload__label">{ ! imageUrl ? __( 'Upload', i18n ) : __( 'Replace', i18n ) } </span>
-									<SVGUploadIcon />
 								</Button>
 							</Fragment>
 						)
