@@ -370,8 +370,7 @@ export const DynamicContentButton = memo( props => {
 				icon={ dynamicContent }
 				aria-haspopup="true"
 				label={ __( 'Dynamic Fields', i18n ) }
-				isSmall
-				isTertiary
+				variant="secondary"
 				onClick={ props.onClick }
 				isPressed={ !! props.isPressed }
 			/>

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { TextStyles } from './style'
+import { BlockStyles } from './style'
 
 /**
  * External dependencies
@@ -93,7 +93,7 @@ const Edit = props => {
 				</>
 			) }
 
-			<TextStyles
+			<BlockStyles
 				version={ VERSION }
 				blockState={ props.blockState }
 				clientId={ clientId }

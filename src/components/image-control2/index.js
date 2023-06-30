@@ -1,10 +1,11 @@
 /**
  * Internal dependencies
  */
-import SVGImageIcon from './images/image.svg'
+import SVGUploadIcon from './images/upload.svg'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import { ResetButton } from '../base-control2/reset-button'
+import Button from '../button'
 
 /**
  * External dependencies
@@ -86,6 +87,51 @@ const ImageControl = memo( props => {
 			valueCheckAttribute={ props.attribute + 'Url' }
 			className={ classnames( 'ugb-image-control', props.className ) }
 		>
+			{ imageUrl &&
+				<MediaUpload
+					onSelect={ onChange }
+					allowedTypes={ props.allowedTypes }
+					value={ imageId }
+					render={ obj => {
+						return (
+							<Fragment>
+								<div className="ugb-image-preview-wrapper">
+									{ type === 'video' && (
+										<video
+											className="ugb-image-preview"
+											autoPlay
+											muted
+											loop
+											src={ imageUrl }
+											onClick={ obj.open }
+											onKeyDown={ event => {
+												if ( event.keyCode === 13 ) {
+													obj.open()
+												}
+											} }
+										/>
+									) }
+									{ type === 'image' && (
+									// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+										<img
+											className="ugb-image-preview"
+											draggable="false"
+											src={ imageUrl }
+											onClick={ obj.open }
+											onKeyDown={ event => {
+												if ( event.keyCode === 13 ) {
+													obj.open()
+												}
+											} }
+											alt={ __( 'preview', i18n ) }
+										/>
+									) }
+								</div>
+							</Fragment>
+						)
+					} }
+				/>
+			}
 			<DynamicContentControl
 				enable={ props.isDynamic }
 				hasPanelModifiedIndicator={ props.hasPanelModifiedIndicator }
@@ -99,61 +145,25 @@ const ImageControl = memo( props => {
 					render={ obj => {
 						return (
 							<Fragment>
-								{ imageUrl &&
-									<div className="ugb-image-preview-wrapper">
-										{ type === 'video' && (
-											<video
-												className="ugb-image-preview"
-												autoPlay
-												muted
-												loop
-												src={ imageUrl }
-												onClick={ obj.open }
-												onKeyDown={ event => {
-													if ( event.keyCode === 13 ) {
-														obj.open()
-													}
-												} }
-											/>
-										) }
-										{ type === 'image' && (
-										/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
-											<img
-												className="ugb-image-preview"
-												draggable="false"
-												src={ imageUrl }
-												onClick={ obj.open }
-												onKeyDown={ event => {
-													if ( event.keyCode === 13 ) {
-														obj.open()
-													}
-												} }
-												alt={ __( 'preview', i18n ) }
-											/>
-										) }
-									</div>
-								}
-								{ ! imageUrl && (
-									<div
-										className="ugb-placeholder"
-										onClick={ obj.open }
-										onKeyDown={ event => {
-											if ( event.keyCode === 13 ) {
-												obj.open()
-											}
-										} }
-										role="button"
-										tabIndex={ 0 }
-									>
-										<SVGImageIcon />
-									</div>
-								) }
-
+								<Button
+									className="ugb-image-upload"
+									onClick={ obj.open }
+									icon={ <SVGUploadIcon viewBox="0 0 20 20" /> }
+									isSecondary
+									onKeyDown={ event => {
+										if ( event.keyCode === 13 ) {
+											obj.open()
+										}
+									} }
+								>
+									<span className="ugb-image-upload__label">{ ! imageUrl ? __( 'Upload', i18n ) : __( 'Replace', i18n ) } </span>
+								</Button>
 							</Fragment>
 						)
 					} }
 				/>
 			</DynamicContentControl>
+
 			<ResetButton
 				allowReset={ props.allowReset && ! props.dynamic }
 				value={ imageUrl }
