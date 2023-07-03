@@ -251,9 +251,11 @@ export const useDynamicContent = ( value = '' ) => {
 
 		// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
 		if ( currentPostId && queryLoopContext?.postId !== currentPostId ) {
-			currentPostId = queryLoopContext.postId.toString()
+			currentPostId = queryLoopContext.postId?.toString() || -1
+		}
+
 		// If we're being used in the site editor, then check if we need to change the display value to match the given post Id.
-		} else if ( select( 'core/edit-site' ) ) {
+		if ( currentPostId === -1 && select( 'core/edit-site' ) ) {
 			currentPostId = select( 'core/edit-site' ).getEditedPostContext()?.postId || -1
 		}
 
