@@ -18,19 +18,13 @@ import {
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
-	BackgroundControlsHelper,
-	ImageControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
-	ButtonControlsHelper,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -39,6 +33,12 @@ import {
 	DivBackground,
 	Image,
 	ResponsiveControl,
+	BackgroundControlsHelper,
+	ButtonControlsHelper,
+	ColumnPaddingControl,
+	ImageControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,
@@ -831,7 +831,7 @@ const edit = props => {
 					const buttonComp = (
 						<div className="ugb-pricing-box__button">
 							<ButtonEditHelper
-								attrNameTemplate={ `button%s` }
+								attrNameTemplate="button%s"
 								setAttributes={ setAttributes }
 								blockAttributes={ props.attributes }
 								text={ buttonText }

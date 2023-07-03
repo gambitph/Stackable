@@ -8,6 +8,8 @@
 import ControlIconToggle from '../control-icon-toggle'
 import ResponsiveToggle from '../responsive-toggle'
 import HoverStateToggle from './hover-state-toggle'
+import { VisualGuideer } from './use-visual-guide'
+import LabelTooltip from './label-tooltip'
 import {
 	useAttributeName, useBlockAttributesContext, useBlockSetAttributesContext, useDeviceType,
 } from '~stackable/hooks'
@@ -25,7 +27,6 @@ import { pick, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { BaseControl as GutBaseControl } from '@wordpress/components'
-import { VisualGuideer } from './use-visual-guide'
 
 // Expose useControlHandlers to our API.
 export { useControlHandlers } from './hooks'
@@ -70,7 +71,7 @@ export const BaseControl = props => {
 		>
 			<VisualGuide { ...props.visualGuide }>
 				<div className={ labelClassName }>
-					<div className="components-base-control__label">{ label }</div>
+					<LabelTooltip label={ label } { ...props.helpTooltip } />
 					<div className="stk-control-label__toggles">
 						{ hasResponsive && (
 							<ResponsiveToggle
@@ -136,6 +137,7 @@ BaseControl.defaultProps = {
 	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
 
 	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
+	helpTooltip: EMPTY_OBJ, // If supplied, displays a help tooltip when hovering on the label.
 }
 
 const AdvancedControl = props => {
@@ -182,6 +184,7 @@ AdvancedControl.defaultProps = {
 	hasMobileValue: undefined, // If true, then the responsive toggle for mobile will be highlighted to show that the mobile value has been set.
 
 	visualGuide: EMPTY_OBJ, // If supplied, displays a highlight on the block.
+	helpTooltip: EMPTY_OBJ, // If supplied, displays a help tooltip when hovering on the label.
 }
 
 export default AdvancedControl

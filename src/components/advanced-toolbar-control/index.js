@@ -218,6 +218,11 @@ const AdvancedToolbarControl = props => {
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
+	const isNothingSelected = controls.every( option => {
+		const isSelected = value ? value === option.value : props.placeholder === option.value
+		return ! isSelected
+	} )
+
 	return (
 		<AdvancedControl
 			{ ...controlProps }
@@ -225,8 +230,10 @@ const AdvancedToolbarControl = props => {
 		>
 			<ButtonGroup
 				children={
-					controls.map( option => {
+					controls.map( ( option, i ) => {
 						const defaultValue = props.default || ''
+						const isSelected = value ? value === option.value : props.placeholder === option.value
+						const tabindex = isSelected ? '0' : '-1'
 						const controlProps = {
 							...( omit( option, 'controls', 'show' ) ),
 							onClick: () => {
@@ -236,12 +243,34 @@ const AdvancedToolbarControl = props => {
 								}
 								onChange( option.value !== value ? option.value : defaultValue )
 							},
-							isPrimary: value ? value === option.value : props.placeholder === option.value,
-							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
-							disabled: props.disabled === 'all' ? true : props.disabled.includes( option.value ),
 						}
-						return <Button key={ option.value } { ...controlProps } />
+						return <Button
+							key={ option.value }
+							{ ...controlProps }
+							label={ option.title || props.label }
+							tabindex={ isNothingSelected && i === 0 ? '0' : tabindex }
+							disabled={ props.disabled === 'all' ? true : props.disabled.includes( option.value ) }
+							isPrimary={ isSelected }
+							isSmall={ props.isSmall }
+							onKeyDown={ e => {
+								const el = e.target
+								if ( el ) {
+									// On right, select the next value or loop to first.
+									if ( e.keyCode === 39 ) {
+										const nextEl = el.nextElementSibling || el.parentElement.firstElementChild
+										nextEl.focus()
+										nextEl.click()
+
+									// Trigger click on the previous option or loop to last.
+									} else if ( e.keyCode === 37 ) {
+										const prevEl = el.previousElementSibling || el.parentElement.lastElementChild
+										prevEl.focus()
+										prevEl.click()
+									}
+								}
+							} }
+						/>
 					} )
 				}
 				className={ toolbarClasses }

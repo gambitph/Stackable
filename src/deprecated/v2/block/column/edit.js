@@ -15,17 +15,19 @@ import {
 	WhenResponsiveScreen,
 	AdvancedRangeControl,
 	ControlSeparator,
-	BackgroundControlsHelper,
 	ColorPaletteControl,
 	PanelAdvancedSettings,
 	DesignControl,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
-	PanelSpacingBody,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl,
+	DivBackground,
+	ContentAlignControl,
+	ResponsiveControl,
+	BackgroundControlsHelper,
+	ColumnPaddingControl,
+	PanelSpacingBody,
 } from '../../components'
 import {
 	withUniqueClass,

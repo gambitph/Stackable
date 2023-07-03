@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.9.0\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.9.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-14T08:39:29+00:00\n"
+"POT-Creation-Date: 2023-07-03T06:16:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -634,13 +634,13 @@ msgid "This only works for version 2 blocks."
 msgstr ""
 
 #: src/deprecated/v2/block/blog-posts/attributes.php:1845
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:78
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:77
 #: src/deprecated/v2/block/blog-posts/schema.js:253
 msgid "Next »"
 msgstr ""
 
 #: src/deprecated/v2/block/blog-posts/attributes.php:1849
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:79
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:78
 #: src/deprecated/v2/block/blog-posts/schema.js:257
 msgid "« Previous"
 msgstr ""
@@ -793,10 +793,6 @@ msgstr ""
 msgid "Vivid purple"
 msgstr ""
 
-#: src/help/help-tooltip.php:27
-msgid "Disable Stackable help video tooltips"
-msgstr ""
-
 #: src/pro.php:49
 msgid "Hide \"Go Premium\" notices"
 msgstr ""
@@ -921,7 +917,6 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:123
 #: src/components/base-control2/hover-state-toggle.js:88
 #: src/components/variation-picker/index.js:75
-#: src/help/help-tooltip.js:106
 #: src/welcome/admin.js:303
 #: src/welcome/admin.js:370
 #: src/welcome/wizard.js:242
@@ -1276,17 +1271,17 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/components/effects-settings/index.js:39
 #: src/block-components/advanced/edit.js:80
 #: src/block-components/button/edit.js:58
-#: src/block-components/helpers/borders/edit.js:25
-#: src/block-components/image/edit.js:381
-#: src/block-components/typography/edit.js:209
+#: src/block-components/helpers/borders/edit.js:23
+#: src/block-components/image/edit.js:414
+#: src/block-components/typography/edit.js:218
 #: src/block/countdown/edit.js:62
 #: src/block/table-of-contents/edit.js:73
-#: src/components/blend-mode-control/index.js:18
+#: src/components/blend-mode-control/index.js:17
 #: src/components/border-controls/index.js:26
-#: src/components/button-controls/index.js:210
-#: src/components/typography-control/index.js:130
-#: src/deprecated/v2/block/image-box/edit.js:428
-#: src/deprecated/v2/block/number-box/edit.js:346
+#: src/components/typography-control/index.js:149
+#: src/deprecated/v2/block/image-box/edit.js:431
+#: src/deprecated/v2/block/number-box/edit.js:348
+#: src/deprecated/v2/components/button-controls/index.js:210
 msgid "None"
 msgstr ""
 
@@ -1355,12 +1350,12 @@ msgid "Media queries are supported. Use the widths 1024px and 768px for tablet a
 msgstr ""
 
 #: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:26
-#: src/deprecated/v2/block/blockquote/edit.js:275
+#: src/deprecated/v2/block/blockquote/edit.js:277
 msgid "Horizontal Position"
 msgstr ""
 
 #: pro__premium_only/src/block-components/effects-animations/entrance-animation-control.js:35
-#: src/deprecated/v2/block/blockquote/edit.js:288
+#: src/deprecated/v2/block/blockquote/edit.js:290
 msgid "Vertical Position"
 msgstr ""
 
@@ -1370,7 +1365,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/components/effects-settings/index.js:46
 #: pro__premium_only/src/deprecated/v2/components/effects-settings/index.js:47
 #: src/block-components/button/edit.js:70
-#: src/components/button-controls/index.js:216
+#: src/deprecated/v2/components/button-controls/index.js:216
 msgid "Scale"
 msgstr ""
 
@@ -1406,14 +1401,13 @@ msgid "Slow"
 msgstr ""
 
 #: pro__premium_only/src/block-components/effects-animations/index.js:62
-#: src/block-components/typography/edit.js:197
-#: src/block-components/typography/edit.js:217
-#: src/components/base-control2/hover-state-toggle.js:28
-#: src/components/blend-mode-control/index.js:19
-#: src/components/button-controls/index.js:326
-#: src/components/typography-control/index.js:114
+#: src/block-components/typography/edit.js:201
+#: src/block-components/typography/edit.js:231
+#: src/components/blend-mode-control/index.js:18
+#: src/components/typography-control/index.js:129
 #: src/deprecated/v2/block/columns/edit.js:336
-#: src/deprecated/v2/block/container/edit.js:158
+#: src/deprecated/v2/block/container/edit.js:160
+#: src/deprecated/v2/components/button-controls/index.js:326
 #: src/format-types/highlight/index.js:204
 msgid "Normal"
 msgstr ""
@@ -1453,21 +1447,20 @@ msgstr ""
 #: pro__premium_only/src/block-components/effects-animations/scroll-animation-control.js:25
 #: pro__premium_only/src/block-components/separator/index.js:118
 #: pro__premium_only/src/block/separator/index.js:71
-#: pro__premium_only/src/block/separator/index.js:115
+#: pro__premium_only/src/block/separator/index.js:125
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:99
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:162
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:108
 #: src/block-components/advanced/edit.js:90
 #: src/block/carousel/edit.js:433
-#: src/components/button-controls/index.js:408
 #: src/components/image-filter-control/index.js:71
-#: src/deprecated/v2/block/blockquote/edit.js:260
-#: src/deprecated/v2/block/image-box/edit.js:374
-#: src/deprecated/v2/block/image-box/edit.js:409
-#: src/deprecated/v2/block/number-box/edit.js:385
-#: src/deprecated/v2/block/video-popup/edit.js:263
+#: src/deprecated/v2/block/blockquote/edit.js:262
+#: src/deprecated/v2/block/image-box/edit.js:377
+#: src/deprecated/v2/block/image-box/edit.js:412
+#: src/deprecated/v2/block/number-box/edit.js:387
+#: src/deprecated/v2/block/video-popup/edit.js:264
+#: src/deprecated/v2/components/button-controls/index.js:408
 #: src/deprecated/v2/modules/advanced-general/index.js:72
-#: src/help/videos.js:517
 msgid "Opacity"
 msgstr ""
 
@@ -1512,38 +1505,44 @@ msgstr ""
 msgid "Background Shape"
 msgstr ""
 
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:37
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:36
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:41
 #: pro__premium_only/src/features/icon-controls/index.js:260
+#: src/block-components/image/edit.js:448
 #: src/block/number-box/edit.js:80
 #: src/components/image-shape-control/index.js:59
-#: src/help/videos.js:181
 msgid "Shape"
 msgstr ""
 
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:43
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:42
+#: src/block-components/image/edit.js:449
+msgid "Change the shape of the image"
+msgstr ""
+
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:47
 #: pro__premium_only/src/features/icon-controls/index.js:269
 #: src/block-components/icon/edit.js:186
 msgid "Shape Color"
 msgstr ""
 
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:49
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:53
 #: pro__premium_only/src/features/icon-controls/index.js:277
 msgid "Shape Opacity"
 msgstr ""
 
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:60
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:64
 #: pro__premium_only/src/features/icon-controls/index.js:290
-#: src/deprecated/v2/block/number-box/edit.js:361
+#: src/deprecated/v2/block/number-box/edit.js:363
 msgid "Shape Size"
 msgstr ""
 
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:70
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:74
 #: pro__premium_only/src/features/icon-controls/index.js:303
 #: src/components/shadow-control/index.js:48
 msgid "Horizontal Offset"
 msgstr ""
 
-#: pro__premium_only/src/block-components/icon/background-shape-controls.js:80
+#: pro__premium_only/src/block-components/icon/background-shape-controls.js:84
 #: pro__premium_only/src/features/icon-controls/index.js:316
 #: src/components/shadow-control/index.js:60
 msgid "Vertical Offset"
@@ -1557,15 +1556,15 @@ msgstr ""
 #: pro__premium_only/src/block-components/icon/gradient-controls.js:31
 #: pro__premium_only/src/features/icon-controls/index.js:105
 #: pro__premium_only/src/features/icon-controls/index.js:225
-#: src/block-components/button/edit.js:151
-#: src/block-components/helpers/backgrounds/edit.js:138
-#: src/block-components/image/edit.js:326
+#: src/block-components/button/edit.js:156
+#: src/block-components/helpers/backgrounds/edit.js:141
+#: src/block-components/image/edit.js:350
 #: src/block-components/progress-bar/edit.js:155
 #: src/block-components/progress-bar/edit.js:183
-#: src/block-components/typography/edit.js:286
-#: src/components/background-controls/index.js:111
-#: src/components/button-controls/index.js:171
-#: src/components/button-controls/index.js:279
+#: src/block-components/typography/edit.js:315
+#: src/deprecated/v2/components/background-controls/index.js:109
+#: src/deprecated/v2/components/button-controls/index.js:171
+#: src/deprecated/v2/components/button-controls/index.js:279
 msgid "Gradient Direction (degrees)"
 msgstr ""
 
@@ -1573,21 +1572,21 @@ msgstr ""
 #: pro__premium_only/src/block-components/icon/index.js:56
 #: pro__premium_only/src/features/icon-controls/index.js:67
 #: pro__premium_only/src/features/icon-controls/index.js:192
-#: src/block-components/button/edit.js:126
+#: src/block-components/button/edit.js:131
 #: src/block-components/helpers/backgrounds/edit.js:39
-#: src/block-components/image/edit.js:254
+#: src/block-components/image/edit.js:275
 #: src/block-components/progress-bar/edit.js:36
 #: src/block-components/typography/edit.js:60
-#: src/components/background-controls/index.js:53
-#: src/components/button-controls/index.js:138
-#: src/components/icon-controls/index.js:81
-#: src/components/icon-controls/index.js:133
+#: src/deprecated/v2/components/background-controls/index.js:51
+#: src/deprecated/v2/components/button-controls/index.js:138
+#: src/deprecated/v2/components/icon-controls/index.js:81
+#: src/deprecated/v2/components/icon-controls/index.js:133
 msgid "Gradient"
 msgstr ""
 
 #: pro__premium_only/src/block-components/icon/index.js:31
 #: pro__premium_only/src/features/icon-controls/index.js:71
-#: src/components/icon-controls/index.js:87
+#: src/deprecated/v2/components/icon-controls/index.js:87
 msgid "Multicolor"
 msgstr ""
 
@@ -1602,15 +1601,15 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/feature-grid/index.js:87
 #: pro__premium_only/src/deprecated/v2/block/feature-grid/index.js:103
 #: pro__premium_only/src/deprecated/v2/block/number-box/index.js:50
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:72
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:89
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:71
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:88
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:75
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:100
 #: pro__premium_only/src/deprecated/v2/block/testimonial/background.js:90
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:87
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:71
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:88
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:194
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:73
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:90
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:196
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:90
 #: pro__premium_only/src/features/icon-controls/index.js:87
 #: pro__premium_only/src/features/icon-controls/index.js:97
@@ -1618,18 +1617,18 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:145
 #: pro__premium_only/src/features/icon-controls/index.js:207
 #: pro__premium_only/src/features/icon-controls/index.js:217
-#: src/components/background-controls/index.js:68
-#: src/components/background-controls/index.js:92
-#: src/components/button-controls/index.js:153
-#: src/components/button-controls/index.js:163
-#: src/components/button-controls/index.js:262
-#: src/components/button-controls/index.js:272
-#: src/deprecated/v2/block/button/edit.js:149
-#: src/deprecated/v2/block/button/edit.js:161
-#: src/deprecated/v2/block/button/edit.js:177
-#: src/deprecated/v2/block/count-up/edit.js:319
+#: src/deprecated/v2/block/button/edit.js:150
+#: src/deprecated/v2/block/button/edit.js:162
+#: src/deprecated/v2/block/button/edit.js:178
+#: src/deprecated/v2/block/count-up/edit.js:322
 #: src/deprecated/v2/block/header/edit.js:431
 #: src/deprecated/v2/block/header/edit.js:463
+#: src/deprecated/v2/components/background-controls/index.js:66
+#: src/deprecated/v2/components/background-controls/index.js:90
+#: src/deprecated/v2/components/button-controls/index.js:153
+#: src/deprecated/v2/components/button-controls/index.js:163
+#: src/deprecated/v2/components/button-controls/index.js:262
+#: src/deprecated/v2/components/button-controls/index.js:272
 msgctxt "Panel title"
 msgid "%s #%d"
 msgstr ""
@@ -1639,12 +1638,12 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:88
 #: pro__premium_only/src/features/icon-controls/index.js:97
 #: pro__premium_only/src/features/icon-controls/index.js:132
-#: src/block-components/button/edit.js:183
+#: src/block-components/button/edit.js:188
 #: src/block-components/icon/edit.js:107
 #: src/block/notification/edit.js:143
-#: src/components/icon-controls/index.js:104
-#: src/deprecated/v2/block/icon-list/edit.js:145
+#: src/deprecated/v2/block/icon-list/edit.js:148
 #: src/deprecated/v2/block/notification/edit.js:386
+#: src/deprecated/v2/components/icon-controls/index.js:104
 msgid "Icon Color"
 msgstr ""
 
@@ -1652,8 +1651,8 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:145
 #: src/block-components/icon/edit.js:129
 #: src/block/icon-list/edit.js:301
-#: src/components/icon-controls/index.js:256
-#: src/deprecated/v2/block/icon-list/edit.js:164
+#: src/deprecated/v2/block/icon-list/edit.js:167
+#: src/deprecated/v2/components/icon-controls/index.js:256
 msgid "Icon Opacity"
 msgstr ""
 
@@ -1664,23 +1663,23 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/separator/index.js:69
 #: pro__premium_only/src/block/separator/index.js:46
-#: pro__premium_only/src/block/separator/index.js:90
+#: pro__premium_only/src/block/separator/index.js:100
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:76
 #: src/block-components/separator/edit.js:63
 #: src/block/countdown/divider.js:114
 #: src/block/divider/edit.js:69
 #: src/block/icon-list/edit.js:284
-#: src/components/blend-mode-control/index.js:33
-#: src/deprecated/v2/block/accordion/edit.js:333
-#: src/deprecated/v2/block/accordion/edit.js:362
-#: src/deprecated/v2/block/blockquote/edit.js:244
+#: src/components/blend-mode-control/index.js:32
+#: src/deprecated/v2/block/accordion/edit.js:335
+#: src/deprecated/v2/block/accordion/edit.js:364
+#: src/deprecated/v2/block/blockquote/edit.js:246
 #: src/deprecated/v2/block/blog-posts/edit.js:616
 #: src/deprecated/v2/block/divider/edit.js:102
-#: src/deprecated/v2/block/icon-list/edit.js:197
-#: src/deprecated/v2/block/image-box/edit.js:451
-#: src/deprecated/v2/block/image-box/edit.js:594
-#: src/deprecated/v2/block/text/edit.js:212
-#: src/deprecated/v2/block/video-popup/edit.js:258
+#: src/deprecated/v2/block/icon-list/edit.js:200
+#: src/deprecated/v2/block/image-box/edit.js:454
+#: src/deprecated/v2/block/image-box/edit.js:597
+#: src/deprecated/v2/block/text/edit.js:215
+#: src/deprecated/v2/block/video-popup/edit.js:259
 #: src/deprecated/v2/modules/block-separators/index.js:92
 #: src/deprecated/v2/modules/block-separators/index.js:190
 msgid "Color"
@@ -1688,7 +1687,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/separator/index.js:80
 #: pro__premium_only/src/block/separator/index.js:51
-#: pro__premium_only/src/block/separator/index.js:95
+#: pro__premium_only/src/block/separator/index.js:105
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:74
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:137
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:81
@@ -1697,7 +1696,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/separator/index.js:94
 #: pro__premium_only/src/block/separator/index.js:59
-#: pro__premium_only/src/block/separator/index.js:103
+#: pro__premium_only/src/block/separator/index.js:113
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:84
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:147
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:92
@@ -1706,17 +1705,29 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/separator/index.js:108
 #: pro__premium_only/src/block/separator/index.js:67
-#: pro__premium_only/src/block/separator/index.js:111
+#: pro__premium_only/src/block/separator/index.js:121
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:94
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:157
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:103
-#: src/block-components/separator/edit.js:93
+#: src/block-components/separator/edit.js:108
 #: src/block/separator/edit.js:92
 #: src/deprecated/v2/block/separator/edit.js:124
 #: src/deprecated/v2/block/separator/edit.js:183
 #: src/deprecated/v2/modules/block-separators/index.js:122
 #: src/deprecated/v2/modules/block-separators/index.js:220
 msgid "Flip Horizontally"
+msgstr ""
+
+#: pro__premium_only/src/block-components/separator/index.js:142
+#: pro__premium_only/src/block/separator/index.js:87
+#: pro__premium_only/src/block/separator/index.js:141
+msgid "Layer Blend mode"
+msgstr ""
+
+#: pro__premium_only/src/block-components/separator/index.js:143
+#: pro__premium_only/src/block/separator/index.js:88
+#: pro__premium_only/src/block/separator/index.js:142
+msgid "Sets how the sepator layer is blended into the background"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:30
@@ -1732,14 +1743,14 @@ msgstr ""
 #: src/block-components/advanced/edit.js:23
 #: src/block-components/advanced/edit.js:65
 #: src/block-components/advanced/edit.js:76
-#: src/block-components/advanced/edit.js:121
-#: src/block-components/helpers/backgrounds/edit.js:273
-#: src/block-components/helpers/backgrounds/edit.js:292
-#: src/block-components/helpers/backgrounds/edit.js:306
-#: src/block-components/image/edit.js:377
-#: src/block-components/typography/edit.js:196
-#: src/block-components/typography/edit.js:205
-#: src/block-components/typography/edit.js:216
+#: src/block-components/advanced/edit.js:128
+#: src/block-components/helpers/backgrounds/edit.js:294
+#: src/block-components/helpers/backgrounds/edit.js:316
+#: src/block-components/helpers/backgrounds/edit.js:333
+#: src/block-components/image/edit.js:410
+#: src/block-components/typography/edit.js:200
+#: src/block-components/typography/edit.js:214
+#: src/block-components/typography/edit.js:230
 #: src/block/accordion/variations.js:36
 #: src/block/accordion/variations.js:41
 #: src/block/blockquote/variations.js:35
@@ -1771,22 +1782,22 @@ msgstr ""
 #: src/block/team-member/variations.js:66
 #: src/block/testimonial/variations.js:34
 #: src/block/testimonial/variations.js:41
-#: src/components/background-controls/index.js:258
-#: src/components/background-controls/index.js:278
-#: src/components/background-controls/index.js:298
-#: src/components/background-controls/index.js:319
-#: src/components/background-controls/index.js:334
-#: src/components/background-controls/index.js:349
-#: src/components/background-controls/index.js:365
-#: src/components/background-controls/index.js:380
-#: src/components/background-controls/index.js:395
-#: src/components/image-background-controls/index.js:68
-#: src/components/image-background-controls/index.js:89
-#: src/components/image-background-controls/index.js:105
 #: src/components/image-shape-control/index.js:38
-#: src/components/typography-control/index.js:113
-#: src/components/typography-control/index.js:126
+#: src/components/typography-control/index.js:128
+#: src/components/typography-control/index.js:145
 #: src/deprecated/v2/block/blog-posts/edit.js:242
+#: src/deprecated/v2/components/background-controls/index.js:256
+#: src/deprecated/v2/components/background-controls/index.js:276
+#: src/deprecated/v2/components/background-controls/index.js:296
+#: src/deprecated/v2/components/background-controls/index.js:317
+#: src/deprecated/v2/components/background-controls/index.js:332
+#: src/deprecated/v2/components/background-controls/index.js:347
+#: src/deprecated/v2/components/background-controls/index.js:363
+#: src/deprecated/v2/components/background-controls/index.js:378
+#: src/deprecated/v2/components/background-controls/index.js:393
+#: src/deprecated/v2/components/image-background-controls/index.js:68
+#: src/deprecated/v2/components/image-background-controls/index.js:89
+#: src/deprecated/v2/components/image-background-controls/index.js:105
 #: src/deprecated/v2/modules/advanced-general/index.js:48
 #: src/plugins/save-block/custom-block-styles-editor.js:101
 msgid "Default"
@@ -1849,9 +1860,10 @@ msgid "Ease In Out Back"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:60
-#: src/block-components/typography/edit.js:203
-#: src/components/typography-control/index.js:124
-#: src/help/videos.js:241
+#: src/block-components/typography/edit.js:212
+#: src/block-components/typography/edit.js:223
+#: src/components/typography-control/index.js:143
+#: src/components/typography-control/index.js:155
 msgid "Transform"
 msgstr ""
 
@@ -1860,83 +1872,83 @@ msgid "Transform Origin"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:69
-#: src/block-components/helpers/backgrounds/edit.js:274
-#: src/components/background-controls/index.js:259
-#: src/components/background-controls/index.js:279
-#: src/components/background-controls/index.js:299
-#: src/components/image-background-controls/index.js:69
+#: src/block-components/helpers/backgrounds/edit.js:295
+#: src/deprecated/v2/components/background-controls/index.js:257
+#: src/deprecated/v2/components/background-controls/index.js:277
+#: src/deprecated/v2/components/background-controls/index.js:297
+#: src/deprecated/v2/components/image-background-controls/index.js:69
 msgid "Top Left"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:70
-#: src/block-components/helpers/backgrounds/edit.js:275
-#: src/components/background-controls/index.js:260
-#: src/components/background-controls/index.js:280
-#: src/components/background-controls/index.js:300
-#: src/components/image-background-controls/index.js:70
+#: src/block-components/helpers/backgrounds/edit.js:296
+#: src/deprecated/v2/components/background-controls/index.js:258
+#: src/deprecated/v2/components/background-controls/index.js:278
+#: src/deprecated/v2/components/background-controls/index.js:298
+#: src/deprecated/v2/components/image-background-controls/index.js:70
 msgid "Top Center"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:71
-#: src/block-components/helpers/backgrounds/edit.js:276
-#: src/components/background-controls/index.js:261
-#: src/components/background-controls/index.js:281
-#: src/components/background-controls/index.js:301
-#: src/components/image-background-controls/index.js:71
+#: src/block-components/helpers/backgrounds/edit.js:297
+#: src/deprecated/v2/components/background-controls/index.js:259
+#: src/deprecated/v2/components/background-controls/index.js:279
+#: src/deprecated/v2/components/background-controls/index.js:299
+#: src/deprecated/v2/components/image-background-controls/index.js:71
 msgid "Top Right"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:72
-#: src/block-components/helpers/backgrounds/edit.js:277
-#: src/components/background-controls/index.js:262
-#: src/components/background-controls/index.js:282
-#: src/components/background-controls/index.js:302
-#: src/components/image-background-controls/index.js:72
+#: src/block-components/helpers/backgrounds/edit.js:298
+#: src/deprecated/v2/components/background-controls/index.js:260
+#: src/deprecated/v2/components/background-controls/index.js:280
+#: src/deprecated/v2/components/background-controls/index.js:300
+#: src/deprecated/v2/components/image-background-controls/index.js:72
 msgid "Center Left"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:73
-#: src/block-components/helpers/backgrounds/edit.js:278
-#: src/components/background-controls/index.js:263
-#: src/components/background-controls/index.js:283
-#: src/components/background-controls/index.js:303
-#: src/components/image-background-controls/index.js:73
+#: src/block-components/helpers/backgrounds/edit.js:299
+#: src/deprecated/v2/components/background-controls/index.js:261
+#: src/deprecated/v2/components/background-controls/index.js:281
+#: src/deprecated/v2/components/background-controls/index.js:301
+#: src/deprecated/v2/components/image-background-controls/index.js:73
 msgid "Center Center"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:74
-#: src/block-components/helpers/backgrounds/edit.js:279
-#: src/components/background-controls/index.js:264
-#: src/components/background-controls/index.js:284
-#: src/components/background-controls/index.js:304
-#: src/components/image-background-controls/index.js:74
+#: src/block-components/helpers/backgrounds/edit.js:300
+#: src/deprecated/v2/components/background-controls/index.js:262
+#: src/deprecated/v2/components/background-controls/index.js:282
+#: src/deprecated/v2/components/background-controls/index.js:302
+#: src/deprecated/v2/components/image-background-controls/index.js:74
 msgid "Center Right"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:75
-#: src/block-components/helpers/backgrounds/edit.js:280
-#: src/components/background-controls/index.js:265
-#: src/components/background-controls/index.js:285
-#: src/components/background-controls/index.js:305
-#: src/components/image-background-controls/index.js:75
+#: src/block-components/helpers/backgrounds/edit.js:301
+#: src/deprecated/v2/components/background-controls/index.js:263
+#: src/deprecated/v2/components/background-controls/index.js:283
+#: src/deprecated/v2/components/background-controls/index.js:303
+#: src/deprecated/v2/components/image-background-controls/index.js:75
 msgid "Bottom Left"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:76
-#: src/block-components/helpers/backgrounds/edit.js:281
-#: src/components/background-controls/index.js:266
-#: src/components/background-controls/index.js:286
-#: src/components/background-controls/index.js:306
-#: src/components/image-background-controls/index.js:76
+#: src/block-components/helpers/backgrounds/edit.js:302
+#: src/deprecated/v2/components/background-controls/index.js:264
+#: src/deprecated/v2/components/background-controls/index.js:284
+#: src/deprecated/v2/components/background-controls/index.js:304
+#: src/deprecated/v2/components/image-background-controls/index.js:76
 msgid "Bottom Center"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:77
-#: src/block-components/helpers/backgrounds/edit.js:282
-#: src/components/background-controls/index.js:267
-#: src/components/background-controls/index.js:287
-#: src/components/background-controls/index.js:307
-#: src/components/image-background-controls/index.js:77
+#: src/block-components/helpers/backgrounds/edit.js:303
+#: src/deprecated/v2/components/background-controls/index.js:265
+#: src/deprecated/v2/components/background-controls/index.js:285
+#: src/deprecated/v2/components/background-controls/index.js:305
+#: src/deprecated/v2/components/image-background-controls/index.js:77
 msgid "Bottom Right"
 msgstr ""
 
@@ -2157,14 +2169,14 @@ msgstr ""
 #: src/block/feature-grid/variations.js:118
 #: src/block/feature-grid/variations.js:148
 #: src/block/image-box/example.js:23
-#: src/block/posts/edit.js:265
-#: src/block/posts/edit.js:325
+#: src/block/posts/edit.js:269
+#: src/block/posts/edit.js:329
 #: src/block/posts/util.js:44
 #: src/block/pricing-box/example.js:16
 #: src/block/table-of-contents/edit.js:449
 #: src/components/heading-buttons-control/index.js:79
-#: src/deprecated/v2/block/accordion/edit.js:266
-#: src/deprecated/v2/block/accordion/edit.js:278
+#: src/deprecated/v2/block/accordion/edit.js:268
+#: src/deprecated/v2/block/accordion/edit.js:280
 #: src/deprecated/v2/block/blog-posts/edit.js:194
 #: src/deprecated/v2/block/blog-posts/edit.js:443
 #: src/deprecated/v2/block/blog-posts/edit.js:636
@@ -2176,15 +2188,15 @@ msgstr ""
 #: src/deprecated/v2/block/count-up/deprecated.js:198
 #: src/deprecated/v2/block/count-up/deprecated.js:203
 #: src/deprecated/v2/block/count-up/deprecated.js:208
-#: src/deprecated/v2/block/count-up/edit.js:256
-#: src/deprecated/v2/block/count-up/edit.js:354
-#: src/deprecated/v2/block/count-up/edit.js:519
+#: src/deprecated/v2/block/count-up/edit.js:259
+#: src/deprecated/v2/block/count-up/edit.js:357
+#: src/deprecated/v2/block/count-up/edit.js:522
 #: src/deprecated/v2/block/count-up/schema.js:26
 #: src/deprecated/v2/block/count-up/schema.js:31
 #: src/deprecated/v2/block/count-up/schema.js:36
 #: src/deprecated/v2/block/count-up/schema.js:41
-#: src/deprecated/v2/block/expand/edit.js:72
-#: src/deprecated/v2/block/expand/edit.js:175
+#: src/deprecated/v2/block/expand/edit.js:75
+#: src/deprecated/v2/block/expand/edit.js:178
 #: src/deprecated/v2/block/feature-grid/deprecated.js:163
 #: src/deprecated/v2/block/feature-grid/deprecated.js:168
 #: src/deprecated/v2/block/feature-grid/deprecated.js:173
@@ -2196,25 +2208,25 @@ msgstr ""
 #: src/deprecated/v2/block/feature/edit.js:398
 #: src/deprecated/v2/block/header/edit.js:269
 #: src/deprecated/v2/block/header/edit.js:354
-#: src/deprecated/v2/block/heading/edit.js:80
-#: src/deprecated/v2/block/heading/edit.js:276
-#: src/deprecated/v2/block/icon/edit.js:118
-#: src/deprecated/v2/block/icon/edit.js:167
-#: src/deprecated/v2/block/icon/edit.js:331
+#: src/deprecated/v2/block/heading/edit.js:83
+#: src/deprecated/v2/block/heading/edit.js:279
+#: src/deprecated/v2/block/icon/edit.js:121
+#: src/deprecated/v2/block/icon/edit.js:170
+#: src/deprecated/v2/block/icon/edit.js:334
 #: src/deprecated/v2/block/icon/schema.js:135
 #: src/deprecated/v2/block/image-box/deprecated.js:124
-#: src/deprecated/v2/block/image-box/edit.js:272
-#: src/deprecated/v2/block/image-box/edit.js:502
-#: src/deprecated/v2/block/image-box/edit.js:747
+#: src/deprecated/v2/block/image-box/edit.js:275
+#: src/deprecated/v2/block/image-box/edit.js:505
+#: src/deprecated/v2/block/image-box/edit.js:750
 #: src/deprecated/v2/block/image-box/schema.js:176
 #: src/deprecated/v2/block/notification/edit.js:313
 #: src/deprecated/v2/block/notification/edit.js:445
 #: src/deprecated/v2/block/number-box/deprecated.js:35
 #: src/deprecated/v2/block/number-box/deprecated.js:40
 #: src/deprecated/v2/block/number-box/deprecated.js:45
-#: src/deprecated/v2/block/number-box/edit.js:267
-#: src/deprecated/v2/block/number-box/edit.js:407
-#: src/deprecated/v2/block/number-box/edit.js:556
+#: src/deprecated/v2/block/number-box/edit.js:269
+#: src/deprecated/v2/block/number-box/edit.js:409
+#: src/deprecated/v2/block/number-box/edit.js:558
 #: src/deprecated/v2/block/number-box/schema.js:40
 #: src/deprecated/v2/block/number-box/schema.js:45
 #: src/deprecated/v2/block/number-box/schema.js:50
@@ -2223,9 +2235,8 @@ msgstr ""
 #: src/deprecated/v2/block/pricing-box/edit.js:407
 #: src/deprecated/v2/block/pricing-box/edit.js:784
 #: src/deprecated/v2/block/pricing-box/schema.js:121
-#: src/deprecated/v2/block/text/edit.js:159
-#: src/deprecated/v2/block/text/edit.js:262
-#: src/help/videos.js:271
+#: src/deprecated/v2/block/text/edit.js:162
+#: src/deprecated/v2/block/text/edit.js:265
 msgid "Title"
 msgstr ""
 
@@ -2259,34 +2270,34 @@ msgstr ""
 #: src/block/spacer/edit.js:100
 #: src/block/table-of-contents/edit.js:359
 #: src/block/video-popup/edit.js:92
-#: src/deprecated/v2/block/accordion/edit.js:137
-#: src/deprecated/v2/block/blockquote/edit.js:128
+#: src/deprecated/v2/block/accordion/edit.js:139
+#: src/deprecated/v2/block/blockquote/edit.js:130
 #: src/deprecated/v2/block/blog-posts/edit.js:202
-#: src/deprecated/v2/block/button/edit.js:109
+#: src/deprecated/v2/block/button/edit.js:110
 #: src/deprecated/v2/block/call-to-action/edit.js:141
 #: src/deprecated/v2/block/card/edit.js:156
-#: src/deprecated/v2/block/column/edit.js:119
+#: src/deprecated/v2/block/column/edit.js:121
 #: src/deprecated/v2/block/columns/edit.js:260
-#: src/deprecated/v2/block/container/edit.js:146
-#: src/deprecated/v2/block/count-up/edit.js:138
+#: src/deprecated/v2/block/container/edit.js:148
+#: src/deprecated/v2/block/count-up/edit.js:141
 #: src/deprecated/v2/block/divider/edit.js:96
-#: src/deprecated/v2/block/expand/edit.js:62
+#: src/deprecated/v2/block/expand/edit.js:65
 #: src/deprecated/v2/block/feature-grid/edit.js:150
 #: src/deprecated/v2/block/feature/edit.js:176
 #: src/deprecated/v2/block/header/edit.js:155
-#: src/deprecated/v2/block/heading/edit.js:70
-#: src/deprecated/v2/block/icon-list/edit.js:92
-#: src/deprecated/v2/block/icon/edit.js:73
-#: src/deprecated/v2/block/image-box/edit.js:159
+#: src/deprecated/v2/block/heading/edit.js:73
+#: src/deprecated/v2/block/icon-list/edit.js:95
+#: src/deprecated/v2/block/icon/edit.js:76
+#: src/deprecated/v2/block/image-box/edit.js:162
 #: src/deprecated/v2/block/notification/edit.js:159
-#: src/deprecated/v2/block/number-box/edit.js:148
+#: src/deprecated/v2/block/number-box/edit.js:150
 #: src/deprecated/v2/block/pricing-box/edit.js:160
 #: src/deprecated/v2/block/separator/edit.js:136
-#: src/deprecated/v2/block/spacer/edit.js:51
+#: src/deprecated/v2/block/spacer/edit.js:50
 #: src/deprecated/v2/block/team-member/edit.js:155
 #: src/deprecated/v2/block/testimonial/edit.js:158
-#: src/deprecated/v2/block/text/edit.js:121
-#: src/deprecated/v2/block/video-popup/edit.js:75
+#: src/deprecated/v2/block/text/edit.js:124
+#: src/deprecated/v2/block/video-popup/edit.js:76
 #: src/deprecated/v2/modules/advanced-general/index.js:39
 msgid "General"
 msgstr ""
@@ -2322,7 +2333,7 @@ msgid "Previous Label"
 msgstr ""
 
 #: pro__premium_only/src/block/posts/index.js:219
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:47
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:46
 #: src/block/feature-grid/variations.js:191
 #: src/block/feature-grid/variations.js:196
 msgid "Offset"
@@ -2333,12 +2344,12 @@ msgid "Offset your posts by a specific number of items."
 msgstr ""
 
 #: pro__premium_only/src/block/posts/index.js:228
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:57
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:56
 msgid "Exclude Post IDs"
 msgstr ""
 
 #: pro__premium_only/src/block/posts/index.js:231
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:61
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:60
 msgid "Excludes specific IDs from the display. Enter post IDs separated by a commas"
 msgstr ""
 
@@ -2351,12 +2362,12 @@ msgid "Removes the current post from the posts list"
 msgstr ""
 
 #: pro__premium_only/src/block/posts/index.js:239
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:64
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:63
 msgid "Display Specific Post IDs"
 msgstr ""
 
 #: pro__premium_only/src/block/posts/index.js:242
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:68
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:67
 msgid "Limit display to only these specific IDs. Enter post IDs separated by a commas"
 msgstr ""
 
@@ -2397,8 +2408,18 @@ msgid "Package inclusion %s"
 msgstr ""
 
 #: pro__premium_only/src/block/separator/index.js:39
-#: pro__premium_only/src/block/separator/index.js:83
+#: pro__premium_only/src/block/separator/index.js:93
 msgid "Layer %s"
+msgstr ""
+
+#: pro__premium_only/src/block/separator/index.js:79
+#: pro__premium_only/src/block/separator/index.js:133
+msgid "Layer Opacity"
+msgstr ""
+
+#: pro__premium_only/src/block/separator/index.js:80
+#: pro__premium_only/src/block/separator/index.js:134
+msgid "Adjusts the transparency of the separator layer"
 msgstr ""
 
 #: pro__premium_only/src/block/team-member/index.js:56
@@ -2429,7 +2450,6 @@ msgstr ""
 #: src/deprecated/v2/block/testimonial/edit.js:429
 #: src/deprecated/v2/block/testimonial/edit.js:643
 #: src/deprecated/v2/block/testimonial/schema.js:145
-#: src/help/videos.js:276
 msgid "Name"
 msgstr ""
 
@@ -2441,8 +2461,8 @@ msgstr ""
 #: pro__premium_only/src/block/testimonial/index.js:147
 #: pro__premium_only/src/block/testimonial/index.js:196
 #: src/block-components/advanced/edit.js:86
-#: src/block-components/advanced/edit.js:112
-#: src/block-components/advanced/edit.js:130
+#: src/block-components/advanced/edit.js:119
+#: src/block-components/advanced/edit.js:137
 #: src/block/team-member/example.js:24
 #: src/block/team-member/variations.js:77
 #: src/block/team-member/variations.js:99
@@ -2505,7 +2525,7 @@ msgstr ""
 #: pro__premium_only/src/components/panel-design-user-library/modal-design-manage.js:131
 #: pro__premium_only/src/conditional-display/date-time.js:74
 #: src/components/advanced-range-control/range-control.js:191
-#: src/components/base-control/index.js:60
+#: src/components/base-control/index.js:61
 #: src/components/base-control2/reset-button.js:36
 #: src/deprecated/v2/components/columns-width-control/index.js:213
 #: src/plugins/global-settings/colors/color-picker.js:141
@@ -2926,44 +2946,44 @@ msgstr ""
 msgid "Value to compare with the option value."
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:53
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:52
 msgid "Offset your posts by a specific number of items"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:84
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:83
 #: src/deprecated/v2/block/blog-posts/edit.js:523
 #: src/deprecated/v2/block/blog-posts/edit.js:849
 msgid "Pagination"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:92
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:91
 msgid "Show previous and next buttons"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:99
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:98
 msgid "Previous label"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:104
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:103
 msgid "Next label"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:111
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:110
 msgid "Hover & Active Opacity"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:112
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:111
 msgid "Hover & Active Colors"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:129
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:185
-#: src/block-components/typography/edit.js:312
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:128
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:184
+#: src/block-components/typography/edit.js:341
 #: src/block/heading/edit.js:190
 #: src/block/heading/edit.js:236
 #: src/components/align-buttons-control/index.js:62
-#: src/deprecated/v2/block/accordion/edit.js:304
-#: src/deprecated/v2/block/blockquote/edit.js:317
+#: src/deprecated/v2/block/accordion/edit.js:306
+#: src/deprecated/v2/block/blockquote/edit.js:319
 #: src/deprecated/v2/block/blog-posts/edit.js:629
 #: src/deprecated/v2/block/blog-posts/edit.js:677
 #: src/deprecated/v2/block/blog-posts/edit.js:722
@@ -2976,13 +2996,13 @@ msgstr ""
 #: src/deprecated/v2/block/card/edit.js:528
 #: src/deprecated/v2/block/card/edit.js:563
 #: src/deprecated/v2/block/card/edit.js:597
-#: src/deprecated/v2/block/count-up/edit.js:347
-#: src/deprecated/v2/block/count-up/edit.js:389
-#: src/deprecated/v2/block/count-up/edit.js:428
-#: src/deprecated/v2/block/count-up/edit.js:463
-#: src/deprecated/v2/block/expand/edit.js:107
-#: src/deprecated/v2/block/expand/edit.js:134
-#: src/deprecated/v2/block/expand/edit.js:161
+#: src/deprecated/v2/block/count-up/edit.js:350
+#: src/deprecated/v2/block/count-up/edit.js:392
+#: src/deprecated/v2/block/count-up/edit.js:431
+#: src/deprecated/v2/block/count-up/edit.js:466
+#: src/deprecated/v2/block/expand/edit.js:110
+#: src/deprecated/v2/block/expand/edit.js:137
+#: src/deprecated/v2/block/expand/edit.js:164
 #: src/deprecated/v2/block/feature-grid/edit.js:353
 #: src/deprecated/v2/block/feature-grid/edit.js:395
 #: src/deprecated/v2/block/feature-grid/edit.js:430
@@ -2994,23 +3014,23 @@ msgstr ""
 #: src/deprecated/v2/block/header/edit.js:424
 #: src/deprecated/v2/block/header/edit.js:455
 #: src/deprecated/v2/block/header/edit.js:485
-#: src/deprecated/v2/block/heading/edit.js:106
-#: src/deprecated/v2/block/heading/edit.js:141
-#: src/deprecated/v2/block/heading/edit.js:194
-#: src/deprecated/v2/block/heading/edit.js:247
-#: src/deprecated/v2/block/icon/edit.js:159
-#: src/deprecated/v2/block/icon/edit.js:207
-#: src/deprecated/v2/block/image-box/edit.js:495
-#: src/deprecated/v2/block/image-box/edit.js:537
-#: src/deprecated/v2/block/image-box/edit.js:572
-#: src/deprecated/v2/block/image-box/edit.js:615
+#: src/deprecated/v2/block/heading/edit.js:109
+#: src/deprecated/v2/block/heading/edit.js:144
+#: src/deprecated/v2/block/heading/edit.js:197
+#: src/deprecated/v2/block/heading/edit.js:250
+#: src/deprecated/v2/block/icon/edit.js:162
+#: src/deprecated/v2/block/icon/edit.js:210
+#: src/deprecated/v2/block/image-box/edit.js:498
+#: src/deprecated/v2/block/image-box/edit.js:540
+#: src/deprecated/v2/block/image-box/edit.js:575
+#: src/deprecated/v2/block/image-box/edit.js:618
 #: src/deprecated/v2/block/notification/edit.js:437
 #: src/deprecated/v2/block/notification/edit.js:480
 #: src/deprecated/v2/block/notification/edit.js:515
 #: src/deprecated/v2/block/notification/edit.js:546
-#: src/deprecated/v2/block/number-box/edit.js:400
-#: src/deprecated/v2/block/number-box/edit.js:442
-#: src/deprecated/v2/block/number-box/edit.js:477
+#: src/deprecated/v2/block/number-box/edit.js:402
+#: src/deprecated/v2/block/number-box/edit.js:444
+#: src/deprecated/v2/block/number-box/edit.js:479
 #: src/deprecated/v2/block/pricing-box/edit.js:399
 #: src/deprecated/v2/block/pricing-box/edit.js:442
 #: src/deprecated/v2/block/pricing-box/edit.js:478
@@ -3026,20 +3046,20 @@ msgstr ""
 #: src/deprecated/v2/block/testimonial/edit.js:407
 #: src/deprecated/v2/block/testimonial/edit.js:451
 #: src/deprecated/v2/block/testimonial/edit.js:487
-#: src/deprecated/v2/block/text/edit.js:255
-#: src/deprecated/v2/block/text/edit.js:303
-#: src/deprecated/v2/block/text/edit.js:345
+#: src/deprecated/v2/block/text/edit.js:258
+#: src/deprecated/v2/block/text/edit.js:306
+#: src/deprecated/v2/block/text/edit.js:348
 #: src/deprecated/v2/components/content-align-control/index.js:33
 msgid "Align"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:147
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:146
 #: src/deprecated/v2/block/blog-posts/edit.js:865
 msgid "Load More Button"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:160
-#: src/block/posts/edit.js:208
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/index.js:159
+#: src/block/posts/edit.js:212
 #: src/deprecated/v2/block/blog-posts/edit.js:265
 msgid "Number of items"
 msgstr ""
@@ -3058,19 +3078,18 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/columns/index.js:121
 #: pro__premium_only/src/deprecated/v2/modules/advanced-column-spacing/index.js:68
-#: src/block-components/alignment/edit.js:259
-#: src/block-components/columns/edit.js:168
+#: src/block-components/alignment/edit.js:288
+#: src/block-components/columns/edit.js:173
 #: src/block-components/helpers/flex-gap/edit.js:16
 #: src/block/icon-list/edit.js:222
 #: src/block/table-of-contents/edit.js:382
 #: src/block/text/edit.js:147
-#: src/help/videos.js:572
 msgid "Column Gap"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/columns/index.js:137
-#: src/block-components/alignment/edit.js:295
-#: src/block-components/columns/edit.js:181
+#: src/block-components/alignment/edit.js:332
+#: src/block-components/columns/edit.js:190
 #: src/block-components/helpers/flex-gap/edit.js:24
 #: src/block/icon-list/edit.js:230
 #: src/block/table-of-contents/edit.js:391
@@ -3079,41 +3098,40 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:64
 #: pro__premium_only/src/deprecated/v2/block/feature-grid/index.js:103
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:89
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:162
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:88
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:161
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:75
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:88
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:133
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:194
-#: src/block-components/image/edit.js:489
-#: src/components/image-background-controls/index.js:26
-#: src/components/image-controls/index.js:47
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:90
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:135
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:196
+#: src/block-components/image/edit.js:531
 #: src/components/resizer-tooltip/index.js:277
 #: src/deprecated/v2/block/blog-posts/edit.js:411
 #: src/deprecated/v2/block/card/edit.js:286
 #: src/deprecated/v2/block/card/edit.js:362
-#: src/deprecated/v2/block/container/edit.js:70
-#: src/deprecated/v2/block/container/edit.js:73
-#: src/deprecated/v2/block/container/edit.js:76
+#: src/deprecated/v2/block/container/edit.js:72
+#: src/deprecated/v2/block/container/edit.js:75
+#: src/deprecated/v2/block/container/edit.js:78
 #: src/deprecated/v2/block/feature-grid/edit.js:252
 #: src/deprecated/v2/block/feature-grid/edit.js:312
 #: src/deprecated/v2/block/feature/edit.js:362
-#: src/deprecated/v2/block/image-box/edit.js:331
+#: src/deprecated/v2/block/image-box/edit.js:334
 #: src/deprecated/v2/block/pricing-box/edit.js:263
 #: src/deprecated/v2/block/pricing-box/edit.js:358
 #: src/deprecated/v2/block/team-member/edit.js:259
 #: src/deprecated/v2/block/team-member/edit.js:351
 #: src/deprecated/v2/block/testimonial/edit.js:282
 #: src/deprecated/v2/block/testimonial/edit.js:364
-#: src/help/videos.js:256
+#: src/deprecated/v2/components/image-background-controls/index.js:26
+#: src/deprecated/v2/components/image-controls/index.js:45
 msgid "Image"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:76
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:91
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:105
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:189
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:149
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:188
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:151
 #: src/deprecated/v2/block/blog-posts/edit.js:576
 #: src/deprecated/v2/block/card/edit.js:393
 #: src/deprecated/v2/block/feature/edit.js:386
@@ -3124,14 +3142,14 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:123
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:138
 #: pro__premium_only/src/deprecated/v2/block/container/index.js:152
-#: src/components/image-controls/index.js:126
-#: src/components/image-controls/index.js:149
-#: src/components/image-controls/index.js:160
 #: src/deprecated/v2/block/blog-posts/edit.js:560
 #: src/deprecated/v2/block/card/edit.js:406
 #: src/deprecated/v2/block/card/edit.js:422
 #: src/deprecated/v2/block/card/edit.js:438
 #: src/deprecated/v2/block/team-member/edit.js:443
+#: src/deprecated/v2/components/image-controls/index.js:124
+#: src/deprecated/v2/components/image-controls/index.js:147
+#: src/deprecated/v2/components/image-controls/index.js:158
 msgid "Image Width"
 msgstr ""
 
@@ -3146,12 +3164,12 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/count-up/index.js:50
 #: pro__premium_only/src/deprecated/v2/block/feature-grid/index.js:87
 #: pro__premium_only/src/deprecated/v2/block/number-box/index.js:50
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:72
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:71
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:100
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:71
-#: src/block-components/alignment/edit.js:148
-#: src/block-components/alignment/edit.js:163
-#: src/block-components/alignment/edit.js:178
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:73
+#: src/block-components/alignment/edit.js:157
+#: src/block-components/alignment/edit.js:176
+#: src/block-components/alignment/edit.js:195
 #: src/components/resizable-column/index.js:545
 msgid "Column"
 msgstr ""
@@ -3159,12 +3177,12 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/count-up/index.js:52
 #: pro__premium_only/src/deprecated/v2/block/feature-grid/index.js:91
 #: pro__premium_only/src/deprecated/v2/block/number-box/index.js:54
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:76
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:75
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:104
 #: pro__premium_only/src/deprecated/v2/block/testimonial/background.js:94
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:91
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:75
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:198
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:77
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:200
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:94
 msgid "Override settings for column %d"
 msgstr ""
@@ -3172,12 +3190,12 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/count-up/index.js:54
 #: pro__premium_only/src/deprecated/v2/block/feature-grid/index.js:95
 #: pro__premium_only/src/deprecated/v2/block/number-box/index.js:57
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:81
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:80
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:109
 #: pro__premium_only/src/deprecated/v2/block/testimonial/background.js:42
 #: pro__premium_only/src/deprecated/v2/block/testimonial/background.js:90
 #: pro__premium_only/src/deprecated/v2/block/testimonial/background.js:98
-#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:80
+#: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:82
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:42
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:90
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:98
@@ -3191,20 +3209,19 @@ msgstr ""
 #: src/block/carousel/edit.js:395
 #: src/block/carousel/edit.js:425
 #: src/block/icon-list/edit.js:268
-#: src/components/button-controls/index.js:423
 #: src/components/icon-control/index.js:67
-#: src/components/icon-controls/index.js:39
-#: src/deprecated/v2/block/blockquote/edit.js:234
-#: src/deprecated/v2/block/count-up/edit.js:240
-#: src/deprecated/v2/block/count-up/edit.js:300
-#: src/deprecated/v2/block/count-up/edit.js:319
-#: src/deprecated/v2/block/icon-list/edit.js:135
+#: src/deprecated/v2/block/blockquote/edit.js:236
+#: src/deprecated/v2/block/count-up/edit.js:243
+#: src/deprecated/v2/block/count-up/edit.js:303
+#: src/deprecated/v2/block/count-up/edit.js:322
 #: src/deprecated/v2/block/icon-list/edit.js:138
-#: src/deprecated/v2/block/icon/edit.js:103
-#: src/deprecated/v2/block/icon/edit.js:130
+#: src/deprecated/v2/block/icon-list/edit.js:141
+#: src/deprecated/v2/block/icon/edit.js:106
+#: src/deprecated/v2/block/icon/edit.js:133
 #: src/deprecated/v2/block/notification/edit.js:297
 #: src/deprecated/v2/block/notification/edit.js:391
-#: src/help/videos.js:266
+#: src/deprecated/v2/components/button-controls/index.js:423
+#: src/deprecated/v2/components/icon-controls/index.js:39
 msgid "Icon"
 msgstr ""
 
@@ -3228,9 +3245,9 @@ msgstr ""
 #: src/block-components/advanced/edit.js:77
 #: src/block-components/icon/edit.js:154
 #: src/components/advanced-toolbar-control/index.js:155
-#: src/components/button-controls/index.js:452
 #: src/components/four-number-control/index.js:205
 #: src/components/four-range-control/index.js:321
+#: src/deprecated/v2/components/button-controls/index.js:452
 msgid "Left"
 msgstr ""
 
@@ -3238,9 +3255,9 @@ msgstr ""
 #: src/block-components/advanced/edit.js:78
 #: src/block-components/icon/edit.js:155
 #: src/components/advanced-toolbar-control/index.js:165
-#: src/components/button-controls/index.js:455
 #: src/components/four-number-control/index.js:181
 #: src/components/four-range-control/index.js:281
+#: src/deprecated/v2/components/button-controls/index.js:455
 msgid "Right"
 msgstr ""
 
@@ -3261,7 +3278,6 @@ msgid "Grayscale Out"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/image-box/index.js:48
-#: src/help/videos.js:747
 msgid "Box Hover Effect"
 msgstr ""
 
@@ -3269,29 +3285,28 @@ msgstr ""
 msgid "Number Background"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:128
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:137
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:127
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:136
 msgid "Column Header"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:137
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:136
 msgctxt "Nth Title"
 msgid "%s #%d"
 msgstr ""
 
-#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:172
+#: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:171
 #: pro__premium_only/src/dynamic-content/components/image-size-control.js:17
-#: src/block-components/helpers/backgrounds/edit.js:303
-#: src/block-components/image/edit.js:213
-#: src/block/posts/edit.js:556
-#: src/components/background-controls/index.js:363
-#: src/components/background-controls/index.js:378
-#: src/components/background-controls/index.js:393
-#: src/components/image-background-controls/index.js:52
-#: src/components/image-controls/index.js:105
-#: src/components/image-size-control/index.js:52
+#: src/block-components/helpers/backgrounds/edit.js:330
+#: src/block-components/image/edit.js:228
+#: src/block/posts/edit.js:564
+#: src/components/image-size-control/index.js:51
 #: src/deprecated/v2/block/blog-posts/edit.js:548
-#: src/help/videos.js:457
+#: src/deprecated/v2/components/background-controls/index.js:361
+#: src/deprecated/v2/components/background-controls/index.js:376
+#: src/deprecated/v2/components/background-controls/index.js:391
+#: src/deprecated/v2/components/image-background-controls/index.js:52
+#: src/deprecated/v2/components/image-controls/index.js:103
 msgid "Image Size"
 msgstr ""
 
@@ -3329,20 +3344,20 @@ msgstr ""
 #: src/components/heading-buttons-control/index.js:54
 #: src/deprecated/v2/block/blog-posts/edit.js:105
 #: src/deprecated/v2/block/blog-posts/edit.js:114
-#: src/deprecated/v2/block/button/edit.js:59
-#: src/deprecated/v2/block/button/edit.js:62
+#: src/deprecated/v2/block/button/edit.js:60
+#: src/deprecated/v2/block/button/edit.js:63
 #: src/deprecated/v2/block/call-to-action/edit.js:81
 #: src/deprecated/v2/block/call-to-action/edit.js:84
 #: src/deprecated/v2/block/columns/edit.js:113
-#: src/deprecated/v2/block/container/edit.js:73
-#: src/deprecated/v2/block/container/edit.js:76
-#: src/deprecated/v2/block/count-up/edit.js:72
-#: src/deprecated/v2/block/number-box/edit.js:80
+#: src/deprecated/v2/block/container/edit.js:75
+#: src/deprecated/v2/block/container/edit.js:78
+#: src/deprecated/v2/block/count-up/edit.js:75
+#: src/deprecated/v2/block/number-box/edit.js:82
 #: src/deprecated/v2/block/separator/pro.js:26
 #: src/deprecated/v2/block/separator/pro.js:33
 #: src/deprecated/v2/block/testimonial/edit.js:83
-#: src/deprecated/v2/block/text/edit.js:63
 #: src/deprecated/v2/block/text/edit.js:66
+#: src/deprecated/v2/block/text/edit.js:69
 msgctxt "Nth Title"
 msgid "%s %d"
 msgstr ""
@@ -3366,90 +3381,89 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/testimonial/background.js:52
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:49
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:52
-#: src/block-components/helpers/borders/edit.js:84
-#: src/block-components/image/edit.js:233
+#: src/block-components/helpers/borders/edit.js:82
+#: src/block-components/image/edit.js:251
 #: src/block-components/progress-bar/edit.js:99
 #: src/block/carousel/edit.js:418
 #: src/block/carousel/edit.js:505
-#: src/components/button-controls/index.js:344
-#: src/components/image-controls/index.js:210
-#: src/deprecated/v2/block/accordion/edit.js:197
-#: src/deprecated/v2/block/blockquote/edit.js:181
+#: src/deprecated/v2/block/accordion/edit.js:199
+#: src/deprecated/v2/block/blockquote/edit.js:183
 #: src/deprecated/v2/block/blog-posts/edit.js:217
 #: src/deprecated/v2/block/blog-posts/edit.js:369
-#: src/deprecated/v2/block/button/edit.js:111
+#: src/deprecated/v2/block/button/edit.js:112
 #: src/deprecated/v2/block/call-to-action/edit.js:195
 #: src/deprecated/v2/block/card/edit.js:171
 #: src/deprecated/v2/block/card/edit.js:244
-#: src/deprecated/v2/block/column/edit.js:263
-#: src/deprecated/v2/block/container/edit.js:305
-#: src/deprecated/v2/block/count-up/edit.js:201
+#: src/deprecated/v2/block/column/edit.js:265
+#: src/deprecated/v2/block/container/edit.js:307
+#: src/deprecated/v2/block/count-up/edit.js:204
 #: src/deprecated/v2/block/feature-grid/edit.js:213
 #: src/deprecated/v2/block/feature/edit.js:284
 #: src/deprecated/v2/block/header/edit.js:230
-#: src/deprecated/v2/block/image-box/edit.js:203
+#: src/deprecated/v2/block/image-box/edit.js:206
 #: src/deprecated/v2/block/notification/edit.js:199
 #: src/deprecated/v2/block/notification/edit.js:255
-#: src/deprecated/v2/block/number-box/edit.js:212
+#: src/deprecated/v2/block/number-box/edit.js:214
 #: src/deprecated/v2/block/pricing-box/edit.js:224
 #: src/deprecated/v2/block/team-member/edit.js:217
 #: src/deprecated/v2/block/testimonial/edit.js:225
-#: src/deprecated/v2/block/video-popup/edit.js:205
-#: src/help/videos.js:156
+#: src/deprecated/v2/block/video-popup/edit.js:206
+#: src/deprecated/v2/components/button-controls/index.js:344
+#: src/deprecated/v2/components/image-controls/index.js:208
 msgid "Border Radius"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/testimonial/background.js:63
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:60
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:63
-#: src/block-components/helpers/borders/edit.js:94
-#: src/block-components/separator/edit.js:83
-#: src/block-components/typography/edit.js:302
-#: src/components/icon-controls/index.js:188
-#: src/components/image-controls/index.js:223
+#: src/block-components/helpers/borders/edit.js:95
+#: src/block-components/separator/edit.js:93
+#: src/block-components/typography/edit.js:331
 #: src/components/shadow-control/index.js:313
-#: src/deprecated/v2/block/accordion/edit.js:216
-#: src/deprecated/v2/block/blockquote/edit.js:194
+#: src/deprecated/v2/block/accordion/edit.js:218
+#: src/deprecated/v2/block/blockquote/edit.js:196
 #: src/deprecated/v2/block/blog-posts/edit.js:229
 #: src/deprecated/v2/block/blog-posts/edit.js:382
 #: src/deprecated/v2/block/call-to-action/edit.js:208
 #: src/deprecated/v2/block/card/edit.js:183
 #: src/deprecated/v2/block/card/edit.js:257
-#: src/deprecated/v2/block/column/edit.js:276
-#: src/deprecated/v2/block/container/edit.js:318
-#: src/deprecated/v2/block/count-up/edit.js:214
+#: src/deprecated/v2/block/column/edit.js:278
+#: src/deprecated/v2/block/container/edit.js:320
+#: src/deprecated/v2/block/count-up/edit.js:217
 #: src/deprecated/v2/block/feature-grid/edit.js:226
 #: src/deprecated/v2/block/feature/edit.js:297
 #: src/deprecated/v2/block/header/edit.js:243
-#: src/deprecated/v2/block/image-box/edit.js:216
+#: src/deprecated/v2/block/image-box/edit.js:219
 #: src/deprecated/v2/block/notification/edit.js:267
-#: src/deprecated/v2/block/number-box/edit.js:225
+#: src/deprecated/v2/block/number-box/edit.js:227
 #: src/deprecated/v2/block/pricing-box/edit.js:237
 #: src/deprecated/v2/block/team-member/edit.js:230
 #: src/deprecated/v2/block/testimonial/edit.js:238
-#: src/deprecated/v2/block/video-popup/edit.js:217
+#: src/deprecated/v2/block/video-popup/edit.js:218
+#: src/deprecated/v2/components/icon-controls/index.js:188
+#: src/deprecated/v2/components/image-controls/index.js:221
 msgid "Shadow / Outline"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:37
 #: src/block-components/container-div/edit.js:47
-#: src/deprecated/v2/block/accordion/edit.js:164
-#: src/deprecated/v2/block/blockquote/edit.js:139
+#: src/deprecated/v2/block/accordion/edit.js:166
+#: src/deprecated/v2/block/blockquote/edit.js:141
 #: src/deprecated/v2/block/blog-posts/edit.js:313
 #: src/deprecated/v2/block/call-to-action/edit.js:152
 #: src/deprecated/v2/block/card/edit.js:201
-#: src/deprecated/v2/block/column/edit.js:220
-#: src/deprecated/v2/block/container/edit.js:262
-#: src/deprecated/v2/block/count-up/edit.js:158
+#: src/deprecated/v2/block/column/edit.js:222
+#: src/deprecated/v2/block/container/edit.js:264
+#: src/deprecated/v2/block/count-up/edit.js:161
 #: src/deprecated/v2/block/feature-grid/edit.js:170
 #: src/deprecated/v2/block/feature/edit.js:211
 #: src/deprecated/v2/block/header/edit.js:187
 #: src/deprecated/v2/block/notification/edit.js:214
-#: src/deprecated/v2/block/number-box/edit.js:168
+#: src/deprecated/v2/block/number-box/edit.js:170
 #: src/deprecated/v2/block/pricing-box/edit.js:182
 #: src/deprecated/v2/block/team-member/edit.js:175
 #: src/deprecated/v2/block/testimonial/edit.js:180
-#: src/deprecated/v2/block/video-popup/edit.js:110
+#: src/deprecated/v2/block/video-popup/edit.js:111
 msgid "Container"
 msgstr ""
 
@@ -3460,20 +3474,20 @@ msgid "Bubble Background"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/components/effects-settings/index.js:40
+#: src/block-components/separator/edit.js:99
 #: src/block/accordion/variations.js:114
 #: src/block/accordion/variations.js:119
-#: src/components/button-controls/index.js:395
 #: src/deprecated/v2/block/separator/edit.js:129
+#: src/deprecated/v2/components/button-controls/index.js:395
 #: src/deprecated/v2/modules/block-separators/index.js:132
 #: src/deprecated/v2/modules/block-separators/index.js:230
-#: src/help/videos.js:487
 msgid "Shadow"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/components/effects-settings/index.js:41
 #: pro__premium_only/src/deprecated/v2/components/effects-settings/index.js:42
 #: src/block-components/button/edit.js:66
-#: src/components/button-controls/index.js:213
+#: src/deprecated/v2/components/button-controls/index.js:213
 msgid "Lift"
 msgstr ""
 
@@ -3510,12 +3524,12 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/components/effects-settings/index.js:82
 #: src/block-components/button/edit.js:94
-#: src/components/button-controls/index.js:205
+#: src/deprecated/v2/components/button-controls/index.js:205
 msgid "Hover Effect"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/components/panel-effects-settings/index.js:26
-#: src/deprecated/v2/block/image-box/edit.js:422
+#: src/deprecated/v2/block/image-box/edit.js:425
 msgid "Effects"
 msgstr ""
 
@@ -3525,7 +3539,6 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/modules/advanced-column-spacing/index.js:85
 #: src/deprecated/v2/block/columns/edit.js:402
-#: src/help/videos.js:577
 msgid "Column Vertical Align"
 msgstr ""
 
@@ -3535,24 +3548,21 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/modules/advanced-column-spacing/index.js:116
 #: src/block-components/helpers/size/edit.js:29
-#: src/deprecated/v2/block/column/edit.js:128
-#: src/deprecated/v2/block/container/edit.js:170
-#: src/deprecated/v2/block/container/edit.js:180
-#: src/deprecated/v2/block/container/edit.js:191
-#: src/deprecated/v2/block/image-box/edit.js:232
+#: src/deprecated/v2/block/column/edit.js:130
+#: src/deprecated/v2/block/container/edit.js:172
+#: src/deprecated/v2/block/container/edit.js:182
+#: src/deprecated/v2/block/container/edit.js:193
+#: src/deprecated/v2/block/image-box/edit.js:235
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:184
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:195
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:206
-#: src/help/videos.js:547
-#: src/help/videos.js:587
 msgid "Content Vertical Align"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/modules/advanced-column-spacing/index.js:126
 #: pro__premium_only/src/deprecated/v2/modules/advanced-column-spacing/index.js:159
 #: pro__premium_only/src/deprecated/v2/modules/advanced-column-spacing/index.js:188
-#: src/components/column-padding-control/index.js:115
-#: src/help/videos.js:567
+#: src/deprecated/v2/components/column-padding-control/index.js:113
 msgid "Column Paddings"
 msgstr ""
 
@@ -3570,12 +3580,12 @@ msgid "Custom Text"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/date-format-picker.js:23
-#: src/block-components/helpers/backgrounds/edit.js:310
-#: src/components/background-controls/index.js:369
-#: src/components/background-controls/index.js:384
-#: src/components/background-controls/index.js:399
-#: src/components/image-background-controls/index.js:109
+#: src/block-components/helpers/backgrounds/edit.js:337
 #: src/components/shadow-control/index.js:284
+#: src/deprecated/v2/components/background-controls/index.js:367
+#: src/deprecated/v2/components/background-controls/index.js:382
+#: src/deprecated/v2/components/background-controls/index.js:397
+#: src/deprecated/v2/components/image-background-controls/index.js:109
 msgid "Custom"
 msgstr ""
 
@@ -3623,7 +3633,7 @@ msgid "Remove"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/excerpt-control.js:15
-#: src/block/posts/edit.js:490
+#: src/block/posts/edit.js:494
 #: src/deprecated/v2/block/blog-posts/edit.js:698
 msgid "Excerpt Length"
 msgstr ""
@@ -3645,12 +3655,12 @@ msgid "Thumbnail"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/image-quality-picker.js:15
-#: src/components/button-controls/index.js:329
+#: src/deprecated/v2/components/button-controls/index.js:329
 msgid "Medium"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/image-quality-picker.js:16
-#: src/components/button-controls/index.js:332
+#: src/deprecated/v2/components/button-controls/index.js:332
 msgid "Large"
 msgstr ""
 
@@ -3712,7 +3722,7 @@ msgid "Display text when false"
 msgstr ""
 
 #: pro__premium_only/src/features/icon-controls/index.js:51
-#: src/components/icon-controls/index.js:70
+#: src/deprecated/v2/components/icon-controls/index.js:70
 msgid "Icon Color Type"
 msgstr ""
 
@@ -3726,17 +3736,17 @@ msgstr ""
 
 #: pro__premium_only/src/features/icon-controls/index.js:63
 #: pro__premium_only/src/features/icon-controls/index.js:188
-#: src/block-components/button/edit.js:122
+#: src/block-components/button/edit.js:127
 #: src/block-components/helpers/backgrounds/edit.js:35
 #: src/block-components/icon/edit.js:67
 #: src/block-components/icon/edit.js:74
-#: src/block-components/image/edit.js:250
+#: src/block-components/image/edit.js:271
 #: src/block-components/progress-bar/edit.js:32
 #: src/block-components/typography/edit.js:56
-#: src/components/background-controls/index.js:49
-#: src/components/button-controls/index.js:134
-#: src/components/icon-controls/index.js:77
-#: src/components/icon-controls/index.js:129
+#: src/deprecated/v2/components/background-controls/index.js:47
+#: src/deprecated/v2/components/button-controls/index.js:134
+#: src/deprecated/v2/components/icon-controls/index.js:77
+#: src/deprecated/v2/components/icon-controls/index.js:129
 msgid "Single"
 msgstr ""
 
@@ -3911,26 +3921,24 @@ msgstr ""
 #: src/block/heading/edit.js:144
 #: src/block/subtitle/edit.js:96
 #: src/block/text/edit.js:130
-#: src/deprecated/v2/block/blockquote/edit.js:298
-#: src/deprecated/v2/block/expand/edit.js:114
-#: src/deprecated/v2/block/expand/edit.js:190
-#: src/deprecated/v2/block/text/edit.js:190
-#: src/deprecated/v2/block/text/edit.js:236
-#: src/help/videos.js:281
+#: src/deprecated/v2/block/blockquote/edit.js:300
+#: src/deprecated/v2/block/expand/edit.js:117
+#: src/deprecated/v2/block/expand/edit.js:193
+#: src/deprecated/v2/block/text/edit.js:193
+#: src/deprecated/v2/block/text/edit.js:239
 msgid "Text"
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/admin.js:301
 #: src/block/icon-list/edit.js:66
 #: src/block/table-of-contents/edit.js:77
-#: src/deprecated/v2/block/count-up/edit.js:272
-#: src/deprecated/v2/block/count-up/edit.js:396
-#: src/deprecated/v2/block/number-box/edit.js:251
-#: src/deprecated/v2/block/number-box/edit.js:295
-#: src/deprecated/v2/block/number-box/edit.js:314
-#: src/deprecated/v2/block/number-box/edit.js:320
-#: src/deprecated/v2/block/number-box/edit.js:327
-#: src/help/videos.js:261
+#: src/deprecated/v2/block/count-up/edit.js:275
+#: src/deprecated/v2/block/count-up/edit.js:399
+#: src/deprecated/v2/block/number-box/edit.js:253
+#: src/deprecated/v2/block/number-box/edit.js:297
+#: src/deprecated/v2/block/number-box/edit.js:316
+#: src/deprecated/v2/block/number-box/edit.js:322
+#: src/deprecated/v2/block/number-box/edit.js:329
 msgid "Number"
 msgstr ""
 
@@ -3967,9 +3975,9 @@ msgstr ""
 #: src/deprecated/v2/block/count-up/deprecated.js:238
 #: src/deprecated/v2/block/count-up/deprecated.js:243
 #: src/deprecated/v2/block/count-up/deprecated.js:248
-#: src/deprecated/v2/block/count-up/edit.js:288
-#: src/deprecated/v2/block/count-up/edit.js:435
-#: src/deprecated/v2/block/count-up/edit.js:536
+#: src/deprecated/v2/block/count-up/edit.js:291
+#: src/deprecated/v2/block/count-up/edit.js:438
+#: src/deprecated/v2/block/count-up/edit.js:539
 #: src/deprecated/v2/block/count-up/schema.js:66
 #: src/deprecated/v2/block/count-up/schema.js:71
 #: src/deprecated/v2/block/count-up/schema.js:76
@@ -3979,14 +3987,14 @@ msgstr ""
 #: src/deprecated/v2/block/feature/edit.js:334
 #: src/deprecated/v2/block/feature/edit.js:440
 #: src/deprecated/v2/block/image-box/deprecated.js:129
-#: src/deprecated/v2/block/image-box/edit.js:304
-#: src/deprecated/v2/block/image-box/edit.js:544
-#: src/deprecated/v2/block/image-box/edit.js:759
+#: src/deprecated/v2/block/image-box/edit.js:307
+#: src/deprecated/v2/block/image-box/edit.js:547
+#: src/deprecated/v2/block/image-box/edit.js:762
 #: src/deprecated/v2/block/image-box/schema.js:200
 #: src/deprecated/v2/block/notification/edit.js:329
 #: src/deprecated/v2/block/notification/edit.js:487
-#: src/deprecated/v2/block/number-box/edit.js:283
-#: src/deprecated/v2/block/number-box/edit.js:449
+#: src/deprecated/v2/block/number-box/edit.js:285
+#: src/deprecated/v2/block/number-box/edit.js:451
 #: src/deprecated/v2/block/pricing-box/deprecated.js:328
 #: src/deprecated/v2/block/pricing-box/edit.js:343
 #: src/deprecated/v2/block/pricing-box/edit.js:614
@@ -4163,14 +4171,14 @@ msgid "Overflow"
 msgstr ""
 
 #: src/block-components/advanced/edit.js:66
-#: src/block-components/helpers/backgrounds/edit.js:307
-#: src/components/background-controls/index.js:366
-#: src/components/background-controls/index.js:381
-#: src/components/background-controls/index.js:396
-#: src/components/image-background-controls/index.js:106
+#: src/block-components/helpers/backgrounds/edit.js:334
 #: src/components/resizable-column/index.js:474
 #: src/components/resizable-column/index.js:482
 #: src/components/resizable-column/index.js:491
+#: src/deprecated/v2/components/background-controls/index.js:364
+#: src/deprecated/v2/components/background-controls/index.js:379
+#: src/deprecated/v2/components/background-controls/index.js:394
+#: src/deprecated/v2/components/image-background-controls/index.js:106
 msgid "Auto"
 msgstr ""
 
@@ -4194,29 +4202,36 @@ msgstr ""
 msgid "Both"
 msgstr ""
 
-#: src/block-components/advanced/edit.js:102
+#: src/block-components/advanced/edit.js:101
+msgid "Adjusts the transparency of the entire block"
+msgstr ""
+
+#: src/block-components/advanced/edit.js:105
 #: src/deprecated/v2/modules/advanced-general/index.js:90
-#: src/help/videos.js:522
 msgid "Z-Index"
 msgstr ""
 
-#: src/block-components/advanced/edit.js:117
-msgid "Sticky position may not work across all themes"
-msgstr ""
-
-#: src/block-components/advanced/edit.js:122
-msgid "Static"
-msgstr ""
-
-#: src/block-components/advanced/edit.js:123
-msgid "Relative"
+#: src/block-components/advanced/edit.js:114
+msgid "Sets the stack order of different blocks to make one appear in front of another. A block with a higher z-index will show up on top of another block with a lower z-index."
 msgstr ""
 
 #: src/block-components/advanced/edit.js:124
+msgid "Sticky position may not work across all themes"
+msgstr ""
+
+#: src/block-components/advanced/edit.js:129
+msgid "Static"
+msgstr ""
+
+#: src/block-components/advanced/edit.js:130
+msgid "Relative"
+msgstr ""
+
+#: src/block-components/advanced/edit.js:131
 msgid "Absolute"
 msgstr ""
 
-#: src/block-components/advanced/edit.js:125
+#: src/block-components/advanced/edit.js:132
 msgid "Sticky"
 msgstr ""
 
@@ -4244,9 +4259,9 @@ msgid "Justified"
 msgstr ""
 
 #: src/block-components/alignment/edit.js:80
-#: src/block-components/alignment/edit.js:163
-#: src/block-components/alignment/edit.js:178
-#: src/block-components/alignment/edit.js:228
+#: src/block-components/alignment/edit.js:176
+#: src/block-components/alignment/edit.js:195
+#: src/block-components/alignment/edit.js:253
 #: src/block/button-group/edit.js:169
 #: src/block/button-group/edit.js:175
 #: src/block/carousel/edit.js:353
@@ -4254,13 +4269,6 @@ msgstr ""
 #: src/block/icon-list/edit.js:254
 #: src/block/subtitle/edit.js:96
 #: src/block/text/edit.js:130
-#: src/help/videos.js:256
-#: src/help/videos.js:261
-#: src/help/videos.js:266
-#: src/help/videos.js:271
-#: src/help/videos.js:276
-#: src/help/videos.js:281
-#: src/help/videos.js:286
 msgid "%s Alignment"
 msgstr ""
 
@@ -4280,45 +4288,61 @@ msgstr ""
 
 #: src/block-components/alignment/edit.js:119
 #: src/block-components/helpers/size/edit.js:28
-#: src/deprecated/v2/block/column/edit.js:182
-#: src/deprecated/v2/block/column/edit.js:192
-#: src/deprecated/v2/block/column/edit.js:202
-#: src/deprecated/v2/block/container/edit.js:224
-#: src/deprecated/v2/block/container/edit.js:234
-#: src/deprecated/v2/block/container/edit.js:244
+#: src/deprecated/v2/block/column/edit.js:184
+#: src/deprecated/v2/block/column/edit.js:194
+#: src/deprecated/v2/block/column/edit.js:204
+#: src/deprecated/v2/block/container/edit.js:226
+#: src/deprecated/v2/block/container/edit.js:236
+#: src/deprecated/v2/block/container/edit.js:246
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:272
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:283
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:294
-#: src/help/videos.js:557
 msgid "Content Horizontal Align"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:148
-#: src/block-components/alignment/edit.js:216
+#: src/block-components/alignment/edit.js:125
+msgid "Sets the placement of the column container to left, center or right. Not available when block width is set to full width."
+msgstr ""
+
+#: src/block-components/alignment/edit.js:152
+msgid "Adjusts the placement of all content in the block to align left, center or right"
+msgstr ""
+
+#: src/block-components/alignment/edit.js:157
+#: src/block-components/alignment/edit.js:237
 #: src/block/carousel/edit.js:346
 #: src/block/carousel/edit.js:463
 msgid "%s Justify"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:158
+#: src/block-components/alignment/edit.js:165
+msgid "Sets the horizontal position and spacing of the inner columns."
+msgstr ""
+
+#: src/block-components/alignment/edit.js:171
 msgid "Column contents need to be narrow for effect to show."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:189
+#: src/block-components/alignment/edit.js:182
+#: src/block-components/alignment/edit.js:201
+msgid "Sets the vertical position of the inner columns relative to the columns block."
+msgstr ""
+
+#: src/block-components/alignment/edit.js:210
 msgid "%s Direction"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:189
-#: src/block-components/alignment/edit.js:216
-#: src/block-components/alignment/edit.js:228
-#: src/block-components/alignment/edit.js:259
-#: src/block-components/alignment/edit.js:260
-#: src/block-components/alignment/edit.js:280
-#: src/block-components/alignment/edit.js:295
+#: src/block-components/alignment/edit.js:210
+#: src/block-components/alignment/edit.js:237
+#: src/block-components/alignment/edit.js:253
+#: src/block-components/alignment/edit.js:288
+#: src/block-components/alignment/edit.js:289
+#: src/block-components/alignment/edit.js:313
+#: src/block-components/alignment/edit.js:332
 msgid "Inner Block"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:193
+#: src/block-components/alignment/edit.js:214
 #: src/block/button-group/edit.js:77
 #: src/block/button-group/edit.js:88
 #: src/block/call-to-action/variations.js:53
@@ -4346,7 +4370,7 @@ msgstr ""
 msgid "Horizontal"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:197
+#: src/block-components/alignment/edit.js:218
 #: src/block/button-group/edit.js:81
 #: src/block/button-group/edit.js:92
 #: src/block/testimonial/variations.js:117
@@ -4355,35 +4379,55 @@ msgstr ""
 msgid "Vertical"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:237
+#: src/block-components/alignment/edit.js:247
+msgid "Sets the horizontal/vertical position and spacing of the inner blocks."
+msgstr ""
+
+#: src/block-components/alignment/edit.js:264
+msgid "Aligns the horizontal/vertical position of the inner blocks."
+msgstr ""
+
+#: src/block-components/alignment/edit.js:266
 msgid "Set Content Min. Height for alignment to display properly"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:242
+#: src/block-components/alignment/edit.js:271
 msgid "Inner Block Wrapping"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:246
+#: src/block-components/alignment/edit.js:275
 #: src/block/button-group/edit.js:191
 msgid "No Wrap"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:250
+#: src/block-components/alignment/edit.js:279
 #: src/block/button-group/edit.js:195
 msgid "Wrap"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:259
-#: src/block-components/alignment/edit.js:260
-#: src/block-components/alignment/edit.js:280
-#: src/block-components/alignment/edit.js:295
+#: src/block-components/alignment/edit.js:288
+#: src/block-components/alignment/edit.js:289
+#: src/block-components/alignment/edit.js:313
+#: src/block-components/alignment/edit.js:332
 msgid "%s %s"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:260
-#: src/block-components/alignment/edit.js:280
+#: src/block-components/alignment/edit.js:289
+#: src/block-components/alignment/edit.js:313
 #: src/block/horizontal-scroller/edit.js:142
 msgid "Gap"
+msgstr ""
+
+#: src/block-components/alignment/edit.js:298
+msgid "Sets the gap between the columns of inner blocks."
+msgstr ""
+
+#: src/block-components/alignment/edit.js:321
+msgid "Sets the gap between inner blocks."
+msgstr ""
+
+#: src/block-components/alignment/edit.js:340
+msgid "Sets the gap between the rows of inner blocks."
 msgstr ""
 
 #: src/block-components/block-div/edit.js:44
@@ -4391,22 +4435,22 @@ msgid "Block Size & Spacing"
 msgstr ""
 
 #: src/block-components/block-div/edit.js:67
-#: src/deprecated/v2/block/accordion/edit.js:169
-#: src/deprecated/v2/block/accordion/edit.js:170
-#: src/deprecated/v2/block/blockquote/edit.js:145
-#: src/deprecated/v2/block/blockquote/edit.js:146
+#: src/deprecated/v2/block/accordion/edit.js:171
+#: src/deprecated/v2/block/accordion/edit.js:172
+#: src/deprecated/v2/block/blockquote/edit.js:147
+#: src/deprecated/v2/block/blockquote/edit.js:148
 #: src/deprecated/v2/block/blog-posts/edit.js:319
 #: src/deprecated/v2/block/blog-posts/edit.js:320
 #: src/deprecated/v2/block/call-to-action/edit.js:158
 #: src/deprecated/v2/block/call-to-action/edit.js:159
 #: src/deprecated/v2/block/card/edit.js:207
 #: src/deprecated/v2/block/card/edit.js:208
-#: src/deprecated/v2/block/column/edit.js:226
-#: src/deprecated/v2/block/column/edit.js:227
-#: src/deprecated/v2/block/container/edit.js:268
-#: src/deprecated/v2/block/container/edit.js:269
-#: src/deprecated/v2/block/count-up/edit.js:164
-#: src/deprecated/v2/block/count-up/edit.js:165
+#: src/deprecated/v2/block/column/edit.js:228
+#: src/deprecated/v2/block/column/edit.js:229
+#: src/deprecated/v2/block/container/edit.js:270
+#: src/deprecated/v2/block/container/edit.js:271
+#: src/deprecated/v2/block/count-up/edit.js:167
+#: src/deprecated/v2/block/count-up/edit.js:168
 #: src/deprecated/v2/block/feature-grid/edit.js:176
 #: src/deprecated/v2/block/feature-grid/edit.js:177
 #: src/deprecated/v2/block/feature/edit.js:217
@@ -4415,9 +4459,9 @@ msgstr ""
 #: src/deprecated/v2/block/header/edit.js:194
 #: src/deprecated/v2/block/notification/edit.js:220
 #: src/deprecated/v2/block/notification/edit.js:221
-#: src/deprecated/v2/block/number-box/edit.js:74
-#: src/deprecated/v2/block/number-box/edit.js:175
-#: src/deprecated/v2/block/number-box/edit.js:176
+#: src/deprecated/v2/block/number-box/edit.js:76
+#: src/deprecated/v2/block/number-box/edit.js:177
+#: src/deprecated/v2/block/number-box/edit.js:178
 #: src/deprecated/v2/block/pricing-box/edit.js:188
 #: src/deprecated/v2/block/pricing-box/edit.js:189
 #: src/deprecated/v2/block/team-member/edit.js:181
@@ -4425,8 +4469,8 @@ msgstr ""
 #: src/deprecated/v2/block/testimonial/edit.js:89
 #: src/deprecated/v2/block/testimonial/edit.js:188
 #: src/deprecated/v2/block/testimonial/edit.js:189
-#: src/deprecated/v2/block/video-popup/edit.js:114
 #: src/deprecated/v2/block/video-popup/edit.js:115
+#: src/deprecated/v2/block/video-popup/edit.js:116
 msgid "Background"
 msgstr ""
 
@@ -4437,9 +4481,9 @@ msgstr ""
 #: src/block-components/block-link/edit.js:27
 #: src/block-components/link/edit.js:36
 #: src/block/button/block-styles.js:111
-#: src/components/button-controls/index.js:103
-#: src/deprecated/v2/block/expand/edit.js:141
-#: src/deprecated/v2/block/expand/edit.js:204
+#: src/deprecated/v2/block/expand/edit.js:144
+#: src/deprecated/v2/block/expand/edit.js:207
+#: src/deprecated/v2/components/button-controls/index.js:103
 msgid "Link"
 msgstr ""
 
@@ -4452,12 +4496,12 @@ msgid "Styles"
 msgstr ""
 
 #: src/block-components/button/edit.js:62
-#: src/components/blend-mode-control/index.js:23
+#: src/components/blend-mode-control/index.js:22
 msgid "Darken"
 msgstr ""
 
 #: src/block-components/button/edit.js:74
-#: src/components/button-controls/index.js:219
+#: src/deprecated/v2/components/button-controls/index.js:219
 msgid "Lift & Scale"
 msgstr ""
 
@@ -4466,82 +4510,98 @@ msgid "Lift More"
 msgstr ""
 
 #: src/block-components/button/edit.js:82
-#: src/components/button-controls/index.js:222
+#: src/deprecated/v2/components/button-controls/index.js:222
 msgid "Scale More"
 msgstr ""
 
 #: src/block-components/button/edit.js:86
-#: src/components/button-controls/index.js:225
+#: src/deprecated/v2/components/button-controls/index.js:225
 msgid "Lift & Scale More"
 msgstr ""
 
-#: src/block-components/button/edit.js:115
+#: src/block-components/button/edit.js:100
+msgid "Hover effect"
+msgstr ""
+
+#: src/block-components/button/edit.js:101
+msgid "Triggers animation or effects when you mouse over"
+msgstr ""
+
+#: src/block-components/button/edit.js:120
 msgid "Button Colors"
 msgstr ""
 
-#: src/block-components/button/edit.js:135
+#: src/block-components/button/edit.js:140
 msgid "Button Color #%s"
 msgstr ""
 
-#: src/block-components/button/edit.js:136
-#: src/components/button-controls/index.js:153
-#: src/components/button-controls/index.js:154
-#: src/components/button-controls/index.js:163
-#: src/components/button-controls/index.js:262
-#: src/components/button-controls/index.js:263
-#: src/components/button-controls/index.js:272
+#: src/block-components/button/edit.js:141
+#: src/deprecated/v2/components/button-controls/index.js:153
+#: src/deprecated/v2/components/button-controls/index.js:154
+#: src/deprecated/v2/components/button-controls/index.js:163
+#: src/deprecated/v2/components/button-controls/index.js:262
+#: src/deprecated/v2/components/button-controls/index.js:263
+#: src/deprecated/v2/components/button-controls/index.js:272
 msgid "Button Color"
 msgstr ""
 
-#: src/block-components/button/edit.js:145
+#: src/block-components/button/edit.js:150
 msgid "Button Color #2"
 msgstr ""
 
-#: src/block-components/button/edit.js:175
-#: src/block-components/typography/edit.js:272
-#: src/components/button-controls/index.js:185
-#: src/components/button-controls/index.js:292
-#: src/deprecated/v2/block/blockquote/edit.js:309
+#: src/block-components/button/edit.js:180
+#: src/block-components/typography/edit.js:301
+#: src/deprecated/v2/block/blockquote/edit.js:311
 #: src/deprecated/v2/block/blog-posts/edit.js:664
 #: src/deprecated/v2/block/blog-posts/edit.js:714
 #: src/deprecated/v2/block/blog-posts/edit.js:772
 #: src/deprecated/v2/block/blog-posts/edit.js:828
-#: src/deprecated/v2/block/column/edit.js:312
+#: src/deprecated/v2/block/column/edit.js:314
 #: src/deprecated/v2/block/columns/edit.js:429
-#: src/deprecated/v2/block/container/edit.js:356
-#: src/deprecated/v2/block/expand/edit.js:126
+#: src/deprecated/v2/block/container/edit.js:358
+#: src/deprecated/v2/block/expand/edit.js:129
 #: src/deprecated/v2/block/pricing-box/edit.js:470
 #: src/deprecated/v2/block/pricing-box/edit.js:509
 #: src/deprecated/v2/block/pricing-box/edit.js:539
 #: src/deprecated/v2/block/pricing-box/edit.js:566
 #: src/deprecated/v2/block/testimonial/edit.js:479
-#: src/deprecated/v2/block/text/edit.js:247
+#: src/deprecated/v2/block/text/edit.js:250
+#: src/deprecated/v2/components/button-controls/index.js:185
+#: src/deprecated/v2/components/button-controls/index.js:292
 #: src/format-types/highlight/index.js:232
 msgid "Text Color"
 msgstr ""
 
-#: src/block-components/button/edit.js:202
+#: src/block-components/button/edit.js:207
 msgid "Button Size & Spacing"
 msgstr ""
 
-#: src/block-components/button/edit.js:207
-#: src/deprecated/v2/block/button/edit.js:56
+#: src/block-components/button/edit.js:212
+#: src/deprecated/v2/block/button/edit.js:57
 msgid "Full Width"
 msgstr ""
 
-#: src/block-components/button/edit.js:212
+#: src/block-components/button/edit.js:217
 msgid "Min. Button Height"
 msgstr ""
 
-#: src/block-components/button/edit.js:220
+#: src/block-components/button/edit.js:225
 msgid "Button Width"
 msgstr ""
 
-#: src/block-components/button/edit.js:229
+#: src/block-components/button/edit.js:234
 msgid "Button Padding"
 msgstr ""
 
-#: src/block-components/button/edit.js:251
+#: src/block-components/button/edit.js:244
+msgid "Button padding"
+msgstr ""
+
+#: src/block-components/button/edit.js:245
+msgid "Adjusts the space between the button text and button borders"
+msgstr ""
+
+#: src/block-components/button/edit.js:261
 msgid "Button Borders & Shadows"
 msgstr ""
 
@@ -4558,22 +4618,30 @@ msgstr ""
 #: src/deprecated/v2/block/card/edit.js:160
 #: src/deprecated/v2/block/columns/edit.js:156
 #: src/deprecated/v2/block/columns/edit.js:264
-#: src/deprecated/v2/block/count-up/edit.js:142
+#: src/deprecated/v2/block/count-up/edit.js:145
 #: src/deprecated/v2/block/feature-grid/edit.js:154
-#: src/deprecated/v2/block/icon-list/edit.js:101
-#: src/deprecated/v2/block/image-box/edit.js:163
-#: src/deprecated/v2/block/number-box/edit.js:152
+#: src/deprecated/v2/block/icon-list/edit.js:104
+#: src/deprecated/v2/block/image-box/edit.js:166
+#: src/deprecated/v2/block/number-box/edit.js:154
 #: src/deprecated/v2/block/pricing-box/edit.js:164
 #: src/deprecated/v2/block/team-member/edit.js:159
 #: src/deprecated/v2/block/testimonial/edit.js:162
-#: src/deprecated/v2/block/text/edit.js:125
-#: src/help/videos.js:171
+#: src/deprecated/v2/block/text/edit.js:128
 msgid "Columns"
 msgstr ""
 
 #: src/block-components/columns/edit.js:153
 #: src/block/horizontal-scroller/edit.js:132
 msgid "Inner Column Spacing"
+msgstr ""
+
+#: src/block-components/columns/edit.js:169
+msgid "Sets column paddings, the space inside the block between the block elements and the column container border"
+msgstr ""
+
+#: src/block-components/columns/edit.js:186
+#: src/block-components/columns/edit.js:198
+msgid "Sets the distance between two or more columns"
 msgstr ""
 
 #: src/block-components/conditional-display/edit.js:29
@@ -4623,10 +4691,10 @@ msgid "Align Full"
 msgstr ""
 
 #: src/block-components/content-align/edit.js:50
-#: src/deprecated/v2/block/column/edit.js:135
-#: src/deprecated/v2/block/column/edit.js:150
-#: src/deprecated/v2/block/column/edit.js:165
-#: src/deprecated/v2/block/container/edit.js:213
+#: src/deprecated/v2/block/column/edit.js:137
+#: src/deprecated/v2/block/column/edit.js:152
+#: src/deprecated/v2/block/column/edit.js:167
+#: src/deprecated/v2/block/container/edit.js:215
 msgid "Content Width"
 msgstr ""
 
@@ -4643,210 +4711,253 @@ msgid "Custom Attributes"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:81
-#: src/block-components/helpers/backgrounds/edit.js:114
-#: src/block-components/image/edit.js:265
-#: src/block-components/image/edit.js:274
+#: src/block-components/helpers/backgrounds/edit.js:117
+#: src/block-components/image/edit.js:286
+#: src/block-components/image/edit.js:295
 msgctxt "option title"
 msgid "%s #%d"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:81
 #: src/block-components/helpers/backgrounds/edit.js:82
-#: src/block-components/helpers/backgrounds/edit.js:114
-#: src/block-components/progress-bar/edit.js:221
-#: src/components/background-controls/index.js:490
+#: src/block-components/helpers/backgrounds/edit.js:117
+#: src/block-components/progress-bar/edit.js:234
 #: src/deprecated/v2/block/header/edit.js:335
 #: src/deprecated/v2/block/separator/edit.js:188
+#: src/deprecated/v2/components/background-controls/index.js:488
 msgid "Background Color"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:101
-#: src/components/background-controls/index.js:78
 #: src/deprecated/v2/block/header/edit.js:340
-#: src/help/videos.js:417
+#: src/deprecated/v2/components/background-controls/index.js:76
 msgid "Background Color Opacity"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:121
+#: src/block-components/helpers/backgrounds/edit.js:111
+msgid "Adjusts the transparency of the background color"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:124
 #: src/block-components/progress-bar/edit.js:166
-#: src/components/background-controls/index.js:100
+#: src/deprecated/v2/components/background-controls/index.js:98
 msgid "Adv. Gradient Color Settings"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:149
-#: src/block-components/helpers/backgrounds/edit.js:160
-#: src/block-components/image/edit.js:338
-#: src/block-components/image/edit.js:350
+#: src/block-components/helpers/backgrounds/edit.js:150
+#: src/block-components/image/edit.js:360
 #: src/block-components/progress-bar/edit.js:193
-#: src/block-components/progress-bar/edit.js:203
-#: src/components/background-controls/index.js:125
-#: src/components/background-controls/index.js:139
+msgid "Sets the direction (in degrees) of the colors"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:155
+#: src/block-components/helpers/backgrounds/edit.js:169
+#: src/block-components/image/edit.js:365
+#: src/block-components/image/edit.js:380
+#: src/block-components/progress-bar/edit.js:197
+#: src/block-components/progress-bar/edit.js:210
+#: src/deprecated/v2/components/background-controls/index.js:123
+#: src/deprecated/v2/components/background-controls/index.js:137
 msgid "Color %d Location"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:172
-#: src/block-components/progress-bar/edit.js:213
-#: src/components/background-controls/index.js:153
+#: src/block-components/helpers/backgrounds/edit.js:164
+#: src/block-components/helpers/backgrounds/edit.js:178
+#: src/block-components/image/edit.js:375
+#: src/block-components/image/edit.js:390
+#: src/block-components/progress-bar/edit.js:206
+#: src/block-components/progress-bar/edit.js:219
+msgid "Sets the placement of each color in relation to the other color"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:184
+#: src/block-components/progress-bar/edit.js:223
+#: src/deprecated/v2/components/background-controls/index.js:151
 msgid "Background Gradient Blend Mode"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:186
-#: src/components/background-controls/index.js:170
-#: src/components/background-controls/index.js:181
-#: src/components/background-controls/index.js:192
+#: src/block-components/helpers/backgrounds/edit.js:188
+#: src/block-components/helpers/backgrounds/edit.js:362
+#: src/block-components/progress-bar/edit.js:227
+msgid "Sets how this background gradient/image blends into the other background"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:201
+#: src/deprecated/v2/components/background-controls/index.js:168
+#: src/deprecated/v2/components/background-controls/index.js:179
+#: src/deprecated/v2/components/background-controls/index.js:190
 msgid "Background Image or Video"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:186
-#: src/components/background-controls/index.js:170
-#: src/components/background-controls/index.js:181
-#: src/components/background-controls/index.js:192
+#: src/block-components/helpers/backgrounds/edit.js:201
+#: src/deprecated/v2/components/background-controls/index.js:168
+#: src/deprecated/v2/components/background-controls/index.js:179
+#: src/deprecated/v2/components/background-controls/index.js:190
 msgid "Background Image"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:187
+#: src/block-components/helpers/backgrounds/edit.js:202
 #: src/block/video-popup/edit.js:99
-#: src/components/background-controls/index.js:171
-#: src/components/background-controls/index.js:182
-#: src/components/background-controls/index.js:193
-#: src/deprecated/v2/block/video-popup/edit.js:80
+#: src/deprecated/v2/block/video-popup/edit.js:81
+#: src/deprecated/v2/components/background-controls/index.js:169
+#: src/deprecated/v2/components/background-controls/index.js:180
+#: src/deprecated/v2/components/background-controls/index.js:191
 msgid "Use .mp4 format for videos"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:218
-#: src/components/background-controls/index.js:207
-#: src/help/videos.js:422
+#: src/block-components/helpers/backgrounds/edit.js:233
+#: src/deprecated/v2/components/background-controls/index.js:205
 msgid "Background Media Tint Strength"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:232
-#: src/components/background-controls/index.js:234
-#: src/help/videos.js:432
+#: src/block-components/helpers/backgrounds/edit.js:243
+msgid "Adjusts the intensity of the background media tint"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:250
+#: src/deprecated/v2/components/background-controls/index.js:232
 msgid "Fixed Background"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:240
-#: src/components/background-controls/index.js:244
+#: src/block-components/helpers/backgrounds/edit.js:254
+msgid "Keeps the background image fixed in place while scrolling"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:261
+#: src/deprecated/v2/components/background-controls/index.js:242
 msgid "Adv. Background Image Settings"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:270
-#: src/components/background-controls/index.js:256
-#: src/components/background-controls/index.js:276
-#: src/components/background-controls/index.js:296
-#: src/help/videos.js:447
+#: src/block-components/helpers/backgrounds/edit.js:291
+#: src/deprecated/v2/components/background-controls/index.js:254
+#: src/deprecated/v2/components/background-controls/index.js:274
+#: src/deprecated/v2/components/background-controls/index.js:294
 msgid "Image Position"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:289
-#: src/components/background-controls/index.js:317
-#: src/components/background-controls/index.js:332
-#: src/components/background-controls/index.js:347
-#: src/help/videos.js:452
+#: src/block-components/helpers/backgrounds/edit.js:307
+msgid "Chooses which part of the background image will be the focal point"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:313
+#: src/deprecated/v2/components/background-controls/index.js:315
+#: src/deprecated/v2/components/background-controls/index.js:330
+#: src/deprecated/v2/components/background-controls/index.js:345
 msgid "Image Repeat"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:293
-#: src/components/background-controls/index.js:320
-#: src/components/background-controls/index.js:335
-#: src/components/background-controls/index.js:350
-#: src/components/image-background-controls/index.js:90
+#: src/block-components/helpers/backgrounds/edit.js:317
+#: src/deprecated/v2/components/background-controls/index.js:318
+#: src/deprecated/v2/components/background-controls/index.js:333
+#: src/deprecated/v2/components/background-controls/index.js:348
+#: src/deprecated/v2/components/image-background-controls/index.js:90
 msgid "No-Repeat"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:294
-#: src/components/background-controls/index.js:321
-#: src/components/background-controls/index.js:336
-#: src/components/background-controls/index.js:351
-#: src/components/image-background-controls/index.js:91
+#: src/block-components/helpers/backgrounds/edit.js:318
+#: src/deprecated/v2/components/background-controls/index.js:319
+#: src/deprecated/v2/components/background-controls/index.js:334
+#: src/deprecated/v2/components/background-controls/index.js:349
+#: src/deprecated/v2/components/image-background-controls/index.js:91
 msgid "Repeat"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:295
-#: src/components/background-controls/index.js:322
-#: src/components/background-controls/index.js:337
-#: src/components/background-controls/index.js:352
-#: src/components/image-background-controls/index.js:92
+#: src/block-components/helpers/backgrounds/edit.js:319
+#: src/deprecated/v2/components/background-controls/index.js:320
+#: src/deprecated/v2/components/background-controls/index.js:335
+#: src/deprecated/v2/components/background-controls/index.js:350
+#: src/deprecated/v2/components/image-background-controls/index.js:92
 msgid "Repeat-X"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:296
-#: src/components/background-controls/index.js:323
-#: src/components/background-controls/index.js:338
-#: src/components/background-controls/index.js:353
-#: src/components/image-background-controls/index.js:93
+#: src/block-components/helpers/backgrounds/edit.js:320
+#: src/deprecated/v2/components/background-controls/index.js:321
+#: src/deprecated/v2/components/background-controls/index.js:336
+#: src/deprecated/v2/components/background-controls/index.js:351
+#: src/deprecated/v2/components/image-background-controls/index.js:93
 msgid "Repeat-Y"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:308
-#: src/block-components/image/edit.js:379
+#: src/block-components/helpers/backgrounds/edit.js:324
+msgid "Covers the background with tiled images"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:335
+#: src/block-components/image/edit.js:412
 #: src/block/team-member/variations.js:131
 #: src/block/team-member/variations.js:135
-#: src/components/background-controls/index.js:367
-#: src/components/background-controls/index.js:382
-#: src/components/background-controls/index.js:397
-#: src/components/image-background-controls/index.js:107
+#: src/deprecated/v2/components/background-controls/index.js:365
+#: src/deprecated/v2/components/background-controls/index.js:380
+#: src/deprecated/v2/components/background-controls/index.js:395
+#: src/deprecated/v2/components/image-background-controls/index.js:107
 msgid "Cover"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:309
-#: src/block-components/image/edit.js:378
-#: src/components/background-controls/index.js:368
-#: src/components/background-controls/index.js:383
-#: src/components/background-controls/index.js:398
-#: src/components/image-background-controls/index.js:108
+#: src/block-components/helpers/backgrounds/edit.js:336
+#: src/block-components/image/edit.js:411
+#: src/deprecated/v2/components/background-controls/index.js:366
+#: src/deprecated/v2/components/background-controls/index.js:381
+#: src/deprecated/v2/components/background-controls/index.js:396
+#: src/deprecated/v2/components/image-background-controls/index.js:108
 msgid "Contain"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:318
-#: src/components/background-controls/index.js:410
-#: src/components/background-controls/index.js:425
-#: src/components/background-controls/index.js:440
-#: src/components/image-background-controls/index.js:119
+#: src/block-components/helpers/backgrounds/edit.js:341
+msgid "Sets the display image size"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:348
+#: src/deprecated/v2/components/background-controls/index.js:408
+#: src/deprecated/v2/components/background-controls/index.js:423
+#: src/deprecated/v2/components/background-controls/index.js:438
+#: src/deprecated/v2/components/image-background-controls/index.js:119
 msgid "Custom Size"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:328
-#: src/components/background-controls/index.js:455
-#: src/help/videos.js:462
+#: src/block-components/helpers/backgrounds/edit.js:358
+#: src/deprecated/v2/components/background-controls/index.js:453
 msgid "Image Blend Mode"
 msgstr ""
 
-#: src/block-components/helpers/borders/edit.js:29
+#: src/block-components/helpers/borders/edit.js:27
 #: src/block/carousel/edit.js:481
 #: src/components/border-controls/index.js:30
 msgid "Solid"
 msgstr ""
 
-#: src/block-components/helpers/borders/edit.js:33
+#: src/block-components/helpers/borders/edit.js:31
 #: src/components/border-controls/index.js:34
 msgid "Dashed"
 msgstr ""
 
-#: src/block-components/helpers/borders/edit.js:37
+#: src/block-components/helpers/borders/edit.js:35
 #: src/components/border-controls/index.js:38
 msgid "Dotted"
 msgstr ""
 
-#: src/block-components/helpers/borders/edit.js:51
+#: src/block-components/helpers/borders/edit.js:49
 #: src/components/border-controls/index.js:22
 msgid "Borders"
 msgstr ""
 
-#: src/block-components/helpers/borders/edit.js:62
+#: src/block-components/helpers/borders/edit.js:60
 #: src/components/border-controls/index.js:50
-#: src/components/button-controls/index.js:383
+#: src/deprecated/v2/components/button-controls/index.js:383
 msgid "Border Width"
 msgstr ""
 
-#: src/block-components/helpers/borders/edit.js:76
+#: src/block-components/helpers/borders/edit.js:74
 #: src/components/border-controls/index.js:133
 #: src/deprecated/v2/block/notification/edit.js:186
 msgid "Border Color"
 msgstr ""
 
+#: src/block-components/helpers/borders/edit.js:88
+msgid "Adjusts the radius of block corners to make them more rounded"
+msgstr ""
+
 #: src/block-components/helpers/link/edit.js:32
-#: src/components/button-controls/index.js:49
+#: src/deprecated/v2/components/button-controls/index.js:49
 #: src/deprecated/v2/modules/container-link/index.js:132
 msgid "Link / URL"
 msgstr ""
@@ -4883,51 +4994,75 @@ msgstr ""
 msgid "Max. Content Width"
 msgstr ""
 
-#: src/block-components/helpers/size/edit.js:108
-#: src/deprecated/v2/block/blockquote/edit.js:212
+#: src/block-components/helpers/size/edit.js:46
+msgid "Adjusts the minimum allowable height of the block"
+msgstr ""
+
+#: src/block-components/helpers/size/edit.js:59
+msgid "Sets the placement of the content to top, center or bottom. Available when the min. block height is set to higher than default."
+msgstr ""
+
+#: src/block-components/helpers/size/edit.js:82
+msgid "Adjusts the maximum allowable width of the block. The settings will depend on the block width you set on the toolbar."
+msgstr ""
+
+#: src/block-components/helpers/size/edit.js:99
+msgid "Sets the placement of the content to left, center or right. Not available when block width is set to full width."
+msgstr ""
+
+#: src/block-components/helpers/size/edit.js:121
+#: src/deprecated/v2/block/blockquote/edit.js:214
 #: src/deprecated/v2/block/blog-posts/edit.js:400
 #: src/deprecated/v2/block/call-to-action/edit.js:226
 #: src/deprecated/v2/block/card/edit.js:275
-#: src/deprecated/v2/block/column/edit.js:294
-#: src/deprecated/v2/block/container/edit.js:336
-#: src/deprecated/v2/block/count-up/edit.js:229
+#: src/deprecated/v2/block/column/edit.js:296
+#: src/deprecated/v2/block/container/edit.js:338
+#: src/deprecated/v2/block/count-up/edit.js:232
 #: src/deprecated/v2/block/feature-grid/edit.js:241
 #: src/deprecated/v2/block/header/edit.js:258
-#: src/deprecated/v2/block/icon/edit.js:98
-#: src/deprecated/v2/block/image-box/edit.js:245
+#: src/deprecated/v2/block/icon/edit.js:101
+#: src/deprecated/v2/block/image-box/edit.js:248
 #: src/deprecated/v2/block/notification/edit.js:286
-#: src/deprecated/v2/block/number-box/edit.js:240
+#: src/deprecated/v2/block/number-box/edit.js:242
 #: src/deprecated/v2/block/pricing-box/edit.js:252
 #: src/deprecated/v2/block/team-member/edit.js:248
 #: src/deprecated/v2/block/testimonial/edit.js:255
-#: src/deprecated/v2/block/text/edit.js:148
+#: src/deprecated/v2/block/text/edit.js:151
 msgid "Paddings"
 msgstr ""
 
-#: src/block-components/helpers/size/edit.js:109
+#: src/block-components/helpers/size/edit.js:122
 msgid "Margins"
+msgstr ""
+
+#: src/block-components/helpers/size/edit.js:148
+msgid "Sets the block paddings, i.e the space between the inner columns and the block border"
+msgstr ""
+
+#: src/block-components/helpers/size/edit.js:166
+msgid "Sets the block margin, i.e. the space outside the block between the block border and the next block."
 msgstr ""
 
 #: src/block-components/icon/edit.js:117
 #: src/block/notification/edit.js:135
-#: src/components/button-controls/index.js:437
-#: src/components/icon-controls/index.js:223
-#: src/components/icon-controls/index.js:233
-#: src/components/icon-controls/index.js:243
-#: src/deprecated/v2/block/icon-list/edit.js:156
+#: src/deprecated/v2/block/icon-list/edit.js:159
 #: src/deprecated/v2/block/notification/edit.js:376
+#: src/deprecated/v2/components/button-controls/index.js:437
+#: src/deprecated/v2/components/icon-controls/index.js:223
+#: src/deprecated/v2/components/icon-controls/index.js:233
+#: src/deprecated/v2/components/icon-controls/index.js:243
 msgid "Icon Size"
 msgstr ""
 
 #: src/block-components/icon/edit.js:140
 #: src/block/icon-list/edit.js:312
-#: src/components/icon-controls/index.js:269
-#: src/deprecated/v2/block/icon-list/edit.js:174
+#: src/deprecated/v2/block/icon-list/edit.js:177
+#: src/deprecated/v2/components/icon-controls/index.js:269
 msgid "Icon Rotation"
 msgstr ""
 
 #: src/block-components/icon/edit.js:151
-#: src/components/button-controls/index.js:448
+#: src/deprecated/v2/components/button-controls/index.js:448
 msgid "Icon Position"
 msgstr ""
 
@@ -4964,24 +5099,32 @@ msgstr ""
 
 #: src/block-components/image/edit.js:149
 #: src/block-components/progress-bar/edit.js:76
-#: src/block-components/separator/edit.js:75
+#: src/block-components/separator/edit.js:80
 #: src/block/divider/edit.js:73
 #: src/block/heading/edit.js:165
 #: src/block/heading/edit.js:211
 #: src/components/resizer-tooltip/index.js:94
 #: src/deprecated/v2/block/divider/edit.js:125
-#: src/deprecated/v2/block/heading/edit.js:167
-#: src/deprecated/v2/block/heading/edit.js:220
-#: src/deprecated/v2/block/text/edit.js:215
-#: src/deprecated/v2/block/video-popup/edit.js:144
-#: src/deprecated/v2/block/video-popup/edit.js:156
-#: src/deprecated/v2/block/video-popup/edit.js:168
+#: src/deprecated/v2/block/heading/edit.js:170
+#: src/deprecated/v2/block/heading/edit.js:223
+#: src/deprecated/v2/block/text/edit.js:218
+#: src/deprecated/v2/block/video-popup/edit.js:145
+#: src/deprecated/v2/block/video-popup/edit.js:157
+#: src/deprecated/v2/block/video-popup/edit.js:169
 #: src/deprecated/v2/modules/block-separators/index.js:111
 #: src/deprecated/v2/modules/block-separators/index.js:209
 msgid "Width"
 msgstr ""
 
-#: src/block-components/image/edit.js:164
+#: src/block-components/image/edit.js:161
+msgid "Image width"
+msgstr ""
+
+#: src/block-components/image/edit.js:162
+msgid "Adjusts the image width"
+msgstr ""
+
+#: src/block-components/image/edit.js:169
 #: src/block-components/progress-bar/edit.js:87
 #: src/block-components/separator/edit.js:67
 #: src/block/heading/edit.js:174
@@ -4993,97 +5136,128 @@ msgstr ""
 #: src/block/spacer/edit.js:105
 #: src/components/resizer-tooltip/index.js:147
 #: src/deprecated/v2/block/columns/edit.js:334
-#: src/deprecated/v2/block/container/edit.js:155
+#: src/deprecated/v2/block/container/edit.js:157
 #: src/deprecated/v2/block/divider/edit.js:116
-#: src/deprecated/v2/block/heading/edit.js:180
-#: src/deprecated/v2/block/heading/edit.js:233
-#: src/deprecated/v2/block/image-box/edit.js:184
+#: src/deprecated/v2/block/heading/edit.js:183
+#: src/deprecated/v2/block/heading/edit.js:236
+#: src/deprecated/v2/block/image-box/edit.js:187
 #: src/deprecated/v2/block/separator/edit.js:141
 #: src/deprecated/v2/block/separator/edit.js:155
 #: src/deprecated/v2/block/separator/edit.js:167
-#: src/deprecated/v2/block/spacer/edit.js:56
-#: src/deprecated/v2/block/spacer/edit.js:71
-#: src/deprecated/v2/block/spacer/edit.js:85
-#: src/deprecated/v2/block/text/edit.js:224
-#: src/deprecated/v2/block/video-popup/edit.js:186
+#: src/deprecated/v2/block/spacer/edit.js:55
+#: src/deprecated/v2/block/spacer/edit.js:70
+#: src/deprecated/v2/block/spacer/edit.js:84
+#: src/deprecated/v2/block/text/edit.js:227
+#: src/deprecated/v2/block/video-popup/edit.js:187
 #: src/deprecated/v2/modules/block-separators/index.js:102
 #: src/deprecated/v2/modules/block-separators/index.js:200
-#: src/help/videos.js:647
 msgid "Height"
 msgstr ""
 
-#: src/block-components/image/edit.js:178
+#: src/block-components/image/edit.js:180
+msgid "Image height"
+msgstr ""
+
+#: src/block-components/image/edit.js:181
+msgid "Adjusts the image height"
+msgstr ""
+
+#: src/block-components/image/edit.js:188
 msgid "Open Image in Lightbox"
 msgstr ""
 
-#: src/block-components/image/edit.js:185
+#: src/block-components/image/edit.js:195
 msgid "Image Alt"
 msgstr ""
 
-#: src/block-components/image/edit.js:192
+#: src/block-components/image/edit.js:202
 #: src/block/map/edit.js:341
 msgid "Zoom"
 msgstr ""
 
-#: src/block-components/image/edit.js:265
-#: src/block-components/image/edit.js:266
-#: src/block-components/image/edit.js:274
-#: src/deprecated/v2/block/image-box/edit.js:352
-#: src/deprecated/v2/block/image-box/edit.js:368
-#: src/deprecated/v2/block/image-box/edit.js:403
-#: src/help/videos.js:732
+#: src/block-components/image/edit.js:220
+msgid "Image Shadow"
+msgstr ""
+
+#: src/block-components/image/edit.js:221
+msgid "Adjusts the intensity of the image shadow"
+msgstr ""
+
+#: src/block-components/image/edit.js:244
+#: src/block/posts/edit.js:570
+msgid "Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster."
+msgstr ""
+
+#: src/block-components/image/edit.js:260
+msgid "Adjusts the radius of image corners to make them more rounded"
+msgstr ""
+
+#: src/block-components/image/edit.js:286
+#: src/block-components/image/edit.js:287
+#: src/block-components/image/edit.js:295
+#: src/deprecated/v2/block/image-box/edit.js:355
+#: src/deprecated/v2/block/image-box/edit.js:371
+#: src/deprecated/v2/block/image-box/edit.js:406
 msgid "Overlay Color"
 msgstr ""
 
-#: src/block-components/image/edit.js:282
+#: src/block-components/image/edit.js:303
 msgid "Overlay Opacity"
 msgstr ""
 
-#: src/block-components/image/edit.js:292
+#: src/block-components/image/edit.js:313
 msgid "Overlay Blend Mode"
 msgstr ""
 
-#: src/block-components/image/edit.js:299
+#: src/block-components/image/edit.js:317
+msgid "Sets how the overlay color blends with the image"
+msgstr ""
+
+#: src/block-components/image/edit.js:323
 msgid "Gradient Overlay Settings"
 msgstr ""
 
-#: src/block-components/image/edit.js:367
+#: src/block-components/image/edit.js:400
 msgid "Focal point"
 msgstr ""
 
-#: src/block-components/image/edit.js:374
+#: src/block-components/image/edit.js:407
 msgid "Image Fit"
 msgstr ""
 
-#: src/block-components/image/edit.js:380
+#: src/block-components/image/edit.js:413
 msgid "Fill"
 msgstr ""
 
-#: src/block-components/image/edit.js:382
+#: src/block-components/image/edit.js:415
 msgid "Scale Down"
 msgstr ""
 
-#: src/block-components/image/edit.js:390
-msgid "Image Shape"
-msgstr ""
-
-#: src/block-components/image/edit.js:411
-#: src/components/image-shape-controls/index.js:32
-msgid "Flip Shape Horizontally"
-msgstr ""
-
-#: src/block-components/image/edit.js:415
-#: src/components/image-shape-controls/index.js:40
-msgid "Flip Shape Vertically"
-msgstr ""
-
 #: src/block-components/image/edit.js:419
-#: src/components/image-shape-controls/index.js:48
-msgid "Stretch Shape Mask"
+msgid "Sets the fit to default, contain, cover, fill, none, and scale down. Image fit specifies how an image resizes in a container."
 msgstr ""
 
 #: src/block-components/image/edit.js:427
-#: src/block-components/image/edit.js:435
+msgid "Image Shape"
+msgstr ""
+
+#: src/block-components/image/edit.js:453
+#: src/deprecated/v2/components/image-shape-controls/index.js:32
+msgid "Flip Shape Horizontally"
+msgstr ""
+
+#: src/block-components/image/edit.js:457
+#: src/deprecated/v2/components/image-shape-controls/index.js:40
+msgid "Flip Shape Vertically"
+msgstr ""
+
+#: src/block-components/image/edit.js:461
+#: src/deprecated/v2/components/image-shape-controls/index.js:48
+msgid "Stretch Shape Mask"
+msgstr ""
+
+#: src/block-components/image/edit.js:469
+#: src/block-components/image/edit.js:477
 msgid "Image Filter"
 msgstr ""
 
@@ -5116,23 +5290,23 @@ msgid "Maximum Progress"
 msgstr ""
 
 #: src/block-components/progress-bar/edit.js:87
-#: src/block-components/typography/edit.js:248
+#: src/block-components/typography/edit.js:272
 #: src/block/countdown/divider.js:89
 #: src/block/countdown/divider.js:105
 #: src/block/number-box/edit.js:88
-#: src/components/typography-control/index.js:63
-#: src/components/typography-control/index.js:76
-#: src/components/typography-control/index.js:88
-#: src/components/typography-control/index.js:242
-#: src/components/typography-control/index.js:255
-#: src/components/typography-control/index.js:267
-#: src/deprecated/v2/block/accordion/edit.js:322
-#: src/deprecated/v2/block/accordion/edit.js:350
-#: src/deprecated/v2/block/blockquote/edit.js:252
+#: src/components/typography-control/index.js:66
+#: src/components/typography-control/index.js:83
+#: src/components/typography-control/index.js:99
+#: src/components/typography-control/index.js:289
+#: src/components/typography-control/index.js:306
+#: src/components/typography-control/index.js:322
+#: src/deprecated/v2/block/accordion/edit.js:324
+#: src/deprecated/v2/block/accordion/edit.js:352
+#: src/deprecated/v2/block/blockquote/edit.js:254
 #: src/deprecated/v2/block/divider/edit.js:116
-#: src/deprecated/v2/block/image-box/edit.js:454
-#: src/deprecated/v2/block/image-box/edit.js:602
-#: src/deprecated/v2/block/video-popup/edit.js:250
+#: src/deprecated/v2/block/image-box/edit.js:457
+#: src/deprecated/v2/block/image-box/edit.js:605
+#: src/deprecated/v2/block/video-popup/edit.js:251
 msgid "Size"
 msgstr ""
 
@@ -5153,7 +5327,11 @@ msgstr ""
 msgid "Bar Color"
 msgstr ""
 
-#: src/block-components/progress-bar/edit.js:227
+#: src/block-components/progress-bar/edit.js:192
+msgid "Gradient Direction"
+msgstr ""
+
+#: src/block-components/progress-bar/edit.js:240
 #: src/block-components/separator/designs.js:62
 #: src/block-components/separator/designs.js:65
 #: src/block-components/separator/designs.js:68
@@ -5163,23 +5341,23 @@ msgstr ""
 msgid "Rounded"
 msgstr ""
 
-#: src/block-components/progress-bar/edit.js:232
+#: src/block-components/progress-bar/edit.js:245
 msgid "Animate"
 msgstr ""
 
-#: src/block-components/progress-bar/edit.js:237
+#: src/block-components/progress-bar/edit.js:250
 msgid "Accessibility Label"
 msgstr ""
 
-#: src/block-components/progress-bar/edit.js:262
+#: src/block-components/progress-bar/edit.js:275
 msgid "Progress Bar Text"
 msgstr ""
 
-#: src/block-components/progress-bar/edit.js:268
+#: src/block-components/progress-bar/edit.js:281
 msgid "Progress Prefix"
 msgstr ""
 
-#: src/block-components/progress-bar/edit.js:272
+#: src/block-components/progress-bar/edit.js:285
 msgid "Progress Suffix"
 msgstr ""
 
@@ -5236,18 +5414,36 @@ msgid "Curve"
 msgstr ""
 
 #: src/block-components/separator/edit.js:59
-#: src/components/button-controls/index.js:89
-#: src/components/icon-controls/index.js:47
+#: src/deprecated/v2/components/button-controls/index.js:89
+#: src/deprecated/v2/components/icon-controls/index.js:47
 #: src/deprecated/v2/modules/block-separators/index.js:87
 #: src/deprecated/v2/modules/block-separators/index.js:185
 msgid "Design"
 msgstr ""
 
-#: src/block-components/separator/edit.js:89
+#: src/block-components/separator/edit.js:75
+msgid "Separator Height"
+msgstr ""
+
+#: src/block-components/separator/edit.js:76
+#: src/block-components/separator/edit.js:88
+msgid "Adjusts the height of the separator to stretch or compress vertically"
+msgstr ""
+
+#: src/block-components/separator/edit.js:87
+#: src/deprecated/v2/block/separator/edit.js:112
+msgid "Separator Width"
+msgstr ""
+
+#: src/block-components/separator/edit.js:100
+msgid "Adjusts the intensity of the separator shadow and makes the separator more prominent"
+msgstr ""
+
+#: src/block-components/separator/edit.js:104
 msgid "Invert Design"
 msgstr ""
 
-#: src/block-components/separator/edit.js:98
+#: src/block-components/separator/edit.js:113
 #: src/block/separator/edit.js:96
 #: src/deprecated/v2/block/separator/edit.js:178
 #: src/deprecated/v2/modules/block-separators/index.js:127
@@ -5255,19 +5451,23 @@ msgstr ""
 msgid "Flip Vertically"
 msgstr ""
 
-#: src/block-components/separator/edit.js:103
+#: src/block-components/separator/edit.js:118
+#: src/block-components/separator/edit.js:122
 #: src/deprecated/v2/modules/block-separators/index.js:140
 #: src/deprecated/v2/modules/block-separators/index.js:238
-#: src/help/videos.js:492
 msgid "Bring to Front"
 msgstr ""
 
-#: src/block-components/separator/edit.js:130
+#: src/block-components/separator/edit.js:123
+msgid "Brings the separator layer in front of other block elements"
+msgstr ""
+
+#: src/block-components/separator/edit.js:150
 #: src/deprecated/v2/modules/block-separators/index.js:52
 msgid "Top Separator"
 msgstr ""
 
-#: src/block-components/separator/edit.js:141
+#: src/block-components/separator/edit.js:161
 #: src/deprecated/v2/modules/block-separators/index.js:150
 msgid "Bottom Separator"
 msgstr ""
@@ -5282,9 +5482,8 @@ msgstr ""
 
 #: src/block-components/typography/edit.js:152
 #: src/block-components/typography/edit.js:153
-#: src/block-components/typography/edit.js:395
-#: src/components/typography-control/index.js:284
-#: src/help/videos.js:221
+#: src/block-components/typography/edit.js:424
+#: src/components/typography-control/index.js:343
 msgid "Typography"
 msgstr ""
 
@@ -5295,77 +5494,149 @@ msgid "Font Family"
 msgstr ""
 
 #: src/block-components/typography/edit.js:185
-#: src/components/typography-control/index.js:102
+#: src/components/typography-control/index.js:58
+msgid "Sets the font set to be used for the element"
+msgstr ""
+
+#: src/block-components/typography/edit.js:189
+#: src/components/typography-control/index.js:117
 msgid "Weight"
 msgstr ""
 
-#: src/block-components/typography/edit.js:198
-#: src/components/typography-control/index.js:115
+#: src/block-components/typography/edit.js:202
+#: src/components/typography-control/index.js:130
 msgid "Bold"
 msgstr ""
 
-#: src/block-components/typography/edit.js:206
-#: src/components/typography-control/index.js:127
-msgid "Uppercase"
-msgstr ""
-
 #: src/block-components/typography/edit.js:207
-#: src/components/typography-control/index.js:128
-msgid "Lowercase"
+#: src/components/typography-control/index.js:136
+msgid "Font weight"
 msgstr ""
 
 #: src/block-components/typography/edit.js:208
-#: src/components/typography-control/index.js:129
+#: src/components/typography-control/index.js:137
+msgid "Sets the thinness or thickness of text characters"
+msgstr ""
+
+#: src/block-components/typography/edit.js:215
+#: src/components/typography-control/index.js:146
+msgid "Uppercase"
+msgstr ""
+
+#: src/block-components/typography/edit.js:216
+#: src/components/typography-control/index.js:147
+msgid "Lowercase"
+msgstr ""
+
+#: src/block-components/typography/edit.js:217
+#: src/components/typography-control/index.js:148
 msgid "Capitalize"
 msgstr ""
 
-#: src/block-components/typography/edit.js:214
+#: src/block-components/typography/edit.js:224
+#: src/components/typography-control/index.js:156
+msgid "Sets the usage of upper or lower case"
+msgstr ""
+
+#: src/block-components/typography/edit.js:228
 msgid "Font Style"
 msgstr ""
 
-#: src/block-components/typography/edit.js:218
+#: src/block-components/typography/edit.js:232
 msgid "Italic"
 msgstr ""
 
-#: src/block-components/typography/edit.js:219
+#: src/block-components/typography/edit.js:233
 msgid "Oblique"
 msgstr ""
 
-#: src/block-components/typography/edit.js:224
-#: src/components/typography-control/index.js:141
-#: src/components/typography-control/index.js:158
-#: src/components/typography-control/index.js:175
+#: src/block-components/typography/edit.js:238
+#: src/components/typography-control/index.js:164
+#: src/components/typography-control/index.js:185
+#: src/components/typography-control/index.js:206
 msgid "Line-Height"
 msgstr ""
 
-#: src/block-components/typography/edit.js:236
-#: src/components/typography-control/index.js:196
-#: src/components/typography-control/index.js:209
-#: src/components/typography-control/index.js:222
+#: src/block-components/typography/edit.js:250
+#: src/components/typography-control/index.js:178
+#: src/components/typography-control/index.js:199
+#: src/components/typography-control/index.js:220
+msgid "Line height"
+msgstr ""
+
+#: src/block-components/typography/edit.js:251
+#: src/components/typography-control/index.js:179
+#: src/components/typography-control/index.js:200
+#: src/components/typography-control/index.js:221
+msgid "Sets the vertical distance between lines of text"
+msgstr ""
+
+#: src/block-components/typography/edit.js:255
+#: src/components/typography-control/index.js:231
+#: src/components/typography-control/index.js:248
+#: src/components/typography-control/index.js:265
 msgid "Letter Spacing"
 msgstr ""
 
-#: src/block-components/typography/edit.js:271
-#: src/block-components/typography/edit.js:280
+#: src/block-components/typography/edit.js:265
+#: src/components/typography-control/index.js:241
+#: src/components/typography-control/index.js:258
+#: src/components/typography-control/index.js:275
+msgid "Letter spacing"
+msgstr ""
+
+#: src/block-components/typography/edit.js:266
+#: src/components/typography-control/index.js:242
+#: src/components/typography-control/index.js:259
+#: src/components/typography-control/index.js:276
+msgid "Sets the distance or space between letters"
+msgstr ""
+
+#: src/block-components/typography/edit.js:283
+#: src/components/typography-control/index.js:76
+#: src/components/typography-control/index.js:92
+#: src/components/typography-control/index.js:108
+#: src/components/typography-control/index.js:299
+#: src/components/typography-control/index.js:315
+#: src/components/typography-control/index.js:331
+msgid "Font size"
+msgstr ""
+
+#: src/block-components/typography/edit.js:284
+#: src/components/typography-control/index.js:77
+#: src/components/typography-control/index.js:93
+#: src/components/typography-control/index.js:109
+#: src/components/typography-control/index.js:300
+#: src/components/typography-control/index.js:316
+#: src/components/typography-control/index.js:332
+msgid "Sets the size of text characters"
+msgstr ""
+
+#: src/block-components/typography/edit.js:300
+#: src/block-components/typography/edit.js:309
 msgid "Text Color #%s"
 msgstr ""
 
 #: src/block/accordion/edit.js:131
-#: src/deprecated/v2/block/accordion/edit.js:147
+#: src/deprecated/v2/block/accordion/edit.js:149
 msgid "Open at the start"
 msgstr ""
 
 #: src/block/accordion/edit.js:135
-#: src/deprecated/v2/block/accordion/edit.js:141
-#: src/help/videos.js:592
+#: src/block/accordion/edit.js:139
+#: src/deprecated/v2/block/accordion/edit.js:143
 msgid "Close adjacent on open"
 msgstr ""
 
-#: src/block/accordion/edit.js:216
-msgid "Open Icon"
+#: src/block/accordion/edit.js:140
+msgid "Automatically closes adjacent accordion panels when clicked."
 msgstr ""
 
 #: src/block/accordion/edit.js:220
+msgid "Open Icon"
+msgstr ""
+
+#: src/block/accordion/edit.js:224
 msgid "The open icon will appear when the accordion is opened"
 msgstr ""
 
@@ -5379,7 +5650,7 @@ msgstr ""
 #: src/block/notification/example.js:20
 #: src/block/table-of-contents/edit.js:483
 #: src/deprecated/v2/block/accordion/deprecated.js:116
-#: src/deprecated/v2/block/accordion/edit.js:453
+#: src/deprecated/v2/block/accordion/edit.js:455
 #: src/deprecated/v2/block/accordion/schema.js:60
 #: src/deprecated/v2/block/call-to-action/deprecated.js:142
 #: src/deprecated/v2/block/call-to-action/edit.js:435
@@ -5387,20 +5658,20 @@ msgstr ""
 #: src/deprecated/v2/block/card/deprecated.js:33
 #: src/deprecated/v2/block/card/edit.js:697
 #: src/deprecated/v2/block/card/schema.js:86
-#: src/deprecated/v2/block/expand/edit.js:249
+#: src/deprecated/v2/block/expand/edit.js:252
 #: src/deprecated/v2/block/feature/deprecated.js:47
 #: src/deprecated/v2/block/feature/edit.js:589
 #: src/deprecated/v2/block/feature/schema.js:76
 #: src/deprecated/v2/block/header/deprecated.js:22
 #: src/deprecated/v2/block/header/edit.js:543
 #: src/deprecated/v2/block/header/schema.js:69
-#: src/deprecated/v2/block/heading/edit.js:350
+#: src/deprecated/v2/block/heading/edit.js:353
 #: src/deprecated/v2/block/notification/edit.js:636
 #: src/deprecated/v2/block/notification/schema.js:103
-#: src/deprecated/v2/modules/block-title/index.js:83
-#: src/deprecated/v2/modules/block-title/index.js:285
-#: src/deprecated/v2/modules/block-title/index.js:379
-#: src/deprecated/v2/modules/block-title/index.js:564
+#: src/deprecated/v2/modules/block-title/index.js:85
+#: src/deprecated/v2/modules/block-title/index.js:287
+#: src/deprecated/v2/modules/block-title/index.js:381
+#: src/deprecated/v2/modules/block-title/index.js:566
 msgid "Title for This Block"
 msgstr ""
 
@@ -5513,34 +5784,34 @@ msgstr ""
 #: src/block/notification/variations.js:83
 #: src/block/team-member/variations.js:86
 #: src/block/team-member/variations.js:90
-#: src/components/button-controls/index.js:99
-#: src/components/icon-controls/index.js:52
-#: src/deprecated/v2/block/accordion/edit.js:66
-#: src/deprecated/v2/block/blockquote/edit.js:66
+#: src/deprecated/v2/block/accordion/edit.js:68
+#: src/deprecated/v2/block/blockquote/edit.js:68
 #: src/deprecated/v2/block/call-to-action/edit.js:75
 #: src/deprecated/v2/block/card/edit.js:80
-#: src/deprecated/v2/block/column/edit.js:57
+#: src/deprecated/v2/block/column/edit.js:59
 #: src/deprecated/v2/block/columns/edit.js:107
-#: src/deprecated/v2/block/container/edit.js:67
-#: src/deprecated/v2/block/count-up/edit.js:69
+#: src/deprecated/v2/block/container/edit.js:69
 #: src/deprecated/v2/block/count-up/edit.js:72
+#: src/deprecated/v2/block/count-up/edit.js:75
 #: src/deprecated/v2/block/feature-grid/edit.js:79
 #: src/deprecated/v2/block/feature/edit.js:86
 #: src/deprecated/v2/block/header/edit.js:77
-#: src/deprecated/v2/block/image-box/edit.js:75
+#: src/deprecated/v2/block/image-box/edit.js:78
 #: src/deprecated/v2/block/notification/edit.js:85
-#: src/deprecated/v2/block/number-box/edit.js:71
+#: src/deprecated/v2/block/number-box/edit.js:73
 #: src/deprecated/v2/block/pricing-box/edit.js:82
 #: src/deprecated/v2/block/team-member/edit.js:82
 #: src/deprecated/v2/block/testimonial/edit.js:80
-#: src/deprecated/v2/block/text/edit.js:60
+#: src/deprecated/v2/block/text/edit.js:63
+#: src/deprecated/v2/components/button-controls/index.js:99
+#: src/deprecated/v2/components/icon-controls/index.js:52
 msgid "Plain"
 msgstr ""
 
 #: src/block/accordion/variations.js:126
 #: src/block/accordion/variations.js:131
 #: src/block/pricing-box/variations.js:108
-#: src/deprecated/v2/block/accordion/edit.js:72
+#: src/deprecated/v2/block/accordion/edit.js:74
 #: src/deprecated/v2/block/pricing-box/edit.js:88
 msgid "Colored"
 msgstr ""
@@ -5587,7 +5858,7 @@ msgstr ""
 #: src/block/blockquote/quotes.js:53
 #: src/components/image-shape-control/index.js:41
 #: src/deprecated/v2/block/blockquote/quotes.js:68
-#: src/deprecated/v2/block/number-box/edit.js:348
+#: src/deprecated/v2/block/number-box/edit.js:350
 msgid "Square"
 msgstr ""
 
@@ -5613,21 +5884,21 @@ msgstr ""
 
 #: src/block/blockquote/variations.js:82
 #: src/block/blockquote/variations.js:87
-#: src/block/posts/edit.js:462
+#: src/block/posts/edit.js:466
 #: src/deprecated/v2/block/blog-posts/edit.js:609
 msgid "Highlighted"
 msgstr ""
 
 #: src/block/blockquote/variations.js:94
 #: src/block/blockquote/variations.js:99
-#: src/deprecated/v2/block/blockquote/edit.js:72
+#: src/deprecated/v2/block/blockquote/edit.js:74
 #: src/deprecated/v2/block/header/edit.js:92
 msgid "Huge"
 msgstr ""
 
 #: src/block/blockquote/variations.js:106
 #: src/block/blockquote/variations.js:111
-#: src/deprecated/v2/block/blockquote/edit.js:69
+#: src/deprecated/v2/block/blockquote/edit.js:71
 msgid "Centered Quote"
 msgstr ""
 
@@ -5649,9 +5920,9 @@ msgstr ""
 #: src/block/hero/example.js:27
 #: src/block/notification/example.js:33
 #: src/block/pricing-box/example.js:47
-#: src/deprecated/v2/block/button/edit.js:149
-#: src/deprecated/v2/block/button/edit.js:161
-#: src/deprecated/v2/block/button/edit.js:177
+#: src/deprecated/v2/block/button/edit.js:150
+#: src/deprecated/v2/block/button/edit.js:162
+#: src/deprecated/v2/block/button/edit.js:178
 #: src/deprecated/v2/block/call-to-action/edit.js:269
 #: src/deprecated/v2/block/call-to-action/edit.js:359
 #: src/deprecated/v2/block/card/edit.js:350
@@ -5667,7 +5938,6 @@ msgstr ""
 #: src/deprecated/v2/block/notification/edit.js:522
 #: src/deprecated/v2/block/pricing-box/edit.js:327
 #: src/deprecated/v2/block/pricing-box/edit.js:581
-#: src/help/videos.js:286
 msgid "Button"
 msgstr ""
 
@@ -5704,7 +5974,7 @@ msgstr ""
 
 #: src/block/button/block-styles.js:52
 #: src/block/icon-button/block-styles.js:55
-#: src/components/button-controls/index.js:96
+#: src/deprecated/v2/components/button-controls/index.js:96
 msgid "Ghost"
 msgstr ""
 
@@ -5764,7 +6034,7 @@ msgstr ""
 #: src/block/card/variations.js:166
 #: src/block/card/variations.js:170
 #: src/deprecated/v2/block/card/edit.js:89
-#: src/deprecated/v2/block/number-box/edit.js:83
+#: src/deprecated/v2/block/number-box/edit.js:85
 msgid "Faded"
 msgstr ""
 
@@ -5784,7 +6054,7 @@ msgstr ""
 #: src/block/carousel/edit.js:253
 #: src/block/image-box/variations.js:166
 #: src/block/image-box/variations.js:170
-#: src/deprecated/v2/block/image-box/edit.js:84
+#: src/deprecated/v2/block/image-box/edit.js:87
 msgid "Fade"
 msgstr ""
 
@@ -5957,7 +6227,11 @@ msgstr ""
 msgid "Column Spacing"
 msgstr ""
 
-#: src/block/column/edit.js:124
+#: src/block/column/edit.js:105
+msgid "Sets the paddings between the column content and the border."
+msgstr ""
+
+#: src/block/column/edit.js:128
 msgid "Align Last Block to Bottom"
 msgstr ""
 
@@ -6040,14 +6314,14 @@ msgstr ""
 #: src/block/countdown/divider.js:63
 #: src/block/image-box/variations.js:178
 #: src/block/image-box/variations.js:182
-#: src/deprecated/v2/block/image-box/edit.js:87
-#: src/deprecated/v2/block/image-box/edit.js:288
-#: src/deprecated/v2/block/image-box/edit.js:446
+#: src/deprecated/v2/block/image-box/edit.js:90
+#: src/deprecated/v2/block/image-box/edit.js:291
+#: src/deprecated/v2/block/image-box/edit.js:449
 msgid "Line"
 msgstr ""
 
 #: src/block/countdown/divider.js:75
-#: src/block/posts/edit.js:525
+#: src/block/posts/edit.js:529
 #: src/block/separator/edit.js:101
 #: src/deprecated/v2/block/blog-posts/edit.js:775
 #: src/deprecated/v2/block/separator/edit.js:103
@@ -6198,15 +6472,15 @@ msgstr ""
 
 #: src/block/expand/edit.js:42
 #: src/block/expand/example.js:16
-#: src/deprecated/v2/block/expand/edit.js:260
-#: src/deprecated/v2/block/expand/edit.js:284
+#: src/deprecated/v2/block/expand/edit.js:263
+#: src/deprecated/v2/block/expand/edit.js:287
 msgid "Some short text that can be expanded to show more details."
 msgstr ""
 
 #: src/block/expand/edit.js:47
 #: src/block/expand/example.js:20
 #: src/deprecated/v2/block/expand/deprecated.js:30
-#: src/deprecated/v2/block/expand/edit.js:270
+#: src/deprecated/v2/block/expand/edit.js:273
 #: src/deprecated/v2/block/expand/schema.js:59
 msgid "Show more"
 msgstr ""
@@ -6219,18 +6493,18 @@ msgstr ""
 #: src/block/expand/edit.js:58
 #: src/block/expand/example.js:28
 #: src/deprecated/v2/block/expand/deprecated.js:35
-#: src/deprecated/v2/block/expand/edit.js:296
+#: src/deprecated/v2/block/expand/edit.js:299
 #: src/deprecated/v2/block/expand/schema.js:64
 msgid "Show less"
 msgstr ""
 
 #: src/block/expand/edit.js:116
-#: src/deprecated/v2/block/expand/edit.js:254
+#: src/deprecated/v2/block/expand/edit.js:257
 msgid "Less text"
 msgstr ""
 
 #: src/block/expand/edit.js:117
-#: src/deprecated/v2/block/expand/edit.js:276
+#: src/deprecated/v2/block/expand/edit.js:279
 msgid "More text"
 msgstr ""
 
@@ -6316,15 +6590,15 @@ msgid "Overlap Background 5"
 msgstr ""
 
 #: src/block/heading/edit.js:152
-#: src/deprecated/v2/block/heading/edit.js:148
-#: src/deprecated/v2/block/heading/edit.js:261
+#: src/deprecated/v2/block/heading/edit.js:151
+#: src/deprecated/v2/block/heading/edit.js:264
 msgid "Top Line"
 msgstr ""
 
 #: src/block/heading/edit.js:159
 #: src/block/heading/edit.js:205
-#: src/deprecated/v2/block/heading/edit.js:164
-#: src/deprecated/v2/block/heading/edit.js:217
+#: src/deprecated/v2/block/heading/edit.js:167
+#: src/deprecated/v2/block/heading/edit.js:220
 msgid "Line Color"
 msgstr ""
 
@@ -6334,8 +6608,8 @@ msgid "Margin"
 msgstr ""
 
 #: src/block/heading/edit.js:197
-#: src/deprecated/v2/block/heading/edit.js:201
-#: src/deprecated/v2/block/heading/edit.js:307
+#: src/deprecated/v2/block/heading/edit.js:204
+#: src/deprecated/v2/block/heading/edit.js:310
 msgid "Bottom Line"
 msgstr ""
 
@@ -6527,13 +6801,13 @@ msgstr ""
 
 #: src/block/image-box/variations.js:142
 #: src/block/image-box/variations.js:146
-#: src/deprecated/v2/block/image-box/edit.js:78
+#: src/deprecated/v2/block/image-box/edit.js:81
 msgid "Box"
 msgstr ""
 
 #: src/block/image-box/variations.js:154
 #: src/block/image-box/variations.js:158
-#: src/deprecated/v2/block/image-box/edit.js:81
+#: src/deprecated/v2/block/image-box/edit.js:84
 msgid "Captioned"
 msgstr ""
 
@@ -6674,13 +6948,12 @@ msgstr ""
 
 #: src/block/notification/edit.js:128
 #: src/deprecated/v2/block/notification/edit.js:358
-#: src/help/videos.js:652
 msgid "Dismissible"
 msgstr ""
 
 #: src/block/notification/variations.js:119
 #: src/block/notification/variations.js:123
-#: src/deprecated/v2/block/count-up/edit.js:75
+#: src/deprecated/v2/block/count-up/edit.js:78
 msgid "Side"
 msgstr ""
 
@@ -6692,8 +6965,8 @@ msgstr ""
 
 #: src/block/notification/variations.js:143
 #: src/block/notification/variations.js:147
-#: src/components/icon-controls/index.js:58
 #: src/deprecated/v2/block/notification/edit.js:91
+#: src/deprecated/v2/components/icon-controls/index.js:58
 msgid "Outlined"
 msgstr ""
 
@@ -6711,72 +6984,75 @@ msgstr ""
 msgid "Content Arrangement"
 msgstr ""
 
-#: src/block/posts/edit.js:203
+#: src/block/posts/edit.js:196
+msgid "Sets the order of the items displayed (category, title, meta, excerpt, read more button, image) for each post"
+msgstr ""
+
+#: src/block/posts/edit.js:207
 msgid "Query"
 msgstr ""
 
-#: src/block/posts/edit.js:217
+#: src/block/posts/edit.js:221
 #: src/deprecated/v2/block/blog-posts/edit.js:275
 msgid "Order by"
 msgstr ""
 
-#: src/block/posts/edit.js:219
+#: src/block/posts/edit.js:223
 #: src/deprecated/v2/block/blog-posts/edit.js:277
 msgid "Newest to Oldest"
 msgstr ""
 
-#: src/block/posts/edit.js:220
+#: src/block/posts/edit.js:224
 #: src/deprecated/v2/block/blog-posts/edit.js:278
 msgid "Oldest to Newest"
 msgstr ""
 
-#: src/block/posts/edit.js:221
+#: src/block/posts/edit.js:225
 #: src/deprecated/v2/block/blog-posts/edit.js:279
 msgid "A → Z"
 msgstr ""
 
-#: src/block/posts/edit.js:222
+#: src/block/posts/edit.js:226
 #: src/deprecated/v2/block/blog-posts/edit.js:280
 msgid "Z → A"
 msgstr ""
 
-#: src/block/posts/edit.js:223
+#: src/block/posts/edit.js:227
 #: src/deprecated/v2/block/blog-posts/edit.js:281
 msgid "Last Modified to Oldest"
 msgstr ""
 
-#: src/block/posts/edit.js:224
+#: src/block/posts/edit.js:228
 #: src/deprecated/v2/block/blog-posts/edit.js:282
 msgid "Oldest Modified to Last"
 msgstr ""
 
-#: src/block/posts/edit.js:225
+#: src/block/posts/edit.js:229
 #: src/deprecated/v2/block/blog-posts/edit.js:283
 msgid "Menu Order"
 msgstr ""
 
-#: src/block/posts/edit.js:226
+#: src/block/posts/edit.js:230
 #: src/deprecated/v2/block/blog-posts/edit.js:284
 msgid "Random"
 msgstr ""
 
-#: src/block/posts/edit.js:253
-#: src/components/panel-spacing-body/index.js:18
+#: src/block/posts/edit.js:257
 #: src/components/spacing-control/index.js:118
 #: src/deprecated/v2/block/separator/edit.js:194
-#: src/help/videos.js:351
+#: src/deprecated/v2/components/panel-spacing-body/index.js:18
 msgid "Spacing"
 msgstr ""
 
-#: src/block/posts/edit.js:257
-#: src/block/posts/edit.js:313
+#: src/block/posts/edit.js:261
+#: src/block/posts/edit.js:317
 #: src/block/posts/util.js:40
 #: src/deprecated/v2/block/blog-posts/edit.js:535
 msgid "Featured Image"
 msgstr ""
 
-#: src/block/posts/edit.js:273
-#: src/block/posts/edit.js:334
+#: src/block/posts/edit.js:277
+#: src/block/posts/edit.js:338
 #: src/block/posts/util.js:52
 #: src/deprecated/v2/block/blog-posts/edit.js:193
 #: src/deprecated/v2/block/blog-posts/edit.js:427
@@ -6784,8 +7060,8 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: src/block/posts/edit.js:281
-#: src/block/posts/edit.js:344
+#: src/block/posts/edit.js:285
+#: src/block/posts/edit.js:348
 #: src/block/posts/util.js:56
 #: src/deprecated/v2/block/blog-posts/edit.js:196
 #: src/deprecated/v2/block/blog-posts/edit.js:459
@@ -6793,8 +7069,8 @@ msgstr ""
 msgid "Excerpt"
 msgstr ""
 
-#: src/block/posts/edit.js:289
-#: src/block/posts/edit.js:354
+#: src/block/posts/edit.js:293
+#: src/block/posts/edit.js:358
 #: src/block/posts/util.js:48
 #: src/deprecated/v2/block/blog-posts/edit.js:195
 #: src/deprecated/v2/block/blog-posts/edit.js:475
@@ -6802,73 +7078,77 @@ msgstr ""
 msgid "Meta"
 msgstr ""
 
-#: src/block/posts/edit.js:297
-#: src/block/posts/edit.js:364
+#: src/block/posts/edit.js:301
+#: src/block/posts/edit.js:368
 #: src/deprecated/v2/block/blog-posts/edit.js:800
 msgid "Read More Link"
 msgstr ""
 
-#: src/block/posts/edit.js:389
+#: src/block/posts/edit.js:393
 #: src/deprecated/v2/block/blog-posts/edit.js:1022
 msgid "Posts"
 msgstr ""
 
-#: src/block/posts/edit.js:394
+#: src/block/posts/edit.js:398
 #: src/deprecated/v2/block/blog-posts/edit.js:1027
 msgid "No posts found."
 msgstr ""
 
-#: src/block/posts/edit.js:440
-#: src/block/posts/edit.js:563
+#: src/block/posts/edit.js:444
+#: src/block/posts/edit.js:574
 msgid "Apply hover effect when container is hovered"
 msgstr ""
 
-#: src/block/posts/edit.js:467
+#: src/block/posts/edit.js:471
 #: src/format-types/highlight/index.js:243
 msgid "Highlight Color"
 msgstr ""
 
-#: src/block/posts/edit.js:513
+#: src/block/posts/edit.js:517
 #: src/deprecated/v2/block/blog-posts/edit.js:746
 msgid "Show Author"
 msgstr ""
 
-#: src/block/posts/edit.js:517
+#: src/block/posts/edit.js:521
 #: src/deprecated/v2/block/blog-posts/edit.js:752
 msgid "Show Date"
 msgstr ""
 
-#: src/block/posts/edit.js:521
+#: src/block/posts/edit.js:525
 #: src/deprecated/v2/block/blog-posts/edit.js:758
 msgid "Show Comments"
 msgstr ""
 
-#: src/block/posts/edit.js:527
+#: src/block/posts/edit.js:531
 #: src/deprecated/v2/block/blog-posts/edit.js:777
 msgid "Default (Dot)"
 msgstr ""
 
-#: src/block/posts/edit.js:528
+#: src/block/posts/edit.js:532
 #: src/deprecated/v2/block/blog-posts/edit.js:778
 msgid "Space"
 msgstr ""
 
-#: src/block/posts/edit.js:529
+#: src/block/posts/edit.js:533
 #: src/deprecated/v2/block/blog-posts/edit.js:779
 msgid "Comma"
 msgstr ""
 
-#: src/block/posts/edit.js:530
+#: src/block/posts/edit.js:534
 #: src/deprecated/v2/block/blog-posts/edit.js:780
 msgid "Dash"
 msgstr ""
 
-#: src/block/posts/edit.js:531
+#: src/block/posts/edit.js:535
 #: src/deprecated/v2/block/blog-posts/edit.js:781
 msgid "Pipe"
 msgstr ""
 
-#: src/block/posts/edit.js:552
+#: src/block/posts/edit.js:540
+msgid "Sets the separators between meta items (dot, space, comma, dash, pipe)"
+msgstr ""
+
+#: src/block/posts/edit.js:560
 msgid "Add post links to images"
 msgstr ""
 
@@ -6969,9 +7249,9 @@ msgstr ""
 
 #: src/block/progress-bar/edit.js:92
 #: src/block/progress-circle/edit.js:97
-#: src/deprecated/v2/block/number-box/edit.js:314
-#: src/deprecated/v2/block/number-box/edit.js:320
-#: src/deprecated/v2/block/number-box/edit.js:327
+#: src/deprecated/v2/block/number-box/edit.js:316
+#: src/deprecated/v2/block/number-box/edit.js:322
+#: src/deprecated/v2/block/number-box/edit.js:329
 msgid "Label"
 msgstr ""
 
@@ -7023,31 +7303,37 @@ msgstr ""
 
 #: src/block/table-of-contents/example.js:13
 #: src/block/table-of-contents/index.js:35
+msgctxt "Table of Contents example text"
 msgid "Introduction"
 msgstr ""
 
 #: src/block/table-of-contents/example.js:13
 #: src/block/table-of-contents/index.js:40
+msgctxt "Table of Contents example text"
 msgid "Chapter 1: Abstract"
 msgstr ""
 
 #: src/block/table-of-contents/example.js:13
 #: src/block/table-of-contents/index.js:45
+msgctxt "Table of Contents example text"
 msgid "Chapter 2: History"
 msgstr ""
 
 #: src/block/table-of-contents/example.js:13
 #: src/block/table-of-contents/index.js:50
+msgctxt "Table of Contents example text"
 msgid "Chapter 3: Main Content"
 msgstr ""
 
 #: src/block/table-of-contents/example.js:13
 #: src/block/table-of-contents/index.js:55
+msgctxt "Table of Contents example text"
 msgid "Chapter 4: Additional Thoughts"
 msgstr ""
 
 #: src/block/table-of-contents/example.js:13
 #: src/block/table-of-contents/index.js:60
+msgctxt "Table of Contents example text"
 msgid "Conclusion"
 msgstr ""
 
@@ -7070,8 +7356,8 @@ msgstr ""
 #: src/components/heading-buttons-control/index.js:44
 #: src/components/heading-buttons-control/index.js:49
 #: src/components/heading-buttons-control/index.js:54
-#: src/deprecated/v2/block/number-box/edit.js:77
-#: src/deprecated/v2/block/number-box/edit.js:80
+#: src/deprecated/v2/block/number-box/edit.js:79
+#: src/deprecated/v2/block/number-box/edit.js:82
 msgid "Heading"
 msgstr ""
 
@@ -7091,17 +7377,17 @@ msgid "Text for this block. Use this space for describing your block. Any text w
 msgstr ""
 
 #: src/block/video-popup/edit.js:98
-#: src/deprecated/v2/block/video-popup/edit.js:79
+#: src/deprecated/v2/block/video-popup/edit.js:80
 msgid "Popup Option #1: Upload Video"
 msgstr ""
 
 #: src/block/video-popup/edit.js:115
-#: src/deprecated/v2/block/video-popup/edit.js:96
+#: src/deprecated/v2/block/video-popup/edit.js:97
 msgid "Popup Option #2: Video URL"
 msgstr ""
 
 #: src/block/video-popup/edit.js:116
-#: src/deprecated/v2/block/video-popup/edit.js:97
+#: src/deprecated/v2/block/video-popup/edit.js:98
 msgid "Paste a Youtube / Vimeo URL"
 msgstr ""
 
@@ -7109,7 +7395,7 @@ msgstr ""
 msgid "Play Video"
 msgstr ""
 
-#: src/components/advanced-autosuggest-control/index.js:325
+#: src/components/advanced-autosuggest-control/index.js:326
 #: src/components/icon-search-popover/index.js:250
 msgid "No matches found"
 msgstr ""
@@ -7181,22 +7467,21 @@ msgstr ""
 msgid "Bottom"
 msgstr ""
 
-#: src/components/background-controls/index.js:489
-msgid "Background Color Type"
-msgstr ""
-
-#: src/components/base-control-multi-label/index.js:31
-#: src/components/base-control2/index.js:99
+#: src/components/base-control-multi-label/index.js:35
+#: src/components/base-control2/index.js:100
 msgid "Unit"
 msgstr ""
 
+#: src/components/base-control2/hover-state-toggle.js:28
+msgid "Normal State"
+msgstr ""
+
 #: src/components/base-control2/hover-state-toggle.js:33
-msgid "Hover"
+msgid "Hovered State"
 msgstr ""
 
 #: src/components/base-control2/hover-state-toggle.js:38
-#: src/components/base-control2/hover-state-toggle.js:86
-msgid "Parent Hovered"
+msgid "Parent Hovered State"
 msgstr ""
 
 #: src/components/base-control2/hover-state-toggle.js:43
@@ -7204,177 +7489,84 @@ msgid "Collapsed"
 msgstr ""
 
 #: src/components/base-control2/hover-state-toggle.js:86
+msgid "Parent Hovered"
+msgstr ""
+
+#: src/components/base-control2/hover-state-toggle.js:86
 msgid "Add a Container Background to a parent block to enable this state."
 msgstr ""
 
-#: src/components/base-control2/hover-state-toggle.js:110
-msgid "Hover State"
-msgstr ""
-
-#: src/components/blend-mode-control/index.js:20
+#: src/components/blend-mode-control/index.js:19
 msgid "Multiply"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:21
+#: src/components/blend-mode-control/index.js:20
 msgid "Screen"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:22
+#: src/components/blend-mode-control/index.js:21
 #: src/deprecated/v2/block/team-member/edit.js:88
 msgid "Overlay"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:24
+#: src/components/blend-mode-control/index.js:23
 msgid "Lighten"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:25
+#: src/components/blend-mode-control/index.js:24
 msgid "Color Dodge"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:26
+#: src/components/blend-mode-control/index.js:25
 msgid "Color Burn"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:27
+#: src/components/blend-mode-control/index.js:26
 msgid "Hard Light"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:28
+#: src/components/blend-mode-control/index.js:27
 msgid "Soft Light"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:29
+#: src/components/blend-mode-control/index.js:28
 msgid "Difference"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:30
+#: src/components/blend-mode-control/index.js:29
 msgid "Exclusion"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:31
+#: src/components/blend-mode-control/index.js:30
 msgid "Hue"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:32
+#: src/components/blend-mode-control/index.js:31
 msgid "Saturation"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:34
+#: src/components/blend-mode-control/index.js:33
 msgid "Luminosity"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:35
+#: src/components/blend-mode-control/index.js:34
 msgid "Initial"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:36
+#: src/components/blend-mode-control/index.js:35
 msgid "Inherit"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:37
+#: src/components/blend-mode-control/index.js:36
 msgid "Unset"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:52
+#: src/components/blend-mode-control/index.js:51
 msgid "Mix Blend Mode"
 msgstr ""
 
-#: src/components/blend-mode-control/index.js:53
+#: src/components/blend-mode-control/index.js:52
 msgid "Not supported in all browsers."
-msgstr ""
-
-#: src/components/button-controls-helper/index.js:130
-#: src/components/button-controls/index.js:520
-msgid "Hover Opacity"
-msgstr ""
-
-#: src/components/button-controls-helper/index.js:131
-#: src/components/button-controls/index.js:522
-msgid "Hover Colors"
-msgstr ""
-
-#: src/components/button-controls/index.js:57
-#: src/components/social-controls/index.js:44
-#: src/deprecated/v2/modules/container-link/index.js:147
-msgid "Open link in new tab"
-msgstr ""
-
-#: src/components/button-controls/index.js:64
-#: src/components/url-input-popover/index.js:30
-#: src/deprecated/v2/modules/container-link/index.js:154
-msgid "Nofollow link"
-msgstr ""
-
-#: src/components/button-controls/index.js:71
-#: src/components/url-input-popover/index.js:34
-#: src/deprecated/v2/modules/container-link/index.js:161
-msgid "Sponsored"
-msgstr ""
-
-#: src/components/button-controls/index.js:78
-#: src/components/url-input-popover/index.js:38
-#: src/deprecated/v2/modules/container-link/index.js:168
-msgid "UGC"
-msgstr ""
-
-#: src/components/button-controls/index.js:93
-#: src/deprecated/v2/block/accordion/edit.js:63
-#: src/deprecated/v2/block/blockquote/edit.js:63
-#: src/deprecated/v2/block/blog-posts/edit.js:96
-#: src/deprecated/v2/block/button/edit.js:50
-#: src/deprecated/v2/block/call-to-action/edit.js:72
-#: src/deprecated/v2/block/card/edit.js:77
-#: src/deprecated/v2/block/column/edit.js:54
-#: src/deprecated/v2/block/container/edit.js:64
-#: src/deprecated/v2/block/divider/edit.js:44
-#: src/deprecated/v2/block/feature-grid/edit.js:76
-#: src/deprecated/v2/block/feature/edit.js:83
-#: src/deprecated/v2/block/header/edit.js:74
-#: src/deprecated/v2/block/image-box/edit.js:72
-#: src/deprecated/v2/block/notification/edit.js:82
-#: src/deprecated/v2/block/number-box/edit.js:68
-#: src/deprecated/v2/block/pricing-box/edit.js:79
-#: src/deprecated/v2/block/team-member/edit.js:79
-#: src/deprecated/v2/block/testimonial/edit.js:77
-#: src/deprecated/v2/block/testimonial/edit.js:83
-msgid "Basic"
-msgstr ""
-
-#: src/components/button-controls/index.js:117
-msgid "Use social colors"
-msgstr ""
-
-#: src/components/button-controls/index.js:196
-msgid "Change to Normal Button on Hover"
-msgstr ""
-
-#: src/components/button-controls/index.js:316
-msgid "Button Size"
-msgstr ""
-
-#: src/components/button-controls/index.js:320
-msgid "Tiny"
-msgstr ""
-
-#: src/components/button-controls/index.js:323
-msgid "Small"
-msgstr ""
-
-#: src/components/button-controls/index.js:357
-msgid "Vertical Padding"
-msgstr ""
-
-#: src/components/button-controls/index.js:369
-msgid "Horizontal Padding"
-msgstr ""
-
-#: src/components/button-controls/index.js:431
-msgid "Adv. Icon Settings"
-msgstr ""
-
-#: src/components/button-controls/index.js:463
-msgid "Icon Spacing"
 msgstr ""
 
 #: src/components/button-icon-popover-control/index.js:78
@@ -7395,7 +7587,11 @@ msgstr ""
 msgid "Add Column"
 msgstr ""
 
-#: src/components/columns-width-control/index.js:109
+#: src/components/columns-width-control/index.js:83
+msgid "Adjust the individual widths of each column"
+msgstr ""
+
+#: src/components/columns-width-control/index.js:113
 #: src/components/columns-width-multi-control/index.js:75
 #: src/deprecated/v2/components/columns-width-control/index.js:296
 msgid "Column Widths"
@@ -7432,7 +7628,7 @@ msgstr ""
 #: src/components/design-panel-body/index.js:22
 #: src/components/inspector-tabs/index.js:89
 #: src/components/panel-tabs/index.js:23
-#: src/deprecated/v2/block/column/edit.js:78
+#: src/deprecated/v2/block/column/edit.js:80
 #: src/deprecated/v2/block/columns/edit.js:153
 #: src/deprecated/v2/higher-order/with-tabbed-inspector/index.js:32
 msgid "Layout"
@@ -7501,33 +7697,8 @@ msgstr ""
 msgid "Paragraph"
 msgstr ""
 
-#: src/components/icon-controls/index.js:55
-msgid "Shaped"
-msgstr ""
-
-#: src/components/icon-controls/index.js:122
-#: src/components/icon-controls/index.js:151
-msgid "Icon Shape / Outline Color"
-msgstr ""
-
-#: src/components/icon-controls/index.js:162
-msgid "Icon Shape Border Radius"
-msgstr ""
-
-#: src/components/icon-controls/index.js:162
-msgid "Outline Border Radius"
-msgstr ""
-
-#: src/components/icon-controls/index.js:175
-msgid "Icon Shape Padding"
-msgstr ""
-
-#: src/components/icon-controls/index.js:175
-msgid "Outline Padding"
-msgstr ""
-
-#: src/components/icon-controls/index.js:201
-msgid "Outline Width"
+#: src/components/help-tooltip/index.js:51
+msgid "Stop showing tooltips"
 msgstr ""
 
 #: src/components/icon-search-popover/index.js:191
@@ -7563,31 +7734,17 @@ msgstr ""
 msgid "Alt Text (Alternative Text)"
 msgstr ""
 
-#: src/components/image-background-controls/index.js:66
-msgid "Background Image Position"
-msgstr ""
-
-#: src/components/image-background-controls/index.js:87
-msgid "Background Image Repeat"
-msgstr ""
-
-#: src/components/image-background-controls/index.js:103
-msgid "Background Image Size"
-msgstr ""
-
 #: src/components/image-control/index.js:81
-#: src/components/image-control2/index.js:131
+#: src/components/image-control2/index.js:126
 msgid "preview"
 msgstr ""
 
-#: src/components/image-controls/index.js:177
-#: src/components/image-controls/index.js:187
-#: src/components/image-controls/index.js:197
-msgid "Force square image"
+#: src/components/image-control2/index.js:159
+msgid "Upload"
 msgstr ""
 
-#: src/components/image-controls/index.js:236
-msgid "Blend Mode"
+#: src/components/image-control2/index.js:159
+msgid "Replace"
 msgstr ""
 
 #: src/components/image-filter-control/index.js:31
@@ -7619,7 +7776,7 @@ msgid "Sepia"
 msgstr ""
 
 #: src/components/image-shape-control/index.js:44
-#: src/deprecated/v2/block/number-box/edit.js:347
+#: src/deprecated/v2/block/number-box/edit.js:349
 msgid "Circle"
 msgstr ""
 
@@ -7933,12 +8090,12 @@ msgid "Desktop"
 msgstr ""
 
 #: src/components/responsive-toggle/index.js:37
-#: src/deprecated/v2/block/button/edit.js:141
+#: src/deprecated/v2/block/button/edit.js:142
 msgid "Tablet"
 msgstr ""
 
 #: src/components/responsive-toggle/index.js:42
-#: src/deprecated/v2/block/button/edit.js:142
+#: src/deprecated/v2/block/button/edit.js:143
 msgid "Mobile"
 msgstr ""
 
@@ -7962,9 +8119,12 @@ msgstr ""
 msgid "Shadow Settings"
 msgstr ""
 
-#: src/components/social-controls/index.js:33
-msgctxt "name"
-msgid "%s Link"
+#: src/components/shadow-control/index.js:321
+msgid "Shadow/Outline"
+msgstr ""
+
+#: src/components/shadow-control/index.js:322
+msgid "Adjusts the intensity of the shadow/outline of the block and the appearance of the block border"
 msgstr ""
 
 #: src/components/sort-control/index.js:116
@@ -7993,6 +8153,24 @@ msgstr ""
 
 #: src/components/url-input-popover/index.js:26
 msgid "Opens in new tab"
+msgstr ""
+
+#: src/components/url-input-popover/index.js:30
+#: src/deprecated/v2/components/button-controls/index.js:64
+#: src/deprecated/v2/modules/container-link/index.js:154
+msgid "Nofollow link"
+msgstr ""
+
+#: src/components/url-input-popover/index.js:34
+#: src/deprecated/v2/components/button-controls/index.js:71
+#: src/deprecated/v2/modules/container-link/index.js:161
+msgid "Sponsored"
+msgstr ""
+
+#: src/components/url-input-popover/index.js:38
+#: src/deprecated/v2/components/button-controls/index.js:78
+#: src/deprecated/v2/modules/container-link/index.js:168
+msgid "UGC"
 msgstr ""
 
 #: src/components/url-input-popover/index.js:111
@@ -8033,60 +8211,82 @@ msgstr ""
 msgid "Pick a post"
 msgstr ""
 
-#: src/deprecated/v2/block/accordion/edit.js:69
+#: src/deprecated/v2/block/accordion/edit.js:65
+#: src/deprecated/v2/block/blockquote/edit.js:65
+#: src/deprecated/v2/block/blog-posts/edit.js:96
+#: src/deprecated/v2/block/button/edit.js:51
+#: src/deprecated/v2/block/call-to-action/edit.js:72
+#: src/deprecated/v2/block/card/edit.js:77
+#: src/deprecated/v2/block/column/edit.js:56
+#: src/deprecated/v2/block/container/edit.js:66
+#: src/deprecated/v2/block/divider/edit.js:44
+#: src/deprecated/v2/block/feature-grid/edit.js:76
+#: src/deprecated/v2/block/feature/edit.js:83
+#: src/deprecated/v2/block/header/edit.js:74
+#: src/deprecated/v2/block/image-box/edit.js:75
+#: src/deprecated/v2/block/notification/edit.js:82
+#: src/deprecated/v2/block/number-box/edit.js:70
+#: src/deprecated/v2/block/pricing-box/edit.js:79
+#: src/deprecated/v2/block/team-member/edit.js:79
+#: src/deprecated/v2/block/testimonial/edit.js:77
+#: src/deprecated/v2/block/testimonial/edit.js:83
+#: src/deprecated/v2/components/button-controls/index.js:93
+msgid "Basic"
+msgstr ""
+
+#: src/deprecated/v2/block/accordion/edit.js:71
 msgid "Lined to Colored"
 msgstr ""
 
-#: src/deprecated/v2/block/accordion/edit.js:152
+#: src/deprecated/v2/block/accordion/edit.js:154
 msgid "Reverse arrow"
 msgstr ""
 
-#: src/deprecated/v2/block/accordion/edit.js:230
+#: src/deprecated/v2/block/accordion/edit.js:232
 msgid "Closed State Background Color"
 msgstr ""
 
-#: src/deprecated/v2/block/accordion/edit.js:243
+#: src/deprecated/v2/block/accordion/edit.js:245
 msgid "Padding"
 msgstr ""
 
-#: src/deprecated/v2/block/accordion/edit.js:296
+#: src/deprecated/v2/block/accordion/edit.js:298
 #: src/deprecated/v2/block/call-to-action/edit.js:309
 #: src/deprecated/v2/block/card/edit.js:484
-#: src/deprecated/v2/block/count-up/edit.js:381
-#: src/deprecated/v2/block/expand/edit.js:99
+#: src/deprecated/v2/block/count-up/edit.js:384
+#: src/deprecated/v2/block/expand/edit.js:102
 #: src/deprecated/v2/block/feature-grid/edit.js:387
 #: src/deprecated/v2/block/feature/edit.js:425
 #: src/deprecated/v2/block/header/edit.js:381
-#: src/deprecated/v2/block/heading/edit.js:98
-#: src/deprecated/v2/block/icon/edit.js:199
-#: src/deprecated/v2/block/image-box/edit.js:529
+#: src/deprecated/v2/block/heading/edit.js:101
+#: src/deprecated/v2/block/icon/edit.js:202
+#: src/deprecated/v2/block/image-box/edit.js:532
 #: src/deprecated/v2/block/notification/edit.js:472
-#: src/deprecated/v2/block/number-box/edit.js:434
+#: src/deprecated/v2/block/number-box/edit.js:436
 #: src/deprecated/v2/block/pricing-box/edit.js:434
-#: src/deprecated/v2/block/text/edit.js:289
-#: src/deprecated/v2/modules/block-title/index.js:110
+#: src/deprecated/v2/block/text/edit.js:292
+#: src/deprecated/v2/modules/block-title/index.js:112
 msgid "Title Color"
 msgstr ""
 
-#: src/deprecated/v2/block/accordion/edit.js:311
+#: src/deprecated/v2/block/accordion/edit.js:313
 #: src/deprecated/v2/block/icon-list/deprecated/util.js:55
-#: src/deprecated/v2/block/image-box/edit.js:320
-#: src/deprecated/v2/block/image-box/edit.js:579
+#: src/deprecated/v2/block/image-box/edit.js:323
+#: src/deprecated/v2/block/image-box/edit.js:582
 msgid "Arrow"
 msgstr ""
 
-#: src/deprecated/v2/block/accordion/edit.js:339
+#: src/deprecated/v2/block/accordion/edit.js:341
 #: src/deprecated/v2/block/notification/edit.js:181
-#: src/help/videos.js:612
 msgid "Border"
 msgstr ""
 
-#: src/deprecated/v2/block/blockquote/edit.js:75
+#: src/deprecated/v2/block/blockquote/edit.js:77
 #: src/format-types/highlight/index.js:208
 msgid "Highlight"
 msgstr ""
 
-#: src/deprecated/v2/block/blockquote/edit.js:219
+#: src/deprecated/v2/block/blockquote/edit.js:221
 msgid "Quotation Mark"
 msgstr ""
 
@@ -8095,7 +8295,6 @@ msgid "Horizontal Card"
 msgstr ""
 
 #: src/deprecated/v2/block/blog-posts/edit.js:240
-#: src/help/videos.js:657
 msgid "Content Order"
 msgstr ""
 
@@ -8113,34 +8312,34 @@ msgstr ""
 msgid "Customize Read More Link"
 msgstr ""
 
-#: src/deprecated/v2/block/button/edit.js:53
+#: src/deprecated/v2/block/button/edit.js:54
 msgid "Spread"
 msgstr ""
 
-#: src/deprecated/v2/block/button/edit.js:59
-#: src/deprecated/v2/block/button/edit.js:62
+#: src/deprecated/v2/block/button/edit.js:60
+#: src/deprecated/v2/block/button/edit.js:63
 msgid "Grouped"
 msgstr ""
 
-#: src/deprecated/v2/block/button/edit.js:137
+#: src/deprecated/v2/block/button/edit.js:138
 msgid "Collapse Buttons On"
 msgstr ""
 
-#: src/deprecated/v2/block/button/edit.js:140
+#: src/deprecated/v2/block/button/edit.js:141
 msgid "Don't collapse"
 msgstr ""
 
 #: src/deprecated/v2/block/call-to-action/edit.js:344
 #: src/deprecated/v2/block/card/edit.js:555
-#: src/deprecated/v2/block/count-up/edit.js:455
+#: src/deprecated/v2/block/count-up/edit.js:458
 #: src/deprecated/v2/block/feature-grid/edit.js:422
 #: src/deprecated/v2/block/feature/edit.js:460
-#: src/deprecated/v2/block/image-box/edit.js:564
+#: src/deprecated/v2/block/image-box/edit.js:567
 #: src/deprecated/v2/block/notification/edit.js:507
-#: src/deprecated/v2/block/number-box/edit.js:469
+#: src/deprecated/v2/block/number-box/edit.js:471
 #: src/deprecated/v2/block/pricing-box/edit.js:634
 #: src/deprecated/v2/block/team-member/edit.js:554
-#: src/deprecated/v2/modules/block-title/index.js:205
+#: src/deprecated/v2/modules/block-title/index.js:207
 msgid "Description Color"
 msgstr ""
 
@@ -8153,15 +8352,15 @@ msgstr ""
 #: src/deprecated/v2/block/card/edit.js:499
 #: src/deprecated/v2/block/header/edit.js:285
 #: src/deprecated/v2/block/header/edit.js:396
-#: src/deprecated/v2/block/heading/edit.js:113
-#: src/deprecated/v2/block/heading/edit.js:291
-#: src/deprecated/v2/block/image-box/edit.js:256
-#: src/deprecated/v2/block/image-box/edit.js:466
-#: src/deprecated/v2/block/image-box/edit.js:737
+#: src/deprecated/v2/block/heading/edit.js:116
+#: src/deprecated/v2/block/heading/edit.js:294
+#: src/deprecated/v2/block/image-box/edit.js:259
+#: src/deprecated/v2/block/image-box/edit.js:469
+#: src/deprecated/v2/block/image-box/edit.js:740
 #: src/deprecated/v2/block/image-box/schema.js:156
-#: src/deprecated/v2/block/text/edit.js:175
-#: src/deprecated/v2/block/text/edit.js:310
-#: src/deprecated/v2/block/text/edit.js:407
+#: src/deprecated/v2/block/text/edit.js:178
+#: src/deprecated/v2/block/text/edit.js:313
+#: src/deprecated/v2/block/text/edit.js:410
 #: src/deprecated/v2/block/text/schema.js:84
 #: src/plugins/global-settings/typography/index.js:54
 msgid "Subtitle"
@@ -8169,40 +8368,40 @@ msgstr ""
 
 #: src/deprecated/v2/block/card/edit.js:520
 #: src/deprecated/v2/block/header/edit.js:416
-#: src/deprecated/v2/block/heading/edit.js:133
-#: src/deprecated/v2/block/image-box/edit.js:487
-#: src/deprecated/v2/block/text/edit.js:337
+#: src/deprecated/v2/block/heading/edit.js:136
+#: src/deprecated/v2/block/image-box/edit.js:490
+#: src/deprecated/v2/block/text/edit.js:340
 msgid "Subtitle Color"
 msgstr ""
 
-#: src/deprecated/v2/block/column/edit.js:301
+#: src/deprecated/v2/block/column/edit.js:303
 #: src/deprecated/v2/block/columns/edit.js:418
-#: src/deprecated/v2/block/container/edit.js:345
+#: src/deprecated/v2/block/container/edit.js:347
 msgid "Text Colors"
 msgstr ""
 
-#: src/deprecated/v2/block/column/edit.js:307
+#: src/deprecated/v2/block/column/edit.js:309
 #: src/deprecated/v2/block/columns/edit.js:424
-#: src/deprecated/v2/block/container/edit.js:351
+#: src/deprecated/v2/block/container/edit.js:353
 msgid "Heading Color"
 msgstr ""
 
-#: src/deprecated/v2/block/column/edit.js:317
+#: src/deprecated/v2/block/column/edit.js:319
 #: src/deprecated/v2/block/columns/edit.js:434
-#: src/deprecated/v2/block/container/edit.js:361
-#: src/deprecated/v2/block/expand/edit.js:153
+#: src/deprecated/v2/block/container/edit.js:363
+#: src/deprecated/v2/block/expand/edit.js:156
 msgid "Link Color"
 msgstr ""
 
-#: src/deprecated/v2/block/column/edit.js:322
+#: src/deprecated/v2/block/column/edit.js:324
 #: src/deprecated/v2/block/columns/edit.js:439
-#: src/deprecated/v2/block/container/edit.js:366
+#: src/deprecated/v2/block/container/edit.js:368
 msgid "Link Hover Color"
 msgstr ""
 
-#: src/deprecated/v2/block/column/edit.js:324
+#: src/deprecated/v2/block/column/edit.js:326
 #: src/deprecated/v2/block/columns/edit.js:441
-#: src/deprecated/v2/block/container/edit.js:368
+#: src/deprecated/v2/block/container/edit.js:370
 msgid "The colors above might not apply to some nested blocks."
 msgstr ""
 
@@ -8229,12 +8428,12 @@ msgid "No Paddings"
 msgstr ""
 
 #: src/deprecated/v2/block/columns/edit.js:337
-#: src/deprecated/v2/block/container/edit.js:160
+#: src/deprecated/v2/block/container/edit.js:162
 msgid "Half-screen height"
 msgstr ""
 
 #: src/deprecated/v2/block/columns/edit.js:338
-#: src/deprecated/v2/block/container/edit.js:161
+#: src/deprecated/v2/block/container/edit.js:163
 msgid "Full-screen height"
 msgstr ""
 
@@ -8248,35 +8447,33 @@ msgstr ""
 msgid "Custom Height"
 msgstr ""
 
-#: src/deprecated/v2/block/container/edit.js:157
+#: src/deprecated/v2/block/container/edit.js:159
 msgid "Short"
 msgstr ""
 
-#: src/deprecated/v2/block/container/edit.js:159
+#: src/deprecated/v2/block/container/edit.js:161
 msgid "Tall"
 msgstr ""
 
-#: src/deprecated/v2/block/container/edit.js:201
+#: src/deprecated/v2/block/container/edit.js:203
 #: src/deprecated/v2/block/header/edit.js:173
-#: src/help/videos.js:151
 msgid "Restrict to Content Width"
 msgstr ""
 
-#: src/deprecated/v2/block/count-up/edit.js:78
+#: src/deprecated/v2/block/count-up/edit.js:81
 msgid "Abstract"
 msgstr ""
 
-#: src/deprecated/v2/block/count-up/edit.js:81
+#: src/deprecated/v2/block/count-up/edit.js:84
 msgid "Boxed"
 msgstr ""
 
-#: src/deprecated/v2/block/count-up/edit.js:420
-#: src/deprecated/v2/block/number-box/edit.js:381
+#: src/deprecated/v2/block/count-up/edit.js:423
+#: src/deprecated/v2/block/number-box/edit.js:383
 msgid "Number Color"
 msgstr ""
 
 #: src/deprecated/v2/block/divider/edit.js:105
-#: src/help/videos.js:667
 msgid "Vertical Margin"
 msgstr ""
 
@@ -8301,7 +8498,6 @@ msgid "Overlap Background %s"
 msgstr ""
 
 #: src/deprecated/v2/block/feature/edit.js:187
-#: src/help/videos.js:622
 msgid "Image Column Width"
 msgstr ""
 
@@ -8311,17 +8507,14 @@ msgid "Reverse Horizontally"
 msgstr ""
 
 #: src/deprecated/v2/block/feature/edit.js:250
-#: src/help/videos.js:627
 msgid "Container Width"
 msgstr ""
 
 #: src/deprecated/v2/block/feature/edit.js:265
-#: src/help/videos.js:632
 msgid "Container Offset"
 msgstr ""
 
 #: src/deprecated/v2/block/header/edit.js:166
-#: src/help/videos.js:146
 msgid "Full Height"
 msgstr ""
 
@@ -8346,24 +8539,23 @@ msgstr ""
 msgid "Star"
 msgstr ""
 
-#: src/deprecated/v2/block/icon-list/edit.js:109
+#: src/deprecated/v2/block/icon-list/edit.js:112
 msgid "Display as a grid (left to right & evenly spaced)"
 msgstr ""
 
-#: src/deprecated/v2/block/icon-list/edit.js:123
-#: src/help/videos.js:642
+#: src/deprecated/v2/block/icon-list/edit.js:126
 msgid "List Gap"
 msgstr ""
 
-#: src/deprecated/v2/block/icon-list/edit.js:141
+#: src/deprecated/v2/block/icon-list/edit.js:144
 msgid "You can click on each icon in the Icon List block to change them individually."
 msgstr ""
 
-#: src/deprecated/v2/block/icon-list/edit.js:185
+#: src/deprecated/v2/block/icon-list/edit.js:188
 msgid "List Text"
 msgstr ""
 
-#: src/deprecated/v2/block/icon-list/edit.js:308
+#: src/deprecated/v2/block/icon-list/edit.js:311
 msgid "Text for this block"
 msgstr ""
 
@@ -8371,34 +8563,32 @@ msgstr ""
 msgid "Line %d"
 msgstr ""
 
-#: src/deprecated/v2/block/icon/edit.js:77
+#: src/deprecated/v2/block/icon/edit.js:80
 msgid "Number of Icons / Columns"
 msgstr ""
 
-#: src/deprecated/v2/block/icon/edit.js:181
+#: src/deprecated/v2/block/icon/edit.js:184
 msgid "Title on Top"
 msgstr ""
 
-#: src/deprecated/v2/block/image-box/edit.js:367
-#: src/deprecated/v2/block/image-box/edit.js:402
+#: src/deprecated/v2/block/image-box/edit.js:370
+#: src/deprecated/v2/block/image-box/edit.js:405
 msgid "Overlay Color Type"
 msgstr ""
 
-#: src/deprecated/v2/block/image-box/edit.js:387
-#: src/help/videos.js:737
+#: src/deprecated/v2/block/image-box/edit.js:390
 msgid "Overlay Hover Color"
 msgstr ""
 
-#: src/deprecated/v2/block/image-box/edit.js:426
-#: src/help/videos.js:742
+#: src/deprecated/v2/block/image-box/edit.js:429
 msgid "Image Hover Effect"
 msgstr ""
 
-#: src/deprecated/v2/block/image-box/edit.js:429
+#: src/deprecated/v2/block/image-box/edit.js:432
 msgid "Zoom In"
 msgstr ""
 
-#: src/deprecated/v2/block/image-box/edit.js:430
+#: src/deprecated/v2/block/image-box/edit.js:433
 msgid "Zoom Out"
 msgstr ""
 
@@ -8410,18 +8600,18 @@ msgstr ""
 msgid "Icon Location"
 msgstr ""
 
-#: src/deprecated/v2/block/number-box/edit.js:314
-#: src/deprecated/v2/block/number-box/edit.js:320
-#: src/deprecated/v2/block/number-box/edit.js:327
+#: src/deprecated/v2/block/number-box/edit.js:316
+#: src/deprecated/v2/block/number-box/edit.js:322
+#: src/deprecated/v2/block/number-box/edit.js:329
 msgctxt "Nth Title with description"
 msgid "%s %d %s"
 msgstr ""
 
-#: src/deprecated/v2/block/number-box/edit.js:344
+#: src/deprecated/v2/block/number-box/edit.js:346
 msgid "Number Shape"
 msgstr ""
 
-#: src/deprecated/v2/block/number-box/edit.js:374
+#: src/deprecated/v2/block/number-box/edit.js:376
 msgid "Number Background Color"
 msgstr ""
 
@@ -8447,10 +8637,6 @@ msgstr ""
 
 #: src/deprecated/v2/block/separator/edit.js:107
 msgid "Separator Color"
-msgstr ""
-
-#: src/deprecated/v2/block/separator/edit.js:112
-msgid "Separator Width"
 msgstr ""
 
 #: src/deprecated/v2/block/separator/edit.js:199
@@ -8524,31 +8710,31 @@ msgstr ""
 msgid "Testimonial Color"
 msgstr ""
 
-#: src/deprecated/v2/block/text/edit.js:63
 #: src/deprecated/v2/block/text/edit.js:66
+#: src/deprecated/v2/block/text/edit.js:69
 msgid "Side Title"
 msgstr ""
 
-#: src/deprecated/v2/block/text/edit.js:135
+#: src/deprecated/v2/block/text/edit.js:138
 msgid "Reverse Title"
 msgstr ""
 
-#: src/deprecated/v2/block/text/edit.js:201
+#: src/deprecated/v2/block/text/edit.js:204
 msgid "Column Rule"
 msgstr ""
 
-#: src/deprecated/v2/block/text/edit.js:292
+#: src/deprecated/v2/block/text/edit.js:295
 msgid "Vertical Align"
 msgstr ""
 
-#: src/deprecated/v2/block/text/edit.js:324
+#: src/deprecated/v2/block/text/edit.js:327
 msgid "Subtitle on Top"
 msgstr ""
 
-#: src/deprecated/v2/block/text/edit.js:397
+#: src/deprecated/v2/block/text/edit.js:400
 #: src/deprecated/v2/block/text/schema.js:63
-#: src/deprecated/v2/modules/block-title/index.js:75
-#: src/deprecated/v2/modules/block-title/index.js:414
+#: src/deprecated/v2/modules/block-title/index.js:77
+#: src/deprecated/v2/modules/block-title/index.js:416
 msgid "Block Title"
 msgstr ""
 
@@ -8567,11 +8753,11 @@ msgstr ""
 msgid "Outline Play Button"
 msgstr ""
 
-#: src/deprecated/v2/block/video-popup/edit.js:229
+#: src/deprecated/v2/block/video-popup/edit.js:230
 msgid "Play Button"
 msgstr ""
 
-#: src/deprecated/v2/block/video-popup/edit.js:234
+#: src/deprecated/v2/block/video-popup/edit.js:235
 msgid "Button Style"
 msgstr ""
 
@@ -8583,12 +8769,119 @@ msgstr ""
 msgid "Align Bottom"
 msgstr ""
 
+#: src/deprecated/v2/components/background-controls/index.js:487
+msgid "Background Color Type"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls-helper/index.js:130
+#: src/deprecated/v2/components/button-controls/index.js:520
+msgid "Hover Opacity"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls-helper/index.js:131
+#: src/deprecated/v2/components/button-controls/index.js:522
+msgid "Hover Colors"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:57
+#: src/deprecated/v2/components/social-controls/index.js:42
+#: src/deprecated/v2/modules/container-link/index.js:147
+msgid "Open link in new tab"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:117
+msgid "Use social colors"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:196
+msgid "Change to Normal Button on Hover"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:316
+msgid "Button Size"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:320
+msgid "Tiny"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:323
+msgid "Small"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:357
+msgid "Vertical Padding"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:369
+msgid "Horizontal Padding"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:431
+msgid "Adv. Icon Settings"
+msgstr ""
+
+#: src/deprecated/v2/components/button-controls/index.js:463
+msgid "Icon Spacing"
+msgstr ""
+
 #: src/deprecated/v2/components/design-library-control/index.js:76
 msgid "Free"
 msgstr ""
 
 #: src/deprecated/v2/components/design-library-control/index.js:80
 msgid "Premium"
+msgstr ""
+
+#: src/deprecated/v2/components/icon-controls/index.js:55
+msgid "Shaped"
+msgstr ""
+
+#: src/deprecated/v2/components/icon-controls/index.js:122
+#: src/deprecated/v2/components/icon-controls/index.js:151
+msgid "Icon Shape / Outline Color"
+msgstr ""
+
+#: src/deprecated/v2/components/icon-controls/index.js:162
+msgid "Icon Shape Border Radius"
+msgstr ""
+
+#: src/deprecated/v2/components/icon-controls/index.js:162
+msgid "Outline Border Radius"
+msgstr ""
+
+#: src/deprecated/v2/components/icon-controls/index.js:175
+msgid "Icon Shape Padding"
+msgstr ""
+
+#: src/deprecated/v2/components/icon-controls/index.js:175
+msgid "Outline Padding"
+msgstr ""
+
+#: src/deprecated/v2/components/icon-controls/index.js:201
+msgid "Outline Width"
+msgstr ""
+
+#: src/deprecated/v2/components/image-background-controls/index.js:66
+msgid "Background Image Position"
+msgstr ""
+
+#: src/deprecated/v2/components/image-background-controls/index.js:87
+msgid "Background Image Repeat"
+msgstr ""
+
+#: src/deprecated/v2/components/image-background-controls/index.js:103
+msgid "Background Image Size"
+msgstr ""
+
+#: src/deprecated/v2/components/image-controls/index.js:175
+#: src/deprecated/v2/components/image-controls/index.js:185
+#: src/deprecated/v2/components/image-controls/index.js:195
+msgid "Force square image"
+msgstr ""
+
+#: src/deprecated/v2/components/image-controls/index.js:234
+msgid "Blend Mode"
 msgstr ""
 
 #: src/deprecated/v2/components/modal-design-library/block-list.js:237
@@ -8601,6 +8894,11 @@ msgstr ""
 
 #: src/deprecated/v2/components/modal-design-library/block-list.js:289
 msgid "Premium Designs"
+msgstr ""
+
+#: src/deprecated/v2/components/social-controls/index.js:31
+msgctxt "name"
+msgid "%s Link"
 msgstr ""
 
 #: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector.js:73
@@ -8616,7 +8914,6 @@ msgid "Select a design from our library to start with."
 msgstr ""
 
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:124
-#: src/help/videos.js:527
 msgid "Block Spacing"
 msgstr ""
 
@@ -8629,7 +8926,6 @@ msgstr ""
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:308
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:339
 #: src/deprecated/v2/modules/advanced-block-spacing/index.js:368
-#: src/help/videos.js:532
 msgid "Block Margins"
 msgstr ""
 
@@ -8640,7 +8936,6 @@ msgid "Block Paddings"
 msgstr ""
 
 #: src/deprecated/v2/modules/advanced-column-spacing/index.js:23
-#: src/help/videos.js:562
 msgid "Column Spacing & More"
 msgstr ""
 
@@ -8668,27 +8963,27 @@ msgstr ""
 msgid "You will not lose your block content when changing designs."
 msgstr ""
 
-#: src/deprecated/v2/modules/block-title/index.js:114
-#: src/deprecated/v2/modules/block-title/index.js:129
-#: src/deprecated/v2/modules/block-title/index.js:144
-#: src/deprecated/v2/modules/block-title/index.js:209
-#: src/deprecated/v2/modules/block-title/index.js:224
-#: src/deprecated/v2/modules/block-title/index.js:239
+#: src/deprecated/v2/modules/block-title/index.js:116
+#: src/deprecated/v2/modules/block-title/index.js:131
+#: src/deprecated/v2/modules/block-title/index.js:146
+#: src/deprecated/v2/modules/block-title/index.js:211
+#: src/deprecated/v2/modules/block-title/index.js:226
+#: src/deprecated/v2/modules/block-title/index.js:241
 msgid "Max Width"
 msgstr ""
 
-#: src/deprecated/v2/modules/block-title/index.js:159
-#: src/deprecated/v2/modules/block-title/index.js:254
+#: src/deprecated/v2/modules/block-title/index.js:161
+#: src/deprecated/v2/modules/block-title/index.js:256
 msgid "Horizontal Align"
 msgstr ""
 
-#: src/deprecated/v2/modules/block-title/index.js:171
-#: src/deprecated/v2/modules/block-title/index.js:266
+#: src/deprecated/v2/modules/block-title/index.js:173
+#: src/deprecated/v2/modules/block-title/index.js:268
 msgid "Text Align"
 msgstr ""
 
-#: src/deprecated/v2/modules/block-title/index.js:177
-#: src/deprecated/v2/modules/block-title/index.js:430
+#: src/deprecated/v2/modules/block-title/index.js:179
+#: src/deprecated/v2/modules/block-title/index.js:432
 msgid "Block Description"
 msgstr ""
 
@@ -9050,853 +9345,6 @@ msgstr ""
 #: src/format-types/highlight/index.js:262
 #: src/format-types/highlight/index.js:275
 msgid "Highlight Text"
-msgstr ""
-
-#: src/help/help-tooltip.js:88
-msgid "Stop showing tooltips"
-msgstr ""
-
-#: src/help/help-tooltip.js:102
-msgid "Help"
-msgstr ""
-
-#: src/help/videos.js:147
-msgid "Block height takes up the full height of the screen"
-msgstr ""
-
-#: src/help/videos.js:152
-msgid "Restricts content to a narrower space when block width is set to full width"
-msgstr ""
-
-#: src/help/videos.js:157
-msgid "Adjusts the radius of block corners to make them more rounded"
-msgstr ""
-
-#: src/help/videos.js:161
-msgid "Shadow/Outline"
-msgstr ""
-
-#: src/help/videos.js:162
-msgid "Adjusts the intensity of the shadow/outline of the block and the appearance of the block border"
-msgstr ""
-
-#: src/help/videos.js:166
-msgid "Align (general / all)"
-msgstr ""
-
-#: src/help/videos.js:167
-msgid "Adjusts the placement of all content in the block to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:172
-msgid "Sets the number of columns"
-msgstr ""
-
-#: src/help/videos.js:176
-msgid "Column / Container Background"
-msgstr ""
-
-#: src/help/videos.js:177
-msgid "Background settings for the container or columns."
-msgstr ""
-
-#: src/help/videos.js:182
-msgid "Change the shape of the image"
-msgstr ""
-
-#: src/help/videos.js:186
-#: src/help/videos.js:191
-msgid "Image size"
-msgstr ""
-
-#: src/help/videos.js:187
-msgid "Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster."
-msgstr ""
-
-#: src/help/videos.js:192
-msgid "Adjusts the image size / width while preseving the aspect ratio"
-msgstr ""
-
-#: src/help/videos.js:196
-#: src/help/videos.js:807
-msgid "Image width"
-msgstr ""
-
-#: src/help/videos.js:197
-#: src/help/videos.js:808
-msgid "Adjusts the image width"
-msgstr ""
-
-#: src/help/videos.js:201
-#: src/help/videos.js:812
-msgid "Image height"
-msgstr ""
-
-#: src/help/videos.js:202
-#: src/help/videos.js:813
-msgid "Adjusts the image height"
-msgstr ""
-
-#: src/help/videos.js:206
-msgid "Force Square Image"
-msgstr ""
-
-#: src/help/videos.js:207
-msgid "Crops image into a square"
-msgstr ""
-
-#: src/help/videos.js:211
-msgid "Border radius (of image)"
-msgstr ""
-
-#: src/help/videos.js:212
-msgid "Adjusts the radius of image corners to make them more rounded"
-msgstr ""
-
-#: src/help/videos.js:216
-msgid "Shadow (of image)"
-msgstr ""
-
-#: src/help/videos.js:217
-msgid "Adjusts the intensity of the image shadow"
-msgstr ""
-
-#: src/help/videos.js:222
-msgid "Change the font family, size, weight and spacing of the font of this text"
-msgstr ""
-
-#: src/help/videos.js:226
-msgid "Font family"
-msgstr ""
-
-#: src/help/videos.js:227
-msgid "Sets the font set to be used for the element"
-msgstr ""
-
-#: src/help/videos.js:231
-msgid "Font size"
-msgstr ""
-
-#: src/help/videos.js:232
-msgid "Sets the size of text characters"
-msgstr ""
-
-#: src/help/videos.js:236
-msgid "Font weight"
-msgstr ""
-
-#: src/help/videos.js:237
-msgid "Sets the thinness or thickness of text characters"
-msgstr ""
-
-#: src/help/videos.js:242
-msgid "Sets the usage of upper or lower case"
-msgstr ""
-
-#: src/help/videos.js:246
-msgid "Line height"
-msgstr ""
-
-#: src/help/videos.js:247
-msgid "Sets the vertical distance between lines of text"
-msgstr ""
-
-#: src/help/videos.js:251
-msgid "Letter spacing"
-msgstr ""
-
-#: src/help/videos.js:252
-msgid "Sets the distance or space between letters"
-msgstr ""
-
-#: src/help/videos.js:257
-#: src/help/videos.js:673
-msgid "Adjusts the placement of the image to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:262
-msgid "Adjusts the placement of the number to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:267
-msgid "Adjusts the placement of the icon to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:272
-msgid "Adjusts the placement of the title or subtitle to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:277
-msgid "Adjusts the placement of the name or position to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:282
-msgid "Adjusts the placement of the text to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:287
-msgid "Adjusts the placement of the button or link to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:291
-msgid "Button padding"
-msgstr ""
-
-#: src/help/videos.js:292
-msgid "Adjusts the space between the button text and button borders"
-msgstr ""
-
-#: src/help/videos.js:296
-msgid "Button vertical padding"
-msgstr ""
-
-#: src/help/videos.js:297
-msgid "Adjusts the space between the button text and button's top and bottom borders"
-msgstr ""
-
-#: src/help/videos.js:301
-msgid "Button horizontal padding"
-msgstr ""
-
-#: src/help/videos.js:302
-msgid "Adjusts the space between the button text and button's side borders"
-msgstr ""
-
-#: src/help/videos.js:306
-msgid "Button size"
-msgstr ""
-
-#: src/help/videos.js:307
-msgid "Sets the size of the button. Choose from tiny, small, normal, medium or large."
-msgstr ""
-
-#: src/help/videos.js:311
-#: src/help/videos.js:406
-msgid "Hover effect"
-msgstr ""
-
-#: src/help/videos.js:312
-#: src/help/videos.js:407
-msgid "Triggers animation or effects when you mouse over"
-msgstr ""
-
-#: src/help/videos.js:316
-msgid "Hover opacity"
-msgstr ""
-
-#: src/help/videos.js:317
-msgid "Adjusts the transparency of the button when you mouse over"
-msgstr ""
-
-#: src/help/videos.js:321
-msgid "Hover colors"
-msgstr ""
-
-#: src/help/videos.js:322
-msgid "Triggers a change in color when you mouse over"
-msgstr ""
-
-#: src/help/videos.js:326
-msgid "Button shadow"
-msgstr ""
-
-#: src/help/videos.js:327
-msgid "Adjusts the intensity of the button shadow"
-msgstr ""
-
-#: src/help/videos.js:331
-msgid "Button border radius"
-msgstr ""
-
-#: src/help/videos.js:332
-msgid "Adjusts the radius of button corners to make them more rounded"
-msgstr ""
-
-#: src/help/videos.js:336
-msgid "Button color type"
-msgstr ""
-
-#: src/help/videos.js:337
-msgid "Sets the button color type to single or gradient"
-msgstr ""
-
-#: src/help/videos.js:341
-msgid "Change to normal button on hover"
-msgstr ""
-
-#: src/help/videos.js:342
-msgid "Triggers change from ghost to normal button when you mouse over"
-msgstr ""
-
-#: src/help/videos.js:346
-msgid "Collapse buttons on"
-msgstr ""
-
-#: src/help/videos.js:347
-msgid "Sets when buttons will be triggered to arrange vertically"
-msgstr ""
-
-#: src/help/videos.js:352
-msgid "Adjusts the space between block elements"
-msgstr ""
-
-#: src/help/videos.js:356
-msgid "Block title spacing"
-msgstr ""
-
-#: src/help/videos.js:357
-msgid "Adjusts the space below the block title"
-msgstr ""
-
-#: src/help/videos.js:361
-msgid "Block description spacing"
-msgstr ""
-
-#: src/help/videos.js:362
-msgid "Adjusts the space below the block description"
-msgstr ""
-
-#: src/help/videos.js:366
-msgid "Image spacing"
-msgstr ""
-
-#: src/help/videos.js:367
-#: src/help/videos.js:703
-msgid "Adjusts the space below the image"
-msgstr ""
-
-#: src/help/videos.js:371
-msgid "Number spacing"
-msgstr ""
-
-#: src/help/videos.js:372
-msgid "Adjusts the space below the number"
-msgstr ""
-
-#: src/help/videos.js:376
-msgid "Icon spacing"
-msgstr ""
-
-#: src/help/videos.js:377
-msgid "Adjusts the space below the icon"
-msgstr ""
-
-#: src/help/videos.js:381
-msgid "Title spacing"
-msgstr ""
-
-#: src/help/videos.js:382
-#: src/help/videos.js:608
-#: src/help/videos.js:708
-#: src/help/videos.js:758
-msgid "Adjusts the space below the title"
-msgstr ""
-
-#: src/help/videos.js:386
-msgid "Name / position spacing"
-msgstr ""
-
-#: src/help/videos.js:387
-msgid "Adjusts the space below the name / position"
-msgstr ""
-
-#: src/help/videos.js:391
-#: src/help/videos.js:727
-#: src/help/videos.js:767
-msgid "Description Spacing"
-msgstr ""
-
-#: src/help/videos.js:392
-#: src/help/videos.js:728
-#: src/help/videos.js:768
-msgid "Adjusts the space below the description"
-msgstr ""
-
-#: src/help/videos.js:396
-msgid "Button spacing"
-msgstr ""
-
-#: src/help/videos.js:397
-msgid "Adjusts the space beloe the button"
-msgstr ""
-
-#: src/help/videos.js:401
-msgid "Button spacing gap"
-msgstr ""
-
-#: src/help/videos.js:402
-msgid "Adjusts the gap between the buttons"
-msgstr ""
-
-#: src/help/videos.js:411
-msgid "Background Toggle On/Off"
-msgstr ""
-
-#: src/help/videos.js:412
-msgid "Turns the block background on/off. Turn on to enable different background settings."
-msgstr ""
-
-#: src/help/videos.js:418
-msgid "Adjusts the transparency of the background color"
-msgstr ""
-
-#: src/help/videos.js:423
-msgid "Adjusts the intensity of the background media tint"
-msgstr ""
-
-#: src/help/videos.js:427
-msgid "Color type"
-msgstr ""
-
-#: src/help/videos.js:428
-msgid "Sets the color to either a single color or a gradient"
-msgstr ""
-
-#: src/help/videos.js:433
-msgid "Keeps the background image fixed in place while scrolling"
-msgstr ""
-
-#: src/help/videos.js:437
-msgid "Gradient direction"
-msgstr ""
-
-#: src/help/videos.js:438
-msgid "Sets the direction (in degrees) of the colors"
-msgstr ""
-
-#: src/help/videos.js:442
-msgid "Gradient Color location"
-msgstr ""
-
-#: src/help/videos.js:443
-msgid "Sets the placement of each color in relation to the other color"
-msgstr ""
-
-#: src/help/videos.js:448
-msgid "Chooses which part of the background image will be the focal point"
-msgstr ""
-
-#: src/help/videos.js:453
-msgid "Covers the background with tiled images"
-msgstr ""
-
-#: src/help/videos.js:458
-msgid "Sets the display image size"
-msgstr ""
-
-#: src/help/videos.js:463
-msgid "Sets how this background gradient/image blends into the other background"
-msgstr ""
-
-#: src/help/videos.js:467
-msgid "Separator Top On and Off"
-msgstr ""
-
-#: src/help/videos.js:468
-msgid "Turns the top separator on/off. Turn on to enable different separator settings."
-msgstr ""
-
-#: src/help/videos.js:472
-msgid "Separator Bottom On and Off"
-msgstr ""
-
-#: src/help/videos.js:473
-msgid "Turns the bottom separator on/off. Turn on to enable different separator settings."
-msgstr ""
-
-#: src/help/videos.js:477
-msgid "Separator height"
-msgstr ""
-
-#: src/help/videos.js:478
-msgid "Adjusts the height of the separator to stretch or compress vertically"
-msgstr ""
-
-#: src/help/videos.js:482
-msgid "Separator width"
-msgstr ""
-
-#: src/help/videos.js:483
-msgid "Adusts the width of the separator to stretch or compress horizantally"
-msgstr ""
-
-#: src/help/videos.js:488
-msgid "Adjusts the intensity of the separator shadow and makes the separator more prominent"
-msgstr ""
-
-#: src/help/videos.js:493
-msgid "Brings the separator layer in front of other block elements"
-msgstr ""
-
-#: src/help/videos.js:497
-msgid "Layer 2"
-msgstr ""
-
-#: src/help/videos.js:498
-msgid "Turns a second separator layer on/off. Turn on to enable the separate layer settings."
-msgstr ""
-
-#: src/help/videos.js:502
-msgid "Layer 3"
-msgstr ""
-
-#: src/help/videos.js:503
-msgid "Turns a third separator layer on/off. Turn on to enable the separate layer settings."
-msgstr ""
-
-#: src/help/videos.js:507
-msgid "Layer Opacity"
-msgstr ""
-
-#: src/help/videos.js:508
-msgid "Adjusts the transparency of the separator layer"
-msgstr ""
-
-#: src/help/videos.js:512
-msgid "Layer blend mode"
-msgstr ""
-
-#: src/help/videos.js:513
-msgid "Sets how the sepator layer is blended into the background"
-msgstr ""
-
-#: src/help/videos.js:518
-msgid "Adjusts the transparency of the entire block"
-msgstr ""
-
-#: src/help/videos.js:523
-msgid "Sets the stack order of different blocks to make one appear in front of another. A block with a higher z-index will show up on top of another block with a lower z-index."
-msgstr ""
-
-#: src/help/videos.js:528
-msgid "Set margins, paddings and alignment of the block and its content"
-msgstr ""
-
-#: src/help/videos.js:533
-msgid "Sets the block margin, i.e. the space outside the block between the block border and the next block"
-msgstr ""
-
-#: src/help/videos.js:537
-msgid "Block Padding"
-msgstr ""
-
-#: src/help/videos.js:538
-msgid "Sets the block padding, i.e. the space inside the block between the column container and the block border"
-msgstr ""
-
-#: src/help/videos.js:542
-msgid "Min Block Height"
-msgstr ""
-
-#: src/help/videos.js:543
-msgid "Adjusts the minimum allowable height of the block"
-msgstr ""
-
-#: src/help/videos.js:548
-msgid "Sets the placement of the column container to top, center or bottom. Available when the min. block height is set to higher than default."
-msgstr ""
-
-#: src/help/videos.js:552
-msgid "Max Content Width"
-msgstr ""
-
-#: src/help/videos.js:553
-msgid "Adjusts the maximum allowable width of the block. The settings will depend on the block width you set on the toolbar."
-msgstr ""
-
-#: src/help/videos.js:558
-msgid "Sets the placement of the column container to left, center or right. Not available when block width is set to full width."
-msgstr ""
-
-#: src/help/videos.js:563
-msgid "Sets column paddings, the space inside the block between the block elements and the column container border"
-msgstr ""
-
-#: src/help/videos.js:568
-msgid "Sets the column padding, the space inside the block between the block elements and the column container border"
-msgstr ""
-
-#: src/help/videos.js:573
-msgid "Sets the distance between two or more columns"
-msgstr ""
-
-#: src/help/videos.js:578
-msgid "Sets the placement of the column container to top, center, bottom or stretch. Available when column heights are different."
-msgstr ""
-
-#: src/help/videos.js:582
-msgid "Min Column Height"
-msgstr ""
-
-#: src/help/videos.js:583
-msgid "Adjusts the minimum allowable height of the column container"
-msgstr ""
-
-#: src/help/videos.js:588
-msgid "Sets the placement of the block elements to top, center, bottom or stretch. Available when column heights are different or when min. column height is set to higher than default."
-msgstr ""
-
-#: src/help/videos.js:593
-msgid "Automatically closes adjacent accordion panels when clicked"
-msgstr ""
-
-#: src/help/videos.js:597
-msgid "Closed state Background Color"
-msgstr ""
-
-#: src/help/videos.js:598
-msgid "Sets color of the panel when closed"
-msgstr ""
-
-#: src/help/videos.js:602
-msgid "Accordion Padding"
-msgstr ""
-
-#: src/help/videos.js:603
-msgid "Sets the accordion padding, i.e. the space inside the block between the panel elements and the panel border"
-msgstr ""
-
-#: src/help/videos.js:607
-msgid "Accordion Title Spacing"
-msgstr ""
-
-#: src/help/videos.js:613
-msgid "Adjusts the thickness and color of the border of a closed panel for the Lined to Colored layout"
-msgstr ""
-
-#: src/help/videos.js:617
-msgid "Border Size"
-msgstr ""
-
-#: src/help/videos.js:618
-msgid "Adjusts the thickness of the border of a closed panel for the Lined to Colored layout"
-msgstr ""
-
-#: src/help/videos.js:623
-msgid "Adjusts the width of the image"
-msgstr ""
-
-#: src/help/videos.js:628
-msgid "Adjusts the width of the text and button container"
-msgstr ""
-
-#: src/help/videos.js:633
-msgid "Adjusts the relative arrangement of the image and the text and button container"
-msgstr ""
-
-#: src/help/videos.js:637
-msgid "Display as a grid"
-msgstr ""
-
-#: src/help/videos.js:638
-msgid "Displays the list in an evenly-spaced grid arrangement"
-msgstr ""
-
-#: src/help/videos.js:643
-msgid "Adjusts the space between different list lines"
-msgstr ""
-
-#: src/help/videos.js:648
-msgid "Adjusts the height of the image box"
-msgstr ""
-
-#: src/help/videos.js:653
-msgid "Provides option to close the notification"
-msgstr ""
-
-#: src/help/videos.js:658
-msgid "Sets the order of the items displayed (category, title, meta, excerpt) for each post"
-msgstr ""
-
-#: src/help/videos.js:662
-msgid "Meta Separator"
-msgstr ""
-
-#: src/help/videos.js:663
-msgid "Sets the separators between meta items (dot, space, comma, dash, pipe)"
-msgstr ""
-
-#: src/help/videos.js:668
-msgid "Adjusts the space between the divider and the vertically adjacent blocks"
-msgstr ""
-
-#: src/help/videos.js:672
-msgid "Image Align"
-msgstr ""
-
-#: src/help/videos.js:677
-#: src/help/videos.js:782
-msgid "Title Align"
-msgstr ""
-
-#: src/help/videos.js:678
-#: src/help/videos.js:783
-msgid "Adjusts the placement of the title to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:682
-msgid "Price Align"
-msgstr ""
-
-#: src/help/videos.js:683
-msgid "Adjusts the placement of the price to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:687
-msgid "Sub Price Align"
-msgstr ""
-
-#: src/help/videos.js:688
-#: src/help/videos.js:778
-msgid "Adjusts the placement of the subtitle to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:692
-msgid "Button Align"
-msgstr ""
-
-#: src/help/videos.js:693
-msgid "Adjusts the placement of the button to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:697
-#: src/help/videos.js:787
-msgid "Description Align"
-msgstr ""
-
-#: src/help/videos.js:698
-#: src/help/videos.js:788
-msgid "Adjusts the placement of the description to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:702
-msgid "Image Spacing"
-msgstr ""
-
-#: src/help/videos.js:707
-#: src/help/videos.js:757
-msgid "Title Spacing"
-msgstr ""
-
-#: src/help/videos.js:712
-msgid "Price Spacing"
-msgstr ""
-
-#: src/help/videos.js:713
-msgid "Adjusts the space below the price"
-msgstr ""
-
-#: src/help/videos.js:717
-msgid "Sub Price Spacing"
-msgstr ""
-
-#: src/help/videos.js:718
-#: src/help/videos.js:753
-msgid "Adjusts the space below the subtitle"
-msgstr ""
-
-#: src/help/videos.js:722
-msgid "Button Spacing"
-msgstr ""
-
-#: src/help/videos.js:723
-msgid "Adjusts the space below the button"
-msgstr ""
-
-#: src/help/videos.js:733
-msgid "Sets the overlay color of all image boxes"
-msgstr ""
-
-#: src/help/videos.js:738
-msgid "Triggers change in overlay color when you mouse over"
-msgstr ""
-
-#: src/help/videos.js:743
-msgid "Sets an effect that animates the image"
-msgstr ""
-
-#: src/help/videos.js:748
-msgid "Sets an effect that animates the container of the image"
-msgstr ""
-
-#: src/help/videos.js:752
-msgid "Subtitle Spacing"
-msgstr ""
-
-#: src/help/videos.js:762
-msgid "Line Spacing"
-msgstr ""
-
-#: src/help/videos.js:763
-msgid "Adjusts the space below the line"
-msgstr ""
-
-#: src/help/videos.js:772
-msgid "Arrow Spacing"
-msgstr ""
-
-#: src/help/videos.js:773
-msgid "Adjusts the space below the arrow"
-msgstr ""
-
-#: src/help/videos.js:777
-msgid "Subtitle Align"
-msgstr ""
-
-#: src/help/videos.js:792
-msgid "Arrow Align"
-msgstr ""
-
-#: src/help/videos.js:793
-msgid "Adjusts the placement of the arrow to align left, center or right"
-msgstr ""
-
-#: src/help/videos.js:797
-msgid "Video popup width"
-msgstr ""
-
-#: src/help/videos.js:798
-msgid "Adjusts the width of the video popup container"
-msgstr ""
-
-#: src/help/videos.js:802
-msgid "Video popup height"
-msgstr ""
-
-#: src/help/videos.js:803
-msgid "Adjusts the height of the video popup container"
-msgstr ""
-
-#: src/help/videos.js:817
-msgid "Row gap"
-msgstr ""
-
-#: src/help/videos.js:818
-msgid "Adjusts the vertical row gap between columns"
-msgstr ""
-
-#: src/help/videos.js:822
-msgid "No paddings"
-msgstr ""
-
-#: src/help/videos.js:823
-msgid "Removes all outer paddings of the block"
-msgstr ""
-
-#: src/help/videos.js:827
-msgid "Column widths"
-msgstr ""
-
-#: src/help/videos.js:828
-msgid "Adjust the individual widths of each column"
-msgstr ""
-
-#: src/help/videos.js:832
-msgid "Column arrangement"
-msgstr ""
-
-#: src/help/videos.js:833
-msgid "Rearrange and move columns around by dragging each handle"
 msgstr ""
 
 #: src/plugins/design-library-button/design-library-button.js:38

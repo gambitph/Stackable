@@ -77,7 +77,11 @@ const ColumnsWidthControl = props => {
 			responsive={ props.responsive }
 			hasTabletValue={ props.hasTabletValue }
 			hasMobileValue={ props.hasMobileValue }
-			className={ classnames( [ 'ugb-columns-width-control', 'ugb--help-tip-column-width', props.className ] ) }
+			className={ classnames( [ 'ugb-columns-width-control', props.className ] ) }
+			helpTooltip={ {
+				// TODO: Add a working video
+				description: __( 'Adjust the individual widths of each column', i18n ),
+			} }
 		>
 			{ COLUMN_PRESET_OPTIONS[ props.columns ] &&
 				<DesignControl

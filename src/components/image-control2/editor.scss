@@ -46,6 +46,12 @@
 			stroke-width: 1px;
 			fill: #fff;
 		}
+
+		+ .stk-dynamic-content-control {
+			.components-button {
+				margin-top: 8px;
+			}
+		}
 	}
 	.ugb-image-preview {
 		min-width: 100px;
@@ -56,5 +62,28 @@
 		object-fit: contain;
 		width: auto;
 		height: auto;
+	}
+
+	.stk-dynamic-content-control {
+		display: flex;
+
+		.ugb-image-upload {
+			display: flex;
+			flex-grow: 1;
+			gap: 4px;
+			justify-content: center;
+			align-items: center;
+			height: 30px;
+			svg {
+				fill: none;
+				color: transparent;
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		.stk-dynamic-content-control__button {
+			position: unset;
+		}
 	}
 }

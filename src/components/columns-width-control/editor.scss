@@ -41,6 +41,14 @@
 	}
 	.slider-handles button {
 		cursor: pointer;
+		&:focus::before {
+			position: absolute;
+			content: "";
+			inset: -5px;
+			background: var(--wp-admin-theme-color);
+			opacity: 0.4;
+			border-radius: 100%;
+		}
 	}
 }
 .stk-column-widths-control__columns-input {

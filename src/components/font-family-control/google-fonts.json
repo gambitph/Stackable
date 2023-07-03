@@ -132,6 +132,17 @@
     ]
   },
   {
+    "family": "Agdasima",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Aguafina Script",
     "variants": [
       "regular"
@@ -139,6 +150,22 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Akatab",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "tifinagh"
     ]
   },
   {
@@ -377,16 +404,29 @@
   {
     "family": "Aleo",
     "variants": [
+      "100",
+      "200",
       "300",
-      "300italic",
       "regular",
-      "italic",
+      "500",
+      "600",
       "700",
-      "700italic"
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -1747,6 +1787,16 @@
     ]
   },
   {
+    "family": "Bacasime Antique",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Bad Script",
     "variants": [
       "regular"
@@ -2230,6 +2280,18 @@
     "family": "Bebas Neue",
     "variants": [
       "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Belanosima",
+    "variants": [
+      "regular",
+      "600",
+      "700"
     ],
     "subsets": [
       "latin",
@@ -3211,6 +3273,16 @@
   },
   {
     "family": "Cantora One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Caprasimo",
     "variants": [
       "regular"
     ],
@@ -11330,6 +11402,17 @@
     ]
   },
   {
+    "family": "Narnoor",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "gunjala-gondi",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Neonderthaw",
     "variants": [
       "regular"
@@ -12069,10 +12152,13 @@
   {
     "family": "Noto Sans Duployan",
     "variants": [
-      "regular"
+      "regular",
+      "700"
     ],
     "subsets": [
-      "duployan"
+      "duployan",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12710,6 +12796,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "meroitic"
     ]
   },
@@ -12825,6 +12913,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "nabataean"
     ]
   },
@@ -12963,6 +13053,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-sogdian"
     ]
   },
@@ -13042,6 +13134,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "palmyrene"
     ]
   },
@@ -13080,6 +13174,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "psalter-pahlavi"
     ]
   },
@@ -13124,6 +13220,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "samaritan"
     ]
   },
@@ -13205,6 +13303,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "sogdian"
     ]
   },
@@ -13414,6 +13514,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tamil-supplement"
     ]
   },
@@ -13975,6 +14077,17 @@
     ]
   },
   {
+    "family": "Noto Serif Makasar",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "makasar"
+    ]
+  },
+  {
     "family": "Noto Serif Malayalam",
     "variants": [
       "100",
@@ -14035,6 +14148,17 @@
       "latin",
       "latin-ext",
       "oriya"
+    ]
+  },
+  {
+    "family": "Noto Serif Ottoman Siyaq",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "ottoman-siyaq-numbers"
     ]
   },
   {
@@ -16694,6 +16818,7 @@
       "900italic"
     ],
     "subsets": [
+      "arabic",
       "cyrillic",
       "cyrillic-ext",
       "hebrew",
@@ -20272,6 +20397,90 @@
       "700italic",
       "800italic",
       "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Ysabeau Infant",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Ysabeau Office",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Ysabeau SC",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "cyrillic",

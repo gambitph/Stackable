@@ -20,17 +20,12 @@ import {
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	AlignButtonsControl,
 	ControlSeparator,
-	ImageControlsHelper,
 	HeadingButtonsControl,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -38,6 +33,11 @@ import {
 	DivBackground,
 	Image,
 	ResponsiveControl,
+	BackgroundControlsHelper,
+	ColumnPaddingControl,
+	ImageControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,
