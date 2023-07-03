@@ -8,6 +8,7 @@ import { DesignPanelItem } from '~stackable/components'
 import { omit } from 'lodash'
 import classnames from 'classnames'
 import { isPro } from 'stackable'
+import LabelTooltip from '../base-control2/label-tooltip'
 
 /**
  * WordPress dependencies
@@ -45,7 +46,7 @@ const DesignControl = props => {
 
 	return (
 		<div className={ mainClasses }>
-			{ props.label && <div className="components-base-control__label">{ props.label }</div> }
+			{ props.label && <LabelTooltip label={ props.label } { ...props.helpTooltip } /> }
 			<RadioControl
 				{ ...omit( props, [ 'label' ] ) }
 				className="ugb-design-control"

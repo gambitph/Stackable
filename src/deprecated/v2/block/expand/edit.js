@@ -8,15 +8,18 @@ import createStyles from './style'
  */
 import {
 	BlockContainer,
-	TypographyControlHelper,
 	ColorPaletteControl,
 	AlignButtonsControl,
 	PanelAdvancedSettings,
 	HeadingButtonsControl,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 } from '~stackable/components'
-import { ContentAlignControl, ResponsiveControl } from '../../components'
+import {
+	ContentAlignControl,
+	ResponsiveControl,
+	PanelSpacingBody,
+	TypographyControlHelper,
+} from '../../components'
 import {
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,

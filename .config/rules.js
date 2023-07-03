@@ -54,7 +54,7 @@ module.exports = [
 	},
 	// Help video snippets
 	{
-		test: /help\/videos\/[\w\d-_]+\.(mp4)$/,
+		test: /videos\/[\w\d-_]+\.(mp4)$/,
 		use: [
 			{
 				loader: 'file-loader',
@@ -69,7 +69,7 @@ module.exports = [
 	},
 	{
 		test: /\.(mp4)$/,
-		exclude: /(help\/videos)/,
+		exclude: /(help\/videos|help-tooltip\/videos)/,
 		use: [
 			{
 				loader: 'file-loader',

@@ -5,11 +5,10 @@ import {
 	AdvancedRangeControl,
 	BlockContainer,
 	WhenResponsiveScreen,
-	BackgroundControlsHelper,
 	ControlSeparator,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { DivBackground } from '../../components'
+import { DivBackground, BackgroundControlsHelper } from '../../components'
 import {
 	withBlockStyles,
 	withGoogleFont,

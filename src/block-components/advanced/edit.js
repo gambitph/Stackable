@@ -96,7 +96,10 @@ export const Edit = () => {
 						step={ 0.1 }
 						allowReset={ true }
 						placeholder="1"
-						className="ugb--help-tip-advanced-opacity"
+						helpTooltip={ {
+							video: 'advanced-opacity',
+							description: __( 'Adjusts the transparency of the entire block', i18n ),
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Z-Index', i18n ) }
@@ -106,7 +109,11 @@ export const Edit = () => {
 						sliderMax={ 10 }
 						allowReset={ true }
 						placeholder="1"
-						className="ugb--help-tip-advanced-zindex"
+						helpTooltip={ {
+							video: 'advanced-zindex',
+							description: __( 'Sets the stack order of different blocks to make one appear in front of another. A block with a higher z-index will show up on top of another block with a lower z-index.', i18n ),
+
+						} }
 					/>
 					<AdvancedSelectControl
 						label={ __( 'Position', i18n ) }
@@ -136,7 +143,6 @@ export const Edit = () => {
 						hasLock={ false }
 						sliderMin={ -100 }
 						sliderMax={ 100 }
-						className="ugb--help-tip-advanced-block-paddings"
 					/>
 				</PanelAdvancedSettings>
 			</InspectorAdvancedControls>
