@@ -3,10 +3,10 @@
  */
 import {
 	AdvancedToggleControl,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	ControlSeparator,
 } from '~stackable/components'
+import { BackgroundControlsHelper } from '../../components'
 import { __getValue } from '~stackable/util'
 import {
 	createBackgroundAttributes,

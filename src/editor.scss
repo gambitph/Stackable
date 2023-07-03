@@ -7,6 +7,7 @@
 @import "common";
 @import "styles/editor-block-design-system";
 @import "styles/editor-block";
+@import "styles/editor-skin";
 
 // Stackable gradient fill. Works in tandem with icons.js
 svg.stk-stackable-icon-gradient {
@@ -153,6 +154,11 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 // Small card notice fonts so they look like help comments from the inspector.
 .stk-block .components-card__body {
 	font-size: 12px;
+}
+
+// Focal point picker goes past container.
+.stk-control .components-focal-point-picker__icon_container {
+	z-index: 3 !important;
 }
 
 // Fix WP 6.1 makes the control into 1 column only.

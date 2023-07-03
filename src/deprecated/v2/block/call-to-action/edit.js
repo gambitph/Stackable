@@ -4,18 +4,13 @@
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
-	BackgroundControlsHelper,
 	BlockContainer,
-	ButtonControlsHelper,
 	ColorPaletteControl,
-	ColumnPaddingControl,
 	ControlSeparator,
 	DesignPanelBody,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
-	PanelSpacingBody,
 	ProControlButton,
-	TypographyControlHelper,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
@@ -24,6 +19,11 @@ import {
 	DivBackground,
 	ContentAlignControl,
 	ResponsiveControl,
+	BackgroundControlsHelper,
+	ButtonControlsHelper,
+	ColumnPaddingControl,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createButtonAttributeNames,
