@@ -98,7 +98,6 @@ const Edit = props => {
 
 					<Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } />
 					<BlockDiv.InspectorControls />
-					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
