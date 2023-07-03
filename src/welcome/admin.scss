@@ -2,7 +2,14 @@
  * Admin Welcome Screen
  */
 
+:root {
+	--stk-welcome-primary: #dd2590;
+	--stk-welcome-secondary: #101828;
+	--stk-welcome-light-border: #d0d5dd;
+}
+
 // Clear out the margins of the admin page.
+
 body[class*="page_stackable"],
 body[class*="page_stk-"] {
 	#wpcontent {
@@ -11,6 +18,80 @@ body[class*="page_stk-"] {
 	#wpbody-content > .wrap:not(#fs_connect) { // stylelint-disable-line selector-id-pattern
 		margin: 0;
 		padding: 0 50px;
+	}
+}
+
+.s-header-wrap {
+	position: relative;
+	display: flex;
+	background-color: #fff;
+	justify-content: center;
+	align-items: flex-end;
+	margin-bottom: 40px;
+	border-bottom: 1px solid var(--stk-welcome-light-border);
+	font-weight: 300;
+
+	.s-header {
+		padding: 0px;
+		position: absolute;
+		left: 50px;
+		align-self: center;
+		&.s-logo-logo {
+			h1 {
+				justify-content: left;
+			}
+			img {
+				height: 40px;
+			}
+			// Hide all admin notices in the getting started area.
+			h1 ~ * {
+				display: none !important;
+			}
+		}
+	}
+
+	.s-premium-button {
+		align-self: center;
+		background: var(--stk-welcome-primary) !important;
+		border-radius: 4px;
+		font-weight: 600;
+		text-transform: unset !important;
+		width: 200px;
+		text-align: center;
+		position: absolute;
+		right: 50px;
+		transition: all 0.1s ease-in-out;
+		text-decoration: none;
+		border: none;
+		color: #fff;
+		padding: 12px 20px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-size: 14px;
+		cursor: pointer;
+		box-sizing: border-box !important;
+		&:hover {
+			opacity: 0.85;
+			box-shadow: none !important;
+		}
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.s-header-wrap {
+		flex-direction: column;
+		align-items: center;
+
+		.s-header {
+			position: unset;
+			padding: 16px;
+			left: unset;
+		}
+
+		.s-premium-button {
+			position: unset;
+			right: unset;
+		}
 	}
 }
 
@@ -48,10 +129,10 @@ body[class*="page_stk-"] {
 	}
 	&.s-logo-logo {
 		h1 {
-			justify-content: center;
+			justify-content: left;
 		}
 		img {
-			height: 50px;
+			height: 40px;
 		}
 		// Hide all admin notices in the getting started area.
 		h1 ~ * {
@@ -59,7 +140,8 @@ body[class*="page_stk-"] {
 		}
 	}
 }
-.s-header,
+
+.s-header-wrap,
 .s-separator {
 	margin-left: -50px;
 	margin-right: -50px;
@@ -208,35 +290,36 @@ body[class*="page_stk-"] {
 }
 
 .s-tabs {
-	transform: translateY(-100%);
 	padding: 0;
 	display: flex;
 	justify-content: flex-start;
+	height: 80px;
 	.s-tab {
-		padding: 14px 18px;
+		padding: 28px 16px;
 		list-style: none;
 		margin: 0 !important;
-		display: inline-block;
+		display: flex;
+		align-items: flex-end;
 		cursor: pointer;
 		color: #444 !important;
 		text-decoration: none !important;
 		&[aria-selected="true"],
 		&.s-active {
 			position: relative;
-			font-weight: bold;
+			font-weight: 600;
+			color: var(--stk-welcome-primary) !important;
 			&::before {
 				content: "";
 				position: absolute;
 				bottom: 0;
 				left: 0;
 				right: 0;
-				height: 3px;
-				background: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+				height: 2px;
+				background-color: var(--stk-welcome-primary);
 			}
 		}
 		&:hover {
-			background: #eee;
-			color: #444;
+			color: var(--stk-welcome-primary) !important;
 		}
 		&.s-tab-premium {
 			color: #bd2f9a !important;
@@ -301,6 +384,7 @@ body.settings_page_stackable-settings-wizard {
 			margin: 0;
 		}
 	}
+
 	.s-button {
 		background: linear-gradient(135deg, #b300be, #f00069);
 		transition: all 0.1s ease-in-out;
@@ -436,27 +520,6 @@ body.settings_page_stackable-settings-wizard {
 			> * {
 				margin-top: 0 !important;
 			}
-		}
-	}
-	.s-getting-started-blocks-wrapper {
-		margin-top: 64px;
-		margin-bottom: 64px;
-		h3 {
-			margin: 30px 0 30px 30px !important;
-			color: #f00069;
-		}
-		&:first-child {
-			margin-top: 0;
-		}
-	}
-	.s-getting-started-blocks {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		grid-gap: 16px;
-		.s-box {
-			padding: 30px;
-			margin: 0;
-			box-shadow: 0 0 1px #ccc, 0 6px 12px -2px rgba(18, 63, 82, 0.1) !important;
 		}
 	}
 	.s-box-block {
