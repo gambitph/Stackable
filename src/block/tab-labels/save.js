@@ -69,7 +69,6 @@ export const Save = props => {
 							{ props.attributes.showIcon && (
 								<Icon.Content
 									attributes={ attributes }
-									attrNameTemplate="tabIconColor1"
 									value={ props.attributes.tabLabels[ index ].icon }
 								/>
 							) }

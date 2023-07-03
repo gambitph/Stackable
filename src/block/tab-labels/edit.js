@@ -505,6 +505,7 @@ const Edit = props => {
 							id="icon"
 						>
 							<Icon.InspectorControls
+								attrNameTemplate="tabIconColor1"
 								wrapInPanels={ false }
 								hasGradient={ false }
 								hasShape={ false }
