@@ -288,10 +288,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Inspector UI improvements and reskin
 * New: New help tooltips UI
 * New: Better inspector accessibility
+* Fixed: Dynamic Content issues with the Site Editor
 * Fixed: Added missing help tooltips
 * Fixed: Focal point picker going outside the inspector panels
 * Fixed: Expand block accessibility improvements
 * Fixed: Progress bar block fullwidth issues
+* Fixed: Updated Freemius SDK to 2.5.10
 
 = 3.9.0 =
 [Introducing: New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
