@@ -129,8 +129,8 @@ export const GettingStarted = () => {
 		<div className="s-body">
 
 			<div className="s-getting-started__centered">
-				<h2 className="title"> { __( 'Stackable offers you a wide range of', i18n ) } <span> { __( 'beautifully designed', i18n ) } </span> { __( 'blocks and layouts.', i18n ) } </h2>
-				<p className="subtitle">{ __( 'From eye-catching image galleries to engaging testimonials and powerful call-to-action sections, our blocks make it easy to build professional-looking pages without any coding knowledge.', i18n ) } </p>
+				<h2 className="title"> { __( 'Unleash the Full Potential of the WordPress Block Editor by Turning It into a Page Builder', i18n ) } </h2>
+				<p className="subtitle">{ __( 'Learn the essentials in just a few minutes by watching this video. Scroll down to see more quick tutorials.', i18n ) } </p>
 
 				<div className="s-video-wrapper s-getting-started-video">
 					<iframe className="s-video" src="https://www.youtube.com/embed/MaXOZ-1UIvs" title="Getting Started" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
