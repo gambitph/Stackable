@@ -40,9 +40,6 @@
 
 // Transition interferes and adds delay, this fixes the delay.
 .stk-block-tabs__tab {
-	.stk--inner-svg svg {
-		transition: none !important;
-	}
 	.stk-block-tab-labels__text {
 		transition: none !important;
 	}
