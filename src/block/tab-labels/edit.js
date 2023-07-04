@@ -42,6 +42,7 @@ import {
 	AlignButtonsControl,
 	ColorPaletteControl,
 	BlockStyles,
+	RichText,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
@@ -58,7 +59,7 @@ import {
 } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
-import { BlockControls, RichText } from '@wordpress/block-editor'
+import { BlockControls } from '@wordpress/block-editor'
 import { Toolbar, ToolbarButton } from '@wordpress/components'
 import { useBlockContext } from '~stackable/hooks'
 import { getBlockFromExample } from '@wordpress/blocks'
@@ -428,7 +429,7 @@ const Edit = props => {
 							/>
 							<ColorPaletteControl
 								label={ __( 'Text Color', i18n ) }
-								attribute="tabTextColor"
+								attribute="tabTextColor1"
 								hover="all"
 							/>
 							{ props.attributes.showIcon &&
@@ -486,6 +487,7 @@ const Edit = props => {
 							id="typography"
 						>
 							<Typography.InspectorControls.Controls
+								attrNameTemplate="tab%s"
 								{ ...props }
 								hasTextContent={ false }
 								hasTextTag={ false }
@@ -505,7 +507,7 @@ const Edit = props => {
 							id="icon"
 						>
 							<Icon.InspectorControls
-								attrNameTemplate="tabIconColor1"
+								attrNameTemplate="tab%s"
 								wrapInPanels={ false }
 								hasGradient={ false }
 								hasShape={ false }

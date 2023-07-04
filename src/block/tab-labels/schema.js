@@ -75,7 +75,7 @@ export const attributes = ( version = VERSION ) => {
 				stkResponsive: true,
 			},
 
-			tabTextColor: {
+			tabTextColor1: {
 				type: 'string',
 				default: '',
 				stkHover: true,
