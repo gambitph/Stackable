@@ -22,7 +22,7 @@ class _StackableCarousel {
 		this.currentZIndex = 1
 		this.wrapper = this.el.querySelector( '.stk-block-carousel__slider-wrapper' )
 		this.type = this.el.classList.contains( 'stk--is-fade' ) ? 'fade' : 'slide'
-		this.slideDuration = 300 // TODO: make this a setting
+		this.slideSpeed = 300 // TODO: make this a setting
 		this.isInfiniteScroll = false // TODO: make this a setting
 		this.sliderEl = this.el.querySelector( '.stk-block-carousel__slider' )
 		this.slideEls = Array.from( this.sliderEl.children )
@@ -177,7 +177,7 @@ class _StackableCarousel {
 					this.sliderEl.insertBefore( currentSlideEl, this.sliderEl.lastChild.nextSibling )
 					this._slideTimeoutNext = null
 				}
-				this._slideTimeoutNext = setTimeout( this._slideTimeoutNextFn, this.slideDuration )
+				this._slideTimeoutNext = setTimeout( this._slideTimeoutNextFn, this.slideSpeed )
 				slid = true
 			}
 
@@ -194,7 +194,7 @@ class _StackableCarousel {
 					this.sliderEl.insertBefore( currentSlideEl, this.sliderEl.firstChild )
 					this._slideTimeoutPrev = null
 				}
-				this._slideTimeoutPrev = setTimeout( this._slideTimeoutPrevFn, this.slideDuration )
+				this._slideTimeoutPrev = setTimeout( this._slideTimeoutPrevFn, this.slideSpeed )
 				slid = true
 			}
 		}
@@ -256,10 +256,10 @@ class _StackableCarousel {
 					start = timeStamp
 				}
 				const elapsed = timeStamp - start
-				const newValue = easeInOutQuad( elapsed, offsetStart, offsetChange, this.slideDuration )
+				const newValue = easeInOutQuad( elapsed, offsetStart, offsetChange, this.slideSpeed )
 				this.sliderEl.scrollLeft = newValue
 
-				if ( elapsed < this.slideDuration ) {
+				if ( elapsed < this.slideSpeed ) {
 					requestAnimationFrame( this._animation )
 				} else {
 					this.sliderEl.scrollLeft = offset
