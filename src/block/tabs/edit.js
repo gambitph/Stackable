@@ -215,7 +215,6 @@ const Edit = props => {
 					<ContentAlign.InspectorControls />
 					{ /* <Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } /> */ }
 					<BlockDiv.InspectorControls />
-					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
