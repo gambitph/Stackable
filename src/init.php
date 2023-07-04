@@ -349,6 +349,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				// Editor settings.
 				'settings' => apply_filters( 'stackable_js_settings', array() ),
 				'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
+				'blockCategoryIndex' => apply_filters( 'stackable_block_category_index', 0 ),
 			) );
 			wp_localize_script( 'wp-blocks', 'stackable', $args );
 		}
