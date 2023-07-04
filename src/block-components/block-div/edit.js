@@ -51,6 +51,7 @@ export const Edit = props => {
 							visualGuide={ {
 								highlight: 'outline',
 							} }
+							hasContentVerticalAlign={ props.hasContentVerticalAlign }
 						/>
 						<SizeControls.Spacing
 							attrNameTemplate="block%s"
