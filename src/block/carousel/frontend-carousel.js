@@ -1,7 +1,16 @@
+/* eslint-disable no-mixed-operators */
 /**
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
+
+// More functions from https://spicyyoghurt.com/tools/easing-functions
+const easeInOutQuad = ( t, b, c, d ) => {
+	if ( ( t /= d / 2 ) < 1 ) {
+		return c / 2 * t * t + b
+	}
+	return -c / 2 * ( ( --t ) * ( t - 2 ) - 1 ) + b
+}
 
 class _StackableCarousel {
 	constructor( el ) {
@@ -13,6 +22,8 @@ class _StackableCarousel {
 		this.currentZIndex = 1
 		this.wrapper = this.el.querySelector( '.stk-block-carousel__slider-wrapper' )
 		this.type = this.el.classList.contains( 'stk--is-fade' ) ? 'fade' : 'slide'
+		this.slideDuration = 300 // TODO: make this a setting
+		this.isInfiniteScroll = false // TODO: make this a setting
 		this.sliderEl = this.el.querySelector( '.stk-block-carousel__slider' )
 		this.slideEls = Array.from( this.sliderEl.children )
 
@@ -139,12 +150,63 @@ class _StackableCarousel {
 			return
 		}
 
+		let slid = false
+		// Infinite scrolling. Method: e.g. when transitioning from the last
+		// slide to the first slide, before scrolling, move the last slide to be
+		// the first child. Abruptly change the scrollLeft to the start, then
+		// move the scrollLeft to the first slide. After the animation, move the
+		// last slide back to the last child. The good thing with this method is
+		// we preseve the mousewheel scroll direction (you can still reach the end)
+		if ( this._slideTimeoutNext ) {
+			this._slideTimeoutNextFn()
+		}
+		if ( this._slideTimeoutPrev ) {
+			this._slideTimeoutPrevFn()
+		}
+		if ( this.isInfiniteScroll && this.type === 'slide' ) {
+			if ( slide === 1 && this.currentSlide === this.maxSlides() ) {
+				this.sliderEl.classList.add( 'stk--snapping-deactivated' )
+				this.sliderEl.scrollLeft = 0
+				const currentSlideEl = this.slideEls[ this.currentSlide - 1 ]
+				// Move currentSlideEl to the first child of this.sliderEl
+				this.sliderEl.insertBefore( currentSlideEl, this.sliderEl.firstChild )
+				this.sliderEl.classList.remove( 'stk--snapping-deactivated' )
+				this._scrollLeft( this.slideEls[ slide - 1 ].offsetLeft )
+				// After the animation, move currentSlideEl back to the last child of this.sliderEl
+				this._slideTimeoutNextFn = () => {
+					this.sliderEl.insertBefore( currentSlideEl, this.sliderEl.lastChild.nextSibling )
+					this._slideTimeoutNext = null
+				}
+				this._slideTimeoutNext = setTimeout( this._slideTimeoutNextFn, this.slideDuration )
+				slid = true
+			}
+
+			if ( slide === this.maxSlides() && this.currentSlide === 1 ) {
+				this.sliderEl.classList.add( 'stk--snapping-deactivated' )
+				const currentSlideEl = this.slideEls[ this.currentSlide - 1 ]
+				// Move currentSlideEl to the last child of this.sliderEl
+				this.sliderEl.appendChild( currentSlideEl )
+				this.sliderEl.scrollLeft = this.slideEls[ this.currentSlide - 1 ].offsetLeft
+				this.sliderEl.classList.remove( 'stk--snapping-deactivated' )
+				this._scrollLeft( this.slideEls[ slide - 1 ].offsetLeft )
+				// After the animation, move currentSlideEl back to the first child of this.sliderEl
+				this._slideTimeoutPrevFn = () => {
+					this.sliderEl.insertBefore( currentSlideEl, this.sliderEl.firstChild )
+					this._slideTimeoutPrev = null
+				}
+				this._slideTimeoutPrev = setTimeout( this._slideTimeoutPrevFn, this.slideDuration )
+				slid = true
+			}
+		}
+
 		this.slideEls[ this.currentSlide - 1 ].classList.remove( 'stk-block-carousel__slide--active' )
 		this.slideEls[ slide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
 
-		if ( this.type === 'slide' ) {
-			this.sliderEl.scrollLeft = this.slideEls[ slide - 1 ].offsetLeft
-		} else { // fade
+		if ( ! slid && this.type === 'slide' ) {
+			this._scrollLeft( this.slideEls[ slide - 1 ].offsetLeft )
+		}
+
+		if ( this.type === 'fade' ) {
 			const slidePrevEl = this.slideEls[ this.currentSlide - 1 ]
 			slidePrevEl.style.opacity = 0
 
@@ -159,6 +221,7 @@ class _StackableCarousel {
 				slideEl.style.opacity = 1
 			}, 1 )
 		}
+
 		this.fixAccessibility( slide )
 		this.setDotActive( slide )
 		this.currentSlide = slide
@@ -174,6 +237,38 @@ class _StackableCarousel {
 		this.tempDisableOnScroll = setTimeout( () => {
 			this.tempDisableOnScroll = null
 		}, 500 )
+	}
+
+	// Animates scrollLeft
+	_scrollLeft = offset => {
+		// this.sliderEl.scrollLeft = offset
+		cancelAnimationFrame( this._animation )
+
+		return new Promise( resolve => {
+			this.sliderEl.classList.add( 'stk--snapping-deactivated' )
+			const offsetStart = this.sliderEl.scrollLeft
+			const offsetChange = offset - offsetStart
+
+			// From https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+			let start
+			this._animation = timeStamp => {
+				if ( ! start ) {
+					start = timeStamp
+				}
+				const elapsed = timeStamp - start
+				const newValue = easeInOutQuad( elapsed, offsetStart, offsetChange, this.slideDuration )
+				this.sliderEl.scrollLeft = newValue
+
+				if ( elapsed < this.slideDuration ) {
+					requestAnimationFrame( this._animation )
+				} else {
+					this.sliderEl.scrollLeft = offset
+					this.sliderEl.classList.remove( 'stk--snapping-deactivated' )
+					resolve( this.sliderEl.scrollLeft )
+				}
+			}
+			requestAnimationFrame( this._animation )
+		} )
 	}
 
 	fixAccessibility = slide => {
