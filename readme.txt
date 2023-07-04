@@ -288,6 +288,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Inspector UI improvements and reskin
 * New: New help tooltips UI
 * New: Better inspector accessibility
+* New: PHP filter stackable_block_category_index to adjust the block category index
 * Fixed: Dynamic Content issues with the Site Editor
 * Fixed: Added missing help tooltips
 * Fixed: Focal point picker going outside the inspector panels
