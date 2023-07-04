@@ -44,6 +44,11 @@ const activeButtonOptions = {
 	borderEnabledCallback: null, // If this is enabled, then we should be able to render the border attributes for the active tab.
 }
 
+const iconOptions = {
+	selector: '.stk-block-tabs__tab',
+	hoverSelector: '.stk-block-tabs__tab:not(.stk-block-tabs__tab--active):hover',
+}
+
 const Styles = props => {
 	const propsToPass = {
 		...props,
@@ -160,7 +165,7 @@ const Styles = props => {
 				selector=".stk-block-tabs__tab"
 				hoverSelector=".stk-block-tabs__tab:hover"
 				styleRule="color"
-				attrName="tabTextColor"
+				attrName="tabTextColor1"
 				key="tabTextColor"
 				hover="all"
 			/>
@@ -186,7 +191,7 @@ export const TabStyles = memo( props => {
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<Typography.Style { ...props } { ...typographyOptions } />
-			<Icon.Style { ...props } hasIconGap={ false } />
+			<Icon.Style { ...props } { ...iconOptions } hasIconGap={ false } />
 			<Styles { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Button.Style { ...props } { ...buttonOptions } attrNameTemplate="tab%s" />
@@ -211,7 +216,7 @@ TabStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Typography.Style.Content { ...props } { ...typographyOptions } />
-			<Icon.Style.Content { ...props } hasIconGap={ false } />
+			<Icon.Style.Content { ...props } { ...iconOptions } hasIconGap={ false } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
 			<Styles { ...props } />
