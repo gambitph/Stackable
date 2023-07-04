@@ -67,6 +67,10 @@
 	.stk-dynamic-content-control {
 		display: flex;
 
+		.components-base-control {
+			align-self: flex-end;
+		}
+
 		.stk-dynamic-content-control__button {
 			position: unset;
 		}
