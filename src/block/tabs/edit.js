@@ -158,6 +158,11 @@ const Edit = props => {
 									} )
 								}
 							} }
+							customAttributes={
+								{
+									customAttributes: [ [ 'role', 'tabpanel' ] ],
+								}
+							}
 						/>
 						<AdvancedSelectControl
 							label={ __( 'Initial Tab Open', i18n ) }

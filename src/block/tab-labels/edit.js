@@ -174,7 +174,11 @@ const Edit = props => {
 		setTemplateLock( false )
 		setTimeout( () => { // We need to wait a bit for the templateLock to get applied to the tabContent component.
 			const tabContentBlock = parentBlock.innerBlocks[ 0 ].name === 'stackable/tab-content' ? parentBlock.innerBlocks[ 0 ] : parentBlock.innerBlocks[ 1 ]
-			const block = getBlockFromExample( 'stackable/column', {} )
+			const block = getBlockFromExample( 'stackable/column', {
+				attributes: {
+					customAttributes: [ [ 'role', 'tabpanel' ] ],
+				},
+			} )
 
 			dispatch( 'core/block-editor' ).insertBlock( block, index, tabContentBlock.clientId, false )
 			setTemplateLock( true )
