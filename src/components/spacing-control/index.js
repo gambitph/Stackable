@@ -145,7 +145,6 @@ SpacingControl.defaultProps = {
 	placeholderBottom: '60',
 	placeholderRight: '35',
 	placeholder: '',
-	className: 'ugb--help-tip-advanced-column-paddings',
 }
 
 export default SpacingControl

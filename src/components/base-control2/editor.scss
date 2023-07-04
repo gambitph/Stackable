@@ -87,3 +87,14 @@ $right-space: 28px;
 .stk-control {
 	margin-bottom: 12px !important;
 }
+
+// Tooltip labels
+.stk-control__label--has-tooltip {
+	cursor: help;
+	user-select: none;
+	&:hover {
+		color: #b300be;
+		text-decoration: #b300be underline dashed 1px;
+		text-underline-offset: 3px;
+	}
+}

@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.0
 Tested up to: 6.2.2
 Requires PHP: 5.7
-Stable tag: 3.9.0
+Stable tag: 3.9.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -224,7 +224,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 5.9 or higher for this to work.
+You'll need WordPress version 6.0 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -283,6 +283,18 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.9.1 =
+* New: Inspector UI improvements and reskin
+* New: New help tooltips UI
+* New: Better inspector accessibility
+* New: PHP filter stackable_block_category_index to adjust the block category index
+* Fixed: Dynamic Content issues with the Site Editor
+* Fixed: Added missing help tooltips
+* Fixed: Focal point picker going outside the inspector panels
+* Fixed: Expand block accessibility improvements
+* Fixed: Progress bar block fullwidth issues
+* Fixed: Updated Freemius SDK to 2.5.10
 
 = 3.9.0 =
 [Introducing: New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

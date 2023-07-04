@@ -95,6 +95,11 @@ export const HoverEffects = () => {
 			attribute="buttonHoverEffect"
 			options={ HOVER_OPTIONS }
 			default="darken"
+			helpTooltip={ {
+				video: 'button-hover-effect',
+				title: __( 'Hover effect', i18n ),
+				description: __( 'Triggers animation or effects when you mouse over', i18n ),
+			} }
 		/>
 	)
 }
@@ -234,6 +239,11 @@ export const Size = props => {
 					sliderMin={ [ 0, 0 ] }
 					sliderMax={ [ 40, 100 ] }
 					vhMode={ true }
+					helpTooltip={ {
+						// TODO: Add a working video
+						title: __( 'Button padding', i18n ),
+						description: __( 'Adjusts the space between the button text and button borders', i18n ),
+					} }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>

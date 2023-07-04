@@ -279,7 +279,7 @@ const ShadowControl = memo( props => {
 				min={ 0 }
 				max={ shadows.length - 1 }
 				allowReset={ true }
-				className="ugb--help-tip-general-shadow"
+				helpTooltip={ props.helpTooltip }
 				hover={ props.hover }
 				placeholder={ value === 'custom' ? __( 'Custom', i18n ) : '' }
 				after={ (
@@ -289,7 +289,7 @@ const ShadowControl = memo( props => {
 						isSmall
 						isTertiary
 						isPressed={ isPopoverOpen || value === 'custom' }
-						aria-label={ __( 'Shadow Settings', i18n ) }
+						label={ __( 'Shadow Settings', i18n ) }
 						onClick={ () => setIsPopoverOpen( ! isPopoverOpen ) }
 						icon={ <Dashicon icon="admin-generic" /> }
 					/>
@@ -316,6 +316,11 @@ ShadowControl.defaultProps = {
 	valueCallback: null,
 	changeCallback: null,
 	isFilter: false, // If the style rule is `filter`, disable spread.
+	helpTooltip: {
+		video: 'general-shadow',
+		title: __( 'Shadow/Outline', i18n ),
+		description: __( 'Adjusts the intensity of the shadow/outline of the block and the appearance of the block border', i18n ),
+	},
 }
 
 export default ShadowControl

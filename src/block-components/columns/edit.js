@@ -163,6 +163,11 @@ export const Controls = props => {
 							highlight: 'column-spacing',
 							defaultValue: '12px',
 						} }
+						// TODO: Sample of how to use the new helpTooltip
+						helpTooltip={ {
+							// Add a working video
+							description: __( 'Sets column paddings, the space inside the block between the block elements and the column container border', i18n ),
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
@@ -176,6 +181,10 @@ export const Controls = props => {
 							highlight: 'columns:column-gap',
 							responsive: [ 'desktop' ],
 						} }
+						helpTooltip={ {
+							video: 'column-gap',
+							description: __( 'Sets the distance between two or more columns', i18n ),
+						} }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Row Gap', i18n ) }
@@ -184,6 +193,10 @@ export const Controls = props => {
 						min={ 0 }
 						sliderMax={ 100 }
 						placeholder="0"
+						helpTooltip={ {
+							// TODO: Add a working video
+							description: __( 'Sets the distance between two or more columns', i18n ),
+						} }
 					/>
 				</>
 			) }

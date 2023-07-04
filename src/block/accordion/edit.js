@@ -134,7 +134,11 @@ const Edit = props => {
 							<AdvancedToggleControl
 								label={ __( 'Close adjacent on open', i18n ) }
 								attribute="onlyOnePanelOpen"
-								className="ugb--help-tip-accordion-adjacent-open"
+								helpTooltip={ {
+									video: 'accordion-adjacent-open',
+									title: __( 'Close adjacent on open', i18n ),
+									description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
+								} }
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
