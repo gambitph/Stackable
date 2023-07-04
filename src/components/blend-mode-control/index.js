@@ -12,7 +12,6 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import classnames from 'classnames'
 
 const OPTIONS = [
 	{ value: '', label: __( 'None', i18n ) },
@@ -41,7 +40,7 @@ const BlendModeControl = props => {
 	return (
 		<AdvancedSelectControl
 			{ ...props }
-			className={ classnames( [ 'ugb--help-tip-background-blend-mode', props.className ] ) }
+			className={ props.className }
 			options={ OPTIONS }
 		/>
 	)

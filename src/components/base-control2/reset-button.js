@@ -33,7 +33,7 @@ export const ResetButton = memo( props => {
 			className={ className }
 			isSmall
 			isTertiary
-			aria-label={ __( 'Reset', i18n ) }
+			label={ __( 'Reset', i18n ) }
 			onClick={ onChange }
 			icon={ icon }
 		/>

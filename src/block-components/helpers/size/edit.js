@@ -41,7 +41,10 @@ const Layout = props => {
 				step={ [ 1, 1 ] }
 				allowReset={ true }
 				placeholder="0"
-				className="ugb--help-tip-advanced-block-height"
+				helpTooltip={ {
+					video: 'block-height',
+					description: __( 'Adjusts the minimum allowable height of the block', i18n ),
+				} }
 				visualGuide={ props.visualGuide }
 			/>
 
@@ -51,7 +54,11 @@ const Layout = props => {
 					attribute={ getAttrName( 'verticalAlign' ) }
 					responsive="all"
 					controls="vertical"
-					className="ugb--help-tip-advanced-block-vertical-align"
+					helpTooltip={ {
+						video: 'content-vertical-align',
+						description: __( 'Sets the placement of the content to top, center or bottom. Available when the min. block height is set to higher than default.', i18n ),
+
+					} }
 					visualGuide={ ! props.visualGuide ? null : {
 						...props.visualGuide,
 						selector: ( props.visualGuide.selector || '' ) + ', .stk-%s > *',
@@ -70,7 +77,10 @@ const Layout = props => {
 				allowReset={ true }
 				placeholder=""
 				initialPosition="1500"
-				className="ugb--help-tip-advanced-block-content-width"
+				helpTooltip={ {
+					video: 'max-content-width',
+					description: __( 'Adjusts the maximum allowable width of the block. The settings will depend on the block width you set on the toolbar.', i18n ),
+				} }
 				visualGuide={ props.visualGuide }
 			/>
 
@@ -84,7 +94,10 @@ const Layout = props => {
 					attribute={ getAttrName( 'HorizontalAlign' ) }
 					responsive="all"
 					controls="horizontal"
-					className="ugb--help-tip-advanced-block-horizontal-align"
+					helpTooltip={ {
+						video: 'content-horizontal-align',
+						description: __( 'Sets the placement of the content to left, center or right. Not available when block width is set to full width.', i18n ),
+					} }
 					visualGuide={ props.visualGuide }
 				/>
 			}
@@ -130,7 +143,10 @@ const Spacing = props => {
 				defaultLocked={ true }
 				min={ [ 0, 0, 0 ] }
 				sliderMax={ [ 200, 30, 100 ] }
-				className="ugb--help-tip-advanced-block-paddings"
+				helpTooltip={ {
+					video: 'inner-block-padding',
+					description: __( 'Sets the block paddings, i.e the space between the inner columns and the block border', i18n ),
+				} }
 				visualGuide={ paddingVisualGuide }
 				placeholder={ props.paddingPlaceholder }
 			/>
@@ -145,7 +161,10 @@ const Spacing = props => {
 					sliderMin={ [ -200, -100 ] }
 					sliderMax={ [ 200, 100 ] }
 					placeholder="0"
-					className="ugb--help-tip-advanced-block-margins"
+					helpTooltip={ {
+						video: 'advanced-block-margin',
+						description: __( 'Sets the block margin, i.e. the space outside the block between the block border and the next block.', i18n ),
+					} }
 					visualGuide={ marginVisualGuide }
 				/>
 			}

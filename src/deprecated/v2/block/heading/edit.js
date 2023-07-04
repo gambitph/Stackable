@@ -11,13 +11,16 @@ import {
 	BlockContainer,
 	AdvancedRangeControl,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
-	PanelSpacingBody,
 } from '~stackable/components'
-import { ContentAlignControl, ResponsiveControl } from '../../components'
+import {
+	ContentAlignControl,
+	ResponsiveControl,
+	PanelSpacingBody,
+	TypographyControlHelper,
+} from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,

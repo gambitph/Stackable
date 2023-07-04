@@ -86,13 +86,15 @@ export const BorderControls = props => {
 					attribute={ getAttrName( 'borderRadius' ) }
 					responsive="all"
 					hover={ props.hasBorderRadiusHover }
-					className="ugb--help-tip-general-border-radius"
+					helpTooltip={ {
+						video: 'general-border-radius',
+						description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
+					} }
 					min={ 0 }
 					sliderMax={ props.borderSliderMax }
 					placeholderRender={ props.borderRadiusPlaceholder }
 				/>
 			}
-
 			<ShadowControl
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'shadow' ) }

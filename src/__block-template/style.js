@@ -48,7 +48,7 @@ const Styles = () => {
 	)
 }
 
-export const TextStyles = memo( props => {
+export const BlockStyles = memo( props => {
 	return (
 		<>
 			<Alignment.Style { ...props } />
@@ -62,11 +62,11 @@ export const TextStyles = memo( props => {
 	)
 } )
 
-TextStyles.defaultProps = {
+BlockStyles.defaultProps = {
 	version: '',
 }
 
-TextStyles.Content = props => {
+BlockStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
@@ -85,7 +85,7 @@ TextStyles.Content = props => {
 	)
 }
 
-TextStyles.Content.defaultProps = {
+BlockStyles.Content.defaultProps = {
 	version: '',
 	attributes: {},
 }

@@ -4,7 +4,6 @@
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
-	BackgroundControlsHelper,
 	BlockContainer,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
@@ -12,15 +11,19 @@ import {
 	HeadingButtonsControl,
 	IconControl,
 	PanelAdvancedSettings,
-	PanelSpacingBody,
 	ProControlButton,
-	TypographyControlHelper,
-	IconControlsHelper,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl, SvgIconPlaceholder,
+	DivBackground,
+	ContentAlignControl,
+	ResponsiveControl,
+	SvgIconPlaceholder,
+	BackgroundControlsHelper,
+	ColumnPaddingControl,
+	IconControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,
