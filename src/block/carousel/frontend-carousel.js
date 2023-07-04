@@ -22,8 +22,8 @@ class _StackableCarousel {
 		this.currentZIndex = 1
 		this.wrapper = this.el.querySelector( '.stk-block-carousel__slider-wrapper' )
 		this.type = this.el.classList.contains( 'stk--is-fade' ) ? 'fade' : 'slide'
-		this.slideSpeed = 300 // TODO: make this a setting
-		this.isInfiniteScroll = false // TODO: make this a setting
+		this.slideSpeed = parseInt( this.el.dataset.speed, 10 ) || 500 // TODO: make this a setting
+		this.isInfiniteScroll = this.el.classList.contains( 'stk--is-infinite-slide' ) // TODO: make this a setting
 		this.sliderEl = this.el.querySelector( '.stk-block-carousel__slider' )
 		this.slideEls = Array.from( this.sliderEl.children )
 
