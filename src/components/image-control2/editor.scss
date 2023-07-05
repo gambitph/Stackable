@@ -67,23 +67,29 @@
 	.stk-dynamic-content-control {
 		display: flex;
 
-		.ugb-image-upload {
-			display: flex;
-			flex-grow: 1;
-			gap: 4px;
-			justify-content: center;
-			align-items: center;
-			height: 30px;
-			svg {
-				fill: none;
-				color: transparent;
-				width: 16px;
-				height: 16px;
-			}
+		.components-base-control {
+			align-self: flex-end;
+			width: 100%;
 		}
 
 		.stk-dynamic-content-control__button {
 			position: unset;
 		}
+	}
+}
+
+.ugb-image-upload {
+	display: flex;
+	flex-grow: 1;
+	gap: 4px;
+	justify-content: center;
+	align-items: center;
+	height: 30px;
+	width: 100%;
+	svg {
+		fill: none;
+		color: transparent;
+		width: 16px;
+		height: 16px;
 	}
 }
