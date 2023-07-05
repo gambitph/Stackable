@@ -12,6 +12,7 @@
 	cursor: pointer;
 	padding: 12px;
 	flex: var(--tabs-flex, none);
+	background-color: transparent !important;
 }
 .stk-block-tab-labels__wrapper {
 	display: flex;
@@ -47,7 +48,8 @@
 
 @include mobile {
 	.stk-block-tab-labels:not(.stk-block-tab-labels--wrap-mobile) {
-		overflow-x: auto;
+		overflow-x: auto !important;
+		width: -webkit-fill-available;
 		&::-webkit-scrollbar {
 			height: 0 !important;
 		}
