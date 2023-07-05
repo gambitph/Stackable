@@ -191,7 +191,7 @@ export const TabStyles = memo( props => {
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
-			<Typography.Style { ...props } { ...typographyOptions } />
+			<Typography.Style { ...props } { ...typographyOptions } attrNameTemplate="tab%s" />
 			<Icon.Style { ...props } { ...iconOptions } hasIconGap={ false } />
 			<Styles { ...props } />
 			<EffectsAnimations.Style { ...props } />
@@ -216,7 +216,7 @@ TabStyles.Content = props => {
 			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Typography.Style.Content { ...props } { ...typographyOptions } />
+			<Typography.Style.Content { ...props } { ...typographyOptions } attrNameTemplate="tab%s" />
 			<Icon.Style.Content { ...props } { ...iconOptions } hasIconGap={ false } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
