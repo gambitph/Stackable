@@ -36,9 +36,14 @@
 		justify-content: center;
 		margin-bottom: 24px;
 
+		.s-video {
+			aspect-ratio: 16/9;
+			min-width: 100%;
+		}
+
 		&.s-getting-started-video .s-video {
 			height: 240px;
-			aspect-ratio: 16/9;
+			min-width: unset;
 		}
 	}
 
@@ -111,6 +116,17 @@
 
 		&.s-card-general .s-card {
 			box-shadow: 0 2px 4px 2px #1018280f;
+			transition: 0.3s;
+			&:hover {
+				box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+			}
+		}
+
+		.s-card-link {
+			color: #000;
+			font-weight: 300;
+			cursor: pointer;
+			text-decoration: none;
 		}
 
 		.s-card {
@@ -126,16 +142,12 @@
 				margin-bottom: 16px;
 			}
 
-			.s-video-wrapper {
-				align-items: center;
-
-				.s-video {
-					min-width: 100%;
-				}
-			}
-
 			.s-card-subtitle {
 				margin-top: 0;
+			}
+
+			.s-video-wrapper {
+				align-items: center;
 			}
 
 			.s-icon-wrapper {
@@ -145,18 +157,11 @@
 				display: flex;
 				align-items: center;
 				max-width: fit-content;
-
 			}
 
-			.s-card-link {
+			.s-bottom-icon-wrapper {
 				display: flex;
 				justify-content: flex-end;
-
-				a {
-					color: #000;
-					font-weight: 300;
-					cursor: pointer;
-				}
 			}
 
 			svg {

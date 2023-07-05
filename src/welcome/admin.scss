@@ -324,6 +324,13 @@ body[class*="page_stk-"] {
 		&.s-tab-premium {
 			color: #bd2f9a !important;
 		}
+		&:focus {
+			box-shadow: none;
+
+			span {
+				box-shadow: 0 0 0 1px #4f94d4, 0 0 2px 1px rgba(79, 148, 212, 0.8);
+			}
+		}
 	}
 }
 .s-logo-logo + * > .s-tabs {
