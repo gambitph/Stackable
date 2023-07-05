@@ -289,6 +289,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: New help tooltips UI
 * New: Better inspector accessibility
 * New: PHP filter stackable_block_category_index to adjust the block category index
+* FIxed: All Dynamic Content Fields from ACF, Metabox and JetEngine are now shown in the field picker
 * Fixed: Dynamic Content issues with the Site Editor
 * Fixed: Added missing help tooltips
 * Fixed: Focal point picker going outside the inspector panels
