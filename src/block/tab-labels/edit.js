@@ -499,6 +499,9 @@ const Edit = props => {
 								initialOpen={ true }
 								hasTextShadow={ true }
 								hasGradient={ false }
+								excludedFilterOptions={
+									[ 'inset' ]
+								}
 							/>
 						</PanelAdvancedSettings>
 

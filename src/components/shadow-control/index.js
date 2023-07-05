@@ -216,6 +216,10 @@ const ShadowFilterControl = props => {
 					boldLabel={ true }
 				>
 					{ FILTERS.map( filter => {
+						if ( props.excludedFilterOptions.includes( filter.key ) ) {
+							return ( undefined )
+						}
+
 						const propsToPass = { ...filter.props }
 
 						const Component = filter.component
@@ -246,6 +250,10 @@ const ShadowFilterControl = props => {
 			</div>
 		</Popover>
 	)
+}
+
+ShadowFilterControl.defaultProps = {
+	excludedFilterOptions: [],
 }
 
 const ShadowControl = memo( props => {
@@ -327,6 +335,7 @@ const ShadowControl = memo( props => {
 					responsive={ props.responsive }
 					hover={ props.hover }
 					parentProps={ props }
+					excludedFilterOptions={ props.excludedFilterOptions }
 				/>
 			) }
 		</>
