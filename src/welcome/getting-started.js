@@ -21,19 +21,19 @@ const generalProps = [
 	{
 		title: __( 'Tutorials', i18n ),
 		subtitle: __( 'Get to know the plugin and start your journey with our brand new Stackable Courses.', i18n ),
-		link: '#',
+		link: 'https://wpstackable.com/learn/?utm_source=plugin&utm_medium=getting_started&utm_campaign=tutorial_button',
 		icon: <SVGTutorialsIcon />,
 	},
 	{
 		title: __( 'Documentation and Support', i18n ),
 		subtitle: __( 'Get assistance with troubleshooting, guides, FAQs, and updates.', i18n ),
-		link: '#',
+		link: 'https://docs.wpstackable.com/',
 		icon: <SVGDocsIcon />,
 	},
 	{
 		title: __( 'Community', i18n ),
 		subtitle: __( 'Join our very active Stackable Community on Facebook.', i18n ),
-		link: '#',
+		link: 'https://www.facebook.com/groups/wpstackable/',
 		icon: <SVGCommunityIcon />,
 	},
 ]
@@ -80,7 +80,7 @@ const essentialsProps = [
 const GeneralCard = ( {
 	title, subtitle, link, icon,
 } ) => {
-	return <a href={ link } className="s-card s-card-link">
+	return <a href={ link } className="s-card s-card-link" target="_blank" rel="noreferrer">
 		<div className="s-icon-wrapper"> { icon } </div>
 		<h3 className="s-card-title"> { title } </h3>
 		<p className="s-card-subtitle"> { subtitle } </p>
@@ -92,7 +92,7 @@ const EssentialsCard = ( {
 	title, subtitle, src,
 } ) => {
 	return <div className="s-card">
-		<div className="s-video-wrapper">
+		<div className="s-video-wrapper s-card-top">
 			<iframe className="s-video" src={ src } title={ title } allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
 		</div>
 		<h3 className="s-card-title"> { title } </h3>
@@ -142,7 +142,7 @@ export const GettingStarted = () => {
 						<h2> { __( 'Check out our library of tutorials and guides', i18n ) } </h2>
 						<p> { __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat tempus sollicitudin rhoncus pretium tellus.', i18n ) } </p>
 					</div>
-					<div className="s-button-container"><a href="https://wpstackable.com/learn/" target="_new" className="s-button s-secondary-button">
+					<div className="s-button-container"><a href="https://wpstackable.com/learn/?utm_source=plugin&utm_medium=getting_started&utm_campaign=tutorial_button" target="_blank" rel="noreferrer" className="s-button s-secondary-button">
 						{ __( 'Go to Stackable Learn', i18n ) }
 					</a></div>
 				</div>

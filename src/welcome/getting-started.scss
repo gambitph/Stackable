@@ -36,13 +36,18 @@
 		justify-content: center;
 		margin-bottom: 24px;
 
+		&.s-card-top {
+			margin: -20px -20px 20px;
+		}
+
 		.s-video {
 			aspect-ratio: 16/9;
 			min-width: 100%;
 		}
 
 		&.s-getting-started-video .s-video {
-			height: 240px;
+			width: 700px;
+			max-width: 100%;
 			min-width: unset;
 		}
 	}
@@ -115,10 +120,10 @@
 		max-width: 1200px;
 
 		&.s-card-general .s-card {
-			box-shadow: 0 2px 4px 2px #1018280f;
+			box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 			transition: 0.3s;
 			&:hover {
-				box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+				box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 			}
 		}
 
@@ -137,11 +142,14 @@
 			flex-direction: column;
 			width: calc(30% - 32px);
 
-			.s-card-title,
-			.s-card-subtitle {
+			.s-card-title {
 				margin-bottom: 16px;
 			}
+			.s-card-subtitle {
+				margin-bottom: 0;
+			}
 
+			.s-card-title,
 			.s-card-subtitle {
 				margin-top: 0;
 			}
