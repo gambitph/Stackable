@@ -104,7 +104,6 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
-
 			activeBackgroundColor: {
 				type: 'string',
 				default: '',
