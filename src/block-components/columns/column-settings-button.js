@@ -18,7 +18,7 @@ export const ColumnsControl = props => {
 		sliderMax = 6,
 		rootClientId = null,
 		onChangeCallback,
-		customAttributes,
+		newColumnAttributes,
 	} = props
 	const { clientId: _clientId } = useBlockEditContext()
 	const clientId = rootClientId || _clientId
@@ -46,7 +46,7 @@ export const ColumnsControl = props => {
 				// add more empty columns if necessary
 				for ( let i = 0; i < numToAdd; i++ ) {
 					const block = getBlockFromExample( 'stackable/column', {
-						attributes: { ...customAttributes },
+						attributes: { ...newColumnAttributes },
 					} )
 					insertBlock( block, numInnerBlocks + i + 1, clientId, false )
 				}
@@ -115,7 +115,7 @@ ColumnsControl.defaultProps = {
 	label: __( 'Columns', i18n ),
 	rootClientId: null,
 	onChangeCallback: PASSTHRU,
-	customAttributes: {},
+	newColumnAttributes: {},
 }
 
 CloneButton.defaultProps = {

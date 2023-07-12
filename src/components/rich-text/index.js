@@ -1,4 +1,8 @@
 /**
+ * Our own RichText component that uses our own hooks to load custom fonts.
+ */
+
+/**
  * External dependencies
  */
 import { useBlockAttributesContext, useFontLoader } from '~stackable/hooks'

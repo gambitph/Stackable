@@ -159,7 +159,7 @@ const Edit = props => {
 									} )
 								}
 							} }
-							customAttributes={
+							newColumnAttributes={
 								{
 									customAttributes: [ [ 'role', 'tabpanel' ] ],
 								}

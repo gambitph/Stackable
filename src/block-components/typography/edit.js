@@ -333,9 +333,7 @@ export const Controls = props => {
 					options={ TYPOGRAPHY_SHADOWS }
 					placeholder=""
 					hover="all"
-					excludedFilterOptions={
-						[ 'inset' ]
-					}
+					hasInset={ false }
 				/>
 			) }
 

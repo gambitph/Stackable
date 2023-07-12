@@ -96,7 +96,7 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 					<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
-					<BlockDiv.InspectorControls hasContentVerticalAlign={ false } />
+					<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
