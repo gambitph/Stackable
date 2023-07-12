@@ -44,6 +44,11 @@ const activeButtonOptions = {
 	borderEnabledCallback: null, // If this is enabled, then we should be able to render the border attributes for the active tab.
 }
 
+const iconOptions = {
+	selector: '.stk-block-tabs__tab',
+	hoverSelector: '.stk-block-tabs__tab:not(.stk-block-tabs__tab--active):hover',
+}
+
 const Styles = props => {
 	const propsToPass = {
 		...props,
@@ -68,7 +73,6 @@ const Styles = props => {
 				styleRule="--tabs-flex"
 				attrName="fullWidth"
 				key="fullWidth"
-				responsive="all"
 				valuePreCallback={ value => {
 					return value ? '1 1 auto' : undefined
 				} }
@@ -143,6 +147,7 @@ const Styles = props => {
 
 					return newValue
 				} }
+				responsive="all"
 				dependencies={ [ 'fullWidth', 'iconPosition' ] }
 			/>
 			<BlockCss
@@ -160,14 +165,14 @@ const Styles = props => {
 				selector=".stk-block-tabs__tab"
 				hoverSelector=".stk-block-tabs__tab:hover"
 				styleRule="color"
-				attrName="tabTextColor"
+				attrName="tabTextColor1"
 				key="tabTextColor"
 				hover="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".stk-block-tabs__tab.stk-block-tabs__tab--active"
-				hoverSelector=".stk-block-tabs__tab.stk-block-tabs__tab--active:hover"
+				selector=".stk-block-tabs__tab.stk-block-tabs__tab--active .stk-block-tab-labels__text"
+				hoverSelector=".stk-block-tabs__tab.stk-block-tabs__tab--active:hover .stk-block-tab-labels__text"
 				styleRule="color"
 				attrName="activeTabTextColor"
 				key="activeTabTextColor"
@@ -185,8 +190,8 @@ export const TabStyles = memo( props => {
 			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
-			<Typography.Style { ...props } { ...typographyOptions } />
-			<Icon.Style { ...props } hasIconGap={ false } />
+			<Typography.Style { ...props } { ...typographyOptions } attrNameTemplate="tab%s" />
+			<Icon.Style { ...props } { ...iconOptions } hasIconGap={ false } />
 			<Styles { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Button.Style { ...props } { ...buttonOptions } attrNameTemplate="tab%s" />
@@ -210,8 +215,8 @@ TabStyles.Content = props => {
 			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Typography.Style.Content { ...props } { ...typographyOptions } />
-			<Icon.Style.Content { ...props } hasIconGap={ false } />
+			<Typography.Style.Content { ...props } { ...typographyOptions } attrNameTemplate="tab%s" />
+			<Icon.Style.Content { ...props } { ...iconOptions } hasIconGap={ false } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
 			<Styles { ...props } />

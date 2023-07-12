@@ -36,7 +36,7 @@ export const attributes = ( version = VERSION ) => {
 	Transform.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
-	Typography.addAttributes( attrObject, '.stk-block-tab-labels__text', { hasTextTag: false } )
+	Typography.addAttributes( attrObject, '.stk-block-tab-labels__text', { hasTextTag: false, attrNameTemplate: 'tab%s' } )
 	Icon.addAttributes( attrObject )
 	Button.addAttributes( attrObject, { attrNameTemplate: 'tab%s' } )
 	Button.addAttributes( attrObject, { attrNameTemplate: 'activeTab%s' } )
@@ -75,7 +75,7 @@ export const attributes = ( version = VERSION ) => {
 				stkResponsive: true,
 			},
 
-			tabTextColor: {
+			tabTextColor1: {
 				type: 'string',
 				default: '',
 				stkHover: true,
@@ -104,7 +104,6 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
-
 			activeBackgroundColor: {
 				type: 'string',
 				default: '',

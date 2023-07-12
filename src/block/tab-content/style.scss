@@ -1,5 +1,6 @@
 .stk-block-tab-content {
 	margin-bottom: 0;
+	display: flex;
 }
 .stk-block-tab-content > .stk-inner-blocks {
 	// Overlap all the tab panels on top of each other.
@@ -8,35 +9,17 @@
 		grid-column: 1 / 1;
 		grid-row: 1 / 1;
 		z-index: 1; // The active panel should be on top.
-		// transition: opacity 0.3s ease-in-out;
 
-		// opacity: 0;
 		&[hidden] {
-			// display: none;
 			visibility: hidden;
 		}
-
-		// The visible one.
-		// &:not([hidden]) {
-		// 	z-index: 2;
-		// 	visibility: visible;
-		// 	// opacity: 1;
-		// }
 	}
-}
-.stk-block-tabs > .stk-block-tabs--immediate [role="tabpanel"] {
-	// visibility: visible;
-	// &[hidden] {
-	// 	visibility: hidden;
-	// }
 }
 .stk-block-tabs > .stk-block-tabs--fade > .stk-block-tab-content [role="tabpanel"] {
 	transition: opacity 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95), visibility 0s;
 	transition-delay: 0.01s, 0s;
-	// visibility: visible;
 	opacity: 1;
 	&[hidden] {
-		// visibility: hidden;
 		opacity: 0;
 		transition: opacity 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95), visibility 0s;
 		transition-delay: 0s, 0.3s;

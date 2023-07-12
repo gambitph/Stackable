@@ -216,6 +216,10 @@ const ShadowFilterControl = props => {
 					boldLabel={ true }
 				>
 					{ FILTERS.map( filter => {
+						if ( ! props.hasInset && filter.key === 'inset' ) {
+							return null
+						}
+
 						const propsToPass = { ...filter.props }
 
 						const Component = filter.component
@@ -246,6 +250,10 @@ const ShadowFilterControl = props => {
 			</div>
 		</Popover>
 	)
+}
+
+ShadowFilterControl.defaultProps = {
+	hasInset: true,
 }
 
 const ShadowControl = memo( props => {
@@ -327,6 +335,7 @@ const ShadowControl = memo( props => {
 					responsive={ props.responsive }
 					hover={ props.hover }
 					parentProps={ props }
+					hasInset={ props.hasInset }
 				/>
 			) }
 		</>
@@ -341,6 +350,7 @@ ShadowControl.defaultProps = {
 	valueCallback: null,
 	changeCallback: null,
 	isFilter: false, // If the style rule is `filter`, disable spread.
+	hasInset: true,
 	helpTooltip: {
 		video: 'general-shadow',
 		title: __( 'Shadow/Outline', i18n ),

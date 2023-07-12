@@ -1,3 +1,22 @@
+@import "common";
+
 [data-type="stackable/tab-content"] {
 	margin-top: 0 !important;
+}
+
+@include mobile {
+	.stk-block-tab-labels:not(.stk-block-tab-labels--wrap-mobile) {
+		overflow-x: auto !important;
+		width: -webkit-fill-available;
+		&::-webkit-scrollbar {
+			height: 0 !important;
+		}
+		.stk-block-tab-labels__wrapper {
+			flex-wrap: nowrap;
+			width: max-content;
+			min-width: -moz-available;
+			min-width: -webkit-fill-available;
+			min-width: fill-available;
+		}
+	}
 }

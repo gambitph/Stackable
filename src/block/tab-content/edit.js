@@ -95,10 +95,8 @@ const Edit = props => {
 			{ isSelected && (
 				<>
 					<InspectorTabs />
-
-					<Alignment.InspectorControls hasColumnJustify={ true } hasRowAlignment={ true } />
-					<BlockDiv.InspectorControls />
-					<Separator.InspectorControls />
+					<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
+					<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />

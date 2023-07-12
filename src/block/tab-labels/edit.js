@@ -42,6 +42,7 @@ import {
 	AlignButtonsControl,
 	ColorPaletteControl,
 	BlockStyles,
+	RichText,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext,
@@ -58,9 +59,9 @@ import {
 } from '@wordpress/element'
 import { dispatch } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
-import { BlockControls, RichText } from '@wordpress/block-editor'
+import { BlockControls } from '@wordpress/block-editor'
 import { Toolbar, ToolbarButton } from '@wordpress/components'
-import { useBlockContext } from '~stackable/hooks'
+import { getBlockStyle, useBlockContext } from '~stackable/hooks'
 import { getBlockFromExample } from '@wordpress/blocks'
 import { defaultIcon } from './schema'
 import { blockStyles as _blockStyles } from './block-styles'
@@ -173,7 +174,11 @@ const Edit = props => {
 		setTemplateLock( false )
 		setTimeout( () => { // We need to wait a bit for the templateLock to get applied to the tabContent component.
 			const tabContentBlock = parentBlock.innerBlocks[ 0 ].name === 'stackable/tab-content' ? parentBlock.innerBlocks[ 0 ] : parentBlock.innerBlocks[ 1 ]
-			const block = getBlockFromExample( 'stackable/column', {} )
+			const block = getBlockFromExample( 'stackable/column', {
+				attributes: {
+					customAttributes: [ [ 'role', 'tabpanel' ] ],
+				},
+			} )
 
 			dispatch( 'core/block-editor' ).insertBlock( block, index, tabContentBlock.clientId, false )
 			setTemplateLock( true )
@@ -340,6 +345,34 @@ const Edit = props => {
 								label={ __( 'Full Width', i18n ) }
 								attribute="fullWidth"
 								defaultValue={ false }
+								onChange={ fullWidth => {
+									const newAttributes = { fullWidth }
+
+									// For ceneterd pills, we have block margin
+									// left/right set to auto, so the full width
+									// option would look like it's not working,
+									// change the margins too.
+									const activeStyle = getBlockStyle( blockStyles, props.attributes.className )
+									if ( activeStyle.name === 'centered-pills' ) {
+										props.attributes.blockMargin = {
+											top: props.attributes.blockMargin?.top || '',
+											bottom: props.attributes.blockMargin?.bottom || '',
+										}
+										if ( fullWidth ) {
+											const right = props.attributes.blockMargin?.right || ''
+											const left = props.attributes.blockMargin?.left || ''
+											props.attributes.blockMargin.right = right === 'auto' ? '' : right
+											props.attributes.blockMargin.left = left === 'auto' ? '' : left
+										} else {
+											const right = props.attributes.blockMargin?.right
+											const left = props.attributes.blockMargin?.left
+											props.attributes.blockMargin.right = right === '' ? 'auto' : right
+											props.attributes.blockMargin.left = left === '' ? 'auto' : left
+										}
+									}
+
+									setAttributes( newAttributes )
+								} }
 							/>
 						</> }
 
@@ -428,7 +461,7 @@ const Edit = props => {
 							/>
 							<ColorPaletteControl
 								label={ __( 'Text Color', i18n ) }
-								attribute="tabTextColor"
+								attribute="tabTextColor1"
 								hover="all"
 							/>
 							{ props.attributes.showIcon &&
@@ -486,6 +519,7 @@ const Edit = props => {
 							id="typography"
 						>
 							<Typography.InspectorControls.Controls
+								attrNameTemplate="tab%s"
 								{ ...props }
 								hasTextContent={ false }
 								hasTextTag={ false }
@@ -493,6 +527,7 @@ const Edit = props => {
 								initialOpen={ true }
 								hasTextShadow={ true }
 								hasGradient={ false }
+								hasInset={ false }
 							/>
 						</PanelAdvancedSettings>
 
@@ -505,6 +540,7 @@ const Edit = props => {
 							id="icon"
 						>
 							<Icon.InspectorControls
+								attrNameTemplate="tab%s"
 								wrapInPanels={ false }
 								hasGradient={ false }
 								hasShape={ false }

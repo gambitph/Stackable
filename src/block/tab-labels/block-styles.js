@@ -225,7 +225,7 @@ export const blockStyles = [
 		onSelect: () => {
 			const willSetAttributes = {
 				hasBackground: true,
-				blockBorderRadius: 25,
+				blockBorderRadius: 50,
 				tabBorderRadius: 50,
 				activeTabBackgroundColor: '#000000',
 				tabTextColor: '#777777',

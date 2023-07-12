@@ -11,6 +11,7 @@ import {
 	getAlignmentClasses,
 	Icon,
 } from '~stackable/block-components'
+import { RichText } from '~stackable/components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { withVersion } from '~stackable/higher-order'
@@ -19,7 +20,6 @@ import { withVersion } from '~stackable/higher-order'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
 export const Save = props => {

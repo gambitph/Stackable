@@ -3,7 +3,7 @@ import { i18n } from 'stackable'
 import { isEmpty, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { Button } from '@wordpress/components'
-import { RichText } from '@wordpress/block-editor'
+import { RichText } from '~stackable/components'
 
 const TableOfContentsList = props => {
 	const {

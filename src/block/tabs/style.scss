@@ -1,21 +1,35 @@
+@import "common";
+
 .stk-block-tabs {
 	--tabs-gap: 16px;
 	> .stk-inner-blocks {
 		display: grid;
 		gap: var(--tabs-gap, 16px);
-		&.stk-block-tabs--vertical {
-			grid-template-columns: auto 1fr auto;
-			> .stk-block-tab-labels:first-child {
-				grid-column: 1 / 2;
+
+		// For mobile, the tabs should be vertical.
+		@include desktop-tablet {
+			&.stk-block-tabs--vertical {
+				grid-template-columns: auto 1fr auto;
+				> .stk-block-tab-labels:first-child {
+					grid-column: 1 / 2;
+				}
+				> .stk-block-tab-content:last-child {
+					grid-column: 2 / 4;
+				}
+				> .stk-block-tab-content:first-child {
+					grid-column: 1 / 3;
+				}
+				> .stk-block-tab-labels:last-child {
+					grid-column: 3 / 4;
+				}
 			}
-			> .stk-block-tab-content:last-child {
-				grid-column: 2 / 4;
-			}
-			> .stk-block-tab-content:first-child {
-				grid-column: 1 / 3;
-			}
+		}
+
+		// On mobile, make the grid vertical
+		@include mobile {
+			grid-template-columns: 1fr;
 			> .stk-block-tab-labels:last-child {
-				grid-column: 3 / 4;
+				grid-row: 1 / 2;
 			}
 		}
 	}

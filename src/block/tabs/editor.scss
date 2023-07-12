@@ -1,3 +1,5 @@
+@import "common";
+
 .stk-block-tabs > .stk-inner-blocks {
 	> * > .block-editor-block-list__layout {
 		display: grid;
@@ -18,6 +20,14 @@
 			> [data-type="stackable/tab-labels"]:last-child {
 				grid-column: 3 / 4;
 			}
+		}
+	}
+}
+
+@include mobile {
+	.stk-block-tabs > .stk-inner-blocks {
+		> * > .block-editor-block-list__layout {
+			display: flex;
 		}
 	}
 }
