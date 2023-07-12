@@ -172,8 +172,8 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".stk-block-tabs__tab.stk-block-tabs__tab--active"
-				hoverSelector=".stk-block-tabs__tab.stk-block-tabs__tab--active:hover"
+				selector=".stk-block-tabs__tab.stk-block-tabs__tab--active .stk-block-tab-labels__text"
+				hoverSelector=".stk-block-tabs__tab.stk-block-tabs__tab--active:hover .stk-block-tab-labels__text"
 				styleRule="color"
 				attrName="activeTabTextColor"
 				key="activeTabTextColor"
