@@ -61,7 +61,7 @@ import { dispatch } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { BlockControls } from '@wordpress/block-editor'
 import { Toolbar, ToolbarButton } from '@wordpress/components'
-import { useBlockContext } from '~stackable/hooks'
+import { getBlockStyle, useBlockContext } from '~stackable/hooks'
 import { getBlockFromExample } from '@wordpress/blocks'
 import { defaultIcon } from './schema'
 import { blockStyles as _blockStyles } from './block-styles'
@@ -345,6 +345,34 @@ const Edit = props => {
 								label={ __( 'Full Width', i18n ) }
 								attribute="fullWidth"
 								defaultValue={ false }
+								onChange={ fullWidth => {
+									const newAttributes = { fullWidth }
+
+									// For ceneterd pills, we have block margin
+									// left/right set to auto, so the full width
+									// option would look like it's not working,
+									// change the margins too.
+									const activeStyle = getBlockStyle( blockStyles, props.attributes.className )
+									if ( activeStyle.name === 'centered-pills' ) {
+										props.attributes.blockMargin = {
+											top: props.attributes.blockMargin?.top || '',
+											bottom: props.attributes.blockMargin?.bottom || '',
+										}
+										if ( fullWidth ) {
+											const right = props.attributes.blockMargin?.right || ''
+											const left = props.attributes.blockMargin?.left || ''
+											props.attributes.blockMargin.right = right === 'auto' ? '' : right
+											props.attributes.blockMargin.left = left === 'auto' ? '' : left
+										} else {
+											const right = props.attributes.blockMargin?.right
+											const left = props.attributes.blockMargin?.left
+											props.attributes.blockMargin.right = right === '' ? 'auto' : right
+											props.attributes.blockMargin.left = left === '' ? 'auto' : left
+										}
+									}
+
+									setAttributes( newAttributes )
+								} }
 							/>
 						</> }
 

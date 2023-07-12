@@ -73,7 +73,6 @@ const Styles = props => {
 				styleRule="--tabs-flex"
 				attrName="fullWidth"
 				key="fullWidth"
-				responsive="all"
 				valuePreCallback={ value => {
 					return value ? '1 1 auto' : undefined
 				} }
