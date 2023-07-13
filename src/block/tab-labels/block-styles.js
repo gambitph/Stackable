@@ -222,7 +222,7 @@ export const blockStyles = [
 		label: __( 'Centered Pills', i18n ),
 		disabled: true,
 		icon: ImageCenteredPills,
-		onSelect: () => {
+		onSelect: attributes => {
 			const willSetAttributes = {
 				hasBackground: true,
 				blockBorderRadius: 50,
@@ -253,6 +253,15 @@ export const blockStyles = [
 				tabIconColor1: '#777777',
 				activeTabIconColor1: '#ffffff',
 				tabIconColor1Hover: '#000000',
+			}
+
+			if ( attributes.fullWidth ) {
+				willSetAttributes.blockMargin = {
+					top: '',
+					right: '',
+					bottom: '',
+					left: '',
+				}
 			}
 
 			return {

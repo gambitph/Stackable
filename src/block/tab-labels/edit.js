@@ -364,8 +364,8 @@ const Edit = props => {
 											props.attributes.blockMargin.right = right === 'auto' ? '' : right
 											props.attributes.blockMargin.left = left === 'auto' ? '' : left
 										} else {
-											const right = props.attributes.blockMargin?.right
-											const left = props.attributes.blockMargin?.left
+											const right = props.attributes.blockMargin?.right || 'auto'
+											const left = props.attributes.blockMargin?.left || 'auto'
 											props.attributes.blockMargin.right = right === '' ? 'auto' : right
 											props.attributes.blockMargin.left = left === '' ? 'auto' : left
 										}
