@@ -40,9 +40,9 @@ const generalProps = [
 
 const essentialsProps = [
 	{
-		title: __( 'How to Add Blocks', i18n ),
+		title: __( 'Flexbox Controls', i18n ),
 		subtitle: __( 'Lorem ipsum dolor sit amet consectetur. Molestie in arcu est feugiat pulvinar sit.', i18n ),
-		src: 'https://www.youtube.com/embed/MaXOZ-1UIvs',
+		src: 'https://www.youtube.com/embed/73N9uXnpUJE',
 		url: '#',
 	},
 	{
