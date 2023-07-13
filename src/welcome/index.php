@@ -149,7 +149,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		}
 
 		public static function print_premium_button() { ?>
-			<?php if (  sugb_fs()->can_use_premium_code() ) : ?>
+			<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
 
 				<a href="https://wpstackable.com/premium/?utm_source=wp-settings-tabs&utm_campaign=gopremium&utm_medium=wp-dashboard" class="s-button s-premium-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>" target="_new"><?php esc_attr_e( 'Upgrade to Premium', STACKABLE_I18N ) ?></a>
 			<?php endif; ?>
