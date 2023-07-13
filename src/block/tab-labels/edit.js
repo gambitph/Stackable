@@ -640,6 +640,7 @@ const Edit = props => {
 										withoutInteractiveFormatting
 										allowedFormats={ [] }
 										placeholder={ __( 'Tab Label', i18n ) }
+										attrNameTemplate="tab%s"
 									/>
 								</div>
 							</button>
