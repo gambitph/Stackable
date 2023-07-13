@@ -24,6 +24,7 @@ import {
 	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
+	getTypographyClasses,
 	getAlignmentClasses,
 	Advanced,
 	CustomCSS,
@@ -92,7 +93,13 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const typographyClass = getTypographyClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
+
+	const dateClassNames = classnames( [
+		typographyClass,
+		'stk-block-timeline__date',
+	] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -259,7 +266,7 @@ const Edit = props => {
 				>
 					<Typography
 						tagName="div"
-						className="stk-block-timeline__date"
+						className={ dateClassNames }
 						placeholder={ _x( 'Text for This Block', 'Text placeholder', i18n ) }
 					/>
 					<div className="stk-block-timeline__middle"></div>
