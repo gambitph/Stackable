@@ -228,7 +228,7 @@ const Edit = props => {
 						<ControlSeparator />
 					</InspectorLayoutControls>
 					<ContentAlign.InspectorControls />
-					<BlockDiv.InspectorControls />
+					<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
