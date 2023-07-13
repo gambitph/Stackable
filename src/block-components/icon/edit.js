@@ -20,6 +20,7 @@ import {
 	ProControlButton,
 	ProControl,
 } from '~stackable/components'
+import { getAttrNameFunction } from '~stackable/util'
 import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
 /**
@@ -44,7 +45,12 @@ export const Edit = props => {
 		responsive = 'all',
 		hover = 'all',
 		defaultValue,
+		onChangeIcon,
+		iconGapPlaceholder = '0',
+		attrNameTemplate,
 	} = props
+
+	const attributeName = getAttrNameFunction( attrNameTemplate )
 
 	const PremiumColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.color-controls', null ), [] )
 	const PremiumShapeColorControls = useMemo( () => applyFilters( 'stackable.block-component.icon.shape-color-controls', null ), [] )
@@ -81,10 +87,18 @@ export const Edit = props => {
 				label={ applyFilters( 'stackable.block-component.icon.label', __( 'Icon', i18n ) ) }
 				value={ attributes.icon }
 				defaultValue={ defaultValue }
-				onChange={ icon => setAttributes( { icon } ) }
+				onChange={ icon => {
+					if ( onChangeIcon ) {
+						onChangeIcon( icon )
+					} else {
+						setAttributes( { icon } )
+					}
+				} }
 				help={ iconControlHelp }
 				hasPanelModifiedIndicator={ false }
 			/>
+
+			{ props.children }
 
 			{ showProNotice && ( hasMultiColor || hasGradient ) && <ProControlButton type="icon-colors" /> }
 
@@ -105,7 +119,7 @@ export const Edit = props => {
 					{ ( attributes.iconColorType || '' ) === '' && (
 						<ColorPaletteControl
 							label={ __( 'Icon Color', i18n ) }
-							attribute="iconColor1"
+							attribute={ attributeName( 'iconColor1' ) }
 							hover={ hover }
 						/>
 					) }
@@ -164,7 +178,7 @@ export const Edit = props => {
 					min={ 0 }
 					sliderMax={ 50 }
 					allowReset={ true }
-					placeholder="0"
+					placeholder={ iconGapPlaceholder }
 				/>
 			) }
 		</>
@@ -275,4 +289,6 @@ Edit.defaultProps = {
 	hasIconPosition: false,
 	hasMultiColor: false,
 	defaultValue: '',
+	onChangeIcon: null,
+	attrNameTemplate: '%s',
 }

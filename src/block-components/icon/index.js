@@ -55,10 +55,14 @@ const LinearGradient = ( {
 	)
 }
 
+const NOOP = () => {}
+
 export const Icon = props => {
 	const {
 		attrNameTemplate = '%s',
 		hasLinearGradient = true,
+		value = '',
+		onChange = NOOP,
 	} = props
 
 	const { isSelected } = useBlockEditContext()
@@ -116,7 +120,8 @@ export const Icon = props => {
 
 	const ShapeComp = useMemo( () => getShapeSVG( getAttribute( 'backgroundShape' ) || 'blob1' ), [ getAttribute( 'backgroundShape' ) ] )
 
-	if ( ! getAttribute( 'icon' ) ) {
+	const icon = value || getAttribute( 'icon' )
+	if ( ! icon ) {
 		return null
 	}
 
@@ -149,11 +154,11 @@ export const Icon = props => {
 			} }
 
 		>
-			{ getAttribute( 'icon' ) && (
+			{ icon && (
 				<SvgIcon
 					className="stk--inner-svg"
 					prependRenderString={ linearGradient }
-					value={ getAttribute( 'icon' ) }
+					value={ icon }
 					ariaLabel={ getAttribute( 'ariaLabel' ) }
 				/>
 			) }
@@ -163,7 +168,11 @@ export const Icon = props => {
 					__hasPopover={ true }
 					__deprecateUseRef={ popoverEl }
 					onChange={ icon => {
-						updateAttributeHandler( 'icon' )( icon )
+						if ( ! onChange ) {
+							updateAttributeHandler( 'icon' )( icon )
+						} else {
+							onChange( icon )
+						}
 						setIsOpen( false )
 					} }
 				/>
@@ -187,6 +196,7 @@ Icon.Content = props => {
 		attrNameTemplate,
 		hasLinearGradient = true,
 		children,
+		value = '',
 	} = props
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -207,17 +217,18 @@ Icon.Content = props => {
 		{ 'stk--has-icon2': getValue( 'icon2' ) }
 	)
 
-	if ( ! getValue( 'icon' ) && ! getValue( 'icon2' ) ) {
+	const icon = value || getValue( 'icon' )
+	if ( ! icon && ! getValue( 'icon2' ) ) {
 		return null
 	}
 
 	return (
 		<span className={ className }>
-			{ getValue( 'icon' ) && (
+			{ icon && (
 				<SvgIcon.Content
 					className="stk--inner-svg"
 					prependRenderString={ linearGradient }
-					value={ getValue( 'icon' ) }
+					value={ icon }
 					ariaLabel={ getValue( 'ariaLabel' ) }
 				/>
 			) }

@@ -42,6 +42,8 @@ export const BorderControls = props => {
 		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
+
 	return (
 		<Fragment>
 			{ props.hasBorderType &&
@@ -55,7 +57,7 @@ export const BorderControls = props => {
 				/>
 			}
 
-			{ ( getAttribute( 'borderType' ) || ! props.hasBorderType ) && props.hasBorderControls &&
+			{ borderTypeValue && props.hasBorderControls &&
 				<FourRangeControl
 					label={ __( 'Border Width', i18n ) }
 					attribute={ getAttrName( 'borderWidth' ) }
@@ -69,7 +71,7 @@ export const BorderControls = props => {
 				/>
 			}
 
-			{ ( getAttribute( 'borderType' ) || ! props.hasBorderType ) && props.hasBorderControls &&
+			{ borderTypeValue && props.hasBorderControls &&
 				<ColorPaletteControl
 					label={ __( 'Border Color', i18n ) }
 					attribute={ getAttrName( 'borderColor' ) }
@@ -78,19 +80,21 @@ export const BorderControls = props => {
 				/>
 			}
 
-			<AdvancedRangeControl
-				label={ __( 'Border Radius', i18n ) }
-				attribute={ getAttrName( 'borderRadius' ) }
-				responsive="all"
-				hover={ props.hasBorderRadiusHover }
-				helpTooltip={ {
-					video: 'general-border-radius',
-					description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
-				} }
-				min={ 0 }
-				sliderMax={ props.borderSliderMax }
-				placeholderRender={ props.borderRadiusPlaceholder }
-			/>
+			{ props.hasBorderRadius &&
+				<AdvancedRangeControl
+					label={ __( 'Border Radius', i18n ) }
+					attribute={ getAttrName( 'borderRadius' ) }
+					responsive="all"
+					hover={ props.hasBorderRadiusHover }
+					helpTooltip={ {
+						video: 'general-border-radius',
+						description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
+					} }
+					min={ 0 }
+					sliderMax={ props.borderSliderMax }
+					placeholderRender={ props.borderRadiusPlaceholder }
+				/>
+			}
 			<ShadowControl
 				label={ __( 'Shadow / Outline', i18n ) }
 				attribute={ getAttrName( 'shadow' ) }
@@ -103,8 +107,10 @@ export const BorderControls = props => {
 BorderControls.defaultProps = {
 	attrNameTemplate: '%s',
 	blockEl: null,
+	borderTypeValue: '', // If not supplied, the value from the attribute will be used, otherwise: '' for none, 'solid', 'dashed', 'dotted'
 	hasBorderType: true,
 	hasBorderControls: true,
+	hasBorderRadius: true,
 	hasBorderRadiusHover: true,
 	borderSelector: null,
 	borderSliderMax: 50,

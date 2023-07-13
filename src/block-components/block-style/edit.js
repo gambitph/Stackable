@@ -1,13 +1,13 @@
 /**
  * Internal dependencies
  */
-import BlockStyles from './block-styles'
 
 /**
  * External dependencies
  */
 import { i18n } from 'stackable'
 import {
+	BlockStyles,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'

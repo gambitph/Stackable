@@ -56,6 +56,7 @@ export { default as AdminToggleSetting } from './admin-toggle-setting'
 export { default as AdminSelectSetting } from './admin-select-setting'
 export { default as TaxonomyControl } from './taxonomy-control'
 export { default as Tooltip } from './tooltip'
+export { default as BlockStyles } from './block-styles'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'
@@ -110,3 +111,4 @@ export { default as ColumnsWidthControl } from './columns-width-control'
 export { default as ColumnsWidthMultiControl } from './columns-width-multi-control'
 export { default as Popover } from './popover'
 export { default as HelpTooltip } from './help-tooltip'
+export { default as RichText } from './rich-text'

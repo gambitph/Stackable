@@ -51,6 +51,7 @@ export const Edit = props => {
 							visualGuide={ {
 								highlight: 'outline',
 							} }
+							{ ...props.sizeControlLayoutProps }
 						/>
 						<SizeControls.Spacing
 							attrNameTemplate="block%s"
@@ -91,4 +92,5 @@ export const Edit = props => {
 Edit.defaultProps = {
 	hasSizeSpacing: true,
 	initialOpen: false,
+	sizeControlLayoutProps: {},
 }

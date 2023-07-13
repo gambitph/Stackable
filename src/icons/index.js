@@ -42,6 +42,9 @@ import SVGSeparatorIcon from './images/separator-icon.svg'
 import SVGSocialButtonsIcon from './images/social-buttons.svg'
 import SVGSpacerIcon from './images/spacer-icon.svg'
 import SVGTableOfContentsIcon from './images/table-of-contents.svg'
+import SVGTabsIcon from './images/tabs-icon.svg'
+import SVGTabsContentIcon from './images/tabs-content-icon.svg'
+import SVGTabsLabelIcon from './images/tabs-label-icon.svg'
 import SVGTeamMemberIcon from './images/team-member-icon.svg'
 import SVGTestimonialIcon from './images/testimonial-icon.svg'
 import SVGTextIcon from './images/text-icon.svg'
@@ -264,6 +267,18 @@ export function SpacerIcon() {
 
 export function TableOfContentsIcon() {
 	return colorizeIcon( <SVGTableOfContentsIcon width="20" height="20" /> )
+}
+
+export function TabsIcon() {
+	return colorizeIcon( <SVGTabsIcon width="16" height="16" /> )
+}
+
+export function TabsContentIcon() {
+	return colorizeIcon( <SVGTabsContentIcon width="16" height="16" /> )
+}
+
+export function TabsLabelIcon() {
+	return colorizeIcon( <SVGTabsLabelIcon width="16" height="16" /> )
 }
 
 export function TeamMemberIcon() {
