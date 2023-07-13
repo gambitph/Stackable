@@ -25,8 +25,8 @@ const generalProps = [
 		icon: <SVGTutorialsIcon />,
 	},
 	{
-		title: __( 'Documentation and Support', i18n ),
-		subtitle: __( 'Get assistance with troubleshooting, guides, FAQs, and updates.', i18n ),
+		title: __( 'Documentation', i18n ),
+		subtitle: __( 'Visit our knowledge base for troubleshooting, guides, FAQs and updates.', i18n ),
 		link: 'https://docs.wpstackable.com/',
 		icon: <SVGDocsIcon />,
 	},
@@ -40,39 +40,39 @@ const generalProps = [
 
 const essentialsProps = [
 	{
+		title: __( 'How to Customize Stackable Blocks', i18n ),
+		subtitle: __( 'Learn how to personalize and tailor Stackable Blocks to match your website\'s unique style and design.', i18n ),
+		src: 'https://www.youtube.com/embed/HkOPBKMgXuM',
+		url: '#',
+	},
+	{
 		title: __( 'Flexbox Controls', i18n ),
-		subtitle: __( 'Lorem ipsum dolor sit amet consectetur. Molestie in arcu est feugiat pulvinar sit.', i18n ),
+		subtitle: __( 'Explore the powerful Flexbox controls in Stackable that allow you to effortlessly create dynamic and responsive layouts.', i18n ),
 		src: 'https://www.youtube.com/embed/73N9uXnpUJE',
 		url: '#',
 	},
 	{
-		title: __( 'How to Customize Blocks', i18n ),
-		subtitle: __( 'Lorem ipsum dolor sit amet consectetur. Molestie in arcu est feugiat pulvinar sit.', i18n ),
-		src: 'https://www.youtube.com/embed/MaXOZ-1UIvs',
+		title: __( 'Introduction to Hover Styles', i18n ),
+		subtitle: __( 'Discover the exciting world of hover styles in Stackable and learn how to add interactive and engaging effects to your website.', i18n ),
+		src: 'https://www.youtube.com/embed/6vSxPN3kOWY',
 		url: '#',
 	},
 	{
-		title: __( 'How to Use Copy & Paste Styles', i18n ),
-		subtitle: __( 'Lorem ipsum dolor sit amet consectetur. Molestie in arcu est feugiat pulvinar sit.', i18n ),
-		src: 'https://www.youtube.com/embed/MaXOZ-1UIvs',
+		title: __( 'How to Use Image Settings', i18n ),
+		subtitle: __( 'Master the art of optimizing and enhancing images using Stackable\'s intuitive image settings for a visually captivating website.', i18n ),
+		src: 'https://www.youtube.com/embed/SS60OM8hQBo',
 		url: '#',
 	},
 	{
-		title: __( 'Introduction to Wireframes', i18n ),
-		subtitle: __( 'Lorem ipsum dolor sit amet consectetur. Molestie in arcu est feugiat pulvinar sit.', i18n ),
-		src: 'https://www.youtube.com/embed/MaXOZ-1UIvs',
+		title: __( 'Introduction to Stackable Wireframes', i18n ),
+		subtitle: __( 'Dive into the fundamentals of Stackable Wireframes and learn how to streamline your website development process with ease.', i18n ),
+		src: 'https://www.youtube.com/embed/HIr4_9j7-Zc',
 		url: '#',
 	},
 	{
-		title: __( 'How to Use the Design Library', i18n ),
-		subtitle: __( 'Lorem ipsum dolor sit amet consectetur. Molestie in arcu est feugiat pulvinar sit.', i18n ),
-		src: 'https://www.youtube.com/embed/MaXOZ-1UIvs',
-		url: '#',
-	},
-	{
-		title: __( 'How to Use the Column Blocks', i18n ),
-		subtitle: __( 'Lorem ipsum dolor sit amet consectetur. Molestie in arcu est feugiat pulvinar sit.', i18n ),
-		src: 'https://www.youtube.com/embed/MaXOZ-1UIvs',
+		title: __( 'All About Typography in Stackable', i18n ),
+		subtitle: __( 'Unlock the full potential of typography in Stackable and gain insights on how to create visually stunning and impactful text designs.', i18n ),
+		src: 'https://www.youtube.com/embed/dvISiVMmPDQ',
 		url: '#',
 	},
 ]
@@ -140,7 +140,6 @@ export const GettingStarted = () => {
 				<div className="s-banner-wrapper">
 					<div className="s-banner-content">
 						<h2> { __( 'Check out our library of tutorials and guides', i18n ) } </h2>
-						<p> { __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat tempus sollicitudin rhoncus pretium tellus.', i18n ) } </p>
 					</div>
 					<div className="s-button-container"><a href="https://wpstackable.com/learn/?utm_source=plugin&utm_medium=getting_started&utm_campaign=tutorial_button" target="_blank" rel="noreferrer" className="s-button s-secondary-button">
 						{ __( 'Go to Stackable Learn', i18n ) }
