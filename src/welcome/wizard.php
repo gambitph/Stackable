@@ -33,7 +33,7 @@ if ( ! class_exists( 'Stackable_Onboarding_Wizard' ) ) {
 		public function onboard_wizard_content() {
 			?>
 			<div class="wrap s-wrapper--no-menu s-wrap-onboarding-wizard">
-				<?php Stackable_Welcome_Screen::print_header( __( 'Stackable Onboarding Wizard', STACKABLE_I18N ) ) ?>
+				<?php Stackable_Welcome_Screen::print_header( __( 'Stackable Onboarding Wizard', STACKABLE_I18N ), 'icon' ) ?>
                 <section class="s-body-container">
 					<div class="s-body">
 						<div class="s-onboarding-wizard"></div>
