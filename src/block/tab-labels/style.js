@@ -46,7 +46,7 @@ const activeButtonOptions = {
 
 const iconOptions = {
 	selector: '.stk-block-tabs__tab',
-	hoverSelector: '.stk-block-tabs__tab:not(.stk-block-tabs__tab--active):hover',
+	hoverSelector: '.stk-block-tabs__tab:hover',
 }
 
 const Styles = props => {
