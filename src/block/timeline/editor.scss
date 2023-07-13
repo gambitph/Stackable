@@ -4,7 +4,7 @@
 	display: grid !important;
 	grid-template-columns: 1fr var(--line-dot-size, 16px) 1fr;
 	grid-template-rows: auto;
-	gap: var(--gap, 16px);
+	column-gap: var(--gap, 16px);
 	align-items: center;
 }
 .stk-block-timeline {
