@@ -3,7 +3,8 @@
  */
 import { TabStyles } from './style'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
-
+import { defaultIcon } from './schema'
+import { blockStyles as _blockStyles } from './block-styles'
 import SVGIconLeft from './images/icon-left.svg'
 import SVGIconRight from './images/icon-right.svg'
 import SVGIconTop from './images/icon-top.svg'
@@ -49,6 +50,8 @@ import {
 	withBlockWrapper,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
+import { getBlockStyle, useBlockContext } from '~stackable/hooks'
+import { cloneDeep } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -61,10 +64,7 @@ import { dispatch } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { BlockControls } from '@wordpress/block-editor'
 import { Toolbar, ToolbarButton } from '@wordpress/components'
-import { getBlockStyle, useBlockContext } from '~stackable/hooks'
 import { getBlockFromExample } from '@wordpress/blocks'
-import { defaultIcon } from './schema'
-import { blockStyles as _blockStyles } from './block-styles'
 
 // These are the style names (in block-styles.js) that are only available if the
 // parent tabs block orientation is horizontal.
@@ -119,13 +119,13 @@ const Edit = props => {
 	}
 
 	const updateTabLabel = ( content, index ) => {
-		const updatedLabels = [ ...props.attributes.tabLabels ]
+		const updatedLabels = cloneDeep( props.attributes.tabLabels )
 		updatedLabels[ index ].label = content
 		setAttributes( { tabLabels: updatedLabels } )
 	}
 
 	const updateTabIcon = ( icon, index ) => {
-		const updatedLabels = [ ...props.attributes.tabLabels ]
+		const updatedLabels = cloneDeep( props.attributes.tabLabels )
 		updatedLabels[ index ].icon = icon
 		setAttributes( { tabLabels: updatedLabels } )
 	}
@@ -133,7 +133,7 @@ const Edit = props => {
 	const moveActiveTabRight = () => {
 		// Move the tab label
 		const index = activeTab - 1
-		const updatedLabels = [ ...props.attributes.tabLabels ]
+		const updatedLabels = cloneDeep( props.attributes.tabLabels )
 		const temp = updatedLabels[ index ]
 		updatedLabels[ index ] = updatedLabels[ index + 1 ]
 		updatedLabels[ index + 1 ] = temp
@@ -150,7 +150,7 @@ const Edit = props => {
 	const moveActiveTabLeft = () => {
 		// Move the tab label
 		const index = activeTab - 1
-		const updatedLabels = [ ...props.attributes.tabLabels ]
+		const updatedLabels = cloneDeep( props.attributes.tabLabels )
 		const temp = updatedLabels[ index ]
 		updatedLabels[ index ] = updatedLabels[ index - 1 ]
 		updatedLabels[ index - 1 ] = temp
@@ -166,7 +166,7 @@ const Edit = props => {
 
 	const addNewTab = index => {
 		// Ada a new tab label
-		const updatedLabels = [ ...props.attributes.tabLabels ]
+		const updatedLabels = cloneDeep( props.attributes.tabLabels )
 		updatedLabels.splice( index, 0, { label: '', icon: '' } )
 		setAttributes( { tabLabels: updatedLabels } )
 
@@ -201,7 +201,7 @@ const Edit = props => {
 
 	const duplicateTab = index => {
 		// Duplicate the tab label
-		const updatedLabels = [ ...props.attributes.tabLabels ]
+		const updatedLabels = cloneDeep( props.attributes.tabLabels )
 		updatedLabels.splice( index, 0, { label: updatedLabels[ index - 1 ].label, icon: updatedLabels[ index - 1 ].icon } )
 		setAttributes( { tabLabels: updatedLabels } )
 
@@ -232,7 +232,7 @@ const Edit = props => {
 	const deleteActiveTab = () => {
 		const index = activeTab - 1
 		// Delete the tab label
-		const updatedLabels = [ ...props.attributes.tabLabels ]
+		const updatedLabels = cloneDeep( props.attributes.tabLabels )
 		updatedLabels.splice( index, 1 )
 		setAttributes( { tabLabels: updatedLabels } )
 
@@ -552,7 +552,7 @@ const Edit = props => {
 								iconGapPlaceholder="8"
 								onChangeIcon={ icon => {
 									// Reset all tab label icons.
-									const newTabLabels = props.attributes.tabLabels.map(
+									const newTabLabels = cloneDeep( props.attributes.tabLabels ).map(
 										tab => ( {
 											...tab,
 											icon: '',
