@@ -32,7 +32,6 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	getSeparatorClasses,
-	Transform,
 	ContentAlign,
 	getContentAlignmentClasses,
 	Typography,
@@ -230,7 +229,6 @@ const Edit = props => {
 					<ContentAlign.InspectorControls />
 					<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
 					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-timeline" />
