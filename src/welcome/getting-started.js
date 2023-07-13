@@ -127,7 +127,6 @@ export const GettingStarted = () => {
 			<div className="s-getting-started__section">
 				<div className="s-card-header">
 					<h2> { __( 'Learn the essentials', i18n ) } </h2>
-					<p> { __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat tempus sollicitudin rhoncus pretium tellus.', i18n ) } </p>
 				</div>
 				<div className="s-card-container s-card-essentials">
 					{ essentialsProps.map( ( item, key ) => {
