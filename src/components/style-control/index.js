@@ -69,7 +69,7 @@ export const StyleControlOption = memo( props => {
 			aria-label={ option.label || '' }
 		>
 			<div className="stk-block-editor-block-styles__item-preview stk-style-control__image">
-				{ option.image || ( Image && <Image className="stk-style-control__image__icon" /> ) }
+				{ option.image || ( Image && <Image width={ props.width } height={ props.height } className="stk-style-control__image__icon" /> ) }
 			</div>
 			{ option.label && (
 				<div className="stk-block-editor-block-styles__item-label">
@@ -84,6 +84,8 @@ StyleControlOption.defaultProps = {
 	option: {},
 	isActive: false,
 	onSelect: () => {},
+	width: '53.5px',
+	height: '53.5px',
 }
 
 export default StyleControl
