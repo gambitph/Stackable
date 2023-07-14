@@ -52,6 +52,7 @@ Essential Blocks
 Special Blocks
 - Carousel Block - [View Block](https://wpstackable.com/carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Tabs Block - [View Block](https://wpstackable.com/tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
