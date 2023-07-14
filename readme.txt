@@ -177,6 +177,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.10 New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.9 New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.8 New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.7 New Horizontal Scroller and Countdown Blocks](https://wpstackable.com/blog/introducing-new-horizontal-scroller-and-countdown-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -285,6 +286,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.10.0 =
+[Introducing: New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: Tabs Block
 * New: Revamped Getting Started page with new videos and links
 * New: Added new inset option for shadows
