@@ -292,6 +292,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Revamped Getting Started page with new videos and links
 * New: Added new inset option for shadows
 * Fixed: Table of Contents block font family not being applied
+* Fixed: Some block options did not show correctly in Safari
 
 = 3.9.1 =
 * New: Inspector UI improvements and reskin
