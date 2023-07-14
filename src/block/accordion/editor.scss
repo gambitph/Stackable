@@ -32,6 +32,9 @@
 
 	// Rotate the icon when the accordion opens.
 	.stk-block-accordion__heading {
+		.stk-block-content.stk-block-column__content.stk-column-wrapper {
+			width: 100%; // Added for safari compatibility
+		}
 		.stk--svg-wrapper {
 			@include transition();
 		}
