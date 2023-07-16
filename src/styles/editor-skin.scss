@@ -69,7 +69,7 @@
 	.stk-control-label__toggles .components-button:hover,
 	.components-button.is-tertiary.stk-dynamic-content-control__button.is-pressed,
 	.ugb-image-upload:hover,
-	.ugb-button-component:hover {
+	.ugb-button-component:not(.components-circular-option-picker__option):hover {
 		color: var(--stk-skin-dark) !important;
 		background-color: var(--stk-skin-bg-secondary) !important;
 	}
