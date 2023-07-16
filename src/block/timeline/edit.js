@@ -177,7 +177,7 @@ const Edit = props => {
 								placeholder=""
 							/>
 							<AdvancedRangeControl
-								label={ __( 'Thickness', i18n ) }
+								label={ __( 'Line Thickness', i18n ) }
 								attribute="timelineThickness"
 								sliderMax={ 20 }
 								min={ 1 }
