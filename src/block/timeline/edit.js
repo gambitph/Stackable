@@ -227,7 +227,7 @@ const Edit = props => {
 						{ ...props }
 						hasTextTag={ false }
 						isMultiline={ true }
-						initialOpen={ true }
+						initialOpen={ false }
 						hasTextShadow={ true }
 					/>
 					<InspectorLayoutControls>
