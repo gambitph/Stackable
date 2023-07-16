@@ -13,6 +13,10 @@
 .stk-block-timeline--left > .stk-inner-blocks > * {
 	grid-row: 1 / 2;
 }
+// prevents content to be overlapped by background
+.stk-block-timeline > .stk-inner-blocks > * {
+	z-index: 2;
+}
 .stk-block-timeline > .stk-inner-blocks::after {
 	content: "";
 	position: absolute;
@@ -22,6 +26,7 @@
 	bottom: 0;
 	background: var(--fixed-bg);
 	background-attachment: fixed;
+	z-index: 2;
 }
 /** Trim the top-most line and the bottom-most line */
 .stk-block-timeline > .stk-inner-blocks::after {
