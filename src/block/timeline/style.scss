@@ -102,9 +102,13 @@
 		grid-template-columns: var(--line-dot-size, 16px) 1fr;
 		grid-template-rows: auto 1fr;
 		align-items: flex-start;
+		padding-left: 16px;
 	}
 	.stk-block-timeline > .stk-inner-blocks::after {
-		inset-inline-start: calc(var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2);
+		inset-inline-start: calc(var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2 + 16px);
+	}
+	.stk-block-timeline.stk-block-background .stk-block-timeline__middle {
+		margin-left: -16px;
 	}
 	.stk-block-timeline .stk-block-timeline__middle {
 		grid-column: 1 / 2;
