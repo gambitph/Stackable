@@ -15,6 +15,7 @@ import {
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
+	getTypographyClasses,
 	// Separator,
 	getSeparatorClasses,
 	getContentAlignmentClasses,
@@ -36,7 +37,13 @@ export const Save = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const typographyClass = getTypographyClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
+
+	const dateClassNames = classnames( [
+		typographyClass,
+		'stk-block-timeline__date',
+	] )
 
 	const blockClassName = classnames( [
 		props.className,
@@ -71,7 +78,7 @@ export const Save = props => {
 			<div className={ contentClassNames }>
 				<Typography.Content
 					tagName="div"
-					className="stk-block-timeline__date"
+					className={ dateClassNames }
 					attributes={ attributes }
 					// onMerge={ mergeBlocks }
 					// onRemove={ onRemove }
