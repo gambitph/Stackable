@@ -8,7 +8,6 @@ import { createUniqueClass } from '~stackable/util'
  * WordPress dependencies
  */
 import { createBlock } from '@wordpress/blocks'
-import { select } from '@wordpress/data'
 
 const MAXIMUM_SELECTED_BLOCKS = 10
 
@@ -50,12 +49,6 @@ const transforms = {
 							case 'backgroundColor': {
 								if ( value ) {
 									newColumnsAttributes.hasBackground = true
-									const colorObject = select( 'core/block-editor' ).getSettings().colors.find( ( { slug } ) => slug === value )
-									if ( value.startsWith( 'stk-global-color' ) ) {
-										newColumnsAttributes.blockBackgroundColor = `var(--${ value }, ${ colorObject.color })`
-									} else {
-										newColumnsAttributes.blockBackgroundColor = colorObject.color
-									}
 								}
 
 								break

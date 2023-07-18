@@ -19,9 +19,7 @@ import {
 	PanelAdvancedSettings,
 	ShadowControl,
 } from '~stackable/components'
-import {
-	getAttributeName, getAttrNameFunction, extractColor,
-} from '~stackable/util'
+import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -32,8 +30,6 @@ import {
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
 import { applyFilters } from '@wordpress/hooks'
-import { select } from '@wordpress/data'
-import { getColorClassName } from '@wordpress/block-editor'
 
 const TYPOGRAPHY_SHADOWS = [
 	'none',
@@ -103,17 +99,6 @@ export const Controls = props => {
 	}, [ updateAttribute, debouncedText, text ] )
 
 	const onChangeContent = useCallback( text => setDebouncedText( escapeHTML( text ) ), [] )
-
-	const colorChangeCallback = useCallback( _value => {
-		if ( blockState !== 'normal' ) {
-			return _value
-		}
-		const value = extractColor( _value )
-		const colors = select( 'core/block-editor' ).getSettings().colors || []
-		const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-		updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
-		return _value
-	}, [ blockState ] )
 
 	return (
 		<>
@@ -296,19 +281,16 @@ export const Controls = props => {
 						/>
 					) }
 					<ColorPaletteControl
-						changeCallback={ colorChangeCallback }
 						label={ getAttribute( 'textColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
 							: __( 'Text Color', i18n ) }
 						attribute={ attributeName( 'textColor1' ) }
 						hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
-						hasTransparent={ getAttribute( 'textColorType' ) === 'gradient' }
 					/>
 					{ getAttribute( 'textColorType' ) === 'gradient' && hasGradient && (
 						<>
 							<ColorPaletteControl
 								label={ sprintf( __( 'Text Color #%s', i18n ), 2 ) }
 								attribute={ attributeName( 'textColor2' ) }
-								hasTransparent={ true }
 							/>
 
 							<AdvancedRangeControl

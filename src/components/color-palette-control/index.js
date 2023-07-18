@@ -2,34 +2,37 @@
  * Internal dependencies
  */
 import AdvancedControl, { extractControlProps } from '../base-control2'
+import { ResetButton } from '../base-control2/reset-button'
 import { useControlHandlers } from '../base-control2/hooks'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 import {
 	getColorObjectByColorValue,
-	useSetting,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor'
-import { memo, useMemo } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import {
 	Button,
 	ColorIndicator,
 	ColorPalette,
+	ColorPicker,
 	Dropdown,
 	FlexItem,
 	__experimentalHStack as HStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
+import { useSelect } from '@wordpress/data'
 
 /**
  * External dependencies
  */
+import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
-import { isPlainObject, compact } from 'lodash'
-import { ResetButton } from '../base-control2/reset-button'
 
 const popoverProps = {
 	placement: 'left-start',
@@ -39,48 +42,65 @@ const popoverProps = {
 
 const ColorPaletteControl = memo( props => {
 	const {
-		disableCustomColors,
 		label,
 		className = '',
 	} = props
-
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const themeColors = useSetting( 'color.palette.theme' ) || [] // This can be undefined.
-	const colors = useMemo( () => {
-		const colors = compact( themeColors.map( color => {
-			// Make sure to only get color objects. If null, also return null.
-			// This will be removed by lodash's `compact` function.
-			if ( ! isPlainObject( color ) ) {
-				return null
-			}
+	const {
+		stackableColors,
+		hideThemeColors,
+		hideDefaultColors,
+		hideSiteEditorColors,
+	} = useSelect( 'stackable/global-colors' ).getSettings()
 
-			return {
-				...color,
-				name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
-			}
-		} ) )
+	const { colors: groupedColors } = useMultipleOriginColorsAndGradients()
+	let colors = cloneDeep( groupedColors )
 
-		if ( props.hasTransparent ) {
-			colors.push( {
-				name: __( 'Transparent', i18n ),
-				slug: '_stk-transparent', // Make it unique to prevent conflict.
-				color: 'transparent',
-			} )
+	if ( stackableColors && stackableColors.length ) {
+		colors = [
+			{
+				name: __( 'Global Colors', i18n ),
+				colors: cloneDeep( stackableColors ),
+			},
+			...colors,
+		]
+	}
+
+	// Filter the colors.
+	colors = colors.filter( group => {
+		// Since there are no identifying properties for the groups, we'll just use the same names used in Gutenberg.
+		if ( hideThemeColors && group.name === _x( 'Theme', 'Indicates this palette comes from the theme.' ) ) {
+			return false
 		}
 
-		return colors
-	}, [ themeColors, props.hasTransparent ] )
+		if ( hideDefaultColors && group.name === _x( 'Default', 'Indicates this palette comes from WordPress.' ) ) {
+			return false
+		}
+
+		if ( hideSiteEditorColors && group.name === _x( 'Custom', 'Indicates this palette comes from the theme.' ) ) {
+			return false
+		}
+
+		return true
+	} )
+
+	const allColors = colors.reduce( ( colors, group ) => {
+		return [
+			...colors,
+			...group.colors,
+		]
+	}, [] )
 
 	let value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6}/ ) ) {
-		value = value.match( /#[\d\w]{6}/ )[ 0 ]
+	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6,}/ ) ) {
+		value = value.match( /#[\d\w]{6,}/ )[ 0 ]
 	}
 
-	const colorObject = getColorObjectByColorValue( colors, value )
+	const colorObject = getColorObjectByColorValue( allColors, value )
 	const colorName = colorObject && colorObject.name
 	const colorLabel = colorName || ( value === 'transparent' ? 'Transparent' : value )
 
@@ -90,17 +110,32 @@ const ColorPaletteControl = memo( props => {
 	}
 
 	const colorPalette = (
-		<ColorPalette
-			value={ value }
-			onChange={ value => {
-				// Allow the selected color to be overridden.
-				const colorObject = getColorObjectByColorValue( colors, value )
-				onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
-			} }
-			label={ colorLabel }
-			clearable={ false }
-			{ ...{ colors, disableCustomColors } }
-		/>
+		<>
+			<ColorPicker
+				onChange={ onChange }
+				color={ value }
+				enableAlpha={ true }
+			/>
+			<ColorPalette
+				value={ value }
+				onChange={ value => {
+					// Allow the selected color to be overridden.
+					const allColors = colors.reduce( ( colors, group ) => {
+						return [
+							...colors,
+							...group.colors,
+						]
+					}, [] )
+
+					const colorObject = getColorObjectByColorValue( allColors, value )
+					onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
+				} }
+				disableCustomColors={ true }
+				label={ colorLabel }
+				clearable={ false }
+				colors={ colors }
+			/>
+		</>
 	)
 
 	return (
