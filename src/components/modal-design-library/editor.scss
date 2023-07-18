@@ -25,6 +25,9 @@
 		margin: 0;
 		height: 58px;
 		border-bottom: 1px solid #ddd;
+		.components-button-group:focus-within {
+			box-shadow: none;
+		}
 	}
 	.ugb-modal-design-library__wrapper {
 		display: grid;
