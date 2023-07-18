@@ -106,7 +106,7 @@ const loadScriptAsync = apiKey => {
 		}
 		const script = document.createElement( 'script' )
 		script.id = 'stackable-google-map'
-		script.src = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places`
+		script.src = `https://maps.googleapis.com/maps/api/js?key=${ apiKey }&libraries=places&callback=Function.prototype`
 		script.type = 'text/javascript'
 		script.async = true
 		script.onload = resolve
