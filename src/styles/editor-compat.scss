@@ -11,8 +11,8 @@
 
 // Default block width and wide widths - used for Content Width of column-type blocks.
 .ct-theme-editor-styles {
-	--stk-block-width-default-detected: var(--has-wide, var(--block-max-width));
-	--stk-block-width-wide-detected: var(--has-wide, var(--wide-block-max-width));
+	--stk-block-width-default-detected: var(--has-wide, var(--theme-block-max-width, var(--block-max-width)));
+	--stk-block-width-wide-detected: var(--has-wide, var(--theme-block-wide-max-width, var(--wide-block-max-width)));
 }
 
 /**
