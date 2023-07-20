@@ -141,7 +141,7 @@ const ResizableColumn = props => {
 			const totalColumnGap = parentColumnGaps.desktop * ( adjacentBlocks.length - 1 )
 
 			// Get the current pixel width of the columns.
-			const parentEl = editorDom.querySelector( `[data-block="${ parentBlockClientId }"]` )
+			const parentEl = editorDom.querySelector( `[data-block="${ parentBlockClientId }"] .stk-inner-blocks` )
 			const parentWidth = parentEl.clientWidth - totalColumnGap
 			const isFirstResize = adjacentBlocks.every( ( { attributes } ) => ! attributes.columnWidth )
 			const columnWidths = adjacentBlocks.map( ( { clientId, attributes } ) => {
