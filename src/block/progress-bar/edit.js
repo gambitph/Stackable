@@ -70,7 +70,7 @@ const Edit = props => {
 	} )
 
 	// parsing string to number since progress value is of a string type to support dynamic content
-	const parsedProgressValue = parseFloat( useDynamicContent( attributes.progressValue ) )
+	const parsedProgressValue = parseFloat( useDynamicContent( attributes.progressValue ).replace( /,/g, '' ) )
 	const derivedProgressValue = isNaN( parsedProgressValue ) ? DEFAULT_PROGRESS : parsedProgressValue
 	const derivedValue = `${ attributes.progressValuePrefix }${ derivedProgressValue }${ attributes.progressValueSuffix }`.trim()
 
