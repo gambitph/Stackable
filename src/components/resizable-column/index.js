@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
-import { AdvancedTextControl } from '..'
+import { AdvancedTextControl, Popover } from '..'
 import { ColumnShowTooltipContext } from '../column-inner-blocks'
 
 /**
@@ -22,7 +22,7 @@ import { getRowsFromColumns } from '~stackable/block-components/column/util'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { ResizableBox, Popover } from '@wordpress/components'
+import { ResizableBox } from '@wordpress/components'
 import { useSelect, select } from '@wordpress/data'
 import {
 	Fragment, useState, useEffect, useRef, memo, useContext,
@@ -539,6 +539,7 @@ const ResizableTooltip = memo( props => {
 							setIsEditWidth( false )
 						}
 					} }
+					onEscape={ () => setIsEditWidth( false ) }
 				>
 					<div ref={ popupRef }>
 						<AdvancedTextControl
