@@ -330,8 +330,8 @@ Image.defaultProps = {
 	height: '',
 	widthUnit: '%',
 	heightUnit: 'px',
-	widthUnits: [ 'px', '%' ],
-	heightUnits: [ 'px', '%' ],
+	widthUnits: [ 'px', '%', 'vw' ],
+	heightUnits: [ 'px', '%', 'vh' ],
 
 	shape: '',
 	shapeStretch: false,
