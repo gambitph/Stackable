@@ -188,6 +188,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @return string output block
 		 */
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
+			if ( is_admin() ) {
+				return;
+			}
+
 			// Load our main frontend scripts if there's a Stackable block loaded in the
 			// frontend.
 			if ( ! $this->is_main_script_loaded && ! is_admin() ) {
