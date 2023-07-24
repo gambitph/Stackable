@@ -53,7 +53,7 @@ if ( ! function_exists( 'stackable_register_show_pro_notice_option' ) ) {
 			)
 		);
 	}
-	add_action( 'init', 'stackable_register_show_pro_notice_option' );
+	add_action( 'admin_init', 'stackable_register_show_pro_notice_option' );
 }
 
 if ( ! function_exists( 'stackable_should_show_pro_notices' ) ) {

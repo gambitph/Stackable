@@ -41,7 +41,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 */
   	function __construct() {
 			// Register our settings.
-			add_action( 'init', array( $this, 'register_global_settings' ) );
+			add_action( 'admin_init', array( $this, 'register_global_settings' ) );
 
 			/**
 			 * Color hooks
