@@ -77,21 +77,34 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"
-				selector=".%s .stk-inner-blocks__wrapper"
-				styleRule="justifyContent"
+				selector=".%s-column"
+				styleRule="marginLeft"
 				attrName="containerHorizontalAlign"
 				key="containerHorizontalAlign"
 				responsive="all"
+				valueCallback={ value => {
+					if ( value === 'flex-start' ) {
+						return '0'
+					}
+					if ( value === 'flex-end' || value === 'center' ) {
+						return 'auto'
+					}
+				} }
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"
-				selector=".%s .stk-inner-blocks__wrapper"
-				styleRule="display"
+				selector=".%s-column"
+				styleRule="marginRight"
 				attrName="containerHorizontalAlign"
 				key="containerHorizontalAlign"
-				valueCallback={ () => {
-					return 'flex'
+				valueCallback={ value => {
+					if ( value === 'flex-start' || value === 'center' ) {
+						return 'auto'
+					}
+					if ( value === 'flex-end' ) {
+						return '0'
+					}
 				} }
 			/>
 		</>

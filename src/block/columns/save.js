@@ -62,10 +62,8 @@ export const Save = props => {
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<Separator.Content attributes={ attributes }>
-				<div className="stk-inner-blocks__wrapper">
-					<div className={ contentClassNames }>
-						<InnerBlocks.Content />
-					</div>
+				<div className={ contentClassNames }>
+					<InnerBlocks.Content />
 				</div>
 			</Separator.Content>
 		</BlockDiv.Content>
