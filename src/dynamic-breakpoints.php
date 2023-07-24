@@ -29,6 +29,7 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		function __construct() {
 			// Register breakpoint settings.
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
+			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
 
 			if ( $this->has_custom_breakpoints() ) {
 				// Add our filter that adjusts all CSS that we print out.

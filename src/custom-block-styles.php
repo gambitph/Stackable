@@ -23,6 +23,7 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		function __construct() {
 			// Register our settings.
 			add_action( 'admin_init', array( $this, 'register_block_style_settings' ) );
+			add_action( 'rest_api_init', array( $this, 'register_block_style_settings' ) );
 
 			// Register our management rest routes
 			add_action( 'rest_api_init', array( $this, 'register_route' ) );
