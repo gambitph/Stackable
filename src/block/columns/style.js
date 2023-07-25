@@ -10,9 +10,10 @@ import {
 	Separator,
 	Transform,
 	Columns,
+	ContainerDiv,
 } from '~stackable/block-components'
 import { useBlockAttributesContext } from '~stackable/hooks'
-import { BlockCssCompiler, BlockCss } from '~stackable/components'
+import { BlockCssCompiler } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -24,91 +25,10 @@ const alignmentOptions = {
 	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 }
 
-const Styles = props => {
-	const propsToPass = {
-		...props,
-		version: props.version,
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	}
-
-	return (
-		<>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector=".%s .stk-inner-blocks .block-editor-inner-blocks > .block-editor-block-list__layout"
-				styleRule="maxWidth"
-				attrName="containerWidth"
-				key="containerWidth"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector=".%s .stk-inner-blocks .block-editor-inner-blocks"
-				styleRule="justifyContent"
-				attrName="containerHorizontalAlign"
-				key="containerHorizontalAlign"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector=".%s .stk-inner-blocks .block-editor-inner-blocks"
-				styleRule="display"
-				attrName="containerHorizontalAlign"
-				key="containerHorizontalAlign"
-				valueCallback={ () => {
-					return 'flex'
-				} }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="save"
-				selector=".%s .stk-inner-blocks"
-				styleRule="maxWidth"
-				attrName="containerWidth"
-				key="containerWidth"
-				format="%spx"
-				responsive="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="save"
-				selector=".%s-column"
-				styleRule="marginLeft"
-				attrName="containerHorizontalAlign"
-				key="containerHorizontalAlign"
-				responsive="all"
-				valueCallback={ value => {
-					if ( value === 'flex-start' ) {
-						return '0'
-					}
-					if ( value === 'flex-end' || value === 'center' ) {
-						return 'auto'
-					}
-				} }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="save"
-				selector=".%s-column"
-				styleRule="marginRight"
-				attrName="containerHorizontalAlign"
-				key="containerHorizontalAlign"
-				valueCallback={ value => {
-					if ( value === 'flex-start' || value === 'center' ) {
-						return 'auto'
-					}
-					if ( value === 'flex-end' ) {
-						return '0'
-					}
-				} }
-			/>
-		</>
-	)
+const containerDivOptions = {
+	sizeSelector: '.%s-column',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeVerticalAlignSelector: '.%s-column',
 }
 
 const BlockStyles = memo( props => {
@@ -119,10 +39,10 @@ const BlockStyles = memo( props => {
 
 	return (
 		<>
-			<Styles { ...props } />
 			<Alignment.Style { ...props } { ...alignmentOptions } />
 			<BlockDiv.Style { ...props } />
 			<MarginBottom.Style { ...props } />
+			<ContainerDiv.Style { ...props } { ...containerDivOptions } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
@@ -147,10 +67,10 @@ BlockStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
-			<Styles { ...props } />
 			<Alignment.Style.Content { ...props } { ...alignmentOptions } />
 			<BlockDiv.Style.Content { ...props } />
 			<MarginBottom.Style.Content { ...props } />
+			<ContainerDiv.Style.Content { ...props } { ...containerDivOptions } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />

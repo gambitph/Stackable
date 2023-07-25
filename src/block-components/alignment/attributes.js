@@ -62,21 +62,4 @@ export const addAttributes = attrObject => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
-
-	attrObject.add( {
-		attributes: {
-			containerWidth: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			containerHorizontalAlign: {
-				stkResponsive: true,
-				type: 'string',
-				default: '',
-			},
-		},
-		versionAdded: '3.10.1',
-		versionDeprecated: '',
-	} )
 }
