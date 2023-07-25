@@ -93,10 +93,10 @@
 	inset-inline-end: 50%;
 }
 .stk-block-timeline--right .stk-block-timeline__content {
-	margin-inline-start: var(--content-line, 0);
+	margin-inline-start: max(calc(var(--content-line, 0) - calc(var(--line-dot-size, 0) * 0.5)), 0px);
 }
 .stk-block-timeline--left .stk-block-timeline__content {
-	margin-inline-end: var(--content-line, 0);
+	margin-inline-end: max(calc(var(--content-line, 0) - calc(var(--line-dot-size, 0) * 0.5)), 0px);
 }
 
 @include mobile {
