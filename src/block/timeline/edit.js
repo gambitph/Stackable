@@ -52,6 +52,7 @@ import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
+import { addFilter } from '@wordpress/hooks'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -291,3 +292,11 @@ export default compose(
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
+
+// Change the default bottom margin to 0 for the timeline block because this
+// block is usually used multiple times in a page and it can be annoying having
+// to remove the bottom margin every time. This works in conjunction with the
+// margin-bottom set in style.scss
+addFilter( 'stackable.resizable-bottom-margin.default', 'stackable/timeline', ( defaultBottomMargin, blockName ) => {
+	return blockName === 'stackable/timeline' ? 0 : defaultBottomMargin
+} )
