@@ -32,7 +32,8 @@ const Styles = props => {
 				attrName="progressValue"
 				key="progressValue"
 				valueCallback={ value => {
-					return getDynamicContent( value ).replace( /,/g, '' )
+					const progressValue = value || ''
+					return getDynamicContent( progressValue ).replace( /,/g, '' )
 				} }
 				format={ ! isCircle ? '%s%' : undefined }
 			/>

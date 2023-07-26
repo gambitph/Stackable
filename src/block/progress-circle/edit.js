@@ -65,8 +65,10 @@ const Edit = props => {
 		textClasses,
 	] )
 
+	const progressValue = attributes.progressValue || ''
+
 	// this is to handle dynamic content; only show valid value
-	const parsedProgressValue = parseFloat( useDynamicContent( attributes.progressValue ).replace( /,/g, '' ) )
+	const parsedProgressValue = parseFloat( useDynamicContent( progressValue ).replace( /,/g, '' ) )
 	const derivedProgressValue = isNaN( parsedProgressValue ) ? DEFAULT_PROGRESS : parsedProgressValue
 	const derivedValue = `${ attributes.progressValuePrefix }${ derivedProgressValue }${ attributes.progressValueSuffix }`.trim()
 
