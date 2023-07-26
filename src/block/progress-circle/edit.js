@@ -150,6 +150,9 @@ const Edit = props => {
 						) }
 					</div>
 				</div>
+				<style>
+					{ `.editor-styles-wrapper .stk-${ props.attributes.uniqueId } .stk-progress-circle { --progress-value:${ derivedValue } }` }
+				</style>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

@@ -137,6 +137,9 @@ const Edit = props => {
 						</div>
 					</div>
 				</div>
+				<style>
+					{ `.editor-styles-wrapper .stk-${ props.attributes.uniqueId } .stk-progress-bar { --progress-value:${ derivedValue }% !important; }` }
+				</style>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>
