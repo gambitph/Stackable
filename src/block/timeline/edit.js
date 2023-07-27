@@ -37,7 +37,9 @@ import {
 	getContentAlignmentClasses,
 	Typography,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
+import {
+	useBlockContext, useBlockSetAttributesContext, useDeviceType,
+} from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -53,6 +55,9 @@ import {
 } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { addFilter } from '@wordpress/hooks'
+import {
+	useEffect, useRef, useState,
+} from '@wordpress/element'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -96,6 +101,16 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const typographyClass = getTypographyClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
+	const setAttribute = useBlockSetAttributesContext()
+	const deviceType = useDeviceType()
+
+	const middleRef = useRef()
+	const branchRef = useRef()
+	const blockRef = useRef()
+	const adjacentBlock = useRef()
+	const [ middleHeight, setMiddleHeight ] = useState( { dot: 0, branch: 0 } )
+	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
+	const [ verticalLineHeight, setVerticalLineHeight ] = useState( 0 )
 
 	const dateClassNames = classnames( [
 		typographyClass,
@@ -110,6 +125,7 @@ const Edit = props => {
 		{
 			'stk-block-timeline--left': props.attributes.timelinePosition !== 'right',
 			'stk-block-timeline--right': props.attributes.timelinePosition === 'right',
+			'stk-block-timeline--last': props.attributes.timelineIsLast,
 		},
 	] )
 
@@ -118,6 +134,90 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes ) )
+
+	useEffect( () => {
+		const getAdjacentBlocks = () => {
+			let timelineBlock = document.getElementById( 'block-' + clientId )
+
+			if ( ! timelineBlock ) {
+				const iframe = document.querySelector( 'iframe' )
+				timelineBlock = iframe.contentDocument.getElementById( 'block-' + clientId )
+			}
+
+			const nextBlock = timelineBlock ? timelineBlock.nextElementSibling : null
+			const previousBlock = timelineBlock ? timelineBlock.previousElementSibling : null
+
+			return {
+				previousBlock,
+				nextBlock,
+			}
+		}
+
+		// check if timeline block is single, is first block, or is last block
+		const getTimelinePosition = ( previousBlock, nextBlock ) => {
+			return {
+				isSingle: ( ! nextBlock || nextBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ) && ( ! previousBlock || previousBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ),
+				isFirst: ( ! previousBlock || previousBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ),
+				isLast: ( ! nextBlock || nextBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ),
+			}
+		}
+
+		const timeout = setInterval( () => {
+			const { previousBlock, nextBlock } = getAdjacentBlocks()
+			const {
+				isSingle, isFirst, isLast,
+			} = getTimelinePosition( previousBlock, nextBlock )
+
+			// check if adjacent block has changed
+			if ( adjacentBlock.current?.getAttribute( 'data-type' ) !== nextBlock?.getAttribute( 'data-type' ) && adjacentBlock.current?.getAttribute( 'data-block' ) !== nextBlock?.getAttribute( 'data-block' ) ) {
+				adjacentBlock.current = nextBlock
+
+				// set attribute for frontend
+				if ( nextBlock && nextBlock.getAttribute( 'data-type' ) === 'stackable/timeline' && props.attributes.timelineIsLast ) {
+					setAttribute( { timelineIsLast: false } )
+				} else if ( ! nextBlock || nextBlock.getAttribute( 'data-type' !== 'stackable/timeline' ) ) {
+					setAttribute( { timelineIsLast: true } )
+				}
+
+				let lineMaxHeight = '100%'
+				if ( deviceType === 'Mobile' && isLast && ! isSingle ) {
+					lineMaxHeight = '16px'
+				} else if ( deviceType === 'Mobile' && ! isSingle ) {
+					lineMaxHeight = '100%'
+				// if single timeline block
+				} else if ( isSingle ) {
+					lineMaxHeight = '0'
+				// if first or last timeline block
+				} else if ( isFirst || isLast ) {
+					lineMaxHeight = '50%'
+				}
+
+				setVerticalLineMaxHeight( lineMaxHeight )
+				handleScroll()
+			}
+		}, 500 )
+
+		const handleScroll = () => {
+			const { previousBlock } = getAdjacentBlocks()
+
+			const dot = ( document.body.clientHeight / 2 ) - ( middleRef.current.getBoundingClientRect().top + middleRef.current.getBoundingClientRect().height )
+			const branch = dot - ( branchRef.current.getBoundingClientRect().top - middleRef.current.getBoundingClientRect().top )
+			let lineHeight = ( document.body.clientHeight / 2 ) - ( blockRef.current.getBoundingClientRect().top - ( middleRef.current.getBoundingClientRect().height / 2 ) )
+
+			// corrects the position of the fill for the first timeline block since the line starts at the middle
+			if ( ! previousBlock || previousBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ) {
+				lineHeight = ( document.body.clientHeight / 2 ) - ( blockRef.current.getBoundingClientRect().top + ( blockRef.current.getBoundingClientRect().height / 2 ) + middleRef.current.getBoundingClientRect().height )
+			}
+			setMiddleHeight( { dot, branch } )
+			setVerticalLineHeight( lineHeight )
+		}
+
+		document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
+		return () => {
+			clearInterval( timeout )
+			document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
+		}
+	}, [] )
 
 	return (
 		<>
@@ -260,6 +360,7 @@ const Edit = props => {
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<div
+					ref={ blockRef }
 					className={ contentClassNames }
 					data-align={ ! props.attributes.contentAlign ? undefined // Only needed in the backend
 						: props.attributes.contentAlign === 'alignwide' ? 'wide'
@@ -270,13 +371,52 @@ const Edit = props => {
 						className={ dateClassNames }
 						placeholder={ _x( 'Text for This Block', 'Text placeholder', i18n ) }
 					/>
-					<div className="stk-block-timeline__middle"></div>
+					<div
+						className="stk-block-timeline__middle"
+					>
+						<div
+							className="stk-block-timeline__middle__dot"
+							ref={ middleRef }
+						>
+							<div
+								className="stk-block-timeline__middle__fill"
+								style={ {
+									height: `max(${ middleHeight.dot }px, 0px)`,
+								} }
+							/>
+						</div>
+						<div
+							className="stk-block-timeline__middle__branch"
+							ref={ branchRef }
+						>
+							<div
+								className="stk-block-timeline__middle__branch__fill"
+								style={ {
+									height: `max(${ middleHeight.branch }px, 0px)`,
+								 } }
+							>
+							</div>
+						</div>
+					</div>
 					<div className="stk-block-timeline__content">
 						<InnerBlocks
 							template={ TEMPLATE }
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ false }
 							templateLock="false"
+						/>
+					</div>
+					<div
+						className="stk-block-timeline__vertical-line"
+						style={ {
+							maxHeight: verticalLineMaxHeight,
+						} }
+					>
+						<div
+							className="stk-block-timeline__vertical-line__fill"
+							style={ {
+								height: `max(${ verticalLineHeight }px, 0px)`,
+							} }
 						/>
 					</div>
 				</div>

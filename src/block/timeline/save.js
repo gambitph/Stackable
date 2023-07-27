@@ -53,6 +53,7 @@ export const Save = props => {
 		{
 			'stk-block-timeline--left': props.attributes.timelinePosition !== 'right',
 			'stk-block-timeline--right': props.attributes.timelinePosition === 'right',
+			'stk-is-last': props.attributes.timelineIsLast,
 		},
 	] )
 

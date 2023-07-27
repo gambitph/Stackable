@@ -78,7 +78,7 @@
 .stk-block-timeline + .stk-block-timeline > .stk-inner-blocks::after {
 	top: 0;
 }
-.stk-block-timeline:has(+ .stk-block-timeline) > .stk-inner-blocks::after {
+.stk-block-timeline:not(.stk-is-last) > .stk-inner-blocks::after {
 	bottom: 0;
 }
 
