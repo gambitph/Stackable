@@ -25,6 +25,12 @@
 		margin: 0;
 		height: 58px;
 		border-bottom: 1px solid #ddd;
+		.stk-control-content {
+			padding-left: 14px;
+		}
+		.components-button {
+			left: 0 !important;
+		}
 	}
 	.ugb-modal-design-library__wrapper {
 		display: grid;
