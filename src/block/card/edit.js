@@ -164,9 +164,9 @@ const Edit = props => {
 						heightUnits={ heightUnit }
 						defaultWidth={ 250 }
 						width={ blockStyle !== 'horizontal' ? 100 : undefined }
-						widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
+						widthUnit={ blockStyle !== 'horizontal' ? '%' : props.attributes.imageWidthUnit }
 						height={ blockStyle !== 'horizontal' ? undefined : 100 }
-						heightUnit={ blockStyle !== 'horizontal' ? 'px' : '%' }
+						heightUnit={ blockStyle !== 'horizontal' ? props.attributes.imageHeightUnit : '%' }
 						hasTooltip={ ! [ 'full', 'faded' ].includes( blockStyle ) }
 					/>
 					<div className={ innerClassNames }>
