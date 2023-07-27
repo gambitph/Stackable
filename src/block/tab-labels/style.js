@@ -69,7 +69,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=""
+				selector=":is(.stk-block-content.stk-block-tabs--horizontal) .%s"
 				styleRule="--tabs-flex"
 				attrName="fullWidth"
 				key="fullWidth"
@@ -125,7 +125,7 @@ const Styles = props => {
 				} }
 				attrName="contentAlign"
 				key="iconAlignment-iconPosition"
-				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) || getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom' }
+				enabledCallback={ getAttribute => getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom' }
 				valueCallback={ ( value, getAttribute ) => {
 					let newValue = value
 					if ( value === '' || value === 'left' ) {
@@ -185,8 +185,10 @@ const Styles = props => {
 				selector=".stk-block-tab-labels__wrapper .stk-block-tab-labels__text"
 				styleRule="width"
 				attrName="labelFullWidth"
-				valueCallback={ () => {
-					return '100%'
+				valueCallback={ value => {
+					if ( value ) {
+						return '100%'
+					}
 				} }
 				key="labelFullWidth"
 				responsive="all"
