@@ -152,6 +152,7 @@ const Edit = props => {
 						) }
 					</div>
 				</div>
+				{ /* Add our progress style here because we're adjusting the value using a hook */ }
 				<style>
 					{ `.editor-styles-wrapper .stk-${ props.attributes.uniqueId } .stk-progress-circle { --progress-value:${ derivedValue } }` }
 				</style>
