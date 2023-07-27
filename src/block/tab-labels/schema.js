@@ -109,13 +109,6 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkHover: true,
 			},
-		},
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
-
-	attrObject.add( {
-		attributes: {
 			fixedIconPosition: {
 				type: 'string',
 				default: '',

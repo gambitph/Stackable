@@ -57,6 +57,10 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 
+	const {
+		dependencies = [],
+	} = props
+
 	return (
 		<>
 			<BlockCss
@@ -125,7 +129,7 @@ const Styles = props => {
 				} }
 				attrName="contentAlign"
 				key="iconAlignment-iconPosition"
-				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) || ! getAttribute( 'fullWidth' ) || getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom' }
+				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) !== undefined || getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom' }
 				valueCallback={ ( value, getAttribute ) => {
 					let newValue = value
 					if ( value === '' || value === 'left' ) {
@@ -148,7 +152,7 @@ const Styles = props => {
 					return newValue
 				} }
 				responsive="all"
-				dependencies={ [ 'fullWidth', 'iconPosition' ] }
+				dependencies={ [ 'fullWidth', 'iconPosition', ...dependencies ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -190,10 +194,11 @@ const Styles = props => {
 					if ( value ) {
 						return '100%'
 					}
+					return undefined
 				} }
 				key="fixedIconPosition"
 				responsive="all"
-				dependencies={ [ 'iconPosition' ] }
+				dependencies={ [ 'iconPosition', ...dependencies ] }
 			/>
 		</>
 	)
