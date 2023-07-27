@@ -4,10 +4,6 @@
 	margin-top: 0 !important;
 }
 
-.stk-block-tabs--vertical .stk-block-tab-labels.stk-block {
-	--tabs-flex: unset;
-}
-
 @include mobile {
 	.wp-block-stackable-tab-labels {
 		width: 100% !important;
