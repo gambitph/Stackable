@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { AdvancedTextControl } from '~stackable/components'
+import { AdvancedTextControl, Popover } from '~stackable/components'
 
 /**
  * External dependencies
@@ -13,7 +13,7 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { BaseControl, Popover } from '@wordpress/components'
+import { BaseControl } from '@wordpress/components'
 import {
 	Fragment, useState, useEffect, useRef,
 } from '@wordpress/element'
@@ -214,6 +214,7 @@ const ResizerTooltip = props => {
 							setIsEditing( false )
 						}
 					} }
+					onEscape={ () => setIsEditing( false ) }
 				>
 					<div ref={ popupRef }>
 						{ props.enableWidth && props.enableHeight &&

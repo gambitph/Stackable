@@ -1,14 +1,14 @@
 /**
  * Internal dependencies
  */
-import { Button, BaseControl } from '~stackable/components'
+import {
+	Button, BaseControl, Popover,
+} from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import {
-	Popover, ToggleControl, PanelBody,
-} from '@wordpress/components'
+import { ToggleControl, PanelBody } from '@wordpress/components'
 import {
 	useEffect, useState, memo, useRef,
 } from '@wordpress/element'
@@ -84,6 +84,7 @@ const ButtonIconPopoverControl = memo( props => {
 					<Popover
 						className="ugb-button-icon-control__popover"
 						focusOnMount="container"
+						onEscape={ () => setIsOpen( false ) }
 					>
 						<PanelBody>
 							{ ( typeof props.popoverLabel !== 'undefined' ? props.popoverLabel : props.label ) &&

@@ -387,6 +387,7 @@ export const DynamicContentButton = memo( props => {
 				<Popover
 					position="top right"
 					className={ classnames( 'stackable-dynamic-content__popover', { 'stk-dynamic-content__popover--is-premium': ! isPro } ) }
+					onEscape={ props.onClick }
 				>
 					{ ! isPro && <ProControl type="dynamic-attributes" /> }
 
