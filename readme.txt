@@ -286,6 +286,25 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.10.1 =
+* New: Added vw and vh units to some block options
+* New: Added a new `stackable_activation_screen_enabled` PHP filter that when false bypasses the welcome and wizard screen.
+* Fixed: Column resize doesn't snap correctly when the Columns block has a background enabled
+* Fixed: Columns block content max width and horizontal align options reset upon save
+* Fixed: Resolved missing dependencies warning in Query Monitor
+* Fixed: Divider block tablet and mobile alignments not working
+* Fixed: Tab Labels block text alignment do now work correctly when using vertical tabs
+* Fixed: Some embedded content do not show up in lightbox
+* Fixed: Enabling template locking on a container can cause inner blocks to overlap
+* Fixed: A scrollbar was visible on the carousel block in Firefox
+* Fixed: Better accessibility: pressing the escape key will close popovers
+* Fixed: Colors not working for the collapsed state of accordion blocks (need to edit the block for it to take effect)
+* Fixed: Carousel block aria warning
+* Fixed: Design library tab focus outline
+* Fixed: Map block JS callback warning is now resolved
+* Fixed: Progress bar and cirlce blocks can now handle dynamic content that has commas
+* Fixed: V2 Feature Grid encounters an error when using the advanced tab
+
 = 3.10.0 =
 [Introducing: New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 

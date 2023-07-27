@@ -34,6 +34,7 @@
 	margin: 0 auto;
 	position: relative;
 	overflow: hidden;
+	scrollbar-width: none; // Removes scrollbar visibility in Mozilla Firefox
 }
 .stk-block-carousel__slider-wrapper {
 	position: relative;

@@ -235,7 +235,8 @@
 		margin-top: 0;
 	}
 	// Last of type since there's a .block-list-appender
-	> [data-block]:nth-last-child(2) {
+	// If the block parent is locked, there will be no appender block and data-is-drop-zone will not be present.
+	&:is([data-is-drop-zone="true"]) > [data-block]:nth-last-child(2) {
 		margin-bottom: 0;
 		&[data-type^="stackable/"] > .stk-block {
 			margin-bottom: 0;

@@ -357,6 +357,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				// Never go here again.
                 delete_option( 'stackable_redirect_to_welcome' );
 
+				// Allow others to bypass the welcome screen.
+				if ( ! apply_filters( 'stackable_activation_screen_enabled', true ) ) {
+					return;
+				}
+
 				// If we haven't been to the wizard yet, go there.
 				if ( get_option( 'stackable_redirected_to_wizard' ) === false ) {
 					update_option( 'stackable_redirected_to_wizard', '1' );
@@ -374,6 +379,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
     new Stackable_Welcome_Screen();
 }
+
+// This filter is used by the Freemius activation screen, we can disable redirection with this.
+add_filter( 'fs_redirect_on_activation_stackable-ultimate-gutenberg-blocks', function ( $redirect ) {
+	return apply_filters( 'stackable_activation_screen_enabled', $redirect );
+} );
 
 // Redirect to the welcome screen.
 register_activation_hook( STACKABLE_FILE, array( 'Stackable_Welcome_Screen', 'start_redirect_to_welcome_page' ) );
