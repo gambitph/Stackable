@@ -125,7 +125,7 @@ const Styles = props => {
 				} }
 				attrName="contentAlign"
 				key="iconAlignment-iconPosition"
-				enabledCallback={ getAttribute => getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom' }
+				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) || ! getAttribute( 'fullWidth' ) || getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom' }
 				valueCallback={ ( value, getAttribute ) => {
 					let newValue = value
 					if ( value === '' || value === 'left' ) {
@@ -182,16 +182,18 @@ const Styles = props => {
 			{ /* Enable labels layout to more customizable */ }
 			<BlockCss
 				{ ...propsToPass }
+				enabledCallback={ getAttribute => getAttribute( 'iconPosition' ) === '' || getAttribute( 'iconPosition' ) === 'right' }
 				selector=".stk-block-tab-labels__wrapper .stk-block-tab-labels__text"
 				styleRule="width"
-				attrName="labelFullWidth"
+				attrName="fixedIconPosition"
 				valueCallback={ value => {
 					if ( value ) {
 						return '100%'
 					}
 				} }
-				key="labelFullWidth"
+				key="fixedIconPosition"
 				responsive="all"
+				dependencies={ [ 'iconPosition' ] }
 			/>
 		</>
 	)

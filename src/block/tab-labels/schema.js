@@ -116,7 +116,7 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
-			labelFullWidth: {
+			fixedIconPosition: {
 				type: 'string',
 				default: '',
 			},

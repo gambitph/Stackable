@@ -376,11 +376,14 @@ const Edit = props => {
 							/>
 						</> }
 
-						<AdvancedToggleControl
-							label={ __( 'Label Full Width', i18n ) }
-							attribute="labelFullWidth"
-							defaultValue={ false }
-						/>
+						{ ( ( props.attributes.showIcon && props.attributes.iconPosition === 'right' ) ||
+							( props.attributes.showIcon && props.attributes.iconPosition === '' ) ) &&
+								<AdvancedToggleControl
+									label={ __( 'Fixed Icon Position', i18n ) }
+									attribute="fixedIconPosition"
+									defaultValue={ false }
+								/>
+						}
 
 						{ props.attributes.showIcon &&
 							<AdvancedToolbarControl
