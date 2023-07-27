@@ -104,6 +104,9 @@ const Edit = props => {
 		hasHeight = true
 	}
 
+	const imageWidthUnit = props.attributes.imageWidthUnit || 'px'
+	const imageHeightUnit = props.attributes.imageHeightUnit || 'px'
+
 	return (
 		<>
 			{ isSelected && (
@@ -164,9 +167,9 @@ const Edit = props => {
 						heightUnits={ heightUnit }
 						defaultWidth={ 250 }
 						width={ blockStyle !== 'horizontal' ? 100 : undefined }
-						widthUnit={ blockStyle !== 'horizontal' ? '%' : props.attributes.imageWidthUnit }
+						widthUnit={ blockStyle !== 'horizontal' ? '%' : imageWidthUnit }
 						height={ blockStyle !== 'horizontal' ? undefined : 100 }
-						heightUnit={ blockStyle !== 'horizontal' ? props.attributes.imageHeightUnit : '%' }
+						heightUnit={ blockStyle !== 'horizontal' ? imageHeightUnit : 'px' }
 						hasTooltip={ ! [ 'full', 'faded' ].includes( blockStyle ) }
 					/>
 					<div className={ innerClassNames }>
