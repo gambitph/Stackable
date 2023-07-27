@@ -114,6 +114,17 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
+	attrObject.add( {
+		attributes: {
+			labelFullWidth: {
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
 	attrObject.addDefaultValues( {
 		attributes: {
 			icon: defaultIcon,

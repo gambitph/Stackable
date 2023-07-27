@@ -179,6 +179,18 @@ const Styles = props => {
 				hover="all"
 			/>
 
+			{ /* Enable labels layout to more customizable */ }
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-tab-labels__wrapper .stk-block-tab-labels__text"
+				styleRule="width"
+				attrName="labelFullWidth"
+				valueCallback={ () => {
+					return '100%'
+				} }
+				key="labelFullWidth"
+				responsive="all"
+			/>
 		</>
 	)
 }
