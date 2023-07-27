@@ -595,7 +595,6 @@ const Edit = props => {
 				version={ VERSION }
 				blockState={ props.blockState }
 				clientId={ clientId }
-				context={ props.context }
 			/>
 			<CustomCSS mainBlockClass="stk-block-tab-labels" />
 
