@@ -57,6 +57,10 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 
+	const {
+		dependencies = [],
+	} = props
+
 	return (
 		<>
 			<BlockCss
@@ -69,7 +73,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=""
+				selector=".stk-block-content.stk-block-tabs--horizontal .%s"
 				styleRule="--tabs-flex"
 				attrName="fullWidth"
 				key="fullWidth"
@@ -125,7 +129,7 @@ const Styles = props => {
 				} }
 				attrName="contentAlign"
 				key="iconAlignment-iconPosition"
-				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) || getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom' }
+				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) !== undefined || getAttribute( 'iconPosition' ) === 'top' || getAttribute( 'iconPosition' ) === 'bottom' }
 				valueCallback={ ( value, getAttribute ) => {
 					let newValue = value
 					if ( value === '' || value === 'left' ) {
@@ -148,7 +152,11 @@ const Styles = props => {
 					return newValue
 				} }
 				responsive="all"
-				dependencies={ [ 'fullWidth', 'iconPosition' ] }
+				dependencies={ [
+					'fullWidth',
+					'iconPosition',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -179,6 +187,23 @@ const Styles = props => {
 				hover="all"
 			/>
 
+			{ /* Enable labels layout to more customizable */ }
+			<BlockCss
+				{ ...propsToPass }
+				enabledCallback={ getAttribute => getAttribute( 'iconPosition' ) === '' || getAttribute( 'iconPosition' ) === 'right' }
+				selector=".stk-block-tab-labels__wrapper .stk-block-tab-labels__text"
+				styleRule="width"
+				attrName="fixedIconPosition"
+				valueCallback={ value => {
+					return value ? '100%' : undefined
+				} }
+				key="fixedIconPosition"
+				responsive="all"
+				dependencies={ [
+					'iconPosition',
+					 ...dependencies,
+				] }
+			/>
 		</>
 	)
 }

@@ -376,6 +376,15 @@ const Edit = props => {
 							/>
 						</> }
 
+						{ ( ( props.attributes.iconPosition === '' || props.attributes.iconPosition === 'right' ) && props.attributes.showIcon ) && // Check if icon position is left or right
+							( ( context[ 'stackable/tabOrientation' ] !== 'vertical' && props.attributes.fullWidth ) || context[ 'stackable/tabOrientation' ] === 'vertical' ) && // Show if its in horizontal position and fullWidth OR show on vertical position
+								<AdvancedToggleControl
+									label={ __( 'Fixed Icon Position', i18n ) }
+									attribute="fixedIconPosition"
+									defaultValue={ false }
+								/>
+						}
+
 						{ props.attributes.showIcon &&
 							<AdvancedToolbarControl
 								label={ __( 'Icon Position', i18n ) }
