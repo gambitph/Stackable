@@ -76,5 +76,6 @@ addFilter( 'stackable.toolbar-control.controls', 'stackable/deprecated-options',
 		'__flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
 		'__flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
 		'__flex-vertical-with-stretch': FLEX_VERTICAL_ALIGN_STRETCH_OPTIONS,
+		'flex-vertical-with-stretch': FLEX_VERTICAL_ALIGN_STRETCH_OPTIONS,
 	}
 } )
