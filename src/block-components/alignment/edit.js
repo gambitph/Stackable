@@ -100,7 +100,7 @@ export const Edit = props => {
 			label={ __( 'Content Max Width', i18n ) }
 			attribute="containerWidth"
 			responsive="all"
-			units={ [ 'px', '%' ] }
+			units={ [ 'px', '%', 'vw' ] }
 			min={ [ 0, 0 ] }
 			sliderMax={ [ 1500, 100 ] }
 			step={ [ 1, 1 ] }

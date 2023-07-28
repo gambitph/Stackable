@@ -117,7 +117,7 @@ const SpacingControl = props => {
 SpacingControl.defaultProps = {
 	label: __( 'Spacing', i18n ),
 	defaultLocked: true,
-	units: [ 'px', 'em', '%' ],
+	units: [ 'px', 'em', '%', 'vw' ],
 	screens: [ 'desktop', 'tablet', 'mobile' ],
 	min: 0,
 	max: Infinity,
