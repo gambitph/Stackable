@@ -73,7 +73,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=":is(.stk-block-content.stk-block-tabs--horizontal) .%s"
+				selector=".stk-block-content.stk-block-tabs--horizontal .%s"
 				styleRule="--tabs-flex"
 				attrName="fullWidth"
 				key="fullWidth"
@@ -155,7 +155,7 @@ const Styles = props => {
 				dependencies={ [
 					'fullWidth',
 					'iconPosition',
-					...dependencies
+					...dependencies,
 				] }
 			/>
 			<BlockCss
@@ -201,7 +201,7 @@ const Styles = props => {
 				responsive="all"
 				dependencies={ [
 					'iconPosition',
-					 ...dependencies
+					 ...dependencies,
 				] }
 			/>
 		</>

@@ -110,7 +110,7 @@ export const attributes = ( version = VERSION ) => {
 				stkHover: true,
 			},
 			fixedIconPosition: {
-				type: 'string',
+				type: 'boolean',
 				default: '',
 			},
 		},
