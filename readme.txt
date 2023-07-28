@@ -287,8 +287,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.10.1 =
+* New: Improved Block Theme & Site Editor color compatibility
+* New: Improved Color palette popup - now has built-in color picker, and color categories for global colors, theme colors, default colors, and custom Site Editor colors.
+* New: Improved Global Color panel UI, includes reoredring of global colors and new options to show/hide color categories in the color palette popup
 * New: Added vw and vh units to some block options
 * New: Added a new `stackable_activation_screen_enabled` PHP filter that when false bypasses the welcome and wizard screen.
+* Change: Stackable global colors now are no longer included in the color picker of Native blocks to prevent confusion and possible conflicts.
+* Fixed: Bug when you have a custom color in the Site Editor, it stops displaying the other colors in the color picker
 * Fixed: Column resize doesn't snap correctly when the Columns block has a background enabled
 * Fixed: Columns block content max width and horizontal align options reset upon save
 * Fixed: Resolved missing dependencies warning in Query Monitor
