@@ -218,7 +218,7 @@ const AdvancedToolbarControl = props => {
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	const isNothingSelected = controls.every( option => {
+	const isNothingSelected = controls?.every( option => {
 		const isSelected = value ? value === option.value : props.placeholder === option.value
 		return ! isSelected
 	} )
@@ -230,7 +230,7 @@ const AdvancedToolbarControl = props => {
 		>
 			<ButtonGroup
 				children={
-					controls.map( ( option, i ) => {
+					controls?.map( ( option, i ) => {
 						const defaultValue = props.default || ''
 						const isSelected = value ? value === option.value : props.placeholder === option.value
 						const tabindex = isSelected ? '0' : '-1'
