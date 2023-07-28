@@ -152,7 +152,11 @@ const Styles = props => {
 					return newValue
 				} }
 				responsive="all"
-				dependencies={ [ 'fullWidth', 'iconPosition', ...dependencies ] }
+				dependencies={ [
+					'fullWidth',
+					'iconPosition',
+					...dependencies
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
