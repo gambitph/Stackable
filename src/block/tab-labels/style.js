@@ -202,7 +202,10 @@ const Styles = props => {
 				} }
 				key="fixedIconPosition"
 				responsive="all"
-				dependencies={ [ 'iconPosition', ...dependencies ] }
+				dependencies={ [
+					'iconPosition',
+					 ...dependencies
+				] }
 			/>
 		</>
 	)
