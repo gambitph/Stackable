@@ -195,10 +195,7 @@ const Styles = props => {
 				styleRule="width"
 				attrName="fixedIconPosition"
 				valueCallback={ value => {
-					if ( value ) {
-						return '100%'
-					}
-					return undefined
+					return value ? '100%' : undefined
 				} }
 				key="fixedIconPosition"
 				responsive="all"
