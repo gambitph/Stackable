@@ -185,11 +185,35 @@ const VERTICAL_ALIGN_OPTIONS = [
 	},
 ]
 
+const FLEX_VERTICAL_ALIGN_STRETCH_OPTIONS = [
+	{
+		value: 'flex-start',
+		title: __( 'Start', i18n ),
+		icon: <SVGIconTop />,
+	},
+	{
+		value: 'center',
+		title: __( 'Center', i18n ),
+		icon: <SVGIconVerticalCenter />,
+	},
+	{
+		value: 'flex-end',
+		title: __( 'End', i18n ),
+		icon: <SVGIconBottom />,
+	},
+	{
+		value: 'stretch',
+		title: __( 'Stretch', i18n ),
+		icon: <SVGIconStretch />,
+	},
+]
+
 export const CONTROLS = {
 	'flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
 	'flex-horizontal-alt': FLEX_HORIZONTAL_ALIGN_OPTIONS_ALT,
 	'flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
 	'flex-justify-vertical': FLEX_VERTICAL_JUSTIFY_OPTIONS,
+	'flex-vertical-with-stretch': FLEX_VERTICAL_ALIGN_STRETCH_OPTIONS,
 	horizontal: HORIZONTAL_ALIGN_OPTIONS,
 	vertical: VERTICAL_ALIGN_OPTIONS,
 }
