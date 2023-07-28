@@ -7,12 +7,20 @@ const getImageFromSrcset = el => {
 		return null
 	}
 
-	// Search and return an attribute that ends with "srcset"
-	const srcsetName = el.getAttributeNames().find( v => {
-		return v.endsWith( 'srcset' )
-	} )
+	// Find the srcset attribute
+	const findSrcsetAttribute = () => {
+		// Return if 'srcset' is available
+		if ( el.getAttribute( 'srcset' ) ) {
+			return el.getAttribute( 'srcset' )
+		}
 
-	const srcset = el.getAttribute( srcsetName )
+		// Find an attribute that ends with 'srcset'
+		return el.getAttributeNames().find( v => {
+			return v.endsWith( 'srcset' )
+		} )
+	}
+
+	const srcset = findSrcsetAttribute()
 
 	if ( ! srcset ) {
 		return null
