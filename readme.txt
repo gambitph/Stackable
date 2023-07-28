@@ -287,28 +287,29 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.10.1 =
-* New: Improved Block Theme & Site Editor color compatibility
-* New: Improved Color palette popup - now has built-in color picker, and color categories for global colors, theme colors, default colors, and custom Site Editor colors.
+* New: Improved Block Theme & Site Editor color compatibility #2599 #2601 #2641
+* New: Improved Color palette popup - now has built-in color picker, and color categories for global colors, theme colors, default colors, and custom Site Editor colors. #2600
 * New: Improved Global Color panel UI, includes reoredring of global colors and new options to show/hide color categories in the color palette popup
-* New: Added vw and vh units to some block options
-* New: Added a new `stackable_activation_screen_enabled` PHP filter that when false bypasses the welcome and wizard screen.
+* New: Added vw and vh units to some block options #2735
+* New: Added a new `stackable_activation_screen_enabled` PHP filter that when false bypasses the welcome and wizard screen. #2676
+* New: Added new "Fixed Icon Position" option in Tab Labels block for better text alignment #2739
 * Change: Stackable global colors now are no longer included in the color picker of Native blocks to prevent confusion and possible conflicts.
-* Fixed: Bug when you have a custom color in the Site Editor, it stops displaying the other colors in the color picker
-* Fixed: Column resize doesn't snap correctly when the Columns block has a background enabled
-* Fixed: Columns block content max width and horizontal align options reset upon save
-* Fixed: Resolved missing dependencies warning in Query Monitor
-* Fixed: Divider block tablet and mobile alignments not working
-* Fixed: Tab Labels block text alignment do now work correctly when using vertical tabs
-* Fixed: Some embedded content do not show up in lightbox
-* Fixed: Enabling template locking on a container can cause inner blocks to overlap
-* Fixed: A scrollbar was visible on the carousel block in Firefox
-* Fixed: Better accessibility: pressing the escape key will close popovers
-* Fixed: Colors not working for the collapsed state of accordion blocks (need to edit the block for it to take effect)
-* Fixed: Carousel block aria warning
-* Fixed: Design library tab focus outline
-* Fixed: Map block JS callback warning is now resolved
-* Fixed: Progress bar and cirlce blocks can now handle dynamic content that has commas
-* Fixed: V2 Feature Grid encounters an error when using the advanced tab
+* Fixed: Bug when you have a custom color in the Site Editor, it stops displaying the other colors in the color picker  #2599 #2601
+* Fixed: Column resize doesn't snap correctly when the Columns block has a background enabled #2579
+* Fixed: Columns block content max width and horizontal align options reset upon save #2742
+* Fixed: Resolved missing dependencies warning in Query Monitor #2562
+* Fixed: Divider block tablet and mobile alignments not working #2733
+* Fixed: Some embedded content do not show up in lightbox #2658
+* Fixed: Added support for WP Rocket's Image Lazy Loading feature in the lightbox #2724
+* Fixed: Enabling template locking on a container can cause inner blocks to overlap #2672
+* Fixed: A scrollbar was visible on the carousel block in Firefox #2701
+* Fixed: Better accessibility: pressing the escape key will close popovers #2766
+* Fixed: Colors not working for the collapsed state of accordion blocks (need to edit the block for it to take effect) #2723
+* Fixed: Carousel block aria warning #2722
+* Fixed: Design library tab focus outline #2727
+* Fixed: Map block JS callback warning is now resolved #2734
+* Fixed: Progress bar and cirlce blocks can now handle dynamic content that has commas #2688
+* Fixed: V2 Feature Grid encounters an error when using the advanced tab #2707
 
 = 3.10.0 =
 [Introducing: New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
