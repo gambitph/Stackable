@@ -1,5 +1,5 @@
 import { hexToRgba } from '~stackable/util'
-import { BlockCss } from '~stackable/components'
+import { BlockCss, getDynamicContent } from '~stackable/components'
 
 const Styles = props => {
 	const propsToPass = {
@@ -27,9 +27,14 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
+				renderIn="save"
 				styleRule="--progress-value"
 				attrName="progressValue"
 				key="progressValue"
+				valueCallback={ value => {
+					const progressValue = value || ''
+					return getDynamicContent( progressValue ).replace( /,/g, '' )
+				} }
 				format={ ! isCircle ? '%s%' : undefined }
 			/>
 			{ ! isCircle && (
