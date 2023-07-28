@@ -76,6 +76,7 @@ export const BorderControls = props => {
 					label={ __( 'Border Color', i18n ) }
 					attribute={ getAttrName( 'borderColor' ) }
 					hover="all"
+					hasTransparent={ true }
 				/>
 			}
 

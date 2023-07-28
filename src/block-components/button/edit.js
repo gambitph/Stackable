@@ -105,6 +105,7 @@ export const HoverEffects = () => {
 
 export const ColorsControls = props => {
 	const {
+		blockState,
 		hasIconColor,
 		hasTextColor,
 		attrNameTemplate = 'button%s',
@@ -141,6 +142,7 @@ export const ColorsControls = props => {
 			}
 			attribute={ getAttrName( 'backgroundColor' ) }
 			hover="all"
+			hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
 		/>
 		{ buttonBackgroundColorType === 'gradient' && (
 			<>

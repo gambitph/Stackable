@@ -63,6 +63,7 @@ const ColorPaletteControl = memo( props => {
 			{
 				name: __( 'Global Colors', i18n ),
 				colors: cloneDeep( stackableColors ),
+				id: 'stk-global-colors',
 			},
 			...colors,
 		]
@@ -85,6 +86,19 @@ const ColorPaletteControl = memo( props => {
 
 		return true
 	} )
+
+	// Support for hasTransparent.
+	if ( props.hasTransparent && colors.length ) {
+		let i = 0
+		if ( colors[ i ].id === 'stk-global-colors' && colors.length > 1 ) {
+			i++
+		}
+		colors[ i ].colors.push( {
+			name: __( 'Transparent', i18n ),
+			slug: '_stk-transparent', // Make it unique to prevent conflict.
+			color: 'transparent',
+		} )
+	}
 
 	const allColors = colors.reduce( ( colors, group ) => {
 		return [
@@ -114,7 +128,7 @@ const ColorPaletteControl = memo( props => {
 			<ColorPicker
 				onChange={ onChange }
 				color={ value }
-				enableAlpha={ true }
+				// enableAlpha={ true }
 			/>
 			<ColorPalette
 				value={ value }

@@ -179,10 +179,12 @@ const Edit = props => {
 							<ColorPaletteControl
 								label={ __( 'Track Color', i18n ) }
 								attribute="scrollbarTrackColor"
+								hasTransparent={ true }
 							/>
 							<ColorPaletteControl
 								label={ __( 'Thumb Color', i18n ) }
 								attribute="scrollbarThumbColor"
+								hasTransparent={ true }
 							/>
 							<AdvancedRangeControl
 								label={ __( 'Thumb Radius', i18n ) }

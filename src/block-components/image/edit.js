@@ -288,6 +288,7 @@ const Controls = props => {
 						: __( 'Overlay Color', i18n )
 				}
 				attribute="imageOverlayColor"
+				hasTransparent={ attributes.imageOverlayColorType === 'gradient' }
 				hover="all"
 			/>
 			{ attributes.imageOverlayColorType === 'gradient' && (
@@ -295,6 +296,7 @@ const Controls = props => {
 					label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Overlay Color', i18n ), 2 ) }
 					attribute="imageOverlayColor2"
 					hover="all"
+					hasTransparent={ true }
 				/>
 			) }
 

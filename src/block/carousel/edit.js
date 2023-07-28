@@ -389,6 +389,7 @@ const Edit = props => {
 								label={ sprintf( __( '%s Color', i18n ), __( 'Button', i18n ) ) }
 								attribute="arrowButtonColor"
 								hover="all"
+								hasTransparent={ true }
 							/>
 							<ColorPaletteControl
 								label={ sprintf( __( '%s Color', i18n ), __( 'Icon', i18n ) ) }
@@ -486,10 +487,12 @@ const Edit = props => {
 								label={ sprintf( __( '%s Color', i18n ), __( 'Dot', i18n ) ) }
 								attribute="dotsColor"
 								hover="all"
+								hasTransparent={ true }
 							/>
 							<ColorPaletteControl
 								label={ sprintf( __( '%s Color', i18n ), __( 'Active Dot', i18n ) ) }
 								attribute="dotsActiveColor"
+								hasTransparent={ true }
 							/>
 							<AdvancedRangeControl
 								label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }
