@@ -1,35 +1,14 @@
 # Global Settings - Global Colors
 
 It allows users to create their own set of global color palette which
-can be applied to Stackable and Native blocks.
+can be applied to Stackable blocks.
+
+As of v3.11.0, Global Colors are no longer applied to the Native color palette and are only available for Stackable blocks - this is to prevent conflicts and to keep Stackable functionality to our blocks only.
 
 ## How Global Colors Works in the Editor
 
 ### ```editor-loader.js```
 ```editor-loader.js``` is responsible for generating global CSS variables. 
-
-### ```editor-color-palette-change.js```
-As of __WordPress v5.5.1__, changing the responsive preview mode and view mode resets the color palette. ```editor-color-palette-change.js``` is responsible for retrieving the global colors back to the editor.
-
-## List of Action Hooks 
- 
-### ```stackable.global-colors.save-model-settings``` 
-Action for saving/updating the global colors in ```stackable_global_colors```.
-
-Doing this:
-```js
-const { colors } = useSelect( select => ( { colors: select('core/block-editor').getSettings().colors } ) )
-
-useEffect( () => {
-    doAction( 'stackable.global-colors.save-model-settings', colors )
-}, [ colors ] )
-
-```
-
-will save the ```colors``` in ```stackable_global_colors``` and will update the block attributes with the most updated fallback values. We are constantly updating the fallback values since we don't want our color styles to break if Stackable is removed in list of plugins.
-
-### ```stackable.global-settings.reset-compatibility```
-Action for handling the reset button in the color picker. All added custom global colors will be removed.
 
 
 ## List of Filter Hooks
@@ -55,6 +34,11 @@ The generated css style rules are divided into three parts:
 
 - Standard Color Variables - these are the standard way of defining the global colors e.g. ```--stk-global-color-091820: #FFFFFF;```
 - RGBA Color Variables - color variables in RGBA. These are mainly used by ```hexToRgba``` utility function. e.g. ```--stk-global-color-091820-rgba: 255, 255, 255;```
+
+**DEPRECATED**
+
+**(We will keep this here for now, but since Global Colors will no longer be available for Native blocks, this will no longer have any purpose except for backward compatibility. Consider only generating this code only when it's detected the website updated from a Stackable version < 3.11.0)**
+
 - Color Slug Classes - css rules mainly used by Native blocks e.g. ```.has-stk-global-color-091820 { color: #FFFFFF; }```
 
 A sample generated global color styles:

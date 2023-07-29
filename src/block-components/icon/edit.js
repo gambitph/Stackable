@@ -241,8 +241,8 @@ export const Edit = props => {
 			<ColorPaletteControl
 				label={ __( 'Shape Outline Color', i18n ) }
 				attribute="shapeOutlineColor"
-				hasTransparent={ true }
 				hover={ hover }
+				hasTransparent={ true }
 			/>
 		</>
 	)

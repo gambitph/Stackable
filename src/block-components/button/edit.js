@@ -14,16 +14,14 @@ import {
 import { i18n } from 'stackable'
 import {
 	useAttributeEditHandlers,
-	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
+	useBlockAttributesContext,
+	useBlockContext,
 } from '~stackable/hooks'
-import { extractColor } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { select } from '@wordpress/data'
-import { getColorClassName } from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
@@ -120,7 +118,6 @@ export const ColorsControls = props => {
 	const buttonBackgroundColorType = useBlockAttributesContext( attributes => {
 		return attributes[ getAttrName( 'backgroundColorType' ) ]
 	} )
-	const setAttributes = useBlockSetAttributesContext()
 
 	return ( <>
 		<AdvancedToolbarControl
@@ -144,8 +141,8 @@ export const ColorsControls = props => {
 				: __( 'Button Color', i18n )
 			}
 			attribute={ getAttrName( 'backgroundColor' ) }
-			hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
 			hover="all"
+			hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
 		/>
 		{ buttonBackgroundColorType === 'gradient' && (
 			<>
@@ -169,17 +166,6 @@ export const ColorsControls = props => {
 
 		{ hasTextColor && (
 			<ColorPaletteControl
-				changeCallback={ _value => {
-					if ( blockState !== 'normal' ) {
-						return _value
-					}
-					const value = extractColor( _value )
-					const colors = select( select => select( 'core/block-editor' ).getSettings().colors ) || []
-					const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-					setAttributes( { textColorClass: colorSlug ? getColorClassName( 'color', colorSlug ) : '' } )
-
-					return _value
-				} }
 				label={ __( 'Text Color', i18n ) }
 				attribute="textColor1"
 				hover="all"

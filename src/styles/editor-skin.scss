@@ -14,9 +14,11 @@
 .components-panel .ugb-toggle-panel-body,
 .components-popover.ugb-button-icon-control__popover,
 .components-popover.stk-popover,
-.components-popover .stk-icon-search-popover-container {
+.components-popover .stk-icon-search-popover-container,
+.stk-color-palette-control__popover-content {
 	--wp-admin-theme-color: var(--stk-skin-dark);
 	--wp-admin-theme-color-darker-10: var(--stk-skin-dark);
+	--wp-components-color-accent: var(--stk-skin-dark);
 	--wp-components-color-accent-inverted: var(--stk-skin-dark);
 }
 
@@ -43,7 +45,8 @@
 .components-panel .ugb-toggle-panel-body,
 .components-popover.ugb-button-icon-control__popover,
 .components-popover.stk-popover,
-.components-popover .stk-icon-search-popover-container {
+.components-popover .stk-icon-search-popover-container,
+.stk-color-palette-control__popover-content {
 	background: var(--stk-skin-bg-default) !important;
 
 	// button group
