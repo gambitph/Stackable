@@ -1,8 +1,14 @@
 /**
+ * Internal dependencies
+ */
+import './deprecated'
+
+/**
  * WordPress dependencies
  */
 import { useSelect } from '@wordpress/data'
 import { useEffect, useState } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * External dependencies
@@ -11,12 +17,14 @@ import rgba from 'color-rgba'
 import { compact } from 'lodash'
 
 const renderGlobalStyles = ( newColors, isEditingTemplate, setStyles ) => {
+	let css = ''
+
 	// Output all our --stk-global-colors.
 	const styleRules = newColors.map( color => {
 		return `--${ color.slug || '' }: ${ color.color || '' };`
 	} )
 
-	setStyles( `:root { ${ compact( styleRules ).join( '' ) }}` )
+	css += `:root { ${ compact( styleRules ).join( '' ) }}`
 
 	// Output all the rgba colors, detect the actual color values.
 	const rgbaStyleRules = newColors.map( color => {
@@ -32,7 +40,9 @@ const renderGlobalStyles = ( newColors, isEditingTemplate, setStyles ) => {
 		return null
 	} )
 
-	setStyles( styles => `${ styles } :root { ${ compact( rgbaStyleRules ).join( ' ' ) }}` )
+	css += `:root { ${ compact( rgbaStyleRules ).join( ' ' ) }}`
+
+	setStyles( applyFilters( 'stackable.editor-render-global-styles.css', css, newColors, isEditingTemplate ) )
 }
 
 export const GlobalColorStyles = () => {
