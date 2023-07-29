@@ -44,7 +44,7 @@ export const StyleControlOption = memo( props => {
 	} = props
 
 	const onSelect = value => {
-		if ( ! isActive ) {
+		if ( ! option.disabled && ! isActive ) {
 			_onSelect( value )
 		}
 	}
@@ -55,6 +55,7 @@ export const StyleControlOption = memo( props => {
 		<div
 			className={ classnames( 'stk-style-control__option', 'stk-block-editor-block-styles__item', {
 				'is-active': isActive,
+				'is-disabled': option.disabled,
 			} ) }
 			onClick={ () => onSelect( option ) }
 			onKeyDown={ event => {

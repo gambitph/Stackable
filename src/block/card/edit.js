@@ -51,8 +51,8 @@ import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
-const widthUnit = [ 'px' ]
-const heightUnit = [ 'px' ]
+const widthUnit = [ 'px', 'vw' ]
+const heightUnit = [ 'px', 'vh' ]
 
 const Edit = props => {
 	const {
@@ -103,6 +103,9 @@ const Edit = props => {
 	if ( blockStyle === 'horizontal' && deviceType === 'Mobile' ) {
 		hasHeight = true
 	}
+
+	const imageWidthUnit = props.attributes.imageWidthUnit || 'px'
+	const imageHeightUnit = props.attributes.imageHeightUnit || 'px'
 
 	return (
 		<>
@@ -164,9 +167,9 @@ const Edit = props => {
 						heightUnits={ heightUnit }
 						defaultWidth={ 250 }
 						width={ blockStyle !== 'horizontal' ? 100 : undefined }
-						widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
+						widthUnit={ blockStyle !== 'horizontal' ? '%' : imageWidthUnit }
 						height={ blockStyle !== 'horizontal' ? undefined : 100 }
-						heightUnit={ blockStyle !== 'horizontal' ? 'px' : '%' }
+						heightUnit={ blockStyle !== 'horizontal' ? imageHeightUnit : '%' }
 						hasTooltip={ ! [ 'full', 'faded' ].includes( blockStyle ) }
 					/>
 					<div className={ innerClassNames }>

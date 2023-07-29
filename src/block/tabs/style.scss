@@ -1,0 +1,44 @@
+@import "common";
+
+.stk-block-tabs {
+	--tabs-gap: 16px;
+	> .stk-inner-blocks {
+		display: grid;
+		gap: var(--tabs-gap, 16px);
+
+		// For mobile, the tabs should be vertical.
+		@include desktop-tablet {
+			&.stk-block-tabs--vertical {
+				grid-template-columns: auto 1fr auto;
+				> .stk-block-tab-labels:first-child {
+					grid-column: 1 / 2;
+				}
+				> .stk-block-tab-content:last-child {
+					grid-column: 2 / 4;
+				}
+				> .stk-block-tab-content:first-child {
+					grid-column: 1 / 3;
+				}
+				> .stk-block-tab-labels:last-child {
+					grid-column: 3 / 4;
+				}
+			}
+		}
+
+		// On mobile, make the grid vertical
+		@include mobile {
+			grid-template-columns: 1fr;
+			> .stk-block-tab-labels:last-child {
+				grid-row: 1 / 2;
+			}
+		}
+	}
+}
+
+// Initially (when JS hasn't initialized the tabs block yet), all tab panels are
+// visible, just make the initial one visible.
+@for $i from 1 through 10 {
+	.stk-block-tabs[data-initial-tab="#{ $i }"] > * > .stk-block-tab-content > * > .stk-column:not([aria-labelledby]):not(:nth-child(#{ $i })) {
+		display: none;
+	}
+}

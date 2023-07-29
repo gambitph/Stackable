@@ -266,6 +266,7 @@ const IconSearchPopover = props => {
 			<Popover
 				className="ugb-icon-popover"
 				onClose={ props.onClose }
+				onEscape={ props.onClose }
 				onClickOutside={ props.__deprecatedOnClickOutside }
 				position={ props.__deprecatedPosition }
 				anchorRef={ props.__deprecatedAnchorRef }

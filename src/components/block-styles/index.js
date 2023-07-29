@@ -49,7 +49,7 @@ const BlockStyles = props => {
 		)
 
 		// Selecting a new style can update other attributes too.
-		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( attributes )
+		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( attributes, props )
 
 		setAttributes( {
 			...updatedAttributes,

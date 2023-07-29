@@ -39,4 +39,20 @@
 .stk-color-palette-control__popover-content {
 	width: 260px;
 	padding: 8px;
+	.components-color-picker,
+	.react-colorful,
+	.react-colorful__hue,
+	.react-colorful__alpha {
+		width: 100% !important;
+	}
+	.react-colorful {
+		overflow: visible !important;
+	}
+	.react-colorful__saturation {
+		height: 150px !important;
+	}
+	// These are the side paddings of the hex input.
+	.react-colorful + * > * {
+		padding-inline: 0 !important;
+	}
 }

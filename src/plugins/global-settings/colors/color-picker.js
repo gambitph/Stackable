@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { AddIcon, LockIcon } from './icons'
 import {
 	getRgb,
 	createColor,
@@ -13,230 +12,62 @@ import {
  * External dependencies
  */
 import classnames from 'classnames'
-import { cloneDeep, isPlainObject } from 'lodash'
+import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
-import { whiteIfDark } from '~stackable/util'
 import { Button } from '~stackable/components'
+import {
+	sortableContainer, sortableElement, sortableHandle,
+} from 'react-sortable-hoc'
 
 /**
  * WordPress dependencies
  */
 import {
-	ColorPicker, Popover, BaseControl, ButtonGroup,
+	ColorPicker,
+	BaseControl,
+	ColorIndicator,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	__experimentalHStack as HStack,
+	Dashicon,
+	Dropdown,
 } from '@wordpress/components'
-import {
-	Fragment, useState, useMemo,
-} from '@wordpress/element'
+import { useState, useRef } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { __, sprintf } from '@wordpress/i18n'
 
-// Component used to add a style name field at the bottom of the ColorPicker.
-const ColorPickerTextArea = props => (
-	<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
-		<div className="components-color-picker__controls">
-			<div className="components-color-picker__inputs-wrapper">
-				<div className="components-color-picker__inputs-fields">
-					<BaseControl
-						id="color-picker-text-name"
-						className="components-color-picker__input-field"
-						label={ __( 'Style name', i18n ) }
-					>
-						<input
-							className="components-text-control__input"
-							id="color-picker-text-name"
-							onChange={ event => props.onChange( event.target.value ) }
-							defaultValue={ props.value }
-						/>
-					</BaseControl>
-				</div>
-			</div>
-		</div>
-	</div>
-)
-
-ColorPickerTextArea.defaultProps = {
-	value: '',
-	onChange: () => {},
+const popoverProps = {
+	placement: 'left-start',
+	offset: 36,
+	shift: true,
 }
 
-// Component used to add a Delete Style button at the bottom of the ColorPicker.
-const DeleteButton = props => {
-	const [ isDeletePopoverOpen, setIsDeletePopoverOpen ] = useState( false )
-
-	return (
-		<Fragment>
-			<Button
-				isLink
-				isDestructive
-				onClick={ () => setIsDeletePopoverOpen( toggle => ! toggle ) }
-				disabled={ props.disabled }
-			>
-				{ __( 'Delete color', i18n ) }
-			</Button>
-			{ isDeletePopoverOpen && (
-				<Popover
-					className="ugb-global-settings-color-picker__delete-button-popover"
-					focusOnMount={ false }
-					onFocusOutside={ () => setIsDeletePopoverOpen( false ) }
-					position="bottom center"
-				>
-					<h4 className="ugb-global-settings-color-picker__title">
-						{ sprintf( __( 'Delete "%s"', i18n ), props.name ) }
-					</h4>
-					<p className="components-base-control__help">
-						{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
-					</p>
-					<ButtonGroup>
-						<Button
-							onClick={ () => {
-								setIsDeletePopoverOpen( false )
-								props.onClick()
-							} }
-							isDestructive
-							isSecondary
-							isSmall
-						>
-							{ __( 'Delete', i18n ) }
-						</Button>
-						<Button
-							onClick={ () => setIsDeletePopoverOpen( false ) }
-							isSmall
-						>
-							{ __( 'Cancel', i18n ) }
-						</Button>
-					</ButtonGroup>
-				</Popover>
-			) }
-		</Fragment>
-	)
-}
-
-// Component used to add am add icon button.
-const AddButton = props => (
-	<Button
-		{ ...props }
-		isSecondary
-		className="ugb-global-settings-color-picker__add-icon"
-		label={ __( 'Add New Color', i18n ) }
-		icon={ <AddIcon /> }
-	/>
-)
-
-// Component used to add a reset icon button.
-const ResetButton = props => {
-	const [ isResetPopoverOpen, setIsResetPopoverOpen ] = useState( false )
-
-	return (
-		<div className="ugb-global-settings-color-picker__reset-button">
-			<Button
-				onClick={ () => setIsResetPopoverOpen( ! isResetPopoverOpen ) }
-				onMouseDown={ event => event.preventDefault() } // Prevents the onFocusOutside from triggering when clicking the button.
-				disabled={ props.disabled }
-				isSecondary
-				isSmall
-			>
-				{ __( 'Reset', i18n ) }
-			</Button>
-			{ isResetPopoverOpen && (
-				<Popover
-					className="ugb-global-settings-color-picker__reset-button-popover"
-					onFocusOutside={ () => setIsResetPopoverOpen( false ) }
-					position="middle left"
-				>
-					<h4 className="ugb-global-settings-color-picker__title">
-						{ __( 'Reset Color Palette', i18n ) }
-					</h4>
-					<p className="components-base-control__help">
-						{ __( 'Resetting the global colors will revert all colors to its original color palette. Any added colors will be deleted and will become unlinked. Proceed?', i18n ) }
-					</p>
-					<ButtonGroup>
-						<Button
-							onClick={ () => {
-								props.onClick()
-								setIsResetPopoverOpen( false )
-							} }
-							isDestructive
-							isSecondary
-							isSmall
-						>
-							{ __( 'Reset', i18n ) }
-						</Button>
-						<Button
-							onClick={ () => setIsResetPopoverOpen( false ) }
-							isSmall
-						>
-							{ __( 'Cancel', i18n ) }
-						</Button>
-					</ButtonGroup>
-				</Popover>
-			) }
-		</div>
-	)
-}
-
-const ColorOption = props => {
-	const {
-		color,
-		name,
-	} = props
-
-	if ( props.locked ) {
-		return (
-			<div className="components-circular-option-picker__option-wrapper ugb-global-settings__color-picker-disabled-color">
-				<div className="components-circular-option-picker__option" style={ { backgroundColor: color, color } }>
-					<LockIcon color={ whiteIfDark( null, color ) || '#222222' } />
-				</div>
-			</div>
-		)
-	}
-
-	return (
-		<Fragment>
-			<div className="components-circular-option-picker__option-wrapper">
-				<Button
-					className="components-circular-option-picker__option"
-					label={ name }
-					style={ { backgroundColor: color, color } }
-					onClick={ () => props.onClick( color ) }
-					onMouseDown={ event => event.preventDefault() } // Prevents the onFocusOutside from triggering when clicking the button.
-				/>
-				{ props.children }
-			</div>
-		</Fragment>
-	)
-}
-
-ColorOption.defaultProps = {
-	color: '#222222',
-	name: __( 'Untitled Color', i18n ),
-	locked: false,
-	onClick: () => {},
+// We need to define these because 13 (return key) is not included in the
+// default keyCodes to initiate a drag.
+const DRAG_KEYCODES = {
+	lift: [ 32, 13 ],
+	drop: [ 32, 13 ],
+	cancel: [ 27 ],
+	up: [ 38, 37 ],
+	down: [ 40, 39 ],
 }
 
 let saveTimeout = null
 
 const ColorPickers = props => {
-	// State used to determine the clicked index in the color picker.
-	const [ selectedIndex, setSelectedIndex ] = useState( null )
+	const [ isSorting, setIsSorting ] = useState( false )
+	const ref = useRef()
 
-	const _colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors ) || []
-	const colors = Array.isArray( _colors ) ? _colors : []
-
-	// Enable reset if there are Stackable global colors.
-	const disableReset = useMemo( () => ! colors.some( color => {
-		if ( ! isPlainObject( color ) ) {
-			return false
+	const {
+		colors,
+	} = useSelect( select => {
+		const stkSettings = select( 'stackable/global-colors' ).getSettings()
+		return {
+			colors: cloneDeep( stkSettings.stackableColors ),
 		}
-
-		if ( typeof color.slug === 'string' && color.slug.includes( 'stk-global-color' ) ) {
-			return true
-		}
-
-		return false
-	}, [ JSON.stringify( colors ) ] ) )
+	} )
 
 	/**
 	 * Function used to update the colors in @wordpress/data,
@@ -244,50 +75,43 @@ const ColorPickers = props => {
 	 * @param {Array} newColors colors passed.
 	 */
 	const updateColors = newColors => {
-		const updatedColors = newColors.filter( color => color.slug.match( /^stk-global-color/ ) )
-
 		// Update the blocks in our page.
-		updateFallbackBlockAttributes( updatedColors )
+		updateFallbackBlockAttributes( newColors )
 
 		// Save settings.
-		// const stackableColors = updatedColors.filter( color => color.slug.match( /^stk-global-color/ ) )
 		clearTimeout( saveTimeout )
 		saveTimeout = setTimeout( () => {
-			const settings = new models.Settings( { stackable_global_colors: [ updatedColors ] } ) // eslint-disable-line camelcase
+			const settings = new models.Settings( { stackable_global_colors: [ newColors ] } ) // eslint-disable-line camelcase
 			settings.save()
 		}, 300 )
 
 		// Update our store.
 		dispatch( 'stackable/global-colors' ).updateSettings( {
-			stackableColors: updatedColors,
+			stackableColors: newColors,
 		} )
 	}
 
 	// Called when updating a color.
-	const onChangeColor = data => {
+	const onChangeColor = color => {
 		const updatedColors = cloneDeep( colors )
 
-		// Overwrite the selected color to a new color.
-		updatedColors[ selectedIndex ].color = data.hex
-		updatedColors[ selectedIndex ].rgb = getRgb( data.hex )
-
-		// Update the colors.
-		updateColors( updatedColors )
-	}
-
-	// Called when updating a style name.
-	const onChangeStyleName = value => {
-		const updatedColors = cloneDeep( colors )
-
-		// Overwrite the selected style name and slug to a new style name and slug.
-		updatedColors[ selectedIndex ].name = value
+		const selectedIndex = colors.findIndex( c => c.slug === color.slug )
+		updatedColors[ selectedIndex ] = { ...color }
 
 		// Update the colors.
 		updateColors( updatedColors )
 	}
 
 	// Called when deleting a color.
-	const onColorDelete = () => {
+	const onColorDelete = color => {
+		// Open a confirm box
+		// eslint-disable-next-line no-alert
+		const confirmDelete = window.confirm( __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) )
+		if ( ! confirmDelete ) {
+			return
+		}
+
+		const selectedIndex = colors.findIndex( c => c.slug === color.slug )
 		const updatedColors = cloneDeep( colors )
 
 		// Delete the specific color based on the selected index.
@@ -298,19 +122,6 @@ const ColorPickers = props => {
 
 		// Update the colors.
 		updateColors( updatedColors )
-		setSelectedIndex( null )
-	}
-
-	// Called when the user decided to reset the color palette.
-	const onColorPaletteReset = () => {
-		// Revert the global color attributes to hex color.
-		convertGlobalColorBlockAttributesToStatic( colors )
-
-		// Update the colors
-		updateColors( [] )
-		setSelectedIndex( null )
-
-		props.onReset()
 	}
 
 	// Called when adding a new color.
@@ -320,7 +131,7 @@ const ColorPickers = props => {
 		const color = createColor()
 
 		const updatedColors = [
-			...select( 'core/block-editor' ).getSettings().colors,
+			...select( 'stackable/global-colors' ).getSettings().stackableColors,
 			{
 				name: sprintf( __( 'Custom Color %s', i18n ), newIndex ),
 				slug: `stk-global-color-${ slugId }`,
@@ -332,8 +143,20 @@ const ColorPickers = props => {
 		// Update the colors.
 		updateColors( updatedColors )
 
-		setSelectedIndex( newIndex - 1 )
+		// Open the new color picker.
+		setTimeout( () => {
+			ref.current?.querySelector( '.stk-global-settings-color-picker__color-indicator-wrapper:last-child .block-editor-panel-color-gradient-settings__dropdown' )?.click()
+		}, 1 )
 	}
+
+	const onSortEnd = ( { oldIndex, newIndex } ) => {
+		const updatedColors = cloneDeep( colors )
+		// Move the color to the new index.
+		updatedColors.splice( newIndex, 0, updatedColors.splice( oldIndex, 1 )[ 0 ] )
+
+		updateColors( updatedColors )
+		setIsSorting( false )
+	  }
 
 	const classNames = classnames(
 		'ugb-global-settings-color-picker',
@@ -343,56 +166,145 @@ const ColorPickers = props => {
 	)
 
 	return (
-		<BaseControl className={ classNames }>
-			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
-			{ colors.map( ( color, index ) => {
-				if ( ! isPlainObject( color ) ) {
-					return null
-				}
-
-				return (
-					<ColorOption
-						key={ index }
-						color={ color.color }
-						name={ color.name }
-						locked={ ! ( color.slug || '' ).startsWith( 'stk-' ) }
-						onClick={ () => setSelectedIndex( selectedIndex !== index ? index : null ) }
-					>
-						{ selectedIndex === index &&
-							<Popover
-								className="components-dropdown__content"
-								onFocusOutside={ () => setSelectedIndex( null ) }
-							>
-								<ColorPicker
-									color={ color.color }
-									onChangeComplete={ onChangeColor }
-									disableAlpha
-								/>
-								<ColorPickerTextArea
-									onChange={ onChangeStyleName }
-									value={ color.name || '' }
-								/>
-								<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
-									<div className="components-color-picker__controls">
-										<DeleteButton
-											name={ color.name }
-											onClick={ onColorDelete }
-										/>
-									</div>
-								</div>
-							</Popover>
-						}
-					</ColorOption>
-				)
-			} ) }
-			<AddButton onClick={ handleAddIcon } />
+		<BaseControl className={ classNames } label={ props.label }>
+			<Button
+				className="ugb-global-settings-color-picker__add-button"
+				onClick={ handleAddIcon }
+				icon="plus-alt2"
+			/>
+			<div
+				ref={ ref }
+				className={ classnames(
+					'ugb-global-settings-color-picker__color-indicators',
+					{ 'is-sorting': isSorting }
+				) }
+			>
+				<SortableContainer
+					items={ colors }
+					onSortStart={ () => setIsSorting( true ) }
+					onSortEnd={ onSortEnd }
+					axis="y"
+					useDragHandle
+					keyCodes={ DRAG_KEYCODES }
+				>
+					{ colors.map( ( color, i ) => (
+						<SortableItem
+							key={ i }
+							index={ i }
+							color={ color }
+							onDelete={ () => onColorDelete( color ) }
+							onChange={ color => onChangeColor( color ) }
+						/> ) ) }
+				</SortableContainer>
+			</div>
 		</BaseControl>
 	)
 }
 
 ColorPickers.defaultProps = {
 	className: '',
+	label: '',
 	onReset: () => {},
 }
 
 export default ColorPickers
+
+const SortableItem = sortableElement( props => <LabeledColorIndicator { ...props } /> )
+
+const SortableContainer = sortableContainer( ( { children } ) => {
+	return <div>{ children }</div>
+} )
+
+const DragHandle = sortableHandle( () => <Dashicon
+	icon="menu"
+	size="16"
+	tabIndex="0"
+/> )
+
+const LabeledColorIndicator = props => {
+	const {
+		color,
+		onDelete,
+		onChange,
+	} = props
+
+	const [ isFocused, setIsFocused ] = useState( false )
+
+	return (
+		<HStack justify="space-between" className="stk-global-settings-color-picker__color-indicator-wrapper">
+			<Dropdown
+				popoverProps={ popoverProps }
+				// This is so that when we click on the label to edit it, the input doesn't lose focus.
+				focusOnMount={ ! isFocused ? 'firstElement' : false }
+				renderToggle={ ( { onToggle, isOpen } ) => {
+					return (
+						<Button
+							className="block-editor-panel-color-gradient-settings__dropdown"
+							onClick={ () => {
+								if ( ! isFocused ) {
+									onToggle()
+								}
+							} }
+							isPressed={ isOpen }
+						>
+							<HStack justify="flex-start">
+								<ColorIndicator
+									className="block-editor-panel-color-gradient-settings__color-indicator"
+									colorValue={ color.color }
+								/>
+								<input
+									className="components-input-control__input"
+									value={ color.name }
+									onChange={ ev => {
+										onChange( {
+											...color,
+											name: ev.target.value,
+										} )
+									} }
+									onFocus={ () => setIsFocused( true ) }
+									onBlur={ ev => {
+										setIsFocused( false )
+										if ( isOpen && ! ev.relatedTarget?.closest( '.components-popover' ) ) {
+											onToggle()
+										}
+									} }
+									onClick={ () => {
+										if ( ! isOpen ) {
+											onToggle()
+										}
+									} }
+									onKeyDown={ ev => {
+										// On enter, blur the input.
+										if ( ev.keyCode === 13 ) {
+											ev.target.blur()
+										}
+									} }
+								/>
+								<DragHandle />
+							</HStack>
+						</Button>
+					)
+				} }
+				renderContent={ () => (
+					<div className="stk-color-palette-control__popover-content">
+						<ColorPicker
+							onChange={ value => onChange( {
+								...color,
+								color: value,
+							} ) }
+							color={ color.color }
+							enableAlpha={ true }
+						/>
+					</div>
+				) }
+			/>
+			<Button
+				className="stk-global-settings-color-picker__delete-button"
+				icon="trash"
+				isSmall
+				isTertiary
+				onClick={ onDelete }
+			/>
+		</HStack>
+	)
+}

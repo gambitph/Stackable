@@ -31,6 +31,7 @@ import classnames from 'classnames'
 import { importBlocks } from '~stackable/util/admin'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
+import { GettingStarted } from './getting-started'
 
 const FREE_BLOCKS = importBlocks( require.context( '../block', true, /block\.json$/ ) )
 export const getAllBlocks = () => applyFilters( 'stackable.settings.blocks', FREE_BLOCKS )
@@ -631,5 +632,11 @@ domReady( () => {
 			document.querySelector( '.s-global-settings' )
 		)
 	}
-} )
 
+	if ( document.querySelector( '.s-getting-started__body' ) ) {
+		render(
+			<GettingStarted />,
+			document.querySelector( '.s-getting-started__body' )
+		)
+	}
+} )
