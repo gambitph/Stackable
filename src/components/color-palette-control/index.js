@@ -63,6 +63,7 @@ const ColorPaletteControl = memo( props => {
 			{
 				name: __( 'Global Colors', i18n ),
 				colors: cloneDeep( stackableColors ),
+				id: 'stk-global-colors',
 			},
 			...colors,
 		]

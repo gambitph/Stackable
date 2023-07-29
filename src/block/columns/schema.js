@@ -53,6 +53,23 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
+	attrObject.add( {
+		attributes: {
+			containerWidth: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			containerHorizontalAlign: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.10.1',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 

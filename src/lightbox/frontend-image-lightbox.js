@@ -7,11 +7,21 @@ const getImageFromSrcset = el => {
 		return null
 	}
 
-	// Support for NitroPack lazy loading.
-	const srcset = el.getAttribute( 'nitro-lazy-srcset' ) ||
-		// Support for Perfmatters lazy loading.
-		el.getAttribute( 'data-srcset' ) ||
-		el.getAttribute( 'srcset' )
+	// Find the srcset attribute
+	const findSrcsetAttribute = () => {
+		// Return if 'srcset' is available
+		if ( el.getAttribute( 'srcset' ) ) {
+			return el.getAttribute( 'srcset' )
+		}
+
+		// Find an attribute that ends with 'srcset'
+		const srcsetName = el.getAttributeNames().find( v => {
+			return v.endsWith( 'srcset' )
+		} )
+		return el.getAttribute( srcsetName )
+	}
+
+	const srcset = findSrcsetAttribute()
 
 	if ( ! srcset ) {
 		return null
