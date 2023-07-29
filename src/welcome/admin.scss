@@ -713,6 +713,10 @@ body.settings_page_stackable-settings-wizard {
 		opacity: 0.3;
 		background: #aaa !important;
 	}
+	.components-checkbox-control .components-base-control__help {
+		margin-top: 0;
+		margin-left: 32px;
+	}
 	h3 {
 		margin-top: 2em;
 	}

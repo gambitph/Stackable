@@ -474,6 +474,7 @@ const GlobalSettings = () => {
 
 const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
+	const [ generateNativeGlobalColors, setGenerateNativeGlobalColors ] = useState( false )
 	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
 	const [ v2EditorBackwardCompatibility, setV2EditorBackwardCompatibility ] = useState( false )
 	const [ v2EditorBackwardCompatibilityUsage, setV2EditorBackwardCompatibilityUsage ] = useState( false )
@@ -487,6 +488,7 @@ const AdditionalOptions = props => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
 				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
+				setGenerateNativeGlobalColors( !! response.stackable_global_colors_native_compatibility )
 				setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
 				setV2EditorBackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
 				setV2EditorBackwardCompatibilityUsage( response.stackable_v2_editor_compatibility_usage === '1' )
@@ -521,6 +523,15 @@ const AdditionalOptions = props => {
 				onChange={ checked => {
 					updateSetting( { stackable_help_tooltip_disabled: checked ? '1' : '' } ) // eslint-disable-line camelcase
 					setHelpTooltipsDisabled( checked )
+				} }
+			/>
+			<CheckboxControl
+				label={ __( 'Generate Global Colors for native blocks', i18n ) }
+				help={ __( `When enabled, extra frontend CSS is generated to support Stackable global colors used in native blocks. If you don't use Stackable global colors in native blocks, simply toggle this OFF. Please note that Stackable global colors are no longer available for native blocks. To ensure your styles always look perfect, our auto-detect feature will activate this option whenever needed.`, i18n ) }
+				checked={ generateNativeGlobalColors }
+				onChange={ checked => {
+					updateSetting( { stackable_global_colors_native_compatibility: checked } ) // eslint-disable-line camelcase
+					setGenerateNativeGlobalColors( checked )
 				} }
 			/>
 			<h3>{ __( '🏠 Migration Settings', i18n ) }</h3>

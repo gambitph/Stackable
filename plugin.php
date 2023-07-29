@@ -229,6 +229,9 @@ if ( sugb_fs()->is__premium_only() ) {
 	}
 }
 
+// Deprecated.
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/native-global-colors.php' );
+
 /**
  * V2 Deprecated
  */
