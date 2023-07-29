@@ -72,15 +72,15 @@ const ColorPaletteControl = memo( props => {
 	// Filter the colors.
 	colors = colors.filter( group => {
 		// Since there are no identifying properties for the groups, we'll just use the same names used in Gutenberg.
-		if ( hideThemeColors && group.name === _x( 'Theme', 'Indicates this palette comes from the theme.' ) ) {
+		if ( hideThemeColors && group.name === _x( 'Theme', 'Indicates this palette comes from the theme.', i18n ) ) {
 			return false
 		}
 
-		if ( hideDefaultColors && group.name === _x( 'Default', 'Indicates this palette comes from WordPress.' ) ) {
+		if ( hideDefaultColors && group.name === _x( 'Default', 'Indicates this palette comes from WordPress.', i18n ) ) {
 			return false
 		}
 
-		if ( hideSiteEditorColors && group.name === _x( 'Custom', 'Indicates this palette comes from the theme.' ) ) {
+		if ( hideSiteEditorColors && group.name === _x( 'Custom', 'Indicates this palette comes from the theme.', i18n ) ) {
 			return false
 		}
 
