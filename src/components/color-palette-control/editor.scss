@@ -1,3 +1,9 @@
+// Some themes and plugins can warp our color indicator.
+.stk-color-indicator {
+	height: 20px !important;
+	width: 20px !important;
+}
+
 // Style transparent circular color option.
 .stk-color-palette-control {
 	.components-circular-option-picker__option[style*="color:transparent"],
