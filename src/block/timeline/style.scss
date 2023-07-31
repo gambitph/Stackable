@@ -11,6 +11,7 @@
 	--line-bg-width: 3px;
 	--content-line: 40px;
 	--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%), var(--line-bg-color, #eee) var(--line-accent-bg-location, 50%));
+	--stk-block-margin-bottom: 0;
 	position: relative;
 	padding: 16px 0;
 	margin-block-start: 0 !important;

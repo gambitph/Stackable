@@ -108,9 +108,10 @@ const Edit = props => {
 	const branchRef = useRef()
 	const blockRef = useRef()
 	const adjacentBlock = useRef()
-	const [ middleHeight, setMiddleHeight ] = useState( { dot: 0, branch: 0 } )
+	const [ middleTopPosition, setMiddleTopPosition ] = useState( { dot: 0, branch: 0 } )
+	const [ fillHeight, setFillHeight ] = useState( { verticalLine: 0, middle: 0 } )
 	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
-	const [ verticalLineHeight, setVerticalLineHeight ] = useState( 0 )
+	const [ verticalLineTop, setVerticalLineTop ] = useState( 0 )
 
 	const dateClassNames = classnames( [
 		typographyClass,
@@ -135,87 +136,144 @@ const Edit = props => {
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes ) )
 
+	// get previous and next elements/blocks
+	const getAdjacentBlocks = () => {
+		let timelineBlock = document.getElementById( 'block-' + clientId )
+
+		if ( ! timelineBlock ) {
+			const iframe = document.querySelector( 'iframe' )
+			timelineBlock = iframe.contentDocument.getElementById( 'block-' + clientId )
+		}
+
+		const nextBlock = timelineBlock ? timelineBlock.nextElementSibling : null
+		const previousBlock = timelineBlock ? timelineBlock.previousElementSibling : null
+
+		return {
+			previousBlock,
+			nextBlock,
+		}
+	}
+
+	// check if timeline block is single, is first block, or is last block
+	const getTimelinePosition = ( previousBlock, nextBlock ) => {
+		let _previousBlock = previousBlock
+		if ( _previousBlock?.tagName === 'STYLE' ) {
+			_previousBlock = previousBlock ? previousBlock.previousElementSibling : null
+		}
+		return {
+			isFirst: ! _previousBlock || _previousBlock.getAttribute( 'data-type' ) !== 'stackable/timeline',
+			isLast: ! nextBlock || nextBlock.getAttribute( 'data-type' ) !== 'stackable/timeline',
+		}
+	}
+
+	const getSelectAttributes = () => {
+		return {
+			timelineAnchor: props.attributes.timelineAnchor === '' ? 0.5 : ( props.attributes.timelineAnchor / 100 ),
+			topPadding: ( props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 16 ),
+			topPaddingZero: ( props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 0 ),
+			hasTopPadding: ( props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? ( props.attributes.blockPadding.top / 2 ) : false ),
+			bottomPadding: ( props.attributes.blockPadding && props.attributes.blockPadding.bottom !== '' ? props.attributes.blockPadding.bottom : 16 ),
+		}
+	}
+
+	const handleScroll = () => {
+		const { previousBlock } = getAdjacentBlocks()
+
+		const {
+			timelineAnchor, topPadding, topPaddingZero,
+		} = getSelectAttributes()
+
+		const lineHeight = ( document.body.clientHeight * timelineAnchor ) - ( blockRef.current.getBoundingClientRect().top ) + topPaddingZero
+		const fillPercent = ( lineHeight / blockRef.current.getBoundingClientRect().height ) * 100
+
+		// gets equivalent px of 1%
+		const fillPxPercent = blockRef.current.getBoundingClientRect().height / 100
+		// converts percent to px
+		const fillPx = fillPercent * fillPxPercent
+
+		let fill = { verticalLine: fillPx, middle: fillPx }
+
+		const dot = ( middleRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding
+		const branch = ( branchRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding
+
+		// corrects the position of the fill for the first timeline block since the line starts at the middle
+		if ( ! previousBlock || previousBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ) {
+			fill = {
+				verticalLine: fillPx - dot,
+				middle: fillPx,
+			}
+		}
+
+		setMiddleTopPosition( { dot, branch } )
+		setFillHeight( fill )
+	}
+
+	const updateMaxHeight = ( { previousBlock, nextBlock } ) => {
+		const {
+			isFirst, isLast,
+		} = getTimelinePosition( previousBlock, nextBlock )
+
+		const {
+			hasTopPadding, topPadding,
+		} = getSelectAttributes()
+
+		let lineMaxHeight = '100%'
+		let lineTop = 0
+		const offset = topPadding + middleRef.current.getBoundingClientRect().top + ( middleRef.current.getBoundingClientRect().height / 2 ) - blockRef.current.getBoundingClientRect().top
+		if ( deviceType === 'Mobile' && isLast ) {
+			lineMaxHeight = '16px'
+		} else if ( deviceType === 'Mobile' ) {
+			lineMaxHeight = '100%'
+		} else if ( isFirst && isLast ) {
+			lineMaxHeight = '0'
+		} else if ( isFirst ) {
+			lineMaxHeight = '50%'
+			// if padding is default, use top: 50%, else use calculated value
+			lineTop = hasTopPadding ? `${ offset }px` : '50%'
+		} else if ( isLast ) {
+			lineMaxHeight = hasTopPadding ? `${ offset }px` : '50%'
+		}
+
+		setVerticalLineMaxHeight( lineMaxHeight )
+		setVerticalLineTop( lineTop )
+		handleScroll()
+	}
+
+	// update max height when device type & padding changes
 	useEffect( () => {
-		const getAdjacentBlocks = () => {
-			let timelineBlock = document.getElementById( 'block-' + clientId )
+		updateMaxHeight( getAdjacentBlocks() )
+	}, [ deviceType, props.attributes.blockPadding ] )
 
-			if ( ! timelineBlock ) {
-				const iframe = document.querySelector( 'iframe' )
-				timelineBlock = iframe.contentDocument.getElementById( 'block-' + clientId )
-			}
-
-			const nextBlock = timelineBlock ? timelineBlock.nextElementSibling : null
-			const previousBlock = timelineBlock ? timelineBlock.previousElementSibling : null
-
-			return {
-				previousBlock,
-				nextBlock,
-			}
+	// update accent fill when anchor position or padding changes
+	useEffect( () => {
+		handleScroll()
+		document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
+		return () => {
+			document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
 		}
+	}, [ props.attributes.timelineAnchor, props.attributes.blockPadding ] )
 
-		// check if timeline block is single, is first block, or is last block
-		const getTimelinePosition = ( previousBlock, nextBlock ) => {
-			return {
-				isSingle: ( ! nextBlock || nextBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ) && ( ! previousBlock || previousBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ),
-				isFirst: ( ! previousBlock || previousBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ),
-				isLast: ( ! nextBlock || nextBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ),
-			}
-		}
-
+	// update blocks if position changes
+	useEffect( () => {
 		const timeout = setInterval( () => {
 			const { previousBlock, nextBlock } = getAdjacentBlocks()
-			const {
-				isSingle, isFirst, isLast,
-			} = getTimelinePosition( previousBlock, nextBlock )
 
-			// check if adjacent block has changed
-			if ( adjacentBlock.current?.getAttribute( 'data-type' ) !== nextBlock?.getAttribute( 'data-type' ) && adjacentBlock.current?.getAttribute( 'data-block' ) !== nextBlock?.getAttribute( 'data-block' ) ) {
+			// check if adjacent block changes
+			if ( adjacentBlock.current?.getAttribute( 'data-type' ) !== nextBlock?.getAttribute( 'data-type' ) || adjacentBlock.current?.getAttribute( 'data-block' ) !== nextBlock?.getAttribute( 'data-block' ) ) {
 				adjacentBlock.current = nextBlock
 
 				// set attribute for frontend
 				if ( nextBlock && nextBlock.getAttribute( 'data-type' ) === 'stackable/timeline' && props.attributes.timelineIsLast ) {
 					setAttribute( { timelineIsLast: false } )
-				} else if ( ! nextBlock || nextBlock.getAttribute( 'data-type' !== 'stackable/timeline' ) ) {
+				} else if ( ! nextBlock || nextBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ) {
 					setAttribute( { timelineIsLast: true } )
 				}
 
-				let lineMaxHeight = '100%'
-				if ( deviceType === 'Mobile' && isLast && ! isSingle ) {
-					lineMaxHeight = '16px'
-				} else if ( deviceType === 'Mobile' && ! isSingle ) {
-					lineMaxHeight = '100%'
-				// if single timeline block
-				} else if ( isSingle ) {
-					lineMaxHeight = '0'
-				// if first or last timeline block
-				} else if ( isFirst || isLast ) {
-					lineMaxHeight = '50%'
-				}
-
-				setVerticalLineMaxHeight( lineMaxHeight )
-				handleScroll()
+				updateMaxHeight( { previousBlock, nextBlock } )
 			}
 		}, 500 )
-
-		const handleScroll = () => {
-			const { previousBlock } = getAdjacentBlocks()
-
-			const dot = ( document.body.clientHeight / 2 ) - ( middleRef.current.getBoundingClientRect().top + middleRef.current.getBoundingClientRect().height )
-			const branch = dot - ( branchRef.current.getBoundingClientRect().top - middleRef.current.getBoundingClientRect().top )
-			let lineHeight = ( document.body.clientHeight / 2 ) - ( blockRef.current.getBoundingClientRect().top - ( middleRef.current.getBoundingClientRect().height / 2 ) )
-
-			// corrects the position of the fill for the first timeline block since the line starts at the middle
-			if ( ! previousBlock || previousBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ) {
-				lineHeight = ( document.body.clientHeight / 2 ) - ( blockRef.current.getBoundingClientRect().top + ( blockRef.current.getBoundingClientRect().height / 2 ) + middleRef.current.getBoundingClientRect().height )
-			}
-			setMiddleHeight( { dot, branch } )
-			setVerticalLineHeight( lineHeight )
-		}
-
-		document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
 		return () => {
 			clearInterval( timeout )
-			document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
 		}
 	}, [] )
 
@@ -307,19 +365,16 @@ const Edit = props => {
 										: __( 'Timeline Accent Color', i18n )
 								}
 								attribute="timelineAccentColor"
-								hasTransparent={ true }
 							/>
 							{ props.attributes.timelineAccentColorType === 'gradient' &&
 								<ColorPaletteControl
 									label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 2 ) }
 									attribute="timelineAccentColor2"
-									hasTransparent={ true }
 								/>
 							}
 							<ColorPaletteControl
 								label={ __( 'Timeline Background Color', i18n ) }
 								attribute="timelineBackgroundColor"
-								hasTransparent={ true }
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
@@ -381,7 +436,9 @@ const Edit = props => {
 							<div
 								className="stk-block-timeline__middle__fill"
 								style={ {
-									height: `max(${ middleHeight.dot }px, 0px)`,
+									height: `max(${ fillHeight.middle }px, 0px)`,
+									top: `-${ middleTopPosition.dot }px`,
+									maxHeight: `calc(100% + ${ middleTopPosition.dot }px)`,
 								} }
 							/>
 						</div>
@@ -392,7 +449,9 @@ const Edit = props => {
 							<div
 								className="stk-block-timeline__middle__branch__fill"
 								style={ {
-									height: `max(${ middleHeight.branch }px, 0px)`,
+									height: `max(${ fillHeight.middle }px, 0px)`,
+									top: `-${ middleTopPosition.branch }px`,
+									maxHeight: `calc(100% + ${ middleTopPosition.branch }px)`,
 								 } }
 							>
 							</div>
@@ -410,12 +469,13 @@ const Edit = props => {
 						className="stk-block-timeline__vertical-line"
 						style={ {
 							maxHeight: verticalLineMaxHeight,
+							top: verticalLineTop,
 						} }
 					>
 						<div
 							className="stk-block-timeline__vertical-line__fill"
 							style={ {
-								height: `max(${ verticalLineHeight }px, 0px)`,
+								height: `max(${ fillHeight.verticalLine }px, 0px)`,
 							} }
 						/>
 					</div>
