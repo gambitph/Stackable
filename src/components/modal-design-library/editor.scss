@@ -22,6 +22,7 @@
 		flex-direction: column;
 	}
 	.components-modal__header {
+		padding: 0px;
 		margin: 0;
 		height: 58px;
 		border-bottom: 1px solid #ddd;
@@ -57,7 +58,7 @@
 		display: flex;
 		justify-content: flex-end;
 		padding: 0 24px;
-		height: 80px;
+		height: 50px;
 		align-items: center;
 		grid-column: 2 / 3;
 		grid-row: 1 / 2;
@@ -250,6 +251,7 @@
 .ugb-modal-design-library .components-modal__header-heading {
 	display: flex;
 	align-items: center;
+	padding: 0 32px;
 	.ugb-advanced-toolbar-control {
 		margin: 0 32px;
 		> *,
