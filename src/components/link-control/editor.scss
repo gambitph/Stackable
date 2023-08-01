@@ -5,6 +5,10 @@
 		min-width: auto;
 		width: 100%;
 
+		.block-editor-link-control__search-input-wrapper {
+			margin: 0;
+		}
+
 		.block-editor-link-control__field {
 			margin: 0;
 		}
@@ -31,10 +35,15 @@
 	.block-editor-link-control__search-results-wrapper {
 		margin-bottom: 24px !important;
 		margin-top: 0 !important;
+		.block-editor-link-control__search-results {
+			margin: 0;
+		}
 	}
 	.block-editor-link-control__search-item.is-current {
 		padding: 0 !important;
 	}
+
+
 }
 
 // Adjust the location of the dynamic and reset buttons since our control is taller.
