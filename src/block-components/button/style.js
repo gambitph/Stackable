@@ -5,11 +5,6 @@ import { BorderStyle } from '../helpers/borders'
 import { Icon } from '../icon'
 import { BlockCss } from '~stackable/components'
 
-/**
- * WordPress dependencies
- */
-import { sprintf } from '@wordpress/i18n'
-
 const Styles = props => {
 	const propsToPass = {
 		...props,
@@ -18,7 +13,9 @@ const Styles = props => {
 		versionDeprecated: '',
 	}
 	const {
+		attrNameTemplate = 'button%s',
 		selector,
+		backgroundSelector = `${ selector }:after`,
 		hoverSelector,
 		dependencies = [],
 	} = props
@@ -29,11 +26,12 @@ const Styles = props => {
 				{ ...propsToPass }
 				selector={ [ '', '.stk-button' ] }
 				styleRule="width"
-				attrName="buttonFullWidth"
+				attrName="fullWidth"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonFullWidth"
 				valueCallback={ () => '100%' }
 				format="%spx"
-				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
+				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) }
 			/>
 			{
 			// This makes the full-width button occupy the available space, but make
@@ -44,27 +42,30 @@ const Styles = props => {
 				renderIn="save"
 				selector=""
 				styleRule="flex"
-				attrName="buttonFullWidth"
+				attrName="fullWidth"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonFullWidth-save"
 				valueCallback={ () => '1 1 0' }
-				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
+				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) }
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="edit"
 				selectorCallback={ ( getAttributes, attributes, clientId ) => `[data-block="${ clientId }"]` }
 				styleRule="flex"
-				attrName="buttonFullWidth"
+				attrName="fullWidth"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonFullWidth-flex"
 				valueCallback={ () => '1 1 0' }
-				enabledCallback={ getAttribute => getAttribute( 'buttonFullWidth' ) }
+				enabledCallback={ getAttribute => getAttribute( 'fullWidth' ) }
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
 				responsive="all"
 				styleRule="minHeight"
-				attrName="buttonMinHeight"
+				attrName="minHeight"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonMinHeight"
 				format="%spx"
 			/>
@@ -73,12 +74,13 @@ const Styles = props => {
 				selector={ selector }
 				responsive="all"
 				styleRule="width"
-				attrName="buttonWidth"
+				attrName="width"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonWidth"
 				format="%spx"
-				enabledCallback={ getAttribute => ! getAttribute( 'buttonFullWidth' ) }
+				enabledCallback={ getAttribute => ! getAttribute( 'fullWidth' ) }
 				dependencies={ [
-					'buttonFullWidth',
+					'fullWidth',
 					...dependencies,
 				] }
 			/>
@@ -87,7 +89,8 @@ const Styles = props => {
 				selector={ selector }
 				responsive="all"
 				styleRule="paddingTop"
-				attrName="buttonPadding"
+				attrName="padding"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonPadding-top"
 				hasUnits="px"
 				valuePreCallback={ value => value?.top }
@@ -97,7 +100,8 @@ const Styles = props => {
 				selector={ selector }
 				responsive="all"
 				styleRule="paddingRight"
-				attrName="buttonPadding"
+				attrName="padding"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonPadding-right"
 				hasUnits="px"
 				valuePreCallback={ value => value?.right }
@@ -107,7 +111,8 @@ const Styles = props => {
 				selector={ selector }
 				responsive="all"
 				styleRule="paddingBottom"
-				attrName="buttonPadding"
+				attrName="padding"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonPadding-bottom"
 				hasUnits="px"
 				valuePreCallback={ value => value?.bottom }
@@ -117,7 +122,8 @@ const Styles = props => {
 				selector={ selector }
 				responsive="all"
 				styleRule="paddingLeft"
-				attrName="buttonPadding"
+				attrName="padding"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonPadding-left"
 				hasUnits="px"
 				valuePreCallback={ value => value?.left }
@@ -126,32 +132,34 @@ const Styles = props => {
 				{ ...propsToPass }
 				selector={ selector }
 				styleRule="background"
-				attrName="buttonBackgroundColor"
+				attrName="backgroundColor"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonBackgroundColor"
 				valueCallback={ ( _, getAttribute ) => {
-					const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection' )
-					const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor' )
-					const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2' )
+					const buttonBackgroundGradientDirection = getAttribute( 'backgroundGradientDirection' )
+					const buttonBackgroundColor = getAttribute( 'backgroundColor' )
+					const buttonBackgroundColor2 = getAttribute( 'backgroundColor2' )
 
-					if ( getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' ) {
-						return getAttribute( 'buttonBackgroundColor' )
+					if ( getAttribute( 'backgroundColorType' ) !== 'gradient' ) {
+						return getAttribute( 'backgroundColor' )
 					}
 
 					return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
 				} }
 				dependencies={ [
-					'buttonBackgroundGradientDirection',
-					'buttonBackgroundColor',
-					'buttonBackgroundColor2',
-					'buttonBackgroundColorType',
+					'backgroundGradientDirection',
+					'backgroundColor',
+					'backgroundColor2',
+					'backgroundColorType',
 					...dependencies,
 				 ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ `${ selector }:after` }
+				selector={ backgroundSelector || `${ selector }:after` }
 				styleRule="background"
-				attrName="buttonBackgroundColor"
+				attrName="backgroundColor"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonBackgroundColor-after"
 				hover="all"
 				hoverSelector={ hoverSelector ? hoverSelector : `${ selector }:hover:after` }
@@ -160,13 +168,13 @@ const Styles = props => {
 						return undefined
 					}
 
-					if ( getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' ) {
+					if ( getAttribute( 'backgroundColorType' ) !== 'gradient' ) {
 						return value
 					}
 
-					const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection', 'desktop', state )
-					const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', 'desktop', state )
-					const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2', 'desktop', state )
+					const buttonBackgroundGradientDirection = getAttribute( 'backgroundGradientDirection', 'desktop', state )
+					const buttonBackgroundColor = getAttribute( 'backgroundColor', 'desktop', state )
+					const buttonBackgroundColor2 = getAttribute( 'backgroundColor2', 'desktop', state )
 
 					if (
 						( typeof buttonBackgroundColor !== undefined &&
@@ -179,18 +187,19 @@ const Styles = props => {
 					return undefined
 				} }
 				dependencies={ [
-					'buttonBackgroundGradientDirection',
-					'buttonBackgroundColor',
-					'buttonBackgroundColor2',
-					'buttonBackgroundColorType',
+					'backgroundGradientDirection',
+					'backgroundColor',
+					'backgroundColor2',
+					'backgroundColorType',
 					...dependencies,
 				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ `${ selector }:after` }
+				selector={ backgroundSelector || `${ selector }:after` }
 				styleRule="opacity"
-				attrName="buttonBackgroundColor"
+				attrName="backgroundColor"
+				attrNameTemplate={ attrNameTemplate }
 				key="buttonBackgroundColor-opacity"
 				hover="all"
 				hoverSelector={ hoverSelector ? hoverSelector : `${ selector }:hover:after` }
@@ -199,7 +208,7 @@ const Styles = props => {
 						return undefined
 					}
 
-					const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', 'desktop', state )
+					const buttonBackgroundColor = getAttribute( 'backgroundColor', 'desktop', state )
 
 					if (
 						typeof buttonBackgroundColor !== 'undefined' &&
@@ -218,22 +227,27 @@ const Styles = props => {
 export const Style = props => {
 	const {
 		selector = '',
-		attrNameTemplate = '',
+		attrNameTemplate = 'button%s',
+		borderSelector = `${ selector }:before`,
+		borderHoverSelector = `${ selector }:hover:before`,
 	} = props
 
 	return (
 		<>
-			<Styles { ...props } />
+			<Styles
+				{ ...props }
+				attrNameTemplate={ attrNameTemplate }
+			/>
 			<BorderStyle
 				{ ...props }
-				selector={ selector + ':before' }
+				selector={ borderSelector }
 				// Adding border radius clips button's shadow.
 				// This prevents this from happening.
 				// @see src/block-components/borders/style.js
 				addBorderRadiusOverflow={ false }
-				hoverSelector={ selector + ':hover:before' }
+				hoverSelector={ borderHoverSelector }
 				borderRadiusSelector={ selector }
-				attrNameTemplate={ sprintf( 'button%s', attrNameTemplate || '%s' ) }
+				attrNameTemplate={ attrNameTemplate }
 			/>
 			<Icon.Style { ...props } />
 		</>
@@ -243,22 +257,27 @@ export const Style = props => {
 Style.Content = props => {
 	const {
 		selector = '',
-		attrNameTemplate = '',
+		attrNameTemplate = 'button%s',
+		borderSelector = `${ selector }:before`,
+		borderHoverSelector = `${ selector }:hover:before`,
 	} = props
 
 	return (
 		<>
-			<Styles { ...props } />
+			<Styles
+				{ ...props }
+				attrNameTemplate={ attrNameTemplate }
+			/>
 			<BorderStyle.Content
 				{ ...props }
-				selector={ selector + ':before' }
+				selector={ borderSelector }
 				// Adding border radius clips button's shadow.
 				// This prevents this from happening.
 				// @see src/block-components/borders/style.js}
 				addBorderRadiusOverflow={ false }
-				hoverSelector={ selector + ':hover:before' }
+				hoverSelector={ borderHoverSelector }
 				borderRadiusSelector={ selector }
-				attrNameTemplate={ sprintf( 'button%s', attrNameTemplate || '%s' ) }
+				attrNameTemplate={ attrNameTemplate }
 			/>
 			<Icon.Style.Content { ...props } />
 		</>

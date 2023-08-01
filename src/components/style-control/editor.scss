@@ -44,6 +44,10 @@
 	margin: 0;
 	border: 2px solid #1e1e1e;
 }
+.stk-block-editor-block-styles__item.is-disabled {
+	opacity: 0.4;
+	pointer-events: none;
+}
 .stk-block-editor-block-styles__item .block-editor-block-preview__container {
 	cursor: inherit;
 }
@@ -64,4 +68,8 @@
 .stk-block-editor-block-styles__item-label {
 	text-align: center;
 	padding: 4px 0;
+}
+
+.stk-style-control__image__icon {
+	width: 100%;
 }

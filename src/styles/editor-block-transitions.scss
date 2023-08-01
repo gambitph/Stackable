@@ -26,8 +26,9 @@
 	.stk-block .stk-button::after, // For button animations
 	.stk-img-resizer-wrapper::after, // Image block overlay.
 	.stk-img-resizer-wrapper::before, // Image block hover ovelay.
-	.stk-block li::marker { // For icon list marker
-		transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), margin 0s, flex 0s, max-width 0s; // Don't include flex & max-width since column widths would animate.
+	.stk-block li::marker, // For icon list marker
+	.stk-block-tabs__tab { // Tabs block
+		transition: all var(--stk-transition-duration, 0.12s) cubic-bezier(0.45, 0.05, 0.55, 0.95), margin 0s, flex 0s, max-width 0s, visibility 0s; // Don't include flex & max-width since column widths would animate.
 		border-width: 1px;
 		border-style: none;
 	}

@@ -70,7 +70,7 @@ const Layout = props => {
 				label={ labelContentWidth }
 				attribute={ getAttrName( 'width' ) }
 				responsive="all"
-				units={ [ 'px', '%' ] }
+				units={ [ 'px', '%', 'vw' ] }
 				min={ [ 0, 0 ] }
 				sliderMax={ [ 1500, 100 ] }
 				step={ [ 1, 1 ] }

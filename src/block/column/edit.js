@@ -98,7 +98,7 @@ const Edit = props => {
 							label={ __( 'Column Spacing', i18n ) }
 							attribute="columnSpacing"
 							responsive="all"
-							units={ [ 'px', 'em' ] }
+							units={ [ 'px', 'em', 'vw' ] }
 							defaultLocked={ true }
 							min={ [ 0, 0 ] }
 							sliderMax={ [ 200, 30 ] }

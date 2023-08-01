@@ -1,51 +1,49 @@
 /**
  * External dependencies
  */
-import {
-	addBorderAttributes,
-} from '~stackable/block-components'
+import { addBorderAttributes } from '~stackable/block-components'
 import { Link, Icon } from '../'
 
 const buttonAttributes = {
-	buttonPadding: {
+	padding: {
 		stkResponsive: true,
 		type: 'object',
 		stkUnits: 'px',
 	},
-	buttonBackgroundColorType: {
+	backgroundColorType: {
 		type: 'string',
 		default: '',
 	},
-	buttonBackgroundColor: {
+	backgroundColor: {
 		stkHover: true,
 		type: 'string',
 		default: '', // button primary color.
 	},
-	buttonBackgroundColor2: {
+	backgroundColor2: {
 		stkHover: true,
 		type: 'string',
 		default: '',
 	},
-	buttonBackgroundGradientDirection: {
+	backgroundGradientDirection: {
 		stkHover: true,
 		type: 'number',
 		default: '',
 	},
-	buttonMinHeight: {
+	minHeight: {
 		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	buttonWidth: {
+	width: {
 		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	buttonFullWidth: {
+	fullWidth: {
 		type: 'boolean',
 		default: '',
 	},
-	buttonHoverEffect: {
+	hoverEffect: {
 		type: 'string',
 		default: 'darken',
 	},
@@ -54,15 +52,17 @@ const buttonAttributes = {
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		selector,
+		attrNameTemplate = 'button%s',
 	} = options
 
 	attrObject.add( {
 		attributes: buttonAttributes,
+		attrNameTemplate,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
 
-	addBorderAttributes( attrObject, 'button%s' )
+	addBorderAttributes( attrObject, attrNameTemplate )
 	Link.addAttributes( attrObject, { selector } )
 	Icon.addAttributes( attrObject )
 }

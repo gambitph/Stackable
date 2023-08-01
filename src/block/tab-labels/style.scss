@@ -1,0 +1,64 @@
+@import "common";
+
+.stk-block-tab-labels {
+	--stk-block-margin-bottom: 0;
+	--tabs-flex: none;
+	--tabs-column-gap: 12px;
+	--tabs-row-gap: 8px;
+}
+.stk-block-tabs__tab {
+	all: unset;
+	outline: revert;
+	cursor: pointer;
+	padding: 12px;
+	flex: var(--tabs-flex, none);
+	background-color: transparent !important;
+}
+.stk-block-tab-labels__wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	column-gap: var(--tabs-column-gap, 12px);
+	row-gap: var(--tabs-row-gap, 8px);
+}
+.stk-block-tabs--horizontal .stk-block-tab-labels__wrapper {
+	flex-direction: row;
+}
+.stk-block-tabs--vertical .stk-block-tab-labels__wrapper {
+	flex-direction: column;
+}
+
+.stk-block-tabs__tab {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 8px;
+	--stk-icon-size: 16px;
+}
+.stk-block-tab-labels__text {
+	flex: 0 1 auto;
+}
+
+// Transition interferes and adds delay, this fixes the delay.
+.stk-block-tabs__tab {
+	.stk-block-tab-labels__text {
+		transition: none !important;
+	}
+}
+
+@include mobile {
+	.stk-block-tab-labels:not(.stk-block-tab-labels--wrap-mobile) {
+		overflow-x: auto !important;
+		width: 100%;
+		&::-webkit-scrollbar {
+			height: 0 !important;
+		}
+		.stk-block-tab-labels__wrapper {
+			flex-wrap: nowrap;
+			width: max-content;
+			min-width: -moz-available;
+			min-width: -webkit-fill-available;
+			min-width: fill-available;
+		}
+	}
+}

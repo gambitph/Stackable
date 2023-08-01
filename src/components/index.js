@@ -56,6 +56,7 @@ export { default as AdminToggleSetting } from './admin-toggle-setting'
 export { default as AdminSelectSetting } from './admin-select-setting'
 export { default as TaxonomyControl } from './taxonomy-control'
 export { default as Tooltip } from './tooltip'
+export { default as BlockStyles } from './block-styles'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'
@@ -99,7 +100,9 @@ export {
 } from './inspector-tabs'
 export { default as Div } from './div'
 export { default as ControlIconToggle } from './control-icon-toggle'
-export { default as DynamicContentControl, useDynamicContent } from './dynamic-content-control'
+export {
+	default as DynamicContentControl, useDynamicContent, getDynamicContent,
+} from './dynamic-content-control'
 export { default as Separator2 } from './separator2'
 export { default as ColumnInnerBlocks } from './column-inner-blocks'
 export { default as VariationPicker } from './variation-picker'
@@ -110,3 +113,4 @@ export { default as ColumnsWidthControl } from './columns-width-control'
 export { default as ColumnsWidthMultiControl } from './columns-width-multi-control'
 export { default as Popover } from './popover'
 export { default as HelpTooltip } from './help-tooltip'
+export { default as RichText } from './rich-text'

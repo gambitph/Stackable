@@ -49,6 +49,7 @@ export const LinkControls = props => {
 			}
 			<AdvancedTextControl
 				label={ __( 'Link rel', i18n ) }
+				help={ __( 'Link relationship keywords, e.g. nofollow noreferrer prefetch', i18n ) }
 				value={ getAttribute( 'rel' ) }
 				onChange={ updateAttributeHandler( 'rel' ) }
 			/>

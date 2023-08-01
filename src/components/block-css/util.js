@@ -115,9 +115,11 @@ export const getDependencyAttrnamesFast = styleParams => {
 
 	// Add the attribute dependencies.
 	dependencies.forEach( _attrName => {
-		const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
-		if ( attrName && ! attrNames.includes( attrName ) ) {
-			attrNames.push( attrName )
+		if ( _attrName ) {
+			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+			if ( attrName && ! attrNames.includes( attrName ) ) {
+				attrNames.push( attrName )
+			}
 		}
 	} )
 

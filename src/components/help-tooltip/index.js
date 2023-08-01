@@ -12,9 +12,10 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	CheckboxControl, Dashicon, PanelBody, Popover,
+	CheckboxControl, Dashicon, PanelBody,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import Popover from '../popover'
 
 const NOOP = () => {}
 
@@ -22,11 +23,11 @@ const HelpTooltip = props => {
 	return <Popover
 		className="stk-control-help-tooltip"
 		title={ props.title }
-		focusOnMount={ false }
 		placement="left"
 		offset={ 28 }
 		noArrow={ false }
 		onFocusOutside={ props.onClose }
+		onEscape={ props.onClose }
 	>
 		<PanelBody>
 			<button

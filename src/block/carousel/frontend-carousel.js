@@ -35,6 +35,7 @@ class _StackableCarousel {
 
 		this.initProperties()
 		this.addEventListeners()
+		this.fixChildrenAccessibility()
 		this.fixAccessibility( this.currentSlide )
 		this.setDotActive( this.currentSlide )
 
@@ -194,6 +195,12 @@ class _StackableCarousel {
 				}
 			}
 		}
+	}
+
+	fixChildrenAccessibility = () => {
+		this.slideEls.forEach( slide => {
+			slide.setAttribute( 'role', 'listitem' )
+		} )
 	}
 
 	setDotActive = slide => {
@@ -394,7 +401,9 @@ class StackableCarousel {
 	init = () => {
 		const els = document.querySelectorAll( '.stk-block-carousel' )
 		els.forEach( el => {
-			new _StackableCarousel( el ).init()
+			const carousel = new _StackableCarousel( el )
+			el.carousel = carousel
+			carousel.init()
 		} )
 	}
 }
