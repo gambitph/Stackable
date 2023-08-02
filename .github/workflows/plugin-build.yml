@@ -46,3 +46,10 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: stackable-${{ env.VERSION_SUFFIX }}.zip
         artifacts-branch: artifacts
+
+    - name: Comment WordPress playground link
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: dannyskoog/pull-request-comment@v1.0.1
+      with:
+        message: 'Try this Pull Request in the WordPress playground: https://playground.wordpress.net/?mode=seamless#{"landingPage":"/wp-admin/post-new.php?post_type=page","preferredVersions":{"php":"latest","wp":"latest"},"steps":[{"step":"login","username":"admin","password":"password"},{"step":"installPlugin","pluginZipFile":{"resource":"url","url":"https://raw.githubusercontent.com/gambitph/Stackable/artifacts/pr${{ github.event.number }}-stackable-${{ github.event.number }}-merge.zip"}}]}'
+        marker: <!-- wp-playground-link -->
