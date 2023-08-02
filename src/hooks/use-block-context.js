@@ -40,7 +40,7 @@ const STORE_REDUCER = ( state = {}, action ) => {
 		case 'UPDATE_BLOCK_TREE': {
 			const blocks = {}
 
-			action.blockTree.forEach( rootBlock => {
+			action.blockTree.forEach( ( rootBlock, index, siblingBlocks ) => {
 				// Gather information about the root block.
 				const {
 					clientId, innerBlocks, name,
@@ -48,6 +48,8 @@ const STORE_REDUCER = ( state = {}, action ) => {
 				blocks[ clientId ] = {
 					numInnerBlocks: innerBlocks.length,
 					hasInnerBlocks: !! innerBlocks.length,
+					nextBlock: nth( siblingBlocks, index + 1 ),
+					previousBlock: index === 0 ? undefined : nth( siblingBlocks, index - 1 ), // nth will loop back to the last if index is -1.
 					innerBlocks,
 					rootBlockClientId: clientId,
 					parentTree: [],
@@ -96,6 +98,8 @@ const STORE_REDUCER = ( state = {}, action ) => {
 								adjacentBlock: nth( innerBlocks, ! isLastBlock ? index + 1 : index - 1 ),
 								adjacentBlockIndex: ! isLastBlock ? index + 1 : index - 1,
 								adjacentBlocks: innerBlocks || [],
+								nextBlock: nth( innerBlocks, index + 1 ),
+								previousBlock: index === 0 ? undefined : nth( innerBlocks, index - 1 ), // nth will loop back to the last if index is -1.
 								numInnerBlocks: block.innerBlocks.length,
 								hasInnerBlocks: !! block.innerBlocks.length,
 								innerBlocks: block.innerBlocks,
