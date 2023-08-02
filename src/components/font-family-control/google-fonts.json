@@ -2869,6 +2869,16 @@
     ]
   },
   {
+    "family": "Borel",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Bowlby One",
     "variants": [
       "regular"
@@ -4416,12 +4426,24 @@
   {
     "family": "DM Sans",
     "variants": [
+      "100",
+      "200",
+      "300",
       "regular",
-      "italic",
       "500",
-      "500italic",
+      "600",
       "700",
-      "700italic"
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -4448,6 +4470,26 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Dai Banna SIL",
+    "variants": [
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "new-tai-lue"
     ]
   },
   {
@@ -6998,6 +7040,31 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Handjet",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "arabic",
+      "armenian",
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9570,6 +9637,32 @@
     ]
   },
   {
+    "family": "Lisu Bosa",
+    "variants": [
+      "200",
+      "200italic",
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic",
+      "800",
+      "800italic",
+      "900",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "lisu"
+    ]
+  },
+  {
     "family": "Literata",
     "variants": [
       "200",
@@ -9776,6 +9869,43 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Lugrasimo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Lumanosimo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Lunasima",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -11801,7 +11931,9 @@
       "regular"
     ],
     "subsets": [
-      "anatolian-hieroglyphs"
+      "anatolian-hieroglyphs",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11938,7 +12070,9 @@
       "regular"
     ],
     "subsets": [
-      "brahmi"
+      "brahmi",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11988,7 +12122,9 @@
       "regular"
     ],
     "subsets": [
-      "carian"
+      "carian",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12077,7 +12213,9 @@
       "regular"
     ],
     "subsets": [
-      "cuneiform"
+      "cuneiform",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12090,12 +12228,25 @@
     ]
   },
   {
+    "family": "Noto Sans Cypro Minoan",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cypro-minoan",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Noto Sans Deseret",
     "variants": [
       "regular"
     ],
     "subsets": [
-      "deseret"
+      "deseret",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12167,7 +12318,9 @@
       "regular"
     ],
     "subsets": [
-      "egyptian-hieroglyphs"
+      "egyptian-hieroglyphs",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12234,7 +12387,10 @@
       "regular"
     ],
     "subsets": [
-      "glagolitic"
+      "cyrillic-ext",
+      "glagolitic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12243,7 +12399,9 @@
       "regular"
     ],
     "subsets": [
-      "gothic"
+      "gothic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12350,7 +12508,9 @@
       "regular"
     ],
     "subsets": [
-      "hatran"
+      "hatran",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12466,7 +12626,9 @@
       "regular"
     ],
     "subsets": [
-      "kaithi"
+      "kaithi",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12549,7 +12711,9 @@
       "regular"
     ],
     "subsets": [
-      "khudawadi"
+      "khudawadi",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12618,6 +12782,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "linear-a"
     ]
   },
@@ -12627,6 +12793,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "linear-b"
     ]
   },
@@ -12659,6 +12827,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "lydian"
     ]
   },
@@ -12668,6 +12838,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "mahajani"
     ]
   },
@@ -12705,6 +12877,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "manichaean"
     ]
   },
@@ -12714,6 +12888,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "marchen"
     ]
   },
@@ -12985,6 +13161,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "ogham"
     ]
   },
@@ -13017,6 +13195,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-italic"
     ]
   },
@@ -13026,6 +13206,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-north-arabian"
     ]
   },
@@ -13035,6 +13217,9 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
       "old-permic"
     ]
   },
@@ -13044,6 +13229,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-persian"
     ]
   },
@@ -13064,6 +13251,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-south-arabian"
     ]
   },
@@ -13165,6 +13354,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "phoenician"
     ]
   },
@@ -13196,6 +13387,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "runic"
     ]
   },
@@ -13253,6 +13446,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "shavian"
     ]
   },
@@ -13328,6 +13523,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "soyombo"
     ]
   },
@@ -13388,6 +13585,25 @@
   },
   {
     "family": "Noto Sans Syriac",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "syriac"
+    ]
+  },
+  {
+    "family": "Noto Sans Syriac Eastern",
     "variants": [
       "100",
       "200",
@@ -13626,6 +13842,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "tirhuta"
     ]
   },
@@ -13649,6 +13867,20 @@
       "latin",
       "latin-ext",
       "vai"
+    ]
+  },
+  {
+    "family": "Noto Sans Vithkuqi",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vithkuqi"
     ]
   },
   {
@@ -14025,6 +14257,17 @@
     ]
   },
   {
+    "family": "Noto Serif Khitan Small Script",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "khitan-small-script",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Noto Serif Khmer",
     "variants": [
       "100",
@@ -14323,6 +14566,20 @@
     ]
   },
   {
+    "family": "Noto Serif Vithkuqi",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vithkuqi"
+    ]
+  },
+  {
     "family": "Noto Serif Yezidi",
     "variants": [
       "regular",
@@ -14331,6 +14588,8 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "yezidi"
     ]
   },
@@ -15996,6 +16255,34 @@
     ]
   },
   {
+    "family": "REM",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Racing Sans One",
     "variants": [
       "regular"
@@ -17623,6 +17910,8 @@
     "family": "Sen",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700",
       "800"
     ],
@@ -19053,6 +19342,25 @@
     ]
   },
   {
+    "family": "Tektur",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Telex",
     "variants": [
       "regular"
@@ -19935,6 +20243,33 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Victor Mono",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {

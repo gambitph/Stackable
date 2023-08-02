@@ -208,11 +208,11 @@ const renderToggle =
 const LabeledColorIndicator = ( { colorValue, label } ) => (
 	<HStack justify="flex-start">
 		<ColorIndicator
-			className="block-editor-panel-color-gradient-settings__color-indicator"
+			className="stk-color-indicator block-editor-panel-color-gradient-settings__color-indicator"
 			colorValue={ colorValue }
 		/>
 		<FlexItem
-			className="block-editor-panel-color-gradient-settings__color-name"
+			className="stk-color-name block-editor-panel-color-gradient-settings__color-name"
 			title={ label }
 		>
 			{ label }

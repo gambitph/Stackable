@@ -11,7 +11,6 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { pick } from 'lodash'
 import {
 	render, useEffect, useState, Fragment, useCallback,
 } from '@wordpress/element'
@@ -203,6 +202,17 @@ const BlockToggler = () => {
 			} ) }
 		</>
 	)
+}
+
+// Implement pick without using lodash, because themes and plugins might remove
+// lodash from the admin.
+const pick = ( obj, keys ) => {
+	return keys.reduce( ( acc, key ) => {
+		if ( obj && obj.hasOwnProperty( key ) ) {
+			acc[ key ] = obj[ key ]
+		}
+		return acc
+	}, {} )
 }
 
 const EditorSettings = () => {
