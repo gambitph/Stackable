@@ -37,9 +37,7 @@ import {
 	getContentAlignmentClasses,
 	Typography,
 } from '~stackable/block-components'
-import {
-	useBlockContext, useBlockSetAttributesContext, useDeviceType,
-} from '~stackable/hooks'
+import { useBlockContext, useDeviceType } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -55,6 +53,7 @@ import {
 } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { addFilter } from '@wordpress/hooks'
+import { dispatch } from '@wordpress/data'
 import {
 	useEffect, useRef, useState,
 } from '@wordpress/element'
@@ -92,6 +91,7 @@ const Edit = props => {
 		className,
 		clientId,
 		isSelected,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -101,7 +101,6 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const typographyClass = getTypographyClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
-	const setAttribute = useBlockSetAttributesContext()
 	const deviceType = useDeviceType()
 
 	const middleRef = useRef()
@@ -264,9 +263,11 @@ const Edit = props => {
 
 				// set attribute for frontend
 				if ( nextBlock && nextBlock.getAttribute( 'data-type' ) === 'stackable/timeline' && props.attributes.timelineIsLast ) {
-					setAttribute( { timelineIsLast: false } )
+					dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					setAttributes( { timelineIsLast: false } )
 				} else if ( ! nextBlock || nextBlock.getAttribute( 'data-type' ) !== 'stackable/timeline' ) {
-					setAttribute( { timelineIsLast: true } )
+					dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					setAttributes( { timelineIsLast: true } )
 				}
 
 				updateMaxHeight( { previousBlock, nextBlock } )
