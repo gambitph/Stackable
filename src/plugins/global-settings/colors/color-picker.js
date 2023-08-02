@@ -249,7 +249,7 @@ const LabeledColorIndicator = props => {
 						>
 							<HStack justify="flex-start">
 								<ColorIndicator
-									className="block-editor-panel-color-gradient-settings__color-indicator"
+									className="stk-color-indicator block-editor-panel-color-gradient-settings__color-indicator"
 									colorValue={ color.color }
 								/>
 								<input
