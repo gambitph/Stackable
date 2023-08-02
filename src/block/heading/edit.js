@@ -163,7 +163,7 @@ const Edit = props => {
 
 								<AdvancedRangeControl
 									label={ __( 'Width', i18n ) }
-									units={ [ 'px', '%' ] }
+									units={ [ 'px', '%', 'vw' ] }
 									attribute="topLineWidth"
 									min="0"
 									sliderMax={ [ 200, 100 ] }
@@ -209,7 +209,7 @@ const Edit = props => {
 
 								<AdvancedRangeControl
 									label={ __( 'Width', i18n ) }
-									units={ [ 'px', '%' ] }
+									units={ [ 'px', '%', 'vw' ] }
 									attribute="bottomLineWidth"
 									min={ 0 }
 									sliderMax={ [ 200, 100 ] }

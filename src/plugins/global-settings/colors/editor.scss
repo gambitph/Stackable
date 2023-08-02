@@ -16,15 +16,89 @@
 
 .ugb-global-settings-color-picker {
 	margin-bottom: 12px;
+	.components-base-control__field {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		row-gap: 8px;
+	}
+	.components-base-control__label {
+		grid-column: 1 / 2;
+		align-self: center;
+		margin-bottom: 0;
+	}
+	.ugb-global-settings-color-picker__add-button {
+		grid-column: 2 / 3;
+	}
+	.ugb-global-settings-color-picker__color-indicators {
+		grid-column: 1 / 3;
+		// This collapses.
+		.components-dropdown {
+			width: 100%;
+		}
+	}
+
+	.ugb-global-settings-color-picker__color-indicators:not(.is-sorting) {
+		.components-flex:not(:last-child) .block-editor-panel-color-gradient-settings__dropdown {
+			border-bottom: 0 !important;
+			border-bottom-left-radius: 0 !important;
+			border-bottom-right-radius: 0 !important;
+		}
+		.components-flex:not(:first-child) .block-editor-panel-color-gradient-settings__dropdown {
+			border-top-left-radius: 0 !important;
+			border-top-right-radius: 0 !important;
+		}
+	}
+	.stk-global-settings-color-picker__delete-button {
+		color: var(--stk-skin-error);
+	}
 }
 
-.ugb-global-settings-color-picker__add-icon {
-	min-width: 28px !important;
-	width: 28px;
-	height: 28px;
-	border-radius: 50%;
-	svg {
-		width: 20px;
+.block-editor-panel-color-gradient-settings__dropdown {
+	border: 1px solid #0000001a;
+	height: 40px;
+	background: #fff;
+	&:focus {
+		z-index: 2;
+		position: relative;
+	}
+	// Style when selected.
+	&.is-pressed {
+		--wp-components-color-foreground: #f0f0f0;
+		color: revert;
+	}
+	.dashicon {
+		max-width: 16px !important;
+		width: 100% !important;
+	}
+
+	.components-input-control__input {
+		border: none;
+		background: none;
+		height: 26px;
+		font-size: 13px;
+		outline-color: var(--stk-skin-border-dark);
+	}
+}
+
+// Make sure when dragging, it doesn't collapse.
+.stk-global-settings-color-picker__color-indicator-wrapper {
+	.components-dropdown {
+		width: 100%;
+	}
+	.dashicon {
+		margin-left: auto;
+		outline-color: var(--stk-skin-border-dark);
+	}
+}
+// Hide the trash button when dragging.
+body > .stk-global-settings-color-picker__color-indicator-wrapper {
+	// border: 1px solid #0000001a;
+	// height: 40px;
+	.block-editor-panel-color-gradient-settings__dropdown {
+		border: 2px solid var(--stk-skin-border-dark);
+	}
+	.stk-global-settings-color-picker__delete-button {
+		visibility: hidden;
 	}
 }
 

@@ -167,6 +167,7 @@ export const Icon = props => {
 				<IconSearchPopover
 					__hasPopover={ true }
 					__deprecateUseRef={ popoverEl }
+					onClose={ () => setIsOpen( false ) }
 					onChange={ icon => {
 						if ( ! onChange ) {
 							updateAttributeHandler( 'icon' )( icon )

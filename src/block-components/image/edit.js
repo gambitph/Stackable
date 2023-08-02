@@ -280,6 +280,7 @@ const Controls = props => {
 				isSmall={ true }
 			/>
 
+			{ /* TODO: opacity will now be included in the color */ }
 			<ColorPaletteControl
 				label={
 					attributes.imageOverlayColorType === 'gradient'
@@ -287,8 +288,8 @@ const Controls = props => {
 						: __( 'Overlay Color', i18n )
 				}
 				attribute="imageOverlayColor"
-				hover="all"
 				hasTransparent={ attributes.imageOverlayColorType === 'gradient' }
+				hover="all"
 			/>
 			{ attributes.imageOverlayColorType === 'gradient' && (
 				<ColorPaletteControl
