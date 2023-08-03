@@ -54,6 +54,7 @@
 	inset-inline-start: calc(50% - var(--line-bg-width, 3px) / 2);
 	width: var(--line-bg-width, 3px);
 	height: 100%;
+	bottom: unset;
 }
 .stk-block-timeline__vertical-line__fill {
 	position: absolute;
@@ -85,11 +86,22 @@
 	inset-inline-end: 50%;
 }
 
+// for first timeline block
+[data-type="stackable/timeline"]:not([data-type="stackable/timeline"] + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line {
+	top: unset;
+	bottom: 0;
+}
+
+[data-type="stackable/timeline"]:is([data-type="stackable/timeline"] + style + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line {
+	top: 0;
+}
+
 [data-type="stackable/timeline"]:not([data-type="stackable/timeline"] + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line__fill {
 	top: calc(var(--line-dot-size, 16px) / -2);
 	max-height: calc(100% + var(--line-dot-size, 16px));
 }
 
+// set max height to 0 if timeline block is single
 [data-type="stackable/timeline"]:not([data-type="stackable/timeline"] + [data-type="stackable/timeline"]) > .stk-block-timeline.stk-block-timeline--last .stk-block-timeline__vertical-line {
 	max-height: 0;
 }
@@ -154,6 +166,10 @@
 	}
 
 	[data-type="stackable/timeline"]:not([data-type="stackable/timeline"] + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line {
-		top: 16px !important;
+		top: 16px;
+	}
+
+	[data-type="stackable/timeline"]:is([data-type="stackable/timeline"] + style + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line {
+		top: 0;
 	}
 }
