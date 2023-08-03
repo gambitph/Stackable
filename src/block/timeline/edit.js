@@ -24,6 +24,7 @@ import {
 	useGeneratedCss,
 	MarginBottom,
 	getRowClasses,
+	getTypographyClasses,
 	getAlignmentClasses,
 	Advanced,
 	CustomCSS,
@@ -32,12 +33,11 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 	getSeparatorClasses,
-	Transform,
 	ContentAlign,
 	getContentAlignmentClasses,
 	Typography,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useDeviceType } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -52,6 +52,11 @@ import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
+import { addFilter } from '@wordpress/hooks'
+import { dispatch } from '@wordpress/data'
+import {
+	useEffect, useRef, useState,
+} from '@wordpress/element'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -86,6 +91,7 @@ const Edit = props => {
 		className,
 		clientId,
 		isSelected,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -93,7 +99,24 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
+	const typographyClass = getTypographyClasses( props.attributes )
+	const {
+		hasInnerBlocks, nextBlock, previousBlock,
+	} = useBlockContext()
+	const deviceType = useDeviceType()
+
+	const middleRef = useRef()
+	const branchRef = useRef()
+	const blockRef = useRef()
+	const [ middleTopPosition, setMiddleTopPosition ] = useState( { dot: 0, branch: 0 } )
+	const [ fillHeight, setFillHeight ] = useState( { verticalLine: 0, middle: 0 } )
+	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
+	const [ verticalLineTopPosition, setVerticalLineTopPosition ] = useState( 0 )
+
+	const dateClassNames = classnames( [
+		typographyClass,
+		'stk-block-timeline__date',
+	] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -103,6 +126,7 @@ const Edit = props => {
 		{
 			'stk-block-timeline--left': props.attributes.timelinePosition !== 'right',
 			'stk-block-timeline--right': props.attributes.timelinePosition === 'right',
+			'stk-block-timeline--last': props.attributes.timelineIsLast,
 		},
 	] )
 
@@ -111,6 +135,137 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes ) )
+
+	// check if timeline block is single, is first block, or is last block
+	const getTimelinePosition = () => {
+		return {
+			isFirst: ! previousBlock || previousBlock.name !== 'stackable/timeline',
+			isLast: ! nextBlock || nextBlock.name !== 'stackable/timeline',
+		}
+	}
+
+	const getSelectAttributes = () => {
+		return {
+			timelineAnchor:
+				props.attributes.timelineAnchor === '' ? 0.5 : ( props.attributes.timelineAnchor / 100 ),
+			topPadding:
+				props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 16,
+			topPaddingZero:
+				props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 0,
+			bottomPadding:
+				props.attributes.blockPadding && props.attributes.blockPadding.bottom !== '' ? props.attributes.blockPadding.bottom : 16,
+			topPaddingTablet:
+				props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.top !== '' ? props.attributes.blockPaddingTablet.top : 16,
+			bottomPaddingTablet:
+				props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.bottom !== '' ? props.attributes.blockPaddingTablet.bottom : 16,
+			topPaddingMobileZero:
+				props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.top !== '' ? props.attributes.blockPaddingMobile.top : 0,
+			bottomPaddingMobileZero:
+				props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.bottom !== '' ? props.attributes.blockPaddingMobile.bottom : 0,
+		}
+	}
+
+	const handleScroll = () => {
+		const {
+			timelineAnchor, topPadding, topPaddingZero,
+		} = getSelectAttributes()
+
+		const lineHeight = ( document.body.clientHeight * timelineAnchor ) - ( blockRef.current.getBoundingClientRect().top ) + topPaddingZero
+		const fillPercent = ( lineHeight / blockRef.current.getBoundingClientRect().height ) * 100
+
+		// gets equivalent px of 1%
+		const fillPxPercent = blockRef.current.getBoundingClientRect().height / 100
+		// converts percent to px
+		const fillPx = fillPercent * fillPxPercent
+
+		let fill = { verticalLine: fillPx, middle: fillPx }
+
+		const dot = ( middleRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding
+		const branch = ( branchRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding
+
+		// corrects the position of the fill for the first timeline block since the line starts at the middle
+		if ( ! previousBlock || previousBlock.name !== 'stackable/timeline' ) {
+			fill = {
+				verticalLine: fillPx - dot,
+				middle: fillPx,
+			}
+		}
+
+		setMiddleTopPosition( { dot, branch } )
+		setFillHeight( fill )
+	}
+
+	const updateMaxHeight = () => {
+		const {
+			isFirst, isLast,
+		} = getTimelinePosition()
+
+		const {
+			topPadding, bottomPadding,
+			topPaddingTablet, bottomPaddingTablet,
+			topPaddingMobileZero, bottomPaddingMobileZero,
+		} = getSelectAttributes()
+
+		let lineMaxHeight = '100%'
+		let top = ''
+		if ( deviceType === 'Mobile' && isFirst ) {
+			lineMaxHeight = `calc(100% + ${ bottomPaddingMobileZero }px - ${ topPaddingMobileZero }px - 16px)`
+			top = `${ topPaddingMobileZero + 16 }px`
+		} else if ( deviceType === 'Mobile' && isLast ) {
+			lineMaxHeight = `${ topPaddingMobileZero + 16 }px`
+		} else if ( deviceType === 'Tablet' && isFirst ) {
+			lineMaxHeight = `calc(50% + ${ bottomPaddingTablet / 2 }px - ${ topPaddingTablet / 2 }px)`
+		} else if ( deviceType === 'Tablet' && isLast ) {
+			lineMaxHeight = `calc(50% + ${ topPaddingTablet / 2 }px - ${ bottomPaddingTablet / 2 }px)`
+		} else if ( deviceType === 'Mobile' ) {
+			lineMaxHeight = '100%'
+		} else if ( isFirst && isLast ) {
+			lineMaxHeight = '0'
+		} else if ( isFirst ) {
+			lineMaxHeight = `calc(50% + ${ bottomPadding / 2 }px - ${ topPadding / 2 }px)`
+		} else if ( isLast ) {
+			lineMaxHeight = `calc(50% + ${ topPadding / 2 }px - ${ bottomPadding / 2 }px)`
+		}
+
+		setVerticalLineMaxHeight( lineMaxHeight )
+		setVerticalLineTopPosition( top )
+		handleScroll()
+	}
+
+	// update max height when device type & padding changes
+	useEffect( () => {
+		updateMaxHeight()
+	}, [ deviceType,
+		props.attributes.blockPadding,
+		props.attributes.blockPaddingTablet,
+		props.attributes.blockPaddingMobile ] )
+
+	// update accent fill when anchor position or padding changes
+	useEffect( () => {
+		document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
+		handleScroll()
+		return () => {
+			document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
+		}
+	}, [ props.attributes.timelineAnchor,
+		props.attributes.blockPadding,
+		props.attributes.blockPaddingTablet,
+		props.attributes.blockPaddingMobile,
+		nextBlock ] )
+
+	// update blocks if position changes
+	useEffect( () => {
+		// set attribute for frontend
+		if ( nextBlock && nextBlock.name === 'stackable/timeline' && props.attributes.timelineIsLast ) {
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { timelineIsLast: false } )
+		} else if ( ! nextBlock || nextBlock.name !== 'stackable/timeline' ) {
+			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+			setAttributes( { timelineIsLast: true } )
+		}
+
+		updateMaxHeight()
+	}, [ nextBlock ] )
 
 	return (
 		<>
@@ -171,7 +326,7 @@ const Edit = props => {
 								placeholder=""
 							/>
 							<AdvancedRangeControl
-								label={ __( 'Thickness', i18n ) }
+								label={ __( 'Line Thickness', i18n ) }
 								attribute="timelineThickness"
 								sliderMax={ 20 }
 								min={ 1 }
@@ -200,19 +355,16 @@ const Edit = props => {
 										: __( 'Timeline Accent Color', i18n )
 								}
 								attribute="timelineAccentColor"
-								hasTransparent={ true }
 							/>
 							{ props.attributes.timelineAccentColorType === 'gradient' &&
 								<ColorPaletteControl
 									label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Timeline Accent Color', i18n ), 2 ) }
 									attribute="timelineAccentColor2"
-									hasTransparent={ true }
 								/>
 							}
 							<ColorPaletteControl
 								label={ __( 'Timeline Background Color', i18n ) }
 								attribute="timelineBackgroundColor"
-								hasTransparent={ true }
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
@@ -221,16 +373,15 @@ const Edit = props => {
 						{ ...props }
 						hasTextTag={ false }
 						isMultiline={ true }
-						initialOpen={ true }
+						initialOpen={ false }
 						hasTextShadow={ true }
 					/>
 					<InspectorLayoutControls>
 						<ControlSeparator />
 					</InspectorLayoutControls>
 					<ContentAlign.InspectorControls />
-					<BlockDiv.InspectorControls />
+					<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
 					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-timeline" />
@@ -254,6 +405,7 @@ const Edit = props => {
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<div
+					ref={ blockRef }
 					className={ contentClassNames }
 					data-align={ ! props.attributes.contentAlign ? undefined // Only needed in the backend
 						: props.attributes.contentAlign === 'alignwide' ? 'wide'
@@ -261,16 +413,60 @@ const Edit = props => {
 				>
 					<Typography
 						tagName="div"
-						className="stk-block-timeline__date"
+						className={ dateClassNames }
 						placeholder={ _x( 'Text for This Block', 'Text placeholder', i18n ) }
 					/>
-					<div className="stk-block-timeline__middle"></div>
+					<div
+						className="stk-block-timeline__middle"
+					>
+						<div
+							className="stk-block-timeline__middle__dot"
+							ref={ middleRef }
+						>
+							<div
+								className="stk-block-timeline__middle__fill"
+								style={ {
+									height: `max(${ fillHeight.middle }px, 0px)`,
+									top: `-${ middleTopPosition.dot }px`,
+									maxHeight: `calc(100% + ${ middleTopPosition.dot }px)`,
+								} }
+							/>
+						</div>
+						<div
+							className="stk-block-timeline__middle__branch"
+							ref={ branchRef }
+						>
+							<div
+								className="stk-block-timeline__middle__branch__fill"
+								style={ {
+									height: `max(${ fillHeight.middle }px, 0px)`,
+									top: `-${ middleTopPosition.branch }px`,
+									maxHeight: `calc(100% + ${ middleTopPosition.branch }px)`,
+								 } }
+							>
+							</div>
+						</div>
+					</div>
 					<div className="stk-block-timeline__content">
 						<InnerBlocks
 							template={ TEMPLATE }
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ false }
-							templateLock="all"
+							templateLock="false"
+						/>
+					</div>
+					<div
+						className="stk-block-timeline__vertical-line"
+						style={ {
+							maxHeight: verticalLineMaxHeight,
+							top: verticalLineTopPosition,
+						} }
+					>
+						<div
+							className="stk-block-timeline__vertical-line__fill"
+							style={ {
+								height: `max(${ fillHeight.verticalLine }px, 0px)`,
+							} }
 						/>
 					</div>
 				</div>
@@ -286,3 +482,11 @@ export default compose(
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
+
+// Change the default bottom margin to 0 for the timeline block because this
+// block is usually used multiple times in a page and it can be annoying having
+// to remove the bottom margin every time. This works in conjunction with the
+// margin-bottom set in style.scss
+addFilter( 'stackable.resizable-bottom-margin.default', 'stackable/timeline', ( defaultBottomMargin, blockName ) => {
+	return blockName === 'stackable/timeline' ? 0 : defaultBottomMargin
+} )

@@ -492,7 +492,6 @@ const Edit = props => {
 							<ColorPaletteControl
 								label={ sprintf( __( '%s Color', i18n ), __( 'Active Dot', i18n ) ) }
 								attribute="dotsActiveColor"
-								hasTransparent={ true }
 							/>
 							<AdvancedRangeControl
 								label={ sprintf( __( '%s Size', i18n ), __( 'Dot', i18n ) ) }

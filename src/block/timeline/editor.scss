@@ -4,7 +4,7 @@
 	display: grid !important;
 	grid-template-columns: 1fr var(--line-dot-size, 16px) 1fr;
 	grid-template-rows: auto;
-	gap: var(--gap, 16px);
+	column-gap: var(--gap, 16px);
 	align-items: center;
 }
 .stk-block-timeline {
@@ -13,26 +13,97 @@
 .stk-block-timeline--left > .stk-inner-blocks > * {
 	grid-row: 1 / 2;
 }
+// prevents content to be overlapped by background
+.stk-block-timeline > .stk-inner-blocks > * {
+	z-index: 2;
+}
+
+.stk-block-timeline > .stk-inner-blocks::after,
+.stk-block-timeline__middle,
+.stk-block-timeline__middle::after {
+	background: none !important;
+}
+.stk-block-timeline__middle::after,
 .stk-block-timeline > .stk-inner-blocks::after {
-	content: "";
+	content: none !important;
+}
+
+.stk-block-timeline__middle {
+	z-index: 2 !important;
+}
+.stk-block-timeline__middle__dot {
+	border-radius: var(--line-dot-border-radius, 100%);
+	width: var(--line-dot-size, 16px);
+	height: var(--line-dot-size, 16px);
+	position: relative;
+	z-index: 2;
+}
+.stk-block-timeline__middle__dot,
+.stk-block-timeline__vertical-line {
+	overflow: hidden;
+	background: var(--line-bg-color, #eee) !important;
+}
+.stk-block-timeline__middle__fill {
 	position: absolute;
+	width: 100%;
+	background: var(--line-accent-bg-color, #000) !important;
+}
+.stk-block-timeline__vertical-line {
+	position: absolute;
+	top: 0px;
 	inset-inline-start: calc(50% - var(--line-bg-width, 3px) / 2);
 	width: var(--line-bg-width, 3px);
-	top: 0;
+	height: 100%;
+	bottom: unset;
+}
+.stk-block-timeline__vertical-line__fill {
+	position: absolute;
+	width: var(--line-bg-width, 3px);
+	background: var(--line-accent-bg-color, #000) !important;
+	max-height: 100%;
+	z-index: 3 !important;
+}
+
+// branching line
+.stk-block-timeline__middle__branch {
+	position: absolute;
+	top: calc(50% - var(--line-bg-width, 3px) / 2);
+	inset-inline-start: 50%;
+	height: var(--line-bg-width, 3px);
+	width: var(--content-line, 0);
+	border-radius: var(--line-bg-width, 3px);
+	background: var(--line-bg-color, #eee) !important;
+	overflow: hidden;
+}
+.stk-block-timeline__middle__branch__fill {
+	position: absolute;
+	top: calc(50% - var(--line-bg-width, 3px) / 2);
+	width: var(--content-line, 0);
+	background: var(--line-accent-bg-color, #000) !important;
+}
+.stk-block-timeline--left .stk-block-timeline__middle__branch {
+	inset-inline-start: auto;
+	inset-inline-end: 50%;
+}
+
+// for first timeline block
+[data-type="stackable/timeline"]:not([data-type="stackable/timeline"] + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line {
+	top: unset;
 	bottom: 0;
-	background: var(--fixed-bg);
-	background-attachment: fixed;
 }
-/** Trim the top-most line and the bottom-most line */
-.stk-block-timeline > .stk-inner-blocks::after {
-	top: 50%;
-	bottom: 50%;
-}
-[data-type="stackable/timeline"] + [data-type="stackable/timeline"] > .stk-block-timeline > .stk-inner-blocks::after {
+
+[data-type="stackable/timeline"]:is([data-type="stackable/timeline"] + style + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line {
 	top: 0;
 }
-[data-type="stackable/timeline"]:has(+ [data-type="stackable/timeline"]) > .stk-block-timeline > .stk-inner-blocks::after {
-	bottom: 0;
+
+[data-type="stackable/timeline"]:not([data-type="stackable/timeline"] + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line__fill {
+	top: calc(var(--line-dot-size, 16px) / -2);
+	max-height: calc(100% + var(--line-dot-size, 16px));
+}
+
+// set max height to 0 if timeline block is single
+[data-type="stackable/timeline"]:not([data-type="stackable/timeline"] + [data-type="stackable/timeline"]) > .stk-block-timeline.stk-block-timeline--last .stk-block-timeline__vertical-line {
+	max-height: 0;
 }
 
 // Remove the top 8px gap.
@@ -46,6 +117,16 @@
 	.stk-block-timeline > .stk-inner-blocks::after {
 		--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
 	}
+	.stk-block-timeline__middle__branch__fill,
+	.stk-block-timeline__vertical-line__fill,
+	.stk-block-timeline__middle__fill {
+		background: transparent !important;
+	}
+	.stk-block-timeline__middle__branch,
+	.stk-block-timeline__vertical-line,
+	.stk-block-timeline__middle__dot {
+		background: var(--line-accent-bg-color, #000) !important;
+	}
 }
 
 @include mobile {
@@ -57,9 +138,13 @@
 		grid-template-columns: var(--line-dot-size, 16px) 1fr;
 		grid-template-rows: auto 1fr;
 		align-items: flex-start;
+		padding-left: 16px;
 	}
 	.stk-block-timeline > .stk-inner-blocks::after {
-		inset-inline-start: calc(var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2);
+		inset-inline-start: calc(var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2 + 16px);
+	}
+	.stk-block-timeline.stk-block-background .stk-block-timeline__middle {
+		margin-left: -16px;
 	}
 	.stk-block-timeline .stk-block-timeline__middle {
 		grid-column: 1 / 2;
@@ -76,16 +161,15 @@
 		grid-row: 1 / 2;
 		text-align: start;
 	}
+	.stk-block-timeline__vertical-line {
+		inset-inline-start: calc(16px + var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2);
+	}
 
-	/** Trim the top-most line and the bottom-most line */
-	.stk-block-timeline > .stk-inner-blocks::after {
-		top: calc(var(--line-dot-size, 16px) / 2 + 0.5em);
-		bottom: calc(100% - calc(var(--line-dot-size, 16px) / 2) - 0.5em);
+	[data-type="stackable/timeline"]:not([data-type="stackable/timeline"] + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line {
+		top: 16px;
 	}
-	[data-type="stackable/timeline"] + [data-type="stackable/timeline"] > .stk-block-timeline > .stk-inner-blocks::after {
-		top: -16px;
-	}
-	[data-type="stackable/timeline"]:has(+ [data-type="stackable/timeline"]) > .stk-block-timeline > .stk-inner-blocks::after {
-		bottom: 0;
+
+	[data-type="stackable/timeline"]:is([data-type="stackable/timeline"] + style + [data-type="stackable/timeline"]) > .stk-block-timeline .stk-block-timeline__vertical-line {
+		top: 0;
 	}
 }
