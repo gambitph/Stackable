@@ -178,3 +178,8 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 		padding: 2px;
 	}
 }
+
+// WP 6.3 prevents our sticky feature from working
+.edit-post-visual-editor {
+	overflow: visible;
+}
