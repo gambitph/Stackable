@@ -251,7 +251,8 @@ const Edit = props => {
 		props.attributes.blockPadding,
 		props.attributes.blockPaddingTablet,
 		props.attributes.blockPaddingMobile,
-		nextBlock ] )
+		nextBlock,
+		previousBlock ] )
 
 	// update blocks if position changes
 	useEffect( () => {
