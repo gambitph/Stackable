@@ -65,7 +65,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ isOpen, setIsOpen ] = useState( true )
+	const [ isOpen, setIsOpen ] = useState( props.attributes.startOpen )
 	const { hasInnerBlocks } = useBlockContext()
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
 
