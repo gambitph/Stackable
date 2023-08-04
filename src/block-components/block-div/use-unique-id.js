@@ -8,13 +8,14 @@ import { useBlockSetAttributesContext } from '~stackable/hooks'
  */
 import { useEffect } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 
 export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 
 export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 	const { clientId } = useBlockEditContext()
 	const setAttributes = useBlockSetAttributesContext()
+	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
 	// Need to do this when the clientId changes (when a block is
 	// cloned/duplicated).
@@ -36,7 +37,8 @@ export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 		} else if ( uniqueClass !== attributes.uniqueId ) {
 			// There should only be one block each with the same unique ID, or
 			// else we'll have styling conflicts.
-			const els = Array.prototype.filter.call( document.querySelectorAll( `[data-block-id="${ attributes.uniqueId }"]` ), el => {
+			const blocks = getEditorDom()?.querySelectorAll( `[data-block-id="${ attributes.uniqueId }"]` ) || []
+			const els = Array.prototype.filter.call( blocks, el => {
 				// Exclude reusable blocks because they can have the same unique ID.
 				return ! el.closest( '[data-type="core/block"]' )
 			} )
