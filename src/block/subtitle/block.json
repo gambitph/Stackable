@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/subtitle",
 	"title": "Subtitle",
 	"description": "Subtitle text that you can add custom styling to from the global settings.",
