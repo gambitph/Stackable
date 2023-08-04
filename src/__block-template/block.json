@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/new-block",
 	"title": "New Block",
 	"description": "A new block.",

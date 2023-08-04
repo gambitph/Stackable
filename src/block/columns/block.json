@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/columns",
 	"title": "Columns",
 	"description": "Multiple columns with advanced layout options.",

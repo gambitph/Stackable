@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/progress-bar",
 	"title": "Progress Bar",
 	"description": "Visualize a progress value or percentage in a bar.",
