@@ -1,3 +1,9 @@
 .ugb-insert-library-button {
 	white-space: nowrap;
 }
+
+.has-fixed-toolbar {
+	.ugb-insert-library-button {
+		margin-left: 70px;
+	}
+}
