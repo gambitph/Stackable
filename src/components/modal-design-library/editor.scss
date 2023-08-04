@@ -31,6 +31,9 @@
 		}
 		.components-button {
 			left: 0 !important;
+			&.has-icon {
+				margin: 10px;
+			}
 		}
 	}
 	.ugb-modal-design-library__wrapper {
@@ -48,6 +51,9 @@
 		flex-direction: column;
 		overflow: hidden;
 		z-index: 1;
+		position: absolute;
+		width: 300px;
+		height: 100%;
 
 		.ugb-control-separator {
 			margin: 8px 0 !important;
@@ -99,6 +105,7 @@
 	.ugb-modal-design-library__filters {
 		overflow-y: auto;
 		padding: 24px;
+		height: 100%;
 	}
 
 	/**
