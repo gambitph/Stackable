@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/horizontal-scroller",
 	"title": "Horizontal Scroller",
 	"description": "A slider that scrolls horizontally.",

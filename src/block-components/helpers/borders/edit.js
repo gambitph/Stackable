@@ -106,7 +106,6 @@ export const BorderControls = props => {
 
 BorderControls.defaultProps = {
 	attrNameTemplate: '%s',
-	blockEl: null,
 	borderTypeValue: '', // If not supplied, the value from the attribute will be used, otherwise: '' for none, 'solid', 'dashed', 'dotted'
 	hasBorderType: true,
 	hasBorderControls: true,

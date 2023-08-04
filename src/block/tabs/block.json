@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/tabs",
 	"title": "Tabs",
 	"description": "Organize and display content in multiple tabs.",
