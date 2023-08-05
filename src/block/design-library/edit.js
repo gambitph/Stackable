@@ -85,7 +85,10 @@ const Edit = props => {
 	}
 
 	return (
-		<div className="ugb-design-library-block">
+		<div
+			className="ugb-design-library-block"
+			data-block={ props.clientId }
+		>
 			<Placeholder
 				icon={ <SVGStackableIcon /> }
 				label={ __( 'Stackable Design Library', i18n ) }
