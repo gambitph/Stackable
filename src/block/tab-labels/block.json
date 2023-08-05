@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/tab-labels",
 	"title": "Tab Labels",
 	"description": "Create interactive navigation within tabs.",

@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/separator",
 	"title": "Separator",
 	"description": "A fancy separator to be placed between content.",
