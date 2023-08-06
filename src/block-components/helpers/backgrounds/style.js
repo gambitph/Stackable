@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { hexToRgba, extractColor } from '~stackable/util'
+import { hexToRgba } from '~stackable/util'
 import { BlockCss } from '~stackable/components'
 
 const Styles = props => {
@@ -14,7 +14,6 @@ const Styles = props => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
-		backgroundFallbackColor = '#ffffff',
 		dependencies = [],
 		selectorCallback = null,
 	} = props
@@ -34,20 +33,9 @@ const Styles = props => {
 					return getAttribute( 'backgroundColorType' ) !== 'gradient'
 						? 'all' : false
 				} }
-				valueCallback={ ( value, getAttribute, device, state ) => {
+				valueCallback={ ( value, getAttribute ) => {
 					const backgroundColorType = getAttribute( 'backgroundColorType' )
-					const backgroundColorOpacity = getAttribute( 'backgroundColorOpacity', 'desktop', state )
 					const backgroundColor2 = getAttribute( 'backgroundColor2' )
-
-					const hasBackground = getAttribute( 'backgroundMediaUrl', 'desktop' ) ||
-						getAttribute( 'backgroundMediaUrl', 'tablet' ) ||
-						getAttribute( 'backgroundMediaUrl', 'mobile' )
-
-					if ( ! backgroundColorType && backgroundColorOpacity !== '' && ! hasBackground ) {
-						// Checks if color comes from Non-stackable color palette.
-						const hexColor = extractColor( value )
-						return `${ hexToRgba( hexColor || '#ffffff', backgroundColorOpacity || 0 ) }`
-					}
 
 					if ( backgroundColorType === 'gradient' && backgroundColor2 === 'transparent' ) {
 						return 'transparent'
@@ -55,22 +43,9 @@ const Styles = props => {
 
 					return value
 				} }
-				valuePreCallback={ ( _value, getAttribute, device, state ) => {
-					let value = _value
-					if ( ! value && getAttribute( 'backgroundColorOpacity', 'desktop', state ) !== '' ) {
-						if ( device !== 'desktop' || state !== 'normal' ) {
-							value = getAttribute( 'backgroundColor', 'desktop', 'normal' ) || backgroundFallbackColor
-						} else {
-							value = backgroundFallbackColor
-						}
-					}
-					return value
-				} }
 				dependencies={ [
 					'backgroundColor2',
-					'backgroundColorOpacity',
 					'backgroundColorType',
-					'backgroundMediaUrl',
 					...dependencies,
 				] }
 			/>

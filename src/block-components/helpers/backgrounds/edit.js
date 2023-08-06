@@ -120,22 +120,6 @@ export const BackgroundControls = props => {
 				} }
 				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
 			/>
-			{ getAttribute( 'backgroundColorType' ) !== 'gradient' && ( ! getAttribute( 'backgroundMediaUrl' ) && ! getAttribute( 'backgroundMediaUrlTablet' ) && ! getAttribute( 'backgroundMediaUrlMobile' ) ) && (
-				<AdvancedRangeControl
-					label={ __( 'Background Color Opacity', i18n ) }
-					attribute={ getAttrName( 'backgroundColorOpacity' ) }
-					hover="all"
-					min={ 0 }
-					max={ 1 }
-					step={ 0.1 }
-					allowReset={ true }
-					placeholder="1.0"
-					helpTooltip={ {
-						video: 'background-color-opacity',
-						description: __( 'Adjusts the transparency of the background color', i18n ),
-					} }
-				/>
-			) }
 			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
 				<ColorPaletteControl
 					label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Background Color', i18n ), 2 ) }
