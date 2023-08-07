@@ -108,6 +108,10 @@ export const attributes = ( version = VERSION ) => {
 				source: 'attribute',
 				type: 'string',
 			},
+			style: {
+				type: 'object',
+				default: {},
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
