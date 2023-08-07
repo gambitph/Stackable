@@ -23,14 +23,11 @@
 	.block-editor-url-input__input {
 		margin: 0 !important;
 		width: 100% !important;
+		height: 30px !important;
+		padding: 6px 8px !important;
 	}
 	.block-editor-link-control__search-actions {
-		top: 2px;
-		right: 2px;
-	}
-	.components-spinner {
-		top: 12px !important;
-		right: 36px !important;
+		display: none;
 	}
 	.block-editor-link-control__search-results-wrapper {
 		margin-bottom: 24px !important;
@@ -39,11 +36,21 @@
 			margin: 0;
 		}
 	}
+	.block-editor-link-control__search-item {
+		flex-wrap: wrap;
+	}
 	.block-editor-link-control__search-item.is-current {
+		margin-top: -2px;
 		padding: 0 !important;
 	}
+	.block-editor-link-control__search-item-details {
+		max-width: 140px !important;
+		overflow: hidden;
+	}
 
-
+	.block-editor-link-control__search-item-icon {
+		display: none;
+	}
 }
 
 // Adjust the location of the dynamic and reset buttons since our control is taller.
@@ -57,7 +64,17 @@
 		.stk-dynamic-content-control__button {
 			margin-left: 3px;
 			align-self: start;
-			margin-top: 6px;
+		}
+
+		// Hide the reset button behind.
+		z-index: 2;
+		position: relative;
+		.stk-dynamic-content-control__button {
+			background: #fff;
+		}
+
+		.stk-link-control__input {
+			margin-top: -1px;
 		}
 	}
 }
