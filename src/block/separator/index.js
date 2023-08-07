@@ -22,6 +22,7 @@ export const settings = {
 	supports: {
 		align: [ 'full' ],
 		anchor: true,
+		spacing: true,
 	},
 	example,
 

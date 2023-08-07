@@ -23,7 +23,8 @@ export const settings = {
 	supports: {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
-		stkBlockLinking: false, // Disable linking on the columns in this block.
+		stkBlockLinking: false,
+		spacing: true,
 	},
 	example,
 	deprecated,

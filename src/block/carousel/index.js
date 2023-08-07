@@ -27,6 +27,7 @@ export const settings = {
 		stkDefaultTab: 'layout',
 		stkColumnResize: false,
 		stkBlockLinking: true,
+		spacing: true,
 	},
 	example,
 	edit,
