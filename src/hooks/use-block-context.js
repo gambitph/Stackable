@@ -142,11 +142,9 @@ let prevClientIds = null
 // changes.
 subscribe( () => {
 	const tree = select( 'core/block-editor' ).__unstableGetClientIdsTree()
-
 	if ( ! prevClientIds ) {
 		prevClientIds = tree
-		const blocks = fixReusableInnerBlocks( select( 'core/block-editor' ).getBlocks() )
-		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
+		dispatch( 'stackable/block-context' ).setBlockTree( tree )
 		return
 	}
 
@@ -155,31 +153,9 @@ subscribe( () => {
 	// even when blocks are edited.
 	if ( tree !== prevClientIds ) {
 		prevClientIds = tree
-		const blocks = fixReusableInnerBlocks( select( 'core/block-editor' ).getBlocks() )
-		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
+		dispatch( 'stackable/block-context' ).setBlockTree( tree )
 	}
 } )
-
-// Use to correct the blocks returned from getBlocks.
-// Applies only core/block (reusable blocks) - Adds missing innerBlocks
-const fixReusableInnerBlocks = blocks => {
-	return ( blocks || [] ).map( block => {
-		if ( ! [ 'core/widget-area', 'core/block', 'core/template-part', 'core/post-content' ].includes( block.name ) ) {
-			return {
-				...block,
-				innerBlocks: fixReusableInnerBlocks( block.innerBlocks ),
-			}
-		}
-		const results = select( 'core/block-editor' ).__unstableGetClientIdsTree( block.clientId )
-		return {
-			...block,
-			innerBlocks: fixReusableInnerBlocks( results.map( ( { clientId } ) => {
-				const [ innerResult ] = select( 'core/block-editor' ).getBlocksByClientId( clientId )
-				return innerResult
-			} ) ),
-		}
-	} )
-}
 
 // The default context if none is found. This can be true when the block is
 // being previewed as an example.
