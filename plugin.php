@@ -206,6 +206,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-bar/index.php' )
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-circle/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/horizontal-scroller/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/tabs/index.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/alignment/index.php' );
 
 /**
  * Welcome screen.
