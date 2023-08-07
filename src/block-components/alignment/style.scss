@@ -13,10 +13,12 @@
 	flex-direction: column;
 }
 
+/**
+ * Polyfill for browsers which do not support the `:has()` selector.
+ */
 .stk--height-100 {
 	height: 100%;
 }
-
 .stk-container--has-child-column-flex {
 	display: flex;
 	flex-direction: column;

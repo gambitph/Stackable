@@ -3,7 +3,7 @@
  */
 import domReady from '@wordpress/dom-ready'
 
-class StackableAlignment {
+class StackableAlignmentPolyfill {
 	init = () => {
 		const modifyCSS = () => {
 			const containers = document.querySelectorAll( '.stk-container' )
@@ -38,5 +38,5 @@ class StackableAlignment {
 	}
 }
 
-window.stackableAlignment = new StackableAlignment()
-domReady( window.stackableAlignment.init )
+window.stackableAlignmentPolyfill = new StackableAlignmentPolyfill()
+domReady( window.stackableAlignmentPolyfill.init )

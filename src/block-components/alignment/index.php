@@ -1,4 +1,8 @@
 <?php
+/**
+ * In charge of loading the frontend polyfill for alignment :has() selector
+ * support
+ */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,12 +22,12 @@ if ( ! function_exists( 'stackable_load_alignment_frontend_polyfill_script' ) ) 
 
 		// Safari <= 15.3
 		if ( stripos( $user_agent, 'Safari/' ) !== false ) {
-			$start = stripos($user_agent, 'Version/') + 8;
-			$end = strpos($user_agent, ' ', $start);
-			$safari_version = substr($user_agent, $start, $end - $start);
+			$start = stripos( $user_agent, 'Version/' ) + 8;
+			$end = strpos( $user_agent, ' ', $start );
+			$safari_version = substr( $user_agent, $start, $end - $start );
 
 			// Convert version string to an array of parts
-			$version_parts = explode('.', $safari_version);
+			$version_parts = explode( '.', $safari_version );
 
 			if (
 				// Safari < 15
@@ -44,8 +48,8 @@ if ( ! function_exists( 'stackable_load_alignment_frontend_polyfill_script' ) ) 
 
 		if ( $load_polyfill ) {
 			wp_enqueue_script(
-				'stk-frontend-alginment-polyfill',
-				plugins_url( 'dist/frontend_block_components_alignment_polyfill.js', STACKABLE_FILE ),
+				'stk-frontend-alginment-has-polyfill',
+				plugins_url( 'dist/frontend_block_components_alignment_has_polyfill.js', STACKABLE_FILE ),
 				array(),
 				STACKABLE_VERSION
 			);
