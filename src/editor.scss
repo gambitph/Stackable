@@ -178,3 +178,8 @@ $block-joined: #{ join($blocks, (), $separator: comma) };
 		padding: 2px;
 	}
 }
+
+// Fix WP 6.3 prevent toolbar covering "Save draft" button
+.block-editor-block-contextual-toolbar {
+	width: auto !important;
+}
