@@ -2,118 +2,33 @@
  * Internal dependencies
  */
 import { addAttributes } from './attributes'
-import { LinkControls } from '../helpers/link'
 import { Edit } from './edit'
 
 /*+
  * External dependencies
  */
 import { Link as LinkComponent } from '~stackable/components'
-import { useBlockContext, useBlockAttributesContext } from '~stackable/hooks'
-import { isElementDescendant } from '~stackable/util'
+import { useBlockAttributesContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { Popover } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import {
-	Fragment, useRef, useState, useEffect,
-} from '@wordpress/element'
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { applyFilters } from '@wordpress/hooks'
 
 export const Link = props => {
-	const [ isOpen, setIsOpen ] = useState( false )
-	const popoverEl = useRef()
-	const [ popoverRef, setPopoverRef ] = useState( null )
-	const { parentBlock } = useBlockContext()
 	const linkHasLink = useBlockAttributesContext( attributes => attributes.linkHasLink )
-
-	// Enable editing of the icon only when the current block that implements
-	// it is selected. We need to use setTimeout since the isSelected is
-	// changed earlier.
-	const { isSelected } = useBlockEditContext()
-	const [ debouncedIsSelected, setDebouncedIsSelected ] = useState( false )
-	useEffect( () => {
-		if ( ! isSelected ) {
-			setDebouncedIsSelected( false )
-			return
-		}
-		const t = setTimeout( () => {
-			if ( isSelected ) {
-				setDebouncedIsSelected( isSelected )
-			}
-		}, 1 )
-		return () => clearTimeout( t )
-	}, [ isSelected ] )
-
-	// If the block is unselected, make sure that the opopver is closed.
-	useEffect( () => {
-		if ( ! isSelected && isOpen ) {
-			setIsOpen( false )
-		}
-	}, [ isSelected, isOpen ] )
-
-	// Assign the outside click listener.
-	useEffect( () => {
-		const clickOutsideListener = event => {
-			if ( isOpen ) {
-				// If the button text is clicked, don't re-open the popover, just close it.
-				if ( event.target.closest( '.stk-button' ) && event.target.closest( props.linkTrigger || '.rich-text' ) ) {
-					event.stopPropagation()
-				}
-				if ( ! isElementDescendant( popoverEl.curent, event.target ) && ! event.target.closest( '.components-popover' ) ) {
-					setIsOpen( false )
-				}
-			}
-		}
-
-		document.body.addEventListener( 'click', clickOutsideListener )
-		return () => document.body.removeEventListener( 'click', clickOutsideListener )
-	}, [ popoverEl.current, isOpen ] )
-
-	// Allow parent blocks to prevent the link popup to open.
-	const enable = applyFilters( 'stackable.edit.link.enable-link-popup', true, parentBlock )
 
 	if ( ! linkHasLink ) {
 		return props.children
 	}
 
 	return (
-		<Fragment>
-			<LinkComponent
-				{ ...props.linkProps }
-				ref={ popoverEl }
-				className={ props.className }
-				onClick={ e => {
-					if ( debouncedIsSelected ) {
-						const ref = e.target.closest( props.linkTrigger || '.rich-text' )
-						if ( ref && ! isOpen ) {
-							// Only trigger the setIsOpen when the rich text is selected.
-							setPopoverRef( ref )
-							setIsOpen( ! isOpen )
-						}
-					}
-				} }
-			>
-				{ props.children }
-			</LinkComponent>
-			{ isOpen && enable && (
-				<Popover
-					position="top center"
-					getAnchorRect={ () => {
-						return popoverRef?.getBoundingClientRect() || popoverEl.current?.getBoundingClientRect()
-					} }
-					focusOnMount={ false }
-					className="stk-link__popover"
-				>
-					<LinkControls
-						attrNameTemplate="link%s"
-					/>
-				</Popover>
-			) }
-		</Fragment>
+		<LinkComponent
+			{ ...props.linkProps }
+			className={ props.className }
+		>
+			{ props.children }
+		</LinkComponent>
 	)
 }
 
