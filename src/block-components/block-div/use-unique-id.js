@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { useBlockSetAttributesContext } from '~stackable/hooks'
-
-/**
  * WordPress dependencies
  */
 import { useEffect } from '@wordpress/element'
@@ -14,7 +9,6 @@ export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 
 export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 	const { clientId } = useBlockEditContext()
-	const setAttributes = useBlockSetAttributesContext()
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
 	// Need to do this when the clientId changes (when a block is
@@ -30,7 +24,8 @@ export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 		const uniqueClass = createUniqueClass( clientId )
 		if ( ! attributes.uniqueId ) {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-			setAttributes( { uniqueId: uniqueClass } )
+			// Use dispatch here because if performed in multiple blocks they will all use the same context
+			dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, { uniqueId: uniqueClass })
 
 			// If there's one already, check whether the we need to re-create one.
 			// Duplicating a block or copy pasting a block may give us duplicate IDs.
@@ -45,7 +40,8 @@ export const useUniqueId = ( attributes, autoApplyUniqueId = true ) => {
 
 			if ( els.length > 1 ) {
 				dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-				setAttributes( { uniqueId: uniqueClass } )
+				// Use dispatch here because if performed in multiple blocks they will all use the same context
+				dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, { uniqueId: uniqueClass })
 			}
 		}
 	}, [ clientId ] )
