@@ -14,7 +14,7 @@ if ( ! function_exists( 'stackable_load_alignment_frontend_polyfill_script' ) ) 
 			return;
 		}
 
-		$load_polyfill = true;
+		$load_polyfill = false;
 
 		// Safari <= 15.3
 		if ( stripos( $user_agent, 'Safari/' ) !== false ) {
