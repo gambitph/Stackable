@@ -13,7 +13,7 @@ import DesignLibraryButton from './design-library-button'
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
-import { render } from '@wordpress/element'
+import { createRoot } from '@wordpress/element'
 import { subscribe } from '@wordpress/data'
 
 const mountDesignLibrary = () => {
@@ -26,7 +26,7 @@ const mountDesignLibrary = () => {
 		const buttonDiv = document.createElement( 'div' )
 		buttonDiv.classList.add( 'ugb-insert-library-button__wrapper' )
 
-		render( <DesignLibraryButton />, buttonDiv )
+		createRoot( buttonDiv ).render( <DesignLibraryButton /> )
 		toolbar.appendChild( buttonDiv )
 	}
 

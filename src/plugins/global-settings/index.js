@@ -15,7 +15,7 @@ import { useDeviceType } from '~stackable/hooks'
 /** WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins'
-import { render, useEffect } from '@wordpress/element'
+import { createRoot, useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addAction } from '@wordpress/hooks'
 import {
@@ -100,6 +100,6 @@ const globalColorWrapper = document?.createElement( 'style' )
 domReady( () => {
 	document?.body?.appendChild( globalTypographyWrapper )
 	document?.body?.appendChild( globalColorWrapper )
-	render( <GlobalTypographyStyles />, globalTypographyWrapper )
-	render( <GlobalColorStyles />, globalColorWrapper )
+	createRoot( globalTypographyWrapper ).render( <GlobalTypographyStyles /> )
+	createRoot( globalColorWrapper ).render( <GlobalColorStyles /> )
 } )

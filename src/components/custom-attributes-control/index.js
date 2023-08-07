@@ -10,7 +10,7 @@ import { escape as _escape } from 'lodash'
 import {
 	Fragment,
 	useState,
-	render,
+	createRoot,
 	unmountComponentAtNode,
 	useRef,
 } from '@wordpress/element'
@@ -63,7 +63,7 @@ const CustomAttributesControl = props => {
 			// Throws an error if not valid.
 			try {
 				const dummyNode = document.createElement( 'div' )
-				render( <div { ...{ [ attrNodeMap[ i ].name ]: attrNodeMap[ i ].value } } />, dummyNode )
+				createRoot( dummyNode ).render( <div { ...{ [ attrNodeMap[ i ].name ]: attrNodeMap[ i ].value } } /> )
 				unmountComponentAtNode( dummyNode )
 				document.createElement( 'div' ).setAttribute( attrNodeMap[ i ].name, attrNodeMap[ i ].value )
 
@@ -99,7 +99,10 @@ const CustomAttributesControl = props => {
 					&nbsp;
 					{ __( 'Example:', i18n ) }
 					<br />
-					<code>{ `data-id="my-title"` }</code>
+					<code>{
+						// eslint-disable-next-line react/jsx-curly-brace-presence
+						`data-id="my-title"`
+					}</code>
 					<br />
 					<ExternalLink
 						href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg"
