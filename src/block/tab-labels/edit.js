@@ -63,7 +63,7 @@ import {
 import { dispatch } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { BlockControls } from '@wordpress/block-editor'
-import { Toolbar, ToolbarButton } from '@wordpress/components'
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 
 // These are the style names (in block-styles.js) that are only available if the
@@ -297,7 +297,7 @@ const Edit = props => {
 					<InspectorTabs />
 
 					<BlockControls>
-						<Toolbar>
+						<ToolbarGroup>
 							<ToolbarButton
 								label={ __( 'Move left', i18n ) }
 								icon="arrow-left-alt2"
@@ -310,11 +310,11 @@ const Edit = props => {
 								disabled={ activeTab === props.attributes.tabLabels.length }
 								onClick={ moveActiveTabRight }
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					</BlockControls>
 
 					<BlockControls>
-						<Toolbar>
+						<ToolbarGroup>
 							<ToolbarButton
 								label={ __( 'Add tab', i18n ) }
 								icon="plus-alt2"
@@ -336,7 +336,7 @@ const Edit = props => {
 									}
 								} }
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					</BlockControls>
 
 					<InspectorLayoutControls>
