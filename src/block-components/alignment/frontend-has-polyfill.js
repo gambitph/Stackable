@@ -8,11 +8,9 @@ class StackableAlignmentPolyfill {
 		const modifyCSS = () => {
 			const containers = document.querySelectorAll( '.stk-container' )
 			containers.forEach( container => {
-				const columnFlex = container.querySelector( '.stk--column-flex' )
+				const columnFlex = container.querySelector( ':scope > .stk--column-flex' )
 				if ( columnFlex ) {
-					container.classList.add( 'stk-container--has-child-column-flex' )
-				} else if ( ! columnFlex && container.classList.contains( 'stk-container--has-child-column-flex' ) ) {
-					container.classList.remove( 'stk-container--has-child-column-flex' )
+					container.classList.add( 'stk-container--has-child-column-flex-polyfill' )
 				}
 			} )
 
@@ -20,9 +18,7 @@ class StackableAlignmentPolyfill {
 			blocks.forEach( block => {
 				const hasMargin = block.querySelector( ':scope > .stk--block-margin-top-auto, :scope > .stk--block-margin-bottom-auto' )
 				if ( hasMargin ) {
-					block.classList.add( 'stk--height-100' )
-				} else if ( ! hasMargin && block.classList.contains( 'stk--height-100' ) ) {
-					block.classList.remove( 'stk--height-100' )
+					block.classList.add( 'stk--height-100-polyfill' )
 				}
 			} )
 		}
