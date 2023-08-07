@@ -13,7 +13,8 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 		 */
 		function __construct() {
 			// Register settings.
-			add_action( 'init', array( $this, 'register_settings' ) );
+			add_action( 'admin_init', array( $this, 'register_settings' ) );
+			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
 
 			// Make our settings available in the editor.
 			add_filter( 'stackable_js_settings', array( $this, 'add_settings' ) );
