@@ -21,6 +21,7 @@ export const settings = {
 		align: [ 'center', 'wide', 'full' ],
 		anchor: true,
 		stkAlign: true,
+		spacing: true,
 	},
 	attributes: schema,
 	example,
