@@ -19,10 +19,6 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		}
 
 		public function gather_google_fonts( $block_content, $block ) {
-			if ( $block_content === null ) {
-				return $block_content;
-			}
-
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if ( $this->is_stackable_block( $block_name ) && is_array( $block['attrs'] ) ) {
 				foreach ( $block['attrs'] as $attr_name => $font_name ) {
