@@ -91,7 +91,7 @@ export const BorderControls = props => {
 					} }
 					min={ 0 }
 					sliderMax={ props.borderSliderMax }
-					placeholderRender={ props.borderRadiusPlaceholder }
+					placeholder={ props.borderRadiusPlaceholder }
 				/>
 			}
 			<ShadowControl
@@ -105,7 +105,6 @@ export const BorderControls = props => {
 
 BorderControls.defaultProps = {
 	attrNameTemplate: '%s',
-	blockEl: null,
 	borderTypeValue: '', // If not supplied, the value from the attribute will be used, otherwise: '' for none, 'solid', 'dashed', 'dotted'
 	hasBorderType: true,
 	hasBorderControls: true,

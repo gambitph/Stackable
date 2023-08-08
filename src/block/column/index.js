@@ -31,6 +31,7 @@ export const settings = {
 		stkBlockLinking: true,
 		stkSaveBlockStyle: false,
 		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	//  styles: blockStyles,
 

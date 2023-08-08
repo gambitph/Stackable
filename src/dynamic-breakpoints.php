@@ -28,7 +28,8 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 */
 		function __construct() {
 			// Register breakpoint settings.
-			add_action( 'init', array( $this, 'register_settings' ) );
+			add_action( 'admin_init', array( $this, 'register_settings' ) );
+			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
 
 			if ( $this->has_custom_breakpoints() ) {
 				// Add our filter that adjusts all CSS that we print out.
@@ -165,6 +166,10 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function adjust_block_styles( $block_content, $block ) {
+			if ( $block_content === null ) {
+				return $block_content;
+			}
+
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if (
 				stripos( $block_name, 'stackable/' ) === 0 ||

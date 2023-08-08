@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/spacer",
 	"title": "Spacer",
 	"description": "Sometimes you just need some space.",

@@ -12,3 +12,14 @@
 	display: flex;
 	flex-direction: column;
 }
+
+/**
+ * Polyfill for browsers which do not support the `:has()` selector.
+ */
+:is(.stk-block-content, .stk-inner-blocks):not(.stk--column-flex).stk--height-100-polyfill {
+	height: 100%;
+}
+.stk-container.stk-container--has-child-column-flex-polyfill {
+	display: flex;
+	flex-direction: column;
+}

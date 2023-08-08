@@ -32,6 +32,7 @@ export const settings = {
 		stkLayoutReset: false,
 		stkSaveBlockStyle: false,
 		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	variations,
 	deprecated,

@@ -29,6 +29,7 @@ export const settings = {
 	supports: {
 		align: [ 'full', 'wide', 'center' ],
 		anchor: true,
+		spacing: true,
 	},
 	example,
 	deprecated,
