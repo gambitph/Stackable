@@ -86,7 +86,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 		 */
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
 			if ( $block_content === null ) {
-				$block_content = '';
+				return $block_content;
 			}
 
 			if ( ! $this->is_script_loaded ) {
