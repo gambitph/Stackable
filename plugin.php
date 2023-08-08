@@ -122,8 +122,7 @@ if ( ! function_exists( 'stackable_early_version_upgrade_check' ) ) {
  */
 if ( ! function_exists( 'stackable_notice_gutenberg_plugin_activated' ) ) {
 	function stackable_notice_gutenberg_plugin_activated() {
-		global $wp_version;
-		if ( version_compare( $wp_version, '5.0', '>=' ) && is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
+		if ( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
 			$ignore = get_option( 'stackable_notice_gutenberg_plugin_ignore' );
 			if ( ! $ignore ) {
 				printf(
@@ -141,7 +140,10 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_activated' ) ) {
 			}
 		}
 	}
-	add_action( 'admin_notices', 'stackable_notice_gutenberg_plugin_activated' );
+
+	if ( defined( 'GUTENBERG_VERSION' ) ) {
+		add_action( 'admin_notices', 'stackable_notice_gutenberg_plugin_activated' );
+	}
 }
 
 if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
