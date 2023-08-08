@@ -69,7 +69,7 @@
 		// Hide the reset button behind.
 		z-index: 2;
 		position: relative;
-		.stk-dynamic-content-control__button {
+		.stk-dynamic-content-control__button:not(.is-pressed) {
 			background: #fff;
 		}
 
