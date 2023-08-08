@@ -375,6 +375,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return void
 		 */
 		public function typography_parse_global_styles() {
+			$typography = get_option( 'stackable_global_typography' );
+			if ( ! $typography || ! is_array( $typography ) ) {
+				return;
+			}
+
 			// We can have multiple entries in the future, use the first one.
 			$active_typography = $typography[0];
 			if ( empty( $active_typography ) || ! is_array( $active_typography ) ) {
