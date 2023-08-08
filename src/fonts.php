@@ -8,6 +8,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'str_ends_with' ) ) {
+	/**
+	 * This function is only available in PHP 8.0 and above.
+	 *
+	 * @param {string} $haystack
+	 * @param {string} $needle
+	 * @return {boolean}
+	 */
+    function str_ends_with( $haystack, $needle ) {
+        $needle_len = strlen( $needle );
+        return ( $needle_len === 0 || 0 === substr_compare( $haystack, $needle, - $needle_len ) );
+    }
+}
+
 if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
   class Stackable_Google_Fonts {
 
@@ -21,9 +35,11 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		public function gather_google_fonts( $block_content, $block ) {
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if ( $this->is_stackable_block( $block_name ) && is_array( $block['attrs'] ) ) {
-				foreach ( $block['attrs'] as $attr_name => $font_name ) {
-					if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
-						self::register_font( $font_name );
+				if ( stripos( $block_content, 'family' ) !== false ) {
+					foreach ( $block['attrs'] as $attr_name => $font_name ) {
+						if ( str_ends_with( strtolower( $attr_name ), 'fontfamily' ) ) {
+							self::register_font( $font_name );
+						}
 					}
 				}
 			}
