@@ -85,6 +85,10 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 		 * @since 2.17.0
 		 */
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
+			if ( $block_content === null ) {
+				$block_content = '';
+			}
+
 			if ( ! $this->is_script_loaded ) {
 				if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
 					$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';

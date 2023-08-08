@@ -312,6 +312,10 @@ if ( ! function_exists( 'stackable_add_required_block_styles_v2' ) ) {
 if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 
 	function load_frontend_scripts_conditionally_v2( $block_content, $block ) {
+		if ( $block_content === null ) {
+			$block_content = '';
+		}
+
 		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
 			stripos( $block_name, 'ugb/' ) === 0 ||
@@ -364,6 +368,10 @@ if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
 	 * @return string The block content
 	 */
 	function stackable_frontend_v2_try_migration( $block_content, $block ) {
+		if ( $block_content === null ) {
+			$block_content = '';
+		}
+
 		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
 			stripos( $block_name, 'ugb/' ) === 0 ||
