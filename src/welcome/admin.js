@@ -484,7 +484,6 @@ const GlobalSettings = () => {
 
 const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
-	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
 	const [ v2EditorBackwardCompatibility, setV2EditorBackwardCompatibility ] = useState( false )
 	const [ v2EditorBackwardCompatibilityUsage, setV2EditorBackwardCompatibilityUsage ] = useState( false )
 	const [ v2FrontendBackwardCompatibility, setV2FrontendBackwardCompatibility ] = useState( false )
@@ -497,7 +496,6 @@ const AdditionalOptions = props => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
 				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
-				setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
 				setV2EditorBackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
 				setV2EditorBackwardCompatibilityUsage( response.stackable_v2_editor_compatibility_usage === '1' )
 				setV2FrontendBackwardCompatibility( response.stackable_v2_frontend_compatibility === '1' )
@@ -572,14 +570,6 @@ const AdditionalOptions = props => {
 				onChange={ checked => {
 					updateSetting( { stackable_v2_frontend_compatibility: checked ? '1' : '' } ) // eslint-disable-line camelcase
 					setV2FrontendBackwardCompatibility( checked )
-				} }
-			/>
-			<CheckboxControl
-				label={ __( 'Load version 1 block stylesheet for backward compatibility', i18n ) }
-				checked={ v1BackwardCompatibility }
-				onChange={ checked => {
-					updateSetting( { stackable_load_v1_styles: checked ? '1' : '' } ) // eslint-disable-line camelcase
-					setV1BackwardCompatibility( checked )
 				} }
 			/>
 			{ isBusy &&

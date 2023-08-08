@@ -251,7 +251,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre
 /**
  * V2 Deprecated
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v1/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/disabled-blocks.php' );
