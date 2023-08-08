@@ -65,7 +65,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
 
 			// For some native blocks, add a note that they're core blocks.
-			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+			// Only do this when we need to style native blocks.
+			if ( in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
+				add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+			}
 
 			// Fixes columns issue with Native Posts block.
 			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
@@ -700,16 +703,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return string Rendered block
 		 */
 		public function typography_detect_native_blocks( $block_content, $block ) {
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-
 			if ( $block_content === null ) {
 				return $block_content;
 			}
 
-			// Only do this when we need to style native blocks.
-			if ( ! in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
-				return $block_content;
-			}
+			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 
 			// Only do this if we have some global typography settings to apply.
 			if ( empty( $this->generated_typography_css ) ) {
