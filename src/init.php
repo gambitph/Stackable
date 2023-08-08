@@ -214,9 +214,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			$stackable_block = '';
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
-				if ( preg_match( '#stackable/([\w\d-]+)#', $block_name, $matches ) ) {
-					$stackable_block = $matches[1];
-				}
+				$stackable_block = substr( $block_name, 10 );
 			} else if ( stripos( $block_content, '<!-- wp:stackable/' ) !==  false ) {
 				if ( preg_match( '#stackable/([\w\d-]+)#', $block_content, $matches ) ) {
 					$stackable_block = $matches[1];
