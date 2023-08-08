@@ -62,7 +62,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 *
 			 * @since 2.17.1
 			 */
-			add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
+			// Don't do anything if we don't have any global typography.
+			$typography = get_option( 'stackable_global_typography' );
+			if ( ! empty( $typography ) && is_array( $typography ) ) {
+				add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
+			}
 
 			// For some native blocks, add a note that they're core blocks.
 			// Only do this when we need to style native blocks.
@@ -371,12 +375,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return void
 		 */
 		public function typography_parse_global_styles() {
-			// Don't do anything if we don't have any global typography.
-			$typography = get_option( 'stackable_global_typography' );
-			if ( ! $typography || ! is_array( $typography ) ) {
-				return;
-			}
-
 			// We can have multiple entries in the future, use the first one.
 			$active_typography = $typography[0];
 			if ( empty( $active_typography ) || ! is_array( $active_typography ) ) {
