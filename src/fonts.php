@@ -29,7 +29,6 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 
 		function __construct() {
 			add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
-			add_filter( 'wp_footer', array( $this, 'enqueue_frontend_block_fonts' ) );
 		}
 
 		public function gather_google_fonts( $block_content, $block ) {
@@ -71,6 +70,9 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 				// Allow themes to disable enqueuing fonts, helpful for custom fonts.
 				if ( apply_filters( 'stackable_enqueue_font', true, $font_name ) ) {
 					self::$google_fonts[] = $font_name;
+
+					// Enqueue the fonts in the footer.
+					add_filter( 'wp_footer', array( $this, 'enqueue_frontend_block_fonts' ) );
 				}
 			}
 		}
