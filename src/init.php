@@ -192,6 +192,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				return;
 			}
 
+			if ( $block_content === null ) {
+				$block_content = "";
+			}
+
 			// Load our main frontend scripts if there's a Stackable block loaded in the
 			// frontend.
 			if ( ! $this->is_main_script_loaded && ! is_admin() ) {

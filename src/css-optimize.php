@@ -258,6 +258,10 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 * @return String The modified $block_content
 		 */
 		public function strip_optimized_block_styles( $block_content, $block ) {
+			if ( $block_content === null ) {
+				return $block_content;
+			}
+
 			if ( ! is_singular() || is_preview() ) {
 				return $block_content;
 			}
