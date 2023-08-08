@@ -21,7 +21,7 @@ if ( ! function_exists( 'stackable_load_alignment_frontend_polyfill_script' ) ) 
 		$load_polyfill = false;
 
 		// Safari <= 15.3
-		if ( stripos( $user_agent, 'Safari/' ) !== false ) {
+		if ( stripos( $user_agent, 'Safari/' ) !== false && strpos($user_agent, 'Chrome/') === false ) {
 			$start = stripos( $user_agent, 'Version/' ) + 8;
 			$end = strpos( $user_agent, ' ', $start );
 			$safari_version = substr( $user_agent, $start, $end - $start );
