@@ -289,7 +289,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 3.10.2 =
 * New: Compatibility with WordPress 6.3
 * New: Updated all blocks to use the new Block API Version 3 - now all Stackable blocks can be iframed in the editor. [Learn about the benefits of an iframed editor](https://make.wordpress.org/core/2021/06/29/blocks-in-an-iframed-template-editor/)
-* New: Improved editor loading performance
+* New: Improved editor loading performance #2797
 * New: Support for the Navite Group block flexbox options when nesting Stackable blocks #2773 #2774
 * Change: The Navigation Panel is now disabled by default #2789
 * Fixed: When duplicating or transforming blocks, sometimes changes get applied to multiple blocks ##2749
