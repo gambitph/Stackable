@@ -47,6 +47,10 @@ if ( ! function_exists( 'stackable_jetpack_photon_render_block' ) ) {
 	 * @return string The modified block output.
 	 */
 	function stackable_jetpack_photon_render_block( $block_content, $block ) {
+		if ( $block_content === null ) {
+			return $block_content;
+		}
+
 		// Only when Jetpack's Photon is enabled.
 		if ( ! function_exists( 'jetpack_photon_url' ) ) {
 			return $block_content;

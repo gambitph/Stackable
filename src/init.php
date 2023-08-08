@@ -188,6 +188,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @return string output block
 		 */
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
+			if ( $block_content === null ) {
+				return $block_content;
+			}
+
 			if ( is_admin() ) {
 				return;
 			}

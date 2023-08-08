@@ -166,6 +166,10 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 		 * @return void
 		 */
 		public function adjust_block_styles( $block_content, $block ) {
+			if ( $block_content === null ) {
+				return $block_content;
+			}
+
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if (
 				stripos( $block_name, 'stackable/' ) === 0 ||
