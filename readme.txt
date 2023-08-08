@@ -286,6 +286,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.10.3 =
+* Fixed: (Hotfix update) PHP error incompatibility with some plugins
+
 = 3.10.2 =
 * New: Compatibility with WordPress 6.3
 * New: Updated all blocks to use the new Block API Version 3 - now all Stackable blocks can be iframed in the editor. [Learn about the benefits of an iframed editor](https://make.wordpress.org/core/2021/06/29/blocks-in-an-iframed-template-editor/)
