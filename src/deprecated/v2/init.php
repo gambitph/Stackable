@@ -313,7 +313,7 @@ if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 
 	function load_frontend_scripts_conditionally_v2( $block_content, $block ) {
 		if ( $block_content === null ) {
-			$block_content = '';
+			return $block_content;
 		}
 
 		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
@@ -369,7 +369,7 @@ if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
 	 */
 	function stackable_frontend_v2_try_migration( $block_content, $block ) {
 		if ( $block_content === null ) {
-			$block_content = '';
+			return $block_content;
 		}
 
 		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
