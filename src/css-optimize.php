@@ -202,9 +202,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			if ( is_singular() && ! is_preview() && ! is_attachment() ) {
 				$post_id = get_the_ID();
 				$this->optimized_css = get_post_meta( $post_id, 'stackable_optimized_css', true );
-				$this->css_raw = get_post_meta( $post_id, 'stackable_optimized_css_raw', true );
 
 				if ( ! empty( $this->optimized_css ) ) {
+					$this->css_raw = get_post_meta( $post_id, 'stackable_optimized_css_raw', true );
 					add_action( 'wp_head', array( $this, 'print_optimized_styles' ) );
 				}
 			}
