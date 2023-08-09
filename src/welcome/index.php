@@ -351,8 +351,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
          * Redirect to the welcome screen if our marker exists.
          */
         public function redirect_to_welcome_page() {
-            if ( ! sugb_fs()->is_activation_mode() && current_user_can( 'manage_options' ) &&
-				( get_option( 'stackable_redirect_to_welcome' ) || get_option( 'stackable_redirected_to_wizard' ) === false )
+            if ( ( get_option( 'stackable_redirect_to_welcome' ) || get_option( 'stackable_redirected_to_wizard' ) === false ) &&
+			     current_user_can( 'manage_options' ) &&
+			     ! sugb_fs()->is_activation_mode()
 			) {
 				// Never go here again.
                 delete_option( 'stackable_redirect_to_welcome' );
