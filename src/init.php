@@ -49,8 +49,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			add_action( 'admin_init', array( $this, 'register_block_editor_assets' ) );
 			add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_assets_admin' ) );
 
-			add_filter( 'init', array( $this, 'register_frontend_assets_nodep' ) );
-
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
 			// Adds a special class to the body tag, to indicate we can now run animations.
@@ -64,21 +62,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Add theme classes for compatibility detection.
 			add_action( 'body_class', array( $this, 'add_body_class_theme_compatibility' ) );
 			add_action( 'admin_body_class', array( $this, 'add_body_class_theme_compatibility' ) );
-		}
-
-		/**
-		 * Register inline frontend styles, these are always loaded.
-		 *
-		 * @since 3.0.0
-		 */
-		public function register_frontend_assets_nodep() {
-			// Register our dummy style so that the inline styles would get added.
-			wp_register_style( 'ugb-style-css-nodep', false );
-			wp_enqueue_style( 'ugb-style-css-nodep' );
-			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
-			if ( ! empty( $inline_css ) ) {
-				wp_add_inline_style( 'ugb-style-css-nodep', $inline_css );
-			}
 		}
 
 		/**
@@ -121,6 +104,14 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'i18n' => array(), // Translatable labels used in the frontend should go here.
 			) );
 			wp_localize_script( 'ugb-block-frontend-js', 'stackable', $args );
+
+			// Register inline frontend styles, these are always loaded.
+			// Register via a dummy style.
+			wp_register_style( 'ugb-style-css-nodep', false );
+			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
+			if ( ! empty( $inline_css ) ) {
+				wp_add_inline_style( 'ugb-style-css-nodep', $inline_css );
+			}
 
 			// Frontend only scripts.
 			// if ( ! is_admin() ) {
@@ -241,6 +232,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		public function block_enqueue_frontend_assets() {
 			$this->register_frontend_assets();
 			wp_enqueue_style( 'ugb-style-css' );
+			wp_enqueue_style( 'ugb-style-css-nodep' );
 			wp_enqueue_script( 'ugb-block-frontend-js' );
 			do_action( 'stackable_block_enqueue_frontend_assets' );
 		}
