@@ -323,7 +323,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'nonce' => wp_create_nonce( 'stackable' ),
 				'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
 				'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
-				'displayWelcomeVideo' => function_exists( 'stackable_display_welcome_video' ) ? stackable_display_welcome_video() : false,
 				'currentTheme' => esc_html( get_template() ),
 				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 				'version' => array_shift( $version_parts ),

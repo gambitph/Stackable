@@ -200,7 +200,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
