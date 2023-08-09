@@ -36,7 +36,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Only load the frontend scripts for now in the backend.  In the frontend,
 			// we'll load these conditionally with `load_frontend_scripts_conditionally`
 			if ( is_admin() ) {
-				add_action( 'enqueue_block_editor_assets', array( $this, 'register_frontend_assets' ) );
+				add_action( 'enqueue_block_editor_assets', array( $this, 'block_enqueue_frontend_assets' ) );
 			}
 
 			// Checks if a Stackable block is rendered in the frontend, then loads our scripts.
