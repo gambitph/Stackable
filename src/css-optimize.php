@@ -113,7 +113,6 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			}
 
 			$current_optimized_css = get_post_meta( $post_id, 'stackable_optimized_css', true );
-			$current_optimized_css_raw = get_post_meta( $post_id, 'stackable_optimized_css_raw', true );
 
 			// If no contents, don't do anything.
 			if ( empty( $post->post_content ) && empty( $optimized_css ) ) {
