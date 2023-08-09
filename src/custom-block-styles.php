@@ -38,7 +38,9 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 
 			// This will trigger the editor to redirect to the editor for a
 			// default block.
-			add_action( 'admin_init', array( $this, 'edit_default_block_redirect' ) );
+			if ( isset( $_REQUEST['stk_edit_block_style'] ) && isset( $_REQUEST['stk_edit_block'] ) && isset( $_REQUEST['stk_edit_block_title'] ) ) {
+				add_action( 'admin_init', array( $this, 'edit_default_block_redirect' ) );
+			}
 		}
 
 		/**
@@ -351,10 +353,6 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 * @return void
 		 */
 		public function edit_default_block_redirect() {
-			if ( ! isset( $_REQUEST['stk_edit_block_style'] ) || ! isset( $_REQUEST['stk_edit_block'] ) || ! isset( $_REQUEST['stk_edit_block_title'] ) ) {
-				return;
-			}
-
 			$block_name = sanitize_text_field( $_REQUEST['stk_edit_block'] );
 			$style_slug = sanitize_text_field( $_REQUEST['stk_edit_block_style'] );
 			$block_title = sanitize_text_field( $_REQUEST['stk_edit_block_title'] );
