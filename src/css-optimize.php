@@ -112,6 +112,14 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				return;
 			}
 
+			$current_optimized_css = get_post_meta( $post_id, 'stackable_optimized_css', true );
+			$current_optimized_css_raw = get_post_meta( $post_id, 'stackable_optimized_css_raw', true );
+
+			// If no contents, don't do anything.
+			if ( empty( $post->post_content ) && empty( $optimized_css ) ) {
+				return;
+			}
+
 			// Convert content to blocks.
 			$blocks = parse_blocks( $post->post_content );
 
@@ -126,11 +134,13 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 					$styles_only[] = $block_style[1];
 				}
 			}
-			$optimized_css = self::generate_css( $styles_only );
+			$optimized_css = count( $styles_only ) ? self::generate_css( $styles_only ) : '';
 
-			// Save the optimized CSS to the post.
-			update_post_meta( $post_id, 'stackable_optimized_css', $optimized_css );
-			update_post_meta( $post_id, 'stackable_optimized_css_raw', $styles );
+			// Save the optimized CSS to the post if it changed.
+			if ( ! empty( $current_optimized_css ) && $current_optimized_css !== $optimized_css ) {
+				update_post_meta( $post_id, 'stackable_optimized_css', $optimized_css );
+				update_post_meta( $post_id, 'stackable_optimized_css_raw', $styles );
+			}
 		}
 
 		/**
