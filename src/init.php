@@ -113,6 +113,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				wp_add_inline_style( 'ugb-style-css-nodep', $inline_css );
 			}
 
+			// This is needed for the translation strings in our UI.
+			if ( is_admin() ) {
+				stackable_load_js_translations();
+			}
+
 			// Frontend only scripts.
 			// if ( ! is_admin() ) {
 			// 	wp_register_script(
@@ -292,7 +297,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Add translations.
 			wp_set_script_translations( 'ugb-stk', STACKABLE_I18N );
 			wp_set_script_translations( 'ugb-block-js', STACKABLE_I18N );
-			stackable_load_js_translations(); // This is needed for the translation strings to be loaded.
 
 			// Backend editor only styles.
 			wp_register_style(
