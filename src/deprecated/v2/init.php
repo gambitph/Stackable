@@ -128,6 +128,7 @@ if ( ! function_exists( 'stackable_v2_compatibility_option' ) ) {
 			)
 		);
 	}
+	add_action( 'admin_init', 'stackable_v2_compatibility_option' );
 	add_action( 'rest_api_init', 'stackable_v2_compatibility_option' );
 }
 
