@@ -150,8 +150,6 @@ const Edit = props => {
 				props.attributes.timelineAnchor === '' ? 0.5 : ( props.attributes.timelineAnchor / 100 ),
 			topPadding:
 				props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 16,
-			topPaddingZero:
-				props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 0,
 			bottomPadding:
 				props.attributes.blockPadding && props.attributes.blockPadding.bottom !== '' ? props.attributes.blockPadding.bottom : 16,
 			topPaddingTablet:
@@ -165,14 +163,14 @@ const Edit = props => {
 
 	const handleScroll = () => {
 		const {
-			timelineAnchor, topPadding, topPaddingZero,
+			timelineAnchor, topPadding, bottomPadding,
 		} = getSelectAttributes()
 
-		const lineHeight = ( document.body.clientHeight * timelineAnchor ) - ( blockRef.current.getBoundingClientRect().top ) + topPaddingZero
-		const fillPercent = ( lineHeight / blockRef.current.getBoundingClientRect().height ) * 100
+		const lineHeight = ( document.body.clientHeight * timelineAnchor ) - ( blockRef.current.getBoundingClientRect().top ) + topPadding
+		const fillPercent = ( lineHeight / ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding ) ) * 100
 
 		// gets equivalent px of 1%
-		const fillPxPercent = blockRef.current.getBoundingClientRect().height / 100
+		const fillPxPercent = ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding ) / 100
 		// converts percent to px
 		const fillPx = fillPercent * fillPxPercent
 
@@ -240,13 +238,16 @@ const Edit = props => {
 
 	// update accent fill when anchor position or padding changes
 	useEffect( () => {
-		const timeout = setInterval( () => {
+		handleScroll()
+		document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
+		return () => {
 			document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
-			document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
-			handleScroll()
-		}, 100 )
-		return () => clearInterval( timeout )
-	}, [ ] )
+		}
+	}, [
+		nextBlock,
+		previousBlock,
+		props.attributes,
+	] )
 
 	// update blocks if position changes
 	useEffect( () => {
