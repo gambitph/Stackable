@@ -333,7 +333,7 @@ const Edit = props => {
 							<AdvancedRangeControl
 								label={ sprintf( __( '%s Border Radius', i18n ), __( 'Dot', i18n ) ) }
 								attribute="timelineDotBorderRadius"
-								sliderMax={ props.attributes.timelineDotSize / 2 }
+								sliderMax={ ( props.attributes.timelineDotSize || 11 ) / 2 }
 								min={ 0 }
 								placeholder=""
 							/>
