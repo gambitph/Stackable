@@ -160,8 +160,6 @@ const Edit = props => {
 				props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.bottom !== '' ? props.attributes.blockPaddingTablet.bottom : 16,
 			topPaddingMobileZero:
 				props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.top !== '' ? props.attributes.blockPaddingMobile.top : 0,
-			bottomPaddingMobileZero:
-				props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.bottom !== '' ? props.attributes.blockPaddingMobile.bottom : 0,
 		}
 	}
 
@@ -203,24 +201,24 @@ const Edit = props => {
 		const {
 			topPadding, bottomPadding,
 			topPaddingTablet, bottomPaddingTablet,
-			topPaddingMobileZero, bottomPaddingMobileZero,
+			topPaddingMobileZero,
 		} = getSelectAttributes()
 
 		let lineMaxHeight = '100%'
 		let top = ''
-		if ( deviceType === 'Mobile' && isFirst ) {
-			lineMaxHeight = `calc(100% + ${ bottomPaddingMobileZero }px - ${ topPaddingMobileZero }px - 16px)`
+		if ( isFirst && isLast ) {
+			lineMaxHeight = '0'
+		} else if ( deviceType === 'Mobile' && isFirst ) {
+			lineMaxHeight = `calc(100% - ${ topPaddingMobileZero }px - 16px)`
 			top = `${ topPaddingMobileZero + 16 }px`
 		} else if ( deviceType === 'Mobile' && isLast ) {
 			lineMaxHeight = `${ topPaddingMobileZero + 16 }px`
+		} else if ( deviceType === 'Mobile' ) {
+			lineMaxHeight = '100%'
 		} else if ( deviceType === 'Tablet' && isFirst ) {
 			lineMaxHeight = `calc(50% + ${ bottomPaddingTablet / 2 }px - ${ topPaddingTablet / 2 }px)`
 		} else if ( deviceType === 'Tablet' && isLast ) {
 			lineMaxHeight = `calc(50% + ${ topPaddingTablet / 2 }px - ${ bottomPaddingTablet / 2 }px)`
-		} else if ( deviceType === 'Mobile' ) {
-			lineMaxHeight = '100%'
-		} else if ( isFirst && isLast ) {
-			lineMaxHeight = '0'
 		} else if ( isFirst ) {
 			lineMaxHeight = `calc(50% + ${ bottomPadding / 2 }px - ${ topPadding / 2 }px)`
 		} else if ( isLast ) {

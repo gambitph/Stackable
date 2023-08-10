@@ -147,9 +147,11 @@
 		margin-left: -16px;
 	}
 	.stk-block-timeline .stk-block-timeline__middle {
-		grid-column: 1 / 2;
-		grid-row: 1 / 2;
-		align-self: center;
+		position: absolute;
+		inset-inline-start: 16px;
+	}
+	.stk-block-timeline .stk-block-timeline__middle__dot {
+		top: 16px;
 	}
 	.stk-block-timeline .stk-block-timeline__content {
 		grid-column: 2 / 3;
