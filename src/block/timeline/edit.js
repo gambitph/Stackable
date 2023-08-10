@@ -161,26 +161,28 @@ const Edit = props => {
 				props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.bottom !== '' ? props.attributes.blockPaddingTablet.bottom : 16,
 			topPaddingMobileZero:
 				props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.top !== '' ? props.attributes.blockPaddingMobile.top : 0,
+			backgroundPadding:
+				props.attributes.hasBackground && props.attributes.blockPadding?.top === '' && props.attributes.blockPadding?.bottom === '' ? 8 : 0,
 		}
 	}
 
 	const handleScroll = () => {
 		const {
-			timelineAnchor, topPadding, bottomPadding,
+			timelineAnchor, topPadding, bottomPadding, backgroundPadding,
 		} = getSelectAttributes()
 
-		const lineHeight = ( document.body.clientHeight * timelineAnchor ) - ( blockRef.current.getBoundingClientRect().top ) + topPadding
-		const fillPercent = ( lineHeight / ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding ) ) * 100
+		const lineHeight = ( document.body.clientHeight * timelineAnchor ) - ( blockRef.current.getBoundingClientRect().top ) + topPadding + backgroundPadding
+		const fillPercent = ( lineHeight / ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding + ( backgroundPadding * 2 ) ) ) * 100
 
 		// gets equivalent px of 1%
-		const fillPxPercent = ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding ) / 100
+		const fillPxPercent = ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding + ( backgroundPadding * 2 ) ) / 100
 		// converts percent to px
 		const fillPx = fillPercent * fillPxPercent
 
 		let fill = { verticalLine: fillPx, middle: fillPx }
 
-		const dot = ( middleRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding
-		const branch = ( branchRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding
+		const dot = ( middleRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding + backgroundPadding
+		const branch = ( branchRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding + backgroundPadding
 
 		// corrects the position of the fill for the first timeline block since the line starts at the middle
 		if ( ! previousBlock || previousBlock.name !== 'stackable/timeline' ) {
@@ -242,9 +244,20 @@ const Edit = props => {
 	// update accent fill when anchor position or padding changes
 	useEffect( () => {
 		handleScroll()
-		document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
+		const iframe = document.querySelector( '[name=editor-canvas]' )
+		let iframeDocument
+		if ( iframe ) {
+			iframeDocument = iframe.contentDocument || iframe.contentWindow.document
+			iframeDocument.addEventListener( 'scroll', handleScroll )
+		} else {
+			document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
+		}
 		return () => {
-			document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
+			if ( iframe ) {
+				iframeDocument.removeEventListener( 'scroll', handleScroll )
+			} else {
+				document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
+			}
 		}
 	}, [
 		nextBlock,
