@@ -1,5 +1,9 @@
 @import "common";
 
+.ct-widget.widget_block:not(:first-child):has(.stk-block-timeline) {
+	margin-top: 0;
+}
+
 .stk-block-timeline {
 	--gap: 16px;
 	--line-dot-size: 11px;
@@ -76,9 +80,11 @@
 	top: 50%;
 	bottom: 50%;
 }
-.stk-block-timeline + .stk-block-timeline > .stk-inner-blocks::after {
+.stk-block-timeline + .stk-block-timeline > .stk-inner-blocks::after,
+.widget_block:has(.stk-block-timeline) + .widget_block .stk-block-timeline > .stk-inner-blocks::after {
 	top: 0;
 }
+
 .stk-block-timeline:not(.stk-is-last) > .stk-inner-blocks::after {
 	bottom: 0;
 }
