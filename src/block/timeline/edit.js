@@ -240,17 +240,13 @@ const Edit = props => {
 
 	// update accent fill when anchor position or padding changes
 	useEffect( () => {
-		document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
-		handleScroll()
-		return () => {
+		const timeout = setInterval( () => {
 			document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
-		}
-	}, [ props.attributes.timelineAnchor,
-		props.attributes.blockPadding,
-		props.attributes.blockPaddingTablet,
-		props.attributes.blockPaddingMobile,
-		nextBlock,
-		previousBlock ] )
+			document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
+			handleScroll()
+		}, 100 )
+		return () => clearInterval( timeout )
+	}, [ ] )
 
 	// update blocks if position changes
 	useEffect( () => {
