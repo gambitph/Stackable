@@ -67,7 +67,7 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const nonZeroColumnSpacingBlocks = [ 'stackable/timeline' ]
-	const useZeroColumnSpacing = ! nonZeroColumnSpacingBlocks.includes( parentBlock.name )
+	const useZeroColumnSpacing = parentBlock ? ! nonZeroColumnSpacingBlocks.includes( parentBlock.name ) : false
 
 	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, props )
 
