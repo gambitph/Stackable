@@ -227,13 +227,15 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/alignment/inde
 /**
  * Welcome screen.
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/freemius.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/updates.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/wizard.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
+if ( is_admin() ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/freemius.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/updates.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/wizard.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
+}
 
 if ( sugb_fs()->is__premium_only() ) {
 	if ( STACKABLE_BUILD === 'premium' ) {
