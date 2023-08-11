@@ -59,6 +59,7 @@ export const attributes = ( version = VERSION ) => {
 				stkResponsive: true,
 				type: 'number',
 				default: '',
+				stkUnits: 'px',
 			},
 			containerHorizontalAlign: {
 				stkResponsive: true,
