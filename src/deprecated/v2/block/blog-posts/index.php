@@ -641,7 +641,10 @@ if ( ! function_exists( 'stackable_render_block_blog_posts_v2' ) ) {
 		}
 		return $parts[0] . $parts[1] . $block_content . $parts[2];
 	}
-	add_filter( 'render_block_ugb/blog-posts', 'stackable_render_block_blog_posts_v2', 10, 2 );
+
+	if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
+		add_filter( 'render_block_ugb/blog-posts', 'stackable_render_block_blog_posts_v2', 10, 2 );
+	}
 }
 
 if ( ! function_exists( 'stackable_rest_get_terms_v2' ) ) {
