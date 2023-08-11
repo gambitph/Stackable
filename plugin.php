@@ -207,22 +207,24 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/lightbox/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/compatibility/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/carousel/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/countdown/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/notification/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/video-popup/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/table-of-contents/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/map/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-bar/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-circle/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/horizontal-scroller/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/tabs/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/alignment/index.php' );
+if ( ! is_admin() ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'src/lightbox/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/carousel/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/countdown/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/notification/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/video-popup/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/table-of-contents/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/map/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-bar/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-circle/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/horizontal-scroller/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/tabs/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/alignment/index.php' );
+}
 
 /**
  * Welcome screen.
