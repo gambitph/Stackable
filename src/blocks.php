@@ -148,11 +148,11 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 	add_action( 'enqueue_block_editor_assets', 'stackable_register_blocks' );
 
 	function stackable_register_blocks_frontend() {
-		if ( ! is_admin() ) {
-			stackable_register_blocks();
-		}
+		stackable_register_blocks();
 	}
-	add_action( 'init', 'stackable_register_blocks_frontend' );
+	if ( ! is_admin() ) {
+		add_action( 'init', 'stackable_register_blocks_frontend' );
+	}
 }
 
 /**
