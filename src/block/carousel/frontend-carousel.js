@@ -89,11 +89,11 @@ class _StackableCarousel {
 		}
 
 		// Mousewheel left and right should scroll the fade carousel
-		this.sliderEl.addEventListener( 'wheel', this.onWheel )
+		this.sliderEl.addEventListener( 'wheel', this.onWheel, { passive: true } )
 
 		// Dragging
 		this.sliderEl.addEventListener( 'mousedown', this.dragMouseDown )
-		this.sliderEl.addEventListener( 'touchstart', this.dragTouchStart )
+		this.sliderEl.addEventListener( 'touchstart', this.dragTouchStart, { passive: true } )
 		this.sliderEl.addEventListener( 'scroll', this.onScroll )
 
 		// Autoplay
