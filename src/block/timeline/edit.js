@@ -41,6 +41,7 @@ import {
 	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
+import { range } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -102,7 +103,7 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const typographyClass = getTypographyClasses( props.attributes )
 	const {
-		hasInnerBlocks, nextBlock, previousBlock,
+		hasInnerBlocks, nextBlock, previousBlock, adjacentBlocks, blockIndex,
 	} = useBlockContext()
 	const deviceType = useDeviceType()
 
@@ -114,6 +115,17 @@ const Edit = props => {
 	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
 	const [ verticalLineTopPosition, setVerticalLineTopPosition ] = useState( 0 )
 	const [ backgroundPosition, setBackgroundPosition ] = useState( { verticalLine: 0, middle: 0 } )
+
+	let numTimelineBlocksAfter = 0
+	const isFirstTimelineBlock = ! previousBlock || previousBlock.name !== 'stackable/timeline'
+	if ( isFirstTimelineBlock ) {
+		// How many timeline blocks are after this block
+		for ( let i = blockIndex + 1; i < adjacentBlocks.length; i++ ) {
+			if ( adjacentBlocks[ i ].name === 'stackable/timeline' ) {
+				numTimelineBlocksAfter++
+			}
+		}
+	}
 
 	const dateClassNames = classnames( [
 		typographyClass,
@@ -148,22 +160,6 @@ const Edit = props => {
 
 	// gets anchor and paddings
 	const getSelectAttributes = () => {
-		const { isFirst } = getTimelinePosition()
-
-		// Get Anchor
-		let anchor = props.attributes.timelineAnchor === '' ? 0.5 : ( props.attributes.timelineAnchor / 100 )
-
-		const iframe = document.querySelector( '[name=editor-canvas]' )
-		const doc = iframe ? ( iframe.contentDocument || iframe.contentWindow.document ) : document
-
-		const block = doc.getElementById( `block-${ clientId }` )
-
-		if ( ! isFirst && block.hasAttribute( 'data-anchor' ) && block.getAttribute( 'data-anchor' ) !== '' ) {
-			anchor = block.getAttribute( 'data-anchor' ) / 100
-		} else if ( ! isFirst && block.hasAttribute( 'data-anchor' ) ) {
-			anchor = 0.5
-		}
-
 		// Get Paddings
 		let topPadding = props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 16
 		let bottomPadding = props.attributes.blockPadding && props.attributes.blockPadding.bottom !== '' ? props.attributes.blockPadding.bottom : 16
@@ -180,7 +176,6 @@ const Edit = props => {
 		}
 
 		return {
-			timelineAnchor: anchor,
 			topPadding,
 			bottomPadding,
 			backgroundPadding,
@@ -189,30 +184,30 @@ const Edit = props => {
 
 	const handleScroll = () => {
 		const {
-			timelineAnchor, topPadding, bottomPadding, backgroundPadding,
+			topPadding, bottomPadding, backgroundPadding,
 		} = getSelectAttributes()
 
-		const lineHeight = ( document.body.clientHeight * timelineAnchor ) - ( blockRef.current.getBoundingClientRect().top ) + topPadding + backgroundPadding
-		const fillPercent = ( lineHeight / ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding + ( backgroundPadding * 2 ) ) ) * 100
+		const { height: blockRectHeight, top: blockRectTop } = blockRef.current.getBoundingClientRect()
+		const blockHeight = blockRectHeight + topPadding + bottomPadding + ( backgroundPadding * 2 )
+		const fillPercent = `( ( ${ ( document?.body?.clientHeight || 10000 ) }px * var(--stk-timeline-anchor, 0.5) ) + ${ -blockRectTop + topPadding + backgroundPadding }px ) / ${ blockHeight } * 100`
 
 		// gets equivalent px of 1%
-		const fillPxPercent = ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding + ( backgroundPadding * 2 ) ) / 100
+		const fillPxPercent = blockHeight / 100
 		// converts percent to px
-		const fillPx = fillPercent * fillPxPercent
+		const fillPx = `${ fillPercent } * ${ fillPxPercent }`
 
-		let fill = { verticalLine: fillPx, middle: fillPx }
+		let fill = { verticalLine: `calc(${ fillPx })`, middle: `calc(${ fillPx })` }
 
-		const dot = ( middleRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding + backgroundPadding
-		const branch = ( branchRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding + backgroundPadding
+		const dot = ( middleRef.current.getBoundingClientRect().top - blockRectTop ) + topPadding + backgroundPadding
+		const branch = ( branchRef.current.getBoundingClientRect().top - blockRectTop ) + topPadding + backgroundPadding
 
 		// corrects the position of the fill for the first timeline block since the line starts at the middle
 		if ( ! previousBlock || previousBlock.name !== 'stackable/timeline' ) {
 			fill = {
-				verticalLine: fillPx - dot,
-				middle: fillPx,
+				verticalLine: `calc(${ fillPx } - ${ dot }px)`,
+				middle: `calc(${ fillPx })`,
 			}
 		}
-
 		setMiddleTopPosition( { dot, branch } )
 		setFillHeight( fill )
 	}
@@ -255,6 +250,7 @@ const Edit = props => {
 			topPadding, bottomPadding, backgroundPadding,
 		} = getSelectAttributes()
 
+		// TODO: Remove me and use CSS instead
 		const iframe = document.querySelector( '[name=editor-canvas]' )
 		const doc = iframe ? ( iframe.contentDocument || iframe.contentWindow.document ) : document
 		let size
@@ -292,49 +288,17 @@ const Edit = props => {
 			doc = iframe.contentDocument || iframe.contentWindow.document
 		}
 		doc?.addEventListener( 'scroll', handleScroll )
-
-		// clears fill
-		const fills = doc.querySelectorAll( '.stk-block-timeline__vertical-line__fill, .stk-block-timeline__middle__branch__fill, .stk-block-timeline__middle__fill' )
-		fills.forEach( fill => {
-			fill.style.height = 0
-		} )
-		setFillHeight( { verticalLine: 0, middle: 0 } )
 		return () => {
 			doc.removeEventListener( 'scroll', handleScroll )
 		}
 	}, [
+		deviceType,
 		nextBlock,
 		previousBlock,
 		props.attributes,
 	] )
 
-	// match timeline anchor with first block
-	useEffect( () => {
-		const iframe = document.querySelector( '[name=editor-canvas]' )
-		const doc = iframe ? ( iframe.contentDocument || iframe.contentWindow.document ) : document
-
-		const { isFirst } = getTimelinePosition()
-		const timelineBlock = doc.getElementById( `block-${ clientId }` )
-		let anchor = ''
-		if ( isFirst ) {
-			anchor = props.attributes.timelineAnchor
-			timelineBlock.setAttribute( 'data-anchor', anchor )
-		} else if ( timelineBlock.hasAttribute( 'data-anchor' ) && timelineBlock.getAttribute( 'data-anchor' ) !== '' ) {
-			anchor = timelineBlock.getAttribute( 'data-anchor' )
-		}
-
-		// get all preceding timeline blocks
-		const timelineBlocks = doc.querySelectorAll( `#block-${ clientId } ~ [data-type='stackable/timeline']:is([data-type='stackable/timeline'] + [data-type='stackable/timeline'])` )
-
-		// sets anchor for the consecutive preceding timeline blocks only
-		for ( const block of timelineBlocks ) {
-			block.setAttribute( 'data-anchor', anchor )
-			if ( block.querySelector( '.stk-block-timeline--last' ) ) {
-				break
-			}
-		}
-	}, [ props.attributes.timelineAnchor, nextBlock, previousBlock ] )
-
+	// TODO: Remove me
 	// update background position for gradient fills
 	useEffect( () => {
 		const timeout = setInterval( updateBackgroundPosition, 100 )
@@ -512,7 +476,7 @@ const Edit = props => {
 							<div
 								className="stk-block-timeline__middle__fill"
 								style={ {
-									height: `max(${ fillHeight.middle }px, 0px)`,
+									height: `max(${ fillHeight.middle }, 0px)`,
 									top: `-${ middleTopPosition.dot }px`,
 									maxHeight: `calc(100% + ${ middleTopPosition.dot }px)`,
 									backgroundPositionY: `-${ backgroundPosition.middle }px`,
@@ -526,7 +490,7 @@ const Edit = props => {
 							<div
 								className="stk-block-timeline__middle__branch__fill"
 								style={ {
-									height: `max(${ fillHeight.middle }px, 0px)`,
+									height: `max(${ fillHeight.middle }, 0px)`,
 									top: `-${ middleTopPosition.branch }px`,
 									maxHeight: `calc(100% + ${ middleTopPosition.branch }px)`,
 									backgroundPositionY: `-${ backgroundPosition.middle }px`,
@@ -553,11 +517,22 @@ const Edit = props => {
 						<div
 							className="stk-block-timeline__vertical-line__fill"
 							style={ {
-								height: `max(${ fillHeight.verticalLine }px, 0px)`,
-								backgroundPositionY: `-${ backgroundPosition.verticalLine }px`,
+								height: `max(${ fillHeight.verticalLine }, 0px)`,
+								backgroundPositionY: `-${ backgroundPosition.verticalLine }`,
 							} }
 						/>
 					</div>
+					{ isFirstTimelineBlock && (
+						<style>
+							{ range( numTimelineBlocksAfter + 1 ).map( i => {
+								const adjacentSelector = range( i ).map( () => '+ [data-type="stackable/timeline"]' ).join( ' ' )
+								return `[data-block="${ clientId }"] ${ adjacentSelector } {
+									--stk-timeline-anchor: ${ props.attributes.timelineAnchor === '' ? 0.5 : ( props.attributes.timelineAnchor / 100 ) };
+								}`
+							} ) }
+						</style>
+					)
+					}
 				</div>
 				{ /* </Separator> */ }
 			</BlockDiv>
