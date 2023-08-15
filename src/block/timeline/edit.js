@@ -271,7 +271,7 @@ const Edit = props => {
 			setBackgroundPosition( { verticalLine: prevBlockSize, middle: prevBlockSize } )
 		}
 
-		const timelineBlock = document.getElementById( `block-${ clientId }` )
+		const timelineBlock = doc.getElementById( `block-${ clientId }` )
 		timelineBlock.setAttribute( 'data-size', size )
 	}
 
