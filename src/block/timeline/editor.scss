@@ -43,11 +43,7 @@
 	overflow: hidden;
 	background: var(--line-bg-color, #eee) !important;
 }
-.stk-block-timeline__middle__fill {
-	position: absolute;
-	width: 100%;
-	background: var(--line-accent-bg-color, #000) !important;
-}
+
 .stk-block-timeline__vertical-line {
 	position: absolute;
 	top: 0px;
@@ -55,13 +51,6 @@
 	width: var(--line-bg-width, 3px);
 	height: 100%;
 	bottom: unset;
-}
-.stk-block-timeline__vertical-line__fill {
-	position: absolute;
-	width: var(--line-bg-width, 3px);
-	background: var(--line-accent-bg-color, #000) !important;
-	max-height: 100%;
-	z-index: 3 !important;
 }
 
 // branching line
@@ -75,15 +64,32 @@
 	background: var(--line-bg-color, #eee) !important;
 	overflow: hidden;
 }
+
+.stk-block-timeline--left .stk-block-timeline__middle__branch {
+	inset-inline-start: auto;
+	inset-inline-end: 50%;
+}
+
+// fills
+.stk-block-timeline__middle__fill {
+	position: absolute;
+	width: var(--line-dot-size, 16px);
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, hsl(0, 0%, 0%)) var(--line-accent-bg-location, 50%));
+	background-size: 100% 100vh;
+}
 .stk-block-timeline__middle__branch__fill {
 	position: absolute;
 	top: calc(50% - var(--line-bg-width, 3px) / 2);
 	width: var(--content-line, 0);
-	background: var(--line-accent-bg-color, #000) !important;
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
+	background-size: 100% 100vh;
 }
-.stk-block-timeline--left .stk-block-timeline__middle__branch {
-	inset-inline-start: auto;
-	inset-inline-end: 50%;
+.stk-block-timeline__vertical-line__fill {
+	position: absolute;
+	width: var(--line-bg-width, 3px);
+	max-height: 100%;
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
+	background-size: 100% 100vh;
 }
 
 // for first timeline block
@@ -116,16 +122,6 @@
 	.stk-block-timeline__middle,
 	.stk-block-timeline > .stk-inner-blocks::after {
 		--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
-	}
-	.stk-block-timeline__middle__branch__fill,
-	.stk-block-timeline__vertical-line__fill,
-	.stk-block-timeline__middle__fill {
-		background: transparent !important;
-	}
-	.stk-block-timeline__middle__branch,
-	.stk-block-timeline__vertical-line,
-	.stk-block-timeline__middle__dot {
-		background: var(--line-accent-bg-color, #000) !important;
 	}
 }
 
