@@ -13,7 +13,6 @@ import {
 	AdvancedToolbarControl,
 	ColorPaletteControl,
 	ControlSeparator,
-	GroupPlaceholder,
 	InspectorLayoutControls,
 	InspectorStyleControls,
 	InspectorTabs,
@@ -30,7 +29,6 @@ import {
 	CustomCSS,
 	Responsive,
 	CustomAttributes,
-	EffectsAnimations,
 	ConditionalDisplay,
 	getSeparatorClasses,
 	ContentAlign,
@@ -394,7 +392,6 @@ const Edit = props => {
 					<ContentAlign.InspectorControls />
 					<BlockDiv.InspectorControls hasContentVerticalAlign={ false } hasMinHeight={ false } />
 					<Advanced.InspectorControls />
-					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-timeline" />
 					<Responsive.InspectorControls />
@@ -415,7 +412,6 @@ const Edit = props => {
 				/>
 				<CustomCSS mainBlockClass="stk-block-timeline" />
 
-				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<div
 					ref={ blockRef }
 					className={ contentClassNames }
