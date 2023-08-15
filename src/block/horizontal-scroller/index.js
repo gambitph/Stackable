@@ -22,6 +22,7 @@ export const settings = {
 		stkSaveBlockStyle: false,
 		stkDefaultTab: 'layout',
 		stkColumnResize: false,
+		spacing: true,
 	},
 	example,
 	deprecated,

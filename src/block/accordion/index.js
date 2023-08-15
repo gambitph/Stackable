@@ -30,6 +30,7 @@ export const settings = {
 	supports: {
 		anchor: true,
 		stkColumnResize: false,
+		spacing: true,
 	},
 	example,
 	//  styles: blockStyles,

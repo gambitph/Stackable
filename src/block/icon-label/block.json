@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/icon-label",
 	"title": "Icon Label",
 	"description": "An Icon and Heading paired together.",

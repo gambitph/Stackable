@@ -19,6 +19,7 @@ import {
 const RichText = memo( forwardRef( ( props, ref ) => {
 	const {
 		attrNameTemplate,
+		...propsToPass
 	} = props
 
 	const {
@@ -35,7 +36,7 @@ const RichText = memo( forwardRef( ( props, ref ) => {
 	return (
 		<_RichText
 			ref={ ref }
-			{ ...props }
+			{ ...propsToPass }
 		/>
 	)
 } ) )

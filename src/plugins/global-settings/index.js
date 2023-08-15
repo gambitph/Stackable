@@ -59,19 +59,32 @@ const GlobalSettings = () => {
 		}
 	}, [ deviceType, editorDom ] )
 
-	const PluginSidebar = window.wp.editSite?.PluginSidebar || window.wp.editPost?.PluginSidebar
-	if ( ! PluginSidebar ) {
-		return null
-	}
+	// We need to to this for both, because one might be disabled. E.g. in
+	// WooCommerce, editSite is loaded and stops the sidebar from showing up.
+	const SideEditorPluginSidebar = window.wp.editSite?.PluginSidebar
+	const PostEditorPluginSidebar = window.wp.editPost?.PluginSidebar
 
 	return (
-		<PluginSidebar
-			name="sidebar"
-			title={ __( 'Stackable Settings', i18n ) }
-			className="ugb-global-settings__inspector"
-			icon={ <SVGStackableIcon /> } >
-			{ applyFilters( 'stackable.global-settings.inspector', null ) }
-		</PluginSidebar>
+		<>
+			{ SideEditorPluginSidebar &&
+				<SideEditorPluginSidebar
+					name="sidebar"
+					title={ __( 'Stackable Settings', i18n ) }
+					className="ugb-global-settings__inspector"
+					icon={ <SVGStackableIcon /> } >
+					{ applyFilters( 'stackable.global-settings.inspector', null ) }
+				</SideEditorPluginSidebar>
+			}
+			{ PostEditorPluginSidebar &&
+				<PostEditorPluginSidebar
+					name="sidebar"
+					title={ __( 'Stackable Settings', i18n ) }
+					className="ugb-global-settings__inspector"
+					icon={ <SVGStackableIcon /> } >
+					{ applyFilters( 'stackable.global-settings.inspector', null ) }
+				</PostEditorPluginSidebar>
+			}
+		</>
 	)
 }
 

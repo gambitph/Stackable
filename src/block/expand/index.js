@@ -29,6 +29,7 @@ export const settings = {
 	supports: {
 		anchor: true,
 		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	example,
 	//  styles: blockStyles,

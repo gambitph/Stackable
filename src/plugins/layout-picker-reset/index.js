@@ -2,12 +2,12 @@
  * External dependencies
  */
 import { i18n, isContentOnlyMode } from 'stackable'
-import { Button } from '~stackable/components'
+// import { Button } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { ToolbarGroup } from '@wordpress/components'
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
 import { BlockControls } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { select, dispatch } from '@wordpress/data'
@@ -20,7 +20,7 @@ const LayoutPickerButton = props => {
 	return (
 		<BlockControls>
 			<ToolbarGroup className="stk-layout-picker">
-				<Button
+				<ToolbarButton
 					className="components-toolbar__control stk-toolbar-button"
 					icon="layout"
 					label={ __( 'Reset layout', i18n ) }

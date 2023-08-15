@@ -18,7 +18,6 @@ import {
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
-	useBlockEl,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 
@@ -34,7 +33,6 @@ export const Edit = props => {
 	} = props
 	const hasBackground = useBlockAttributesContext( attributes => attributes.hasBackground )
 	const setAttributes = useBlockSetAttributesContext()
-	const blockEl = useBlockEl()
 
 	return (
 		<>
@@ -48,7 +46,6 @@ export const Edit = props => {
 						<SizeControls.Layout
 							{ ...props }
 							attrNameTemplate="block%s"
-							blockEl={ blockEl }
 							visualGuide={ {
 								highlight: 'outline',
 							} }
@@ -56,7 +53,6 @@ export const Edit = props => {
 						/>
 						<SizeControls.Spacing
 							attrNameTemplate="block%s"
-							blockEl={ blockEl }
 							visualGuide={ {
 								highlight: 'padding',
 							} }
@@ -82,7 +78,6 @@ export const Edit = props => {
 				>
 					<BorderControls
 						attrNameTemplate="block%s"
-						blockEl={ blockEl }
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>

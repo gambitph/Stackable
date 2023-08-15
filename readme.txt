@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.0
-Tested up to: 6.2.2
-Requires PHP: 5.7
-Stable tag: 3.10.1
+Tested up to: 6.3
+Requires PHP: 7.0
+Stable tag: 3.10.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,7 +18,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 > [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
-[youtube https://www.youtube.com/watch?v=yzmk0qoW880]
+[youtube https://www.youtube.com/watch?v=P3xG3t-QYjw]
 
 ## Transform Gutenberg into a Page Builder.
 
@@ -35,7 +35,7 @@ Enjoy an impressive Design Library to jumpstart your designing process. Never st
 
 ## Powerful Custom Blocks
 
-Get 41 flexible custom WordPress blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 42 flexible custom WordPress blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 You can choose which of these blocks you need, depending on your workflow. You can also disable blocks if you don't need them.
 
@@ -54,6 +54,7 @@ Special Blocks
 - Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Tabs Block - [View Block](https://wpstackable.com/tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Timeline Block - [View Block](https://wpstackable.com/timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -285,6 +286,22 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.10.3 =
+* Fixed: (Hotfix update) PHP error incompatibility with some plugins
+
+= 3.10.2 =
+* New: Compatibility with WordPress 6.3
+* New: Updated all blocks to use the new Block API Version 3 - now all Stackable blocks can be iframed in the editor. [Learn about the benefits of an iframed editor](https://make.wordpress.org/core/2021/06/29/blocks-in-an-iframed-template-editor/)
+* New: Improved editor loading performance #2797
+* New: Support for the Navite Group block flexbox options when nesting Stackable blocks #2773 #2774
+* Change: The Navigation Panel is now disabled by default #2789
+* Fixed: When duplicating or transforming blocks, sometimes changes get applied to multiple blocks ##2749
+* Fixed: Added Safari <= 15.3 and Firefox support for some flexbox options #2784
+* Fixed: Link picker UI issue where the reset button overlapped #2761
+* Fixed: WooCommerce compatibility where the Stackable settings button was not showing up #2793
+* Fixed: Inspector panels did not auto-collapse in the Site Editor #2759
+* Fixed: Resolved a few console warnings #2787 #2788
 
 = 3.10.1 =
 * New: Improved Block Theme & Site Editor color compatibility #2599 #2601 #2641

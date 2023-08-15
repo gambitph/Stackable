@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/heading",
 	"title": "Heading",
 	"description": "Introduce new sections of your content in style.",
