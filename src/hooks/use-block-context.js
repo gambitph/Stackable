@@ -46,8 +46,10 @@ const STORE_REDUCER = ( state = {}, action ) => {
 					clientId, innerBlocks, name,
 				} = rootBlock
 				blocks[ clientId ] = {
+					blockIndex: index,
 					numInnerBlocks: innerBlocks.length,
 					hasInnerBlocks: !! innerBlocks.length,
+					adjacentBlocks: siblingBlocks || [],
 					nextBlock: nth( siblingBlocks, index + 1 ),
 					previousBlock: index === 0 ? undefined : nth( siblingBlocks, index - 1 ), // nth will loop back to the last if index is -1.
 					innerBlocks,
