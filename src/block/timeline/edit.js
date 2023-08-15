@@ -113,6 +113,7 @@ const Edit = props => {
 	const [ fillHeight, setFillHeight ] = useState( { verticalLine: 0, middle: 0 } )
 	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
 	const [ verticalLineTopPosition, setVerticalLineTopPosition ] = useState( 0 )
+	const [ backgroundPosition, setBackgroundPosition ] = useState( { verticalLine: 0, middle: 0 } )
 
 	const dateClassNames = classnames( [
 		typographyClass,
@@ -248,10 +249,37 @@ const Edit = props => {
 		handleScroll()
 	}
 
+	const updateBackgroundPosition = () => {
+		const { isFirst } = getTimelinePosition()
+		const {
+			topPadding, bottomPadding, backgroundPadding,
+		} = getSelectAttributes()
+
+		const iframe = document.querySelector( '[name=editor-canvas]' )
+		const doc = iframe ? ( iframe.contentDocument || iframe.contentWindow.document ) : document
+		let size
+
+		if ( isFirst ) {
+			const middlePosition = ( middleRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding + backgroundPadding
+			setBackgroundPosition( { verticalLine: middlePosition, middle: 0 } )
+			size = ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding + ( backgroundPadding * 2 ) )
+		} else {
+			// console.log ( previousBlock.clientId )
+			const prevTimelineBlock = doc.getElementById( `block-${ previousBlock.clientId }` )
+			const prevBlockSize = prevTimelineBlock.getAttribute( 'data-size' )
+			size = parseFloat( prevBlockSize ) + ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding + ( backgroundPadding * 2 ) )
+			setBackgroundPosition( { verticalLine: prevBlockSize, middle: prevBlockSize } )
+		}
+
+		const timelineBlock = document.getElementById( `block-${ clientId }` )
+		timelineBlock.setAttribute( 'data-size', size )
+	}
+
 	// update max height when device type & padding changes
 	useEffect( () => {
 		updateMaxHeight()
 	}, [ deviceType,
+		props.attributes.timelineDotSize,
 		props.attributes.blockPadding,
 		props.attributes.blockPaddingTablet,
 		props.attributes.blockPaddingMobile ] )
@@ -279,6 +307,39 @@ const Edit = props => {
 		previousBlock,
 		props.attributes,
 	] )
+
+	// match timeline anchor with first block
+	useEffect( () => {
+		const iframe = document.querySelector( '[name=editor-canvas]' )
+		const doc = iframe ? ( iframe.contentDocument || iframe.contentWindow.document ) : document
+
+		const { isFirst } = getTimelinePosition()
+		const timelineBlock = doc.getElementById( `block-${ clientId }` )
+		let anchor = ''
+		if ( isFirst ) {
+			anchor = props.attributes.timelineAnchor
+			timelineBlock.setAttribute( 'data-anchor', anchor )
+		} else if ( timelineBlock.hasAttribute( 'data-anchor' ) && timelineBlock.getAttribute( 'data-anchor' ) !== '' ) {
+			anchor = timelineBlock.getAttribute( 'data-anchor' )
+		}
+
+		// get all preceding timeline blocks
+		const timelineBlocks = doc.querySelectorAll( `#block-${ clientId } ~ [data-type='stackable/timeline']:is([data-type='stackable/timeline'] + [data-type='stackable/timeline'])` )
+
+		// sets anchor for the consecutive preceding timeline blocks only
+		for ( const block of timelineBlocks ) {
+			block.setAttribute( 'data-anchor', anchor )
+			if ( block.querySelector( '.stk-block-timeline--last' ) ) {
+				break
+			}
+		}
+	}, [ props.attributes.timelineAnchor, nextBlock, previousBlock ] )
+
+	// update background position for gradient fills
+	useEffect( () => {
+		const timeout = setInterval( updateBackgroundPosition, 100 )
+		return () => clearInterval( timeout )
+	}, [ props.attributes ] )
 
 	// update blocks if position changes
 	useEffect( () => {
@@ -454,6 +515,7 @@ const Edit = props => {
 									height: `max(${ fillHeight.middle }px, 0px)`,
 									top: `-${ middleTopPosition.dot }px`,
 									maxHeight: `calc(100% + ${ middleTopPosition.dot }px)`,
+									backgroundPositionY: `-${ backgroundPosition.middle }px`,
 								} }
 							/>
 						</div>
@@ -467,6 +529,7 @@ const Edit = props => {
 									height: `max(${ fillHeight.middle }px, 0px)`,
 									top: `-${ middleTopPosition.branch }px`,
 									maxHeight: `calc(100% + ${ middleTopPosition.branch }px)`,
+									backgroundPositionY: `-${ backgroundPosition.middle }px`,
 								 } }
 							>
 							</div>
@@ -491,6 +554,7 @@ const Edit = props => {
 							className="stk-block-timeline__vertical-line__fill"
 							style={ {
 								height: `max(${ fillHeight.verticalLine }px, 0px)`,
+								backgroundPositionY: `-${ backgroundPosition.verticalLine }px`,
 							} }
 						/>
 					</div>
