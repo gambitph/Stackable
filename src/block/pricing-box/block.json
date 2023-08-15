@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/pricing-box",
 	"title": "Pricing Box",
 	"description": "Display the different pricing tiers of your business.",

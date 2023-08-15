@@ -37,6 +37,7 @@ export const settings = {
 		// If this block contains inner columns, uncomment this if you
 		// want to disable the resize handlers of the inner columns.
 		stkColumnResize: false,
+		spacing: true,
 	},
 	example,
 	edit,

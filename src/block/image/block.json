@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/image",
 	"title": "Image",
 	"description": "An image with advanced controls to make a visual statement.",

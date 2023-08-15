@@ -29,6 +29,7 @@ export const settings = {
 		anchor: true,
 		html: false,
 		align: true,
+		spacing: true,
 	},
 	example,
 	deprecated,

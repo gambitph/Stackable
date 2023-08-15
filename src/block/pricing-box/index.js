@@ -32,6 +32,7 @@ export const settings = {
 		align: [ 'center', 'wide', 'full' ],
 		stkAlign: true,
 		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	example,
 	//  styles: blockStyles,

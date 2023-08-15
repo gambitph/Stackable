@@ -19,7 +19,6 @@ import {
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
-	useBlockEl,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
 
@@ -30,15 +29,11 @@ import { __ } from '@wordpress/i18n'
 
 export const Edit = props => {
 	const {
-		sizeSelector = '.stk-container',
-		borderSelector = '.stk-container',
 		hasContentVerticalAlign = false,
 	} = props
 
 	const hasContainer = useBlockAttributesContext( attributes => attributes.hasContainer )
 	const setAttributes = useBlockSetAttributesContext()
-	const blockElSize = useBlockEl( sizeSelector )
-	const blockElBorder = useBlockEl( borderSelector )
 
 	return (
 		<>
@@ -53,7 +48,6 @@ export const Edit = props => {
 				>
 					<SizeControls.Layout
 						attrNameTemplate="container%s"
-						blockEl={ blockElSize }
 						enableMargin={ false }
 						labels={ {
 							labelHeight: __( 'Container Min. Height', i18n ),
@@ -69,7 +63,6 @@ export const Edit = props => {
 					/>
 					<SizeControls.Spacing
 						attrNameTemplate="container%s"
-						blockEl={ blockElSize }
 						enableMargin={ false }
 						paddingPlaceholder="32"
 						visualGuide={ {
@@ -98,7 +91,6 @@ export const Edit = props => {
 					>
 						<BorderControls
 							attrNameTemplate="container%s"
-							blockEl={ blockElBorder }
 						/>
 					</PanelAdvancedSettings>
 				</InspectorStyleControls>

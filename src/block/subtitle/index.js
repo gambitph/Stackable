@@ -23,6 +23,7 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
+		spacing: true,
 	},
 	example,
 	deprecated,
