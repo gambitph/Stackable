@@ -145,22 +145,44 @@ const Edit = props => {
 		}
 	}
 
+	// gets anchor and paddings
 	const getSelectAttributes = () => {
+		const { isFirst } = getTimelinePosition()
+
+		// Get Anchor
+		let anchor = props.attributes.timelineAnchor === '' ? 0.5 : ( props.attributes.timelineAnchor / 100 )
+
+		const iframe = document.querySelector( '[name=editor-canvas]' )
+		const doc = iframe ? ( iframe.contentDocument || iframe.contentWindow.document ) : document
+
+		const block = doc.getElementById( `block-${ clientId }` )
+
+		if ( ! isFirst && block.hasAttribute( 'data-anchor' ) && block.getAttribute( 'data-anchor' ) !== '' ) {
+			anchor = block.getAttribute( 'data-anchor' ) / 100
+		} else if ( ! isFirst && block.hasAttribute( 'data-anchor' ) ) {
+			anchor = 0.5
+		}
+
+		// Get Paddings
+		let topPadding = props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 16
+		let bottomPadding = props.attributes.blockPadding && props.attributes.blockPadding.bottom !== '' ? props.attributes.blockPadding.bottom : 16
+		let backgroundPadding = props.attributes.hasBackground && props.attributes.blockPadding?.top === '' && props.attributes.blockPadding?.bottom === '' ? 8 : 0
+
+		if ( deviceType === 'Tablet' ) {
+			topPadding = props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.top !== '' ? props.attributes.blockPaddingTablet.top : 16
+			bottomPadding = props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.bottom !== '' ? props.attributes.blockPaddingTablet.bottom : 16
+			backgroundPadding = props.attributes.hasBackground && props.attributes.blockPaddingTablet?.top === '' && props.attributes.blockPaddingTablet?.bottom === '' ? 8 : 0
+		} else if ( deviceType === 'Mobile' ) {
+			topPadding = props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.top !== '' ? props.attributes.blockPaddingMobile.top : 0
+			bottomPadding = props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.bottom !== '' ? props.attributes.blockPaddingMobile.bottom : 0
+			backgroundPadding = props.attributes.hasBackground && props.attributes.blockPaddingMobile?.top === '' && props.attributes.blockPaddingMobile?.bottom === '' ? 8 : 0
+		}
+
 		return {
-			timelineAnchor:
-				props.attributes.timelineAnchor === '' ? 0.5 : ( props.attributes.timelineAnchor / 100 ),
-			topPadding:
-				props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 16,
-			bottomPadding:
-				props.attributes.blockPadding && props.attributes.blockPadding.bottom !== '' ? props.attributes.blockPadding.bottom : 16,
-			topPaddingTablet:
-				props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.top !== '' ? props.attributes.blockPaddingTablet.top : 16,
-			bottomPaddingTablet:
-				props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.bottom !== '' ? props.attributes.blockPaddingTablet.bottom : 16,
-			topPaddingMobileZero:
-				props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.top !== '' ? props.attributes.blockPaddingMobile.top : 0,
-			backgroundPadding:
-				props.attributes.hasBackground && props.attributes.blockPadding?.top === '' && props.attributes.blockPadding?.bottom === '' ? 8 : 0,
+			timelineAnchor: anchor,
+			topPadding,
+			bottomPadding,
+			backgroundPadding,
 		}
 	}
 
@@ -201,8 +223,6 @@ const Edit = props => {
 
 		const {
 			topPadding, bottomPadding,
-			topPaddingTablet, bottomPaddingTablet,
-			topPaddingMobileZero,
 		} = getSelectAttributes()
 
 		let lineMaxHeight = '100%'
@@ -210,16 +230,13 @@ const Edit = props => {
 		if ( isFirst && isLast ) {
 			lineMaxHeight = '0'
 		} else if ( deviceType === 'Mobile' && isFirst ) {
-			lineMaxHeight = `calc(100% - ${ topPaddingMobileZero }px - 16px)`
-			top = `${ topPaddingMobileZero + 16 }px`
+			lineMaxHeight = `calc(100% - ${ topPadding }px - 16px)`
+			const dotSize = props.attributes.timelineDotSize || 11
+			top = `${ topPadding + 16 + ( dotSize / 2 ) }px`
 		} else if ( deviceType === 'Mobile' && isLast ) {
-			lineMaxHeight = `${ topPaddingMobileZero + 16 }px`
+			lineMaxHeight = `${ topPadding + 16 }px`
 		} else if ( deviceType === 'Mobile' ) {
 			lineMaxHeight = '100%'
-		} else if ( deviceType === 'Tablet' && isFirst ) {
-			lineMaxHeight = `calc(50% + ${ bottomPaddingTablet / 2 }px - ${ topPaddingTablet / 2 }px)`
-		} else if ( deviceType === 'Tablet' && isLast ) {
-			lineMaxHeight = `calc(50% + ${ topPaddingTablet / 2 }px - ${ bottomPaddingTablet / 2 }px)`
 		} else if ( isFirst ) {
 			lineMaxHeight = `calc(50% + ${ bottomPadding / 2 }px - ${ topPadding / 2 }px)`
 		} else if ( isLast ) {
@@ -239,23 +256,23 @@ const Edit = props => {
 		props.attributes.blockPaddingTablet,
 		props.attributes.blockPaddingMobile ] )
 
-	// update accent fill when anchor position or padding changes
+	// update accent fill
 	useEffect( () => {
-		handleScroll()
 		const iframe = document.querySelector( '[name=editor-canvas]' )
-		let iframeDocument
+		let doc = document.querySelector( '.interface-interface-skeleton__content' )
 		if ( iframe ) {
-			iframeDocument = iframe.contentDocument || iframe.contentWindow.document
-			iframeDocument.addEventListener( 'scroll', handleScroll )
-		} else {
-			document.querySelector( '.interface-interface-skeleton__content' )?.addEventListener( 'scroll', handleScroll )
+			doc = iframe.contentDocument || iframe.contentWindow.document
 		}
+		doc?.addEventListener( 'scroll', handleScroll )
+
+		// clears fill
+		const fills = doc.querySelectorAll( '.stk-block-timeline__vertical-line__fill, .stk-block-timeline__middle__branch__fill, .stk-block-timeline__middle__fill' )
+		fills.forEach( fill => {
+			fill.style.height = 0
+		} )
+		setFillHeight( { verticalLine: 0, middle: 0 } )
 		return () => {
-			if ( iframe ) {
-				iframeDocument.removeEventListener( 'scroll', handleScroll )
-			} else {
-				document.querySelector( '.interface-interface-skeleton__content' )?.removeEventListener( 'scroll', handleScroll )
-			}
+			doc.removeEventListener( 'scroll', handleScroll )
 		}
 	}, [
 		nextBlock,
