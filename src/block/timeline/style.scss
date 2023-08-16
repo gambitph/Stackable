@@ -82,7 +82,7 @@
 }
 .stk-block-timeline + .stk-block-timeline > .stk-inner-blocks::after,
 .widget_block:has(.stk-block-timeline) + .widget_block .stk-block-timeline > .stk-inner-blocks::after {
-	top: 0;
+	top: 0 !important;
 }
 
 .stk-block-timeline:not(.stk-is-last) > .stk-inner-blocks::after {
@@ -130,9 +130,9 @@
 		margin-left: -16px;
 	}
 	.stk-block-timeline .stk-block-timeline__middle {
-		grid-column: 1 / 2;
-		grid-row: 1 / 2;
-		align-self: center;
+		position: absolute;
+		inset-inline-start: 16px;
+		inset-block-start: 8px;
 	}
 	.stk-block-timeline .stk-block-timeline__content {
 		grid-column: 2 / 3;
