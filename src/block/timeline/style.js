@@ -103,6 +103,75 @@ const Styles = props => {
 				attrName="timelineBackgroundColor"
 				key="timelineBackgroundColor"
 			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-inner-blocks:after"
+				styleRule="top"
+				attrName="blockPadding"
+				key="blockPadding"
+				responsive="all"
+				valuePreCallback={ ( value, getAttribute, device ) => {
+					const getInherited = true
+					const padding = getAttribute( 'blockPadding', device, 'normal', getInherited )
+					const top = padding && padding?.top !== '' ? padding?.top : ( device === 'mobile' ? 0 : 16 )
+					if ( device === 'mobile' ) {
+						return `${ top + 16 }px`
+					}
+
+					if ( padding?.top === padding?.bottom ) {
+						return ''
+					}
+
+					const bottom = padding && padding?.bottom !== '' ? padding?.bottom : 16
+					return `calc(${ top }px + (100% - ${ top }px - ${ bottom }px)/2)`
+				} }
+				unitCallback={ () => '' }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-inner-blocks:after"
+				styleRule="bottom"
+				attrName="blockPadding"
+				key="blockPadding"
+				enabledCallback={ getAttribute => getAttribute( 'timelineIsLast' ) === true }
+				responsive="all"
+				valuePreCallback={ ( value, getAttribute, device ) => {
+					const getInherited = true
+					const padding = getAttribute( 'blockPadding', device, 'normal', getInherited )
+					const top = padding && padding?.top !== '' ? padding?.top : ( device === 'mobile' ? 0 : 16 )
+					const bottom = padding && padding?.bottom !== '' ? padding?.bottom : ( device === 'mobile' ? 0 : 16 )
+					if ( device === 'mobile' ) {
+						return `calc(${ bottom }px + (100% - ${ top + bottom }px) - 16px)`
+					}
+
+					if ( top === bottom ) {
+						return ``
+					}
+
+					return `calc(${ bottom }px + (100% - ${ top }px - ${ bottom }px)/2)`
+				} }
+				unitCallback={ () => '' }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-block-timeline__middle"
+				styleRule="marginTop"
+				attrName="blockPadding"
+				key="blockPadding"
+				responsive="all"
+				valuePreCallback={ ( value, getAttribute, device ) => {
+					const getInherited = true
+					const padding = getAttribute( 'blockPadding', device, 'normal', getInherited )
+					if ( device === 'mobile' ) {
+						return `${ padding?.top }px` || ''
+					}
+					return ''
+				} }
+				unitCallback={ () => '' }
+			/>
 		</>
 	)
 }
