@@ -28,6 +28,9 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+	const {
+		dependencies = [],
+	} = props
 
 	return (
 		<>
@@ -94,7 +97,7 @@ const Styles = props => {
 				attrName="timelineAccentColor2"
 				key="timelineAccentColor2"
 				enabledCallback={ getAttribute => getAttribute( 'timelineAccentColorType' ) === 'gradient' }
-				dependencies={ [ 'timelineAccentColorType' ] }
+				dependencies={ [ 'timelineAccentColorType', ...dependencies ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -127,6 +130,7 @@ const Styles = props => {
 					return `calc(${ top }px + (100% - ${ top }px - ${ bottom }px)/2)`
 				} }
 				unitCallback={ () => '' }
+				dependencies={ [ 'blockPadding', ...dependencies ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -153,6 +157,7 @@ const Styles = props => {
 					return `calc(${ bottom }px + (100% - ${ top }px - ${ bottom }px)/2)`
 				} }
 				unitCallback={ () => '' }
+				dependencies={ [ 'timelineIsLast', 'blockPadding', ...dependencies ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -171,6 +176,7 @@ const Styles = props => {
 					return ''
 				} }
 				unitCallback={ () => '' }
+				dependencies={ [ 'blockPadding', ...dependencies ] }
 			/>
 		</>
 	)
