@@ -28,7 +28,9 @@
 		min-width: unset;
 		padding-left: 4px;
 		padding-right: 4px;
-		width: 35px !important;
+		width: 30px;
+		max-width: 30px;
+		flex: 0 0 auto;
 		height: 30px;
 		margin-left: 4px;
 

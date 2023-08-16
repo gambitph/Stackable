@@ -27,6 +27,7 @@ export const settings = {
 	supports: {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
+		spacing: true,
 	},
 }
 

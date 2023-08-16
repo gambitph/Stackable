@@ -24,6 +24,7 @@ export const settings = {
 		anchor: true,
 		align: true,
 		stkAlign: true,
+		spacing: true,
 	},
 	example,
 	deprecated,

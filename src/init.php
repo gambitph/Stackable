@@ -40,8 +40,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Checks if a Stackable block is rendered in the frontend, then loads our scripts.
-			add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
-			add_action( 'template_redirect', array( $this, 'load_frontend_scripts_conditionally_head' ) );
+			if ( ! is_admin() ) {
+				add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
+				add_action( 'template_redirect', array( $this, 'load_frontend_scripts_conditionally_head' ) );
+			}
 
 			// Load our editor scripts.
 			add_action( 'admin_init', array( $this, 'register_block_editor_assets' ) );
@@ -149,7 +151,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 */
 		public function load_frontend_scripts_conditionally_head() {
 			// Only do this in the frontend.
-			if ( $this->is_main_script_loaded || is_admin() ) {
+			if ( $this->is_main_script_loaded ) {
 				return;
 			}
 
@@ -188,8 +190,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @return string output block
 		 */
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
-			if ( is_admin() ) {
-				return;
+			if ( $block_content === null ) {
+				$block_content = "";
 			}
 
 			// Load our main frontend scripts if there's a Stackable block loaded in the

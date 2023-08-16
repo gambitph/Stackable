@@ -24,6 +24,7 @@ export const settings = {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 		stkSaveBlockStyle: false,
+		spacing: true,
 	},
 	example,
 	deprecated,

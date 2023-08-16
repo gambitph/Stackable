@@ -138,7 +138,7 @@ const StackableRangeControl = memo( props => {
 	const deviceType = useDeviceType()
 	useLayoutEffect( () => {
 		const timeout = setTimeout( () => {
-			setPlaceholderValue( ( placeholderRender && ! value )
+			setPlaceholderValue( ( typeof placeholderRender === 'function' && ! value )
 				? placeholderRender( value )
 				: ( props.placeholder !== null ? props.placeholder : initialPosition ) )
 		}, 400 )

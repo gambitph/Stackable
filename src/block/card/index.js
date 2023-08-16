@@ -30,6 +30,7 @@ export const settings = {
 	supports: {
 		anchor: true,
 		align: true,
+		spacing: true,
 	},
 	example,
 	deprecated,

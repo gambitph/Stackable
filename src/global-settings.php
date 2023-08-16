@@ -702,6 +702,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public function typography_detect_native_blocks( $block_content, $block ) {
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 
+			if ( $block_content === null ) {
+				return $block_content;
+			}
+
 			// Only do this when we need to style native blocks.
 			if ( ! in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
 				return $block_content;
