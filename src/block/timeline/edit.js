@@ -114,18 +114,21 @@ const Edit = props => {
 	const [ fillHeight, setFillHeight ] = useState( { verticalLine: 0, middle: 0 } )
 	const [ verticalLineMaxHeight, setVerticalLineMaxHeight ] = useState( 0 )
 	const [ verticalLineTopPosition, setVerticalLineTopPosition ] = useState( 0 )
+	const [ timelinePosition, setTimelinePosition ] = useState( { isFirst: false, isLast: false } )
+	const [ numTimelineBlocksAfter, setNumTimelineBlocksAfter ] = useState( 0 )
 	const [ backgroundPosition, setBackgroundPosition ] = useState( { verticalLine: 0, middle: 0 } )
 
-	let numTimelineBlocksAfter = 0
-	const isFirstTimelineBlock = ! previousBlock || previousBlock.name !== 'stackable/timeline'
-	if ( isFirstTimelineBlock ) {
-		// How many timeline blocks are after this block
-		for ( let i = blockIndex + 1; i < adjacentBlocks.length; i++ ) {
+	useEffect( () => {
+		let blocksAfter = 0
+		for ( let i = blockIndex + 1; i < adjacentBlocks?.length; i++ ) {
 			if ( adjacentBlocks[ i ].name === 'stackable/timeline' ) {
-				numTimelineBlocksAfter++
+				blocksAfter++
+			} else {
+				break
 			}
 		}
-	}
+		setNumTimelineBlocksAfter( blocksAfter )
+	}, [ adjacentBlocks ] )
 
 	const dateClassNames = classnames( [
 		typographyClass,
@@ -150,29 +153,39 @@ const Edit = props => {
 		'stk-block-content',
 	], getContentAlignmentClasses( props.attributes ) )
 
-	// check if timeline block is single, is first block, or is last block
-	const getTimelinePosition = () => {
-		return {
-			isFirst: ! previousBlock || previousBlock.name !== 'stackable/timeline',
-			isLast: ! nextBlock || nextBlock.name !== 'stackable/timeline',
-		}
-	}
-
-	// gets anchor and paddings
+	// Get Paddings
 	const getSelectAttributes = () => {
-		// Get Paddings
-		let topPadding = props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : 16
-		let bottomPadding = props.attributes.blockPadding && props.attributes.blockPadding.bottom !== '' ? props.attributes.blockPadding.bottom : 16
-		let backgroundPadding = props.attributes.hasBackground && props.attributes.blockPadding?.top === '' && props.attributes.blockPadding?.bottom === '' ? 8 : 0
+		let backgroundPadding, bottomPadding, topPadding
+		const defaultValue = deviceType === 'Mobile' ? 0 : 16
+
+		// Desktop paddings
+		const topPaddingDesktop = props.attributes.blockPadding && props.attributes.blockPadding.top !== '' ? props.attributes.blockPadding.top : defaultValue
+		const bottomPaddingDesktop = props.attributes.blockPadding && props.attributes.blockPadding.bottom !== '' ? props.attributes.blockPadding.bottom : defaultValue
+		const backgroundPaddingDesktop = props.attributes.hasBackground && props.attributes.blockPadding?.top === '' && props.attributes.blockPadding?.bottom === '' ? 8 : 0
+
+		// Tablet paddings
+		const topPaddingTablet = props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.top !== ''
+			? props.attributes.blockPaddingTablet.top : topPaddingDesktop
+		const bottomPaddingTablet = props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.bottom !== ''
+			? props.attributes.blockPaddingTablet.bottom : bottomPaddingDesktop
+		const backgroundPaddingTablet = props.attributes.hasBackground && props.attributes.blockPaddingTablet?.top === '' &&
+			props.attributes.blockPaddingTablet?.bottom === '' ? 8 : backgroundPaddingDesktop
 
 		if ( deviceType === 'Tablet' ) {
-			topPadding = props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.top !== '' ? props.attributes.blockPaddingTablet.top : 16
-			bottomPadding = props.attributes.blockPaddingTablet && props.attributes.blockPaddingTablet.bottom !== '' ? props.attributes.blockPaddingTablet.bottom : 16
-			backgroundPadding = props.attributes.hasBackground && props.attributes.blockPaddingTablet?.top === '' && props.attributes.blockPaddingTablet?.bottom === '' ? 8 : 0
+			topPadding = topPaddingTablet
+			bottomPadding = bottomPaddingTablet
+			backgroundPadding = backgroundPaddingTablet
 		} else if ( deviceType === 'Mobile' ) {
-			topPadding = props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.top !== '' ? props.attributes.blockPaddingMobile.top : 0
-			bottomPadding = props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.bottom !== '' ? props.attributes.blockPaddingMobile.bottom : 0
-			backgroundPadding = props.attributes.hasBackground && props.attributes.blockPaddingMobile?.top === '' && props.attributes.blockPaddingMobile?.bottom === '' ? 8 : 0
+			topPadding = props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.top !== ''
+				? props.attributes.blockPaddingMobile.top : topPaddingTablet
+			bottomPadding = props.attributes.blockPaddingMobile && props.attributes.blockPaddingMobile.bottom !== ''
+				? props.attributes.blockPaddingMobile.bottom : bottomPaddingTablet
+			backgroundPadding = props.attributes.hasBackground && props.attributes.blockPaddingMobile?.top === '' &&
+				props.attributes.blockPaddingMobile?.bottom === '' ? 8 : backgroundPaddingTablet
+		} else {
+			topPadding = topPaddingDesktop
+			bottomPadding = bottomPaddingDesktop
+			backgroundPadding = backgroundPaddingDesktop
 		}
 
 		return {
@@ -188,6 +201,9 @@ const Edit = props => {
 		} = getSelectAttributes()
 
 		const { height: blockRectHeight, top: blockRectTop } = blockRef.current.getBoundingClientRect()
+		const middleRectTop = middleRef.current.getBoundingClientRect().top
+		const bgPositionValue = blockRectTop - topPadding - backgroundPadding
+
 		const blockHeight = blockRectHeight + topPadding + bottomPadding + ( backgroundPadding * 2 )
 		const fillPercent = `( ( ${ ( document?.body?.clientHeight || 10000 ) }px * var(--stk-timeline-anchor, 0.5) ) + ${ -blockRectTop + topPadding + backgroundPadding }px ) / ${ blockHeight } * 100`
 
@@ -197,8 +213,9 @@ const Edit = props => {
 		const fillPx = `${ fillPercent } * ${ fillPxPercent }`
 
 		let fill = { verticalLine: `calc(${ fillPx })`, middle: `calc(${ fillPx })` }
+		let bgPosition = { verticalLine: bgPositionValue, middle: bgPositionValue }
 
-		const dot = ( middleRef.current.getBoundingClientRect().top - blockRectTop ) + topPadding + backgroundPadding
+		const dot = ( middleRectTop - blockRectTop ) + topPadding + backgroundPadding
 		const branch = ( branchRef.current.getBoundingClientRect().top - blockRectTop ) + topPadding + backgroundPadding
 
 		// corrects the position of the fill for the first timeline block since the line starts at the middle
@@ -207,74 +224,48 @@ const Edit = props => {
 				verticalLine: `calc(${ fillPx } - ${ dot }px)`,
 				middle: `calc(${ fillPx })`,
 			}
+			bgPosition = {
+				verticalLine: middleRectTop,
+				middle: bgPositionValue,
+			}
 		}
 		setMiddleTopPosition( { dot, branch } )
 		setFillHeight( fill )
+		setBackgroundPosition( bgPosition )
 	}
 
 	const updateMaxHeight = () => {
-		const {
-			isFirst, isLast,
-		} = getTimelinePosition()
-
 		const {
 			topPadding, bottomPadding,
 		} = getSelectAttributes()
 
 		let lineMaxHeight = '100%'
 		let top = ''
-		if ( isFirst && isLast ) {
+		if ( timelinePosition.isFirst && timelinePosition.isLast ) {
 			lineMaxHeight = '0'
-		} else if ( deviceType === 'Mobile' && isFirst ) {
+		} else if ( deviceType === 'Mobile' && timelinePosition.isFirst ) {
 			lineMaxHeight = `calc(100% - ${ topPadding }px - 16px)`
 			const dotSize = props.attributes.timelineDotSize || 11
 			top = `${ topPadding + 16 + ( dotSize / 2 ) }px`
-		} else if ( deviceType === 'Mobile' && isLast ) {
+		} else if ( deviceType === 'Mobile' && timelinePosition.isLast ) {
 			lineMaxHeight = `${ topPadding + 16 }px`
 		} else if ( deviceType === 'Mobile' ) {
 			lineMaxHeight = '100%'
-		} else if ( isFirst ) {
+		} else if ( timelinePosition.isFirst ) {
 			lineMaxHeight = `calc(50% + ${ bottomPadding / 2 }px - ${ topPadding / 2 }px)`
-		} else if ( isLast ) {
+		} else if ( timelinePosition.isLast ) {
 			lineMaxHeight = `calc(50% + ${ topPadding / 2 }px - ${ bottomPadding / 2 }px)`
 		}
 
 		setVerticalLineMaxHeight( lineMaxHeight )
 		setVerticalLineTopPosition( top )
-		handleScroll()
-	}
-
-	const updateBackgroundPosition = () => {
-		const { isFirst } = getTimelinePosition()
-		const {
-			topPadding, bottomPadding, backgroundPadding,
-		} = getSelectAttributes()
-
-		// TODO: Remove me and use CSS instead
-		const iframe = document.querySelector( '[name=editor-canvas]' )
-		const doc = iframe ? ( iframe.contentDocument || iframe.contentWindow.document ) : document
-		let size
-
-		if ( isFirst ) {
-			const middlePosition = ( middleRef.current.getBoundingClientRect().top - blockRef.current.getBoundingClientRect().top ) + topPadding + backgroundPadding
-			setBackgroundPosition( { verticalLine: middlePosition, middle: 0 } )
-			size = ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding + ( backgroundPadding * 2 ) )
-		} else {
-			// console.log ( previousBlock.clientId )
-			const prevTimelineBlock = doc.getElementById( `block-${ previousBlock.clientId }` )
-			const prevBlockSize = prevTimelineBlock.getAttribute( 'data-size' )
-			size = parseFloat( prevBlockSize ) + ( blockRef.current.getBoundingClientRect().height + topPadding + bottomPadding + ( backgroundPadding * 2 ) )
-			setBackgroundPosition( { verticalLine: prevBlockSize, middle: prevBlockSize } )
-		}
-
-		const timelineBlock = doc.getElementById( `block-${ clientId }` )
-		timelineBlock.setAttribute( 'data-size', size )
 	}
 
 	// update max height when device type & padding changes
 	useEffect( () => {
 		updateMaxHeight()
 	}, [ deviceType,
+		timelinePosition,
 		props.attributes.timelineDotSize,
 		props.attributes.blockPadding,
 		props.attributes.blockPaddingTablet,
@@ -288,6 +279,8 @@ const Edit = props => {
 			doc = iframe.contentDocument || iframe.contentWindow.document
 		}
 		doc?.addEventListener( 'scroll', handleScroll )
+		const scrollEvent = new Event( 'scroll', { bubbles: true } )
+		doc?.dispatchEvent( scrollEvent )
 		return () => {
 			doc.removeEventListener( 'scroll', handleScroll )
 		}
@@ -295,15 +288,13 @@ const Edit = props => {
 		deviceType,
 		nextBlock,
 		previousBlock,
-		props.attributes,
+		props.attributes.timelineAnchor,
+		props.attributes.timelineDotSize,
+		props.attributes.blockPadding,
+		props.attributes.blockPaddingTablet,
+		props.attributes.blockPaddingMobile,
+		props.attributes.hasBackground,
 	] )
-
-	// TODO: Remove me
-	// update background position for gradient fills
-	useEffect( () => {
-		const timeout = setInterval( updateBackgroundPosition, 100 )
-		return () => clearInterval( timeout )
-	}, [ props.attributes ] )
 
 	// update blocks if position changes
 	useEffect( () => {
@@ -315,9 +306,17 @@ const Edit = props => {
 			dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 			setAttributes( { timelineIsLast: true } )
 		}
-
 		updateMaxHeight()
 	}, [ nextBlock ] )
+
+	useEffect( () => {
+		setTimelinePosition(
+			{
+				isFirst: ! previousBlock || previousBlock.name !== 'stackable/timeline',
+				isLast: ! nextBlock || nextBlock.name !== 'stackable/timeline',
+			}
+		)
+	}, [ nextBlock, previousBlock ] )
 
 	return (
 		<>
@@ -479,7 +478,6 @@ const Edit = props => {
 									height: `max(${ fillHeight.middle }, 0px)`,
 									top: `-${ middleTopPosition.dot }px`,
 									maxHeight: `calc(100% + ${ middleTopPosition.dot }px)`,
-									backgroundPositionY: `-${ backgroundPosition.middle }px`,
 								} }
 							/>
 						</div>
@@ -493,8 +491,7 @@ const Edit = props => {
 									height: `max(${ fillHeight.middle }, 0px)`,
 									top: `-${ middleTopPosition.branch }px`,
 									maxHeight: `calc(100% + ${ middleTopPosition.branch }px)`,
-									backgroundPositionY: `-${ backgroundPosition.middle }px`,
-								 } }
+								} }
 							>
 							</div>
 						</div>
@@ -518,11 +515,11 @@ const Edit = props => {
 							className="stk-block-timeline__vertical-line__fill"
 							style={ {
 								height: `max(${ fillHeight.verticalLine }, 0px)`,
-								backgroundPositionY: `-${ backgroundPosition.verticalLine }`,
 							} }
 						/>
 					</div>
-					{ isFirstTimelineBlock && (
+
+					{ timelinePosition.isFirst && (
 						<style>
 							{ range( numTimelineBlocksAfter + 1 ).map( i => {
 								const adjacentSelector = range( i ).map( () => '+ [data-type="stackable/timeline"]' ).join( ' ' )
@@ -532,6 +529,16 @@ const Edit = props => {
 							} ) }
 						</style>
 					)
+					}
+					{
+						<style>
+							{
+								`[data-block="${ clientId }"] {
+									--stk-timeline-vertical-line-bg-position: ${ backgroundPosition.verticalLine < 0 ? backgroundPosition.verticalLine * -1 : -backgroundPosition.verticalLine }px;
+									--stk-timeline-middle-bg-position: ${ backgroundPosition.middle < 0 ? backgroundPosition.middle * -1 : -backgroundPosition.middle }px;
+								}`
+							}
+						</style>
 					}
 				</div>
 				{ /* </Separator> */ }

@@ -74,22 +74,25 @@
 .stk-block-timeline__middle__fill {
 	position: absolute;
 	width: var(--line-dot-size, 16px);
-	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, hsl(0, 0%, 0%)) var(--line-accent-bg-location, 50%));
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, hsl(0, 0%, 0%)) 100%) no-repeat;
 	background-size: 100% 100vh;
+	background-position-y: var(--stk-timeline-middle-bg-position, 0);
 }
 .stk-block-timeline__middle__branch__fill {
 	position: absolute;
 	top: calc(50% - var(--line-bg-width, 3px) / 2);
 	width: var(--content-line, 0);
-	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) 100%) no-repeat;
 	background-size: 100% 100vh;
+	background-position-y: var(--stk-timeline-middle-bg-position, 0);
 }
 .stk-block-timeline__vertical-line__fill {
 	position: absolute;
 	width: var(--line-bg-width, 3px);
 	max-height: 100%;
-	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
+	background: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) 100%) no-repeat;
 	background-size: 100% 100vh;
+	background-position-y: var(--stk-timeline-vertical-line-bg-position, 0);
 }
 
 // for first timeline block
