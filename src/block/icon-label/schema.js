@@ -34,6 +34,7 @@ export const attributes = ( version = VERSION ) => {
 		attributes: {
 			iconGap: {
 				type: 'number',
+				stkResponsive: true,
 				default: '',
 			},
 		},
