@@ -70,9 +70,6 @@ const TEMPLATE = [
 	}, [
 		[ 'stackable/text', {
 			text: _x( 'Description for this block. Use this space for describing your block. Any text will do.', 'Content placeholder', i18n ),
-			blockMargin: {
-				bottom: 0,
-			},
 		} ],
 	] ],
 ]
