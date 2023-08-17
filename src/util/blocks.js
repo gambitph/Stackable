@@ -4,7 +4,6 @@
 import { loadGoogleFontInAttributes } from './font'
 import { moveArrayIndex } from '.'
 import { SVGStackableCategoryIcon } from '~stackable/icons'
-import { semverCompare } from '~stackable/util'
 
 /**
  * External dependencies
@@ -14,9 +13,7 @@ import {
 	orderBy,
 	last,
 } from 'lodash'
-import {
-	blockCategoryIndex, i18n, wpVersion,
-} from 'stackable'
+import { blockCategoryIndex, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -479,10 +476,6 @@ export const addStackableBlockCategory = () => {
  * @param {Object} _settings The block properties to register
  */
 export const registerBlockType = ( name, _settings ) => {
-	if ( wpVersion && semverCompare( wpVersion, '<', '6.3' ) && _settings?.supports?.spacing ) {
-		delete _settings.supports.spacing
-	}
-
 	let settings = applyFilters( `stackable.block.metadata`, _settings || {} )
 
 	// If there is no variation title, then some labels in the editor will show
