@@ -50,16 +50,14 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 		public function enqueue_block_editor_assets() {
 			// Load our Free Font Awesome Icons.
 			if ( apply_filters( 'stackable_load_font_awesome_kit', true ) ) {
-				add_filter( 'admin_footer', function() {
-					wp_enqueue_script(
-						'ugb-font-awesome-kit',
-						// 'https://kit.fontawesome.com/9664e939d9.js', // This is our free kit.
-						'https://use.fontawesome.com/releases/v5.15.4/js/all.js',
-						null,
-						null,
-						true
-					);
-				} );
+				wp_enqueue_script(
+					'ugb-font-awesome-kit',
+					// 'https://kit.fontawesome.com/9664e939d9.js', // This is our free kit.
+					'https://use.fontawesome.com/releases/v5.15.4/js/all.js',
+					null,
+					null,
+					true
+				);
 			}
 		}
 
