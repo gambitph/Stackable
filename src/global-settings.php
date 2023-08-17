@@ -705,11 +705,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return string Rendered block
 		 */
 		public function typography_detect_native_blocks( $block_content, $block ) {
+			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+
 			if ( $block_content === null ) {
 				return $block_content;
 			}
-
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 
 			// Only do this if we have some global typography settings to apply.
 			if ( empty( $this->generated_typography_css ) ) {
