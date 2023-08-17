@@ -302,7 +302,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			wp_register_style(
 				'ugb-block-editor-css',
 				plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ),
-				apply_filters( 'stackable_editor_css_dependencies', array( 'wp-edit-blocks' ) ),
+				apply_filters( 'stackable_editor_css_dependencies', array(
+					'wp-edit-blocks',
+					'ugb-style-css' // Ensure frontend styles load first because the editor styles will override them.
+				) ),
 				STACKABLE_VERSION
 			);
 
