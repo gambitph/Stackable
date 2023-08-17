@@ -54,7 +54,7 @@ import SVGUngroupContainerIcon from './images/ungroup-container-icon.svg'
 /**
  * WordPress dependencies
  */
-import { cloneElement, render } from '@wordpress/element'
+import { cloneElement, createRoot } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 
 export function colorizeIcon( SvgIcon ) {
@@ -74,7 +74,7 @@ domReady( () => {
 	stackableGradient.setAttribute( 'style', 'height: 0; width: 0; overflow: hidden;' )
 	stackableGradient.setAttribute( 'aria-hidden', 'true' )
 	document.querySelector( 'body' ).appendChild( stackableGradient )
-	render(
+	createRoot( stackableGradient ).render(
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			className="ugb-stackable-gradient"
@@ -88,8 +88,7 @@ domReady( () => {
 					<stop offset="100%" stopColor="#f34957" stopOpacity="1" />
 				</linearGradient>
 			</defs>
-		</svg>,
-		stackableGradient
+		</svg>
 	)
 } )
 

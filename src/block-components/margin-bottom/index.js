@@ -15,6 +15,7 @@ import {
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
+import { select } from '@wordpress/data'
 
 export const MarginBottom = memo( props => {
 	const { clientId } = useBlockEditContext()
@@ -44,12 +45,14 @@ export const MarginBottom = memo( props => {
 	}
 
 	// Don't show the margin bottom draggable indicator if this is in a row block.
-	const isRowBlock = parentBlock &&
-		parentBlock.name === 'core/group' &&
-		parentBlock.attributes.layout?.type === 'flex' &&
-		parentBlock.attributes.layout?.flexWrap === 'nowrap'
+	const isGroupBlock = parentBlock && parentBlock.name === 'core/group'
+	let isRowLayout = false
+	if ( isGroupBlock ) {
+		const attributes = select( 'core/block-editor' ).getBlockAttributes( parentBlock.clientId )
+		isRowLayout = attributes.layout?.type === 'flex' && attributes.layout?.flexWrap === 'nowrap'
+	}
 
-	if ( isRowBlock ) {
+	if ( isGroupBlock && isRowLayout ) {
 		return null
 	}
 

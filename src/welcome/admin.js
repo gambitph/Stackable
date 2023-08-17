@@ -12,7 +12,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	render, useEffect, useState, Fragment, useCallback,
+	createRoot, useEffect, useState, Fragment, useCallback,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
@@ -589,54 +589,61 @@ AdditionalOptions.defaultProps = {
 domReady( () => {
 	// This is for the getting started block list.
 	if ( document.querySelector( '.s-getting-started__block-list' ) ) {
-		render(
-			<BlockList />,
+		createRoot(
 			document.querySelector( '.s-getting-started__block-list' )
+		).render(
+			<BlockList />
 		)
 	}
 
 	// All these below are for the settings page.
 	if ( document.querySelector( '.s-settings-wrapper' ) ) {
-		render(
-			<BlockToggler />,
+		createRoot(
 			document.querySelector( '.s-settings-wrapper' )
+		).render(
+			<BlockToggler />
 		)
 	}
 
 	if ( document.querySelector( '.s-other-options-wrapper' ) ) {
-		render(
+		createRoot(
+			document.querySelector( '.s-other-options-wrapper' )
+		).render(
 			<AdditionalOptions
 				showProNoticesOption={ showProNoticesOption }
-			/>,
-			document.querySelector( '.s-other-options-wrapper' )
+			/>
 		)
 	}
 
 	if ( document.querySelector( '.s-editor-settings' ) ) {
-		render(
-			<EditorSettings />,
+		createRoot(
 			document.querySelector( '.s-editor-settings' )
+		).render(
+			<EditorSettings />
 		)
 	}
 
 	if ( document.querySelector( '.s-dynamic-breakpoints' ) ) {
-		render(
-			<DynamicBreakpointsSettings />,
+		createRoot(
 			document.querySelector( '.s-dynamic-breakpoints' )
+		).render(
+			<DynamicBreakpointsSettings />
 		)
 	}
 
 	if ( document.querySelector( '.s-global-settings' ) ) {
-		render(
-			<GlobalSettings />,
+		createRoot(
 			document.querySelector( '.s-global-settings' )
+		).render(
+			<GlobalSettings />
 		)
 	}
 
 	if ( document.querySelector( '.s-getting-started__body' ) ) {
-		render(
-			<GettingStarted />,
+		createRoot(
 			document.querySelector( '.s-getting-started__body' )
+		).render(
+			<GettingStarted />
 		)
 	}
 } )
