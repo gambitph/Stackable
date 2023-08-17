@@ -15,10 +15,9 @@
 		z-index: 2;
 	}
 
-	// Prevents blocks with links from being contained within the content
-	> *
-	:not(.stk-block-column__content, .stk-block-team-member__content, .stk-block-card .stk-container, .stk-block-testimonial__content,
-	.stk-block-pricing-box__content, .stk-block-call-to-action__content) {
+	// Prevents blocks with links from being contained within the content.
+	// Mostly applies to blocks with containers.
+	> *:not(.stk-container) {
 		position: relative;
 		z-index: 3;
 	}
