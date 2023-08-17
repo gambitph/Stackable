@@ -40,9 +40,9 @@ const generalProps = [
 
 const essentialsProps = [
 	{
-		title: __( 'How to Customize Stackable Blocks', i18n ),
+		title: __( 'The Basics of Stackable Blocks', i18n ),
 		subtitle: __( 'Learn how to personalize and tailor Stackable Blocks to match your website\'s unique style and design.', i18n ),
-		src: 'https://www.youtube.com/embed/HkOPBKMgXuM',
+		src: 'https://www.youtube.com/embed/GsQxH_gDp1A',
 		url: '#',
 	},
 	{
@@ -64,9 +64,9 @@ const essentialsProps = [
 		url: '#',
 	},
 	{
-		title: __( 'Introduction to Stackable Wireframes', i18n ),
-		subtitle: __( 'Dive into the fundamentals of Stackable Wireframes and learn how to streamline your website development process with ease.', i18n ),
-		src: 'https://www.youtube.com/embed/HIr4_9j7-Zc',
+		title: __( 'Introduction to the Design Library', i18n ),
+		subtitle: __( 'Dive into the fundamentals of the Stackable Design Library and learn how to streamline your website development process with ease.', i18n ),
+		src: 'https://www.youtube.com/embed/zJBQ7CRgzHI',
 		url: '#',
 	},
 	{

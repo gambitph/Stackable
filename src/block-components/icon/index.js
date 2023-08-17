@@ -169,7 +169,7 @@ export const Icon = props => {
 					__deprecateUseRef={ popoverEl }
 					onClose={ () => setIsOpen( false ) }
 					onChange={ icon => {
-						if ( ! onChange ) {
+						if ( onChange === NOOP ) {
 							updateAttributeHandler( 'icon' )( icon )
 						} else {
 							onChange( icon )

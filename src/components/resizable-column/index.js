@@ -103,9 +103,6 @@ const ResizableColumn = props => {
 		'stk-column-resizeable',
 		props.className,
 	] )
-	const {
-		columnGap, columnGapTablet, columnGapMobile,
-	} = ( parentBlock?.attributes || {} )
 
 	const enable = {
 		top: false,
@@ -124,6 +121,11 @@ const ResizableColumn = props => {
 	const onResizeStart = ( _event, _direction ) => {
 		// toggleSelection( false )
 
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		const {
+			columnGap, columnGapTablet, columnGapMobile,
+		} = ( parentBlock?.attributes || {} )
+
 		// Get the column gap amounts, we need these to calculate percentages when resizing columns.
 		const parentColumnGaps = {
 			desktop: columnGap || 0,
@@ -132,7 +134,6 @@ const ResizableColumn = props => {
 		}
 
 		const editorDom = getEditorDom()
-		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
 		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
 
 		// In desktop, get all the column widths.

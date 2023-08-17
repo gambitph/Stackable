@@ -18,7 +18,7 @@ import classnames from 'classnames'
  */
 import domReady from '@wordpress/dom-ready'
 import {
-	render, useEffect, useState, Fragment, useMemo, useCallback,
+	createRoot, useEffect, useState, Fragment, useMemo, useCallback,
 } from '@wordpress/element'
 import { Button, Spinner } from '@wordpress/components'
 import { __, sprintf } from '@wordpress/i18n'
@@ -370,9 +370,10 @@ const STEPS = [
 
 domReady( () => {
 	if ( document.querySelector( '.s-onboarding-wizard' ) ) {
-		render(
-			<Wizard />,
+		createRoot(
 			document.querySelector( '.s-onboarding-wizard' )
+		).render(
+			<Wizard />
 		)
 	}
 } )
