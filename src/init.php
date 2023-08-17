@@ -46,7 +46,9 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Load our editor scripts.
-			add_action( 'admin_init', array( $this, 'register_block_editor_assets' ) );
+			if ( is_admin() ) {
+				add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_assets' ) );
+			}
 			add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_assets_admin' ) );
 
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
@@ -271,10 +273,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @since 0.1
 		 */
 		public function register_block_editor_assets() {
-			if ( ! is_admin() ) {
-				return;
-			}
-
 			// STK API.
 			wp_register_script(
 				'ugb-stk',
@@ -302,10 +300,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			wp_register_style(
 				'ugb-block-editor-css',
 				plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ),
-				apply_filters( 'stackable_editor_css_dependencies', array(
-					'wp-edit-blocks',
-					'ugb-style-css' // Ensure frontend styles load first because the editor styles will override them.
-				) ),
+				apply_filters( 'stackable_editor_css_dependencies', array( 'wp-edit-blocks' ) ),
 				STACKABLE_VERSION
 			);
 
