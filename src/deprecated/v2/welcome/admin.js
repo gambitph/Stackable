@@ -9,7 +9,7 @@ import './wizard'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	Component, render, useEffect, useState, Fragment,
+	Component, createRoot, useEffect, useState, Fragment,
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
@@ -151,16 +151,14 @@ const OptimizationSettings = () => {
 // Load all the options into the UI.
 domReady( () => {
 	if ( document.querySelector( '.s-settings-wrapper-v2' ) ) {
-		render(
-			<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />,
-			document.querySelector( '.s-settings-wrapper-v2' )
+		createRoot( document.querySelector( '.s-settings-wrapper-v2' ) ).render(
+			<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />
 		)
 	}
 
 	if ( document.querySelector( '.s-optimization-settings' ) ) {
-		render(
-			<OptimizationSettings />,
-			document.querySelector( '.s-optimization-settings' )
+		createRoot( document.querySelector( '.s-optimization-settings' ) ).render(
+			<OptimizationSettings />
 		)
 	}
 } )

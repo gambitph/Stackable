@@ -90,6 +90,20 @@ class StackableAccordion {
 						adjacent = adjacent.previousElementSibling
 					}
 				}
+
+				// If an accordion with large content is closed while opening
+				// another accordion, it scrolls downwards.
+				// This is to instantly scroll to the opening accordion.
+				if ( el.open ) {
+					const isAboveView = el.getBoundingClientRect().top < 0
+					if ( isAboveView ) {
+						el.scrollIntoView( {
+							inline: 'start',
+							block: 'start',
+							behavior: 'instant',
+						} )
+					}
+				}
 			} )
 		} )
 

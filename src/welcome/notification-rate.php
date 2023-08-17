@@ -38,7 +38,7 @@ if ( ! class_exists( 'Stackable_Welcome_Notification_Rate' ) ) {
             $elapsed_time = time() - absint( $activation_time );
 
             if ( $elapsed_time > self::RATING_NOTICE_TIME ) {
-                stackable_add_welcome_notification( 'rate', sprintf( __( 'We\'ve noticed that you\'ve been using Stackable for some time now, we hope you are loving it! We would appreciate it if you can %sgive us a 5 star rating on WordPress.org%s!', STACKABLE_I18N ), '<a href="https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/reviews/?rate=5#new-post" target="_rate">', '</a>' ) );
+                stackable_add_welcome_notification( 'rate', sprintf( __( 'If Stackable has been valuable to you, consider %sgiving us a 5-star rating on WordPress.org%s. It would not only make our day but also help others discover us too.', STACKABLE_I18N ), '<a href="https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/reviews/?rate=5#new-post" target="_rate">', '</a>' ) );
             }
         }
     }
