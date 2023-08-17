@@ -241,8 +241,8 @@ const Edit = props => {
 		if ( timelinePosition.isFirst && timelinePosition.isLast ) {
 			lineMaxHeight = '0'
 		} else if ( deviceType === 'Mobile' && timelinePosition.isFirst ) {
-			lineMaxHeight = `calc(100% - ${ topPadding }px - 16px)`
 			const dotSize = props.attributes.timelineDotSize || 11
+			lineMaxHeight = `calc(100% - ${ topPadding }px - 16px - ${ dotSize / 2 }px)`
 			top = `${ topPadding + 16 + ( dotSize / 2 ) }px`
 		} else if ( deviceType === 'Mobile' && timelinePosition.isLast ) {
 			lineMaxHeight = `${ topPadding + 16 }px`
