@@ -22,7 +22,8 @@
 // Remove the default bottom margin of the timeline block because it's annoying
 // to keep on removing it when you want to stack them. This works in conjunction
 // with the stackable.resizable-bottom-margin.default filter in edit.js.
-.wp-block-stackable-timeline.stk-block.stk-block-timeline {
+.wp-block-stackable-timeline.stk-block.stk-block-timeline,
+.stk-block.stk-block-timeline {
 	margin-bottom: 0;
 }
 .stk-block-timeline > .stk-inner-blocks {

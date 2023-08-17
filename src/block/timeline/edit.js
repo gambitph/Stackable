@@ -199,7 +199,7 @@ const Edit = props => {
 
 		const { height: blockRectHeight, top: blockRectTop } = blockRef.current.getBoundingClientRect()
 		const middleRectTop = middleRef.current.getBoundingClientRect().top
-		const bgPositionValue = blockRectTop - topPadding - backgroundPadding
+		const bgPositionValue = `calc( -${ blockRectTop }px + ${ topPadding }px + ${ backgroundPadding }px  )`
 
 		const blockHeight = blockRectHeight + topPadding + bottomPadding + ( backgroundPadding * 2 )
 		const fillPercent = `( ( ${ ( document?.body?.clientHeight || 10000 ) }px * var(--stk-timeline-anchor, 0.5) ) + ${ -blockRectTop + topPadding + backgroundPadding }px ) / ${ blockHeight } * 100`
@@ -222,7 +222,7 @@ const Edit = props => {
 				middle: `calc(${ fillPx })`,
 			}
 			bgPosition = {
-				verticalLine: middleRectTop,
+				verticalLine: `-${ middleRectTop }px`,
 				middle: bgPositionValue,
 			}
 		}
@@ -522,6 +522,9 @@ const Edit = props => {
 								const adjacentSelector = range( i ).map( () => '+ [data-type="stackable/timeline"]' ).join( ' ' )
 								return `[data-block="${ clientId }"] ${ adjacentSelector } {
 									--stk-timeline-anchor: ${ props.attributes.timelineAnchor === '' ? 0.5 : ( props.attributes.timelineAnchor / 100 ) };
+									}
+									[data-block="${ clientId }"] ${ adjacentSelector } .stk-block-timeline {
+									--line-accent-bg-location: ${ props.attributes.timelineAnchor === '' ? '50%' : `${ props.attributes.timelineAnchor }%` };
 								}`
 							} ) }
 						</style>
@@ -531,8 +534,8 @@ const Edit = props => {
 						<style>
 							{
 								`[data-block="${ clientId }"] {
-									--stk-timeline-vertical-line-bg-position: ${ backgroundPosition.verticalLine < 0 ? backgroundPosition.verticalLine * -1 : -backgroundPosition.verticalLine }px;
-									--stk-timeline-middle-bg-position: ${ backgroundPosition.middle < 0 ? backgroundPosition.middle * -1 : -backgroundPosition.middle }px;
+									--stk-timeline-vertical-line-bg-position: ${ backgroundPosition.verticalLine };
+									--stk-timeline-middle-bg-position: ${ backgroundPosition.middle };
 								}`
 							}
 						</style>
