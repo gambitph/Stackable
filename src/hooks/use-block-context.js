@@ -142,10 +142,9 @@ let prevClientIds = null
 // changes.
 subscribe( () => {
 	const tree = select( 'core/block-editor' ).__unstableGetClientIdsTree()
-
 	if ( ! prevClientIds ) {
 		prevClientIds = tree
-		const blocks = fixReusableInnerBlocks( select( 'core/block-editor' ).getBlocks() )
+		const blocks = fixReusableInnerBlocks( tree )
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
 		return
 	}
@@ -155,7 +154,7 @@ subscribe( () => {
 	// even when blocks are edited.
 	if ( tree !== prevClientIds ) {
 		prevClientIds = tree
-		const blocks = fixReusableInnerBlocks( select( 'core/block-editor' ).getBlocks() )
+		const blocks = fixReusableInnerBlocks( tree )
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
 	}
 } )
@@ -164,19 +163,10 @@ subscribe( () => {
 // Applies only core/block (reusable blocks) - Adds missing innerBlocks
 const fixReusableInnerBlocks = blocks => {
 	return ( blocks || [] ).map( block => {
-		if ( ! [ 'core/widget-area', 'core/block', 'core/template-part', 'core/post-content' ].includes( block.name ) ) {
-			return {
-				...block,
-				innerBlocks: fixReusableInnerBlocks( block.innerBlocks ),
-			}
-		}
-		const results = select( 'core/block-editor' ).__unstableGetClientIdsTree( block.clientId )
 		return {
 			...block,
-			innerBlocks: fixReusableInnerBlocks( results.map( ( { clientId } ) => {
-				const [ innerResult ] = select( 'core/block-editor' ).getBlocksByClientId( clientId )
-				return innerResult
-			} ) ),
+			innerBlocks: fixReusableInnerBlocks( block.innerBlocks ),
+			name: select( 'core/block-editor' ).getBlockName( block.clientId ),
 		}
 	} )
 }
