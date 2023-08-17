@@ -112,7 +112,7 @@ const Styles = props => {
 				selector=".stk-inner-blocks:after"
 				styleRule="top"
 				attrName="blockPadding"
-				key="blockPadding"
+				key="timeline-blockPadding-top"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute, device ) => {
 					const getInherited = true
@@ -138,7 +138,7 @@ const Styles = props => {
 				selector=".stk-inner-blocks:after"
 				styleRule="bottom"
 				attrName="blockPadding"
-				key="blockPadding"
+				key="timeline-blockPadding-bottom"
 				enabledCallback={ getAttribute => getAttribute( 'timelineIsLast' ) === true }
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute, device ) => {
@@ -165,7 +165,7 @@ const Styles = props => {
 				selector=".stk-block-timeline__middle"
 				styleRule="marginTop"
 				attrName="blockPadding"
-				key="blockPadding"
+				key="timeline-blockPadding-marginTop"
 				responsive="all"
 				valuePreCallback={ ( value, getAttribute, device ) => {
 					const getInherited = true
