@@ -249,7 +249,7 @@ const AdvancedToolbarControl = props => {
 							key={ option.value }
 							{ ...controlProps }
 							label={ option.title || props.label }
-							tabindex={ isNothingSelected && i === 0 ? '0' : tabindex }
+							tabIndex={ isNothingSelected && i === 0 ? '0' : tabindex }
 							disabled={ props.disabled === 'all' ? true : props.disabled.includes( option.value ) }
 							isPrimary={ isSelected }
 							isSmall={ props.isSmall }
