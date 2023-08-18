@@ -296,7 +296,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Page now scrolls to the opened Accordion if it's not in the viewport #2726
 * New: Added a tip when incorrectly using a Google Map in a lightbox #2807
 * New: Added some new getting started videos
+* Change: Removed settings wizard
+* Fixed: Normal or centered block widths are not visible in the editor in WP 6.3
 * Fixed: Blocks were not being loaded in the Customizer for classic themes #2846
+* Fixed: Global colors and typography not showing in the editor if Content Editing Mode is enabled
+* Fixed: Custom Fields admin menu UI
 * Fixed: Blocks can encounter an error when dragging inside or from a reusable block #2768 #2791
 * Fixed: Picking an icon from the icon picker inside the editor area doesn't work #2772
 * Fixed: Block link now correctly occupies the entire container block if it has a background #2743
