@@ -30,14 +30,17 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 
 			// We allow editing of default blocks in their own editor, we do
 			// this by creating a "dummy" CPT that we'll edit.
-			add_action( 'init', array( $this, 'register_temp_block_editor' ) );
+			add_action( 'admin_init', array( $this, 'register_temp_block_editor' ) );
+			add_action( 'rest_api_init', array( $this, 'register_temp_block_editor' ) );
 
 			// Disallow going through the list of all "dummy" CPTs.
 			add_action( 'current_screen', array( $this, 'temp_block_editor_list_disallow' ) );
 
 			// This will trigger the editor to redirect to the editor for a
 			// default block.
-			add_action( 'admin_init', array( $this, 'edit_default_block_redirect' ) );
+			if ( isset( $_REQUEST['stk_edit_block_style'] ) && isset( $_REQUEST['stk_edit_block'] ) && isset( $_REQUEST['stk_edit_block_title'] ) ) {
+				add_action( 'admin_init', array( $this, 'edit_default_block_redirect' ) );
+			}
 		}
 
 		/**
@@ -350,10 +353,6 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 * @return void
 		 */
 		public function edit_default_block_redirect() {
-			if ( ! isset( $_REQUEST['stk_edit_block_style'] ) || ! isset( $_REQUEST['stk_edit_block'] ) || ! isset( $_REQUEST['stk_edit_block_title'] ) ) {
-				return;
-			}
-
 			$block_name = sanitize_text_field( $_REQUEST['stk_edit_block'] );
 			$style_slug = sanitize_text_field( $_REQUEST['stk_edit_block_style'] );
 			$block_title = sanitize_text_field( $_REQUEST['stk_edit_block_title'] );

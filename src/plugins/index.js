@@ -18,13 +18,13 @@ import { ThemeBlockSize } from './theme-block-size'
  * WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins'
-import { loadPromise, models } from '@wordpress/api'
 
 /**
  * External dependencies
  */
 import { ConvertToContainerButton, GetBlockAttributesButton } from '~stackable/components'
 import { devMode } from 'stackable'
+import { fetchSettings } from '~stackable/util'
 
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
 registerPlugin( 'stackable-block-hover-state', { render: BlockHoverState } )
@@ -36,11 +36,8 @@ if ( devMode ) {
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )
 }
 
-loadPromise.then( () => {
-	const settings = new models.Settings()
-	settings.fetch().then( response => {
-		if ( response.stackable_enable_block_linking ) {
-			registerPlugin( 'stackable-block-linking', { render: BlockLinking } )
-		}
-	} )
+fetchSettings().then( response => {
+	if ( response.stackable_enable_block_linking ) {
+		registerPlugin( 'stackable-block-linking', { render: BlockLinking } )
+	}
 } )

@@ -44,34 +44,40 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			add_action( 'admin_init', array( $this, 'register_global_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_global_settings' ) );
 
-			/**
-			 * Color hooks
-			 */
-			// Add the color styles in the frontend only.
 			if ( ! is_admin() ) {
+
+				/**
+				 * Color hooks
+				 */
+				// Add the color styles in the frontend only.
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'color_add_global_styles' ) );
-			}
 
-			/**
-			 * Typography hooks
-			 */
+				/**
+				 * Typography hooks
+				 */
 
-			/**
-			 * Use `after_setup_theme` to check early if there are global
-			 * typography used the `typograhy_detect_native_blocks`  method.
-			 *
-			 * @since 2.17.1
-			 */
-			add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
+				/**
+				 * Use `after_setup_theme` to check early if there are global
+				 * typography used the `typograhy_detect_native_blocks`  method.
+				 *
+				 * @since 2.17.1
+				 */
+				// Don't do anything if we don't have any global typography.
+				$typography = get_option( 'stackable_global_typography' );
+				if ( ! empty( $typography ) && is_array( $typography ) ) {
+					add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
+				}
 
-			// For some native blocks, add a note that they're core blocks.
-			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+				// For some native blocks, add a note that they're core blocks.
+				// Only do this when we need to style native blocks.
+				if ( in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
+					add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+				}
 
-			// Fixes columns issue with Native Posts block.
-			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
+				// Fixes columns issue with Native Posts block.
+				add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
 
-			// Add our global typography styles in the frontend only.
-			if ( ! is_admin() ) {
+				// Add our global typography styles in the frontend only.
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
 			}
 		}
@@ -368,7 +374,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return void
 		 */
 		public function typography_parse_global_styles() {
-			// Don't do anything if we don't have any global typography.
 			$typography = get_option( 'stackable_global_typography' );
 			if ( ! $typography || ! is_array( $typography ) ) {
 				return;
@@ -703,11 +708,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 
 			if ( $block_content === null ) {
-				return $block_content;
-			}
-
-			// Only do this when we need to style native blocks.
-			if ( ! in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
 				return $block_content;
 			}
 

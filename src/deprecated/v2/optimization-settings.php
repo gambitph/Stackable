@@ -21,10 +21,11 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 		 * Initialize
 		 */
         function __construct() {
-			// Register our setting.
-			add_action( 'init', array( $this, 'register_optimization_settings' ) );
-
 			if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
+				// Register our setting.
+				add_action( 'admin_init', array( $this, 'register_optimization_settings' ) );
+				add_action( 'rest_api_init', array( $this, 'register_optimization_settings' ) );
+
 				// Prevent the scripts from loading normally. Low priority so we can remove the assets.
 				add_action( 'init', array( $this, 'disable_frontend_scripts' ), 9 );
 

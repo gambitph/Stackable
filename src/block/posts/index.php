@@ -223,7 +223,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				// Feature image urls.
 				register_rest_field( $post_type, 'featured_image_urls',
 					array(
-						'get_callback' => array( new Stackable_Posts_Block(), 'get_featured_image_urls' ),
+						'get_callback' => array( 'Stackable_Posts_Block', 'get_featured_image_urls' ),
 						'update_callback' => null,
 						'schema' => array(
 							'description' => __( 'Different sized featured images', STACKABLE_I18N ),
@@ -235,7 +235,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				// Excerpt.
 				register_rest_field( $post_type, 'post_excerpt_stackable',
 					array(
-						'get_callback' => array( new Stackable_Posts_Block(), 'get_excerpt' ),
+						'get_callback' => array( 'Stackable_Posts_Block', 'get_excerpt' ),
 						'update_callback' => null,
 						'schema' => array(
 							'description' => __( 'Post excerpt for Stackable', STACKABLE_I18N ),
@@ -247,7 +247,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				// Category links.
 				register_rest_field( $post_type, 'category_list',
 					array(
-						'get_callback' => array( new Stackable_Posts_Block(), 'get_category_list' ),
+						'get_callback' => array( 'Stackable_Posts_Block', 'get_category_list' ),
 						'update_callback' => null,
 						'schema' => array(
 							'description' => __( 'Category list links', STACKABLE_I18N ),
@@ -259,7 +259,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				// Author name.
 				register_rest_field( $post_type, 'author_info',
 					array(
-						'get_callback' => array( new Stackable_Posts_Block(), 'get_author_info' ),
+						'get_callback' => array( 'Stackable_Posts_Block', 'get_author_info' ),
 						'update_callback' => null,
 						'schema' => array(
 							'description' => __( 'Author information', STACKABLE_I18N ),
@@ -272,7 +272,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				register_rest_field( $post_type, 'comments_num',
 					array(
 						'get_callback' => 'stackable_commments_number_v2',
-						'get_callback' => array( new Stackable_Posts_Block(), 'get_comments_number' ),
+						'get_callback' => array( 'Stackable_Posts_Block', 'get_comments_number' ),
 						'update_callback' => null,
 						'schema' => array(
 							'description' => __( 'Number of comments', STACKABLE_I18N ),
@@ -284,7 +284,7 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				// API endpoint for getting all the terms/taxonomies.
 				register_rest_route( 'stackable/v3', '/terms', array(
 					'methods' => 'GET',
-					'callback' => array( new Stackable_Posts_Block(), 'get_terms' ),
+					'callback' => array( 'Stackable_Posts_Block', 'get_terms' ),
 					'permission_callback' => function () {
 						return current_user_can( 'edit_posts' );
 					},
