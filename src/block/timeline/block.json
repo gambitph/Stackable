@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/timeline",
 	"title": "Timeline",
 	"description": "Show events in chronological order",
