@@ -35,7 +35,7 @@ Enjoy an impressive Design Library to jumpstart your designing process. Never st
 
 ## Powerful Custom Blocks
 
-Get 41 flexible custom WordPress blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 42 flexible custom WordPress blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 You can choose which of these blocks you need, depending on your workflow. You can also disable blocks if you don't need them.
 
@@ -54,6 +54,7 @@ Special Blocks
 - Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Tabs Block - [View Block](https://wpstackable.com/tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Timeline Block - [View Block](https://wpstackable.com/timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

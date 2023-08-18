@@ -1,0 +1,155 @@
+@import "common";
+
+.ct-widget.widget_block:not(:first-child):has(.stk-block-timeline) {
+	margin-top: 0;
+}
+
+.stk-block-timeline {
+	--gap: 16px;
+	--line-dot-size: 11px;
+	--line-dot-border-radius: 100%;
+	--line-accent-bg-color: #000;
+	--line-accent-bg-color-2: var(--line-accent-bg-color, #000);
+	--line-accent-bg-location: 50%;
+	--line-bg-color: #eee;
+	--line-bg-width: 3px;
+	--content-line: 40px;
+	--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%), var(--line-bg-color, #eee) var(--line-accent-bg-location, 50%));
+	position: relative;
+	padding: 16px 0;
+	margin-block-start: 0 !important;
+}
+// Remove the default bottom margin of the timeline block because it's annoying
+// to keep on removing it when you want to stack them. This works in conjunction
+// with the stackable.resizable-bottom-margin.default filter in edit.js.
+.wp-block-stackable-timeline.stk-block.stk-block-timeline {
+	margin-bottom: 0;
+}
+.stk-block-timeline > .stk-inner-blocks {
+	display: grid;
+	grid-template-columns: 1fr var(--line-dot-size, 16px) 1fr;
+	grid-template-rows: auto;
+	column-gap: var(--gap, 16px);
+	position: static;
+	align-items: center;
+}
+.stk-block-timeline--right .stk-block-timeline__date {
+	text-align: end;
+}
+.stk-block-timeline--left > .stk-inner-blocks > * {
+	grid-row: 1 / 2;
+}
+.stk-block-timeline--left .stk-block-timeline__content {
+	grid-column: 1 / 2;
+	text-align: end;
+}
+.stk-block-timeline--left .stk-block-timeline__middle {
+	grid-column: 2 / 3;
+}
+.stk-block-timeline--left .stk-block-timeline__date {
+	grid-column: 3 / 4;
+}
+// prevents content to be overlapped by background
+.stk-block-timeline > .stk-inner-blocks > * {
+	z-index: 2;
+}
+.stk-block-timeline > .stk-inner-blocks::after {
+	content: "";
+	position: absolute;
+	inset-inline-start: calc(50% - var(--line-bg-width, 3px) / 2);
+	width: var(--line-bg-width, 3px);
+	top: 0;
+	bottom: 0;
+	background: var(--fixed-bg);
+	background-attachment: fixed;
+	z-index: 2;
+}
+.stk-block-timeline__middle {
+	border-radius: var(--line-dot-border-radius, 100%);
+	width: var(--line-dot-size, 16px);
+	height: var(--line-dot-size, 16px);
+	background: var(--fixed-bg);
+	background-attachment: fixed;
+	z-index: 2;
+	position: relative;
+}
+
+/** Trim the top-most line and the bottom-most line */
+.stk-block-timeline > .stk-inner-blocks::after {
+	top: 50%;
+	bottom: 50%;
+}
+.stk-block-timeline + .stk-block-timeline > .stk-inner-blocks::after,
+.widget_block:has(.stk-block-timeline) + .widget_block .stk-block-timeline > .stk-inner-blocks::after {
+	top: 0 !important;
+}
+
+.stk-block-timeline:not(.stk-is-last) > .stk-inner-blocks::after {
+	bottom: 0;
+}
+
+/** branching line */
+.stk-block-timeline__middle::after {
+	content: "";
+	position: absolute;
+	top: calc(50% - var(--line-bg-width, 3px) / 2);
+	inset-inline-start: 50%;
+	height: var(--line-bg-width, 3px);
+	width: var(--content-line, 0);
+	border-radius: var(--line-bg-width, 3px);
+	background: var(--fixed-bg);
+	background-attachment: fixed;
+}
+.stk-block-timeline--left .stk-block-timeline__middle::after {
+	inset-inline-start: auto;
+	inset-inline-end: 50%;
+}
+.stk-block-timeline--right .stk-block-timeline__content {
+	margin-inline-start: max(calc(var(--content-line, 0) - calc(var(--line-dot-size, 0) * 0.5)), 0px);
+}
+.stk-block-timeline--left .stk-block-timeline__content {
+	margin-inline-end: max(calc(var(--content-line, 0) - calc(var(--line-dot-size, 0) * 0.5)), 0px);
+}
+
+@include mobile {
+	.stk-block.stk-block-timeline {
+		--content-line: 0 !important;
+		padding-top: 0;
+	}
+	.stk-block-timeline > .stk-inner-blocks {
+		grid-template-columns: var(--line-dot-size, 16px) 1fr;
+		grid-template-rows: auto 1fr;
+		align-items: flex-start;
+		padding-left: 16px;
+	}
+	.stk-block-timeline > .stk-inner-blocks::after {
+		inset-inline-start: calc(var(--line-dot-size, 16px) / 2 - var(--line-bg-width, 3px) / 2 + 16px);
+	}
+	.stk-block-timeline.stk-block-background .stk-block-timeline__middle {
+		margin-left: -16px;
+	}
+	.stk-block-timeline .stk-block-timeline__middle {
+		position: absolute;
+		inset-inline-start: 16px;
+		inset-block-start: 8px;
+	}
+	.stk-block-timeline .stk-block-timeline__content {
+		grid-column: 2 / 3;
+		grid-row: 2 / 3;
+		text-align: start;
+	}
+	.stk-block-timeline .stk-block-timeline__date {
+		grid-column: 2 / 3;
+		grid-row: 1 / 2;
+		text-align: start;
+	}
+
+	/** Trim the top-most line and the bottom-most line */
+	.stk-block-timeline > .stk-inner-blocks::after {
+		top: calc(var(--line-dot-size, 16px) / 2 + 0.5em);
+		bottom: calc(100% - calc(var(--line-dot-size, 16px) / 2) - 0.5em);
+	}
+	.stk-block-timeline + .stk-block-timeline > .stk-inner-blocks::after {
+		top: -16px;
+	}
+}

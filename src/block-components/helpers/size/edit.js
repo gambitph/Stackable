@@ -31,7 +31,7 @@ const Layout = props => {
 
 	return (
 		<>
-			<AdvancedRangeControl
+			{ props.hasMinHeight && <AdvancedRangeControl
 				label={ labelHeight }
 				attribute={ getAttrName( 'height' ) }
 				responsive="all"
@@ -46,7 +46,7 @@ const Layout = props => {
 					description: __( 'Adjusts the minimum allowable height of the block', i18n ),
 				} }
 				visualGuide={ props.visualGuide }
-			/>
+			/> }
 
 			{ props.hasContentVerticalAlign &&
 				<AdvancedToolbarControl
@@ -107,6 +107,7 @@ const Layout = props => {
 
 Layout.defaultProps = {
 	attrNameTemplate: '%s',
+	hasMinHeight: true,
 	hasContentVerticalAlign: true,
 	visualGuide: null,
 	labels: {},

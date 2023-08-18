@@ -1,0 +1,11 @@
+.stk--is-astra-theme {
+	.is-root-container > [data-type^="stackable/timeline"][data-align="full"] {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+
+	[data-type^="stackable/timeline"]:is([data-align="full"], [data-align="wide"]) .stk-block-content.alignwide {
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}
