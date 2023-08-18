@@ -111,7 +111,7 @@ let helpTooltipEnabled = true // Initial value, this will be updated on load.
 // At the start, get whether the helpTooltips are enabled or disabled.
 domReady( () => {
 	fetchSettings().then( response => {
-		helpTooltipEnabled = ! response.stackable_help_tooltip_disabled
+		helpTooltipEnabled = response.stackable_help_tooltip_disabled !== '1'
 	} ).catch( () => {} )
 } )
 

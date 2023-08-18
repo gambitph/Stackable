@@ -143,6 +143,17 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'default' => false,
 				)
 			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_help_tooltip_disabled',
+				array(
+					'type' => 'string',
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
 		}
 
 		public function sanitize_array_setting( $input ) {

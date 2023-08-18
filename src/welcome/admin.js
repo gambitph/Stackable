@@ -495,7 +495,7 @@ const AdditionalOptions = props => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
+				setHelpTooltipsDisabled( response.stackable_help_tooltip_disabled === '1' )
 				setV2EditorBackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
 				setV2EditorBackwardCompatibilityUsage( response.stackable_v2_editor_compatibility_usage === '1' )
 				setV2FrontendBackwardCompatibility( response.stackable_v2_frontend_compatibility === '1' )
