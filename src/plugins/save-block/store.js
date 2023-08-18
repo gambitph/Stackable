@@ -1,12 +1,16 @@
 import { i18n } from 'stackable'
 
 /**
+ * Internal dependencies
+ */
+import { fetchSettings } from '~stackable/util'
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { registerStore, dispatch } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
-import { loadPromise, models } from '@wordpress/api'
 import apiFetch from '@wordpress/api-fetch'
 
 // Include all the stored state.
@@ -199,20 +203,17 @@ registerStore( 'stackable/block-styles', {
 // Load all our settings into our store.
 domReady( () => {
 	const updateBlockStyles = () => {
-		const settings = new models.Settings()
-
-		settings.fetch().then( response => {
+		fetchSettings().then( response => {
 			const {
 				stackable_block_styles: blockStyles,
 			} = response
-
 			dispatch( 'stackable/block-styles' ).updateBlockStylesStore( {
 				blockStyles,
 			} )
 		} )
 	}
 
-	loadPromise.then( updateBlockStyles )
+	updateBlockStyles()
 
 	// When the settings are updated from another tab, update the store.
 	// Editing a block style opens a new tab, so if the user goes back to this

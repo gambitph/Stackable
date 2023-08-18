@@ -3,6 +3,11 @@
  */
 import { sortBy } from 'lodash'
 
+/**
+ * WordPress dependencies
+ */
+import { loadPromise, models } from '@wordpress/api'
+
 // Collect all the blocks and their variations for enabling/disabling and sort
 // them by type.
 export const importBlocks = r => {
@@ -35,4 +40,26 @@ export const importBlocks = r => {
 		blocks[ type ] = sortBy( blocks[ type ], 'name' )
 	} )
 	return blocks
+}
+
+let fetchingPromise = null
+
+/**
+ * Loads settings, this can be called multiple times but it will only fetch
+ * once.
+ *
+ * @return {Promise} Load settings promise
+ */
+export const fetchSettings = () => {
+	if ( ! fetchingPromise ) {
+		fetchingPromise = loadPromise.then( () => {
+			const settings = new models.Settings()
+			return settings.fetch().then( response => {
+				fetchingPromise = null
+				return response
+			} )
+		} )
+	}
+
+	return fetchingPromise
 }
