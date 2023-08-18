@@ -1,5 +1,5 @@
 .stk-inspector-hint {
-	margin: 16px;
+	margin: 16px 0;
 	background: #f1f1f1;
 	position: relative;
 	display: grid;
@@ -19,5 +19,5 @@
 }
 
 .components-panel__body + .stk-inspector-hint {
-	margin: 32px;
+	margin: 32px 16px;
 }

@@ -27,7 +27,9 @@ export const LinkControls = props => {
 
 	const url = getAttribute( 'url' ) || ''
 
-	const showGoogleMapHint = getAttribute( 'hasLightbox' ) && url.startsWith( 'https://www.google.com/maps/' )
+	const showGoogleMapHint = getAttribute( 'hasLightbox' ) &&
+		url.startsWith( 'https://www.google.com/maps/' ) &&
+		! url.startsWith( 'https://www.google.com/maps/embed' )
 
 	return (
 		<>
@@ -55,6 +57,7 @@ export const LinkControls = props => {
 						<div className="stk-inspector-hint stk-inspector-hint__google-map ">
 							<span>
 								{ __( 'Displaying a Google Map in a Lightbox? Use the embed iframe URL instead. Need help finding it?', i18n ) }
+								&nbsp;
 								<a href="https://docs.wpstackable.com/article/528-how-to-add-a-google-map-in-a-lightbox?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg" target="_blank" rel="noreferrer">
 									{ __( ' Check out our docs.', i18n ) }
 								</a>
