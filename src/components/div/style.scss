@@ -24,6 +24,9 @@
 	> .stk-container:has(> .stk-block-link) {
 		position: static;
 	}
+	&:has(> .stk-container > .stk-block-link)::before {
+		z-index: -1;
+	}
 }
 
 .stk-video-background {
