@@ -286,6 +286,24 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.11.0 =
+
+* New: Timeline block
+* New: Various performance optimizations, lesser memory usage and better script loading #2835
+* New: Page now scrolls to the opened Accordion if it's not in the viewport #2726
+* New: Added a tip when incorrectly using a Google Map in a lightbox #2807
+* New: Added some new getting started videos
+* Fixed: Blocks were not being loaded in the Customizer for classic themes #2846
+* Fixed: Blocks can encounter an error when dragging inside or from a reusable block #2768 #2791
+* Fixed: Picking an icon from the icon picker inside the editor area doesn't work #2772
+* Fixed: Block link now correctly occupies the entire container block if it has a background #2743
+* Fixed: Removed ReactDom.render console error messages #2786
+* Fixed: Native spacing tabs appear in WP < 6.3 #2837 #2828
+* Fixed: Columns content max width unit resets after saving #2826
+* Fixed: Icon gap responsive settings resets after saving #2670
+* Fixed: Carousel now uses passive listeners to improve scrolling performance #2831
+* Fixed: Sometimes inactive tabs can still get mouse focus
+
 = 3.10.3 =
 * Fixed: (Hotfix update) PHP error incompatibility with some plugins
 
