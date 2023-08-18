@@ -77,7 +77,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
 					'i18n' => STACKABLE_I18N,
 					'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
-					'isPro' => sugb_fs()->can_use_premium_code(),
+					'isPro' => sugb_fs()->can_use_premium_code() && STACKABLE_BUILD !== 'free',
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 					'contactURL' => ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '',

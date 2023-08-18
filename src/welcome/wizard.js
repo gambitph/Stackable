@@ -55,14 +55,14 @@ const Wizard = () => {
 				<div className="s-welcome-wizard__buttons">
 					{ step > 1 && (
 						<button
-							className="s-getting-started__button secondary"
+							className="s-button s-button--plain"
 							onClick={ () => setStep( step - 1 ) }
 						>
 							{ __( 'Previous', i18n ) }
 						</button>
 					) }
 					<button
-						className="s-getting-started__button primary"
+						className="s-button s-primary-button"
 						onClick={ () => {
 							if ( step === steps.length ) {
 								location.search = '?page=stackable-getting-started'
@@ -282,7 +282,7 @@ const FinishedMessage = () => {
 				<h2>{ __( 'You\'re all set!', i18n ) }</h2>
 				<p>{ __( 'Let\'s get you started on your page building journey with Stackable.', i18n ) }</p>
 				<button
-					className="s-getting-started__button primary"
+					className="s-button s-primary-button"
 					onClick={ () => {
 						location.search = '?page=stackable-getting-started'
 					} }
