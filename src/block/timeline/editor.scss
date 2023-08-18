@@ -120,6 +120,13 @@
 	margin-top: 0 !important;
 }
 
+// Remove the default bottom margin of the timeline block because it's annoying
+// to keep on removing it when you want to stack them. This works in conjunction
+// with the stackable.resizable-bottom-margin.default filter in edit.js.
+.stk-block.stk-block-timeline {
+	margin-bottom: 0;
+}
+
 @include tablet-mobile {
 	// In tablet and mobile, fixed background shows weirdly, so we remove it.
 	.stk-block-timeline__middle,
