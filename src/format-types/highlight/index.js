@@ -10,8 +10,8 @@ import { i18n } from 'stackable'
  */
 import {
 	Dropdown,
-	Toolbar,
 	ToolbarButton,
+	ToolbarGroup,
 } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
@@ -169,7 +169,7 @@ const HighlightButton = props => {
 
 	return (
 		<BlockControls>
-			<Toolbar className="stackable-components-toolbar">
+			<ToolbarGroup className="stackable-components-toolbar">
 				<Dropdown
 					popoverProps={ popoverProps }
 					className="block-editor-tools-panel-color-gradient-settings__dropdown"
@@ -252,7 +252,7 @@ const HighlightButton = props => {
 						</div>
 					) }
 				/>
-			</Toolbar>
+			</ToolbarGroup>
 		</BlockControls>
 	)
 }
