@@ -56,7 +56,7 @@ export const LinkControls = props => {
 							<span>
 								{ __( 'Displaying a Google Map in a Lightbox? Use the embed iframe URL instead. Need help finding it?', i18n ) }
 								<a href="https://docs.wpstackable.com/article/528-how-to-add-a-google-map-in-a-lightbox?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg" target="_blank" rel="noreferrer">
-									{ __( 'Check out our docs.', i18n ) }
+									{ __( ' Check out our docs.', i18n ) }
 								</a>
 							</span>
 						</div>

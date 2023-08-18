@@ -1,11 +1,14 @@
 .stk-inspector-hint {
-	margin: 32px 16px 16px;
+	margin: 16px;
 	background: #f1f1f1;
 	position: relative;
 	display: grid;
 	grid-template-columns: 1fr auto;
 	span {
 		padding: 16px 0 16px 16px;
+	}
+	span:last-child {
+		padding: 16px;
 	}
 }
 .stk-inspector-hint__close {
@@ -15,10 +18,6 @@
 	}
 }
 
-.stk-inspector-hint__google-map {
-	margin: 10px 0 10px !important;
-	span {
-		font-size: 12px;
-		padding: 6px !important;
-	}
+.components-panel__body + .stk-inspector-hint {
+	margin: 32px;
 }
