@@ -10,7 +10,7 @@ import {
 	register, createReduxStore, dispatch,
 } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
-import { loadPromise, models } from '@wordpress/api'
+import { fetchSettings } from '~stackable/util'
 
 // Include all the stored state.
 const DEFAULT_STATE = {
@@ -54,25 +54,21 @@ register( createReduxStore( 'stackable/global-colors', {
 
 // Load all our settings into our store.
 domReady( () => {
-	loadPromise.then( () => {
-		const settings = new models.Settings()
+	fetchSettings().then( response => {
+		const {
+			stackable_global_hide_theme_colors: hideThemeColors,
+			stackable_global_hide_default_colors: hideDefaultColors,
+			stackable_global_hide_site_editor_colors: hideSiteEditorColors,
+			stackable_global_colors: _stackableColors,
+		} = response
+		const stackableColors = head( _stackableColors ) || []
 
-		settings.fetch().then( response => {
-			const {
-				stackable_global_hide_theme_colors: hideThemeColors,
-				stackable_global_hide_default_colors: hideDefaultColors,
-				stackable_global_hide_site_editor_colors: hideSiteEditorColors,
-				stackable_global_colors: _stackableColors,
-			} = response
-			const stackableColors = head( _stackableColors ) || []
-
-			dispatch( 'stackable/global-colors' ).updateSettings( {
-				hideThemeColors,
-				hideDefaultColors,
-				hideSiteEditorColors,
-				stackableColors,
-				isInitializing: false,
-			} )
+		dispatch( 'stackable/global-colors' ).updateSettings( {
+			hideThemeColors,
+			hideDefaultColors,
+			hideSiteEditorColors,
+			stackableColors,
+			isInitializing: false,
 		} )
 	} )
 } )
