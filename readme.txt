@@ -302,6 +302,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Block link now correctly occupies the entire container block if it has a background #2743
 * Fixed: Removed ReactDom.render console error messages #2786
 * Fixed: Native spacing tabs appear in WP < 6.3 #2837 #2828
+* Fixed: Design Library block cannot be selected
 * Fixed: Columns content max width unit resets after saving #2826
 * Fixed: Icon gap responsive settings resets after saving #2670
 * Fixed: Carousel now uses passive listeners to improve scrolling performance #2831
