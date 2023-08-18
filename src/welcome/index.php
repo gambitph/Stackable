@@ -82,7 +82,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 					'contactURL' => ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '',
 					'planName' => sugb_fs()->get_plan_name(),
-					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
+					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ( ! sugb_fs()->can_use_premium_code() || STACKABLE_BUILD === 'free' ),
 					'nonceNews' => stackable_get_news_feed_nonce(),
 				) );
 				wp_localize_script( 'stackable-welcome', 'stackable', $args );
