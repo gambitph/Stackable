@@ -25,7 +25,7 @@ export const LinkControls = props => {
 		updateAttributeHandler,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
-	const url = getAttribute( 'url' )
+	const url = getAttribute( 'url' ) || ''
 
 	const showGoogleMapHint = getAttribute( 'hasLightbox' ) && url.startsWith( 'https://www.google.com/maps/' )
 
