@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.10.3\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.11.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-08-08T15:34:37+00:00\n"
+"POT-Creation-Date: 2023-08-18T06:57:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -41,13 +41,13 @@ msgstr ""
 msgid "\"Stackable\" requires PHP version 5.3.0 or higher, but PHP version %s is used on the site."
 msgstr ""
 
-#: plugin.php:131
+#: plugin.php:130
 msgid "%sStackable Notice%s: We noticed that the Gutenberg plugin is active! Just a heads up, you don't need the Gutenberg plugin anymore to use the Block Editor. The Gutenberg plugin may contain non-final features which may not be compatible with some block plugins. %sPlease deactivate the Gutenberg plugin%s unless you really need it. Click the close button on the side to dismiss this notice."
 msgstr ""
 
 #: pro__premium_only/src/block/load-more/index.php:49
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:28
-#: src/custom-block-styles.php:154
+#: src/custom-block-styles.php:157
 #: src/design-library/init.php:36
 msgid "%s must be a string."
 msgstr ""
@@ -66,21 +66,21 @@ msgid "Next"
 msgstr ""
 
 #: pro__premium_only/src/block/pagination/index.php:278
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:202
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:198
 #: pro__premium_only/src/block/pagination/pagination.js:69
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:108
 msgid "Previous page"
 msgstr ""
 
 #: pro__premium_only/src/block/pagination/index.php:299
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:223
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:219
 #: pro__premium_only/src/block/pagination/pagination.js:81
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:119
 msgid "Page %s"
 msgstr ""
 
 #: pro__premium_only/src/block/pagination/index.php:324
-#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:248
+#: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.php:244
 #: pro__premium_only/src/block/pagination/pagination.js:89
 #: pro__premium_only/src/deprecated/v2/block/blog-posts/pagination.js:128
 msgid "Next page"
@@ -98,11 +98,11 @@ msgstr ""
 msgid "Invalid arguments."
 msgstr ""
 
-#: pro__premium_only/src/custom-fields.php:87
+#: pro__premium_only/src/custom-fields.php:88
 msgid "Settings that control custom fields functionality and permissions."
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/init.php:290
+#: pro__premium_only/src/dynamic-content/init.php:261
 msgid "Invalid parameters. Please try again."
 msgstr ""
 
@@ -154,8 +154,8 @@ msgid "Current Post"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/custom-fields.php:41
-#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:87
-#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:135
+#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:88
+#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:136
 msgid "Stackable Custom Fields"
 msgstr ""
 
@@ -469,7 +469,7 @@ msgstr ""
 msgid "Site URL"
 msgstr ""
 
-#: pro__premium_only/src/editor-mode.php:67
+#: pro__premium_only/src/editor-mode.php:68
 msgid "Roles which only allow content only editing."
 msgstr ""
 
@@ -490,32 +490,32 @@ msgstr ""
 msgid "Make sure you need to add your WordPress site to the %sallowed domains for your CDN%s."
 msgstr ""
 
-#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:47
+#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:48
 msgid "Data from Stackable custom fields"
 msgstr ""
 
-#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:88
+#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:89
 #: pro__premium_only/src/dynamic-content/filters/jetengine.js:125
 msgid "Fields"
 msgstr ""
 
-#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:142
+#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:143
 #: src/welcome/index.php:213
 msgid "📋 Custom Fields"
 msgstr ""
 
-#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:147
+#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:148
 msgid "You can add small pieces of content here which you can use across your website - things like your contact email or the number of customers you've served. You can find these fields under the \"Site source\" area when placing \"Dynamic Content\" in your blocks. %sLearn more%s."
 msgstr ""
 
-#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:156
+#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:157
 #: src/welcome/index.php:195
 #: src/welcome/index.php:208
 #: src/welcome/index.php:219
 msgid "This is only available in Stackable Premium."
 msgstr ""
 
-#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:156
+#: pro__premium_only/src/welcome/custom-fields/custom-fields.php:157
 #: src/welcome/index.php:195
 #: src/welcome/index.php:208
 #: src/welcome/index.php:219
@@ -524,15 +524,15 @@ msgstr ""
 msgid "Go Premium"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.php:62
+#: pro__premium_only/src/welcome/icons.php:63
 msgid "Don't show Font Awesome plugin settings error"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.php:74
+#: pro__premium_only/src/welcome/icons.php:75
 msgid "Font Awesome Kit ID"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.php:86
+#: pro__premium_only/src/welcome/icons.php:87
 msgid "Font Awesome icon version to server"
 msgstr ""
 
@@ -550,34 +550,34 @@ msgstr ""
 #: src/block/posts/index.php:103
 #: src/block/posts/index.php:555
 #: src/deprecated/v2/block/blog-posts/index.php:285
-#: src/deprecated/v2/block/blog-posts/index.php:540
+#: src/deprecated/v2/block/blog-posts/index.php:539
 msgid "%d comment"
 msgid_plural "%d comments"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/block/posts/index.php:229
-#: src/deprecated/v2/block/blog-posts/index.php:418
+#: src/deprecated/v2/block/blog-posts/index.php:414
 msgid "Different sized featured images"
 msgstr ""
 
 #: src/block/posts/index.php:241
-#: src/deprecated/v2/block/blog-posts/index.php:430
+#: src/deprecated/v2/block/blog-posts/index.php:426
 msgid "Post excerpt for Stackable"
 msgstr ""
 
 #: src/block/posts/index.php:253
-#: src/deprecated/v2/block/blog-posts/index.php:442
+#: src/deprecated/v2/block/blog-posts/index.php:438
 msgid "Category list links"
 msgstr ""
 
 #: src/block/posts/index.php:265
-#: src/deprecated/v2/block/blog-posts/index.php:454
+#: src/deprecated/v2/block/blog-posts/index.php:450
 msgid "Author information"
 msgstr ""
 
 #: src/block/posts/index.php:278
-#: src/deprecated/v2/block/blog-posts/index.php:466
+#: src/deprecated/v2/block/blog-posts/index.php:462
 msgid "Number of comments"
 msgstr ""
 
@@ -589,37 +589,33 @@ msgstr ""
 
 #: src/block/posts/index.php:511
 #: src/deprecated/v2/block/blog-posts/index.php:261
-#: src/deprecated/v2/block/blog-posts/index.php:551
+#: src/deprecated/v2/block/blog-posts/index.php:550
 msgid ", "
 msgstr ""
 
-#: src/custom-block-styles.php:66
+#: src/custom-block-styles.php:69
 msgid "Stackable User Block Styles"
 msgstr ""
 
-#: src/custom-block-styles.php:161
+#: src/custom-block-styles.php:164
 #: src/design-library/init.php:43
 msgid "%s must be a boolean."
 msgstr ""
 
-#: src/custom-block-styles.php:280
+#: src/custom-block-styles.php:283
 msgid "Default Blocks"
 msgstr ""
 
-#: src/custom-block-styles.php:281
+#: src/custom-block-styles.php:284
 msgid "Default Block"
 msgstr ""
 
-#: src/custom-block-styles.php:282
+#: src/custom-block-styles.php:285
 msgid "Saving, please wait..."
 msgstr ""
 
-#: src/custom-block-styles.php:432
+#: src/custom-block-styles.php:431
 msgid "Default %s Block"
-msgstr ""
-
-#: src/deprecated/v1/init.php:68
-msgid "Load version 1 styles for backward compatibility"
 msgstr ""
 
 #: src/deprecated/v2/admin.php:39
@@ -628,7 +624,7 @@ msgid "🎛 Enable & Disable Blocks"
 msgstr ""
 
 #: src/deprecated/v2/admin.php:40
-#: src/deprecated/v2/optimization-settings.php:122
+#: src/deprecated/v2/optimization-settings.php:123
 msgid "This only works for version 2 blocks."
 msgstr ""
 
@@ -654,7 +650,7 @@ msgid "Load version 2 frontend styles and scripts"
 msgstr ""
 
 #: src/deprecated/v2/init.php:82
-#: src/welcome/admin.js:543
+#: src/welcome/admin.js:541
 msgid "Load version 2 blocks in the editor"
 msgstr ""
 
@@ -670,15 +666,15 @@ msgstr ""
 msgid "This disables the v2 block detected in the frontend"
 msgstr ""
 
-#: src/deprecated/v2/optimization-settings.php:53
+#: src/deprecated/v2/optimization-settings.php:54
 msgid "Stackable optimization setting, only load scripts when there are Stackable blocks in the page"
 msgstr ""
 
-#: src/deprecated/v2/optimization-settings.php:118
+#: src/deprecated/v2/optimization-settings.php:119
 msgid "🏃‍♂️ Optimization Settings"
 msgstr ""
 
-#: src/deprecated/v2/optimization-settings.php:120
+#: src/deprecated/v2/optimization-settings.php:121
 msgid "Here are some settings that you can tweak to optimize Stackable. %sLearn more%s."
 msgstr ""
 
@@ -724,31 +720,31 @@ msgstr ""
 msgid "Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns."
 msgstr ""
 
-#: src/global-settings.php:92
+#: src/global-settings.php:98
 msgid "Stackable global color palette"
 msgstr ""
 
-#: src/global-settings.php:127
+#: src/global-settings.php:133
 msgid "Hide theme colors in the Stackable color picker"
 msgstr ""
 
-#: src/global-settings.php:139
+#: src/global-settings.php:145
 msgid "Hide default colors in the Stackable color picker"
 msgstr ""
 
-#: src/global-settings.php:151
+#: src/global-settings.php:157
 msgid "Hide Site Editor colors in the Stackable color picker"
 msgstr ""
 
-#: src/global-settings.php:163
+#: src/global-settings.php:169
 msgid "Stackable global typography apply to setting"
 msgstr ""
 
-#: src/global-settings.php:175
+#: src/global-settings.php:181
 msgid "Stackable global typography add important to global styles"
 msgstr ""
 
-#: src/global-settings.php:247
+#: src/global-settings.php:253
 msgid "Stackable global typography settings"
 msgstr ""
 
@@ -980,7 +976,7 @@ msgid "Subscribe"
 msgstr ""
 
 #: src/welcome/notification-rate.php:41
-msgid "We've noticed that you've been using Stackable for some time now, we hope you are loving it! We would appreciate it if you can %sgive us a 5 star rating on WordPress.org%s!"
+msgid "If Stackable has been valuable to you, consider %sgiving us a 5-star rating on WordPress.org%s. It would not only make our day but also help others discover us too."
 msgstr ""
 
 #: src/welcome/notification.php:77
@@ -1302,6 +1298,7 @@ msgstr ""
 
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:74
 #: pro__premium_only/src/features/icon-controls/index.js:303
+#: src/block/timeline/edit.js:384
 #: src/components/shadow-control/index.js:56
 msgid "Horizontal Offset"
 msgstr ""
@@ -1341,6 +1338,7 @@ msgstr ""
 #: src/block-components/image/edit.js:275
 #: src/block-components/progress-bar/edit.js:36
 #: src/block-components/typography/edit.js:56
+#: src/block/timeline/edit.js:84
 #: src/deprecated/v2/components/background-controls/index.js:51
 #: src/deprecated/v2/components/button-controls/index.js:138
 #: src/deprecated/v2/components/icon-controls/index.js:81
@@ -2013,6 +2011,7 @@ msgstr ""
 #: pro__premium_only/src/block/image-box/index.js:251
 #: src/block/image-box/variations.js:64
 #: src/block/image-box/variations.js:122
+#: src/block/timeline/edit.js:463
 msgctxt "Text placeholder"
 msgid "Text for This Block"
 msgstr ""
@@ -2075,6 +2074,7 @@ msgstr ""
 
 #: pro__premium_only/src/block/notification/index.js:60
 #: pro__premium_only/src/block/team-member/index.js:108
+#: src/block/timeline/edit.js:72
 msgctxt "Content placeholder"
 msgid "Description for this block. Use this space for describing your block. Any text will do."
 msgstr ""
@@ -2937,7 +2937,7 @@ msgstr ""
 #: src/block-components/alignment/edit.js:157
 #: src/block-components/alignment/edit.js:176
 #: src/block-components/alignment/edit.js:195
-#: src/components/resizable-column/index.js:546
+#: src/components/resizable-column/index.js:547
 msgid "Column"
 msgstr ""
 
@@ -3013,6 +3013,7 @@ msgstr ""
 #: src/block-components/advanced/edit.js:77
 #: src/block-components/icon/edit.js:168
 #: src/block/tab-labels/edit.js:76
+#: src/block/timeline/edit.js:329
 #: src/components/advanced-toolbar-control/index.js:155
 #: src/components/four-number-control/index.js:205
 #: src/components/four-range-control/index.js:321
@@ -3024,6 +3025,7 @@ msgstr ""
 #: src/block-components/advanced/edit.js:78
 #: src/block-components/icon/edit.js:169
 #: src/block/tab-labels/edit.js:81
+#: src/block/timeline/edit.js:330
 #: src/components/advanced-toolbar-control/index.js:165
 #: src/components/four-number-control/index.js:181
 #: src/components/four-range-control/index.js:281
@@ -3155,7 +3157,7 @@ msgstr ""
 #: src/block-components/image/edit.js:251
 #: src/block-components/progress-bar/edit.js:99
 #: src/block/carousel/edit.js:418
-#: src/block/carousel/edit.js:505
+#: src/block/carousel/edit.js:504
 #: src/deprecated/v2/block/accordion/edit.js:199
 #: src/deprecated/v2/block/blockquote/edit.js:183
 #: src/deprecated/v2/block/blog-posts/edit.js:217
@@ -3450,7 +3452,7 @@ msgid "Text Field"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/new-tab-control.js:17
-#: src/block-components/helpers/link/edit.js:38
+#: src/block-components/helpers/link/edit.js:44
 msgid "Open in new tab"
 msgstr ""
 
@@ -3513,6 +3515,7 @@ msgstr ""
 #: src/block-components/image/edit.js:271
 #: src/block-components/progress-bar/edit.js:32
 #: src/block-components/typography/edit.js:52
+#: src/block/timeline/edit.js:80
 #: src/deprecated/v2/components/background-controls/index.js:47
 #: src/deprecated/v2/components/button-controls/index.js:134
 #: src/deprecated/v2/components/icon-controls/index.js:77
@@ -3942,9 +3945,9 @@ msgstr ""
 
 #: src/block-components/advanced/edit.js:66
 #: src/block-components/helpers/backgrounds/edit.js:359
-#: src/components/resizable-column/index.js:474
-#: src/components/resizable-column/index.js:482
-#: src/components/resizable-column/index.js:491
+#: src/components/resizable-column/index.js:475
+#: src/components/resizable-column/index.js:483
+#: src/components/resizable-column/index.js:492
 #: src/deprecated/v2/components/background-controls/index.js:364
 #: src/deprecated/v2/components/background-controls/index.js:379
 #: src/deprecated/v2/components/background-controls/index.js:394
@@ -4206,7 +4209,7 @@ msgstr ""
 msgid "Block Size & Spacing"
 msgstr ""
 
-#: src/block-components/block-div/edit.js:64
+#: src/block-components/block-div/edit.js:65
 #: src/deprecated/v2/block/accordion/edit.js:171
 #: src/deprecated/v2/block/accordion/edit.js:172
 #: src/deprecated/v2/block/blockquote/edit.js:147
@@ -4246,7 +4249,7 @@ msgstr ""
 msgid "Background"
 msgstr ""
 
-#: src/block-components/block-div/edit.js:74
+#: src/block-components/block-div/edit.js:75
 msgid "Borders & Shadows"
 msgstr ""
 
@@ -4489,6 +4492,8 @@ msgstr ""
 #: src/block-components/helpers/backgrounds/edit.js:142
 #: src/block-components/image/edit.js:287
 #: src/block-components/image/edit.js:296
+#: src/block/timeline/edit.js:402
+#: src/block/timeline/edit.js:409
 msgctxt "option title"
 msgid "%s #%d"
 msgstr ""
@@ -4731,34 +4736,42 @@ msgstr ""
 msgid "Adjusts the radius of block corners to make them more rounded"
 msgstr ""
 
-#: src/block-components/helpers/link/edit.js:32
+#: src/block-components/helpers/link/edit.js:38
 #: src/deprecated/v2/components/button-controls/index.js:49
 #: src/deprecated/v2/modules/container-link/index.js:132
 msgid "Link / URL"
 msgstr ""
 
-#: src/block-components/helpers/link/edit.js:44
+#: src/block-components/helpers/link/edit.js:51
 msgid "Open Link in Lightbox"
 msgstr ""
 
-#: src/block-components/helpers/link/edit.js:51
+#: src/block-components/helpers/link/edit.js:59
+msgid "Displaying a Google Map in a Lightbox? Use the embed iframe URL instead. Need help finding it?"
+msgstr ""
+
+#: src/block-components/helpers/link/edit.js:62
+msgid " Check out our docs."
+msgstr ""
+
+#: src/block-components/helpers/link/edit.js:70
 msgid "Link rel"
 msgstr ""
 
-#: src/block-components/helpers/link/edit.js:52
+#: src/block-components/helpers/link/edit.js:71
 msgid "Link relationship keywords, e.g. nofollow noreferrer prefetch"
 msgstr ""
 
-#: src/block-components/helpers/link/edit.js:58
+#: src/block-components/helpers/link/edit.js:77
 #: src/deprecated/v2/modules/container-link/index.js:140
 msgid "Link Title"
 msgstr ""
 
-#: src/block-components/helpers/link/edit.js:63
+#: src/block-components/helpers/link/edit.js:82
 msgid "Also used for lightbox caption"
 msgstr ""
 
-#: src/block-components/helpers/link/edit.js:75
+#: src/block-components/helpers/link/edit.js:94
 msgid "Supports links to images, videos, YouTube, Vimeo, and web pages that allow embedding"
 msgstr ""
 
@@ -4789,7 +4802,7 @@ msgstr ""
 msgid "Sets the placement of the content to left, center or right. Not available when block width is set to full width."
 msgstr ""
 
-#: src/block-components/helpers/size/edit.js:121
+#: src/block-components/helpers/size/edit.js:122
 #: src/deprecated/v2/block/blockquote/edit.js:214
 #: src/deprecated/v2/block/blog-posts/edit.js:400
 #: src/deprecated/v2/block/call-to-action/edit.js:226
@@ -4810,15 +4823,15 @@ msgstr ""
 msgid "Paddings"
 msgstr ""
 
-#: src/block-components/helpers/size/edit.js:122
+#: src/block-components/helpers/size/edit.js:123
 msgid "Margins"
 msgstr ""
 
-#: src/block-components/helpers/size/edit.js:148
+#: src/block-components/helpers/size/edit.js:149
 msgid "Sets the block paddings, i.e the space between the inner columns and the block border"
 msgstr ""
 
-#: src/block-components/helpers/size/edit.js:166
+#: src/block-components/helpers/size/edit.js:167
 msgid "Sets the block margin, i.e. the space outside the block between the block border and the next block."
 msgstr ""
 
@@ -5832,7 +5845,7 @@ msgid "Carousel Type"
 msgstr ""
 
 #: src/block/carousel/edit.js:249
-#: src/block/carousel/edit.js:582
+#: src/block/carousel/edit.js:581
 msgid "Slide"
 msgstr ""
 
@@ -5906,26 +5919,27 @@ msgid "%s Color"
 msgstr ""
 
 #: src/block/carousel/edit.js:400
-#: src/block/carousel/edit.js:521
+#: src/block/carousel/edit.js:520
 #: src/components/resizer-tooltip/index.js:94
 msgid "%s Width"
 msgstr ""
 
 #: src/block/carousel/edit.js:409
-#: src/block/carousel/edit.js:528
+#: src/block/carousel/edit.js:527
 #: src/components/resizer-tooltip/index.js:147
 msgid "%s Height"
 msgstr ""
 
 #: src/block/carousel/edit.js:425
-#: src/block/carousel/edit.js:498
+#: src/block/carousel/edit.js:497
+#: src/block/timeline/edit.js:362
 #: src/components/resizer-tooltip/index.js:226
 msgid "%s Size"
 msgstr ""
 
 #. Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
 #: src/block/carousel/edit.js:444
-#: src/block/carousel/edit.js:538
+#: src/block/carousel/edit.js:537
 msgid "Show %s on mobile"
 msgstr ""
 
@@ -5937,7 +5951,7 @@ msgstr ""
 #: src/block/carousel/edit.js:455
 #: src/block/carousel/edit.js:463
 #: src/block/carousel/edit.js:469
-#: src/block/carousel/edit.js:512
+#: src/block/carousel/edit.js:511
 #: src/block/divider/block-styles.js:34
 #: src/deprecated/v2/block/divider/edit.js:50
 msgid "Dots"
@@ -5952,72 +5966,75 @@ msgid "Outline"
 msgstr ""
 
 #: src/block/carousel/edit.js:487
-#: src/block/carousel/edit.js:498
+#: src/block/carousel/edit.js:497
+#: src/block/timeline/edit.js:362
+#: src/block/timeline/edit.js:370
 msgid "Dot"
 msgstr ""
 
 #: src/block/carousel/edit.js:493
-#: src/block/carousel/edit.js:521
-#: src/block/carousel/edit.js:528
+#: src/block/carousel/edit.js:520
+#: src/block/carousel/edit.js:527
 msgid "Active Dot"
 msgstr ""
 
-#: src/block/carousel/edit.js:512
+#: src/block/carousel/edit.js:511
+#: src/block/timeline/edit.js:334
 msgid "%s Gap"
 msgstr ""
 
-#: src/block/carousel/edit.js:517
+#: src/block/carousel/edit.js:516
 msgid "To improve accessibility, the clickable area of the dots will not go below %s."
 msgstr ""
 
 #. Translators: lower caps "dots" is the name of the setting.
-#: src/block/carousel/edit.js:540
+#: src/block/carousel/edit.js:539
 msgid "dots"
 msgstr ""
 
-#: src/block/carousel/edit.js:557
+#: src/block/carousel/edit.js:556
 #: src/block/icon/edit.js:77
 msgid "Accessibility"
 msgstr ""
 
 #. Translators: %s is the name of the setting. e.g. "Previous Slide".
-#: src/block/carousel/edit.js:563
-#: src/block/carousel/edit.js:572
-#: src/block/carousel/edit.js:581
-#: src/block/carousel/edit.js:591
+#: src/block/carousel/edit.js:562
+#: src/block/carousel/edit.js:571
+#: src/block/carousel/edit.js:580
+#: src/block/carousel/edit.js:590
 msgid "%s label"
 msgstr ""
 
-#: src/block/carousel/edit.js:564
+#: src/block/carousel/edit.js:563
 msgid "Previous slide"
 msgstr ""
 
-#: src/block/carousel/edit.js:573
+#: src/block/carousel/edit.js:572
 msgid "Next slide"
 msgstr ""
 
-#: src/block/carousel/edit.js:586
+#: src/block/carousel/edit.js:585
 msgid "Use %%d to show the slide number."
 msgstr ""
 
 #. Translators: This is for the "Slide 1 of 3" option label.
-#: src/block/carousel/edit.js:593
+#: src/block/carousel/edit.js:592
 msgid "Slide N of N"
 msgstr ""
 
-#: src/block/carousel/edit.js:597
+#: src/block/carousel/edit.js:596
 msgid "Use two %%d to show the slide number and the total slides. e.g. Slide 1 of 3."
 msgstr ""
 
-#: src/block/column/edit.js:95
+#: src/block/column/edit.js:98
 msgid "Column Spacing"
 msgstr ""
 
-#: src/block/column/edit.js:105
+#: src/block/column/edit.js:108
 msgid "Sets the paddings between the column content and the border."
 msgstr ""
 
-#: src/block/column/edit.js:128
+#: src/block/column/edit.js:131
 msgid "Align Last Block to Bottom"
 msgstr ""
 
@@ -7275,6 +7292,41 @@ msgstr ""
 msgid "Text for this block. Use this space for describing your block. Any text will do. Text for this block. You can use this space for describing your block."
 msgstr ""
 
+#: src/block/timeline/edit.js:326
+msgid "Content Position"
+msgstr ""
+
+#: src/block/timeline/edit.js:334
+#: src/block/timeline/edit.js:345
+msgid "Timeline"
+msgstr ""
+
+#: src/block/timeline/edit.js:350
+msgid "Accent Anchor Position"
+msgstr ""
+
+#: src/block/timeline/edit.js:356
+msgid "Succeeding timeline blocks will also use this value."
+msgstr ""
+
+#: src/block/timeline/edit.js:370
+msgid "%s Border Radius"
+msgstr ""
+
+#: src/block/timeline/edit.js:377
+msgid "Line Thickness"
+msgstr ""
+
+#: src/block/timeline/edit.js:402
+#: src/block/timeline/edit.js:403
+#: src/block/timeline/edit.js:409
+msgid "Timeline Accent Color"
+msgstr ""
+
+#: src/block/timeline/edit.js:414
+msgid "Timeline Background Color"
+msgstr ""
+
 #: src/block/video-popup/edit.js:98
 #: src/deprecated/v2/block/video-popup/edit.js:80
 msgid "Popup Option #1: Upload Video"
@@ -7514,11 +7566,11 @@ msgstr ""
 msgid "Example:"
 msgstr ""
 
-#: src/components/custom-attributes-control/index.js:108
+#: src/components/custom-attributes-control/index.js:111
 msgid "Learn more about Custom Attributes"
 msgstr ""
 
-#: src/components/custom-attributes-control/index.js:110
+#: src/components/custom-attributes-control/index.js:113
 msgid "There is an error in your custom attribute"
 msgstr ""
 
@@ -7781,22 +7833,6 @@ msgstr ""
 #: src/components/modal-design-library/modal.js:283
 #: src/components/modal-design-library/modal.js:300
 msgid "Add Designs"
-msgstr ""
-
-#: src/components/modal-welcome-tutorial/index.js:13
-msgid "Stackable Welcome Guide"
-msgstr ""
-
-#: src/components/modal-welcome-tutorial/index.js:19
-msgid "Hello there 👋 I see you might be new to Stackable, we've made a short 3-minute video so you can make the most out of our unique blocks."
-msgstr ""
-
-#: src/components/modal-welcome-tutorial/index.js:21
-msgid "Video Tutorial"
-msgstr ""
-
-#: src/components/modal-welcome-tutorial/index.js:31
-msgid "Close it, I'm good"
 msgstr ""
 
 #: src/components/panel-design-library/index.js:24
@@ -8281,7 +8317,7 @@ msgstr ""
 #: src/deprecated/v2/block/text/edit.js:313
 #: src/deprecated/v2/block/text/edit.js:410
 #: src/deprecated/v2/block/text/schema.js:84
-#: src/plugins/global-settings/typography/index.js:54
+#: src/plugins/global-settings/typography/index.js:55
 msgid "Subtitle"
 msgstr ""
 
@@ -9325,50 +9361,50 @@ msgstr ""
 msgid "Stackable Settings"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:30
-#: src/plugins/global-settings/typography/index.js:34
-#: src/plugins/global-settings/typography/index.js:38
-#: src/plugins/global-settings/typography/index.js:42
-#: src/plugins/global-settings/typography/index.js:46
-#: src/plugins/global-settings/typography/index.js:50
+#: src/plugins/global-settings/typography/index.js:31
+#: src/plugins/global-settings/typography/index.js:35
+#: src/plugins/global-settings/typography/index.js:39
+#: src/plugins/global-settings/typography/index.js:43
+#: src/plugins/global-settings/typography/index.js:47
+#: src/plugins/global-settings/typography/index.js:51
 #: src/plugins/global-settings/typography/typography-picker.js:103
 msgid "Heading %d"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:58
+#: src/plugins/global-settings/typography/index.js:59
 msgid "To apply this typography style, just add `%s` in your block's Additional CSS classes. Also make sure that `%s` tag is set to avoid conflict with other typography styles"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:62
+#: src/plugins/global-settings/typography/index.js:63
 #: src/plugins/global-settings/typography/typography-picker.js:95
 msgid "Body Text"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:147
+#: src/plugins/global-settings/typography/index.js:145
 msgid "Global Typography"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:150
+#: src/plugins/global-settings/typography/index.js:148
 msgid "Change the typography of your headings for all your blocks in your site."
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:153
+#: src/plugins/global-settings/typography/index.js:151
 msgid "Learn more about Global Typography"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:157
+#: src/plugins/global-settings/typography/index.js:155
 msgid "Apply Typography Styles to"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:159
+#: src/plugins/global-settings/typography/index.js:157
 msgid "Stackable and native blocks only"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:160
+#: src/plugins/global-settings/typography/index.js:158
 msgid "Stackable blocks only"
 msgstr ""
 
-#: src/plugins/global-settings/typography/index.js:161
+#: src/plugins/global-settings/typography/index.js:159
 msgid "Stackable and all other blocks"
 msgstr ""
 
@@ -9408,13 +9444,13 @@ msgstr ""
 msgid "Reset Default %s Block"
 msgstr ""
 
-#: src/plugins/save-block/store.js:124
-#: src/plugins/save-block/store.js:179
+#: src/plugins/save-block/store.js:128
+#: src/plugins/save-block/store.js:183
 msgid "Couldn't update block styles, got this error:"
 msgstr ""
 
-#: src/plugins/save-block/store.js:124
-#: src/plugins/save-block/store.js:179
+#: src/plugins/save-block/store.js:128
+#: src/plugins/save-block/store.js:183
 msgid "Please refresh the page and try again."
 msgstr ""
 
@@ -9578,36 +9614,32 @@ msgstr ""
 msgid "Force styles"
 msgstr ""
 
-#: src/welcome/admin.js:520
+#: src/welcome/admin.js:518
 msgid "Show \"Go premium\" notices"
 msgstr ""
 
-#: src/welcome/admin.js:529
+#: src/welcome/admin.js:527
 msgid "Don't show help video tooltips"
 msgstr ""
 
-#: src/welcome/admin.js:536
+#: src/welcome/admin.js:534
 msgid "🏠 Migration Settings"
 msgstr ""
 
-#: src/welcome/admin.js:538
+#: src/welcome/admin.js:536
 msgid "Migrating from version 2 to version 3?"
 msgstr ""
 
-#: src/welcome/admin.js:540
+#: src/welcome/admin.js:538
 msgid "Learn more about migration and the settings below"
 msgstr ""
 
-#: src/welcome/admin.js:556
+#: src/welcome/admin.js:554
 msgid "Load version 2 blocks in the editor only when the page was using version 2 blocks"
 msgstr ""
 
-#: src/welcome/admin.js:570
+#: src/welcome/admin.js:568
 msgid "Load version 2 frontend block stylesheet and scripts for backward compatibility"
-msgstr ""
-
-#: src/welcome/admin.js:578
-msgid "Load version 1 block stylesheet for backward compatibility"
 msgstr ""
 
 #: src/welcome/getting-started.js:22
@@ -9631,7 +9663,7 @@ msgid "Join our very active Stackable Community on Facebook."
 msgstr ""
 
 #: src/welcome/getting-started.js:43
-msgid "How to Customize Stackable Blocks"
+msgid "The Basics of Stackable Blocks"
 msgstr ""
 
 #: src/welcome/getting-started.js:44
@@ -9663,11 +9695,11 @@ msgid "Master the art of optimizing and enhancing images using Stackable's intui
 msgstr ""
 
 #: src/welcome/getting-started.js:67
-msgid "Introduction to Stackable Wireframes"
+msgid "Introduction to the Design Library"
 msgstr ""
 
 #: src/welcome/getting-started.js:68
-msgid "Dive into the fundamentals of Stackable Wireframes and learn how to streamline your website development process with ease."
+msgid "Dive into the fundamentals of the Stackable Design Library and learn how to streamline your website development process with ease."
 msgstr ""
 
 #: src/welcome/getting-started.js:73
@@ -10396,6 +10428,26 @@ msgstr ""
 #: src/deprecated/v2/block/text/block.json
 msgctxt "block keyword"
 msgid "Paragraph"
+msgstr ""
+
+#: src/block/timeline/block.json
+msgctxt "block title"
+msgid "Timeline"
+msgstr ""
+
+#: src/block/timeline/block.json
+msgctxt "block description"
+msgid "Show events in chronological order"
+msgstr ""
+
+#: src/block/timeline/block.json
+msgctxt "block keyword"
+msgid "history"
+msgstr ""
+
+#: src/block/timeline/block.json
+msgctxt "block keyword"
+msgid "milestone"
 msgstr ""
 
 #: src/block/video-popup/block.json
