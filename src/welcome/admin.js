@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import './news'
-import './wizard'
 import SVGEssentialIcon from './images/settings-icon-essential.svg'
 import SVGSpecialIcon from './images/settings-icon-special.svg'
 import SVGSectionIcon from './images/settings-icon-section.svg'
@@ -40,16 +39,19 @@ export const BLOCK_CATEROGIES = [
 		id: 'essential',
 		label: __( 'Essential Blocks', i18n ),
 		Icon: SVGEssentialIcon,
+		description: __( 'All the necessary building blocks you need to design anything.', i18n ),
 	},
 	{
 		id: 'special',
 		label: __( 'Special Blocks', i18n ),
 		Icon: SVGSpecialIcon,
+		description: __( 'Blocks with special functionality that will allow you to create distinctive designs.', i18n ),
 	},
 	{
 		id: 'section',
 		label: __( 'Section Blocks', i18n ),
 		Icon: SVGSectionIcon,
+		description: __( 'Use these blocks act as templates to help you build sections effortlessly.', i18n ),
 	},
 ]
 

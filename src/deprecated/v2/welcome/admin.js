@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import blockData from './blocks'
-import './wizard'
 
 /**
  * WordPress dependencies

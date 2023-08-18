@@ -350,8 +350,7 @@ body.settings_page_stackable-getting-started {
 }
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started,
-body.toplevel_page_stk-custom-fields,
-body.settings_page_stackable-settings-wizard {
+body.toplevel_page_stk-custom-fields {
 	img {
 		max-width: 100%;
 	}
@@ -724,5 +723,4 @@ body.settings_page_stackable-settings-wizard {
 
 @import "news";
 @import "getting-started";
-@import "wizard";
 @import "freemius";
