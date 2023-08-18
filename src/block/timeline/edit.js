@@ -279,7 +279,7 @@ const Edit = props => {
 		const scrollEvent = new Event( 'scroll', { bubbles: true } )
 		doc?.dispatchEvent( scrollEvent )
 		return () => {
-			doc.removeEventListener( 'scroll', handleScroll )
+			doc?.removeEventListener( 'scroll', handleScroll )
 		}
 	}, [
 		deviceType,
