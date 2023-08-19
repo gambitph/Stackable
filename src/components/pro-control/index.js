@@ -117,7 +117,7 @@ const ProControl = props => {
 			) }
 			{ props.showButton && (
 				<div>
-					<a href="https://wpstackable.com/upgrade/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg" target="_premium" className="button button-secondary">
+					<a href="https://wpstackable.com/premium/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg" target="_premium" className="button button-secondary">
 						<SVGDiamond />
 						{ props.button || LABELS[ props.type ]?.button || __( 'Learn More', i18n ) }
 					</a>
