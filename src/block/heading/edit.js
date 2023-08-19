@@ -47,7 +47,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { useEffect, useState } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 import { createBlock } from '@wordpress/blocks'
 import { dispatch } from '@wordpress/data'
 import { addFilter, applyFilters } from '@wordpress/hooks'
@@ -134,17 +134,18 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-
 					<Typography.InspectorControls
 						{ ...props }
 						hasRemoveMargins={ true }
 						initialOpen={ true }
 						hasTextShadow={ true }
 					/>
+
+					<Alignment.InspectorControls labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'Text', i18n ) ) } />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+
 					{ !! applyFilters( 'stackable.heading.edit.top-bottom-line.enable-handlers', true, parentBlock ) && (
 						<InspectorStyleControls>
 							<PanelAdvancedSettings
@@ -162,7 +163,7 @@ const Edit = props => {
 
 								<AdvancedRangeControl
 									label={ __( 'Width', i18n ) }
-									units={ [ 'px', '%' ] }
+									units={ [ 'px', '%', 'vw' ] }
 									attribute="topLineWidth"
 									min="0"
 									sliderMax={ [ 200, 100 ] }
@@ -208,7 +209,7 @@ const Edit = props => {
 
 								<AdvancedRangeControl
 									label={ __( 'Width', i18n ) }
-									units={ [ 'px', '%' ] }
+									units={ [ 'px', '%', 'vw' ] }
 									attribute="bottomLineWidth"
 									min={ 0 }
 									sliderMax={ [ 200, 100 ] }

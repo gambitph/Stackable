@@ -1,10 +1,13 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/testimonial",
 	"title": "Testimonial",
 	"description": "Showcase what your users say about your product or service.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"providesContext": {
+		"stackable/innerBlockOrientation": "innerBlockOrientation"
+	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",
 	"stk-demo": "https://wpstackable.com/testimonial-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"

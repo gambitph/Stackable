@@ -11,19 +11,22 @@ import {
 	AdvancedToggleControl,
 	BlockContainer,
 	AdvancedRangeControl,
-	IconControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	PanelSpacingBody,
 	UrlInputPopover,
-	ColumnPaddingControl,
 } from '~stackable/components'
 import {
-	DivBackground, ContentAlignControl, ResponsiveControl, SvgIconPlaceholder,
+	DivBackground,
+	ContentAlignControl,
+	ResponsiveControl,
+	SvgIconPlaceholder,
+	ColumnPaddingControl,
+	IconControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	withUniqueClass,

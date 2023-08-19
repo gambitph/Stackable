@@ -1,13 +1,23 @@
 @import "common";
 
-.stackable-dynamic-content__popover > .components-popover__content {
-	width: 250px;
+.stackable-dynamic-content__popover {
+	> .components-popover__content {
+		width: 250px;
+	}
+	&.stk-dynamic-content__popover--is-premium {
+		> .components-popover__content {
+			width: 300px;
+			padding: 16px;
+		}
+		.ugb-design-control-pro-note__logo {
+			width: 100px;
+		}
+	}
 }
 
 .stk-dynamic-content-control {
 	display: flex;
 	align-items: flex-start;
-	overflow: hidden;
 
 	&.stk--has-control-tooltip {
 		overflow: visible;
@@ -18,22 +28,15 @@
 		min-width: unset;
 		padding-left: 4px;
 		padding-right: 4px;
-		width: 35px !important;
+		width: 30px;
+		max-width: 30px;
+		flex: 0 0 auto;
 		height: 30px;
 		margin-left: 4px;
 
 		[data-icon="database"] {
 			width: 14px;
 			height: 16px;
-		}
-
-		&:hover {
-			color: #fff !important;
-			background: var(--wp-admin-theme-color) !important;
-		}
-
-		&.is-pressed {
-			background: var(--wp-admin-theme-color);
 		}
 	}
 
@@ -70,7 +73,6 @@
 
 	.stk-dynamic-content-control__button {
 		position: absolute;
-		border: 1px solid var(--wp-admin-theme-color);
 		z-index: 3;
 		top: 0;
 		right: 0;

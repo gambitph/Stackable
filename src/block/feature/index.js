@@ -32,12 +32,13 @@ export const settings = {
 		align: [ 'center', 'wide', 'full' ],
 		stkBlockLinking: false, // Disable linking on the columns in this block.
 		stkAlign: true,
+		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	example,
 	deprecated,
 	//  styles: blockStyles,
 
-	// deprecated,
 	variations,
 	edit,
 	save,

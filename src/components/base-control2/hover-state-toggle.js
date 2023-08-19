@@ -5,7 +5,9 @@ import SVGStateNormal from './images/state-normal.svg'
 import SVGStateHover from './images/state-hover.svg'
 import SVGStateParentHover from './images/state-parent-hover.svg'
 import ControlIconToggle from '../control-icon-toggle'
-import { useBlockHoverState } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockHoverState, useDeviceType,
+} from '~stackable/hooks'
 
 /**
  * External dependencies
@@ -15,24 +17,26 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { useMemo, memo } from '@wordpress/element'
+import { memo } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { dispatch } from '@wordpress/data'
+import { upperFirst, camelCase } from 'lodash'
+import { isEmptyAttribute } from '~stackable/util'
 
 const HOVER_OPTIONS = [
 	{
-		label: __( 'Normal', i18n ),
+		label: __( 'Normal State', i18n ),
 		value: 'normal',
 		icon: <SVGStateNormal />,
 	},
 	{
-		label: __( 'Hover', i18n ),
+		label: __( 'Hovered State', i18n ),
 		value: 'hover',
 		icon: <SVGStateHover />,
 	},
 	{
-		label: __( 'Parent Hovered', i18n ),
-		value: 'parent-hovered',
+		label: __( 'Parent Hovered State', i18n ),
+		value: 'parent-hover',
 		icon: <SVGStateParentHover />,
 	},
 	{
@@ -42,47 +46,75 @@ const HOVER_OPTIONS = [
 	},
 ]
 
-const ALL_HOVER = [ 'normal', 'hover', 'parent-hovered', 'collapsed' ]
+const ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
+const _ALL_HOVER = [ 'normal', 'hover', 'parent-hover', 'collapsed' ]
+const ALL_HOVER_ATTRIBUTE_SUFFIX = ALL_HOVER.map( s => upperFirst( camelCase( s ) ) )
 
 const HoverStateToggle = props => {
 	const [ currentHoverState, _blockHoverClass, hasParentHoverState, hasCollapsedState, isCollapsedBlock ] = useBlockHoverState()
-	const stateOptions = useMemo( () => {
-		const hover = props.hover === 'all' ? ALL_HOVER : props.hover
-		return HOVER_OPTIONS.filter( ( { value } ) => {
-			if ( ! hasCollapsedState && value === 'collapsed' && ! isCollapsedBlock ) {
-				return false
-			}
+	const deviceType = useDeviceType()
 
-			return hover.includes( value )
-		} ).map( state => {
-			if ( state.value === 'parent-hovered' ) {
-				return {
-					disabled: ! hasParentHoverState,
-					tooltip: ! hasParentHoverState
-						? <span className="stk-tooltip__text">
-							{ sprintf( '%s - %s', __( 'Parent Hovered', i18n ), __( 'Add a Container Background to a parent block to enable this state.', i18n ) ) }
-							<br />
-							<a href="https://docs.wpstackable.com/article/465-how-to-style-the-different-block-hover-states?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">{ __( 'Learn more', i18n ) }</a>
-						</span> : undefined,
-					...state,
-				}
+	// These are all of the attributes for all states.
+	const stateValues = useBlockAttributesContext( attributes => {
+		if ( ! props.attribute ) {
+			return {}
+		}
+		return ALL_HOVER.reduce( ( states, state, i ) => {
+			return {
+				...states,
+				[ state ]: attributes[ `${ props.attribute }${ props.hasResponsive && deviceType !== 'Desktop' ? deviceType : '' }${ ALL_HOVER_ATTRIBUTE_SUFFIX[ i ] }` ],
 			}
+		}, {} )
+	} )
+
+	const hover = props.hover === 'all' ? ALL_HOVER : props.hover
+
+	const _stateOptions = HOVER_OPTIONS.filter( ( { value } ) => {
+		if ( ! hasCollapsedState && value === 'collapsed' && ! isCollapsedBlock ) {
+			return false
+		}
+
+		return hover.includes( value )
+	} )
+
+	const stateOptions = _stateOptions.map( state => {
+		if ( state.value === 'parent-hover' ) {
+			return {
+				disabled: ! hasParentHoverState,
+				tooltip: ! hasParentHoverState
+					? <span className="stk-tooltip__text">
+						{ sprintf( '%s - %s', __( 'Parent Hovered', i18n ), __( 'Add a Container Background to a parent block to enable this state.', i18n ) ) }
+						<br />
+						<a href="https://docs.wpstackable.com/article/465-how-to-style-the-different-block-hover-states?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">{ __( 'Learn more', i18n ) }</a>
+					</span> : undefined,
+				...state,
+			}
+		}
+		return state
+	} ).map( state => {
+		if ( state.value === 'normal' || ! props.attribute ) {
 			return state
-		} )
-	}, [ props.hover, hasParentHoverState ] )
+		}
+
+		return {
+			...state,
+			hasValue: ! isEmptyAttribute( stateValues[ state.value ] ),
+		}
+	} )
 
 	return (
 		<ControlIconToggle
 			value={ currentHoverState }
 			options={ stateOptions }
 			onChange={ state => dispatch( 'stackable/hover-state' ).updateHoverState( state ) }
-			buttonLabel={ __( 'Hover State', i18n ) }
 		/>
 	)
 }
 
 HoverStateToggle.defaultProps = {
 	hover: false,
+	attribute: '',
+	hasResponsive: false, // Wether the attribute has responsive attributes (where we have hover states per device type)
 }
 
 export default memo( HoverStateToggle )

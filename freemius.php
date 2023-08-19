@@ -53,6 +53,14 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 	sugb_fs()->add_filter( 'hide_freemius_powered_by', '__return_true' );
 	sugb_fs()->add_filter( 'permission_diagnostic_default', '__return_false' ); // Disable opt-in option by default
 	sugb_fs()->add_filter( 'permission_extensions_default', '__return_false' ); // Disable opt-in option by default
+	// Hide Freemius notices that can easily annoy users.
+	sugb_fs()->add_filter( 'show_admin_notice', function( $show, $message ) {
+		if ( in_array( $message['id'], array( 'license_activated', 'premium_activated', 'connect_account' ) ) ) {
+			return false;
+		}
+        return $show;
+	}, 10, 2 );
+
 
 	// Signal that SDK was initiated.
 	do_action( 'sugb_fs_loaded' );

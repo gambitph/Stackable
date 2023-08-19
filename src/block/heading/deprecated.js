@@ -31,6 +31,11 @@ addFilter( 'stackable.heading.save.blockClassNames', 'stackable/3.6.1', ( output
 } )
 
 const deprecated = [
+	// Support new margin-top/bottom classes.
+	{
+		attributes: attributes( '3.7.9' ),
+		save: withVersion( '3.7.9' )( Save ),
+	},
 	{
 		attributes: attributes( '3.5.0' ),
 		save: withVersion( '3.5.0' )( Save ),

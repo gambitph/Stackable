@@ -65,8 +65,10 @@ const Edit = props => {
 		textClasses,
 	] )
 
+	const progressValue = attributes.progressValue || ''
+
 	// this is to handle dynamic content; only show valid value
-	const parsedProgressValue = parseFloat( useDynamicContent( attributes.progressValue ) )
+	const parsedProgressValue = parseFloat( useDynamicContent( progressValue ).replace( /,/g, '' ) )
 	const derivedProgressValue = isNaN( parsedProgressValue ) ? DEFAULT_PROGRESS : parsedProgressValue
 	const derivedValue = `${ attributes.progressValuePrefix }${ derivedProgressValue }${ attributes.progressValueSuffix }`.trim()
 
@@ -85,16 +87,6 @@ const Edit = props => {
 					<InspectorTabs />
 
 					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-
-					{ /** Advanced controls */ }
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
 
 					<ProgressBar.InspectorControls isCircle />
 					<Typography.InspectorControls
@@ -106,6 +98,16 @@ const Edit = props => {
 						hasToggle
 						label={ __( 'Label', i18n ) }
 					/>
+
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-circle" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+
 				</>
 			) }
 
@@ -150,6 +152,10 @@ const Edit = props => {
 						) }
 					</div>
 				</div>
+				{ /* Add our progress style here because we're adjusting the value using a hook */ }
+				<style>
+					{ `.editor-styles-wrapper .stk-${ props.attributes.uniqueId } .stk-progress-circle { --progress-value:${ derivedValue } }` }
+				</style>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

@@ -182,7 +182,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							<WhenResponsiveScreen>
 								<AdvancedToolbarControl
 									label={ __( 'Content Vertical Align', i18n ) }
-									controls="flex-vertical"
+									controls="__flex-vertical"
 									value={ blockVerticalAlign }
 									onChange={ value => setAttributes( { blockVerticalAlign: blockVerticalAlign !== value ? value : '' } ) }
 									className="ugb--help-tip-advanced-block-vertical-align"
@@ -193,7 +193,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							<WhenResponsiveScreen screen="tablet">
 								<AdvancedToolbarControl
 									label={ __( 'Content Vertical Align', i18n ) }
-									controls="flex-vertical"
+									controls="__flex-vertical"
 									value={ tabletBlockVerticalAlign }
 									onChange={ value => setAttributes( { tabletBlockVerticalAlign: tabletBlockVerticalAlign !== value ? value : '' } ) }
 									className="ugb--help-tip-advanced-block-vertical-align"
@@ -204,7 +204,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							<WhenResponsiveScreen screen="mobile">
 								<AdvancedToolbarControl
 									label={ __( 'Content Vertical Align', i18n ) }
-									controls="flex-vertical"
+									controls="__flex-vertical"
 									value={ mobileBlockVerticalAlign }
 									onChange={ value => setAttributes( { mobileBlockVerticalAlign: mobileBlockVerticalAlign !== value ? value : '' } ) }
 									className="ugb--help-tip-advanced-block-vertical-align"
@@ -270,7 +270,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							<WhenResponsiveScreen>
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
-									controls="flex-horizontal"
+									controls="__flex-horizontal"
 									value={ blockHorizontalAlign }
 									onChange={ value => setAttributes( { blockHorizontalAlign: blockHorizontalAlign !== value ? value : '' } ) }
 									className="ugb--help-tip-advanced-block-horizontal-align"
@@ -281,7 +281,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							<WhenResponsiveScreen screen="tablet">
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
-									controls="flex-horizontal"
+									controls="__flex-horizontal"
 									value={ tabletBlockHorizontalAlign }
 									onChange={ value => setAttributes( { tabletBlockHorizontalAlign: tabletBlockHorizontalAlign !== value ? value : '' } ) }
 									className="ugb--help-tip-advanced-block-horizontal-align"
@@ -292,7 +292,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							<WhenResponsiveScreen screen="mobile">
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
-									controls="flex-horizontal"
+									controls="__flex-horizontal"
 									value={ mobileBlockHorizontalAlign }
 									onChange={ value => setAttributes( { mobileBlockHorizontalAlign: mobileBlockHorizontalAlign !== value ? value : '' } ) }
 									className="ugb--help-tip-advanced-block-horizontal-align"

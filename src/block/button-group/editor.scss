@@ -1,3 +1,6 @@
-.stk-button-group > * > .block-editor-block-list__layout {
-	align-items: flex-start;
+.stk-button-group > .block-editor-inner-blocks {
+	width: 100%; // This makes full-width buttons work.
+	> .block-editor-block-list__layout {
+		align-items: flex-start;
+	}
 }

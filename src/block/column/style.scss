@@ -10,6 +10,14 @@
 	margin-bottom: 0;
 }
 
+// Align the last block to the bottom.
+.stk-block .stk--align-last-block-to-bottom {
+	height: 100%;
+	> *:last-child {
+		margin-top: auto;
+	}
+}
+
 // FIXME: Temporarily removed this since the frontend is having issues with the Accordion block when it's nested inside a container.
 // // we need this to make position sticky to work inside columns.
 // .stk-block.stk-block-column--v2 > * > .stk-inner-blocks {
@@ -20,6 +28,6 @@
 // Allow columns to shrink below their content size (If you add a horizontal
 // scroller block inside a column, the horizontal scroller will be too wide.)
 // @see https://dfmcphee.com/flex-items-and-min-width-0/
-.stk-block.stk-block-column--v3 > .stk-column-wrapper {
+.stk-block:is(.stk-block-column--v3, [data-v]) > .stk-column-wrapper {
 	min-width: 0;
 }

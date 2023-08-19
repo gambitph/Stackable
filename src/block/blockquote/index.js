@@ -10,6 +10,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * External dependencies
@@ -30,9 +31,12 @@ export const settings = {
 		html: false,
 		align: true,
 		stkAlign: true,
+		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	example,
 
+	deprecated,
 	variations,
 	edit,
 	save,

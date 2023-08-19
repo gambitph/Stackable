@@ -6,6 +6,10 @@
 		&__label {
 			overflow: hidden;
 		}
+
+		.components-base-control__label {
+			overflow: hidden;
+		}
 	}
 	> .components-base-control__field {
 		margin-bottom: 16px;
@@ -41,10 +45,13 @@
 			display: none !important;
 		}
 	}
+	.editor-styles-wrapper {
+		display: flex !important;
+		gap: 12px;
+		align-items: center;
+	}
 	.dashicons-editor-help {
-		position: absolute;
-		top: 0;
-		right: 0;
+		display: flex !important;
 	}
 	// Themes may cut the preview of the heading text.
 	> .editor-styles-wrapper {

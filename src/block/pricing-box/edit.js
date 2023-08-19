@@ -6,7 +6,7 @@ import variations from './variations'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import {
@@ -66,6 +66,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		`stk-${ props.attributes.uniqueId }-container`,
+		`stk-${ props.attributes.uniqueId }-inner-blocks`,
 		'stk-block-pricing-box__content',
 	], getContentAlignmentClasses( props.attributes ) )
 
@@ -78,18 +79,18 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasBlockAlignment={ true } />
+					<ContentAlign.InspectorControls />
+					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
 					<BlockDiv.InspectorControls />
+					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-pricing-box" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-					<ContentAlign.InspectorControls />
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />

@@ -16,7 +16,10 @@ export const getAlignmentClasses = attributes => {
 
 		// We need to put this in a class to we can also target horizontal
 		// orientations in css.
-		[ `stk--block-orientation-${ attributes.innerBlockOrientation }` ]: attributes.innerBlockOrientation,
+		[ `stk--block-horizontal-flex` ]: attributes.innerBlockOrientation === 'horizontal',
+
+		// We need to put this class to make the
+		'stk--column-flex': attributes.innerBlockJustify || attributes.innerBlockAlign,
 
 		// We need to add our own class so we won't have to worry about rules
 		// being applied to the nested children of our blocks.

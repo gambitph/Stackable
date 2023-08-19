@@ -16,6 +16,7 @@ import metadata from './block.json'
 import transforms from './transforms'
 import variations from './variations'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
@@ -32,8 +33,11 @@ export const settings = {
 		stkAlign: true,
 		stkLayoutReset: false,
 		stkSaveBlockStyle: false,
+		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	example,
+	deprecated,
 
 	transforms,
 	variations,

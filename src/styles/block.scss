@@ -12,7 +12,7 @@
 	position: relative;
 	box-sizing: border-box;
 }
-.stk--block-orientation-horizontal .stk-block {
+.stk--block-horizontal-flex .stk-block {
 	width: auto;
 }
 // .site-content - support for OceanWP
@@ -37,6 +37,11 @@
 	// We need to add at least 1px here so that when the column collapses
 	// automatically, it still shows up in tablet and moblie.
 	min-width: 1px;
+}
+
+// Columns spacing
+.stk-block.stk-block-column.stk-column > .stk-column-wrapper {
+	margin: var(--stk-columns-spacing); // This is defined in the design system
 }
 
 /**
@@ -147,11 +152,9 @@
 		justify-content: flex-start;
 
 		// Inner block orientation.
-		&:not(.stk--block-orientation-horizontal) {
-			flex-direction: column;
-		}
-		&.stk--block-orientation-horizontal {
+		&.stk--block-horizontal-flex {
 			flex-direction: row;
+			justify-content: space-evenly; // Default justification for horizontal blocks.
 			> * {
 				margin-top: 0;
 				margin-bottom: 0;
@@ -260,7 +263,7 @@
 	-o-text-fill-color: transparent;
 }
 
-// Button alignment.
+// Deprecated styles.
 @import "deprecated-block";
 
 .stk-block .stk-button-group {
@@ -353,6 +356,22 @@
 	text-align: var(--stk-alignment-text-align, start);
 }
 
+@mixin align-space-between-styles {
+	--stk-alignment-justify-content: space-between;
+}
+
+@mixin align-space-around-styles {
+	--stk-alignment-justify-content: space-around;
+}
+
+@mixin align-space-evenly-styles {
+	--stk-alignment-justify-content: space-evenly;
+}
+
+@mixin align-justify-styles {
+	--stk-alignment-text-align: justify;
+}
+
 // Default text direction, we need to add this for RTL support.
 .stk-block {
 	text-align: start;
@@ -377,6 +396,18 @@
 	&-right {
 		@include align-right-styles;
 	}
+	&-justify {
+		@include align-justify-styles;
+	}
+	&-space-between {
+		@include align-space-between-styles;
+	}
+	&-space-around {
+		@include align-space-around-styles;
+	}
+	&-space-evenly {
+		@include align-space-evenly-styles;
+	}
 }
 
 @include tablet-mobile {
@@ -389,6 +420,18 @@
 	.has-text-align-right-tablet {
 		@include align-right-styles;
 	}
+	.has-text-align-justify-tablet {
+		@include align-justify-styles;
+	}
+	.has-text-align-space-between-tablet {
+		@include align-space-between-styles;
+	}
+	.has-text-align-space-around-tablet {
+		@include align-space-around-styles;
+	}
+	.has-text-align-space-evenly-tablet {
+		@include align-space-evenly-styles;
+	}
 }
 
 @include mobile {
@@ -400,6 +443,18 @@
 	}
 	.has-text-align-right-mobile {
 		@include align-right-styles;
+	}
+	.has-text-align-justify-mobile {
+		@include align-justify-styles;
+	}
+	.has-text-align-space-between-mobile {
+		@include align-space-between-styles;
+	}
+	.has-text-align-space-around-mobile {
+		@include align-space-around-styles;
+	}
+	.has-text-align-space-evenly-mobile {
+		@include align-space-evenly-styles;
 	}
 }
 

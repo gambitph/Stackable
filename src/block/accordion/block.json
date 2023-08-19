@@ -1,10 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/accordion",
 	"title": "Accordion",
 	"description": "A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"Toggle",
 		"Faq"

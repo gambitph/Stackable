@@ -36,18 +36,20 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Only load the frontend scripts for now in the backend.  In the frontend,
 			// we'll load these conditionally with `load_frontend_scripts_conditionally`
 			if ( is_admin() ) {
-				add_action( 'init', array( $this, 'register_frontend_assets' ) );
+				add_action( 'enqueue_block_editor_assets', array( $this, 'block_enqueue_frontend_assets' ) );
 			}
 
 			// Checks if a Stackable block is rendered in the frontend, then loads our scripts.
-			add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
-			add_action( 'template_redirect', array( $this, 'load_frontend_scripts_conditionally_head' ) );
+			if ( ! is_admin() ) {
+				add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
+				add_action( 'template_redirect', array( $this, 'load_frontend_scripts_conditionally_head' ) );
+			}
 
 			// Load our editor scripts.
-			add_action( 'init', array( $this, 'register_block_editor_assets' ) );
+			if ( is_admin() ) {
+				add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_assets' ) );
+			}
 			add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_assets_admin' ) );
-
-			add_filter( 'init', array( $this, 'register_frontend_assets_nodep' ) );
 
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
@@ -62,21 +64,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Add theme classes for compatibility detection.
 			add_action( 'body_class', array( $this, 'add_body_class_theme_compatibility' ) );
 			add_action( 'admin_body_class', array( $this, 'add_body_class_theme_compatibility' ) );
-		}
-
-		/**
-		 * Register inline frontend styles, these are always loaded.
-		 *
-		 * @since 3.0.0
-		 */
-		public function register_frontend_assets_nodep() {
-			// Register our dummy style so that the inline styles would get added.
-			wp_register_style( 'ugb-style-css-nodep', false );
-			wp_enqueue_style( 'ugb-style-css-nodep' );
-			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
-			if ( ! empty( $inline_css ) ) {
-				wp_add_inline_style( 'ugb-style-css-nodep', $inline_css );
-			}
 		}
 
 		/**
@@ -120,6 +107,19 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			) );
 			wp_localize_script( 'ugb-block-frontend-js', 'stackable', $args );
 
+			// Register inline frontend styles, these are always loaded.
+			// Register via a dummy style.
+			wp_register_style( 'ugb-style-css-nodep', false );
+			$inline_css = apply_filters( 'stackable_inline_styles_nodep', '' );
+			if ( ! empty( $inline_css ) ) {
+				wp_add_inline_style( 'ugb-style-css-nodep', $inline_css );
+			}
+
+			// This is needed for the translation strings in our UI.
+			if ( is_admin() ) {
+				stackable_load_js_translations();
+			}
+
 			// Frontend only scripts.
 			// if ( ! is_admin() ) {
 			// 	wp_register_script(
@@ -149,7 +149,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 */
 		public function load_frontend_scripts_conditionally_head() {
 			// Only do this in the frontend.
-			if ( $this->is_main_script_loaded || is_admin() ) {
+			if ( $this->is_main_script_loaded ) {
 				return;
 			}
 
@@ -188,6 +188,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @return string output block
 		 */
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
+			if ( $block_content === null ) {
+				$block_content = "";
+			}
+
 			// Load our main frontend scripts if there's a Stackable block loaded in the
 			// frontend.
 			if ( ! $this->is_main_script_loaded && ! is_admin() ) {
@@ -206,9 +210,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			$stackable_block = '';
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
-				if ( preg_match( '#stackable/([\w\d-]+)#', $block_name, $matches ) ) {
-					$stackable_block = $matches[1];
-				}
+				$stackable_block = substr( $block_name, 10 );
 			} else if ( stripos( $block_content, '<!-- wp:stackable/' ) !==  false ) {
 				if ( preg_match( '#stackable/([\w\d-]+)#', $block_content, $matches ) ) {
 					$stackable_block = $matches[1];
@@ -218,6 +220,12 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			if ( ! empty( $stackable_block ) && ! array_key_exists( $stackable_block, $this->scripts_loaded ) ) {
 				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
 				$this->scripts_loaded[] = $stackable_block;
+			}
+
+			// Check whether the current block needs to enqueue some scripts.
+			// This gets called across all the blocks.
+			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
+				do_action( 'stackable/enqueue_scripts', $block_content, $block );
 			}
 
 			return $block_content;
@@ -231,6 +239,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		public function block_enqueue_frontend_assets() {
 			$this->register_frontend_assets();
 			wp_enqueue_style( 'ugb-style-css' );
+			wp_enqueue_style( 'ugb-style-css-nodep' );
 			wp_enqueue_script( 'ugb-block-frontend-js' );
 			do_action( 'stackable_block_enqueue_frontend_assets' );
 		}
@@ -264,10 +273,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * @since 0.1
 		 */
 		public function register_block_editor_assets() {
-			if ( ! is_admin() ) {
-				return;
-			}
-
 			// STK API.
 			wp_register_script(
 				'ugb-stk',
@@ -290,7 +295,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			// Add translations.
 			wp_set_script_translations( 'ugb-stk', STACKABLE_I18N );
 			wp_set_script_translations( 'ugb-block-js', STACKABLE_I18N );
-			stackable_load_js_translations(); // This is needed for the translation strings to be loaded.
 
 			// Backend editor only styles.
 			wp_register_style(
@@ -317,7 +321,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'nonce' => wp_create_nonce( 'stackable' ),
 				'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
 				'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
-				'displayWelcomeVideo' => function_exists( 'stackable_display_welcome_video' ) ? stackable_display_welcome_video() : false,
 				'currentTheme' => esc_html( get_template() ),
 				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 				'version' => array_shift( $version_parts ),
@@ -343,6 +346,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				// Editor settings.
 				'settings' => apply_filters( 'stackable_js_settings', array() ),
 				'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
+				'blockCategoryIndex' => apply_filters( 'stackable_block_category_index', 0 ),
 			) );
 			wp_localize_script( 'wp-blocks', 'stackable', $args );
 		}
@@ -426,6 +430,8 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-twentytwentyone-theme';
 			} else if ( function_exists( 'twentytwentytwo_support' ) ) {
 				$classes[] = 'stk--is-twentytwentytwo-theme';
+			} else if ( function_exists( 'hello_elementor_setup' ) ) { // Taken from https://github.com/elementor/hello-theme/blob/master/functions.php
+				$classes[] = 'stk--is-helloelementor-theme';
 			}
 
 			return $convert_to_string ? implode( ' ', $classes ) : $classes;

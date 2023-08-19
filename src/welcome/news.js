@@ -3,7 +3,7 @@
  */
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
-import { render } from '@wordpress/element'
+import { createRoot } from '@wordpress/element'
 import { Spinner } from '@wordpress/components'
 
 /**
@@ -23,7 +23,7 @@ domReady( () => {
 	}
 
 	// Spinner.
-	render( <div><Spinner /></div>, content )
+	createRoot( content ).render( <div><Spinner /></div> )
 
 	// Ajax load the news so as not to stall the page load.
 	ajaxSend( 'stackable_news_feed_ajax', {

@@ -16,6 +16,7 @@ const Styles = props => {
 		attrNameTemplate = '%s',
 		hoverSelector,
 		borderRadiusSelector,
+		borderEnabledCallback = getAttribute => getAttribute( 'borderType' ),
 	} = props
 
 	return (
@@ -78,7 +79,7 @@ const Styles = props => {
 				attrName="borderColor"
 				key="borderColor"
 				attrNameTemplate={ attrNameTemplate }
-				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
+				enabledCallback={ borderEnabledCallback }
 				hover="all"
 				hoverSelector={ hoverSelector }
 				dependencies={ [ 'borderType' ] }
@@ -94,7 +95,7 @@ const Styles = props => {
 				hover="all"
 				hoverSelector={ hoverSelector }
 				format="%spx"
-				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
+				enabledCallback={ borderEnabledCallback }
 				valuePreCallback={ value => value?.top }
 				dependencies={ [ 'borderType' ] }
 			/>
@@ -109,7 +110,7 @@ const Styles = props => {
 				hover="all"
 				hoverSelector={ hoverSelector }
 				format="%spx"
-				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
+				enabledCallback={ borderEnabledCallback }
 				valuePreCallback={ value => value?.right }
 				dependencies={ [ 'borderType' ] }
 			/>
@@ -124,7 +125,7 @@ const Styles = props => {
 				hover="all"
 				hoverSelector={ hoverSelector }
 				format="%spx"
-				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
+				enabledCallback={ borderEnabledCallback }
 				valuePreCallback={ value => value?.bottom }
 				dependencies={ [ 'borderType' ] }
 			/>
@@ -139,7 +140,7 @@ const Styles = props => {
 				hover="all"
 				hoverSelector={ hoverSelector }
 				format="%spx"
-				enabledCallback={ getAttribute => getAttribute( 'borderType' ) }
+				enabledCallback={ borderEnabledCallback }
 				valuePreCallback={ value => value?.left }
 				dependencies={ [ 'borderType' ] }
 			/>

@@ -7,6 +7,7 @@
  */
 import {
 	createTypographyStyles,
+	fetchSettings,
 	loadGoogleFont,
 } from '~stackable/util'
 import { generateStyles } from '~stackable/block-components'
@@ -16,7 +17,6 @@ import { head } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { loadPromise, models } from '@wordpress/api'
 import {
 	useEffect,
 	useState,
@@ -48,12 +48,9 @@ export const GlobalTypographyStyles = () => {
 
 	useEffect( () => {
 		// Get settings.
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
-				setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
-			} )
+		fetchSettings().then( response => {
+			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
+			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 		} )
 
 		// Allow actions to trigger styles to update.

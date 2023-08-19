@@ -9,6 +9,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * External dependencies
@@ -23,9 +24,10 @@ export const settings = {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 		stkSaveBlockStyle: false,
+		spacing: true,
 	},
 	example,
-
+	deprecated,
 	edit,
 	save,
 }

@@ -6,19 +6,13 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	BlockContainer,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	ButtonControlsHelper,
-	PanelSpacingBody,
 	AdvancedRangeControl,
-	ImageBackgroundControlsHelper,
 	WhenResponsiveScreen,
-	ColumnPaddingControl,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
@@ -27,6 +21,12 @@ import {
 	DivBackground,
 	ContentAlignControl,
 	ResponsiveControl,
+	BackgroundControlsHelper,
+	ButtonControlsHelper,
+	ColumnPaddingControl,
+	ImageBackgroundControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,
@@ -111,7 +111,11 @@ addFilter( 'stackable.card.edit.inspector.layout.before', 'stackable/card', ( ou
 				options={ applyFilters( 'stackable.card.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)
@@ -717,7 +721,7 @@ const edit = props => {
 								}
 								{ showButton &&
 									<ButtonEditHelper
-										attrNameTemplate={ `button%s` }
+										attrNameTemplate="button%s"
 										setAttributes={ setAttributes }
 										blockAttributes={ props.attributes }
 										text={ buttonText }

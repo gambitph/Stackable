@@ -18,7 +18,7 @@ import deprecated from './deprecated'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { _x } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
 export const settings = {
@@ -27,37 +27,38 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
+		spacing: true,
 		// Display additional blocks when editing the block's default style.
 		stkSaveBlockStyle: [
 			[ 'stackable/table-of-contents', {} ],
 			// We need to add sample headings for the table of contents block to show things.
 			[ 'core/heading', {
-				content: __( 'Introduction', 'Table of Contents example text', i18n ),
+				content: _x( 'Introduction', 'Table of Contents example text', i18n ),
 				anchor: 'heading',
 				level: 2,
 			} ],
 			[ 'core/heading', {
-				content: __( 'Chapter 1: Abstract', 'Table of Contents example text', i18n ),
+				content: _x( 'Chapter 1: Abstract', 'Table of Contents example text', i18n ),
 				anchor: 'heading',
 				level: 2,
 			} ],
 			[ 'core/heading', {
-				content: __( 'Chapter 2: History', 'Table of Contents example text', i18n ),
+				content: _x( 'Chapter 2: History', 'Table of Contents example text', i18n ),
 				anchor: 'heading',
 				level: 2,
 			} ],
 			[ 'core/heading', {
-				content: __( 'Chapter 3: Main Content', 'Table of Contents example text', i18n ),
+				content: _x( 'Chapter 3: Main Content', 'Table of Contents example text', i18n ),
 				anchor: 'heading',
 				level: 2,
 			} ],
 			[ 'core/heading', {
-				content: __( 'Chapter 4: Additional Thoughts', 'Table of Contents example text', i18n ),
+				content: _x( 'Chapter 4: Additional Thoughts', 'Table of Contents example text', i18n ),
 				anchor: 'heading',
 				level: 2,
 			} ],
 			[ 'core/heading', {
-				content: __( 'Conclusion', 'Table of Contents example text', i18n ),
+				content: _x( 'Conclusion', 'Table of Contents example text', i18n ),
 				anchor: 'heading',
 				level: 2,
 			} ],

@@ -7,7 +7,7 @@ import variations from './variations'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { version as VERSION } from 'stackable'
 import { last } from 'lodash'
 import {
@@ -51,8 +51,8 @@ import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = variations[ 0 ].innerBlocks
 
-const widthUnit = [ 'px' ]
-const heightUnit = [ 'px' ]
+const widthUnit = [ 'px', 'vw' ]
+const heightUnit = [ 'px', 'vh' ]
 
 const Edit = props => {
 	const {
@@ -89,6 +89,7 @@ const Edit = props => {
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-card__content',
+		`stk-${ props.attributes.uniqueId }-inner-blocks`,
 	], {
 		'stk-container-padding': hasContainer,
 	} )
@@ -103,19 +104,18 @@ const Edit = props => {
 		hasHeight = true
 	}
 
+	const imageWidthUnit = props.attributes.imageWidthUnit || 'px'
+	const imageHeightUnit = props.attributes.imageHeightUnit || 'px'
+
 	return (
 		<>
 			{ isSelected && (
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasBlockAlignment={ true } />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
 					<Image.InspectorControls
 						{ ...props }
+						initialOpen={ true }
 						hasWidth={ blockStyle === 'horizontal' }
 						hasHeight={ hasHeight }
 						widthUnits={ widthUnit }
@@ -124,7 +124,12 @@ const Edit = props => {
 						hasShape={ false }
 						hasShadow={ false }
 					/>
+					<Alignment.InspectorControls hasContainerSize={ true } hasBlockAlignment={ true } />
+					<BlockDiv.InspectorControls />
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-card__content" />
+					<BlockLink.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-card" />
@@ -162,9 +167,9 @@ const Edit = props => {
 						heightUnits={ heightUnit }
 						defaultWidth={ 250 }
 						width={ blockStyle !== 'horizontal' ? 100 : undefined }
-						widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
+						widthUnit={ blockStyle !== 'horizontal' ? '%' : imageWidthUnit }
 						height={ blockStyle !== 'horizontal' ? undefined : 100 }
-						heightUnit={ blockStyle !== 'horizontal' ? 'px' : '%' }
+						heightUnit={ blockStyle !== 'horizontal' ? imageHeightUnit : '%' }
 						hasTooltip={ ! [ 'full', 'faded' ].includes( blockStyle ) }
 					/>
 					<div className={ innerClassNames }>

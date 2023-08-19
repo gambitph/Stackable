@@ -13,12 +13,18 @@ add_filter( 'fs_templates/account.php_stackable-ultimate-gutenberg-blocks', func
 	ob_start();
 	?>
 	<div class="wrap">
+		<div class="s-header-wrap">
+			<?php
+			Stackable_Welcome_Screen::print_header();
+			Stackable_Welcome_Screen::print_premium_button();
+			Stackable_Welcome_Screen::print_tabs();
+			?>
+		</div>
+		<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 		<?php
-		Stackable_Welcome_Screen::print_header( __( 'Stackable Account', STACKABLE_I18N ) );
-		Stackable_Welcome_Screen::print_tabs();
 		echo $output;
 		?>
-		</div>
+	</div>
 	<?php
 	$output = ob_get_contents();
 	ob_end_clean();
@@ -30,12 +36,18 @@ add_filter( 'fs_/forms/affiliation.php_stackable-ultimate-gutenberg-blocks', fun
 	ob_start();
 	?>
 	<div class="wrap">
+		<div class="s-header-wrap">
+			<?php
+			Stackable_Welcome_Screen::print_header();
+			Stackable_Welcome_Screen::print_premium_button();
+			Stackable_Welcome_Screen::print_tabs();
+			?>
+		</div>
+		<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 		<?php
-		Stackable_Welcome_Screen::print_header( __( 'Become an Affiliate', STACKABLE_I18N ) );
-		Stackable_Welcome_Screen::print_tabs();
 		echo $output;
 		?>
-		</div>
+	</div>
 	<?php
 	$output = ob_get_contents();
 	ob_end_clean();
@@ -47,12 +59,18 @@ add_filter( 'fs_templates/contact.php_stackable-ultimate-gutenberg-blocks', func
 	ob_start();
 	?>
 	<div class="wrap">
+		<div class="s-header-wrap">
+			<?php
+			Stackable_Welcome_Screen::print_header();
+			Stackable_Welcome_Screen::print_premium_button();
+			Stackable_Welcome_Screen::print_tabs();
+			?>
+		</div>
+		<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 		<?php
-		Stackable_Welcome_Screen::print_header( __( 'Contact Us', STACKABLE_I18N ) );
-		Stackable_Welcome_Screen::print_tabs();
 		echo $output;
 		?>
-		</div>
+	</div>
 	<?php
 	$output = ob_get_contents();
 	ob_end_clean();

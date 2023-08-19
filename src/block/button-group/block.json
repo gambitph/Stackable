@@ -1,10 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/button-group",
 	"title": "Button Group",
 	"description": "Add a customizable button.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"Link"
 	],
@@ -15,7 +15,7 @@
 			"description": "Add a customizable button.",
 			"category": "stackable",
 			"stk-type": "essential",
-			"stk-demo": "https://wpstackable.com/social-buttons-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+			"stk-demo": "https://wpstackable.com/icon-button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
 		},
 		{
 			"name": "button",

@@ -1,10 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/button",
 	"title": "Button",
 	"description": "Add a customizable button.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"parent": [
 		"stackable/button-group"
 	],

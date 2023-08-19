@@ -31,6 +31,8 @@ export const settings = {
 		align: [ 'center', 'wide', 'full' ],
 		stkLayoutReset: false,
 		stkSaveBlockStyle: false,
+		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	variations,
 	deprecated,

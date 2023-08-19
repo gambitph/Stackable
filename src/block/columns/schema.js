@@ -13,6 +13,7 @@ import {
 	Separator,
 	Transform,
 	ContentAlign,
+	Columns,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -21,6 +22,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	Columns.addAttributes( attrObject )
 	Style.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	Row.addAttributes( attrObject )
@@ -48,6 +50,24 @@ export const attributes = ( version = VERSION ) => {
 			},
 		},
 		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.add( {
+		attributes: {
+			containerWidth: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+				stkUnits: 'px',
+			},
+			containerHorizontalAlign: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.10.1',
 		versionDeprecated: '',
 	} )
 

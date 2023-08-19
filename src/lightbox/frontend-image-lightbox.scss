@@ -1,0 +1,34 @@
+@import "glightbox/dist/css/glightbox";
+
+.glightbox-clean.glightbox-stk {
+	.gslide-description {
+		background: transparent;
+		flex: 0 1 100%;
+	}
+	.gdesc-inner {
+		padding: 0;
+	}
+	.gslide-title:empty {
+		display: none;
+	}
+	.gslide-title {
+		padding: 24px;
+		text-align: center;
+		margin: 0;
+		font-size: 1rem;
+		line-height: 1.7;
+		color: #fff;
+	}
+	// Compatiblity for other themes that may limit the max-width of images.
+	.gslide-media.gslide-image {
+		max-width: none !important;
+	}
+	.gslide-media.gslide-external {
+		background: transparent;
+		flex: 1 0 100%;
+	}
+	.gcontainer .gbtn {
+		padding: 0;
+		background: none;
+	}
+}

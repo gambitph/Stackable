@@ -16,9 +16,7 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import {
-	BaseControl as _BaseControl, Dashicon,
-} from '@wordpress/components'
+import { BaseControl as _BaseControl, Dashicon } from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 
@@ -48,12 +46,16 @@ const BaseControl = props => {
 					onChangeUnit={ props.onChangeUnit }
 					screens={ props.screens }
 					afterButton={ props.afterButton }
+					helpTooltip={ props.helpTooltip }
 				/>
 			}
 			{ props.children }
 			{ props.allowReset && showReset &&
 				<Button
-					className="stk-inspector-control__reset-button"
+					className={ classnames(
+						'stk-inspector-control__reset-button',
+						{ 'stk-control__reset-button--no-modified': ! props.hasPanelModifiedIndicator },
+					) }
 					isSmall
 					isTertiary
 					aria-label={ __( 'Reset', i18n ) }
@@ -94,6 +96,7 @@ BaseControl.defaultProps = {
 	afterButton: null,
 	isSmall: false,
 	hasLabel: true,
+	hasPanelModifiedIndicator: true,
 }
 
 export default BaseControl

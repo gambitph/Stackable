@@ -25,6 +25,7 @@ import {
 	AdvancedRangeControl,
 	AdvancedToggleControl,
 	AdvancedSelectControl,
+	RichText,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -61,7 +62,6 @@ import {
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
-import { RichText } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 
 const listTypeOptions = [
@@ -352,9 +352,7 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-
-					<BlockDiv.InspectorControls />
+					<InspectorTabs hasLayoutPanel={ false } />
 
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
@@ -384,7 +382,7 @@ const Edit = props => {
 								label={ __( 'Column Gap', i18n ) }
 								attribute="columnGap"
 								min="0"
-								default="32"
+								placeholder="32"
 								sliderMax="50"
 								responsive="all"
 							/>
@@ -438,12 +436,8 @@ const Edit = props => {
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
-					<InspectorStyleControls>
-					</InspectorStyleControls>
-
 					<Typography.InspectorControls
 						{ ...props }
-						label={ __( 'Table of Contents', i18n ) }
 						isMultiline={ true }
 						initialOpen={ false }
 						hasTextTag={ false }
@@ -459,6 +453,7 @@ const Edit = props => {
 						hasTextTag={ false }
 					/>
 
+					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />

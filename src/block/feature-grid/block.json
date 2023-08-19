@@ -1,10 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/feature-grid",
 	"title": "Feature Grid",
 	"description": "Display multiple product features or services. You can use Feature Grids one after another.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",
 	"stk-demo": "https://wpstackable.com/feature-grid-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"

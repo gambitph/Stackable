@@ -17,20 +17,14 @@ import {
 	BlockContainer,
 	DesignPanelBody,
 	ProControlButton,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
 	AlignButtonsControl,
-	ButtonControlsHelper,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	FourRangeControl,
-	IconControlsHelper,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -39,6 +33,12 @@ import {
 	DivBackground,
 	ResponsiveControl,
 	SvgIconPlaceholder,
+	BackgroundControlsHelper,
+	ButtonControlsHelper,
+	ColumnPaddingControl,
+	IconControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	descriptionPlaceholder,
@@ -118,7 +118,11 @@ addFilter( 'stackable.notification.edit.inspector.layout.before', 'stackable/not
 					setAttributes( { design } )
 				} }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)

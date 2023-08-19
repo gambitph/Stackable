@@ -21,10 +21,11 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 		 * Initialize
 		 */
         function __construct() {
-			// Register our setting.
-			add_action( 'init', array( $this, 'register_optimization_settings' ) );
-
 			if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
+				// Register our setting.
+				add_action( 'admin_init', array( $this, 'register_optimization_settings' ) );
+				add_action( 'rest_api_init', array( $this, 'register_optimization_settings' ) );
+
 				// Prevent the scripts from loading normally. Low priority so we can remove the assets.
 				add_action( 'init', array( $this, 'disable_frontend_scripts' ), 9 );
 
@@ -33,9 +34,6 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 
 				// Add the optimization setting.
 				add_action( 'stackable_settings_page_mid', array( $this, 'add_optimization_settings' ) );
-
-				// Add the optimization setting for the wizard.
-				add_filter( 'stackable_localize_settings_script', array( $this, 'add_optimization_setting_in_script' ) );
 			}
 		}
 
@@ -85,6 +83,10 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 		 * @since 2.17.0
 		 */
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
+			if ( $block_content === null ) {
+				return $block_content;
+			}
+
 			if ( ! $this->is_script_loaded ) {
 				if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
 					$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
@@ -120,17 +122,6 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 				<div class="s-optimization-settings"></div>
 			</article>
 			<?php
-		}
-
-		/**
-		 * Adds the optimization setting to the script for the migration/onboarding wizard
-		 *
-		 * @param Array $args
-		 * @return Array
-		 */
-		public function add_optimization_setting_in_script( $args ) {
-			$args['v2optimizationScriptLoad'] = get_option( 'stackable_optimize_script_load' );
-			return $args;
 		}
 	}
 

@@ -1,10 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/video-popup",
 	"title": "Video Popup",
 	"description": "Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"YouTube",
 		"Vimeo",

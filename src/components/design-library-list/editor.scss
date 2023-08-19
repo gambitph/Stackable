@@ -1,10 +1,11 @@
 .ugb-design-library-items {
 	page-break-inside: avoid;
 	break-inside: avoid;
-	column-gap: 38px;
+	gap: 40px;
 	display: grid;
 	grid-template-columns: 1fr;
 	align-items: center;
+	font-size: 13px;
 	&.ugb-design-library-items--columns-2 {
 		grid-template-columns: 1fr 1fr;
 	}
@@ -18,6 +19,7 @@
 	.components-base-control__help {
 		text-align: center;
 		font-style: italic;
+		grid-column: 1 / 4;
 	}
 	.ugb-design-library-search__spinner {
 		display: flex;
@@ -33,20 +35,16 @@
 	overflow: auto;
 }
 .ugb-design-library-item {
-	border-radius: 0;
-	box-shadow: 0px 2px 15px rgba(153, 153, 153, 0.3);
-	overflow: hidden;
-	transition: all 0.3s ease-in-out;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto 40px;
 	position: relative;
-	margin-bottom: 38px;
-	display: block; // Block or else the list will display a few results in a single vertical line.
-	transform: translateZ(0); // Fixes box shadow being cut by columns.
-	break-inside: avoid;
-	width: 100%;
-	will-change: transform; // This fixes the flickering during hover transition.
+	transition: all 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
+	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 	&:hover {
-		transform: translateY(-4px) scale(1.03);
-		box-shadow: 0 6px 25px rgba(153, 153, 153, 0.3);
+		box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 	}
 	img {
 		display: block;
@@ -54,56 +52,54 @@
 		width: 100%;
 		height: auto;
 		min-height: 50px;
-		background: #f1f1f1;
+		background: #fff;
 	}
 	footer {
-		padding: 8px 12px;
-		font-size: 11px;
+		padding-inline: 20px;
 		line-height: 18px;
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
 	}
-	&.ugb--is-busy {
-		.ugb-design-library-item__spinner {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%) translateY(-10px);
-		}
+	.ugb-design-library-item__spinner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) translateY(-10px);
+		z-index: 9;
 		.components-spinner {
 			margin: 0;
 		}
-		img {
-			opacity: 0.15;
+	}
+	&.ugb--is-busy {
+		.ugb-design-library-item__image img {
+			opacity: 0.1;
 		}
 	}
 	.ugb-design-library-item__image {
-		.dashicon {
-			position: absolute;
-			top: calc(50% - 17.5px);
-			left: 50%;
-			transform: translate(-50%, -50%);
-			opacity: 0;
-			fill: #000;
-			height: 24px;
-			width: 24px;
-			&::before {
-				font-size: 24px;
-			}
-		}
-		img,
-		.dashicon {
-			transition: all 0.3s ease-in-out;
+		background: #fff;
+		position: relative;
+	}
+	&.ugb--is-premium {
+		.ugb-design-library-item__image {
+			min-height: 240px;
 		}
 	}
+
+	.ugb-design-control-pro-note {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: #fff;
+		opacity: 0;
+		transition: all 0.3s cubic-bezier(0.2, 0.6, 0.4, 1);
+		padding: 0 24px; // This is for v2 blocks where the design library can be seen in the inspector.
+	}
 	&[class*="ugb--is-premium"]:hover {
-		.ugb-design-library-item__image {
-			img {
-				opacity: 0.4;
-			}
-			.dashicon {
-				opacity: 1;
-			}
+		.ugb-design-control-pro-note {
+			opacity: 1;
 		}
 	}
 
@@ -137,6 +133,13 @@
 			}
 		}
 	}
+
+	.stk-pulsating-circle {
+		position: absolute;
+		top: 12px;
+		right: 12px;
+		z-index: 9;
+	}
 }
 .ugb-design-library-item__image {
 	padding: 0 !important;
@@ -147,26 +150,6 @@
 	outline: none !important;
 	cursor: pointer;
 	display: block;
-}
-
-.ugb-design-library-item__premium {
-	position: absolute;
-	z-index: 1;
-	background: #f00069;
-	font-size: 10px;
-	color: #fff;
-	line-height: 18px;
-	padding: 0 6px;
-	border-radius: 2px;
-	top: 5px;
-	right: 5px;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	transition: none !important;
-}
-
-.ugb-design-library-item__premium-link {
-	cursor: pointer;
 }
 
 .ugb-design-library-item__favorite {

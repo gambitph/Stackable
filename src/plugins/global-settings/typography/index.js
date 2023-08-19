@@ -10,6 +10,7 @@ import TypographyPicker from './typography-picker'
 import {
 	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator,
 } from '~stackable/components'
+import { fetchSettings } from '~stackable/util'
 import { i18n } from 'stackable'
 import { omit, head } from 'lodash'
 
@@ -19,7 +20,7 @@ import { omit, head } from 'lodash'
 import {
 	Fragment, useEffect, useState,
 } from '@wordpress/element'
-import { loadPromise, models } from '@wordpress/api'
+import { models } from '@wordpress/api'
 import { addFilter, doAction } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 
@@ -71,13 +72,10 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
 
 	useEffect( () => {
-		// Get settings.
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
-				setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
-			} )
+		fetchSettings().then( response => {
+			// Get settings.
+			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
+			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 		} )
 	}, [] )
 
@@ -162,6 +160,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					] }
 					value={ applySettingsTo }
 					onChange={ changeApplySettingsTo }
+					default="blocks-stackable-native"
 				/>
 				<ControlSeparator />
 				{ TYPOGRAPHY_TAGS.map( ( {

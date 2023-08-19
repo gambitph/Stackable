@@ -37,8 +37,8 @@ $block-design-system: (
 	 * Columns
 	 */
 	column-margin: (
-		desktop: 12px 12px,
-		mobile: 8px 8px,
+		desktop: 12px,
+		mobile: 8px,
 	),
 
 	/**
@@ -78,4 +78,9 @@ $block-design-system: (
 	 */
 	subtitle-size: 16px,
 	subtitle-color: #39414d,
+
+	/**
+	 * Tabs
+	 */
+	tab-accent-color: #008de4,
 );

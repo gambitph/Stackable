@@ -1,10 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/icon",
 	"title": "Icon",
 	"description": "Pick an icon or upload your own SVG icon to decorate your content.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"SVG"
 	],

@@ -1,0 +1,14 @@
+{
+	"apiVersion": 3,
+	"name": "stackable/new-block",
+	"title": "New Block",
+	"description": "A new block.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"keywords": [
+		"Keywords that are not in the title"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/separator-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+}

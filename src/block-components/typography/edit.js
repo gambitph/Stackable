@@ -19,9 +19,7 @@ import {
 	PanelAdvancedSettings,
 	ShadowControl,
 } from '~stackable/components'
-import {
-	getAttributeName, getAttrNameFunction, extractColor,
-} from '~stackable/util'
+import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -32,8 +30,6 @@ import {
 import { __, sprintf } from '@wordpress/i18n'
 import { escapeHTML } from '@wordpress/escape-html'
 import { applyFilters } from '@wordpress/hooks'
-import { select } from '@wordpress/data'
-import { getColorClassName } from '@wordpress/block-editor'
 
 const TYPOGRAPHY_SHADOWS = [
 	'none',
@@ -104,23 +100,13 @@ export const Controls = props => {
 
 	const onChangeContent = useCallback( text => setDebouncedText( escapeHTML( text ) ), [] )
 
-	const colorChangeCallback = useCallback( _value => {
-		if ( blockState !== 'normal' ) {
-			return _value
-		}
-		const value = extractColor( _value )
-		const colors = select( 'core/block-editor' ).getSettings().colors || []
-		const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-		updateAttribute( 'textColorClass', colorSlug ? getColorClassName( 'color', colorSlug ) : '' )
-		return _value
-	}, [ blockState ] )
-
 	return (
 		<>
 			{ applyFilters( 'stackable.block-component.typography.before', null, props ) }
 			{ hasTextContent && (
 				<AdvancedTextControl
 					label={ __( 'Content', i18n ) }
+					hasPanelModifiedIndicator={ false }
 					isMultiline={ isMultiline }
 					value={ unescape( debouncedText ) }
 					onChange={ onChangeContent }
@@ -156,6 +142,8 @@ export const Controls = props => {
 						[ getAttributeName( 'fontWeight', 'desktop', blockState ) ]: '',
 						[ getAttributeName( 'textTransform', 'desktop', blockState ) ]: '',
 						[ getAttributeName( 'letterSpacing', 'desktop', blockState ) ]: '',
+						[ getAttributeName( 'letterSpacing', 'tablet', blockState ) ]: '',
+						[ getAttributeName( 'letterSpacing', 'mobile', blockState ) ]: '',
 						[ getAttributeName( 'lineHeight', 'desktop', blockState ) ]: '',
 						[ getAttributeName( 'lineHeight', 'tablet', blockState ) ]: '',
 						[ getAttributeName( 'lineHeight', 'mobile', blockState ) ]: '',
@@ -166,6 +154,8 @@ export const Controls = props => {
 						getAttribute( 'fontWeight', 'desktop', blockState ) ||
 						getAttribute( 'textTransform', 'desktop', blockState ) ||
 						getAttribute( 'letterSpacing', 'desktop', blockState ) ||
+						getAttribute( 'letterSpacing', 'tablet', blockState ) ||
+						getAttribute( 'letterSpacing', 'mobile', blockState ) ||
 						getAttribute( 'lineHeight', 'desktop', blockState ) ||
 						getAttribute( 'lineHeight', 'tablet', blockState ) ||
 						getAttribute( 'lineHeight', 'mobile', blockState ) )
@@ -175,6 +165,10 @@ export const Controls = props => {
 					label={ __( 'Font Family', i18n ) }
 					onChange={ updateAttributeHandler( 'fontFamily' ) }
 					value={ getAttribute( 'fontFamily' ) }
+					helpTooltip={ {
+						video: 'typography-family',
+						description: __( 'Sets the font set to be used for the element', i18n ),
+					} }
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Weight', i18n ) }
@@ -193,6 +187,11 @@ export const Controls = props => {
 						{ label: __( 'Bold', i18n ), value: 'bold' },
 					] }
 					attribute={ attributeName( 'fontWeight' ) }
+					helpTooltip={ {
+						video: 'typography-weight',
+						title: __( 'Font weight', i18n ),
+						description: __( 'Sets the thinness or thickness of text characters', i18n ),
+					} }
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Transform', i18n ) }
@@ -204,6 +203,11 @@ export const Controls = props => {
 						{ label: __( 'None', i18n ), value: 'none' },
 					] }
 					attribute={ attributeName( 'textTransform' ) }
+					helpTooltip={ {
+						video: 'typography-transform',
+						title: __( 'Transform', i18n ),
+						description: __( 'Sets the usage of upper or lower case', i18n ),
+					} }
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Font Style', i18n ) }
@@ -226,6 +230,11 @@ export const Controls = props => {
 					allowReset={ true }
 					initialPosition={ [ 37, 1.8 ] }
 					responsive="all"
+					helpTooltip={ {
+						video: 'typography-line-height',
+						title: __( 'Line height', i18n ),
+						description: __( 'Sets the vertical distance between lines of text', i18n ),
+					} }
 				/>
 				<AdvancedRangeControl
 					label={ __( 'Letter Spacing', i18n ) }
@@ -235,6 +244,12 @@ export const Controls = props => {
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="0"
+					responsive="all"
+					helpTooltip={ {
+						video: 'typography-letter-spacing',
+						title: __( 'Letter spacing', i18n ),
+						description: __( 'Sets the distance or space between letters', i18n ),
+					} }
 				/>
 			</ButtonIconPopoverControl>
 
@@ -248,6 +263,11 @@ export const Controls = props => {
 				step={ [ 1, 0.05 ] }
 				placeholder={ props.sizePlaceholder }
 				responsive="all"
+				helpTooltip={ {
+					// TODO: Add a working video.
+					title: __( 'Font size', i18n ),
+					description: __( 'Sets the size of text characters', i18n ),
+				} }
 			/>
 
 			{ hasColor && (
@@ -261,7 +281,6 @@ export const Controls = props => {
 						/>
 					) }
 					<ColorPaletteControl
-						changeCallback={ colorChangeCallback }
 						label={ getAttribute( 'textColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
 							: __( 'Text Color', i18n ) }
 						attribute={ attributeName( 'textColor1' ) }
@@ -298,6 +317,7 @@ export const Controls = props => {
 					options={ TYPOGRAPHY_SHADOWS }
 					placeholder=""
 					hover="all"
+					hasInset={ false }
 				/>
 			) }
 

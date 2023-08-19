@@ -1,3 +1,9 @@
+// Some themes and plugins can warp our color indicator.
+.stk-color-indicator {
+	height: 20px !important;
+	width: 20px !important;
+}
+
 // Style transparent circular color option.
 .stk-color-palette-control {
 	.components-circular-option-picker__option[style*="color:transparent"],
@@ -39,4 +45,20 @@
 .stk-color-palette-control__popover-content {
 	width: 260px;
 	padding: 8px;
+	.components-color-picker,
+	.react-colorful,
+	.react-colorful__hue,
+	.react-colorful__alpha {
+		width: 100% !important;
+	}
+	.react-colorful {
+		overflow: visible !important;
+	}
+	.react-colorful__saturation {
+		height: 150px !important;
+	}
+	// These are the side paddings of the hex input.
+	.react-colorful + * > * {
+		padding-inline: 0 !important;
+	}
 }

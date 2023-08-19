@@ -16,6 +16,7 @@ import schema from './schema'
 import metadata from './block.json'
 import variations from './variations'
 import example from './example'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
@@ -28,11 +29,13 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
+		stkColumnResize: false,
+		spacing: true,
 	},
 	example,
 	//  styles: blockStyles,
 
-	// deprecated,
+	deprecated,
 	variations,
 	edit,
 	save,

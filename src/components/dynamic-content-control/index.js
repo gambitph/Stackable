@@ -247,12 +247,21 @@ export const useDynamicContent = ( value = '' ) => {
 			return value
 		}
 
-		const currentPostId = select( 'core/editor' )?.getCurrentPostId() || -1
+		let currentPostId = select( 'core/editor' )?.getCurrentPostId() || -1
+
+		// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
+		if ( currentPostId && queryLoopContext?.postId !== currentPostId ) {
+			currentPostId = queryLoopContext.postId?.toString() || -1
+		}
+
+		// If we're being used in the site editor, then check if we need to change the display value to match the given post Id.
+		if ( currentPostId === -1 && select( 'core/edit-site' ) ) {
+			currentPostId = select( 'core/edit-site' ).getEditedPostContext()?.postId || -1
+		}
 
 		let tempValue = value
 
-		// If we're being used in a Query Loop, then check if we need to change the display value to match the given post Id.
-		if ( currentPostId !== -1 && queryLoopContext?.postId && queryLoopContext.postId !== currentPostId ) {
+		if ( currentPostId !== -1 ) {
 			// Replace all post IDS.
 			tempValue = tempValue?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
 				const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
@@ -262,9 +271,9 @@ export const useDynamicContent = ( value = '' ) => {
 				}
 
 				if ( splitFieldString.length > 2 && splitFieldString[ 2 ].startsWith( '?' ) ) {
-					splitFieldString.splice( 2, 0, queryLoopContext.postId.toString() )
+					splitFieldString.splice( 2, 0, currentPostId )
 				} else if ( splitFieldString.length === 2 ) {
-					splitFieldString.push( queryLoopContext.postId.toString() )
+					splitFieldString.push( currentPostId )
 				}
 
 				return value.replace(
@@ -281,9 +290,9 @@ export const useDynamicContent = ( value = '' ) => {
 				}
 
 				if ( splitFieldString.length > 2 ) {
-					splitFieldString.splice( 2, 0, queryLoopContext.postId.toString() )
+					splitFieldString.splice( 2, 0, currentPostId )
 				} else if ( splitFieldString.length === 2 ) {
-					splitFieldString.push( queryLoopContext.postId.toString() )
+					splitFieldString.push( currentPostId )
 				}
 
 				return '!#stk_dynamic/' + splitFieldString.join( '/' ) + '!#'
@@ -370,22 +379,17 @@ export const DynamicContentButton = memo( props => {
 				icon={ dynamicContent }
 				aria-haspopup="true"
 				label={ __( 'Dynamic Fields', i18n ) }
-				isSmall
-				isTertiary
+				variant="secondary"
 				onClick={ props.onClick }
 				isPressed={ !! props.isPressed }
 			/>
 			{ props.isPopoverOpen && (
 				<Popover
 					position="top right"
-					className="stackable-dynamic-content__popover"
+					className={ classnames( 'stackable-dynamic-content__popover', { 'stk-dynamic-content__popover--is-premium': ! isPro } ) }
+					onEscape={ props.onClick }
 				>
-					{ ! isPro && (
-						<ProControl
-							title={ __( 'Say Hello to Dynamic Attributes 👋', i18n ) }
-							description={ __( 'Add dynamic values to your Stackable blocks. This feature is only available on Stackable Premium.', i18n ) }
-						/>
-					) }
+					{ ! isPro && <ProControl type="dynamic-attributes" /> }
 
 					{ isPro && (
 						<DynamicContentFields
@@ -433,6 +437,7 @@ const DynamicContentControl = ( {
 				allowReset={ true }
 				value={ otherProps.activeAttribute }
 				default=""
+				hasPanelModifiedIndicator={ otherProps.hasPanelModifiedIndicator }
 				onChange={ otherProps.onReset }
 			/>
 		</Fragment>

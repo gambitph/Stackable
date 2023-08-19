@@ -43,6 +43,7 @@ export const Save = props => {
 			attributes={ props.attributes }
 			applyAdvancedAttributes={ false }
 			applyCustomAttributes={ false }
+			version={ props.version }
 		>
 			<IconButtonStyles.Content { ...propsToPass } />
 			<CustomCSS.Content attributes={ props.attributes } />

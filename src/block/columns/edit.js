@@ -10,7 +10,9 @@ import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInnerBlocks,
+	ControlSeparator,
 	GroupPlaceholder,
+	InspectorLayoutControls,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -31,6 +33,7 @@ import {
 	Transform,
 	ContentAlign,
 	getContentAlignmentClasses,
+	Columns,
 } from '~stackable/block-components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -82,7 +85,18 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasRowAlignment={ true } />
+					<Columns.InspectorControls />
+					<InspectorLayoutControls>
+						<ControlSeparator />
+					</InspectorLayoutControls>
+					<ContentAlign.InspectorControls />
+					<Alignment.InspectorControls
+						hasContainerSize={ true }
+						containerSizePriority={ 1 }
+						hasContainerHeight={ false }
+						hasColumnJustify={ true }
+						hasRowAlignment={ true }
+					/>
 					<BlockDiv.InspectorControls />
 					<Separator.InspectorControls />
 					<Advanced.InspectorControls />
@@ -92,7 +106,6 @@ const Edit = props => {
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-					<ContentAlign.InspectorControls hasColumnCount={ true } />
 				</>
 			) }
 

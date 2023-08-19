@@ -1,0 +1,14 @@
+{
+	"apiVersion": 3,
+	"name": "stackable/tab-content",
+	"title": "Tab Content",
+	"description": "A wrapper for tab panels.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/tabPanelEffect" ],
+	"keywords": [],
+	"parent": [
+		"stackable/tabs"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "hidden"
+}

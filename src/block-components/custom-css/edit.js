@@ -16,8 +16,11 @@ import {
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { useBlockAttributesContext } from '~stackable/hooks'
 
 export const Edit = props => {
+	const customCSSMinified = useBlockAttributesContext( attributes => attributes.customCSSMinified )
+
 	if ( ! showProNotice && ! isPro ) {
 		return null
 	}
@@ -28,13 +31,10 @@ export const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'Custom CSS', i18n ) }
 					id="custom-css"
+					isPremiumPanel={ ! isPro }
+					showModifiedIndicator={ !! customCSSMinified }
 				>
-					{ ! isPro &&
-						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
-							description={ __( 'Further tweak this block by adding custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
-						/>
-					}
+					{ ! isPro && <ProControl type="custom-css" /> }
 					{ isPro &&
 						applyFilters( 'stackable.block-component.custom-css.control', null, {
 							mainBlockClass: props.mainBlockClass,

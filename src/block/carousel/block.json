@@ -1,0 +1,14 @@
+{
+	"apiVersion": 3,
+	"name": "stackable/carousel",
+	"title": "Carousel",
+	"description": "A carousel slider.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"keywords": [
+		"Slider"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/carousel-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+}

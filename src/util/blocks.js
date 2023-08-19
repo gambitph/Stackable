@@ -13,7 +13,7 @@ import {
 	orderBy,
 	last,
 } from 'lodash'
-import { i18n } from 'stackable'
+import { blockCategoryIndex, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -454,14 +454,18 @@ const getNthTypeOfBlock = currentClientId => {
 // as "Uncategorized"
 export const addStackableBlockCategory = () => {
 	if ( ! getCategories().some( category => category.slug === 'stackable' ) ) {
-		setCategories( [
-			{
-				slug: 'stackable',
-				title: __( 'Stackable', i18n ),
-				icon: SVGStackableCategoryIcon,
-			},
-			...getCategories(),
-		] )
+		const stackableCategory = {
+			slug: 'stackable',
+			title: __( 'Stackable', i18n ),
+			icon: SVGStackableCategoryIcon,
+		}
+		const categoryIndex = blockCategoryIndex || 0
+
+		// Add our category based on the categoryIndex
+		const newCategories = [ ...getCategories() ]
+		newCategories.splice( categoryIndex, 0, stackableCategory )
+
+		setCategories( newCategories )
 	}
 }
 
@@ -493,6 +497,9 @@ export const registerBlockType = ( name, _settings ) => {
 			'data-align': undefined,
 		}
 	}
+
+	// Add HOCs here that are present for all our blocks.
+	settings.edit = applyFilters( 'stackable.registerBlockType.edit', settings.edit )
 
 	settings = applyFilters( `stackable.${ name.replace( 'stackable/', '' ) }.settings`, settings )
 	_registerBlockType( name, settings )

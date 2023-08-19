@@ -14,7 +14,6 @@ import {
 	BlockDiv,
 	useGeneratedCss,
 	Image,
-	Alignment,
 	Advanced,
 	CustomCSS,
 	Responsive,
@@ -25,6 +24,7 @@ import {
 	Transform,
 	getAlignmentClasses,
 	Link,
+	Alignment,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -70,15 +70,16 @@ const Edit = props => {
 					<InspectorTabs />
 
 					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
 					<Image.InspectorControls
 						{ ...props }
 						initialOpen={ true }
 						heightUnits={ heightUnit }
+						hasLightbox
 					/>
-					{ enableLink && <Link.InspectorControls hasTitle={ true } /> }
+					{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />

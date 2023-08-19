@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import Button from '../button'
-import Popover from '../popover'
 
 /**
  * External dependencies
@@ -22,7 +21,6 @@ const ControlIconToggle = props => {
 		options,
 	} = props
 
-	const [ isMouseOver, setIsMouseOver ] = useState( false )
 	const [ isOpen, setIsOpen ] = useState( false )
 	const buttonRef = useRef( null )
 
@@ -56,6 +54,7 @@ const ControlIconToggle = props => {
 		'stk-label-unit-toggle',
 	], {
 		'stk-label-unit-toggle__colored': props.hasColors,
+		'is-open': isOpen,
 	} )
 
 	return (
@@ -71,49 +70,66 @@ const ControlIconToggle = props => {
 				{ options.length > 1 &&
 					options.map( ( option, i ) => {
 						const label = option.label || option.value
-						const tooltip = ! isOpen
-							? props.buttonLabel || label
-							: ( props.hasLabels ? label : '' )
+						const isActive = value === option.value
+
+						const className = classnames( {
+							'is-active': isActive,
+							'has-value': option.hasValue,
+						} )
+
 						return (
-							<div
+							<Button
 								key={ i }
-								onMouseEnter={ () => {
-									setIsMouseOver( option.value )
+								className={ className }
+								data-index={ i }
+								data-value={ option.value }
+								disabled={ option.disabled }
+								tabIndex={ isActive ? '0' : '-1' }
+								onClick={ () => {
+									if ( ! isOpen ) {
+										setIsOpen( true )
+									} else {
+										props.onChange( option.value )
+										setIsOpen( false )
+									}
 								} }
-								onMouseLeave={ () => {
-									setIsMouseOver( false )
-								} }
-							>
-								<Button
-									className={ value === option.value ? 'is-active' : '' }
-									data-index={ i }
-									data-value={ option.value }
-									disabled={ option.disabled }
-									onClick={ () => {
-										if ( ! isOpen ) {
-											setIsOpen( true )
-										} else {
-											props.onChange( option.value )
+								icon={ option.icon }
+								label={ props.hasLabels ? label : '' }
+								aria-haspopup="true"
+								tooltipPosition="middle right"
+								onKeyDown={ e => {
+									const el = e.target
+									if ( el && isOpen ) {
+										if ( e.key === 'ArrowUp' || e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' ) {
+											e.preventDefault()
+											if ( e.key === 'ArrowUp' || e.key === 'ArrowLeft' ) {
+												const prev = el.previousElementSibling || el.parentElement.lastElementChild
+												if ( prev ) {
+													prev.focus()
+												}
+											} else {
+												const next = el.nextElementSibling || el.parentElement.firstElementChild
+												if ( next ) {
+													next.focus()
+												}
+											}
+										}
+
+										// On tab, close the panel
+										if ( e.key === 'Tab' ) {
 											setIsOpen( false )
 										}
-									} }
-									icon={ option.icon }
-									showTooltip={ false }
-									label={ label }
-								>
-									{ ! option.icon ? label : undefined }
-								</Button>
-								{ tooltip && isMouseOver === option.value &&
-									<Popover
-										focusOnMount={ false }
-										position={ `middle ${ props.labelPosition }` }
-										className="components-tooltip stk-label-unit-toggle__popup"
-										aria-hidden="true"
-									>
-										{ option.tooltip || tooltip }
-									</Popover>
-								}
-							</div>
+
+										// On escape, just close the panel, don't lose focus.
+										if ( e.key === 'Escape' ) {
+											e.preventDefault()
+											setIsOpen( false )
+										}
+									}
+								} }
+							>
+								{ ! option.icon ? label : undefined }
+							</Button>
 						)
 					} )
 				}

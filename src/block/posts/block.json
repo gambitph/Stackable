@@ -1,10 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/posts",
 	"title": "Posts",
 	"description": "Your latest blog posts. Use this to showcase a few of your posts in your landing pages.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"keywords": [
 		"Blog Posts",
 		"Lastest Posts",

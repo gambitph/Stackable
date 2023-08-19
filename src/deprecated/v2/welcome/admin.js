@@ -2,14 +2,13 @@
  * Internal dependencies
  */
 import blockData from './blocks'
-import './wizard'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import {
-	Component, render, useEffect, useState, Fragment,
+	Component, createRoot, useEffect, useState, Fragment,
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
@@ -24,7 +23,6 @@ import {
 	i18n,
 	v2nonce as nonce,
 } from 'stackable'
-import classnames from 'classnames'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 
 class BlockToggler extends Component {
@@ -91,7 +89,7 @@ class BlockToggler extends Component {
 					<button onClick={ this.enableAllBlocks } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
 					<button onClick={ this.disableAllBlocks } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
 				</div>
-				<div className="s-settings-grid">
+				<div className="s-settings-grid" style={ { rowGap: 0 } }>
 					{ Object.keys( blockData ).map( ( blockName, i ) => {
 						const block = blockData[ blockName ]
 
@@ -101,30 +99,17 @@ class BlockToggler extends Component {
 						}
 
 						const isDisabled = this.state.disabledBlocks.includes( blockName )
-						const mainClasses = classnames( [
-							's-block',
-						], {
-							's-is-disabled': isDisabled,
-						} )
 
-						// const blockNameTrim = blockName.replace( /\w+\//, '' )
 						return (
-							<div key={ i + 1 } className={ mainClasses }>
-								<h4>
-									{ // We need to run the title through the translation function, we have translations ready for this.
-										__( block.title, i18n ) /* eslint-disable-line @wordpress/i18n-no-variables */
-									}
-									&nbsp;
-									<span className="s-tag-v2">(V2)</span>
-								</h4>
-								<button
-									className="s-toggle-button"
-									onClick={ () => this.toggleBlock( blockName ) }
-								>
-									<span>{ __( 'Disabled', i18n ) }</span>
-									<span>{ __( 'Enabled', i18n ) }</span>
-								</button>
-							</div>
+							<AdminToggleSetting
+								key={ i }
+								label={ __( block.title, i18n ) } /* eslint-disable-line @wordpress/i18n-no-variables */
+								value={ ! isDisabled }
+								onChange={ () => this.toggleBlock( blockName ) }
+								size="small"
+								disabled={ __( 'Disabled', i18n ) }
+								enabled={ __( 'Enabled', i18n ) }
+							/>
 						)
 					} ) }
 				</div>
@@ -165,16 +150,14 @@ const OptimizationSettings = () => {
 // Load all the options into the UI.
 domReady( () => {
 	if ( document.querySelector( '.s-settings-wrapper-v2' ) ) {
-		render(
-			<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />,
-			document.querySelector( '.s-settings-wrapper-v2' )
+		createRoot( document.querySelector( '.s-settings-wrapper-v2' ) ).render(
+			<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />
 		)
 	}
 
 	if ( document.querySelector( '.s-optimization-settings' ) ) {
-		render(
-			<OptimizationSettings />,
-			document.querySelector( '.s-optimization-settings' )
+		createRoot( document.querySelector( '.s-optimization-settings' ) ).render(
+			<OptimizationSettings />
 		)
 	}
 } )

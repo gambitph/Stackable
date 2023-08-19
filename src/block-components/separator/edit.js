@@ -4,12 +4,12 @@
 import SeparatorControl from './separator-control'
 import {
 	AdvancedRangeControl,
-	InspectorBlockControls,
 	PanelAdvancedSettings,
 	ColorPaletteControl,
 	AdvancedToggleControl,
 	ProControlButton,
 	ShadowControl,
+	InspectorStyleControls,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers, useBlockAttributesContext, useBlockSetAttributesContext,
@@ -70,6 +70,11 @@ const SeparatorControls = props => {
 				placeholder=""
 				attribute={ getAttrName( 'separatorHeight' ) }
 				responsive="all"
+				helpTooltip={ {
+					video: 'separator-height',
+					title: __( 'Separator Height', i18n ),
+					description: __( 'Adjusts the height of the separator to stretch or compress vertically', i18n ),
+				} }
 			/>
 			<AdvancedRangeControl
 				label={ __( 'Width', i18n ) }
@@ -77,6 +82,11 @@ const SeparatorControls = props => {
 				min={ 1 }
 				sliderMax={ 4 }
 				step={ 0.1 }
+				helpTooltip={ {
+					video: 'separator-width',
+					title: __( 'Separator Width', i18n ),
+					description: __( 'Adjusts the height of the separator to stretch or compress vertically', i18n ),
+				} }
 			/>
 			<ShadowControl
 				isFilter={ true }
@@ -84,6 +94,11 @@ const SeparatorControls = props => {
 				attribute={ getAttrName( 'separatorShadow' ) }
 				options={ separatorShadowOptions }
 				placeholder="5"
+				helpTooltip={ {
+					video: 'separator-shadow',
+					title: __( 'Shadow', i18n ),
+					description: __( 'Adjusts the intensity of the separator shadow and makes the separator more prominent', i18n ),
+				} }
 			/>
 			<AdvancedToggleControl
 				label={ __( 'Invert Design', i18n ) }
@@ -102,6 +117,11 @@ const SeparatorControls = props => {
 			<AdvancedToggleControl
 				label={ __( 'Bring to Front', i18n ) }
 				attribute={ getAttrName( 'separatorBringToFront' ) }
+				helpTooltip={ {
+					video: 'separator-bring-to-front',
+					title: __( 'Bring to Front', i18n ),
+					description: __( 'Brings the separator layer in front of other block elements', i18n ),
+				} }
 			/>
 		</>
 	)
@@ -125,7 +145,7 @@ export const Edit = props => {
 	} )
 
 	return (
-		<InspectorBlockControls>
+		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Top Separator', i18n ) }
 				id="top-separator"
@@ -135,12 +155,7 @@ export const Edit = props => {
 			>
 				<SeparatorControls attrNameTemplate="top%s" />
 				{ PremiumTopSeparatorControls && <PremiumTopSeparatorControls { ...props } /> }
-				{ showProNotice && (
-					<ProControlButton
-						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
-						description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
-					/>
-				) }
+				{ showProNotice && <ProControlButton type="separator" /> }
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator', i18n ) }
@@ -151,14 +166,9 @@ export const Edit = props => {
 			>
 				<SeparatorControls attrNameTemplate="bottom%s" />
 				{ PremiumBottomSeparatorControls && <PremiumBottomSeparatorControls { ...props } /> }
-				{ showProNotice && (
-					<ProControlButton
-						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
-						description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
-					/>
-				) }
+				{ showProNotice && <ProControlButton type="separator" /> }
 			</PanelAdvancedSettings>
-		</InspectorBlockControls>
+		</InspectorStyleControls>
 	)
 }
 

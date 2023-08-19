@@ -35,6 +35,13 @@
 	}
 }
 
+.components-panel__body.ugb-toggle-panel-body {
+	padding: 16px;
+}
+.components-panel__body.ugb-toggle-panel-body > .components-panel__body-title {
+	margin: -16px;
+}
+
 // Icon size.
 .ugb-toggle-panel-body {
 	.components-panel__arrow {
@@ -46,4 +53,149 @@
 // This fixes the auto-scroll when a panel is opened.
 .ugb-toggle-panel-body {
 	scroll-margin-top: 128px;
+}
+
+// Premium dot
+// .stk--premium-panel .components-panel__body-toggle {
+// 	&::after {
+// 		content: "";
+// 		height: 6px;
+// 		width: 6px;
+// 		background: #f00069;
+// 		border-radius: 100%;
+// 		margin-inline: 8px;
+// 		opacity: 0.4;
+// 		transition: opacity 0.2s ease-in-out;
+// 	}
+// 	&:hover::after {
+// 		opacity: 1;
+// 	}
+// }
+
+.components-panel__body-toggle .stk-pulsating-circle {
+	margin-left: auto;
+	margin-top: 8px;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	position: static;
+}
+
+.stk-pulsating-circle {
+	width: 8px;
+	height: 8px;
+	position: relative;
+
+	&::before {
+		content: "";
+		position: relative;
+		display: block;
+		width: 300%;
+		height: 300%;
+		box-sizing: border-box;
+		margin-left: -100%;
+		margin-top: -100%;
+		border-radius: 45px;
+		background-color: #f00069;
+		animation: stk-pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		background-color: #f00069;
+		border-radius: 15px;
+		box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+		animation: stk-pulse-dot 2.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+	}
+}
+
+@keyframes stk-pulse-ring {
+	0% {
+		transform: scale(0.33);
+		opacity: 0.8;
+	}
+	40%,
+	50%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes stk-pulse-dot {
+	0% {
+		transform: scale(0.8);
+	}
+	25% {
+		transform: scale(1);
+	}
+	50%,
+	100% {
+		transform: scale(0.8);
+	}
+}
+
+/**
+ * Premium panels should be on the top when using the free version.
+ */
+div :has(> .stk--premium-panel) {
+	display: flex;
+	flex-direction: column;
+	> .components-panel__body {
+		order: 1;
+	}
+}
+.components-panel__body.stk--premium-panel {
+	order: 2 !important;
+}
+
+/**
+ * Modified controls indicator.
+ */
+.stk-panel-modified-indicator {
+	width: 8px;
+	height: 8px;
+	border-radius: 100%;
+	margin-inline: 12px;
+	background: #ffc107;
+}
+
+/**
+ * Hide contents when not open.
+ */
+.ugb-toggle-panel-body:not(.is-opened) > *:not(.components-panel__body-title) {
+	display: none;
+}
+
+.stk-panel-modified-indicator:not(.stk--visible) {
+	display: none;
+}
+
+// Reset button = .stk-control__reset-button & .stk-inspector-control__reset-button
+// (We had to split this into multiple lines because of a compiler bug where the :not selector goes empty)
+.ugb-toggle-panel-body:has(.stk-control__reset-button:not(.stk-control__reset-button--no-modified)) .stk-panel-modified-indicator {
+	display: block;
+}
+.ugb-toggle-panel-body:has(.stk-inspector-control__reset-button:not(.stk-control__reset-button--no-modified)) .stk-panel-modified-indicator {
+	display: block;
+}
+// Highlighted responsive & hover state toggle = .stk-label-unit-toggle .has-value
+// Conditional display = .stk-condition-component
+.ugb-toggle-panel-body:has(.stk-label-unit-toggle .has-value, .stk-condition-component) .stk-panel-modified-indicator {
+	display: block;
+}
+
+// Design panel selection
+.ugb-toggle-panel-body:has(.ugb-design-control .components-radio-control__option:not(:first-child) .is-active) .stk-panel-modified-indicator {
+	display: block;
+}
+
+// For Button Style Selection
+.ugb-toggle-panel-body:has(.stk-style-control__option.is-active:not(:first-child)) .stk-panel-modified-indicator {
+	display: block;
 }

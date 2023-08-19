@@ -186,6 +186,27 @@ export const getAttributeName = ( attrName, deviceType = 'desktop', hoverState =
 	return `${ attrName }${ deviceAttrName }${ hoverAttrName }`
 }
 
+/**
+ * Checks whether an attribute is empty or is considered as an unset block
+ * attribute. Handles top, left, right and bottom default attribute.
+ *
+ * @param {Object} value The value of a block attribute
+ *
+ * @return {boolean} True if the value is considered to be empty or unset
+ */
+export const isEmptyAttribute = value => {
+	if ( typeof value === 'object' ) {
+		return Object.values( value ).every( value => {
+			return isEmptyAttribute( value )
+		} )
+	}
+	return ( typeof value === 'undefined' ) || ( ! value && value === '' )
+}
+
+export const isEmptyAttributes = values => {
+	return values.every( value => isEmptyAttribute( value ) )
+}
+
 // Common content attributes across all Stackable blocks that should be preserved.
 export const CONTENT_ATTRIBUTES = [
 	// Image attributes

@@ -28,17 +28,25 @@
 		justify-content: center;
 		font-size: 10px; // For text only toggles
 		font-weight: 400; // For text only toggles
+		position: relative;
 		svg {
 			height: 100%;
 			width: 100%;
 		}
-		&:hover,
 		&.is-active {
-			box-shadow: none !important;
+			z-index: 2;
+		}
+		&:hover {
+			z-index: 3;
 		}
 	}
 	+ .stk-label-unit-toggle {
 		margin-left: 0;
+	}
+
+	// If focused on while closed, show an outline.
+	&:not(.is-open):focus-within {
+		outline: var(--wp-admin-border-width-focus) solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
 	}
 }
 .stk-label-unit-toggle__wrapper {
@@ -58,5 +66,18 @@
 		color: #fff;
 		border-color: #007cba !important;
 		border-color: var(--wp-admin-theme-color, #007cba) !important;
+	}
+}
+
+// Color the toggle orange if we have a tablet or mobile value that's set.
+.stk-label-unit-toggle > .stk-label-unit-toggle__wrapper:not(.is-open):has(.has-value) {
+	button.is-active {
+		background: #ffc107;
+	}
+}
+// Color the actual device button when the toggle is open.
+.stk-label-unit-toggle > .stk-label-unit-toggle__wrapper.is-open {
+	button.has-value {
+		background: #ffc107;
 	}
 }

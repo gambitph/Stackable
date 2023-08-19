@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/icon-box",
 	"title": "Icon Box",
 	"description": "A small text area with an icon that can be used to summarize features or services",
@@ -7,7 +7,8 @@
 	"usesContext": [
 		"postId",
 		"postType",
-		"queryId"
+		"queryId",
+		"stackable/innerBlockOrientation"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",

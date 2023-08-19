@@ -1,0 +1,28 @@
+.stk-font-family-control {
+	margin-bottom: 8px;
+
+	.components-form-token-field__label {
+		font: revert;
+		text-transform: revert;
+	}
+	.components-form-token-field__remove-token {
+		display: none !important;
+	}
+	.components-form-token-field__token-text {
+		background: none !important;
+		padding-inline-start: 4px !important;
+	}
+
+	.stk-control__reset-button {
+		position: revert !important;
+		margin-top: 30px !important;
+	}
+
+	.components-form-token-field,
+	.components-form-token-field__input-container {
+		width: 216px !important;
+	}
+	.components-form-token-field__input-container > * {
+		padding-block: 2px !important;
+	}
+}

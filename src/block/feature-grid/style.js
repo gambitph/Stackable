@@ -9,7 +9,7 @@ import {
 	EffectsAnimations,
 	Separator,
 	Transform,
-	ContentAlign,
+	Columns,
 } from '~stackable/block-components'
 import { BlockCssCompiler } from '~stackable/components'
 
@@ -18,17 +18,21 @@ import { BlockCssCompiler } from '~stackable/components'
  */
 import { memo } from '@wordpress/element'
 
+const alignmentOptions = {
+	editorSelectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+}
+
 const BlockStyles = memo( props => {
 	return (
 		<>
-			<Alignment.Style { ...props } />
+			<Alignment.Style { ...props } { ...alignmentOptions } />
 			<BlockDiv.Style { ...props } />
 			<Column.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Separator.Style { ...props } />
-			<ContentAlign.Style { ...props } />
+			<Columns.Style { ...props } />
 		</>
 	)
 } )
@@ -44,14 +48,14 @@ BlockStyles.Content = props => {
 
 	return (
 		<BlockCssCompiler>
-			<Alignment.Style.Content { ...props } />
+			<Alignment.Style.Content { ...props } { ...alignmentOptions } />
 			<BlockDiv.Style.Content { ...props } />
 			<Column.Style.Content { ...props } />
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
-			<ContentAlign.Style.Content { ...props } />
+			<Columns.Style.Content { ...props } />
 		</BlockCssCompiler>
 	)
 }

@@ -7,11 +7,13 @@ import {
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	WhenResponsiveScreen,
 	AdvancedToolbarControl,
 } from '~stackable/components'
-import { ResponsiveControl } from '../../components'
+import {
+	ResponsiveControl,
+	TypographyControlHelper,
+} from '../../components'
 import {
 	createResponsiveAttributeNames,
 	createResponsiveAttributes,
@@ -157,7 +159,7 @@ const addInspectorPanel = ( output, props ) => {
 				{ ( blockTitleWidth || blockTitleTabletWidth || blockTitleMobileWidth ) &&
 					<AdvancedToolbarControl
 						label={ __( 'Horizontal Align', i18n ) }
-						controls="flex-horizontal"
+						controls="__flex-horizontal"
 						value={ blockTitleHorizontalAlign }
 						onChange={ blockTitleHorizontalAlign => setAttributes( { blockTitleHorizontalAlign } ) }
 					/>
@@ -252,7 +254,7 @@ const addInspectorPanel = ( output, props ) => {
 				{ ( blockDescriptionWidth || blockDescriptionTabletWidth || blockDescriptionMobileWidth ) &&
 					<AdvancedToolbarControl
 						label={ __( 'Horizontal Align', i18n ) }
-						controls="flex-horizontal"
+						controls="__flex-horizontal"
 						value={ blockDescriptionHorizontalAlign }
 						onChange={ blockDescriptionHorizontalAlign => setAttributes( { blockDescriptionHorizontalAlign } ) }
 					/>

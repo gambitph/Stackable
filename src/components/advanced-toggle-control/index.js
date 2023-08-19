@@ -3,6 +3,8 @@
  */
 import { BaseControl } from '..'
 
+import LabelTooltip from '../base-control2/label-tooltip'
+
 /**
  * Exterior dependencies
  */
@@ -19,7 +21,6 @@ import { useControlHandlers } from '../base-control2/hooks'
 
 const AdvancedToggleControl = memo( props => {
 	const {
-		label,
 		help,
 	} = props
 
@@ -40,6 +41,7 @@ const AdvancedToggleControl = memo( props => {
 	const className = classnames( [
 		'components-toggle-control',
 		'stk-toggle-control',
+		'stk-control',
 		props.className,
 	] )
 
@@ -62,7 +64,7 @@ const AdvancedToggleControl = memo( props => {
 				aria-describedby={ describedBy }
 			/>
 			<label htmlFor={ id } className="components-toggle-control__label">
-				{ label }
+				<LabelTooltip label={ props.label } { ...props.helpTooltip } />
 			</label>
 		</BaseControl>
 	)

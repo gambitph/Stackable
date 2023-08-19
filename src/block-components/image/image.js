@@ -49,6 +49,8 @@ const getImageWrapperClasses = props => {
 		[ `stk--shadow-${ props.shadow }` ]: ! props.shape && props.shadow,
 
 		'stk-img--gradient-overlay': props.hasGradientOverlay,
+
+		'stk--has-lightbox': props.hasLightbox,
 	} )
 }
 
@@ -63,6 +65,7 @@ const getImageClasses = props => {
 
 const Image = memo( props => {
 	const { isSelected } = useBlockEditContext()
+	const [ neverResized, setNeverResized ] = useState( true )
 	const [ isResizing, setIsResizing ] = useState( false )
 	const [ lockAspectRatio, setLockAspectRatio ] = useState( false )
 	const [ initialHeight, setInitialHeight ] = useState()
@@ -93,6 +96,7 @@ const Image = memo( props => {
 		'stk-img-resizer',
 	], {
 		'stk-img-placeholder': ! src || hasImageError,
+		'stk--never-resized': ( ! src || hasImageError ) && neverResized,
 		'stk--is-resizing': isResizing,
 		'stk--no-click-to-edit': ! props.enableClickToEdit,
 		// If the image is too small, hide the size tooltip.
@@ -167,6 +171,7 @@ const Image = memo( props => {
 				}
 				setInitialWidth( currentWidth || 0 )
 
+				setNeverResized( false )
 				setIsResizing( true )
 				setSnap( null )
 			} }
@@ -325,8 +330,8 @@ Image.defaultProps = {
 	height: '',
 	widthUnit: '%',
 	heightUnit: 'px',
-	widthUnits: [ 'px', '%' ],
-	heightUnits: [ 'px', '%' ],
+	widthUnits: [ 'px', '%', 'vw' ],
+	heightUnits: [ 'px', '%', 'vh' ],
 
 	shape: '',
 	shapeStretch: false,

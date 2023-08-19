@@ -35,7 +35,7 @@ const variations = applyFilters(
 			isDefault: true,
 			attributes: {
 				className: 'is-style-default',
-				contentAlign: 'center',
+				innerBlockAlign: 'center',
 				hasContainer: true,
 			},
 			isActive: [ 'className' ],
@@ -73,16 +73,16 @@ const variations = applyFilters(
 			pickerIcon: ImageHorizontal,
 			innerBlocks: [
 				[ 'stackable/columns', {
-					innerBlockContentAlign: 'alignfull',
-					align: 'full',
-					blockMargin: {
-						bottom: 0,
-					},
 				}, [
 					[ 'stackable/column', {
-						containerWidth: 450,
 						contentAlign: 'left',
-						columnAlign: 'center',
+						innerBlockAlign: 'center',
+						columnSpacing: {
+							top: 32,
+							right: 32,
+							bottom: 32,
+							left: 32,
+						},
 					}, [
 						[ 'stackable/heading', { text: _x( 'Title for This Block', 'Heading placeholder', i18n ), textTag: 'h1' } ],
 						[ 'stackable/text', { text: _x( 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.', 'Content placeholder', i18n ) } ],

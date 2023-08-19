@@ -5,8 +5,8 @@
 // Blocksy theme
 // Default and wide widths - used for Content Width of column-type blocks.
 body.stk--is-blocksy-theme .stk-block { // Need to add .stk-block here, this doesn't work when in body.
-	--stk-block-width-default-detected: var(--block-max-width);
-	--stk-block-width-wide-detected: var(--block-wide-max-width);
+	--stk-block-width-default-detected: var(--theme-block-max-width, var(--block-max-width));
+	--stk-block-width-wide-detected: var(--theme-block-wide-max-width, var(--block-wide-max-width));
 }
 
 // Astra theme

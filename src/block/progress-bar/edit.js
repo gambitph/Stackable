@@ -10,7 +10,6 @@ import { DEFAULT_PROGRESS } from './schema'
 import { InspectorTabs, useDynamicContent } from '~stackable/components'
 import {
 	BlockDiv,
-	Alignment,
 	Advanced,
 	Responsive,
 	MarginBottom,
@@ -24,6 +23,7 @@ import {
 	Typography,
 	getTypographyClasses,
 	getAlignmentClasses,
+	Alignment,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import {
@@ -69,8 +69,10 @@ const Edit = props => {
 		'stk--has-background-overlay': attributes.progressColorType === 'gradient' && attributes.progressColor2,
 	} )
 
+	const progressValue = attributes.progressValue || ''
+
 	// parsing string to number since progress value is of a string type to support dynamic content
-	const parsedProgressValue = parseFloat( useDynamicContent( attributes.progressValue ) )
+	const parsedProgressValue = parseFloat( useDynamicContent( progressValue ).replace( /,/g, '' ) )
 	const derivedProgressValue = isNaN( parsedProgressValue ) ? DEFAULT_PROGRESS : parsedProgressValue
 	const derivedValue = `${ attributes.progressValuePrefix }${ derivedProgressValue }${ attributes.progressValueSuffix }`.trim()
 
@@ -81,17 +83,6 @@ const Edit = props => {
 					<InspectorTabs />
 
 					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-
-					{ /** Advanced controls */ }
-					<Advanced.InspectorControls />
-					<Transform.InspectorControls />
-					<EffectsAnimations.InspectorControls />
-					<CustomAttributes.InspectorControls />
-					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-bar" />
-					<Responsive.InspectorControls />
-					<ConditionalDisplay.InspectorControls />
-
 					<ProgressBar.InspectorControls />
 					<Typography.InspectorControls
 						{ ...props }
@@ -102,6 +93,16 @@ const Edit = props => {
 						hasToggle
 						label={ __( 'Label', i18n ) }
 					/>
+
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
+					<Transform.InspectorControls />
+					<EffectsAnimations.InspectorControls />
+					<CustomAttributes.InspectorControls />
+					<CustomCSS.InspectorControls mainBlockClass="stk-block-progress-bar" />
+					<Responsive.InspectorControls />
+					<ConditionalDisplay.InspectorControls />
+
 				</>
 			) }
 
@@ -138,6 +139,10 @@ const Edit = props => {
 						</div>
 					</div>
 				</div>
+				{ /* Add our progress style here because we're adjusting the value using a hook */ }
+				<style>
+					{ `.editor-styles-wrapper .stk-${ props.attributes.uniqueId } .stk-progress-bar { --progress-value:${ derivedValue }% !important; }` }
+				</style>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

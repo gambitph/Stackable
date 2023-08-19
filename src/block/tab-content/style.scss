@@ -1,0 +1,31 @@
+.stk-block-tab-content {
+	margin-bottom: 0;
+	display: flex;
+}
+.stk-block-tab-content > .stk-inner-blocks {
+	// Overlap all the tab panels on top of each other.
+	display: grid;
+	> .stk-block {
+		grid-column: 1 / 1;
+		grid-row: 1 / 1;
+		z-index: 1; // The active panel should be on top.
+
+		&[hidden] {
+			visibility: hidden;
+		}
+	}
+}
+.stk-block-tabs > .stk-block-tabs--fade > .stk-block-tab-content [role="tabpanel"] {
+	transition: opacity 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95), visibility 0s;
+	transition-delay: 0.01s, 0s;
+	opacity: 1;
+	&[hidden] {
+		opacity: 0;
+		transition: opacity 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95), visibility 0s;
+		transition-delay: 0s, 0.3s;
+		pointer-events: none;
+	}
+}
+.stk-block-tabs--vertical > .stk-block-tab-content > .stk-inner-blocks {
+	height: 100%;
+}

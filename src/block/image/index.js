@@ -16,6 +16,7 @@ import schema from './schema'
 import metadata from './block.json'
 import example from './example'
 import transforms from './transforms'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
@@ -29,11 +30,12 @@ export const settings = {
 	supports: {
 		anchor: true,
 		align: true,
+		spacing: true,
 	},
 	example,
 	transforms,
 
-	// deprecated,
+	deprecated,
 	edit,
 	save,
 }

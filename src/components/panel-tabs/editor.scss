@@ -19,16 +19,16 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		height: 80px;
+		height: 72px;
 		padding: 0 !important;
 		flex: 1;
 		margin: 0 !important;
 		cursor: pointer;
 		color: #1e1e1e;
 		border: 0 !important;
-		.dashicon {
-			margin: 5px;
-			height: 20px;
+		gap: 4px;
+		.dashicon::before {
+			font-size: 20px;
 		}
 		&.is-active {
 			border-bottom: 0;
@@ -68,17 +68,21 @@
 		}
 	}
 	&.is-opened .components-panel__body-title {
-		margin-bottom: 12px;
+		margin-bottom: 12px !important;
 		border-bottom: 1px solid #e1e1e1;
 		// Sticky.
 		position: sticky;
-		top: 128px;
+		top: 121px;
 		z-index: 4;
 	}
 	background: #fafafa;
 	// Our tabs already have a bottom border. This will thicken it.
 	&:first-child {
 		border-top: 0 !important;
+	}
+	// The last panel will remove the border top of the native Advanced tab.
+	&:last-child {
+		margin-bottom: 1px;
 	}
 }
 

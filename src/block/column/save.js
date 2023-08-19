@@ -6,7 +6,7 @@ import BlockStyles from './style'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
+import classnames from 'classnames/dedupe'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
@@ -38,7 +38,6 @@ export const Save = props => {
 	const blockClassNames = classnames( applyFilters( 'stackable.column.save.blockClassNames', [
 		props.className,
 		'stk-block-column',
-		'stk-block-column--v3',
 		columnClass,
 		responsiveClass,
 	], props ) )
@@ -48,17 +47,23 @@ export const Save = props => {
 		'stk-block-column__content',
 	] )
 
-	const innerClassNames = classnames( applyFilters( 'stackable.column.save.innerClassNames', [
-		blockAlignmentClass,
-		'stk-block-content',
-		'stk-inner-blocks',
-		`stk-${ attributes.uniqueId }-inner-blocks`,
-	], props ) )
+	const innerClassNames = applyFilters( 'stackable.column.save.innerClassNames',
+		classnames( [
+			blockAlignmentClass,
+			'stk-block-content',
+			'stk-inner-blocks',
+			`stk-${ attributes.uniqueId }-inner-blocks`,
+			{ 'stk--align-last-block-to-bottom': props.attributes.alignLastBlockToBottom },
+		] ),
+		props
+	)
 
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
 			attributes={ attributes }
+			version={ props.version }
+			data-v={ props.attributes.version }
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

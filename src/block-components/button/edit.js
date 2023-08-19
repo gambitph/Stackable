@@ -13,21 +13,20 @@ import {
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
+	useAttributeEditHandlers,
+	useBlockAttributesContext,
+	useBlockContext,
 } from '~stackable/hooks'
-import { extractColor } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { select } from '@wordpress/data'
-import { getColorClassName } from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
  */
-import { BorderControls } from '../helpers/borders'
+import { BorderControls as _BorderControls } from '../helpers/borders'
 import { Link as _Link } from '../link'
 import { Icon as _Icon } from '../icon'
 import { applyFilters } from '@wordpress/hooks'
@@ -95,96 +94,102 @@ export const HoverEffects = () => {
 			attribute="buttonHoverEffect"
 			options={ HOVER_OPTIONS }
 			default="darken"
+			helpTooltip={ {
+				video: 'button-hover-effect',
+				title: __( 'Hover effect', i18n ),
+				description: __( 'Triggers animation or effects when you mouse over', i18n ),
+			} }
 		/>
 	)
 }
 
-export const Colors = props => {
+export const ColorsControls = props => {
 	const {
 		blockState,
 		hasIconColor,
 		hasTextColor,
+		attrNameTemplate = 'button%s',
 	} = props
 
-	const buttonBackgroundColorType = useBlockAttributesContext( attributes => attributes.buttonBackgroundColorType )
-	const setAttributes = useBlockSetAttributesContext()
+	const {
+		getAttrName,
+	} = useAttributeEditHandlers( attrNameTemplate )
 
+	const buttonBackgroundColorType = useBlockAttributesContext( attributes => {
+		return attributes[ getAttrName( 'backgroundColorType' ) ]
+	} )
+
+	return ( <>
+		<AdvancedToolbarControl
+			controls={ [
+				{
+					value: '',
+					title: __( 'Single', i18n ),
+				},
+				{
+					value: 'gradient',
+					title: __( 'Gradient', i18n ),
+				},
+			] }
+			attribute={ getAttrName( 'backgroundColorType' ) }
+			isSmall={ true }
+			fullwidth={ false }
+		/>
+		<ColorPaletteControl
+			label={ buttonBackgroundColorType === 'gradient'
+				? sprintf( __( 'Button Color #%s', i18n ), 1 )
+				: __( 'Button Color', i18n )
+			}
+			attribute={ getAttrName( 'backgroundColor' ) }
+			hover="all"
+			hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
+		/>
+		{ buttonBackgroundColorType === 'gradient' && (
+			<>
+				<ColorPaletteControl
+					label={ __( 'Button Color #2', i18n ) }
+					attribute={ getAttrName( 'backgroundColor2' ) }
+					hover="all"
+				/>
+
+				<AdvancedRangeControl
+					label={ __( 'Gradient Direction (degrees)', i18n ) }
+					attribute={ getAttrName( 'backgroundGradientDirection' ) }
+					min={ 0 }
+					max={ 360 }
+					step={ 10 }
+					allowReset={ true }
+					hover="all"
+				/>
+			</>
+		) }
+
+		{ hasTextColor && (
+			<ColorPaletteControl
+				label={ __( 'Text Color', i18n ) }
+				attribute="textColor1"
+				hover="all"
+			/>
+		) }
+
+		{ hasIconColor && (
+			<ColorPaletteControl
+				label={ __( 'Icon Color', i18n ) }
+				attribute="iconColor1"
+				hover="all"
+			/>
+		) }
+	</> )
+}
+
+export const Colors = props => {
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Button Colors', i18n ) }
 				id="button-colors"
 			>
-				<AdvancedToolbarControl
-					controls={ [
-						{
-							value: '',
-							title: __( 'Single', i18n ),
-						},
-						{
-							value: 'gradient',
-							title: __( 'Gradient', i18n ),
-						},
-					] }
-					attribute="buttonBackgroundColorType"
-					isSmall={ true }
-					fullwidth={ false }
-				/>
-				<ColorPaletteControl
-					label={ buttonBackgroundColorType === 'gradient'
-						? sprintf( __( 'Button Color #%s', i18n ), 1 )
-						: __( 'Button Color', i18n )
-					}
-					attribute="buttonBackgroundColor"
-					hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
-					hover="all"
-				/>
-				{ buttonBackgroundColorType === 'gradient' && (
-					<>
-						<ColorPaletteControl
-							label={ __( 'Button Color #2', i18n ) }
-							attribute="buttonBackgroundColor2"
-							hover="all"
-						/>
-
-						<AdvancedRangeControl
-							label={ __( 'Gradient Direction (degrees)', i18n ) }
-							attribute="buttonBackgroundGradientDirection"
-							min={ 0 }
-							max={ 360 }
-							step={ 10 }
-							allowReset={ true }
-							hover="all"
-						/>
-					</>
-				) }
-
-				{ hasTextColor && (
-					<ColorPaletteControl
-						changeCallback={ _value => {
-							if ( blockState !== 'normal' ) {
-								return _value
-							}
-							const value = extractColor( _value )
-							const colors = select( select => select( 'core/block-editor' ).getSettings().colors ) || []
-							const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-							setAttributes( { textColorClass: colorSlug ? getColorClassName( 'color', colorSlug ) : '' } )
-
-							return _value
-						} }
-						label={ __( 'Text Color', i18n ) }
-						attribute="textColor1"
-						hover="all"
-					/>
-				) }
-
-				{ hasIconColor && (
-					<ColorPaletteControl
-						label={ __( 'Icon Color', i18n ) }
-						attribute="iconColor1"
-						hover="all"
-					/>
-				) }
+				<ColorsControls { ...props } />
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)
@@ -195,6 +200,57 @@ Colors.defaultProps = {
 	hasIconColor: false,
 }
 
+const SizeControls = props => {
+	const {
+		attrNameTemplate = 'button%s',
+	} = props
+
+	const {
+		getAttrName,
+	} = useAttributeEditHandlers( attrNameTemplate )
+
+	return ( <>
+		{ props.hasFullWidth && (
+			<AdvancedToggleControl
+				label={ __( 'Full Width', i18n ) }
+				attribute={ getAttrName( 'fullWidth' ) }
+			/>
+		) }
+		<AdvancedRangeControl
+			label={ __( 'Min. Button Height', i18n ) }
+			responsive="all"
+			attribute={ getAttrName( 'minHeight' ) }
+			min={ 0 }
+			max={ 100 }
+		/>
+		{ props.hasWidth && ! props.hasFullWidth && (
+			<AdvancedRangeControl
+				label={ __( 'Button Width', i18n ) }
+				responsive="all"
+				attribute={ getAttrName( 'width' ) }
+				min={ 0 }
+				max={ 100 }
+				placeholder=""
+			/>
+		) }
+		<FourRangeControl
+			label={ __( 'Button Padding', i18n ) }
+			units={ [ 'px', '%' ] }
+			responsive="all"
+			defaultLocked={ true }
+			attribute={ getAttrName( 'padding' ) }
+			sliderMin={ [ 0, 0 ] }
+			sliderMax={ [ 40, 100 ] }
+			vhMode={ true }
+			helpTooltip={ {
+				// TODO: Add a working video
+				title: __( 'Button padding', i18n ),
+				description: __( 'Adjusts the space between the button text and button borders', i18n ),
+			} }
+		/>
+	</> )
+}
+
 export const Size = props => {
 	return (
 		<InspectorStyleControls>
@@ -202,52 +258,7 @@ export const Size = props => {
 				title={ __( 'Button Size & Spacing', i18n ) }
 				id="button"
 			>
-				{ props.hasFullWidth && (
-					<AdvancedToggleControl
-						label={ __( 'Full Width', i18n ) }
-						attribute="buttonFullWidth"
-					/>
-				) }
-				<AdvancedRangeControl
-					label={ __( 'Min. Button Height', i18n ) }
-					responsive="all"
-					attribute="buttonMinHeight"
-					min={ 0 }
-					max={ 100 }
-				/>
-				{ props.hasWidth && ! props.hasFullWidth && (
-					<AdvancedRangeControl
-						label={ __( 'Button Width', i18n ) }
-						responsive="all"
-						attribute="buttonWidth"
-						min={ 0 }
-						max={ 100 }
-						placeholder=""
-					/>
-				) }
-				<FourRangeControl
-					label={ __( 'Vertical Padding', i18n ) }
-					units={ [ 'px', '%' ] }
-					responsive="all"
-					defaultLocked={ true }
-					attribute="buttonPadding"
-					sliderMin={ [ 0, 0 ] }
-					sliderMax={ [ 40, 100 ] }
-					enableLeft={ false }
-					enableRight={ false }
-				/>
-				<FourRangeControl
-					label={ __( 'Horizontal Padding', i18n ) }
-					units={ [ 'px', '%' ] }
-					responsive="all"
-					defaultLocked={ true }
-					attribute="buttonPadding"
-					sliderMin={ [ 0, 0 ] }
-					sliderMax={ [ 40, 100 ] }
-					enableTop={ false }
-					enableBottom={ false }
-				/>
-
+				<SizeControls { ...props } />
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)
@@ -255,6 +266,17 @@ export const Size = props => {
 
 Size.defaultProps = {
 	hasWidth: false,
+}
+
+const BorderControls = props => {
+	return (
+		<_BorderControls
+			hasBorderRadiusHover={ false }
+			borderSelector={ props.borderSelector }
+			borderRadiusPlaceholder={ props.placeholder }
+			{ ...props }
+		/>
+	)
 }
 
 export const Borders = props => {
@@ -267,8 +289,7 @@ export const Borders = props => {
 				<BorderControls
 					attrNameTemplate="button%s"
 					hasBorderRadiusHover={ false }
-					borderSelector={ props.borderSelector }
-					borderRadiusPlaceholder={ props.placeholder }
+					{ ...props }
 				/>
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
@@ -298,7 +319,7 @@ export const Edit = props => {
 
 	return (
 		<>
-			{ ( hasLink || enableLink ) && <Link /> }
+			{ ( hasLink && enableLink ) && <Link /> }
 			<Colors hasTextColor={ hasTextColor } { ...propsToPass } />
 			<Size hasFullWidth={ hasFullWidth } />
 			<Borders
@@ -327,7 +348,10 @@ Edit.defaultProps = {
 
 Edit.Link = Link
 Edit.Colors = Colors
+Edit.Colors.Controls = ColorsControls
 Edit.Size = Size
+Edit.Size.Controls = SizeControls
 Edit.Borders = Borders
+Edit.Borders.Controls = BorderControls
 Edit.Icon = Icon
 Edit.HoverEffects = HoverEffects

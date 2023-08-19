@@ -35,6 +35,8 @@ const buildInclude = [
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.
 	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './dist/**/*.js.map' ), // JS Map files.
+	'!' + path.resolve( __dirname, './src/__*/**/*' ), // Development templates.
 ]
 
 const postCSSOptions = [
@@ -47,6 +49,7 @@ const sassOptions = {
 	includePaths: [
 		path.resolve( __dirname, './src/' ),
 		path.resolve( __dirname, './src/styles' ),
+		'./node_modules',
 	],
 }
 
@@ -135,6 +138,18 @@ gulp.task( 'generate-translations-js', gulp.series(
 					strings.push( keyword )
 				}
 			} )
+
+			// Gather all variants translatable strings.
+			if ( blockData[ 'stk-variants' ] ) {
+				blockData[ 'stk-variants' ].forEach( variant => {
+					if ( variant.title && ! strings.includes( variant.title ) ) {
+						strings.push( variant.title )
+					}
+					if ( variant.description && ! strings.includes( variant.description ) ) {
+						strings.push( variant.description )
+					}
+				} )
+			}
 		} )
 
 		// Append all the strings to the translation-strings.js file.
@@ -268,6 +283,17 @@ gulp.task( 'style', gulp.series(
 			.pipe( replace( /.z\s?{\s?opacity:\s?1;?}/g, '' ) )
 			.pipe( gulp.dest( 'dist/' ) )
 	},
+	// Build the lightbox specific styles.
+	function styleImageLightboxCSS() {
+		return gulp.src( [ path.resolve( __dirname, './src/lightbox/frontend-image-lightbox.scss' ) ] )
+			.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+			.pipe( postcss( postCSSOptions ) )
+			.pipe( rename( {
+				basename: 'frontend_image_lightbox',
+				dirname: '',
+			} ) )
+			.pipe( gulp.dest( 'dist/' ) )
+	},
 	function generateResponsiveCSS() {
 		return gulp.src( [ 'dist/frontend_blocks.css' ] )
 			// Extract media queries and move them to another file.
@@ -347,18 +373,9 @@ gulp.task( 'style-deprecated-v2', function() {
 		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 
-gulp.task( 'style-deprecated-v1', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v1/*.scss' ) ] )
-		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
-		.pipe( concat( 'frontend_blocks_deprecated.css' ) )
-		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/deprecated/' ) )
-} )
-
 gulp.task( 'style-deprecated', gulp.parallel(
 	'style-editor-deprecated-v2',
 	'style-deprecated-v2',
-	'style-deprecated-v1',
 ) )
 
 /*********************************************************************

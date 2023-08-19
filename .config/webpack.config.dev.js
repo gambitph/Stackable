@@ -166,9 +166,11 @@ module.exports = [
 	target: [ 'web', 'es2017' ],
 
 	entry: {
+		'frontend_image_lightbox': path.resolve( __dirname, '../src/lightbox/frontend-image-lightbox.js' ),
 		'frontend_blocks': path.resolve( __dirname, '../src/block-frontend.js' ),
 		'frontend_block_accordion': path.resolve( __dirname, '../src/block/accordion/frontend-accordion.js' ),
 		'frontend_block_accordion_polyfill': path.resolve( __dirname, '../src/block/accordion/frontend-accordion-polyfill.js' ),
+		'frontend_block_carousel': path.resolve( __dirname, '../src/block/carousel/frontend-carousel.js' ),
 		'frontend_block_count_up': path.resolve( __dirname, '../src/block/count-up/frontend-count-up.js' ),
 		'frontend_block_countdown': path.resolve( __dirname, '../src/block/countdown/frontend-countdown.js' ),
 		'frontend_block_expand': path.resolve( __dirname, '../src/block/expand/frontend-expand.js' ),
@@ -178,6 +180,8 @@ module.exports = [
 		'frontend_block_progress_circle': path.resolve( __dirname, '../src/block/progress-circle/frontend-progress-circle.js' ),
 		'frontend_block_progress_bar': path.resolve( __dirname, '../src/block/progress-bar/frontend-progress-bar.js' ),
 		'frontend_block_horizontal_scroller': path.resolve( __dirname, '../src/block/horizontal-scroller/frontend-horizontal-scroller.js' ),
+		'frontend_block_tabs': path.resolve( __dirname, '../src/block/tabs/frontend-tabs.js' ),
+		'frontend_block_components_alignment_has_polyfill': path.resolve( __dirname, '../src/block-components/alignment/frontend-has-polyfill.js' ),
 	},
 
 	output: {

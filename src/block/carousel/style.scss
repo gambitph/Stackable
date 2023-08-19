@@ -1,0 +1,262 @@
+@import "common";
+
+.stk-block-carousel {
+	--gap: 30px;
+	--slides-to-show: 1;
+	--button-offset: 12px;
+	--button-gap: 12px;
+	--button-height: 40px;
+	--button-width: 40px;
+	--dot-color: #aaa;
+	--dot-color-hover: #1b1b1b;
+	--dot-size: 8px;
+	--dot-gap: 16px;
+	--dot-active-width: 30px;
+	--dot-active-height: var(--dot-size, 8px);
+	--dot-offset: 12px;
+	--transition-duration: 0.3s;
+	.stk-block-carousel__content-wrapper {
+		max-width: 100%;
+	}
+	--stk-columns-spacing: 0px !important;
+	&.stk--is-slide[data-slides-to-show="1"] {
+		--gap: 0px;
+	}
+}
+.stk-block-carousel__slider {
+	display: flex;
+	flex-direction: row;
+	cursor: grab;
+	width: 100%;
+	// This will make our slider draggable if columns do not have backgrounds or
+	// do not occupy the entire width.
+	background: transparent;
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+	scrollbar-width: none; // Removes scrollbar visibility in Mozilla Firefox
+}
+.stk-block-carousel__slider-wrapper {
+	position: relative;
+	z-index: 1; // For when the dots overlap the slider.
+}
+.stk-block-carousel__button,
+.stk-block-carousel__dot {
+	all: unset !important;
+	cursor: pointer !important;
+	transition: all 0.3s ease-in-out, outline-offset 0s, outline 0s !important;
+	&::before {
+		transition: all 0.3s ease-in-out !important;
+	}
+}
+
+.stk-block-carousel__buttons {
+	z-index: 9999;
+	position: absolute;
+	inset: var(--button-offset, 12px);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--button-gap, 12px);
+	pointer-events: none;
+
+	// Svg size does not match backend, overflow set by unknown source, remove it
+	svg {
+		overflow: visible;
+	}
+}
+.stk-block-carousel__button {
+	pointer-events: all !important;
+	user-select: none;
+}
+.stk-block-carousel__dots {
+	min-height: 24px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: min(var(--dot-gap), calc(var(--dot-gap) - (24px - var(--dot-size))));
+	// Dot offset.
+	z-index: 2;
+	position: relative;
+	margin-top: max(var(--dot-offset), -24px);
+	top: min(0px, calc(var(--dot-offset) + 24px));
+	li {
+		list-style: none;
+	}
+}
+
+.stk-block-carousel.stk--is-fade {
+	.stk-block-carousel__slider > .stk-block-column {
+		transition: opacity 0.3s ease-in-out;
+		width: 100%;
+		flex: 1 0 100% !important;
+		opacity: 1;
+		height: auto;
+		// Use max so that the minimum delay is 0.01s. If the transition
+		// duration is 0, this prevents the slides from blinking.
+		transition-duration: max(calc(var(--transition-duration, 0.3s) * 1.15), 0.01s);
+		transition-delay: calc(var(--transition-duration, 0.3s) * 0.3);
+		&.stk-block-carousel__slide--active {
+			transition-duration: var(--transition-duration, 0.3s);
+			transition-delay: 0s;
+		}
+		&:not(:first-child) {
+			position: relative;
+			left: 0;
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
+}
+
+.stk-block-carousel {
+	&.stk--is-slide {
+		.stk-block-carousel__slider:not(.stk--snapping-deactivated) {
+			scroll-behavior: smooth;
+			scroll-snap-type: inline mandatory;
+		}
+	}
+	.stk-block-carousel__slider.stk--snapping-deactivated {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+}
+
+.stk-block-carousel.stk--is-slide {
+	.stk-block-carousel__slider {
+		overflow-y: hidden;
+		overflow-x: scroll;
+		gap: var(--gap);
+		overscroll-behavior-inline: contain;
+		overflow-x: -moz-scrollbars-none;
+		-ms-overflow-style: none;
+		&::-webkit-scrollbar {
+			height: 0 !important;
+			display: none !important;
+		}
+	}
+	.stk-block-carousel__slider > * {
+		scroll-snap-align: start;
+		flex: 1 0 calc(100% / var(--slides-to-show) - var(--gap) / var(--slides-to-show) * (var(--slides-to-show) - 1)) !important;
+	}
+}
+
+.stk-block-carousel .stk--hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
+}
+
+// Added !important to prevent themes from overriding button styling i.e. Kimono theme
+.stk-block-carousel__button {
+	padding: initial !important;
+	color: initial !important;
+	height: var(--button-height, 40px) !important;
+	width: var(--button-width, 40px) !important;
+	opacity: 0.9 !important;
+	border-radius: 100% !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	background: #fff !important;
+	&:hover {
+		background: #fff;
+		opacity: 1;
+	}
+	svg {
+		width: 16px;
+		height: 16px;
+	}
+}
+.stk-block-carousel__dot {
+	height: max(24px, var(--dot-size, 8px)) !important;
+	width: max(24px, var(--dot-size, 8px)) !important;
+	position: relative !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	will-change: margin, margin-inline, width;
+	&,
+	&:hover {
+		background: transparent !important;
+	}
+	&::before {
+		position: absolute;
+		content: "" !important;
+		width: var(--dot-size, 8px);
+		height: var(--dot-size, 8px);
+		border-radius: var(--dot-size, 8px);
+		background: var(--dot-color, #aaa);
+		opacity: 1 !important;
+		inset: auto !important;
+	}
+	&:hover::before {
+		background: var(--dot-color-hover, #1b1b1b);
+	}
+	&.stk-block-carousel__dot--active {
+		margin-inline: max(0px, calc((24px - var(--dot-size)) / 2)) !important;
+		width: var(--dot-active-width, 30px) !important;
+		&::before {
+			background: #1b1b1b;
+			height: var(--dot-active-height);
+			width: var(--dot-active-width, 30px);
+		}
+	}
+}
+.stk-block-carousel.stk--dots-outline {
+	.stk-block-carousel__dot:not(.stk-block-carousel__dot--active, :hover) {
+		&::before {
+			background: transparent;
+			box-shadow: inset 0 0 0 1px var(--dot-color, #aaa);
+		}
+	}
+}
+
+// Hide arrows and dots on mobile
+@include mobile {
+	.stk-block-carousel.stk--hide-mobile-arrows > .stk-block-carousel__content-wrapper > * > .stk-block-carousel__buttons {
+		display: none;
+	}
+	.stk-block-carousel.stk--hide-mobile-dots > .stk-block-carousel__content-wrapper > .stk-block-carousel__dots {
+		display: none;
+	}
+}
+
+// Outside arrows.
+.stk-block-carousel.stk--arrows-outside.stk--arrows-justify-space-between.stk--arrows-align-center {
+	.stk-block-carousel__buttons {
+		inset: 0;
+	}
+	.stk-block-carousel__slider {
+		width: calc(100% - 2 * var(--button-width) - 2 * var(--button-offset));
+	}
+}
+
+.stk-block-carousel.stk--arrows-outside:is(.stk--arrows-align-flex-end, .stk--arrows-align-flex-start) {
+	.stk-block-carousel__slider-wrapper {
+		flex-direction: column;
+		gap: var(--button-offset, 12px);
+	}
+	.stk-block-carousel__buttons {
+		position: static;
+	}
+}
+
+.stk-block-carousel.stk--arrows-outside.stk--arrows-align-flex-start {
+	.stk-block-carousel__slider-wrapper {
+		flex-direction: column-reverse;
+	}
+}

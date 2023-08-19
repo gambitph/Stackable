@@ -9,10 +9,10 @@ import BlockStyles from './style'
 import classnames from 'classnames'
 import { i18n, version as VERSION } from 'stackable'
 import {
+	AdvancedToggleControl,
 	FourRangeControl,
-	InspectorStyleControls,
+	InspectorLayoutControls,
 	InspectorTabs,
-	PanelAdvancedSettings,
 } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -50,7 +50,7 @@ import { applyFilters } from '@wordpress/hooks'
 
 const Edit = props => {
 	const {
-		hasInnerBlocks, isOnlyBlock,
+		hasInnerBlocks, isOnlyBlock, parentBlock,
 	} = useBlockContext()
 
 	const {
@@ -66,12 +66,14 @@ const Edit = props => {
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
+	const nonZeroColumnSpacingBlocks = [ 'stackable/timeline' ]
+	const useZeroColumnSpacing = parentBlock ? ! nonZeroColumnSpacingBlocks.includes( parentBlock.name ) : false
+
 	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, props )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-column',
-		'stk-block-column--v3',
 		columnClass,
 	] )
 
@@ -82,6 +84,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-block-column__content',
 		`stk-${ props.attributes.uniqueId }-inner-blocks`,
+		{ 'stk--align-last-block-to-bottom': props.attributes.alignLastBlockToBottom },
 	] )
 
 	return (
@@ -90,36 +93,47 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
-					<Alignment.InspectorControls hasColumnAlignment={ true } />
+					<InspectorLayoutControls>
+						<FourRangeControl
+							label={ __( 'Column Spacing', i18n ) }
+							attribute="columnSpacing"
+							responsive="all"
+							units={ [ 'px', 'em', 'vw' ] }
+							defaultLocked={ true }
+							min={ [ 0, 0 ] }
+							sliderMax={ [ 200, 30 ] }
+							placeholder={ isOnlyBlock && useZeroColumnSpacing ? '0' : '12' }
+							helpTooltip={ {
+								video: 'inner-block-padding',
+								description: __( 'Sets the paddings between the column content and the border.', i18n ),
+							} }
+							visualGuide={ {
+								selector: '.stk-%s-container',
+								highlight: 'column-spacing',
+								defaultValue: '12px',
+							} }
+						/>
+					</InspectorLayoutControls>
+
+					<Alignment.InspectorControls hasContainerSize={ true } hasColumnAlignment={ true } />
 					<BlockDiv.InspectorControls />
+					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-column" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
 
-					<InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'Column Spacing', i18n ) }
-							id="column-spacing"
-							initialOpen={ true }
-						>
-							<FourRangeControl
-								label={ __( 'Spacing', i18n ) }
-								attribute={ 'columnSpacing' }
-								responsive="all"
-								units={ [ 'px', 'em' ] }
-								defaultLocked={ true }
-								min={ [ 0, 0 ] }
-								sliderMax={ [ 200, 30 ] }
-								placeholder={ isOnlyBlock ? '0' : '12' }
-								className="ugb--help-tip-advanced-block-paddings"
-							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
+					<InspectorLayoutControls>
+						<AdvancedToggleControl
+							label={ __( 'Align Last Block to Bottom', i18n ) }
+							checked={ props.attributes.alignLastBlockToBottom }
+							onChange={ alignLastBlockToBottom => props.setAttributes( { alignLastBlockToBottom } ) }
+						/>
+					</InspectorLayoutControls>
+
 					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
 				</>
 			) }
@@ -138,6 +152,7 @@ const Edit = props => {
 					clientId={ props.clientId }
 					attributes={ props.attributes }
 					className={ blockClassNames }
+					data-v={ props.attributes.version || 4 }
 				>
 					<ContainerDiv className={ contentClassNames }>
 						<InnerBlocks

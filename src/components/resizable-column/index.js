@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
-import { AdvancedTextControl } from '..'
+import { AdvancedTextControl, Popover } from '..'
 import { ColumnShowTooltipContext } from '../column-inner-blocks'
 
 /**
@@ -22,7 +22,7 @@ import { getRowsFromColumns } from '~stackable/block-components/column/util'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { ResizableBox, Popover } from '@wordpress/components'
+import { ResizableBox } from '@wordpress/components'
 import { useSelect, select } from '@wordpress/data'
 import {
 	Fragment, useState, useEffect, useRef, memo, useContext,
@@ -47,7 +47,7 @@ const ResizableColumn = props => {
 	} = blockContext
 
 	// Block context is provided from the parent Columns block.
-	const allowResize = ! props.context[ 'stackable/columnFit' ]
+	const allowResize = ! props.context[ 'stackable/innerBlockOrientation' ]
 
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
@@ -103,9 +103,6 @@ const ResizableColumn = props => {
 		'stk-column-resizeable',
 		props.className,
 	] )
-	const {
-		columnGap, columnGapTablet, columnGapMobile,
-	} = ( parentBlock?.attributes || {} )
 
 	const enable = {
 		top: false,
@@ -124,6 +121,11 @@ const ResizableColumn = props => {
 	const onResizeStart = ( _event, _direction ) => {
 		// toggleSelection( false )
 
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		const {
+			columnGap, columnGapTablet, columnGapMobile,
+		} = ( parentBlock?.attributes || {} )
+
 		// Get the column gap amounts, we need these to calculate percentages when resizing columns.
 		const parentColumnGaps = {
 			desktop: columnGap || 0,
@@ -132,7 +134,6 @@ const ResizableColumn = props => {
 		}
 
 		const editorDom = getEditorDom()
-		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
 		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
 
 		// In desktop, get all the column widths.
@@ -141,7 +142,7 @@ const ResizableColumn = props => {
 			const totalColumnGap = parentColumnGaps.desktop * ( adjacentBlocks.length - 1 )
 
 			// Get the current pixel width of the columns.
-			const parentEl = editorDom.querySelector( `[data-block="${ parentBlockClientId }"]` )
+			const parentEl = editorDom.querySelector( `[data-block="${ parentBlockClientId }"] .stk-inner-blocks` )
 			const parentWidth = parentEl.clientWidth - totalColumnGap
 			const isFirstResize = adjacentBlocks.every( ( { attributes } ) => ! attributes.columnWidth )
 			const columnWidths = adjacentBlocks.map( ( { clientId, attributes } ) => {
@@ -539,6 +540,7 @@ const ResizableTooltip = memo( props => {
 							setIsEditWidth( false )
 						}
 					} }
+					onEscape={ () => setIsEditWidth( false ) }
 				>
 					<div ref={ popupRef }>
 						<AdvancedTextControl

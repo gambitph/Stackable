@@ -40,16 +40,6 @@ if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 	add_action( 'stackable_version_upgraded', 'stackable_auto_compatibility_v2', 10, 2 );
 }
 
-if ( ! function_exists( 'stackable_v2_wizard_migration_settings' ) ) {
-	function stackable_v2_wizard_migration_settings( $args ) {
-		$args['wizard']['stackable_v2_editor_compatibility'] = get_option( 'stackable_v2_editor_compatibility' );
-		$args['wizard']['stackable_v2_editor_compatibility_usage'] = get_option( 'stackable_v2_editor_compatibility_usage' );
-		return $args;
-	}
-	// Add the admin settings for our wizard.
-	add_filter( 'stackable_localize_settings_script', 'stackable_v2_wizard_migration_settings', 11 );
-}
-
 if ( ! function_exists( 'stackable_v2_compatibility_option' ) ) {
 
 	/**
@@ -128,7 +118,8 @@ if ( ! function_exists( 'stackable_v2_compatibility_option' ) ) {
 			)
 		);
 	}
-	add_action( 'init', 'stackable_v2_compatibility_option' );
+	add_action( 'admin_init', 'stackable_v2_compatibility_option' );
+	add_action( 'rest_api_init', 'stackable_v2_compatibility_option' );
 }
 
 if ( ! function_exists( 'has_stackable_v2_frontend_compatibility' ) ) {
@@ -312,6 +303,10 @@ if ( ! function_exists( 'stackable_add_required_block_styles_v2' ) ) {
 if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 
 	function load_frontend_scripts_conditionally_v2( $block_content, $block ) {
+		if ( $block_content === null ) {
+			return $block_content;
+		}
+
 		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
 			stripos( $block_name, 'ugb/' ) === 0 ||
@@ -364,6 +359,10 @@ if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
 	 * @return string The block content
 	 */
 	function stackable_frontend_v2_try_migration( $block_content, $block ) {
+		if ( $block_content === null ) {
+			return $block_content;
+		}
+
 		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
 			stripos( $block_name, 'ugb/' ) === 0 ||

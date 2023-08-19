@@ -7,6 +7,7 @@ const AdminBaseSetting = props => {
 	const [ uid ] = useState( `ugb-admin-setting-${ i++ }` )
 	const mainClasses = classnames( [
 		'ugb-admin-setting',
+		props.className,
 	], {
 		[ `ugb-admin-setting--${ props.size }` ]: props.size,
 	} )

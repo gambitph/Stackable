@@ -19,7 +19,6 @@ import {
 	useGeneratedCss,
 	ContainerDiv,
 	ConditionalDisplay,
-	Alignment,
 	getAlignmentClasses,
 	EffectsAnimations,
 	CustomAttributes,
@@ -43,7 +42,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
 export const TEMPLATE = [
-	[ 'stackable/icon-label', {}, [
+	[ 'stackable/icon-label', { blockMargin: { bottom: 0 } }, [
 		[ 'stackable/icon', { contentAlign: 'left' } ],
 		[ 'stackable/heading', {
 			text: __( 'Icon Box', i18n ), hasP: true, textTag: 'h4',
@@ -85,20 +84,22 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
+					<InspectorTabs hasLayoutPanel={ false } />
 
-					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
+					<BlockLink.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
-					<BlockLink.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-box" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
 
-					<ContainerDiv.InspectorControls sizeSelector=".stk-block-content" />
+					<ContainerDiv.InspectorControls
+						sizeSelector=".stk-block-content"
+						hasContentVerticalAlign={ true }
+					/>
 
 					<InspectorStyleControls>
 						<InspectorBottomTip />

@@ -31,6 +31,8 @@ export const settings = {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 		stkAlign: true,
+		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	example,
 	deprecated,

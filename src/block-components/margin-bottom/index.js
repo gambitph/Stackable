@@ -5,7 +5,9 @@ import { addAttributes } from './attributes'
 import { Style } from './style'
 import { ResizableBottomMargin } from '~stackable/components'
 import { getUniqueBlockClass } from '~stackable/util'
-import { useBlockAttributesContext, useBlockContext } from '~stackable/hooks'
+import {
+	useBlockAttributesContext, useBlockContext, useBlockContextContext,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -13,6 +15,7 @@ import { useBlockAttributesContext, useBlockContext } from '~stackable/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { memo } from '@wordpress/element'
+import { select } from '@wordpress/data'
 
 export const MarginBottom = memo( props => {
 	const { clientId } = useBlockEditContext()
@@ -28,15 +31,28 @@ export const MarginBottom = memo( props => {
 			blockMarginUnitMobile: attributes.blockMarginUnitMobile,
 		}
 	} )
+
 	const { isLastBlock, parentBlock } = useBlockContext( clientId )
 
-	// Don't show the margin bottom draggable indicator if this is in a row block.
-	const isRowBlock = parentBlock &&
-		parentBlock.name === 'core/group' &&
-		parentBlock.attributes.layout?.type === 'flex' &&
-		parentBlock.attributes.layout?.flexWrap === 'nowrap'
+	// Check if the parent block (like a Column block) is displaying blocks
+	// horizontally, we don't want to show the margin bottom draggable
+	// indicator.
+	const parentInnerBlockOrientation = useBlockContextContext( context => {
+		return context[ 'stackable/innerBlockOrientation' ]
+	} )
+	if ( parentInnerBlockOrientation === 'horizontal' ) {
+		return null
+	}
 
-	if ( isRowBlock ) {
+	// Don't show the margin bottom draggable indicator if this is in a row block.
+	const isGroupBlock = parentBlock && parentBlock.name === 'core/group'
+	let isRowLayout = false
+	if ( isGroupBlock ) {
+		const attributes = select( 'core/block-editor' ).getBlockAttributes( parentBlock.clientId )
+		isRowLayout = attributes.layout?.type === 'flex' && attributes.layout?.flexWrap === 'nowrap'
+	}
+
+	if ( isGroupBlock && isRowLayout ) {
 		return null
 	}
 

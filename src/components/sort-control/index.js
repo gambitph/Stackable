@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import AdvancedControl, { extractControlProps } from '../base-control2'
+import { BaseControl, extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
 import { ResetButton } from '../base-control2/reset-button'
 
@@ -44,7 +44,9 @@ const SortControl = memo( props => {
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
 	let values = typeof props.values === 'undefined' ? _value
-		: Array.isArray( props.values ) ? [ ...props.values ] : _value
+		: Array.isArray( props.values ) ? [ ...props.values ]
+			: typeof props.values === 'string' ? props.values.split( ',' ) : _value
+
 	values = values ? values.splice( 0, props.num ) : range( props.num ).map( i => i + 1 )
 	// If a number was added outside our sorter.
 	while ( values.length < props.num ) {
@@ -57,7 +59,7 @@ const SortControl = memo( props => {
 	const valuesSortOrder = values.map( i => i.toString() )
 
 	return (
-		<AdvancedControl
+		<BaseControl
 			{ ...controlProps }
 			className={ classnames( [ 'ugb-sort-control', props.className, `ugb-sort-control--axis-${ props.axis }` ] ) }
 		>
@@ -104,7 +106,7 @@ const SortControl = memo( props => {
 				default={ props.default }
 				onChange={ () => onChange( '', { oldIndex: 0, newIndex: 0 } ) }
 			/>
-		</AdvancedControl>
+		</BaseControl>
 	)
 } )
 

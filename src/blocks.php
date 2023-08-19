@@ -66,6 +66,7 @@ if ( ! function_exists( 'stackable_get_stk_block_folders_metadata' ) ) {
 		'spacer',
 		'subtitle',
 		'table-of-contents',
+		'tab-labels',
 		'text',
 	);
 
@@ -96,9 +97,12 @@ if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
 			'notification',
 			'posts',
 			'price',
+			'tabs',
+			'tab-content',
 			'pricing-box',
 			'team-member',
 			'testimonial',
+			'timeline',
 			'video-popup',
 			'horizontal-scroller',
 		);

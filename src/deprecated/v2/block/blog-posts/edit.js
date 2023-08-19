@@ -21,15 +21,11 @@ import {
 	ProControlButton,
 	ProControl,
 	BlockContainer,
-	ColumnPaddingControl,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	ImageSizeControl,
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
-	PanelSpacingBody,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	ButtonIconPopoverControl,
@@ -41,6 +37,10 @@ import {
 	DivBackground,
 	ContentAlignControl,
 	ResponsiveControl,
+	BackgroundControlsHelper,
+	ColumnPaddingControl,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createTypographyAttributeNames,
@@ -139,7 +139,11 @@ addFilter( 'stackable.blog-posts.edit.inspector.layout.before', 'stackable/blog-
 				options={ applyFilters( 'stackable.blog-posts.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)
@@ -297,7 +301,11 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
 				/>
 				{ applyFilters( 'stackable.blog-posts.edit.inspector.style.posts.after', null, props ) }
-				{ showProNotice && <ProControlButton type="postsBlock" /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
@@ -843,8 +851,9 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					initialOpen={ false }
 				>
 					<ProControl
-						title={ __( 'Say Hello to More Options 👋', i18n ) }
-						description={ __( 'Get a load more button, pagination, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
+						// Generic label, no translations to keep old text out of the translation files.
+						title="Upgrade to Premium"
+						description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
 					/>
 				</PanelAdvancedSettings>
 			) }
@@ -858,8 +867,9 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					initialOpen={ false }
 				>
 					<ProControl
-						title={ __( 'Say Hello to More Options 👋', i18n ) }
-						description={ __( 'Get a load more button, pagination, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
+						// Generic label, no translations to keep old text out of the translation files.
+						title="Upgrade to Premium"
+						description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
 					/>
 				</PanelAdvancedSettings>
 			) }

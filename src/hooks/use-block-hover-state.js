@@ -22,11 +22,11 @@ const STORE_ACTIONS = {
 		// We need to specify `.editor-styles-wrapper` to avoid targeting the navigation list view.
 		const blockEl = editorDom?.querySelector( `[data-block="${ clientId }"]` )
 
-		// Get the currently parent-hovered block if there is one.
+		// Get the currently parent-hover block if there is one.
 		const parentHoverEl = blockEl?.closest( '.stk-hover-parent' )?.closest( '[data-block]' )
 		const parentHoverClientId = parentHoverEl?.getAttribute( 'data-block' ) || null
 
-		// Get all the child blocks of the currently parent-hovered block.
+		// Get all the child blocks of the currently parent-hover block.
 		const parentHoverChildrenClientIds = Array.from( parentHoverEl?.querySelectorAll( '[data-block]' ) || [] )
 			.map( el => el.getAttribute( 'data-block' ) ) || []
 
@@ -150,21 +150,21 @@ export const useBlockHoverState = () => {
 		let blockHoverClass = ''
 		let currentHoverState = 'normal'
 		if ( isBlockSelected ) {
-			if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
+			if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
 				blockHoverClass = 'stk--is-hovered'
 			}
 
 			currentHoverState = hoverState
 
-			// If we changed the hover state to parent-hovered, but the block
+			// If we changed the hover state to parent-hover, but the block
 			// doesn't have a parent to hover, make it hover instead.
-			if ( ! hasParentHoverState && hoverState === 'parent-hovered' ) {
+			if ( ! hasParentHoverState && hoverState === 'parent-hover' ) {
 				currentHoverState = 'hover'
 			}
 
 		// Also change the hover states of the other
 		} else if ( isParentHoverBlock ) {
-			if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
+			if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
 				blockHoverClass = 'stk--is-hovered'
 				currentHoverState = 'hover'
 			}
@@ -180,9 +180,9 @@ export const useBlockHoverState = () => {
 			const isChildOfCollapsedBlock = collapsedChildrenClientIds.includes( clientId )
 
 			if ( isChildOfParentHover || isChildOfHoverBlock ) {
-				if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
+				if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
 					blockHoverClass = 'stk--is-hovered'
-					currentHoverState = 'parent-hovered'
+					currentHoverState = 'parent-hover'
 				}
 			} else if ( isChildOfCollapsedBlock || isCollapsedBlock ) {
 				// We won't add any classes here anymore.
@@ -226,13 +226,13 @@ export const useBlockHoverClass = () => {
 		// The hover state only applies to the currently selected block.
 		let blockHoverClass = ''
 		if ( isBlockSelected ) {
-			if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
+			if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
 				blockHoverClass = 'stk--is-hovered'
 			}
 
 		// Also change the hover states of the other
 		} else if ( isParentHoverBlock ) {
-			if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
+			if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
 				blockHoverClass = 'stk--is-hovered'
 			}
 
@@ -244,7 +244,7 @@ export const useBlockHoverClass = () => {
 			const isChildOfHoverBlock = hoverChildrenClientIds.includes( clientId )
 
 			if ( isChildOfParentHover || isChildOfHoverBlock ) {
-				if ( hoverState === 'hover' || hoverState === 'parent-hovered' ) {
+				if ( hoverState === 'hover' || hoverState === 'parent-hover' ) {
 					blockHoverClass = 'stk--is-hovered'
 				}
 			}

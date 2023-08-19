@@ -15,9 +15,7 @@ import { getDefaultFontSize } from '~stackable/util'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import {
-	Fragment, useMemo,
-} from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { i18n } from 'stackable'
 
 const TypographyControl = props => {
@@ -43,7 +41,7 @@ const TypographyControl = props => {
 					props.fontWeight ||
 					props.textTransform ||
 					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
-					props.letterSpacing
+					props.letterSpacing || props.tabletLetterSpacing || props.mobileLetterSpacing
 				}
 				resetPopoverTitle={ props.resetPopoverTitle }
 				resetPopoverDescription={ props.resetPopoverDescription }
@@ -55,7 +53,10 @@ const TypographyControl = props => {
 						label={ __( 'Font Family', i18n ) }
 						onChange={ props.onChangeFontFamily }
 						value={ props.fontFamily }
-						className="ugb--help-tip-typography-family"
+						helpTooltip={ {
+							video: 'typography-family',
+							description: __( 'Sets the font set to be used for the element', i18n ),
+						} }
 					/>
 				) }
 				{ props.onChangeFontSize && (
@@ -70,7 +71,11 @@ const TypographyControl = props => {
 								onChangeUnit={ props.onChangeFontSizeUnit }
 								{ ...props.fontSizeProps }
 								placeholder={ placeholder }
-								className="ugb--help-tip-typography-size"
+								helpTooltip={ {
+									// TODO: Add a working video.
+									title: __( 'Font size', i18n ),
+									description: __( 'Sets the size of text characters', i18n ),
+								} }
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -82,7 +87,11 @@ const TypographyControl = props => {
 								unit={ props.tabletFontSizeUnit }
 								onChangeUnit={ props.onChangeTabletFontSizeUnit }
 								{ ...props.fontSizeProps }
-								className="ugb--help-tip-typography-size"
+								helpTooltip={ {
+									// TODO: Add a working video.
+									title: __( 'Font size', i18n ),
+									description: __( 'Sets the size of text characters', i18n ),
+								} }
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -94,7 +103,11 @@ const TypographyControl = props => {
 								unit={ props.mobileFontSizeUnit }
 								onChangeUnit={ props.onChangeMobileFontSizeUnit }
 								{ ...props.fontSizeProps }
-								className="ugb--help-tip-typography-size"
+								helpTooltip={ {
+									// TODO: Add a working video.
+									title: __( 'Font size', i18n ),
+									description: __( 'Sets the size of text characters', i18n ),
+								} }
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>
@@ -118,7 +131,11 @@ const TypographyControl = props => {
 						] }
 						onChange={ props.onChangeFontWeight }
 						value={ props.fontWeight }
-						className="ugb--help-tip-typography-weight"
+						helpTooltip={ {
+							video: 'typography-weight',
+							title: __( 'Font weight', i18n ),
+							description: __( 'Sets the thinness or thickness of text characters', i18n ),
+						} }
 					/>
 				) }
 				{ props.onChangeTextTransform && (
@@ -133,7 +150,11 @@ const TypographyControl = props => {
 						] }
 						onChange={ props.onChangeTextTransform }
 						value={ props.textTransform }
-						className="ugb--help-tip-typography-transform"
+						helpTooltip={ {
+							video: 'typography-transform',
+							title: __( 'Transform', i18n ),
+							description: __( 'Sets the usage of upper or lower case', i18n ),
+						} }
 					/>
 				) }
 				{ props.onChangeLineHeight && (
@@ -152,7 +173,11 @@ const TypographyControl = props => {
 								unit={ props.lineHeightUnit }
 								onChangeUnit={ props.onChangeLineHeightUnit }
 								initialPosition={ [ 37, 1.8 ] }
-								className="ugb--help-tip-typography-line-height"
+								helpTooltip={ {
+									video: 'typography-line-height',
+									title: __( 'Line height', i18n ),
+									description: __( 'Sets the vertical distance between lines of text', i18n ),
+								} }
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -169,7 +194,11 @@ const TypographyControl = props => {
 								unit={ props.tabletLineHeightUnit }
 								onChangeUnit={ props.onChangeTabletLineHeightUnit }
 								initialPosition={ [ 37, 1.8 ] }
-								className="ugb--help-tip-typography-line-height"
+								helpTooltip={ {
+									video: 'typography-line-height',
+									title: __( 'Line height', i18n ),
+									description: __( 'Sets the vertical distance between lines of text', i18n ),
+								} }
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -186,23 +215,70 @@ const TypographyControl = props => {
 								unit={ props.mobileLineHeightUnit }
 								onChangeUnit={ props.onChangeMobileLineHeightUnit }
 								initialPosition={ [ 37, 1.8 ] }
-								className="ugb--help-tip-typography-line-height"
+								helpTooltip={ {
+									video: 'typography-line-height',
+									title: __( 'Line height', i18n ),
+									description: __( 'Sets the vertical distance between lines of text', i18n ),
+								} }
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>
 				) }
 				{ props.onChangeLetterSpacing && (
-					<AdvancedRangeControl
-						label={ __( 'Letter Spacing', i18n ) }
-						min={ -5 }
-						max={ 10 }
-						step={ 0.1 }
-						allowReset={ true }
-						onChange={ props.onChangeLetterSpacing }
-						value={ props.letterSpacing }
-						placeholder="0"
-						className="ugb--help-tip-typography-letter-spacing"
-					/>
+					<Fragment>
+						<WhenResponsiveScreen>
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								onChange={ props.onChangeLetterSpacing }
+								value={ props.letterSpacing }
+								placeholder="0"
+								helpTooltip={ {
+									video: 'typography-letter-spacing',
+									title: __( 'Letter spacing', i18n ),
+									description: __( 'Sets the distance or space between letters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								value={ props.tabletLetterSpacing }
+								onChange={ props.onChangeTabletLetterSpacing }
+								placeholder="0"
+								helpTooltip={ {
+									video: 'typography-letter-spacing',
+									title: __( 'Letter spacing', i18n ),
+									description: __( 'Sets the distance or space between letters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedRangeControl
+								label={ __( 'Letter Spacing', i18n ) }
+								min={ -5 }
+								max={ 10 }
+								step={ 0.1 }
+								allowReset={ true }
+								value={ props.mobileLetterSpacing }
+								onChange={ props.onChangeMobileLetterSpacing }
+								placeholder="0"
+								helpTooltip={ {
+									video: 'typography-letter-spacing',
+									title: __( 'Letter spacing', i18n ),
+									description: __( 'Sets the distance or space between letters', i18n ),
+								} }
+							/>
+						</WhenResponsiveScreen>
+					</Fragment>
+
 				) }
 			</ButtonIconPopoverControl>
 			{ /* A second font size option. */ }
@@ -218,7 +294,11 @@ const TypographyControl = props => {
 							onChangeUnit={ props.onChangeFontSizeUnit }
 							{ ...props.fontSizeProps }
 							placeholder={ placeholder }
-							className="ugb--help-tip-typography-size"
+							helpTooltip={ {
+								// TODO: Add a working video.
+								title: __( 'Font size', i18n ),
+								description: __( 'Sets the size of text characters', i18n ),
+							} }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -230,7 +310,11 @@ const TypographyControl = props => {
 							unit={ props.tabletFontSizeUnit }
 							onChangeUnit={ props.onChangeTabletFontSizeUnit }
 							{ ...props.fontSizeProps }
-							className="ugb--help-tip-typography-size"
+							helpTooltip={ {
+								// TODO: Add a working video.
+								title: __( 'Font size', i18n ),
+								description: __( 'Sets the size of text characters', i18n ),
+							} }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -242,7 +326,11 @@ const TypographyControl = props => {
 							unit={ props.mobileFontSizeUnit }
 							onChangeUnit={ props.onChangeMobileFontSizeUnit }
 							{ ...props.fontSizeProps }
-							className="ugb--help-tip-typography-size"
+							helpTooltip={ {
+								 // TODO: Add a working video.
+								title: __( 'Font size', i18n ),
+								description: __( 'Sets the size of text characters', i18n ),
+							} }
 						/>
 					</WhenResponsiveScreen>
 				</Fragment>
@@ -254,7 +342,6 @@ const TypographyControl = props => {
 TypographyControl.defaultProps = {
 	label: __( 'Typography', i18n ),
 	popoverLabel: undefined,
-	className: 'ugb--help-tip-typography',
 	showSecondFontSize: true,
 	fontFamily: '',
 	fontSize: '',
@@ -273,6 +360,8 @@ TypographyControl.defaultProps = {
 	tabletLineHeightUnit: 'em',
 	mobileLineHeightUnit: 'em',
 	letterSpacing: '',
+	tabletLetterSpacing: '',
+	mobileLetterSpacing: '',
 	fontSizeProps: {},
 	resetPopoverTitle: '',
 	resetPopoverDescription: '',
@@ -298,6 +387,8 @@ TypographyControl.defaultProps = {
 	onChangeTabletLineHeightUnit: () => {},
 	onChangeMobileLineHeightUnit: () => {},
 	onChangeLetterSpacing: () => {},
+	onChangeTabletLetterSpacing: () => {},
+	onChangeMobileLetterSpacing: () => {},
 }
 
 export default TypographyControl

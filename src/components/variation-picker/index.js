@@ -71,7 +71,7 @@ const VariationPicker = props => {
 					<p className="block-editor-block-variation-picker__notice">
 						{ __( 'Upgrade to Premium to get more design variations.', i18n ) }
 						&nbsp;
-						<a href={ `https://wpstackable.com/upgrade/?utm_source=variation-picker&utm_campaign=learnmore&utm_medium=gutenberg` } target="_premium">
+						<a href="https://wpstackable.com/premium/?utm_source=variation-picker&utm_campaign=learnmore&utm_medium=gutenberg" target="_premium">
 							{ __( 'Learn more', i18n ) }
 						</a>
 					</p>

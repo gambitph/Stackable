@@ -22,21 +22,25 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 */
 		function __construct() {
 			// Register our settings.
-			add_action( 'init', array( $this, 'register_block_style_settings' ) );
+			add_action( 'admin_init', array( $this, 'register_block_style_settings' ) );
+			add_action( 'rest_api_init', array( $this, 'register_block_style_settings' ) );
 
 			// Register our management rest routes
 			add_action( 'rest_api_init', array( $this, 'register_route' ) );
 
 			// We allow editing of default blocks in their own editor, we do
 			// this by creating a "dummy" CPT that we'll edit.
-			add_action( 'init', array( $this, 'register_temp_block_editor' ) );
+			add_action( 'admin_init', array( $this, 'register_temp_block_editor' ) );
+			add_action( 'rest_api_init', array( $this, 'register_temp_block_editor' ) );
 
 			// Disallow going through the list of all "dummy" CPTs.
 			add_action( 'current_screen', array( $this, 'temp_block_editor_list_disallow' ) );
 
 			// This will trigger the editor to redirect to the editor for a
 			// default block.
-			add_action( 'admin_init', array( $this, 'edit_default_block_redirect' ) );
+			if ( isset( $_REQUEST['stk_edit_block_style'] ) && isset( $_REQUEST['stk_edit_block'] ) && isset( $_REQUEST['stk_edit_block_title'] ) ) {
+				add_action( 'admin_init', array( $this, 'edit_default_block_redirect' ) );
+			}
 		}
 
 		/**
@@ -349,14 +353,11 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 * @return void
 		 */
 		public function edit_default_block_redirect() {
-			if ( ! isset( $_REQUEST['stk_edit_block_style'] ) || ! isset( $_REQUEST['stk_edit_block'] ) ) {
-				return;
-			}
-
 			$block_name = sanitize_text_field( $_REQUEST['stk_edit_block'] );
 			$style_slug = sanitize_text_field( $_REQUEST['stk_edit_block_style'] );
+			$block_title = sanitize_text_field( $_REQUEST['stk_edit_block_title'] );
 
-			$this->redirect_to_block_style_editor( $block_name, $style_slug );
+			$this->redirect_to_block_style_editor( $block_name, $style_slug, $block_title );
 		}
 
 		/**
@@ -364,18 +365,12 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 		 *
 		 * @param string $block_name The block name e.g. stackable/heading
 		 * @param string $style_slug The slug of the style to edit. e.g. default
+		 * @param string $block_name The title of the block to display e.g. Button
 		 *
 		 * @return boolean False if the block or style doesn't exist, otherwise redirects to the editor.
 		 */
-		public function redirect_to_block_style_editor( $block_name, $style_slug = 'default' ) {
+		public function redirect_to_block_style_editor( $block_name, $style_slug = 'default', $block_title = 'Block' ) {
 			if ( stripos( $block_name, 'stackable/' ) !== 0 ) {
-				return false;
-			}
-
-			// Check if the block is registered.
-			$registry = WP_Block_Type_Registry::get_instance();
-			$block = $registry->get_registered( $block_name );
-			if ( empty( $block ) ) {
 				return false;
 			}
 
@@ -433,13 +428,13 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 				'post_status' => 'publish',
 				'post_title' => $style_slug !== 'default'
 					? $style->name
-					: sprintf( __( 'Default %s Block', STACKABLE_I18N ), $block->title ),
+					: sprintf( __( 'Default %s Block', STACKABLE_I18N ), $block_title ),
 				'post_content' => $post_content,
 			) );
 
 			// Some non-essential data that we will use within the editor (mostly for notices).
 			update_post_meta( $style_post_id, 'stk_block_name', $block_name );
-			update_post_meta( $style_post_id, 'stk_block_title', $block->title );
+			update_post_meta( $style_post_id, 'stk_block_title', $block_title );
 			update_post_meta( $style_post_id, 'stk_style_slug', $style_slug );
 
 			// Update the post id.

@@ -10,6 +10,7 @@ import example from './example'
 import schema from './schema'
 import metadata from './block.json'
 import transforms from './transforms'
+import deprecated from './deprecated'
 
 /**
  * External dependencies
@@ -29,6 +30,8 @@ export const settings = {
 		anchor: true,
 	},
 	transforms,
+
+	deprecated,
 	example,
 	edit,
 	save,

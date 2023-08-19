@@ -8,20 +8,23 @@ import {
 	ProControlButton,
 	BlockContainer,
 	ColorPaletteControl,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	AlignButtonsControl,
 	HeadingButtonsControl,
-	PanelSpacingBody,
 	AdvancedRangeControl,
-	ImageBackgroundControlsHelper,
 	AdvancedToolbarControl,
 	UrlInputPopover,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
-import { ContentAlignControl, ResponsiveControl } from '../../components'
+import {
+	ContentAlignControl,
+	ResponsiveControl,
+	BackgroundControlsHelper,
+	ColumnPaddingControl,
+	ImageBackgroundControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
+} from '../../components'
 import {
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
@@ -111,7 +114,11 @@ addFilter( 'stackable.image-box.edit.inspector.layout.before', 'stackable/image-
 					setAttributes( { design } )
 				} }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)
@@ -226,7 +233,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				>
 					<AdvancedToolbarControl
 						label={ __( 'Content Vertical Align', i18n ) }
-						controls="flex-vertical"
+						controls="__flex-vertical"
 						className="ugb--help-tip-advanced-column-content-vertical-align"
 					/>
 				</ResponsiveControl>
@@ -430,7 +437,11 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					className="ugb--help-tip-image-box-hover-effect"
 				/>
 				{ applyFilters( 'stackable.image-box.edit.panel.image-hover-effects', null, props ) }
-				{ showProNotice && <ProControlButton type="effect" /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</PanelAdvancedSettings>
 
 			{ show.line &&

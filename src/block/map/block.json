@@ -1,9 +1,15 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/map",
 	"title": "Map",
 	"description": "Embedded Google Map with advanced controls.",
 	"category": "stackable",
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"stackable/innerBlockOrientation"
+	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"keywords": [ "location", "address" ],
 	"stk-type": "special",

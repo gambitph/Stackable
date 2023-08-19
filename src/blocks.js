@@ -6,7 +6,6 @@
  */
 import './format-types'
 import './plugins'
-import './help'
 import './compatibility'
 import './disabled-blocks'
 
@@ -15,12 +14,14 @@ import './disabled-blocks'
  */
 import { i18n } from 'stackable'
 import { addStackableBlockCategory, registerBlockType } from '~stackable/util'
+import { withVisualGuideContext } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import { getBlockType } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
+import { addFilter } from '@wordpress/hooks'
 
 // Register our block category.
 addStackableBlockCategory()
@@ -50,5 +51,11 @@ const importAllAndRegister = r => {
 		}
 	} )
 }
+
+// Add some HOCs that should be applied to all our blocks.
+addFilter( 'stackable.registerBlockType.edit', 'stackable', edit => {
+	// This allows controls to show highlighted areas in the block.
+	return withVisualGuideContext( edit )
+} )
 
 importAllAndRegister( require.context( './block', true, /index\.js$/ ) )

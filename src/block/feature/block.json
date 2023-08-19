@@ -1,10 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/feature",
 	"title": "Feature",
 	"description": "Display a product feature or a service in a large area.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "section",
 	"stk-demo": "https://wpstackable.com/feature-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"

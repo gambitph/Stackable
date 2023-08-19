@@ -80,7 +80,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			// Only do this when inline style optimization is enabled.
 			// If stackable_optimize_inline_css === false (or option isn't
 			// present), that's the default value (true) for the option.
-			if ( get_option( 'stackable_optimize_inline_css' ) !== '' ) {
+			if ( ! is_admin() && get_option( 'stackable_optimize_inline_css' ) !== '' ) {
 				// Load the optimized CSS in the head of posts.
 				add_action( 'wp', array( $this, 'load_cached_css_for_post' ) );
 
@@ -112,6 +112,11 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				return;
 			}
 
+			// If no contents, don't do anything.
+			if ( empty( $post->post_content ) ) {
+				return;
+			}
+
 			// Convert content to blocks.
 			$blocks = parse_blocks( $post->post_content );
 
@@ -126,9 +131,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 					$styles_only[] = $block_style[1];
 				}
 			}
-			$optimized_css = self::generate_css( $styles_only );
+			$optimized_css = count( $styles_only ) ? self::generate_css( $styles_only ) : '';
 
-			// Save the optimized CSS to the post.
+			// Save the optimized CSS to the post if it changed.
 			update_post_meta( $post_id, 'stackable_optimized_css', $optimized_css );
 			update_post_meta( $post_id, 'stackable_optimized_css_raw', $styles );
 		}
@@ -202,9 +207,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			if ( is_singular() && ! is_preview() && ! is_attachment() ) {
 				$post_id = get_the_ID();
 				$this->optimized_css = get_post_meta( $post_id, 'stackable_optimized_css', true );
-				$this->css_raw = get_post_meta( $post_id, 'stackable_optimized_css_raw', true );
 
 				if ( ! empty( $this->optimized_css ) ) {
+					$this->css_raw = get_post_meta( $post_id, 'stackable_optimized_css_raw', true );
 					add_action( 'wp_head', array( $this, 'print_optimized_styles' ) );
 				}
 			}
@@ -258,6 +263,10 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 * @return String The modified $block_content
 		 */
 		public function strip_optimized_block_styles( $block_content, $block ) {
+			if ( $block_content === null ) {
+				return $block_content;
+			}
+
 			if ( ! is_singular() || is_preview() ) {
 				return $block_content;
 			}

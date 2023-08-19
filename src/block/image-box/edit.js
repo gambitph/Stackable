@@ -48,8 +48,6 @@ import { addFilter } from '@wordpress/hooks'
 
 export const TEMPLATE = variations[ 0 ].innerBlocks
 
-const TABS = [ 'block', 'advanced' ]
-
 const Edit = props => {
 	const { hasInnerBlocks, innerBlocks } = useBlockContext()
 
@@ -84,13 +82,13 @@ const Edit = props => {
 	return (
 		<Fragment>
 
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
+			<BlockLink.InspectorControls />
 			<Advanced.InspectorControls />
 			<Transform.InspectorControls />
-			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-block-image-box" />

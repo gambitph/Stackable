@@ -1,0 +1,14 @@
+{
+	"apiVersion": 3,
+	"name": "stackable/tab-labels",
+	"title": "Tab Labels",
+	"description": "Create interactive navigation within tabs.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/initialTabOpen", "stackable/tabOrientation" ],
+	"keywords": [],
+	"parent": [
+		"stackable/tabs"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "hidden"
+}

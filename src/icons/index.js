@@ -7,6 +7,7 @@ import SVGBlockquoteIcon from './images/blockquote-icon.svg'
 import SVGBlogPostsIcon from './images/blog-posts-icon.svg'
 import SVGButtonGroupIcon from './images/button-group-icon.svg'
 import SVGButtonIcon from './images/button-icon.svg'
+import SVGCarouselIcon from './images/carousel-icon.svg'
 import SVGCardIcon from './images/card-icon.svg'
 import SVGColumnsIcon from './images/columns-icon.svg'
 import SVGColumnIcon from './images/column-icon.svg'
@@ -41,16 +42,20 @@ import SVGSeparatorIcon from './images/separator-icon.svg'
 import SVGSocialButtonsIcon from './images/social-buttons.svg'
 import SVGSpacerIcon from './images/spacer-icon.svg'
 import SVGTableOfContentsIcon from './images/table-of-contents.svg'
+import SVGTabsIcon from './images/tabs-icon.svg'
+import SVGTabsContentIcon from './images/tabs-content-icon.svg'
+import SVGTabsLabelIcon from './images/tabs-label-icon.svg'
 import SVGTeamMemberIcon from './images/team-member-icon.svg'
 import SVGTestimonialIcon from './images/testimonial-icon.svg'
 import SVGTextIcon from './images/text-icon.svg'
+import SVGTimelineIcon from './images/timeline-icon.svg'
 import SVGVideoPopupIcon from './images/video-popup-icon.svg'
 import SVGUngroupContainerIcon from './images/ungroup-container-icon.svg'
 
 /**
  * WordPress dependencies
  */
-import { cloneElement, render } from '@wordpress/element'
+import { cloneElement, createRoot } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 
 export function colorizeIcon( SvgIcon ) {
@@ -70,7 +75,7 @@ domReady( () => {
 	stackableGradient.setAttribute( 'style', 'height: 0; width: 0; overflow: hidden;' )
 	stackableGradient.setAttribute( 'aria-hidden', 'true' )
 	document.querySelector( 'body' ).appendChild( stackableGradient )
-	render(
+	createRoot( stackableGradient ).render(
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			className="ugb-stackable-gradient"
@@ -84,8 +89,7 @@ domReady( () => {
 					<stop offset="100%" stopColor="#f34957" stopOpacity="1" />
 				</linearGradient>
 			</defs>
-		</svg>,
-		stackableGradient
+		</svg>
 	)
 } )
 
@@ -119,6 +123,10 @@ export function ButtonIcon() {
 
 export function ButtonGroupIcon() {
 	return colorizeIcon( <SVGButtonGroupIcon width="16" height="16" /> )
+}
+
+export function CarouselIcon() {
+	return colorizeIcon( <SVGCarouselIcon width="16" height="16" /> )
 }
 
 export function CardIcon() {
@@ -261,6 +269,18 @@ export function TableOfContentsIcon() {
 	return colorizeIcon( <SVGTableOfContentsIcon width="20" height="20" /> )
 }
 
+export function TabsIcon() {
+	return colorizeIcon( <SVGTabsIcon width="16" height="16" /> )
+}
+
+export function TabsContentIcon() {
+	return colorizeIcon( <SVGTabsContentIcon width="16" height="16" /> )
+}
+
+export function TabsLabelIcon() {
+	return colorizeIcon( <SVGTabsLabelIcon width="16" height="16" /> )
+}
+
 export function TeamMemberIcon() {
 	return colorizeIcon( <SVGTeamMemberIcon width="20" height="20" /> )
 }
@@ -271,6 +291,10 @@ export function TestimonialIcon() {
 
 export function TextIcon() {
 	return colorizeIcon( <SVGTextIcon width="20" height="20" /> )
+}
+
+export function TimelineIcon() {
+	return colorizeIcon( <SVGTimelineIcon width="16" height="16" /> )
 }
 
 export function VideoPopupIcon() {

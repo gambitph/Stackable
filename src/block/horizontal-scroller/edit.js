@@ -17,6 +17,8 @@ import {
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	ColorPaletteControl,
+	InspectorLayoutControls,
+	ControlSeparator,
 } from '~stackable/components'
 
 import {
@@ -93,71 +95,71 @@ const Edit = props => {
 			 { isSelected && (
 				 <>
 					 <InspectorTabs />
+
+					 <InspectorLayoutControls>
+						<ColumnsControl sliderMax={ 10 } />
+						<AdvancedSelectControl
+							label={ __( 'Snapping', i18n ) }
+							attribute="horizontalScrollerSnap"
+							options={ [
+								{ value: 'start', label: __( 'Snap to Start', i18n ) },
+								{ value: 'center', label: __( 'Snap to Center', i18n ) },
+								{ value: 'none', label: __( 'No Snapping', i18n ) },
+							] }
+							default="center"
+						/>
+						<ControlSeparator />
+						<AdvancedRangeControl
+							label={ __( 'Item Width', i18n ) }
+							attribute="horizontalScrollerColumnWidth"
+							responsive="all"
+							units={ [ 'px', 'em', '%', 'vw' ] }
+							min={ [ 0, 0, 0 ] }
+							sliderMax={ [ 500, 40, 100 ] }
+							step={ [ 1, 0.1, 1 ] }
+							placeholder={ 300 }
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Height', i18n ) }
+							attribute="horizontalScrollerHeight"
+							min="0"
+							sliderMin={ 0 }
+							sliderMax={ 500 }
+							step="1"
+							placeholder="auto"
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Inner Column Spacing', i18n ) }
+							attribute="columnSpacing"
+							responsive="all"
+							units={ [ 'px', 'em', 'vw' ] }
+							defaultLocked={ true }
+							min={ [ 0, 0 ] }
+							sliderMax={ [ 200, 30 ] }
+							placeholder="12"
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Gap', i18n ) }
+							attribute="horizontalScrollerColumnGap"
+							responsive="all"
+							min={ 0 }
+							sliderMax={ 100 }
+							placeholder="0"
+						/>
+						<AdvancedRangeControl
+							label={ __( 'Left Offset', i18n ) }
+							attribute="horizontalScrollerLeftOffset"
+							responsive="all"
+							units={ [ 'px', 'em', '%' ] }
+							min={ [ 0, 0, 0 ] }
+							sliderMax={ [ 500, 40, 50 ] }
+							step={ [ 1, 0.1, 1 ] }
+						/>
+						<ControlSeparator />
+					 </InspectorLayoutControls>
 					 <Alignment.InspectorControls hasRowAlignment={ true } />
-					 <BlockDiv.InspectorControls />
-					 <Advanced.InspectorControls />
-					 <Transform.InspectorControls />
-					 <EffectsAnimations.InspectorControls />
-					 <CustomAttributes.InspectorControls />
-					 <CustomCSS.InspectorControls mainBlockClass="stk-block-horizontal-scroller" />
-					 <Responsive.InspectorControls />
-					 <ConditionalDisplay.InspectorControls />
 
 					 <InspectorStyleControls>
-						<PanelAdvancedSettings
-							title={ __( 'General', i18n ) }
-							id="horizontal-scroll"
-							initialOpen={ true }
-						>
-							<ColumnsControl sliderMax={ 10 } />
-							<AdvancedSelectControl
-								label={ __( 'Snapping', i18n ) }
-								attribute="horizontalScrollerSnap"
-								options={ [
-									{ value: 'start', label: __( 'Snap to Start', i18n ) },
-									{ value: 'center', label: __( 'Snap to Center', i18n ) },
-									{ value: 'none', label: __( 'No Snapping', i18n ) },
-								] }
-								default="center"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Item Width', i18n ) }
-								attribute="horizontalScrollerColumnWidth"
-								responsive="all"
-								units={ [ 'px', 'em', '%' ] }
-								min={ [ 0, 0, 0 ] }
-								sliderMax={ [ 500, 40, 100 ] }
-								step={ [ 1, 0.1, 1 ] }
-								placeholder={ 300 }
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Height', i18n ) }
-								attribute="horizontalScrollerHeight"
-								min="0"
-								sliderMin={ 0 }
-								sliderMax={ 500 }
-								step="1"
-								placeholder="auto"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Gap', i18n ) }
-								attribute="horizontalScrollerColumnGap"
-								responsive="all"
-								min={ 0 }
-								sliderMax={ 100 }
-								placeholder="0"
-							/>
-							<AdvancedRangeControl
-								label={ __( 'Left Offset', i18n ) }
-								attribute="horizontalScrollerLeftOffset"
-								responsive="all"
-								units={ [ 'px', 'em', '%' ] }
-								min={ [ 0, 0, 0 ] }
-								sliderMax={ [ 500, 40, 50 ] }
-								step={ [ 1, 0.1, 1 ] }
-							/>
-						</PanelAdvancedSettings>
-
 						<PanelAdvancedSettings
 							title={ __( 'Scrollbar', i18n ) }
 							initialOpen={ false }
@@ -195,6 +197,16 @@ const Edit = props => {
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
+
+					 <BlockDiv.InspectorControls />
+					 <Advanced.InspectorControls />
+					 <Transform.InspectorControls />
+					 <EffectsAnimations.InspectorControls />
+					 <CustomAttributes.InspectorControls />
+					 <CustomCSS.InspectorControls mainBlockClass="stk-block-horizontal-scroller" />
+					 <Responsive.InspectorControls />
+					 <ConditionalDisplay.InspectorControls />
+
 				 </>
 			 ) }
 

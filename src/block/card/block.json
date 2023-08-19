@@ -1,10 +1,13 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/card",
 	"title": "Card",
 	"description": "Describe a single subject in a small card. You can use this to describe your product, service or a person.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
+	"providesContext": {
+		"stackable/innerBlockOrientation": "innerBlockOrientation"
+	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",
 	"stk-demo": "https://wpstackable.com/card-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"

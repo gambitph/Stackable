@@ -16,6 +16,7 @@ import schema from './schema'
 import variations from './variations'
 import metadata from './block.json'
 import example from './example'
+import deprecated from './deprecated'
 
 export const settings = {
 	...metadata,
@@ -24,10 +25,13 @@ export const settings = {
 		anchor: true,
 		align: true,
 		stkAlign: true,
+		stkDefaultTab: 'layout',
+		stkColumnResize: false,
+		spacing: true,
 	},
 	attributes: schema,
 	example,
-
+	deprecated,
 	variations,
 	edit,
 	save,

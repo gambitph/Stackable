@@ -6,20 +6,13 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	BlockContainer,
-	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	TypographyControlHelper,
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
 	ControlSeparator,
-	PanelSpacingBody,
 	AdvancedRangeControl,
-	ImageBackgroundControlsHelper,
-	ImageControlsHelper,
-	SocialControlsHelper,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
@@ -60,6 +53,13 @@ import {
 	DivBackground,
 	Image,
 	ResponsiveControl,
+	BackgroundControlsHelper,
+	SocialControlsHelper,
+	ColumnPaddingControl,
+	ImageBackgroundControlsHelper,
+	ImageControlsHelper,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 
 /**
@@ -116,7 +116,11 @@ addFilter( 'stackable.team-member.edit.inspector.layout.before', 'stackable/team
 				options={ applyFilters( 'stackable.team-member.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)
@@ -768,7 +772,7 @@ const edit = props => {
 								{ showSocial && show.social &&
 									<div className="ugb-team-member__buttons">
 										<SocialButtonEditHelper
-											attrNameTemplate={ `social%s` }
+											attrNameTemplate="social%s"
 											setAttributes={ setAttributes }
 											blockAttributes={ props.attributes }
 											onChangeNewTab={ false }

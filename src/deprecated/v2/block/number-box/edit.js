@@ -4,21 +4,23 @@
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
-	BackgroundControlsHelper,
 	BlockContainer,
 	ColorPaletteControl,
 	DesignPanelBody,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
-	PanelSpacingBody,
 	ProControlButton,
-	TypographyControlHelper,
 	ButtonIconPopoverControl,
-	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
-	ContentAlignControl, DivBackground, ResponsiveControl,
+	ContentAlignControl,
+	DivBackground,
+	ResponsiveControl,
+	BackgroundControlsHelper,
+	ColumnPaddingControl,
+	PanelSpacingBody,
+	TypographyControlHelper,
 } from '../../components'
 import {
 	createResponsiveAttributeNames,
@@ -107,7 +109,11 @@ addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/numbe
 					setAttributes( { design } )
 				} }
 			>
-				{ showProNotice && <ProControlButton /> }
+				{ showProNotice && <ProControlButton
+					// Generic label, no translations to keep old text out of the translation files.
+					title="Upgrade to Premium"
+					description="Get more layouts, effects, designs and options for this block if you upgrade to Stackable Premium."
+				/> }
 			</DesignPanelBody>
 		</Fragment>
 	)
