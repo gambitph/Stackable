@@ -139,11 +139,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 		public static function print_header( $title = '', $image = 'logo' ) {
 			?>
-			<header class="s-header <?php echo ! current_user_can( 'manage_options' ) ? 's-header-no-tabs' : '' ?> s-logo-<?php echo $image ?>">
-				<h1>
-					<img src="<?php echo esc_url( plugins_url( 'images/stackable-' . $image . '.png', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
-					<?php echo $title ?>
-				</h1>
+			<header class="s-header s-heading-1 <?php echo ! current_user_can( 'manage_options' ) ? 's-header-no-tabs' : '' ?> s-logo-<?php echo $image ?>" role="heading" aria-level="1" aria-labelledby="s-heading-<?php echo empty( $title ) ? 'logo' : 'title' ?>">
+				<img id="s-heading-logo" src="<?php echo esc_url( plugins_url( 'images/stackable-' . $image . '.png', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
+				<span id="s-heading-title"><?php echo $title ?></span>
 			</header>
 			<?php
 		}
@@ -164,6 +162,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php echo $this->print_premium_button() ?>
 					<?php echo $this->print_tabs() ?>
 				</div>
+				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
                 <section class="s-body-container s-body-container-grid">
                     <div class="s-body">
 						<?php stackable_welcome_notification() ?>
@@ -298,6 +297,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php echo $this->print_premium_button() ?>
 					<?php echo $this->print_tabs() ?>
 				</div>
+				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 				<section class="s-body-container s-narrow s-body-container-center s-getting-started__body">
 				</section>
 			</div>

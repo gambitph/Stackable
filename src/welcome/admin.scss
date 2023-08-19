@@ -100,23 +100,15 @@ body[class*="page_stk-"] {
 	padding: 50px;
 	// Hide Freemius tabs.
 	.nav-tab-wrapper {
-		display: none;
+		display: none !important;
 	}
+}
+.s-admin-notice-marker ~ .nav-tab-wrapper {
+	display: none !important;
 }
 .s-header {
 	background: #fff;
 	padding-bottom: 80px;
-	h1 {
-		padding: 0;
-		display: flex !important;
-		align-items: center;
-		// Admin notices should appear a little bit below the title.
-		+ div.fs-notice,
-		+ div.notice,
-		+ div.update {
-			margin: 24px 0 0 !important;
-		}
-	}
 	&.s-header-no-tabs {
 		padding-bottom: 40px;
 		margin-bottom: 40px;
@@ -139,6 +131,19 @@ body[class*="page_stk-"] {
 			display: none !important;
 		}
 	}
+}
+
+.s-header h1,
+.s-heading-1 {
+	font-size: 23px;
+	font-weight: 400;
+	padding: 0;
+	display: flex !important;
+	align-items: center;
+}
+
+.s-admin-notice-marker {
+	display: none !important;
 }
 
 .s-header-wrap,
