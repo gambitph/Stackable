@@ -5,12 +5,16 @@ import { i18n } from 'stackable'
 import { escape as _escape } from 'lodash'
 
 /**
+ * Internal dependencies
+ */
+import { createRoot } from '~stackable/util'
+
+/**
  * WordPress dependencies
  */
 import {
 	Fragment,
 	useState,
-	createRoot,
 	unmountComponentAtNode,
 	useRef,
 } from '@wordpress/element'

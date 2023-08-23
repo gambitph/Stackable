@@ -11,7 +11,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	createRoot, useEffect, useState, Fragment, useCallback,
+	useEffect, useState, Fragment, useCallback,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
@@ -27,6 +27,7 @@ import {
 } from 'stackable'
 import classnames from 'classnames'
 import { importBlocks } from '~stackable/util/admin'
+import { createRoot } from '~stackable/util/element'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 import { GettingStarted } from './getting-started'

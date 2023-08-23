@@ -8,7 +8,7 @@ import blockData from './blocks'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	Component, createRoot, useEffect, useState, Fragment,
+	Component, useEffect, useState, Fragment,
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
@@ -24,6 +24,7 @@ import {
 	v2nonce as nonce,
 } from 'stackable'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
+import { createRoot } from '~stackable/util/element'
 
 class BlockToggler extends Component {
 	constructor() {

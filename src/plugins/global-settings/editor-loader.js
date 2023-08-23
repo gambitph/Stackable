@@ -13,11 +13,12 @@ import './block-defaults'
  * External dependencies
  */
 import { useDeviceType } from '~stackable/hooks'
+import { createRoot } from '~stackable/util'
 
 /** WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins'
-import { createRoot, useEffect } from '@wordpress/element'
+import { useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'

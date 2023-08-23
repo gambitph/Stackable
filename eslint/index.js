@@ -7,6 +7,7 @@ module.exports = {
 		'no-deprecated-use-styles': require( './rules/no-deprecated-use-styles' ),
 		'no-get-block-parents': require( './rules/no-get-block-parents' ),
 		'no-use-dispatch': require( './rules/no-use-dispatch' ),
+		'no-import-create-root': require( './rules/no-import-create-root' ),
 	},
 	configs: {
 		recommended: {
@@ -21,6 +22,7 @@ module.exports = {
 				'stackable/no-deprecated-use-styles': 'error',
 				'stackable/no-get-block-parents': 'error',
 				'stackable/no-use-dispatch': 'error',
+				'stackable/no-import-create-root': 'error',
 			},
 		},
 	},

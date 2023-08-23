@@ -53,9 +53,14 @@ import SVGVideoPopupIcon from './images/video-popup-icon.svg'
 import SVGUngroupContainerIcon from './images/ungroup-container-icon.svg'
 
 /**
+ * Internal dependencies
+ */
+import { createRoot } from '~stackable/util'
+
+/**
  * WordPress dependencies
  */
-import { cloneElement, createRoot } from '@wordpress/element'
+import { cloneElement } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 
 export function colorizeIcon( SvgIcon ) {
