@@ -7,12 +7,12 @@ import { isContentOnlyMode } from 'stackable'
  * Internal dependencies
  */
 import DesignLibraryButton from './design-library-button'
+import { createRoot } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
-import { createRoot } from '@wordpress/element'
 import { subscribe } from '@wordpress/data'
 
 const mountDesignLibrary = () => {

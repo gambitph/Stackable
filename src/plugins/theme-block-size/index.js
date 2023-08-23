@@ -4,9 +4,10 @@
  * properties for our blocks to pick up in the editor.
  */
 import { useDeviceType } from '~stackable/hooks'
+import { createRoot } from '~stackable/util'
 import { useSetting } from '@wordpress/block-editor'
 import domReady from '@wordpress/dom-ready'
-import { createRoot, useEffect } from '@wordpress/element'
+import { useEffect } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 
 export const ThemeBlockSize = () => {

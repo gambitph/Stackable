@@ -15,6 +15,7 @@ export * from './icon'
 export * from './fontawesome'
 export * from './user'
 export * from './colors'
+export * from './element'
 
 /**
  * WordPress dependencies
