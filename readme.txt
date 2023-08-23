@@ -288,6 +288,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.11.3 =
+* Fixed: Compatibility issues with WordPress 6.0 and 6.1
+* Fixed: Dynamic Content now display in the editor correctly when used in a Query Loop block
+* Fixed: Typing on a field will turn "current post" Dynamic Content source source to a specific post ID
+
 = 3.11.2 =
 * Fixed: Dynamic Content did not show up when used inside a native Query Loop block
 
