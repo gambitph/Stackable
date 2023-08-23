@@ -1,15 +1,19 @@
 /**
- * In `src/welcome` and `src/admin`, importing the base module/library via `~stackable/components` will unnecessarily import the entire library and will dramatically increase the compiled script. Instead, import the component that's needed directly:
+ * `wp.element.render` has been deprecated in WP 6.2 and was replaced by
+ * `wp.element.createRoot`. In order to preserve backward compatibility of
+ * Stackable with 6.0 and 6.1, we need to stub `createRoot` to fallback to using
+ * `wp.element.render` internally.
  *
  * ```js
  * // Invalid:
- * // import { AdminToggleSetting } from '~stackable/components'
+ * // import { createRoot } from '@wordpress/element'
  *
  * // Valid:
- * import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
- * ```
+ * import { createRoot } from '~stackable/util'
+ * import { createRoot } from '~stackable/util/element'
  *
- * @see https://github.com/gambitph/Stackable/pull/2333#user-content-no-import-stk-full-library
+ * @see
+ * https://github.com/gambitph/Stackable/pull/2856#user-content-no-import-create-root
  */
 module.exports = {
 	meta: {
@@ -17,7 +21,7 @@ module.exports = {
 		docs: {
 			description: 'disallow using of wp.element.createRoot',
 			recommended: true,
-			// url: 'https://github.com/gambitph/Stackable/pull/2333#user-content-no-import-stk-full-library',
+			url: 'https://github.com/gambitph/Stackable/pull/2856#user-content-no-import-create-root',
 		},
 	},
 	create: context => {
