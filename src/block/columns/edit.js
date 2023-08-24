@@ -45,8 +45,10 @@ import {
 /**
  * WordPress dependencies
  */
+import { dispatch } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { useState, useEffect } from '@wordpress/element'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -62,8 +64,12 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
+	const {
+		hasInnerBlocks, numInnerBlocks, innerBlocks,
+	} = useBlockContext()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+	const [ numInnerColumns, setNumInnerColumns ] = useState( null )
+	const [ hasRemoved, setHasRemoved ] = useState( false )
 
 	const blockClassNames = classnames( [
 		className,
@@ -72,6 +78,30 @@ const Edit = props => {
 		separatorClass,
 		columnTooltipClass,
 	] )
+
+	useEffect( () => {
+		setNumInnerColumns( numInnerBlocks )
+	}, [] )
+
+	useEffect( () => {
+		if ( numInnerBlocks < numInnerColumns ) {
+			setHasRemoved( true )
+		}
+
+		if ( numInnerBlocks === 1 && hasRemoved ) {
+			const removedAttributes = {
+				columnAdjacentCount: undefined,
+				columnWidthTablet: undefined,
+				columnWidthMobile: undefined,
+				columnAdjacentCountTablet: undefined,
+				columnAdjacentCountMobile: undefined,
+			}
+			dispatch( 'core/block-editor' ).updateBlockAttributes( innerBlocks[ 0 ].clientId, removedAttributes )
+			setHasRemoved( false )
+		}
+
+		setNumInnerColumns( numInnerBlocks )
+	}, [ numInnerBlocks, hasRemoved ] )
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',

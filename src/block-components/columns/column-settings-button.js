@@ -39,6 +39,17 @@ export const ColumnsControl = props => {
 				const columnClientIds = innerBlocks.slice( numColumns ).map( ( { clientId } ) => clientId )
 				removeBlocks( columnClientIds, false )
 
+				if ( numColumns === 1 ) {
+					const removedAttributes = {
+						columnAdjacentCount: undefined,
+						columnWidthTablet: undefined,
+						columnWidthMobile: undefined,
+						columnAdjacentCountTablet: undefined,
+						columnAdjacentCountMobile: undefined,
+					}
+					dispatch( 'core/block-editor' ).updateBlockAttributes( innerBlocks[ 0 ].clientId, removedAttributes )
+				}
+
 				// Add a blank column.
 			} else if ( numColumns > numInnerBlocks && ! isDuplicate ) {
 				const numToAdd = numColumns - numInnerBlocks
