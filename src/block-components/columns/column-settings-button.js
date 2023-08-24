@@ -38,6 +38,7 @@ export const ColumnsControl = props => {
 			} else if ( numColumns < numInnerBlocks ) {
 				const columnClientIds = innerBlocks.slice( numColumns ).map( ( { clientId } ) => clientId )
 				removeBlocks( columnClientIds, false )
+
 				// Add a blank column.
 			} else if ( numColumns > numInnerBlocks && ! isDuplicate ) {
 				const numToAdd = numColumns - numInnerBlocks
