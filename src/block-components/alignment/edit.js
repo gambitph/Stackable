@@ -14,6 +14,7 @@ import {
 	useBlockSetAttributesContext,
 	useDeviceType,
 } from '~stackable/hooks'
+import { EditorHasPolyfill } from './editor-has-polyfill'
 
 /**
  * WordPress dependencies
@@ -21,6 +22,7 @@ import {
 import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
+import { addFilter } from '@wordpress/hooks'
 
 const ALIGN_OPTIONS = [
 	{
@@ -345,6 +347,18 @@ export const Edit = props => {
 		</Fragment>
 	)
 }
+
+// Add additional classes when browser is Firefox to fix alignment
+addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', classes => {
+	const userAgent = navigator.userAgent
+	if ( userAgent.indexOf( 'Firefox' ) !== -1 ) {
+		const alignmentHasPolyfill = EditorHasPolyfill()
+		const classesToAdd = Object.keys( alignmentHasPolyfill ).filter( classname => alignmentHasPolyfill[ classname ] )
+		const newClasses = classes.concat( classesToAdd )
+		return newClasses
+	}
+	return classes
+} )
 
 Edit.defaultProps = {
 	hasColumnJustify: false,
