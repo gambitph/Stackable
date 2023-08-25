@@ -31,7 +31,18 @@ const AdvancedRangeControl = props => {
 	const [ currentHoverState ] = useBlockHoverState()
 	const hasUnits = !! props.units?.length
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
-	const unitAttribute = useBlockAttributesContext( attributes => attributes[ unitAttrName ] )
+	const {
+		unitAttribute,
+		_valueDesktop,
+		_valueTablet,
+	} = useBlockAttributesContext( attributes => {
+		return {
+			unitAttribute: attributes[ unitAttrName ],
+			_valueDesktop: attributes[ `${ props.attribute }` ],
+			_valueTablet: attributes[ `${ props.attribute }Tablet` ],
+		}
+	} )
+	// const unitAttribute = useBlockAttributesContext( attributes => attributes[ unitAttrName ] )
 
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
@@ -64,14 +75,26 @@ const AdvancedRangeControl = props => {
 		}
 	}
 
+	if ( deviceType === 'Mobile' ) {
+		propsToPass.initialPosition = _valueTablet !== '' ? _valueTablet : _valueDesktop
+		propsToPass.placeholder = _valueTablet !== '' ? _valueTablet : _valueDesktop
+	} else if ( deviceType === 'Tablet' ) {
+		propsToPass.initialPosition = _valueDesktop
+		propsToPass.placeholder = _valueDesktop
+	}
+
 	// Remove the placeholder.
-	if ( ! props.forcePlaceholder && ( deviceType !== 'Desktop' || currentHoverState !== 'normal' ) ) {
+	if ( ! props.forcePlaceholder && (
+		// deviceType !== 'Desktop' ||
+		currentHoverState !== 'normal' ) ) {
 		propsToPass.initialPosition = ''
 		propsToPass.placeholder = ''
 	}
 
 	let placeholderRender = props.placeholderRender
-	if ( deviceType !== 'Desktop' || currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
+	if (
+		// deviceType !== 'Desktop' ||
+		currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
 		placeholderRender = null
 	}
 
