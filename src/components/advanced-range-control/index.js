@@ -35,14 +35,19 @@ const AdvancedRangeControl = props => {
 		unitAttribute,
 		_valueDesktop,
 		_valueTablet,
+		_unitDesktop,
+		_unitTablet,
 	} = useBlockAttributesContext( attributes => {
 		return {
 			unitAttribute: attributes[ unitAttrName ],
 			_valueDesktop: attributes[ `${ props.attribute }` ],
 			_valueTablet: attributes[ `${ props.attribute }Tablet` ],
+			_unitDesktop: attributes[ `${ props.attribute }Unit` ],
+			_unitTablet: attributes[ `${ props.attribute }UnitTablet` ],
 		}
 	} )
-	// const unitAttribute = useBlockAttributesContext( attributes => attributes[ unitAttrName ] )
+
+	// const unitAttribute = attributes[ unitAttrName ]
 
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
@@ -75,12 +80,13 @@ const AdvancedRangeControl = props => {
 		}
 	}
 
-	if ( deviceType === 'Mobile' ) {
-		propsToPass.initialPosition = _valueTablet !== '' ? _valueTablet : _valueDesktop
-		propsToPass.placeholder = _valueTablet !== '' ? _valueTablet : _valueDesktop
-	} else if ( deviceType === 'Tablet' ) {
-		propsToPass.initialPosition = _valueDesktop
-		propsToPass.placeholder = _valueDesktop
+	// Change placeholder based on inherited value
+	if ( deviceType === 'Mobile' && _valueTablet !== '' ) {
+		propsToPass.initialPosition = unitAttribute === _unitTablet ? _valueTablet : ''
+		propsToPass.placeholder = unitAttribute === _unitTablet ? _valueTablet : ''
+	} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+		propsToPass.initialPosition = unitAttribute === _unitDesktop ? _valueDesktop : ''
+		propsToPass.placeholder = unitAttribute === _unitDesktop ? _valueDesktop : ''
 	}
 
 	// Remove the placeholder.
