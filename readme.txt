@@ -1,7 +1,7 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.0
+Requires at least: 6.1
 Tested up to: 6.3
 Requires PHP: 7.0
 Stable tag: 3.11.3
@@ -228,7 +228,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.0 or higher for this to work.
+You'll need WordPress version 6.1 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -289,7 +289,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.11.3 =
-* Fixed: Compatibility issues with WordPress 6.0 and 6.1
+* Fixed: Compatibility issues with WordPress 6.1
 * Fixed: Dynamic Content now display in the editor correctly when used in a Query Loop block
 * Fixed: Typing on a field will turn "current post" Dynamic Content source source to a specific post ID
 
