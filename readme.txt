@@ -16,7 +16,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 [Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
 
-> [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+> [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 [youtube https://www.youtube.com/watch?v=P3xG3t-QYjw]
 
@@ -175,7 +175,7 @@ Add animations that will bring your site to life and make it more visually engag
 - Load More Block (for the Blog Posts Block)
 - Pagination Block (for the Blog Posts Block)
 
-> [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Learn more](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+> [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Learn more](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ### News Article Updates
 
@@ -248,7 +248,7 @@ No, you don't need to know a single line of code when using Stackable
 
 **Do you have a live demo?**
 
-Yes, we have [live demo that you can check out here](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
+Yes, we have [live demo that you can check out here](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
 
 **What are Blocks?**
 
