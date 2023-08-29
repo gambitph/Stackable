@@ -224,6 +224,7 @@ if ( ! is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block/horizontal-scroller/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block/tabs/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/alignment/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/columns/index.php' );
 }
 
 /**
