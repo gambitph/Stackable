@@ -87,3 +87,11 @@
 		opacity: 0;
 	}
 }
+
+// Remove margin for the wrapper div if accordion is inside a columns block
+.stk-inner-blocks > .stk-block-accordion__wrapper:last-child {
+	margin-bottom: 0;
+	> * {
+		margin-bottom: 0;
+	}
+}
