@@ -39,7 +39,8 @@ Get 42 flexible custom WordPress blocks that are feature-rich and look good out 
 
 You can choose which of these blocks you need, depending on your workflow. You can also disable blocks if you don't need them.
 
-Essential Blocks
+**Essential Blocks**
+
 - Advanced Columns Block — [View Block](https://wpstackable.com/columns-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Advanced Heading Block - [View Block](https://wpstackable.com/advanced-heading-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Advanced Text Block - [View Block](https://wpstackable.com/advanced-text-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -49,7 +50,8 @@ Essential Blocks
 - Icon Button Block
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
-Special Blocks
+**Special Blocks**
+
 - Carousel Block - [View Block](https://wpstackable.com/carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Tabs Block - [View Block](https://wpstackable.com/tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -76,7 +78,8 @@ Special Blocks
 - Divider Block
 - Spacer Block
 
-Section Blocks
+**Section Blocks**
+
 - Hero Block — [View Block](https://wpstackable.com/header-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Call to Action Block — [View Block](https://wpstackable.com/call-to-action-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Feature Block — [View Block](https://wpstackable.com/feature-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
