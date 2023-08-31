@@ -30,21 +30,28 @@ class StackableAccordion {
 					el.doAnimate = false
 					const preHeight = el.dataset.preHeight
 
-					const doWrapHack = animateWithWrapper( el, preHeight, height )
+					const doWrapHack = !! el.closest( '.stk-block-columns' )
+					let wrapper = null
 
-					if ( ! doWrapHack ) {
-						// Animate the accordion height.
-						el.anim = el.animate( {
-							height: [ `${ preHeight }px`, `${ height }px` ],
+					if ( doWrapHack ) {
+						wrapper = addWrapperHack( el )
+					}
+
+					// Animate the accordion height.
+					el.anim = el.animate( {
+						height: [ `${ preHeight }px`, `${ height }px` ],
+					}, ANIM_OPTS )
+
+					// We need to animate the content as well since it will
+					// overflow out the accordion.
+					if ( height - preHeight >= 0 ) {
+						el.contentEl.anim = el.contentEl.animate( {
+							maxHeight: [ `0px`, `${ height - preHeight }px` ],
 						}, ANIM_OPTS )
+					}
 
-						// We need to animate the content as well since it will
-						// overflow out the accordion.
-						if ( height - preHeight >= 0 ) {
-							el.contentEl.anim = el.contentEl.animate( {
-								maxHeight: [ `0px`, `${ height - preHeight }px` ],
-							}, ANIM_OPTS )
-						}
+					if ( doWrapHack ) {
+						removeWrapperHack( el, wrapper )
 					}
 				}
 			} )
@@ -123,34 +130,22 @@ class StackableAccordion {
 			} )
 		} )
 
-		const animateWithWrapper = ( el, preHeight, height ) => {
-			const doWrapHack = !! el.closest( '.stk-block-columns' )
-			if ( ! doWrapHack ) {
-				return false
-			}
+		const addWrapperHack = el => {
 			// wrap el with div if it is inside a columns block
 			const wrapper = document.createElement( 'div' )
 			wrapper.classList.add( 'stk-block-accordion__wrapper' )
 			el.parentNode.insertBefore( wrapper, el )
 			wrapper.appendChild( el )
 
-			el.anim = el.animate( {
-				height: [ `${ preHeight }px`, `${ height }px` ],
-			}, ANIM_OPTS )
+			return wrapper
+		}
 
-			if ( height - preHeight >= 0 ) {
-				el.contentEl.anim = el.contentEl.animate( {
-					maxHeight: [ `0px`, `${ height - preHeight }px` ],
-				}, ANIM_OPTS )
-			}
-
+		const removeWrapperHack = ( el, wrapper ) => {
 			el.anim.onfinish = el.anim.oncancel = () => {
 				// Unwrap el from the div
 				wrapper.parentNode?.insertBefore( el, wrapper )
 				wrapper?.remove()
 			}
-
-			return true
 		}
 	}
 }
