@@ -62,8 +62,10 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { hasInnerBlocks } = useBlockContext()
+	const { hasInnerBlocks, numInnerBlocks } = useBlockContext()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+
+	const userAgent = navigator?.userAgent
 
 	const blockClassNames = classnames( [
 		className,
@@ -71,6 +73,9 @@ const Edit = props => {
 		rowClass,
 		separatorClass,
 		columnTooltipClass,
+		{
+			'stk-block-columns--has-single-block-polyfill': numInnerBlocks === 1 && userAgent?.indexOf( 'Firefox' ) !== -1,
+		},
 	] )
 
 	const contentClassNames = classnames( [
