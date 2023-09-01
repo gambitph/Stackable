@@ -66,15 +66,14 @@ const Edit = props => {
 	const { hasInnerBlocks } = useBlockContext()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
-	const blockClassNames = classnames( applyFilters( 'stackable.columns.edit.blockClassNames', [
+	const blockClassNames = classnames( applyFilters( 'stackable.columns.edit.blockClassNames',
 		[
 			className,
 			'stk-block-columns',
 			rowClass,
 			separatorClass,
 			columnTooltipClass,
-		],
-	], props ) )
+		], props ) )
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
@@ -149,16 +148,18 @@ const Edit = props => {
 	)
 }
 
-addFilter( 'stackable.columns.edit.blockClassNames', 'stackable-columns-has-single-block-polyfill', classes => {
-	const { numInnerBlocks } = useBlockContext()
-	const userAgent = navigator?.userAgent
+const userAgent = navigator?.userAgent
+if ( userAgent?.indexOf( 'Firefox' ) !== -1 ) {
+	addFilter( 'stackable.columns.edit.blockClassNames', 'stackable-columns-has-single-block-polyfill', classes => {
+		const { numInnerBlocks } = useBlockContext()
 
-	if ( userAgent?.indexOf( 'Firefox' ) !== -1 && numInnerBlocks === 1 ) {
-		classes.push( 'stk-block-columns--has-single-block-polyfill' )
-	}
+		if ( numInnerBlocks === 1 ) {
+			classes.push( 'stk-block-columns--has-single-block-polyfill' )
+		}
 
-	return classes
-} )
+		return classes
+	} )
+}
 
 export default compose(
 	withBlockWrapperIsHovered,
