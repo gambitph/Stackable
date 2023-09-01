@@ -150,7 +150,7 @@ const Edit = props => {
 
 const userAgent = navigator?.userAgent
 if ( userAgent?.indexOf( 'Firefox' ) !== -1 ) {
-	addFilter( 'stackable.columns.edit.blockClassNames', 'stackable-columns-has-single-block-polyfill', classes => {
+	addFilter( 'stackable.columns.edit.blockClassNames', 'stackable/columns-has-single-block-polyfill', classes => {
 		const { numInnerBlocks } = useBlockContext()
 
 		if ( numInnerBlocks === 1 ) {
