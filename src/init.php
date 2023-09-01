@@ -279,7 +279,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				plugins_url( 'dist/stk.js', STACKABLE_FILE ),
 				// wp-util for wp.ajax.
 				// wp-plugins & wp-edit-post for Gutenberg plugins.
-				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' ),
+				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api', 'lodash' ),
 				STACKABLE_VERSION
 			);
 
