@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import './news'
-import './wizard'
 import SVGEssentialIcon from './images/settings-icon-essential.svg'
 import SVGSpecialIcon from './images/settings-icon-special.svg'
 import SVGSectionIcon from './images/settings-icon-section.svg'
@@ -12,7 +11,7 @@ import SVGSectionIcon from './images/settings-icon-section.svg'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	createRoot, useEffect, useState, Fragment, useCallback,
+	useEffect, useState, Fragment, useCallback,
 } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
 import { Spinner, CheckboxControl } from '@wordpress/components'
@@ -28,6 +27,7 @@ import {
 } from 'stackable'
 import classnames from 'classnames'
 import { importBlocks } from '~stackable/util/admin'
+import { createRoot } from '~stackable/util/element'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 import { GettingStarted } from './getting-started'
@@ -40,16 +40,19 @@ export const BLOCK_CATEROGIES = [
 		id: 'essential',
 		label: __( 'Essential Blocks', i18n ),
 		Icon: SVGEssentialIcon,
+		description: __( 'All the necessary building blocks you need to design anything.', i18n ),
 	},
 	{
 		id: 'special',
 		label: __( 'Special Blocks', i18n ),
 		Icon: SVGSpecialIcon,
+		description: __( 'Blocks with special functionality that will allow you to create distinctive designs.', i18n ),
 	},
 	{
 		id: 'section',
 		label: __( 'Section Blocks', i18n ),
 		Icon: SVGSectionIcon,
+		description: __( 'Use these blocks act as templates to help you build sections effortlessly.', i18n ),
 	},
 ]
 
@@ -485,7 +488,6 @@ const GlobalSettings = () => {
 const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
 	const [ generateNativeGlobalColors, setGenerateNativeGlobalColors ] = useState( false )
-	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
 	const [ v2EditorBackwardCompatibility, setV2EditorBackwardCompatibility ] = useState( false )
 	const [ v2EditorBackwardCompatibilityUsage, setV2EditorBackwardCompatibilityUsage ] = useState( false )
 	const [ v2FrontendBackwardCompatibility, setV2FrontendBackwardCompatibility ] = useState( false )
@@ -497,9 +499,8 @@ const AdditionalOptions = props => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
+				setHelpTooltipsDisabled( response.stackable_help_tooltip_disabled === '1' )
 				setGenerateNativeGlobalColors( !! response.stackable_global_colors_native_compatibility )
-				setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
 				setV2EditorBackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
 				setV2EditorBackwardCompatibilityUsage( response.stackable_v2_editor_compatibility_usage === '1' )
 				setV2FrontendBackwardCompatibility( response.stackable_v2_frontend_compatibility === '1' )
@@ -583,14 +584,6 @@ const AdditionalOptions = props => {
 				onChange={ checked => {
 					updateSetting( { stackable_v2_frontend_compatibility: checked ? '1' : '' } ) // eslint-disable-line camelcase
 					setV2FrontendBackwardCompatibility( checked )
-				} }
-			/>
-			<CheckboxControl
-				label={ __( 'Load version 1 block stylesheet for backward compatibility', i18n ) }
-				checked={ v1BackwardCompatibility }
-				onChange={ checked => {
-					updateSetting( { stackable_load_v1_styles: checked ? '1' : '' } ) // eslint-disable-line camelcase
-					setV1BackwardCompatibility( checked )
 				} }
 			/>
 			{ isBusy &&

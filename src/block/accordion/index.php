@@ -64,5 +64,5 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 			);
 		}
 	}
-	add_action( 'wp_footer', 'stackable_load_accordion_frontend_polyfill_script' );
+	add_action( 'stackable/accordion/enqueue_scripts', 'stackable_load_accordion_frontend_polyfill_script' );
 }

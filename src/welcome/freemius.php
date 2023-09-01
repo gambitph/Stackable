@@ -20,6 +20,7 @@ add_filter( 'fs_templates/account.php_stackable-ultimate-gutenberg-blocks', func
 			Stackable_Welcome_Screen::print_tabs();
 			?>
 		</div>
+		<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 		<?php
 		echo $output;
 		?>
@@ -42,6 +43,7 @@ add_filter( 'fs_/forms/affiliation.php_stackable-ultimate-gutenberg-blocks', fun
 			Stackable_Welcome_Screen::print_tabs();
 			?>
 		</div>
+		<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 		<?php
 		echo $output;
 		?>
@@ -64,6 +66,7 @@ add_filter( 'fs_templates/contact.php_stackable-ultimate-gutenberg-blocks', func
 			Stackable_Welcome_Screen::print_tabs();
 			?>
 		</div>
+		<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 		<?php
 		echo $output;
 		?>

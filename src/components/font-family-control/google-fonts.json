@@ -11,6 +11,17 @@
     ]
   },
   {
+    "family": "ADLaM Display",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "adlam",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Abel",
     "variants": [
       "regular"
@@ -2927,6 +2938,24 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Bricolage Grotesque",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -12466,15 +12495,21 @@
     "family": "Noto Sans HK",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
+      "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
       "chinese-hongkong",
-      "latin"
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -12538,7 +12573,9 @@
       "regular"
     ],
     "subsets": [
-      "imperial-aramaic"
+      "imperial-aramaic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12547,7 +12584,9 @@
       "regular"
     ],
     "subsets": [
-      "indic-siyaq-numbers"
+      "indic-siyaq-numbers",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12556,7 +12595,9 @@
       "regular"
     ],
     "subsets": [
-      "inscriptional-pahlavi"
+      "inscriptional-pahlavi",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12609,15 +12650,21 @@
     "family": "Noto Sans KR",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
+      "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
+      "cyrillic",
       "korean",
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -12868,6 +12915,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "mandaic"
     ]
   },
@@ -12919,6 +12968,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "mayan-numerals"
     ]
   },
@@ -13396,15 +13447,21 @@
     "family": "Noto Sans SC",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
+      "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
       "chinese-simplified",
-      "latin"
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -13625,15 +13682,21 @@
     "family": "Noto Sans TC",
     "variants": [
       "100",
+      "200",
       "300",
       "regular",
       "500",
+      "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
       "chinese-traditional",
-      "latin"
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -17464,6 +17527,20 @@
     ]
   },
   {
+    "family": "Ruwudu",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Rye",
     "variants": [
       "regular"
@@ -20444,6 +20521,24 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Wavefont",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {

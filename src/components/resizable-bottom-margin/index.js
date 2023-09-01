@@ -18,6 +18,7 @@ import { range } from 'lodash'
  * WordPress dependencies
  */
 import { useState, useEffect } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
 
@@ -48,6 +49,7 @@ const ENABLE = {
 
 const ResizableBottomMarginSingle = props => {
 	const { deviceType } = props
+	const { name } = useBlockEditContext()
 	const [ currentHeight, setCurrentHeight ] = useState( null )
 	const [ isResizing, setIsResizing ] = useState( false )
 
@@ -58,7 +60,7 @@ const ResizableBottomMarginSingle = props => {
 	}, [ isShiftKey ] )
 
 	// Allow other developers to override the default bottom margin value.
-	const defaultBottomMargin = applyFilters( 'stackable.resizable-bottom-margin.default', DEFAULT_BOTTOM_MARGINS[ deviceType ] )
+	const defaultBottomMargin = applyFilters( 'stackable.resizable-bottom-margin.default', DEFAULT_BOTTOM_MARGINS[ deviceType ], name )
 
 	const classNames = classnames( [
 		'stk-resizable-bottom-margin',

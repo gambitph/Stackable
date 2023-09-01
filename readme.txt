@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.0
-Tested up to: 6.3
+Requires at least: 6.1
+Tested up to: 6.3.1
 Requires PHP: 7.0
-Stable tag: 3.10.3
+Stable tag: 3.11.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,7 +16,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 [Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
 
-> [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+> [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
 [youtube https://www.youtube.com/watch?v=P3xG3t-QYjw]
 
@@ -35,11 +35,12 @@ Enjoy an impressive Design Library to jumpstart your designing process. Never st
 
 ## Powerful Custom Blocks
 
-Get 41 flexible custom WordPress blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
+Get 42 flexible custom WordPress blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 You can choose which of these blocks you need, depending on your workflow. You can also disable blocks if you don't need them.
 
-Essential Blocks
+**Essential Blocks**
+
 - Advanced Columns Block — [View Block](https://wpstackable.com/columns-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Advanced Heading Block - [View Block](https://wpstackable.com/advanced-heading-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Advanced Text Block - [View Block](https://wpstackable.com/advanced-text-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -49,11 +50,13 @@ Essential Blocks
 - Icon Button Block
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
-Special Blocks
+**Special Blocks**
+
 - Carousel Block - [View Block](https://wpstackable.com/carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Tabs Block - [View Block](https://wpstackable.com/tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Countdown Block - [View Block](https://wpstackable.com/countdown-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Timeline Block - [View Block](https://wpstackable.com/timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Table of Contents Block - [View Block](https://wpstackable.com/table-of-contents-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -75,7 +78,8 @@ Special Blocks
 - Divider Block
 - Spacer Block
 
-Section Blocks
+**Section Blocks**
+
 - Hero Block — [View Block](https://wpstackable.com/header-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Call to Action Block — [View Block](https://wpstackable.com/call-to-action-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Feature Block — [View Block](https://wpstackable.com/feature-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -174,10 +178,11 @@ Add animations that will bring your site to life and make it more visually engag
 - Load More Block (for the Blog Posts Block)
 - Pagination Block (for the Blog Posts Block)
 
-> [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Learn more](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+> [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Learn more](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ### News Article Updates
 
+- [v3.11 New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.10 New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.9 New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.8 New Stackable UI](https://wpstackable.com/blog/introducing-new-stackable-ui/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -226,7 +231,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.0 or higher for this to work.
+You'll need WordPress version 6.1 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -246,7 +251,7 @@ No, you don't need to know a single line of code when using Stackable
 
 **Do you have a live demo?**
 
-Yes, we have [live demo that you can check out here](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
+Yes, we have [live demo that you can check out here](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
 
 **What are Blocks?**
 
@@ -285,6 +290,41 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.11.3 =
+* Fixed: Compatibility issues with WordPress 6.1
+* Fixed: Dynamic Content now display in the editor correctly when used in a Query Loop block
+* Fixed: Typing on a field will turn "current post" Dynamic Content source source to a specific post ID
+
+= 3.11.2 =
+* Fixed: Dynamic Content did not show up when used inside a native Query Loop block
+
+= 3.11.1 =
+* Fixed: (Hotfix update) PHP error missing function encountered sometimes when updating
+
+= 3.11.0 =
+[Introducing: New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: Timeline block
+* New: Various performance optimizations, lesser memory usage and better script loading #2835
+* New: Page now scrolls to the opened Accordion if it's not in the viewport #2726
+* New: Added a tip when incorrectly using a Google Map in a lightbox #2807
+* New: Added some new getting started videos
+* Change: Removed settings wizard
+* Fixed: Normal or centered block widths are not visible in the editor in WP 6.3
+* Fixed: Blocks were not being loaded in the Customizer for classic themes #2846
+* Fixed: Global colors and typography not showing in the editor if Content Editing Mode is enabled
+* Fixed: Custom Fields admin menu UI
+* Fixed: Blocks can encounter an error when dragging inside or from a reusable block #2768 #2791
+* Fixed: Picking an icon from the icon picker inside the editor area doesn't work #2772
+* Fixed: Block link now correctly occupies the entire container block if it has a background #2743
+* Fixed: Removed ReactDom.render console error messages #2786
+* Fixed: Native spacing tabs appear in WP < 6.3 #2837 #2828
+* Fixed: Design Library block cannot be selected
+* Fixed: Columns content max width unit resets after saving #2826
+* Fixed: Icon gap responsive settings resets after saving #2670
+* Fixed: Carousel now uses passive listeners to improve scrolling performance #2831
+* Fixed: Sometimes inactive tabs can still get mouse focus
 
 = 3.10.3 =
 * Fixed: (Hotfix update) PHP error incompatibility with some plugins

@@ -7,6 +7,7 @@
  * Internal dependencies
  */
 import HelpTooltip from '../help-tooltip'
+import { fetchSettings } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -14,7 +15,7 @@ import HelpTooltip from '../help-tooltip'
 import {
 	useRef, useState, useEffect,
 } from '@wordpress/element'
-import { loadPromise, models } from '@wordpress/api'
+import { models } from '@wordpress/api'
 import domReady from '@wordpress/dom-ready'
 
 const LabelTooltip = props => {
@@ -109,11 +110,8 @@ let helpTooltipEnabled = true // Initial value, this will be updated on load.
 
 // At the start, get whether the helpTooltips are enabled or disabled.
 domReady( () => {
-	loadPromise.then( () => {
-		const settings = new models.Settings()
-		settings.fetch().then( response => {
-			helpTooltipEnabled = ! response.stackable_help_tooltip_disabled
-		} )
+	fetchSettings().then( response => {
+		helpTooltipEnabled = response.stackable_help_tooltip_disabled !== '1'
 	} ).catch( () => {} )
 } )
 

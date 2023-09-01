@@ -84,7 +84,7 @@ const ControlIconToggle = props => {
 								data-index={ i }
 								data-value={ option.value }
 								disabled={ option.disabled }
-								tabindex={ isActive ? '0' : '-1' }
+								tabIndex={ isActive ? '0' : '-1' }
 								onClick={ () => {
 									if ( ! isOpen ) {
 										setIsOpen( true )

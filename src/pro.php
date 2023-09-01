@@ -65,7 +65,7 @@ if ( ! function_exists( 'stackable_should_show_pro_notices' ) ) {
 	 * @return Boolean
 	 */
 	function stackable_should_show_pro_notices() {
-		return STACKABLE_SHOW_PRO_NOTICES && stackable_show_pro_notices_option() && ! sugb_fs()->can_use_premium_code();
+		return STACKABLE_SHOW_PRO_NOTICES && stackable_show_pro_notices_option() && ( ! sugb_fs()->can_use_premium_code() || STACKABLE_BUILD === 'free' );
 	}
 }
 

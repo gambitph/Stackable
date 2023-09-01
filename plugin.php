@@ -6,7 +6,7 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.10.3
+ * Version: 3.11.3
  *
  * @package Stackable
  */
@@ -24,7 +24,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
 defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'free' );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.10.3' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.11.3' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_CLOUDFRONT_URL' ) || define( 'STACKABLE_CLOUDFRONT_URL', 'https://d3gt1urn7320t9.cloudfront.net' ); // CloudFront CDN URL
@@ -122,8 +122,7 @@ if ( ! function_exists( 'stackable_early_version_upgrade_check' ) ) {
  */
 if ( ! function_exists( 'stackable_notice_gutenberg_plugin_activated' ) ) {
 	function stackable_notice_gutenberg_plugin_activated() {
-		global $wp_version;
-		if ( version_compare( $wp_version, '5.0', '>=' ) && is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
+		if ( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
 			$ignore = get_option( 'stackable_notice_gutenberg_plugin_ignore' );
 			if ( ! $ignore ) {
 				printf(
@@ -141,7 +140,10 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_activated' ) ) {
 			}
 		}
 	}
-	add_action( 'admin_notices', 'stackable_notice_gutenberg_plugin_activated' );
+
+	if ( defined( 'GUTENBERG_VERSION' ) ) {
+		add_action( 'admin_notices', 'stackable_notice_gutenberg_plugin_activated' );
+	}
 }
 
 if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
@@ -198,7 +200,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php' );
@@ -206,33 +207,36 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/css-optimize.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/lightbox/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/compatibility/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/carousel/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/countdown/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/notification/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/video-popup/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/table-of-contents/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/map/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-bar/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-circle/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/horizontal-scroller/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/tabs/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/alignment/index.php' );
+if ( ! is_admin() ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'src/lightbox/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/carousel/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/countdown/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/notification/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/video-popup/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/table-of-contents/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/map/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-bar/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/progress-circle/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/horizontal-scroller/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block/tabs/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/alignment/index.php' );
+}
 
 /**
  * Welcome screen.
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/freemius.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/updates.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/wizard.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
+if ( is_admin() ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/freemius.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/updates.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
+}
 
 if ( sugb_fs()->is__premium_only() ) {
 	if ( STACKABLE_BUILD === 'premium' ) {
@@ -252,7 +256,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/navigation-panel-pre
 /**
  * V2 Deprecated
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v1/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/disabled-blocks.php' );

@@ -25,7 +25,9 @@ module.exports = {
 		return ( {
 			ImportDeclaration: node => { // AST Node Type
 				if ( node.source && node.source.type === 'Literal' ) {
-					if ( fullPath.includes( '/src/welcome/' ) || fullPath.includes( '/src/admin/' ) ) {
+					if ( fullPath.includes( '/src/welcome/' ) || fullPath.includes( '/src/admin/' ) ||
+					     ( fullPath.includes( '/src/deprecated/' ) && fullPath.includes( '/welcome/' ) )
+					) {
 						if ( node.source.value && node.source.value.startsWith( '~stackable/' ) ) {
 							if ( node.source.value.match( /^~stackable\/[\w-]+\/?$/ ) ) {
 								context.report( {

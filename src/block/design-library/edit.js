@@ -20,6 +20,7 @@ import {
 import { useState } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { Placeholder } from '@wordpress/components'
+import { useBlockProps } from '@wordpress/block-editor'
 
 // Replaces the current block with a block made out of attributes.
 const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design ) => {
@@ -72,6 +73,10 @@ const Edit = props => {
 
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false )
 
+	const blockProps = useBlockProps( {
+		className: 'ugb-design-library-block',
+	} )
+
 	if ( attributes.previewMode ) {
 		const src = previewImage.match( /https?:/i ) ? previewImage
 			: srcUrl ? `${ srcUrl }/${ previewImage }`
@@ -85,10 +90,7 @@ const Edit = props => {
 	}
 
 	return (
-		<div
-			className="ugb-design-library-block"
-			data-block={ props.clientId }
-		>
+		<div { ...blockProps }>
 			<Placeholder
 				icon={ <SVGStackableIcon /> }
 				label={ __( 'Stackable Design Library', i18n ) }
