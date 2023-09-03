@@ -61,6 +61,7 @@ export const Image = props => {
 			imageShape: attributes.imageShape,
 			imageShapeStretch: attributes.imageShapeStretch,
 			imageShadow: attributes.imageShadow,
+			imageExternalUrl: attributes.imageExternalUrl,
 		}
 	} )
 	const { parentBlock } = useBlockContext()
@@ -86,7 +87,7 @@ export const Image = props => {
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
 		size={ attributes.imageSize }
-		src={ attributes.imageUrl }
+		src={ attributes.imageUrl || attributes.imageExternalUrl }
 
 		width={ attributes.imageWidth || defaultWidth }
 		widthTablet={ attributes.imageWidthTablet }
@@ -149,7 +150,7 @@ Image.Content = props => {
 		imageURL={ attributes.imageUrl }
 		alt={ alt || attributes.imageAlt }
 		size={ attributes.imageSize }
-		src={ src || attributes.imageUrl }
+		src={ src || attributes.imageUrl || attributes.imageExternalUrl }
 
 		width={ width || attributes.imageWidthAttribute || attributes.imageWidth || defaultWidth }
 		height={ attributes.imageHeightAttribute || attributes.imageHeight || defaultHeight }

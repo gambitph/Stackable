@@ -77,6 +77,10 @@ export const backgroundAttributes = {
 		type: 'boolean',
 		default: '',
 	},
+	backgroundMediaExternalUrl: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const addBackgroundAttributes = ( attrObject, attrNameTemplate = '%s' ) => {

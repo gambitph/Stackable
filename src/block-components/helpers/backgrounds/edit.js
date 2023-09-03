@@ -12,6 +12,7 @@ import {
 	AdvancedToggleControl,
 	AdvancedRangeControl,
 	ImageControl2,
+	AdvancedTextControl,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers,
@@ -233,6 +234,7 @@ export const BackgroundControls = props => {
 						const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
 						const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
 						const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
+						const attrExternalUrl = getAttributeName( getAttrName( 'backgroundMediaExternalUrl' ) )
 
 						const attributes = {
 							[ attrNameId ]: image.id,
@@ -240,6 +242,7 @@ export const BackgroundControls = props => {
 							[ attrWidthAttribute ]: image.width || '',
 							[ attrHeightAttribute ]: image.height || '',
 							[ attrAlt ]: image.alt || '',
+							[ attrExternalUrl ]: deviceType === 'Desktop' ? '' : getAttribute( 'backgroundMediaExternalUrl' ),
 						}
 
 						if ( props.onBackgroundEnableAttribute ) {
@@ -252,7 +255,29 @@ export const BackgroundControls = props => {
 					responsive="all"
 				/>
 			}
+			{ deviceType === 'Desktop' && <AdvancedTextControl
+				label={ __( 'Background Image Url', i18n ) }
+				attribute={ getAttrName( 'backgroundMediaExternalUrl' ) }
+				onChange={ text => {
+					const backgroundMediaExternalUrl = getAttrName( 'backgroundMediaExternalUrl' )
+					const attrNameId = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Id`, deviceType )
+					const attrNameUrl = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Url`, deviceType )
+					const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
+					const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
+					const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
 
+					setAttributes( {
+						[ backgroundMediaExternalUrl ]: text,
+						[ attrNameId ]: '',
+						[ attrNameUrl ]: '',
+						[ attrWidthAttribute ]: '',
+						[ attrHeightAttribute ]: '',
+						[ attrAlt ]: '',
+					} )
+				}
+
+				}
+			/> }
 			{ hasBackgroundMedia &&
 				<AdvancedRangeControl
 					label={ __( 'Background Media Tint Strength', i18n ) }

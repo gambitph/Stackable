@@ -20,6 +20,7 @@ import {
 	AdvancedToolbarControl,
 	BlendModeControl,
 	ControlSeparator,
+	AdvancedTextControl,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
@@ -138,12 +139,28 @@ const Controls = props => {
 							imageUrl: url,
 							imageWidthAttribute: width,
 							imageHeightAttribute: height,
+							imageExternalUrl: '',
 							...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only set the alt if it's empty.
 						} )
 					} }
 				/>
 			) }
+			<AdvancedTextControl
+				label={ __( 'Image Url', i18n ) }
+				attribute="imageExternalUrl"
+				onChange={ text => {
+					setAttributes( {
+						imageExternalUrl: text,
+						imageUrl: '',
+						imageAlt: '',
+						imageId: '',
+						imageWidthAttribute: '',
+						imageHeightAttribute: '',
+					} )
+				}
 
+				}
+			/>
 			{ props.hasWidth &&
 				<AdvancedRangeControl
 					label={ __( 'Width', i18n ) }

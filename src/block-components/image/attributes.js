@@ -146,6 +146,10 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				type: 'boolean',
 				default: true,
 			},
+			imageExternalUrl: {
+				type: 'string',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
