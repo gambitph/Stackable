@@ -15,6 +15,7 @@ import {
 	ImageControl2,
 	AdvancedTextControl,
 	InspectorBottomTip,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -122,6 +123,18 @@ const Edit = props => {
 									videoLink,
 									videoId: getVideoProviderFromURL( videoLink ).id,
 								} ) }
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Allow fullscreen', i18n ) }
+								attribute="videoFullscreen"
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Allow download video', i18n ) }
+								attribute="videoDownload"
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Loop video', i18n ) }
+								attribute="videoLoop"
 							/>
 						</PanelAdvancedSettings>
 
