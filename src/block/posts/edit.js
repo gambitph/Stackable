@@ -9,7 +9,9 @@ import variations from './variations'
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION, i18n } from 'stackable'
+import {
+	version as VERSION, i18n, showProNotice,
+} from 'stackable'
 import { first, isEqual } from 'lodash'
 import {
 	InspectorTabs,
@@ -24,6 +26,7 @@ import {
 	InspectorLayoutControls,
 	InspectorStyleControls,
 	ControlSeparator,
+	ProControlButton,
 } from '~stackable/components'
 import {
 	useBlockStyle,
@@ -251,6 +254,7 @@ const Edit = props => {
 								onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
 								stkVersion="3"
 							/>
+							{ showProNotice && <ProControlButton /> }
 							{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
 						</PanelAdvancedSettings>
 						<PanelAdvancedSettings
