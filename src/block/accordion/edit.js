@@ -15,6 +15,7 @@ import {
 	InspectorStyleControls,
 	InspectorTabs,
 	PanelAdvancedSettings,
+	InspectorAdvancedControls,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -147,6 +148,17 @@ const Edit = props => {
 					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
+					<InspectorAdvancedControls>
+						<PanelAdvancedSettings
+							title={ __( 'FAQ Schema', i18n ) }
+							id="faq-schema"
+						>
+							<AdvancedToggleControl
+								label={ __( 'Enable FAQ Schema', i18n ) }
+								attribute="enableFAQ"
+							/>
+						</PanelAdvancedSettings>
+					</InspectorAdvancedControls>
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
