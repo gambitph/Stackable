@@ -96,7 +96,7 @@
 body:not(.wp-admin) .stk-block-columns:has(> .stk-block-content > .stk-block-column:first-child:last-child) { // Remove the margins if it's only 1 block.
 	--stk-columns-spacing: 0;
 }
-body:not(.wp-admin) .stk-block-columns.stk-block-columns--has-single-block-polyfill { // For Firefox polyfill provided by src/block/columns/frontend-has-polyfill.js
+.stk-block-columns.stk-block-columns--has-single-block-polyfill { // For Firefox polyfill provided by src/block/columns/frontend-has-polyfill.js
 	--stk-columns-spacing: 0;
 }
 
