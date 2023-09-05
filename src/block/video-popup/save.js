@@ -57,7 +57,7 @@ export const Save = props => {
 			{ ...{
 				nofullscreen: attributes.videoFullscreen ? null : '',
 				nodownload: attributes.videoDownload ? null : '',
-				loop: attributes.videoLoop === true,
+				loop: attributes.videoLoop ? '' : null,
 			} }
 		>
 			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />

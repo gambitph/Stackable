@@ -52,20 +52,14 @@ export const attributes = ( version = VERSION ) => {
 			},
 			videoFullscreen: {
 				type: 'boolean',
-				source: 'attribute',
-				attribute: 'videoFullscreen',
 				default: true,
 			},
 			videoDownload: {
 				type: 'boolean',
-				source: 'attribute',
-				attribute: 'videoDownload',
 				default: true,
 			},
 			videoLoop: {
 				type: 'boolean',
-				source: 'attribute',
-				attribute: 'videoLoop',
 				default: false,
 			},
 		},
