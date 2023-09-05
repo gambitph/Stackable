@@ -94,7 +94,6 @@ const FourRangeControl = memo( props => {
 	const hasUnits = !! props.units?.length
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 
-	// const unit = useBlockAttributesContext( attributes => attributes[ unitAttrName ] )
 	const {
 		unit,
 		_valueDesktop,
@@ -141,51 +140,16 @@ const FourRangeControl = memo( props => {
 		}
 	}
 
-	// Remove the placeholder.
 	const deviceType = useDeviceType()
-	if ( deviceType !== 'Desktop' ) {
-		propsToPass.initialPosition = ''
-		propsToPass.placeholder = props.placeholder
-	}
+	const tabletHasValue = _valueTablet !== '' &&
+							( _valueTablet.top !== '' || _valueTablet.left !== '' ||
+							_valueTablet.right !== '' || _valueTablet.bottom !== '' )
 
-	const setInitPositionPlaceholder = ( _unit, _value, setAll ) => {
-		propsToPass.initialPositionTop = unit === _unit ? _value?.top : ''
-		propsToPass.placeholderTop = unit === _unit ? _value?.top : ''
-		propsToPass.initialPositionLeft = unit === _unit ? _value?.left : ''
-		propsToPass.placeholderLeft = unit === _unit ? _value?.left : ''
-		if ( setAll ) {
-			propsToPass.initialPositionRight = unit === _unit ? _value?.right : ''
-			propsToPass.placeholderRight = unit === _unit ? _value?.right : ''
-			propsToPass.initialPositionBottom = unit === _unit ? _value?.bottom : ''
-			propsToPass.placeholderBottom = unit === _unit ? _value?.bottom : ''
-		}
-	}
-
-	const hasNoValueTablet = _valueTablet === '' ? true
-		: ( _valueTablet.top === '' && _valueTablet.left === '' && _valueTablet.right === '' && _valueTablet.bottom === '' )
-
-	const { firstValueDesktop, firstValueTablet } =
-	props.enableTop ? { firstValueDesktop: _valueDesktop?.top, firstValueTablet: _valueTablet?.top }
-		: props.enableRight ? { firstValueDesktop: _valueDesktop?.right, firstValueTablet: _valueTablet?.right }
-			: props.enableBottom ? { firstValueDesktop: _valueDesktop?.bottom, firstValueTablet: _valueTablet?.bottom }
-				: { firstValueDesktop: _valueDesktop?.left, firstValueTablet: _valueTablet?.left }
-
-	// Change placeholder based on inherited value
-	if ( deviceType === 'Mobile' && ! hasNoValueTablet && isLocked && ! props.vhMode ) {
-		propsToPass.initialPosition = unit === _unitTablet ? firstValueTablet : ''
-		propsToPass.placeholder = unit === _unitTablet ? firstValueTablet : ''
-	} else if ( deviceType === 'Mobile' && ! hasNoValueTablet && isLocked ) {
-		setInitPositionPlaceholder( _unitTablet, _valueTablet, false )
-	} else if ( deviceType === 'Mobile' && ! hasNoValueTablet ) {
-		setInitPositionPlaceholder( _unitTablet, _valueTablet, true )
-	} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && isLocked && ! props.vhMode ) {
-		propsToPass.initialPosition = unit === _unitDesktop ? firstValueDesktop : ''
-		propsToPass.placeholder = unit === _unitDesktop ? firstValueDesktop : ''
-	} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && isLocked ) {
-		setInitPositionPlaceholder( _unitDesktop, _valueDesktop, false )
-	} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-		setInitPositionPlaceholder( _unitDesktop, _valueDesktop, true )
-	}
+	const { desktop: firstValueDesktop, tablet: firstValueTablet } =
+		props.enableTop ? { desktop: _valueDesktop?.top, tablet: _valueTablet?.top }
+			: props.enableRight ? { desktop: _valueDesktop?.right, tablet: _valueTablet?.right }
+				: props.enableBottom ? { desktop: _valueDesktop?.bottom, tablet: _valueTablet?.bottom }
+					: { desktop: _valueDesktop?.left, tablet: _valueTablet?.left }
 
 	const onChangeAll = newValue => {
 		onChange( {
@@ -259,6 +223,22 @@ const FourRangeControl = memo( props => {
 						value={ firstValue }
 						onChange={ onChangeAll }
 						allowReset={ false }
+						initialPosition={ ( () => {
+							if ( deviceType === 'Mobile' && tabletHasValue && firstValueTablet !== '' ) {
+								return unit === _unitTablet ? firstValueTablet : ''
+							} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+								return unit === _unitDesktop ? firstValueDesktop : ''
+							}
+							return propsToPass.initialPosition
+						} )() }
+						placeholder={ ( () => {
+							if ( deviceType === 'Mobile' && tabletHasValue && firstValueTablet !== '' ) {
+								return unit === _unitTablet ? firstValueTablet : ''
+							} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+								return unit === _unitDesktop ? firstValueDesktop : ''
+							}
+							return propsToPass.placeholder
+						} )() }
 					/>
 					<ResetButton
 						allowReset={ props.allowReset }
@@ -279,10 +259,22 @@ const FourRangeControl = memo( props => {
 							value={ value.top }
 							onChange={ onChangeVertical }
 							allowReset={ false }
-							initialPosition={ typeof propsToPass.initialPositionTop === 'undefined' ? propsToPass.initialPosition : propsToPass.initialPositionTop }
-							placeholder={ typeof propsToPass.placeholderTop === 'undefined'
-								? ( typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop )
-								: propsToPass.placeholderTop }
+							initialPosition={ ( () => {
+								if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.top !== '' ) {
+									return unit === _unitTablet ? _valueTablet.top : ''
+								} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+									return unit === _unitDesktop ? _valueDesktop?.top : ''
+								}
+								return propsToPass.initialPosition
+							} )() }
+							placeholder={ ( () => {
+								if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.top !== '' ) {
+									return unit === _unitTablet ? _valueTablet.top : ''
+								} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+									return unit === _unitDesktop ? _valueDesktop?.top : ''
+								}
+								return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
+							} )() }
 						/>
 						<ResetButton
 							allowReset={ props.allowReset }
@@ -300,10 +292,22 @@ const FourRangeControl = memo( props => {
 							value={ value.left }
 							onChange={ onChangeHorizontal }
 							allowReset={ false }
-							initialPosition={ typeof propsToPass.initialPositionLeft === 'undefined' ? propsToPass.initialPosition : propsToPass.initialPositionLeft }
-							placeholder={ typeof propsToPass.placeholderLeft === 'undefined'
-								? ( typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft )
-								: propsToPass.placeholderLeft }
+							initialPosition={ ( () => {
+								if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.left !== '' ) {
+									return unit === _unitTablet ? _valueTablet.left : ''
+								} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+									return unit === _unitDesktop ? _valueDesktop?.left : ''
+								}
+								return propsToPass.initialPosition
+							} )() }
+							placeholder={ ( () => {
+								if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.left !== '' ) {
+									return unit === _unitTablet ? _valueTablet.left : ''
+								} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+									return unit === _unitDesktop ? _valueDesktop?.left : ''
+								}
+								return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft
+							} )() }
 						/>
 						<ResetButton
 							allowReset={ props.allowReset }
@@ -326,10 +330,22 @@ const FourRangeControl = memo( props => {
 								value={ value.top }
 								onChange={ onChangeTop }
 								allowReset={ false }
-								initialPosition={ typeof propsToPass.initialPositionTop === 'undefined' ? propsToPass.initialPosition : propsToPass.initialPositionTop }
-								placeholder={ typeof propsToPass.placeholderTop === 'undefined'
-									? ( typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop )
-									: propsToPass.placeholderTop }
+								initialPosition={ ( () => {
+									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.top !== '' ) {
+										return unit === _unitTablet ? _valueTablet.top : ''
+									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+										return unit === _unitDesktop ? _valueDesktop?.top : ''
+									}
+									return propsToPass.initialPosition
+								} )() }
+								placeholder={ ( () => {
+									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.top !== '' ) {
+										return unit === _unitTablet ? _valueTablet.top : ''
+									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+										return unit === _unitDesktop ? _valueDesktop?.top : ''
+									}
+									return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
+								} )() }
 							/>
 							<ResetButton
 								allowReset={ props.allowReset }
@@ -349,10 +365,22 @@ const FourRangeControl = memo( props => {
 								value={ value.right }
 								onChange={ onChangeRight }
 								allowReset={ false }
-								initialPosition={ typeof propsToPass.initialPositionRight === 'undefined' ? propsToPass.initialPosition : propsToPass.initialPositionRight }
-								placeholder={ typeof propsToPass.placeholderRight === 'undefined'
-									? ( typeof props.placeholderRight === 'undefined' ? propsToPass.placeholder : props.placeholderRight )
-									: propsToPass.placeholderRight }
+								initialPosition={ ( () => {
+									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.right !== '' ) {
+										return unit === _unitTablet ? _valueTablet.right : ''
+									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+										return unit === _unitDesktop ? _valueDesktop?.right : ''
+									}
+									return propsToPass.initialPosition
+								} )() }
+								placeholder={ ( () => {
+									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.right !== '' ) {
+										return unit === _unitTablet ? _valueTablet.right : ''
+									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+										return unit === _unitDesktop ? _valueDesktop?.right : ''
+									}
+									return typeof props.placeholderRight === 'undefined' ? propsToPass.placeholder : props.placeholderRight
+								} )() }
 							/>
 							<ResetButton
 								allowReset={ props.allowReset }
@@ -372,10 +400,22 @@ const FourRangeControl = memo( props => {
 								value={ value.bottom }
 								onChange={ onChangeBottom }
 								allowReset={ false }
-								initialPosition={ typeof propsToPass.initialPositionBottom === 'undefined' ? propsToPass.initialPosition : propsToPass.initialPositionBottom }
-								placeholder={ typeof propsToPass.placeholderBottom === 'undefined'
-									? ( typeof props.placeholderBottom === 'undefined' ? propsToPass.placeholder : props.placeholderBottom )
-									: propsToPass.placeholderBottom }
+								initialPosition={ ( () => {
+									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.bottom !== '' ) {
+										return unit === _unitTablet ? _valueTablet.bottom : ''
+									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+										return unit === _unitDesktop ? _valueDesktop?.bottom : ''
+									}
+									return propsToPass.initialPosition
+								} )() }
+								placeholder={ ( () => {
+									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.bottom !== '' ) {
+										return unit === _unitTablet ? _valueTablet.bottom : ''
+									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+										return unit === _unitDesktop ? _valueDesktop?.bottom : ''
+									}
+									return typeof props.placeholderBottom === 'undefined' ? propsToPass.placeholder : props.placeholderBottom
+								} )() }
 							/>
 							<ResetButton
 								allowReset={ props.allowReset }
@@ -395,10 +435,22 @@ const FourRangeControl = memo( props => {
 								value={ value.left }
 								onChange={ onChangeLeft }
 								allowReset={ false }
-								initialPosition={ typeof propsToPass.initialPositionLeft === 'undefined' ? propsToPass.initialPosition : propsToPass.initialPositionLeft }
-								placeholder={ typeof propsToPass.placeholderLeft === 'undefined'
-									? ( typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft )
-									: propsToPass.placeholderLeft }
+								initialPosition={ ( () => {
+									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.left !== '' ) {
+										return unit === _unitTablet ? _valueTablet.left : ''
+									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+										return unit === _unitDesktop ? _valueDesktop?.left : ''
+									}
+									return propsToPass.initialPosition
+								} )() }
+								placeholder={ ( () => {
+									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.left !== '' ) {
+										return unit === _unitTablet ? _valueTablet.left : ''
+									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+										return unit === _unitDesktop ? _valueDesktop?.left : ''
+									}
+									return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft
+								} )() }
 							/>
 							<ResetButton
 								allowReset={ props.allowReset }
