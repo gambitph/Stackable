@@ -47,8 +47,6 @@ const AdvancedRangeControl = props => {
 		}
 	} )
 
-	// const unitAttribute = attributes[ unitAttrName ]
-
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
 		: ( unitAttribute || '' )
@@ -91,16 +89,13 @@ const AdvancedRangeControl = props => {
 
 	// Remove the placeholder.
 	if ( ! props.forcePlaceholder && (
-		// deviceType !== 'Desktop' ||
 		currentHoverState !== 'normal' ) ) {
 		propsToPass.initialPosition = ''
 		propsToPass.placeholder = ''
 	}
 
 	let placeholderRender = props.placeholderRender
-	if (
-		// deviceType !== 'Desktop' ||
-		currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
+	if ( currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
 		placeholderRender = null
 	}
 
