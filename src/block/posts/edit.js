@@ -254,7 +254,7 @@ const Edit = props => {
 								onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
 								stkVersion="3"
 							/>
-							{ showProNotice && <ProControlButton /> }
+							{ showProNotice && <ProControlButton type="separator" /> }
 							{ applyFilters( 'stackable.posts.edit.inspector.style.query', null ) }
 						</PanelAdvancedSettings>
 						<PanelAdvancedSettings
