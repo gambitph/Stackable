@@ -7,7 +7,7 @@ import BlockStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import { InspectorTabs } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
@@ -25,6 +25,8 @@ import {
 	getAlignmentClasses,
 	Link,
 	Alignment,
+	Typography,
+	getTypographyClasses,
 } from '~stackable/block-components'
 import {
 	withBlockAttributeContext,
@@ -35,6 +37,7 @@ import {
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -48,6 +51,8 @@ const Edit = props => {
 	} = props
 
 	useGeneratedCss( props.attributes )
+
+	const figcaptionClasses = getTypographyClasses( props.attributes, 'figcaption%s' )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { parentBlock } = useBlockContext( clientId )
@@ -76,6 +81,14 @@ const Edit = props => {
 						heightUnits={ heightUnit }
 						hasLightbox
 					/>
+					<Typography.InspectorControls
+						label={ __( 'Figcaption', i18n ) }
+						attrNameTemplate="figcaption%s"
+						hasToggle={ true }
+						hasTextTag={ false }
+						hasTextContent={ true }
+						initialOpen={ false }
+					/>
 					{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
@@ -102,6 +115,7 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				<Image
+					figcaptionClasses={ figcaptionClasses }
 					showTooltips
 					heightUnits={ heightUnit }
 					defaultWidth="100"

@@ -119,6 +119,11 @@ const Image = memo( props => {
 
 	const imageClasses = getImageClasses( props )
 
+	const figcaptionClassnames = classnames(
+		props.figcaptionClassnames,
+		'stk-img-figcaption'
+	)
+
 	return (
 		<ResizableBox
 			className={ imageWrapperClasses }
@@ -272,6 +277,7 @@ const Image = memo( props => {
 					height={ props.height || undefined }
 					draggable="false"
 				/>
+				{ props.figcaptionShow && props.src && <span className={ figcaptionClassnames }> { props.figcaption } </span> }
 			</div>
 			{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }
 			{ isResizing && tempStyle && <style>{ tempStyle }</style> }
@@ -444,6 +450,11 @@ const ImageContent = props => {
 		propsToPass.title = title
 	}
 
+	const figcaptionClassnames = classnames(
+		props.figcaptionClassnames,
+		'stk-img-figcaption'
+	)
+
 	// Allow a custom wrapper, mostly used to turn the image into an anchor
 	// link.
 	const Wrapper = props.customWrapper || 'figure'
@@ -457,6 +468,7 @@ const ImageContent = props => {
 				height={ height || undefined }
 				{ ...propsToPass }
 			/>
+			{ props.figcaptionShow && props.src && <figure className={ figcaptionClassnames }>{ props.figcaption }</figure> }
 			{ props.children }
 		</Wrapper>
 	)

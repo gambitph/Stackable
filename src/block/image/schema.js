@@ -12,6 +12,7 @@ import {
 	Responsive,
 	Transform,
 	Link,
+	Typography,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -32,6 +33,22 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
+
+	Typography.addAttributes( attrObject, '.stk-img-figcaption', {
+		hasTextContent: true,
+		attrNameTemplate: 'figcaption%s',
+	} )
+
+	attrObject.add( {
+		attributes: {
+			figcaptionShow: {
+				type: 'boolean',
+				default: false,
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 
 	return attrObject.getMerged( version )
 }

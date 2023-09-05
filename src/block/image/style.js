@@ -8,6 +8,7 @@ import {
 	EffectsAnimations,
 	Image,
 	Transform,
+	Typography,
 } from '~stackable/block-components'
 import { BlockCssCompiler } from '~stackable/components'
 
@@ -15,6 +16,12 @@ import { BlockCssCompiler } from '~stackable/components'
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+
+const figcaptionTypographyOptions = {
+	selector: '.stk-img-figcaption',
+	hoverSelector: '.stk-img-figcaption:hover',
+	attrNameTemplate: 'figcaption%s',
+}
 
 const BlockStyles = memo( props => {
 	return (
@@ -25,6 +32,7 @@ const BlockStyles = memo( props => {
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Image.Style { ...props } />
+			<Typography.Style { ...figcaptionTypographyOptions } { ...props } />
 		</>
 	)
 } )
@@ -46,6 +54,7 @@ BlockStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Image.Style.Content { ...props } />
+			<Typography.Style.Content { ...figcaptionTypographyOptions } { ...props } />
 		</BlockCssCompiler>
 	)
 }

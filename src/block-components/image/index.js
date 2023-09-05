@@ -62,6 +62,8 @@ export const Image = props => {
 			imageShapeStretch: attributes.imageShapeStretch,
 			imageShadow: attributes.imageShadow,
 			imageExternalUrl: attributes.imageExternalUrl,
+			figcaption: attributes.figcaptionText,
+			figcaptionShow: attributes.figcaptionShow,
 		}
 	} )
 	const { parentBlock } = useBlockContext()
@@ -113,6 +115,10 @@ export const Image = props => {
 		defaultWidth={ props.defaultWidth }
 		defaultHeight={ props.defaultHeight }
 
+		figcaption={ attributes.figcaption }
+		figcaptionShow={ attributes.figcaptionShow }
+		figcaptionClasses={ props.figcaptionClasses }
+
 		{ ...pickBy( propsToPass, v => v !== undefined ) }
 	/>
 }
@@ -161,6 +167,10 @@ Image.Content = props => {
 
 		hasGradientOverlay={ hasHoverOverlay }
 		hasLightbox={ attributes.imageHasLightbox }
+
+		figcaption={ attributes.figcaptionText }
+		figcaptionShow={ attributes.figcaptionShow }
+		figcaptionClasses={ props.figcaptionClasses }
 
 		{ ...propsToPass }
 	/>
