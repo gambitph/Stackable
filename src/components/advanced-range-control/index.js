@@ -37,6 +37,8 @@ const AdvancedRangeControl = props => {
 		_valueTablet,
 		_unitDesktop,
 		_unitTablet,
+		_valueDesktopParentHover,
+		_valueTabletParentHover,
 	} = useBlockAttributesContext( attributes => {
 		return {
 			unitAttribute: attributes[ unitAttrName ],
@@ -44,6 +46,9 @@ const AdvancedRangeControl = props => {
 			_valueTablet: attributes[ `${ props.attribute }Tablet` ],
 			_unitDesktop: attributes[ `${ props.attribute }Unit` ],
 			_unitTablet: attributes[ `${ props.attribute }UnitTablet` ],
+			_valueDesktopParentHover: attributes[ `${ props.attribute }ParentHover` ],
+			_valueTabletParentHover: attributes[ `${ props.attribute }TabletParentHover` ],
+
 		}
 	} )
 
@@ -78,24 +83,39 @@ const AdvancedRangeControl = props => {
 		}
 	}
 
-	// Change placeholder based on inherited value
-	if ( deviceType === 'Mobile' && _valueTablet !== '' ) {
-		propsToPass.initialPosition = unitAttribute === _unitTablet ? _valueTablet : ''
-		propsToPass.placeholder = unitAttribute === _unitTablet ? _valueTablet : ''
-	} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-		propsToPass.initialPosition = unitAttribute === _unitDesktop ? _valueDesktop : ''
-		propsToPass.placeholder = unitAttribute === _unitDesktop ? _valueDesktop : ''
-	}
-
 	// Remove the placeholder.
-	if ( ! props.forcePlaceholder && (
-		currentHoverState !== 'normal' ) ) {
+	if ( ! props.forcePlaceholder ) {
 		propsToPass.initialPosition = ''
 		propsToPass.placeholder = ''
 	}
 
+	// Change placeholder based on inherited value
+	if ( currentHoverState !== 'hover' && deviceType === 'Mobile' && _valueTablet !== '' ) {
+		propsToPass.initialPosition = unitAttribute === _unitTablet ? _valueTablet : ''
+		propsToPass.placeholder = unitAttribute === _unitTablet ? _valueTablet : ''
+	} else if ( currentHoverState !== 'hover' && ( deviceType === 'Mobile' || deviceType === 'Tablet' ) ) {
+		propsToPass.initialPosition = unitAttribute === _unitDesktop ? _valueDesktop : ''
+		propsToPass.placeholder = unitAttribute === _unitDesktop ? _valueDesktop : ''
+	// if in hover state and tablet parent hover is present, use tablet parent hover state value
+	} else if ( deviceType === 'Mobile' && _valueTabletParentHover && _valueTabletParentHover !== '' ) {
+		propsToPass.initialPosition = unitAttribute === _unitTablet ? _valueTabletParentHover : ''
+		propsToPass.placeholder = unitAttribute === _unitTablet ? _valueTabletParentHover : ''
+	// if in hover state and tablet parent hover is not present, use tablet normal state value
+	} else if ( deviceType === 'Mobile' && ! _valueTabletParentHover && _valueTablet !== '' ) {
+		propsToPass.initialPosition = unitAttribute === _unitTablet ? _valueTablet : ''
+		propsToPass.placeholder = unitAttribute === _unitTablet ? _valueTablet : ''
+	// if in hover state and both tablet parent hover and normal state values are not present, use desktop parent hover
+	} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) &&
+					_valueDesktopParentHover && _valueDesktopParentHover !== '' ) {
+		propsToPass.initialPosition = unitAttribute === _unitDesktop ? _valueDesktopParentHover : ''
+		propsToPass.placeholder = unitAttribute === _unitDesktop ? _valueDesktopParentHover : ''
+	} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && ! _valueDesktopParentHover ) {
+		propsToPass.initialPosition = unitAttribute === _unitDesktop ? _valueDesktop : ''
+		propsToPass.placeholder = unitAttribute === _unitDesktop ? _valueDesktop : ''
+	}
+
 	let placeholderRender = props.placeholderRender
-	if ( currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
+	if ( hasUnits && unit !== props.units[ 0 ] ) {
 		placeholderRender = null
 	}
 
