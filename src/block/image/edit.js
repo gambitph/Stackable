@@ -82,7 +82,7 @@ const Edit = props => {
 						hasLightbox
 					/>
 					<Typography.InspectorControls
-						label={ __( 'Figcaption', i18n ) }
+						label={ __( 'Caption', i18n ) }
 						attrNameTemplate="figcaption%s"
 						hasToggle={ true }
 						hasTextTag={ false }

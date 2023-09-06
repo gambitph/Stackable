@@ -3,6 +3,25 @@ import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
 
+import { addFilter } from '@wordpress/hooks'
+import { semverCompare } from '~stackable/util'
+
+addFilter( 'stackable.image.save.wrapper', 'stackable/newWrapper', ( output, imageWrapperClasses, version, notImageBlock, Wrapper, blockName ) => {
+	if ( blockName !== 'stackable/image' ) {
+		return output
+	}
+
+	if ( semverCompare( version, '<', '3.11.4' ) ) {
+		return (
+			<Wrapper className={ imageWrapperClasses }>
+				{ notImageBlock }
+			</Wrapper>
+		 )
+	}
+
+	return output
+} )
+
 const deprecated = [
 	// Support new margin-top/bottom classes.
 	{

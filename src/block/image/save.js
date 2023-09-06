@@ -51,6 +51,8 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			{ props.attributes.imageUrl &&
 				<Image.Content
+					blockName="stackable/image"
+					version={ props.version }
 					figcaptionClasses={ figcaptionClasses }
 					attributes={ attributes }
 					customWrapper={ props.attributes.linkUrl && ( props => (

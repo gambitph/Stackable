@@ -23,6 +23,7 @@ import {
 import {
 	useState, useEffect, memo, useRef,
 } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
 	if ( size === 'auto' ) {
@@ -277,8 +278,8 @@ const Image = memo( props => {
 					height={ props.height || undefined }
 					draggable="false"
 				/>
-				{ props.figcaptionShow && props.src && <span className={ figcaptionClassnames }> { props.figcaption } </span> }
 			</div>
+			{ props.figcaptionShow && props.src && <span className={ figcaptionClassnames }>{ props.figcaption }</span> }
 			{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }
 			{ isResizing && tempStyle && <style>{ tempStyle }</style> }
 			{ ( isSelected && props.enableClickToEdit ) && (
@@ -352,6 +353,9 @@ Image.defaultProps = {
 	widthResizePosition: 'right',
 	heightResizePosition: 'bottom',
 	allowReset: true,
+
+	figcaptionShow: false,
+	figcaptionText: '',
 
 	hasGradientOverlay: false,
 	hasRemove: true,
@@ -459,8 +463,8 @@ const ImageContent = props => {
 	// link.
 	const Wrapper = props.customWrapper || 'figure'
 
-	return (
-		<Wrapper className={ imageWrapperClasses }>
+	const imageBlock = (
+		<div className={ imageWrapperClasses }>
 			<img // eslint-disable-line jsx-a11y/alt-text
 				className={ imageClasses }
 				src={ props.src || undefined }
@@ -468,14 +472,33 @@ const ImageContent = props => {
 				height={ height || undefined }
 				{ ...propsToPass }
 			/>
-			{ props.figcaptionShow && props.src && <figure className={ figcaptionClassnames }>{ props.figcaption }</figure> }
-			{ props.children }
-		</Wrapper>
+		</div>
+	)
+
+	const notImageBlock = (
+		<img // eslint-disable-line jsx-a11y/alt-text
+			className={ imageClasses }
+			src={ props.src || undefined }
+			width={ width || undefined }
+			height={ height || undefined }
+			{ ...propsToPass }
+		/>
+	)
+
+	return (
+		applyFilters( 'stackable.image.save.wrapper',
+			( <Wrapper className={ props.blockName === 'stackable/image' ? undefined : imageWrapperClasses }>
+				{ props.blockName === 'stackable/image' ? imageBlock : notImageBlock }
+				{ props.figcaptionShow && props.src && <span className={ figcaptionClassnames }>{ props.figcaption }</span> }
+				{ props.children }
+			</Wrapper> ), imageWrapperClasses, props?.version, notImageBlock, Wrapper, props.blockName )
 	)
 }
 
 ImageContent.defaultProps = {
 	imageId: '',
+
+	blockName: '',
 
 	alt: '',
 	title: '',
@@ -493,6 +516,9 @@ ImageContent.defaultProps = {
 
 	hasGradientOverlay: false,
 	customWrapper: null,
+
+	figcaptionShow: false,
+	figcaptionText: '',
 }
 
 ImageResponsive.Content = ImageContent
