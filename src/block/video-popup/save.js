@@ -54,11 +54,9 @@ export const Save = props => {
 			attributes={ attributes }
 			data-video={ attributes.videoLink }
 			version={ props.version }
-			{ ...{
-				'data-nofullscreen': attributes.videoFullscreen ? null : '',
-				'data-nodownload': attributes.videoDownload ? null : '',
-				'data-loop': attributes.videoLoop ? '' : null,
-			} }
+			data-nofullscreen={ attributes.videoFullscreen ? null : '' }
+			data-nodownload={ attributes.videoDownload ? null : '' }
+			data-loop={ attributes.videoLoop ? '' : null }
 		>
 			<IconLabelStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
