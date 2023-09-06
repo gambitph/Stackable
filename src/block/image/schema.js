@@ -45,6 +45,10 @@ export const attributes = ( version = VERSION ) => {
 				type: 'boolean',
 				default: false,
 			},
+			figcaptionAlignment: {
+				type: 'string',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

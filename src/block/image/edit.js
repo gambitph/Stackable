@@ -8,7 +8,7 @@ import BlockStyles from './style'
  */
 import classnames from 'classnames'
 import { version as VERSION, i18n } from 'stackable'
-import { InspectorTabs } from '~stackable/components'
+import { InspectorTabs, AlignButtonsControl } from '~stackable/components'
 import { useBlockContext } from '~stackable/hooks'
 import {
 	BlockDiv,
@@ -39,7 +39,8 @@ import {
  */
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { applyFilters } from '@wordpress/hooks'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { applyFilters, addFilter } from '@wordpress/hooks'
 
 const heightUnit = [ 'px', 'vh', '%' ]
 
@@ -132,3 +133,24 @@ export default compose(
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
+
+addFilter( 'stackable.block-component.typography.before', 'stackable/image', ( output, props ) => {
+	const { name } = useBlockEditContext()
+
+	if ( name !== 'stackable/image' ) {
+		return output
+	}
+
+	if ( props.attrNameTemplate !== 'figcaption%s' ) {
+		return output
+	}
+
+	return (
+		<>
+			<AlignButtonsControl
+				label={ __( 'Caption Alignment', i18n ) }
+				attribute="figcaptionAlignment"
+			/>
+		</>
+	)
+} )
