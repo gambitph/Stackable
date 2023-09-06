@@ -355,7 +355,7 @@ Image.defaultProps = {
 	allowReset: true,
 
 	figcaptionShow: false,
-	figcaptionText: '',
+	figcaption: '',
 
 	hasGradientOverlay: false,
 	hasRemove: true,
@@ -489,9 +489,10 @@ const ImageContent = props => {
 		applyFilters( 'stackable.image.save.wrapper',
 			( <Wrapper className={ props.blockName === 'stackable/image' ? undefined : imageWrapperClasses }>
 				{ props.blockName === 'stackable/image' ? imageBlock : notImageBlock }
-				{ props.figcaptionShow && props.src && <span className={ figcaptionClassnames }>{ props.figcaption }</span> }
+				{ props.figcaptionShow && props.src && <figcaption className={ figcaptionClassnames }>{ props.figcaption }</figcaption> }
 				{ props.children }
-			</Wrapper> ), imageWrapperClasses, props?.version, notImageBlock, Wrapper, props.blockName )
+			</Wrapper> ), imageWrapperClasses, props?.version, notImageBlock, Wrapper, props.blockName
+		)
 	)
 }
 
@@ -518,7 +519,7 @@ ImageContent.defaultProps = {
 	customWrapper: null,
 
 	figcaptionShow: false,
-	figcaptionText: '',
+	figcaption: '',
 }
 
 ImageResponsive.Content = ImageContent
