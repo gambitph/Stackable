@@ -1,9 +1,7 @@
 .stk--column-flex,
-// If an direct inner block has a top/bottom margin-auto, then we need to set
-// the height to full (similar to .stk--column-flex) so the margin auto would
-// look like it took effect..
-:is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex):has(> .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block > :is(.stk--block-margin-top-auto, .stk--block-margin-bottom-auto)),
-.stk--align-last-block-to-bottom {
+.stk--align-last-block-to-bottom,
+// for firefox :has polyfill
+.stk--alignment-polyfill > :is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex) {
 	height: auto; // Reverse the 100% height from style.scss
 	&:not(.stk--block-horizontal-flex) {
 		> .block-editor-inner-blocks {
@@ -38,37 +36,14 @@
 	}
 }
 
-// For firefox
-.stk--alignment-polyfill > .stk--column-flex:not(.stk--block-horizontal-flex) {
-	height: auto;
-	> .block-editor-inner-blocks {
-		flex: 1 1 100%;
-		display: flex;
-		flex-direction: column;
 
-		> .block-editor-block-list__layout {
-			flex: 1 1 100%;
-			display: flex !important;
-			flex-direction: column;
-
-			> * {
-				width: auto;
-				margin-inline: 0;
-			}
-		}
-	}
-}
-
-.stk--alignment-polyfill.stk--child-has-margin-top-auto > :is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex, .stk--block-horizontal-flex) > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block {
-	margin-top: auto !important;
-}
-
-.stk--alignment-polyfillt.stk--child-has-margin-bottom-auto > :is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex, .stk--block-horizontal-flex) > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block {
-	margin-bottom: auto !important;
-}
-
-.stk--alignment-polyfill > :is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex) {
-	height: auto;
+// this needs to be on a separate css block because firefox ignores any CSS blocks that include the :has selector
+// reference: https://connect.mozilla.org/t5/ideas/when-is-has-css-selector-going-to-be-fully-implemented-in/idc-p/26839/highlight/true#M19086
+// If an direct inner block has a top/bottom margin-auto, then we need to set
+// the height to full (similar to .stk--column-flex) so the margin auto would
+// look like it took effect..
+:is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex):has(> .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block > :is(.stk--block-margin-top-auto, .stk--block-margin-bottom-auto)) {
+	height: auto; // Reverse the 100% height from style.scss
 	&:not(.stk--block-horizontal-flex) {
 		> .block-editor-inner-blocks {
 			flex: 1 1 100%;
@@ -81,11 +56,15 @@
 				> * {
 					width: auto;
 					margin-inline: 0;
+
+					// Placeholder images will collapse.
+					&[data-type="stackable/image"]:has(.stk-img-placeholder) {
+						min-width: min(30%, 200px);
+					}
 				}
 			}
 		}
 	}
-
 	&.stk--block-horizontal-flex {
 		> .block-editor-inner-blocks {
 			> .block-editor-block-list__layout {

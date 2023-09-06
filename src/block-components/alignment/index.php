@@ -9,51 +9,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_load_alignment_frontend_polyfill_script' ) ) {
-	function stackable_load_alignment_frontend_polyfill_script() {
-
-		$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
-
-		if ( ! $user_agent ) {
-			return;
-		}
-
-		$load_polyfill = false;
-
-		// Safari <= 15.3
-		if ( stripos( $user_agent, 'Version/' ) !== false && stripos( $user_agent, 'Safari/' ) !== false ) {
-			$start = stripos( $user_agent, 'Version/' ) + 8;
-			$end = strpos( $user_agent, ' ', $start );
-			$safari_version = substr( $user_agent, $start, $end - $start );
-
-			// Convert version string to an array of parts
-			$version_parts = explode( '.', $safari_version );
-
-			if (
-				// Safari < 15
-				( isset( $version_parts[ 0 ] ) && intval( $version_parts[ 0 ] ) < 15 ) ||
-				// Safari <= 15.3
-				( isset( $version_parts[ 0 ] ) && intval( $version_parts[ 0 ] ) == 15 &&
-					(
-						( isset( $version_parts[ 1 ] ) && intval( $version_parts[ 1 ] ) <= 3 ) ||
-						! isset( $version_parts[ 1 ] )
-					)
-				)
-			) {
-				$load_polyfill = true;
+$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+if ( ! empty( $user_agent ) && stripos( $user_agent, 'Firefox/' ) !== false ) {
+	add_filter( 'render_block', function( $block_content, $block ) {
+		$tag = new WP_HTML_Tag_Processor( $block_content );
+		$tag->next_tag();
+		$has_bookmark = $tag->set_bookmark( 'block_content' );
+		if ( $tag->next_tag( array( 'class_name' => 'stk-container' ) ) ) {
+			if ( $tag->next_tag( array( 'class_name' => 'stk--column-flex' ) ) ) {
+				return preg_replace( '/stk-container/', 'stk-container stk-container--has-child-column-flex-polyfill', $block_content, 1 );
 			}
-		} else if ( stripos( $user_agent, 'Firefox/' ) !== false ) {
-			$load_polyfill = true;
 		}
 
-		if ( $load_polyfill ) {
-			wp_enqueue_script(
-				'stk-frontend-alginment-has-polyfill',
-				plugins_url( 'dist/frontend_block_components_alignment_has_polyfill.js', STACKABLE_FILE ),
-				array(),
-				STACKABLE_VERSION
-			);
+		if ( $has_bookmark ) {
+			$tag->seek( 'block_content' );
+			while ( $tag->next_tag() ) {
+				$classes = $tag->get_attribute( 'class' );
+				if ( $classes && preg_match( '/stk-block-content|stk-inner-blocks/', $classes ) && ! preg_match( '/stk--column-flex/', $classes ) ) {
+					$tag->add_class( 'stk--height-100-polyfill' );
+					return $tag->get_updated_html();
+				}
+			}
 		}
-	}
-	add_action( 'wp_footer', 'stackable_load_alignment_frontend_polyfill_script' );
+
+		return $block_content;
+	}, 10, 2 );
 }
