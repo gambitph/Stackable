@@ -83,6 +83,9 @@ const Edit = props => {
 	] )
 
 	const isVideoFile = link => {
+		if ( ! link ) {
+			return false
+		}
 		const regexp = /(?:^.*\.(mp4|avi|wmv|mov|flv|mkv|webm|vob|ogv|m4v|3gp|3g2|mpeg|mpg|m2v|m4v|svi|3gpp|3gpp2|mxf|roq|nsv|flv|f4v|f4p|f4a|f4b)$)/im
 		return regexp.test( link )
 	}
