@@ -42,8 +42,7 @@
 // If an direct inner block has a top/bottom margin-auto, then we need to set
 // the height to full (similar to .stk--column-flex) so the margin auto would
 // look like it took effect..
-:is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex):has(> .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block > :is(.stk--block-margin-top-auto,
-.stk--block-margin-bottom-auto)) {
+:is(.stk-inner-blocks, .stk-block-content):not(.stk--column-flex):has(> .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block > :is(.stk--block-margin-top-auto, .stk--block-margin-bottom-auto)) {
 	height: auto; // Reverse the 100% height from style.scss
 	&:not(.stk--block-horizontal-flex) {
 		> .block-editor-inner-blocks {
