@@ -1,7 +1,7 @@
 
 export const firefoxHasPolyfill = ( clientId, attributes ) => {
 	if ( ! clientId ) {
-		return <></>
+		return null
 	}
 
 	const userAgent = navigator?.userAgent
@@ -28,6 +28,6 @@ export const firefoxHasPolyfill = ( clientId, attributes ) => {
 		</style>
 	}
 
-	return <></>
+	return null
 }
 
