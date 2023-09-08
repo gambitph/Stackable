@@ -291,6 +291,19 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.11.4 =
+* New: Added Video Popup block options: disable video download, no full screen & enable/disable loop for self-hosted videos #2876
+* New: Range controls now show the inherited value from larger screen sizes as placeholders #2859
+* Fixed: Responsive column widths now reset when decreasing columns to one ##2792
+* Fixed: Parent hover state cannot be selected without reselecting a recently moved block 3573c51
+* Fixed: Accordion toggle animation is now works when inside columns #2728
+* Fixed: Firefox fixes for alignments, removed polyfill script for :has selector #2824
+* Fixed: Spacer block dragging again fails to update the editor #2866
+* Fixed: Single columns block spacing looks different in Firefox #2862
+* Fixed: Column arrangement's responsive values do not disappear on refresh #2706
+* Fixed: Timeline block - if background is enabled, dot is not aligned on mobile #2863
+* Fixed: JetEngine PHP warning
+
 = 3.11.3 =
 * Fixed: Compatibility issues with WordPress 6.1
 * Fixed: Dynamic Content now display in the editor correctly when used in a Query Loop block
