@@ -31,7 +31,21 @@ const AdvancedRangeControl = props => {
 	const [ currentHoverState ] = useBlockHoverState()
 	const hasUnits = !! props.units?.length
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
-	const unitAttribute = useBlockAttributesContext( attributes => attributes[ unitAttrName ] )
+	const {
+		unitAttribute,
+		_valueDesktop,
+		_valueTablet,
+		_unitDesktop,
+		_unitTablet,
+	} = useBlockAttributesContext( attributes => {
+		return {
+			unitAttribute: attributes[ unitAttrName ],
+			_valueDesktop: attributes[ `${ props.attribute }` ],
+			_valueTablet: attributes[ `${ props.attribute }Tablet` ],
+			_unitDesktop: attributes[ `${ props.attribute }Unit` ],
+			_unitTablet: attributes[ `${ props.attribute }UnitTablet` ],
+		}
+	} )
 
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
@@ -64,14 +78,23 @@ const AdvancedRangeControl = props => {
 		}
 	}
 
+	// Change placeholder based on inherited value
+	if ( deviceType === 'Mobile' && _valueTablet && _valueTablet !== '' ) {
+		propsToPass.initialPosition = unitAttribute === _unitTablet ? _valueTablet : ''
+		propsToPass.placeholder = unitAttribute === _unitTablet ? _valueTablet : ''
+	} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && _valueDesktop && _valueDesktop !== '' ) {
+		propsToPass.initialPosition = unitAttribute === _unitDesktop ? _valueDesktop : ''
+		propsToPass.placeholder = unitAttribute === _unitDesktop ? _valueDesktop : ''
+	}
+
 	// Remove the placeholder.
-	if ( ! props.forcePlaceholder && ( deviceType !== 'Desktop' || currentHoverState !== 'normal' ) ) {
+	if ( ! props.forcePlaceholder && currentHoverState !== 'normal' ) {
 		propsToPass.initialPosition = ''
 		propsToPass.placeholder = ''
 	}
 
 	let placeholderRender = props.placeholderRender
-	if ( deviceType !== 'Desktop' || currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
+	if ( currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
 		placeholderRender = null
 	}
 
