@@ -19,6 +19,11 @@ export const borderAttributes = {
 		type: 'number',
 		default: '',
 	},
+	borderRadius2: {
+		stkResponsive: true,
+		stkHover: true,
+		type: 'object',
+	},
 	shadow: {
 		stkHover: true,
 		type: 'string',

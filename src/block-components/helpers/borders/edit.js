@@ -40,9 +40,20 @@ export const BorderControls = props => {
 	const {
 		getAttribute,
 		getAttrName,
+		updateAttribute,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const borderRadiusValue = getAttribute( 'borderRadius' ) || props.borderRadius
+
 	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
+
+	const borderRadiusValue2 = getAttribute( 'borderRadius2' ) || props.borderTypeValue
+
+	if ( borderRadiusValue !== undefined && borderRadiusValue2 === undefined ) {
+		updateAttribute( 'borderRadius2', {
+			top: borderRadiusValue, left: borderRadiusValue, right: borderRadiusValue, bottom: borderRadiusValue,
+		} )
+	}
 
 	return (
 		<Fragment>
@@ -84,6 +95,21 @@ export const BorderControls = props => {
 				<AdvancedRangeControl
 					label={ __( 'Border Radius', i18n ) }
 					attribute={ getAttrName( 'borderRadius' ) }
+					responsive="all"
+					hover={ props.hasBorderRadiusHover }
+					helpTooltip={ {
+						video: 'general-border-radius',
+						description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
+					} }
+					min={ 0 }
+					sliderMax={ props.borderSliderMax }
+					placeholder={ props.borderRadiusPlaceholder }
+				/>
+			}
+			{ props.hasBorderRadius &&
+				<FourRangeControl
+					label={ __( 'Border Radius', i18n ) }
+					attribute={ borderRadiusValue ? getAttrName( 'borderRadius2' ) : '' }
 					responsive="all"
 					hover={ props.hasBorderRadiusHover }
 					helpTooltip={ {
