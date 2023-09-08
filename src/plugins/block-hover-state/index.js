@@ -1,5 +1,6 @@
 import { dispatch, useSelect } from '@wordpress/data'
 import { useEffect } from '@wordpress/element'
+import { last } from 'lodash'
 
 /**
  * Listens to any block selection changes. This is done as a plugin (and not
@@ -15,18 +16,23 @@ export const BlockHoverState = () => {
 	const {
 		getEditorDom,
 		selectedClientId,
+		selectedParent,
+		selectedParentHoverBlock,
 		hoverStateClientId,
 	} = useSelect( select => {
+		const selectedClientId = select( 'core/block-editor' ).getSelectedBlockClientId()
 		return {
 			getEditorDom: select( 'stackable/editor-dom' ).getEditorDom,
-			selectedClientId: select( 'core/block-editor' ).getSelectedBlockClientId(),
+			selectedClientId,
+			selectedParent: last( select( 'stackable/block-context' ).getBlockContext( selectedClientId ).parentTree ),
+			selectedParentHoverBlock: select( 'stackable/hover-state' ).getSelectedParentHoverBlock(),
 			hoverStateClientId: select( 'stackable/hover-state' ).getSelectedBlock(),
 		}
 	}, [] )
 
 	// Update the selected id in the store if the selected block changes.
 	useEffect( () => {
-		if ( hoverStateClientId !== selectedClientId ) {
+		if ( hoverStateClientId !== selectedClientId || selectedParentHoverBlock !== selectedParent ) {
 			if ( selectedClientId ) {
 				dispatch( 'stackable/hover-state' ).updateSelectedBlock( selectedClientId, getEditorDom() )
 			} else {
@@ -34,7 +40,7 @@ export const BlockHoverState = () => {
 				dispatch( 'stackable/hover-state' ).clearSelectedBlock()
 			}
 		}
-	}, [ selectedClientId, hoverStateClientId ] )
+	}, [ getEditorDom, selectedParent, selectedClientId, hoverStateClientId ] )
 
 	// Don't render anything.
 	return null
