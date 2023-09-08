@@ -42,6 +42,10 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 	if ( ! function_exists( 'stackable_render_block_alignment_frontend_polyfill' ) ) {
 
 		function stackable_render_block_alignment_frontend_polyfill ( $block_content, $block ) {
+			if ( stripos( $block[ 'blockName' ], 'stackable/' ) === false ) {
+				return $block_content;
+			}
+
 			if ( ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
 				return $block_content;
 			}
@@ -63,7 +67,7 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 					$classes = $tag->get_attribute( 'class' );
 
 					// check for :is(.stk-block-content, .stk-inner-blocks):not(.stk--column-flex):has(> :is(.stk--block-margin-top-auto, .stk--block-margin-bottom-auto))
-					if ( $classes && preg_match( '/stk-block-content|stk-inner-blocks/', $classes ) && ! preg_match( '/stk--column-flex/', $classes ) ) {
+					if ( $classes && ( stripos( $classes, 'stk-block-content' ) !== false || stripos( $classes, 'stk-inner-blocks' ) !== false ) &&  stripos( $classes, 'stk--column-flex' ) === false ) {
 						$tag->set_bookmark( 'not_stk--column-flex' );
 
 						$add_polyfill_class = false;
@@ -86,7 +90,6 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 					}
 				}
 			}
-
 
 			$tag->release_bookmark( 'block_content' );
 			return $block_content;
