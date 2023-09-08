@@ -79,17 +79,16 @@ const AdvancedRangeControl = props => {
 	}
 
 	// Change placeholder based on inherited value
-	if ( deviceType === 'Mobile' && _valueTablet !== '' ) {
+	if ( deviceType === 'Mobile' && _valueTablet && _valueTablet !== '' ) {
 		propsToPass.initialPosition = unitAttribute === _unitTablet ? _valueTablet : ''
 		propsToPass.placeholder = unitAttribute === _unitTablet ? _valueTablet : ''
-	} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+	} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && _valueDesktop && _valueDesktop !== '' ) {
 		propsToPass.initialPosition = unitAttribute === _unitDesktop ? _valueDesktop : ''
 		propsToPass.placeholder = unitAttribute === _unitDesktop ? _valueDesktop : ''
 	}
 
 	// Remove the placeholder.
-	if ( ! props.forcePlaceholder && (
-		currentHoverState !== 'normal' ) ) {
+	if ( ! props.forcePlaceholder && currentHoverState !== 'normal' ) {
 		propsToPass.initialPosition = ''
 		propsToPass.placeholder = ''
 	}
