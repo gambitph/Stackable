@@ -49,7 +49,7 @@ export const BorderControls = props => {
 
 	const borderRadiusValue2 = getAttribute( 'borderRadius2' ) || props.borderTypeValue
 
-	if ( borderRadiusValue !== undefined && borderRadiusValue2 === undefined ) {
+	if ( borderRadiusValue !== undefined && borderRadiusValue2 === '' ) {
 		updateAttribute( 'borderRadius2', {
 			top: borderRadiusValue, left: borderRadiusValue, right: borderRadiusValue, bottom: borderRadiusValue,
 		} )
