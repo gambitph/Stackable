@@ -15,6 +15,7 @@ import {
 	ImageControl2,
 	AdvancedTextControl,
 	InspectorBottomTip,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -81,6 +82,14 @@ const Edit = props => {
 		'stk-hover-parent',
 	] )
 
+	const isVideoFile = link => {
+		if ( ! link ) {
+			return false
+		}
+		const regexp = /(?:^.*\.(mp4|avi|wmv|mov|flv|mkv|webm|vob|ogv|m4v|3gp|3g2|mpeg|mpg|m2v|m4v|svi|3gpp|3gpp2|mxf|roq|nsv|flv|f4v|f4p|f4a|f4b)$)/im
+		return regexp.test( link )
+	}
+
 	return (
 		<>
 			{ isSelected && (
@@ -123,6 +132,23 @@ const Edit = props => {
 									videoId: getVideoProviderFromURL( videoLink ).id,
 								} ) }
 							/>
+							{ isVideoFile( attributes.videoLink ) && <>
+								<AdvancedToggleControl
+									label={ __( 'Allow fullscreen', i18n ) }
+									attribute="videoFullscreen"
+									defaultValue={ true }
+								/>
+								<AdvancedToggleControl
+									label={ __( 'Allow download video', i18n ) }
+									attribute="videoDownload"
+									defaultValue={ true }
+								/>
+								<AdvancedToggleControl
+									label={ __( 'Loop video', i18n ) }
+									attribute="videoLoop"
+									defaultValue={ false }
+								/>
+							</> }
 						</PanelAdvancedSettings>
 
 					</InspectorStyleControls>
