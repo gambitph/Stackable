@@ -80,13 +80,14 @@ if ( ! function_exists( 'stackable_render_block_accordion_FAQ_schema' ) ) {
 					"<p>", "<a>", "<span>", "<strong>", "<em>", "<s>",
 					"<kbd>", "<code>", "<sup>", "<sub>"] ) );
 			}
-				return $answer;
+			return $answer;
 		}
 
 		for ( $i = 0; $i < $count_inner_blocks; $i++ ) {
 			$partial_answer = get_answer( $block[ 'innerBlocks' ][ $i ], $answer );
 			$answer = $partial_answer;
 		}
+
 		return $answer;
 	}
 
@@ -102,20 +103,23 @@ if ( ! function_exists( 'stackable_render_block_accordion_FAQ_schema' ) ) {
 			// content may have multiple blocks so we need to retrieve all texts from each block
 			$answer = '';
 			$answer = get_answer( $block[ 'innerBlocks' ][1], $answer );
+
 			return $block_content .
-			'<script type="application/ld+json">
-			{
-			  "@context": "https://schema.org",
-			  "@type": "FAQPage",
-			  "mainEntity": [{
-				"@type": "Question",
-				"name": "' . $question . '",
-				"acceptedAnswer": {
-				  "@type": "Answer",
-				  "text": \'' . $answer .'\'
+				'<script type="application/ld+json">
+				{
+					"@context": "https://schema.org",
+					"@type": "FAQPage",
+					"mainEntity": [ {
+						"@type": "Question",
+						"name": "' . $question . '",
+						"acceptedAnswer": {
+							"@type": "Answer",
+							"text": \'' . $answer .'\'
+							}
+						}
+					]
 				}
-			  }
-			';
+				</script>';
 		}
 
 		return $block_content;
