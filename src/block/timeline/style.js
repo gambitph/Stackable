@@ -171,7 +171,7 @@ const Styles = props => {
 					const getInherited = true
 					const padding = getAttribute( 'blockPadding', device, 'normal', getInherited )
 					if ( device === 'mobile' ) {
-						return `${ padding?.top }px` || ''
+						return padding ? `${ padding?.top }px` : ''
 					}
 					return ''
 				} }

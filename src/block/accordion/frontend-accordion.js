@@ -30,6 +30,14 @@ class StackableAccordion {
 					el.doAnimate = false
 					const preHeight = el.dataset.preHeight
 
+					// When inside columns, flex prevents the accordion closing animation, this hack fixes it.
+					const doWrapHack = !! el.closest( '.stk-block-columns' )
+					let wrapper = null
+
+					if ( doWrapHack ) {
+						wrapper = addWrapperHack( el )
+					}
+
 					// Animate the accordion height.
 					el.anim = el.animate( {
 						height: [ `${ preHeight }px`, `${ height }px` ],
@@ -41,6 +49,10 @@ class StackableAccordion {
 						el.contentEl.anim = el.contentEl.animate( {
 							maxHeight: [ `0px`, `${ height - preHeight }px` ],
 						}, ANIM_OPTS )
+					}
+
+					if ( doWrapHack ) {
+						removeWrapperHack( el, wrapper )
 					}
 				}
 			} )
@@ -118,6 +130,33 @@ class StackableAccordion {
 				attributeOldValue: true,
 			} )
 		} )
+
+		const addWrapperHack = el => {
+			// wrap el with div if it is inside a columns block
+			const wrapper = document.createElement( 'div' )
+			wrapper.classList.add( 'stk-block-accordion__wrapper' )
+			el.parentNode.insertBefore( wrapper, el )
+			wrapper.appendChild( el )
+			const svg = el.querySelector( '.stk--svg-wrapper:not(.stk--has-icon2)' )
+			if ( svg ) {
+				const rotate = el.open ? { from: 0, to: 180 } : { from: 180, to: 0 }
+				svg.anim = svg.animate( {
+					transform: [ `rotate(${ rotate.from }deg)`, `rotate(${ rotate.to }deg)` ],
+				}, {
+					duration: 700,
+					easing: 'cubic-bezier(0.2, 0.6, 0.4, 1)',
+				} )
+			}
+			return wrapper
+		}
+
+		const removeWrapperHack = ( el, wrapper ) => {
+			el.anim.onfinish = el.anim.oncancel = () => {
+				// Unwrap el from the div
+				wrapper.parentNode?.insertBefore( el, wrapper )
+				wrapper?.remove()
+			}
+		}
 	}
 }
 

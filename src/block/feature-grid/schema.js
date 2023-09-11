@@ -35,6 +35,18 @@ export const attributes = ( version = VERSION ) => {
 	Separator.addAttributes( attrObject )
 	ContentAlign.addAttributes( attrObject )
 
+	attrObject.add( {
+		attributes: {
+			columnArrangement: {
+				stkResponsive: true,
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
 	attrObject.addDefaultValues( {
 		attributes: {
 			contentAlign: 'center',
