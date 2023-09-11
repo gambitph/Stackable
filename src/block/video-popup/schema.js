@@ -50,6 +50,18 @@ export const attributes = ( version = VERSION ) => {
 				attribute: 'aria-label',
 				default: '',
 			},
+			videoFullscreen: {
+				type: 'boolean',
+				default: true,
+			},
+			videoDownload: {
+				type: 'boolean',
+				default: true,
+			},
+			videoLoop: {
+				type: 'boolean',
+				default: false,
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
