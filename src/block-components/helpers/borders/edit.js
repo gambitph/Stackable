@@ -13,9 +13,10 @@ import {
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
+import { Fragment, useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
+import { applyFilters } from '@wordpress/hooks'
 
 const BORDER_CONTROLS = [
 	{
@@ -40,20 +41,15 @@ export const BorderControls = props => {
 	const {
 		getAttribute,
 		getAttrName,
+		updateAttributes,
 		updateAttribute,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
-	const borderRadiusValue = getAttribute( 'borderRadius' ) || props.borderRadius
-
 	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
 
-	const borderRadiusValue2 = getAttribute( 'borderRadius2' ) || props.borderTypeValue
-
-	if ( borderRadiusValue !== undefined && borderRadiusValue2 === '' ) {
-		updateAttribute( 'borderRadius2', {
-			top: borderRadiusValue, left: borderRadiusValue, right: borderRadiusValue, bottom: borderRadiusValue,
-		} )
-	}
+	useEffect( () => {
+		applyFilters( 'stackable.block-component.helpers', null, getAttribute, updateAttribute, updateAttributes )
+	}, [] )
 
 	return (
 		<Fragment>
@@ -109,7 +105,7 @@ export const BorderControls = props => {
 			{ props.hasBorderRadius &&
 				<FourRangeControl
 					label={ __( 'Border Radius', i18n ) }
-					attribute={ borderRadiusValue ? getAttrName( 'borderRadius2' ) : '' }
+					attribute={ getAttrName( 'borderRadius2' ) }
 					responsive="all"
 					hover={ props.hasBorderRadiusHover }
 					helpTooltip={ {

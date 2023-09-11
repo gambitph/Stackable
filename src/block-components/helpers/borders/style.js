@@ -24,13 +24,53 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector={ borderRadiusSelector || selector }
-				styleRule="borderRadius"
-				attrName="borderRadius"
-				key="borderRadius"
+				styleRule="borderTopLeftRadius"
+				attrName="borderRadius2"
+				key="borderTopLeftRadius2"
 				attrNameTemplate={ attrNameTemplate }
 				format="%spx"
 				responsive="all"
 				hover="all"
+				valuePreCallback={ value => value?.top }
+				hoverSelector={ borderRadiusSelector ? undefined : hoverSelector }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ borderRadiusSelector || selector }
+				styleRule="borderTopRightRadius"
+				attrName="borderRadius2"
+				key="borderTopRightRadius2"
+				attrNameTemplate={ attrNameTemplate }
+				format="%spx"
+				responsive="all"
+				hover="all"
+				valuePreCallback={ value => value?.right }
+				hoverSelector={ borderRadiusSelector ? undefined : hoverSelector }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ borderRadiusSelector || selector }
+				styleRule="borderBottomRightRadius"
+				attrName="borderRadius2"
+				key="borderBottomRightRadius2"
+				attrNameTemplate={ attrNameTemplate }
+				format="%spx"
+				responsive="all"
+				hover="all"
+				valuePreCallback={ value => value?.left }
+				hoverSelector={ borderRadiusSelector ? undefined : hoverSelector }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ borderRadiusSelector || selector }
+				styleRule="borderBottomLeftRadius"
+				attrName="borderRadius2"
+				key="borderBottomLeftRadius2"
+				attrNameTemplate={ attrNameTemplate }
+				format="%spx"
+				responsive="all"
+				hover="all"
+				valuePreCallback={ value => value?.bottom }
 				hoverSelector={ borderRadiusSelector ? undefined : hoverSelector }
 			/>
 			<BlockCss
