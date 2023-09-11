@@ -1,4 +1,3 @@
-import { __, _x } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { dispatch } from '@wordpress/data'
 
