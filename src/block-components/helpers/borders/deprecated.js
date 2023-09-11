@@ -2,7 +2,7 @@ import { __, _x } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { dispatch } from '@wordpress/data'
 
-addFilter( 'stackable.block-component.helpers', 'borders', ( output, getAttribute, updateAttribute, updateAttributes ) => {
+addFilter( 'stackable.block-component.helpers', 'borders', ( output, getAttribute, updateAttributes ) => {
 	const borderRadius = getAttribute( 'borderRadius' )
 	const borderRadiusTablet = getAttribute( 'borderRadiusTablet' )
 	const borderRadiusMobile = getAttribute( 'borderRadiusMobile' )

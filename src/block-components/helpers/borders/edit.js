@@ -6,7 +6,6 @@ import {
 	 AdvancedToolbarControl,
 	 ColorPaletteControl,
 	 ShadowControl,
-	 AdvancedRangeControl,
 	 FourRangeControl,
 } from '~stackable/components'
 
@@ -42,12 +41,11 @@ export const BorderControls = props => {
 		getAttribute,
 		getAttrName,
 		updateAttributes,
-		updateAttribute,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
 	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
 
-	applyFilters( 'stackable.block-component.helpers', null, getAttribute, updateAttribute, updateAttributes )
+	applyFilters( 'stackable.block-component.helpers', null, getAttribute, updateAttributes )
 
 	return (
 		<Fragment>
@@ -82,22 +80,6 @@ export const BorderControls = props => {
 					attribute={ getAttrName( 'borderColor' ) }
 					hover="all"
 					hasTransparent={ true }
-				/>
-			}
-
-			{ props.hasBorderRadius &&
-				<AdvancedRangeControl
-					label={ __( 'Border Radius', i18n ) }
-					attribute={ getAttrName( 'borderRadius' ) }
-					responsive="all"
-					hover={ props.hasBorderRadiusHover }
-					helpTooltip={ {
-						video: 'general-border-radius',
-						description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
-					} }
-					min={ 0 }
-					sliderMax={ props.borderSliderMax }
-					placeholder={ props.borderRadiusPlaceholder }
 				/>
 			}
 			{ props.hasBorderRadius &&
