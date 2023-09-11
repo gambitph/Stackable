@@ -13,7 +13,7 @@ import {
 /**
  * WordPress dependencies
  */
-import { Fragment, useEffect } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
@@ -47,9 +47,7 @@ export const BorderControls = props => {
 
 	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
 
-	useEffect( () => {
-		applyFilters( 'stackable.block-component.helpers', null, getAttribute, updateAttribute, updateAttributes )
-	}, [] )
+	applyFilters( 'stackable.block-component.helpers', null, getAttribute, updateAttribute, updateAttributes )
 
 	return (
 		<Fragment>

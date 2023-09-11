@@ -24,6 +24,18 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector={ borderRadiusSelector || selector }
+				styleRule="borderRadius"
+				attrName="borderRadius"
+				key="borderRadius"
+				attrNameTemplate={ attrNameTemplate }
+				format="%spx"
+				responsive="all"
+				hover="all"
+				hoverSelector={ borderRadiusSelector ? undefined : hoverSelector }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ borderRadiusSelector || selector }
 				styleRule="borderTopLeftRadius"
 				attrName="borderRadius2"
 				key="borderTopLeftRadius2"
