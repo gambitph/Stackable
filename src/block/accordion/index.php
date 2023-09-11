@@ -66,3 +66,60 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 	}
 	add_action( 'stackable/accordion/enqueue_scripts', 'stackable_load_accordion_frontend_polyfill_script' );
 }
+
+
+if ( ! function_exists( 'stackable_render_block_accordion_FAQ_schema' ) ) {
+	function get_answer( $block, $answer ) {
+		$count_inner_blocks = count( $block[ 'innerBlocks' ] );
+		if ( $count_inner_blocks == 0 ) {
+			// check if it contains a text
+			if ( trim( strip_tags( $block[ 'innerHTML' ] ) ) != '' ) {
+				// return the text with tags
+				return $answer . trim( strip_tags( $block[ 'innerHTML'], [
+					"<h1>", "<h2>", "<h3>", "<h4>", "<h5>", "<h6>",
+					"<p>", "<a>", "<span>", "<strong>", "<em>", "<s>",
+					"<kbd>", "<code>", "<sup>", "<sub>"] ) );
+			}
+				return $answer;
+		}
+
+		for ( $i = 0; $i < $count_inner_blocks; $i++ ) {
+			$partial_answer = get_answer( $block[ 'innerBlocks' ][ $i ], $answer );
+			$answer = $partial_answer;
+		}
+		return $answer;
+	}
+
+	function stackable_render_block_accordion_FAQ_schema( $block_content, $block ) {
+		$attributes = $block[ 'attrs' ];
+
+		if ( isset($attributes[ 'enableFAQ' ] ) && $attributes[ 'enableFAQ' ] ) {
+			// innerBlocks[0] is for the title
+			// retrieve stackable/column -> stackable/icon-label -> stackable/heading
+			$question = trim( strip_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerHTML' ] ) );
+
+			// innerBlocks[1] is for the content
+			// content may have multiple blocks so we need to retrieve all texts from each block
+			$answer = '';
+			$answer = get_answer( $block[ 'innerBlocks' ][1], $answer );
+			return $block_content .
+			'<script type="application/ld+json">
+			{
+			  "@context": "https://schema.org",
+			  "@type": "FAQPage",
+			  "mainEntity": [{
+				"@type": "Question",
+				"name": "' . $question . '",
+				"acceptedAnswer": {
+				  "@type": "Answer",
+				  "text": \'' . $answer .'\'
+				}
+			  }
+			';
+		}
+
+		return $block_content;
+	}
+
+	add_filter( 'render_block_stackable/accordion', 'stackable_render_block_accordion_FAQ_schema', 10, 2 );
+}

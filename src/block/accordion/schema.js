@@ -39,6 +39,10 @@ export const attributes = ( version = VERSION ) => {
 				type: 'boolean',
 				default: '',
 			},
+			enableFAQ: {
+				type: 'boolean',
+				default: false,
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
