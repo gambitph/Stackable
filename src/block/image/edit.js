@@ -53,7 +53,7 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const figcaptionClasses = getTypographyClasses( props.attributes, 'figcaption%s' )
+	const figcaptionClassnames = getTypographyClasses( props.attributes, 'figcaption%s' )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { parentBlock } = useBlockContext( clientId )
@@ -116,7 +116,7 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				<Image
-					figcaptionClasses={ figcaptionClasses }
+					figcaptionClassnames={ figcaptionClassnames }
 					showTooltips
 					heightUnits={ heightUnit }
 					defaultWidth="100"

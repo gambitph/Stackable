@@ -117,7 +117,7 @@ export const Image = props => {
 
 		figcaption={ attributes.figcaption }
 		figcaptionShow={ attributes.figcaptionShow }
-		figcaptionClasses={ props.figcaptionClasses }
+		figcaptionClassnames={ props.figcaptionClassnames }
 
 		{ ...pickBy( propsToPass, v => v !== undefined ) }
 	/>
@@ -170,7 +170,7 @@ Image.Content = props => {
 
 		figcaption={ attributes.figcaptionText }
 		figcaptionShow={ attributes.figcaptionShow }
-		figcaptionClasses={ props.figcaptionClasses }
+		figcaptionClassnames={ props.figcaptionClassnames }
 
 		{ ...propsToPass }
 	/>

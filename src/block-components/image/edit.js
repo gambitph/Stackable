@@ -157,9 +157,7 @@ const Controls = props => {
 						imageWidthAttribute: '',
 						imageHeightAttribute: '',
 					} )
-				}
-
-				}
+				} }
 			/>
 			{ props.hasWidth &&
 				<AdvancedRangeControl

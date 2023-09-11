@@ -32,7 +32,7 @@ export const Save = props => {
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const figcaptionClasses = getTypographyClasses( attributes, 'figcaption%s' )
+	const figcaptionClassnames = getTypographyClasses( attributes, 'figcaption%s' )
 
 	const blockClassNames = classnames( [
 		props.className,
@@ -51,9 +51,9 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			{ props.attributes.imageUrl &&
 				<Image.Content
-					blockName="stackable/image"
+					hasWrapper={ true }
 					version={ props.version }
-					figcaptionClasses={ figcaptionClasses }
+					figcaptionClassnames={ figcaptionClassnames }
 					attributes={ attributes }
 					customWrapper={ props.attributes.linkUrl && ( props => (
 						<Link.Content

@@ -463,19 +463,7 @@ const ImageContent = props => {
 	// link.
 	const Wrapper = props.customWrapper || 'figure'
 
-	const imageBlock = (
-		<div className={ imageWrapperClasses }>
-			<img // eslint-disable-line jsx-a11y/alt-text
-				className={ imageClasses }
-				src={ props.src || undefined }
-				width={ width || undefined }
-				height={ height || undefined }
-				{ ...propsToPass }
-			/>
-		</div>
-	)
-
-	const notImageBlock = (
+	let image = (
 		<img // eslint-disable-line jsx-a11y/alt-text
 			className={ imageClasses }
 			src={ props.src || undefined }
@@ -485,13 +473,19 @@ const ImageContent = props => {
 		/>
 	)
 
+	image = ! props.hasWrapper ? image : (
+		<div className={ imageWrapperClasses }>
+			{ image }
+		</div>
+	)
+
 	return (
 		applyFilters( 'stackable.image.save.wrapper',
-			( <Wrapper className={ props.blockName === 'stackable/image' ? undefined : imageWrapperClasses }>
-				{ props.blockName === 'stackable/image' ? imageBlock : notImageBlock }
+			( <Wrapper className={ props.hasWrapper ? undefined : imageWrapperClasses }>
+				{ image }
 				{ props.figcaptionShow && props.src && <figcaption className={ figcaptionClassnames }>{ props.figcaption }</figcaption> }
 				{ props.children }
-			</Wrapper> ), imageWrapperClasses, props?.version, notImageBlock, Wrapper, props.blockName
+			</Wrapper> ), imageWrapperClasses, props?.version, image, Wrapper, props.hasWrapper
 		)
 	)
 }
@@ -499,7 +493,7 @@ const ImageContent = props => {
 ImageContent.defaultProps = {
 	imageId: '',
 
-	blockName: '',
+	hasWrapper: false,
 
 	alt: '',
 	title: '',
