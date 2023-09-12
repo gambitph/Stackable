@@ -71,6 +71,17 @@ class StackableVideoPopup {
 						args.vimeoSrc = id
 					} else {
 						args.vidSrc = id
+						args.animationStart = () => {
+							const nodownload = el.getAttribute( 'data-nodownload' ) === '' ? 'nodownload' : null
+							const nofullscreen = el.getAttribute( 'data-nofullscreen' ) === '' ? 'nofullscreen' : null
+							const loop = el.getAttribute( 'data-loop' ) === '' ? true : false
+							const controls = [ nodownload, nofullscreen ].filter( attr => attr !== null ).join( ' ' )
+							const vid = document.getElementById( 'bp_vid' )
+							vid.setAttribute( 'controlslist', controls )
+							if ( ! loop ) {
+								vid.removeAttribute( 'loop' )
+							}
+						  }
 					}
 				}
 

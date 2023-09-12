@@ -47,6 +47,7 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -65,13 +66,14 @@ const Edit = props => {
 	const { hasInnerBlocks } = useBlockContext()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
-	const blockClassNames = classnames( [
-		className,
-		'stk-block-columns',
-		rowClass,
-		separatorClass,
-		columnTooltipClass,
-	] )
+	const blockClassNames = classnames( applyFilters( 'stackable.columns.edit.blockClassNames',
+		[
+			className,
+			'stk-block-columns',
+			rowClass,
+			separatorClass,
+			columnTooltipClass,
+		], props ) )
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
@@ -144,6 +146,20 @@ const Edit = props => {
 			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>
 	)
+}
+
+// Load the polyfill for columns block :has() selector for Firefox
+const userAgent = navigator?.userAgent
+if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
+	addFilter( 'stackable.columns.edit.blockClassNames', 'stackable/columns-has-single-block-polyfill', classes => {
+		const { numInnerBlocks } = useBlockContext()
+
+		if ( numInnerBlocks === 1 ) {
+			classes.push( 'stk-block-columns--has-single-block-polyfill' )
+		}
+
+		return classes
+	} )
 }
 
 export default compose(

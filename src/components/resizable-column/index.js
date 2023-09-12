@@ -82,6 +82,10 @@ const ResizableColumn = props => {
 			// Remember the previous block length.
 			setPrevAdjacentBlocks( adjacentBlocks.length )
 		}
+
+		if ( adjacentBlocks?.length < prevAdjacentBlocks && adjacentBlocks?.length === 1 ) {
+			props.onResetTabletMobile()
+		}
 	}, [ adjacentBlocks ] )
 
 	// We have a timeout below, this ensures that our timeout only runs while

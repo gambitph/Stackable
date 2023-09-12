@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.11.3\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.11.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-08-24T01:56:01+00:00\n"
+"POT-Creation-Date: 2023-09-08T11:22:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -112,8 +112,8 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/acf.php:203
 #: pro__premium_only/src/dynamic-content/sources/acf.php:231
 #: pro__premium_only/src/dynamic-content/sources/custom-fields.php:97
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:181
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:575
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:184
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:578
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:233
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:94
 #: pro__premium_only/src/dynamic-content/sources/site.php:77
@@ -121,8 +121,8 @@ msgid "The field type provided is not valid."
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:251
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:310
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:320
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:313
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:323
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:284
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:254
 #: pro__premium_only/src/dynamic-content/api.js:135
@@ -132,7 +132,7 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:357
 #: pro__premium_only/src/dynamic-content/sources/acf.php:550
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:359
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:362
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:320
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:489
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:536
@@ -143,7 +143,7 @@ msgid "Text input is empty"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:412
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:385
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:388
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:367
 msgid "`whenTrueText` and `whenFalseText` arguments are required."
 msgstr ""
@@ -159,7 +159,7 @@ msgid "Stackable Custom Fields"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/jetengine.php:62
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:83
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:86
 msgid "JetEngine"
 msgstr ""
 
@@ -2018,7 +2018,7 @@ msgstr ""
 #: src/block/separator/edit.js:79
 #: src/block/spacer/edit.js:100
 #: src/block/table-of-contents/edit.js:359
-#: src/block/video-popup/edit.js:92
+#: src/block/video-popup/edit.js:101
 #: src/deprecated/v2/block/accordion/edit.js:139
 #: src/deprecated/v2/block/blockquote/edit.js:130
 #: src/deprecated/v2/block/blog-posts/edit.js:202
@@ -2920,7 +2920,7 @@ msgstr ""
 #: src/block-components/alignment/edit.js:157
 #: src/block-components/alignment/edit.js:176
 #: src/block-components/alignment/edit.js:195
-#: src/components/resizable-column/index.js:547
+#: src/components/resizable-column/index.js:551
 msgid "Column"
 msgstr ""
 
@@ -2999,7 +2999,7 @@ msgstr ""
 #: src/block/timeline/edit.js:329
 #: src/components/advanced-toolbar-control/index.js:155
 #: src/components/four-number-control/index.js:205
-#: src/components/four-range-control/index.js:321
+#: src/components/four-range-control/index.js:511
 #: src/deprecated/v2/components/button-controls/index.js:452
 msgid "Left"
 msgstr ""
@@ -3011,7 +3011,7 @@ msgstr ""
 #: src/block/timeline/edit.js:330
 #: src/components/advanced-toolbar-control/index.js:165
 #: src/components/four-number-control/index.js:181
-#: src/components/four-range-control/index.js:281
+#: src/components/four-range-control/index.js:421
 #: src/deprecated/v2/components/button-controls/index.js:455
 msgid "Right"
 msgstr ""
@@ -3926,9 +3926,9 @@ msgstr ""
 
 #: src/block-components/advanced/edit.js:66
 #: src/block-components/helpers/backgrounds/edit.js:359
-#: src/components/resizable-column/index.js:475
-#: src/components/resizable-column/index.js:483
-#: src/components/resizable-column/index.js:492
+#: src/components/resizable-column/index.js:479
+#: src/components/resizable-column/index.js:487
+#: src/components/resizable-column/index.js:496
 #: src/deprecated/v2/components/background-controls/index.js:364
 #: src/deprecated/v2/components/background-controls/index.js:379
 #: src/deprecated/v2/components/background-controls/index.js:394
@@ -4558,7 +4558,7 @@ msgid "Background Image"
 msgstr ""
 
 #: src/block-components/helpers/backgrounds/edit.js:227
-#: src/block/video-popup/edit.js:99
+#: src/block/video-popup/edit.js:108
 #: src/deprecated/v2/block/video-popup/edit.js:81
 #: src/deprecated/v2/components/background-controls/index.js:169
 #: src/deprecated/v2/components/background-controls/index.js:180
@@ -7064,14 +7064,14 @@ msgstr ""
 #: src/components/advanced-toolbar-control/index.js:173
 #: src/components/four-number-control/index.js:164
 #: src/components/four-number-control/index.js:169
-#: src/components/four-range-control/index.js:261
+#: src/components/four-range-control/index.js:376
 msgid "Top"
 msgstr ""
 
 #: src/block/tab-labels/edit.js:91
 #: src/components/advanced-toolbar-control/index.js:183
 #: src/components/four-number-control/index.js:193
-#: src/components/four-range-control/index.js:301
+#: src/components/four-range-control/index.js:466
 msgid "Bottom"
 msgstr ""
 
@@ -7308,22 +7308,34 @@ msgstr ""
 msgid "Timeline Background Color"
 msgstr ""
 
-#: src/block/video-popup/edit.js:98
+#: src/block/video-popup/edit.js:107
 #: src/deprecated/v2/block/video-popup/edit.js:80
 msgid "Popup Option #1: Upload Video"
 msgstr ""
 
-#: src/block/video-popup/edit.js:115
+#: src/block/video-popup/edit.js:124
 #: src/deprecated/v2/block/video-popup/edit.js:97
 msgid "Popup Option #2: Video URL"
 msgstr ""
 
-#: src/block/video-popup/edit.js:116
+#: src/block/video-popup/edit.js:125
 #: src/deprecated/v2/block/video-popup/edit.js:98
 msgid "Paste a Youtube / Vimeo URL"
 msgstr ""
 
-#: src/block/video-popup/save.js:60
+#: src/block/video-popup/edit.js:137
+msgid "Allow fullscreen"
+msgstr ""
+
+#: src/block/video-popup/edit.js:142
+msgid "Allow download video"
+msgstr ""
+
+#: src/block/video-popup/edit.js:147
+msgid "Loop video"
+msgstr ""
+
+#: src/block/video-popup/save.js:63
 msgid "Play Video"
 msgstr ""
 
@@ -7603,19 +7615,19 @@ msgstr ""
 msgid "auto"
 msgstr ""
 
-#: src/components/four-range-control/index.js:91
+#: src/components/four-range-control/index.js:93
 msgid "Individual sides"
 msgstr ""
 
-#: src/components/four-range-control/index.js:91
+#: src/components/four-range-control/index.js:93
 msgid "All sides"
 msgstr ""
 
-#: src/components/four-range-control/index.js:220
+#: src/components/four-range-control/index.js:286
 msgid "Top and Bottom"
 msgstr ""
 
-#: src/components/four-range-control/index.js:238
+#: src/components/four-range-control/index.js:329
 msgid "Left and Right"
 msgstr ""
 
