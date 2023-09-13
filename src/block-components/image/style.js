@@ -422,24 +422,6 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ `${ selector }` }
-				attrName="imageOverlayColor"
-				styleRule="--stk-gradient-overlay" // For backward support, we need to turn --stk-gradient-overlay to 1 so that the overlay will become solid.
-				valuePreCallback={ ( value, getAttribute, device, state, attributes ) => {
-					if ( attributes.imageOverlayColor || attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ) {
-						return '1'
-					}
-				} }
-				key="imageOverlayColor-deprecated-var"
-				dependencies={ [
-					'imageOverlayColor',
-					'imageOverlayColorHover',
-					'imageOverlayColorParentHover',
-					...dependencies,
-				] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
 				renderIn="save"
 				selector={ `${ selector }::after, ${ selector }::before` }
 				styleRule="mix-blend-mode"

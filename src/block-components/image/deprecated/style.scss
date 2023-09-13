@@ -1,8 +1,0 @@
-// TODO: remove this, use PHP to so we can get rid of this.
-.stk-img-wrapper {
-	&::after,
-	&::before,
-	&.stk-img--gradient-overlay::before {
-		opacity: var(--stk-gradient-overlay, 0.3); // TODO: --stk-gradient-overlay will need to be deprecated
-	}
-}

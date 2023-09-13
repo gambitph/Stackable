@@ -17,12 +17,20 @@ export const deprecatedAddAttributes = attrObject => {
 export const deprecationImageOverlayOpacity = {
 	isEligible: attributes => {
 		const hasColor = attributes.imageOverlayColor || attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover
+		const colorHasOpacity = hasColor.length > 7
 		const hasOpacity = ( hasColor && ! attributes.imageOverlayOpacity ) || attributes.imageOverlayOpacity || attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover
+		if ( colorHasOpacity ) {
+			return false
+		}
 		return hasColor || hasOpacity
 	},
 	migrate: attributes => {
 		const hasColor = attributes.imageOverlayColor || attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover
+		const colorHasOpacity = hasColor.length > 7
 		const hasOpacity = ( hasColor && ! attributes.imageOverlayOpacity ) || attributes.imageOverlayOpacity || attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover
+		if ( colorHasOpacity ) {
+			return attributes
+		}
 		if ( ! hasColor && ! hasOpacity ) {
 			return attributes
 		}
