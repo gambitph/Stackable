@@ -275,14 +275,6 @@ const Styles = props => {
 				key="imageOverlayColor-save-image"
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient' }
-				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					if ( state !== 'normal' ) {
-						if ( getAttribute( 'imageOverlayColor2', 'desktop', 'normal' ) || getAttribute( 'imageOverlayColor', 'desktop', 'normal' ) ) {
-							return '1'
-						}
-					}
-					return value
-				} }
 				valueCallback={ ( value, getAttribute, device, state ) => {
 					// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
 					let defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', state )
@@ -353,14 +345,6 @@ const Styles = props => {
 				key="imageOverlayColor-image"
 				hover="all"
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient' }
-				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					if ( state !== 'normal' ) {
-						if ( getAttribute( 'imageOverlayColor2', 'desktop', 'normal' ) || getAttribute( 'imageOverlayColor', 'desktop', 'normal' ) ) {
-							return '1'
-						}
-					}
-					return value
-				} }
 				valueCallback={ ( value, getAttribute, device, state ) => {
 				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
 					let defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', state )
