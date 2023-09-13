@@ -34,6 +34,7 @@ import {
 	useAttributeName,
 	useBlockAttributesContext,
 	useDeviceType,
+	useBlockHoverState,
 } from '~stackable/hooks'
 
 const isEqualInitial = ( props, value, firstValue ) => {
@@ -48,6 +49,7 @@ const isEqualInitial = ( props, value, firstValue ) => {
 const FourRangeControl = memo( props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
+	const [ currentHoverState ] = useBlockHoverState()
 
 	let value = _value || {
 		top: props.defaultTop, right: props.defaultRight, bottom: props.defaultBottom, left: props.defaultLeft,
@@ -141,9 +143,29 @@ const FourRangeControl = memo( props => {
 	}
 
 	const deviceType = useDeviceType()
-	const tabletHasValue = _valueTablet !== '' &&
-							( _valueTablet.top !== '' || _valueTablet.left !== '' ||
-							_valueTablet.right !== '' || _valueTablet.bottom !== '' )
+	const tabletHasValue = {
+		top: _valueTablet && _valueTablet !== '' && _valueTablet.top && _valueTablet.top !== '',
+		right: _valueTablet && _valueTablet !== '' && _valueTablet.right && _valueTablet.right !== '',
+		bottom: _valueTablet && _valueTablet !== '' && _valueTablet.bottom && _valueTablet.bottom !== '',
+		left: _valueTablet && _valueTablet !== '' && _valueTablet.left && _valueTablet.left !== '',
+		firstValue:
+			props.enableTop ? ( _valueTablet && _valueTablet !== '' && _valueTablet.top && _valueTablet.top !== '' )
+				: props.enableRight ? ( _valueTablet && _valueTablet !== '' && _valueTablet.right && _valueTablet.right !== '' )
+					: props.enableBottom ? ( _valueTablet && _valueTablet !== '' && _valueTablet.bottom && _valueTablet.bottom !== '' )
+						: ( _valueTablet && _valueTablet !== '' && _valueTablet.left && _valueTablet.left !== '' ),
+	}
+
+	const desktopHasValue = {
+		top: _valueDesktop && _valueDesktop !== '' && _valueDesktop.top && _valueDesktop.top !== '',
+		right: _valueDesktop && _valueDesktop !== '' && _valueDesktop.right && _valueDesktop.right !== '',
+		bottom: _valueDesktop && _valueDesktop !== '' && _valueDesktop.bottom && _valueDesktop.bottom !== '',
+		left: _valueDesktop && _valueDesktop !== '' && _valueDesktop.left && _valueDesktop.left !== '',
+		firstValue:
+			props.enableTop ? ( _valueDesktop && _valueDesktop !== '' && _valueDesktop.top && _valueDesktop.top !== '' )
+				: props.enableRight ? ( _valueDesktop && _valueDesktop !== '' && _valueDesktop.right && _valueDesktop.right !== '' )
+					: props.enableBottom ? ( _valueDesktop && _valueDesktop !== '' && _valueDesktop.bottom && _valueDesktop.bottom !== '' )
+						: ( _valueDesktop && _valueDesktop !== '' && _valueDesktop.left && _valueDesktop.left !== '' ),
+	}
 
 	const { desktop: firstValueDesktop, tablet: firstValueTablet } =
 		props.enableTop ? { desktop: _valueDesktop?.top, tablet: _valueTablet?.top }
@@ -224,19 +246,29 @@ const FourRangeControl = memo( props => {
 						onChange={ onChangeAll }
 						allowReset={ false }
 						initialPosition={ ( () => {
-							if ( deviceType === 'Mobile' && tabletHasValue && firstValueTablet !== '' ) {
+							if ( currentHoverState !== 'normal' ) {
+								return ''
+							}
+
+							if ( deviceType === 'Mobile' && tabletHasValue.firstValue ) {
 								return unit === _unitTablet ? firstValueTablet : ''
-							} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+							} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.firstValue ) {
 								return unit === _unitDesktop ? firstValueDesktop : ''
 							}
+
 							return propsToPass.initialPosition
 						} )() }
 						placeholder={ ( () => {
-							if ( deviceType === 'Mobile' && tabletHasValue && firstValueTablet !== '' ) {
+							if ( currentHoverState !== 'normal' ) {
+								return ''
+							}
+
+							if ( deviceType === 'Mobile' && tabletHasValue.firstValue ) {
 								return unit === _unitTablet ? firstValueTablet : ''
-							} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
+							} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.firstValue ) {
 								return unit === _unitDesktop ? firstValueDesktop : ''
 							}
+
 							return propsToPass.placeholder
 						} )() }
 					/>
@@ -260,19 +292,29 @@ const FourRangeControl = memo( props => {
 							onChange={ onChangeVertical }
 							allowReset={ false }
 							initialPosition={ ( () => {
-								if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.top !== '' ) {
-									return unit === _unitTablet ? _valueTablet.top : ''
-								} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-									return unit === _unitDesktop ? _valueDesktop?.top : ''
+								if ( currentHoverState !== 'normal' ) {
+									return ''
 								}
+
+								if ( deviceType === 'Mobile' && tabletHasValue.top ) {
+									return unit === _unitTablet ? _valueTablet.top : ''
+								} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.top ) {
+									return unit === _unitDesktop ? _valueDesktop.top : ''
+								}
+
 								return propsToPass.initialPosition
 							} )() }
 							placeholder={ ( () => {
-								if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.top !== '' ) {
-									return unit === _unitTablet ? _valueTablet.top : ''
-								} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-									return unit === _unitDesktop ? _valueDesktop?.top : ''
+								if ( currentHoverState !== 'normal' ) {
+									return ''
 								}
+
+								if ( deviceType === 'Mobile' && tabletHasValue.top ) {
+									return unit === _unitTablet ? _valueTablet.top : ''
+								} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.top ) {
+									return unit === _unitDesktop ? _valueDesktop.top : ''
+								}
+
 								return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
 							} )() }
 						/>
@@ -293,18 +335,27 @@ const FourRangeControl = memo( props => {
 							onChange={ onChangeHorizontal }
 							allowReset={ false }
 							initialPosition={ ( () => {
-								if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.left !== '' ) {
-									return unit === _unitTablet ? _valueTablet.left : ''
-								} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-									return unit === _unitDesktop ? _valueDesktop?.left : ''
+								if ( currentHoverState !== 'normal' ) {
+									return ''
 								}
+
+								if ( deviceType === 'Mobile' && tabletHasValue.left ) {
+									return unit === _unitTablet ? _valueTablet.left : ''
+								} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.left ) {
+									return unit === _unitDesktop ? _valueDesktop.left : ''
+								}
+
 								return propsToPass.initialPosition
 							} )() }
 							placeholder={ ( () => {
-								if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.left !== '' ) {
+								if ( currentHoverState !== 'normal' ) {
+									return ''
+								}
+
+								if ( deviceType === 'Mobile' && tabletHasValue.left ) {
 									return unit === _unitTablet ? _valueTablet.left : ''
-								} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-									return unit === _unitDesktop ? _valueDesktop?.left : ''
+								} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.left ) {
+									return unit === _unitDesktop ? _valueDesktop.left : ''
 								}
 								return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft
 							} )() }
@@ -331,19 +382,29 @@ const FourRangeControl = memo( props => {
 								onChange={ onChangeTop }
 								allowReset={ false }
 								initialPosition={ ( () => {
-									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.top !== '' ) {
-										return unit === _unitTablet ? _valueTablet.top : ''
-									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-										return unit === _unitDesktop ? _valueDesktop?.top : ''
+									if ( currentHoverState !== 'normal' ) {
+										return ''
 									}
+
+									if ( deviceType === 'Mobile' && tabletHasValue.top ) {
+										return unit === _unitTablet ? _valueTablet.top : ''
+									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.top ) {
+										return unit === _unitDesktop ? _valueDesktop.top : ''
+									}
+
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
-									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.top !== '' ) {
-										return unit === _unitTablet ? _valueTablet.top : ''
-									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-										return unit === _unitDesktop ? _valueDesktop?.top : ''
+									if ( currentHoverState !== 'normal' ) {
+										return ''
 									}
+
+									if ( deviceType === 'Mobile' && tabletHasValue.top ) {
+										return unit === _unitTablet ? _valueTablet.top : ''
+									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.top ) {
+										return unit === _unitDesktop ? _valueDesktop.top : ''
+									}
+
 									return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
 								} )() }
 							/>
@@ -366,19 +427,29 @@ const FourRangeControl = memo( props => {
 								onChange={ onChangeRight }
 								allowReset={ false }
 								initialPosition={ ( () => {
-									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.right !== '' ) {
-										return unit === _unitTablet ? _valueTablet.right : ''
-									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-										return unit === _unitDesktop ? _valueDesktop?.right : ''
+									if ( currentHoverState !== 'normal' ) {
+										return ''
 									}
+
+									if ( deviceType === 'Mobile' && tabletHasValue.right ) {
+										return unit === _unitTablet ? _valueTablet.right : ''
+									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.right ) {
+										return unit === _unitDesktop ? _valueDesktop.right : ''
+									}
+
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
-									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.right !== '' ) {
-										return unit === _unitTablet ? _valueTablet.right : ''
-									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-										return unit === _unitDesktop ? _valueDesktop?.right : ''
+									if ( currentHoverState !== 'normal' ) {
+										return ''
 									}
+
+									if ( deviceType === 'Mobile' && tabletHasValue.right ) {
+										return unit === _unitTablet ? _valueTablet.right : ''
+									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.right ) {
+										return unit === _unitDesktop ? _valueDesktop.right : ''
+									}
+
 									return typeof props.placeholderRight === 'undefined' ? propsToPass.placeholder : props.placeholderRight
 								} )() }
 							/>
@@ -401,19 +472,29 @@ const FourRangeControl = memo( props => {
 								onChange={ onChangeBottom }
 								allowReset={ false }
 								initialPosition={ ( () => {
-									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.bottom !== '' ) {
-										return unit === _unitTablet ? _valueTablet.bottom : ''
-									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-										return unit === _unitDesktop ? _valueDesktop?.bottom : ''
+									if ( currentHoverState !== 'normal' ) {
+										return ''
 									}
+
+									if ( deviceType === 'Mobile' && tabletHasValue.bottom ) {
+										return unit === _unitTablet ? _valueTablet.bottom : ''
+									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.bottom ) {
+										return unit === _unitDesktop ? _valueDesktop.bottom : ''
+									}
+
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
-									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.bottom !== '' ) {
-										return unit === _unitTablet ? _valueTablet.bottom : ''
-									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-										return unit === _unitDesktop ? _valueDesktop?.bottom : ''
+									if ( currentHoverState !== 'normal' ) {
+										return ''
 									}
+
+									if ( deviceType === 'Mobile' && tabletHasValue.bottom ) {
+										return unit === _unitTablet ? _valueTablet.bottom : ''
+									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.bottom ) {
+										return unit === _unitDesktop ? _valueDesktop.bottom : ''
+									}
+
 									return typeof props.placeholderBottom === 'undefined' ? propsToPass.placeholder : props.placeholderBottom
 								} )() }
 							/>
@@ -436,19 +517,29 @@ const FourRangeControl = memo( props => {
 								onChange={ onChangeLeft }
 								allowReset={ false }
 								initialPosition={ ( () => {
-									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.left !== '' ) {
-										return unit === _unitTablet ? _valueTablet.left : ''
-									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-										return unit === _unitDesktop ? _valueDesktop?.left : ''
+									if ( currentHoverState !== 'normal' ) {
+										return ''
 									}
+
+									if ( deviceType === 'Mobile' && tabletHasValue.left ) {
+										return unit === _unitTablet ? _valueTablet.left : ''
+									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.left ) {
+										return unit === _unitDesktop ? _valueDesktop.left : ''
+									}
+
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
-									if ( deviceType === 'Mobile' && tabletHasValue && _valueTablet.left !== '' ) {
-										return unit === _unitTablet ? _valueTablet.left : ''
-									} else if ( deviceType === 'Mobile' || deviceType === 'Tablet' ) {
-										return unit === _unitDesktop ? _valueDesktop?.left : ''
+									if ( currentHoverState !== 'normal' ) {
+										return ''
 									}
+
+									if ( deviceType === 'Mobile' && tabletHasValue.left ) {
+										return unit === _unitTablet ? _valueTablet.left : ''
+									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.left ) {
+										return unit === _unitDesktop ? _valueDesktop.left : ''
+									}
+
 									return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft
 								} )() }
 							/>
