@@ -1,8 +1,8 @@
+import { deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
-import { deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity } from '~stackable/block-components'
 
 const deprecated = [
 	// Support the new combined opacity and color.
@@ -22,15 +22,6 @@ const deprecated = [
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 
 			return newAttributes
-		},
-	},
-	// Support new margin-top/bottom classes.
-	{
-		attributes: attributes( '3.7.9' ),
-		save: withVersion( '3.7.9' )( Save ),
-		migrate: attributes => {
-			const newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
-			return deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 		},
 	},
 ]

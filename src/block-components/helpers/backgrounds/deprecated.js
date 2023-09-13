@@ -15,7 +15,6 @@ export const deprecatedAddAttributes = ( attrObject, attrNameTemplate = '%s' ) =
 	} )
 }
 
-// TODO: all deprecations should be combined into just one large deprecation for all.
 export const deprecationBackgrounColorOpacity = {
 	isEligible: attrNameTemplate => attributes => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )

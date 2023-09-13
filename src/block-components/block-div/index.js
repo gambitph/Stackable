@@ -17,6 +17,7 @@ import { CustomAttributes } from '../custom-attributes'
 import { version as VERSION } from 'stackable'
 
 export { useUniqueId }
+export { deprecateBlockBackgroundColorOpacity } from './deprecated'
 
 export const BlockDiv = props => {
 	const {
