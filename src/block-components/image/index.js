@@ -19,6 +19,8 @@ import { pickBy } from 'lodash'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 
+export { deprecationImageOverlayOpacity } from './deprecated'
+
 export const Image = props => {
 	const {
 		defaultWidth,
@@ -34,8 +36,6 @@ export const Image = props => {
 			imageOverlayColorParentHover: attributes.imageOverlayColorParentHover,
 			imageOverlayColor2Hover: attributes.imageOverlayColor2Hover,
 			imageOverlayColor2ParentHover: attributes.imageOverlayColor2ParentHover,
-			imageOverlayOpacityHover: attributes.imageOverlayOpacityHover,
-			imageOverlayOpacityParentHover: attributes.imageOverlayOpacityParentHover,
 			imageOverlayGradientLocation1Hover: attributes.imageOverlayGradientLocation1Hover,
 			imageOverlayGradientLocation1ParentHover: attributes.imageOverlayGradientLocation1ParentHover,
 			imageOverlayGradientLocation2Hover: attributes.imageOverlayGradientLocation2Hover,
@@ -74,7 +74,6 @@ export const Image = props => {
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
 		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
 		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
-		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover ||
 		attributes.imageOverlayGradientLocation1Hover || attributes.imageOverlayGradientLocation1ParentHover ||
 		attributes.imageOverlayGradientLocation2Hover || attributes.imageOverlayGradientLocation2ParentHover ||
 		attributes.imageOverlayGradientDirectionHover || attributes.imageOverlayGradientDirectionParentHover )
@@ -139,7 +138,6 @@ Image.Content = props => {
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
 		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
 		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
-		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover ||
 		attributes.imageOverlayGradientLocation1Hover || attributes.imageOverlayGradientLocation1ParentHover ||
 		attributes.imageOverlayGradientLocation2Hover || attributes.imageOverlayGradientLocation2ParentHover ||
 		attributes.imageOverlayGradientDirectionHover || attributes.imageOverlayGradientDirectionParentHover )

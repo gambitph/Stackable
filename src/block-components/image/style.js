@@ -339,7 +339,6 @@ const Styles = props => {
 					'imageOverlayGradientLocation1',
 					'imageOverlayGradientLocation2',
 					'imageOverlayGradientDirection',
-					'imageOverlayOpacity',
 					...dependencies,
 				] }
 			/>
@@ -418,29 +417,26 @@ const Styles = props => {
 					 'imageOverlayGradientLocation1',
 					 'imageOverlayGradientLocation2',
 					 'imageOverlayGradientDirection',
-					 'imageOverlayOpacity',
 					  ...dependencies,
 				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				renderIn="save"
 				selector={ `${ selector }` }
-				hoverSelector={ `${ selector }::before` }
-				styleRule="--stk-gradient-overlay"
-				attrName="imageOverlayOpacity"
-				key="imageOverlayOpacity-save"
-				hover="all"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				renderIn="edit"
-				selector={ `${ selector } .stk-img-resizer-wrapper` }
-				hoverSelector={ `${ selector } .stk-img-resizer-wrapper::before` }
-				styleRule="--stk-gradient-overlay"
-				attrName="imageOverlayOpacity"
-				key="imageOverlayOpacity"
-				hover="all"
+				attrName="imageOverlayColor"
+				styleRule="--stk-gradient-overlay" // For backward support, we need to turn --stk-gradient-overlay to 1 so that the overlay will become solid.
+				valuePreCallback={ ( value, getAttribute, device, state, attributes ) => {
+					if ( attributes.imageOverlayColor || attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ) {
+						return '1'
+					}
+				} }
+				key="imageOverlayColor-deprecated-var"
+				dependencies={ [
+					'imageOverlayColor',
+					'imageOverlayColorHover',
+					'imageOverlayColorParentHover',
+					...dependencies,
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

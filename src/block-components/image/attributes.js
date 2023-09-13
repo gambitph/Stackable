@@ -1,8 +1,12 @@
+import { deprecatedAddAttributes } from './deprecated'
+
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		imageWidthUnitDefault = '%',
 		selector = 'img',
 	} = options
+
+	deprecatedAddAttributes( attrObject, options )
 
 	attrObject.add( {
 		attributes: {
@@ -58,11 +62,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			},
 			imageOverlayColor2: {
 				type: 'string',
-				default: '',
-				stkHover: true,
-			},
-			imageOverlayOpacity: {
-				type: 'number',
 				default: '',
 				stkHover: true,
 			},

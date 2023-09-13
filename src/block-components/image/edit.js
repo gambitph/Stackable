@@ -280,7 +280,6 @@ const Controls = props => {
 				isSmall={ true }
 			/>
 
-			{ /* TODO: opacity will now be included in the color */ }
 			<ColorPaletteControl
 				label={
 					attributes.imageOverlayColorType === 'gradient'
@@ -288,6 +287,15 @@ const Controls = props => {
 						: __( 'Overlay Color', i18n )
 				}
 				attribute="imageOverlayColor"
+				preOnChange={ ( imageOverlayColor, prevImageOverlayColor ) => {
+					if ( attributes.imageOverlayColorType === 'gradient' ) {
+						return imageOverlayColor
+					}
+					if ( prevImageOverlayColor === '' && imageOverlayColor.length === 7 ) {
+						return imageOverlayColor + '80'
+					}
+					return imageOverlayColor
+				} }
 				hover="all"
 			/>
 			{ attributes.imageOverlayColorType === 'gradient' && (
@@ -297,16 +305,6 @@ const Controls = props => {
 					hover="all"
 				/>
 			) }
-
-			<AdvancedRangeControl
-				label={ __( 'Overlay Opacity', i18n ) }
-				attribute="imageOverlayOpacity"
-				hover="all"
-				min={ 0 }
-				max={ 1 }
-				step={ 0.1 }
-				placeholder="0.3"
-			/>
 
 			<BlendModeControl
 				label={ __( 'Overlay Blend Mode', i18n ) }

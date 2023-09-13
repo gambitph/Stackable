@@ -40,6 +40,8 @@ const popoverProps = {
 	shift: true,
 }
 
+const PASSTHRUOP = v => v
+
 const ColorPaletteControl = memo( props => {
 	const {
 		label,
@@ -113,13 +115,15 @@ const ColorPaletteControl = memo( props => {
 	const colorPalette = (
 		<>
 			<ColorPicker
-				onChange={ onChange }
+				onChange={ newValue => {
+					onChange( props.preOnChange( newValue, value ) )
+				} }
 				color={ value }
 				enableAlpha={ true }
 			/>
 			<ColorPalette
 				value={ value }
-				onChange={ value => {
+				onChange={ newValue => {
 					// Allow the selected color to be overridden.
 					const allColors = colors.reduce( ( colors, group ) => {
 						return [
@@ -128,8 +132,8 @@ const ColorPaletteControl = memo( props => {
 						]
 					}, [] )
 
-					const colorObject = getColorObjectByColorValue( allColors, value )
-					onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
+					const colorObject = getColorObjectByColorValue( allColors, newValue )
+					onChange( props.preOnChange( applyFilters( 'stackable.color-palette-control.change', newValue, colorObject ), value ) )
 				} }
 				disableCustomColors={ true }
 				label={ colorLabel }
@@ -176,6 +180,7 @@ ColorPaletteControl.defaultProps = {
 
 	value: undefined,
 	onChange: undefined,
+	preOnChange: PASSTHRUOP,
 	isExpanded: false,
 }
 
