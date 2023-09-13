@@ -89,8 +89,6 @@ const AdvancedRangeControl = props => {
 
 	const mobileHasValue = {
 		normal: mobileValue.normal && mobileValue.normal !== '',
-		hover: mobileValue.hover && mobileValue.hover !== '',
-		'parent-hover': mobileValue[ 'parent-hover' ] && mobileValue[ 'parent-hover' ] !== '',
 	}
 
 	const desktopFallbackValue = {
