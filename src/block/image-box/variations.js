@@ -39,8 +39,7 @@ const variations = applyFilters(
 			innerBlocks: [
 				[ 'stackable/image', {
 					imageHeight: 350,
-					imageOverlayColorParentHover: '#000000',
-					imageOverlayOpacityParentHover: 0.7,
+					imageOverlayColorParentHover: '#000000B3',
 				} ],
 				[ 'stackable/column', {
 					templateLock: false,
@@ -92,8 +91,7 @@ const variations = applyFilters(
 			innerBlocks: [
 				[ 'stackable/image', {
 					imageHeight: 350,
-					imageOverlayColorParentHover: '#000000',
-					imageOverlayOpacityParentHover: 0.7,
+					imageOverlayColorParentHover: '#000000B3',
 				} ],
 				[ 'stackable/column', {
 					containerPadding: {
