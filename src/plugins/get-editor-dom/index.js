@@ -38,6 +38,11 @@ export const EditorDom = () => {
 		return select( 'core/edit-site' )?.getEditedPostId?.()
 	} )
 
+	// When switching between visual editor and code editor, the editor is recreated
+	const editorMode = useSelect( select => {
+		return select( 'core/edit-site' )?.getEditorMode() || select( 'core/edit-post' )?.getEditorMode()
+	} )
+
 	useEffect( () => {
 		// If the editor is available right away, use it.
 		const editorEl = document.querySelector( `.editor-styles-wrapper, iframe[name="editor-canvas"]` )
@@ -93,7 +98,7 @@ export const EditorDom = () => {
 			clearInterval( interval.current )
 			clearTimeout( timeout.current )
 		}
-	}, [ deviceType, editedSitePostId ] )
+	}, [ deviceType, editorMode, editedSitePostId ] )
 
 	useMemo( () => {
 		const iframeEl = document.querySelector( `iframe[name="editor-canvas"]` )
