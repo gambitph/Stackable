@@ -181,9 +181,9 @@ export const createBlockCompleter = () => {
 			const filteredItems = useMemo( () => {
 				let initialFilteredItems = orderBy( items, [ 'frecency' ], [ 'desc' ] )
 				// Only include stackable and ugb blocks.
-				initialFilteredItems = initialFilteredItems
-					.filter( item => item.name !== selectedBlockName )
-					.filter( item => item.name.startsWith( 'stackable/' ) || item.name.startsWith( 'ugb/' ) )
+				// initialFilteredItems = initialFilteredItems
+				// 	.filter( item => item.name !== selectedBlockName )
+				// 	.filter( item => item.name.startsWith( 'stackable/' ) || item.name.startsWith( 'ugb/' ) )
 
 				// Filter based on keyword.
 				initialFilteredItems = initialFilteredItems
