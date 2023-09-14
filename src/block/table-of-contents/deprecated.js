@@ -9,7 +9,9 @@ import { Save } from './save'
  */
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
-import { deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity } from '~stackable/block-components'
+import {
+	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
@@ -40,14 +42,18 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			const hasTextGradient = deprecateTypographyGradientColor.isEligible( '%s' )( attributes )
+			const hasTitleGradient = deprecateTypographyGradientColor.isEligible( 'title%s' )( attributes )
 
-			return hasContainerOpacity || hasBlockOpacity
+			return hasContainerOpacity || hasBlockOpacity || hasTextGradient || hasTitleGradient
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -57,7 +63,9 @@ const deprecated = [
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
 		migrate: attributes => {
-			const newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
+			let newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
 			return deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 		},
 	},

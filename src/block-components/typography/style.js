@@ -90,58 +90,37 @@ const Styles = props => {
 				selector={ selector }
 				selectorCallback={ selectorCallback }
 				attrNameTemplate={ attrNameTemplate }
-				styleRule="color"
+				styleRuleCallback={ getAttribute => {
+					const textColorType = getAttribute( 'textColorType' )
+					return textColorType === 'gradient' ? 'backgroundImage' : 'color'
+				} }
 				hover="all"
 				hoverSelector={ hoverSelector }
 				hoverSelectorCallback={ hoverSelectorCallback }
 				attrName="textColor1"
 				key="textColor1-color"
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					if ( getAttribute( 'textColorType', 'desktop', state ) === 'gradient' ) {
-						return undefined
+					if ( ! value && getAttribute( 'textColorType', 'desktop', state ) === 'gradient' ) {
+						return 'currentColor'
 					}
 					return value
 				} }
-				dependencies={ [ 'textColorType', 'textColor2', 'textGradientDirection', ...dependencies ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ selector }
-				selectorCallback={ selectorCallback }
-				attrNameTemplate={ attrNameTemplate }
-				styleRule="backgroundImage"
-				attrName="textColor1"
-				key="textColor1-image"
-				valuePreCallback={ ( value, getAttribute ) => {
-					if ( getAttribute( 'textColorType', 'desktop', 'normal' ) !== 'gradient' ) {
-						return undefined
-					}
-					return '1' // Return a dummy value force the style to be generated, this will be replaced by the valueCallback.
-				} }
 				valueCallback={ ( value, getAttribute ) => {
-					let textColor1 = getAttribute( 'textColor1', 'desktop', 'normal' )
-					let textColor2 = getAttribute( 'textColor2', 'desktop', 'normal' )
+					const textColorType = getAttribute( 'textColorType' )
+					const isGradient = value?.startsWith( 'linear-' )
 
-					// If one of the colors is transparent, use black in the other one.
-					if ( textColor1 === 'transparent' && ! textColor2 ) {
-						textColor2 = '#000'
-					} else if ( textColor2 === 'transparent' && ! textColor1 ) {
-						textColor1 = '#000'
-						// If only one color is selected, use it for both.
-					} else {
-						textColor1 = textColor1 || textColor2
-						textColor2 = textColor2 || textColor1
+					// If the type was switched, adjust the value so that gradient will show up.
+					if ( textColorType === 'gradient' && ! isGradient ) {
+						return `linear-gradient(${ value } 0%, ${ value } 100%)`
+					} else if ( textColorType !== 'gradient' && isGradient ) {
+						const color = value.match( /((rgba?|var)\([^\)]+\)|#[\w\d]+)/ )
+						if ( color ) {
+							return color[ 0 ]
+						}
 					}
-
-					// If gradient and no colors are given, set it to black to it won't be transparent.
-					if ( ! textColor1 && ! textColor2 ) {
-						return 'linear-gradient(0deg, #000, #000)'
-					}
-
-					const textGradientDirection = getAttribute( 'textGradientDirection', 'desktop', 'normal' )
-					return `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`
+					return value
 				} }
-				dependencies={ [ 'textColorType', 'textColor1', 'textColor2', 'textGradientDirection', ...dependencies ] }
+				dependencies={ [ 'textColorType', ...dependencies ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }

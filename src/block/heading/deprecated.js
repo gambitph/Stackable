@@ -10,7 +10,7 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
-	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, getResponsiveClasses,
+	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor, getResponsiveClasses,
 } from '~stackable/block-components'
 
 /**
@@ -40,14 +40,16 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			const hasTextGradient = deprecateTypographyGradientColor.isEligible( '%s' )( attributes )
 
-			return hasContainerOpacity || hasBlockOpacity
+			return hasContainerOpacity || hasBlockOpacity || hasTextGradient
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -57,7 +59,8 @@ const deprecated = [
 		attributes: attributes( '3.7.9' ),
 		save: withVersion( '3.7.9' )( Save ),
 		migrate: attributes => {
-			const newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
+			let newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
 			return deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 		},
 	},

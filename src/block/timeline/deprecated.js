@@ -1,4 +1,6 @@
-import { deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity } from '~stackable/block-components'
+import {
+	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
+} from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
 
@@ -12,14 +14,16 @@ const deprecated = [
 		isEligible: attributes => {
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			const hasTextGradient = deprecateTypographyGradientColor.isEligible( '%s' )( attributes )
 
-			return hasContainerOpacity || hasBlockOpacity
+			return hasContainerOpacity || hasBlockOpacity || hasTextGradient
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
 
 			return newAttributes
 		},

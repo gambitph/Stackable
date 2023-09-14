@@ -10,7 +10,7 @@ import { Save } from './save'
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
-	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecationImageOverlayOpacity,
+	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor, deprecationImageOverlayOpacity,
 } from '~stackable/block-components'
 
 /**
@@ -50,9 +50,22 @@ const deprecated = [
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
 			const hasImageOpacity = deprecationImageOverlayOpacity.isEligible( attributes )
+			const hasTitleGradient = deprecateTypographyGradientColor.isEligible( 'title%s' )( attributes )
+			const hasCategoryGradient = deprecateTypographyGradientColor.isEligible( 'category%s' )( attributes )
+			const hasExcerptGradient = deprecateTypographyGradientColor.isEligible( 'excerpt%s' )( attributes )
+			const hasMetaGradient = deprecateTypographyGradientColor.isEligible( 'meta%s' )( attributes )
+			const hasReadmoreGradient = deprecateTypographyGradientColor.isEligible( 'readmore%s' )( attributes )
 			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasContainerOpacity || hasBlockOpacity || hasImageOpacity || isNotV4
+			return hasContainerOpacity ||
+				hasBlockOpacity ||
+				hasImageOpacity ||
+				isNotV4 ||
+				hasTitleGradient ||
+				hasCategoryGradient ||
+				hasExcerptGradient ||
+				hasMetaGradient ||
+				hasReadmoreGradient
 		},
 		migrate: attributes => {
 			let newAttributes = {
@@ -109,6 +122,12 @@ const deprecated = [
 			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'readmore%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -178,6 +197,12 @@ const deprecated = [
 			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'readmore%s' )( newAttributes )
 
 			return newAttributes
 		},
