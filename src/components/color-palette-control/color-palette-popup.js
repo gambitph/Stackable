@@ -49,7 +49,7 @@ export const ColorPalettePopup = props => {
 					onChange={ newValue => {
 						onChange( preOnChange( newValue, value ) )
 					} }
-					value={ value.startsWith( 'linear-' ) ? value : null } // null prevents an error in Spectra
+					value={ value.startsWith( 'linear-' ) || value.startsWith( 'radial-' ) ? value : null } // null prevents an error in Spectra
 					gradients={ colors }
 					clearable={ false }
 				/>

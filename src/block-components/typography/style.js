@@ -107,7 +107,7 @@ const Styles = props => {
 				} }
 				valueCallback={ ( value, getAttribute ) => {
 					const textColorType = getAttribute( 'textColorType' )
-					const isGradient = value?.startsWith( 'linear-' )
+					const isGradient = value?.startsWith( 'linear-' ) || value?.startsWith( 'radial-' )
 
 					// If the type was switched, adjust the value so that gradient will show up.
 					if ( textColorType === 'gradient' && ! isGradient ) {
