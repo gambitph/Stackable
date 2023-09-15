@@ -21,7 +21,7 @@ import {
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 
 /**
  * Internal dependencies
@@ -134,10 +134,7 @@ export const ColorsControls = props => {
 			isSmall={ true }
 		/>
 		<ColorPaletteControl
-			label={ buttonBackgroundColorType === 'gradient'
-				? sprintf( __( 'Button Color #%s', i18n ), 1 )
-				: __( 'Button Color', i18n )
-			}
+			label={ __( 'Button Color', i18n ) }
 			attribute={ getAttrName( 'backgroundColor' ) }
 			hover="all"
 			isGradient={ buttonBackgroundColorType === 'gradient' }
