@@ -132,7 +132,6 @@ export const ColorsControls = props => {
 			] }
 			attribute={ getAttrName( 'backgroundColorType' ) }
 			isSmall={ true }
-			fullwidth={ false }
 		/>
 		<ColorPaletteControl
 			label={ buttonBackgroundColorType === 'gradient'
@@ -141,26 +140,8 @@ export const ColorsControls = props => {
 			}
 			attribute={ getAttrName( 'backgroundColor' ) }
 			hover="all"
+			isGradient={ buttonBackgroundColorType === 'gradient' }
 		/>
-		{ buttonBackgroundColorType === 'gradient' && (
-			<>
-				<ColorPaletteControl
-					label={ __( 'Button Color #2', i18n ) }
-					attribute={ getAttrName( 'backgroundColor2' ) }
-					hover="all"
-				/>
-
-				<AdvancedRangeControl
-					label={ __( 'Gradient Direction (degrees)', i18n ) }
-					attribute={ getAttrName( 'backgroundGradientDirection' ) }
-					min={ 0 }
-					max={ 360 }
-					step={ 10 }
-					allowReset={ true }
-					hover="all"
-				/>
-			</>
-		) }
 
 		{ hasTextColor && (
 			<ColorPaletteControl

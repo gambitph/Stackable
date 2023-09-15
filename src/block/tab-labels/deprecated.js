@@ -1,5 +1,5 @@
 import {
-	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
+	deprecateBlockBackgroundColorOpacity, deprecateButtonGradientColor, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
 } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
@@ -15,8 +15,10 @@ const deprecated = [
 			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
 			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
 			const hasTextGradient = deprecateTypographyGradientColor.isEligible( 'tab%s' )( attributes )
+			const hasTabButtonGradient = deprecateButtonGradientColor.isEligible( 'tab%s' )( attributes )
+			const hasActiveTabButtonGradient = deprecateButtonGradientColor.isEligible( 'activeTab%s' )( attributes )
 
-			return hasContainerOpacity || hasBlockOpacity || hasTextGradient
+			return hasContainerOpacity || hasBlockOpacity || hasTextGradient || hasTabButtonGradient || hasActiveTabButtonGradient
 		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
@@ -24,6 +26,8 @@ const deprecated = [
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'activeTab%s' )( newAttributes )
 
 			return newAttributes
 		},
