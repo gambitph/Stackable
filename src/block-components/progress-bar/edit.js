@@ -135,7 +135,6 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 						<AdvancedToolbarControl
 							controls={ GRADIENT_OPTIONS }
 							isSmall={ true }
-							fullwidth={ false }
 							attribute="progressColorType"
 						/>
 						<ColorPaletteControl
