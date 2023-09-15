@@ -40,8 +40,6 @@ export const Image = props => {
 			imageOverlayGradientLocation1ParentHover: attributes.imageOverlayGradientLocation1ParentHover,
 			imageOverlayGradientLocation2Hover: attributes.imageOverlayGradientLocation2Hover,
 			imageOverlayGradientLocation2ParentHover: attributes.imageOverlayGradientLocation2ParentHover,
-			imageOverlayGradientDirectionHover: attributes.imageOverlayGradientDirectionHover,
-			imageOverlayGradientDirectionParentHover: attributes.imageOverlayGradientDirectionParentHover,
 			imageId: attributes.imageId,
 			imageUrl: attributes.imageUrl,
 			imageSize: attributes.imageSize,
@@ -72,11 +70,7 @@ export const Image = props => {
 	const enableHandlers = applyFilters( 'stackable.image.enable-handlers', true, parentBlock )
 
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
-		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
-		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
-		attributes.imageOverlayGradientLocation1Hover || attributes.imageOverlayGradientLocation1ParentHover ||
-		attributes.imageOverlayGradientLocation2Hover || attributes.imageOverlayGradientLocation2ParentHover ||
-		attributes.imageOverlayGradientDirectionHover || attributes.imageOverlayGradientDirectionParentHover )
+		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover )
 
 	return <Image_
 		{ ...setImage }
@@ -136,11 +130,7 @@ Image.Content = props => {
 	const defaultHeight = _defaultHeight === 'auto' && attributes.imageUrl ? 'auto' : 300
 
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
-		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
-		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
-		attributes.imageOverlayGradientLocation1Hover || attributes.imageOverlayGradientLocation1ParentHover ||
-		attributes.imageOverlayGradientLocation2Hover || attributes.imageOverlayGradientLocation2ParentHover ||
-		attributes.imageOverlayGradientDirectionHover || attributes.imageOverlayGradientDirectionParentHover )
+		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover )
 
 	return <Image_.Content
 		imageId={ attributes.imageId }
