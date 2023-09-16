@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { hexToRgba } from '~stackable/util'
 import { BlockCss } from '~stackable/components'
 
 const Styles = props => {
@@ -35,16 +34,14 @@ const Styles = props => {
 				} }
 				valueCallback={ ( value, getAttribute ) => {
 					const backgroundColorType = getAttribute( 'backgroundColorType' )
-					const backgroundColor2 = getAttribute( 'backgroundColor2' )
 
-					if ( backgroundColorType === 'gradient' && backgroundColor2 === 'transparent' ) {
+					if ( backgroundColorType === 'gradient' && ( value.match( /rgba\(([^\)]*?)\s*0\s*\.?0?0?\)/ ) || value.includes( 'transparent' ) ) ) {
 						return 'transparent'
 					}
 
 					return value
 				} }
 				dependencies={ [
-					'backgroundColor2',
 					'backgroundColorType',
 					...dependencies,
 				] }
@@ -151,7 +148,6 @@ const Styles = props => {
 				} }
 				dependencies={ [
 					'backgroundColorType',
-					'backgroundColor2',
 					'backgroundTintStrength',
 					...dependencies,
 				] }
@@ -179,7 +175,6 @@ const Styles = props => {
 				} }
 				dependencies={ [
 					'backgroundColor',
-					'backgroundColor2',
 					 'backgroundMediaUrl',
 					 ...dependencies,
 				] }
@@ -205,30 +200,9 @@ const Styles = props => {
 				key="backgroundColor-image"
 				attrNameTemplate={ attrNameTemplate }
 				enabledCallback={ getAttribute => getAttribute( 'backgroundColorType' ) === 'gradient' }
-				valueCallback={ ( value, getAttribute ) => {
-					// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
-					const defaultColor1 = hexToRgba( getAttribute( 'backgroundColor2' ) || '#ffffff', 0 )
-					const defaultColor2 = hexToRgba( getAttribute( 'backgroundColor' ) || '#ffffff', 0 )
-
-					// Gradient location.
-					const color1Location = `${ getAttribute( 'backgroundGradientLocation1' ) || '0' }%`
-					const color2Location = `${ getAttribute( 'backgroundGradientLocation2' ) || '100' }%`
-
-					let angle = getAttribute( 'backgroundGradientDirection' )
-					if ( angle === '' ) {
-						angle = '90'
-					}
-					angle = `${ angle }deg`
-
-					return `linear-gradient(${ angle }, ${ getAttribute( 'backgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })`
-				} }
 				dependencies={ [
 					'backgroundColorType',
 					'backgroundColor',
-					'backgroundColor2',
-					'backgroundGradientLocation1',
-					'backgroundGradientLocation2',
-					'backgroundGradientDirection',
 					...dependencies,
 				] }
 			/>
@@ -250,7 +224,6 @@ const Styles = props => {
 				dependencies={ [
 					'backgroundColorType',
 					'backgroundColor',
-					'backgroundColor2',
 					...dependencies,
 				] }
 			/>

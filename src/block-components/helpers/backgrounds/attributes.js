@@ -10,10 +10,6 @@ export const backgroundAttributes = {
 		type: 'string',
 		default: '',
 	},
-	backgroundColor2: {
-		type: 'string',
-		default: '',
-	},
 	backgroundMediaId: {
 		stkResponsive: true,
 		type: 'string',
@@ -47,26 +43,14 @@ export const backgroundAttributes = {
 		type: 'string',
 		default: '',
 	},
-	backgroundTintStrength: { // TODO: deprecate this also
+	backgroundTintStrength: {
 		stkHover: true,
-		type: 'number',
-		default: '',
-	},
-	backgroundGradientDirection: {
 		type: 'number',
 		default: '',
 	},
 	backgroundCustomSize: {
 		stkResponsive: true,
 		stkUnits: '%',
-		type: 'number',
-		default: '',
-	},
-	backgroundGradientLocation1: {
-		type: 'number',
-		default: '',
-	},
-	backgroundGradientLocation2: {
 		type: 'number',
 		default: '',
 	},
