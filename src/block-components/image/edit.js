@@ -272,32 +272,17 @@ const Controls = props => {
 			<ColorPaletteControl
 				label={ __( 'Overlay Color', i18n ) }
 				attribute="imageOverlayColor"
-				preOnChange={ ( imageOverlayColor, prevImageOverlayColor ) => {
-					if ( attributes.imageOverlayColorType === 'gradient' ) {
-						// When picking a gradient, it will put it as a solid
-						// color, let's add opacity to it.
-						const addOpacityToSolid = _color => {
-							// Count number of different characters between imageOverlayColor, prevImageOverlayColor
-							// The regex here are just all the 4 regexes below.
-							const numSolids = _color.match( /(rgb(\([^\)]+)\)|(rgba\([^\)]+),1\)|(#[\d\w]{6})\s|#([\d\w])([\d\w])([\d\w])\s)/g )
-							let color = _color
-							if ( numSolids && numSolids.length > 1 ) {
-								color = color.replace( /rgb(\([^\)]+)\)/g, 'rgba$1,0.5)' )
-								color = color.replace( /(rgba\([^\)]+),1\)/g, '$1,0.5)' )
-								color = color.replace( /(#[\d\w]{6})\s/g, '$180 ' )
-								color = color.replace( /#([\d\w])([\d\w])([\d\w])\s/g, '#$1$1$2$2$3$380 ' )
-							}
-							return color
-						}
-						return addOpacityToSolid( imageOverlayColor )
-					}
-					if ( prevImageOverlayColor === '' && imageOverlayColor.length === 7 ) {
-						return imageOverlayColor + '80'
-					}
-					return imageOverlayColor
-				} }
 				hover="all"
 				isGradient={ attributes.imageOverlayColorType === 'gradient' }
+			/>
+			<AdvancedRangeControl
+				label={ __( 'Overlay Opacity', i18n ) }
+				attribute="imageOverlayOpacity"
+				hover="all"
+				min={ 0 }
+				max={ 1 }
+				step={ 0.1 }
+				placeholder="0.3"
 			/>
 
 			<BlendModeControl

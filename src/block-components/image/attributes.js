@@ -60,6 +60,11 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				default: '',
 				stkHover: true,
 			},
+			imageOverlayOpacity: {
+				type: 'number',
+				default: '',
+				stkHover: true,
+			},
 			imageOverlayBlendMode: {
 				type: 'string',
 				default: '',

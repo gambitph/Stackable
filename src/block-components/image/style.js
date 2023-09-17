@@ -343,6 +343,7 @@ const Styles = props => {
 				} }
 				dependencies={ [
 					'imageOverlayColorType',
+					'imageOverlayOpacity',
 					...dependencies,
 				] }
 			/>
@@ -383,8 +384,29 @@ const Styles = props => {
 				} }
 				dependencies={ [
 					'imageOverlayColorType',
+					'imageOverlayOpacity',
 					...dependencies,
 				] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector={ `${ selector }` }
+				hoverSelector={ `${ selector }::before` }
+				styleRule="--stk-gradient-overlay"
+				attrName="imageOverlayOpacity"
+				key="imageOverlayOpacity-save"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector={ `${ selector } .stk-img-resizer-wrapper` }
+				hoverSelector={ `${ selector } .stk-img-resizer-wrapper::before` }
+				styleRule="--stk-gradient-overlay"
+				attrName="imageOverlayOpacity"
+				key="imageOverlayOpacity"
+				hover="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }

@@ -34,8 +34,8 @@ export const Image = props => {
 			imageOverlayColorType: attributes.imageOverlayColorType,
 			imageOverlayColorHover: attributes.imageOverlayColorHover,
 			imageOverlayColorParentHover: attributes.imageOverlayColorParentHover,
-			imageOverlayColor2Hover: attributes.imageOverlayColor2Hover,
-			imageOverlayColor2ParentHover: attributes.imageOverlayColor2ParentHover,
+			imageOverlayOpacityHover: attributes.imageOverlayOpacityHover,
+			imageOverlayOpacityParentHover: attributes.imageOverlayOpacityParentHover,
 			imageOverlayGradientLocation1Hover: attributes.imageOverlayGradientLocation1Hover,
 			imageOverlayGradientLocation1ParentHover: attributes.imageOverlayGradientLocation1ParentHover,
 			imageOverlayGradientLocation2Hover: attributes.imageOverlayGradientLocation2Hover,
@@ -70,7 +70,8 @@ export const Image = props => {
 	const enableHandlers = applyFilters( 'stackable.image.enable-handlers', true, parentBlock )
 
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
-		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover )
+		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
+		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover )
 
 	return <Image_
 		{ ...setImage }
@@ -130,7 +131,8 @@ Image.Content = props => {
 	const defaultHeight = _defaultHeight === 'auto' && attributes.imageUrl ? 'auto' : 300
 
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
-		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover )
+		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
+		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover )
 
 	return <Image_.Content
 		imageId={ attributes.imageId }

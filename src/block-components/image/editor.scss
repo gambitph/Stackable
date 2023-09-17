@@ -228,6 +228,7 @@
 		content: "";
 		position: absolute;
 		inset: 0;
+		opacity: var(--stk-gradient-overlay, 0.3);
 		z-index: 1;
 	}
 }

@@ -1,14 +1,6 @@
-import { colorOpacityToHexAplha } from '~stackable/util'
-
 export const deprecatedAddAttributes = attrObject => {
 	attrObject.add( {
 		attributes: {
-			imageOverlayOpacity: {
-				type: 'number',
-				default: '',
-				stkHover: true,
-			},
-
 			// These gradient options are now combined into just the color
 			// option.
 			imageOverlayColor2: {
@@ -39,12 +31,8 @@ export const deprecatedAddAttributes = attrObject => {
 
 export const deprecationImageOverlayOpacity = {
 	isEligible: attributes => {
-		// Using the old opacity option.
-		const hasColor = attributes.imageOverlayColor || attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover
-		const colorHasOpacity = hasColor && hasColor.length > 7
-		const hasOpacity = ( hasColor && ! attributes.imageOverlayOpacity ) || attributes.imageOverlayOpacity || attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover
-
 		// Gradient colors are now updated to a single linear-gradient / radial-gradient value.
+		const hasColor = attributes.imageOverlayColor || attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover
 		const hasColor2 = attributes.imageOverlayColor2 || attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover
 		const hasImageGradientOverlay = attributes.imageOverlayColorType === 'gradient' && ( hasColor || hasColor2 || attributes.imageOverlayGradientDirection || attributes.imageOverlayGradientLocation1 || attributes.imageOverlayGradientLocation2 )
 
@@ -52,45 +40,13 @@ export const deprecationImageOverlayOpacity = {
 			( attributes.imageOverlayColor?.includes( '-gradient' ) || attributes.imageOverlayColorHover?.includes( '-gradient' ) || attributes.imageOverlayColorParentHover?.includes( '-gradient' ) )
 		const isGradientEligible = hasImageGradientOverlay && ! isGradientUpdated
 
-		return ( ! colorHasOpacity ? hasColor || hasOpacity : false ) || isGradientEligible
+		return isGradientEligible
 	},
 	migrate: attributes => {
 		let newAttributes = { ...attributes }
 
-		const hasColor = attributes.imageOverlayColor || attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover
-		const colorHasOpacity = hasColor.length > 7
-		const hasOpacity = ( hasColor && ! attributes.imageOverlayOpacity ) || attributes.imageOverlayOpacity || attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover
-
-		if ( ! colorHasOpacity ) {
-			if ( hasColor || hasOpacity ) {
-				const opacity = attributes.imageOverlayOpacity === 0 ? attributes.imageOverlayOpacity : ( attributes.imageOverlayOpacity || 0.3 )
-				const opacityHover = attributes.imageOverlayOpacityHover || opacity
-				const opacityParentHover = attributes.imageOverlayOpacityParentHover || opacity
-
-				const imageOverlayColor = attributes.imageOverlayColor
-				const imageOverlayColorHover = attributes.imageOverlayColorHover || imageOverlayColor
-				const imageOverlayColorParentHover = attributes.imageOverlayColorParentHover || imageOverlayColor
-
-				const imageOverlayColor2 = attributes.imageOverlayColor2
-				const imageOverlayColor2Hover = attributes.imageOverlayColor2Hover || imageOverlayColor2
-				const imageOverlayColor2ParentHover = attributes.imageOverlayColor2ParentHover || imageOverlayColor2
-
-				newAttributes = {
-					...newAttributes,
-					imageOverlayOpacity: undefined,
-					imageOverlayOpacityHover: undefined,
-					imageOverlayOpacityParentHover: undefined,
-					imageOverlayColor: attributes.imageOverlayColor ? colorOpacityToHexAplha( imageOverlayColor, opacity ) : attributes.imageOverlayColor,
-					imageOverlayColor2: attributes.imageOverlayColor2 ? colorOpacityToHexAplha( imageOverlayColor2, opacity ) : attributes.imageOverlayColor2,
-					imageOverlayColorHover: ( attributes.imageOverlayColorHover || attributes.imageOverlayOpacityHover ) ? colorOpacityToHexAplha( imageOverlayColorHover, opacityHover ) : attributes.imageOverlayColorHover,
-					imageOverlayColor2Hover: ( attributes.imageOverlayColor2Hover || attributes.imageOverlayOpacityHover ) ? colorOpacityToHexAplha( imageOverlayColor2Hover, opacityHover ) : attributes.imageOverlayColor2Hover,
-					imageOverlayColorParentHover: ( attributes.imageOverlayColorParentHover || attributes.imageOverlayOpacityParentHover ) ? colorOpacityToHexAplha( imageOverlayColorParentHover, opacityParentHover ) : attributes.imageOverlayColorParentHover,
-					imageOverlayColor2ParentHover: ( attributes.imageOverlayColor2ParentHover || attributes.imageOverlayOpacityParentHover ) ? colorOpacityToHexAplha( imageOverlayColor2ParentHover, opacityParentHover ) : attributes.imageOverlayColor2ParentHover,
-				}
-			}
-		}
-
 		// Gradient color.
+		const hasColor = attributes.imageOverlayColor || attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover
 		const hasColor2 = attributes.imageOverlayColor2 || attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover
 		const hasImageGradientOverlay = attributes.imageOverlayColorType === 'gradient' && ( hasColor || hasColor2 || attributes.imageOverlayGradientDirection || attributes.imageOverlayGradientLocation1 || attributes.imageOverlayGradientLocation2 )
 
