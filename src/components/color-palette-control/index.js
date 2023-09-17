@@ -56,22 +56,21 @@ const ColorPaletteControl = memo( props => {
 	} = useSelect( 'stackable/global-colors' ).getSettings()
 
 	const { colors: groupedColors, gradients: groupedGradients } = useMultipleOriginColorsAndGradients()
-	// const test = useMultipleOriginColorsAndGradients()
-	// console.log( test )
-	let colors = props.isGradient ? cloneDeep( groupedGradients ) : cloneDeep( groupedColors )
 
-	if ( props.isGradient ) {
-		if ( stackableGradients && stackableGradients.length ) {
-			colors = [
-				{
-					name: __( 'Global Gradients', i18n ),
-					gradients: cloneDeep( stackableGradients ),
-					id: 'stk-global-gradients',
-				},
-				...colors,
-			]
-		}
-	} else if ( stackableColors && stackableColors.length ) {
+	let colors = cloneDeep( groupedColors )
+	let gradients = cloneDeep( groupedGradients )
+
+	if ( stackableGradients && stackableGradients.length ) {
+		gradients = [
+			{
+				name: __( 'Global Gradients', i18n ),
+				gradients: cloneDeep( stackableGradients ),
+				id: 'stk-global-gradients',
+			},
+			...gradients,
+		]
+	}
+	if ( stackableColors && stackableColors.length ) {
 		colors = [
 			{
 				name: __( 'Global Colors', i18n ),
@@ -99,8 +98,24 @@ const ColorPaletteControl = memo( props => {
 
 		return true
 	} )
+	gradients = gradients.filter( group => {
+		// Since there are no identifying properties for the groups, we'll just use the same names used in Gutenberg.
+		if ( hideThemeColors && group.name === _x( 'Theme', 'Indicates this palette comes from the theme.' ) ) {
+			return false
+		}
 
-	const allColors = colors.reduce( ( colors, group ) => {
+		if ( hideDefaultColors && group.name === _x( 'Default', 'Indicates this palette comes from WordPress.' ) ) {
+			return false
+		}
+
+		if ( hideSiteEditorColors && group.name === _x( 'Custom', 'Indicates this palette comes from the theme.' ) ) {
+			return false
+		}
+
+		return true
+	} )
+
+	const allColors = ( [ ...colors, ...gradients ] ).reduce( ( colors, group ) => {
 		return [
 			...colors,
 			...( group.colors || group.gradients ),
@@ -137,7 +152,7 @@ const ColorPaletteControl = memo( props => {
 			value={ value }
 			onChange={ onChange }
 			preOnChange={ props.preOnChange }
-			colors={ colors }
+			colors={ props.isGradient ? gradients : colors }
 			isGradient={ props.isGradient }
 		/>
 	)
