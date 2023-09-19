@@ -145,9 +145,6 @@ const Edit = props => {
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
-					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
 					<InspectorAdvancedControls>
 						<PanelAdvancedSettings
 							title={ __( 'FAQ Schema', i18n ) }
@@ -159,6 +156,10 @@ const Edit = props => {
 							/>
 						</PanelAdvancedSettings>
 					</InspectorAdvancedControls>
+
+					<Alignment.InspectorControls />
+					<BlockDiv.InspectorControls />
+					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
