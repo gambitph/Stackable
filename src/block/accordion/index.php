@@ -67,24 +67,29 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 	add_action( 'stackable/accordion/enqueue_scripts', 'stackable_load_accordion_frontend_polyfill_script' );
 }
 
-
 if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 	class Stackable_Accordion_FAQ_Schema {
-		public static $accordion_faq_schema = [];
+		public $faq_entities = [];
 
 		function __construct() {
-			add_filter( 'render_block_stackable/accordion', array( $this, 'stackable_render_block_accordion_FAQ_schema' ), 10, 2 );
+			add_filter( 'render_block_stackable/accordion', array( $this, 'render_block_accordion_faq_schema' ), 10, 2 );
+			add_filter( 'wp_footer', array( $this, 'print_faq_schema' ) );
 		}
 
-		public static function stackable_accordion_get_faq_schema() {
-			echo '<script type="application/ld+json">' . implode( ', ', self::$accordion_faq_schema ) . '</script>';
+		public function print_faq_schema() {
+			if ( count( $this->faq_entities ) ) {
+				echo
+				'<script type="application/ld+json">
+				{
+					"@context": "https://schema.org",
+					"@type": "FAQPage",
+					"mainEntity": [' . implode( ', ', $this->faq_entities ) . ']
+				}
+				</script>';
+			}
 		}
 
-		public static function stackable_add_schema_to_footer() {
-			add_filter( 'wp_footer', array( 'Stackable_Accordion_FAQ_Schema', 'stackable_accordion_get_faq_schema' ) );
-		}
-
-		public static function stackable_faq_schema_get_answer( $block, $answer ) {
+		public function get_faq_answer( $block, $answer ) {
 			$count_inner_blocks = count( $block[ 'innerBlocks' ] );
 			if ( $count_inner_blocks == 0 ) {
 				// check if it contains a text
@@ -96,14 +101,14 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 			}
 
 			for ( $i = 0; $i < $count_inner_blocks; $i++ ) {
-				$partial_answer = self::stackable_faq_schema_get_answer( $block[ 'innerBlocks' ][ $i ], $answer );
+				$partial_answer = $this->get_faq_answer( $block[ 'innerBlocks' ][ $i ], $answer );
 				$answer = $partial_answer;
 			}
 
 			return $answer;
 		}
 
-		public static function stackable_render_block_accordion_FAQ_schema( $block_content, $block ) {
+		public function render_block_accordion_faq_schema( $block_content, $block ) {
 			$attributes = $block[ 'attrs' ];
 
 			if ( isset($attributes[ 'enableFAQ' ] ) && $attributes[ 'enableFAQ' ] ) {
@@ -114,23 +119,16 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 				// innerBlocks[1] is for the content
 				// content may have multiple blocks so we need to retrieve all texts from each block
 				$answer = '';
-				$answer = self::stackable_faq_schema_get_answer( $block[ 'innerBlocks' ][1], $answer );
+				$answer = $this->get_faq_answer( $block[ 'innerBlocks' ][1], $answer );
 
-				self::$accordion_faq_schema[] = '{
-					"@context": "https://schema.org",
-					"@type": "FAQPage",
-					"mainEntity": [ {
+				$this->faq_entities[] = '{
 						"@type": "Question",
 						"name": "' . $question . '",
 						"acceptedAnswer": {
 							"@type": "Answer",
 							"text": \'' . $answer .'\'
-							}
 						}
-					]
-				}';
-
-				self::stackable_add_schema_to_footer();
+					}';
 			}
 
 			return $block_content;
