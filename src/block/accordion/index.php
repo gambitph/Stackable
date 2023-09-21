@@ -111,7 +111,7 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 		public function render_block_accordion_faq_schema( $block_content, $block ) {
 			$attributes = $block[ 'attrs' ];
 
-			if ( isset($attributes[ 'enableFAQ' ] ) && $attributes[ 'enableFAQ' ] ) {
+			if ( isset( $attributes[ 'enableFAQ' ] ) && $attributes[ 'enableFAQ' ] ) {
 				// innerBlocks[0] is for the title
 				// retrieve stackable/column -> stackable/icon-label -> stackable/heading
 				$question = trim( strip_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerHTML' ] ) );
