@@ -114,7 +114,13 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 			if ( isset( $attributes[ 'enableFAQ' ] ) && $attributes[ 'enableFAQ' ] ) {
 				// innerBlocks[0] is for the title
 				// retrieve stackable/column -> stackable/icon-label -> stackable/heading
-				$question = trim( strip_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerHTML' ] ) );
+				$isHeadingBlock = $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'blockName' ] === 'stackable/heading';
+				$question = '';
+				if ( $isHeadingBlock ) {
+					$question = trim( strip_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerHTML' ] ) );
+				} else {
+					$question = trim( strip_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][1][ 'innerHTML' ] ) );
+				}
 
 				// innerBlocks[1] is for the content
 				// content may have multiple blocks so we need to retrieve all texts from each block
@@ -123,10 +129,10 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 
 				$this->faq_entities[] = '{
 						"@type": "Question",
-						"name": "' . $question . '",
+						"name": ' . json_encode( $question ) . ',
 						"acceptedAnswer": {
 							"@type": "Answer",
-							"text": \'' . $answer .'\'
+							"text": ' . json_encode( $answer ) .'
 						}
 					}';
 			}
