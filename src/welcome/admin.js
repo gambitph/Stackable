@@ -590,6 +590,17 @@ AdditionalOptions.defaultProps = {
 
 // Load all the options into the UI.
 domReady( () => {
+	// polyfill that adds class to wpbody if browser is Firefox
+	// for getting-started.scss
+	const userAgent = navigator?.userAgent
+	if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
+		const wpbody = document.querySelector( '#wpbody' )
+
+		if ( wpbody && wpbody.querySelector( '.s-getting-started' ) ) {
+			wpbody.classList.add( 'stk--wpbody-has-getting-started' )
+		}
+	}
+
 	// This is for the getting started block list.
 	if ( document.querySelector( '.s-getting-started__block-list' ) ) {
 		createRoot(
