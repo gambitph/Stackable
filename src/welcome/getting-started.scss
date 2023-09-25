@@ -4,10 +4,6 @@
 
 @import "getting-started-banner-bg";
 
-// the forgiving selector :where prevents the css ruleset to be ignored
-// https://developer.mozilla.org/en-US/docs/Web/CSS/:where#forgiving_selector_parsing
-#wpbody:where(:has(.s-getting-started)),
-.stk--wpbody-has-getting-started,
 .s-getting-started {
 	background-color: #fff;
 	overflow-x: auto;
