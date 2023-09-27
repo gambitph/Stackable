@@ -62,32 +62,3 @@
 		padding-inline: 0 !important;
 	}
 }
-
-// For 6.1 Compatibility
-.stk-color-palette-group-container__wp6-1-compatibility {
-	display: flex;
-	-webkit-box-align: stretch;
-	align-items: stretch;
-	flex-direction: column;
-	gap: calc(12px);
-	-webkit-box-pack: center;
-	justify-content: center;
-}
-.stk-color-palette-group__wp6-1-compatibility {
-	display: flex;
-	-webkit-box-align: stretch;
-	align-items: stretch;
-	flex-direction: column;
-	gap: calc(8px);
-	-webkit-box-pack: center;
-	justify-content: center;
-}
-.stk-color-palette-group__title__wp6-1-compatibility {
-	font-size: 11px;
-	margin: 0px;
-	color: rgb(30, 30, 30);
-	display: block;
-	text-transform: uppercase;
-	line-height: 24px;
-	font-weight: 500;
-}
