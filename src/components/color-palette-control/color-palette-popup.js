@@ -1,6 +1,13 @@
 /**
  * A popup of a color palette.
  */
+
+/**
+ * External dependencies
+ */
+import { semverCompare } from '~stackable/util'
+import { wpVersion } from 'stackable'
+
 /**
  * WordPress dependencies
  */
@@ -50,7 +57,9 @@ export const ColorPalettePopup = props => {
 						onChange( preOnChange( newValue, value ) )
 					} }
 					value={ value.startsWith( 'linear-' ) || value.startsWith( 'radial-' ) ? value : null } // null prevents an error in Spectra
-					gradients={ colors }
+					gradients={
+						wpVersion && semverCompare( wpVersion, '=', '6.1' ) ? allColors // For 6.1 Compatibility
+							: colors }
 					clearable={ false }
 				/>
 			}
@@ -63,7 +72,7 @@ export const ColorPalettePopup = props => {
 					enableAlpha={ true }
 				/>
 			}
-			{ ! isGradient && // Gradient already has it's own palette list of gradients. No need for this.
+			{ ! isGradient && wpVersion && ! semverCompare( wpVersion, '=', '6.1' ) && // Gradient already has it's own palette list of gradients. No need for this.
 				<ColorPalette
 					value={ value }
 					onChange={ newValue => {
@@ -75,6 +84,29 @@ export const ColorPalettePopup = props => {
 					clearable={ false }
 					colors={ colors }
 				/>
+			}
+			{ ! isGradient && wpVersion && semverCompare( wpVersion, '=', '6.1' ) && // For 6.1 Compatibility
+				<div className="stk-color-palette-group-container__wp6-1-compatibility">
+					{ colors.map( colorGroup => {
+						return <>
+							<div className="stk-color-palette-group__wp6-1-compatibility">
+								<h2 className="stk-color-palette-group__title__wp6-1-compatibility"> { colorGroup.name } </h2>
+								<ColorPalette
+									value={ value }
+									onChange={ newValue => {
+										const colorObject = getColorObjectByColorValue( allColors, newValue )
+										onChange( preOnChange( applyFilters( 'stackable.color-palette-control.change', newValue, colorObject ), value ) )
+									} }
+									disableCustomColors={ true }
+									label={ colorLabel }
+									clearable={ false }
+									colors={ colorGroup.colors }
+								/>
+							</div>
+						</>
+					}
+					) }
+				</div>
 			}
 		</>
 	)
