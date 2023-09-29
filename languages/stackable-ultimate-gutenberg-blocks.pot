@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.11.4\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.11.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-09-08T11:22:26+00:00\n"
+"POT-Creation-Date: 2023-09-25T07:42:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -2826,7 +2826,7 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/columns/index.js:121
 #: pro__premium_only/src/deprecated/v2/modules/advanced-column-spacing/index.js:68
-#: src/block-components/alignment/edit.js:288
+#: src/block-components/alignment/edit.js:294
 #: src/block-components/columns/edit.js:173
 #: src/block-components/helpers/flex-gap/edit.js:16
 #: src/block/icon-list/edit.js:222
@@ -2837,7 +2837,7 @@ msgid "Column Gap"
 msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/columns/index.js:137
-#: src/block-components/alignment/edit.js:332
+#: src/block-components/alignment/edit.js:338
 #: src/block-components/columns/edit.js:190
 #: src/block-components/helpers/flex-gap/edit.js:24
 #: src/block/icon-list/edit.js:230
@@ -2917,9 +2917,9 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:71
 #: pro__premium_only/src/deprecated/v2/block/team-member/index.js:100
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:73
-#: src/block-components/alignment/edit.js:157
-#: src/block-components/alignment/edit.js:176
-#: src/block-components/alignment/edit.js:195
+#: src/block-components/alignment/edit.js:163
+#: src/block-components/alignment/edit.js:182
+#: src/block-components/alignment/edit.js:201
 #: src/components/resizable-column/index.js:551
 msgid "Column"
 msgstr ""
@@ -3989,12 +3989,12 @@ msgstr ""
 msgid "Sticky"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:28
+#: src/block-components/alignment/edit.js:34
 #: src/components/align-buttons-control/index.js:16
 msgid "Align Left"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:33
+#: src/block-components/alignment/edit.js:39
 #: src/block-components/content-align/edit.js:33
 #: src/block-components/content-align/edit.js:56
 #: src/components/align-buttons-control/index.js:21
@@ -4002,20 +4002,20 @@ msgstr ""
 msgid "Align Center"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:38
+#: src/block-components/alignment/edit.js:44
 #: src/components/align-buttons-control/index.js:26
 msgid "Align Right"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:43
+#: src/block-components/alignment/edit.js:49
 #: src/components/align-buttons-control/index.js:31
 msgid "Justified"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:80
-#: src/block-components/alignment/edit.js:176
-#: src/block-components/alignment/edit.js:195
-#: src/block-components/alignment/edit.js:253
+#: src/block-components/alignment/edit.js:86
+#: src/block-components/alignment/edit.js:182
+#: src/block-components/alignment/edit.js:201
+#: src/block-components/alignment/edit.js:259
 #: src/block/button-group/edit.js:169
 #: src/block/button-group/edit.js:175
 #: src/block/carousel/edit.js:353
@@ -4026,21 +4026,21 @@ msgstr ""
 msgid "%s Alignment"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:80
+#: src/block-components/alignment/edit.js:86
 #: src/block-components/typography/edit.js:108
 #: src/block/button-group/edit.js:169
 msgid "Content"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:87
+#: src/block-components/alignment/edit.js:93
 msgid "Content Min. Height"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:100
+#: src/block-components/alignment/edit.js:106
 msgid "Content Max Width"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:119
+#: src/block-components/alignment/edit.js:125
 #: src/block-components/helpers/size/edit.js:28
 #: src/deprecated/v2/block/column/edit.js:184
 #: src/deprecated/v2/block/column/edit.js:194
@@ -4054,49 +4054,49 @@ msgstr ""
 msgid "Content Horizontal Align"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:125
+#: src/block-components/alignment/edit.js:131
 msgid "Sets the placement of the column container to left, center or right. Not available when block width is set to full width."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:152
+#: src/block-components/alignment/edit.js:158
 msgid "Adjusts the placement of all content in the block to align left, center or right"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:157
-#: src/block-components/alignment/edit.js:237
+#: src/block-components/alignment/edit.js:163
+#: src/block-components/alignment/edit.js:243
 #: src/block/carousel/edit.js:346
 #: src/block/carousel/edit.js:463
 msgid "%s Justify"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:165
+#: src/block-components/alignment/edit.js:171
 msgid "Sets the horizontal position and spacing of the inner columns."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:171
+#: src/block-components/alignment/edit.js:177
 msgid "Column contents need to be narrow for effect to show."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:182
-#: src/block-components/alignment/edit.js:201
+#: src/block-components/alignment/edit.js:188
+#: src/block-components/alignment/edit.js:207
 msgid "Sets the vertical position of the inner columns relative to the columns block."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:210
+#: src/block-components/alignment/edit.js:216
 msgid "%s Direction"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:210
-#: src/block-components/alignment/edit.js:237
-#: src/block-components/alignment/edit.js:253
-#: src/block-components/alignment/edit.js:288
-#: src/block-components/alignment/edit.js:289
-#: src/block-components/alignment/edit.js:313
-#: src/block-components/alignment/edit.js:332
+#: src/block-components/alignment/edit.js:216
+#: src/block-components/alignment/edit.js:243
+#: src/block-components/alignment/edit.js:259
+#: src/block-components/alignment/edit.js:294
+#: src/block-components/alignment/edit.js:295
+#: src/block-components/alignment/edit.js:319
+#: src/block-components/alignment/edit.js:338
 msgid "Inner Block"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:214
+#: src/block-components/alignment/edit.js:220
 #: src/block/button-group/edit.js:77
 #: src/block/button-group/edit.js:88
 #: src/block/call-to-action/variations.js:53
@@ -4125,7 +4125,7 @@ msgstr ""
 msgid "Horizontal"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:218
+#: src/block-components/alignment/edit.js:224
 #: src/block/button-group/edit.js:81
 #: src/block/button-group/edit.js:92
 #: src/block/tabs/edit.js:188
@@ -4135,54 +4135,54 @@ msgstr ""
 msgid "Vertical"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:247
+#: src/block-components/alignment/edit.js:253
 msgid "Sets the horizontal/vertical position and spacing of the inner blocks."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:264
+#: src/block-components/alignment/edit.js:270
 msgid "Aligns the horizontal/vertical position of the inner blocks."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:266
+#: src/block-components/alignment/edit.js:272
 msgid "Set Content Min. Height for alignment to display properly"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:271
+#: src/block-components/alignment/edit.js:277
 msgid "Inner Block Wrapping"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:275
+#: src/block-components/alignment/edit.js:281
 #: src/block/button-group/edit.js:191
 msgid "No Wrap"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:279
+#: src/block-components/alignment/edit.js:285
 #: src/block/button-group/edit.js:195
 msgid "Wrap"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:288
-#: src/block-components/alignment/edit.js:289
-#: src/block-components/alignment/edit.js:313
-#: src/block-components/alignment/edit.js:332
+#: src/block-components/alignment/edit.js:294
+#: src/block-components/alignment/edit.js:295
+#: src/block-components/alignment/edit.js:319
+#: src/block-components/alignment/edit.js:338
 msgid "%s %s"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:289
-#: src/block-components/alignment/edit.js:313
+#: src/block-components/alignment/edit.js:295
+#: src/block-components/alignment/edit.js:319
 #: src/block/horizontal-scroller/edit.js:142
 msgid "Gap"
 msgstr ""
 
-#: src/block-components/alignment/edit.js:298
+#: src/block-components/alignment/edit.js:304
 msgid "Sets the gap between the columns of inner blocks."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:321
+#: src/block-components/alignment/edit.js:327
 msgid "Sets the gap between inner blocks."
 msgstr ""
 
-#: src/block-components/alignment/edit.js:340
+#: src/block-components/alignment/edit.js:346
 msgid "Sets the gap between the rows of inner blocks."
 msgstr ""
 
