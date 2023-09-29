@@ -82,14 +82,6 @@ const Edit = props => {
 						heightUnits={ heightUnit }
 						hasLightbox
 					/>
-					<Typography.InspectorControls
-						label={ __( 'Caption', i18n ) }
-						attrNameTemplate="figcaption%s"
-						hasToggle={ true }
-						hasTextTag={ false }
-						hasTextContent={ true }
-						initialOpen={ false }
-					/>
 					{ enableLink && <Link.InspectorControls hasTitle={ true } isAdvancedTab={ true } /> }
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
@@ -99,6 +91,14 @@ const Edit = props => {
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
+					{ ( props.attributes.imageExternalUrl || props.attributes.imageUrl ) && <Typography.InspectorControls
+						label={ __( 'Caption', i18n ) }
+						attrNameTemplate="figcaption%s"
+						hasToggle={ true }
+						hasTextTag={ false }
+						hasTextContent={ true }
+						initialOpen={ false }
+					/> }
 				</>
 			) }
 

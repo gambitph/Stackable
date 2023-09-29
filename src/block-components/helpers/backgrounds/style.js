@@ -78,15 +78,6 @@ const Styles = props => {
 				{ ...propsToPass }
 				selector={ selector }
 				styleRule="backgroundImage"
-				attrName="backgroundMediaExternalUrl"
-				key="backgroundMediaExternalUrl"
-				attrNameTemplate={ attrNameTemplate }
-				format="url(%s)"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ selector }
-				styleRule="backgroundImage"
 				attrName="backgroundMediaUrl"
 				key="backgroundMediaUrl"
 				attrNameTemplate={ attrNameTemplate }
@@ -103,6 +94,16 @@ const Styles = props => {
 					}
 					return value
 				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaExternalUrl"
+				key="backgroundMediaExternalUrl"
+				responsive="all"
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
 			/>
 			<BlockCss
 				{ ...propsToPass }

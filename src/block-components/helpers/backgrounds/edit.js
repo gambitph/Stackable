@@ -234,7 +234,7 @@ export const BackgroundControls = props => {
 						const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
 						const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
 						const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
-						const attrExternalUrl = getAttributeName( getAttrName( 'backgroundMediaExternalUrl' ) )
+						const attrExternalUrl = getAttributeName( getAttrName( 'backgroundMediaExternalUrl', deviceType ) )
 
 						const attributes = {
 							[ attrNameId ]: image.id,
@@ -242,7 +242,7 @@ export const BackgroundControls = props => {
 							[ attrWidthAttribute ]: image.width || '',
 							[ attrHeightAttribute ]: image.height || '',
 							[ attrAlt ]: image.alt || '',
-							[ attrExternalUrl ]: deviceType === 'Desktop' ? '' : getAttribute( 'backgroundMediaExternalUrl' ),
+							[ attrExternalUrl ]: '',
 						}
 
 						if ( props.onBackgroundEnableAttribute ) {
@@ -255,11 +255,12 @@ export const BackgroundControls = props => {
 					responsive="all"
 				/>
 			}
-			{ deviceType === 'Desktop' && <AdvancedTextControl
+			<AdvancedTextControl
 				label={ __( 'Background Image Url', i18n ) }
 				attribute={ getAttrName( 'backgroundMediaExternalUrl' ) }
+				responsive="all"
 				onChange={ text => {
-					const backgroundMediaExternalUrl = getAttrName( 'backgroundMediaExternalUrl' )
+					const backgroundMediaExternalUrl = getAttrName( 'backgroundMediaExternalUrl', deviceType )
 					const attrNameId = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Id`, deviceType )
 					const attrNameUrl = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Url`, deviceType )
 					const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
@@ -274,10 +275,8 @@ export const BackgroundControls = props => {
 						[ attrHeightAttribute ]: '',
 						[ attrAlt ]: '',
 					} )
-				}
-
-				}
-			/> }
+				} }
+			/>
 			{ hasBackgroundMedia &&
 				<AdvancedRangeControl
 					label={ __( 'Background Media Tint Strength', i18n ) }

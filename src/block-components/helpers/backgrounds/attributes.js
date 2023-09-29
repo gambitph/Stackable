@@ -78,6 +78,7 @@ export const backgroundAttributes = {
 		default: '',
 	},
 	backgroundMediaExternalUrl: {
+		stkResponsive: true,
 		type: 'string',
 		default: '',
 	},
