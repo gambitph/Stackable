@@ -7785,6 +7785,18 @@
     ]
   },
   {
+    "family": "Inclusive Sans",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Inconsolata",
     "variants": [
       "200",
@@ -10199,7 +10211,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11189,6 +11202,16 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Mooli",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -13237,6 +13260,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-hungarian"
     ]
   },
@@ -13313,6 +13338,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-turkic"
     ]
   },
@@ -14139,7 +14166,9 @@
       "regular"
     ],
     "subsets": [
-      "dogra"
+      "dogra",
+      "latin",
+      "latin-ext"
     ]
   },
   {

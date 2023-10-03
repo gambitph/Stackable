@@ -42,7 +42,9 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 	if ( ! function_exists( 'stackable_render_block_alignment_frontend_polyfill' ) ) {
 
 		function stackable_render_block_alignment_frontend_polyfill ( $block_content, $block ) {
-			if ( stripos( $block[ 'blockName' ], 'stackable/' ) === false ) {
+			$block_name = ! empty( $block[ 'blockName' ] ) ? $block[ 'blockName' ] : '';
+
+			if ( stripos( $block_name, 'stackable/' ) === false ) {
 				return $block_content;
 			}
 

@@ -43,10 +43,31 @@ const detectIfVideo = url => {
 		return true
 	} else if ( url.match( /vimeo\.com/ ) ) {
 		return true
-	} else if ( url.match( /\.(mp4|webm|mov)$/i ) ) {
+	} else if ( url.match( /\.(mp4|webm|mov)/i ) ) {
 		return true
 	}
 	return false
+}
+
+// Detects the type of the URL if it's a image URL.
+const detectIfImage = url => {
+	if ( ! url ) {
+		return false
+	}
+
+	const regexp = /(?:^.*\.(jpg|jpeg|png|webp|avif|gif|svg))/i
+	return regexp.test( url )
+}
+
+// Detects the type of the URL if it's video/image/external
+const detectType = url => {
+	if ( detectIfVideo( url ) ) {
+		return 'video'
+	} else if ( detectIfImage( url ) ) {
+		return 'image'
+	}
+
+	return 'external'
 }
 
 // Get the outermost container block element.
@@ -189,7 +210,7 @@ class StackableImageLightbox {
 						href,
 						// We'll need to detect the type because auto-detect
 						// doesn't work here for some unknown reason.
-						type: type || ( detectIfVideo( href ) ? 'video' : 'image' ),
+						type: type || detectType( href ),
 						title,
 					}
 				} )

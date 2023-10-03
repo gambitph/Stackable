@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.3.1
 Requires PHP: 7.0
-Stable tag: 3.11.4
+Stable tag: 3.11.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -290,6 +290,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.11.5 =
+* Fixed: Fixed styles not loading the the Getting Started page in Firefox #2901
+* Fixed: Remote URLs in lightbox gallery now work correctly #2864
+* Fixed: PHP warning in PHP 8.2 #2897
+* Fixed: Possible PHP warning in admin from Freemius SDK
 
 = 3.11.4 =
 * New: Added Video Popup block options: disable video download, no full screen & enable/disable loop for self-hosted videos #2876
