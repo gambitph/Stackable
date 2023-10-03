@@ -226,6 +226,7 @@ class AdvancedAutosuggestControl extends Component {
 				onChange={ value => { // Will be used to reset.
 					if ( value === '' ) {
 						this.onChange( null, { newValue: '' } )
+						this.props.onReset()
 					}
 				} }
 				allowReset={ this.props.allowReset }
@@ -334,6 +335,7 @@ AdvancedAutosuggestControl.defaultProps = {
 	renderInputComponent: null,
 	inputProps: {},
 	helpTooltip: {},
+	onReset: () => {},
 }
 
 export default AdvancedAutosuggestControl
