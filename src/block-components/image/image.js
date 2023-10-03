@@ -279,7 +279,7 @@ const Image = memo( props => {
 					draggable="false"
 				/>
 			</div>
-			{ props.figcaptionShow && props.src && <span className={ figcaptionClassnames }>{ props.figcaption }</span> }
+			{ props.figcaptionShow && props.src && <span className={ figcaptionClassnames }>{ props.figcaption === '' ? 'Image Caption' : props.figcaption }</span> }
 			{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }
 			{ isResizing && tempStyle && <style>{ tempStyle }</style> }
 			{ ( isSelected && props.enableClickToEdit ) && (
