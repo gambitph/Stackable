@@ -1,6 +1,7 @@
 /**
  * A popup of a color palette.
  */
+
 /**
  * WordPress dependencies
  */
@@ -52,6 +53,7 @@ export const ColorPalettePopup = props => {
 					value={ value.startsWith( 'linear-' ) || value.startsWith( 'radial-' ) ? value : null } // null prevents an error in Spectra
 					gradients={ colors }
 					clearable={ false }
+					__experimentalHasMultipleOrigins={ true }
 				/>
 			}
 			{ ! isGradient &&
@@ -74,6 +76,7 @@ export const ColorPalettePopup = props => {
 					label={ colorLabel }
 					clearable={ false }
 					colors={ colors }
+					__experimentalHasMultipleOrigins={ true }
 				/>
 			}
 		</>
