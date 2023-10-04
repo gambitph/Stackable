@@ -94,8 +94,8 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 			if ( $count_inner_blocks == 0 ) {
 				// check if it contains a text
 				if ( trim( wp_strip_all_tags( $block[ 'innerHTML' ], true ) ) != '' ) {
-					// return the text without tags
-					return $answer . trim( wp_strip_all_tags( $block[ 'innerHTML'], true ) );
+					// return the text after stripping all tags except <br>
+					return $answer . trim( strip_tags( $block[ 'innerHTML'], ["<br>"] ) );
 				}
 				return $answer;
 			}
@@ -129,10 +129,10 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 
 				$this->faq_entities[] = '{
 						"@type": "Question",
-						"name": ' . json_encode( $question ) . ',
+						"name": ' . json_encode( $question, JSON_UNESCAPED_UNICODE ) . ',
 						"acceptedAnswer": {
 							"@type": "Answer",
-							"text": ' . json_encode( $answer ) .'
+							"text": ' . json_encode( $answer, JSON_UNESCAPED_UNICODE ) .'
 						}
 					}';
 			}
