@@ -15,8 +15,8 @@
 		content: "";
 		position: absolute;
 		inset: 0;
-		opacity: var(--stk-gradient-overlay, 0.3);
 		z-index: 1;
+		opacity: var(--stk-gradient-overlay, 0.3);
 		pointer-events: none; // Disallow the gradient overlay to capture the mouse events (so people can still right-click on the image)
 	}
 	&.stk-img--gradient-overlay {

@@ -1,8 +1,12 @@
+import { deprecatedAddAttributes } from './deprecated'
+
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		imageWidthUnitDefault = '%',
 		selector = 'img',
 	} = options
+
+	deprecatedAddAttributes( attrObject, options )
 
 	attrObject.add( {
 		attributes: {
@@ -56,11 +60,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				default: '',
 				stkHover: true,
 			},
-			imageOverlayColor2: {
-				type: 'string',
-				default: '',
-				stkHover: true,
-			},
 			imageOverlayOpacity: {
 				type: 'number',
 				default: '',
@@ -69,21 +68,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			imageOverlayBlendMode: {
 				type: 'string',
 				default: '',
-			},
-			imageOverlayGradientDirection: {
-				type: 'number',
-				default: '',
-				stkHover: true,
-			},
-			imageOverlayGradientLocation1: {
-				type: 'number',
-				default: '',
-				stkHover: true,
-			},
-			imageOverlayGradientLocation2: {
-				type: 'number',
-				default: '',
-				stkHover: true,
 			},
 
 			imageFocalPoint: {

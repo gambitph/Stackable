@@ -49,7 +49,7 @@ const BlendModeControl = props => {
 BlendModeControl.defaultProps = {
 	className: '',
 	label: __( 'Mix Blend Mode', i18n ),
-	help: __( 'Not supported in all browsers.', i18n ),
+	help: '',
 }
 
 export default BlendModeControl

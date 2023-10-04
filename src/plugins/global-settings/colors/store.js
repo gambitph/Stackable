@@ -16,6 +16,7 @@ import { fetchSettings } from '~stackable/util'
 const DEFAULT_STATE = {
 	isInitializing: true,
 	stackableColors: [],
+	stackableGradients: [],
 	hideThemeColors: false,
 	hideDefaultColors: false,
 	hideSiteEditorColors: false,
@@ -60,6 +61,7 @@ domReady( () => {
 			stackable_global_hide_default_colors: hideDefaultColors,
 			stackable_global_hide_site_editor_colors: hideSiteEditorColors,
 			stackable_global_colors: _stackableColors,
+			stackable_global_gradients: stackableGradients,
 		} = response
 		const stackableColors = head( _stackableColors ) || []
 
@@ -68,6 +70,7 @@ domReady( () => {
 			hideDefaultColors,
 			hideSiteEditorColors,
 			stackableColors,
+			stackableGradients: stackableGradients || [],
 			isInitializing: false,
 		} )
 	} )

@@ -1,3 +1,5 @@
+import { deprecatedAddAttributes } from './deprecated'
+
 const typographyAttributes = {
 	fontSize: {
 		stkResponsive: true,
@@ -45,10 +47,6 @@ const typographyAttributes = {
 		stkHover: true,
 		default: '',
 	},
-	textColor2: {
-		type: 'string',
-		default: '',
-	},
 	textShadow: {
 		stkHover: true,
 		type: 'string',
@@ -57,10 +55,6 @@ const typographyAttributes = {
 	textAlign: {
 		stkResponsive: true,
 		type: 'string',
-		default: '',
-	},
-	textGradientDirection: {
-		type: 'number',
 		default: '',
 	},
 	hasP: {
@@ -79,6 +73,8 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 		defaultText = '',
 		multilineWrapperTags: __unstableMultilineWrapperTags,
 	} = options
+
+	deprecatedAddAttributes( attrObject, options )
 
 	attrObject.add( {
 		attributes: {

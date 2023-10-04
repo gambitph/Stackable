@@ -9,7 +9,9 @@ import { Save } from './save'
  */
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
-import { Image } from '~stackable/block-components'
+import {
+	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor, deprecationImageOverlayOpacity,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
@@ -37,6 +39,99 @@ addFilter( 'stackable.posts.title.readmore-content', 'stackable/3_0_2', addUndef
 addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureImage )
 
 const deprecated = [
+	{
+		// Support the new combined opacity and color.
+		// We have to repeat this because the older deprecations are not called when this triggers.
+		// This deprecation entry is for the New UI where we changed how the
+		// layout & containers work.
+		attributes: attributes( '3.11.9' ),
+		save: withVersion( '3.11.9' )( Save ),
+		isEligible: attributes => {
+			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
+			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			const hasImageOpacity = deprecationImageOverlayOpacity.isEligible( attributes )
+			const hasTitleGradient = deprecateTypographyGradientColor.isEligible( 'title%s' )( attributes )
+			const hasCategoryGradient = deprecateTypographyGradientColor.isEligible( 'category%s' )( attributes )
+			const hasExcerptGradient = deprecateTypographyGradientColor.isEligible( 'excerpt%s' )( attributes )
+			const hasMetaGradient = deprecateTypographyGradientColor.isEligible( 'meta%s' )( attributes )
+			const hasReadmoreGradient = deprecateTypographyGradientColor.isEligible( 'readmore%s' )( attributes )
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			return hasContainerOpacity ||
+				hasBlockOpacity ||
+				hasImageOpacity ||
+				isNotV4 ||
+				hasTitleGradient ||
+				hasCategoryGradient ||
+				hasExcerptGradient ||
+				hasMetaGradient ||
+				hasReadmoreGradient
+		},
+		migrate: attributes => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// We used to have an "Inner content width" which is now just the block width
+			const hasOldInnerContentWidth = attributes.innerBlockContentWidth || attributes.innerBlockContentWidthTablet || attributes.innerBlockContentWidthMobile
+
+			if ( hasOldInnerContentWidth ) {
+				newAttributes = {
+					...newAttributes,
+					innerBlockContentWidth: '',
+					innerBlockContentWidthTablet: '',
+					innerBlockContentWidthMobile: '',
+					innerBlockContentWidthUnit: 'px',
+					innerBlockContentWidthUnitTablet: '',
+					innerBlockContentWidthUnitMobile: '',
+					blockWidth: attributes.innerBlockContentWidth,
+					blockWidthTablet: attributes.innerBlockContentWidthTablet,
+					blockWidthMobile: attributes.innerBlockContentWidthMobile,
+					blockWidthUnit: attributes.innerBlockContentWidthUnit,
+					blockWidthUnitTablet: attributes.innerBlockContentWidthUnitTablet,
+					blockWidthUnitMobile: attributes.innerBlockContentWidthUnitMobile,
+					innerBlockAlign: '',
+					innerBlockAlignTablet: '',
+					innerBlockAlignMobile: '',
+					blockHorizontalAlign: attributes.innerBlockAlign,
+					blockHorizontalAlignTablet: attributes.innerBlockAlignTablet,
+					blockHorizontalAlignMobile: attributes.innerBlockAlignMobile,
+				}
+			}
+
+			// Container borders while the container was turned off was allowed
+			// before, now it's not allowed. Turn on the container to mimic the
+			// effect. This goes first before the container paddings check below
+			// because we need to set the paddings to zero for this to work.
+			const hasContainerBorders = !! attributes.containerBorderType ||
+				( typeof attributes.containerBorderRadius !== 'undefined' && attributes.containerBorderRadius !== '' ) ||
+				!! attributes.containerShadow
+
+			if ( ! attributes.hasContainer && hasContainerBorders ) {
+				newAttributes = {
+					...newAttributes,
+					hasContainer: true,
+					containerPadding: {
+						top: 0, right: 0, bottom: 0, left: 0,
+					},
+					containerBackgroundColor: 'transparent',
+				}
+			}
+
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'readmore%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// This deprecation entry is for the New UI where we changed how the
 		// layout & containers work.
@@ -98,6 +193,16 @@ const deprecated = [
 					containerBackgroundColor: 'transparent',
 				}
 			}
+
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			newAttributes = deprecateTypographyGradientColor.migrate( 'title%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'category%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'excerpt%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'meta%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'readmore%s' )( newAttributes )
 
 			return newAttributes
 		},

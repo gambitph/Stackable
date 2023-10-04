@@ -65,6 +65,8 @@
 	&.is-pressed {
 		--wp-components-color-foreground: #f0f0f0;
 		color: revert;
+		// For WP 6.1 Compatibility
+		background-color: var(--wp-components-color-foreground, #f0f0f0);
 	}
 	.dashicon {
 		max-width: 16px !important;

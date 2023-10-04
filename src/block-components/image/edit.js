@@ -26,15 +26,12 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 } from '~stackable/hooks'
-import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { useSelect } from '@wordpress/data'
-import {
-	sprintf, _x, __,
-} from '@wordpress/i18n'
+import { _x, __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { useMemo } from '@wordpress/element'
 
@@ -53,10 +50,6 @@ const IMAGE_SHADOWS = [
 ]
 
 const Controls = props => {
-	const {
-		blockState = 'normal',
-	} = props
-
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
 			imageId: attributes.imageId,
@@ -68,9 +61,6 @@ const Controls = props => {
 			imageSize: attributes.imageSize,
 			imageAlt: attributes.imageAlt,
 			imageOverlayColorType: attributes.imageOverlayColorType,
-			imageOverlayGradientDirection: attributes.imageOverlayGradientDirection,
-			imageOverlayGradientLocation1: attributes.imageOverlayGradientLocation1,
-			imageOverlayGradientLocation2: attributes.imageOverlayGradientLocation2,
 			imageUrl: attributes.imageUrl,
 			imageShapeFlipX: attributes.imageShapeFlipX,
 			imageShapeFlipY: attributes.imageShapeFlipY,
@@ -291,30 +281,15 @@ const Controls = props => {
 					},
 				] }
 				attribute="imageOverlayColorType"
-				fullwidth={ false }
 				isSmall={ true }
 			/>
 
-			{ /* TODO: opacity will now be included in the color */ }
 			<ColorPaletteControl
-				label={
-					attributes.imageOverlayColorType === 'gradient'
-						? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Overlay Color', i18n ), 1 )
-						: __( 'Overlay Color', i18n )
-				}
+				label={ __( 'Overlay Color', i18n ) }
 				attribute="imageOverlayColor"
-				hasTransparent={ attributes.imageOverlayColorType === 'gradient' }
 				hover="all"
+				isGradient={ attributes.imageOverlayColorType === 'gradient' }
 			/>
-			{ attributes.imageOverlayColorType === 'gradient' && (
-				<ColorPaletteControl
-					label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Overlay Color', i18n ), 2 ) }
-					attribute="imageOverlayColor2"
-					hover="all"
-					hasTransparent={ true }
-				/>
-			) }
-
 			<AdvancedRangeControl
 				label={ __( 'Overlay Opacity', i18n ) }
 				attribute="imageOverlayOpacity"
@@ -333,81 +308,6 @@ const Controls = props => {
 					description: __( 'Sets how the overlay color blends with the image', i18n ),
 				} }
 			/>
-
-			{ attributes.imageOverlayColorType === 'gradient' && (
-				<ButtonIconPopoverControl
-					label={ __( 'Gradient Overlay Settings', i18n ) }
-					onReset={ () => {
-						setAttributes( {
-							[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', blockState ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', blockState ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', blockState ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', blockState ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', blockState ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', blockState ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', blockState ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', blockState ) ]: '',
-							[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', blockState ) ]: '',
-						} )
-					} }
-					allowReset={
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'desktop', blockState ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'desktop', blockState ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'desktop', blockState ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'tablet', blockState ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'tablet', blockState ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'tablet', blockState ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientDirection', 'mobile', blockState ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation1', 'mobile', blockState ) ] ||
-						attributes[ getAttributeName( 'imageOverlayGradientLocation2', 'mobile', blockState ) ]
-					}
-				>
-					<AdvancedRangeControl
-						label={ __( 'Gradient Direction (degrees)', i18n ) }
-						attribute="imageOverlayGradientDirection"
-						hover="all"
-						min={ 0 }
-						max={ 360 }
-						step={ 10 }
-						allowReset={ true }
-						placeholder="90"
-						helpTooltip={ {
-							// TODO: Add a working video
-							description: __( 'Sets the direction (in degrees) of the colors', i18n ),
-						} }
-					/>
-
-					<AdvancedRangeControl
-						label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
-						attribute="imageOverlayGradientLocation1"
-						hover="all"
-						sliderMin={ 0 }
-						max={ 100 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder="0"
-						helpTooltip={ {
-							video: 'gradient-location',
-							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
-						} }
-					/>
-
-					<AdvancedRangeControl
-						label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
-						attribute="imageOverlayGradientLocation2"
-						hover="all"
-						sliderMin={ 0 }
-						max={ 100 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder="100"
-						helpTooltip={ {
-							video: 'gradient-location',
-							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
-						} }
-					/>
-				</ButtonIconPopoverControl>
-			) }
 
 			<ControlSeparator />
 

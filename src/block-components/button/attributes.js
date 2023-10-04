@@ -3,6 +3,7 @@
  */
 import { addBorderAttributes } from '~stackable/block-components'
 import { Link, Icon } from '../'
+import { deprecatedAddAttributes } from './deprecated'
 
 const buttonAttributes = {
 	padding: {
@@ -18,16 +19,6 @@ const buttonAttributes = {
 		stkHover: true,
 		type: 'string',
 		default: '', // button primary color.
-	},
-	backgroundColor2: {
-		stkHover: true,
-		type: 'string',
-		default: '',
-	},
-	backgroundGradientDirection: {
-		stkHover: true,
-		type: 'number',
-		default: '',
 	},
 	minHeight: {
 		stkResponsive: true,
@@ -54,6 +45,8 @@ export const addAttributes = ( attrObject, options = {} ) => {
 		selector,
 		attrNameTemplate = 'button%s',
 	} = options
+
+	deprecatedAddAttributes( attrObject, options )
 
 	attrObject.add( {
 		attributes: buttonAttributes,

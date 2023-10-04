@@ -1,3 +1,5 @@
+import { deprecatedAddAttributes } from './deprecated'
+
 export const backgroundAttributes = {
 	backgroundColorType: {
 		type: 'string',
@@ -5,10 +7,6 @@ export const backgroundAttributes = {
 	},
 	backgroundColor: {
 		stkHover: true,
-		type: 'string',
-		default: '',
-	},
-	backgroundColor2: {
 		type: 'string',
 		default: '',
 	},
@@ -45,31 +43,14 @@ export const backgroundAttributes = {
 		type: 'string',
 		default: '',
 	},
-	backgroundColorOpacity: {
-		stkHover: true,
-		type: 'number',
-		default: '',
-	},
 	backgroundTintStrength: {
 		stkHover: true,
-		type: 'number',
-		default: '',
-	},
-	backgroundGradientDirection: {
 		type: 'number',
 		default: '',
 	},
 	backgroundCustomSize: {
 		stkResponsive: true,
 		stkUnits: '%',
-		type: 'number',
-		default: '',
-	},
-	backgroundGradientLocation1: {
-		type: 'number',
-		default: '',
-	},
-	backgroundGradientLocation2: {
 		type: 'number',
 		default: '',
 	},
@@ -85,6 +66,8 @@ export const backgroundAttributes = {
 }
 
 export const addBackgroundAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
+	deprecatedAddAttributes( attrObject, attrNameTemplate )
+
 	attrObject.add( {
 		attributes: backgroundAttributes,
 		attrNameTemplate,
@@ -92,3 +75,4 @@ export const addBackgroundAttributes = ( attrObject, attrNameTemplate = '%s' ) =
 		versionDeprecated: '',
 	} )
 }
+
