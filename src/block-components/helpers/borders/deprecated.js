@@ -5,9 +5,8 @@ addFilter( 'stackable.block-component.helpers.borders', 'borders', ( output, get
 	const borderRadius = getAttribute( 'borderRadius' )
 	const borderRadiusTablet = getAttribute( 'borderRadiusTablet' )
 	const borderRadiusMobile = getAttribute( 'borderRadiusMobile' )
-	dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
-
 	if ( borderRadius || borderRadiusTablet || borderRadiusMobile ) {
+		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 		updateAttributes( {
 			borderRadius2: borderRadius ? {
 				top: borderRadius,
