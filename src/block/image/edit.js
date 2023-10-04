@@ -95,14 +95,14 @@ const Edit = props => {
 					<CustomCSS.InspectorControls mainBlockClass="stk-block-image" />
 					<Responsive.InspectorControls />
 					<ConditionalDisplay.InspectorControls />
-					{ ( props.attributes.imageExternalUrl || props.attributes.imageUrl ) && <Typography.InspectorControls
+					<Typography.InspectorControls
 						label={ __( 'Caption', i18n ) }
 						attrNameTemplate="figcaption%s"
 						hasToggle={ true }
 						hasTextTag={ false }
 						hasTextContent={ true }
 						initialOpen={ false }
-					/> }
+					/>
 				</>
 			) }
 
@@ -125,7 +125,7 @@ const Edit = props => {
 					defaultWidth="100"
 					defaultHeight="auto"
 				/>
-				{ props.attributes.figcaptionShow && props.attributes.imageUrl &&
+				{ props.attributes.figcaptionShow &&
 					<Typography
 						className={ figcaptionClassnames }
 						attrNameTemplate="figcaption%s"
