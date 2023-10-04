@@ -142,20 +142,12 @@ const Edit = props => {
 									description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
 								} }
 							/>
-						</PanelAdvancedSettings>
-					</InspectorStyleControls>
-
-					<InspectorAdvancedControls>
-						<PanelAdvancedSettings
-							title={ __( 'FAQ Schema', i18n ) }
-							id="faq-schema"
-						>
 							<AdvancedToggleControl
 								label={ __( 'Enable FAQ Schema', i18n ) }
 								attribute="enableFAQ"
 							/>
 						</PanelAdvancedSettings>
-					</InspectorAdvancedControls>
+					</InspectorStyleControls>
 
 					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
