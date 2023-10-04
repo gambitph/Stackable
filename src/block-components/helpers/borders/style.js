@@ -21,6 +21,9 @@ const Styles = props => {
 
 	return (
 		<>
+			{ /* The style below is deprecated. We have to keep it
+			because users who have updated will suddenly see that they have lost their
+			border radius */ }
 			<BlockCss
 				{ ...propsToPass }
 				selector={ borderRadiusSelector || selector }

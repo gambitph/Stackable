@@ -45,7 +45,7 @@ export const BorderControls = props => {
 
 	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
 
-	applyFilters( 'stackable.block-component.helpers', null, getAttribute, updateAttributes )
+	applyFilters( 'stackable.block-component.helpers.borders', null, getAttribute, updateAttributes )
 
 	return (
 		<Fragment>

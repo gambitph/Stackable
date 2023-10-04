@@ -1,43 +1,35 @@
 import { addFilter } from '@wordpress/hooks'
 import { dispatch } from '@wordpress/data'
 
-addFilter( 'stackable.block-component.helpers', 'borders', ( output, getAttribute, updateAttributes ) => {
+addFilter( 'stackable.block-component.helpers.borders', 'borders', ( output, getAttribute, updateAttributes ) => {
 	const borderRadius = getAttribute( 'borderRadius' )
 	const borderRadiusTablet = getAttribute( 'borderRadiusTablet' )
 	const borderRadiusMobile = getAttribute( 'borderRadiusMobile' )
 	dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 
-	if ( borderRadius ) {
+	if ( borderRadius || borderRadiusTablet || borderRadiusMobile ) {
 		updateAttributes( {
-			borderRadius2: {
+			borderRadius2: borderRadius ? {
 				top: borderRadius,
 				right: borderRadius,
 				left: borderRadius,
 				bottom: borderRadius,
-			},
-			borderRadius: '',
-		} )
-	}
-	if ( borderRadiusTablet ) {
-		updateAttributes( {
-			borderRadius2Tablet: {
+			} : undefined,
+			borderRadius2Tablet: borderRadiusTablet ? {
 				top: borderRadiusTablet,
 				right: borderRadiusTablet,
 				left: borderRadiusTablet,
 				bottom: borderRadiusTablet,
-			},
-			borderRadiusTablet: '',
-		} )
-	}
-	if ( borderRadiusMobile ) {
-		updateAttributes( {
-			borderRadius2Mobile: {
+			} : undefined,
+			borderRadius2Mobile: borderRadiusMobile ? {
 				top: borderRadiusMobile,
 				right: borderRadiusMobile,
 				left: borderRadiusMobile,
 				bottom: borderRadiusMobile,
-			},
-			borderRadiusMobile: '',
+			} : undefined,
+			borderRadius: borderRadius ? '' : undefined,
+			borderRadiusTablet: borderRadiusTablet ? '' : undefined,
+			borderRadiusMobile: borderRadiusMobile ? '' : undefined,
 		} )
 	}
 } )
