@@ -49,7 +49,7 @@ export const Save = props => {
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ props.attributes.imageUrl &&
+			{ ( props.attributes.imageUrl || props.attributes.imageExternalUrl ) &&
 				<Image.Content
 					hasWrapper={ true }
 					version={ props.version }
