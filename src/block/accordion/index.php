@@ -23,8 +23,6 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_script' ) ) {
 if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) {
 	/**
 	 * Adds polyfill for summary/details element that are * used in accordion blocks.
-	 *
-	 * TODO: confirm that this works on older browsers
 	 */
 	function stackable_load_accordion_frontend_polyfill_script() {
 
@@ -92,12 +90,16 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema' ) ) {
 		public function get_faq_answer( $block, $answer ) {
 			$count_inner_blocks = count( $block[ 'innerBlocks' ] );
 			if ( $count_inner_blocks == 0 ) {
-				// check if it contains a text
-				if ( trim( wp_strip_all_tags( $block[ 'innerHTML' ], true ) ) != '' ) {
-					// return the text after stripping all tags except <br>
-					return trim( $answer . ' ' . trim( strip_tags( $block['innerHTML'], ["<br>"] ) ) );
+				if ( is_null( $block['innerHTML'] ) ) {
+					return $answer;
 				}
-				return $answer;
+
+				// This regex is taken directly on how wp_strip_all_tags does
+				// it, but do not remove some allowed tags.
+				$text = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $block['innerHTML'] );
+				$text = trim( strip_tags( $text, '<br>' ) );
+
+				return trim( $answer . ' ' . $text );
 			}
 
 			for ( $i = 0; $i < $count_inner_blocks; $i++ ) {
@@ -117,9 +119,9 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema' ) ) {
 				$isHeadingBlock = $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'blockName' ] === 'stackable/heading';
 				$question = '';
 				if ( $isHeadingBlock ) {
-					$question = trim( strip_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerHTML' ] ) );
+					$question = trim( wp_strip_all_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerHTML' ] ) );
 				} else {
-					$question = trim( strip_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][1][ 'innerHTML' ] ) );
+					$question = trim( wp_strip_all_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][1][ 'innerHTML' ] ) );
 				}
 
 				// innerBlocks[1] is for the content
