@@ -200,7 +200,6 @@ export const Edit = props => {
 					label={ __( 'Shape Color', i18n ) }
 					attribute="shapeColor1"
 					hover="all"
-					hasTransparent={ true }
 				/>
 			) }
 			{ PremiumShapeColorControls && <PremiumShapeColorControls { ...props } /> }
@@ -242,7 +241,6 @@ export const Edit = props => {
 				label={ __( 'Shape Outline Color', i18n ) }
 				attribute="shapeOutlineColor"
 				hover={ hover }
-				hasTransparent={ true }
 			/>
 		</>
 	)

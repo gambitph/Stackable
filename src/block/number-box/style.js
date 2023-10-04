@@ -67,7 +67,7 @@ export const HeadingStyles = memo( props => {
 						{ ...props }
 						attrNameTemplate="shape%s"
 						selector=".stk-block-number-box__text"
-						backgroundFallbackColor="#000000"
+						// backgroundFallbackColor="#000000"
 					/>
 					<BorderStyle
 						{ ...props }

@@ -314,14 +314,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			$css = array();
-			$core_css = array();
 
-			foreach( $colors as $color_palette ) {
+			foreach ( $colors as $color_palette ) {
 				if ( ! is_array( $color_palette ) ) {
 					continue;
 				}
 
-				foreach( $color_palette as $color ) {
+				foreach ( $color_palette as $color ) {
 					if ( ! is_array( $color ) ) {
 						continue;
 					}
@@ -329,24 +328,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						continue;
 					}
 
-					$color_name = strtolower( $color['slug'] );
-
-					// Convert the name to kebab casing,
-					$color_typography_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
-					$color_background_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
-
 					// Only do this for our global colors.
 					if ( $color['color'] && $color['slug'] ) {
 						// Add the custom css property.
 						$css[] = '--' . $color['slug'] . ': ' . $color['color'] . ';';
 						$css[] = '--' . $color['slug'] . '-rgba: ' . $color['rgb'] . ';';
-
-						// Add custom css class rule for other blocks.
-						// For typography colors.
-						$core_css[] = $color_typography_name . ' { color: ' . $color['color'] . ' !important; }';
-
-						// For background colors.
-						$core_css[] = $color_background_name . ' { background-color: ' . $color['color'] . ' !important; }';
 					}
 				}
 			}
@@ -357,11 +343,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$current_css .= $generated_color_css;
 			}
 
-			if ( count( $core_css ) ) {
-				$current_css .= implode( ' ', $core_css );
-			}
-
-			return $current_css;
+			return apply_filters( 'stackable_global_colors_frontend_css', $current_css, $colors );
 		}
 
 		/**-----------------------------------------------------------------------------

@@ -15,6 +15,7 @@ import { Icon } from '../icon'
 import { getButtonClasses } from './get-button-classes'
 
 export { getButtonClasses }
+export { deprecateButtonGradientColor } from './deprecated'
 
 export const Button = props => {
 	const {

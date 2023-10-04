@@ -13,14 +13,20 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 	useDeviceType,
+	useBlockContext,
 } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
+import {
+	AlignmentToolbar,
+	BlockControls,
+} from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
+import { addFilter } from '@wordpress/hooks'
+import { select } from '@wordpress/data'
 
 const ALIGN_OPTIONS = [
 	{
@@ -344,6 +350,27 @@ export const Edit = props => {
 			</InspectorLayoutControls>
 		</Fragment>
 	)
+}
+
+// Add additional classes when browser is Firefox to fix alignment
+const userAgent = navigator?.userAgent
+if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
+	addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', classes => {
+		const {
+			hasInnerBlocks, numInnerBlocks, innerBlocks,
+		} = useBlockContext()
+
+		if ( hasInnerBlocks ) {
+			for ( let i = 0; i < numInnerBlocks; i++ ) {
+				const innerBlockClientId = innerBlocks[ i ].clientId
+				const { blockMargin } = select( 'core/block-editor' ).getBlockAttributes( innerBlockClientId )
+				if ( blockMargin && ( blockMargin.top === 'auto' || blockMargin.bottom === 'auto' ) ) {
+					classes.push( 'stk--alignment-polyfill' )
+				}
+			}
+		}
+		return classes
+	} )
 }
 
 Edit.defaultProps = {

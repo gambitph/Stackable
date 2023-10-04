@@ -3,6 +3,7 @@ import { addAttributes } from './attributes'
 import { createUniqueClass, useUniqueId } from './use-unique-id'
 import { Style } from './style'
 import { Edit } from './edit'
+import { firefoxHasPolyfill } from './firefox-has-polyfill'
 
 import classnames from 'classnames/dedupe'
 import { Div } from '~stackable/components'
@@ -16,6 +17,7 @@ import { CustomAttributes } from '../custom-attributes'
 import { version as VERSION } from 'stackable'
 
 export { useUniqueId }
+export { deprecateBlockBackgroundColorOpacity } from './deprecated'
 
 export const BlockDiv = props => {
 	const {
@@ -42,13 +44,6 @@ export const BlockDiv = props => {
 	uniqueBlockClass = instanceId ? uniqueBlockClass + `-${ instanceId }` : uniqueBlockClass
 	uniqueBlockClass = applyFilters( 'stackable.block-div.uniqueClass.edit', uniqueBlockClass )
 
-	// Variation picker will show up if there's no uniqueId yet (which will be
-	// the case when enableVariationPicker = true)
-	const variationPicker = useVariationPicker( clientId, attributes.uniqueId )
-	if ( variationPicker && enableVariationPicker ) {
-		return variationPicker
-	}
-
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
 	const customAttributes = applyCustomAttributes ? CustomAttributes.getCustomAttributes( attributes ) : {}
@@ -74,6 +69,13 @@ export const BlockDiv = props => {
 		props
 	) )
 
+	// Variation picker will show up if there's no uniqueId yet (which will be
+	// the case when enableVariationPicker = true)
+	const variationPicker = useVariationPicker( clientId, attributes.uniqueId )
+	if ( variationPicker && enableVariationPicker ) {
+		return variationPicker
+	}
+
 	return <Div
 		{ ...propsToPass }
 		{ ...customAttributes }
@@ -87,7 +89,10 @@ export const BlockDiv = props => {
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
 		{ ...applyFilters( 'stackable.block-components.block-div.attributes', {}, attributes ) }
-	/>
+	>
+		{ props.children }
+		{ firefoxHasPolyfill( clientId, attributes ) }
+	</Div>
 }
 
 BlockDiv.defaultProps = {

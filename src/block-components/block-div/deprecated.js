@@ -1,3 +1,5 @@
+import { deprecationBackgrounColorOpacity } from '../helpers'
+
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
 
@@ -18,3 +20,12 @@ addFilter( 'stackable.block-components.block-div.classnames.content', 'stackable
 
 	return classes
 } )
+
+export const deprecateBlockBackgroundColorOpacity = {
+	isEligible: attributes => {
+		return deprecationBackgrounColorOpacity.isEligible( 'block%s' )( attributes )
+	},
+	migrate: attributes => {
+		return deprecationBackgrounColorOpacity.migrate( 'block%s' )( attributes )
+	},
+}

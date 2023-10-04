@@ -21,7 +21,7 @@ import {
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 
 /**
  * Internal dependencies
@@ -105,7 +105,6 @@ export const HoverEffects = () => {
 
 export const ColorsControls = props => {
 	const {
-		blockState,
 		hasIconColor,
 		hasTextColor,
 		attrNameTemplate = 'button%s',
@@ -133,36 +132,13 @@ export const ColorsControls = props => {
 			] }
 			attribute={ getAttrName( 'backgroundColorType' ) }
 			isSmall={ true }
-			fullwidth={ false }
 		/>
 		<ColorPaletteControl
-			label={ buttonBackgroundColorType === 'gradient'
-				? sprintf( __( 'Button Color #%s', i18n ), 1 )
-				: __( 'Button Color', i18n )
-			}
+			label={ __( 'Button Color', i18n ) }
 			attribute={ getAttrName( 'backgroundColor' ) }
 			hover="all"
-			hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
+			isGradient={ buttonBackgroundColorType === 'gradient' }
 		/>
-		{ buttonBackgroundColorType === 'gradient' && (
-			<>
-				<ColorPaletteControl
-					label={ __( 'Button Color #2', i18n ) }
-					attribute={ getAttrName( 'backgroundColor2' ) }
-					hover="all"
-				/>
-
-				<AdvancedRangeControl
-					label={ __( 'Gradient Direction (degrees)', i18n ) }
-					attribute={ getAttrName( 'backgroundGradientDirection' ) }
-					min={ 0 }
-					max={ 360 }
-					step={ 10 }
-					allowReset={ true }
-					hover="all"
-				/>
-			</>
-		) }
 
 		{ hasTextColor && (
 			<ColorPaletteControl
