@@ -135,21 +135,7 @@ const Styles = props => {
 				attrName="backgroundColor"
 				attrNameTemplate={ attrNameTemplate }
 				key="buttonBackgroundColor"
-				valueCallback={ ( _, getAttribute ) => {
-					const buttonBackgroundGradientDirection = getAttribute( 'backgroundGradientDirection' )
-					const buttonBackgroundColor = getAttribute( 'backgroundColor' )
-					const buttonBackgroundColor2 = getAttribute( 'backgroundColor2' )
-
-					if ( getAttribute( 'backgroundColorType' ) !== 'gradient' ) {
-						return getAttribute( 'backgroundColor' )
-					}
-
-					return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
-				} }
 				dependencies={ [
-					'backgroundGradientDirection',
-					'backgroundColor',
-					'backgroundColor2',
 					'backgroundColorType',
 					...dependencies,
 				 ] }
@@ -167,29 +153,9 @@ const Styles = props => {
 					if ( state === 'normal' ) {
 						return undefined
 					}
-
-					if ( getAttribute( 'backgroundColorType' ) !== 'gradient' ) {
-						return value
-					}
-
-					const buttonBackgroundGradientDirection = getAttribute( 'backgroundGradientDirection', 'desktop', state )
-					const buttonBackgroundColor = getAttribute( 'backgroundColor', 'desktop', state )
-					const buttonBackgroundColor2 = getAttribute( 'backgroundColor2', 'desktop', state )
-
-					if (
-						( typeof buttonBackgroundColor !== undefined &&
-					buttonBackgroundColor !== '' ) ||
-					( typeof buttonBackgroundColor2 !== undefined &&
-					buttonBackgroundColor2 !== '' )
-					) {
-						return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
-					}
-					return undefined
+					return value
 				} }
 				dependencies={ [
-					'backgroundGradientDirection',
-					'backgroundColor',
-					'backgroundColor2',
 					'backgroundColorType',
 					...dependencies,
 				] }

@@ -393,7 +393,6 @@ const Edit = props => {
 							<AdvancedToolbarControl
 								controls={ COLOR_TYPE_CONTROLS }
 								attribute="timelineAccentColorType"
-								fullwidth={ false }
 								isSmall={ true }
 							/>
 							<ColorPaletteControl

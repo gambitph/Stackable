@@ -135,21 +135,18 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 						<AdvancedToolbarControl
 							controls={ GRADIENT_OPTIONS }
 							isSmall={ true }
-							fullwidth={ false }
 							attribute="progressColorType"
 						/>
 						<ColorPaletteControl
 							label={ isColorGradient ? sprintf( __( 'Bar Color #%s', i18n ), 1 )
 								: __( 'Bar Color', i18n ) }
 							attribute="progressColor1"
-							hasTransparent={ isColorGradient }
 						/>
 						{ isColorGradient && (
 							<>
 								<ColorPaletteControl
 									label={ sprintf( __( 'Bar Color #%s', i18n ), 2 ) }
 									attribute="progressColor2"
-									hasTransparent={ true }
 								/>
 								{ isCircle && ( <AdvancedRangeControl
 									label={ __( 'Gradient Direction (degrees)', i18n ) }
@@ -233,7 +230,6 @@ export const Edit = ( { attrNameTemplate, isCircle } ) => {
 					<ColorPaletteControl
 						label={ __( 'Background Color', i18n ) }
 						attribute="progressBackgroundColor"
-						hasTransparent={ true }
 					/>
 					{ isCircle && (
 						<AdvancedToggleControl

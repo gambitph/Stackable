@@ -8,7 +8,6 @@ import { getShapeCSS } from './get-shape-css'
  */
 import { toNumber } from 'lodash'
 import { BlockCss } from '~stackable/components'
-import { hexToRgba } from '~stackable/util'
 
 const focalPointToPosition = ( { x, y } ) => {
 	let _x = toNumber( x )
@@ -233,17 +232,38 @@ const Styles = props => {
 					...dependencies,
 				] }
 			/>
+			{ /* These 2 components are for the gradient overlay normal states */ }
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"
 				selector={ `${ selector }::after` }
 				hoverSelector={ `${ hoverSelector }::after` }
 				hoverSelectorCallback={ hoverSelectorCallback }
-				styleRule="backgroundColor"
+				styleRuleCallback={ getAttribute => {
+					const colorType = getAttribute( 'imageOverlayColorType' )
+					return colorType === 'gradient' ? 'backgroundImage' : 'backgroundColor'
+				} }
 				attrName="imageOverlayColor"
 				key="imageOverlayColor-save"
-				hover="all"
-				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient' }
+				hoverCallback={ getAttribute => {
+					const colorType = getAttribute( 'imageOverlayColorType' )
+					return colorType === 'gradient' ? null : 'all'
+				} }
+				valueCallback={ ( value, getAttribute ) => {
+					const textColorType = getAttribute( 'imageOverlayColorType' )
+					const isGradient = value?.startsWith( 'linear-' ) || value?.startsWith( 'radial-' )
+
+					// If the type was switched, adjust the value so that gradient will show up.
+					if ( textColorType === 'gradient' && ! isGradient ) {
+						return `linear-gradient(${ value } 0%, ${ value } 100%)`
+					} else if ( textColorType !== 'gradient' && isGradient ) {
+						const color = value.match( /((rgba?|var)\([^\)]+\)|#[\w\d]+)/ )
+						if ( color ) {
+							return color[ 0 ]
+						}
+					}
+					return value
+				} }
 				dependencies={ [
 					'imageOverlayColorType',
 					...dependencies,
@@ -255,171 +275,117 @@ const Styles = props => {
 				selector={ `${ selector } .stk-img-resizer-wrapper::after` }
 				hoverSelector={ `${ hoverSelector } .stk-img-resizer-wrapper::after` }
 				hoverSelectorCallback={ hoverSelectorCallback }
-				styleRule="backgroundColor"
+				styleRuleCallback={ getAttribute => {
+					const colorType = getAttribute( 'imageOverlayColorType' )
+					return colorType === 'gradient' ? 'backgroundImage' : 'backgroundColor'
+				} }
 				attrName="imageOverlayColor"
 				key="imageOverlayColor"
-				hover="all"
-				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) !== 'gradient' }
+				hoverCallback={ getAttribute => {
+					const colorType = getAttribute( 'imageOverlayColorType' )
+					return colorType === 'gradient' ? null : 'all'
+				} }
+				valueCallback={ ( value, getAttribute ) => {
+					const textColorType = getAttribute( 'imageOverlayColorType' )
+					const isGradient = value?.startsWith( 'linear-' ) || value?.startsWith( 'radial-' )
+
+					// If the type was switched, adjust the value so that gradient will show up.
+					if ( textColorType === 'gradient' && ! isGradient ) {
+						return `linear-gradient(${ value } 0%, ${ value } 100%)`
+					} else if ( textColorType !== 'gradient' && isGradient ) {
+						const color = value.match( /((rgba?|var)\([^\)]+\)|#[\w\d]+)/ )
+						if ( color ) {
+							return color[ 0 ]
+						}
+					}
+					return value
+				} }
 				dependencies={ [
 					'imageOverlayColorType',
 					 ...dependencies,
 				] }
 			/>
+			{ /* These 2 components are for the gradient overlay for hover states */ }
 			<BlockCss
 				{ ...propsToPass }
-				renderIn="save"
+				renderIn="edit"
 				selector={ `${ selector }::after` }
-				hoverSelector={ `${ hoverSelector }::before` }
-				styleRule="backgroundImage"
+				hoverSelector={ `${ selector }::before` }
+				styleRuleCallback={ getAttribute => {
+					const colorType = getAttribute( 'imageOverlayColorType' )
+					return colorType === 'gradient' ? 'backgroundImage' : 'backgroundColor'
+				} }
 				attrName="imageOverlayColor"
-				key="imageOverlayColor-save-image"
-				hover="all"
+				key="imageOverlayColor-edit-image"
+				hoverCallback={ getAttribute => {
+					const colorType = getAttribute( 'imageOverlayColorType' )
+					return colorType === 'gradient' ? 'all' : null
+				} }
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient' }
-				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					if ( state !== 'normal' ) {
-						if ( getAttribute( 'imageOverlayColor2', 'desktop', 'normal' ) || getAttribute( 'imageOverlayColor', 'desktop', 'normal' ) ) {
-							return '1'
+				valueCallback={ ( value, getAttribute, device, state ) => {
+					if ( state === 'normal' ) {
+						return undefined
+					}
+
+					const textColorType = getAttribute( 'imageOverlayColorType' )
+					const isGradient = value?.startsWith( 'linear-' ) || value?.startsWith( 'radial-' )
+
+					// If the type was switched, adjust the value so that gradient will show up.
+					if ( textColorType === 'gradient' && ! isGradient ) {
+						return `linear-gradient(${ value } 0%, ${ value } 100%)`
+					} else if ( textColorType !== 'gradient' && isGradient ) {
+						const color = value.match( /((rgba?|var)\([^\)]+\)|#[\w\d]+)/ )
+						if ( color ) {
+							return color[ 0 ]
 						}
 					}
 					return value
 				} }
-				valueCallback={ ( value, getAttribute, device, state ) => {
-					// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
-					let defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', state )
-					if ( state !== 'normal' && ! defaultColor1 ) { // For hover state, use the default if not set.
-						defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', 'normal' )
-					}
-					defaultColor1 = hexToRgba( defaultColor1 || '#ffffff', 0 )
-
-					let defaultColor2 = getAttribute( 'imageOverlayColor', 'desktop', state )
-					if ( state !== 'normal' && ! defaultColor2 ) { // For hover state, use the default if not set.
-						defaultColor2 = getAttribute( 'imageOverlayColor', 'desktop', 'normal' )
-					}
-					defaultColor2 = hexToRgba( defaultColor2 || '#ffffff', 0 )
-
-					// Gradient location.
-					let color1Location = getAttribute( 'imageOverlayGradientLocation1', 'desktop', state )
-					if ( state !== 'normal' && color1Location === '' ) {
-						color1Location = getAttribute( 'imageOverlayGradientLocation1', 'desktop', 'normal' )
-					}
-					color1Location = `${ color1Location || '0' }%`
-
-					let color2Location = getAttribute( 'imageOverlayGradientLocation2', 'desktop', state )
-					if ( state !== 'normal' && color2Location === '' ) {
-						color2Location = getAttribute( 'imageOverlayGradientLocation2', 'desktop', 'normal' )
-					}
-					color2Location = `${ color2Location || '100' }%`
-
-					let angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', state )
-					// For hover state, use the default if not set.
-					if ( state !== 'normal' && angle === '' ) {
-						angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', 'normal' )
-					}
-
-					if ( angle === '' ) {
-						angle = '90'
-					}
-					angle = `${ angle }deg`
-
-					let color1 = getAttribute( 'imageOverlayColor', 'desktop', state )
-					if ( state !== 'normal' && ! color1 ) { // For hover state, use the default if not set.
-						color1 = getAttribute( 'imageOverlayColor', 'desktop', 'normal' )
-					}
-					let color2 = getAttribute( 'imageOverlayColor2', 'desktop', state )
-					if ( state !== 'normal' && ! color2 ) { // For hover state, use the default if not set.
-						color2 = getAttribute( 'imageOverlayColor2', 'desktop', 'normal' )
-					}
-
-					return `linear-gradient(${ angle }, ${ color1 || defaultColor1 } ${ color1Location }, ${ color2 || defaultColor2 } ${ color2Location })`
-				} }
 				dependencies={ [
 					'imageOverlayColorType',
-					'imageOverlayColor2',
-					'imageOverlayColor',
-					'imageOverlayGradientLocation1',
-					'imageOverlayGradientLocation2',
-					'imageOverlayGradientDirection',
 					'imageOverlayOpacity',
 					...dependencies,
 				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				renderIn="edit"
-				selector={ `${ selector } .stk-img-resizer-wrapper::after` }
-				hoverSelector={ `${ hoverSelector } .stk-img-resizer-wrapper::before` }
-				hoverSelectorCallback={ hoverSelectorCallback }
-				styleRule="backgroundImage"
+				renderIn="save"
+				selector={ `${ selector }::after` }
+				hoverSelector={ `${ selector }::before` }
+				styleRuleCallback={ getAttribute => {
+					const colorType = getAttribute( 'imageOverlayColorType' )
+					return colorType === 'gradient' ? 'backgroundImage' : 'backgroundColor'
+				} }
 				attrName="imageOverlayColor"
-				key="imageOverlayColor-image"
-				hover="all"
+				key="imageOverlayColor-save-image"
+				hoverCallback={ getAttribute => {
+					const colorType = getAttribute( 'imageOverlayColorType' )
+					return colorType === 'gradient' ? 'all' : null
+				} }
 				enabledCallback={ getAttribute => getAttribute( 'imageOverlayColorType' ) === 'gradient' }
-				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					if ( state !== 'normal' ) {
-						if ( getAttribute( 'imageOverlayColor2', 'desktop', 'normal' ) || getAttribute( 'imageOverlayColor', 'desktop', 'normal' ) ) {
-							return '1'
+				valueCallback={ ( value, getAttribute, device, state ) => {
+					if ( state === 'normal' ) {
+						return undefined
+					}
+
+					const textColorType = getAttribute( 'imageOverlayColorType' )
+					const isGradient = value?.startsWith( 'linear-' ) || value?.startsWith( 'radial-' )
+
+					// If the type was switched, adjust the value so that gradient will show up.
+					if ( textColorType === 'gradient' && ! isGradient ) {
+						return `linear-gradient(${ value } 0%, ${ value } 100%)`
+					} else if ( textColorType !== 'gradient' && isGradient ) {
+						const color = value.match( /((rgba?|var)\([^\)]+\)|#[\w\d]+)/ )
+						if ( color ) {
+							return color[ 0 ]
 						}
 					}
 					return value
 				} }
-				valueCallback={ ( value, getAttribute, device, state ) => {
-				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
-					let defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', state )
-					if ( state !== 'normal' && ! defaultColor1 ) { // For hover state, use the default if not set.
-						defaultColor1 = getAttribute( 'imageOverlayColor2', 'desktop', 'normal' )
-					}
-					defaultColor1 = hexToRgba( defaultColor1 || '#ffffff', 0 )
-
-					let defaultColor2 = getAttribute( 'imageOverlayColor', 'desktop', state )
-					if ( state !== 'normal' && ! defaultColor2 ) { // For hover state, use the default if not set.
-						defaultColor2 = getAttribute( 'imageOverlayColor', 'desktop', 'normal' )
-					}
-					defaultColor2 = hexToRgba( defaultColor2 || '#ffffff', 0 )
-
-					// Gradient location.
-					let color1Location = getAttribute( 'imageOverlayGradientLocation1', 'desktop', state )
-					if ( state !== 'normal' && color1Location === '' ) {
-						color1Location = getAttribute( 'imageOverlayGradientLocation1', 'desktop', 'normal' )
-					}
-					color1Location = `${ color1Location || '0' }%`
-
-					let color2Location = getAttribute( 'imageOverlayGradientLocation2', 'desktop', state )
-					if ( state !== 'normal' && color2Location === '' ) {
-						color2Location = getAttribute( 'imageOverlayGradientLocation2', 'desktop', 'normal' )
-					}
-					color2Location = `${ color2Location || '100' }%`
-
-					let angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', state )
-					// For hover state, use the default if not set.
-					if ( state !== 'normal' && angle === '' ) {
-						angle = getAttribute( 'imageOverlayGradientDirection', 'desktop', 'normal' )
-					}
-
-					if ( angle === '' ) {
-						angle = '90'
-					}
-					angle = `${ angle }deg`
-
-					let color1 = getAttribute( 'imageOverlayColor', 'desktop', state )
-					if ( state !== 'normal' && ! color1 ) { // For hover state, use the default if not set.
-						color1 = getAttribute( 'imageOverlayColor', 'desktop', 'normal' )
-					}
-					let color2 = getAttribute( 'imageOverlayColor2', 'desktop', state )
-					if ( state !== 'normal' && ! color2 ) { // For hover state, use the default if not set.
-						color2 = getAttribute( 'imageOverlayColor2', 'desktop', 'normal' )
-					}
-
-					return `linear-gradient(${ angle }, ${ color1 || defaultColor1 } ${ color1Location }, ${ color2 || defaultColor2 } ${ color2Location })`
-				} }
 				dependencies={ [
 					'imageOverlayColorType',
-					 'imageOverlayColor2',
-					 'imageOverlayColor',
-					 'imageOverlayGradientLocation1',
-					 'imageOverlayGradientLocation2',
-					 'imageOverlayGradientDirection',
-					 'imageOverlayOpacity',
-					  ...dependencies,
+					'imageOverlayOpacity',
+					...dependencies,
 				] }
 			/>
 			<BlockCss

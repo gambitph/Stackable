@@ -14,6 +14,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import metadata from './block.json'
+import deprecated from './deprecated'
 
 export const settings = {
 	...metadata,
@@ -25,6 +26,7 @@ export const settings = {
 		reusable: false,
 		stkSaveBlockStyle: false,
 	},
+	deprecated,
 	edit,
 	save,
 }
