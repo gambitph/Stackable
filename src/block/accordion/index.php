@@ -67,7 +67,7 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 	add_action( 'stackable/accordion/enqueue_scripts', 'stackable_load_accordion_frontend_polyfill_script' );
 }
 
-if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
+if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema' ) ) {
 	class Stackable_Accordion_FAQ_Schema {
 		public $faq_entities = [];
 
@@ -95,7 +95,7 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema') ) {
 				// check if it contains a text
 				if ( trim( wp_strip_all_tags( $block[ 'innerHTML' ], true ) ) != '' ) {
 					// return the text after stripping all tags except <br>
-					return $answer . trim( strip_tags( $block[ 'innerHTML'], ["<br>"] ) );
+					return trim( $answer . ' ' . trim( strip_tags( $block['innerHTML'], ["<br>"] ) ) );
 				}
 				return $answer;
 			}
