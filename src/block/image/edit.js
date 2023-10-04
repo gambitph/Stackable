@@ -53,7 +53,11 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const figcaptionClassnames = getTypographyClasses( props.attributes, 'figcaption%s' )
+	const figcaptionClassnames = classnames(
+		getTypographyClasses( props.attributes, 'figcaption%s' ),
+		'stk-img-figcaption'
+
+	)
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { parentBlock } = useBlockContext( clientId )
@@ -116,12 +120,18 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				<Image
-					figcaptionClassnames={ figcaptionClassnames }
 					showTooltips
 					heightUnits={ heightUnit }
 					defaultWidth="100"
 					defaultHeight="auto"
 				/>
+				{ props.attributes.figcaptionShow && props.attributes.imageUrl &&
+					<Typography
+						className={ figcaptionClassnames }
+						attrNameTemplate="figcaption%s"
+						placeholder={ __( 'Image Caption', i18n ) }
+					/>
+				}
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>
