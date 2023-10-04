@@ -5,18 +5,23 @@ export const getThemeStyles = () => {
 	if ( iframe ) {
 		const doc = iframe.contentDocument || iframe.contentWindow.document
 
-		// theme styles are stored in <style> tags that are direct children of body
-		let styleList = doc.querySelectorAll( 'body style' )
+		try {
+			const stylesheets = Array.from( doc.styleSheets ).filter( stylesheet => stylesheet.href === null )
 
-		// converts node list to array
-		styleList = Array.from( styleList )
+			stylesheets.forEach( stylesheet => {
+				const cssRules = Array.from( stylesheet.cssRules )
 
-		styleList.forEach( style => {
-			// retrieves css rules with .editor-styles-wrapper only
-			if ( ! style.hasAttribute( 'id' ) && style.innerHTML.includes( '.editor-styles-wrapper' ) ) {
-				themeStyles += style.innerHTML
-			}
-		} )
+				cssRules.forEach( cssRule => {
+					// get only css rules with .editor-styles-wrapper
+					if ( cssRule.selectorText?.includes( '.editor-styles-wrapper' ) ) {
+						themeStyles += cssRule.cssText
+					}
+				} )
+			} )
+		} catch ( error ) {
+			// eslint-disable-next-line no-console
+			console.error( 'An error occurred while retrieving stylesheets', error )
+		}
 	}
 	return themeStyles
 }
