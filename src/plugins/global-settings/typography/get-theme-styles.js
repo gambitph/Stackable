@@ -1,3 +1,4 @@
+// This function gets all the editor-related styles by collects all the styles inside the editor iframe that contain the selector .editor-styles-wrapper.
 export const getThemeStyles = () => {
 	const iframe = document.querySelector( 'iframe[name="editor-canvas"]' )
 	let themeStyles = ''
