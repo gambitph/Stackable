@@ -292,14 +292,16 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.12.0 =
-* New: WooCommerce integration: you can now use WooCommerce product fields in Dynamic Content and inside the native Query Loop block (premium)
-* New: WooCommerce integration: you can now use WooCommerce product fields as Display Conditions (premium)
-* New: Enhanced color picker: now includes opacity
-* New: Enhanced gradient color picker: multiple color stops, type and angle. Also supports theme gradient colors.
-* New: Accordion FAQ Schema option
-* Fixed: Global settings get removed when switching between code view and visual view
-* Fixed: Posts block, added missing note about extra options
+* New: WooCommerce integration: you can now use WooCommerce product fields in Dynamic Content and inside the native Query Loop block (premium) #2907
+* New: WooCommerce integration: you can now use WooCommerce product fields as Display Conditions (premium) #2907
+* New: Enhanced color picker: now includes opacity #2740
+* New: Enhanced gradient color picker: multiple color stops, type and angle. Also supports theme gradient colors. #2740
+* New: Accordion FAQ Schema option #2874
+* New: You can now adjust border radius corners individually #2877
 * Change: Global colors can no longer be used when picking gradient colors (backward compatible, if you used them before, they will still work unless the gradient is edited)
+* Fixed: Global settings get removed when switching between code view and visual view #2855
+* Fixed: Posts block, added missing note about extra options #2879
+* Fixed: Global typography preview now reflects the theme's default font family #2858
 
 = 3.11.5 =
 * Fixed: Fixed styles not loading the the Getting Started page in Firefox #2901
