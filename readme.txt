@@ -303,6 +303,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Posts block, added missing note about extra options #2879
 * Fixed: Global typography preview now reflects the theme's default font family #2858
 
+= 3.11.6 =
+* Fixed: Design Library not loading, changed CDN
+
 = 3.11.5 =
 * Fixed: Fixed styles not loading the the Getting Started page in Firefox #2901
 * Fixed: Remote URLs in lightbox gallery now work correctly #2864
