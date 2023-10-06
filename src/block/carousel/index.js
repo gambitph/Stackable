@@ -14,6 +14,7 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 import example from './example'
+import deprecated from './deprecated'
 
 export const settings = {
 	...metadata,
@@ -30,6 +31,7 @@ export const settings = {
 		spacing: true,
 	},
 	example,
+	deprecated,
 	edit,
 	save,
 }

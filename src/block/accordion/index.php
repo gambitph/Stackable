@@ -23,8 +23,6 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_script' ) ) {
 if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) {
 	/**
 	 * Adds polyfill for summary/details element that are * used in accordion blocks.
-	 *
-	 * TODO: confirm that this works on older browsers
 	 */
 	function stackable_load_accordion_frontend_polyfill_script() {
 
@@ -65,4 +63,85 @@ if ( ! function_exists( 'stackable_load_accordion_frontend_polyfill_script' ) ) 
 		}
 	}
 	add_action( 'stackable/accordion/enqueue_scripts', 'stackable_load_accordion_frontend_polyfill_script' );
+}
+
+if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema' ) ) {
+	class Stackable_Accordion_FAQ_Schema {
+		public $faq_entities = [];
+
+		function __construct() {
+			add_filter( 'render_block_stackable/accordion', array( $this, 'render_block_accordion_faq_schema' ), 10, 2 );
+			add_filter( 'wp_footer', array( $this, 'print_faq_schema' ) );
+		}
+
+		public function print_faq_schema() {
+			if ( count( $this->faq_entities ) ) {
+				echo
+				'<script type="application/ld+json">
+				{
+					"@context": "https://schema.org",
+					"@type": "FAQPage",
+					"mainEntity": [' . implode( ', ', $this->faq_entities ) . ']
+				}
+				</script>';
+			}
+		}
+
+		public function get_faq_answer( $block, $answer ) {
+			$count_inner_blocks = count( $block[ 'innerBlocks' ] );
+			if ( $count_inner_blocks == 0 ) {
+				if ( is_null( $block['innerHTML'] ) ) {
+					return $answer;
+				}
+
+				// This regex is taken directly on how wp_strip_all_tags does
+				// it, but do not remove some allowed tags.
+				$text = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $block['innerHTML'] );
+				$text = trim( strip_tags( $text, '<br>' ) );
+
+				return trim( $answer . ' ' . $text );
+			}
+
+			for ( $i = 0; $i < $count_inner_blocks; $i++ ) {
+				$partial_answer = $this->get_faq_answer( $block[ 'innerBlocks' ][ $i ], $answer );
+				$answer = $partial_answer;
+			}
+
+			return $answer;
+		}
+
+		public function render_block_accordion_faq_schema( $block_content, $block ) {
+			$attributes = $block[ 'attrs' ];
+
+			if ( isset( $attributes[ 'enableFAQ' ] ) && $attributes[ 'enableFAQ' ] ) {
+				// innerBlocks[0] is for the title
+				// retrieve stackable/column -> stackable/icon-label -> stackable/heading
+				$isHeadingBlock = $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'blockName' ] === 'stackable/heading';
+				$question = '';
+				if ( $isHeadingBlock ) {
+					$question = trim( wp_strip_all_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerHTML' ] ) );
+				} else {
+					$question = trim( wp_strip_all_tags( $block[ 'innerBlocks' ][0][ 'innerBlocks' ][0][ 'innerBlocks' ][1][ 'innerHTML' ] ) );
+				}
+
+				// innerBlocks[1] is for the content
+				// content may have multiple blocks so we need to retrieve all texts from each block
+				$answer = '';
+				$answer = $this->get_faq_answer( $block[ 'innerBlocks' ][1], $answer );
+
+				$this->faq_entities[] = '{
+						"@type": "Question",
+						"name": ' . json_encode( $question, JSON_UNESCAPED_UNICODE ) . ',
+						"acceptedAnswer": {
+							"@type": "Answer",
+							"text": ' . json_encode( $answer, JSON_UNESCAPED_UNICODE ) .'
+						}
+					}';
+			}
+
+			return $block_content;
+		}
+	}
+
+	new Stackable_Accordion_FAQ_Schema();
 }

@@ -46,6 +46,11 @@ export const GlobalTypographyStyles = () => {
 		[]
 	)
 
+	// when switching between visual editor and code editor, the font family needs to be reloaded
+	const editorMode = useSelect( select => {
+		return select( 'core/edit-site' )?.getEditorMode() || select( 'core/edit-post' )?.getEditorMode()
+	} )
+
 	useEffect( () => {
 		// Get settings.
 		fetchSettings().then( response => {
@@ -115,7 +120,7 @@ export const GlobalTypographyStyles = () => {
 		setStyleTimeout( setTimeout( () => doAction( 'stackable.global-settings.typography-update-global-styles', typographySettings ), 200 ) )
 
 		return () => removeAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles' )
-	}, [ JSON.stringify( typographySettings ), applySettingsTo, device ] )
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, device, editorMode ] )
 
 	return styles
 }

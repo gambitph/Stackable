@@ -279,7 +279,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				plugins_url( 'dist/stk.js', STACKABLE_FILE ),
 				// wp-util for wp.ajax.
 				// wp-plugins & wp-edit-post for Gutenberg plugins.
-				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api' ),
+				array( 'code-editor', 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-api-fetch', 'wp-util', 'wp-plugins', 'wp-i18n', 'wp-api', 'lodash' ),
 				STACKABLE_VERSION
 			);
 
@@ -320,7 +320,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'i18n' => STACKABLE_I18N,
 				'nonce' => wp_create_nonce( 'stackable' ),
 				'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
-				'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
+				'cdnUrl' => STACKABLE_DESIGN_LIBRARY_URL,
 				'currentTheme' => esc_html( get_template() ),
 				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 				'version' => array_shift( $version_parts ),

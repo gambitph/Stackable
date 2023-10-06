@@ -3,8 +3,8 @@
  */
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
-import { createRoot } from '@wordpress/element'
 import { Spinner } from '@wordpress/components'
+import { createRoot } from '~stackable/util/element'
 
 /**
  * External dependencies

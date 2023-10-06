@@ -29,3 +29,8 @@
 .stk-block-columns > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	column-gap: var(--stk-column-gap, 0px);
 }
+
+// For Firefox polyfill
+[data-type="stackable/columns"] .stk-block.stk-block-columns.stk-block-columns--has-single-block-polyfill {
+	--stk-columns-spacing: 0;
+}

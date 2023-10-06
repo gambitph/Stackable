@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 6.0
-Tested up to: 6.3
+Requires at least: 6.1
+Tested up to: 6.3.1
 Requires PHP: 7.0
-Stable tag: 3.11.0
+Stable tag: 3.12.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,7 +16,7 @@ Custom Blocks that transform your WordPress Block Editor into a page builder
 
 [Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted block plugin you've been waiting for. Build dynamic websites with our powerful yet lightweight custom WordPress blocks, ready-made designs, UI Kits, global settings, and advanced customization options all whilst boasting speedy performance. Have the confidence to easily design professional websites that stand out using a new page building experience for Gutenberg - the WordPress Block Editor.
 
-> [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+> [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Join the Facebook Community](https://www.facebook.com/groups/wpstackable/)
 
 [youtube https://www.youtube.com/watch?v=P3xG3t-QYjw]
 
@@ -39,7 +39,8 @@ Get 42 flexible custom WordPress blocks that are feature-rich and look good out 
 
 You can choose which of these blocks you need, depending on your workflow. You can also disable blocks if you don't need them.
 
-Essential Blocks
+**Essential Blocks**
+
 - Advanced Columns Block — [View Block](https://wpstackable.com/columns-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Advanced Heading Block - [View Block](https://wpstackable.com/advanced-heading-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Advanced Text Block - [View Block](https://wpstackable.com/advanced-text-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -49,7 +50,8 @@ Essential Blocks
 - Icon Button Block
 - Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
-Special Blocks
+**Special Blocks**
+
 - Carousel Block - [View Block](https://wpstackable.com/carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Horizontal Scroller Block - [View Block](https://wpstackable.com/horizontal-scroller-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Tabs Block - [View Block](https://wpstackable.com/tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -76,7 +78,8 @@ Special Blocks
 - Divider Block
 - Spacer Block
 
-Section Blocks
+**Section Blocks**
+
 - Hero Block — [View Block](https://wpstackable.com/header-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Call to Action Block — [View Block](https://wpstackable.com/call-to-action-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Feature Block — [View Block](https://wpstackable.com/feature-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -175,10 +178,11 @@ Add animations that will bring your site to life and make it more visually engag
 - Load More Block (for the Blog Posts Block)
 - Pagination Block (for the Blog Posts Block)
 
-> [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Learn more](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+> [Try our live demo](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Learn more](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ### News Article Updates
 
+- [v3.12 WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.11 New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.10 New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.9 New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -228,7 +232,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 = Minimum Requirements =
 
-You'll need WordPress version 6.0 or higher for this to work.
+You'll need WordPress version 6.1 or higher for this to work.
 
 == Frequently Asked Questions ==
 
@@ -248,7 +252,7 @@ No, you don't need to know a single line of code when using Stackable
 
 **Do you have a live demo?**
 
-Yes, we have [live demo that you can check out here](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
+Yes, we have [live demo that you can check out here](https://wpstackable.com/demo/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
 
 **What are Blocks?**
 
@@ -287,6 +291,52 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+[WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+= 3.12.0 =
+* New: WooCommerce integration: you can now use WooCommerce product fields in Dynamic Content and inside the native Query Loop block (premium) #2907
+* New: WooCommerce integration: you can now use WooCommerce product fields as Display Conditions (premium) #2907
+* New: Enhanced color picker: now includes opacity #2740
+* New: Enhanced gradient color picker: multiple color stops, type and angle. Also supports theme gradient colors. #2740
+* New: Accordion FAQ Schema option #2874
+* New: You can now adjust border radius corners individually #2877
+* Change: Global colors can no longer be used when picking gradient colors (backward compatible, if you used them before, they will still work unless the gradient is edited)
+* Fixed: Global settings get removed when switching between code view and visual view #2855
+* Fixed: Posts block, added missing note about extra options #2879
+* Fixed: Global typography preview now reflects the theme's default font family #2858
+
+= 3.11.6 =
+* Fixed: Design Library not loading, changed CDN
+
+= 3.11.5 =
+* Fixed: Fixed styles not loading the the Getting Started page in Firefox #2901
+* Fixed: Remote URLs in lightbox gallery now work correctly #2864
+* Fixed: PHP warning in PHP 8.2 #2897
+* Fixed: Possible PHP warning in admin from Freemius SDK
+
+= 3.11.4 =
+* New: Added Video Popup block options: disable video download, no full screen & enable/disable loop for self-hosted videos #2876
+* New: Range controls now show the inherited value from larger screen sizes as placeholders #2859
+* Fixed: Responsive column widths now reset when decreasing columns to one ##2792
+* Fixed: Parent hover state cannot be selected without reselecting a recently moved block 3573c51
+* Fixed: Accordion toggle animation is now works when inside columns #2728
+* Fixed: Firefox fixes for alignments, removed polyfill script for :has selector #2824
+* Fixed: Spacer block dragging again fails to update the editor #2866
+* Fixed: Single columns block spacing looks different in Firefox #2862
+* Fixed: Column arrangement's responsive values do not disappear on refresh #2706
+* Fixed: Timeline block - if background is enabled, dot is not aligned on mobile #2863
+* Fixed: JetEngine PHP warning
+
+= 3.11.3 =
+* Fixed: Compatibility issues with WordPress 6.1
+* Fixed: Dynamic Content now display in the editor correctly when used in a Query Loop block
+* Fixed: Typing on a field will turn "current post" Dynamic Content source source to a specific post ID
+
+= 3.11.2 =
+* Fixed: Dynamic Content did not show up when used inside a native Query Loop block
+
+= 3.11.1 =
+* Fixed: (Hotfix update) PHP error missing function encountered sometimes when updating
 
 = 3.11.0 =
 [Introducing: New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

@@ -66,7 +66,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 				do_action( 'stackable_settings_admin_enqueue_scripts' );
 
-				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor' ) );
+				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor', 'lodash' ) );
 
 				// Add translations.
 				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
 					'i18n' => STACKABLE_I18N,
-					'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
+					'cdnUrl' => STACKABLE_DESIGN_LIBRARY_URL,
 					'isPro' => sugb_fs()->can_use_premium_code() && STACKABLE_BUILD !== 'free',
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
@@ -283,7 +283,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			if ( file_exists( untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/videos/' . $video_file ) ) {
 				return untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ) . '/src/welcome/videos/' . $video_file;
 			}
-			return untrailingslashit( STACKABLE_CLOUDFRONT_URL ) . '/dist/videos/welcome/' . $video_file;
+			return untrailingslashit( STACKABLE_DESIGN_LIBRARY_URL ) . '/dist/videos/welcome/' . $video_file;
 		}
 
 		/**

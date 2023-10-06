@@ -3,6 +3,7 @@
  */
 import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
+import { getThemeStyles } from './get-theme-styles'
 
 /**
  * External dependencies
@@ -163,6 +164,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					default="blocks-stackable-native"
 				/>
 				<ControlSeparator />
+				<style> { getThemeStyles() } </style>
 				{ TYPOGRAPHY_TAGS.map( ( {
 					label, selector, help,
 				}, index ) => {

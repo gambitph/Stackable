@@ -22,6 +22,20 @@
     ]
   },
   {
+    "family": "AR One Sans",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Abel",
     "variants": [
       "regular"
@@ -6162,6 +6176,21 @@
     ]
   },
   {
+    "family": "Gabarito",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Gabriela",
     "variants": [
       "regular"
@@ -7785,6 +7814,18 @@
     ]
   },
   {
+    "family": "Inclusive Sans",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Inconsolata",
     "variants": [
       "200",
@@ -8471,10 +8512,13 @@
     "family": "Kameron",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10199,7 +10243,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -11192,6 +11237,16 @@
     ]
   },
   {
+    "family": "Mooli",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Moon Dance",
     "variants": [
       "regular"
@@ -12090,7 +12145,9 @@
       "regular"
     ],
     "subsets": [
-      "bhaiksuki"
+      "bhaiksuki",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12466,10 +12523,15 @@
   {
     "family": "Noto Sans Gunjala Gondi",
     "variants": [
-      "regular"
+      "regular",
+      "500",
+      "600",
+      "700"
     ],
     "subsets": [
-      "gunjala-gondi"
+      "gunjala-gondi",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -13135,6 +13197,20 @@
     ]
   },
   {
+    "family": "Noto Sans NKo Unjoined",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "nko"
+    ]
+  },
+  {
     "family": "Noto Sans Nabataean",
     "variants": [
       "regular"
@@ -13237,6 +13313,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-hungarian"
     ]
   },
@@ -13313,6 +13391,8 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext",
       "old-turkic"
     ]
   },
@@ -13635,8 +13715,10 @@
       "regular"
     ],
     "subsets": [
+      "braille",
       "latin",
       "latin-ext",
+      "mayan-numerals",
       "symbols"
     ]
   },
@@ -14139,7 +14221,9 @@
       "regular"
     ],
     "subsets": [
-      "dogra"
+      "dogra",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -14923,6 +15007,26 @@
     ]
   },
   {
+    "family": "Onest",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Oooh Baby",
     "variants": [
       "regular"
@@ -15701,6 +15805,20 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Pixelify Sans",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic",
       "latin",
       "latin-ext"
     ]
@@ -20784,6 +20902,16 @@
       "latin",
       "latin-ext",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Young Serif",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {

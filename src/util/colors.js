@@ -70,3 +70,32 @@ export const extractColor = value => {
 	}
 	return value
 }
+
+/**
+ * Combines a hex or var() color with an opacity value to a hex color with alpha
+ * #RRGGBBAA format. This is mostly used for the deprecated opacity attributes.
+ *
+ * When deprecating the opacity, if the color is a normal hex value, deprecate
+ * to:
+ *
+ * color: #abcdef opacity: 0.1 new color: #abcdef1a
+ *
+ * formula: Math.ceil((0.42 * 255)).toString(16).padStart(2, '0')
+ *
+ * color: var(--stk-global-color-10793, #00ffe1) opacity: 0.4 new color:
+ * color-mix(in srgb, var(--stk-global-color-10793, #00ffe1) 40%, transparent)
+ *
+ * @param {string} color color in hex or var() format
+ * @param {float} opacity opacity 0.0-1.0
+ * @return {string} color in #RRGGBBAA format
+ */
+export const colorOpacityToHexAplha = ( color, opacity ) => {
+	if ( color.startsWith( '#' ) ) {
+		// Get the first 6 hex digits.
+		const hex = color.slice( 0, 7 )
+		return hex + Math.ceil( ( opacity * 255 ) ).toString( 16 ).padStart( 2, '0' )
+	} else if ( color.includes( 'var(' ) ) {
+		return `color-mix(in srgb, ${ color } ${ opacity * 100 }%, transparent)`
+	}
+	return color
+}
