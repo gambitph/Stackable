@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.3.1
 Requires PHP: 7.0
-Stable tag: 3.11.5
+Stable tag: 3.12.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -182,6 +182,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.12 WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.11 New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.10 New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.9 New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -290,6 +291,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+[WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 = 3.12.0 =
 * New: WooCommerce integration: you can now use WooCommerce product fields in Dynamic Content and inside the native Query Loop block (premium) #2907
