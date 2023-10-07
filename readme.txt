@@ -102,6 +102,7 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
 - Block Background and Image Color Settings
 - Block Typography Settings
 - Image Shapes and Settings
+- Advanced Gradient Color Picker
 - Advanced Icon Options
 - Advanced Column and Spacing Settings
 - Global Colors & Typography Settings
@@ -154,6 +155,7 @@ Create dynamic WordPress websites that cater to the specific interests of visito
 
 In premium, you get more integrations.
 
+- WooCommerce
 - ACF
 - Metabox
 - JetEngine
