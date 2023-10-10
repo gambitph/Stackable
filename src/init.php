@@ -320,7 +320,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'i18n' => STACKABLE_I18N,
 				'nonce' => wp_create_nonce( 'stackable' ),
 				'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
-				'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
+				'cdnUrl' => STACKABLE_DESIGN_LIBRARY_URL,
 				'currentTheme' => esc_html( get_template() ),
 				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 				'version' => array_shift( $version_parts ),

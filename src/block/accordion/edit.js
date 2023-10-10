@@ -15,6 +15,7 @@ import {
 	InspectorStyleControls,
 	InspectorTabs,
 	PanelAdvancedSettings,
+	InspectorAdvancedControls,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -140,6 +141,10 @@ const Edit = props => {
 									title: __( 'Close adjacent on open', i18n ),
 									description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
 								} }
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Enable FAQ Schema', i18n ) }
+								attribute="enableFAQ"
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>

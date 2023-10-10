@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.3.1
 Requires PHP: 7.0
-Stable tag: 3.11.5
+Stable tag: 3.12.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -102,6 +102,7 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
 - Block Background and Image Color Settings
 - Block Typography Settings
 - Image Shapes and Settings
+- Advanced Gradient Color Picker
 - Advanced Icon Options
 - Advanced Column and Spacing Settings
 - Global Colors & Typography Settings
@@ -154,6 +155,7 @@ Create dynamic WordPress websites that cater to the specific interests of visito
 
 In premium, you get more integrations.
 
+- WooCommerce
 - ACF
 - Metabox
 - JetEngine
@@ -182,6 +184,7 @@ Add animations that will bring your site to life and make it more visually engag
 
 ### News Article Updates
 
+- [v3.12 WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.11 New Timeline Block](https://wpstackable.com/blog/introducing-new-timeline-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.10 New Tabs Block](https://wpstackable.com/blog/introducing-new-tabs-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v3.9 New Carousel Block](https://wpstackable.com/blog/introducing-new-carousel-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -290,6 +293,26 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.1 =
+* Fixed: (Hotfix update) Possible PHP error with Dynamic Content
+
+= 3.12.0 =
+[WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: WooCommerce integration: you can now use WooCommerce product fields in Dynamic Content and inside the native Query Loop block (premium) #2907
+* New: WooCommerce integration: you can now use WooCommerce product fields as Display Conditions (premium) #2907
+* New: Enhanced color picker: now includes opacity #2740
+* New: Enhanced gradient color picker: multiple color stops, type and angle. Also supports theme gradient colors. #2740
+* New: Accordion FAQ Schema option #2874
+* New: You can now adjust border radius corners individually #2877
+* Change: Global colors can no longer be used when picking gradient colors (backward compatible, if you used them before, they will still work unless the gradient is edited)
+* Fixed: Global settings get removed when switching between code view and visual view #2855
+* Fixed: Posts block, added missing note about extra options #2879
+* Fixed: Global typography preview now reflects the theme's default font family #2858
+
+= 3.11.6 =
+* Fixed: Design Library not loading, changed CDN
 
 = 3.11.5 =
 * Fixed: Fixed styles not loading the the Getting Started page in Firefox #2901
