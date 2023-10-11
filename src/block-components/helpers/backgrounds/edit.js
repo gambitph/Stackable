@@ -55,7 +55,12 @@ export const BackgroundControls = props => {
 	const setAttributes = useBlockSetAttributesContext()
 	const [ currentHoverState ] = useBlockHoverState()
 
-	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) || getAttribute( 'backgroundMediaUrlTablet' ) || getAttribute( 'backgroundMediaUrlMobile' )
+	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) ||
+	getAttribute( 'backgroundMediaUrlTablet' ) ||
+	getAttribute( 'backgroundMediaUrlMobile' ) ||
+	getAttribute( 'backgroundMediaExternalUrl' ) ||
+	getAttribute( 'backgroundMediaExternalUrlTablet' ) ||
+	getAttribute( 'backgroundMediaExternalUrlMobile' )
 	const isBackgroundVideo = () => {
 		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
 			.filter( value => value )

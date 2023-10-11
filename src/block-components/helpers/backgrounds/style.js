@@ -171,7 +171,7 @@ const Styles = props => {
 				key="backgroundTintStrength"
 				attrNameTemplate={ attrNameTemplate }
 				hover="all"
-				enabledCallback={ getAttribute => !! getAttribute( 'backgroundMediaUrl', 'mobile', 'normal', true ) }
+				enabledCallback={ getAttribute => !! ( getAttribute( 'backgroundMediaUrl', 'mobile', 'normal', true ) || getAttribute( 'backgroundMediaExternalUrl', 'mobile', 'normal', true ) ) }
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( value === '' ) {
 						if ( getAttribute( 'backgroundColor', device, state ) ) {
@@ -185,8 +185,9 @@ const Styles = props => {
 				} }
 				dependencies={ [
 					'backgroundColor',
-					 'backgroundMediaUrl',
-					 ...dependencies,
+					'backgroundMediaUrl',
+					'backgroundMediaExternalUrl',
+					...dependencies,
 				] }
 			/>
 			<BlockCss
