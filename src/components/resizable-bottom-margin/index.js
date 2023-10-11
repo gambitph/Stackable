@@ -70,9 +70,10 @@ const ResizableBottomMarginSingle = props => {
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
+	const body = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
+	const block = body.querySelector( `${ props.previewSelector }` )
+
 	const getHeightInPixels = val => {
-		const body = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
-		const block = body.querySelector( `${ props.previewSelector }` )
 		if ( block ) {
 			const parent = block.parentElement
 
@@ -87,9 +88,7 @@ const ResizableBottomMarginSingle = props => {
 
 	const unit = props.value || props.value === 0 ? props.unit : 'px'
 	const heightLabel = props.value || props.value === 0 ? props.value : defaultBottomMargin
-	const height =
-	// heightLabel
-	 unit === '%' ? getHeightInPixels( heightLabel ) : heightLabel
+	const height = unit === '%' ? getHeightInPixels( heightLabel ) : heightLabel
 
 	return (
 		<ResizableBox
@@ -106,7 +105,15 @@ const ResizableBottomMarginSingle = props => {
 				setIsResizing( true )
 			} }
 			onResize={ ( _event, _direction, elt, delta ) => {
-				setCurrentHeight( getHeightInPixels( heightLabel + delta.height ) )
+				let heightInPixels = heightLabel + delta.height
+				if ( unit === '%' ) {
+					heightInPixels = getHeightInPixels( heightLabel + delta.height )
+				}
+
+				setCurrentHeight( heightInPixels )
+				elt.style.height = `${ heightInPixels }px`
+
+				// console.log( elt )
 				setCurrentHeightLabel( heightLabel + delta.height )
 
 				// Set snap widths. We need to do this here not on
@@ -116,7 +123,7 @@ const ResizableBottomMarginSingle = props => {
 				}
 			} }
 			onResizeStop={ () => {
-				props.onChange( parseInt( currentHeightLabel, 10 ) === parseInt( defaultBottomMargin, 10 ) ? '' : parseInt( currentHeightLabel, 10 ) )
+				props.onChange( parseInt( currentHeightLabel, 10 ) === parseInt( defaultBottomMargin, 10 ) && unit === 'px' ? '' : parseInt( currentHeightLabel, 10 ) )
 
 				setCurrentHeight( null )
 				setCurrentHeightLabel( null )
