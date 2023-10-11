@@ -104,20 +104,20 @@ const deprecated = [
 			// before, now it's not allowed. Turn on the container to mimic the
 			// effect. This goes first before the container paddings check below
 			// because we need to set the paddings to zero for this to work.
-			const hasContainerBorders = !! attributes.containerBorderType ||
-				( typeof attributes.containerBorderRadius !== 'undefined' && attributes.containerBorderRadius !== '' ) ||
-				!! attributes.containerShadow
+			// const hasContainerBorders = !! attributes.containerBorderType ||
+			// 	( typeof attributes.containerBorderRadius !== 'undefined' && attributes.containerBorderRadius !== '' ) ||
+			// 	!! attributes.containerShadow
 
-			if ( ! attributes.hasContainer && hasContainerBorders ) {
-				newAttributes = {
-					...newAttributes,
-					hasContainer: true,
-					containerPadding: {
-						top: 0, right: 0, bottom: 0, left: 0,
-					},
-					containerBackgroundColor: 'transparent',
-				}
-			}
+			// if ( ! attributes.hasContainer && hasContainerBorders ) {
+			// 	newAttributes = {
+			// 		...newAttributes,
+			// 		hasContainer: true,
+			// 		containerPadding: {
+			// 			top: 0, right: 0, bottom: 0, left: 0,
+			// 		},
+			// 		containerBackgroundColor: 'transparent',
+			// 	}
+			// }
 
 			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
