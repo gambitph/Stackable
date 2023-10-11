@@ -17,7 +17,9 @@ import { range } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element'
+import {
+	useState, useEffect, useRef,
+} from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
@@ -51,8 +53,8 @@ const ResizableBottomMarginSingle = props => {
 	const { deviceType } = props
 	const { name } = useBlockEditContext()
 	const [ currentHeight, setCurrentHeight ] = useState( null )
-	const [ currentHeightLabel, setCurrentHeightLabel ] = useState( null )
 	const [ isResizing, setIsResizing ] = useState( false )
+	const resizableBoxRef = useRef( null )
 
 	const [ snapWidths, setSnapWidths ] = useState( SNAP_HEIGHTS )
 	const isShiftKey = useWithShift()
@@ -70,51 +72,42 @@ const ResizableBottomMarginSingle = props => {
 		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
-	const body = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
-	const block = body.querySelector( `${ props.previewSelector }` )
-
-	const getHeightInPixels = val => {
-		if ( block ) {
-			const parent = block.parentElement
-
-			// use parentWidth because https://medium.com/coding-blocks/css-padding-a-magic-wand-2b8a66b84ebe#:~:text=Margin%20and%20Padding%20in%20percentages,height%20of%20the%20parent%20element.
-			const parentWidth = parseFloat( getComputedStyle( parent ).width )
-
-			// Convert the margin-bottom percentage to pixels
-			val = ( val / 100 ) * parentWidth
-		}
-		return val
-	}
-
 	const unit = props.value || props.value === 0 ? props.unit : 'px'
-	const heightLabel = props.value || props.value === 0 ? props.value : defaultBottomMargin
-	const height = unit === '%' ? getHeightInPixels( heightLabel ) : heightLabel
+	const height = props.value || props.value === 0 ? props.value : defaultBottomMargin
+
+	// Get resizable box initial height in pixels
+	const getSize = delta => {
+		if ( unit === '%' && resizableBoxRef.current ) {
+			// use parent width because the margin in percentage is calculated by the parent's width
+			// reference: https://medium.com/coding-blocks/css-padding-a-magic-wand-2b8a66b84ebe#:~:text=Margin%20and%20Padding%20in%20percentages,height%20of%20the%20parent%20element.
+			const parentWidth = resizableBoxRef.current.getParentSize().width
+			return ( ( height + delta ) / 100 ) * parentWidth
+		}
+		return height
+	}
 
 	return (
 		<ResizableBox
+			ref={ resizableBoxRef }
 			className={ classNames }
 			minHeight="0"
 			handleStyles={ HANDLE_STYLES }
 			enable={ ENABLE }
-			size={ { height } }
+			size={ { height: getSize( 0 ) } }
 			snap={ snapWidths }
 			snapGap={ 5 }
 			onResizeStart={ () => {
 				setCurrentHeight( height )
-				setCurrentHeightLabel( heightLabel )
 				setIsResizing( true )
 			} }
 			onResize={ ( _event, _direction, elt, delta ) => {
-				let heightInPixels = heightLabel + delta.height
 				if ( unit === '%' ) {
-					heightInPixels = getHeightInPixels( heightLabel + delta.height )
+					// height and delta.height is in %, so we need to convert them to pixels
+					const heightInPixels = getSize( delta.height )
+					elt.style.height = `${ heightInPixels }px`
 				}
 
-				setCurrentHeight( heightInPixels )
-				elt.style.height = `${ heightInPixels }px`
-
-				// console.log( elt )
-				setCurrentHeightLabel( heightLabel + delta.height )
+				setCurrentHeight( height + delta.height )
 
 				// Set snap widths. We need to do this here not on
 				// ResizeStart or it won't be used at first drag.
@@ -123,19 +116,18 @@ const ResizableBottomMarginSingle = props => {
 				}
 			} }
 			onResizeStop={ () => {
-				props.onChange( parseInt( currentHeightLabel, 10 ) === parseInt( defaultBottomMargin, 10 ) && unit === 'px' ? '' : parseInt( currentHeightLabel, 10 ) )
+				props.onChange( parseInt( currentHeight, 10 ) === parseInt( defaultBottomMargin, 10 ) && unit === 'px' ? '' : parseInt( currentHeight, 10 ) )
 
 				setCurrentHeight( null )
-				setCurrentHeightLabel( null )
 				setIsResizing( false )
 			} }
 		>
 			{ props.previewSelector && isResizing &&
 				// .editor-styles-wrapper so that our styles will override the currently set margin.
-				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ currentHeightLabel }${ unit } !important; }` }</style>
+				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ currentHeight }${ unit } !important; }` }</style>
 			}
 			<span className="stk-resizable-bottom-margin__label">
-				{ `${ isResizing ? currentHeightLabel : heightLabel }${ unit }` }
+				{ `${ isResizing ? currentHeight : height }${ unit }` }
 			</span>
 		</ResizableBox>
 	)
