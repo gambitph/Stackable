@@ -60,25 +60,6 @@ const deprecated = [
 				}
 			}
 
-			// Container borders while the container was turned off was allowed
-			// before, now it's not allowed. Turn on the container to mimic the
-			// effect. This goes first before the container paddings check below
-			// because we need to set the paddings to zero for this to work.
-			// const hasContainerBorders = !! attributes.containerBorderType ||
-			// 	( typeof attributes.containerBorderRadius !== 'undefined' && attributes.containerBorderRadius !== '' ) ||
-			// 	!! attributes.containerShadow
-
-			// if ( ! attributes.hasContainer && hasContainerBorders ) {
-			// 	newAttributes = {
-			// 		...newAttributes,
-			// 		hasContainer: true,
-			// 		containerPadding: {
-			// 			top: 0, right: 0, bottom: 0, left: 0,
-			// 		},
-			// 		containerBackgroundColor: 'transparent',
-			// 	}
-			// }
-
 			// If the inner blocks are horizontal, adjust to accomodate the new
 			// column gap, it will modify blocks because people used block
 			// margins before instead of a proper column gap.
