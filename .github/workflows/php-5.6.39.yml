@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        wp-versions: ['6.1.3']
+        wp-versions: ['6.1.4']
 
     steps:
     - uses: actions/checkout@v2
