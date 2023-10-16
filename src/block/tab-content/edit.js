@@ -6,12 +6,14 @@ import BlockStyles from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInnerBlocks,
 	GroupPlaceholder,
 	InspectorTabs,
+	AdvancedToggleControl,
+	InspectorLayoutControls
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -95,6 +97,13 @@ const Edit = props => {
 			{ isSelected && (
 				<>
 					<InspectorTabs />
+					<InspectorLayoutControls>
+						<AdvancedToggleControl
+								label={ __( 'Same Height across Tabs', i18n ) }
+								attribute="equalTabHeight"
+								defaultValue={ false }
+						/>
+					</InspectorLayoutControls>
 					<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
 					<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
 					<Advanced.InspectorControls />
@@ -143,14 +152,14 @@ const Edit = props => {
 						if ( context[ 'stackable/tabPanelEffect' ] === 'immediate' ) {
 							if ( index !== activeTab - 1 ) {
 								return `.stk-block-tabs [data-block="${ clientId }"] {
-									visibility: hidden;
+									${ props.attributes.equalTabHeight ? 'display:none' : 'visibility: hidden' };
 									z-index: 1 !important;
 								}`
 							}
 						} else { // fade
 							if ( index !== activeTab - 1 ) {
 								return `.stk-block-tabs [data-block="${ clientId }"] {
-									visibility: hidden;
+									${ props.attributes.equalTabHeight ? 'display:none' : 'visibility: hidden' };
 									opacity: 0;
 									z-index: 1 !important;
 								}`
