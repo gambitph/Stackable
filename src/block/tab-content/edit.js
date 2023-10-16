@@ -152,14 +152,14 @@ const Edit = props => {
 						if ( context[ 'stackable/tabPanelEffect' ] === 'immediate' ) {
 							if ( index !== activeTab - 1 ) {
 								return `.stk-block-tabs [data-block="${ clientId }"] {
-									${ props.attributes.equalTabHeight ? 'display:none' : 'visibility: hidden' };
+									${ props.attributes.equalTabHeight ? 'visibility: hidden' : 'display:none' };
 									z-index: 1 !important;
 								}`
 							}
 						} else { // fade
 							if ( index !== activeTab - 1 ) {
 								return `.stk-block-tabs [data-block="${ clientId }"] {
-									${ props.attributes.equalTabHeight ? 'display:none' : 'visibility: hidden' };
+									${ props.attributes.equalTabHeight ? 'visibility: hidden' : 'display:none' };
 									opacity: 0;
 									z-index: 1 !important;
 								}`

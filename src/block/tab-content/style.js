@@ -38,8 +38,8 @@ const Styles = props => {
 				styleRule="display"
 				attrName="equalTabHeight"
 				key="equalTabHeight"
-				valueCallback={ () => {
-					return 'none'
+				valueCallback={ value => {
+					return value ? undefined : 'none'
 				} }
 				responsive="all"
 			/>
