@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.0\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-06T16:24:45+00:00\n"
+"POT-Creation-Date: 2023-10-17T01:02:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -117,7 +117,7 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:233
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:100
 #: pro__premium_only/src/dynamic-content/sources/site.php:77
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:64
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:67
 msgid "The field type provided is not valid."
 msgstr ""
 
@@ -470,141 +470,142 @@ msgstr ""
 msgid "Site URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:89
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:92
 msgid "Product Url"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:90
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:100
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:107
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:114
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:121
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:128
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:135
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:142
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:149
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:156
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:163
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:170
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:177
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:184
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:192
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:199
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:206
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:213
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:220
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:227
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:234
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:241
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:248
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:255
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:262
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:269
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:276
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:93
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:103
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:110
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:117
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:124
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:131
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:138
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:145
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:152
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:159
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:166
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:173
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:180
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:187
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:195
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:202
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:209
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:216
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:223
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:230
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:237
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:244
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:251
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:258
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:265
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:272
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:279
+#: pro__premium_only/src/conditional-display/condition-types.js:24
 msgid "WooCommerce"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:99
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:102
 msgid "Product Name"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:106
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:109
 msgid "Product Description"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:113
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:116
 msgid "Product Short Description"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:120
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:123
 msgid "Product Purchase Note"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:127
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:130
 msgid "Product Image"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:134
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:137
 msgid "Product Price"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:141
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:144
 msgid "Product Price (Regular)"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:148
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:151
 msgid "Product Price (No Tax)"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:155
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:158
 msgid "Produce Price (Sale)"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:162
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:165
 msgid "Product Date Created"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:169
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:172
 msgid "Product Sale Date From"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:176
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:179
 msgid "Product Sale Date To"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:183
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:186
 msgid "Product Add to Cart URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:191
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:194
 msgid "Product SKU"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:198
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:201
 msgid "Product Total Sales"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:205
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:208
 msgid "Product Total Stock"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:212
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:215
 msgid "Product Low Stock"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:219
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:222
 msgid "Product Weight"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:226
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:229
 msgid "Product Width"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:233
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:236
 msgid "Product Length"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:240
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:243
 msgid "Product Height"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:247
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:250
 msgid "Product Review Count"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:254
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:257
 msgid "Product Tax Status"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:261
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:264
 msgid "Product Tax Class"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:268
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:271
 msgid "Product Tags"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:275
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:278
 msgid "Product Attributes"
 msgstr ""
 
@@ -2510,10 +2511,6 @@ msgstr ""
 
 #: pro__premium_only/src/conditional-display/condition-types.js:21
 msgid "Post IDs"
-msgstr ""
-
-#: pro__premium_only/src/conditional-display/condition-types.js:24
-msgid "Woocommerce"
 msgstr ""
 
 #: pro__premium_only/src/conditional-display/conditional-tag.js:20
