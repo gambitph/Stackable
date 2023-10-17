@@ -124,7 +124,7 @@ const Edit = props => {
 	const sliderRef = useRef()
 	const dotActiveJustChanged = useRef()
 
-	const isRTL = document.querySelector( 'html' )?.getAttribute( 'dir' ) === 'rtl' || document.querySelector( 'body' )?.getAttribute( 'dir' ) === 'rtl'
+	const isRTL = document.documentElement?.getAttribute( 'dir' ) === 'rtl' || document.body?.getAttribute( 'dir' ) === 'rtl'
 
 	let maxSlides = numInnerBlocks
 	let slidesToShow = attributes.slidesToShow || 1
