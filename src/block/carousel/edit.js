@@ -119,8 +119,11 @@ const Edit = props => {
 	const { numInnerBlocks } = useBlockContext()
 	const [ activeSlide, setActiveSlide ] = useState( 1 )
 	const [ dotActiveSlide, setDotActiveSlide ] = useState( 1 )
+	const [ defaultIcon, setDefaultIcon ] = useState( { next: defaultIconNext, prev: defaultIconPrev } )
 	const sliderRef = useRef()
 	const dotActiveJustChanged = useRef()
+
+	const isRTL = document.querySelector( 'html' )?.getAttribute( 'dir' ) === 'rtl' || document.querySelector( 'body' )?.getAttribute( 'dir' ) === 'rtl'
 
 	let maxSlides = numInnerBlocks
 	if ( carouselType === 'slide' ) {
@@ -133,6 +136,14 @@ const Edit = props => {
 		}
 		maxSlides -= ( slidesToShow - 1 )
 	}
+
+	useEffect( () => {
+		if ( isRTL ) {
+			setDefaultIcon( { next: defaultIconPrev, prev: defaultIconNext } )
+		} else {
+			setDefaultIcon( { next: defaultIconNext, prev: defaultIconPrev } )
+		}
+	}, [ isRTL ] )
 
 	const nextSlide = ev => {
 		ev?.preventDefault()
@@ -317,14 +328,14 @@ const Edit = props => {
 						>
 							<IconControl
 								label={ __( 'Previous Slide Icon', i18n ) }
-								value={ attributes.arrowIconPrev || defaultIconPrev }
-								defaultValue={ defaultIconPrev }
+								value={ attributes.arrowIconPrev || defaultIcon.prev }
+								defaultValue={ defaultIcon.prev }
 								onChange={ arrowIconPrev => setAttributes( { arrowIconPrev } ) }
 							/>
 							<IconControl
 								label={ __( 'Next Slide Icon', i18n ) }
-								value={ attributes.arrowIconNext || defaultIconNext }
-								defaultValue={ defaultIconNext }
+								value={ attributes.arrowIconNext || defaultIcon.next }
+								defaultValue={ defaultIcon.next }
 								onChange={ arrowIconNext => setAttributes( { arrowIconNext } ) }
 							/>
 							<AdvancedToolbarControl
@@ -664,13 +675,13 @@ const Edit = props => {
 										className="stk-block-carousel__button stk-block-carousel__button__prev"
 										onClick={ prevSlide }
 									>
-										<SvgIcon value={ attributes.arrowIconPrev || defaultIconPrev } />
+										<SvgIcon value={ attributes.arrowIconPrev || defaultIcon.prev } />
 									</button>
 									<button
 										className="stk-block-carousel__button stk-block-carousel__button__next"
 										onClick={ nextSlide }
 									>
-										<SvgIcon value={ attributes.arrowIconNext || defaultIconNext } />
+										<SvgIcon value={ attributes.arrowIconNext || defaultIcon.next } />
 									</button>
 								</div>
 							) }
