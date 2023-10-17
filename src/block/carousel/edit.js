@@ -154,7 +154,7 @@ const Edit = props => {
 		} else {
 			setSlideOffset( 0 )
 		}
-	}, [ slidesToShow ] )
+	}, [ slidesToShow, carouselType ] )
 
 	const nextSlide = ev => {
 		ev?.preventDefault()
@@ -654,7 +654,7 @@ const Edit = props => {
 										return `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ i + 1 }) {
 										opacity: 0;
 										visibility: hidden;
-										left: -${ 100 * ( i ) }%;
+										left: ${ isRTL ? '' : '-' }${ 100 * ( i ) }%;
 									}`
 									} ) }
 									{ `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ activeSlide }) {
