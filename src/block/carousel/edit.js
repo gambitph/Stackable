@@ -119,6 +119,7 @@ const Edit = props => {
 	const { numInnerBlocks } = useBlockContext()
 	const [ activeSlide, setActiveSlide ] = useState( 1 )
 	const [ dotActiveSlide, setDotActiveSlide ] = useState( 1 )
+	const [ slideOffset, setSlideOffset ] = useState( 0 )
 	const [ defaultIcon, setDefaultIcon ] = useState( { next: defaultIconNext, prev: defaultIconPrev } )
 	const sliderRef = useRef()
 	const dotActiveJustChanged = useRef()
@@ -126,15 +127,17 @@ const Edit = props => {
 	const isRTL = document.querySelector( 'html' )?.getAttribute( 'dir' ) === 'rtl' || document.querySelector( 'body' )?.getAttribute( 'dir' ) === 'rtl'
 
 	let maxSlides = numInnerBlocks
+	let slidesToShow = attributes.slidesToShow || 1
 	if ( carouselType === 'slide' ) {
-		let slidesToShow = attributes.slidesToShow || 1
 		if ( ( deviceType === 'Tablet' || deviceType === 'Mobile' ) && attributes.slidesToShowTablet ) {
 			slidesToShow = attributes.slidesToShowTablet
 		}
 		if ( deviceType === 'Mobile' && attributes.slidesToShowMobile ) {
 			slidesToShow = attributes.slidesToShowMobile
 		}
-		maxSlides -= ( slidesToShow - 1 )
+		if ( ! isRTL ) {
+			maxSlides -= ( slidesToShow - 1 )
+		}
 	}
 
 	useEffect( () => {
@@ -145,12 +148,20 @@ const Edit = props => {
 		}
 	}, [ isRTL ] )
 
+	useEffect( () => {
+		if ( isRTL && carouselType === 'slide' ) {
+			setSlideOffset( slidesToShow - 1 )
+		} else {
+			setSlideOffset( 0 )
+		}
+	}, [ slidesToShow ] )
+
 	const nextSlide = ev => {
 		ev?.preventDefault()
 
 		let newSlide = activeSlide + 1
 		if ( newSlide > maxSlides ) {
-			newSlide = 1
+			newSlide = slideOffset + 1
 		}
 		goToSlide( newSlide )
 	}
@@ -159,7 +170,7 @@ const Edit = props => {
 		ev.preventDefault()
 
 		let newSlide = activeSlide - 1
-		if ( newSlide <= 0 ) {
+		if ( newSlide <= slideOffset ) {
 			newSlide = maxSlides
 		}
 		goToSlide( newSlide )
@@ -231,7 +242,7 @@ const Edit = props => {
 					}
 				}
 			}
-		}, 500 )
+		}, 1000 )
 		return () => clearInterval( timeout )
 	}, [ carouselType, activeSlide ] )
 
@@ -689,6 +700,12 @@ const Edit = props => {
 						{ attributes.showDots && (
 							<div className="stk-block-carousel__dots" role="list" data-label="Slide %d">
 								{ range( maxSlides ).map( i => {
+									// active dot is the leftmost slide
+									// for RTL, don't show the first n dots
+									// where n is the offset number
+									if ( isRTL && i < slideOffset ) {
+										return null
+									}
 									const className = classnames( 'stk-block-carousel__dot', {
 										'stk-block-carousel__dot--active': i + 1 === dotActiveSlide,
 									} )
