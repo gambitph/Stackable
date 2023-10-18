@@ -23,7 +23,7 @@ if ( ! function_exists( 'stackableGetRandomString' ) ) {
 	}
 }
 
-function stackable_generate_unique_id( $block_content, $block, $instance ) {
+function stackable_generate_unique_id( $block_content, $block ) {
 
 	$test = wp_cache_get('stackable_unique_ids');
 	if ( ! $test ) {
@@ -43,4 +43,4 @@ function stackable_generate_unique_id( $block_content, $block, $instance ) {
 	return $block_content;
 }
 
-add_filter( 'render_block', 'stackable_generate_unique_id', 9, 3 );
+add_filter( 'render_block', 'stackable_generate_unique_id', 9, 2 );
