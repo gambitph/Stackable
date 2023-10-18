@@ -66,7 +66,7 @@ if ( ! function_exists( 'stackable_deprecated_global_colors_for_native_blocks' )
 		// Don't do anything if we doon't have any global colors.
 		$colors = get_option( 'stackable_global_colors' );
 		if ( ! $colors || ! is_array( $colors ) ) {
-			return $current_css;
+			return;
 		}
 
 		$css = '';

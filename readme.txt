@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
-Tested up to: 6.3.1
-Requires PHP: 7.0
-Stable tag: 3.12.0
+Tested up to: 6.3.2
+Requires PHP: 7.3
+Stable tag: 3.12.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -102,6 +102,7 @@ Turn the WordPress Block Editor into a page builder. Fine-tune your creations wi
 - Block Background and Image Color Settings
 - Block Typography Settings
 - Image Shapes and Settings
+- Advanced Gradient Color Picker
 - Advanced Icon Options
 - Advanced Column and Spacing Settings
 - Global Colors & Typography Settings
@@ -154,6 +155,7 @@ Create dynamic WordPress websites that cater to the specific interests of visito
 
 In premium, you get more integrations.
 
+- WooCommerce
 - ACF
 - Metabox
 - JetEngine
@@ -291,9 +293,22 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
-[WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+= 3.12.3 =
+* Fixed: When updating a container, it has a chance of incorrectly enabling the container
+* Fixed: Resolved PHP warning about global styles variable
+* Fixed: Accordion block produces a PHP error on saving when structure is malformed
+* Fixed: Prevent new border radius control from overflowing the corners
+
+= 3.12.2 =
+* Fixed: (Hotfix update) PHP error if using PHP 7.2 and below
+
+= 3.12.1 =
+* Fixed: (Hotfix update) Possible PHP error with Dynamic Content
 
 = 3.12.0 =
+[WooCommerce Integration and Enhanced Color, Gradient and Opacity Settings](https://wpstackable.com/blog/woocommerce-integration/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: WooCommerce integration: you can now use WooCommerce product fields in Dynamic Content and inside the native Query Loop block (premium) #2907
 * New: WooCommerce integration: you can now use WooCommerce product fields as Display Conditions (premium) #2907
 * New: Enhanced color picker: now includes opacity #2740
