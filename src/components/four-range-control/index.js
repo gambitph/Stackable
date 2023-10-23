@@ -1,6 +1,11 @@
 /**
  * Internal dependencies
  */
+import SVGAllCornersImage from './images/all-corners.svg'
+import SVGLowerRightImage from './images/lower-right-corner.svg'
+import SVGLowerLeftImage from './images/lower-left-corner.svg'
+import SVGUpperRightImage from './images/upper-right-corner.svg'
+import SVGUpperLeftImage from './images/upper-left-corner.svg'
 import SVGAllImage from './images/all.svg'
 import SVGBottomImage from './images/bottom.svg'
 import SVGLeftImage from './images/left.svg'
@@ -89,7 +94,7 @@ const FourRangeControl = memo( props => {
 		className={ lockClassNames }
 		onClick={ () => setIsLocked( ! isLocked ) }
 		variation="tertiary"
-		icon={ isLocked ? <SVGAllImage /> : <SVGFullImage /> }
+		icon={ isLocked ? ( props.isCorner ? <SVGAllCornersImage /> : <SVGAllImage /> ) : <SVGFullImage /> }
 		label={ isLocked ? __( 'Individual sides', i18n ) : __( 'All sides', i18n ) }
 	/>
 
@@ -373,8 +378,8 @@ const FourRangeControl = memo( props => {
 				<Fragment>
 					{ props.enableTop &&
 						<div className="ugb-four-range-control__range">
-							<Tooltip text={ __( 'Top', i18n ) }>
-								<span className="ugb-four-range-control__icon"><SVGTopImage /></span>
+							<Tooltip text={ props.isCorner ? __( 'Upper Left', i18n ) : __( 'Top', i18n ) }>
+								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGUpperLeftImage /> : <SVGTopImage /> }</span>
 							</Tooltip>
 							<RangeControl
 								{ ...propsToPass }
@@ -418,8 +423,8 @@ const FourRangeControl = memo( props => {
 					}
 					{ props.enableRight &&
 						<div className="ugb-four-range-control__range">
-							<Tooltip text={ __( 'Right', i18n ) }>
-								<span className="ugb-four-range-control__icon"><SVGRightImage /></span>
+							<Tooltip text={ props.isCorner ? __( 'Upper Right', i18n ) : __( 'Right', i18n ) }>
+								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGUpperRightImage /> : <SVGRightImage /> }</span>
 							</Tooltip>
 							<RangeControl
 								{ ...propsToPass }
@@ -463,8 +468,8 @@ const FourRangeControl = memo( props => {
 					}
 					{ props.enableBottom &&
 						<div className="ugb-four-range-control__range">
-							<Tooltip text={ __( 'Bottom', i18n ) }>
-								<span className="ugb-four-range-control__icon"><SVGBottomImage /></span>
+							<Tooltip text={ props.isCorner ? __( 'Lower Left', i18n ) : __( 'Bottom', i18n ) }>
+								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGLowerLeftImage /> : <SVGBottomImage /> }</span>
 							</Tooltip>
 							<RangeControl
 								{ ...propsToPass }
@@ -508,8 +513,8 @@ const FourRangeControl = memo( props => {
 					}
 					{ props.enableLeft &&
 						<div className="ugb-four-range-control__range">
-							<Tooltip text={ __( 'Left', i18n ) }>
-								<span className="ugb-four-range-control__icon"><SVGLeftImage /></span>
+							<Tooltip text={ props.isCorner ? __( 'Lower Right', i18n ) : __( 'Left', i18n ) }>
+								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGLowerRightImage /> : <SVGLeftImage /> }</span>
 							</Tooltip>
 							<RangeControl
 								{ ...propsToPass }
@@ -589,6 +594,8 @@ FourRangeControl.defaultProps = {
 	bottom: undefined,
 	left: undefined,
 	onChange: undefined,
+
+	isCorner: false,
 }
 
 export default memo( FourRangeControl )
