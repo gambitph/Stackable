@@ -468,7 +468,7 @@ const FourRangeControl = memo( props => {
 					}
 					{ props.enableBottom &&
 						<div className="ugb-four-range-control__range">
-							<Tooltip text={ props.isCorner ? __( 'Lower Left', i18n ) : __( 'Bottom', i18n ) }>
+							<Tooltip text={ props.isCorner ? __( 'Bottom Left', i18n ) : __( 'Bottom', i18n ) }>
 								<span className="ugb-four-range-control__icon">{ props.isCorner ? <SVGLowerLeftImage /> : <SVGBottomImage /> }</span>
 							</Tooltip>
 							<RangeControl
