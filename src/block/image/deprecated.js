@@ -15,7 +15,7 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/newWrapper', ( output, ima
 	}
 
 	// Get the children of wrapped img
-	if ( semverCompare( version, '<', '3.12' ) ) {
+	if ( semverCompare( version, '<', '3.12.3' ) ) {
 		return (
 			<Wrapper className={ imageWrapperClasses }>
 				{ image.props.children }
