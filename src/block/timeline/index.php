@@ -17,7 +17,9 @@ if ( ! function_exists( 'stackable_load_timeline_ios_frontend_polyfill' ) ) {
 
 	$user_agent = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 	// Add polyfill if device is iPhone/iPad
-	if ( ! empty( $user_agent ) && ( stripos( $user_agent, 'iPhone' ) !== false || stripos( $user_agent, 'iPad' ) !== false ) ) {
+	// Include Safari because by default the User Agent in Safari on iPadOS is same  on MacOS
+	// Reference: https://developer.apple.com/forums/thread/119186
+	if ( ! empty( $user_agent ) && ( stripos( $user_agent, 'iPhone' ) !== false || stripos( $user_agent, 'iPad' ) !== false || stripos( $user_agent, 'Safari/' ) !== false ) ) {
 		add_filter( 'render_block_stackable/timeline', 'stackable_load_timeline_ios_frontend_polyfill', 10, 2 );
 	}
 }

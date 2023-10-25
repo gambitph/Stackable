@@ -21,9 +21,11 @@
 }
 
 // iOS polyfill for timeline accent color
-// fill timeline lines filled with accent color
-.stk-block-timeline.stk-block-timeline__ios-polyfill {
-	--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
+// For tablet and mobile, fill timeline lines with accent color
+@include tablet-mobile {
+	.stk-block-timeline.stk-block-timeline__ios-polyfill {
+		--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
+	}
 }
 
 // Remove the default bottom margin of the timeline block because it's annoying
