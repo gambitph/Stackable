@@ -341,13 +341,25 @@ const Edit = props => {
 								label={ __( 'Previous Slide Icon', i18n ) }
 								value={ attributes.arrowIconPrev || defaultIcon.prev }
 								defaultValue={ defaultIcon.prev }
-								onChange={ arrowIconPrev => setAttributes( { arrowIconPrev } ) }
+								onChange={ arrowIconPrev => {
+									if ( arrowIconPrev === defaultIcon.prev ) {
+										setAttributes( { arrowIconPrev: '' } )
+									} else {
+										setAttributes( { arrowIconPrev } )
+									}
+								 } }
 							/>
 							<IconControl
 								label={ __( 'Next Slide Icon', i18n ) }
 								value={ attributes.arrowIconNext || defaultIcon.next }
 								defaultValue={ defaultIcon.next }
-								onChange={ arrowIconNext => setAttributes( { arrowIconNext } ) }
+								onChange={ arrowIconNext => {
+									if ( arrowIconNext === defaultIcon.next ) {
+										setAttributes( { arrowIconNext: '' } )
+									} else {
+										setAttributes( { arrowIconNext } )
+									}
+								 } }
 							/>
 							<AdvancedToolbarControl
 								label={ __( 'Arrow Position', i18n ) }
