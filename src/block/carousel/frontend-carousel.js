@@ -104,10 +104,10 @@ class _StackableCarousel {
 		const prevButton = this.el.querySelector( '.stk-block-carousel__button.stk-block-carousel__button__prev .fa-chevron-left' )
 		const nextButton = this.el.querySelector( '.stk-block-carousel__button.stk-block-carousel__button__next .fa-chevron-right' )
 		if ( prevButton ) {
-			prevButton.setAttribute( 'transform', 'rotate(180)' )
+			prevButton.style.transform = 'rotate(180deg)'
 		}
 		if ( nextButton ) {
-			nextButton.setAttribute( 'transform', 'rotate(180)' )
+			nextButton.style.transform = 'rotate(180deg)'
 		}
 	}
 
