@@ -80,6 +80,8 @@
 	bottom: 50%;
 }
 .stk-block-timeline + .stk-block-timeline > .stk-inner-blocks::after,
+// add :where so that this CSS rule won't be ignored because of the :has()
+// Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/:where#forgiving_selector_parsing
 .widget_block:where(:has(.stk-block-timeline)) + .widget_block .stk-block-timeline > .stk-inner-blocks::after {
 	top: 0 !important;
 }
