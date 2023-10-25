@@ -15,8 +15,8 @@ if ( ! function_exists( 'stackableGetRandomString' ) ) {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
 		$string = '';
 
-		for ($i = 0; $i < $length; $i++) {
-			$string .= $characters[mt_rand(0, strlen($characters) - 1)];
+		for ( $i = 0; $i < $length; $i++ ) {
+			$string .= $characters[ mt_rand(0, strlen( $characters ) - 1) ];
 		}
 
 		return $string;
@@ -25,17 +25,20 @@ if ( ! function_exists( 'stackableGetRandomString' ) ) {
 
 function stackable_generate_unique_id( $block_content, $block ) {
 
-	$test = wp_cache_get('stackable_unique_ids');
-	if ( ! $test ) {
+	global $stackable_unique_ids;
+	error_log(print_r($stackable_unique_ids, true));
+	if ( ! $stackable_unique_ids ) {
 		if ( isset( $block['attrs'] ) && array_key_exists( 'uniqueId', $block['attrs'] ) ) {
-			wp_cache_set( 'stackable_unique_ids', array( $block['attrs']['uniqueId'] ) );
+			$GLOBALS['stackable_unique_ids'] =  array( $block['attrs']['uniqueId'] );
 		}
 	}
 
-	if ( isset( $block['attrs'] ) && array_key_exists( 'uniqueId', $block['attrs'] ) && $test ) {
+	if ( $stackable_unique_ids ) {
 		$random_unique_id = stackableGetRandomString(7);
-		if ( in_array( $block['attrs']['uniqueId'], $test ) && ! in_array( $random_unique_id, $test ) ) {
-			wp_cache_set( 'stackable_unique_ids', array_merge( $test, array( $random_unique_id )  ) );
+		if ( array_key_exists( 'uniqueId', $block['attrs'] ) &&
+		in_array( $block['attrs']['uniqueId'], $stackable_unique_ids ) &&
+		! in_array( $random_unique_id, $stackable_unique_ids ) ) {
+			$GLOBALS['stackable_unique_ids'] = array_merge( $stackable_unique_ids, array( $random_unique_id )  );
 			$block_content = str_replace( $block['attrs']['uniqueId'], $random_unique_id, $block_content );
 		}
 	}
