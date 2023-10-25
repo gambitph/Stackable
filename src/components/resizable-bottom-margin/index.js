@@ -81,9 +81,12 @@ const ResizableBottomMarginSingle = props => {
 			// use parent width because the margin in percentage is calculated by the parent's width
 			// reference: https://medium.com/coding-blocks/css-padding-a-magic-wand-2b8a66b84ebe#:~:text=Margin%20and%20Padding%20in%20percentages,height%20of%20the%20parent%20element.
 			const parentWidth = resizableBoxRef.current.getParentSize().width
-			return ( ( height + delta ) / 100 ) * parentWidth
+			return {
+				height: ( ( height / 100 ) * parentWidth ) + delta, // delta is already in px
+				delta: ( ( delta / parentWidth ) * 100 ), // convert delta to percent
+			}
 		}
-		return height
+		return { height, delta }
 	}
 
 	return (
@@ -93,7 +96,7 @@ const ResizableBottomMarginSingle = props => {
 			minHeight="0"
 			handleStyles={ HANDLE_STYLES }
 			enable={ ENABLE }
-			size={ { height: getSize( 0 ) } }
+			size={ { height: getSize( 0 ).height } }
 			snap={ snapWidths }
 			snapGap={ 5 }
 			onResizeStart={ () => {
@@ -101,13 +104,15 @@ const ResizableBottomMarginSingle = props => {
 				setIsResizing( true )
 			} }
 			onResize={ ( _event, _direction, elt, delta ) => {
+				let _delta = delta.height
 				if ( unit === '%' ) {
 					// height and delta.height is in %, so we need to convert them to pixels
-					const heightInPixels = getSize( delta.height )
+					const { height: heightInPixels, delta: deltaPercent } = getSize( _delta )
+					_delta = deltaPercent
 					elt.style.height = `${ heightInPixels }px`
 				}
 
-				setCurrentHeight( height + delta.height )
+				setCurrentHeight( height + _delta )
 
 				// Set snap widths. We need to do this here not on
 				// ResizeStart or it won't be used at first drag.
@@ -127,7 +132,7 @@ const ResizableBottomMarginSingle = props => {
 				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ currentHeight }${ unit } !important; }` }</style>
 			}
 			<span className="stk-resizable-bottom-margin__label">
-				{ `${ isResizing ? currentHeight : height }${ unit }` }
+				{ `${ isResizing ? parseInt( currentHeight, 10 ) : height }${ unit }` }
 			</span>
 		</ResizableBox>
 	)
