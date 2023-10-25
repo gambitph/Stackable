@@ -80,7 +80,7 @@
 	bottom: 50%;
 }
 .stk-block-timeline + .stk-block-timeline > .stk-inner-blocks::after,
-.widget_block:has(.stk-block-timeline) + .widget_block .stk-block-timeline > .stk-inner-blocks::after {
+.widget_block:where(:has(.stk-block-timeline)) + .widget_block .stk-block-timeline > .stk-inner-blocks::after {
 	top: 0 !important;
 }
 
