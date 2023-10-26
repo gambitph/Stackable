@@ -16,7 +16,7 @@ if ( ! function_exists( 'stackable_get_random_string' ) ) {
 		$string = '';
 
 		for ( $i = 0; $i < $length; $i++ ) {
-			$string .= $characters[ wp_rand(0, strlen( $characters ) - 1) ];
+			$string .= $characters[ wp_rand( 0, strlen( $characters ) - 1 ) ];
 		}
 
 		return $string;
