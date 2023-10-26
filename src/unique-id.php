@@ -10,13 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackableGetRandomString' ) ) {
-	function stackableGetRandomString( $length ) {
+if ( ! function_exists( 'stackable_get_random_string' ) ) {
+	function stackable_get_random_string( $length ) {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
 		$string = '';
 
 		for ( $i = 0; $i < $length; $i++ ) {
-			$string .= $characters[ mt_rand(0, strlen( $characters ) - 1) ];
+			$string .= $characters[ wp_rand(0, strlen( $characters ) - 1) ];
 		}
 
 		return $string;
@@ -25,22 +25,28 @@ if ( ! function_exists( 'stackableGetRandomString' ) ) {
 
 function stackable_generate_unique_id( $block_content, $block ) {
 
-	global $stackable_unique_ids;
-	error_log(print_r($stackable_unique_ids, true));
-	if ( ! $stackable_unique_ids ) {
-		if ( isset( $block['attrs'] ) && array_key_exists( 'uniqueId', $block['attrs'] ) ) {
-			$GLOBALS['stackable_unique_ids'] =  array( $block['attrs']['uniqueId'] );
-		}
+	if ( strpos( $block['blockName'], 'stackable/' ) === false ) {
+		return $block_content;
 	}
 
-	if ( $stackable_unique_ids ) {
-		$random_unique_id = stackableGetRandomString(7);
-		if ( array_key_exists( 'uniqueId', $block['attrs'] ) &&
-		in_array( $block['attrs']['uniqueId'], $stackable_unique_ids ) &&
-		! in_array( $random_unique_id, $stackable_unique_ids ) ) {
-			$GLOBALS['stackable_unique_ids'] = array_merge( $stackable_unique_ids, array( $random_unique_id )  );
-			$block_content = str_replace( $block['attrs']['uniqueId'], $random_unique_id, $block_content );
-		}
+	global $stackable_unique_ids;
+	$unique_id = isset( $block['attrs']['uniqueId'] ) ? $block['attrs']['uniqueId'] : '';
+
+	if ( empty( $unique_id ) ) {
+		return $block_content;
+	}
+
+	if ( ! is_array( $stackable_unique_ids ) ) {
+		$stackable_unique_ids = array( $unique_id );
+		return $block_content;
+	}
+
+	if ( in_array( $unique_id, $stackable_unique_ids ) ) {
+		$random_unique_id = stackable_get_random_string( 7 );
+		$stackable_unique_ids = array_merge( $stackable_unique_ids, array( $random_unique_id )  );
+		$block_content = str_replace( $unique_id, $random_unique_id, $block_content );
+	} else {
+		$stackable_unique_ids = array_merge( $stackable_unique_ids, array( $unique_id )  );
 	}
 
 	return $block_content;
