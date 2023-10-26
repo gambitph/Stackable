@@ -53,6 +53,7 @@ const ResizableBottomMarginSingle = props => {
 	const { deviceType } = props
 	const { name } = useBlockEditContext()
 	const [ currentHeight, setCurrentHeight ] = useState( null )
+	const [ currentTop, setCurrentTop ] = useState( null )
 	const [ isResizing, setIsResizing ] = useState( false )
 	const resizableBoxRef = useRef( null )
 
@@ -100,6 +101,13 @@ const ResizableBottomMarginSingle = props => {
 			snap={ snapWidths }
 			snapGap={ 5 }
 			onResizeStart={ () => {
+				// Get the current top position of the resizable box because resizing gets choppy
+				if ( resizableBoxRef.current && resizableBoxRef.current.resizable && resizableBoxRef.current.resizable.closest( '.wp-block' ) ) {
+					setCurrentTop( resizableBoxRef.current.resizable.getBoundingClientRect().top - resizableBoxRef.current.resizable.closest( '.wp-block' ).getBoundingClientRect().top )
+				} else {
+					setCurrentTop( null )
+				}
+
 				setCurrentHeight( height )
 				setIsResizing( true )
 			} }
@@ -112,6 +120,11 @@ const ResizableBottomMarginSingle = props => {
 					elt.style.height = `${ heightInPixels }px`
 				}
 
+				// Fix the top of the margin top so that it doesn't look jittery when resizing.
+				if ( currentTop !== null ) {
+					elt.style.top = `${ currentTop }px`
+				}
+
 				setCurrentHeight( height + _delta )
 
 				// Set snap widths. We need to do this here not on
@@ -120,7 +133,8 @@ const ResizableBottomMarginSingle = props => {
 					setSnapWidths( getSnapWidths( isShiftKey ) )
 				}
 			} }
-			onResizeStop={ () => {
+			onResizeStop={ ( _event, _direction, elt ) => {
+				elt.style.top = ''
 				props.onChange( parseInt( currentHeight, 10 ) === parseInt( defaultBottomMargin, 10 ) && unit === 'px' ? '' : parseInt( currentHeight, 10 ) )
 
 				setCurrentHeight( null )
