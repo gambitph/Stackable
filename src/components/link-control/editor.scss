@@ -53,7 +53,16 @@
 	}
 
 	.block-editor-link-control__search-enter {
-		display: none;
+		position: absolute;
+		top: 0;
+		right: 3px;
+		button:hover {
+			box-shadow: none !important;
+		}
+		svg {
+			height: 20px;
+			width: 20px;
+		}
 	}
 }
 
