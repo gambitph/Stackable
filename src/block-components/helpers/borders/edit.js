@@ -92,6 +92,7 @@ export const BorderControls = props => {
 						description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
 					} }
 					min={ 0 }
+					isCorner={ true }
 					sliderMax={ props.borderSliderMax }
 					placeholder={ props.borderRadiusPlaceholder }
 				/>
