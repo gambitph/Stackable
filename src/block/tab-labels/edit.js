@@ -177,6 +177,9 @@ const Edit = props => {
 			const block = getBlockFromExample( 'stackable/column', {
 				attributes: {
 					customAttributes: [ [ 'role', 'tabpanel' ] ],
+					metadata: {
+						name: 'Tab ' + ( tabContentBlock.innerBlocks?.length + 1 ),
+					},
 				},
 			} )
 

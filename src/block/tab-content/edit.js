@@ -49,12 +49,21 @@ const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 const TEMPLATE = [
 	[ 'stackable/column', {
 		customAttributes: [ [ 'role', 'tabpanel' ] ],
+		metadata: {
+			name: 'Tab 1',
+		},
 	} ],
 	[ 'stackable/column', {
 		customAttributes: [ [ 'role', 'tabpanel' ] ],
+		metadata: {
+			name: 'Tab 2',
+		},
 	} ],
 	[ 'stackable/column', {
 		customAttributes: [ [ 'role', 'tabpanel' ] ],
+		metadata: {
+			name: 'Tab 3',
+		},
 	} ],
 ]
 
