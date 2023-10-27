@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_generate_random_unique_id' ) ) {
+if ( ! function_exists( 'stackable_generate_unique_id' ) ) {
 	function stackable_generate_unique_id() {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
 		$unique_id = '';
