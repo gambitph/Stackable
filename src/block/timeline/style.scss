@@ -19,6 +19,15 @@
 	padding: 16px 0;
 	margin-block-start: 0 !important;
 }
+
+// iOS polyfill for timeline accent color
+// For tablet and mobile, fill timeline lines with accent color
+@include tablet-mobile {
+	.stk-block-timeline.stk-block-timeline__ios-polyfill {
+		--fixed-bg: linear-gradient(to bottom, var(--line-accent-bg-color, #000) 0, var(--line-accent-bg-color-2, #000) var(--line-accent-bg-location, 50%));
+	}
+}
+
 // Remove the default bottom margin of the timeline block because it's annoying
 // to keep on removing it when you want to stack them. This works in conjunction
 // with the stackable.resizable-bottom-margin.default filter in edit.js.
