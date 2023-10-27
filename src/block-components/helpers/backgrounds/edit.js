@@ -140,6 +140,7 @@ export const BackgroundControls = props => {
 
 			{ hasBackgroundMedia && ! isBackgroundVideo() &&
 				<AdvancedToggleControl
+					help={ __( 'Note: Fixed Background works on Desktop and Android devices only.', i18n ) }
 					label={ __( 'Fixed Background', i18n ) }
 					attribute={ getAttrName( 'fixedBackground' ) }
 					helpTooltip={ {
