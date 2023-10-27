@@ -51,6 +51,6 @@ if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
 
 		return $block_content;
 	}
+	add_filter( 'render_block', 'stackable_prevent_duplicate_unique_ids', 9, 2 );
 }
 
-add_filter( 'render_block', 'stackable_prevent_duplicate_unique_ids', 9, 2 );
