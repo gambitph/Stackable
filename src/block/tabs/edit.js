@@ -10,6 +10,7 @@ import { withActiveTab } from './with-active-tab'
 import { i18n, version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
+	AdvancedToggleControl,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
@@ -174,6 +175,11 @@ const Edit = props => {
 									label: index + 1,
 								}
 							} ) }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Equal tab height', i18n ) }
+							attribute="equalTabHeight"
+							defaultValue={ false }
 						/>
 						<ControlSeparator />
 						<AdvancedToolbarControl

@@ -61,6 +61,17 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
+	attrObject.add( {
+		attributes: {
+			equalTabHeight: {
+				type: 'boolean',
+				default: false,
+			},
+		},
+		versionAdded: '3.12.4',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 
