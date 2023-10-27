@@ -201,7 +201,7 @@ const BlockCss = props => {
 	const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
 
 	// Some BlockCss components do not have the responsive prop. This is default behavior of obtaining the desktop value.
-	const hasDesktop = responsive === 'all' || props.responsive === false || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'desktop' ) ) )
+	const hasDesktop = responsive === 'all' || responsive === false || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'desktop' ) ) )
 	const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
 	const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
 
