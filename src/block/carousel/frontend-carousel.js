@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
-
 class _StackableCarousel {
 	constructor( el ) {
 		this.el = el
@@ -15,6 +14,7 @@ class _StackableCarousel {
 		this.type = this.el.classList.contains( 'stk--is-fade' ) ? 'fade' : 'slide'
 		this.sliderEl = this.el.querySelector( '.stk-block-carousel__slider' )
 		this.slideEls = Array.from( this.sliderEl.children )
+		this.isRTL = document.documentElement?.getAttribute( 'dir' ) === 'rtl' || document.body?.getAttribute( 'dir' ) === 'rtl'
 
 		const tempDotsEls = this.el.querySelectorAll( '.stk-block-carousel__dots' )
 		const tempPrevEls = this.el.querySelectorAll( '.stk-block-carousel__button__prev' )
@@ -45,6 +45,19 @@ class _StackableCarousel {
 	initProperties = () => {
 		this.slidesToShow = this.type === 'slide' ? parseInt( getComputedStyle( this.el ).getPropertyValue( '--slides-to-show' ), 10 ) : 1
 		this.autoplay = this.sliderEl.dataset.autoplay
+		// for RTL, slideOffset is the starting slide number
+		// it is the leftmost slide for the first set of slides to show
+		this.slideOffset = this.isRTL && this.type === 'slide' ? this.slidesToShow : 1
+
+		if ( this.isRTL ) {
+			// update default icons here instead on save.js so that
+			// users won't have to update/save in editor when changing site language
+			this.updateDefaultIcon()
+			if ( this.slidesToShow > 1 ) {
+				this.currentSlide = this.slidesToShow
+				this.setDotActive( this.currentSlide )
+			}
+		}
 		this.updateDots()
 	}
 
@@ -57,7 +70,7 @@ class _StackableCarousel {
 
 		const dotLabel = this.dotsEl.dataset.label
 		this.slideEls.forEach( ( slideEl, i ) => {
-			if ( i >= this.slideEls.length - this.slidesToShow + 1 ) {
+			if ( ! this.isRTL && i >= this.slideEls.length - this.slidesToShow + 1 ) {
 				return
 			}
 
@@ -70,7 +83,11 @@ class _StackableCarousel {
 				dotEl.classList.add( 'stk-block-carousel__dot--active' )
 			}
 			listEl.appendChild( dotEl )
-			this.dotsEl.appendChild( listEl )
+			// if RTL, display only dots starting from the offset
+			// if site is not RTL, slideOffset = 1 so all listEl will still be appended
+			if ( i >= this.slideOffset - 1 ) {
+				this.dotsEl.appendChild( listEl )
+			}
 
 			dotEl.addEventListener( 'click', () => {
 				this.pauseAutoplay()
@@ -80,6 +97,18 @@ class _StackableCarousel {
 
 			this.dotEls.push( dotEl )
 		} )
+	}
+
+	// switch default icons if site is RTL
+	updateDefaultIcon = () => {
+		const prevButton = this.el.querySelector( '.stk-block-carousel__button.stk-block-carousel__button__prev .fa-chevron-left' )
+		const nextButton = this.el.querySelector( '.stk-block-carousel__button.stk-block-carousel__button__next .fa-chevron-right' )
+		if ( prevButton ) {
+			prevButton.style.transform = 'rotate(180deg)'
+		}
+		if ( nextButton ) {
+			nextButton.style.transform = 'rotate(180deg)'
+		}
 	}
 
 	addEventListeners = () => {
@@ -113,7 +142,7 @@ class _StackableCarousel {
 
 	maxSlides = () => {
 		let maxSlides = this.slideEls.length
-		if ( this.type === 'slide' ) {
+		if ( this.type === 'slide' && ! this.isRTL ) {
 			maxSlides -= ( this.slidesToShow - 1 )
 		}
 		return maxSlides
@@ -122,14 +151,14 @@ class _StackableCarousel {
 	nextSlide = () => {
 		let newSlide = this.currentSlide + 1
 		if ( newSlide > this.maxSlides() ) {
-			newSlide = 1
+			newSlide = this.slideOffset
 		}
 		this.goToSlide( newSlide )
 	}
 
 	prevSlide = () => {
 		let newSlide = this.currentSlide - 1
-		if ( newSlide < 1 ) {
+		if ( newSlide < this.slideOffset ) {
 			newSlide = this.maxSlides()
 		}
 		this.goToSlide( newSlide )
@@ -154,7 +183,7 @@ class _StackableCarousel {
 			slideEl.style.transition = 'none'
 			slideEl.style.opacity = 0
 			slideEl.style.visibility = 'visible'
-			slideEl.style.left = `-${ 100 * ( slide - 1 ) }%`
+			slideEl.style.left = `${ this.isRTL ? '' : '-' }${ 100 * ( slide - 1 ) }%`
 			setTimeout( () => {
 				slideEl.style.transition = ''
 				slideEl.style.opacity = 1
