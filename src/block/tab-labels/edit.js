@@ -178,7 +178,7 @@ const Edit = props => {
 				attributes: {
 					customAttributes: [ [ 'role', 'tabpanel' ] ],
 					metadata: {
-						name: 'Tab ' + ( tabContentBlock.innerBlocks?.length + 1 ),
+						name: 'Tab',
 					},
 				},
 			} )

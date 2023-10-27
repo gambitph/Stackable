@@ -43,6 +43,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
+import { i18n } from 'stackable'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -50,19 +51,19 @@ const TEMPLATE = [
 	[ 'stackable/column', {
 		customAttributes: [ [ 'role', 'tabpanel' ] ],
 		metadata: {
-			name: 'Tab 1',
+			name: __( 'Tab', i18n ),
 		},
 	} ],
 	[ 'stackable/column', {
 		customAttributes: [ [ 'role', 'tabpanel' ] ],
 		metadata: {
-			name: 'Tab 2',
+			name: __( 'Tab', i18n ),
 		},
 	} ],
 	[ 'stackable/column', {
 		customAttributes: [ [ 'role', 'tabpanel' ] ],
 		metadata: {
-			name: 'Tab 3',
+			name: __( 'Tab', i18n ),
 		},
 	} ],
 ]
