@@ -10,46 +10,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_get_random_string' ) ) {
-	function stackable_get_random_string( $length ) {
+if ( ! function_exists( 'stackable_generate_random_unique_id' ) ) {
+	function stackable_generate_unique_id() {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-		$string = '';
+		$unique_id = '';
 
-		for ( $i = 0; $i < $length; $i++ ) {
-			$string .= $characters[ wp_rand( 0, strlen( $characters ) - 1 ) ];
+		for ( $i = 0; $i < 7; $i++ ) {
+			$unique_id .= $characters[ wp_rand( 0, strlen( $characters ) - 1 ) ];
 		}
 
-		return $string;
+		return $unique_id;
 	}
 }
 
-function stackable_generate_unique_id( $block_content, $block ) {
+$stackable_unique_ids = array();
+
+function stackable_prevent_duplicate_unique_ids( $block_content, $block ) {
 
 	if ( strpos( $block['blockName'], 'stackable/' ) === false ) {
 		return $block_content;
 	}
 
 	global $stackable_unique_ids;
+
 	$unique_id = isset( $block['attrs']['uniqueId'] ) ? $block['attrs']['uniqueId'] : '';
 
 	if ( empty( $unique_id ) ) {
 		return $block_content;
 	}
 
-	if ( ! is_array( $stackable_unique_ids ) ) {
-		$stackable_unique_ids = array( $unique_id );
-		return $block_content;
-	}
-
 	if ( in_array( $unique_id, $stackable_unique_ids ) ) {
-		$random_unique_id = stackable_get_random_string( 7 );
-		$stackable_unique_ids = array_merge( $stackable_unique_ids, array( $random_unique_id )  );
+		$random_unique_id = stackable_generate_unique_id( 7 );
+		array_push( $stackable_unique_ids, $random_unique_id );
 		$block_content = str_replace( $unique_id, $random_unique_id, $block_content );
 	} else {
-		$stackable_unique_ids = array_merge( $stackable_unique_ids, array( $unique_id )  );
+		array_push( $stackable_unique_ids, $unique_id );
 	}
 
 	return $block_content;
 }
 
-add_filter( 'render_block', 'stackable_generate_unique_id', 9, 2 );
+add_filter( 'render_block', 'stackable_prevent_duplicate_unique_ids', 9, 2 );
