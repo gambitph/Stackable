@@ -113,6 +113,11 @@ if ( ! class_exists( 'Stackable_Accordion_FAQ_Schema' ) ) {
 		public function render_block_accordion_faq_schema( $block_content, $block ) {
 			$attributes = $block[ 'attrs' ];
 
+			// If the block is malformed then we don't do anything.
+			if ( count( $block[ 'innerBlocks' ] ) < 2 ) {
+				return $block_content;
+			}
+
 			if ( isset( $attributes[ 'enableFAQ' ] ) && $attributes[ 'enableFAQ' ] ) {
 				// innerBlocks[0] is for the title
 				// retrieve stackable/column -> stackable/icon-label -> stackable/heading
