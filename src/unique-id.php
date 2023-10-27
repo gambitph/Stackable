@@ -25,29 +25,32 @@ if ( ! function_exists( 'stackable_generate_unique_id' ) ) {
 
 $stackable_unique_ids = array();
 
-function stackable_prevent_duplicate_unique_ids( $block_content, $block ) {
 
-	if ( strpos( $block['blockName'], 'stackable/' ) === false ) {
+if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
+	function stackable_prevent_duplicate_unique_ids( $block_content, $block ) {
+
+		if ( strpos( $block['blockName'], 'stackable/' ) === false ) {
+			return $block_content;
+		}
+
+		global $stackable_unique_ids;
+
+		$unique_id = isset( $block['attrs']['uniqueId'] ) ? $block['attrs']['uniqueId'] : '';
+
+		if ( empty( $unique_id ) ) {
+			return $block_content;
+		}
+
+		if ( in_array( $unique_id, $stackable_unique_ids ) ) {
+			$random_unique_id = stackable_generate_unique_id();
+			array_push( $stackable_unique_ids, $random_unique_id );
+			$block_content = str_replace( $unique_id, $random_unique_id, $block_content );
+		} else {
+			array_push( $stackable_unique_ids, $unique_id );
+		}
+
 		return $block_content;
 	}
-
-	global $stackable_unique_ids;
-
-	$unique_id = isset( $block['attrs']['uniqueId'] ) ? $block['attrs']['uniqueId'] : '';
-
-	if ( empty( $unique_id ) ) {
-		return $block_content;
-	}
-
-	if ( in_array( $unique_id, $stackable_unique_ids ) ) {
-		$random_unique_id = stackable_generate_unique_id();
-		array_push( $stackable_unique_ids, $random_unique_id );
-		$block_content = str_replace( $unique_id, $random_unique_id, $block_content );
-	} else {
-		array_push( $stackable_unique_ids, $unique_id );
-	}
-
-	return $block_content;
 }
 
 add_filter( 'render_block', 'stackable_prevent_duplicate_unique_ids', 9, 2 );
