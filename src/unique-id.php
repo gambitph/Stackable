@@ -29,7 +29,8 @@ $stackable_unique_ids = array();
 if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
 	function stackable_prevent_duplicate_unique_ids( $block_content, $block ) {
 
-		if ( strpos( $block['blockName'], 'stackable/' ) === false ) {
+		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+		if ( stripos( $block_name, 'stackable/' ) === false ) {
 			return $block_content;
 		}
 
