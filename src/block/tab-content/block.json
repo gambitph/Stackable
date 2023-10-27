@@ -4,7 +4,7 @@
 	"title": "Tab Content",
 	"description": "A wrapper for tab panels.",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/tabPanelEffect" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/tabPanelEffect", "stackable/equalTabHeight" ],
 	"keywords": [],
 	"parent": [
 		"stackable/tabs"

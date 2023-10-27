@@ -68,6 +68,8 @@ const Edit = props => {
 		context,
 	} = props
 
+	console.log(context)
+
 	useGeneratedCss( props.attributes )
 
 	const [ activeTab, , templateLock ] = useSetActiveTabContext()
@@ -97,13 +99,6 @@ const Edit = props => {
 			{ isSelected && (
 				<>
 					<InspectorTabs />
-					<InspectorLayoutControls>
-						<AdvancedToggleControl
-								label={ __( 'Same Height across Tabs', i18n ) }
-								attribute="equalTabHeight"
-								defaultValue={ false }
-						/>
-					</InspectorLayoutControls>
 					<Alignment.InspectorControls hasColumnJustify={ false } hasRowAlignment={ false } />
 					<BlockDiv.InspectorControls sizeControlLayoutProps={ { hasContentVerticalAlign: false } } />
 					<Advanced.InspectorControls />
@@ -152,14 +147,14 @@ const Edit = props => {
 						if ( context[ 'stackable/tabPanelEffect' ] === 'immediate' ) {
 							if ( index !== activeTab - 1 ) {
 								return `.stk-block-tabs [data-block="${ clientId }"] {
-									${ props.attributes.equalTabHeight ? 'visibility: hidden' : 'display:none' };
+									${ context[ 'stackable/equalTabHeight' ] ? 'visibility: hidden' : 'display:none' };
 									z-index: 1 !important;
 								}`
 							}
 						} else { // fade
 							if ( index !== activeTab - 1 ) {
 								return `.stk-block-tabs [data-block="${ clientId }"] {
-									${ props.attributes.equalTabHeight ? 'visibility: hidden' : 'display:none' };
+									${ context[ 'stackable/equalTabHeight' ] ? 'visibility: hidden' : 'display:none' };
 									opacity: 0;
 									z-index: 1 !important;
 								}`

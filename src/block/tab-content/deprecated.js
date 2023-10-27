@@ -6,17 +6,6 @@ import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
 	{
-		attributes: attributes( '3.12.2' ),
-		migrate: attributes => {
-		   return {
-				...attributes,
-				equalTabHeight: true,
-			}
-		},
-		save: withVersion( '3.12.2' )( Save ),
-	},
-	// Support the new combined opacity and color.
-	{
 		attributes: attributes( '3.11.9' ),
 		save: withVersion( '3.11.9' )( Save ),
 		isEligible: attributes => {

@@ -10,6 +10,7 @@ import { withActiveTab } from './with-active-tab'
 import { i18n, version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
+	AdvancedToggleControl,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
@@ -124,6 +125,11 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 					<InspectorLayoutControls>
+						<AdvancedToggleControl
+							label={ __( 'Equal tab height', i18n ) }
+							attribute="equalTabHeight"
+							defaultValue={ false }
+						/>
 						<ColumnsControl
 							label={ __( 'Tabs', i18n ) }
 							rootClientId={ tabContentBlock?.clientId }
