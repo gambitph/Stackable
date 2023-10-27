@@ -198,6 +198,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/unique-id.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
