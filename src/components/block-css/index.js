@@ -200,7 +200,8 @@ const BlockCss = props => {
 
 	const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
 
-	const hasDesktop = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'desktop' ) ) )
+	// Some BlockCss components do not have the responsive prop. This is default behavior of obtaining the desktop value.
+	const hasDesktop = responsive === 'all' || props.responsive === false || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'desktop' ) ) )
 	const hasTablet = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'tablet' ) ) )
 	const hasMobile = responsive === 'all' || ( Array.isArray( responsive ) && responsive.find( s => s.startsWith( 'mobile' ) ) )
 
@@ -220,21 +221,6 @@ const BlockCss = props => {
 		valueTabletCollapsed,
 		valueTabletHover,
 		valueTabletParentHover
-
-	// Some BlockCss components do not have the responsive prop. This is default behavior of obtaining
-	// the desktop value.
-	if ( responsive === false ) {
-		valueDesktop = getValue( attrName, 'desktop', 'normal' )
-		if ( hasHover ) {
-			valueDesktopHover = getValue( attrName, 'desktop', 'hover' )
-		}
-		if ( hasParentHover ) {
-			valueDesktopParentHover = getValue( attrName, 'desktop', 'parent-hover' )
-		}
-		if ( hasCollapsed ) {
-			valueDesktopCollapsed = getValue( attrName, 'desktop', 'collapsed' )
-		}
-	}
 
 	if ( hasDesktop ) {
 		valueDesktop = getValue( attrName, 'desktop', 'normal' )
