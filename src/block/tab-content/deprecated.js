@@ -5,6 +5,7 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
+	// Support the new combined opacity and color.
 	{
 		attributes: attributes( '3.11.9' ),
 		save: withVersion( '3.11.9' )( Save ),
