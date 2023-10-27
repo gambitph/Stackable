@@ -46,6 +46,12 @@ const Styles = props => {
 					...dependencies,
 				] }
 			/>
+			{
+			// To allow smaller screensizes to override the larger screensize
+			// background images, we need to split these css rules to individual
+			// ones: desktop, tablet and mobile
+			}
+			{ /* Desktop */ }
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
@@ -77,6 +83,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				format="url(%s)"
 			/>
+			{ /* Tablet */ }
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
@@ -108,6 +115,7 @@ const Styles = props => {
 				attrNameTemplate={ attrNameTemplate }
 				format="url(%s)"
 			/>
+			{ /* Mobile */ }
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
