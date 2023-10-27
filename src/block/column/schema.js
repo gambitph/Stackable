@@ -58,6 +58,10 @@ export const attributes = ( version = VERSION ) => {
 				type: 'boolean',
 				default: '',
 			},
+			metadata: {
+				type: 'object',
+				default: {},
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
