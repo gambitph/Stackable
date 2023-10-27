@@ -125,11 +125,6 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 					<InspectorLayoutControls>
-						<AdvancedToggleControl
-							label={ __( 'Equal tab height', i18n ) }
-							attribute="equalTabHeight"
-							defaultValue={ false }
-						/>
 						<ColumnsControl
 							label={ __( 'Tabs', i18n ) }
 							rootClientId={ tabContentBlock?.clientId }
@@ -180,6 +175,11 @@ const Edit = props => {
 									label: index + 1,
 								}
 							} ) }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Equal tab height', i18n ) }
+							attribute="equalTabHeight"
+							defaultValue={ false }
 						/>
 						<ControlSeparator />
 						<AdvancedToolbarControl
