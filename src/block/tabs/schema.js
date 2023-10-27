@@ -68,7 +68,7 @@ export const attributes = ( version = VERSION ) => {
 				default: false,
 			},
 		},
-		versionAdded: '3.12.3',
+		versionAdded: '3.12.4',
 		versionDeprecated: '',
 	} )
 
