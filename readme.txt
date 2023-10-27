@@ -294,6 +294,22 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.12.4 =
+* New: WordPress 6.4 compatibility
+* New: Tabs block option: Equal tab height - to toggle on/off equal tab heights #2844
+* New: Dynamic Content: Added "show as link" option for author name and taxonomies #2878
+* New: Image block now has a built-in caption #2875
+* New: You can now use a URL for images and background images #2873
+* Change: Tabs block now by default will now have non-equal tab heights
+* Change: Added note in fixed background option that it only works in desktop and Android mobile #2917
+* Fixed: Carousel block is now RTL compatible #2910
+* Fixed: Duplicated blocks that are inserted dynamically will now style correctly #2890
+* Fixed: Margin bottom draggable control now works correctly when using percentage #2904
+* Fixed: Added border radius corner icons #2914
+* Fixed: Timeline block lines now connect properly in Firefox #2872
+* Fixed: Timeline block in Safari mobile workaround: now always filled with accent color #2912
+* Fixed: Dragging margin bottom control is now smoother #2904
+
 = 3.12.3 =
 * Fixed: When updating a container, it has a chance of incorrectly enabling the container
 * Fixed: Resolved PHP warning about global styles variable
