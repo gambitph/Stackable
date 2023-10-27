@@ -6,7 +6,7 @@ import BlockStyles from './style'
 /**
  * External dependencies
  */
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInnerBlocks,
@@ -67,8 +67,6 @@ const Edit = props => {
 		isSelected,
 		context,
 	} = props
-
-	console.log(context)
 
 	useGeneratedCss( props.attributes )
 

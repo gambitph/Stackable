@@ -7,9 +7,20 @@ import { withVersion } from '~stackable/higher-order'
 const deprecated = [
 	{
 		attributes: attributes( '3.12.3' ),
+		isEligible: attributes => {
+			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
+			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+
+			return hasContainerOpacity || hasBlockOpacity
+		},
 		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
 			return {
-				...attributes,
+				...newAttributes,
 				equalTabHeight: true,
 			}
 		},
