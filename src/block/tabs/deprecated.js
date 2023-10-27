@@ -7,17 +7,19 @@ import { withVersion } from '~stackable/higher-order'
 const deprecated = [
 	{
 		attributes: attributes( '3.12.3' ),
-		isEligible: attributes => {
-			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
-			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
-
-			return hasContainerOpacity || hasBlockOpacity
-		},
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 
-			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
-			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			// Also add the older migration rules because they will not be applied.
+			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
+			if ( hasContainerOpacity ) {
+				newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			}
+
+			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			if ( hasBlockOpacity ) {
+				newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			}
 
 			return {
 				...newAttributes,
