@@ -157,6 +157,18 @@
     ]
   },
   {
+    "family": "Agbalumo",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Agdasima",
     "variants": [
       "regular",
@@ -2642,6 +2654,8 @@
       "200",
       "300",
       "regular",
+      "500",
+      "600",
       "700",
       "800"
     ],
@@ -8668,6 +8682,20 @@
     ]
   },
   {
+    "family": "Kay Pho Du",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "kayah-li",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Kdam Thmor Pro",
     "variants": [
       "regular"
@@ -9704,6 +9732,23 @@
     "variants": [
       "regular",
       "italic"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
+    "family": "Linefont",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
     ],
     "subsets": [
       "latin"
@@ -12219,7 +12264,9 @@
       "regular"
     ],
     "subsets": [
-      "caucasian-albanian"
+      "caucasian-albanian",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12426,7 +12473,9 @@
       "regular"
     ],
     "subsets": [
-      "elymaic"
+      "elymaic",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12755,6 +12804,20 @@
     ],
     "subsets": [
       "kannada",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Noto Sans Kawi",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "kawi",
       "latin",
       "latin-ext"
     ]
@@ -14527,6 +14590,17 @@
     ]
   },
   {
+    "family": "Noto Serif Old Uyghur",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "old-uyghur"
+    ]
+  },
+  {
     "family": "Noto Serif Oriya",
     "variants": [
       "regular",
@@ -15926,6 +16000,26 @@
     ]
   },
   {
+    "family": "Playpen Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Plus Jakarta Sans",
     "variants": [
       "200",
@@ -17003,12 +17097,24 @@
   {
     "family": "Roboto Condensed",
     "variants": [
+      "100",
+      "200",
       "300",
-      "300italic",
       "regular",
-      "italic",
+      "500",
+      "600",
       "700",
-      "700italic"
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "cyrillic",
@@ -18207,7 +18313,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -18745,6 +18852,23 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Sometype Mono",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -20655,8 +20779,7 @@
       "900"
     ],
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
