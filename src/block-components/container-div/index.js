@@ -19,6 +19,9 @@ export const ContainerDiv = props => {
 			containerBackgroundMediaUrl: attributes.containerBackgroundMediaUrl,
 			containerBackgroundMediaUrlTablet: attributes.containerBackgroundMediaUrlTablet,
 			containerBackgroundMediaUrlMobile: attributes.containerBackgroundMediaUrlMobile,
+			containerBackgroundMediaExternalUrl: attributes.containerBackgroundMediaExternalUrl,
+			containerBackgroundMediaExternalUrlTablet: attributes.containerBackgroundMediaExternalUrlTablet,
+			containerBackgroundMediaExternalUrlMobile: attributes.containerBackgroundMediaExternalUrlMobile,
 			containerBackgroundColorType: attributes.containerBackgroundColorType,
 		}
 	} )
@@ -41,9 +44,9 @@ export const ContainerDiv = props => {
 		{ ...props }
 		className={ classNames }
 		hasBackground={ attributes.hasContainer }
-		backgroundUrl={ attributes.containerBackgroundMediaUrl }
-		backgroundUrlTablet={ attributes.containerBackgroundMediaUrlTablet }
-		backgroundUrlMobile={ attributes.containerBackgroundMediaUrlMobile }
+		backgroundUrl={ attributes.containerBackgroundMediaUrl || attributes.containerBackgroundMediaExternalUrl }
+		backgroundUrlTablet={ attributes.containerBackgroundMediaUrlTablet || attributes.containerBackgroundMediaExternalUrlTablet }
+		backgroundUrlMobile={ attributes.containerBackgroundMediaUrlMobile || attributes.containerBackgroundMediaExternalUrlMobile }
 		backgroundColorType={ attributes.containerBackgroundColorType }
 	/>
 }
@@ -74,9 +77,9 @@ ContainerDiv.Content = props => {
 		{ ...propsToPass }
 		className={ classNames }
 		hasBackground={ attributes.hasContainer }
-		backgroundUrl={ attributes.containerBackgroundMediaUrl }
-		backgroundUrlTablet={ attributes.containerBackgroundMediaUrlTablet }
-		backgroundUrlMobile={ attributes.containerBackgroundMediaUrlMobile }
+		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.containerBackgroundMediaExternalUrl }
+		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.containerBackgroundMediaExternalUrlTablet }
+		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile || attributes.containerBackgroundMediaExternalUrlMobile }
 		backgroundColorType={ attributes.containerBackgroundColorType }
 	/>
 }

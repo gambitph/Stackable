@@ -15,6 +15,7 @@ export const useImage = () => {
 			imageId: image.id,
 			imageHeightAttribute: image.height,
 			imageWidthAttribute: image.width,
+			imageExternalUrl: '',
 			...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only add the image alt if it's empty.
 		} )
 	}

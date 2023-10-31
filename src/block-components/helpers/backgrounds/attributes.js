@@ -58,6 +58,11 @@ export const backgroundAttributes = {
 		type: 'boolean',
 		default: '',
 	},
+	backgroundMediaExternalUrl: {
+		stkResponsive: true,
+		type: 'string',
+		default: '',
+	},
 }
 
 export const addBackgroundAttributes = ( attrObject, attrNameTemplate = '%s' ) => {

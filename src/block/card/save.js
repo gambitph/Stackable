@@ -78,7 +78,7 @@ export const Save = props => {
 				className={ contentClassNames }
 				attributes={ attributes }
 			>
-				{ props.attributes.imageUrl &&
+				{ ( props.attributes.imageUrl || props.attributes.imageExternalUrl ) &&
 					<Image.Content
 						className="stk-block-card__image"
 						attributes={ attributes }

@@ -23,6 +23,7 @@ import {
 import {
 	useState, useEffect, memo, useRef,
 } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
 	if ( size === 'auto' ) {
@@ -444,26 +445,46 @@ const ImageContent = props => {
 		propsToPass.title = title
 	}
 
+	const figcaptionClassnames = classnames(
+		props.figcaptionClassnames,
+		'stk-img-figcaption'
+	)
+
 	// Allow a custom wrapper, mostly used to turn the image into an anchor
 	// link.
 	const Wrapper = props.customWrapper || 'figure'
 
+	let image = (
+		<img // eslint-disable-line jsx-a11y/alt-text
+			className={ imageClasses }
+			src={ props.src || undefined }
+			width={ width || undefined }
+			height={ height || undefined }
+			{ ...propsToPass }
+		/>
+	)
+
+	image = ! props.hasWrapper ? image : (
+		<div className={ imageWrapperClasses }>
+			{ image }
+		</div>
+	)
+
 	return (
-		<Wrapper className={ imageWrapperClasses }>
-			<img // eslint-disable-line jsx-a11y/alt-text
-				className={ imageClasses }
-				src={ props.src || undefined }
-				width={ width || undefined }
-				height={ height || undefined }
-				{ ...propsToPass }
-			/>
-			{ props.children }
-		</Wrapper>
+		applyFilters( 'stackable.image.save.wrapper',
+			( <Wrapper className={ props.hasWrapper ? undefined : imageWrapperClasses }>
+				{ image }
+				{ props.figcaptionShow && props.src && <figcaption className={ figcaptionClassnames }>{ props.figcaption }</figcaption> }
+				{ props.children }
+			</Wrapper> ), props, imageWrapperClasses, image
+		)
 	)
 }
 
 ImageContent.defaultProps = {
 	imageId: '',
+
+	hasWrapper: false,
 
 	alt: '',
 	title: '',
@@ -481,6 +502,9 @@ ImageContent.defaultProps = {
 
 	hasGradientOverlay: false,
 	customWrapper: null,
+
+	figcaptionShow: false,
+	figcaption: '',
 }
 
 ImageResponsive.Content = ImageContent

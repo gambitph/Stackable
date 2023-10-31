@@ -20,6 +20,7 @@ import {
 	AdvancedToolbarControl,
 	BlendModeControl,
 	ControlSeparator,
+	AdvancedTextControl,
 } from '~stackable/components'
 import {
 	useBlockAttributesContext,
@@ -66,6 +67,7 @@ const Controls = props => {
 			imageShapeStretch: attributes.imageShapeStretch,
 			imageShape: attributes.imageShape,
 			imageFilter: attributes.imageFilter,
+			imageExternalUrl: attributes.imageExternalUrl,
 		}
 	} )
 	const setAttributes = useBlockSetAttributesContext()
@@ -128,12 +130,26 @@ const Controls = props => {
 							imageUrl: url,
 							imageWidthAttribute: width,
 							imageHeightAttribute: height,
+							imageExternalUrl: '',
 							...( attributes.imageAlt ? {} : { imageAlt: image.alt || '' } ), // Only set the alt if it's empty.
 						} )
 					} }
 				/>
 			) }
-
+			<AdvancedTextControl
+				label={ __( 'Image Url', i18n ) }
+				attribute="imageExternalUrl"
+				onChange={ text => {
+					setAttributes( {
+						imageExternalUrl: text,
+						imageUrl: '',
+						imageAlt: '',
+						imageId: '',
+						imageWidthAttribute: '',
+						imageHeightAttribute: '',
+					} )
+				} }
+			/>
 			{ props.hasWidth &&
 				<AdvancedRangeControl
 					label={ __( 'Width', i18n ) }
@@ -299,7 +315,7 @@ const Controls = props => {
 			<AdvancedFocalPointControl
 				attribute="imageFocalPoint"
 				label={ __( 'Focal point', i18n ) }
-				url={ props.src ? props.src : attributes.imageUrl }
+				url={ props.src ? props.src : ( attributes.imageUrl || attributes.imageExternalUrl ) }
 				responsive="all"
 				hover="all"
 			/>
