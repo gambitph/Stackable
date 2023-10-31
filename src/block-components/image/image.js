@@ -313,7 +313,6 @@ const Image = memo( props => {
 			) }
 			{ props.children }
 		</ResizableBox>
-
 	)
 } )
 
