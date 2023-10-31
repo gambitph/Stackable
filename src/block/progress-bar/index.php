@@ -27,7 +27,7 @@ if ( ! function_exists( 'stackable_progress_bar_value_remove_commas' ) ) {
 			return $block_content;
 		}
 
-		if ( ! str_contains( $block_content, ',' ) ) {
+		if ( stripos( $block_content, ',' ) === false ) {
 			return $block_content;
 		}
 
