@@ -9,13 +9,18 @@ import {
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
 
-addFilter( 'stackable.image.save.wrapper', 'stackable/newWrapper', ( output, imageWrapperClasses, version, image, Wrapper, hasWrapper ) => {
-	if ( ! hasWrapper ) { // Image block is the only one with a wrapper
+addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( output, props, imageWrapperClasses, image ) => {
+	if ( ! props.version ) {
+		return output
+	}
+
+	if ( ! props.hasWrapper ) { // Image block is the only one with a wrapper
 		return output
 	}
 
 	// Get the children of wrapped img
-	if ( semverCompare( version, '<', '3.12.3' ) ) {
+	if ( semverCompare( props.version, '<', '3.12.3' ) ) {
+		const Wrapper = props.customWrapper || 'figure'
 		return (
 			<Wrapper className={ imageWrapperClasses }>
 				{ image.props.children }

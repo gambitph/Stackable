@@ -477,7 +477,7 @@ const ImageContent = props => {
 				{ image }
 				{ props.figcaptionShow && props.src && <figcaption className={ figcaptionClassnames }>{ props.figcaption }</figcaption> }
 				{ props.children }
-			</Wrapper> ), imageWrapperClasses, props?.version, image, Wrapper, props.hasWrapper
+			</Wrapper> ), props, imageWrapperClasses, image
 		)
 	)
 }
