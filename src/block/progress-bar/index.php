@@ -31,7 +31,7 @@ if ( ! function_exists( 'stackable_progress_bar_value_remove_commas' ) ) {
 			return $block_content;
 		}
 
-		return preg_replace_callback( '/--progress-value:[^%]+%/', function ( $matches ) {
+		return preg_replace_callback( '/--progress-value:[^%;\}]+/', function ( $matches ) {
 			return str_replace( ',', '', $matches[0] );
 		}, $block_content );
 	}
