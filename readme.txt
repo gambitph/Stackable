@@ -308,6 +308,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Added border radius corner icons #2914
 * Fixed: Timeline block lines now connect properly in Firefox #2872
 * Fixed: Timeline block in Safari mobile workaround: now always filled with accent color #2912
+* Fixed: Progress bar and circle blocks now show correctly dynamic content if edited in widgets #2952
 * Fixed: Dragging margin bottom control is now smoother #2904
 
 = 3.12.3 =
