@@ -227,6 +227,7 @@ if ( ! is_admin() ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/alignment/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block/columns/index.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'src/block/timeline/index.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'src/block-components/progress-bar/index.php' );
 }
 
 /**
