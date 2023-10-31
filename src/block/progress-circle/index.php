@@ -23,7 +23,7 @@ if ( ! function_exists( 'stackable_load_progresscircle_frontend_script' ) ) {
 // Remove commas when the progress value is text field from dynamic content
 if ( ! function_exists( 'stackable_progress_circle_value_remove_commas' ) ) {
 	function stackable_progress_circle_value_remove_commas( $block_content, $block ) {
-		if ( ! empty( $block_content ) ) {
+		if ( empty( $block_content ) ) {
 			return $block_content;
 		}
 
