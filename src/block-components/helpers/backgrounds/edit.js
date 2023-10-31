@@ -147,6 +147,7 @@ export const BackgroundControls = props => {
 						[ attrWidthAttribute ]: '',
 						[ attrHeightAttribute ]: '',
 						[ attrAlt ]: '',
+						[ props.onBackgroundEnableAttribute ]: props.onBackgroundEnableAttribute,
 					} )
 				} }
 			/>
