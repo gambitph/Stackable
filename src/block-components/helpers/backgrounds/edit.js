@@ -140,15 +140,20 @@ export const BackgroundControls = props => {
 					const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
 					const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
 
-					setAttributes( {
+					const attributes = {
 						[ backgroundMediaExternalUrl ]: text,
 						[ attrNameId ]: '',
 						[ attrNameUrl ]: '',
 						[ attrWidthAttribute ]: '',
 						[ attrHeightAttribute ]: '',
 						[ attrAlt ]: '',
-						[ props.onBackgroundEnableAttribute ]: props.onBackgroundEnableAttribute,
-					} )
+					}
+
+					if ( props.onBackgroundEnableAttribute ) {
+						attributes[ props.onBackgroundEnableAttribute ] = true
+					}
+
+					setAttributes( attributes )
 				} }
 			/>
 			{ hasBackgroundMedia &&
