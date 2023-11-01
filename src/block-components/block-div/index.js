@@ -84,9 +84,9 @@ export const BlockDiv = props => {
 		data-block-id={ attributes.uniqueId || tempUniqueId }
 		blockTag={ renderHtmlTag ? htmlTag : 'div' }
 		hasBackground={ attributes.hasBackground }
-		backgroundUrl={ attributes.blockBackgroundMediaUrl }
-		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
-		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
+		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.blockBackgroundMediaExternalUrl }
+		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.blockBackgroundMediaExternalUrlTablet }
+		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile || attributes.blockBackgroundMediaExternalUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
 		{ ...applyFilters( 'stackable.block-components.block-div.attributes', {}, attributes ) }
 	>
@@ -148,9 +148,9 @@ BlockDiv.Content = props => {
 		data-block-id={ attributes.uniqueId || undefined }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
-		backgroundUrl={ attributes.blockBackgroundMediaUrl }
-		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
-		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
+		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.blockBackgroundMediaExternalUrl }
+		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.blockBackgroundMediaExternalUrlTablet }
+		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile || attributes.blockBackgroundMediaExternalUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
 		{ ...applyFilters( 'stackable.block-components.block-div.attributes.content', {}, attributes ) }
 	/>

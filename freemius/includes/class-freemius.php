@@ -425,6 +425,14 @@
 
             $this->_storage = FS_Storage::instance( $this->_module_type, $this->_slug );
 
+            // If not set or 24 hours have already passed from the last time it's set, set the last load timestamp to the current time.
+            if (
+                ! isset( $this->_storage->last_load_timestamp ) ||
+                $this->_storage->last_load_timestamp < ( time() - ( WP_FS__TIME_24_HOURS_IN_SEC ) )
+            ) {
+                $this->_storage->last_load_timestamp = time();
+            }
+
             $this->_cache = FS_Cache_Manager::get_manager( WP_FS___OPTION_PREFIX . "cache_{$module_id}" );
 
             $this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $this->get_unique_affix(), WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
@@ -1348,6 +1356,30 @@
             }
         }
 
+        function _run_garbage_collector() {
+            // @todo - Remove this check once the garbage collector is ready to be out of beta.
+            if ( true !== fs_get_optional_constant( 'WP_FS__ENABLE_GARBAGE_COLLECTOR', false ) ) {
+                return;
+            }
+
+            if ( ! $this->is_user_in_admin() ) {
+                return;
+            }
+
+            require_once WP_FS__DIR_INCLUDES . '/class-fs-lock.php';
+
+            $lock = new FS_Lock( 'garbage_collection' );
+
+            if ( $lock->is_locked() ) {
+                return;
+            }
+
+            // Create a 1-day lock.
+            $lock->lock( WP_FS__TIME_24_HOURS_IN_SEC );
+
+            FS_Garbage_Collector::instance()->clean();
+        }
+
         /**
          * Opens the support forum subemenu item in a new browser page.
          *
@@ -1442,6 +1474,8 @@
                         $this->_plugins_loaded();
                     }
                 }
+
+                add_action( 'plugins_loaded', array( &$this, '_run_garbage_collector' ) );
 
                 if ( ! self::is_ajax() ) {
                     if ( ! $this->is_addon() ) {
@@ -2320,7 +2354,7 @@
             ) {
                 return;
             }
-
+            
             $subscription_cancellation_dialog_box_template_params = $this->apply_filters( 'show_deactivation_subscription_cancellation', true ) ?
                 $this->_get_subscription_cancellation_dialog_box_template_params() :
                 array();
@@ -3089,11 +3123,8 @@
                 return false;
             }
 
-            $url_params = array();
-            parse_str( parse_url( $url, PHP_URL_QUERY ), $url_params );
-
-            $sub_url_params = array();
-            parse_str( parse_url( $sub_url, PHP_URL_QUERY ), $sub_url_params );
+            $url_params     = fs_parse_url_params( $url );
+            $sub_url_params = fs_parse_url_params( $sub_url );
 
             foreach ( $sub_url_params as $key => $val ) {
                 if ( ! isset( $url_params[ $key ] ) || $val != $url_params[ $key ] ) {
@@ -3484,7 +3515,7 @@
         /**
          * @author Leo Fajardo (@leorw)
          * @since 2.5.0
-         *
+         *        
          * @param int|null $blog_id
          * @param bool     $strip_protocol
          * @param bool     $add_trailing_slash
@@ -3881,7 +3912,7 @@
         /**
          * @author Leo Fajardo (@leorw)
          * @since  2.5.0
-         *
+         * 
          * @return array
          */
         static function get_all_modules_sites() {
@@ -8197,7 +8228,7 @@
             $parent_licenses_endpoint = "/plugins/{$this->get_id()}/parent_licenses.json?filter=activatable";
 
             $fs = $this;
-
+            
             if ( $this->is_addon() ) {
                 $parent_instance = $this->get_parent_instance();
 
@@ -10090,7 +10121,7 @@
 
             if ( is_object( $fs ) ) {
                 $fs->remove_sdk_reference();
-
+                
                 self::require_plugin_essentials();
 
                 if ( is_plugin_active( $fs->_free_plugin_basename ) ||
@@ -10705,7 +10736,7 @@
             if ( fs_starts_with( $option_name, WP_FS__MODULE_TYPE_THEME . '_' ) ) {
                 $option_name = str_replace( WP_FS__MODULE_TYPE_THEME . '_', '', $option_name );
             }
-
+            
             switch ( $option_name ) {
                 case 'plugins':
                 case 'themes':
@@ -13369,7 +13400,7 @@
                 // Subscription cancellation dialog box is currently not supported for multisite networks.
                 return array();
             }
-
+            
             if ( $this->is_whitelabeled() ) {
                 return array();
             }
@@ -13469,7 +13500,7 @@
                 ! $this->is_premium() &&
                 /**
                  * Also handle the case when an upgrade was made using the free version.
-                 *
+                 * 
                  * @author Leo Fajardo (@leorw)
                  * @since 2.3.2
                  */
@@ -13700,7 +13731,7 @@
          */
         function _activate_license_ajax_action() {
             $this->_logger->entrance();
-
+            
             $this->check_ajax_referer( 'activate_license' );
 
             $license_key = trim( fs_request_get_raw( 'license_key' ) );
@@ -13771,7 +13802,7 @@
             foreach ( $installs_info_by_slug_map as $slug => $install_info ) {
                 $install_ids[ $slug ] = $install_info['install']->id;
             }
-
+            
             $params['install_ids'] = implode( ',', array_values( $install_ids ) );
 
             $install = $this->get_api_site_scope()->call( $this->add_show_pending( '/' ), 'put', $params );
@@ -13864,7 +13895,7 @@
          *
          * @author Vova Feldman (@svovaf)
          * @since  2.3.0
-         *
+         *         
          * @param string      $license_key
          * @param null|bool   $is_marketing_allowed
          * @param null|number $plugin_id
@@ -14791,9 +14822,15 @@
             }
 
             if ( ! $this->is_registered() ) {
+                $email_address = isset( $affiliate['email'] ) ? $affiliate['email'] : '';
+
+                if ( ! is_email( $email_address ) ) {
+                    self::shoot_ajax_failure('Invalid email address.');
+                }
+
                 // Opt in but don't track usage.
                 $next_page = $this->opt_in(
-                    false,
+                    $email_address,
                     false,
                     false,
                     false,
@@ -18630,7 +18667,7 @@
             if ( is_object( $this->_site ) && ! $this->is_registered() ) {
                 return;
             }
-
+            
             /**
              * When running from a site admin with a network activated module and the connection
              * was NOT delegated and the user still haven't skipped or opted-in, then hide the
@@ -21616,7 +21653,7 @@
             foreach( $api_domains as $api_domain ) {
                 $api_domains_list_items .= "<li>{$api_domain}</li>";
             }
-
+            
             $error_message = sprintf(
                 $this->get_text_inline( 'Your server is blocking the access to Freemius\' API, which is crucial for %1$s synchronization. Please contact your host to whitelist the following domains:%2$s', 'server-blocking-access' ),
                 $this->get_plugin_name(),
@@ -23297,7 +23334,7 @@
          * Adds CSS classes for the body tag in the admin.
          *
          * @param string $classes Space-separated string of class names.
-         *
+         * 
          * @return string $classes FS Admin body tag class names.
          */
         public function fs_addons_body_class( $classes ) {
@@ -25424,7 +25461,7 @@
                 return false;
             }
 
-			$tabs_html = $this->get_tabs_html();
+            $tabs_html = $this->get_tabs_html();
 
             if ( empty( $tabs_html ) ) {
                 return false;

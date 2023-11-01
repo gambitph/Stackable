@@ -11,7 +11,8 @@
 	"providesContext": {
 		"stackable/initialTabOpen": "initialTabOpen",
 		"stackable/tabOrientation": "tabOrientation",
-		"stackable/tabPanelEffect": "tabPanelEffect"
+		"stackable/tabPanelEffect": "tabPanelEffect",
+		"stackable/equalTabHeight": "equalTabHeight"
 	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",

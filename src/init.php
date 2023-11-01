@@ -324,7 +324,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'currentTheme' => esc_html( get_template() ),
 				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 				'version' => array_shift( $version_parts ),
-				'wpVersion' => $wp_version,
+				'wpVersion' => ! empty( $wp_version ) ? preg_replace( '/-.*/', '', $wp_version ) : $wp_version, // Ensure semver, strip out after dash
 				'adminUrl' => admin_url(),
 
 				// Fonts.

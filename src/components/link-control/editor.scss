@@ -51,6 +51,19 @@
 	.block-editor-link-control__search-item-icon {
 		display: none;
 	}
+
+	.block-editor-link-control__search-enter {
+		position: absolute;
+		top: 0;
+		right: 3px;
+		button:hover {
+			box-shadow: none !important;
+		}
+		svg {
+			height: 20px;
+			width: 20px;
+		}
+	}
 }
 
 // Adjust the location of the dynamic and reset buttons since our control is taller.

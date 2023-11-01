@@ -17,6 +17,7 @@ import {
 	getAlignmentClasses,
 	Image,
 	Link,
+	getTypographyClasses,
 } from '~stackable/block-components'
 
 /**
@@ -31,6 +32,7 @@ export const Save = props => {
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const figcaptionClassnames = getTypographyClasses( attributes, 'figcaption%s' )
 
 	const blockClassNames = classnames( [
 		props.className,
@@ -47,8 +49,11 @@ export const Save = props => {
 		>
 			<BlockStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ props.attributes.imageUrl &&
+			{ ( props.attributes.imageUrl || props.attributes.imageExternalUrl ) &&
 				<Image.Content
+					hasWrapper={ true }
+					version={ props.version }
+					figcaptionClassnames={ figcaptionClassnames }
 					attributes={ attributes }
 					customWrapper={ props.attributes.linkUrl && ( props => (
 						<Link.Content

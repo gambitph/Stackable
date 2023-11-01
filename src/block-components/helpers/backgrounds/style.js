@@ -46,6 +46,12 @@ const Styles = props => {
 					...dependencies,
 				] }
 			/>
+			{
+			// To allow smaller screensizes to override the larger screensize
+			// background images, we need to split these css rules to individual
+			// ones: desktop, tablet and mobile
+			}
+			{ /* Desktop */ }
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
@@ -54,7 +60,7 @@ const Styles = props => {
 				key="backgroundMediaUrl"
 				attrNameTemplate={ attrNameTemplate }
 				format="url(%s)"
-				responsive="all"
+				responsive={ [ 'desktop' ] }
 				valuePreCallback={ value => {
 					// If it's a video, don't print out the style because
 					// it's handled by a video element. And this will cause
@@ -66,6 +72,80 @@ const Styles = props => {
 					}
 					return value
 				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaExternalUrl"
+				key="backgroundMediaExternalUrl"
+				responsive={ [ 'desktop' ] }
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
+			/>
+			{ /* Tablet */ }
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaUrl"
+				key="backgroundMediaUrlTablet"
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
+				responsive={ [ 'tablet' ] }
+				valuePreCallback={ value => {
+					// If it's a video, don't print out the style because
+					// it's handled by a video element. And this will cause
+					// the video to show up twice in the network requests.
+					if ( typeof value === 'string' ) {
+						if ( value.match( /\.(mp4|ogg|webm)$/i ) ) {
+							return undefined
+						}
+					}
+					return value
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaExternalUrl"
+				key="backgroundMediaExternalUrlTablet"
+				responsive={ [ 'tablet' ] }
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
+			/>
+			{ /* Mobile */ }
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaUrl"
+				key="backgroundMediaUrlMobile"
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
+				responsive={ [ 'mobile' ] }
+				valuePreCallback={ value => {
+					// If it's a video, don't print out the style because
+					// it's handled by a video element. And this will cause
+					// the video to show up twice in the network requests.
+					if ( typeof value === 'string' ) {
+						if ( value.match( /\.(mp4|ogg|webm)$/i ) ) {
+							return undefined
+						}
+					}
+					return value
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaExternalUrl"
+				key="backgroundMediaExternalUrlMobile"
+				responsive={ [ 'mobile' ] }
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -161,7 +241,7 @@ const Styles = props => {
 				key="backgroundTintStrength"
 				attrNameTemplate={ attrNameTemplate }
 				hover="all"
-				enabledCallback={ getAttribute => !! getAttribute( 'backgroundMediaUrl', 'mobile', 'normal', true ) }
+				enabledCallback={ getAttribute => !! ( getAttribute( 'backgroundMediaUrl', 'mobile', 'normal', true ) || getAttribute( 'backgroundMediaExternalUrl', 'mobile', 'normal', true ) ) }
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( value === '' ) {
 						if ( getAttribute( 'backgroundColor', device, state ) ) {
@@ -175,8 +255,9 @@ const Styles = props => {
 				} }
 				dependencies={ [
 					'backgroundColor',
-					 'backgroundMediaUrl',
-					 ...dependencies,
+					'backgroundMediaUrl',
+					'backgroundMediaExternalUrl',
+					...dependencies,
 				] }
 			/>
 			<BlockCss

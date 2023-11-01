@@ -119,27 +119,49 @@ const Edit = props => {
 	const { numInnerBlocks } = useBlockContext()
 	const [ activeSlide, setActiveSlide ] = useState( 1 )
 	const [ dotActiveSlide, setDotActiveSlide ] = useState( 1 )
+	const [ slideOffset, setSlideOffset ] = useState( 0 )
+	const [ defaultIcon, setDefaultIcon ] = useState( { next: defaultIconNext, prev: defaultIconPrev } )
 	const sliderRef = useRef()
 	const dotActiveJustChanged = useRef()
 
+	const isRTL = document.documentElement?.getAttribute( 'dir' ) === 'rtl' || document.body?.getAttribute( 'dir' ) === 'rtl'
+
 	let maxSlides = numInnerBlocks
+	let slidesToShow = attributes.slidesToShow || 1
 	if ( carouselType === 'slide' ) {
-		let slidesToShow = attributes.slidesToShow || 1
 		if ( ( deviceType === 'Tablet' || deviceType === 'Mobile' ) && attributes.slidesToShowTablet ) {
 			slidesToShow = attributes.slidesToShowTablet
 		}
 		if ( deviceType === 'Mobile' && attributes.slidesToShowMobile ) {
 			slidesToShow = attributes.slidesToShowMobile
 		}
-		maxSlides -= ( slidesToShow - 1 )
+		if ( ! isRTL ) {
+			maxSlides -= ( slidesToShow - 1 )
+		}
 	}
+
+	useEffect( () => {
+		if ( isRTL ) {
+			setDefaultIcon( { next: defaultIconPrev, prev: defaultIconNext } )
+		} else {
+			setDefaultIcon( { next: defaultIconNext, prev: defaultIconPrev } )
+		}
+	}, [ isRTL ] )
+
+	useEffect( () => {
+		if ( isRTL && carouselType === 'slide' ) {
+			setSlideOffset( slidesToShow - 1 )
+		} else {
+			setSlideOffset( 0 )
+		}
+	}, [ slidesToShow, carouselType ] )
 
 	const nextSlide = ev => {
 		ev?.preventDefault()
 
 		let newSlide = activeSlide + 1
 		if ( newSlide > maxSlides ) {
-			newSlide = 1
+			newSlide = slideOffset + 1
 		}
 		goToSlide( newSlide )
 	}
@@ -148,7 +170,7 @@ const Edit = props => {
 		ev.preventDefault()
 
 		let newSlide = activeSlide - 1
-		if ( newSlide <= 0 ) {
+		if ( newSlide <= slideOffset ) {
 			newSlide = maxSlides
 		}
 		goToSlide( newSlide )
@@ -220,7 +242,7 @@ const Edit = props => {
 					}
 				}
 			}
-		}, 500 )
+		}, 1000 )
 		return () => clearInterval( timeout )
 	}, [ carouselType, activeSlide ] )
 
@@ -317,15 +339,27 @@ const Edit = props => {
 						>
 							<IconControl
 								label={ __( 'Previous Slide Icon', i18n ) }
-								value={ attributes.arrowIconPrev || defaultIconPrev }
-								defaultValue={ defaultIconPrev }
-								onChange={ arrowIconPrev => setAttributes( { arrowIconPrev } ) }
+								value={ attributes.arrowIconPrev || defaultIcon.prev }
+								defaultValue={ defaultIcon.prev }
+								onChange={ arrowIconPrev => {
+									if ( arrowIconPrev === defaultIcon.prev ) {
+										setAttributes( { arrowIconPrev: '' } )
+									} else {
+										setAttributes( { arrowIconPrev } )
+									}
+								 } }
 							/>
 							<IconControl
 								label={ __( 'Next Slide Icon', i18n ) }
-								value={ attributes.arrowIconNext || defaultIconNext }
-								defaultValue={ defaultIconNext }
-								onChange={ arrowIconNext => setAttributes( { arrowIconNext } ) }
+								value={ attributes.arrowIconNext || defaultIcon.next }
+								defaultValue={ defaultIcon.next }
+								onChange={ arrowIconNext => {
+									if ( arrowIconNext === defaultIcon.next ) {
+										setAttributes( { arrowIconNext: '' } )
+									} else {
+										setAttributes( { arrowIconNext } )
+									}
+								 } }
 							/>
 							<AdvancedToolbarControl
 								label={ __( 'Arrow Position', i18n ) }
@@ -632,7 +666,7 @@ const Edit = props => {
 										return `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ i + 1 }) {
 										opacity: 0;
 										visibility: hidden;
-										left: -${ 100 * ( i ) }%;
+										left: ${ isRTL ? '' : '-' }${ 100 * ( i ) }%;
 									}`
 									} ) }
 									{ `.stk-${ attributes.uniqueId }-column > .stk-block-carousel__slider > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="stackable/column"]:nth-child(${ activeSlide }) {
@@ -664,13 +698,13 @@ const Edit = props => {
 										className="stk-block-carousel__button stk-block-carousel__button__prev"
 										onClick={ prevSlide }
 									>
-										<SvgIcon value={ attributes.arrowIconPrev || defaultIconPrev } />
+										<SvgIcon value={ attributes.arrowIconPrev || defaultIcon.prev } />
 									</button>
 									<button
 										className="stk-block-carousel__button stk-block-carousel__button__next"
 										onClick={ nextSlide }
 									>
-										<SvgIcon value={ attributes.arrowIconNext || defaultIconNext } />
+										<SvgIcon value={ attributes.arrowIconNext || defaultIcon.next } />
 									</button>
 								</div>
 							) }
@@ -678,6 +712,12 @@ const Edit = props => {
 						{ attributes.showDots && (
 							<div className="stk-block-carousel__dots" role="list" data-label="Slide %d">
 								{ range( maxSlides ).map( i => {
+									// active dot is the leftmost slide
+									// for RTL, don't show the first n dots
+									// where n is the offset number
+									if ( isRTL && i < slideOffset ) {
+										return null
+									}
 									const className = classnames( 'stk-block-carousel__dot', {
 										'stk-block-carousel__dot--active': i + 1 === dotActiveSlide,
 									} )

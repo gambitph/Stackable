@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.3\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-17T01:02:05+00:00\n"
+"POT-Creation-Date: 2023-10-31T07:45:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -138,7 +138,7 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:489
 #: pro__premium_only/src/dynamic-content/sources/metabox.php:536
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:353
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:594
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:617
 #: pro__premium_only/src/dynamic-content/sources/site.php:134
 msgid "Text input is empty"
 msgstr ""
@@ -380,7 +380,7 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:248
 #: pro__premium_only/src/conditional-display/condition-types.js:22
-#: src/components/taxonomy-control/index.js:139
+#: src/components/taxonomy-control/index.js:143
 msgid "Post Type"
 msgstr ""
 
@@ -447,7 +447,7 @@ msgstr ""
 msgid "Media"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/other-posts.php:444
+#: pro__premium_only/src/dynamic-content/sources/other-posts.php:462
 msgid "Post not found."
 msgstr ""
 
@@ -1159,7 +1159,7 @@ msgstr ""
 #: src/block-components/advanced/edit.js:80
 #: src/block-components/button/edit.js:57
 #: src/block-components/helpers/borders/edit.js:23
-#: src/block-components/image/edit.js:315
+#: src/block-components/image/edit.js:331
 #: src/block-components/typography/edit.js:203
 #: src/block/countdown/edit.js:62
 #: src/block/table-of-contents/edit.js:73
@@ -1339,7 +1339,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/separator/index.js:162
 #: pro__premium_only/src/deprecated/v2/modules/block-separators/index.js:108
 #: src/block-components/advanced/edit.js:90
-#: src/block/carousel/edit.js:432
+#: src/block/carousel/edit.js:466
 #: src/components/image-filter-control/index.js:71
 #: src/deprecated/v2/block/blockquote/edit.js:262
 #: src/deprecated/v2/block/image-box/edit.js:377
@@ -1395,14 +1395,14 @@ msgstr ""
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:36
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:41
 #: pro__premium_only/src/features/icon-controls/index.js:260
-#: src/block-components/image/edit.js:349
+#: src/block-components/image/edit.js:365
 #: src/block/number-box/edit.js:80
 #: src/components/image-shape-control/index.js:59
 msgid "Shape"
 msgstr ""
 
 #: pro__premium_only/src/block-components/icon/background-shape-controls.js:42
-#: src/block-components/image/edit.js:350
+#: src/block-components/image/edit.js:366
 msgid "Change the shape of the image"
 msgstr ""
 
@@ -1457,8 +1457,8 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:67
 #: pro__premium_only/src/features/icon-controls/index.js:192
 #: src/block-components/button/edit.js:130
-#: src/block-components/helpers/backgrounds/edit.js:36
-#: src/block-components/image/edit.js:265
+#: src/block-components/helpers/backgrounds/edit.js:37
+#: src/block-components/image/edit.js:281
 #: src/block-components/progress-bar/edit.js:36
 #: src/block-components/typography/edit.js:56
 #: src/block/timeline/edit.js:84
@@ -1631,10 +1631,10 @@ msgstr ""
 #: src/block-components/advanced/edit.js:65
 #: src/block-components/advanced/edit.js:76
 #: src/block-components/advanced/edit.js:128
-#: src/block-components/helpers/backgrounds/edit.js:198
-#: src/block-components/helpers/backgrounds/edit.js:220
-#: src/block-components/helpers/backgrounds/edit.js:237
-#: src/block-components/image/edit.js:311
+#: src/block-components/helpers/backgrounds/edit.js:234
+#: src/block-components/helpers/backgrounds/edit.js:256
+#: src/block-components/helpers/backgrounds/edit.js:273
+#: src/block-components/image/edit.js:327
 #: src/block-components/typography/edit.js:185
 #: src/block-components/typography/edit.js:199
 #: src/block-components/typography/edit.js:215
@@ -1760,7 +1760,8 @@ msgid "Transform Origin"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:69
-#: src/block-components/helpers/backgrounds/edit.js:199
+#: src/block-components/helpers/backgrounds/edit.js:235
+#: src/components/four-range-control/index.js:381
 #: src/deprecated/v2/components/background-controls/index.js:257
 #: src/deprecated/v2/components/background-controls/index.js:277
 #: src/deprecated/v2/components/background-controls/index.js:297
@@ -1769,7 +1770,7 @@ msgid "Top Left"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:70
-#: src/block-components/helpers/backgrounds/edit.js:200
+#: src/block-components/helpers/backgrounds/edit.js:236
 #: src/deprecated/v2/components/background-controls/index.js:258
 #: src/deprecated/v2/components/background-controls/index.js:278
 #: src/deprecated/v2/components/background-controls/index.js:298
@@ -1778,7 +1779,8 @@ msgid "Top Center"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:71
-#: src/block-components/helpers/backgrounds/edit.js:201
+#: src/block-components/helpers/backgrounds/edit.js:237
+#: src/components/four-range-control/index.js:426
 #: src/deprecated/v2/components/background-controls/index.js:259
 #: src/deprecated/v2/components/background-controls/index.js:279
 #: src/deprecated/v2/components/background-controls/index.js:299
@@ -1787,7 +1789,7 @@ msgid "Top Right"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:72
-#: src/block-components/helpers/backgrounds/edit.js:202
+#: src/block-components/helpers/backgrounds/edit.js:238
 #: src/deprecated/v2/components/background-controls/index.js:260
 #: src/deprecated/v2/components/background-controls/index.js:280
 #: src/deprecated/v2/components/background-controls/index.js:300
@@ -1796,7 +1798,7 @@ msgid "Center Left"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:73
-#: src/block-components/helpers/backgrounds/edit.js:203
+#: src/block-components/helpers/backgrounds/edit.js:239
 #: src/deprecated/v2/components/background-controls/index.js:261
 #: src/deprecated/v2/components/background-controls/index.js:281
 #: src/deprecated/v2/components/background-controls/index.js:301
@@ -1805,7 +1807,7 @@ msgid "Center Center"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:74
-#: src/block-components/helpers/backgrounds/edit.js:204
+#: src/block-components/helpers/backgrounds/edit.js:240
 #: src/deprecated/v2/components/background-controls/index.js:262
 #: src/deprecated/v2/components/background-controls/index.js:282
 #: src/deprecated/v2/components/background-controls/index.js:302
@@ -1814,7 +1816,8 @@ msgid "Center Right"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:75
-#: src/block-components/helpers/backgrounds/edit.js:205
+#: src/block-components/helpers/backgrounds/edit.js:241
+#: src/components/four-range-control/index.js:471
 #: src/deprecated/v2/components/background-controls/index.js:263
 #: src/deprecated/v2/components/background-controls/index.js:283
 #: src/deprecated/v2/components/background-controls/index.js:303
@@ -1823,7 +1826,7 @@ msgid "Bottom Left"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:76
-#: src/block-components/helpers/backgrounds/edit.js:206
+#: src/block-components/helpers/backgrounds/edit.js:242
 #: src/deprecated/v2/components/background-controls/index.js:264
 #: src/deprecated/v2/components/background-controls/index.js:284
 #: src/deprecated/v2/components/background-controls/index.js:304
@@ -1832,7 +1835,8 @@ msgid "Bottom Center"
 msgstr ""
 
 #: pro__premium_only/src/block-components/transform/index.js:77
-#: src/block-components/helpers/backgrounds/edit.js:207
+#: src/block-components/helpers/backgrounds/edit.js:243
+#: src/components/four-range-control/index.js:516
 #: src/deprecated/v2/components/background-controls/index.js:265
 #: src/deprecated/v2/components/background-controls/index.js:285
 #: src/deprecated/v2/components/background-controls/index.js:305
@@ -3060,7 +3064,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:90
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:135
 #: pro__premium_only/src/deprecated/v2/block/testimonial/index.js:196
-#: src/block-components/image/edit.js:432
+#: src/block-components/image/edit.js:448
 #: src/components/resizer-tooltip/index.js:278
 #: src/deprecated/v2/block/blog-posts/edit.js:411
 #: src/deprecated/v2/block/card/edit.js:286
@@ -3162,8 +3166,8 @@ msgstr ""
 #: src/block-components/icon/edit.js:87
 #: src/block-components/icon/edit.js:255
 #: src/block-components/icon/edit.js:279
-#: src/block/carousel/edit.js:394
-#: src/block/carousel/edit.js:424
+#: src/block/carousel/edit.js:428
+#: src/block/carousel/edit.js:458
 #: src/block/icon-list/edit.js:268
 #: src/block/tab-labels/edit.js:544
 #: src/components/icon-control/index.js:67
@@ -3205,7 +3209,7 @@ msgstr ""
 #: src/block/timeline/edit.js:329
 #: src/components/advanced-toolbar-control/index.js:155
 #: src/components/four-number-control/index.js:205
-#: src/components/four-range-control/index.js:511
+#: src/components/four-range-control/index.js:516
 #: src/deprecated/v2/components/button-controls/index.js:452
 msgid "Left"
 msgstr ""
@@ -3217,7 +3221,7 @@ msgstr ""
 #: src/block/timeline/edit.js:330
 #: src/components/advanced-toolbar-control/index.js:165
 #: src/components/four-number-control/index.js:181
-#: src/components/four-range-control/index.js:421
+#: src/components/four-range-control/index.js:426
 #: src/deprecated/v2/components/button-controls/index.js:455
 msgid "Right"
 msgstr ""
@@ -3258,8 +3262,8 @@ msgstr ""
 
 #: pro__premium_only/src/deprecated/v2/block/pricing-box/index.js:171
 #: pro__premium_only/src/dynamic-content/components/image-size-control.js:17
-#: src/block-components/helpers/backgrounds/edit.js:234
-#: src/block-components/image/edit.js:218
+#: src/block-components/helpers/backgrounds/edit.js:270
+#: src/block-components/image/edit.js:234
 #: src/block/posts/edit.js:568
 #: src/components/image-size-control/index.js:51
 #: src/deprecated/v2/block/blog-posts/edit.js:548
@@ -3343,10 +3347,10 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:49
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:52
 #: src/block-components/helpers/borders/edit.js:86
-#: src/block-components/image/edit.js:241
+#: src/block-components/image/edit.js:257
 #: src/block-components/progress-bar/edit.js:99
-#: src/block/carousel/edit.js:417
-#: src/block/carousel/edit.js:502
+#: src/block/carousel/edit.js:451
+#: src/block/carousel/edit.js:536
 #: src/deprecated/v2/block/accordion/edit.js:199
 #: src/deprecated/v2/block/blockquote/edit.js:183
 #: src/deprecated/v2/block/blog-posts/edit.js:217
@@ -3377,7 +3381,7 @@ msgstr ""
 #: pro__premium_only/src/deprecated/v2/block/testimonial/background.js:63
 #: pro__premium_only/src/deprecated/v2/block/testimonial/bubble.js:60
 #: pro__premium_only/src/deprecated/v2/block/testimonial/vertical.js:63
-#: src/block-components/helpers/borders/edit.js:100
+#: src/block-components/helpers/borders/edit.js:101
 #: src/block-components/separator/edit.js:93
 #: src/block-components/typography/edit.js:295
 #: src/components/shadow-control/index.js:349
@@ -3541,7 +3545,7 @@ msgid "Custom Text"
 msgstr ""
 
 #: pro__premium_only/src/dynamic-content/components/date-format-picker.js:23
-#: src/block-components/helpers/backgrounds/edit.js:241
+#: src/block-components/helpers/backgrounds/edit.js:277
 #: src/components/shadow-control/index.js:318
 #: src/deprecated/v2/components/background-controls/index.js:367
 #: src/deprecated/v2/components/background-controls/index.js:382
@@ -3703,10 +3707,10 @@ msgstr ""
 #: pro__premium_only/src/features/icon-controls/index.js:63
 #: pro__premium_only/src/features/icon-controls/index.js:188
 #: src/block-components/button/edit.js:126
-#: src/block-components/helpers/backgrounds/edit.js:32
+#: src/block-components/helpers/backgrounds/edit.js:33
 #: src/block-components/icon/edit.js:73
 #: src/block-components/icon/edit.js:80
-#: src/block-components/image/edit.js:261
+#: src/block-components/image/edit.js:277
 #: src/block-components/progress-bar/edit.js:32
 #: src/block-components/typography/edit.js:52
 #: src/block/timeline/edit.js:80
@@ -4136,7 +4140,7 @@ msgid "Overflow"
 msgstr ""
 
 #: src/block-components/advanced/edit.js:66
-#: src/block-components/helpers/backgrounds/edit.js:238
+#: src/block-components/helpers/backgrounds/edit.js:274
 #: src/components/resizable-column/index.js:479
 #: src/components/resizable-column/index.js:487
 #: src/components/resizable-column/index.js:496
@@ -4229,7 +4233,7 @@ msgstr ""
 #: src/block-components/alignment/edit.js:259
 #: src/block/button-group/edit.js:169
 #: src/block/button-group/edit.js:175
-#: src/block/carousel/edit.js:353
+#: src/block/carousel/edit.js:387
 #: src/block/heading/edit.js:144
 #: src/block/icon-list/edit.js:254
 #: src/block/subtitle/edit.js:96
@@ -4275,8 +4279,8 @@ msgstr ""
 
 #: src/block-components/alignment/edit.js:163
 #: src/block-components/alignment/edit.js:243
-#: src/block/carousel/edit.js:346
-#: src/block/carousel/edit.js:462
+#: src/block/carousel/edit.js:380
+#: src/block/carousel/edit.js:496
 msgid "%s Justify"
 msgstr ""
 
@@ -4322,7 +4326,7 @@ msgstr ""
 #: src/block/hero/variations.js:72
 #: src/block/posts/variations.js:96
 #: src/block/posts/variations.js:100
-#: src/block/tabs/edit.js:184
+#: src/block/tabs/edit.js:190
 #: src/block/team-member/variations.js:107
 #: src/block/team-member/variations.js:111
 #: src/block/testimonial/variations.js:93
@@ -4339,7 +4343,7 @@ msgstr ""
 #: src/block-components/alignment/edit.js:224
 #: src/block/button-group/edit.js:81
 #: src/block/button-group/edit.js:92
-#: src/block/tabs/edit.js:188
+#: src/block/tabs/edit.js:194
 #: src/block/testimonial/variations.js:117
 #: src/block/testimonial/variations.js:121
 #: src/deprecated/v2/block/testimonial/edit.js:92
@@ -4672,7 +4676,7 @@ msgstr ""
 msgid "Custom Attributes"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:75
+#: src/block-components/helpers/backgrounds/edit.js:81
 #: src/block-components/progress-bar/edit.js:231
 #: src/deprecated/v2/block/header/edit.js:335
 #: src/deprecated/v2/block/separator/edit.js:188
@@ -4680,21 +4684,21 @@ msgstr ""
 msgid "Background Color"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:94
+#: src/block-components/helpers/backgrounds/edit.js:100
 #: src/deprecated/v2/components/background-controls/index.js:168
 #: src/deprecated/v2/components/background-controls/index.js:179
 #: src/deprecated/v2/components/background-controls/index.js:190
 msgid "Background Image or Video"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:94
+#: src/block-components/helpers/backgrounds/edit.js:100
 #: src/deprecated/v2/components/background-controls/index.js:168
 #: src/deprecated/v2/components/background-controls/index.js:179
 #: src/deprecated/v2/components/background-controls/index.js:190
 msgid "Background Image"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:95
+#: src/block-components/helpers/backgrounds/edit.js:101
 #: src/block/video-popup/edit.js:108
 #: src/deprecated/v2/block/video-popup/edit.js:81
 #: src/deprecated/v2/components/background-controls/index.js:169
@@ -4703,60 +4707,68 @@ msgstr ""
 msgid "Use .mp4 format for videos"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:126
+#: src/block-components/helpers/backgrounds/edit.js:132
+msgid "Background Image Url"
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:161
 #: src/deprecated/v2/components/background-controls/index.js:205
 msgid "Background Media Tint Strength"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:136
+#: src/block-components/helpers/backgrounds/edit.js:171
 msgid "Adjusts the intensity of the background media tint"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:143
+#: src/block-components/helpers/backgrounds/edit.js:178
+msgid "Note: Fixed Background works on Desktop and Android devices only."
+msgstr ""
+
+#: src/block-components/helpers/backgrounds/edit.js:179
 #: src/deprecated/v2/components/background-controls/index.js:232
 msgid "Fixed Background"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:147
+#: src/block-components/helpers/backgrounds/edit.js:183
 msgid "Keeps the background image fixed in place while scrolling"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:154
+#: src/block-components/helpers/backgrounds/edit.js:190
 #: src/block-components/progress-bar/edit.js:220
 #: src/deprecated/v2/components/background-controls/index.js:151
 msgid "Background Gradient Blend Mode"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:158
-#: src/block-components/helpers/backgrounds/edit.js:266
+#: src/block-components/helpers/backgrounds/edit.js:194
+#: src/block-components/helpers/backgrounds/edit.js:302
 #: src/block-components/progress-bar/edit.js:224
 msgid "Sets how this background gradient/image blends into the other background"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:165
+#: src/block-components/helpers/backgrounds/edit.js:201
 #: src/deprecated/v2/components/background-controls/index.js:242
 msgid "Adv. Background Image Settings"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:195
+#: src/block-components/helpers/backgrounds/edit.js:231
 #: src/deprecated/v2/components/background-controls/index.js:254
 #: src/deprecated/v2/components/background-controls/index.js:274
 #: src/deprecated/v2/components/background-controls/index.js:294
 msgid "Image Position"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:211
+#: src/block-components/helpers/backgrounds/edit.js:247
 msgid "Chooses which part of the background image will be the focal point"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:217
+#: src/block-components/helpers/backgrounds/edit.js:253
 #: src/deprecated/v2/components/background-controls/index.js:315
 #: src/deprecated/v2/components/background-controls/index.js:330
 #: src/deprecated/v2/components/background-controls/index.js:345
 msgid "Image Repeat"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:221
+#: src/block-components/helpers/backgrounds/edit.js:257
 #: src/deprecated/v2/components/background-controls/index.js:318
 #: src/deprecated/v2/components/background-controls/index.js:333
 #: src/deprecated/v2/components/background-controls/index.js:348
@@ -4764,7 +4776,7 @@ msgstr ""
 msgid "No-Repeat"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:222
+#: src/block-components/helpers/backgrounds/edit.js:258
 #: src/deprecated/v2/components/background-controls/index.js:319
 #: src/deprecated/v2/components/background-controls/index.js:334
 #: src/deprecated/v2/components/background-controls/index.js:349
@@ -4772,7 +4784,7 @@ msgstr ""
 msgid "Repeat"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:223
+#: src/block-components/helpers/backgrounds/edit.js:259
 #: src/deprecated/v2/components/background-controls/index.js:320
 #: src/deprecated/v2/components/background-controls/index.js:335
 #: src/deprecated/v2/components/background-controls/index.js:350
@@ -4780,7 +4792,7 @@ msgstr ""
 msgid "Repeat-X"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:224
+#: src/block-components/helpers/backgrounds/edit.js:260
 #: src/deprecated/v2/components/background-controls/index.js:321
 #: src/deprecated/v2/components/background-controls/index.js:336
 #: src/deprecated/v2/components/background-controls/index.js:351
@@ -4788,12 +4800,12 @@ msgstr ""
 msgid "Repeat-Y"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:228
+#: src/block-components/helpers/backgrounds/edit.js:264
 msgid "Covers the background with tiled images"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:239
-#: src/block-components/image/edit.js:313
+#: src/block-components/helpers/backgrounds/edit.js:275
+#: src/block-components/image/edit.js:329
 #: src/block/team-member/variations.js:131
 #: src/block/team-member/variations.js:135
 #: src/deprecated/v2/components/background-controls/index.js:365
@@ -4803,8 +4815,8 @@ msgstr ""
 msgid "Cover"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:240
-#: src/block-components/image/edit.js:312
+#: src/block-components/helpers/backgrounds/edit.js:276
+#: src/block-components/image/edit.js:328
 #: src/deprecated/v2/components/background-controls/index.js:366
 #: src/deprecated/v2/components/background-controls/index.js:381
 #: src/deprecated/v2/components/background-controls/index.js:396
@@ -4812,11 +4824,11 @@ msgstr ""
 msgid "Contain"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:245
+#: src/block-components/helpers/backgrounds/edit.js:281
 msgid "Sets the display image size"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:252
+#: src/block-components/helpers/backgrounds/edit.js:288
 #: src/deprecated/v2/components/background-controls/index.js:408
 #: src/deprecated/v2/components/background-controls/index.js:423
 #: src/deprecated/v2/components/background-controls/index.js:438
@@ -4824,13 +4836,13 @@ msgstr ""
 msgid "Custom Size"
 msgstr ""
 
-#: src/block-components/helpers/backgrounds/edit.js:262
+#: src/block-components/helpers/backgrounds/edit.js:298
 #: src/deprecated/v2/components/background-controls/index.js:453
 msgid "Image Blend Mode"
 msgstr ""
 
 #: src/block-components/helpers/borders/edit.js:27
-#: src/block/carousel/edit.js:480
+#: src/block/carousel/edit.js:514
 #: src/components/border-controls/index.js:30
 msgid "Solid"
 msgstr ""
@@ -5018,11 +5030,15 @@ msgstr ""
 msgid "Icon Shape"
 msgstr ""
 
-#: src/block-components/image/edit.js:103
+#: src/block-components/image/edit.js:105
 msgid "Select Image"
 msgstr ""
 
-#: src/block-components/image/edit.js:139
+#: src/block-components/image/edit.js:140
+msgid "Image Url"
+msgstr ""
+
+#: src/block-components/image/edit.js:155
 #: src/block-components/progress-bar/edit.js:76
 #: src/block-components/separator/edit.js:80
 #: src/block/divider/edit.js:73
@@ -5041,15 +5057,15 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
-#: src/block-components/image/edit.js:151
+#: src/block-components/image/edit.js:167
 msgid "Image width"
 msgstr ""
 
-#: src/block-components/image/edit.js:152
+#: src/block-components/image/edit.js:168
 msgid "Adjusts the image width"
 msgstr ""
 
-#: src/block-components/image/edit.js:159
+#: src/block-components/image/edit.js:175
 #: src/block-components/progress-bar/edit.js:87
 #: src/block-components/separator/edit.js:67
 #: src/block/heading/edit.js:174
@@ -5079,104 +5095,104 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
-#: src/block-components/image/edit.js:170
+#: src/block-components/image/edit.js:186
 msgid "Image height"
 msgstr ""
 
-#: src/block-components/image/edit.js:171
+#: src/block-components/image/edit.js:187
 msgid "Adjusts the image height"
 msgstr ""
 
-#: src/block-components/image/edit.js:178
+#: src/block-components/image/edit.js:194
 msgid "Open Image in Lightbox"
 msgstr ""
 
-#: src/block-components/image/edit.js:185
+#: src/block-components/image/edit.js:201
 msgid "Image Alt"
 msgstr ""
 
-#: src/block-components/image/edit.js:192
+#: src/block-components/image/edit.js:208
 #: src/block/map/edit.js:341
 msgid "Zoom"
 msgstr ""
 
-#: src/block-components/image/edit.js:210
+#: src/block-components/image/edit.js:226
 msgid "Image Shadow"
 msgstr ""
 
-#: src/block-components/image/edit.js:211
+#: src/block-components/image/edit.js:227
 msgid "Adjusts the intensity of the image shadow"
 msgstr ""
 
-#: src/block-components/image/edit.js:234
+#: src/block-components/image/edit.js:250
 #: src/block/posts/edit.js:574
 msgid "Sets the image display size to thumbnail, medium, large or full size. A smaller image size will also load faster."
 msgstr ""
 
-#: src/block-components/image/edit.js:250
+#: src/block-components/image/edit.js:266
 msgid "Adjusts the radius of image corners to make them more rounded"
 msgstr ""
 
-#: src/block-components/image/edit.js:273
+#: src/block-components/image/edit.js:289
 #: src/deprecated/v2/block/image-box/edit.js:355
 #: src/deprecated/v2/block/image-box/edit.js:371
 #: src/deprecated/v2/block/image-box/edit.js:406
 msgid "Overlay Color"
 msgstr ""
 
-#: src/block-components/image/edit.js:279
+#: src/block-components/image/edit.js:295
 msgid "Overlay Opacity"
 msgstr ""
 
-#: src/block-components/image/edit.js:289
+#: src/block-components/image/edit.js:305
 msgid "Overlay Blend Mode"
 msgstr ""
 
-#: src/block-components/image/edit.js:293
+#: src/block-components/image/edit.js:309
 msgid "Sets how the overlay color blends with the image"
 msgstr ""
 
-#: src/block-components/image/edit.js:301
+#: src/block-components/image/edit.js:317
 msgid "Focal point"
 msgstr ""
 
-#: src/block-components/image/edit.js:308
+#: src/block-components/image/edit.js:324
 msgid "Image Fit"
 msgstr ""
 
-#: src/block-components/image/edit.js:314
+#: src/block-components/image/edit.js:330
 msgid "Fill"
 msgstr ""
 
-#: src/block-components/image/edit.js:316
+#: src/block-components/image/edit.js:332
 msgid "Scale Down"
 msgstr ""
 
-#: src/block-components/image/edit.js:320
+#: src/block-components/image/edit.js:336
 msgid "Sets the fit to default, contain, cover, fill, none, and scale down. Image fit specifies how an image resizes in a container."
 msgstr ""
 
-#: src/block-components/image/edit.js:328
+#: src/block-components/image/edit.js:344
 msgid "Image Shape"
 msgstr ""
 
-#: src/block-components/image/edit.js:354
+#: src/block-components/image/edit.js:370
 #: src/deprecated/v2/components/image-shape-controls/index.js:32
 msgid "Flip Shape Horizontally"
 msgstr ""
 
-#: src/block-components/image/edit.js:358
+#: src/block-components/image/edit.js:374
 #: src/deprecated/v2/components/image-shape-controls/index.js:40
 msgid "Flip Shape Vertically"
 msgstr ""
 
-#: src/block-components/image/edit.js:362
+#: src/block-components/image/edit.js:378
 #: src/deprecated/v2/components/image-shape-controls/index.js:48
 msgid "Stretch Shape Mask"
 msgstr ""
 
-#: src/block-components/image/edit.js:370
-#: src/block-components/image/edit.js:378
+#: src/block-components/image/edit.js:386
+#: src/block-components/image/edit.js:394
 msgid "Image Filter"
 msgstr ""
 
@@ -5849,12 +5865,12 @@ msgstr ""
 #: src/block/call-to-action/variations.js:46
 #: src/block/call-to-action/variations.js:69
 #: src/block/card/example.js:31
-#: src/block/carousel/edit.js:346
-#: src/block/carousel/edit.js:353
-#: src/block/carousel/edit.js:370
-#: src/block/carousel/edit.js:389
-#: src/block/carousel/edit.js:399
-#: src/block/carousel/edit.js:408
+#: src/block/carousel/edit.js:380
+#: src/block/carousel/edit.js:387
+#: src/block/carousel/edit.js:404
+#: src/block/carousel/edit.js:423
+#: src/block/carousel/edit.js:433
+#: src/block/carousel/edit.js:442
 #: src/block/feature-grid/example.js:34
 #: src/block/feature-grid/example.js:58
 #: src/block/feature/example.js:30
@@ -5980,193 +5996,193 @@ msgstr ""
 msgid "Faded"
 msgstr ""
 
-#: src/block/carousel/edit.js:241
+#: src/block/carousel/edit.js:263
 msgid "Slides"
 msgstr ""
 
-#: src/block/carousel/edit.js:245
+#: src/block/carousel/edit.js:267
 msgid "Carousel Type"
 msgstr ""
 
-#: src/block/carousel/edit.js:249
-#: src/block/carousel/edit.js:579
+#: src/block/carousel/edit.js:271
+#: src/block/carousel/edit.js:613
 msgid "Slide"
 msgstr ""
 
-#: src/block/carousel/edit.js:253
+#: src/block/carousel/edit.js:275
 #: src/block/image-box/variations.js:164
 #: src/block/image-box/variations.js:168
-#: src/block/tabs/edit.js:206
+#: src/block/tabs/edit.js:212
 #: src/deprecated/v2/block/image-box/edit.js:87
 msgid "Fade"
 msgstr ""
 
-#: src/block/carousel/edit.js:261
+#: src/block/carousel/edit.js:283
 msgid "Slides to Show"
 msgstr ""
 
-#: src/block/carousel/edit.js:269
+#: src/block/carousel/edit.js:291
 msgid "Slide Gap"
 msgstr ""
 
-#: src/block/carousel/edit.js:280
+#: src/block/carousel/edit.js:302
 msgid "Fade duration"
 msgstr ""
 
-#: src/block/carousel/edit.js:291
+#: src/block/carousel/edit.js:313
 msgid "Autoplay"
 msgstr ""
 
-#: src/block/carousel/edit.js:298
+#: src/block/carousel/edit.js:320
 msgid "Speed (ms)"
 msgstr ""
 
-#: src/block/carousel/edit.js:312
+#: src/block/carousel/edit.js:334
 msgid "Arrows"
 msgstr ""
 
-#: src/block/carousel/edit.js:319
+#: src/block/carousel/edit.js:341
 msgid "Previous Slide Icon"
 msgstr ""
 
-#: src/block/carousel/edit.js:325
+#: src/block/carousel/edit.js:353
 msgid "Next Slide Icon"
 msgstr ""
 
-#: src/block/carousel/edit.js:331
+#: src/block/carousel/edit.js:365
 msgid "Arrow Position"
 msgstr ""
 
-#: src/block/carousel/edit.js:334
+#: src/block/carousel/edit.js:368
 msgid "Inside"
 msgstr ""
 
-#: src/block/carousel/edit.js:335
+#: src/block/carousel/edit.js:369
 msgid "Outside"
 msgstr ""
 
-#: src/block/carousel/edit.js:370
-#: src/block/carousel/edit.js:468
+#: src/block/carousel/edit.js:404
+#: src/block/carousel/edit.js:502
 msgid "%s Offset"
 msgstr ""
 
-#: src/block/carousel/edit.js:379
+#: src/block/carousel/edit.js:413
 #: src/deprecated/v2/block/header/edit.js:317
 msgid "Button Gap"
 msgstr ""
 
-#: src/block/carousel/edit.js:389
-#: src/block/carousel/edit.js:394
-#: src/block/carousel/edit.js:486
-#: src/block/carousel/edit.js:491
+#: src/block/carousel/edit.js:423
+#: src/block/carousel/edit.js:428
+#: src/block/carousel/edit.js:520
+#: src/block/carousel/edit.js:525
 msgid "%s Color"
 msgstr ""
 
-#: src/block/carousel/edit.js:399
-#: src/block/carousel/edit.js:518
+#: src/block/carousel/edit.js:433
+#: src/block/carousel/edit.js:552
 #: src/components/resizer-tooltip/index.js:94
 msgid "%s Width"
 msgstr ""
 
-#: src/block/carousel/edit.js:408
-#: src/block/carousel/edit.js:525
+#: src/block/carousel/edit.js:442
+#: src/block/carousel/edit.js:559
 #: src/components/resizer-tooltip/index.js:147
 msgid "%s Height"
 msgstr ""
 
-#: src/block/carousel/edit.js:424
-#: src/block/carousel/edit.js:495
+#: src/block/carousel/edit.js:458
+#: src/block/carousel/edit.js:529
 #: src/block/timeline/edit.js:362
 #: src/components/resizer-tooltip/index.js:226
 msgid "%s Size"
 msgstr ""
 
 #. Translators: %s is the name of the setting. e.g. "Show arrows on mobile".
-#: src/block/carousel/edit.js:443
-#: src/block/carousel/edit.js:535
+#: src/block/carousel/edit.js:477
+#: src/block/carousel/edit.js:569
 msgid "Show %s on mobile"
 msgstr ""
 
 #. Translators: lower caps "arrows" is the name of the setting.
-#: src/block/carousel/edit.js:445
+#: src/block/carousel/edit.js:479
 msgid "arrows"
 msgstr ""
 
-#: src/block/carousel/edit.js:454
-#: src/block/carousel/edit.js:462
-#: src/block/carousel/edit.js:468
-#: src/block/carousel/edit.js:509
+#: src/block/carousel/edit.js:488
+#: src/block/carousel/edit.js:496
+#: src/block/carousel/edit.js:502
+#: src/block/carousel/edit.js:543
 #: src/block/divider/block-styles.js:34
 #: src/deprecated/v2/block/divider/edit.js:50
 msgid "Dots"
 msgstr ""
 
-#: src/block/carousel/edit.js:477
+#: src/block/carousel/edit.js:511
 msgid "Dot Style"
 msgstr ""
 
-#: src/block/carousel/edit.js:481
+#: src/block/carousel/edit.js:515
 msgid "Outline"
 msgstr ""
 
-#: src/block/carousel/edit.js:486
-#: src/block/carousel/edit.js:495
+#: src/block/carousel/edit.js:520
+#: src/block/carousel/edit.js:529
 #: src/block/timeline/edit.js:362
 #: src/block/timeline/edit.js:370
 msgid "Dot"
 msgstr ""
 
-#: src/block/carousel/edit.js:491
-#: src/block/carousel/edit.js:518
 #: src/block/carousel/edit.js:525
+#: src/block/carousel/edit.js:552
+#: src/block/carousel/edit.js:559
 msgid "Active Dot"
 msgstr ""
 
-#: src/block/carousel/edit.js:509
+#: src/block/carousel/edit.js:543
 #: src/block/timeline/edit.js:334
 msgid "%s Gap"
 msgstr ""
 
-#: src/block/carousel/edit.js:514
+#: src/block/carousel/edit.js:548
 msgid "To improve accessibility, the clickable area of the dots will not go below %s."
 msgstr ""
 
 #. Translators: lower caps "dots" is the name of the setting.
-#: src/block/carousel/edit.js:537
+#: src/block/carousel/edit.js:571
 msgid "dots"
 msgstr ""
 
-#: src/block/carousel/edit.js:554
+#: src/block/carousel/edit.js:588
 #: src/block/icon/edit.js:77
 msgid "Accessibility"
 msgstr ""
 
 #. Translators: %s is the name of the setting. e.g. "Previous Slide".
-#: src/block/carousel/edit.js:560
-#: src/block/carousel/edit.js:569
-#: src/block/carousel/edit.js:578
-#: src/block/carousel/edit.js:588
+#: src/block/carousel/edit.js:594
+#: src/block/carousel/edit.js:603
+#: src/block/carousel/edit.js:612
+#: src/block/carousel/edit.js:622
 msgid "%s label"
 msgstr ""
 
-#: src/block/carousel/edit.js:561
+#: src/block/carousel/edit.js:595
 msgid "Previous slide"
 msgstr ""
 
-#: src/block/carousel/edit.js:570
+#: src/block/carousel/edit.js:604
 msgid "Next slide"
 msgstr ""
 
-#: src/block/carousel/edit.js:583
+#: src/block/carousel/edit.js:617
 msgid "Use %%d to show the slide number."
 msgstr ""
 
 #. Translators: This is for the "Slide 1 of 3" option label.
-#: src/block/carousel/edit.js:590
+#: src/block/carousel/edit.js:624
 msgid "Slide N of N"
 msgstr ""
 
-#: src/block/carousel/edit.js:594
+#: src/block/carousel/edit.js:628
 msgid "Use two %%d to show the slide number and the total slides. e.g. Slide 1 of 3."
 msgstr ""
 
@@ -6758,6 +6774,18 @@ msgstr ""
 msgid "Captioned"
 msgstr ""
 
+#: src/block/image/edit.js:99
+msgid "Caption"
+msgstr ""
+
+#: src/block/image/edit.js:132
+msgid "Image Caption"
+msgstr ""
+
+#: src/block/image/edit.js:161
+msgid "Caption Alignment"
+msgstr ""
+
 #: src/block/map/edit.js:277
 msgid "Some map features require a Google API Key."
 msgstr ""
@@ -7227,14 +7255,14 @@ msgstr ""
 #: src/components/advanced-toolbar-control/index.js:173
 #: src/components/four-number-control/index.js:164
 #: src/components/four-number-control/index.js:169
-#: src/components/four-range-control/index.js:376
+#: src/components/four-range-control/index.js:381
 msgid "Top"
 msgstr ""
 
 #: src/block/tab-labels/edit.js:91
 #: src/components/advanced-toolbar-control/index.js:183
 #: src/components/four-number-control/index.js:193
-#: src/components/four-range-control/index.js:466
+#: src/components/four-range-control/index.js:471
 msgid "Bottom"
 msgstr ""
 
@@ -7388,36 +7416,40 @@ msgstr ""
 msgid "Heading"
 msgstr ""
 
-#: src/block/tabs/edit.js:57
 #: src/block/tabs/edit.js:58
 #: src/block/tabs/edit.js:59
+#: src/block/tabs/edit.js:60
 #: src/block/tabs/example.js:26
 #: src/block/tabs/example.js:27
 #: src/block/tabs/example.js:28
 msgid "Tab %d"
 msgstr ""
 
-#: src/block/tabs/edit.js:128
+#: src/block/tabs/edit.js:129
 msgid "Tabs"
 msgstr ""
 
-#: src/block/tabs/edit.js:169
+#: src/block/tabs/edit.js:170
 msgid "Initial Tab Open"
 msgstr ""
 
 #: src/block/tabs/edit.js:180
+msgid "Equal tab height"
+msgstr ""
+
+#: src/block/tabs/edit.js:186
 msgid "Tab Orientation"
 msgstr ""
 
-#: src/block/tabs/edit.js:194
+#: src/block/tabs/edit.js:200
 msgid "Tab Panel Offset"
 msgstr ""
 
-#: src/block/tabs/edit.js:202
+#: src/block/tabs/edit.js:208
 msgid "Tab Panel Effect"
 msgstr ""
 
-#: src/block/tabs/edit.js:210
+#: src/block/tabs/edit.js:216
 msgid "Immediate"
 msgstr ""
 
@@ -7783,19 +7815,19 @@ msgstr ""
 msgid "auto"
 msgstr ""
 
-#: src/components/four-range-control/index.js:93
+#: src/components/four-range-control/index.js:98
 msgid "Individual sides"
 msgstr ""
 
-#: src/components/four-range-control/index.js:93
+#: src/components/four-range-control/index.js:98
 msgid "All sides"
 msgstr ""
 
-#: src/components/four-range-control/index.js:286
+#: src/components/four-range-control/index.js:291
 msgid "Top and Bottom"
 msgstr ""
 
-#: src/components/four-range-control/index.js:329
+#: src/components/four-range-control/index.js:334
 msgid "Left and Right"
 msgstr ""
 
@@ -8258,19 +8290,19 @@ msgstr ""
 msgid "Column Arrangement"
 msgstr ""
 
-#: src/components/taxonomy-control/index.js:154
+#: src/components/taxonomy-control/index.js:158
 msgid "Filter by Taxonomy"
 msgstr ""
 
-#: src/components/taxonomy-control/index.js:168
+#: src/components/taxonomy-control/index.js:172
 msgid "Taxonomy Filter Type"
 msgstr ""
 
-#: src/components/taxonomy-control/index.js:171
+#: src/components/taxonomy-control/index.js:175
 msgid "Included In"
 msgstr ""
 
-#: src/components/taxonomy-control/index.js:172
+#: src/components/taxonomy-control/index.js:176
 msgid "Not In"
 msgstr ""
 

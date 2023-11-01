@@ -11,6 +11,7 @@ import {
 	AdvancedToggleControl,
 	AdvancedRangeControl,
 	ImageControl2,
+	AdvancedTextControl,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers,
@@ -54,7 +55,12 @@ export const BackgroundControls = props => {
 	const setAttributes = useBlockSetAttributesContext()
 	const [ currentHoverState ] = useBlockHoverState()
 
-	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) || getAttribute( 'backgroundMediaUrlTablet' ) || getAttribute( 'backgroundMediaUrlMobile' )
+	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) ||
+	getAttribute( 'backgroundMediaUrlTablet' ) ||
+	getAttribute( 'backgroundMediaUrlMobile' ) ||
+	getAttribute( 'backgroundMediaExternalUrl' ) ||
+	getAttribute( 'backgroundMediaExternalUrlTablet' ) ||
+	getAttribute( 'backgroundMediaExternalUrlMobile' )
 	const isBackgroundVideo = () => {
 		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
 			.filter( value => value )
@@ -101,6 +107,7 @@ export const BackgroundControls = props => {
 						const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
 						const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
 						const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
+						const attrExternalUrl = getAttributeName( getAttrName( 'backgroundMediaExternalUrl', deviceType ) )
 
 						const attributes = {
 							[ attrNameId ]: image.id,
@@ -108,6 +115,7 @@ export const BackgroundControls = props => {
 							[ attrWidthAttribute ]: image.width || '',
 							[ attrHeightAttribute ]: image.height || '',
 							[ attrAlt ]: image.alt || '',
+							[ attrExternalUrl ]: '',
 						}
 
 						if ( props.onBackgroundEnableAttribute ) {
@@ -120,7 +128,34 @@ export const BackgroundControls = props => {
 					responsive="all"
 				/>
 			}
+			<AdvancedTextControl
+				label={ __( 'Background Image Url', i18n ) }
+				attribute={ getAttrName( 'backgroundMediaExternalUrl' ) }
+				responsive="all"
+				onChange={ text => {
+					const backgroundMediaExternalUrl = getAttrName( 'backgroundMediaExternalUrl', deviceType )
+					const attrNameId = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Id`, deviceType )
+					const attrNameUrl = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Url`, deviceType )
+					const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
+					const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
+					const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
 
+					const attributes = {
+						[ backgroundMediaExternalUrl ]: text,
+						[ attrNameId ]: '',
+						[ attrNameUrl ]: '',
+						[ attrWidthAttribute ]: '',
+						[ attrHeightAttribute ]: '',
+						[ attrAlt ]: '',
+					}
+
+					if ( props.onBackgroundEnableAttribute ) {
+						attributes[ props.onBackgroundEnableAttribute ] = true
+					}
+
+					setAttributes( attributes )
+				} }
+			/>
 			{ hasBackgroundMedia &&
 				<AdvancedRangeControl
 					label={ __( 'Background Media Tint Strength', i18n ) }
@@ -140,6 +175,7 @@ export const BackgroundControls = props => {
 
 			{ hasBackgroundMedia && ! isBackgroundVideo() &&
 				<AdvancedToggleControl
+					help={ __( 'Note: Fixed Background works on Desktop and Android devices only.', i18n ) }
 					label={ __( 'Fixed Background', i18n ) }
 					attribute={ getAttrName( 'fixedBackground' ) }
 					helpTooltip={ {

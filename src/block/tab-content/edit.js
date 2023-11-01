@@ -12,6 +12,8 @@ import {
 	ColumnInnerBlocks,
 	GroupPlaceholder,
 	InspectorTabs,
+	AdvancedToggleControl,
+	InspectorLayoutControls
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -143,14 +145,14 @@ const Edit = props => {
 						if ( context[ 'stackable/tabPanelEffect' ] === 'immediate' ) {
 							if ( index !== activeTab - 1 ) {
 								return `.stk-block-tabs [data-block="${ clientId }"] {
-									visibility: hidden;
+									${ context[ 'stackable/equalTabHeight' ] ? 'visibility: hidden' : 'display:none' };
 									z-index: 1 !important;
 								}`
 							}
 						} else { // fade
 							if ( index !== activeTab - 1 ) {
 								return `.stk-block-tabs [data-block="${ clientId }"] {
-									visibility: hidden;
+									${ context[ 'stackable/equalTabHeight' ] ? 'visibility: hidden' : 'display:none' };
 									opacity: 0;
 									z-index: 1 !important;
 								}`

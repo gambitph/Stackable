@@ -5,6 +5,29 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
+	{
+		attributes: attributes( '3.12.3' ),
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			// Also add the older migration rules because they will not be applied.
+			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
+			if ( hasContainerOpacity ) {
+				newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			}
+
+			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			if ( hasBlockOpacity ) {
+				newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			}
+
+			return {
+				...newAttributes,
+				equalTabHeight: true,
+			}
+		},
+		save: withVersion( '3.12.3' )( Save ),
+	},
 	// Support the new combined opacity and color.
 	{
 		attributes: attributes( '3.11.9' ),

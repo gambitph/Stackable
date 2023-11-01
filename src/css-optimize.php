@@ -180,6 +180,12 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 
 					$all_block_styles = array();
 					foreach ( $styles[0] as $i => $style_tag ) {
+						// If the styles contain dynamic content, let's not include
+						// it in the optimized styles it because we need it dynamic.
+						if ( stripos( $styles[1][ $i ], '!#stk_dynamic' ) ) {
+							return;
+						}
+
 						// Add the styles to our list of styles to optimize.
 						$all_block_styles[] = array(
 							$styles[0][ $i ],
