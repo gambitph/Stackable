@@ -19,6 +19,7 @@
 			width: 100% !important;
 		}
 		&.stk--with-scrollbar {
+			scrollbar-color: var(--stk-scrollbar-thumb-color, #d3d3d3) var(--stk-scrollbar-track-color, #eee); // For Firefox
 			&::-webkit-scrollbar {
 				height: var(--stk-scrollbar-height, 10px);
 			}
@@ -32,6 +33,7 @@
 			}
 		}
 		&:not(.stk--with-scrollbar) {
+			scrollbar-width: none; // For Firefox
 			&::-webkit-scrollbar {
 				height: 0 !important;
 			}
