@@ -16,7 +16,9 @@ import { ResizerTooltip } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { MediaUpload, useBlockEditContext } from '@wordpress/block-editor'
+import {
+	MediaUpload, RichText, useBlockEditContext,
+} from '@wordpress/block-editor'
 import {
 	Button, Dashicon, ResizableBox,
 } from '@wordpress/components'
@@ -474,7 +476,7 @@ const ImageContent = props => {
 		applyFilters( 'stackable.image.save.wrapper',
 			( <Wrapper className={ props.hasWrapper ? undefined : imageWrapperClasses }>
 				{ image }
-				{ props.figcaptionShow && props.src && <figcaption className={ figcaptionClassnames }>{ props.figcaption }</figcaption> }
+				{ props.figcaptionShow && props.src && <RichText.Content tagName="figcaption" className={ figcaptionClassnames } value={ props.figcaption } /> }
 				{ props.children }
 			</Wrapper> ), props, imageWrapperClasses, image
 		)
