@@ -23,9 +23,6 @@ if ( ! function_exists( 'stackable_generate_unique_id' ) ) {
 	}
 }
 
-$stackable_unique_ids = array();
-
-
 if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
 	function stackable_prevent_duplicate_unique_ids( $block_content, $block ) {
 
@@ -42,12 +39,17 @@ if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
 			return $block_content;
 		}
 
+		// Initialize the global variable if it's not set
+		if ( ! isset( $stackable_unique_ids ) || ! is_array( $stackable_unique_ids ) ) {
+			$stackable_unique_ids = array();
+		}
+
 		if ( in_array( $unique_id, $stackable_unique_ids ) ) {
 			$random_unique_id = stackable_generate_unique_id();
-			array_push( $stackable_unique_ids, $random_unique_id );
+			$stackable_unique_ids[] = $random_unique_id;
 			$block_content = str_replace( $unique_id, $random_unique_id, $block_content );
 		} else {
-			array_push( $stackable_unique_ids, $unique_id );
+			$stackable_unique_ids[] = $unique_id;
 		}
 
 		return $block_content;
