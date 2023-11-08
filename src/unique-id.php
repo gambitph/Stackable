@@ -23,9 +23,6 @@ if ( ! function_exists( 'stackable_generate_unique_id' ) ) {
 	}
 }
 
-$stackable_unique_ids = array();
-
-
 if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
 	function stackable_prevent_duplicate_unique_ids( $block_content, $block ) {
 
