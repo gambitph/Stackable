@@ -49,10 +49,10 @@ if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
 
 		if ( in_array( $unique_id, $stackable_unique_ids ) ) {
 			$random_unique_id = stackable_generate_unique_id();
-			$stackable_unique_ids[] = $unique_id;
+			$stackable_unique_ids[] = $random_unique_id;
 			$block_content = str_replace( $unique_id, $random_unique_id, $block_content );
 		} else {
-			array_push( $stackable_unique_ids, $unique_id );
+			$stackable_unique_ids[] = $unique_id;
 		}
 
 		return $block_content;
