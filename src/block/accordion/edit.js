@@ -73,12 +73,17 @@ const Edit = props => {
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
+	// getEditorDom() always returns null in theme customizer, so we need to manually get its editor
+	const isCustomizer = window.location.href && window.location.href.indexOf( 'customize.php' ) !== -1
+	const getDom = () => {
+		return isCustomizer ? document?.querySelector( '.customize-control-sidebar_block_editor' ) : getEditorDom()
+	}
 	// Opens or closes the accordion when the heading is clicked.
 	useEffect( () => {
 		if ( ! hasInitClickHandler ) {
 			return
 		}
-		const headerEl = getEditorDom()?.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
+		const headerEl = getDom()?.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
 		const onClick = ev => {
 			// Dom't open the accordion if the user is clicking on the icon.
 			if ( ! ev.target.closest( '[data-type="stackable/icon"]' ) ) {
@@ -101,7 +106,7 @@ const Edit = props => {
 
 	// When first adding an accordion, the inner blocks may not be rendered yet, wait for it.
 	if ( ! hasInitClickHandler ) {
-		const headerEl = getEditorDom()?.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
+		const headerEl = getDom?.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
 		if ( headerEl ) {
 			setHasInitClickHandler( true )
 		}
