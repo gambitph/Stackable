@@ -28,6 +28,15 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( 
 		 )
 	}
 
+	if ( semverCompare( props.version, '<', '3.12.6' ) ) {
+		const Wrapper = props.customWrapper
+		return (
+			<Wrapper>
+				{ image }
+			</Wrapper>
+		)
+	}
+
 	return output
 } )
 
