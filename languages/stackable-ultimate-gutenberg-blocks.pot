@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.4\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-31T07:45:33+00:00\n"
+"POT-Creation-Date: 2023-11-08T16:27:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -114,7 +114,7 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/custom-fields.php:97
 #: pro__premium_only/src/dynamic-content/sources/jetengine.php:184
 #: pro__premium_only/src/dynamic-content/sources/jetengine.php:578
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:233
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:231
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:100
 #: pro__premium_only/src/dynamic-content/sources/site.php:77
 #: pro__premium_only/src/dynamic-content/sources/woocommerce.php:67
@@ -125,7 +125,7 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/jetengine.php:313
 #: pro__premium_only/src/dynamic-content/sources/jetengine.php:323
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:284
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:254
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:252
 #: pro__premium_only/src/dynamic-content/api.js:135
 #: pro__premium_only/src/dynamic-content/store/selectors.js:134
 msgid "%s Placeholder"
@@ -134,9 +134,9 @@ msgstr ""
 #: pro__premium_only/src/dynamic-content/sources/acf.php:357
 #: pro__premium_only/src/dynamic-content/sources/acf.php:550
 #: pro__premium_only/src/dynamic-content/sources/jetengine.php:362
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:320
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:489
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:536
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:318
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:487
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:534
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:353
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:617
 #: pro__premium_only/src/dynamic-content/sources/site.php:134
@@ -145,7 +145,7 @@ msgstr ""
 
 #: pro__premium_only/src/dynamic-content/sources/acf.php:412
 #: pro__premium_only/src/dynamic-content/sources/jetengine.php:388
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:367
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:365
 msgid "`whenTrueText` and `whenFalseText` arguments are required."
 msgstr ""
 
@@ -308,15 +308,15 @@ msgstr ""
 msgid "Meta Box"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:163
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:161
 msgid "Multiple select not supported in this field."
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:524
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:522
 msgid "You have not selected an image."
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:557
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:555
 msgid "Text fields are empty"
 msgstr ""
 
