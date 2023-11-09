@@ -454,16 +454,18 @@ const ImageContent = props => {
 
 	// Allow a custom wrapper, mostly used to turn the image into an anchor
 	// link.
-	const Wrapper = props.customWrapper || 'figure'
+	const Wrapper = props.customWrapper
 
 	let image = (
-		<img // eslint-disable-line jsx-a11y/alt-text
-			className={ imageClasses }
-			src={ props.src || undefined }
-			width={ width || undefined }
-			height={ height || undefined }
-			{ ...propsToPass }
-		/>
+		<Wrapper>
+			<img // eslint-disable-line jsx-a11y/alt-text
+				className={ imageClasses }
+				src={ props.src || undefined }
+				width={ width || undefined }
+				height={ height || undefined }
+				{ ...propsToPass }
+			/>
+		</Wrapper>
 	)
 
 	image = ! props.hasWrapper ? image : (
@@ -474,11 +476,11 @@ const ImageContent = props => {
 
 	return (
 		applyFilters( 'stackable.image.save.wrapper',
-			( <Wrapper className={ props.hasWrapper ? undefined : imageWrapperClasses }>
+			( <figure className={ props.hasWrapper ? undefined : imageWrapperClasses }>
 				{ image }
 				{ props.figcaptionShow && props.src && <RichText.Content tagName="figcaption" className={ figcaptionClassnames } value={ props.figcaption } /> }
 				{ props.children }
-			</Wrapper> ), props, imageWrapperClasses, image
+			</figure> ), props, imageWrapperClasses, image
 		)
 	)
 }
