@@ -24,7 +24,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
 defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'free' );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.12.5' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.12.6' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://storage.googleapis.com/stackable-plugin-assets' ); // Design Library CDN URL
