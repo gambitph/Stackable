@@ -9,6 +9,28 @@ import {
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
 
+addFilter( 'stackable.image.save.wrapper', 'stackable/image-link-wrapper', ( output, props, imageWrapperClasses, image ) => {
+	if ( ! props.version ) {
+		return output
+	}
+
+	if ( ! props.hasWrapper ) { // Image block is the only one with a wrapper
+		return output
+	}
+
+	// Get the children of wrapped img
+	if ( semverCompare( props.version, '<', '3.12.3' ) ) {
+		const Wrapper = props.customWrapper
+		return (
+			<Wrapper>
+				{ image }
+			</Wrapper>
+		 )
+	}
+
+	return output
+} )
+
 addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( output, props, imageWrapperClasses, image ) => {
 	if ( ! props.version ) {
 		return output
@@ -28,19 +50,14 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( 
 		 )
 	}
 
-	if ( semverCompare( props.version, '<', '3.12.6' ) ) {
-		const Wrapper = props.customWrapper
-		return (
-			<Wrapper>
-				{ image }
-			</Wrapper>
-		)
-	}
-
 	return output
 } )
 
 const deprecated = [
+	{
+		attributes: attributes( '3.12.5' ),
+		save: withVersion( '3.12.5' )( Save ),
+	},
 	{
 		attributes: attributes( '3.11.9' ),
 		save: withVersion( '3.11.9' )( Save ),
