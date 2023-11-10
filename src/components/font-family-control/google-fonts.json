@@ -2914,7 +2914,10 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
     ]
   },
   {
@@ -12357,7 +12360,9 @@
       "regular"
     ],
     "subsets": [
-      "cypriot"
+      "cypriot",
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -13150,7 +13155,9 @@
     "subsets": [
       "latin",
       "latin-ext",
-      "meroitic"
+      "meroitic",
+      "meroitic-cursive",
+      "meroitic-hieroglyphs"
     ]
   },
   {
@@ -13781,6 +13788,7 @@
       "braille",
       "latin",
       "latin-ext",
+      "math",
       "mayan-numerals",
       "symbols"
     ]
