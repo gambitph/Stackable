@@ -77,9 +77,9 @@ ContainerDiv.Content = props => {
 		{ ...propsToPass }
 		className={ classNames }
 		hasBackground={ attributes.hasContainer }
-		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.containerBackgroundMediaExternalUrl }
-		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.containerBackgroundMediaExternalUrlTablet }
-		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile || attributes.containerBackgroundMediaExternalUrlMobile }
+		backgroundUrl={ attributes.containerBackgroundMediaUrl || attributes.containerBackgroundMediaExternalUrl }
+		backgroundUrlTablet={ attributes.containerBackgroundMediaUrlTablet || attributes.containerBackgroundMediaExternalUrlTablet }
+		backgroundUrlMobile={ attributes.containerBackgroundMediaUrlMobile || attributes.containerBackgroundMediaExternalUrlMobile }
 		backgroundColorType={ attributes.containerBackgroundColorType }
 	/>
 }
