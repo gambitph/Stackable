@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.5\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-08T16:27:00+00:00\n"
+"POT-Creation-Date: 2023-11-10T06:20:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -7772,7 +7772,7 @@ msgid "No designs found"
 msgstr ""
 
 #: src/components/design-panel-body/index.js:22
-#: src/components/inspector-tabs/index.js:89
+#: src/components/inspector-tabs/index.js:88
 #: src/components/panel-tabs/index.js:23
 #: src/deprecated/v2/block/column/edit.js:80
 #: src/deprecated/v2/block/columns/edit.js:153
