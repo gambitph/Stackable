@@ -457,9 +457,9 @@ const ImageContent = props => {
 	const Wrapper = props.customWrapper
 
 	const ConditionalWrapper = ( {
-		condition, wrapper, children,
+		condition, children,
 	} ) =>
-		condition ? wrapper( children ) : children
+		condition ? ( <Wrapper>{ children }</Wrapper> ) : children
 
 	let image = (
 		<img // eslint-disable-line jsx-a11y/alt-text
@@ -482,7 +482,6 @@ const ImageContent = props => {
 			( <figure className={ props.hasWrapper ? undefined : imageWrapperClasses }>
 				<ConditionalWrapper
 					condition={ !! props.customWrapper }
-					wrapper={ children => <Wrapper>{ children }</Wrapper> }
 					children={ image }
 				/>
 				{ props.figcaptionShow && props.src && <RichText.Content tagName="figcaption" className={ figcaptionClassnames } value={ props.figcaption } /> }
