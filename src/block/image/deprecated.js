@@ -6,10 +6,11 @@ import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecationImageOverlayOpacity,
 } from '~stackable/block-components'
 
+import { RichText } from '@wordpress/block-editor'
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
 
-addFilter( 'stackable.image.save.wrapper', 'stackable/image-link-wrapper', ( output, props, imageWrapperClasses, image ) => {
+addFilter( 'stackable.image.save.wrapper', 'stackable/image-link-wrapper', ( output, props, imageWrapperClasses, image, figcaptionClassnames ) => {
 	if ( ! props.version ) {
 		return output
 	}
@@ -24,6 +25,8 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-link-wrapper', ( out
 		return (
 			<Wrapper>
 				{ image }
+				{ props.figcaptionShow && props.src && <RichText.Content tagName="figcaption" className={ figcaptionClassnames } value={ props.figcaption } /> }
+				{ props.children }
 			</Wrapper>
 		 )
 	}

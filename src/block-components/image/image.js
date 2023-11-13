@@ -456,16 +456,19 @@ const ImageContent = props => {
 	// link.
 	const Wrapper = props.customWrapper
 
+	const ConditionalWrapper = ( {
+		condition, wrapper, children,
+	} ) =>
+		condition ? wrapper( children ) : children
+
 	let image = (
-		<Wrapper>
-			<img // eslint-disable-line jsx-a11y/alt-text
-				className={ imageClasses }
-				src={ props.src || undefined }
-				width={ width || undefined }
-				height={ height || undefined }
-				{ ...propsToPass }
-			/>
-		</Wrapper>
+		<img // eslint-disable-line jsx-a11y/alt-text
+			className={ imageClasses }
+			src={ props.src || undefined }
+			width={ width || undefined }
+			height={ height || undefined }
+			{ ...propsToPass }
+		/>
 	)
 
 	image = ! props.hasWrapper ? image : (
@@ -477,10 +480,14 @@ const ImageContent = props => {
 	return (
 		applyFilters( 'stackable.image.save.wrapper',
 			( <figure className={ props.hasWrapper ? undefined : imageWrapperClasses }>
-				{ image }
+				<ConditionalWrapper
+					condition={ !! props.customWrapper }
+					wrapper={ children => <Wrapper>{ children }</Wrapper> }
+					children={ image }
+				/>
 				{ props.figcaptionShow && props.src && <RichText.Content tagName="figcaption" className={ figcaptionClassnames } value={ props.figcaption } /> }
 				{ props.children }
-			</figure> ), props, imageWrapperClasses, image
+			</figure> ), props, imageWrapperClasses, image, figcaptionClassnames
 		)
 	)
 }
