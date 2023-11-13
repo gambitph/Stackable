@@ -19,7 +19,7 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-link-wrapper', ( out
 	}
 
 	// Get the children of wrapped img
-	if ( semverCompare( props.version, '<', '3.12.3' ) ) {
+	if ( semverCompare( props.version, '<', '3.12.7' ) ) {
 		const Wrapper = props.customWrapper
 		return (
 			<Wrapper>
@@ -55,8 +55,8 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( 
 
 const deprecated = [
 	{
-		attributes: attributes( '3.12.5' ),
-		save: withVersion( '3.12.5' )( Save ),
+		attributes: attributes( '3.12.6' ),
+		save: withVersion( '3.12.6' )( Save ),
 	},
 	{
 		attributes: attributes( '3.11.9' ),
