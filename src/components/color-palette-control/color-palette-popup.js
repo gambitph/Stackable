@@ -84,11 +84,12 @@ export const ColorPalettePopup = props => {
 }
 
 const NOOP = () => {}
+const PASSTHRU = v => v
 
 ColorPalettePopup.defaultProps = {
 	value: '',
 	onChange: NOOP,
-	preOnChange: NOOP,
+	preOnChange: PASSTHRU,
 
 	colors: [],
 

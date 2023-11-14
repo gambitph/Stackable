@@ -22,7 +22,8 @@ import {
 	FlexItem,
 	__experimentalHStack as HStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
-import { useSelect } from '@wordpress/data'
+import { useSelect, select } from '@wordpress/data'
+import { applyFilters, addFilter } from '@wordpress/hooks'
 
 /**
  * External dependencies
@@ -39,26 +40,14 @@ const popoverProps = {
 
 const PASSTHRUOP = v => v
 
-const ColorPaletteControl = memo( props => {
-	const {
-		label,
-		className = '',
-	} = props
-	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
-	const [ _propsToPass, controlProps ] = extractControlProps( props )
-
+addFilter( 'stackable.color-palette-control.colors', 'stackable/color-palette-control', ( { colors: _colors, gradients: _gradients } ) => {
 	const {
 		stackableColors,
 		stackableGradients,
-		hideThemeColors,
-		hideDefaultColors,
-		hideSiteEditorColors,
-	} = useSelect( 'stackable/global-colors' ).getSettings()
+	} = select( 'stackable/global-colors' ).getSettings()
 
-	const { colors: groupedColors, gradients: groupedGradients } = useMultipleOriginColorsAndGradients()
-
-	let colors = cloneDeep( groupedColors )
-	let gradients = cloneDeep( groupedGradients )
+	let colors = cloneDeep( _colors )
+	let gradients = cloneDeep( _gradients )
 
 	if ( stackableGradients && stackableGradients.length ) {
 		gradients = [
@@ -80,6 +69,32 @@ const ColorPaletteControl = memo( props => {
 			...colors,
 		]
 	}
+
+	return { colors, gradients }
+} )
+
+addFilter( 'stackable.color-palette-control.color-value', 'stackable/color-palette-control', value => {
+	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6,}/ ) ) {
+		return value.match( /#[\d\w]{6,}/ )[ 0 ]
+	}
+	return value
+} )
+
+const ColorPaletteControl = memo( props => {
+	const {
+		label,
+		className = '',
+	} = props
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ _propsToPass, controlProps ] = extractControlProps( props )
+
+	const {
+		hideThemeColors,
+		hideDefaultColors,
+		hideSiteEditorColors,
+	} = useSelect( 'stackable/global-colors' ).getSettings()
+
+	let { colors, gradients } = applyFilters( 'stackable.color-palette-control.colors', useMultipleOriginColorsAndGradients() )
 
 	// Filter the colors.
 	colors = colors.filter( group => {
@@ -125,9 +140,7 @@ const ColorPaletteControl = memo( props => {
 	let value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6,}/ ) ) {
-		value = value.match( /#[\d\w]{6,}/ )[ 0 ]
-	}
+	value = applyFilters( 'stackable.color-palette-control.color-value', value )
 
 	let colorLabel,
 		colorName = value
