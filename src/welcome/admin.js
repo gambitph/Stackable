@@ -28,6 +28,7 @@ import {
 import classnames from 'classnames'
 import { importBlocks } from '~stackable/util/admin'
 import { createRoot } from '~stackable/util/element'
+import AdminSelectSetting from '~stackable/components/admin-select-setting'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
 import AdminTextSetting from '~stackable/components/admin-text-setting'
 import { GettingStarted } from './getting-started'
@@ -485,6 +486,43 @@ const GlobalSettings = () => {
 	</Fragment>
 }
 
+const IconSettings = () => {
+	const [ faVersion, setFaVersion ] = useState( '' )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setFaVersion( response.stackable_fa_icons_version || '6.4.2' )
+			} )
+		} )
+	}, [] )
+
+	const updateFaVersion = value => {
+		const model = new models.Settings( { stackable_fa_icons_version: value } ) // eslint-disable-line camelcase
+		model.save()
+		setFaVersion( value )
+	}
+
+	return <Fragment>
+		<AdminSelectSetting
+			label={ __( 'FontAwesome Version', i18n ) }
+			value={ faVersion }
+			options={ [
+				{
+					name: '6.4.2',
+					value: '6.4.2',
+				},
+				{
+					name: '5.15.4',
+					value: '5.15.4',
+				},
+			] }
+			onChange={ updateFaVersion }
+		/>
+	</Fragment>
+}
+
 const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
 	const [ generateNativeGlobalColors, setGenerateNativeGlobalColors ] = useState( false )
@@ -650,6 +688,14 @@ domReady( () => {
 			document.querySelector( '.s-global-settings' )
 		).render(
 			<GlobalSettings />
+		)
+	}
+
+	if ( document.querySelector( '.s-icon-settings-fa-version' ) ) {
+		createRoot(
+			document.querySelector( '.s-icon-settings-fa-version' )
+		).render(
+			<IconSettings />
 		)
 	}
 

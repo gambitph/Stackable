@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	faAPILoaded, faIsAPILoaded, faGetSVGIcon, faIconLoaded, createElementFromHTMLString,
-} from '~stackable/util'
+import { faGetIcon, createElementFromHTMLString } from '~stackable/util'
 import { pick } from 'lodash'
 
 /**
@@ -80,14 +78,38 @@ const addSVGAttributes = ( svgHTML, attributesToAdd = {}, attributesToRemove = [
 }
 
 const FontAwesomeIcon = memo( props => {
-	const [ forceUpdateCount, setForceUpdateCount ] = useState( 0 )
-	const forceUpdate = () => {
-		setForceUpdateCount( forceUpdateCount + 1 )
-	}
+	const [ iconHTML, setIconHTML ] = useState( '' )
+	const [ isLoading, setIsLoading ] = useState( false )
 
-	// Wait for the FA API to load.
+	const prefix = props.value ? props.value.replace( /-.*$/, '' ) : props.prefix
+	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
+
 	useEffect( () => {
-		faAPILoaded().then( forceUpdate )
+		const loadIconHTML = async () => {
+			setIsLoading( true )
+
+			if ( typeof props.value === 'string' && props.value.match( /^<svg/ ) ) {
+				setIsLoading( false )
+				return
+			}
+
+			// Wait for the FA icon to load.
+			let _iconHTML
+			if ( prefix && iconName ) {
+				await faGetIcon( prefix, iconName ).then( svg => {
+					_iconHTML = svg
+				} )
+			} else {
+				// If no value, just display a smiley placeholder.
+				await faGetIcon( 'far', 'smile' ).then( svg => {
+					_iconHTML = svg
+				} )
+			}
+			setIconHTML( _iconHTML )
+			setIsLoading( false )
+		}
+
+		loadIconHTML()
 	}, [] )
 
 	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style' ] )
@@ -100,31 +122,17 @@ const FontAwesomeIcon = memo( props => {
 		return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
 	}
 
-	// There's a chance that the Font Awesome library hasn't loaded yet, wait for it.
-	if ( ! faIsAPILoaded() ) {
+	if ( isLoading ) {
 		return <Spinner />
 	}
-
-	const prefix = props.value ? props.value.replace( /-.*$/, '' ) : props.prefix
-	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
-
 	// Display the icon.
 	if ( prefix && iconName ) {
-		const iconHTML = faGetSVGIcon( prefix, iconName )
-
-		if ( ! iconHTML ) {
-			faIconLoaded( prefix, iconName ).then( forceUpdate )
-			return <Spinner />
-		}
-
 		let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 		// Add fallback SVG width and height values.
 		svg = addSVGAttributes( svg, { width: '32', height: '32' } )
 		return <RawHTML { ...propsToPass }>{ props.prependRenderString + svg }</RawHTML>
 	}
 
-	// If no value, just display a smiley placeholder.
-	const iconHTML = faGetSVGIcon( 'far', 'smile' )
 	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 	// Add fallback SVG width and height values.
 	svg = addSVGAttributes( svg, { width: '32', height: '32' } )
@@ -152,7 +160,10 @@ FontAwesomeIcon.Content = props => {
 	const prefix = props.value ? props.value.replace( /-.*$/, '' ) : props.prefix
 	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
 
-	const iconHTML = faGetSVGIcon( prefix, iconName )
+	let iconHTML
+	faGetIcon( prefix, iconName ).then( svg => {
+		iconHTML = svg
+	} )
 	let svg = addSVGAriaLabel( iconHTML, props.ariaLabel )
 	// Add fallback SVG width and height values.
 	svg = addSVGAttributes( svg, { width: '32', height: '32' } )

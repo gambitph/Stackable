@@ -22,7 +22,7 @@ import {
 import {
 	Button, FontAwesomeIcon, Popover,
 } from '~stackable/components'
-import { faGetSVGIcon } from '~stackable/util'
+import { faGetIcon } from '~stackable/util'
 import { FileDrop } from 'react-file-drop'
 import classnames from 'classnames'
 
@@ -234,9 +234,13 @@ const IconSearchPopover = props => {
 						return <button
 							key={ i }
 							className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
-							onClick={ () => {
+							onClick={ async () => {
 								if ( props.returnSVGValue ) {
-									props.onChange( cleanSvgString( faGetSVGIcon( prefix, iconName ) ) )
+									let svgIcon
+									await faGetIcon( prefix, iconName ).then( svg => {
+										svgIcon = svg
+									} )
+									props.onChange( cleanSvgString( svgIcon ) )
 								} else {
 									props.onChange( iconValue, prefix, iconName )
 								}
