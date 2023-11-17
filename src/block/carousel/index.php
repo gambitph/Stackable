@@ -22,7 +22,7 @@ if ( ! function_exists( 'stackable_load_carousel_frontend_script' ) ) {
 
 if ( ! function_exists( 'stackable_carousel_add_class_images' ) ) {
 	function stackable_carousel_test($block_content, $block) {
-		$block_content = str_replace( "\"stk-img\"", "\"stk-img stk-img-carousel\"", $block_content );
+		$block_content = str_replace( "\"stk-img", "\"stk-img stk-img-carousel", $block_content );
 		return $block_content;
 	}
 
