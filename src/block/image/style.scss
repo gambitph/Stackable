@@ -2,6 +2,10 @@
 	margin-left: var(--stk-alignment-margin-left, auto);
 	margin-right: var(--stk-alignment-margin-right, auto);
 }
+// Some themes might add a margin to the image.
+.stk-block-image figure {
+	margin: 0;
+}
 
 // Placeholder images will collapse if flex is used.
 .stk--block-horizontal-flex > .block-editor-inner-blocks > .block-editor-block-list__layout {
