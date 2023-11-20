@@ -21,12 +21,12 @@ if ( ! function_exists( 'stackable_load_carousel_frontend_script' ) ) {
 }
 
 if ( ! function_exists( 'stackable_carousel_add_class_images' ) ) {
-	function stackable_carousel_test($block_content, $block) {
+	function stackable_carousel_add_class_images($block_content, $block) {
 		$block_content = str_replace( "\"stk-img", "\"stk-img stk-img-carousel", $block_content );
 		return $block_content;
 	}
 
-	add_filter( 'render_block_stackable/carousel', 'stackable_carousel_test', 1, 2 );
+	add_filter( 'render_block_stackable/carousel', 'stackable_carousel_add_class_images', 1, 2 );
 }
 
 if ( ! function_exists( 'stackable_skip_loading_lazy_carousel_image' ) ) {
