@@ -22,7 +22,7 @@ if ( ! function_exists( 'stackable_load_horizontalscroller_frontend_script' ) ) 
 
 if ( ! function_exists( 'stackable_horizontal_scroller_add_class_images' ) ) {
 	function stackable_horizontal_scroller_add_class_images($block_content, $block) {
-		$block_content = preg_replace( '/stk-img $/', "\"stk-img stk-img-horizontal-scroller", $block_content );
+		$block_content = str_replace( array("\"stk-img ",  "\"stk-img\""), array("\"stk-img stk-img-horizontal-scroller ", "\"stk-img stk-img-horizontal-scroller\""), $block_content );
 		return $block_content;
 	}
 
