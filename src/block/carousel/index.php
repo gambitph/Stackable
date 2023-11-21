@@ -22,15 +22,39 @@ if ( ! function_exists( 'stackable_load_carousel_frontend_script' ) ) {
 
 if ( ! function_exists( 'stackable_carousel_add_class_images' ) ) {
 	function stackable_carousel_add_class_images($block_content, $block) {
-		$block_content = str_replace( array("\"stk-img ",  "\"stk-img\""), array("\"stk-img stk-img-carousel ", "\"stk-img stk-img-carousel\""), $block_content );
-		return $block_content;
+		if ( ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
+			return $block_content;
+		}
+
+		$index = 1;
+		$slides_to_show = 1;
+
+		if ( ! empty( $block ) && isset( $block['attrs'] ) && is_array( $block['attrs'] ) ) {
+			if ( isset( $block['attrs']['slidesToShow'] ) ) {
+				$slides_to_show = $block['attrs']['slidesToShow'];
+			}
+		}
+
+		$block_content = new WP_HTML_Tag_Processor( $block_content );
+
+		while ( $block_content->next_tag( 'img' ) ) {
+			$img_classname = $block_content->get_attribute( 'class' );
+
+			// add for images that are not immediately shown
+			if ( strpos( $img_classname, 'stk-img') !== false && $index > $slides_to_show ) {
+				$block_content->add_class( 'stk-img-carousel' );
+			}
+			$index++;
+		}
+
+		return $block_content->get_updated_html();
 	}
 
 	add_filter( 'render_block_stackable/carousel', 'stackable_carousel_add_class_images', 1, 2 );
 }
 
 if ( ! function_exists( 'stackable_skip_loading_lazy_carousel_image' ) ) {
-	function stackable_skip_loading_lazy_carousel_image( $value, $image, $context ) {
+	function stackable_skip_loading_lazy_carousel_image( $value, $image ) {
 		if ( ! strpos( $image, 'stk-img-carousel' ) === false ) {
 			return false;
 		}
@@ -38,7 +62,7 @@ if ( ! function_exists( 'stackable_skip_loading_lazy_carousel_image' ) ) {
 		return $value;
 	}
 
-	add_filter( 'wp_img_tag_add_loading_attr', 'stackable_skip_loading_lazy_carousel_image', 10, 3 );
+	add_filter( 'wp_img_tag_add_loading_attr', 'stackable_skip_loading_lazy_carousel_image', 10, 2 );
 }
 
 
