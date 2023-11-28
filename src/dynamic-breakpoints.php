@@ -136,37 +136,36 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				return $css;
 			}
 
-			// Check if css still have the default tablet and mobile breakpoints
-			$has_default_tablet = strpos( $css, 'width:1024px)' ) !== false || strpos( $css, 'width:1023px)' ) !== false;
-			$has_default_mobile = strpos( $css, 'width:768px)' ) !== false || strpos( $css, 'width:767px)' ) !== false;
+			if ( ! empty( $new_tablet ) && ( strpos( $css, 'width:1024px)' ) !== false || strpos( $css, 'width:1023px)' ) !== false ) ) {
 
-            if ( ! empty( $new_tablet ) && $has_default_tablet ) {
 				// Check if the style generated contains new breakpoints
-                $has_new_tablet = strpos( $css, 'width:' . $new_tablet . 'px)' ) !== false;
-                $has_new_tablet_minus_1 = strpos( $css, 'width:' . ( $new_tablet - 1 ) . 'px)' ) !== false;
-                if ( ! $has_new_tablet ) {
-                    $css = preg_replace( "/(@media[^{]+)width:\s*1024px/", "$1width:" . $new_tablet . "px", $css );
+				$has_new_tablet = strpos( $css, 'width:' . $new_tablet . 'px)' ) !== false;
+				$has_new_tablet_minus_1 = strpos( $css, 'width:' . ( $new_tablet - 1 ) . 'px)' ) !== false;
 
-                }
+				if ( ! $has_new_tablet ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*1024px/", "$1width:" . $new_tablet . "px", $css );
+				}
 
 				if ( ! $has_new_tablet_minus_1 ) {
 					$css = preg_replace( "/(@media[^{]+)width:\s*1023px/", "$1width:" . ( $new_tablet - 1 ) . "px", $css );
 				}
-            }
+			}
 
-			if ( ! empty( $new_mobile ) && $has_default_mobile ) {
-				// Mobile version
-                $has_new_mobile = strpos( $css, 'width:' . $new_mobile . 'px)' ) !== false;
-                $has_new_mobile_minus_1 = strpos( $css, 'width:' . ( $new_mobile - 1 ) . 'px)' ) !== false;
-                if ( ! $has_new_mobile ) {
-                    $css = preg_replace( "/(@media[^{]+)width:\s*768px/", "$1width:" . $new_mobile . "px", $css );
+			// Mobile version
+			if ( ! empty( $new_mobile ) && ( strpos( $css, 'width:768px)' ) !== false || strpos( $css, 'width:767px)' ) !== false ) ) {
 
-                }
+				$has_new_mobile = strpos( $css, 'width:' . $new_mobile . 'px)' ) !== false;
+				$has_new_mobile_minus_1 = strpos( $css, 'width:' . ( $new_mobile - 1 ) . 'px)' ) !== false;
+
+				if ( ! $has_new_mobile ) {
+					$css = preg_replace( "/(@media[^{]+)width:\s*768px/", "$1width:" . $new_mobile . "px", $css );
+				}
 
 				if ( ! $has_new_mobile_minus_1 ) {
 					$css = preg_replace( "/(@media[^{]+)width:\s*767px/", "$1width:" . ( $new_mobile - 1 ) . "px", $css );
 				}
 			}
+
 			return $css;
 		}
 
