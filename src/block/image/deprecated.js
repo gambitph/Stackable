@@ -19,13 +19,12 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-link-wrapper', ( out
 		return output
 	}
 
-	// Get the children of wrapped img
-	if ( semverCompare( props.version, '<', '3.12.7' ) || semverCompare( props.version, '>', '3.12.3' ) ) {
-		const Wrapper = props.customWrapper || <figure />
+	if ( semverCompare( props.version, '<', '3.12.7' ) ) {
+		const Wrapper = props.customWrapper || 'figure'
 		return (
 			<Wrapper>
 				<div className={ imageWrapperClasses }>
-					{ image }
+					{ image.props.children }
 				</div>
 				{ props.figcaptionShow && props.src && <RichText.Content tagName="figcaption" className={ figcaptionClassnames } value={ props.figcaption } /> }
 				{ props.children }
@@ -46,7 +45,7 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( 
 	}
 
 	// Get the children of wrapped img
-	if ( semverCompare( props.version, '<', '3.12.3' ) ) {
+	if ( semverCompare( props.version, '<', '3.12.4' ) ) {
 		const Wrapper = props.customWrapper || 'figure'
 		return (
 			<Wrapper className={ imageWrapperClasses }>
@@ -62,6 +61,10 @@ const deprecated = [
 	{
 		attributes: attributes( '3.12.6' ),
 		save: withVersion( '3.12.6' )( Save ),
+	},
+	{
+		attributes: attributes( '3.12.3' ),
+		save: withVersion( '3.12.3' )( Save ),
 	},
 	{
 		attributes: attributes( '3.11.9' ),
