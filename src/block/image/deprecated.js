@@ -20,15 +20,17 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-link-wrapper', ( out
 	}
 
 	// Get the children of wrapped img
-	if ( semverCompare( props.version, '<', '3.12.7' ) ) {
-		const Wrapper = props.customWrapper
+	if ( semverCompare( props.version, '<', '3.12.7' ) || semverCompare( props.version, '>', '3.12.3' ) ) {
+		const Wrapper = props.customWrapper || <figure />
 		return (
 			<Wrapper>
-				{ image }
+				<div className={ imageWrapperClasses }>
+					{ image }
+				</div>
 				{ props.figcaptionShow && props.src && <RichText.Content tagName="figcaption" className={ figcaptionClassnames } value={ props.figcaption } /> }
 				{ props.children }
 			</Wrapper>
-		 )
+		)
 	}
 
 	return output

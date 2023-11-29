@@ -472,9 +472,9 @@ const ImageContent = props => {
 	)
 
 	image = ! props.hasWrapper ? image : (
-		<div className={ imageWrapperClasses }>
+		<span className={ imageWrapperClasses }>
 			{ image }
-		</div>
+		</span>
 	)
 
 	return (
