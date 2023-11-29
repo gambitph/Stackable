@@ -24,7 +24,7 @@ if ( ! function_exists( 'stackable_load_carousel_frontend_script' ) ) {
 // spaces because the height isn't available in lazy loaded images. Prevent images from
 // hidden slides from lazy loading to prevent this.
 if ( ! function_exists( 'stackable_carousel_add_class_images' ) ) {
-	function stackable_carousel_add_class_images($block_content, $block) {
+	function stackable_carousel_add_class_images( $block_content, $block ) {
 		if ( ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
 			return $block_content;
 		}
@@ -38,19 +38,19 @@ if ( ! function_exists( 'stackable_carousel_add_class_images' ) ) {
 			}
 		}
 
-		$block_content = new WP_HTML_Tag_Processor( $block_content );
+		$html_tag = new WP_HTML_Tag_Processor( $block_content );
 
-		while ( $block_content->next_tag( 'img' ) ) {
-			$img_classname = $block_content->get_attribute( 'class' );
+		while ( $html_tag->next_tag( 'img' ) ) {
+			$img_classname = $html_tag->get_attribute( 'class' );
 
 			// add for images that are not immediately shown
 			if ( strpos( $img_classname, 'stk-img') !== false && $index > $slides_to_show ) {
-				$block_content->add_class( 'stk-img-carousel' );
+				$html_tag->add_class( 'stk-img-carousel' );
 			}
 			$index++;
 		}
 
-		return $block_content->get_updated_html();
+		return $html_tag->get_updated_html();
 	}
 
 	add_filter( 'render_block_stackable/carousel', 'stackable_carousel_add_class_images', 1, 2 );
