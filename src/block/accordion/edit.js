@@ -74,7 +74,7 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	// Hacky fix: getEditorDom() always returns null in theme customizer, so we need to manually get its editor
-	const isCustomizer = window.location.href && window.location.href.indexOf( 'customize.php' ) !== -1
+	const isCustomizer = window?.location?.href && window.location.href.indexOf( 'customize.php' ) !== -1
 	const getDom = () => {
 		return isCustomizer ? document?.querySelector( '.customize-control-sidebar_block_editor' ) : getEditorDom()
 	}
