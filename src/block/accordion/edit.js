@@ -106,7 +106,7 @@ const Edit = props => {
 
 	// When first adding an accordion, the inner blocks may not be rendered yet, wait for it.
 	if ( ! hasInitClickHandler ) {
-		const headerEl = getDom?.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
+		const headerEl = getDom()?.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
 		if ( headerEl ) {
 			setHasInitClickHandler( true )
 		}
