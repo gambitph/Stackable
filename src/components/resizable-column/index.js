@@ -4,6 +4,7 @@
 import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
 import { AdvancedTextControl, Popover } from '..'
 import { ColumnShowTooltipContext } from '../column-inner-blocks'
+import ArrowDownSvg from './images/arrow-down.svg'
 
 /**
  * External dependencies
@@ -465,21 +466,17 @@ const ResizableTooltip = memo( props => {
 	let columnLabel = ''
 	if ( typeof adjacentBlocks !== 'undefined' && ! props.value && ! originalInputValue ) {
 		// The columns are evenly distributed by default.
-		if ( deviceType === 'Desktop' ) {
+		if ( deviceType === 'Desktop' || deviceType === 'Tablet' ) {
 			const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
 			if ( value.toString() === '33.3' ) {
 				columnLabel = 33.33
 			} else {
 				columnLabel = value
 			}
+		} else {
+			// In mobile, the columns collapse to 100%.
+			columnLabel = 100.0
 		}
-		// In mobile, the columns are  "auto" so that we don't display
-		// inaccurate percentage widths.
-	} else if ( deviceType === 'Tablet' ) {
-		columnLabel = __( 'Auto', i18n )
-	} else {
-		// In mobile, the columns collapse to 100%.
-		columnLabel = 100.0
 	}
 
 	// Create the label of the tooltip.
@@ -593,6 +590,7 @@ const ResizableTooltip = memo( props => {
 						role="button"
 						tabIndex="0"
 					>
+						<ArrowDownSvg fill="currentColor" width="10" />
 					</div>
 				)
 			}

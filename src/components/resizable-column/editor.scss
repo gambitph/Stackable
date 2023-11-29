@@ -57,13 +57,10 @@
 		transform: translate(-6px, -6px) rotate(45deg);
 	}
 	// Drop down icon.
-	&::after {
-		content: "\f347";
-		font-family: Dashicons;
+	svg {
 		top: 2px;
 		position: relative;
 		margin-left: 4px;
-		font-size: 11px;
 		display: none;
 	}
 
@@ -116,7 +113,7 @@
 		background: transparent;
 		display: inline;
 	}
-	&::after {
+	svg {
 		display: inline;
 	}
 }
