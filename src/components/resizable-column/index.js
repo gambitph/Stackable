@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { fixFractionWidths, getSnapWidths } from './get-snap-widths'
-import { AdvancedTextControl } from '..'
+import { AdvancedTextControl, Popover } from '..'
 import { ColumnShowTooltipContext } from '../column-inner-blocks'
 
 /**
@@ -22,7 +22,7 @@ import { getRowsFromColumns } from '~stackable/block-components/column/util'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { ResizableBox, Popover } from '@wordpress/components'
+import { ResizableBox } from '@wordpress/components'
 import { useSelect, select } from '@wordpress/data'
 import {
 	Fragment, useState, useEffect, useRef, memo, useContext,
@@ -82,6 +82,10 @@ const ResizableColumn = props => {
 			// Remember the previous block length.
 			setPrevAdjacentBlocks( adjacentBlocks.length )
 		}
+
+		if ( adjacentBlocks?.length < prevAdjacentBlocks && adjacentBlocks?.length === 1 ) {
+			props.onResetTabletMobile()
+		}
 	}, [ adjacentBlocks ] )
 
 	// We have a timeout below, this ensures that our timeout only runs while
@@ -103,9 +107,6 @@ const ResizableColumn = props => {
 		'stk-column-resizeable',
 		props.className,
 	] )
-	const {
-		columnGap, columnGapTablet, columnGapMobile,
-	} = ( parentBlock?.attributes || {} )
 
 	const enable = {
 		top: false,
@@ -124,6 +125,11 @@ const ResizableColumn = props => {
 	const onResizeStart = ( _event, _direction ) => {
 		// toggleSelection( false )
 
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		const {
+			columnGap, columnGapTablet, columnGapMobile,
+		} = ( parentBlock?.attributes || {} )
+
 		// Get the column gap amounts, we need these to calculate percentages when resizing columns.
 		const parentColumnGaps = {
 			desktop: columnGap || 0,
@@ -132,7 +138,6 @@ const ResizableColumn = props => {
 		}
 
 		const editorDom = getEditorDom()
-		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
 		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
 
 		// In desktop, get all the column widths.
@@ -539,6 +544,7 @@ const ResizableTooltip = memo( props => {
 							setIsEditWidth( false )
 						}
 					} }
+					onEscape={ () => setIsEditWidth( false ) }
 				>
 					<div ref={ popupRef }>
 						<AdvancedTextControl

@@ -46,10 +46,10 @@ const DesignLayoutSelectorItem = ( {
 		>
 			<div className="ugb-design-layout-selector__wrapper">
 				{ isLocked &&
-					<Icon className="ugb-design-layout-selector__lock" icon={ 'lock' } />
+					<Icon className="ugb-design-layout-selector__lock" icon="lock" />
 				}
 				{ isLocked && (
-					<a href="https://wpstackable.com/upgrade/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg"
+					<a href="https://wpstackable.com/premium/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg"
 						className="ugb-design-layout-selector__item-premium-button ugb-shadow-4 button button-secondary"
 						target="_premium"
 						title={ __( 'Learn More', i18n ) }

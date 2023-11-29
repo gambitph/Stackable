@@ -182,7 +182,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		public function replace_dev_mode_urls( $content ) {
 			if ( self::is_dev_mode() ) {
 				$content = str_replace(
-					trailingslashit( STACKABLE_CLOUDFRONT_URL ),
+					trailingslashit( STACKABLE_DESIGN_LIBRARY_URL ),
 					trailingslashit( plugin_dir_url( STACKABLE_DLH_LIBRARY_FILE ) ),
 					$content
 				);
@@ -199,7 +199,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			if ( self::is_dev_mode() ) {
 				return trailingslashit( plugin_dir_url( STACKABLE_DLH_LIBRARY_FILE ) );
 			} else {
-				return trailingslashit( STACKABLE_CLOUDFRONT_URL );
+				return trailingslashit( STACKABLE_DESIGN_LIBRARY_URL );
 			}
 		}
 

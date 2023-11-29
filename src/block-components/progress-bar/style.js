@@ -27,6 +27,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
+				renderIn="save"
 				styleRule="--progress-value"
 				attrName="progressValue"
 				key="progressValue"

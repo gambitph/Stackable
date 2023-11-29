@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { hexToRgba, extractColor } from '~stackable/util'
 import { BlockCss } from '~stackable/components'
 
 const Styles = props => {
@@ -14,7 +13,6 @@ const Styles = props => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
-		backgroundFallbackColor = '#ffffff',
 		dependencies = [],
 		selectorCallback = null,
 	} = props
@@ -34,46 +32,26 @@ const Styles = props => {
 					return getAttribute( 'backgroundColorType' ) !== 'gradient'
 						? 'all' : false
 				} }
-				valueCallback={ ( value, getAttribute, device, state ) => {
+				valueCallback={ ( value, getAttribute ) => {
 					const backgroundColorType = getAttribute( 'backgroundColorType' )
-					const backgroundColorOpacity = getAttribute( 'backgroundColorOpacity', 'desktop', state )
-					const backgroundColor2 = getAttribute( 'backgroundColor2' )
 
-					const hasBackground = getAttribute( 'backgroundMediaUrl', 'desktop' ) ||
-						getAttribute( 'backgroundMediaUrl', 'tablet' ) ||
-						getAttribute( 'backgroundMediaUrl', 'mobile' )
-
-					if ( ! backgroundColorType && backgroundColorOpacity !== '' && ! hasBackground ) {
-						// Checks if color comes from Non-stackable color palette.
-						const hexColor = extractColor( value )
-						return `${ hexToRgba( hexColor || '#ffffff', backgroundColorOpacity || 0 ) }`
-					}
-
-					if ( backgroundColorType === 'gradient' && backgroundColor2 === 'transparent' ) {
+					if ( backgroundColorType === 'gradient' && ( value.match( /rgba\(([^\)]*?)\s*0\s*\.?0?0?\)/ ) || value.includes( 'transparent' ) ) ) {
 						return 'transparent'
 					}
 
 					return value
 				} }
-				valuePreCallback={ ( _value, getAttribute, device, state ) => {
-					let value = _value
-					if ( ! value && getAttribute( 'backgroundColorOpacity', 'desktop', state ) !== '' ) {
-						if ( device !== 'desktop' || state !== 'normal' ) {
-							value = getAttribute( 'backgroundColor', 'desktop', 'normal' ) || backgroundFallbackColor
-						} else {
-							value = backgroundFallbackColor
-						}
-					}
-					return value
-				} }
 				dependencies={ [
-					'backgroundColor2',
-					'backgroundColorOpacity',
 					'backgroundColorType',
-					'backgroundMediaUrl',
 					...dependencies,
 				] }
 			/>
+			{
+			// To allow smaller screensizes to override the larger screensize
+			// background images, we need to split these css rules to individual
+			// ones: desktop, tablet and mobile
+			}
+			{ /* Desktop */ }
 			<BlockCss
 				{ ...propsToPass }
 				selector={ selector }
@@ -82,7 +60,7 @@ const Styles = props => {
 				key="backgroundMediaUrl"
 				attrNameTemplate={ attrNameTemplate }
 				format="url(%s)"
-				responsive="all"
+				responsive={ [ 'desktop' ] }
 				valuePreCallback={ value => {
 					// If it's a video, don't print out the style because
 					// it's handled by a video element. And this will cause
@@ -94,6 +72,80 @@ const Styles = props => {
 					}
 					return value
 				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaExternalUrl"
+				key="backgroundMediaExternalUrl"
+				responsive={ [ 'desktop' ] }
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
+			/>
+			{ /* Tablet */ }
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaUrl"
+				key="backgroundMediaUrlTablet"
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
+				responsive={ [ 'tablet' ] }
+				valuePreCallback={ value => {
+					// If it's a video, don't print out the style because
+					// it's handled by a video element. And this will cause
+					// the video to show up twice in the network requests.
+					if ( typeof value === 'string' ) {
+						if ( value.match( /\.(mp4|ogg|webm)$/i ) ) {
+							return undefined
+						}
+					}
+					return value
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaExternalUrl"
+				key="backgroundMediaExternalUrlTablet"
+				responsive={ [ 'tablet' ] }
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
+			/>
+			{ /* Mobile */ }
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaUrl"
+				key="backgroundMediaUrlMobile"
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
+				responsive={ [ 'mobile' ] }
+				valuePreCallback={ value => {
+					// If it's a video, don't print out the style because
+					// it's handled by a video element. And this will cause
+					// the video to show up twice in the network requests.
+					if ( typeof value === 'string' ) {
+						if ( value.match( /\.(mp4|ogg|webm)$/i ) ) {
+							return undefined
+						}
+					}
+					return value
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ selector }
+				styleRule="backgroundImage"
+				attrName="backgroundMediaExternalUrl"
+				key="backgroundMediaExternalUrlMobile"
+				responsive={ [ 'mobile' ] }
+				attrNameTemplate={ attrNameTemplate }
+				format="url(%s)"
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -176,7 +228,6 @@ const Styles = props => {
 				} }
 				dependencies={ [
 					'backgroundColorType',
-					'backgroundColor2',
 					'backgroundTintStrength',
 					...dependencies,
 				] }
@@ -190,7 +241,7 @@ const Styles = props => {
 				key="backgroundTintStrength"
 				attrNameTemplate={ attrNameTemplate }
 				hover="all"
-				enabledCallback={ getAttribute => !! getAttribute( 'backgroundMediaUrl', 'mobile', 'normal', true ) }
+				enabledCallback={ getAttribute => !! ( getAttribute( 'backgroundMediaUrl', 'mobile', 'normal', true ) || getAttribute( 'backgroundMediaExternalUrl', 'mobile', 'normal', true ) ) }
 				valuePreCallback={ ( value, getAttribute, device, state ) => {
 					if ( value === '' ) {
 						if ( getAttribute( 'backgroundColor', device, state ) ) {
@@ -204,9 +255,9 @@ const Styles = props => {
 				} }
 				dependencies={ [
 					'backgroundColor',
-					'backgroundColor2',
-					 'backgroundMediaUrl',
-					 ...dependencies,
+					'backgroundMediaUrl',
+					'backgroundMediaExternalUrl',
+					...dependencies,
 				] }
 			/>
 			<BlockCss
@@ -230,30 +281,9 @@ const Styles = props => {
 				key="backgroundColor-image"
 				attrNameTemplate={ attrNameTemplate }
 				enabledCallback={ getAttribute => getAttribute( 'backgroundColorType' ) === 'gradient' }
-				valueCallback={ ( value, getAttribute ) => {
-					// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
-					const defaultColor1 = hexToRgba( getAttribute( 'backgroundColor2' ) || '#ffffff', 0 )
-					const defaultColor2 = hexToRgba( getAttribute( 'backgroundColor' ) || '#ffffff', 0 )
-
-					// Gradient location.
-					const color1Location = `${ getAttribute( 'backgroundGradientLocation1' ) || '0' }%`
-					const color2Location = `${ getAttribute( 'backgroundGradientLocation2' ) || '100' }%`
-
-					let angle = getAttribute( 'backgroundGradientDirection' )
-					if ( angle === '' ) {
-						angle = '90'
-					}
-					angle = `${ angle }deg`
-
-					return `linear-gradient(${ angle }, ${ getAttribute( 'backgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })`
-				} }
 				dependencies={ [
 					'backgroundColorType',
 					'backgroundColor',
-					'backgroundColor2',
-					'backgroundGradientLocation1',
-					'backgroundGradientLocation2',
-					'backgroundGradientDirection',
 					...dependencies,
 				] }
 			/>
@@ -275,7 +305,6 @@ const Styles = props => {
 				dependencies={ [
 					'backgroundColorType',
 					'backgroundColor',
-					'backgroundColor2',
 					...dependencies,
 				] }
 			/>

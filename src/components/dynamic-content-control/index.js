@@ -4,7 +4,9 @@
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
-import { isString, first } from 'lodash'
+import {
+	isString, first, last,
+} from 'lodash'
 import classnames from 'classnames'
 import { QueryLoopContext } from '~stackable/higher-order/with-query-loop-context'
 
@@ -234,7 +236,7 @@ export const useDynamicContent = ( value = '' ) => {
 	const blockDetails = select( 'core/block-editor' ).getBlock( clientId )
 	const queryLoopContext = useContext( QueryLoopContext )
 
-	return useSelect( () => {
+	return useSelect( select => {
 		if ( ! value || ! isString( value ) ) {
 			return value
 		}
@@ -262,7 +264,7 @@ export const useDynamicContent = ( value = '' ) => {
 		let tempValue = value
 
 		if ( currentPostId !== -1 ) {
-			// Replace all post IDS.
+			// Replace all post IDS or else we will just get the value of the current post.
 			tempValue = tempValue?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
 				const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
 				const splitFieldString = dataFieldString.split( '/' )
@@ -299,7 +301,37 @@ export const useDynamicContent = ( value = '' ) => {
 			} )
 		}
 
-		return select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue, blockDetails )
+		// Get the correct value for the dynamic content.
+		let parsedContent = select( 'stackable/dynamic-content' ).parseDynamicContents( tempValue, blockDetails )
+
+		/**
+		 * If we are using the current-page, then we need to remove the post ID from the data-stk-dynamic.
+		 */
+		if ( currentPostId !== -1 ) {
+			parsedContent = parsedContent?.replace( /<span[^\>]+data-stk-dynamic=[^\>]*>(.*?)<\/span>/g, value => {
+				const dataFieldString = value.match( /data-stk-dynamic="([^\"]*)"/ )[ 1 ]
+				const splitFieldString = dataFieldString.split( '/' )
+				if ( dataFieldString.startsWith( 'current-page' ) && last( splitFieldString ).match( /^\d+$/ ) ) {
+					splitFieldString.pop()
+					return value.replace(
+						/data-stk-dynamic="[^\"]*"/g,
+						'data-stk-dynamic="' + splitFieldString.join( '/' ) + '"'
+					)
+				}
+				return value
+			} )
+
+			parsedContent = parsedContent?.replace( /!#stk_dynamic(.*)\!#/g, value => {
+				const dataFieldString = value.replace( /\!#/g, '' ).replace( 'stk_dynamic/', '' )
+				const splitFieldString = dataFieldString.split( '/' )
+				if ( dataFieldString.startsWith( 'current-page' ) && last( splitFieldString ).match( /^\d+$/ ) ) {
+					return '!#stk_dynamic/' + splitFieldString.join( '/' ) + '!#'
+				}
+				return value
+			} )
+		}
+
+		return parsedContent
 	}, [ value, queryLoopContext?.postId ] )
 }
 
@@ -387,6 +419,7 @@ export const DynamicContentButton = memo( props => {
 				<Popover
 					position="top right"
 					className={ classnames( 'stackable-dynamic-content__popover', { 'stk-dynamic-content__popover--is-premium': ! isPro } ) }
+					onEscape={ props.onClick }
 				>
 					{ ! isPro && <ProControl type="dynamic-attributes" /> }
 

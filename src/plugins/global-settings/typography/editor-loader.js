@@ -7,6 +7,7 @@
  */
 import {
 	createTypographyStyles,
+	fetchSettings,
 	loadGoogleFont,
 } from '~stackable/util'
 import { generateStyles } from '~stackable/block-components'
@@ -16,7 +17,6 @@ import { head } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { loadPromise, models } from '@wordpress/api'
 import {
 	useEffect,
 	useState,
@@ -46,14 +46,16 @@ export const GlobalTypographyStyles = () => {
 		[]
 	)
 
+	// when switching between visual editor and code editor, the font family needs to be reloaded
+	const editorMode = useSelect( select => {
+		return select( 'core/edit-site' )?.getEditorMode() || select( 'core/edit-post' )?.getEditorMode()
+	} )
+
 	useEffect( () => {
 		// Get settings.
-		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( response => {
-				setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
-				setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
-			} )
+		fetchSettings().then( response => {
+			setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
+			setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 		} )
 
 		// Allow actions to trigger styles to update.
@@ -118,7 +120,7 @@ export const GlobalTypographyStyles = () => {
 		setStyleTimeout( setTimeout( () => doAction( 'stackable.global-settings.typography-update-global-styles', typographySettings ), 200 ) )
 
 		return () => removeAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles' )
-	}, [ JSON.stringify( typographySettings ), applySettingsTo, device ] )
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, device, editorMode ] )
 
 	return styles
 }

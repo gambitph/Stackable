@@ -27,6 +27,7 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
+		spacing: true,
 		// Display additional blocks when editing the block's default style.
 		stkSaveBlockStyle: [
 			[ 'stackable/table-of-contents', {} ],

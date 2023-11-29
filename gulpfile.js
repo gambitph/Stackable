@@ -373,18 +373,9 @@ gulp.task( 'style-deprecated-v2', function() {
 		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 
-gulp.task( 'style-deprecated-v1', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v1/*.scss' ) ] )
-		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
-		.pipe( concat( 'frontend_blocks_deprecated.css' ) )
-		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/deprecated/' ) )
-} )
-
 gulp.task( 'style-deprecated', gulp.parallel(
 	'style-editor-deprecated-v2',
 	'style-deprecated-v2',
-	'style-deprecated-v1',
 ) )
 
 /*********************************************************************

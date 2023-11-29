@@ -27,6 +27,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector=""
+				renderIn="save"
 				styleRule="height"
 				attrName="height"
 				key="height"

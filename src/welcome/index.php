@@ -66,7 +66,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 				do_action( 'stackable_settings_admin_enqueue_scripts' );
 
-				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor' ) );
+				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor', 'lodash' ) );
 
 				// Add translations.
 				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
@@ -76,13 +76,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
 					'i18n' => STACKABLE_I18N,
-					'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
-					'isPro' => sugb_fs()->can_use_premium_code(),
+					'cdnUrl' => STACKABLE_DESIGN_LIBRARY_URL,
+					'isPro' => sugb_fs()->can_use_premium_code() && STACKABLE_BUILD !== 'free',
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 					'contactURL' => ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '',
 					'planName' => sugb_fs()->get_plan_name(),
-					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
+					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ( ! sugb_fs()->can_use_premium_code() || STACKABLE_BUILD === 'free' ),
 					'nonceNews' => stackable_get_news_feed_nonce(),
 				) );
 				wp_localize_script( 'stackable-welcome', 'stackable', $args );
@@ -139,11 +139,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 		public static function print_header( $title = '', $image = 'logo' ) {
 			?>
-			<header class="s-header <?php echo ! current_user_can( 'manage_options' ) ? 's-header-no-tabs' : '' ?> s-logo-<?php echo $image ?>">
-				<h1>
-					<img src="<?php echo esc_url( plugins_url( 'images/stackable-' . $image . '.png', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
-					<?php echo $title ?>
-				</h1>
+			<header class="s-header s-heading-1 <?php echo ! current_user_can( 'manage_options' ) ? 's-header-no-tabs' : '' ?> s-logo-<?php echo $image ?>" role="heading" aria-level="1" aria-labelledby="s-heading-<?php echo empty( $title ) ? 'logo' : 'title' ?>">
+				<img id="s-heading-logo" src="<?php echo esc_url( plugins_url( 'images/stackable-' . $image . '.png', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
+				<span id="s-heading-title"><?php echo $title ?></span>
 			</header>
 			<?php
 		}
@@ -164,6 +162,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php echo $this->print_premium_button() ?>
 					<?php echo $this->print_tabs() ?>
 				</div>
+				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
                 <section class="s-body-container s-body-container-grid">
                     <div class="s-body">
 						<?php stackable_welcome_notification() ?>
@@ -284,7 +283,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 			if ( file_exists( untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/videos/' . $video_file ) ) {
 				return untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ) . '/src/welcome/videos/' . $video_file;
 			}
-			return untrailingslashit( STACKABLE_CLOUDFRONT_URL ) . '/dist/videos/welcome/' . $video_file;
+			return untrailingslashit( STACKABLE_DESIGN_LIBRARY_URL ) . '/dist/videos/welcome/' . $video_file;
 		}
 
 		/**
@@ -298,6 +297,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php echo $this->print_premium_button() ?>
 					<?php echo $this->print_tabs() ?>
 				</div>
+				<h1 aria-hidden="true" class="s-admin-notice-marker"></h1>
 				<section class="s-body-container s-narrow s-body-container-center s-getting-started__body">
 				</section>
 			</div>
@@ -351,21 +351,20 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
          * Redirect to the welcome screen if our marker exists.
          */
         public function redirect_to_welcome_page() {
-            if ( ! sugb_fs()->is_activation_mode() && current_user_can( 'manage_options' ) &&
-				( get_option( 'stackable_redirect_to_welcome' ) || get_option( 'stackable_redirected_to_wizard' ) === false )
+            if ( get_option( 'stackable_redirect_to_welcome' ) &&
+			     current_user_can( 'manage_options' ) &&
+			     ! sugb_fs()->is_activation_mode()
 			) {
 				// Never go here again.
                 delete_option( 'stackable_redirect_to_welcome' );
 
-				// If we haven't been to the wizard yet, go there.
-				if ( get_option( 'stackable_redirected_to_wizard' ) === false ) {
-					update_option( 'stackable_redirected_to_wizard', '1' );
-					wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-settings-wizard' ) ) );
+				// Allow others to bypass the welcome screen.
+				if ( ! apply_filters( 'stackable_activation_screen_enabled', true ) ) {
+					return;
+				}
 
 				// Or go to the getting started page.
-				} else {
-					wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-getting-started' ) ) );
-				}
+				wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-getting-started' ) ) );
 
                 die();
             }
@@ -374,6 +373,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
     new Stackable_Welcome_Screen();
 }
+
+// This filter is used by the Freemius activation screen, we can disable redirection with this.
+add_filter( 'fs_redirect_on_activation_stackable-ultimate-gutenberg-blocks', function ( $redirect ) {
+	return apply_filters( 'stackable_activation_screen_enabled', $redirect );
+} );
 
 // Redirect to the welcome screen.
 register_activation_hook( STACKABLE_FILE, array( 'Stackable_Welcome_Screen', 'start_redirect_to_welcome_page' ) );

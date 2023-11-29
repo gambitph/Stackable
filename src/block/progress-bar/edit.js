@@ -69,8 +69,10 @@ const Edit = props => {
 		'stk--has-background-overlay': attributes.progressColorType === 'gradient' && attributes.progressColor2,
 	} )
 
+	const progressValue = attributes.progressValue || ''
+
 	// parsing string to number since progress value is of a string type to support dynamic content
-	const parsedProgressValue = parseFloat( useDynamicContent( attributes.progressValue ) )
+	const parsedProgressValue = parseFloat( useDynamicContent( progressValue ).replace( /,/g, '' ) )
 	const derivedProgressValue = isNaN( parsedProgressValue ) ? DEFAULT_PROGRESS : parsedProgressValue
 	const derivedValue = `${ attributes.progressValuePrefix }${ derivedProgressValue }${ attributes.progressValueSuffix }`.trim()
 
@@ -137,6 +139,10 @@ const Edit = props => {
 						</div>
 					</div>
 				</div>
+				{ /* Add our progress style here because we're adjusting the value using a hook */ }
+				<style>
+					{ `.editor-styles-wrapper .stk-${ props.attributes.uniqueId } .stk-progress-bar { --progress-value:${ derivedValue }% !important; }` }
+				</style>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

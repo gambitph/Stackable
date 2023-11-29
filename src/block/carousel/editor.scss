@@ -1,6 +1,8 @@
 @import "common";
 
 .stk-block-carousel__slider {
+	scrollbar-width: none; // Removes scrollbar visibility in Mozilla Firefox
+
 	// Column outlines should be offset inside or else they will be cut.
 	> .block-editor-inner-blocks > .block-editor-block-list__layout {
 		> [data-type="stackable/column"] {

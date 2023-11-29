@@ -53,7 +53,8 @@ if ( ! function_exists( 'stackable_register_show_pro_notice_option' ) ) {
 			)
 		);
 	}
-	add_action( 'init', 'stackable_register_show_pro_notice_option' );
+	add_action( 'admin_init', 'stackable_register_show_pro_notice_option' );
+	add_action( 'rest_api_init', 'stackable_register_show_pro_notice_option' );
 }
 
 if ( ! function_exists( 'stackable_should_show_pro_notices' ) ) {
@@ -64,7 +65,7 @@ if ( ! function_exists( 'stackable_should_show_pro_notices' ) ) {
 	 * @return Boolean
 	 */
 	function stackable_should_show_pro_notices() {
-		return STACKABLE_SHOW_PRO_NOTICES && stackable_show_pro_notices_option() && ! sugb_fs()->can_use_premium_code();
+		return STACKABLE_SHOW_PRO_NOTICES && stackable_show_pro_notices_option() && ( ! sugb_fs()->can_use_premium_code() || STACKABLE_BUILD === 'free' );
 	}
 }
 

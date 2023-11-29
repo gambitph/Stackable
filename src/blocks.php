@@ -102,6 +102,7 @@ if ( ! function_exists( 'stackable_get_stk_wrapper_block_folders_metadata' ) ) {
 			'pricing-box',
 			'team-member',
 			'testimonial',
+			'timeline',
 			'video-popup',
 			'horizontal-scroller',
 		);

@@ -2,7 +2,7 @@
  * This component replaces the main wrapper of the block, and should be used by
  * all Stackable blocks.
  *
- * In order to use this, the block.json should define: "apiVersion": 2
+ * In order to use this, the block.json should define: "apiVersion": 3
  */
 
 /**

@@ -91,11 +91,22 @@ export const useColumn = () => {
 		}
 	}
 
+	const onResetTabletMobile = () => {
+		const { parentBlock } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const adjacentBlocks = parentBlock?.innerBlocks || []
+
+		if ( adjacentBlocks.length ) {
+			const clientIds = adjacentBlocks.map( block => block.clientId )
+			dispatch( 'core/block-editor' ).updateBlockAttributes( clientIds, { columnWidthTablet: '', columnWidthMobile: '' } ) // eslint-disable-line stackable/no-update-block-attributes
+		}
+	}
+
 	return {
 		onChangeDesktop,
 		onChangeTablet,
 		onChangeMobile,
 		onResetDesktop,
+		onResetTabletMobile,
 	}
 }
 

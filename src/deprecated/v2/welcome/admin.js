@@ -2,14 +2,13 @@
  * Internal dependencies
  */
 import blockData from './blocks'
-import './wizard'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import {
-	Component, render, useEffect, useState, Fragment,
+	Component, useEffect, useState, Fragment,
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
@@ -25,6 +24,7 @@ import {
 	v2nonce as nonce,
 } from 'stackable'
 import AdminToggleSetting from '~stackable/components/admin-toggle-setting'
+import { createRoot } from '~stackable/util/element'
 
 class BlockToggler extends Component {
 	constructor() {
@@ -151,16 +151,14 @@ const OptimizationSettings = () => {
 // Load all the options into the UI.
 domReady( () => {
 	if ( document.querySelector( '.s-settings-wrapper-v2' ) ) {
-		render(
-			<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />,
-			document.querySelector( '.s-settings-wrapper-v2' )
+		createRoot( document.querySelector( '.s-settings-wrapper-v2' ) ).render(
+			<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />
 		)
 	}
 
 	if ( document.querySelector( '.s-optimization-settings' ) ) {
-		render(
-			<OptimizationSettings />,
-			document.querySelector( '.s-optimization-settings' )
+		createRoot( document.querySelector( '.s-optimization-settings' ) ).render(
+			<OptimizationSettings />
 		)
 	}
 } )

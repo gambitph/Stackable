@@ -60,6 +60,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/default-blocks', ou
 					const searchParams = new URLSearchParams()
 					searchParams.set( 'stk_edit_block', block.name )
 					searchParams.set( 'stk_edit_block_style', 'default' )
+					searchParams.set( 'stk_edit_block_title', block.title )
 
 					const hasStyle = getBlockStyle( block.name, 'default' )
 					const className = classnames(

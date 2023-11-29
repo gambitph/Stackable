@@ -8,6 +8,7 @@ import { attributes } from './schema'
  * External dependencies
  */
 import { withVersion } from '~stackable/higher-order'
+import { deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity } from '~stackable/block-components'
 import compareVersions from 'compare-versions'
 
 /**
@@ -31,6 +32,66 @@ addFilter( 'stackable.call-to-action.save.innerClassNames', 'stackable/3.8.0', (
 } )
 
 const deprecated = [
+	// Support the new combined opacity and color.
+	{
+		attributes: attributes( '3.11.9' ),
+		save: withVersion( '3.11.9' )( Save ),
+		isEligible: attributes => {
+			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
+			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			return hasContainerOpacity || hasBlockOpacity || isNotV4
+		},
+		migrate: ( attributes, innerBlocks ) => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// Update the vertical align into flexbox
+			const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+
+			if ( hasOldVerticalAlign ) {
+				newAttributes = {
+					...newAttributes,
+					containerVerticalAlign: '',
+					innerBlockAlign: attributes.containerVerticalAlign,
+				}
+			}
+
+			// If the inner blocks are horizontal, adjust to accomodate the new
+			// column gap, it will modify blocks because people used block
+			// margins before instead of a proper column gap.
+			if ( attributes.innerBlockOrientation === 'horizontal' ) {
+				innerBlocks.forEach( ( block, index ) => {
+					if ( index ) {
+						if ( ! block.attributes.blockMargin ) {
+							block.attributes.blockMargin = {
+								top: '',
+								right: '',
+								bottom: '',
+								left: '',
+							}
+						}
+						if ( block.attributes.blockMargin.left === '' ) {
+							block.attributes.blockMargin.left = 24
+						}
+					}
+				} )
+
+				newAttributes = {
+					...newAttributes,
+					innerBlockColumnGap: 0,
+				}
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			return [ newAttributes, innerBlocks ]
+		},
+	},
 	{
 		// This deprecation entry is for the New UI where we changed how the
 		// layout & containers work.
@@ -102,6 +163,9 @@ const deprecated = [
 					innerBlockColumnGap: 0,
 				}
 			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 
 			return [ newAttributes, innerBlocks ]
 		},

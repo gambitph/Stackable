@@ -10,6 +10,8 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
+	deprecateBlockBackgroundColorOpacity,
+	deprecateContainerBackgroundColorOpacity,
 	getAlignmentClasses, getContentAlignmentClasses, getRowClasses,
 } from '~stackable/block-components'
 
@@ -59,6 +61,40 @@ addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.8.0', ( output
 } )
 
 const deprecated = [
+	// Support the new combined opacity and color.
+	{
+		attributes: attributes( '3.11.9' ),
+		save: withVersion( '3.11.9' )( Save ),
+		isEligible: attributes => {
+			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
+			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			return hasContainerOpacity || hasBlockOpacity || isNotV4
+		},
+		migrate: attributes => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// Update the old column fit into flexbox
+			const hasOldColumnFit = !! attributes.columnFit
+			if ( hasOldColumnFit ) {
+				newAttributes = {
+					...newAttributes,
+					columnFit: '',
+					columnFitAlign: '',
+					columnJustify: attributes.columnFitAlign,
+				}
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// This deprecation entry is for the New UI where we changed how the
 		// layout & containers work.
@@ -104,6 +140,9 @@ const deprecated = [
 					containerBackgroundColor: 'transparent',
 				}
 			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 
 			return newAttributes
 		},

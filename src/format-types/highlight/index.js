@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { ColorPaletteControl, AdvancedToolbarControl } from '~stackable/components'
+import {
+	ColorPaletteControl, AdvancedToolbarControl, Popover,
+} from '~stackable/components'
 import { whiteIfDarkBlackIfLight } from '~stackable/util'
 import { i18n } from 'stackable'
 
@@ -9,9 +11,8 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	Dropdown,
-	Toolbar,
 	ToolbarButton,
+	ToolbarGroup,
 } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
@@ -120,15 +121,10 @@ export const extractColors = styleString => {
 	}
 }
 
-const popoverProps = {
-	placement: 'bottom',
-	offset: 16,
-	shift: true,
-}
-
 const HighlightButton = props => {
 	const { clientId } = useBlockEditContext()
 	const [ colorType, setColorType ] = useState( null )
+	const [ isOpen, setIsOpen ] = useState( false )
 	const { getBlock } = useSelect( 'core/block-editor' )
 
 	const block = getBlock( clientId )
@@ -169,32 +165,35 @@ const HighlightButton = props => {
 
 	return (
 		<BlockControls>
-			<Toolbar className="stackable-components-toolbar">
-				<Dropdown
-					popoverProps={ popoverProps }
-					className="block-editor-tools-panel-color-gradient-settings__dropdown"
-					renderToggle={ ( { isOpen, onToggle } ) => (
-						<ToolbarButton
-							label={ __( 'Color & Highlight', i18n ) }
-							className="components-toolbar__control stk-toolbar-button stk-components-toolbar__highlight"
-							icon="editor-textcolor"
-							aria-haspopup="true"
-							tooltip={ __( 'Color & Highlight', i18n ) }
-							onClick={ () => {
-								if ( ! isOpen ) {
-									const {
-										colorType = '',
-									} = isActive ? extractColors( highlightStyles ) : {}
-									setColorType( colorType )
-								}
-								onToggle()
-							} }
-							isActive={ isActive }
-						>
-							<span className="components-stackable-highlight-color__indicator" style={ { backgroundColor: displayIconColor } } />
-						</ToolbarButton>
-					) }
-					renderContent={ () => (
+			<ToolbarGroup className="stackable-components-toolbar">
+				<ToolbarButton
+					label={ __( 'Color & Highlight', i18n ) }
+					className="components-toolbar__control stk-toolbar-button stk-components-toolbar__highlight"
+					icon="editor-textcolor"
+					aria-haspopup="true"
+					tooltip={ __( 'Color & Highlight', i18n ) }
+					onClick={ () => {
+						if ( ! isOpen ) {
+							const {
+								colorType = '',
+							} = isActive ? extractColors( highlightStyles ) : {}
+							setColorType( colorType )
+						}
+						setIsOpen( ! isOpen )
+					} }
+					isActive={ isActive }
+				>
+					<span className="components-stackable-highlight-color__indicator" style={ { backgroundColor: displayIconColor } } />
+				</ToolbarButton>
+				{ isOpen && (
+					<Popover
+						offset={ 13 }
+						position="bottom center"
+						className="stk-copy-paste-styles__menu"
+						isAlternate
+						onFocusOutside={ () => setIsOpen( false ) }
+						onEscape={ () => setIsOpen( false ) }
+					>
 						<div className="stk-color-palette-control__popover-content">
 							<div className="components-stackable-highlight__inner">
 								<AdvancedToolbarControl
@@ -250,9 +249,9 @@ const HighlightButton = props => {
 								}
 							</div>
 						</div>
-					) }
-				/>
-			</Toolbar>
+					</Popover>
+				) }
+			</ToolbarGroup>
 		</BlockControls>
 	)
 }

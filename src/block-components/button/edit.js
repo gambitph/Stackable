@@ -14,16 +14,14 @@ import {
 import { i18n } from 'stackable'
 import {
 	useAttributeEditHandlers,
-	useBlockAttributesContext, useBlockContext, useBlockSetAttributesContext,
+	useBlockAttributesContext,
+	useBlockContext,
 } from '~stackable/hooks'
-import { extractColor } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
-import { select } from '@wordpress/data'
-import { getColorClassName } from '@wordpress/block-editor'
+import { __ } from '@wordpress/i18n'
 
 /**
  * Internal dependencies
@@ -107,7 +105,6 @@ export const HoverEffects = () => {
 
 export const ColorsControls = props => {
 	const {
-		blockState,
 		hasIconColor,
 		hasTextColor,
 		attrNameTemplate = 'button%s',
@@ -120,7 +117,6 @@ export const ColorsControls = props => {
 	const buttonBackgroundColorType = useBlockAttributesContext( attributes => {
 		return attributes[ getAttrName( 'backgroundColorType' ) ]
 	} )
-	const setAttributes = useBlockSetAttributesContext()
 
 	return ( <>
 		<AdvancedToolbarControl
@@ -136,50 +132,16 @@ export const ColorsControls = props => {
 			] }
 			attribute={ getAttrName( 'backgroundColorType' ) }
 			isSmall={ true }
-			fullwidth={ false }
 		/>
 		<ColorPaletteControl
-			label={ buttonBackgroundColorType === 'gradient'
-				? sprintf( __( 'Button Color #%s', i18n ), 1 )
-				: __( 'Button Color', i18n )
-			}
+			label={ __( 'Button Color', i18n ) }
 			attribute={ getAttrName( 'backgroundColor' ) }
-			hasTransparent={ blockState === 'normal' && buttonBackgroundColorType !== 'gradient' }
 			hover="all"
+			isGradient={ buttonBackgroundColorType === 'gradient' }
 		/>
-		{ buttonBackgroundColorType === 'gradient' && (
-			<>
-				<ColorPaletteControl
-					label={ __( 'Button Color #2', i18n ) }
-					attribute={ getAttrName( 'backgroundColor2' ) }
-					hover="all"
-				/>
-
-				<AdvancedRangeControl
-					label={ __( 'Gradient Direction (degrees)', i18n ) }
-					attribute={ getAttrName( 'backgroundGradientDirection' ) }
-					min={ 0 }
-					max={ 360 }
-					step={ 10 }
-					allowReset={ true }
-					hover="all"
-				/>
-			</>
-		) }
 
 		{ hasTextColor && (
 			<ColorPaletteControl
-				changeCallback={ _value => {
-					if ( blockState !== 'normal' ) {
-						return _value
-					}
-					const value = extractColor( _value )
-					const colors = select( select => select( 'core/block-editor' ).getSettings().colors ) || []
-					const colorSlug = colors.find( ( { color } ) => value === color )?.slug
-					setAttributes( { textColorClass: colorSlug ? getColorClassName( 'color', colorSlug ) : '' } )
-
-					return _value
-				} }
 				label={ __( 'Text Color', i18n ) }
 				attribute="textColor1"
 				hover="all"

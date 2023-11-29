@@ -8,6 +8,9 @@ import {
 	ModalDesignLibrary,
 } from '~stackable/components'
 import { SVGStackableIcon } from '~stackable/icons'
+import {
+	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
@@ -18,8 +21,9 @@ import {
 	createBlock, parse, createBlocksFromInnerBlocksTemplate, getBlockVariations,
 } from '@wordpress/blocks'
 import { useState } from '@wordpress/element'
-import { applyFilters } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Placeholder } from '@wordpress/components'
+import { useBlockProps } from '@wordpress/block-editor'
 
 // Replaces the current block with a block made out of attributes.
 const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design ) => {
@@ -55,6 +59,29 @@ const createBlockWithAttributes = ( blockName, attributes, innerBlocks, design )
 	}
 
 	const shortBlockName = blockName.replace( /^\w+\//g, '' )
+
+	// Recursively update the attributes of all inner blocks for the new Color Picker
+	const migrateToNewColorPicker = blocks => {
+		blocks.forEach( block => {
+			let newAttributes = block[ 1 ]
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			block[ 1 ] = newAttributes
+			migrateToNewColorPicker( block[ 2 ] )
+		} )
+	}
+
+	migrateToNewColorPicker( innerBlocks )
+
+	addFilter( `stackable.${ shortBlockName }.design.filtered-block-attributes`, 'stackable.design-library.attributes--migrate-to-new-color-picker', attributes => {
+		let newAttributes = { ...attributes }
+		newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+		newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+		newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+		return newAttributes
+	} )
+
 	const blockAttributes = applyFilters( `stackable.${ shortBlockName }.design.filtered-block-attributes`, attributes )
 
 	return createBlock( blockName, blockAttributes, createBlocksFromInnerBlocksTemplate( innerBlocks ) )
@@ -72,6 +99,10 @@ const Edit = props => {
 
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false )
 
+	const blockProps = useBlockProps( {
+		className: 'ugb-design-library-block',
+	} )
+
 	if ( attributes.previewMode ) {
 		const src = previewImage.match( /https?:/i ) ? previewImage
 			: srcUrl ? `${ srcUrl }/${ previewImage }`
@@ -85,7 +116,7 @@ const Edit = props => {
 	}
 
 	return (
-		<div className="ugb-design-library-block">
+		<div { ...blockProps }>
 			<Placeholder
 				icon={ <SVGStackableIcon /> }
 				label={ __( 'Stackable Design Library', i18n ) }

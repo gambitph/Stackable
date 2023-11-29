@@ -72,6 +72,10 @@ class TaxonomyControl extends Component {
 				taxonomies,
 			} = this.state.termList[ postType ]
 
+			if ( postType === 'wp_block' ) {
+				return
+			}
+
 			postTypeOptions.push( {
 				label,
 				value: postType,

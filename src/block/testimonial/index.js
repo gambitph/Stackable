@@ -32,6 +32,7 @@ export const settings = {
 		align: true,
 		stkAlign: true,
 		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	example,
 

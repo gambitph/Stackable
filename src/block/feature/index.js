@@ -33,6 +33,7 @@ export const settings = {
 		stkBlockLinking: false, // Disable linking on the columns in this block.
 		stkAlign: true,
 		stkDefaultTab: 'layout',
+		spacing: true,
 	},
 	example,
 	deprecated,

@@ -19,6 +19,7 @@ import { select, dispatch } from '@wordpress/data'
  *
  * @return {string} generated modified stringified attributes object.
  */
+// TODO: Do we still need this??
 export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset = [], options = {} ) => {
 	if ( ! Array.isArray( colorsBeforeReset ) ) {
 		return attributes
@@ -51,6 +52,7 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	return JSON.parse( updatedStringifiedAttributes )
 }
 
+// TODO: Do we still need this??
 export const resetBlockColorAttributes = ( block, colorObjects ) => {
 	const { clientId, name } = block
 	const { updateBlockAttributes } = dispatch( 'core/block-editor' )

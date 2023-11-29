@@ -18,6 +18,15 @@
 		position: relative;
 		z-index: 3;
 	}
+
+	// Having a background image and a block link makes the link hug the
+	// contents only and not the entire block.
+	> .stk-container:has(> .stk-block-link) {
+		position: static;
+	}
+	&:has(> .stk-container > .stk-block-link)::before {
+		z-index: -1;
+	}
 }
 
 .stk-video-background {

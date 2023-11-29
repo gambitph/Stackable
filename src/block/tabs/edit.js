@@ -10,6 +10,7 @@ import { withActiveTab } from './with-active-tab'
 import { i18n, version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
+	AdvancedToggleControl,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
@@ -48,7 +49,7 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { dispatch } from '@wordpress/data'
+import { dispatch, select } from '@wordpress/data'
 import { __, sprintf } from '@wordpress/i18n'
 
 const TEMPLATE = [
@@ -136,7 +137,7 @@ const Edit = props => {
 
 								// Update the number of tab labels
 								const clientId = tabLabelsBlock.clientId
-								const tabLabels = tabLabelsBlock.attributes.tabLabels
+								const tabLabels = select( 'core/block-editor' ).getBlockAttributes( tabLabelsBlock.clientId ).tabLabels
 
 								// If we added a new tab, then add a new tab label
 								if ( numColumns > tabLabels.length ) {
@@ -174,6 +175,11 @@ const Edit = props => {
 									label: index + 1,
 								}
 							} ) }
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Equal tab height', i18n ) }
+							attribute="equalTabHeight"
+							defaultValue={ false }
 						/>
 						<ControlSeparator />
 						<AdvancedToolbarControl

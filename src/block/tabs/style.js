@@ -43,6 +43,18 @@ const Styles = props => {
 				format="%spx"
 				responsive="all"
 			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s .stk-block-tab-content .stk-block-content .stk-block-column[hidden]"
+				renderIn="save"
+				styleRule="display"
+				attrName="equalTabHeight"
+				key="equalTabHeight"
+				valueCallback={ value => {
+					return value ? undefined : 'none'
+				} }
+				responsive="all"
+			/>
 		</>
 	)
 }

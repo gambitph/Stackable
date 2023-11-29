@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "stackable/button-group",
 	"title": "Button Group",
 	"description": "Add a customizable button.",

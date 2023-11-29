@@ -101,6 +101,14 @@ const LABELS = {
 		title: __( 'This is a Premium Design', i18n ),
 		description: __( 'Unlock access to the entire design library and set your website apart from the rest.', i18n ),
 	},
+	posts: {
+		title: __( 'Get More Post Options', i18n ),
+		description: <ul>
+			<li>{ __( 'New Custom Post Type option', i18n ) }</li>
+			<li>{ __( 'Offset, exclude, include specific posts', i18n ) }</li>
+			<li>{ __( 'Hide the current post - great for synced patterns', i18n ) }</li>
+		</ul>,
+	},
 }
 
 const ProControl = props => {
@@ -117,7 +125,7 @@ const ProControl = props => {
 			) }
 			{ props.showButton && (
 				<div>
-					<a href="https://wpstackable.com/upgrade/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg" target="_premium" className="button button-secondary">
+					<a href="https://wpstackable.com/premium/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg" target="_premium" className="button button-secondary">
 						<SVGDiamond />
 						{ props.button || LABELS[ props.type ]?.button || __( 'Learn More', i18n ) }
 					</a>

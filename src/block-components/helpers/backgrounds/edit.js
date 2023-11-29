@@ -8,10 +8,10 @@ import {
 	BlendModeControl,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
-	ControlSeparator,
 	AdvancedToggleControl,
 	AdvancedRangeControl,
 	ImageControl2,
+	AdvancedTextControl,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers,
@@ -25,9 +25,7 @@ import { getAttributeName, urlIsVideo } from '~stackable/util'
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
-import {
-	__, _x, sprintf,
-} from '@wordpress/i18n'
+import { __, _x } from '@wordpress/i18n'
 
 const COLOR_TYPE_CONTROLS = [
 	{
@@ -57,7 +55,12 @@ export const BackgroundControls = props => {
 	const setAttributes = useBlockSetAttributesContext()
 	const [ currentHoverState ] = useBlockHoverState()
 
-	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) || getAttribute( 'backgroundMediaUrlTablet' ) || getAttribute( 'backgroundMediaUrlMobile' )
+	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) ||
+	getAttribute( 'backgroundMediaUrlTablet' ) ||
+	getAttribute( 'backgroundMediaUrlMobile' ) ||
+	getAttribute( 'backgroundMediaExternalUrl' ) ||
+	getAttribute( 'backgroundMediaExternalUrlTablet' ) ||
+	getAttribute( 'backgroundMediaExternalUrlMobile' )
 	const isBackgroundVideo = () => {
 		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
 			.filter( value => value )
@@ -71,16 +74,11 @@ export const BackgroundControls = props => {
 				<AdvancedToolbarControl
 					controls={ COLOR_TYPE_CONTROLS }
 					attribute={ getAttrName( 'backgroundColorType' ) }
-					fullwidth={ false }
 					isSmall={ true }
 				/>
 			}
 			<ColorPaletteControl
-				label={
-					getAttribute( 'backgroundColorType' ) === 'gradient'
-						? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Background Color', i18n ), 1 )
-						: __( 'Background Color', i18n )
-				}
+				label={ __( 'Background Color', i18n ) }
 				attribute={ getAttrName( 'backgroundColor' ) }
 				onChange={ value => {
 					const attributes = {
@@ -93,108 +91,9 @@ export const BackgroundControls = props => {
 
 					setAttributes( attributes )
 				} }
-				hasTransparent={ true }
 				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
+				isGradient={ getAttribute( 'backgroundColorType' ) === 'gradient' }
 			/>
-			{ getAttribute( 'backgroundColorType' ) !== 'gradient' && ( ! getAttribute( 'backgroundMediaUrl' ) && ! getAttribute( 'backgroundMediaUrlTablet' ) && ! getAttribute( 'backgroundMediaUrlMobile' ) ) && (
-				<AdvancedRangeControl
-					label={ __( 'Background Color Opacity', i18n ) }
-					attribute={ getAttrName( 'backgroundColorOpacity' ) }
-					hover="all"
-					min={ 0 }
-					max={ 1 }
-					step={ 0.1 }
-					allowReset={ true }
-					placeholder="1.0"
-					helpTooltip={ {
-						video: 'background-color-opacity',
-						description: __( 'Adjusts the transparency of the background color', i18n ),
-					} }
-				/>
-			) }
-			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
-				<ColorPaletteControl
-					label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Background Color', i18n ), 2 ) }
-					attribute={ getAttrName( 'backgroundColor2' ) }
-					hasTransparent={ true }
-				/>
-			) }
-			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
-				<ButtonIconPopoverControl
-					label={ __( 'Adv. Gradient Color Settings', i18n ) }
-					onReset={ () => {
-						updateAttributes( {
-							backgroundGradientDirection: '',
-							backgroundGradientBlendMode: '',
-							backgroundGradientLocation1: '',
-							backgroundGradientLocation2: '',
-						} )
-					} }
-					allowReset={
-						( getAttribute( 'backgroundGradientDirection' ) !== '' && getAttribute( 'backgroundGradientDirection' ) !== 90 ) ||
-						( getAttribute( 'backgroundGradientLocation1' ) !== '' && getAttribute( 'backgroundGradientLocation1' ) !== 0 ) ||
-						( getAttribute( 'backgroundGradientLocation2' ) !== '' && getAttribute( 'backgroundGradientLocation2' ) !== 100 ) ||
-						getAttribute( 'backgroundGradientBlendMode' )
-					}
-				>
-					<AdvancedRangeControl
-						label={ __( 'Gradient Direction (degrees)', i18n ) }
-						attribute={ getAttrName( 'backgroundGradientDirection' ) }
-						min={ 0 }
-						max={ 360 }
-						step={ 10 }
-						allowReset={ true }
-						placeholder="90"
-						helpTooltip={ {
-							// TODO: Add a working video
-							description: __( 'Sets the direction (in degrees) of the colors', i18n ),
-						} }
-					/>
-
-					<AdvancedRangeControl
-						label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
-						attribute={ getAttrName( 'backgroundGradientLocation1' ) }
-						sliderMin={ 0 }
-						max={ 100 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder="0"
-						helpTooltip={ {
-							video: 'gradient-location',
-							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
-						} }
-					/>
-
-					<AdvancedRangeControl
-						label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
-						attribute={ getAttrName( 'backgroundGradientLocation2' ) }
-						sliderMin={ 0 }
-						max={ 100 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder="100"
-						helpTooltip={ {
-							video: 'gradient-location',
-							description: __( 'Sets the placement of each color in relation to the other color', i18n ),
-						} }
-					/>
-
-					{ props.hasBackgroundGradientBlendMode &&
-						<BlendModeControl
-							label={ __( 'Background Gradient Blend Mode', i18n ) }
-							attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
-							helpTooltip={ {
-								video: 'background-blend-mode',
-								description: __( 'Sets how this background gradient/image blends into the other background', i18n ),
-							} }
-						/>
-					}
-				</ButtonIconPopoverControl>
-			) }
-
-			{ getAttribute( 'backgroundColorType' ) === 'gradient' &&
-				<ControlSeparator />
-			}
 
 			{ props.hasBackgroundImage &&
 				<ImageControl2
@@ -208,6 +107,7 @@ export const BackgroundControls = props => {
 						const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
 						const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
 						const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
+						const attrExternalUrl = getAttributeName( getAttrName( 'backgroundMediaExternalUrl', deviceType ) )
 
 						const attributes = {
 							[ attrNameId ]: image.id,
@@ -215,6 +115,7 @@ export const BackgroundControls = props => {
 							[ attrWidthAttribute ]: image.width || '',
 							[ attrHeightAttribute ]: image.height || '',
 							[ attrAlt ]: image.alt || '',
+							[ attrExternalUrl ]: '',
 						}
 
 						if ( props.onBackgroundEnableAttribute ) {
@@ -227,7 +128,34 @@ export const BackgroundControls = props => {
 					responsive="all"
 				/>
 			}
+			<AdvancedTextControl
+				label={ __( 'Background Image Url', i18n ) }
+				attribute={ getAttrName( 'backgroundMediaExternalUrl' ) }
+				responsive="all"
+				onChange={ text => {
+					const backgroundMediaExternalUrl = getAttrName( 'backgroundMediaExternalUrl', deviceType )
+					const attrNameId = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Id`, deviceType )
+					const attrNameUrl = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Url`, deviceType )
+					const attrWidthAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }HeightAttribute`, deviceType )
+					const attrHeightAttribute = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }WidthAttribute`, deviceType )
+					const attrAlt = getAttributeName( `${ getAttrName( 'backgroundMedia' ) }Alt`, deviceType )
 
+					const attributes = {
+						[ backgroundMediaExternalUrl ]: text,
+						[ attrNameId ]: '',
+						[ attrNameUrl ]: '',
+						[ attrWidthAttribute ]: '',
+						[ attrHeightAttribute ]: '',
+						[ attrAlt ]: '',
+					}
+
+					if ( props.onBackgroundEnableAttribute ) {
+						attributes[ props.onBackgroundEnableAttribute ] = true
+					}
+
+					setAttributes( attributes )
+				} }
+			/>
 			{ hasBackgroundMedia &&
 				<AdvancedRangeControl
 					label={ __( 'Background Media Tint Strength', i18n ) }
@@ -247,11 +175,23 @@ export const BackgroundControls = props => {
 
 			{ hasBackgroundMedia && ! isBackgroundVideo() &&
 				<AdvancedToggleControl
+					help={ __( 'Note: Fixed Background works on Desktop and Android devices only.', i18n ) }
 					label={ __( 'Fixed Background', i18n ) }
 					attribute={ getAttrName( 'fixedBackground' ) }
 					helpTooltip={ {
 						video: 'background-fixed',
 						description: __( 'Keeps the background image fixed in place while scrolling', i18n ),
+					} }
+				/>
+			}
+
+			{ getAttribute( 'backgroundColorType' ) === 'gradient' && props.hasBackgroundGradientBlendMode &&
+				<BlendModeControl
+					label={ __( 'Background Gradient Blend Mode', i18n ) }
+					attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
+					helpTooltip={ {
+						video: 'background-blend-mode',
+						description: __( 'Sets how this background gradient/image blends into the other background', i18n ),
 					} }
 				/>
 			}

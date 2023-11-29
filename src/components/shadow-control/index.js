@@ -208,6 +208,7 @@ const ShadowFilterControl = props => {
 			placement="top-start"
 			className="shadow-control__popover"
 			anchorRect={ props.anchorRect }
+			onEscape={ props.onEscape }
 		>
 			<div className="components-panel__body is-opened">
 				<AdvancedControl
@@ -336,6 +337,7 @@ const ShadowControl = memo( props => {
 					hover={ props.hover }
 					parentProps={ props }
 					hasInset={ props.hasInset }
+					onEscape={ () => setIsPopoverOpen( false ) }
 				/>
 			) }
 		</>

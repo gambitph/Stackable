@@ -113,7 +113,7 @@ const Edit = props => {
 							label={ __( 'Item Width', i18n ) }
 							attribute="horizontalScrollerColumnWidth"
 							responsive="all"
-							units={ [ 'px', 'em', '%' ] }
+							units={ [ 'px', 'em', '%', 'vw' ] }
 							min={ [ 0, 0, 0 ] }
 							sliderMax={ [ 500, 40, 100 ] }
 							step={ [ 1, 0.1, 1 ] }
@@ -132,7 +132,7 @@ const Edit = props => {
 							label={ __( 'Inner Column Spacing', i18n ) }
 							attribute="columnSpacing"
 							responsive="all"
-							units={ [ 'px', 'em' ] }
+							units={ [ 'px', 'em', 'vw' ] }
 							defaultLocked={ true }
 							min={ [ 0, 0 ] }
 							sliderMax={ [ 200, 30 ] }
@@ -179,12 +179,10 @@ const Edit = props => {
 							<ColorPaletteControl
 								label={ __( 'Track Color', i18n ) }
 								attribute="scrollbarTrackColor"
-								hasTransparent={ true }
 							/>
 							<ColorPaletteControl
 								label={ __( 'Thumb Color', i18n ) }
 								attribute="scrollbarThumbColor"
-								hasTransparent={ true }
 							/>
 							<AdvancedRangeControl
 								label={ __( 'Thumb Radius', i18n ) }

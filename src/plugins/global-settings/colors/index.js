@@ -1,4 +1,3 @@
-import './color-palette-updater'
 import './store'
 
 /**
@@ -20,14 +19,13 @@ import rgba from 'color-rgba'
 import { addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import {
-	dispatch, useSelect,
-} from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
 
 export { GlobalColorStyles }
 
+// TODO: Do we still need this because opacity is now included in the picker???
 addFilter( 'stackable.util.hex-to-rgba', 'stackable/global-colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
 	if ( ! hexColor.includes( '--stk-global-color' ) ) {
@@ -71,14 +69,36 @@ addFilter( 'stackable.util.is-dark-color', 'stackable/global-colors', color => {
 } )
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', output => {
-	const { useStackableColorsOnly } = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
+	const {
+		hideThemeColors,
+		hideDefaultColors,
+		hideSiteEditorColors,
+	} = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
 
-	const onChangeUseStackableColorsOnly = value => {
+	const onChangeHideThemeColors = value => {
 		dispatch( 'stackable/global-colors' ).updateSettings( {
-			useStackableColorsOnly: value,
+			hideThemeColors: value,
 		} )
 
-		const settings = new models.Settings( { stackable_global_colors_palette_only: value } ) // eslint-disable-line camelcase
+		const settings = new models.Settings( { stackable_global_hide_theme_colors: value } ) // eslint-disable-line camelcase
+		settings.save()
+	}
+
+	const onChangeHideDefaultColors = value => {
+		dispatch( 'stackable/global-colors' ).updateSettings( {
+			hideDefaultColors: value,
+		} )
+
+		const settings = new models.Settings( { stackable_global_hide_default_colors: value } ) // eslint-disable-line camelcase
+		settings.save()
+	}
+
+	const onChangeHideSiteEditorColors = value => {
+		dispatch( 'stackable/global-colors' ).updateSettings( {
+			hideSiteEditorColors: value,
+		} )
+
+		const settings = new models.Settings( { stackable_global_hide_site_editor_colors: value } ) // eslint-disable-line camelcase
 		settings.save()
 	}
 
@@ -96,13 +116,25 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 						{ __( 'Learn more about Global Colors', i18n ) }
 					</a>
 				</p>
-				<ColorPicker
+				<ColorPicker label={ __( 'Global Colors', i18n ) } />
+				{ /* <ColorPicker
+					label={ __( 'Global Gradients', i18n ) }
 					onReset={ () => onChangeUseStackableColorsOnly( false ) }
+				/> */ }
+				<ToggleControl
+					label={ __( 'Show Theme Colors', i18n ) }
+					checked={ ! hideThemeColors }
+					onChange={ value => onChangeHideThemeColors( ! value ) }
 				/>
 				<ToggleControl
-					label={ __( 'Use only Stackable colors', i18n ) }
-					checked={ !! useStackableColorsOnly }
-					onChange={ value => onChangeUseStackableColorsOnly( value ) }
+					label={ __( 'Show Default Colors', i18n ) }
+					checked={ ! hideDefaultColors }
+					onChange={ value => onChangeHideDefaultColors( ! value ) }
+				/>
+				<ToggleControl
+					label={ __( 'Show Site Editor Custom Colors', i18n ) }
+					checked={ ! hideSiteEditorColors }
+					onChange={ value => onChangeHideSiteEditorColors( ! value ) }
 				/>
 			</PanelAdvancedSettings>
 		</Fragment>

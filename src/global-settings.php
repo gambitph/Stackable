@@ -41,38 +41,43 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 */
   	function __construct() {
 			// Register our settings.
-			add_action( 'init', array( $this, 'register_global_settings' ) );
+			add_action( 'admin_init', array( $this, 'register_global_settings' ) );
+			add_action( 'rest_api_init', array( $this, 'register_global_settings' ) );
 
-			/**
-			 * Color hooks
-			 */
-			// Add the color styles in the frontend only.
 			if ( ! is_admin() ) {
+
+				/**
+				 * Color hooks
+				 */
+				// Add the color styles in the frontend only.
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'color_add_global_styles' ) );
-			}
 
-			add_action( 'after_setup_theme', array( $this, 'color_add_global_color_palette' ), 9999 );
+				/**
+				 * Typography hooks
+				 */
 
-			/**
-			 * Typography hooks
-			 */
+				/**
+				 * Use `after_setup_theme` to check early if there are global
+				 * typography used the `typograhy_detect_native_blocks`  method.
+				 *
+				 * @since 2.17.1
+				 */
+				// Don't do anything if we don't have any global typography.
+				$typography = get_option( 'stackable_global_typography' );
+				if ( ! empty( $typography ) && is_array( $typography ) ) {
+					add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
+				}
 
-			/**
-			 * Use `after_setup_theme` to check early if there are global
-			 * typography used the `typograhy_detect_native_blocks`  method.
-			 *
-			 * @since 2.17.1
-			 */
-			add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
+				// For some native blocks, add a note that they're core blocks.
+				// Only do this when we need to style native blocks.
+				if ( in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
+					add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+				}
 
-			// For some native blocks, add a note that they're core blocks.
-			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+				// Fixes columns issue with Native Posts block.
+				add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
 
-			// Fixes columns issue with Native Posts block.
-			add_filter( 'stackable_global_typography_selectors', array( $this, 'posts_block_columns_fix' ), 10, 2 );
-
-			// Add our global typography styles in the frontend only.
-			if ( ! is_admin() ) {
+				// Add our global typography styles in the frontend only.
 				add_filter( 'stackable_inline_styles_nodep', array( $this, 'typography_add_global_styles' ) );
 			}
 		}
@@ -83,6 +88,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return void
 		 */
 		public function register_global_settings() {
+			$this->fix_deprecated_options();
+
 			register_setting(
 				'stackable_global_settings',
 				'stackable_global_colors',
@@ -120,10 +127,34 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
-				'stackable_global_colors_palette_only',
+				'stackable_global_hide_theme_colors',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Stackable global colors display only global colors', STACKABLE_I18N ),
+					'description' => __( 'Hide theme colors in the Stackable color picker', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_global_hide_default_colors',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Hide default colors in the Stackable color picker', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
+				'stackable_global_hide_site_editor_colors',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Hide Site Editor colors in the Stackable color picker', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -244,6 +275,22 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			);
 		}
 
+		/**
+		 * Updates the old "use Stackable colors only" option to the new individual hide options.
+		 *
+		 * @return void
+		 *
+		 * @since 3.11.0
+		 */
+		public function fix_deprecated_options() {
+			if ( ! empty( get_option( 'stackable_global_colors_palette_only' ) ) ) {
+				update_option( 'stackable_global_hide_theme_colors', '1' );
+				update_option( 'stackable_global_hide_default_colors', '1' );
+				update_option( 'stackable_global_hide_site_editor_colors', '1' );
+				delete_option( 'stackable_global_colors_palette_only' );
+			}
+		}
+
 		public function sanitize_array_setting( $input ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
@@ -252,113 +299,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		/**-----------------------------------------------------------------------------
 		 * Color functions
 		 *-----------------------------------------------------------------------------*/
-
-		 /**
-		  * Add our global colors in the editor.
-		  *
-		  * @return void
-		  */
-		public function color_add_global_color_palette() {
-			$global_colors = get_option( 'stackable_global_colors' );
-			if ( ! empty( $global_colors ) ) {
-
-				// Get the current set of colors.
-				$colors = get_theme_support( 'editor-color-palette' );
-				if ( isset( $colors[0] ) ) {
-					$colors = $colors[0];
-				}
-
-				// If no colors, create defaults.
-				if ( empty( $colors ) ) {
-					$colors = array(
-						array(
-							'name' => __( 'Black', STACKABLE_I18N ),
-							'slug' => 'black',
-							'color' => '#000000',
-						),
-						array(
-							'name' => __( 'Cyan bluish gray', STACKABLE_I18N ),
-							'slug' => 'cyan-bluish-gray',
-							'color' => '#abb8c3',
-						),
-						array(
-							'name' => __( 'White', STACKABLE_I18N ),
-							'slug' => 'white',
-							'color' => '#ffffff',
-						),
-						array(
-							'name' => __( 'Pale pink', STACKABLE_I18N ),
-							'slug' => 'pale-pink',
-							'color' => '#f78da7',
-						),
-						array(
-							'name' => __( 'Vivid red', STACKABLE_I18N ),
-							'slug' => 'vivid-red',
-							'color' => '#cf2e2e',
-						),
-						array(
-							'name' => __( 'Luminous vivid orange', STACKABLE_I18N ),
-							'slug' => 'luminous-vivid-orange',
-							'color' => '#ff6900',
-						),
-						array(
-							'name' => __( 'Luminous vivid amber', STACKABLE_I18N ),
-							'slug' => 'luminous-vivid-amber',
-							'color' => '#fcb900',
-						),
-						array(
-							'name' => __( 'Light green cyan', STACKABLE_I18N ),
-							'slug' => 'light-green-cyan',
-							'color' => '#7bdcb5',
-						),
-						array(
-							'name' => __( 'Vivid green cyan', STACKABLE_I18N ),
-							'slug' => 'vivid-green-cyan',
-							'color' => '#00d084',
-						),
-						array(
-							'name' => __( 'Pale cyan blue', STACKABLE_I18N ),
-							'slug' => 'pale-cyan-blue',
-							'color' => '#8ed1fc',
-						),
-						array(
-							'name' => __( 'Vivid cyan blue', STACKABLE_I18N ),
-							'slug' => 'vivid-cyan-blue',
-							'color' => '#0693e3',
-						),
-						array(
-							'name' => __( 'Vivid purple', STACKABLE_I18N ),
-							'slug' => 'vivid-purple',
-							'color' => '#9b51e0',
-						),
-					);
-				}
-
-				// Get the first global color set saved. Provision for future global color sets.
-				if ( is_array( $global_colors ) ) {
-					if ( is_array( $global_colors[0] ) ) {
-						$global_colors = $global_colors[0];
-					}
-				}
-
-				// Beta compatibility: if the "color" key exists, this means the
-				// color is invalid and was saved in a beta version. The beta
-				// version worked differently and shouldn't be used.
-				if ( is_array( $global_colors ) ) {
-					if ( array_key_exists( 'color', $global_colors ) ) {
-						$global_colors = array();
-					}
-				}
-
-				if ( empty( $global_colors ) ) {
-					$global_colors = array();
-				}
-
-				// Append our global colors with the theme/default ones.
-				$colors = array_merge( $colors, $global_colors );
-				add_theme_support( 'editor-color-palette', $colors );
-			}
-		}
 
 		/**
 		 * Add our global color styles in the frontend.
@@ -374,14 +314,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			$css = array();
-			$core_css = array();
 
-			foreach( $colors as $color_palette ) {
+			foreach ( $colors as $color_palette ) {
 				if ( ! is_array( $color_palette ) ) {
 					continue;
 				}
 
-				foreach( $color_palette as $color ) {
+				foreach ( $color_palette as $color ) {
 					if ( ! is_array( $color ) ) {
 						continue;
 					}
@@ -389,24 +328,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						continue;
 					}
 
-					$color_name = strtolower( $color['slug'] );
-
-					// Convert the name to kebab casing,
-					$color_typography_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
-					$color_background_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
-
 					// Only do this for our global colors.
 					if ( $color['color'] && $color['slug'] ) {
 						// Add the custom css property.
 						$css[] = '--' . $color['slug'] . ': ' . $color['color'] . ';';
 						$css[] = '--' . $color['slug'] . '-rgba: ' . $color['rgb'] . ';';
-
-						// Add custom css class rule for other blocks.
-						// For typography colors.
-						$core_css[] = $color_typography_name . ' { color: ' . $color['color'] . ' !important; }';
-
-						// For background colors.
-						$core_css[] = $color_background_name . ' { background-color: ' . $color['color'] . ' !important; }';
 					}
 				}
 			}
@@ -417,11 +343,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$current_css .= $generated_color_css;
 			}
 
-			if ( count( $core_css ) ) {
-				$current_css .= implode( ' ', $core_css );
-			}
-
-			return $current_css;
+			return apply_filters( 'stackable_global_colors_frontend_css', $current_css, $colors );
 		}
 
 		/**-----------------------------------------------------------------------------
@@ -434,7 +356,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return void
 		 */
 		public function typography_parse_global_styles() {
-			// Don't do anything if we don't have any global typography.
 			$typography = get_option( 'stackable_global_typography' );
 			if ( ! $typography || ! is_array( $typography ) ) {
 				return;
@@ -768,8 +689,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public function typography_detect_native_blocks( $block_content, $block ) {
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 
-			// Only do this when we need to style native blocks.
-			if ( ! in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
+			if ( $block_content === null ) {
 				return $block_content;
 			}
 

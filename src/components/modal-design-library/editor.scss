@@ -22,15 +22,26 @@
 		flex-direction: column;
 	}
 	.components-modal__header {
+		padding: 0px;
 		margin: 0;
 		height: 58px;
 		border-bottom: 1px solid #ddd;
+		.stk-control-content {
+			padding-left: 14px;
+		}
+		.components-button {
+			left: 0 !important;
+			&.has-icon {
+				margin: 10px;
+			}
+		}
 	}
 	.ugb-modal-design-library__wrapper {
 		display: grid;
 		grid-template-columns: 300px auto;
 		grid-template-rows: 80px auto;
 		flex: 1;
+		height: 100%;
 	}
 	.ugb-modal-design-library__sidebar {
 		box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
@@ -41,7 +52,6 @@
 		flex-direction: column;
 		overflow: hidden;
 		z-index: 1;
-
 		.ugb-control-separator {
 			margin: 8px 0 !important;
 			width: 100% !important;
@@ -51,7 +61,7 @@
 		display: flex;
 		justify-content: flex-end;
 		padding: 0 24px;
-		height: 80px;
+		height: 64px;
 		align-items: center;
 		grid-column: 2 / 3;
 		grid-row: 1 / 2;
@@ -244,6 +254,7 @@
 .ugb-modal-design-library .components-modal__header-heading {
 	display: flex;
 	align-items: center;
+	padding: 0 32px;
 	.ugb-advanced-toolbar-control {
 		margin: 0 32px;
 		> *,
@@ -273,4 +284,9 @@
 			background: rgba(229, 67, 118, 0.1) !important;
 		}
 	}
+}
+
+// Fix WP 6.3 a div wraps the .ugb-modal-design-library__wrapper
+.ugb-modal-design-library .components-modal__content > div:not(.components-modal__header) {
+	height: 100%;
 }

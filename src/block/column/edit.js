@@ -50,7 +50,7 @@ import { applyFilters } from '@wordpress/hooks'
 
 const Edit = props => {
 	const {
-		hasInnerBlocks, isOnlyBlock,
+		hasInnerBlocks, isOnlyBlock, parentBlock,
 	} = useBlockContext()
 
 	const {
@@ -65,6 +65,9 @@ const Edit = props => {
 	const blockOrientation = getBlockOrientation( props.attributes )
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+
+	const nonZeroColumnSpacingBlocks = [ 'stackable/timeline' ]
+	const useZeroColumnSpacing = parentBlock ? ! nonZeroColumnSpacingBlocks.includes( parentBlock.name ) : false
 
 	const ALLOWED_INNER_BLOCKS = applyFilters( 'stackable.block.column.allowed-inner-blocks', undefined, props )
 
@@ -95,11 +98,11 @@ const Edit = props => {
 							label={ __( 'Column Spacing', i18n ) }
 							attribute="columnSpacing"
 							responsive="all"
-							units={ [ 'px', 'em' ] }
+							units={ [ 'px', 'em', 'vw' ] }
 							defaultLocked={ true }
 							min={ [ 0, 0 ] }
 							sliderMax={ [ 200, 30 ] }
-							placeholder={ isOnlyBlock ? '0' : '12' }
+							placeholder={ isOnlyBlock && useZeroColumnSpacing ? '0' : '12' }
 							helpTooltip={ {
 								video: 'inner-block-padding',
 								description: __( 'Sets the paddings between the column content and the border.', i18n ),

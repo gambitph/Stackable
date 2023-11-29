@@ -63,7 +63,7 @@ import {
 import { dispatch } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { BlockControls } from '@wordpress/block-editor'
-import { Toolbar, ToolbarButton } from '@wordpress/components'
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 
 // These are the style names (in block-styles.js) that are only available if the
@@ -297,7 +297,7 @@ const Edit = props => {
 					<InspectorTabs />
 
 					<BlockControls>
-						<Toolbar>
+						<ToolbarGroup>
 							<ToolbarButton
 								label={ __( 'Move left', i18n ) }
 								icon="arrow-left-alt2"
@@ -310,11 +310,11 @@ const Edit = props => {
 								disabled={ activeTab === props.attributes.tabLabels.length }
 								onClick={ moveActiveTabRight }
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					</BlockControls>
 
 					<BlockControls>
-						<Toolbar>
+						<ToolbarGroup>
 							<ToolbarButton
 								label={ __( 'Add tab', i18n ) }
 								icon="plus-alt2"
@@ -336,7 +336,7 @@ const Edit = props => {
 									}
 								} }
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					</BlockControls>
 
 					<InspectorLayoutControls>
@@ -375,6 +375,15 @@ const Edit = props => {
 								} }
 							/>
 						</> }
+
+						{ ( ( props.attributes.iconPosition === '' || props.attributes.iconPosition === 'right' ) && props.attributes.showIcon ) && // Check if icon position is left or right
+							( ( context[ 'stackable/tabOrientation' ] !== 'vertical' && props.attributes.fullWidth ) || context[ 'stackable/tabOrientation' ] === 'vertical' ) && // Show if its in horizontal position and fullWidth OR show on vertical position
+								<AdvancedToggleControl
+									label={ __( 'Fixed Icon Position', i18n ) }
+									attribute="fixedIconPosition"
+									defaultValue={ false }
+								/>
+						}
 
 						{ props.attributes.showIcon &&
 							<AdvancedToolbarControl

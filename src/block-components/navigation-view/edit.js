@@ -99,7 +99,7 @@ export const Edit = props => {
 					onToggle={ () => dispatch( 'stackable/navigation-view' ).updateIsOpen( ! isOpen ) }
 				>
 					<div className="stk-panel--navigation-view__wrapper">
-						<ListView
+						{ isOpen && <ListView
 							blocks={ blocks }
 							showOnlyCurrentHierarchy
 							showAppender
@@ -107,7 +107,7 @@ export const Edit = props => {
 							showNestedBlocks
 							__experimentalFeatures
 							__experimentalPersistentListViewFeatures
-						/>
+						/> }
 					</div>
 				</PanelAdvancedSettings>
 			</ResizableBox>

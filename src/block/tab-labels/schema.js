@@ -109,6 +109,10 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkHover: true,
 			},
+			fixedIconPosition: {
+				type: 'boolean',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

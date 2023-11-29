@@ -6,7 +6,6 @@ import {
 	 AdvancedToolbarControl,
 	 ColorPaletteControl,
 	 ShadowControl,
-	 AdvancedRangeControl,
 	 FourRangeControl,
 } from '~stackable/components'
 
@@ -16,6 +15,7 @@ import {
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
+import { applyFilters } from '@wordpress/hooks'
 
 const BORDER_CONTROLS = [
 	{
@@ -40,9 +40,12 @@ export const BorderControls = props => {
 	const {
 		getAttribute,
 		getAttrName,
+		updateAttributes,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
 	const borderTypeValue = getAttribute( 'borderType' ) || props.borderTypeValue
+
+	applyFilters( 'stackable.block-component.helpers.borders', null, getAttribute, updateAttributes )
 
 	return (
 		<Fragment>
@@ -76,14 +79,12 @@ export const BorderControls = props => {
 					label={ __( 'Border Color', i18n ) }
 					attribute={ getAttrName( 'borderColor' ) }
 					hover="all"
-					hasTransparent={ true }
 				/>
 			}
-
 			{ props.hasBorderRadius &&
-				<AdvancedRangeControl
+				<FourRangeControl
 					label={ __( 'Border Radius', i18n ) }
-					attribute={ getAttrName( 'borderRadius' ) }
+					attribute={ getAttrName( 'borderRadius2' ) }
 					responsive="all"
 					hover={ props.hasBorderRadiusHover }
 					helpTooltip={ {
@@ -91,8 +92,9 @@ export const BorderControls = props => {
 						description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
 					} }
 					min={ 0 }
+					isCorner={ true }
 					sliderMax={ props.borderSliderMax }
-					placeholderRender={ props.borderRadiusPlaceholder }
+					placeholder={ props.borderRadiusPlaceholder }
 				/>
 			}
 			<ShadowControl
@@ -106,7 +108,6 @@ export const BorderControls = props => {
 
 BorderControls.defaultProps = {
 	attrNameTemplate: '%s',
-	blockEl: null,
 	borderTypeValue: '', // If not supplied, the value from the attribute will be used, otherwise: '' for none, 'solid', 'dashed', 'dotted'
 	hasBorderType: true,
 	hasBorderControls: true,

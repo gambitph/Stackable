@@ -19,6 +19,8 @@ import { pickBy } from 'lodash'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { applyFilters } from '@wordpress/hooks'
 
+export { deprecationImageOverlayOpacity } from './deprecated'
+
 export const Image = props => {
 	const {
 		defaultWidth,
@@ -32,16 +34,12 @@ export const Image = props => {
 			imageOverlayColorType: attributes.imageOverlayColorType,
 			imageOverlayColorHover: attributes.imageOverlayColorHover,
 			imageOverlayColorParentHover: attributes.imageOverlayColorParentHover,
-			imageOverlayColor2Hover: attributes.imageOverlayColor2Hover,
-			imageOverlayColor2ParentHover: attributes.imageOverlayColor2ParentHover,
 			imageOverlayOpacityHover: attributes.imageOverlayOpacityHover,
 			imageOverlayOpacityParentHover: attributes.imageOverlayOpacityParentHover,
 			imageOverlayGradientLocation1Hover: attributes.imageOverlayGradientLocation1Hover,
 			imageOverlayGradientLocation1ParentHover: attributes.imageOverlayGradientLocation1ParentHover,
 			imageOverlayGradientLocation2Hover: attributes.imageOverlayGradientLocation2Hover,
 			imageOverlayGradientLocation2ParentHover: attributes.imageOverlayGradientLocation2ParentHover,
-			imageOverlayGradientDirectionHover: attributes.imageOverlayGradientDirectionHover,
-			imageOverlayGradientDirectionParentHover: attributes.imageOverlayGradientDirectionParentHover,
 			imageId: attributes.imageId,
 			imageUrl: attributes.imageUrl,
 			imageSize: attributes.imageSize,
@@ -61,6 +59,9 @@ export const Image = props => {
 			imageShape: attributes.imageShape,
 			imageShapeStretch: attributes.imageShapeStretch,
 			imageShadow: attributes.imageShadow,
+			imageExternalUrl: attributes.imageExternalUrl,
+			figcaption: attributes.figcaptionText,
+			figcaptionShow: attributes.figcaptionShow,
 		}
 	} )
 	const { parentBlock } = useBlockContext()
@@ -73,11 +74,7 @@ export const Image = props => {
 
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
 		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
-		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
-		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover ||
-		attributes.imageOverlayGradientLocation1Hover || attributes.imageOverlayGradientLocation1ParentHover ||
-		attributes.imageOverlayGradientLocation2Hover || attributes.imageOverlayGradientLocation2ParentHover ||
-		attributes.imageOverlayGradientDirectionHover || attributes.imageOverlayGradientDirectionParentHover )
+		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover )
 
 	return <Image_
 		{ ...setImage }
@@ -86,7 +83,7 @@ export const Image = props => {
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
 		size={ attributes.imageSize }
-		src={ attributes.imageUrl }
+		src={ attributes.imageUrl || attributes.imageExternalUrl }
 
 		width={ attributes.imageWidth || defaultWidth }
 		widthTablet={ attributes.imageWidthTablet }
@@ -111,6 +108,10 @@ export const Image = props => {
 
 		defaultWidth={ props.defaultWidth }
 		defaultHeight={ props.defaultHeight }
+
+		figcaption={ attributes.figcaption }
+		figcaptionShow={ attributes.figcaptionShow }
+		figcaptionClassnames={ props.figcaptionClassnames }
 
 		{ ...pickBy( propsToPass, v => v !== undefined ) }
 	/>
@@ -138,18 +139,14 @@ Image.Content = props => {
 
 	const hasHoverOverlay = attributes.imageOverlayColorType === 'gradient' &&
 		( attributes.imageOverlayColorHover || attributes.imageOverlayColorParentHover ||
-		attributes.imageOverlayColor2Hover || attributes.imageOverlayColor2ParentHover ||
-		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover ||
-		attributes.imageOverlayGradientLocation1Hover || attributes.imageOverlayGradientLocation1ParentHover ||
-		attributes.imageOverlayGradientLocation2Hover || attributes.imageOverlayGradientLocation2ParentHover ||
-		attributes.imageOverlayGradientDirectionHover || attributes.imageOverlayGradientDirectionParentHover )
+		attributes.imageOverlayOpacityHover || attributes.imageOverlayOpacityParentHover )
 
 	return <Image_.Content
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
 		alt={ alt || attributes.imageAlt }
 		size={ attributes.imageSize }
-		src={ src || attributes.imageUrl }
+		src={ src || attributes.imageUrl || attributes.imageExternalUrl }
 
 		width={ width || attributes.imageWidthAttribute || attributes.imageWidth || defaultWidth }
 		height={ attributes.imageHeightAttribute || attributes.imageHeight || defaultHeight }
@@ -160,6 +157,10 @@ Image.Content = props => {
 
 		hasGradientOverlay={ hasHoverOverlay }
 		hasLightbox={ attributes.imageHasLightbox }
+
+		figcaption={ attributes.figcaptionText }
+		figcaptionShow={ attributes.figcaptionShow }
+		figcaptionClassnames={ props.figcaptionClassnames }
 
 		{ ...propsToPass }
 	/>

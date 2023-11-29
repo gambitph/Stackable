@@ -80,6 +80,10 @@
 	&:first-child {
 		border-top: 0 !important;
 	}
+	// The last panel will remove the border top of the native Advanced tab.
+	&:last-child {
+		margin-bottom: 1px;
+	}
 }
 
 $tabs: "block", "layout", "style", "advanced";

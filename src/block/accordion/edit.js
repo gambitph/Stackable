@@ -15,6 +15,7 @@ import {
 	InspectorStyleControls,
 	InspectorTabs,
 	PanelAdvancedSettings,
+	InspectorAdvancedControls,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -65,9 +66,10 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const [ isOpen, setIsOpen ] = useState( true )
+	const [ isOpen, setIsOpen ] = useState( props.attributes.startOpen )
 	const { hasInnerBlocks } = useBlockContext()
 	const [ hasInitClickHandler, setHasInitClickHandler ] = useState( false )
+	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
@@ -76,7 +78,7 @@ const Edit = props => {
 		if ( ! hasInitClickHandler ) {
 			return
 		}
-		const headerEl = document.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
+		const headerEl = getEditorDom()?.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
 		const onClick = ev => {
 			// Dom't open the accordion if the user is clicking on the icon.
 			if ( ! ev.target.closest( '[data-type="stackable/icon"]' ) ) {
@@ -87,7 +89,7 @@ const Edit = props => {
 		return () => {
 			headerEl?.removeEventListener( 'click', onClick )
 		}
-	}, [ clientId, isOpen, setIsOpen, hasInitClickHandler ] )
+	}, [ clientId, isOpen, setIsOpen, hasInitClickHandler, getEditorDom ] )
 
 	// If the className changes (e.g. layout switch), we need to re-apply the
 	// Accordion open/close click handler.
@@ -99,7 +101,7 @@ const Edit = props => {
 
 	// When first adding an accordion, the inner blocks may not be rendered yet, wait for it.
 	if ( ! hasInitClickHandler ) {
-		const headerEl = document.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
+		const headerEl = getEditorDom()?.querySelector( `[data-block="${ clientId }"] [data-type="stackable/column"]` )
 		if ( headerEl ) {
 			setHasInitClickHandler( true )
 		}
@@ -139,6 +141,10 @@ const Edit = props => {
 									title: __( 'Close adjacent on open', i18n ),
 									description: __( 'Automatically closes adjacent accordion panels when clicked.', i18n ),
 								} }
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Enable FAQ Schema', i18n ) }
+								attribute="enableFAQ"
 							/>
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>

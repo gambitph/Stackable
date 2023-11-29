@@ -8,13 +8,40 @@ import {
 	EffectsAnimations,
 	Image,
 	Transform,
+	Typography,
 } from '~stackable/block-components'
-import { BlockCssCompiler } from '~stackable/components'
+import { BlockCssCompiler, BlockCss } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { memo } from '@wordpress/element'
+
+const figcaptionTypographyOptions = {
+	selector: '.stk-img-figcaption',
+	hoverSelector: '.stk-img-figcaption:hover',
+	attrNameTemplate: 'figcaption%s',
+}
+
+const Styles = props => {
+	const propsToPass = {
+		...props,
+		version: props.version,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	}
+
+	return (
+		<>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".%s .stk-img-figcaption"
+				styleRule="textAlign"
+				attrName="figcaptionAlignment"
+			/>
+		</>
+	)
+}
 
 const BlockStyles = memo( props => {
 	return (
@@ -25,6 +52,8 @@ const BlockStyles = memo( props => {
 			<Transform.Style { ...props } />
 			<EffectsAnimations.Style { ...props } />
 			<Image.Style { ...props } />
+			<Typography.Style { ...figcaptionTypographyOptions } { ...props } />
+			<Styles { ...props } />
 		</>
 	)
 } )
@@ -46,6 +75,8 @@ BlockStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Image.Style.Content { ...props } />
+			<Typography.Style.Content { ...figcaptionTypographyOptions } { ...props } />
+			<Styles { ...props } />
 		</BlockCssCompiler>
 	)
 }

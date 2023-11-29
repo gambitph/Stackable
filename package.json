@@ -1,6 +1,6 @@
 {
 	"name": "stackable",
-	"version": "3.10.0",
+	"version": "3.12.6",
 	"private": true,
 	"description": "Blocks for everyone",
 	"author": "Benjamin Intal of Gambit",
@@ -120,7 +120,7 @@
 		"build:translations-pot": "./vendor/wp-cli/wp-cli/bin/wp i18n make-pot . languages/stackable-ultimate-gutenberg-blocks.pot --slug=stackable-ultimate-gutenberg-blocks --domain=stackable-ultimate-gutenberg-blocks --ignore-domain --include=\"*.php,src/,pro__premium_only/\" --exclude=\"pro__premium_only/dist,pro__premium_only/node_modules,pro__premium_only/tests,*.test.js,*.config.js,__test__,wordpress,build,tools,vendor,docs\"",
 		"build:translations-js": "gulp generate-translations-js",
 		"build:translations-php": "gulp generate-translations-php",
-		"prebuild": "node ./tools/ensure-version-number && node ./tools/ensure-cloudfront-domain && node ./tools/fix-freemius-strings.js && npm run build:translations-js",
+		"prebuild": "node ./tools/ensure-version-number && node ./tools/fix-freemius-strings.js && npm run build:translations-js",
 		"build": "npm run clean && npm run update-build-type && concurrently --raw \"npm:build:js\" \"npm:build:css\" \"npm:build:sub-builds\" \"npm:build:translations-php\" \"npm:build:translations-pot\" &&  npm run package",
 		"build:no-translate": "npm run clean && npm run update-build-type && concurrently --raw \"npm:build:js\" \"npm:build:css\" \"npm:build:sub-builds\" && npm run package",
 		"test": "jest --no-cache --watchAll",
