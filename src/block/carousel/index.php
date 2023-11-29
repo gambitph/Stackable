@@ -20,6 +20,9 @@ if ( ! function_exists( 'stackable_load_carousel_frontend_script' ) ) {
 	add_action( 'stackable/carousel/enqueue_scripts', 'stackable_load_carousel_frontend_script' );
 }
 
+// Lazy loaded images inside carousels make the carousel height buggy and show extra
+// spaces because the height isn't available in lazy loaded images. Prevent images from
+// hidden slides from lazy loading to prevent this.
 if ( ! function_exists( 'stackable_carousel_add_class_images' ) ) {
 	function stackable_carousel_add_class_images($block_content, $block) {
 		if ( ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
