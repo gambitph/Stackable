@@ -493,7 +493,7 @@ const IconSettings = () => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setFaVersion( response.stackable_fa_icons_version || '6.4.2' )
+				setFaVersion( response.stackable_fa_icons_version || '6.5.1' )
 			} )
 		} )
 	}, [] )
@@ -510,8 +510,8 @@ const IconSettings = () => {
 			value={ faVersion }
 			options={ [
 				{
-					name: '6.4.2',
-					value: '6.4.2',
+					name: '6.5.1',
+					value: '6.5.1',
 				},
 				{
 					name: '5.15.4',

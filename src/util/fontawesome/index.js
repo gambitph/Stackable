@@ -2,6 +2,7 @@ import { iconsFaKit, fontAwesomeIconsVersion } from 'stackable'
 
 const faTokenV5 = 'd2a8ea0b89'
 const faTokenV6 = '8f4ebede24'
+const faVersion = fontAwesomeIconsVersion || '6.5.1'
 
 const aliasToFamilyStyle = {
 	fas: 'solid',
@@ -27,17 +28,32 @@ const getToken = () => {
 	return faTokenV6
 }
 
-export const faGetIcon = async ( prefix, iconName ) => {
+export const faGetIcon = ( prefix, iconName ) => {
+	if ( ! window.StkFontAwesome || ! window.StkFontAwesome[ `${ prefix }-${ iconName }` ] ) {
+		return ''
+	}
+
+	return window.StkFontAwesome[ `${ prefix }-${ iconName }` ]
+}
+
+export const faFetchIcon = ( prefix, iconName ) => {
 	const token = getToken()
 	const familyStyle = getFamilyStyle( prefix )
 
 	let url
 	if ( ! iconsFaKit ) {
-		url = `https://ka-f.fontawesome.com/releases/v${ fontAwesomeIconsVersion }/svgs/${ familyStyle }/${ iconName }.svg?token=${ token }`
+		url = `https://ka-f.fontawesome.com/releases/v${ faVersion }/svgs/${ familyStyle }/${ iconName }.svg?token=${ token }`
 	} else {
-		url = `https://ka-p.fontawesome.com/releases/v${ fontAwesomeIconsVersion }/svgs/${ familyStyle }/${ iconName }.svg?token=${ token }`
+		url = `https://ka-p.fontawesome.com/releases/v${ faVersion }/svgs/${ familyStyle }/${ iconName }.svg?token=${ token }`
 	}
-	const iconText = await fetch( url ).then( response => response.text() )
+	return new Promise( async ( resolve, reject ) => {
+		const svgText = await fetch( url ).then( response => response.text() ).catch( () => reject( false ) )
 
-	return iconText
+		if ( ! window.StkFontAwesome ) {
+			window.StkFontAwesome = {}
+		}
+
+		window.StkFontAwesome[ `${ prefix }-${ iconName }` ] = svgText
+		resolve( true )
+	} )
 }

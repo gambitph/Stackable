@@ -22,7 +22,7 @@ import {
 import {
 	Button, FontAwesomeIcon, Popover,
 } from '~stackable/components'
-import { faGetIcon } from '~stackable/util'
+import { faGetIcon, faFetchIcon } from '~stackable/util'
 import { FileDrop } from 'react-file-drop'
 import classnames from 'classnames'
 
@@ -58,7 +58,7 @@ export const cleanSvgString = svgString => {
 	let newSvg = svgString.replace( /(^[\s\S]*?)(<svg)/gm, '$2' )
 		.replace( /(<\/svg>)([\s\S]*)/g, '$1' )
 
-	if ( newSvg.indexOf( '<!-- Font Awesome' ) !== -1 ) {
+	if ( newSvg.indexOf( '<!--' ) !== -1 ) {
 		// Remove defs
 		newSvg = newSvg.replace( /<defs[\s\S]*?<\/defs>/gm, '' )
 
@@ -244,10 +244,12 @@ const IconSearchPopover = props => {
 							className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
 							onClick={ async () => {
 								if ( props.returnSVGValue ) {
-									let svgIcon
-									await faGetIcon( prefix, iconName ).then( svg => {
-										svgIcon = svg
-									} )
+									let svgIcon = faGetIcon( prefix, iconName )
+
+									if ( ! svgIcon ) {
+										await faFetchIcon( prefix, iconName )
+										svgIcon = faGetIcon( prefix, iconName )
+									}
 									props.onChange( cleanSvgString( svgIcon ) )
 								} else {
 									props.onChange( iconValue, prefix, iconName )

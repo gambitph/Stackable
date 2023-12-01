@@ -12,7 +12,7 @@ if ( ! function_exists( 'stackable_font_awesome_icons_version_set_default' ) ) {
 
 	/**
 	 * When upgrading to v3.12.7 and above, use FontAwesome icons v5.15.4 by default.
-	 * If new installation, use FontAwesome icons v6.4.2.
+	 * If new installation, use FontAwesome icons v6.5.1.
 	 *
 	 */
 	function stackable_font_awesome_icons_version_set_default( $old_version, $new_version ) {
@@ -21,9 +21,6 @@ if ( ! function_exists( 'stackable_font_awesome_icons_version_set_default' ) ) {
 			if ( ! get_option( 'stackable_fa_icons_version' ) || get_option( 'stackable_fa_icons_version' ) === '5.15.4' ) {
 				update_option( 'stackable_fa_icons_version', '5.15.4' );
 			}
-		} else if ( empty( $old_version ) ) {
-			// Use FontAwesome icons v6.4.2 for new installations.
-			update_option( 'stackable_fa_icons_version', '6.4.2' );
 		}
 	}
 	add_action( 'stackable_early_version_upgraded', 'stackable_font_awesome_icons_version_set_default', 10, 2 );

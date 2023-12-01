@@ -2,7 +2,7 @@ import { fontAwesomeSearchProIcons, fontAwesomeIconsVersion } from 'stackable'
 
 export const searchFontAwesomeIconName = async ( name = 'icon', isPro = fontAwesomeSearchProIcons ) => {
 	const query =
-		`{ search(version: "${ fontAwesomeIconsVersion }", first: 50, query: "${ ( name || 'info' ).replace( /["'\\]/g, '' ) }") {
+		`{ search(version: "${ fontAwesomeIconsVersion || '6.5.1' }", first: 50, query: "${ ( name || 'info' ).replace( /["'\\]/g, '' ) }") {
 			id,
 			FamilyStylesByLicense {
 				free { style, family },
