@@ -8,6 +8,11 @@
 	max-width: none;
 }
 
+// Make sure the blocks in inner columns have the correct width when max content width is set
+.stk-column-wrapper > .stk-inner-blocks > .stk-block {
+	width: inherit;
+}
+
 .stk-block-columns > .stk-block-content {
 	--stk-column-gap: 0px; // For nested columns, this takes precedence.
 	column-gap: var(--stk-column-gap, 0px);
