@@ -506,7 +506,7 @@ const IconSettings = () => {
 
 	return <Fragment>
 		<AdminSelectSetting
-			label={ __( 'FontAwesome Version', i18n ) }
+			label={ __( 'FontAwesome Icon Library Version', i18n ) }
 			value={ faVersion }
 			options={ [
 				{
