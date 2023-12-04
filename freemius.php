@@ -22,6 +22,14 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 	        // Include Freemius SDK.
 	        require_once dirname(__FILE__) . '/freemius/start.php';
 
+			// Do not redirect to the getting started when in network activating
+			// in multisite or in the mainsite because it will redirect to a 404
+			// page.
+			$first_path = 'options-general.php?page=stackable-getting-started';
+			if ( is_multisite() && is_main_site() ) {
+				$first_path = 'plugins.php';
+			}
+
 	        $sugb_fs = fs_dynamic_init( array(
 	            'id'                  => '1748',
 	            'slug'                => 'stackable-ultimate-gutenberg-blocks',
@@ -34,7 +42,7 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 				'navigation'          => 'tabs',
 				'menu'                => array(
 					'slug'       => 'stackable',
-					'first-path'  => 'options-general.php?page=stackable-getting-started',
+					'first-path'  => $first_path,
 					'account'    => true,
 					'pricing'    => true,
 					'contact'    => true,

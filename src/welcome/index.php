@@ -343,8 +343,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
          * Adds a marker to remember to redirect after activation.
          * Redirecting right away will not work.
          */
-        public static function start_redirect_to_welcome_page() {
-            update_option( 'stackable_redirect_to_welcome', '1' );
+        public static function start_redirect_to_welcome_page( $network_wide ) {
+			if ( ! $network_wide ) {
+            	update_option( 'stackable_redirect_to_welcome', '1' );
+			}
         }
 
         /**
