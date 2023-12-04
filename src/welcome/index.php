@@ -186,7 +186,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<h2><?php _e( '🧰 Icon Library Settings', STACKABLE_I18N ) ?></h2>
 							<div class="s-icon-settings"></div>
 							<div class="s-icon-settings-fa-version"></div>
-							<?php if ( true | ! sugb_fs()->can_use_premium_code() ) : ?>
+							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
 								<p class="s-settings-pro"><?php _e( 'Font Awesome Pro Integration is available is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-icons&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
 						</article>
