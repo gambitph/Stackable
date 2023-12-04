@@ -14,6 +14,11 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 	    global $sugb_fs;
 
 	    if ( ! isset( $sugb_fs ) ) {
+			// Activate multisite network integration.
+            if ( ! defined( 'WP_FS__PRODUCT_1748_MULTISITE' ) ) {
+                define( 'WP_FS__PRODUCT_1748_MULTISITE', true );
+            }
+
 	        // Include Freemius SDK.
 	        require_once dirname(__FILE__) . '/freemius/start.php';
 
