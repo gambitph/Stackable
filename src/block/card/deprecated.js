@@ -131,11 +131,6 @@ const deprecated = [
 						}
 					}
 				} )
-
-				newAttributes = {
-					...newAttributes,
-					innerBlockColumnGap: 0,
-				}
 			}
 
 			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes ),

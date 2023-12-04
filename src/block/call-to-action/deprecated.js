@@ -79,11 +79,6 @@ const deprecated = [
 						}
 					}
 				} )
-
-				newAttributes = {
-					...newAttributes,
-					innerBlockColumnGap: 0,
-				}
 			}
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
