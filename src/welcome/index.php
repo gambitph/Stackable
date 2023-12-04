@@ -91,6 +91,22 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 		public static function print_tabs() {
 			$screen = get_current_screen();
+
+			$display_account_tab = true;
+			$display_contact_tab = true;
+			$account_url = sugb_fs()->get_account_url();
+			$contact_url = admin_url( 'options-general.php?page=stackable-contact' );
+
+			// If network activated and in multisite, the accounts page is in a different URL.
+			if ( is_multisite() && sugb_fs()->is_network_active() ) {
+				$account_url = str_replace( 'options-general.php', 'admin.php', $account_url );
+				$contact_url = admin_url( 'network/admin.php?page=stackable-contact' );
+				if ( ! is_main_site() ) {
+					$display_account_tab = false;
+					$display_contact_tab = false;
+				}
+			}
+
 			?>
 			<div class="s-body s-tabs">
 				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-getting-started' ? 's-active' : '' ?>"
@@ -103,9 +119,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<span><?php _e( 'Settings', STACKABLE_I18N ) ?></span>
 				</a>
 
-				<?php if ( sugb_fs()->get_user() ) { ?>
+				<?php if ( $display_account_tab && sugb_fs()->get_user() ) { ?>
 					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-account' ? 's-active' : '' ?>"
-						href="<?php echo sugb_fs()->get_account_url() ?>">
+						href="<?php echo $account_url ?>">
 						<span><?php _e( 'Account', STACKABLE_I18N ) ?></span>
 					</a>
 				<?php } ?>
@@ -120,10 +136,12 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				<a class="s-tab" href="https://docs.wpstackable.com" target="_docs">
 				<span><?php _e( 'Documentation', STACKABLE_I18N ) ?></span></a>
 
-				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-contact' ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'options-general.php?page=stackable-contact' ) ?>">
-					<span><?php _e( 'Contact Us', STACKABLE_I18N ) ?></span>
-				</a>
+				<?php if ( $display_contact_tab ) { ?>
+					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-contact' ? 's-active' : '' ?>"
+						href="<?php echo $contact_url ?>">
+						<span><?php _e( 'Contact Us', STACKABLE_I18N ) ?></span>
+					</a>
+				<?php } ?>
 
 				<?php if ( function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
 					<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
