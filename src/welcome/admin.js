@@ -493,33 +493,45 @@ const IconSettings = () => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setFaVersion( response.stackable_fa_icons_version || '6.5.1' )
+				setFaVersion( response.stackable_icons_fa_free_version || '6.5.1' )
 			} )
 		} )
 	}, [] )
 
 	const updateFaVersion = value => {
-		const model = new models.Settings( { stackable_fa_icons_version: value } ) // eslint-disable-line camelcase
+		const model = new models.Settings( { stackable_icons_fa_free_version: value } ) // eslint-disable-line camelcase
 		model.save()
 		setFaVersion( value )
 	}
 
 	return <Fragment>
-		<AdminSelectSetting
-			label={ __( 'FontAwesome Icon Library Version', i18n ) }
-			value={ faVersion }
-			options={ [
-				{
-					name: '6.5.1',
-					value: '6.5.1',
-				},
-				{
-					name: '5.15.4',
-					value: '5.15.4',
-				},
-			] }
-			onChange={ updateFaVersion }
-		/>
+		<div className="s-icon-settings-fa-pro-version">
+			<label className="ugb-admin-setting__label-wrapper" htmlFor="s-icon-settings-fa-pro-version">
+				<span className="ugb-admin-setting__label"> { __( 'FontAwesome Icon Library Version', i18n ) }</span>
+				<div className="ugb-admin-setting__field">
+					<p>
+						{ __( 'You are using the version set in your Font Awesome Pro Kit.', i18n ) }
+					</p>
+				</div>
+			</label>
+		</div>
+		<div className="s-icon-settings-fa-free-version">
+			<AdminSelectSetting
+				label={ __( 'FontAwesome Icon Library Version', i18n ) }
+				value={ faVersion }
+				options={ [
+					{
+						name: '6.5.1',
+						value: '6.5.1',
+					},
+					{
+						name: '5.15.4',
+						value: '5.15.4',
+					},
+				] }
+				onChange={ updateFaVersion }
+			/>
+		</div>
 	</Fragment>
 }
 

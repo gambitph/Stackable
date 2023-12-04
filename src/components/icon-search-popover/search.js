@@ -1,8 +1,11 @@
-import { fontAwesomeSearchProIcons, fontAwesomeIconsVersion } from 'stackable'
+import {
+	fontAwesomeSearchProIcons, iconsFaKit, iconsFaProKitVersion, iconsFaFreeKitVersion,
+} from 'stackable'
 
 export const searchFontAwesomeIconName = async ( name = 'icon', isPro = fontAwesomeSearchProIcons ) => {
+	const faVersion = iconsFaKit ? iconsFaProKitVersion : ( iconsFaFreeKitVersion || '6.5.1' )
 	const query =
-		`{ search(version: "${ fontAwesomeIconsVersion || '6.5.1' }", first: 50, query: "${ ( name || 'info' ).replace( /["'\\]/g, '' ) }") {
+		`{ search(version: "${ faVersion || '6.5.1' }", first: 50, query: "${ ( name || 'info' ).replace( /["'\\]/g, '' ) }") {
 			id,
 			FamilyStylesByLicense {
 				free { style, family },

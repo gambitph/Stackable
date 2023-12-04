@@ -34,7 +34,7 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 		public function register_icon_settings() {
 			register_setting(
 				'stackable_icons',
-				'stackable_fa_icons_version',
+				'stackable_icons_fa_free_version',
 				array(
 					'type' => 'string',
 					'description' => __( 'Select FontAwesome version', STACKABLE_I18N ),
@@ -53,7 +53,7 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 		 */
 		public function add_settings( $args ) {
 			return array_merge( $args, array(
-				'fontAwesomeIconsVersion' => get_option( 'stackable_fa_icons_version' ),
+				'iconsFaFreeKitVersion' => get_option( 'stackable_icons_fa_free_version' ),
 			) );
 			return $args;
 		}

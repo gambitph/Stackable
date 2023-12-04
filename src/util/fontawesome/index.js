@@ -1,8 +1,10 @@
-import { iconsFaKit, fontAwesomeIconsVersion } from 'stackable'
+import {
+	iconsFaKit, iconsFaProKitVersion, iconsFaFreeKitVersion,
+} from 'stackable'
 
 const faTokenV5 = 'd2a8ea0b89'
 const faTokenV6 = '8f4ebede24'
-const faVersion = fontAwesomeIconsVersion || '6.5.1'
+const faVersion = iconsFaKit ? iconsFaProKitVersion : ( iconsFaFreeKitVersion || '6.5.1' )
 
 const aliasToFamilyStyle = {
 	fas: 'solid',
@@ -22,7 +24,7 @@ const getFamilyStyle = prefix => {
 const getToken = () => {
 	if ( iconsFaKit ) {
 		return iconsFaKit
-	} else if ( fontAwesomeIconsVersion === '5.15.4' ) {
+	} else if ( iconsFaFreeKitVersion === '5.15.4' ) {
 		return faTokenV5
 	}
 	return faTokenV6
