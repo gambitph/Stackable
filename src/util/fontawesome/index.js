@@ -4,7 +4,7 @@ import {
 
 const faTokenV5 = 'd2a8ea0b89'
 const faTokenV6 = '8f4ebede24'
-const faVersion = iconsFaKit ? iconsFaProKitVersion : ( iconsFaFreeKitVersion || '6.5.1' )
+const faVersion = ( iconsFaKit ? iconsFaProKitVersion : ( iconsFaFreeKitVersion || '6.5.1' ) ) || '5.15.4'
 
 const aliasToFamilyStyle = {
 	fas: 'solid',
