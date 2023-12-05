@@ -30,6 +30,15 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 				$first_path = 'plugins.php';
 			}
 
+			// Freemius issue:
+			// https://github.com/Freemius/wordpress-sdk/issues/674 If the menu
+			// slug is options-general, for a network activated plugin, all
+			// admin URLs will be broken. This is a temporary fix.
+			$menu_slug = 'options-general.php';
+			if ( is_multisite() && is_main_site() && is_plugin_active_for_network( plugin_basename( STACKABLE_FILE ) ) ) {
+				$menu_slug = 'admin.php';
+			}
+
 	        $sugb_fs = fs_dynamic_init( array(
 	            'id'                  => '1748',
 	            'slug'                => 'stackable-ultimate-gutenberg-blocks',
@@ -49,7 +58,7 @@ if ( ! function_exists( 'sugb_fs' ) ) {
                     'support'    => false,
                     'affiliation' => false,
 					'parent'     => array(
-                        'slug' => 'options-general.php',
+                        'slug' => $menu_slug,
 					),
 				),
 	        ) );
