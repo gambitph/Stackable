@@ -79,6 +79,13 @@ const deprecated = [
 						}
 					}
 				} )
+
+				if ( ! attributes.innerBlockColumnGap ) {
+					newAttributes = {
+						...newAttributes,
+						innerBlockColumnGap: 0,
+					}
+				}
 			}
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
