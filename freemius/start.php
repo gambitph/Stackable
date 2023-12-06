@@ -15,7 +15,7 @@
 	 *
 	 * @var string
 	 */
-	$this_sdk_version = '2.6.0.1';
+	$this_sdk_version = '2.6.1';
 
 	#region SDK Selection Logic --------------------------------------------------------------------
 
@@ -52,15 +52,15 @@
 
     if (
         ! function_exists( 'wp_get_current_user' ) &&
-        // The temporary fix is only needed for WP versions 6.3.0 and 6.3.1.
-        version_compare( $wp_version, '6.3.2', '<' ) &&
         /**
          * `get_stylesheet()` will rely on `wp_get_current_user()` when it is being filtered by `theme-previews.php`. That happens only when the site editor is loaded or when the site editor is sending REST requests.
          * @see theme-previews.php:wp_get_theme_preview_path()
          *
-         * @todo If this behavior is fixed in the core, we will remove this workaround.
+         * @todo This behavior is already fixed in the core (WP 6.3.2+), and this code can be removed after a few months when WP 6.3 usage is low enough.
          * @since WP 6.3.0
          */
+        version_compare( $wp_version, '6.3', '>=' ) &&
+        version_compare( $wp_version, '6.3.1', '<=' ) &&
         (
             'site-editor.php' === basename( $_SERVER['SCRIPT_FILENAME'] ) ||
             (
