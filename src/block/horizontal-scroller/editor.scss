@@ -9,6 +9,8 @@
 	gap: var(--stk-column-gap, 0);
 	height: var(--stk-column-height);
 	padding-inline-start: var(--stk-left-offset, 0px);
+	scrollbar-color: var(--stk-scrollbar-thumb-color, #d3d3d3) var(--stk-scrollbar-track-color, #eee); // For Firefox
+	scrollbar-width: var(--stk-scrollbar-height-firefox, "auto"); // For Firefox
 	> * {
 		scroll-snap-align: var(--stk-snapping, center);
 		width: 100% !important;
