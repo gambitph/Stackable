@@ -294,6 +294,16 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 3.12.7 =
+* New: Better multisite support
+* New: Multisite network license key activation is now possible
+* Fixed: Dynamic Content show different post data when used with JetEngine loops and other query builders
+* Fixed: Better scrollbar styling support with Firefix
+* Fixed: Dynamic breakpoints not producing correct breakpoints when used with specific values
+* Fixed: Carousel & Horizontal scroller height issues when images are lazy loaded
+* Fixed: Corrected account and contact us links in the settings when network activated
+* Fixed: Network activating will no longer redirect to a 404 page
+
 = 3.12.6 =
 * Fixed: Block error for blocks with containers and video backgrounds #2967
 
