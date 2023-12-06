@@ -116,23 +116,23 @@ const deprecated = [
 			// column gap, it will modify blocks because people used block
 			// margins before instead of a proper column gap.
 			if ( attributes.innerBlockOrientation === 'horizontal' ) {
-				innerBlocks.forEach( ( block, index ) => {
-					if ( index ) {
-						if ( ! block.attributes.blockMargin ) {
-							block.attributes.blockMargin = {
-								top: '',
-								right: '',
-								bottom: '',
-								left: '',
+				if ( ! attributes.innerBlockColumnGap ) {
+					innerBlocks.forEach( ( block, index ) => {
+						if ( index ) {
+							if ( ! block.attributes.blockMargin ) {
+								block.attributes.blockMargin = {
+									top: '',
+									right: '',
+									bottom: '',
+									left: '',
+								}
+							}
+							if ( block.attributes.blockMargin.left === '' ) {
+								block.attributes.blockMargin.left = 24
 							}
 						}
-						if ( block.attributes.blockMargin.left === '' ) {
-							block.attributes.blockMargin.left = 24
-						}
-					}
-				} )
+					} )
 
-				if ( ! attributes.innerBlockColumnGap ) {
 					newAttributes = {
 						...newAttributes,
 						innerBlockColumnGap: 0,
