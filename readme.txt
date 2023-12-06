@@ -297,9 +297,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 3.12.7 =
 * New: Better multisite support
 * New: Multisite network license key activation is now possible
+* New: Font Awesome 6 support, you can now choose between Font Awesome 5 and 6 icon libraries from the settings
+* Fixed: You can now use text formatting on Image block captions
 * Fixed: Dynamic Content show different post data when used with JetEngine loops and other query builders
 * Fixed: Better scrollbar styling support with Firefix
+* Fixed: Column size indicator sometimes shows up as a square / no icon and without a label
 * Fixed: Dynamic breakpoints not producing correct breakpoints when used with specific values
+* Fixed: Inner block gap option sometimes resets to 0
+* Fixed: Accordion block now opens correctly when editing in the theme Customizer
 * Fixed: Carousel & Horizontal scroller height issues when images are lazy loaded
 * Fixed: Corrected account and contact us links in the settings when network activated
 * Fixed: Network activating will no longer redirect to a 404 page
