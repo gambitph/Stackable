@@ -84,49 +84,57 @@ const deprecated = [
 			return hasContainerOpacity || hasBlockOpacity || isNotV4
 		},
 		migrate: ( attributes, innerBlocks ) => {
+			const isNotV4 = attributes.version < 4 || typeof attributes.version === 'undefined'
+
 			let newAttributes = {
 				...attributes,
-				version: 4,
-				className: classnames( attributes.className, {
-					'stk-block-column--v2': false,
-					'stk-block-column--v3': false,
-				} ),
 			}
 
-			// Update the vertical align into flexbox
-			const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
-
-			if ( hasOldVerticalAlign ) {
+			if ( isNotV4 ) {
 				newAttributes = {
 					...newAttributes,
-					containerVerticalAlign: '',
-					innerBlockAlign: attributes.containerVerticalAlign,
+					version: 4,
+					className: classnames( attributes.className, {
+						'stk-block-column--v2': false,
+						'stk-block-column--v3': false,
+					} ),
 				}
-			}
 
-			// If the inner blocks are horizontal, adjust to accomodate the new
-			// column gap, it will modify blocks because people used block
-			// margins before instead of a proper column gap.
-			if ( attributes.innerBlockOrientation === 'horizontal' ) {
-				innerBlocks.forEach( ( block, index ) => {
-					if ( index ) {
-						if ( ! block.attributes.blockMargin ) {
-							block.attributes.blockMargin = {
-								top: '',
-								right: '',
-								bottom: '',
-								left: '',
+				// Update the vertical align into flexbox
+				const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+
+				if ( hasOldVerticalAlign ) {
+					newAttributes = {
+						...newAttributes,
+						containerVerticalAlign: '',
+						innerBlockAlign: attributes.containerVerticalAlign,
+					}
+				}
+
+				// If the inner blocks are horizontal, adjust to accomodate the new
+				// column gap, it will modify blocks because people used block
+				// margins before instead of a proper column gap.
+				if ( attributes.innerBlockOrientation === 'horizontal' ) {
+					innerBlocks.forEach( ( block, index ) => {
+						if ( index ) {
+							if ( ! block.attributes.blockMargin ) {
+								block.attributes.blockMargin = {
+									top: '',
+									right: '',
+									bottom: '',
+									left: '',
+								}
+							}
+							if ( block.attributes.blockMargin.left === '' ) {
+								block.attributes.blockMargin.left = 24
 							}
 						}
-						if ( block.attributes.blockMargin.left === '' ) {
-							block.attributes.blockMargin.left = 24
-						}
-					}
-				} )
+					} )
 
-				newAttributes = {
-					...newAttributes,
-					innerBlockColumnGap: 0,
+					newAttributes = {
+						...newAttributes,
+						innerBlockColumnGap: 0,
+					}
 				}
 			}
 
