@@ -1,14 +1,10 @@
 import SVGSpinner from './images/spinner.svg'
 import {
-	faAPILoaded,
-	faIsAPILoaded,
-	faGetSVGIcon,
-	faIconLoaded,
+	faFetchIcon,
+	faGetIcon,
 } from '~stackable/util'
 
-import {
-	RawHTML, useEffect, useState,
-} from '@wordpress/element'
+import { RawHTML, useState } from '@wordpress/element'
 import { pick } from 'lodash'
 
 const Spinner = () => {
@@ -21,11 +17,6 @@ const FontAwesomeIcon = props => {
 		setForceUpdateCount( forceUpdateCount + 1 )
 	}
 
-	// Wait for the FA API to load.
-	useEffect( () => {
-		faAPILoaded().then( forceUpdate )
-	}, [] )
-
 	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style', 'onClick' ] )
 
 	// If given an svg, just display it.
@@ -35,21 +26,15 @@ const FontAwesomeIcon = props => {
 		}
 	}
 
-	// There's a chance that the Font Awesome library hasn't loaded yet, wait for it.
-	if ( ! faIsAPILoaded() ) {
-		return <Spinner />
-	}
-
 	const prefix = props.value ? props.value.replace( /-.*$/, '' ) : props.prefix
 	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
 
 	// Display the icon.
 	if ( prefix && iconName ) {
-		const iconHTML = faGetSVGIcon( prefix, iconName )
+		const iconHTML = faGetIcon( prefix, iconName )
 
-		// Just in case the icon hasn't loaded yet, wait for it.
 		if ( ! iconHTML ) {
-			faIconLoaded( prefix, iconName ).then( forceUpdate )
+			faFetchIcon( prefix, iconName ).then( forceUpdate )
 			return <Spinner />
 		}
 
@@ -57,7 +42,13 @@ const FontAwesomeIcon = props => {
 	}
 
 	// If no value, just display a smiley placeholder.
-	const iconHTML = faGetSVGIcon( 'far', 'smile' )
+	const iconHTML = faGetIcon( 'far', 'smile' )
+
+	if ( ! iconHTML ) {
+		faFetchIcon( 'far', 'smile' ).then( forceUpdate )
+		return <Spinner />
+	}
+
 	return <RawHTML { ...propsToPass } className={ `${ props.className } ugb-icon--faded` }>{ iconHTML }</RawHTML>
 }
 
@@ -74,7 +65,7 @@ FontAwesomeIcon.Content = props => {
 	const prefix = props.value ? props.value.replace( /-.*$/, '' ) : props.prefix
 	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
 
-	const iconHTML = faGetSVGIcon( prefix, iconName )
+	const iconHTML = faGetIcon( prefix, iconName )
 	return <RawHTML { ...propsToPass }>{ iconHTML }</RawHTML>
 }
 

@@ -22,7 +22,7 @@ import {
 import {
 	Button, FontAwesomeIcon, Popover,
 } from '~stackable/components'
-import { faGetSVGIcon } from '~stackable/util'
+import { faGetIcon, faFetchIcon } from '~stackable/util'
 import { FileDrop } from 'react-file-drop'
 import classnames from 'classnames'
 
@@ -57,6 +57,14 @@ export const cleanSvgString = svgString => {
 	// Get the SVG only
 	let newSvg = svgString.replace( /(^[\s\S]*?)(<svg)/gm, '$2' )
 		.replace( /(<\/svg>)([\s\S]*)/g, '$1' )
+
+	if ( newSvg.indexOf( '<!--' ) !== -1 ) {
+		// Remove defs
+		newSvg = newSvg.replace( /<defs[\s\S]*?<\/defs>/gm, '' )
+
+		// Remove comments
+		newSvg = newSvg.replace( /<!--[\s\S]*?-->/gm, '' )
+	}
 
 	// Remove simple grouping so that we can color SVGs.
 	for ( let i = 0; i < 2; i++ ) {
@@ -234,9 +242,15 @@ const IconSearchPopover = props => {
 						return <button
 							key={ i }
 							className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
-							onClick={ () => {
+							onClick={ async () => {
 								if ( props.returnSVGValue ) {
-									props.onChange( cleanSvgString( faGetSVGIcon( prefix, iconName ) ) )
+									let svgIcon = faGetIcon( prefix, iconName )
+
+									if ( ! svgIcon ) {
+										await faFetchIcon( prefix, iconName )
+										svgIcon = faGetIcon( prefix, iconName )
+									}
+									props.onChange( cleanSvgString( svgIcon ) )
 								} else {
 									props.onChange( iconValue, prefix, iconName )
 								}

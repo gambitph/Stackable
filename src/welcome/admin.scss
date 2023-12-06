@@ -231,6 +231,17 @@ body[class*="page_stk-"] {
 .s-icon-kit-settings-field > p {
 	margin-left: calc(var(--label-width) + 40px);
 }
+.s-icon-settings-fa-version .ugb-admin-setting__field {
+	margin-left: 40px;
+}
+.s-icon-settings-fa-pro-version .ugb-admin-setting__field p {
+	margin-left: 20px;
+}
+
+.s-icon-settings-fa-pro-version {
+	display: none;
+}
+
 .s-settings-error {
 	color: #ff5a7f;
 }
