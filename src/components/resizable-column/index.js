@@ -38,6 +38,11 @@ const MIN_COLUMN_WIDTH_PERCENTAGE = {
 	Mobile: 10,
 }
 
+// Prevent rounding off decimals.
+const formatLabel = value => {
+	return ( Math.trunc( value * 10 ) / 10 ).toFixed( 1 )
+}
+
 const ResizableColumn = props => {
 	const { clientId } = useBlockEditContext()
 	const blockContext = useBlockContext()
@@ -208,7 +213,7 @@ const ResizableColumn = props => {
 
 			// Fix the widths, ensure that our total width is 100%
 			columnPercentages = ( columnWidths || [] ).map( width => {
-				return parseFloat( ( width / totalWidth * 100 ).toFixed( 1 ) )
+				return parseFloat( formatLabel( width / totalWidth * 100 ) )
 			} )
 			// Fix the widths, ensure that we don't end up with off numbers 49.9% and 50.1%.
 			columnPercentages = fixFractionWidths( columnPercentages, isShiftKey )
@@ -216,7 +221,7 @@ const ResizableColumn = props => {
 			// Ensure that the total width is exactly 100%.
 			let totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
 			if ( totalCurrentWidth !== 100 ) {
-				columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
+				columnPercentages[ adjacentBlockIndex ] = parseFloat( formatLabel( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ) )
 			}
 
 			// There are cases where the total width may slightly go past 100%
@@ -236,7 +241,7 @@ const ResizableColumn = props => {
 					max-width: ${ width }% !important;
 				}
 				[data-block="${ adjacentBlocks[ i ].clientId }"] .stk-resizable-column__size-tooltip {
-					--width: '${ width.toFixed( 1 ) }%' !important;
+					--width: '${ formatLabel( width ) }%' !important;
 				}`
 			} ).join( '' )
 			setTempStyles( columnStyles )
@@ -252,8 +257,10 @@ const ResizableColumn = props => {
 		// control.
 		} else {
 			const newWidth = currentWidth + delta.width
-			columnPercentages = clamp( parseFloat( ( newWidth / maxWidth * 100 ).toFixed( 1 ) ), 0, 100 )
+			columnPercentages = clamp( parseFloat( formatLabel( newWidth / maxWidth * 100 ) ), 0, 100 )
 
+			// Fix the widths, ensure that we don't end up with off numbers 49.9% and 50.1%.
+			columnPercentages = fixFractionWidths( [ columnPercentages ], isShiftKey )[ 0 ]
 			setNewWidthsPercent( columnPercentages )
 
 			// Take into account the number of adjacent columns per row
@@ -268,7 +275,7 @@ const ResizableColumn = props => {
 					max-width: calc(${ columnPercentages }% - var(--stk-column-gap, 0px) * ${ adjacentColumnCount - 1 } / ${ adjacentColumnCount } ) !important;
 				}
 				[data-block="${ clientId }"] .stk-resizable-column__size-tooltip {
-					--width: '${ columnPercentages.toFixed( 1 ) }%' !important;
+					--width: '${ formatLabel( columnPercentages ) }%' !important;
 				}`
 			setTempStyles( columnStyles )
 
@@ -467,7 +474,7 @@ const ResizableTooltip = memo( props => {
 	if ( typeof adjacentBlocks !== 'undefined' && ! props.value && ! originalInputValue ) {
 		// The columns are evenly distributed by default.
 		if ( deviceType === 'Desktop' || deviceType === 'Tablet' ) {
-			const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
+			const value = formatLabel( 100 / adjacentBlocks.length )
 			if ( value.toString() === '33.3' ) {
 				columnLabel = 33.33
 			} else {
@@ -480,7 +487,7 @@ const ResizableTooltip = memo( props => {
 	}
 
 	// Create the label of the tooltip.
-	const _label = ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel
+	const _label = ( props.value ? formatLabel( parseFloat( props.value ) ) : '' ) || originalInputValue || columnLabel
 	const tooltipLabel = _label !== __( 'Auto', i18n ) ? `'${ _label }%'` : `'${ _label }'`
 
 	// Setup the input field when the popup opens.
