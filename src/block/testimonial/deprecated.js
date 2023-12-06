@@ -44,27 +44,33 @@ const deprecated = [
 			return hasContainerOpacity || hasBlockOpacity || isNotV4
 		},
 		migrate: ( attributes, innerBlocks ) => {
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
 			let newAttributes = {
 				...attributes,
-				version: 2,
 			}
 
-			// Update the vertical align into flexbox
-			const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
-
-			if ( hasOldVerticalAlign ) {
+			if ( isNotV4 ) {
 				newAttributes = {
 					...newAttributes,
-					containerVerticalAlign: '',
-					innerBlockAlign: attributes.containerVerticalAlign,
+					version: 2,
 				}
-			}
 
-			// If the inner blocks are horizontal, adjust to accomodate the new
-			// column gap, it will modify blocks because people used block
-			// margins before instead of a proper column gap.
-			if ( attributes.innerBlockOrientation === 'horizontal' ) {
-				if ( ! attributes.innerBlockColumnGap ) {
+				// Update the vertical align into flexbox
+				const hasOldVerticalAlign = !! attributes.containerVerticalAlign // Column only, this was changed to flexbox
+
+				if ( hasOldVerticalAlign ) {
+					newAttributes = {
+						...newAttributes,
+						containerVerticalAlign: '',
+						innerBlockAlign: attributes.containerVerticalAlign,
+					}
+				}
+
+				// If the inner blocks are horizontal, adjust to accomodate the new
+				// column gap, it will modify blocks because people used block
+				// margins before instead of a proper column gap.
+				if ( attributes.innerBlockOrientation === 'horizontal' ) {
 					innerBlocks.forEach( ( block, index ) => {
 						if ( index ) {
 							if ( ! block.attributes.blockMargin ) {
