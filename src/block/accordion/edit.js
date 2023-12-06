@@ -75,8 +75,9 @@ const Edit = props => {
 
 	// Hacky fix: getEditorDom() always returns null in theme customizer, so we need to manually get its editor
 	const isCustomizer = window?.location?.href && window.location.href.indexOf( 'customize.php' ) !== -1
+	const isWidgets = window?.location?.href && window.location.href.indexOf( 'widgets.php' ) !== -1
 	const getDom = () => {
-		return isCustomizer ? document?.querySelector( '.customize-control-sidebar_block_editor' ) : getEditorDom()
+		return isCustomizer ? document?.querySelector( '#customize-controls' ) : ( isWidgets ? document?.querySelector( '.edit-widgets-main-block-list.block-editor-block-list__layout' ) : getEditorDom() )
 	}
 	// Opens or closes the accordion when the heading is clicked.
 	useEffect( () => {
