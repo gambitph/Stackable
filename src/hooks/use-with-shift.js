@@ -25,6 +25,7 @@ const useWithShift = () => {
 			window.removeEventListener( 'keydown', handleShiftKeyToggle ) // eslint-disable-line @wordpress/no-global-event-listener
 			window.removeEventListener( 'keyup', handleShiftKeyToggle ) // eslint-disable-line @wordpress/no-global-event-listener
 
+			const iframe = document?.querySelector( 'iframe[name="editor-canvas"]' )
 			if ( iframe ) {
 				const doc = iframe.contentDocument || iframe.contentWindow.document
 				doc.removeEventListener( 'keyup', handleShiftKeyToggle )
