@@ -260,3 +260,8 @@
 		flex-direction: column-reverse;
 	}
 }
+
+// Support for SiteGround lazy loaded images: they make the carousel taller.
+.stk-block-carousel .stk-img-carousel.lazyload[src*="data:"] {
+	height: 1px !important;
+}

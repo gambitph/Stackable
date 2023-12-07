@@ -55,3 +55,8 @@
 		}
 	}
 }
+
+// Support for SiteGround lazy loaded images: they make the horizontal scroller taller.
+.stk-block-horizontal-scroller .stk-img-carousel.lazyload[src*="data:"] {
+	height: 1px !important;
+}
