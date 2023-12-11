@@ -157,6 +157,27 @@
     ]
   },
   {
+    "family": "Afacad",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Agbalumo",
     "variants": [
       "regular"
@@ -7229,6 +7250,30 @@
     ]
   },
   {
+    "family": "Hedvig Letters Sans",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Hedvig Letters Serif",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Heebo",
     "variants": [
       "100",
@@ -8523,6 +8568,23 @@
       "devanagari",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Kalnia",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math"
     ]
   },
   {
@@ -11666,12 +11728,18 @@
   {
     "family": "Narnoor",
     "variants": [
-      "regular"
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
     ],
     "subsets": [
       "gunjala-gondi",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12000,22 +12068,22 @@
     "family": "Noto Sans",
     "variants": [
       "100",
-      "100italic",
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
@@ -12571,7 +12639,9 @@
     "subsets": [
       "gujarati",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -14362,7 +14432,9 @@
     "subsets": [
       "gujarati",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -16020,10 +16092,10 @@
       "800"
     ],
     "subsets": [
+      "emoji",
       "latin",
       "latin-ext",
       "math",
-      "symbols",
       "vietnamese"
     ]
   },
@@ -17000,6 +17072,25 @@
     "subsets": [
       "cyrillic",
       "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Rethink Sans",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]

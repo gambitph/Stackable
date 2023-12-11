@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.4.1
 Requires PHP: 7.3
-Stable tag: 3.12.6
+Stable tag: 3.12.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -303,6 +303,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Better scrollbar styling support with Firefix
 * Fixed: Column size indicator sometimes shows up as a square / no icon and without a label
 * Fixed: Dynamic breakpoints not producing correct breakpoints when used with specific values
+* Fixed: Conditional Display can produce a PHP error if post meta is an array
 * Fixed: Inner block gap option sometimes resets to 0
 * Fixed: Accordion block now opens correctly when editing in the theme Customizer
 * Fixed: Carousel & Horizontal scroller height issues when images are lazy loaded

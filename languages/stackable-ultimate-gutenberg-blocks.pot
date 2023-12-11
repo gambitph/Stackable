@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Stackable - Gutenberg Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.6\n"
+"Project-Id-Version: Stackable - Gutenberg Blocks 3.12.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-10T06:20:46+00:00\n"
+"POT-Creation-Date: 2023-12-11T01:53:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -109,43 +109,43 @@ msgstr ""
 msgid "ACF"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/acf.php:203
-#: pro__premium_only/src/dynamic-content/sources/acf.php:231
+#: pro__premium_only/src/dynamic-content/sources/acf.php:201
+#: pro__premium_only/src/dynamic-content/sources/acf.php:229
 #: pro__premium_only/src/dynamic-content/sources/custom-fields.php:97
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:184
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:578
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:231
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:183
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:577
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:230
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:100
 #: pro__premium_only/src/dynamic-content/sources/site.php:77
 #: pro__premium_only/src/dynamic-content/sources/woocommerce.php:67
 msgid "The field type provided is not valid."
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/acf.php:251
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:313
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:323
+#: pro__premium_only/src/dynamic-content/sources/acf.php:249
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:312
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:322
 #: pro__premium_only/src/dynamic-content/sources/latest-post.php:284
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:252
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:251
 #: pro__premium_only/src/dynamic-content/api.js:135
 #: pro__premium_only/src/dynamic-content/store/selectors.js:134
 msgid "%s Placeholder"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/acf.php:357
-#: pro__premium_only/src/dynamic-content/sources/acf.php:550
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:362
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:318
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:487
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:534
+#: pro__premium_only/src/dynamic-content/sources/acf.php:355
+#: pro__premium_only/src/dynamic-content/sources/acf.php:548
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:361
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:317
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:486
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:533
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:353
 #: pro__premium_only/src/dynamic-content/sources/other-posts.php:617
 #: pro__premium_only/src/dynamic-content/sources/site.php:134
 msgid "Text input is empty"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/acf.php:412
-#: pro__premium_only/src/dynamic-content/sources/jetengine.php:388
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:365
+#: pro__premium_only/src/dynamic-content/sources/acf.php:410
+#: pro__premium_only/src/dynamic-content/sources/jetengine.php:387
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:364
 msgid "`whenTrueText` and `whenFalseText` arguments are required."
 msgstr ""
 
@@ -308,15 +308,15 @@ msgstr ""
 msgid "Meta Box"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:161
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:160
 msgid "Multiple select not supported in this field."
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:522
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:521
 msgid "You have not selected an image."
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/metabox.php:555
+#: pro__premium_only/src/dynamic-content/sources/metabox.php:554
 msgid "Text fields are empty"
 msgstr ""
 
@@ -470,142 +470,142 @@ msgstr ""
 msgid "Site URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:92
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:91
 msgid "Product Url"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:93
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:103
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:110
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:117
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:124
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:131
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:138
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:145
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:152
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:159
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:166
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:173
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:180
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:187
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:195
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:202
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:209
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:216
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:223
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:230
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:237
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:244
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:251
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:258
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:265
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:272
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:279
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:92
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:102
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:109
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:116
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:123
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:130
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:137
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:144
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:151
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:158
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:165
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:172
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:179
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:186
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:194
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:201
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:208
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:215
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:222
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:229
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:236
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:243
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:250
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:257
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:264
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:271
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:278
 #: pro__premium_only/src/conditional-display/condition-types.js:24
 msgid "WooCommerce"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:102
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:101
 msgid "Product Name"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:109
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:108
 msgid "Product Description"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:116
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:115
 msgid "Product Short Description"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:123
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:122
 msgid "Product Purchase Note"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:130
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:129
 msgid "Product Image"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:137
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:136
 msgid "Product Price"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:144
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:143
 msgid "Product Price (Regular)"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:151
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:150
 msgid "Product Price (No Tax)"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:158
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:157
 msgid "Produce Price (Sale)"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:165
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:164
 msgid "Product Date Created"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:172
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:171
 msgid "Product Sale Date From"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:179
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:178
 msgid "Product Sale Date To"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:186
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:185
 msgid "Product Add to Cart URL"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:194
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:193
 msgid "Product SKU"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:201
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:200
 msgid "Product Total Sales"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:208
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:207
 msgid "Product Total Stock"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:215
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:214
 msgid "Product Low Stock"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:222
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:221
 msgid "Product Weight"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:229
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:228
 msgid "Product Width"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:236
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:235
 msgid "Product Length"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:243
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:242
 msgid "Product Height"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:250
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:249
 msgid "Product Review Count"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:257
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:256
 msgid "Product Tax Status"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:264
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:263
 msgid "Product Tax Class"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:271
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:270
 msgid "Product Tags"
 msgstr ""
 
-#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:278
+#: pro__premium_only/src/dynamic-content/sources/woocommerce.php:277
 msgid "Product Attributes"
 msgstr ""
 
@@ -613,20 +613,20 @@ msgstr ""
 msgid "Roles which only allow content only editing."
 msgstr ""
 
-#: pro__premium_only/src/icons.php:202
+#: pro__premium_only/src/icons.php:169
 msgid "Hold on! We noticed that you're using the Font Awesome plugin and that you're using a free Kit. If you have a FontAwesome Pro subscription, you can just set your Kit to use Pro Icons, and you should be able to use your Pro Icons inside your Stackable blocks. %sLearn more about this here.%s"
 msgstr ""
 
-#: pro__premium_only/src/icons.php:206
+#: pro__premium_only/src/icons.php:173
 msgid "Hold on! We noticed that you're using the Font Awesome plugin and that you're using the free CDN. If you have a FontAwesome Pro subscription, you can just set your CDN to use Pro Icons, and you should be able to use your Pro Icons inside your Stackable blocks. %sLearn more about this here.%s"
 msgstr ""
 
-#: pro__premium_only/src/icons.php:209
-#: pro__premium_only/src/icons.php:213
+#: pro__premium_only/src/icons.php:176
+#: pro__premium_only/src/icons.php:180
 msgid "Good news! We noticed that you're using the Font Awesome plugin. Your Font Awesome Pro icons are already available inside your Stackable blocks."
 msgstr ""
 
-#: pro__premium_only/src/icons.php:210
+#: pro__premium_only/src/icons.php:177
 msgid "Make sure you need to add your WordPress site to the %sallowed domains for your CDN%s."
 msgstr ""
 
@@ -640,7 +640,7 @@ msgid "Fields"
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/custom-fields.php:146
-#: src/welcome/index.php:212
+#: src/welcome/index.php:226
 msgid "📋 Custom Fields"
 msgstr ""
 
@@ -649,17 +649,16 @@ msgid "You can add small pieces of content here which you can use across your we
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/custom-fields.php:160
-#: src/welcome/index.php:194
-#: src/welcome/index.php:207
-#: src/welcome/index.php:218
+#: src/welcome/index.php:221
+#: src/welcome/index.php:232
 msgid "This is only available in Stackable Premium."
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/custom-fields.php:160
-#: src/welcome/index.php:194
-#: src/welcome/index.php:207
-#: src/welcome/index.php:218
-#: src/welcome/index.php:331
+#: src/welcome/index.php:208
+#: src/welcome/index.php:221
+#: src/welcome/index.php:232
+#: src/welcome/index.php:345
 #: src/components/design-library-list/design-library-list-item.js:95
 msgid "Go Premium"
 msgstr ""
@@ -759,7 +758,7 @@ msgid "Default %s Block"
 msgstr ""
 
 #: src/deprecated/v2/admin.php:39
-#: src/welcome/index.php:222
+#: src/welcome/index.php:236
 msgid "🎛 Enable & Disable Blocks"
 msgstr ""
 
@@ -790,7 +789,7 @@ msgid "Load version 2 frontend styles and scripts"
 msgstr ""
 
 #: src/deprecated/v2/init.php:72
-#: src/welcome/admin.js:555
+#: src/welcome/admin.js:605
 msgid "Load version 2 blocks in the editor"
 msgstr ""
 
@@ -851,12 +850,12 @@ msgid "The width used when a Columns block has its Content Width set to wide."
 msgstr ""
 
 #: src/editor-settings.php:128
-#: src/welcome/admin.js:299
+#: src/welcome/admin.js:300
 msgid "Collapse other inspector panels when opening another, keeping only one open at a time."
 msgstr ""
 
 #: src/editor-settings.php:140
-#: src/welcome/admin.js:315
+#: src/welcome/admin.js:316
 msgid "Gives you the ability to link columns. Any changes you make on one column will automatically get applied on the other columns."
 msgstr ""
 
@@ -888,6 +887,10 @@ msgstr ""
 msgid "Stackable global typography settings"
 msgstr ""
 
+#: src/icons.php:40
+msgid "Select FontAwesome version"
+msgstr ""
+
 #: src/pro.php:49
 msgid "Hide \"Go Premium\" notices"
 msgstr ""
@@ -898,7 +901,7 @@ msgstr ""
 
 #: src/welcome/index.php:29
 #: src/welcome/index.php:30
-#: src/welcome/index.php:143
+#: src/welcome/index.php:161
 #: src/deprecated/v2/blocks.js:29
 #: src/util/blocks.js:459
 msgid "Stackable"
@@ -909,202 +912,198 @@ msgstr ""
 msgid "Get Started"
 msgstr ""
 
-#: src/welcome/index.php:98
+#: src/welcome/index.php:114
 #: src/welcome/getting-started.js:112
 msgid "Getting Started"
 msgstr ""
 
-#: src/welcome/index.php:103
-#: src/welcome/index.php:319
+#: src/welcome/index.php:119
+#: src/welcome/index.php:333
 #: src/block-components/columns/column-settings-button.js:106
 #: src/components/panel-advanced-settings/index.js:26
 msgid "Settings"
 msgstr ""
 
-#: src/welcome/index.php:109
+#: src/welcome/index.php:125
 msgid "Account"
 msgstr ""
 
-#: src/welcome/index.php:116
+#: src/welcome/index.php:132
 msgid "Affiliation"
 msgstr ""
 
-#: src/welcome/index.php:121
+#: src/welcome/index.php:137
 #: src/welcome/getting-started.js:28
 msgid "Documentation"
 msgstr ""
 
-#: src/welcome/index.php:125
+#: src/welcome/index.php:142
 msgid "Contact Us"
 msgstr ""
 
-#: src/welcome/index.php:132
+#: src/welcome/index.php:150
 msgid "Custom Fields"
 msgstr ""
 
-#: src/welcome/index.php:152
-#: src/welcome/index.php:254
+#: src/welcome/index.php:170
+#: src/welcome/index.php:268
 msgid "Get Stackable Premium"
 msgstr ""
 
-#: src/welcome/index.php:152
+#: src/welcome/index.php:170
 msgid "Upgrade to Premium"
 msgstr ""
 
-#: src/welcome/index.php:171
+#: src/welcome/index.php:189
 msgid "🎛 Editor Settings"
 msgstr ""
 
-#: src/welcome/index.php:172
+#: src/welcome/index.php:190
 msgid "You can customize some of the features and behavior of Stackable in the editor here."
 msgstr ""
 
-#: src/welcome/index.php:176
+#: src/welcome/index.php:194
 msgid "📱 Responsive Breakpoints"
 msgstr ""
 
-#: src/welcome/index.php:177
+#: src/welcome/index.php:195
 msgid "Blocks can be styles differently for tablet and mobile screens, and some styles adjust to make them fit better in smaller screens. You can change the widths when tablet and mobile views are triggered. %sLearn more%s."
 msgstr ""
 
-#: src/welcome/index.php:181
+#: src/welcome/index.php:199
 msgid "🌏 Global Settings"
 msgstr ""
 
-#: src/welcome/index.php:182
+#: src/welcome/index.php:200
 msgid "Each WordPress theme is unique, so if your global settings are not working correctly with your theme, here are a few options you can tweak to make them work. %sLearn more%s."
 msgstr ""
 
-#: src/welcome/index.php:186
+#: src/welcome/index.php:204
 msgid "🧰 Icon Library Settings"
 msgstr ""
 
-#: src/welcome/index.php:188
-msgid "If you have %sFont Awesome Pro%s, you can use your Pro icons by inputting your Pro Kit code below."
+#: src/welcome/index.php:208
+msgid "Font Awesome Pro Integration is available is only available in Stackable Premium."
 msgstr ""
 
-#: src/welcome/index.php:190
-msgid "%sFont Awesome Pro%s Integration is available by inputting your Pro Kit code. %sLearn more%s."
-msgstr ""
-
-#: src/welcome/index.php:198
+#: src/welcome/index.php:212
 msgid "📰 Role Manager"
 msgstr ""
 
-#: src/welcome/index.php:200
-#: src/welcome/index.php:203
+#: src/welcome/index.php:214
+#: src/welcome/index.php:217
 msgid "Lock the Block Editor's inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks."
 msgstr ""
 
-#: src/welcome/index.php:200
-#: src/welcome/index.php:203
+#: src/welcome/index.php:214
+#: src/welcome/index.php:217
 #: pro__premium_only/src/block-components/icon/multicolor-controls.js:31
 #: pro__premium_only/src/features/icon-controls/index.js:123
 #: src/components/base-control2/hover-state-toggle.js:88
 #: src/components/variation-picker/index.js:75
-#: src/welcome/admin.js:317
-#: src/welcome/admin.js:384
+#: src/welcome/admin.js:318
+#: src/welcome/admin.js:385
 msgid "Learn more"
 msgstr ""
 
-#: src/welcome/index.php:215
+#: src/welcome/index.php:229
 msgid "Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. %sLearn more%s."
 msgstr ""
 
-#: src/welcome/index.php:223
+#: src/welcome/index.php:237
 msgid "We have a lot of awesome blocks. But if you're overwhelmed with awesomeness, you can hide some of them."
 msgstr ""
 
-#: src/welcome/index.php:223
+#: src/welcome/index.php:237
 msgid "(If your post contains a disabled block, it will still continue to work. You won't just be able to add the disabled blocks.)"
 msgstr ""
 
-#: src/welcome/index.php:230
+#: src/welcome/index.php:244
 msgid "🔩 Other Settings"
 msgstr ""
 
-#: src/welcome/index.php:237
+#: src/welcome/index.php:251
 msgid "🚀 Stackable Premium"
 msgstr ""
 
-#: src/welcome/index.php:238
+#: src/welcome/index.php:252
 msgid "If you are ready for even more, upgrade to Premium and get:"
 msgstr ""
 
-#: src/welcome/index.php:240
+#: src/welcome/index.php:254
 msgid "54+ Additional Block Layouts"
 msgstr ""
 
-#: src/welcome/index.php:241
+#: src/welcome/index.php:255
 msgid "230+ Additional Library Designs"
 msgstr ""
 
-#: src/welcome/index.php:242
+#: src/welcome/index.php:256
 #: pro__premium_only/src/format-types/dynamic-content/index.js:176
 msgid "Dynamic Content"
 msgstr ""
 
-#: src/welcome/index.php:243
+#: src/welcome/index.php:257
 #: src/block-components/effects-animations/edit.js:29
 msgid "Motion Effects"
 msgstr ""
 
-#: src/welcome/index.php:244
+#: src/welcome/index.php:258
 msgid "Conditionally Display Blocks"
 msgstr ""
 
-#: src/welcome/index.php:245
+#: src/welcome/index.php:259
 msgid "User Role Manager"
 msgstr ""
 
-#: src/welcome/index.php:246
+#: src/welcome/index.php:260
 msgid "Font Awesome Pro Integration"
 msgstr ""
 
-#: src/welcome/index.php:247
+#: src/welcome/index.php:261
 msgid "Custom Block CSS"
 msgstr ""
 
-#: src/welcome/index.php:248
+#: src/welcome/index.php:262
 msgid "1 Year of Updates"
 msgstr ""
 
-#: src/welcome/index.php:249
+#: src/welcome/index.php:263
 msgid "1 Year of Support"
 msgstr ""
 
-#: src/welcome/index.php:250
+#: src/welcome/index.php:264
 msgid "No Ads"
 msgstr ""
 
-#: src/welcome/index.php:257
+#: src/welcome/index.php:271
 #: src/components/pro-control/index.js:130
 #: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector-item.js:55
 #: src/deprecated/v2/higher-order/with-design-layout-selector/design-layout-selector-item.js:57
 msgid "Learn More"
 msgstr ""
 
-#: src/welcome/index.php:262
+#: src/welcome/index.php:276
 msgid "🎉 Join the Community"
 msgstr ""
 
-#: src/welcome/index.php:263
+#: src/welcome/index.php:277
 msgid "Join the very active Stackable Community in Facebook, join thousands of like-minded people who are also building their websites and crafting beautiful and impactful web pages."
 msgstr ""
 
-#: src/welcome/index.php:264
+#: src/welcome/index.php:278
 msgid "Join Facebook Community"
 msgstr ""
 
-#: src/welcome/index.php:267
+#: src/welcome/index.php:281
 msgid "🗞 Stackable Blog"
 msgstr ""
 
-#: src/welcome/index.php:269
+#: src/welcome/index.php:283
 msgid "Keep up to date by subscribing to our newsletter."
 msgstr ""
 
-#: src/welcome/index.php:270
+#: src/welcome/index.php:284
 msgid "Subscribe"
 msgstr ""
 
@@ -2153,7 +2152,7 @@ msgstr ""
 #: pro__premium_only/src/block/load-more/edit.js:83
 #: pro__premium_only/src/block/pagination/edit.js:74
 #: src/block-components/advanced/edit.js:52
-#: src/block/accordion/edit.js:128
+#: src/block/accordion/edit.js:134
 #: src/block/countdown/edit.js:169
 #: src/block/icon-label/edit.js:85
 #: src/block/icon-list/edit.js:199
@@ -3130,7 +3129,7 @@ msgstr ""
 #: src/block-components/alignment/edit.js:163
 #: src/block-components/alignment/edit.js:182
 #: src/block-components/alignment/edit.js:201
-#: src/components/resizable-column/index.js:551
+#: src/components/resizable-column/index.js:555
 msgid "Column"
 msgstr ""
 
@@ -3842,14 +3841,14 @@ msgstr ""
 #: pro__premium_only/src/welcome/custom-fields-toggle.js:65
 #: src/components/admin-toggle-setting/index.js:51
 #: src/deprecated/v2/welcome/admin.js:112
-#: src/welcome/admin.js:198
+#: src/welcome/admin.js:199
 msgid "Enabled"
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields-toggle.js:66
 #: src/components/admin-toggle-setting/index.js:50
 #: src/deprecated/v2/welcome/admin.js:111
-#: src/welcome/admin.js:197
+#: src/welcome/admin.js:198
 msgid "Disabled"
 msgstr ""
 
@@ -3990,7 +3989,6 @@ msgid "You don't have any custom fields."
 msgstr ""
 
 #: pro__premium_only/src/welcome/custom-fields/admin.js:547
-#: pro__premium_only/src/welcome/icons.js:207
 msgid "Save changes"
 msgstr ""
 
@@ -4010,39 +4008,43 @@ msgstr ""
 msgid "Content only editing"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:138
+#: pro__premium_only/src/welcome/icons.js:161
 msgid "Let me enter my Font Awesome Pro Kit code"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:148
+#: pro__premium_only/src/welcome/icons.js:171
 msgid "Don't show me this again"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:157
+#: pro__premium_only/src/welcome/icons.js:180
 msgid "FontAwesome Pro Kit"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:170
+#: pro__premium_only/src/welcome/icons.js:193
 msgid "Please wait…"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:170
+#: pro__premium_only/src/welcome/icons.js:193
 msgid "Paste your Kit code %s"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:188
+#: pro__premium_only/src/welcome/icons.js:212
 msgid "Please make sure you have Pro icons selected in your kit. Edit your kit settings at: "
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:194
+#: pro__premium_only/src/welcome/icons.js:218
 msgid "Click here to check again"
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:198
+#: pro__premium_only/src/welcome/icons.js:222
 msgid "Please enter a valid Font Awesome Pro Kit code."
 msgstr ""
 
-#: pro__premium_only/src/welcome/icons.js:200
+#: pro__premium_only/src/welcome/icons.js:224
+msgid "If you have Font Awesome Pro, you can use your Pro icons by inputting your Pro Kit code here."
+msgstr ""
+
+#: pro__premium_only/src/welcome/icons.js:224
 msgid "Need help? Read our guide."
 msgstr ""
 
@@ -4141,9 +4143,8 @@ msgstr ""
 
 #: src/block-components/advanced/edit.js:66
 #: src/block-components/helpers/backgrounds/edit.js:274
-#: src/components/resizable-column/index.js:479
-#: src/components/resizable-column/index.js:487
-#: src/components/resizable-column/index.js:496
+#: src/components/resizable-column/index.js:491
+#: src/components/resizable-column/index.js:500
 #: src/deprecated/v2/components/background-controls/index.js:364
 #: src/deprecated/v2/components/background-controls/index.js:379
 #: src/deprecated/v2/components/background-controls/index.js:394
@@ -5569,30 +5570,30 @@ msgstr ""
 msgid "Sets the size of text characters"
 msgstr ""
 
-#: src/block/accordion/edit.js:133
+#: src/block/accordion/edit.js:139
 #: src/deprecated/v2/block/accordion/edit.js:149
 msgid "Open at the start"
 msgstr ""
 
-#: src/block/accordion/edit.js:137
-#: src/block/accordion/edit.js:141
+#: src/block/accordion/edit.js:143
+#: src/block/accordion/edit.js:147
 #: src/deprecated/v2/block/accordion/edit.js:143
 msgid "Close adjacent on open"
 msgstr ""
 
-#: src/block/accordion/edit.js:142
+#: src/block/accordion/edit.js:148
 msgid "Automatically closes adjacent accordion panels when clicked."
 msgstr ""
 
-#: src/block/accordion/edit.js:146
+#: src/block/accordion/edit.js:152
 msgid "Enable FAQ Schema"
 msgstr ""
 
-#: src/block/accordion/edit.js:226
+#: src/block/accordion/edit.js:232
 msgid "Open Icon"
 msgstr ""
 
-#: src/block/accordion/edit.js:230
+#: src/block/accordion/edit.js:236
 msgid "The open icon will appear when the accordion is opened"
 msgstr ""
 
@@ -7541,7 +7542,7 @@ msgid "Play Video"
 msgstr ""
 
 #: src/components/advanced-autosuggest-control/index.js:326
-#: src/components/icon-search-popover/index.js:250
+#: src/components/icon-search-popover/index.js:264
 msgid "No matches found"
 msgstr ""
 
@@ -7702,29 +7703,29 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: src/components/color-palette-control/index.js:66
+#: src/components/color-palette-control/index.js:55
 msgid "Global Gradients"
 msgstr ""
 
-#: src/components/color-palette-control/index.js:76
+#: src/components/color-palette-control/index.js:65
 #: src/plugins/global-settings/colors/index.js:119
 msgid "Global Colors"
 msgstr ""
 
-#: src/components/color-palette-control/index.js:87
-#: src/components/color-palette-control/index.js:103
+#: src/components/color-palette-control/index.js:102
+#: src/components/color-palette-control/index.js:118
 msgctxt "Indicates this palette comes from the theme."
 msgid "Theme"
 msgstr ""
 
-#: src/components/color-palette-control/index.js:91
-#: src/components/color-palette-control/index.js:107
+#: src/components/color-palette-control/index.js:106
+#: src/components/color-palette-control/index.js:122
 msgctxt "Indicates this palette comes from WordPress."
 msgid "Default"
 msgstr ""
 
-#: src/components/color-palette-control/index.js:95
-#: src/components/color-palette-control/index.js:111
+#: src/components/color-palette-control/index.js:110
+#: src/components/color-palette-control/index.js:126
 msgctxt "Indicates this palette comes from the theme."
 msgid "Custom"
 msgstr ""
@@ -7847,23 +7848,23 @@ msgstr ""
 msgid "Stop showing tooltips"
 msgstr ""
 
-#: src/components/icon-search-popover/index.js:191
+#: src/components/icon-search-popover/index.js:199
 msgid "Type to search icon"
 msgstr ""
 
-#: src/components/icon-search-popover/index.js:200
+#: src/components/icon-search-popover/index.js:208
 msgid "Icon Settings"
 msgstr ""
 
-#: src/components/icon-search-popover/index.js:213
+#: src/components/icon-search-popover/index.js:221
 msgid "Upload SVG"
 msgstr ""
 
-#: src/components/icon-search-popover/index.js:226
+#: src/components/icon-search-popover/index.js:234
 msgid "Clear icon"
 msgstr ""
 
-#: src/components/icon-search-popover/index.js:256
+#: src/components/icon-search-popover/index.js:270
 msgid "Drop your SVG here"
 msgstr ""
 
@@ -9168,12 +9169,12 @@ msgid "Link %d Title"
 msgstr ""
 
 #: src/deprecated/v2/welcome/admin.js:90
-#: src/welcome/admin.js:165
+#: src/welcome/admin.js:166
 msgid "Enable All"
 msgstr ""
 
 #: src/deprecated/v2/welcome/admin.js:91
-#: src/welcome/admin.js:166
+#: src/welcome/admin.js:167
 msgid "Disable All"
 msgstr ""
 
@@ -9386,7 +9387,7 @@ msgid "Highlight Text"
 msgstr ""
 
 #: src/plugins/design-library-button/design-library-button.js:38
-#: src/welcome/admin.js:246
+#: src/welcome/admin.js:247
 msgid "Design Library"
 msgstr ""
 
@@ -9605,143 +9606,152 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: src/welcome/admin.js:41
+#: src/welcome/admin.js:42
 msgid "Essential Blocks"
 msgstr ""
 
-#: src/welcome/admin.js:43
+#: src/welcome/admin.js:44
 msgid "All the necessary building blocks you need to design anything."
 msgstr ""
 
-#: src/welcome/admin.js:47
+#: src/welcome/admin.js:48
 msgid "Special Blocks"
 msgstr ""
 
-#: src/welcome/admin.js:49
+#: src/welcome/admin.js:50
 msgid "Blocks with special functionality that will allow you to create distinctive designs."
 msgstr ""
 
-#: src/welcome/admin.js:53
+#: src/welcome/admin.js:54
 msgid "Section Blocks"
 msgstr ""
 
-#: src/welcome/admin.js:55
+#: src/welcome/admin.js:56
 msgid "Use these blocks act as templates to help you build sections effortlessly."
 msgstr ""
 
-#: src/welcome/admin.js:82
+#: src/welcome/admin.js:83
 msgid "See example"
 msgstr ""
 
-#: src/welcome/admin.js:179
+#: src/welcome/admin.js:180
 msgid "view demo"
 msgstr ""
 
-#: src/welcome/admin.js:257
+#: src/welcome/admin.js:258
 msgid "Adds a button on the top of the editor which gives access to a collection of pre-made block designs."
 msgstr ""
 
-#: src/welcome/admin.js:260
+#: src/welcome/admin.js:261
 msgid "Optimize Inline CSS"
 msgstr ""
 
-#: src/welcome/admin.js:271
+#: src/welcome/admin.js:272
 msgid "Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults."
 msgstr ""
 
-#: src/welcome/admin.js:274
+#: src/welcome/admin.js:275
 msgid "Navigation Panel"
 msgstr ""
 
-#: src/welcome/admin.js:285
+#: src/welcome/admin.js:286
 msgid "A block Navigation panel that floats at the bottom of the inspector that helps with adjusting the different blocks in your column layout."
 msgstr ""
 
-#: src/welcome/admin.js:288
+#: src/welcome/admin.js:289
 msgid "Auto-Collapse Panels"
 msgstr ""
 
-#: src/welcome/admin.js:302
+#: src/welcome/admin.js:303
 msgid "Block Linking (Beta)"
 msgstr ""
 
-#: src/welcome/admin.js:322
+#: src/welcome/admin.js:323
 msgid "Nested Block Width"
 msgstr ""
 
-#: src/welcome/admin.js:337
+#: src/welcome/admin.js:338
 msgid "The width used when a Columns block has its Content Width set to center. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula."
 msgstr ""
 
-#: src/welcome/admin.js:340
+#: src/welcome/admin.js:341
 msgid "Nested Wide Block Width"
 msgstr ""
 
-#: src/welcome/admin.js:355
+#: src/welcome/admin.js:356
 msgid "The width used when a Columns block has its Content Width set to wide. This is automatically detected from your theme. You can adjust it if your blocks are not aligned correctly. In px, you can also use other units or use a calc() formula."
 msgstr ""
 
-#: src/welcome/admin.js:358
+#: src/welcome/admin.js:359
 msgid "Google Maps API Key"
 msgstr ""
 
-#: src/welcome/admin.js:379
+#: src/welcome/admin.js:380
 msgid "Adding a Google API Key enables additional features of the Stackable Map Block."
 msgstr ""
 
-#: src/welcome/admin.js:437
+#: src/welcome/admin.js:438
 msgid "Tablet Breakpoint"
 msgstr ""
 
-#: src/welcome/admin.js:444
+#: src/welcome/admin.js:445
 msgid "Mobile Breakpoint"
 msgstr ""
 
-#: src/welcome/admin.js:479
+#: src/welcome/admin.js:480
 msgid "Force Typography Styles"
 msgstr ""
 
-#: src/welcome/admin.js:482
+#: src/welcome/admin.js:483
 msgid "Not forced"
 msgstr ""
 
-#: src/welcome/admin.js:483
+#: src/welcome/admin.js:484
 msgid "Force styles"
 msgstr ""
 
-#: src/welcome/admin.js:523
+#: src/welcome/admin.js:510
+#: src/welcome/admin.js:520
+msgid "FontAwesome Icon Library Version"
+msgstr ""
+
+#: src/welcome/admin.js:513
+msgid "You are using the version set in your Font Awesome Pro Kit."
+msgstr ""
+
+#: src/welcome/admin.js:573
 msgid "Show \"Go premium\" notices"
 msgstr ""
 
-#: src/welcome/admin.js:532
+#: src/welcome/admin.js:582
 msgid "Don't show help video tooltips"
 msgstr ""
 
-#: src/welcome/admin.js:540
+#: src/welcome/admin.js:590
 msgid "Generate Global Colors for native blocks"
 msgstr ""
 
-#: src/welcome/admin.js:541
+#: src/welcome/admin.js:591
 msgid "When enabled, extra frontend CSS is generated to support Stackable global colors used in native blocks. If you don't use Stackable global colors in native blocks, simply toggle this OFF. Please note that Stackable global colors are no longer available for native blocks. To ensure your styles always look perfect, our auto-detect feature will activate this option whenever needed."
 msgstr ""
 
-#: src/welcome/admin.js:548
+#: src/welcome/admin.js:598
 msgid "🏠 Migration Settings"
 msgstr ""
 
-#: src/welcome/admin.js:550
+#: src/welcome/admin.js:600
 msgid "Migrating from version 2 to version 3?"
 msgstr ""
 
-#: src/welcome/admin.js:552
+#: src/welcome/admin.js:602
 msgid "Learn more about migration and the settings below"
 msgstr ""
 
-#: src/welcome/admin.js:568
+#: src/welcome/admin.js:618
 msgid "Load version 2 blocks in the editor only when the page was using version 2 blocks"
 msgstr ""
 
-#: src/welcome/admin.js:582
+#: src/welcome/admin.js:632
 msgid "Load version 2 frontend block stylesheet and scripts for backward compatibility"
 msgstr ""
 
