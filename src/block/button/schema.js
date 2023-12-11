@@ -44,6 +44,10 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+			anchor: {
+				type: 'string',
+				default: '',
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
