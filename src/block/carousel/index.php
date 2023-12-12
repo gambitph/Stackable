@@ -53,7 +53,9 @@ if ( ! function_exists( 'stackable_carousel_add_class_images' ) ) {
 		return $html_tag->get_updated_html();
 	}
 
-	add_filter( 'render_block_stackable/carousel', 'stackable_carousel_add_class_images', 1, 2 );
+	if ( get_option( 'stackable_enable_carousel_lazy_loading' ) ) {
+		add_filter( 'render_block_stackable/carousel', 'stackable_carousel_add_class_images', 1, 2 );
+	}
 }
 
 if ( ! function_exists( 'stackable_skip_loading_lazy_carousel_image' ) ) {
@@ -65,7 +67,9 @@ if ( ! function_exists( 'stackable_skip_loading_lazy_carousel_image' ) ) {
 		return $value;
 	}
 
-	add_filter( 'wp_img_tag_add_loading_attr', 'stackable_skip_loading_lazy_carousel_image', 10, 2 );
+	if ( get_option( 'stackable_enable_carousel_lazy_loading' ) ) {
+		add_filter( 'wp_img_tag_add_loading_attr', 'stackable_skip_loading_lazy_carousel_image', 10, 2 );
+	}
 }
 
 

@@ -154,6 +154,18 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'default' => '',
 				)
 			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_enable_carousel_lazy_loading',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Disables image lazy loading when using images inside carousel-type blocks to prevent space or layout issues .', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
 		}
 
 		public function sanitize_array_setting( $input ) {
@@ -174,6 +186,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_enable_navigation_panel'] = get_option( 'stackable_enable_navigation_panel' );
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
+			$settings['stackable_enable_carousel_lazy_loading'] = get_option( 'stackable_enable_carousel_lazy_loading' );
 			return $settings;
 		}
 

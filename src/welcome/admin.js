@@ -237,6 +237,7 @@ const EditorSettings = () => {
 					'stackable_block_wide_width',
 					'stackable_auto_collapse_panels',
 					'stackable_enable_block_linking',
+					'stackable_enable_carousel_lazy_loading',
 				] ) )
 			} )
 		} )
@@ -385,6 +386,20 @@ const EditorSettings = () => {
 					<a href="https://docs.wpstackable.com/article/483-how-to-use-stackable-map-block#api-key" target="_blank" rel="noreferrer">{ __( 'Learn more', i18n ) }</a>
 				</>
 				 }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Lazy Load Images within Carousels', i18n ) }
+			value={ settings.stackable_enable_carousel_lazy_loading }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_enable_carousel_lazy_loading: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_enable_carousel_lazy_loading: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
 		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">
