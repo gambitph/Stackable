@@ -163,7 +163,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 					'description' => __( 'Disables image lazy loading when using images inside carousel-type blocks to prevent space or layout issues .', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
-					'default' => '',
+					'default' => true,
 				)
 			);
 		}
