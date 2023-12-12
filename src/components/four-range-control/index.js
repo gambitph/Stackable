@@ -103,17 +103,45 @@ const FourRangeControl = memo( props => {
 
 	const {
 		unit,
-		_valueDesktop,
-		_valueTablet,
-		_unitDesktop,
-		_unitTablet,
+		desktopValue,
+		tabletValue,
+		mobileValue,
+		desktopUnit,
+		tabletUnit,
+		mobileUnit,
 	} = useBlockAttributesContext( attributes => {
 		return {
 			unit: attributes[ unitAttrName ],
-			_valueDesktop: attributes[ `${ props.attribute }` ],
-			_valueTablet: attributes[ `${ props.attribute }Tablet` ],
-			_unitDesktop: attributes[ `${ props.attribute }Unit` ],
-			_unitTablet: attributes[ `${ props.attribute }UnitTablet` ],
+			desktopValue: {
+				normal: attributes[ `${ props.attribute }` ],
+				hover: attributes[ `${ props.attribute }Hover` ],
+				'parent-hover': attributes[ `${ props.attribute }ParentHover` ],
+			},
+			tabletValue: {
+				normal: attributes[ `${ props.attribute }Tablet` ],
+				hover: attributes[ `${ props.attribute }TabletHover` ],
+				'parent-hover': attributes[ `${ props.attribute }TabletParentHover` ],
+			},
+			mobileValue: {
+				normal: attributes[ `${ props.attribute }Mobile` ],
+				hover: attributes[ `${ props.attribute }MobileHover` ],
+				'parent-hover': attributes[ `${ props.attribute }MobileParentHover` ],
+			},
+			desktopUnit: {
+				normal: attributes[ `${ props.attribute }Unit` ],
+				hover: attributes[ `${ props.attribute }UnitHover` ],
+				'parent-hover': attributes[ `${ props.attribute }UnitParentHover` ],
+			},
+			tabletUnit: {
+				normal: attributes[ `${ props.attribute }UnitTablet` ],
+				hover: attributes[ `${ props.attribute }UnitTabletHover` ],
+				'parent-hover': attributes[ `${ props.attribute }UnitTabletParentHover` ],
+			},
+			mobileUnit: {
+				normal: attributes[ `${ props.attribute }UnitMobile` ],
+				hover: attributes[ `${ props.attribute }UnitMobileHover` ],
+				'parent-hover': attributes[ `${ props.attribute }UnitMobileParentHover` ],
+			},
 		}
 	} )
 
@@ -148,35 +176,152 @@ const FourRangeControl = memo( props => {
 	}
 
 	const deviceType = useDeviceType()
-	const tabletHasValue = {
-		top: _valueTablet && _valueTablet !== '' && _valueTablet.top && _valueTablet.top !== '',
-		right: _valueTablet && _valueTablet !== '' && _valueTablet.right && _valueTablet.right !== '',
-		bottom: _valueTablet && _valueTablet !== '' && _valueTablet.bottom && _valueTablet.bottom !== '',
-		left: _valueTablet && _valueTablet !== '' && _valueTablet.left && _valueTablet.left !== '',
-		firstValue:
-			props.enableTop ? ( _valueTablet && _valueTablet !== '' && _valueTablet.top && _valueTablet.top !== '' )
-				: props.enableRight ? ( _valueTablet && _valueTablet !== '' && _valueTablet.right && _valueTablet.right !== '' )
-					: props.enableBottom ? ( _valueTablet && _valueTablet !== '' && _valueTablet.bottom && _valueTablet.bottom !== '' )
-						: ( _valueTablet && _valueTablet !== '' && _valueTablet.left && _valueTablet.left !== '' ),
+	// check if the first value exists depending on device type and hover state
+	const hasFirstValue = ( type, state ) => {
+		const device = {
+			Desktop: desktopValue,
+			Tablet: tabletValue,
+			Mobile: mobileValue,
+		}
+
+		return props.enableTop ? ( device[ type ][ state ] && device[ type ][ state ] !== '' && device[ type ][ state ].top && device[ type ][ state ].top !== '' )
+			: props.enableRight ? ( device[ type ][ state ] && device[ type ][ state ] !== '' && device[ type ][ state ].right && device[ type ][ state ].right !== '' )
+				: props.enableBottom ? ( device[ type ][ state ] && device[ type ][ state ] !== '' && device[ type ][ state ].bottom && device[ type ][ state ].bottom !== '' )
+					: ( device[ type ][ state ] && device[ type ][ state ] !== '' && device[ type ][ state ].left && device[ type ][ state ].left !== '' )
 	}
 
-	const desktopHasValue = {
-		top: _valueDesktop && _valueDesktop !== '' && _valueDesktop.top && _valueDesktop.top !== '',
-		right: _valueDesktop && _valueDesktop !== '' && _valueDesktop.right && _valueDesktop.right !== '',
-		bottom: _valueDesktop && _valueDesktop !== '' && _valueDesktop.bottom && _valueDesktop.bottom !== '',
-		left: _valueDesktop && _valueDesktop !== '' && _valueDesktop.left && _valueDesktop.left !== '',
-		firstValue:
-			props.enableTop ? ( _valueDesktop && _valueDesktop !== '' && _valueDesktop.top && _valueDesktop.top !== '' )
-				: props.enableRight ? ( _valueDesktop && _valueDesktop !== '' && _valueDesktop.right && _valueDesktop.right !== '' )
-					: props.enableBottom ? ( _valueDesktop && _valueDesktop !== '' && _valueDesktop.bottom && _valueDesktop.bottom !== '' )
-						: ( _valueDesktop && _valueDesktop !== '' && _valueDesktop.left && _valueDesktop.left !== '' ),
+	// return first value based on device type and hover state
+	const deviceFirstValue = ( type, state ) => {
+		const device = {
+			Desktop: desktopValue,
+			Tablet: tabletValue,
+			Mobile: mobileValue,
+		}
+
+		return props.enableTop ? device[ type ][ state ].top
+			: props.enableRight ? device[ type ][ state ].right
+				: props.enableBottom ? device[ type ][ state ].bottom
+					: device[ type ][ state ].left
 	}
 
-	const { desktop: firstValueDesktop, tablet: firstValueTablet } =
-		props.enableTop ? { desktop: _valueDesktop?.top, tablet: _valueTablet?.top }
-			: props.enableRight ? { desktop: _valueDesktop?.right, tablet: _valueTablet?.right }
-				: props.enableBottom ? { desktop: _valueDesktop?.bottom, tablet: _valueTablet?.bottom }
-					: { desktop: _valueDesktop?.left, tablet: _valueTablet?.left }
+	// fallback values for the first value
+	const desktopFirstValueFallback = {
+		normal: hasFirstValue( 'Desktop', 'normal' ) ? { value: deviceFirstValue( 'Desktop', 'normal' ), unit: desktopUnit.normal } : { value: '', unit: desktopUnit.normal },
+	}
+	// display desktop normal state value if desktop hover state is not set
+	desktopFirstValueFallback.hover = desktopFirstValueFallback.normal
+	desktopFirstValueFallback[ 'parent-hover' ] = desktopFirstValueFallback.normal
+
+	const tabletFirstValueFallback = {
+		// display tablet normal state value if set, else display desktop normal state value
+		normal: hasFirstValue( 'Tablet', 'normal' ) ? { value: deviceFirstValue( 'Tablet', 'normal' ), unit: tabletUnit.normal } : desktopFirstValueFallback.normal,
+	}
+	// display desktop hover state value if it exists, else display tablet/desktop normal state value
+	tabletFirstValueFallback.hover = hasFirstValue( 'Desktop', 'hover' )
+		? { value: deviceFirstValue( 'Desktop', 'hover' ), unit: desktopUnit.hover }
+		: tabletFirstValueFallback.normal
+	tabletFirstValueFallback[ 'parent-hover' ] = hasFirstValue( 'Desktop', 'parent-hover' )
+		? { value: deviceFirstValue( 'Desktop', 'parent-hover' ), unit: desktopUnit[ 'parent-hover' ] }
+		: tabletFirstValueFallback.normal
+
+	const mobileFirstValueFallback = {
+		// display mobile normal state value if set, else display tablet/desktop normal state value
+		normal: hasFirstValue( 'Mobile', 'normal' ) ? { value: deviceFirstValue( 'Mobile', 'normal' ), unit: mobileUnit.normal } : tabletFirstValueFallback.normal,
+	}
+	// display tablet hover state value if it exists, else display mobile normal state value if it exists
+	// else display desktop hover state value or tablet/desktop normal state value
+	mobileFirstValueFallback.hover = hasFirstValue( 'Tablet', 'hover' )
+		? { value: deviceFirstValue( 'Tablet', 'hover' ), unit: tabletUnit.hover }
+		: ( hasFirstValue( 'Mobile', 'normal' )
+			? { value: deviceFirstValue( 'Mobile', 'normal' ), unit: mobileUnit.normal }
+			: tabletFirstValueFallback.hover )
+	mobileFirstValueFallback[ 'parent-hover' ] = hasFirstValue( 'Tablet', 'parent-hover' )
+		? { value: deviceFirstValue( 'Tablet', 'parent-hover' ), unit: mobileUnit[ 'parent-hover' ] }
+		: ( hasFirstValue( 'Mobile', 'normal' )
+			? { value: deviceFirstValue( 'Mobile', 'normal' ), unit: mobileUnit.normal }
+			: tabletFirstValueFallback[ 'parent-hover' ] )
+
+	const deviceHasValue = ( type, state ) => {
+		const device = {
+			Desktop: desktopValue,
+			Tablet: tabletValue,
+			Mobile: mobileValue,
+		}
+
+		return {
+			top: device[ type ][ state ] && device[ type ][ state ] !== '' && device[ type ][ state ].top && device[ type ][ state ].top !== '',
+			right: device[ type ][ state ] && device[ type ][ state ] !== '' && device[ type ][ state ].right && device[ type ][ state ].right !== '',
+			bottom: device[ type ][ state ] && device[ type ][ state ] !== '' && device[ type ][ state ].bottom && device[ type ][ state ].bottom !== '',
+			left: device[ type ][ state ] && device[ type ][ state ] !== '' && device[ type ][ state ].left && device[ type ][ state ].left !== '',
+		}
+	}
+
+	const deviceValue = ( type, state ) => {
+		const device = {
+			Desktop: desktopValue,
+			Tablet: tabletValue,
+			Mobile: mobileValue,
+		}
+		return {
+			top: device[ type ][ state ].top,
+			right: device[ type ][ state ].right,
+			bottom: device[ type ][ state ].bottom,
+			left: device[ type ][ state ].left,
+		}
+	}
+
+	const deviceFallbackValue = position => {
+		const desktopFallbackValue = {
+			normal: deviceHasValue( 'Desktop', 'normal' )[ position ]
+				? { value: deviceValue( 'Desktop', 'normal' )[ position ], unit: desktopUnit.normal }
+				: { value: '', unit: desktopUnit.normal },
+		}
+		// display normal state value if desktop hover state is not set
+		desktopFallbackValue.hover = desktopFallbackValue.normal
+		desktopFallbackValue[ 'parent-hover' ] = desktopFallbackValue.normal
+
+		const tabletFallbackValue = {
+			normal: deviceHasValue( 'Tablet', 'normal' )[ position ]
+				? { value: deviceValue( 'Tablet', 'normal' )[ position ], unit: tabletUnit.normal }
+				: desktopFallbackValue.normal,
+		}
+		// tablet placeholder will display desktop hover state value, or tablet/desktop normal state value
+		tabletFallbackValue.hover = deviceHasValue( 'Desktop', 'hover' )[ position ]
+			? { value: deviceValue( 'Desktop', 'hover' )[ position ], unit: desktopUnit.hover }
+			: tabletFallbackValue.normal
+		tabletFallbackValue[ 'parent-hover' ] = deviceHasValue( 'Desktop', 'parent-hover' )[ position ]
+			? {
+				value: deviceValue( 'Desktop', 'parent-hover' )[ position ],
+				unit: desktopUnit[ 'parent-hover' ],
+			} : tabletFallbackValue.normal
+
+		const mobileFallbackValue = {
+			normal: deviceHasValue( 'Mobile', 'normal' )[ position ]
+				? { value: deviceValue( 'Mobile', 'normal' )[ position ], unit: mobileUnit.normal }
+				: tabletFallbackValue.normal,
+		}
+
+		// mobile placeholder will display tablet hover state value, or mobile normal state value,
+		// or desktop hover state value or tablet/desktop normal state value
+		mobileFallbackValue.hover = deviceHasValue( 'Tablet', 'hover' )[ position ]
+			? { value: deviceValue( 'Tablet', 'hover' )[ position ], unit: tabletUnit.hover }
+			: ( deviceHasValue( 'Mobile', 'normal' )[ position ]
+				? { value: deviceValue( 'Mobile', 'normal' )[ position ], unit: mobileUnit.normal }
+				: tabletFallbackValue.hover )
+		mobileFallbackValue[ 'parent-hover' ] = deviceHasValue( 'Tablet', 'parent-hover' )[ position ]
+			? {
+				value: deviceValue( 'Tablet', 'parent-hover' )[ position ],
+				unit: mobileUnit[ 'parent-hover' ],
+			} : ( deviceHasValue( 'Mobile', 'normal' )[ position ]
+				? { value: deviceValue( 'Mobile', 'normal' )[ position ], unit: mobileUnit.normal }
+				: tabletFallbackValue[ 'parent-hover' ] )
+
+		return {
+			desktopFallbackValue,
+			tabletFallbackValue,
+			mobileFallbackValue,
+		}
+	}
 
 	const onChangeAll = newValue => {
 		onChange( {
@@ -251,29 +396,23 @@ const FourRangeControl = memo( props => {
 						onChange={ onChangeAll }
 						allowReset={ false }
 						initialPosition={ ( () => {
-							if ( currentHoverState !== 'normal' ) {
-								return ''
+							if ( deviceType === 'Mobile' ) {
+								return unit === mobileFirstValueFallback[ currentHoverState ].unit ? mobileFirstValueFallback[ currentHoverState ].value : ''
+							} else if ( deviceType === 'Tablet' ) {
+								return unit === tabletFirstValueFallback[ currentHoverState ].unit ? tabletFirstValueFallback[ currentHoverState ].value : ''
+							} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+								return unit === desktopFirstValueFallback[ currentHoverState ].unit ? desktopFirstValueFallback[ currentHoverState ].value : ''
 							}
-
-							if ( deviceType === 'Mobile' && tabletHasValue.firstValue ) {
-								return unit === _unitTablet ? firstValueTablet : ''
-							} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.firstValue ) {
-								return unit === _unitDesktop ? firstValueDesktop : ''
-							}
-
 							return propsToPass.initialPosition
 						} )() }
 						placeholder={ ( () => {
-							if ( currentHoverState !== 'normal' ) {
-								return ''
+							if ( deviceType === 'Mobile' ) {
+								return unit === mobileFirstValueFallback[ currentHoverState ].unit ? mobileFirstValueFallback[ currentHoverState ].value : ''
+							} else if ( deviceType === 'Tablet' ) {
+								return unit === tabletFirstValueFallback[ currentHoverState ].unit ? tabletFirstValueFallback[ currentHoverState ].value : ''
+							} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+								return unit === desktopFirstValueFallback[ currentHoverState ].unit ? desktopFirstValueFallback[ currentHoverState ].value : ''
 							}
-
-							if ( deviceType === 'Mobile' && tabletHasValue.firstValue ) {
-								return unit === _unitTablet ? firstValueTablet : ''
-							} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.firstValue ) {
-								return unit === _unitDesktop ? firstValueDesktop : ''
-							}
-
 							return propsToPass.placeholder
 						} )() }
 					/>
@@ -297,27 +436,35 @@ const FourRangeControl = memo( props => {
 							onChange={ onChangeVertical }
 							allowReset={ false }
 							initialPosition={ ( () => {
-								if ( currentHoverState !== 'normal' ) {
-									return ''
-								}
+								const {
+									desktopFallbackValue,
+									tabletFallbackValue,
+									mobileFallbackValue,
+								} = deviceFallbackValue( 'top' )
 
-								if ( deviceType === 'Mobile' && tabletHasValue.top ) {
-									return unit === _unitTablet ? _valueTablet.top : ''
-								} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.top ) {
-									return unit === _unitDesktop ? _valueDesktop.top : ''
+								if ( deviceType === 'Mobile' ) {
+									return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+								} else if ( deviceType === 'Tablet' ) {
+									return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+								} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+									return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 								}
 
 								return propsToPass.initialPosition
 							} )() }
 							placeholder={ ( () => {
-								if ( currentHoverState !== 'normal' ) {
-									return ''
-								}
+								const {
+									desktopFallbackValue,
+									tabletFallbackValue,
+									mobileFallbackValue,
+								} = deviceFallbackValue( 'top' )
 
-								if ( deviceType === 'Mobile' && tabletHasValue.top ) {
-									return unit === _unitTablet ? _valueTablet.top : ''
-								} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.top ) {
-									return unit === _unitDesktop ? _valueDesktop.top : ''
+								if ( deviceType === 'Mobile' ) {
+									return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+								} else if ( deviceType === 'Tablet' ) {
+									return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+								} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+									return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 								}
 
 								return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
@@ -340,28 +487,37 @@ const FourRangeControl = memo( props => {
 							onChange={ onChangeHorizontal }
 							allowReset={ false }
 							initialPosition={ ( () => {
-								if ( currentHoverState !== 'normal' ) {
-									return ''
-								}
+								const {
+									desktopFallbackValue,
+									tabletFallbackValue,
+									mobileFallbackValue,
+								} = deviceFallbackValue( 'left' )
 
-								if ( deviceType === 'Mobile' && tabletHasValue.left ) {
-									return unit === _unitTablet ? _valueTablet.left : ''
-								} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.left ) {
-									return unit === _unitDesktop ? _valueDesktop.left : ''
+								if ( deviceType === 'Mobile' ) {
+									return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+								} else if ( deviceType === 'Tablet' ) {
+									return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+								} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+									return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 								}
 
 								return propsToPass.initialPosition
 							} )() }
 							placeholder={ ( () => {
-								if ( currentHoverState !== 'normal' ) {
-									return ''
+								const {
+									desktopFallbackValue,
+									tabletFallbackValue,
+									mobileFallbackValue,
+								} = deviceFallbackValue( 'left' )
+
+								if ( deviceType === 'Mobile' ) {
+									return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+								} else if ( deviceType === 'Tablet' ) {
+									return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+								} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+									return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 								}
 
-								if ( deviceType === 'Mobile' && tabletHasValue.left ) {
-									return unit === _unitTablet ? _valueTablet.left : ''
-								} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.left ) {
-									return unit === _unitDesktop ? _valueDesktop.left : ''
-								}
 								return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft
 							} )() }
 						/>
@@ -387,27 +543,35 @@ const FourRangeControl = memo( props => {
 								onChange={ onChangeTop }
 								allowReset={ false }
 								initialPosition={ ( () => {
-									if ( currentHoverState !== 'normal' ) {
-										return ''
-									}
+									const {
+										desktopFallbackValue,
+										tabletFallbackValue,
+										mobileFallbackValue,
+									} = deviceFallbackValue( 'top' )
 
-									if ( deviceType === 'Mobile' && tabletHasValue.top ) {
-										return unit === _unitTablet ? _valueTablet.top : ''
-									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.top ) {
-										return unit === _unitDesktop ? _valueDesktop.top : ''
+									if ( deviceType === 'Mobile' ) {
+										return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Tablet' ) {
+										return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+										return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 									}
 
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
-									if ( currentHoverState !== 'normal' ) {
-										return ''
-									}
+									const {
+										desktopFallbackValue,
+										tabletFallbackValue,
+										mobileFallbackValue,
+									} = deviceFallbackValue( 'top' )
 
-									if ( deviceType === 'Mobile' && tabletHasValue.top ) {
-										return unit === _unitTablet ? _valueTablet.top : ''
-									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.top ) {
-										return unit === _unitDesktop ? _valueDesktop.top : ''
+									if ( deviceType === 'Mobile' ) {
+										return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Tablet' ) {
+										return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+										return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 									}
 
 									return typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop
@@ -432,27 +596,35 @@ const FourRangeControl = memo( props => {
 								onChange={ onChangeRight }
 								allowReset={ false }
 								initialPosition={ ( () => {
-									if ( currentHoverState !== 'normal' ) {
-										return ''
-									}
+									const {
+										desktopFallbackValue,
+										tabletFallbackValue,
+										mobileFallbackValue,
+									} = deviceFallbackValue( 'right' )
 
-									if ( deviceType === 'Mobile' && tabletHasValue.right ) {
-										return unit === _unitTablet ? _valueTablet.right : ''
-									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.right ) {
-										return unit === _unitDesktop ? _valueDesktop.right : ''
+									if ( deviceType === 'Mobile' ) {
+										return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Tablet' ) {
+										return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+										return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 									}
 
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
-									if ( currentHoverState !== 'normal' ) {
-										return ''
-									}
+									const {
+										desktopFallbackValue,
+										tabletFallbackValue,
+										mobileFallbackValue,
+									} = deviceFallbackValue( 'right' )
 
-									if ( deviceType === 'Mobile' && tabletHasValue.right ) {
-										return unit === _unitTablet ? _valueTablet.right : ''
-									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.right ) {
-										return unit === _unitDesktop ? _valueDesktop.right : ''
+									if ( deviceType === 'Mobile' ) {
+										return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Tablet' ) {
+										return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+										return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 									}
 
 									return typeof props.placeholderRight === 'undefined' ? propsToPass.placeholder : props.placeholderRight
@@ -477,27 +649,35 @@ const FourRangeControl = memo( props => {
 								onChange={ onChangeBottom }
 								allowReset={ false }
 								initialPosition={ ( () => {
-									if ( currentHoverState !== 'normal' ) {
-										return ''
-									}
+									const {
+										desktopFallbackValue,
+										tabletFallbackValue,
+										mobileFallbackValue,
+									} = deviceFallbackValue( 'bottom' )
 
-									if ( deviceType === 'Mobile' && tabletHasValue.bottom ) {
-										return unit === _unitTablet ? _valueTablet.bottom : ''
-									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.bottom ) {
-										return unit === _unitDesktop ? _valueDesktop.bottom : ''
+									if ( deviceType === 'Mobile' ) {
+										return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Tablet' ) {
+										return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+										return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 									}
 
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
-									if ( currentHoverState !== 'normal' ) {
-										return ''
-									}
+									const {
+										desktopFallbackValue,
+										tabletFallbackValue,
+										mobileFallbackValue,
+									} = deviceFallbackValue( 'bottom' )
 
-									if ( deviceType === 'Mobile' && tabletHasValue.bottom ) {
-										return unit === _unitTablet ? _valueTablet.bottom : ''
-									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.bottom ) {
-										return unit === _unitDesktop ? _valueDesktop.bottom : ''
+									if ( deviceType === 'Mobile' ) {
+										return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Tablet' ) {
+										return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+										return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 									}
 
 									return typeof props.placeholderBottom === 'undefined' ? propsToPass.placeholder : props.placeholderBottom
@@ -522,27 +702,35 @@ const FourRangeControl = memo( props => {
 								onChange={ onChangeLeft }
 								allowReset={ false }
 								initialPosition={ ( () => {
-									if ( currentHoverState !== 'normal' ) {
-										return ''
-									}
+									const {
+										desktopFallbackValue,
+										tabletFallbackValue,
+										mobileFallbackValue,
+									} = deviceFallbackValue( 'left' )
 
-									if ( deviceType === 'Mobile' && tabletHasValue.left ) {
-										return unit === _unitTablet ? _valueTablet.left : ''
-									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.left ) {
-										return unit === _unitDesktop ? _valueDesktop.left : ''
+									if ( deviceType === 'Mobile' ) {
+										return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Tablet' ) {
+										return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+										return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 									}
 
 									return propsToPass.initialPosition
 								} )() }
 								placeholder={ ( () => {
-									if ( currentHoverState !== 'normal' ) {
-										return ''
-									}
+									const {
+										desktopFallbackValue,
+										tabletFallbackValue,
+										mobileFallbackValue,
+									} = deviceFallbackValue( 'left' )
 
-									if ( deviceType === 'Mobile' && tabletHasValue.left ) {
-										return unit === _unitTablet ? _valueTablet.left : ''
-									} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && desktopHasValue.left ) {
-										return unit === _unitDesktop ? _valueDesktop.left : ''
+									if ( deviceType === 'Mobile' ) {
+										return unit === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Tablet' ) {
+										return unit === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+									} else if ( deviceType === 'Desktop' && currentHoverState !== 'normal' ) {
+										return unit === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
 									}
 
 									return typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft

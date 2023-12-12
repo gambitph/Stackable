@@ -33,19 +33,95 @@ const AdvancedRangeControl = props => {
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 	const {
 		unitAttribute,
-		_valueDesktop,
-		_valueTablet,
-		_unitDesktop,
-		_unitTablet,
+		desktopValue,
+		tabletValue,
+		mobileValue,
+		desktopUnit,
+		tabletUnit,
+		mobileUnit,
 	} = useBlockAttributesContext( attributes => {
 		return {
 			unitAttribute: attributes[ unitAttrName ],
-			_valueDesktop: attributes[ `${ props.attribute }` ],
-			_valueTablet: attributes[ `${ props.attribute }Tablet` ],
-			_unitDesktop: attributes[ `${ props.attribute }Unit` ],
-			_unitTablet: attributes[ `${ props.attribute }UnitTablet` ],
+			desktopValue: {
+				normal: attributes[ `${ props.attribute }` ],
+				hover: attributes[ `${ props.attribute }Hover` ],
+				'parent-hover': attributes[ `${ props.attribute }ParentHover` ],
+			},
+			tabletValue: {
+				normal: attributes[ `${ props.attribute }Tablet` ],
+				hover: attributes[ `${ props.attribute }TabletHover` ],
+				'parent-hover': attributes[ `${ props.attribute }TabletParentHover` ],
+			},
+			mobileValue: {
+				normal: attributes[ `${ props.attribute }Mobile` ],
+				hover: attributes[ `${ props.attribute }MobileHover` ],
+				'parent-hover': attributes[ `${ props.attribute }MobileParentHover` ],
+			},
+			desktopUnit: {
+				normal: attributes[ `${ props.attribute }Unit` ],
+				hover: attributes[ `${ props.attribute }UnitHover` ],
+				'parent-hover': attributes[ `${ props.attribute }UnitParentHover` ],
+			},
+			tabletUnit: {
+				normal: attributes[ `${ props.attribute }UnitTablet` ],
+				hover: attributes[ `${ props.attribute }UnitTabletHover` ],
+				'parent-hover': attributes[ `${ props.attribute }UnitTabletParentHover` ],
+			},
+			mobileUnit: {
+				normal: attributes[ `${ props.attribute }UnitMobile` ],
+				hover: attributes[ `${ props.attribute }UnitMobileHover` ],
+				'parent-hover': attributes[ `${ props.attribute }UnitMobileParentHover` ],
+			},
 		}
 	} )
+
+	const desktopHasValue = {
+		normal: desktopValue.normal && desktopValue.normal !== '',
+		hover: desktopValue.hover && desktopValue.hover !== '',
+		'parent-hover': desktopValue[ 'parent-hover' ] && desktopValue[ 'parent-hover' ] !== '',
+	}
+
+	const tabletHasValue = {
+		normal: tabletValue.normal && tabletValue.normal !== '',
+		hover: tabletValue.hover && tabletValue.hover !== '',
+		'parent-hover': tabletValue[ 'parent-hover' ] && tabletValue[ 'parent-hover' ] !== '',
+	}
+
+	const mobileHasValue = {
+		normal: mobileValue.normal && mobileValue.normal !== '',
+	}
+
+	const desktopFallbackValue = {
+		normal: desktopHasValue.normal ? { value: desktopValue.normal, unit: desktopUnit.normal }
+			: { value: '', unit: desktopUnit.normal },
+	}
+	desktopFallbackValue.hover = desktopFallbackValue.normal
+	desktopFallbackValue[ 'parent-hover' ] = desktopFallbackValue.normal
+
+	const tabletFallbackValue = {
+		normal: tabletHasValue.normal ? { value: tabletValue.normal, unit: tabletUnit.normal }
+			: desktopFallbackValue.normal,
+	}
+	// if desktop has hover state, display desktop hover state value else display tablet normal state value
+	tabletFallbackValue.hover = desktopHasValue.hover ? { value: desktopValue.hover, unit: desktopUnit.hover }
+		: tabletFallbackValue.normal
+	tabletFallbackValue[ 'parent-hover' ] = desktopHasValue[ 'parent-hover' ]
+		? { value: desktopValue[ 'parent-hover' ], unit: desktopUnit[ 'parent-hover' ] }
+		: tabletFallbackValue.normal
+
+	const mobileFallbackValue = {
+		normal: mobileHasValue.normal ? { value: mobileValue.normal, unit: mobileUnit.normal } : tabletFallbackValue.normal,
+	}
+	// if tablet has hover state, display tablet hover state value
+	// else if mobile has normal state value display mobile normal state value
+	// else display desktop hover state value or tablet normal state value
+	mobileFallbackValue.hover = tabletHasValue.hover ? { value: tabletValue.hover, unit: tabletUnit.hover }
+		: ( mobileHasValue.normal ? { value: mobileValue.normal, unit: mobileUnit.normal }
+			: tabletFallbackValue.hover )
+	mobileFallbackValue[ 'parent-hover' ] = tabletHasValue[ 'parent-hover' ]
+		? { value: tabletValue[ 'parent-hover' ], unit: tabletUnit[ 'parent-hover' ] }
+		: ( mobileHasValue.normal ? { value: mobileValue.normal, unit: mobileUnit.normal }
+			: tabletFallbackValue[ 'parent-hover' ] )
 
 	const unit = typeof props.unit === 'string'
 		? ( props.unit || props.units?.[ 0 ] || 'px' )
@@ -78,23 +154,25 @@ const AdvancedRangeControl = props => {
 		}
 	}
 
-	// Change placeholder based on inherited value
-	if ( deviceType === 'Mobile' && _valueTablet && _valueTablet !== '' ) {
-		propsToPass.initialPosition = unitAttribute === _unitTablet ? _valueTablet : ''
-		propsToPass.placeholder = unitAttribute === _unitTablet ? _valueTablet : ''
-	} else if ( ( deviceType === 'Mobile' || deviceType === 'Tablet' ) && _valueDesktop && _valueDesktop !== '' ) {
-		propsToPass.initialPosition = unitAttribute === _unitDesktop ? _valueDesktop : ''
-		propsToPass.placeholder = unitAttribute === _unitDesktop ? _valueDesktop : ''
-	}
-
 	// Remove the placeholder.
-	if ( ! props.forcePlaceholder && currentHoverState !== 'normal' ) {
+	if ( ! props.forcePlaceholder ) {
 		propsToPass.initialPosition = ''
 		propsToPass.placeholder = ''
 	}
 
+	if ( deviceType === 'Mobile' ) {
+		propsToPass.initialPosition = unitAttribute === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+		propsToPass.placeholder = unitAttribute === mobileFallbackValue[ currentHoverState ].unit ? mobileFallbackValue[ currentHoverState ].value : ''
+	} else if ( deviceType === 'Tablet' ) {
+		propsToPass.initialPosition = unitAttribute === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+		propsToPass.placeholder = unitAttribute === tabletFallbackValue[ currentHoverState ].unit ? tabletFallbackValue[ currentHoverState ].value : ''
+	} else {
+		propsToPass.initialPosition = unitAttribute === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
+		propsToPass.placeholder = unitAttribute === desktopFallbackValue[ currentHoverState ].unit ? desktopFallbackValue[ currentHoverState ].value : ''
+	}
+
 	let placeholderRender = props.placeholderRender
-	if ( currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
+	if ( hasUnits && unit !== props.units[ 0 ] ) {
 		placeholderRender = null
 	}
 
