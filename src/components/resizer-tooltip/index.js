@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { AdvancedTextControl, Popover } from '~stackable/components'
+import ArrowDownSvg from './images/arrow-down.svg'
 
 /**
  * External dependencies
@@ -258,6 +259,7 @@ const ResizerTooltip = props => {
 				{ props.enableWidth ? labelWidth : null }
 				{ props.enableWidth && props.enableHeight ? ' × ' : null }
 				{ props.enableHeight ? labelHeight : null }
+				<ArrowDownSvg fill="currentColor" width="10" />
 			</div>
 		</Fragment>
 	)
