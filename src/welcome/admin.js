@@ -399,7 +399,7 @@ const EditorSettings = () => {
 					stackable_enable_carousel_lazy_loading: value, // eslint-disable-line camelcase
 				} )
 			} }
-			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
+			help={ __( 'Enable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
 		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">
