@@ -33,9 +33,8 @@ export const attributes = ( version = VERSION ) => {
 		selector: '.stk-button',
 	} )
 
-	attrObject.addDefaultValues( {
+	attrObject.add( {
 		attributes: {
-			icon: defaultIcon,
 			anchorId: {
 				type: 'string',
 				selector: 'a.stk-button',
@@ -43,6 +42,14 @@ export const attributes = ( version = VERSION ) => {
 				attribute: 'id',
 				default: '',
 			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecarted: '',
+	} )
+
+	attrObject.addDefaultValues( {
+		attributes: {
+			icon: defaultIcon,
 		},
 		versionAdded: '3.0.0',
 		versionDeprecarted: '',
