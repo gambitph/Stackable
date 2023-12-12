@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.4.2
 Requires PHP: 7.3
-Stable tag: 3.12.7
+Stable tag: 3.12.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.8 =
+* New: (Hotfix update) Added new option "Lazy Load Images within Carousels" that fixes carousel spacing issues with some image lazy loading solutions
+* Fixed: (Hotfix update) Turned carousel image lazy loading fix into an option instead of a default
+* Fixed: Dropdown arrows in the block resizers shows up as a square / no icon
+* Fixed: Accessibility warning in lightboxes that aria-* attributes are misspelled
 
 = 3.12.7 =
 * New: Better multisite support
