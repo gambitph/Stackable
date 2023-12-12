@@ -110,7 +110,6 @@ BlockDiv.Content = props => {
 		className,
 		attributes,
 		applyCustomAttributes,
-		applyAdvancedAttributes,
 		version: _version,
 		...propsToPass
 	} = props
@@ -144,7 +143,7 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		{ ...useBlockProps.save( { className: classNames } ) }
-		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
+		id={ attributes.anchor || undefined }
 		data-block-id={ attributes.uniqueId || undefined }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
