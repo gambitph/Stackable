@@ -106,7 +106,7 @@ const Edit = props => {
 
 					<BlockDiv.InspectorControls initialOpen="spacing" />
 
-					<Advanced.InspectorControls />
+					<Advanced.InspectorControls enableAnchorId={ true } />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />
@@ -128,13 +128,12 @@ const Edit = props => {
 				clientId={ props.clientId }
 				attributes={ props.attributes }
 				className={ blockClassNames }
-				applyAdvancedAttributes={ false }
 				applyCustomAttributes={ false }
 			>
 				<Button
 					buttonProps={ {
 						tagName: props.attributes.linkTag,
-						id: props.attributes.anchor || undefined,
+						id: props.attributes.anchorId || undefined,
 						...customAttributes,
 					} }
 				>
