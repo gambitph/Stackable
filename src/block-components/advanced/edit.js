@@ -82,7 +82,7 @@ export const Edit = props => {
 						] }
 					/>
 					{ props.enableAnchorId && <AdvancedTextControl
-						label={ __( 'Anchor Link', i18n ) }
+						label={ __( 'Anchor ID', i18n ) }
 						attribute="anchorId"
 					/> }
 				</PanelAdvancedSettings>
