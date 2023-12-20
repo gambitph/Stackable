@@ -101,10 +101,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
 			}
 
-			$args = apply_filters( 'stackable_localize_frontend_script', array(
-				'restUrl' => get_rest_url(),
-				'i18n' => array(), // Translatable labels used in the frontend should go here.
-			) );
+			$args = apply_filters( 'stackable_localize_frontend_script', array() );
 			wp_localize_script( 'ugb-block-frontend-js', 'stackable', $args );
 
 			// Register inline frontend styles, these are always loaded.
