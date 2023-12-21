@@ -1,0 +1,17 @@
+{
+	"apiVersion": 3,
+	"name": "stackable/icon-list-item",
+	"title": "Icon List Item",
+	"description": "A new block.",
+	"category": "stackable",
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/ordered", "stackable/uniqueId" ],
+	"keywords": [
+		"Keywords that are not in the title"
+	],
+	"parent": [
+		"stackable/icon-list-new"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks",
+	"stk-type": "special",
+	"stk-demo": "https://wpstackable.com/separator-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"
+}

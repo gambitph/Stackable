@@ -1,0 +1,41 @@
+// Important, we can't use flex since it causes issues with columns.
+.stk-block-icon-list.stk-block-icon-list-new {
+	:is(ul, ol) {
+		width: fit-content; // TODO: Confirm if will set to 100% or not
+		text-align: start;
+	}
+	ol {
+		list-style-image: none;
+	}
+
+	ul.stk-block-icon-list__ul {
+		list-style-type: none;
+		padding-inline-start: 0px;
+	}
+
+	&.stk-block :is(ol) {
+		padding-inline-start: 1em;
+	}
+
+	// @from https://css-tricks.com/almanac/properties/b/break-inside/
+	li {
+		page-break-inside: avoid; /* Firefox */
+		break-inside: avoid;
+	}
+}
+
+// Alignments when the icon list is aligned.
+.stk-block-icon-list :is(ul, ol) {
+	margin-left: var(--stk-alignment-margin-left);
+	margin-right: var(--stk-alignment-margin-right);
+}
+
+// Prevents theme's css from affecting the icon list.
+.stk-block-icon-list :is(ul, ol) {
+	margin-top: 0;
+	margin-bottom: 0;
+
+	li:last-child {
+		margin-bottom: 0;
+	}
+}
