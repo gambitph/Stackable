@@ -15,6 +15,11 @@
 			height: var(--stk-icon-height, 1em);
 		}
 	}
+
+	.stk-block-icon-list-new {
+		margin-bottom: 0;
+		padding-inline-start: 1em;
+	}
 }
 
 .stk-block-icon-list-new .stk-block-icon-list__ol .stk-block-icon-list-item {

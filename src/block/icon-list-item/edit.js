@@ -32,12 +32,12 @@ import {
  * WordPress dependencies
  */
 import { createBlock } from '@wordpress/blocks'
-import { useBlockProps } from '@wordpress/block-editor'
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useEffect } from '@wordpress/element'
 import { getUseSvgDef } from '../icon-list-new/util'
-// import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 
 const Edit = props => {
 	const {
@@ -60,7 +60,7 @@ const Edit = props => {
 
 	const { 'stackable/ordered': ordered, 'stackable/uniqueId': parentUniqueId } = context
 
-	// const { adjacentBlock, parentBlock } = useBlockContext()
+	const { hasInnerBlocks } = useBlockContext()
 
 	useEffect( () => {
 		setAttributes( { ordered } )
@@ -110,13 +110,19 @@ const Edit = props => {
 
 	//TODO: move cursor to adjacent blocks without double press of arrow keys
 
-	const { ref, ...blockProps } = useBlockProps( {
+	const blockProps = useBlockProps( {
 		blockHoverClass: props.blockHoverClass,
 		clientId: props.clientId,
 		attributes: props.attributes,
 		className: blockClassNames,
 		blockTag: 'li',
 		renderHtmlTag: false,
+	} )
+
+	const { ref, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
+		allowedBlocks: [ 'stackable/icon-list-new' ],
+		renderAppender: false,
+		__unstableDisableDropZone: true,
 	} )
 
 	return (
@@ -149,7 +155,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				blockTag="li"
 				renderHtmlTag={ false }
-				{ ...blockProps }
+				{ ...innerBlocksProps }
 			>
 				<TextStyles
 					version={ VERSION }
@@ -158,10 +164,13 @@ const Edit = props => {
 				/>
 				<CustomCSS mainBlockClass="stk-block-icon-list-item" />
 				{ /* TODO: Open icon search popover on click */ }
-				{ ! ordered && icon && <Icon value={ icon } /> }
-				{ ! ordered && ! icon && <Icon value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) } /> }
+				{ ! ordered && icon && ! hasInnerBlocks &&
+					<Icon value={ icon } /> }
+				{ ! ordered && ! icon && ! hasInnerBlocks &&
+					<Icon
+						value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) } /> }
 				{ /* TODO: change to allow icon list as inner blocks */ }
-				<Typography
+				{ ! hasInnerBlocks && <Typography
 					ref={ ref }
 					tagName="span"
 					className={ textClassNames }
@@ -169,7 +178,8 @@ const Edit = props => {
 					onRemove={ _onRemove }
 					onMerge={ mergeBlocks }
 					onReplace={ onReplace }
-				/>
+				/> }
+				{ innerBlocksProps.children }
 			</BlockDiv>
 		</>
 	)
