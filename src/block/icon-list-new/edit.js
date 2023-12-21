@@ -132,6 +132,8 @@ const Edit = props => {
 		allowedBlocks: ALLOWED_INNER_BLOCKS,
 		template: TEMPLATE,
 		templateInsertUpdatesSelection: true,
+		renderAppender: false,
+		__experimentalCaptureToolbars: true,
 	} )
 
 	return (
