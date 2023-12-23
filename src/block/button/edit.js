@@ -106,7 +106,7 @@ const Edit = props => {
 
 					<BlockDiv.InspectorControls initialOpen="spacing" />
 
-					<Advanced.InspectorControls enableAnchorId={ true } />
+					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />

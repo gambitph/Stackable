@@ -8,7 +8,6 @@ import {
 	FourRangeControl,
 	InspectorAdvancedControls,
 	PanelAdvancedSettings,
-	AdvancedTextControl,
 } from '~stackable/components'
 import { useBlockAttributesContext } from '~stackable/hooks'
 
@@ -37,7 +36,7 @@ const HTML_TAG_OPTIONS = [
 	{ value: 'summary', label: _x( 'Summary', 'HTML Tag', i18n ) },
 ]
 
-export const Edit = props => {
+export const Edit = () => {
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
 			position: attributes.position,
@@ -81,10 +80,6 @@ export const Edit = props => {
 							{ value: 'none', label: __( 'None', i18n ) },
 						] }
 					/>
-					{ props.enableAnchorId && <AdvancedTextControl
-						label={ __( 'Anchor ID', i18n ) }
-						attribute="anchorId"
-					/> }
 				</PanelAdvancedSettings>
 
 				<PanelAdvancedSettings
