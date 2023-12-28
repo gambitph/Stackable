@@ -55,6 +55,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Adds a special class to the body tag, to indicate we can now run animations.
 			add_action( 'wp_footer', array( $this, 'init_animation' ) );
+			add_action( 'wp_footer', array( $this, 'init_stackable_vars' ) );
 
 			// Add the fallback values for the default block width and wide block width.
 			// These are used for the inside "Content width" option of Columns.
@@ -100,9 +101,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			if ( ! is_admin() ) {
 				wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
 			}
-
-			$args = apply_filters( 'stackable_localize_frontend_script', array() );
-			wp_localize_script( 'ugb-block-frontend-js', 'stackable', $args );
 
 			// Register inline frontend styles, these are always loaded.
 			// Register via a dummy style.
@@ -451,6 +449,13 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 */
 		public function init_animation() {
 			echo '<script>requestAnimationFrame(() => document.body.classList.add( "stk--anim-init" ))</script>';
+		}
+
+		public function init_stackable_vars() {
+			$args = apply_filters( 'stackable_localize_frontend_script', array() );
+			if ( array_key_exists( 'restUrl', $args ) ) {
+				echo '<script> stackable = {"restUrl": "' . $args["restUrl"] .'"} </script>';
+			}
 		}
 	}
 
