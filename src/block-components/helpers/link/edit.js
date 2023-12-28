@@ -36,7 +36,7 @@ export const LinkControls = props => {
 		<>
 			{ ( hasLink || getAttribute( 'hasLink' ) ) && (
 				<LinkControl
-					label={ __( 'Lisnk / URL', i18n ) }
+					label={ __( 'Link / URL', i18n ) }
 					value={ getAttribute( 'url' ) }
 					onChange={ updateAttributeHandler( 'url' ) }
 				/>
