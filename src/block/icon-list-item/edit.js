@@ -3,7 +3,9 @@
  */
 import { TextStyles } from './style'
 import { getUseSvgDef } from '../icon-list-new/util'
-import { useOutdentListItem, useIndentListItem } from './util'
+import {
+	useOutdentListItem, useIndentListItem, useMerge,
+} from './util'
 
 /**
  * External dependencies
@@ -50,7 +52,6 @@ const Edit = props => {
 		clientId,
 		isSelected,
 		onRemove,
-		mergeBlocks,
 		onReplace,
 		context,
 		className,
@@ -93,6 +94,7 @@ const Edit = props => {
 	] )
 
 	const onSplit = ( value, isOriginal ) => {
+		// TODO: update when block is split and has inner blocks
 		let block
 
 		if ( isOriginal || value ) {
@@ -114,10 +116,7 @@ const Edit = props => {
 		return block
 	}
 
-	const _onRemove = () => {
-		// TODO: remove block then transfer content to previous block
-		onRemove( clientId )
-	}
+	const onMerge = useMerge( blockContext, clientId, attributes.text )
 
 	//TODO: move cursor to adjacent blocks without double press of arrow keys
 
@@ -204,7 +203,7 @@ const Edit = props => {
 						className={ textClassNames }
 						onSplit={ onSplit }
 						onRemove={ onRemove }
-						onMerge={ mergeBlocks }
+						onMerge={ onMerge }
 						onReplace={ onReplace }
 					/>
 				</div>

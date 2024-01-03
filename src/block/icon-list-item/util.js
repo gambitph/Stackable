@@ -105,3 +105,64 @@ export const useIndentListItem = ( blockContext, clientId ) => {
 		replaceBlocks( [ previousBlock.clientId, clientId ], [ previousItem ] )
 	}, [ blockContext, clientId ] )
 }
+
+export const useMerge = ( blockContext, clientId, text ) => {
+	const {
+		parentBlock,
+		previousBlock,
+		hasInnerBlocks,
+		innerBlocks,
+	} = blockContext
+
+	const registry = useRegistry()
+	const outdentListItem = useOutdentListItem( blockContext, clientId )
+
+	const {
+		updateBlockAttributes,
+		removeBlock,
+		moveBlocksToPosition,
+	} =
+    useDispatch( 'core/block-editor' )
+
+	const {
+		getBlockAttributes,
+	} = useSelect( 'core/block-editor' )
+
+	let blockToMerge = previousBlock
+	let willOutdent = false
+	const { parentBlock: iconListItemParentBlock } = useBlockContext( parentBlock.clientId )
+	if ( ! previousBlock || iconListItemParentBlock?.name === 'stackable/icon-list-item' ) {
+		willOutdent = true
+	}
+	const { hasInnerBlocks: previousHasInnerBlocks, innerBlocks: previousInnerBlocks } = useBlockContext( previousBlock?.clientId )
+	if ( previousHasInnerBlocks ) {
+		// Get the last icon list block of the preceding icon list item.
+		const lastIconList = previousInnerBlocks[ previousInnerBlocks.length - 1 ]
+		// Get the last icon list item block.
+		blockToMerge = lastIconList.innerBlocks[ lastIconList.innerBlocks.length - 1 ]
+	}
+
+	return useCallback( () => {
+		registry.batch( () => {
+			if ( willOutdent ) {
+				outdentListItem()
+				return
+			}
+
+			const currentAttributes = getBlockAttributes( blockToMerge.clientId )
+
+			// eslint-disable-next-line stackable/no-update-block-attributes
+			updateBlockAttributes(
+				blockToMerge.clientId,
+				{ text: currentAttributes.text + text }
+			)
+
+			if ( hasInnerBlocks ) {
+				const clientIds = innerBlocks.map( block => block.clientId )
+				moveBlocksToPosition( clientIds, clientId, blockToMerge.clientId )
+			}
+
+			removeBlock( clientId )
+		} )
+	}, [ blockContext, clientId ] )
+}
