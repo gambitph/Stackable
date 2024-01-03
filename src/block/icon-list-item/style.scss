@@ -1,18 +1,22 @@
-.stk-block-icon-list-new .stk-block-icon-list__ul .stk-block.stk-block-icon-list-item,
-.stk-block-icon-list-new .stk-block-icon-list__ul [data-type^="stackable/"].stk-block.stk-block-icon-list-item {
+.stk-block-icon-list-new .stk-block-icon-list__ul .stk-block-icon-list-item,
+.stk-block-icon-list-new .stk-block-icon-list__ul [data-type^="stackable/"].stk-block-icon-list-item {
+	flex-direction: column;
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
 	width: fit-content;
-	display: flex;
-	align-items: center;
 	margin-inline: 0 auto;
-	span.stk--svg-wrapper {
-		width: var(--stk-icon-height, 1em);
-		svg {
-			cursor: copy;
-			padding-right: 3px;
+
+	.stk-block-icon-list-item__content {
+		display: flex;
+		align-items: center;
+		span.stk--svg-wrapper {
 			width: var(--stk-icon-height, 1em);
-			height: var(--stk-icon-height, 1em);
+			svg {
+				cursor: copy;
+				padding-right: 3px;
+				width: var(--stk-icon-height, 1em);
+				height: var(--stk-icon-height, 1em);
+			}
 		}
 	}
 
@@ -24,6 +28,11 @@
 
 .stk-block-icon-list-new .stk-block-icon-list__ol .stk-block-icon-list-item {
 	display: list-item;
+
+	.stk-block-icon-list-new {
+		margin-bottom: 0;
+		padding-inline: 1em;
+	}
 }
 
 li.wp-block-stackable-icon-list-item.stk-block-icon-list-item {

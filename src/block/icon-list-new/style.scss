@@ -25,13 +25,13 @@
 }
 
 // Alignments when the icon list is aligned.
-.stk-block-icon-list :is(ul, ol) {
+.stk-block.stk-block-icon-list-new :is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
 	margin-left: var(--stk-alignment-margin-left);
 	margin-right: var(--stk-alignment-margin-right);
 }
 
 // Prevents theme's css from affecting the icon list.
-.stk-block-icon-list :is(ul, ol) {
+.stk-block.stk-block-icon-list-new :is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
 	margin-top: 0;
 	margin-bottom: 0;
 

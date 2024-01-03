@@ -54,14 +54,16 @@ export const Save = props => {
 		>
 			<TextStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<Icon.Content attributes={ attributes } />
-			{ ! attributes.ordered && attributes.icon && <Icon.Content value={ attributes.icon } attributes={ attributes } /> }
-			{ ! attributes.ordered && ! attributes.icon && <Icon.Content attributes={ attributes } useSvgDef={ true } value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ attributes.parentUniqueId }` ) } /> }
-			<Typography.Content
-				attributes={ attributes }
-				tagName="span"
-				className={ textClassNames }
-			/>
+			<div className="stk-block-icon-list-item__content">
+				<Icon.Content attributes={ attributes } />
+				{ ! attributes.ordered && attributes.icon && <Icon.Content value={ attributes.icon } attributes={ attributes } /> }
+				{ ! attributes.ordered && ! attributes.icon && <Icon.Content attributes={ attributes } useSvgDef={ true } value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ attributes.parentUniqueId }` ) } /> }
+				<Typography.Content
+					attributes={ attributes }
+					tagName="span"
+					className={ textClassNames }
+				/>
+			</div>
 			<InnerBlocks.Content />
 		</BlockDiv.Content>
 	)

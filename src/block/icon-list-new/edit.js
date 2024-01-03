@@ -48,6 +48,8 @@ import { DEFAULT_SVG, IconSvgDef } from './util'
 import { compose } from '@wordpress/compose'
 import { useInnerBlocksProps } from '@wordpress/block-editor'
 import { dispatch } from '@wordpress/data'
+import { useEffect } from '@wordpress/element'
+import { addFilter } from '@wordpress/hooks'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/icon-list-item' ]
 
@@ -110,7 +112,15 @@ const Edit = props => {
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const { innerBlocks } = useBlockContext()
+	const { innerBlocks, parentBlock } = useBlockContext()
+
+	useEffect( () => {
+		if ( parentBlock && parentBlock.name === 'stackable/icon-list-item' ) {
+			setAttributes( { isIndented: true } )
+		} else {
+		 setAttributes( { isIndented: false } )
+		}
+	}, [ parentBlock ] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -314,3 +324,7 @@ export default compose(
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
+
+addFilter( 'stackable.edit.margin-bottom.enable-handlers', 'stackable/icon-list-new', ( enabled, parentBlock ) => {
+	return parentBlock?.name === 'stackable/icon-list-item' ? false : enabled
+} )

@@ -12,7 +12,8 @@
 	],
 	"providesContext": {
 		"stackable/ordered": "ordered",
-		"stackable/uniqueId": "uniqueId"
+		"stackable/uniqueId": "uniqueId",
+		"stackable/isIndented": "isIndented"
 	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "essential",

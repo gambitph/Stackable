@@ -82,6 +82,12 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+
+	// Indentation.
+	isIdented: {
+		type: 'boolean',
+		default: false,
+	},
 }
 
 export const attributes = ( version = VERSION ) => {

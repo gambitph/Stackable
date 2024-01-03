@@ -2,6 +2,9 @@
  * Internal dependencies
  */
 import { TextStyles } from './style'
+import { getUseSvgDef } from '../icon-list-new/util'
+import { useOutdentListItem, useIndentListItem } from './util'
+
 /**
  * External dependencies
  */
@@ -20,24 +23,26 @@ import {
 	Transform,
 	Icon,
 } from '~stackable/block-components'
-import { version as VERSION } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
 import {
 	withBlockAttributeContext,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
+import { useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { createBlock } from '@wordpress/blocks'
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor'
+import {
+	useBlockProps, useInnerBlocksProps, BlockControls,
+} from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { useEffect } from '@wordpress/element'
-import { getUseSvgDef } from '../icon-list-new/util'
-import { useBlockContext } from '~stackable/hooks'
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
 
 const Edit = props => {
 	const {
@@ -58,9 +63,12 @@ const Edit = props => {
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
-	const { 'stackable/ordered': ordered, 'stackable/uniqueId': parentUniqueId } = context
+	const {
+		'stackable/ordered': ordered, 'stackable/uniqueId': parentUniqueId, 'stackable/isIndented': isIndented,
+	} = context
 
-	const { hasInnerBlocks } = useBlockContext()
+	const blockContext = useBlockContext()
+	const { blockIndex } = blockContext
 
 	useEffect( () => {
 		setAttributes( { ordered } )
@@ -69,6 +77,9 @@ const Edit = props => {
 	useEffect( () => {
 		setAttributes( { parentUniqueId } )
 	}, [ parentUniqueId ] )
+
+	const indentListItem = useIndentListItem( blockContext, clientId )
+	const outdentListItem = useOutdentListItem( blockContext, clientId )
 
 	const blockClassNames = classnames( [
 		className,
@@ -129,6 +140,23 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
+					<BlockControls>
+						<ToolbarGroup>
+							<ToolbarButton
+								label={ __( 'Outdent', i18n ) }
+								icon="editor-outdent"
+								disabled={ ! isIndented }
+								onClick={ outdentListItem }
+							/>
+							<ToolbarButton
+								label={ __( 'Indent', i18n ) }
+								icon="editor-indent"
+								disabled={ blockIndex === 0 }
+								onClick={ indentListItem }
+							/>
+						</ToolbarGroup>
+					</BlockControls>
+
 					<InspectorTabs hasLayoutPanel={ false } />
 
 					<Typography.InspectorControls
@@ -164,21 +192,22 @@ const Edit = props => {
 				/>
 				<CustomCSS mainBlockClass="stk-block-icon-list-item" />
 				{ /* TODO: Open icon search popover on click */ }
-				{ ! ordered && icon && ! hasInnerBlocks &&
-					<Icon value={ icon } /> }
-				{ ! ordered && ! icon && ! hasInnerBlocks &&
-					<Icon
-						value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) } /> }
-				{ /* TODO: change to allow icon list as inner blocks */ }
-				{ ! hasInnerBlocks && <Typography
-					ref={ ref }
-					tagName="span"
-					className={ textClassNames }
-					onSplit={ onSplit }
-					onRemove={ _onRemove }
-					onMerge={ mergeBlocks }
-					onReplace={ onReplace }
-				/> }
+				<div className="stk-block-icon-list-item__content">
+					{ ! ordered && icon &&
+						<Icon value={ icon } /> }
+					{ ! ordered && ! icon &&
+						<Icon
+							value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) } /> }
+					<Typography
+						ref={ ref }
+						tagName="span"
+						className={ textClassNames }
+						onSplit={ onSplit }
+						onRemove={ onRemove }
+						onMerge={ mergeBlocks }
+						onReplace={ onReplace }
+					/>
+				</div>
 				{ innerBlocksProps.children }
 			</BlockDiv>
 		</>
