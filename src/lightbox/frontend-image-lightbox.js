@@ -243,7 +243,7 @@ class StackableImageLightbox {
 
 	addClickHandler = ( element, lightbox, i ) => {
 		element.style.cursor = 'pointer'
-		element.setAttribute( 'aria-role', 'button' )
+		element.setAttribute( 'role', 'button' )
 
 		element.addEventListener( 'click', ev => {
 			lightbox.openAt( i )

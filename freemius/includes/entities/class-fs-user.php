@@ -38,6 +38,10 @@
 		 * @var float
 		 */
 		public $gross;
+		/**
+		 * @var bool
+		 */
+		public $is_beta;
 
 		#endregion Properties
 
