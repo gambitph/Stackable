@@ -175,13 +175,13 @@ const Edit = props => {
 					clientId={ clientId }
 				/>
 				<CustomCSS mainBlockClass="stk-block-icon-list-item" />
-				{ /* TODO: Open icon search popover on click */ }
 				<div className="stk-block-icon-list-item__content">
 					{ ! ordered && icon &&
-						<Icon value={ icon } /> }
+						<Icon value={ icon } openOnClick={ true } /> }
 					{ ! ordered && ! icon &&
 						<Icon
-							value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) } /> }
+							value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) }
+							openOnClick={ true } /> }
 					<Typography
 						ref={ ref }
 						tagName="span"
