@@ -67,7 +67,7 @@ export const useOutdentListItem = ( blockContext, clientId ) => {
 				removeBlock( parentIconListClientId )
 			}
 		} )
-	}, [ blockContext ] )
+	}, [ blockContext, clientId ] )
 }
 
 export const useIndentListItem = ( blockContext, clientId ) => {
@@ -87,7 +87,7 @@ export const useIndentListItem = ( blockContext, clientId ) => {
 	return useCallback( () => {
 		// Clone the icon list item to be indented
 		// and the preceding icon list item.
-		const item = [ cloneBlock( getBlock( clientId ) ) ]
+		const item = cloneBlock( getBlock( clientId ) )
 		const previousItem = cloneBlock( getBlock( previousBlock.clientId ) )
 
 		// Create an icon list block for the preceding icon list item if it doesn't exist.
@@ -99,7 +99,7 @@ export const useIndentListItem = ( blockContext, clientId ) => {
 			// Get the last icon list block of the preceding icon list item.
 			innerBlocks[ previousItem.innerBlocks.length - 1 ].
 			// Add the cloned icon list item to the end of the preceding icon list item's last icon list block.
-			innerBlocks.push( ...item )
+			innerBlocks.push( item )
 
 		// Replace the preceding icon list item with the cloned icon list item.
 		replaceBlocks( [ previousBlock.clientId, clientId ], [ previousItem ] )
@@ -165,4 +165,36 @@ export const useMerge = ( blockContext, clientId, text ) => {
 			removeBlock( clientId )
 		} )
 	}, [ blockContext, clientId ] )
+}
+
+export const useOnSplit = ( clientId, attributes ) => {
+	const {
+		getBlock,
+	} = useSelect( 'core/block-editor' )
+
+	return useCallback( ( value, isOriginal ) => {
+		const block = getBlock( clientId )
+		let newBlock
+
+		if ( isOriginal || value ) {
+			newBlock = cloneBlock( block, {
+				...attributes,
+				text: value,
+			} )
+		} else {
+			newBlock = cloneBlock( block, {
+				...attributes,
+				text: '',
+			} )
+		}
+
+		if ( isOriginal ) {
+			newBlock.clientId = clientId
+			if ( newBlock.innerBlocks?.length ) {
+				newBlock.innerBlocks = []
+			}
+		}
+
+		return newBlock
+	}, [ clientId, attributes ] )
 }

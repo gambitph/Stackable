@@ -4,7 +4,10 @@
 import { TextStyles } from './style'
 import { getUseSvgDef } from '../icon-list-new/util'
 import {
-	useOutdentListItem, useIndentListItem, useMerge,
+	useOutdentListItem,
+	useIndentListItem,
+	useMerge,
+	useOnSplit,
 } from './util'
 
 /**
@@ -37,7 +40,6 @@ import { useBlockContext } from '~stackable/hooks'
 /**
  * WordPress dependencies
  */
-import { createBlock } from '@wordpress/blocks'
 import {
 	useBlockProps, useInnerBlocksProps, BlockControls,
 } from '@wordpress/block-editor'
@@ -65,11 +67,15 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const {
-		'stackable/ordered': ordered, 'stackable/uniqueId': parentUniqueId, 'stackable/isIndented': isIndented,
+		'stackable/ordered': ordered,
+		'stackable/uniqueId': parentUniqueId,
+		'stackable/isIndented': isIndented,
 	} = context
 
 	const blockContext = useBlockContext()
-	const { blockIndex } = blockContext
+	const {
+		blockIndex,
+	} = blockContext
 
 	useEffect( () => {
 		setAttributes( { ordered } )
@@ -93,28 +99,7 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	const onSplit = ( value, isOriginal ) => {
-		// TODO: update when block is split and has inner blocks
-		let block
-
-		if ( isOriginal || value ) {
-			block = createBlock( 'stackable/icon-list-item', {
-				...attributes,
-				text: value,
-			} )
-		} else {
-			block = createBlock( 'stackable/icon-list-item', {
-				...attributes,
-				text: '',
-			} )
-		}
-
-		if ( isOriginal ) {
-			block.clientId = clientId
-		}
-
-		return block
-	}
+	const onSplit = useOnSplit( clientId, attributes )
 
 	const onMerge = useMerge( blockContext, clientId, attributes.text )
 
