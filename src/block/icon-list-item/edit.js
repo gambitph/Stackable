@@ -112,6 +112,7 @@ const Edit = props => {
 		className: blockClassNames,
 		blockTag: 'li',
 		renderHtmlTag: false,
+		tabindex: '-1',
 	} )
 
 	const { ref, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
