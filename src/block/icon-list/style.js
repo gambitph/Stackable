@@ -38,59 +38,6 @@ const Styles = props => {
 	// TODO: clean up comments
 	return (
 		<>
-			{ /* { Object.keys( icons ).reduce( ( acc, key ) => {
-				acc.push(
-					<BlockCss
-						{ ...propsToPass }
-						renderIn="edit"
-						selector={ key }
-						hover="all"
-						hoverSelector={ '.%s:hover ' + key }
-						styleRule="listStyleImage"
-						attrName="markerColor"
-						key="markerColor"
-						valuePreCallback={ ( value, getAttribute, device, state ) => {
-							const iconRotation = getAttribute( 'iconRotation' )
-							const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
-							if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
-								return undefined
-							}
-
-							const transform = `rotate(${ iconRotation + 'deg' })`
-							const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000', { transform, opacity: iconOpacity } )
-							return `url('data:image/svg+xml;base64,${ iconWithColor }')`
-						} }
-						dependencies={ [ 'icons', 'iconRotation', 'iconOpacity' ] }
-					/>
-				)
-				acc.push(
-					<BlockCss
-						{ ...propsToPass }
-						renderIn="save"
-						selector={ key }
-						hover="all"
-						hoverSelector={ '.%s:hover ' + key }
-						styleRule="listStyleImage"
-						attrName="markerColor"
-						key="markerColor-save"
-						valuePreCallback={ ( value, getAttribute, device, state ) => {
-							const iconRotation = getAttribute( 'iconRotation' )
-							const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
-							if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
-								return undefined
-							}
-
-							const transform = `rotate(${ iconRotation + 'deg' })`
-
-							const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000', { transform, opacity: iconOpacity } )
-							return `url('data:image/svg+xml;base64,${ iconWithColor }')`
-						} }
-						dependencies={ [ 'icons', 'iconRotation', 'iconOpacity' ] }
-					/>
-				)
-				return acc
-			}, [] ) } */ }
-
 			<BlockCss
 				{ ...propsToPass }
 				selector="ol li"
@@ -151,51 +98,34 @@ const Styles = props => {
 				responsive="all"
 				format="%spx"
 			/>
-			{ /* <BlockCss
+			<BlockCss
 				{ ...propsToPass }
-				selector="ul li"
+				selector=""
 				hover="all"
-				hoverSelector=".%s:hover li"
-				styleRule="listStyleImage"
+				hoverSelector=".%s:hover"
+				styleRule="--stk-icon-list-icon-color"
 				attrName="markerColor"
 				key="markerColor"
-				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					const iconSVG = getAttribute( 'icon' )
-					const iconRotation = getAttribute( 'iconRotation' )
-					const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
-					if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
-						return undefined
-					}
-
-					if ( ! iconSVG ) {
-						return undefined
-					}
-
-					const transform = `rotate(${ iconRotation + 'deg' })`
-
-					const iconWithColor = convertSVGStringToBase64( iconSVG, value || '#000', { transform, opacity: iconOpacity } )
-					return `url('data:image/svg+xml;base64,${ iconWithColor }')`
-				} }
-				dependencies={ [ 'icon', 'iconRotation', 'iconOpacity' ] }
-			/> */ }
-			{ /* <BlockCss
-				{ ...propsToPass }
-				selector="li::marker"
-				hover="all"
-				hoverSelector=".%s:hover li::marker"
-				styleRule="color"
-				attrName="markerColor"
-				key="markerColor-hover"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="li::marker"
-				styleRule="fontSize"
-				attrName="iconSize"
-				key="iconSize"
-				responsive="all"
-				format="%sem"
-			/> */ }
+				selector=""
+				hover="all"
+				hoverSelector=".%s:hover"
+				styleRule="--stk-icon-list-icon-opacity"
+				attrName="iconOpacity"
+				key="iconOpacity"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=""
+				hover="all"
+				hoverSelector=".%s:hover"
+				styleRule="--stk-icon-list-icon-rotation"
+				attrName="iconRotation"
+				key="iconRotation"
+				valueCallback={ value => value + 'deg' }
+			/>
 			<BlockCss
 				{ ...propsToPass }
 				// For calculating the approximate clickable area for
