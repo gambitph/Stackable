@@ -19,8 +19,15 @@ export const settings = {
 	supports: {
 		anchor: true,
 		align: true,
+		__experimentalSelector: 'li',
 	},
 	example,
 	edit,
 	save,
+	merge( attributes, attributesToMerge ) {
+		return {
+			...attributes,
+			text: attributes.text + attributesToMerge.text,
+		}
+	},
 }

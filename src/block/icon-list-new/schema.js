@@ -105,7 +105,6 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, 'ul,ol', {
 		hasTextTag: false,
-		multilineWrapperTags: [ 'ol', 'ul' ],
 	} )
 	MarginBottom.addAttributes( attrObject )
 

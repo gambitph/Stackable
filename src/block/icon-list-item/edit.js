@@ -4,10 +4,12 @@
 import { TextStyles } from './style'
 import { getUseSvgDef } from '../icon-list-new/util'
 import {
-	useOutdentListItem,
+	convertToListItems,
 	useIndentListItem,
+	useOutdentListItem,
 	useMerge,
 	useOnSplit,
+	useCopy,
 } from './util'
 
 /**
@@ -53,8 +55,8 @@ const Edit = props => {
 		attributes,
 		clientId,
 		isSelected,
-		onRemove,
 		onReplace,
+		mergeBlocks,
 		context,
 		className,
 		setAttributes,
@@ -101,18 +103,17 @@ const Edit = props => {
 
 	const onSplit = useOnSplit( clientId, attributes )
 
-	const onMerge = useMerge( blockContext, clientId, attributes.text )
-
-	//TODO: move cursor to adjacent blocks without double press of arrow keys
+	const onMerge = useMerge( clientId, mergeBlocks )
 
 	const blockProps = useBlockProps( {
+		ref: useCopy( clientId ),
 		blockHoverClass: props.blockHoverClass,
 		clientId: props.clientId,
 		attributes: props.attributes,
 		className: blockClassNames,
 		blockTag: 'li',
 		renderHtmlTag: false,
-		tabindex: '-1',
+		tabIndex: '-1',
 	} )
 
 	const { ref, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
@@ -188,9 +189,15 @@ const Edit = props => {
 						tagName="span"
 						className={ textClassNames }
 						onSplit={ onSplit }
-						onRemove={ onRemove }
 						onMerge={ onMerge }
-						onReplace={ onReplace }
+						onReplace={ onReplace
+							? ( blocks, ...args ) => {
+								onReplace(
+									convertToListItems( blocks ),
+									...args
+								)
+							  }
+							: undefined }
 					/>
 				</div>
 				{ innerBlocksProps.children }

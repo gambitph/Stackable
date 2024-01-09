@@ -2,12 +2,46 @@
 /**
  * WordPress dependencies
  */
+import { useRefEffect } from '@wordpress/compose'
 import { useCallback } from '@wordpress/element'
 import {
-	useSelect, useDispatch, useRegistry,
+	useSelect, useDispatch, useRegistry, select,
 } from '@wordpress/data'
-import { createBlock, cloneBlock } from '@wordpress/blocks'
+import {
+	createBlock, cloneBlock, switchToBlockType,
+} from '@wordpress/blocks'
+import { store as blockEditorStore } from '@wordpress/block-editor'
 import { useBlockContext } from '~stackable/hooks'
+
+function convertBlockToList( block ) {
+	const list = switchToBlockType( block, 'stackable/icon-list-new' )
+	if ( list ) {
+		return list
+	}
+	const paragraph = switchToBlockType( block, 'core/paragraph' )
+	if ( ! paragraph ) {
+		return null
+	}
+	return switchToBlockType( paragraph, 'stackable/icon-list-new' )
+}
+
+export function convertToListItems( blocks ) {
+	const listItems = []
+
+	for ( let block of blocks ) {
+		if ( block.name === 'stackable/icon-list-item' ) {
+			listItems.push( block )
+		} else if ( block.name === 'stackable/icon-list-new' ) {
+			listItems.push( ...block.innerBlocks )
+		} else if ( ( block = convertBlockToList( block ) ) ) {
+			for ( const { innerBlocks } of block ) {
+				listItems.push( ...innerBlocks )
+			}
+		}
+	}
+
+	return listItems
+}
 
 export const useOutdentListItem = ( blockContext, clientId ) => {
 	const {
@@ -106,64 +140,119 @@ export const useIndentListItem = ( blockContext, clientId ) => {
 	}, [ blockContext, clientId ] )
 }
 
-export const useMerge = ( blockContext, clientId, text ) => {
-	const {
-		parentBlock,
-		previousBlock,
-		hasInnerBlocks,
-		innerBlocks,
-	} = blockContext
+// Modified useMerge from gutenberg list item hooks.
+export const useMerge = ( clientId, onMerge ) => {
+	const blockContext = useBlockContext( clientId )
+	const { previousBlock } = blockContext
 
 	const registry = useRegistry()
 	const outdentListItem = useOutdentListItem( blockContext, clientId )
 
-	const {
-		updateBlockAttributes,
-		removeBlock,
-		moveBlocksToPosition,
-	} =
-    useDispatch( 'core/block-editor' )
+	const { mergeBlocks, moveBlocksToPosition } = useDispatch( 'core/block-editor' )
 
-	const {
-		getBlockAttributes,
-	} = useSelect( 'core/block-editor' )
+	const { getBlockOrder, getBlockRootClientId } = useSelect( 'core/block-editor' )
 
-	let blockToMerge = previousBlock
-	let willOutdent = false
-	const { parentBlock: iconListItemParentBlock } = useBlockContext( parentBlock.clientId )
-	if ( ! previousBlock || iconListItemParentBlock?.name === 'stackable/icon-list-item' ) {
-		willOutdent = true
-	}
-	const { hasInnerBlocks: previousHasInnerBlocks, innerBlocks: previousInnerBlocks } = useBlockContext( previousBlock?.clientId )
-	if ( previousHasInnerBlocks ) {
-		// Get the last icon list block of the preceding icon list item.
-		const lastIconList = previousInnerBlocks[ previousInnerBlocks.length - 1 ]
-		// Get the last icon list item block.
-		blockToMerge = lastIconList.innerBlocks[ lastIconList.innerBlocks.length - 1 ]
+	const getParentListItemId = id => {
+		const { parentBlock: parentListBlock } = select( 'stackable/block-context' ).getBlockContext( id )
+		const { parentBlock: parentIconListItemBlock } = select( 'stackable/block-context' ).getBlockContext( parentListBlock.clientId )
+
+		if ( parentIconListItemBlock?.name !== 'stackable/icon-list-item' ) {
+			return
+		}
+
+		return parentIconListItemBlock.clientId
 	}
 
-	return useCallback( () => {
-		registry.batch( () => {
-			if ( willOutdent ) {
-				outdentListItem()
+	const getTrailingId = id => {
+		const order = getBlockOrder( id )
+
+		if ( ! order.length ) {
+			return id
+		}
+
+		return getTrailingId( order[ order.length - 1 ] )
+	}
+
+	/**
+	 * Return the next list item with respect to the given list item. If none,
+	 * return the next list item of the parent list item if it exists.
+	 *
+	 * @param {string} id A list item client ID.
+	 * @return {string?} The client ID of the next list item.
+	 */
+	function _getNextId( id ) {
+		const { nextBlock: next } = select( 'stackable/block-context' ).getBlockContext( id )
+		if ( next ) {
+			return next.clientId
+		}
+		const parentListItemId = getParentListItemId( id )
+		if ( ! parentListItemId ) {
+			return
+		}
+		return _getNextId( parentListItemId )
+	}
+
+	/**
+	 * Given a client ID, return the client ID of the list item on the next
+	 * line, regardless of indentation level.
+	 *
+	 * @param {string} id The client ID of the current list item.
+	 * @return {string?} The client ID of the next list item.
+	 */
+	function getNextId( id ) {
+		const order = getBlockOrder( id )
+
+		// If the list item does not have a nested list, return the next list
+		// item.
+		if ( ! order.length ) {
+			return _getNextId( id )
+		}
+
+		// Get the first list item in the nested list.
+		return getBlockOrder( order[ 0 ] )[ 0 ]
+	}
+
+	return useCallback( forward => {
+		function mergeWithNested( clientIdA, clientIdB ) {
+			registry.batch( () => {
+				const [ nestedListClientId ] = getBlockOrder( clientIdB )
+				// Move any nested list items to the previous list item.
+				if ( nestedListClientId ) {
+					moveBlocksToPosition(
+						getBlockOrder( nestedListClientId ),
+						nestedListClientId,
+						getBlockRootClientId( clientIdA )
+					)
+				}
+				mergeBlocks( clientIdA, clientIdB )
+			} )
+		}
+
+		if ( forward ) {
+			const nextBlockClientId = getNextId( clientId )
+
+			if ( ! nextBlockClientId ) {
+				onMerge( forward )
 				return
 			}
 
-			const currentAttributes = getBlockAttributes( blockToMerge.clientId )
-
-			// eslint-disable-next-line stackable/no-update-block-attributes
-			updateBlockAttributes(
-				blockToMerge.clientId,
-				{ text: currentAttributes.text + text }
-			)
-
-			if ( hasInnerBlocks ) {
-				const clientIds = innerBlocks.map( block => block.clientId )
-				moveBlocksToPosition( clientIds, clientId, blockToMerge.clientId )
+			if ( getParentListItemId( nextBlockClientId ) ) {
+				outdentListItem( nextBlockClientId )
+			} else {
+				mergeWithNested( clientId, nextBlockClientId )
 			}
-
-			removeBlock( clientId )
-		} )
+		} else {
+			const previousBlockClientId = previousBlock?.clientId
+			if ( getParentListItemId( clientId ) ) {
+				// Outdent nested lists.
+				outdentListItem()
+			} else if ( previousBlockClientId ) {
+				const trailingId = getTrailingId( previousBlockClientId )
+				mergeWithNested( trailingId, clientId )
+			} else {
+				onMerge( forward )
+			}
+		}
 	}, [ blockContext, clientId ] )
 }
 
@@ -197,4 +286,38 @@ export const useOnSplit = ( clientId, attributes ) => {
 
 		return newBlock
 	}, [ clientId, attributes ] )
+}
+
+export const useCopy = clientId => {
+	const {
+		getBlockRootClientId, getBlockName, getBlockAttributes,
+	} =
+		useSelect( blockEditorStore )
+
+	return useRefEffect( node => {
+		function onCopy( event ) {
+			// The event propagates through all nested lists, so don't override
+			// when copying nested list items.
+			if ( event.clipboardData.getData( '__unstableWrapperBlockName' ) ) {
+				return
+			}
+
+			const rootClientId = getBlockRootClientId( clientId )
+			event.clipboardData.setData(
+				'__unstableWrapperBlockName',
+				getBlockName( rootClientId )
+			)
+			event.clipboardData.setData(
+				'__unstableWrapperBlockAttributes',
+				JSON.stringify( getBlockAttributes( rootClientId ) )
+			)
+		}
+
+		node.addEventListener( 'copy', onCopy )
+		node.addEventListener( 'cut', onCopy )
+		return () => {
+			node.removeEventListener( 'copy', onCopy )
+			node.removeEventListener( 'cut', onCopy )
+		}
+	}, [] )
 }

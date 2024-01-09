@@ -12,6 +12,7 @@ import metadata from './block.json'
 import schema from './schema'
 import example from './example'
 import deprecated from './deprecated'
+import transforms from './transforms'
 
 /**
  * WordPress dependencies
@@ -25,18 +26,13 @@ export const settings = {
 	supports: {
 		anchor: true,
 		spacing: true,
+		__unstablePasteTextInline: true,
+		__experimentalSelector: 'ol,ul',
+		__experimentalOnMerge: true,
 	},
 	example,
 	deprecated,
 	edit,
 	save,
-	merge( attributes, attributesToMerge ) {
-		// Make sure that the selection is always at the end of the text.
-		// @see https://github.com/WordPress/gutenberg/blob/3da717b8d0ac7d7821fc6d0475695ccf3ae2829f/packages/block-library/src/paragraph/index.js
-		return {
-			text:
-				( attributes.text || '' ) +
-				( attributesToMerge.text || '' ),
-		}
-	},
+	transforms,
 }
