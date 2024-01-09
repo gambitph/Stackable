@@ -52,6 +52,10 @@ export const iconListAttributes = {
 		default: '',
 		stkHover: true,
 	},
+	icons: {
+		type: 'object',
+		default: {},
+	},
 	iconSize: {
 		stkResponsive: true,
 		type: 'number',

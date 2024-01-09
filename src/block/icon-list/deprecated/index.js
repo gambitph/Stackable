@@ -14,13 +14,24 @@ const textToArray = text => {
 	return contents
 }
 
+const getUniqueIcon = ( icons, index ) => {
+	if ( ! icons ) {
+		return
+	}
+	const key = `ul li:nth-child(${ index + 1 })`
+	if ( ! ( key in icons ) ) {
+		return
+	}
+	return icons[ key ]
+}
+
 const deprecated = [
 	{
 		attributes: attributes( '3.12.8' ),
 		save: withVersion( '3.12.8' )( Save ),
 		migrate: ( attributes, innerBlocks ) => {
 			const {
-				text, icons: _icons, ...newAttributes
+				text, icons, ...newAttributes
 			} = { ...attributes }
 
 			if ( ! text ) {
@@ -28,9 +39,10 @@ const deprecated = [
 				innerBlocks = [ block ]
 			} else {
 				const contents = textToArray( text )
-				const blocks = contents.map( content => {
+				const blocks = contents.map( ( content, index ) => {
 					return createBlock( 'stackable/icon-list-item', {
 						text: content,
+						icon: getUniqueIcon( icons, index ),
 					} )
 				} )
 				innerBlocks = blocks
