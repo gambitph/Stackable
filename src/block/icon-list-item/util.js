@@ -14,7 +14,7 @@ import { store as blockEditorStore } from '@wordpress/block-editor'
 import { useBlockContext } from '~stackable/hooks'
 
 function convertBlockToList( block ) {
-	const list = switchToBlockType( block, 'stackable/icon-list-new' )
+	const list = switchToBlockType( block, 'stackable/icon-list' )
 	if ( list ) {
 		return list
 	}
@@ -22,7 +22,7 @@ function convertBlockToList( block ) {
 	if ( ! paragraph ) {
 		return null
 	}
-	return switchToBlockType( paragraph, 'stackable/icon-list-new' )
+	return switchToBlockType( paragraph, 'stackable/icon-list' )
 }
 
 export function convertToListItems( blocks ) {
@@ -31,7 +31,7 @@ export function convertToListItems( blocks ) {
 	for ( let block of blocks ) {
 		if ( block.name === 'stackable/icon-list-item' ) {
 			listItems.push( block )
-		} else if ( block.name === 'stackable/icon-list-new' ) {
+		} else if ( block.name === 'stackable/icon-list' ) {
 			listItems.push( ...block.innerBlocks )
 		} else if ( ( block = convertBlockToList( block ) ) ) {
 			for ( const { innerBlocks } of block ) {
@@ -126,7 +126,7 @@ export const useIndentListItem = ( blockContext, clientId ) => {
 
 		// Create an icon list block for the preceding icon list item if it doesn't exist.
 		if ( ! previousItem.innerBlocks?.length ) {
-			previousItem.innerBlocks = [ createBlock( 'stackable/icon-list-new' ) ]
+			previousItem.innerBlocks = [ createBlock( 'stackable/icon-list' ) ]
 		}
 
 		previousItem.

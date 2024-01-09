@@ -1,12 +1,44 @@
 import { Save } from './save'
-import { attributes } from './schema'
+import { attributes } from '../schema'
 
 import { withVersion } from '~stackable/higher-order'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
 } from '~stackable/block-components'
 
+import { createBlock } from '@wordpress/blocks'
+
+const textToArray = text => {
+	const liTags = Array.from( text.matchAll( /<li>(.*?)<\/li>/gs ) )
+	const contents = liTags.map( tag => tag[ 1 ] )
+	return contents
+}
+
 const deprecated = [
+	{
+		attributes: attributes( '3.12.8' ),
+		save: withVersion( '3.12.8' )( Save ),
+		migrate: ( attributes, innerBlocks ) => {
+			const {
+				text, icons: _icons, ...newAttributes
+			} = { ...attributes }
+
+			if ( ! text ) {
+				const block = createBlock( 'stackable/icon-list-item' )
+				innerBlocks = [ block ]
+			} else {
+				const contents = textToArray( text )
+				const blocks = contents.map( content => {
+					return createBlock( 'stackable/icon-list-item', {
+						text: content,
+					} )
+				} )
+				innerBlocks = blocks
+			}
+
+			return [ newAttributes, innerBlocks ]
+		},
+	},
 	// Support the new combined opacity and color.
 	{
 		attributes: attributes( '3.11.9' ),

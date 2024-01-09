@@ -1,7 +1,7 @@
 {
 	"apiVersion": 3,
-	"name": "stackable/icon-list-new",
-	"title": "Icon List (New)",
+	"name": "stackable/icon-list-old",
+	"title": "Icon List (Old)",
 	"description": "An unordered list with icons. You can use this as a list of features or benefits.",
 	"category": "stackable",
 	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation" ],
@@ -10,11 +10,6 @@
 		"Bullets",
 		"Number list"
 	],
-	"providesContext": {
-		"stackable/ordered": "ordered",
-		"stackable/uniqueId": "uniqueId",
-		"stackable/isIndented": "isIndented"
-	},
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "essential",
 	"stk-demo": "https://wpstackable.com/icon-list-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink"

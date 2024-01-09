@@ -66,7 +66,7 @@ const transforms = {
 					} )
 				}
 				return createBlock(
-					'stackable/icon-list-new',
+					'stackable/icon-list',
 					{
 						anchor: blockAttributes.anchor,
 					},
@@ -87,7 +87,7 @@ const transforms = {
 			type: 'prefix',
 			prefix,
 			transform( content ) {
-				return createBlock( 'stackable/icon-list-new', {}, [
+				return createBlock( 'stackable/icon-list', {}, [
 					createBlock( 'stackable/icon-list-item', { text: content } ),
 				] )
 			},
@@ -97,7 +97,7 @@ const transforms = {
 			prefix,
 			transform( content ) {
 				return createBlock(
-					'stackable/icon-list-new',
+					'stackable/icon-list',
 					{
 						ordered: true,
 					},

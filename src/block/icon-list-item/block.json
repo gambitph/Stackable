@@ -9,7 +9,7 @@
 		"Keywords that are not in the title"
 	],
 	"parent": [
-		"stackable/icon-list-new"
+		"stackable/icon-list"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks",
 	"stk-type": "special",

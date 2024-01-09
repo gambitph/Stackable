@@ -1,136 +1,125 @@
 /**
- * External dependencies
- */
-import { faGetSVGIcon, createElementFromHTMLString } from '~stackable/util'
-import { kebabCase } from 'lodash'
-
-/**
  * WordPress dependencies
  */
-import { RichTextShortcut } from '@wordpress/block-editor'
-/* eslint-disable @wordpress/no-unsafe-wp-apis */
-import {
-	__unstableIndentListItems as indentListItems,
-	__unstableOutdentListItems as outdentListItems,
-} from '@wordpress/rich-text'
-/* eslint-enable @wordpress/no-unsafe-wp-apis */
+import { createElement } from '@wordpress/element'
 import { __, _x } from '@wordpress/i18n'
+import { createBlock } from '@wordpress/blocks'
+
+import { forwardRef } from 'react'
+
+import { i18n } from 'stackable'
 
 // The default icon list SVG.
 export const DEFAULT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190"><polygon points="173.8,28.4 60.4,141.8 15.7,97.2 5.1,107.8 60.4,163 184.4,39 173.8,28.4"/></svg>'
 
+export const IconSvgDef = props => {
+	const { icon, uniqueId } = props
+
+	const rawHtml = `<defs><g id="stk-icon-list__icon-svg-def-${ uniqueId }">${ icon }</g></defs>`
+
+	return createElement( 'svg', { dangerouslySetInnerHTML: { __html: rawHtml }, style: { display: 'none' } } )
+}
+
+export const getUseSvgDef = href => {
+	return `<svg><use xlink:href="${ href }"></use></svg>`
+}
+
+// eslint-disable-next-line no-unused-vars
+export const WithForwardRefComponent = forwardRef( ( props, ref ) => {
+	const { component: Component, ...propsToPass } = props
+
+	return <Component { ...propsToPass }> { props.children } </Component>
+} )
 /**
- * Convert SVG tag to base64 string
- *
- * @param {string} svgTag
- * @param {string} color
- * @param {Object} styles additional styles
- *
- * @return {string} base64 string
+ * WordPress dependencies
  */
-export const convertSVGStringToBase64 = ( svgTag = '', color = '', styles = {} ) => {
-	let svgTagString = svgTag
 
-	// If no SVG given, use the default SVG.
-	if ( ! svgTag ) {
-		svgTagString = DEFAULT_SVG
+const listStyleTypeOptions = {
+	d: {
+		label: __( 'Number', i18n ),
+		value: 'decimal',
+	},
+	D: {
+		label: __( 'Padded Number', i18n ),
+		value: 'decimal-leading-zero',
+	},
+	i: {
+		label: __( 'Lowercase Roman', i18n ),
+		value: 'lower-roman',
+	},
+	I: {
+		label: __( 'Uppercase Roman', i18n ),
+		value: 'upper-roman',
+	},
+	a: {
+		label: __( 'Lowercase Letters', i18n ),
+		value: 'lower-alpha',
+	},
+	A: {
+		label: __( 'Uppercase Letters', i18n ),
+		value: 'upper-alpha',
+	},
+}
+
+export function createListBlockFromDOMElement( listElement ) {
+	const type = listElement.getAttribute( 'type' )
+	const listAttributes = {
+		ordered: 'OL' === listElement.tagName,
+		anchor: listElement.id === '' ? undefined : listElement.id,
+		listType: type && listStyleTypeOptions[ type ] ? listStyleTypeOptions[ type ] : undefined,
 	}
 
-	if ( typeof svgTag === 'string' && svgTag.split( '-' ).length === 2 ) {
-		const [ prefix, iconName ] = svgTag.split( '-' )
-		svgTagString = faGetSVGIcon( prefix, iconName )
-	}
+	const innerBlocks = Array.from( listElement.children ).map(
+		listItem => {
+			const children = Array.from( listItem.childNodes ).filter(
+				node =>
+					node.nodeType !== node.TEXT_NODE ||
+					node.textContent.trim().length !== 0
+			)
+			children.reverse()
+			const [ nestedList, ...nodes ] = children
 
-	const svgEl = createElementFromHTMLString( svgTagString )
-	if ( svgEl ) {
-		const svgChildElements = svgEl.querySelectorAll( '*' )
-
-		if ( color ) {
-			let _color = color
-			if ( color.match( /#([\d\w]{6})/g ) ) {
-				_color = color.match( /#([\d\w]{6})/g )[ 0 ]
-			} else if ( color.match( /var\((.*)?--[\w\d-_]+/g ) ) {
-				const colorVariable = color.match( /--[\w\d-_]+/g )[ 0 ]
-				try {
-					// Try and get the actual value, this can possibly get an error due to stylesheet access security.
-					_color = window.getComputedStyle( document.documentElement ).getPropertyValue( colorVariable ) || color
-				} catch ( err ) {
-					_color = color
-				}
+			const hasNestedList =
+				nestedList?.tagName === 'UL' || nestedList?.tagName === 'OL'
+			if ( ! hasNestedList ) {
+				return createBlock( 'stackable/icon-list-item', {
+					text: listItem.innerHTML,
+				} )
 			}
-
-			svgChildElements.forEach( child => {
-				if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
-					child.setAttribute( 'fill', _color )
-					child.setAttribute( 'stroke', _color )
-					child.style.fill = _color
-					child.style.stroke = _color
+			const htmlNodes = nodes.map( node => {
+				if ( node.nodeType === node.TEXT_NODE ) {
+					return node.textContent
 				}
+				return node.outerHTML
 			} )
-			const willEnqueueStyles = Object.keys( styles ).map( key => typeof styles[ key ] !== 'undefined' && styles[ key ] !== '' ? `${ kebabCase( key ) }: ${ styles[ key ] } !important;` : '' ).join( '' )
-			svgEl.setAttribute( 'style', `fill: ${ _color } !important; color: ${ _color } !important;` + willEnqueueStyles )
+			htmlNodes.reverse()
+			const childAttributes = {
+				text: htmlNodes.join( '' ).trim(),
+			}
+			const childInnerBlocks = [
+				createListBlockFromDOMElement( nestedList ),
+			]
+			return createBlock(
+				'stackable/icon-list-item',
+				childAttributes,
+				childInnerBlocks
+			)
 		}
-
-		/**
-		 * Use XMLSerializer to create XML string from DOM Element
-		 *
-		 * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer
-		 */
-		const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
-
-		return window.btoa( serializedString )
-	}
-}
-
-/**
- * Create a toolbar control
- * for the icon list block.
- *
- * @param {{ isSelected, tagName }}  options
- * @return {Function} function which will be used as render prop.
- */
-export const createIconListControls = ( options = {} ) => {
-	const {
-		isSelected,
-		tagName,
-	} = options
-
-	return ( {
-		value, onChange,
-	} ) => isSelected && (
-		<>
-			<RichTextShortcut
-				type="primary"
-				character="["
-				onUse={ () => {
-					onChange( outdentListItems( value ) )
-				} }
-			/>
-			<RichTextShortcut
-				type="primary"
-				character="]"
-				onUse={ () => {
-					onChange(
-						indentListItems( value, { type: tagName } )
-					)
-				} }
-			/>
-			<RichTextShortcut
-				type="primary"
-				character="m"
-				onUse={ () => {
-					onChange(
-						indentListItems( value, { type: tagName } )
-					)
-				} }
-			/>
-			<RichTextShortcut
-				type="primaryShift"
-				character="m"
-				onUse={ () => {
-					onChange( outdentListItems( value ) )
-				} }
-			/>
-		</>
 	)
+
+	return createBlock( 'stackable/icon-list', listAttributes, innerBlocks )
 }
+
+export function migrateTypeToInlineStyle( attributes ) {
+	const { type } = attributes
+
+	if ( type && listStyleTypeOptions[ type ] ) {
+		return {
+			...attributes,
+			listType: listStyleTypeOptions[ type ],
+		}
+	}
+
+	return attributes
+}
+

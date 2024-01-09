@@ -1,20 +1,20 @@
 // Important, we can't use flex since it causes issues with columns.
-.stk-block-icon-list {
+.stk-block-icon-list.stk-block {
 	:is(ul, ol) {
-		width: fit-content;
+		width: fit-content; // TODO: Confirm if will set to 100% or not
 		text-align: start;
 	}
 	ol {
 		list-style-image: none;
 	}
 
-	&.stk-block :is(ul, ol) {
-		padding-inline-start: 1em;
+	ul.stk-block-icon-list__ul {
+		list-style-type: none;
+		padding-inline-start: 0px;
 	}
 
-	// Line height creates unnecessary row gaps.
-	::marker {
-		line-height: 0;
+	&.stk-block :is(ol) {
+		padding-inline-start: 1em;
 	}
 
 	// @from https://css-tricks.com/almanac/properties/b/break-inside/
@@ -22,22 +22,16 @@
 		page-break-inside: avoid; /* Firefox */
 		break-inside: avoid;
 	}
-
-	// Need to make this fit the content so that we can align left/center/right
-	// the list alignment.
-	li {
-		width: fit-content;
-	}
 }
 
 // Alignments when the icon list is aligned.
-.stk-block-icon-list :is(ul, ol) {
+.stk-block.stk-block-icon-list :is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
 	margin-left: var(--stk-alignment-margin-left);
 	margin-right: var(--stk-alignment-margin-right);
 }
 
 // Prevents theme's css from affecting the icon list.
-.stk-block-icon-list :is(ul, ol) {
+.stk-block.stk-block-icon-list :is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
 	margin-top: 0;
 	margin-bottom: 0;
 

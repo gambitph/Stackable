@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-// import { convertSVGStringToBase64 } from './util'
+import { convertSVGStringToBase64 } from './util'
 
 /**
  * External dependencies
@@ -35,10 +35,13 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
-	// TODO: clean up comments
+	const {
+		icons,
+	} = props
+
 	return (
 		<>
-			{ /* { Object.keys( icons ).reduce( ( acc, key ) => {
+			{ Object.keys( icons ).reduce( ( acc, key ) => {
 				acc.push(
 					<BlockCss
 						{ ...propsToPass }
@@ -89,23 +92,14 @@ const Styles = props => {
 					/>
 				)
 				return acc
-			}, [] ) } */ }
+			}, [] ) }
 
 			<BlockCss
 				{ ...propsToPass }
-				selector="ol li"
+				selector="li"
 				styleRule="paddingInlineStart"
 				attrName="iconGap"
-				key="olIconGap"
-				responsive="all"
-				format="%spx"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector="ul li"
-				styleRule="gap"
-				attrName="iconGap"
-				key="ulIconGap"
+				key="iconGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -151,7 +145,7 @@ const Styles = props => {
 				responsive="all"
 				format="%spx"
 			/>
-			{ /* <BlockCss
+			<BlockCss
 				{ ...propsToPass }
 				selector="ul li"
 				hover="all"
@@ -177,8 +171,8 @@ const Styles = props => {
 					return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 				} }
 				dependencies={ [ 'icon', 'iconRotation', 'iconOpacity' ] }
-			/> */ }
-			{ /* <BlockCss
+			/>
+			<BlockCss
 				{ ...propsToPass }
 				selector="li::marker"
 				hover="all"
@@ -195,7 +189,7 @@ const Styles = props => {
 				key="iconSize"
 				responsive="all"
 				format="%sem"
-			/> */ }
+			/>
 			<BlockCss
 				{ ...propsToPass }
 				// For calculating the approximate clickable area for
@@ -256,7 +250,7 @@ IconListStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Styles { ...props } />
+			<Styles { ...props } icons={ props.attributes.icons } />
 		</BlockCssCompiler>
 	)
 }

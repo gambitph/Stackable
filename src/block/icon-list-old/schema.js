@@ -52,6 +52,10 @@ export const iconListAttributes = {
 		default: '',
 		stkHover: true,
 	},
+	icons: {
+		type: 'object',
+		default: {},
+	},
 	iconSize: {
 		stkResponsive: true,
 		type: 'number',
@@ -82,12 +86,6 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
-
-	// Indentation.
-	isIdented: {
-		type: 'boolean',
-		default: false,
-	},
 }
 
 export const attributes = ( version = VERSION ) => {
@@ -105,6 +103,8 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, 'ul,ol', {
 		hasTextTag: false,
+		multiline: 'li',
+		multilineWrapperTags: [ 'ol', 'ul' ],
 	} )
 	MarginBottom.addAttributes( attrObject )
 

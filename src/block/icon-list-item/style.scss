@@ -1,5 +1,5 @@
-.stk-block-icon-list-new .stk-block-icon-list__ul .stk-block-icon-list-item,
-.stk-block-icon-list-new .stk-block-icon-list__ul [data-type^="stackable/"].stk-block-icon-list-item {
+.stk-block-icon-list .stk-block-icon-list__ul .stk-block-icon-list-item,
+.stk-block-icon-list .stk-block-icon-list__ul [data-type^="stackable/"].stk-block-icon-list-item {
 	flex-direction: column;
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
@@ -20,16 +20,16 @@
 		}
 	}
 
-	.stk-block-icon-list-new {
+	.stk-block-icon-list {
 		margin-bottom: 0;
 		padding-inline: 1em;
 	}
 }
 
-.stk-block-icon-list-new .stk-block-icon-list__ol .stk-block-icon-list-item {
+.stk-block-icon-list .stk-block-icon-list__ol .stk-block-icon-list-item {
 	display: list-item;
 
-	.stk-block-icon-list-new {
+	.stk-block-icon-list {
 		margin-bottom: 0;
 		padding-inline: 1em;
 	}

@@ -15,7 +15,7 @@ import {
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { withVersion } from '~stackable/higher-order'
-import { getUseSvgDef } from '../icon-list-new/util'
+import { getUseSvgDef } from '../icon-list/util'
 
 /**
  * WordPress dependencies

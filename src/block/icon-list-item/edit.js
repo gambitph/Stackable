@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import { TextStyles } from './style'
-import { getUseSvgDef } from '../icon-list-new/util'
+import { getUseSvgDef } from '../icon-list/util'
 import {
 	convertToListItems,
 	useIndentListItem,
@@ -117,7 +117,7 @@ const Edit = props => {
 	} )
 
 	const { ref, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
-		allowedBlocks: [ 'stackable/icon-list-new' ],
+		allowedBlocks: [ 'stackable/icon-list' ],
 		renderAppender: false,
 		__unstableDisableDropZone: true,
 	} )
