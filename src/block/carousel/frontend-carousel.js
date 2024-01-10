@@ -459,8 +459,8 @@ class _StackableCarousel {
 		}
 
 		// Manually trigger click event on links and buttons
-		if ( target.tagName.toLowerCase() === 'a' ||
-			target.tagName.toLowerCase() === 'button' ||
+		if ( target.tagName === 'A' ||
+			target.tagName === 'BUTTON' ||
 			target.closest( 'a' ) ||
 			target.closest( 'button' ) ) {
 			const clickEvent = new MouseEvent( 'click', { bubbles: true, cancelable: true } )
