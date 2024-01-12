@@ -47,7 +47,7 @@ import {
 } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { useEffect } from '@wordpress/element'
+import { useEffect, useState } from '@wordpress/element'
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
 
 const Edit = props => {
@@ -59,7 +59,6 @@ const Edit = props => {
 		mergeBlocks,
 		context,
 		className,
-		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -68,9 +67,10 @@ const Edit = props => {
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
+	const [ ordered, setOrdered ] = useState( context[ 'stackable/ordered' ] )
+	const [ parentUniqueId, setParentUniqueId ] = useState( context[ 'stackable/uniqueId' ] )
+
 	const {
-		'stackable/ordered': ordered,
-		'stackable/uniqueId': parentUniqueId,
 		'stackable/isIndented': isIndented,
 	} = context
 
@@ -80,12 +80,9 @@ const Edit = props => {
 	} = blockContext
 
 	useEffect( () => {
-		setAttributes( { ordered } )
-	}, [ ordered ] )
-
-	useEffect( () => {
-		setAttributes( { parentUniqueId } )
-	}, [ parentUniqueId ] )
+		setOrdered( context[ 'stackable/ordered' ] )
+		setParentUniqueId( context[ 'stackable/uniqueId' ] )
+	}, [ context ] )
 
 	const indentListItem = useIndentListItem( blockContext, clientId )
 	const outdentListItem = useOutdentListItem( blockContext, clientId )
