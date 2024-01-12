@@ -25,14 +25,27 @@ const getUniqueIcon = ( icons, index ) => {
 	return icons[ key ]
 }
 
+const getEquivalentIconSize = iconSize => {
+	// Old icon list sets iconSize to fontSize
+	// but the actual size of the icons are smaller by ~2.067 times.
+	const actualSize = parseFloat( iconSize ) / 2.067
+	// return value rounded to the nearest 0.1
+	return Math.round( actualSize * 10 ) / 10
+}
+
 const deprecated = [
 	{
 		attributes: attributes( '3.12.8' ),
 		save: withVersion( '3.12.8' )( Save ),
 		migrate: ( attributes, innerBlocks ) => {
+			let newAttributes = { ...attributes }
 			const {
-				text, icons, ...newAttributes
-			} = { ...attributes }
+				text, icons, iconSize,
+			} = attributes
+
+			if ( iconSize ) {
+				newAttributes = { ...newAttributes, iconSize: getEquivalentIconSize( iconSize ) }
+			}
 
 			if ( ! text ) {
 				const block = createBlock( 'stackable/icon-list-item' )
