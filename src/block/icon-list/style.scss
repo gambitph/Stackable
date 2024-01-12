@@ -1,7 +1,7 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list.stk-block {
 	:is(ul, ol) {
-		width: fit-content; // TODO: Confirm if will set to 100% or not
+		width: fit-content;
 		text-align: start;
 	}
 	ol {

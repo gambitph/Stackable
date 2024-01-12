@@ -43,7 +43,7 @@ import { useBlockProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { dispatch } from '@wordpress/data'
-import { useEffect, useState } from '@wordpress/element'
+import { useEffect } from '@wordpress/element'
 
 const Edit = props => {
 	const {
@@ -54,6 +54,7 @@ const Edit = props => {
 		mergeBlocks,
 		context,
 		className,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -64,13 +65,21 @@ const Edit = props => {
 
 	const { parentBlock } = useBlockContext()
 
-	const [ ordered, setOrdered ] = useState( context[ 'stackable/ordered' ] )
-	const [ parentUniqueId, setParentUniqueId ] = useState( context[ 'stackable/uniqueId' ] )
+	const {
+		'stackable/ordered': ordered,
+		'stackable/uniqueId': parentUniqueId,
+	} = context
+
+	// Set the attributes so they can be used in Save.
+	useEffect( () => {
+		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+		setAttributes( { ordered } )
+	}, [ ordered ] )
 
 	useEffect( () => {
-		setOrdered( context[ 'stackable/ordered' ] )
-		setParentUniqueId( context[ 'stackable/uniqueId' ] )
-	}, [ context ] )
+		dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+		setAttributes( { parentUniqueId } )
+	}, [ parentUniqueId ] )
 
 	const blockClassNames = classnames( [
 		className,

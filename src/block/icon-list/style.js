@@ -35,7 +35,6 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
-	// TODO: clean up comments
 	return (
 		<>
 			<BlockCss
@@ -128,13 +127,10 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				// For calculating the approximate clickable area for
-				// icon picker.
-				renderIn="edit"
 				selector=""
 				styleRule="--stk-icon-height"
 				attrName="iconSize"
-				key="iconSize-picker"
+				key="iconSize"
 				responsive="all"
 				format="%sem"
 			/>
