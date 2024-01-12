@@ -4,7 +4,7 @@
 	"title": "Icon List Item",
 	"description": "A single list entry in the Icon List block",
 	"category": "stackable",
-	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/ordered", "stackable/uniqueId", "stackable/isIndented" ],
+	"usesContext": [ "postId", "postType", "queryId" , "stackable/innerBlockOrientation", "stackable/ordered", "stackable/uniqueId" ],
 	"keywords": [],
 	"parent": [
 		"stackable/icon-list"

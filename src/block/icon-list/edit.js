@@ -48,7 +48,6 @@ import { DEFAULT_SVG, IconSvgDef } from './util'
 import { compose } from '@wordpress/compose'
 import { useInnerBlocksProps } from '@wordpress/block-editor'
 import { dispatch } from '@wordpress/data'
-import { useEffect } from '@wordpress/element'
 import { addFilter } from '@wordpress/hooks'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/icon-list-item' ]
@@ -112,15 +111,7 @@ const Edit = props => {
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
-	const { innerBlocks, parentBlock } = useBlockContext()
-
-	useEffect( () => {
-		if ( parentBlock && parentBlock.name === 'stackable/icon-list-item' ) {
-			setAttributes( { isIndented: true } )
-		} else {
-		 setAttributes( { isIndented: false } )
-		}
-	}, [ parentBlock ] )
+	const { innerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,

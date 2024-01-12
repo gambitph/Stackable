@@ -21,7 +21,6 @@ import { getUseSvgDef } from '../icon-list/util'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { InnerBlocks } from '@wordpress/block-editor'
 
 export const Save = props => {
 	const {
@@ -63,7 +62,6 @@ export const Save = props => {
 					className={ textClassNames }
 				/>
 			</div>
-			<InnerBlocks.Content />
 		</BlockDiv.Content>
 	)
 }

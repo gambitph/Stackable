@@ -5,9 +5,6 @@ import { TextStyles } from './style'
 import { getUseSvgDef } from '../icon-list/util'
 import {
 	convertToListItems,
-	useIndentListItem,
-	useOutdentListItem,
-	useMerge,
 	useOnSplit,
 	useCopy,
 } from './util'
@@ -30,7 +27,7 @@ import {
 	Transform,
 	Icon,
 } from '~stackable/block-components'
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
 import {
@@ -42,13 +39,11 @@ import { useBlockContext } from '~stackable/hooks'
 /**
  * WordPress dependencies
  */
-import {
-	useBlockProps, useInnerBlocksProps, BlockControls,
-} from '@wordpress/block-editor'
+import { useBlockProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
+import { dispatch } from '@wordpress/data'
 import { useEffect, useState } from '@wordpress/element'
-import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
 
 const Edit = props => {
 	const {
@@ -67,25 +62,15 @@ const Edit = props => {
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
+	const { parentBlock } = useBlockContext()
+
 	const [ ordered, setOrdered ] = useState( context[ 'stackable/ordered' ] )
 	const [ parentUniqueId, setParentUniqueId ] = useState( context[ 'stackable/uniqueId' ] )
-
-	const {
-		'stackable/isIndented': isIndented,
-	} = context
-
-	const blockContext = useBlockContext()
-	const {
-		blockIndex,
-	} = blockContext
 
 	useEffect( () => {
 		setOrdered( context[ 'stackable/ordered' ] )
 		setParentUniqueId( context[ 'stackable/uniqueId' ] )
 	}, [ context ] )
-
-	const indentListItem = useIndentListItem( blockContext, clientId )
-	const outdentListItem = useOutdentListItem( blockContext, clientId )
 
 	const blockClassNames = classnames( [
 		className,
@@ -100,9 +85,7 @@ const Edit = props => {
 
 	const onSplit = useOnSplit( clientId, attributes )
 
-	const onMerge = useMerge( clientId, mergeBlocks )
-
-	const blockProps = useBlockProps( {
+	const { ref, ...blockProps } = useBlockProps( {
 		ref: useCopy( clientId ),
 		blockHoverClass: props.blockHoverClass,
 		clientId: props.clientId,
@@ -113,33 +96,21 @@ const Edit = props => {
 		tabIndex: '-1', // We need this since navigating up/down selects the wrapper.
 	} )
 
-	const { ref, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
-		allowedBlocks: [ 'stackable/icon-list' ],
-		renderAppender: false,
-		__unstableDisableDropZone: true,
-	} )
+	const onMerge = forward => {
+		mergeBlocks( forward )
+
+		// Remove icon list item and icon list on backspace if there is no text and is the only item on the list.
+		if ( ! forward &&
+			 ! attributes.text &&
+			 parentBlock.innerBlocks.length === 1 ) {
+			dispatch( 'core/block-editor' ).removeBlocks( [ clientId, parentBlock.clientId ] )
+		}
+	}
 
 	return (
 		<>
 			{ isSelected && (
 				<>
-					<BlockControls>
-						<ToolbarGroup>
-							<ToolbarButton
-								label={ __( 'Outdent', i18n ) }
-								icon="editor-outdent"
-								disabled={ ! isIndented }
-								onClick={ outdentListItem }
-							/>
-							<ToolbarButton
-								label={ __( 'Indent', i18n ) }
-								icon="editor-indent"
-								disabled={ blockIndex === 0 }
-								onClick={ indentListItem }
-							/>
-						</ToolbarGroup>
-					</BlockControls>
-
 					<InspectorTabs hasLayoutPanel={ false } />
 
 					<Typography.InspectorControls
@@ -166,7 +137,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				blockTag="li"
 				renderHtmlTag={ false }
-				{ ...innerBlocksProps }
+				{ ...blockProps }
 			>
 				<TextStyles
 					version={ VERSION }
@@ -197,7 +168,6 @@ const Edit = props => {
 							: undefined }
 					/>
 				</div>
-				{ innerBlocksProps.children }
 			</BlockDiv>
 		</>
 	)
