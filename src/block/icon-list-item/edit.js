@@ -179,11 +179,11 @@ const Edit = props => {
 				<CustomCSS mainBlockClass="stk-block-icon-list-item" />
 				<div className="stk-block-icon-list-item__content">
 					{ ! ordered && icon &&
-						<Icon value={ icon } openOnClick={ true } /> }
+						<Icon value={ icon } openEvenIfUnselected={ true } /> }
 					{ ! ordered && ! icon &&
 						<Icon
 							value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) }
-							openOnClick={ true } /> }
+							openEvenIfUnselected={ true } /> }
 					<Typography
 						ref={ ref }
 						tagName="span"
