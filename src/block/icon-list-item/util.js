@@ -122,6 +122,8 @@ export const useEnter = ( textRef, clientId ) => {
 				}
 				event.preventDefault()
 
+				// TODO: Not sure why, but splitting is so slow for our Icon List, not like the native List block.
+
 				// Here we are in top level list so we need to split.
 				const topParentListBlock = getBlock(
 					getBlockRootClientId( clientId )
