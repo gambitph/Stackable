@@ -110,7 +110,7 @@ const Edit = props => {
 		className: blockClassNames,
 		blockTag: 'li',
 		renderHtmlTag: false,
-		tabIndex: '-1',
+		tabIndex: '-1', // We need this since navigating up/down selects the wrapper.
 	} )
 
 	const { ref, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
