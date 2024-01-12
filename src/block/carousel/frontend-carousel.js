@@ -452,17 +452,13 @@ class _StackableCarousel {
 		}
 		const target = e.target
 
-		if ( target.closest( '.stk-block-carousel__slider' ) ) {
-			e.preventDefault()
-			this.hasTouched = false
-			return
-		}
-
 		// Manually trigger click event on links and buttons
-		if ( target.tagName === 'A' ||
+		if ( ! target.closest( '.stk-block-carousel__slider' ) &&
+			( target.tagName === 'A' ||
 			target.tagName === 'BUTTON' ||
 			target.closest( 'a' ) ||
-			target.closest( 'button' ) ) {
+			target.closest( 'button' )
+			 ) ) {
 			const clickEvent = new MouseEvent( 'click', { bubbles: true, cancelable: true } )
 			target.dispatchEvent( clickEvent )
 			e.preventDefault()
