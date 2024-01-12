@@ -4,9 +4,15 @@
  */
 import { useRefEffect } from '@wordpress/compose'
 import { useCallback } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
-import { cloneBlock, switchToBlockType } from '@wordpress/blocks'
+import { useSelect, useDispatch } from '@wordpress/data'
+import {
+	cloneBlock,
+	switchToBlockType,
+	createBlock,
+	getDefaultBlockName,
+} from '@wordpress/blocks'
 import { store as blockEditorStore } from '@wordpress/block-editor'
+import { ENTER } from '@wordpress/keycodes'
 
 function convertBlockToList( block ) {
 	const list = switchToBlockType( block, 'stackable/icon-list' )
@@ -97,4 +103,68 @@ export const useCopy = clientId => {
 			node.removeEventListener( 'cut', onCopy )
 		}
 	}, [] )
+}
+
+export const useEnter = ( textRef, clientId ) => {
+	const { replaceBlocks, selectionChange } = useDispatch( blockEditorStore )
+	const {
+		getBlock, getBlockRootClientId, getBlockIndex,
+	} = useSelect( blockEditorStore )
+
+	return useRefEffect(
+		element => {
+			function onKeyDown( event ) {
+				if ( event.defaultPrevented || event.keyCode !== ENTER ) {
+					return
+				}
+				if ( textRef.current.length ) {
+					return
+				}
+				event.preventDefault()
+
+				// Here we are in top level list so we need to split.
+				const topParentListBlock = getBlock(
+					getBlockRootClientId( clientId )
+				)
+				const blockIndex = getBlockIndex( clientId )
+				const head = cloneBlock( {
+					...topParentListBlock,
+					innerBlocks: topParentListBlock.innerBlocks.slice(
+						0,
+						blockIndex
+					),
+				} )
+				const middle = createBlock( getDefaultBlockName() )
+				// Last list item might contain a `list` block innerBlock
+				// In that case append remaining innerBlocks blocks.
+				const after = [
+					...( topParentListBlock.innerBlocks[ blockIndex ]
+						.innerBlocks[ 0 ]?.innerBlocks || [] ),
+					...topParentListBlock.innerBlocks.slice( blockIndex + 1 ),
+				]
+				const tail = after.length
+					? [
+						cloneBlock( {
+							...topParentListBlock,
+							innerBlocks: after,
+						} ),
+					  ]
+					: []
+				replaceBlocks(
+					topParentListBlock.clientId,
+					[ head, middle, ...tail ],
+					1
+				)
+				// We manually change the selection here because we are replacing
+				// a different block than the selected one.
+				selectionChange( middle.clientId )
+			}
+
+			element.addEventListener( 'keydown', onKeyDown )
+			return () => {
+				element.removeEventListener( 'keydown', onKeyDown )
+			}
+		},
+		[ clientId ]
+	)
 }

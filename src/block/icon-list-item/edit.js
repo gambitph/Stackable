@@ -7,6 +7,7 @@ import {
 	convertToListItems,
 	useOnSplit,
 	useCopy,
+	useEnter,
 } from './util'
 
 /**
@@ -41,9 +42,9 @@ import { useBlockContext } from '~stackable/hooks'
  */
 import { useBlockProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-import { compose } from '@wordpress/compose'
+import { compose, useMergeRefs } from '@wordpress/compose'
 import { dispatch } from '@wordpress/data'
-import { useEffect } from '@wordpress/element'
+import { useEffect, useRef } from '@wordpress/element'
 
 const Edit = props => {
 	const {
@@ -59,10 +60,10 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const { icon } = attributes
+	const { icon, text } = attributes
+	const textRef = useRef( text )
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-
 	const { parentBlock } = useBlockContext()
 
 	const {
@@ -92,6 +93,7 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	const useEnterRef = useEnter( textRef, clientId )
 	const onSplit = useOnSplit( clientId, attributes )
 
 	const { ref, ...blockProps } = useBlockProps( {
@@ -162,7 +164,8 @@ const Edit = props => {
 							value={ getUseSvgDef( `#stk-icon-list__icon-svg-def-${ parentUniqueId }` ) }
 							openEvenIfUnselected={ true } /> }
 					<Typography
-						ref={ ref }
+						ref={ useMergeRefs( [ ref, useEnterRef ] ) }
+						realtimeOnChange={ text => textRef.current = text }
 						tagName="span"
 						className={ textClassNames }
 						onSplit={ onSplit }
