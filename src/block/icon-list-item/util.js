@@ -106,7 +106,9 @@ export const useCopy = clientId => {
 }
 
 export const useEnter = ( textRef, clientId ) => {
-	const { replaceBlocks, selectionChange } = useDispatch( blockEditorStore )
+	const {
+		removeBlocks, selectionChange, insertBlocks,
+	} = useDispatch( blockEditorStore )
 	const {
 		getBlock, getBlockRootClientId, getBlockIndex,
 	} = useSelect( blockEditorStore )
@@ -122,21 +124,25 @@ export const useEnter = ( textRef, clientId ) => {
 				}
 				event.preventDefault()
 
-				// TODO: Not sure why, but splitting is so slow for our Icon List, not like the native List block.
-
 				// Here we are in top level list so we need to split.
 				const topParentListBlock = getBlock(
 					getBlockRootClientId( clientId )
 				)
 				const blockIndex = getBlockIndex( clientId )
-				const head = cloneBlock( {
-					...topParentListBlock,
-					innerBlocks: topParentListBlock.innerBlocks.slice(
-						0,
-						blockIndex
-					),
-				} )
+
+				// Delete the inner blocks from index 0 to blockIndex in the topParentListBlock
+				// Native doesn't do it this way, it uses one replaceBlock action, but it's
+				// slow with Stackable, so we just remove the excess blocks.
+				const clientIdsToRemove = topParentListBlock.innerBlocks.reduce( ( clientIds, innerBlock, index ) => {
+					if ( index >= blockIndex ) {
+						clientIds.push( innerBlock.clientId )
+					}
+					return clientIds
+				}, [] )
+				removeBlocks( clientIdsToRemove, false )
+
 				const middle = createBlock( getDefaultBlockName() )
+
 				// Last list item might contain a `list` block innerBlock
 				// In that case append remaining innerBlocks blocks.
 				const after = [
@@ -152,11 +158,13 @@ export const useEnter = ( textRef, clientId ) => {
 						} ),
 					  ]
 					: []
-				replaceBlocks(
-					topParentListBlock.clientId,
-					[ head, middle, ...tail ],
-					1
-				)
+
+				const topParentListBlockIndex = getBlockIndex( topParentListBlock.clientId )
+				const rootClientId = getBlockRootClientId( topParentListBlock.clientId )
+
+				// Insert the new blocks.
+				insertBlocks( [ middle, ...tail ], topParentListBlockIndex + 1, rootClientId )
+
 				// We manually change the selection here because we are replacing
 				// a different block than the selected one.
 				selectionChange( middle.clientId )
