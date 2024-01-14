@@ -25,12 +25,49 @@ const getUniqueIcon = ( icons, index ) => {
 	return icons[ key ]
 }
 
+// Get base font size
+const getBaseFontSize = () => {
+	let baseFontSize
+	try {
+		// get font size defined in :root
+		const root = window.getComputedStyle( document.documentElement )
+			.getPropertyValue( '--wp--preset--font-size--normal' )
+
+		// create dummy element with editor-styles-wrapper class
+		const dummyElement = document.createElement( 'div' )
+		dummyElement.className = 'editor-styles-wrapper'
+		document.body.appendChild( dummyElement )
+
+		// Get font-size of editor-styles-wrapper class
+		// which is defined as var(--wp--preset--font-size--medium)
+		const fontsize = window.getComputedStyle( dummyElement ).getPropertyValue( '--wp--preset--font-size--medium' )
+
+		// note that root is in px while fontsize is in rem
+		baseFontSize = parseFloat( root ) * parseFloat( fontsize )
+	} catch ( e ) {
+		baseFontSize = 16.8
+	}
+
+	return baseFontSize
+}
+
+// Convert font size in ordered list to pixels
+const getEquivalentFontSize = iconSize => {
+	return getBaseFontSize() * parseFloat( iconSize )
+}
+
+// Rounds off the value to the nearest x.5 or x.0
+const getRoundedValue = value => {
+	return Math.round( value * 2 ) / 2
+}
+
+// Convert actual icon size in unordered list
 const getEquivalentIconSize = iconSize => {
-	// Old icon list sets iconSize to fontSize
-	// but the actual size of the icons are smaller by ~2.067 times.
-	const actualSize = parseFloat( iconSize ) / 2.067
-	// return value rounded to the nearest 0.1
-	return Math.round( actualSize * 10 ) / 10
+	const baseFontSize = getBaseFontSize()
+
+	// Actual size of icon is rounded off to the nearest x.5 or x.0
+	const unroundedValue = baseFontSize * parseFloat( iconSize )
+	return getRoundedValue( unroundedValue / 2.067 )
 }
 
 const deprecated = [
@@ -40,11 +77,16 @@ const deprecated = [
 		migrate: ( attributes, innerBlocks ) => {
 			let newAttributes = { ...attributes }
 			const {
-				text, icons, iconSize,
+				text, icons, iconSize, ordered,
 			} = attributes
 
-			if ( iconSize ) {
-				newAttributes = { ...newAttributes, iconSize: getEquivalentIconSize( iconSize ) }
+			const _iconSize = iconSize ? iconSize : 1
+
+			newAttributes = {
+				...newAttributes,
+				iconSize: ordered
+					? getEquivalentFontSize( _iconSize )
+					: getEquivalentIconSize( _iconSize ),
 			}
 
 			if ( ! text ) {

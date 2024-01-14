@@ -239,11 +239,11 @@ const Edit = props => {
 								label={ __( 'Icon / Number Size', i18n ) }
 								attribute="iconSize"
 								min={ 0 }
-								max={ 5 }
-								step={ 0.1 }
+								max={ 50 }
+								step={ 1 }
 								allowReset={ true }
 								responsive="all"
-								placeholder="1"
+								placeholder="16"
 							/>
 
 							<AdvancedRangeControl

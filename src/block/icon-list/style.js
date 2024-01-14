@@ -102,7 +102,7 @@ const Styles = props => {
 				selector=""
 				hover="all"
 				hoverSelector=".%s:hover"
-				styleRule="--stk-icon-list-icon-color"
+				styleRule="--stk-icon-list-marker-color"
 				attrName="markerColor"
 				key="markerColor"
 			/>
@@ -132,7 +132,7 @@ const Styles = props => {
 				attrName="iconSize"
 				key="iconSize"
 				responsive="all"
-				format="%sem"
+				format="%spx"
 			/>
 			<BlockCss
 				{ ...propsToPass }

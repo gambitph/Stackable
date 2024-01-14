@@ -9,27 +9,20 @@
 	.stk-block-icon-list-item__content {
 		display: flex;
 		align-items: center;
-		span.stk--svg-wrapper {
-			width: var(--stk-icon-height, 1em);
-			svg {
-				padding-right: 3px;
-				width: var(--stk-icon-height, 1em);
-				height: var(--stk-icon-height, 1em);
-				:is(g,path,rect,polygon,ellipse) {
-					fill: var(--stk-icon-list-icon-color);
-				}
-				fill: var(--stk-icon-list-icon-color);
-				transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
-				opacity: var(--stk-icon-list-icon-opacity, 1);
+		.stk--svg-wrapper .stk--inner-svg svg {
+			height: var(--stk-icon-height, 16px);
+			width: var(--stk-icon-height, 16px);
+			transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
+			opacity: var(--stk-icon-list-icon-opacity, 1);
+			fill: var(--stk-icon-list-marker-color);
+
+			:is(use,g,path,rect,polygon,ellipse) {
+				fill: var(--stk-icon-list-marker-color);
 			}
 		}
 	}
-
-	.stk-block-icon-list {
-		margin-bottom: 0;
-		padding-inline: 1em;
-	}
 }
+
 .stk-block-icon-list [data-type^="stackable/"].stk-block-icon-list-item .stk--svg-wrapper svg {
 	cursor: copy;
 }
@@ -37,9 +30,10 @@
 .stk-block-icon-list .stk-block-icon-list__ol .stk-block-icon-list-item {
 	display: list-item;
 
-	.stk-block-icon-list {
-		margin-bottom: 0;
-		padding-inline: 1em;
+	&::marker {
+		font-size: var(--stk-icon-height, 16px);
+		line-height: 1;
+		color: var(--stk-icon-list-marker-color);
 	}
 }
 

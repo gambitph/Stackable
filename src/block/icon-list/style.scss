@@ -30,7 +30,7 @@
 	// For previous icon list blocks.
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
-	li:not(.stk-block-icon-list__li) {
+	:not(ul.stk-block-icon-list__li, ol.stk-block-icon-list__ol) li {
 		width: fit-content;
 		&::marker {
 			line-height: 0;
