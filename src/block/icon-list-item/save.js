@@ -7,7 +7,7 @@ import {
 	BlockDiv,
 	CustomCSS,
 	Typography,
-	// getResponsiveClasses,
+	getResponsiveClasses,
 	getTypographyClasses,
 	getAlignmentClasses,
 	Icon,
@@ -28,12 +28,14 @@ export const Save = props => {
 		attributes,
 	} = props
 
+	const responsiveClass = getResponsiveClasses( attributes )
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-list-item',
+		responsiveClass,
 	] )
 
 	const textClassNames = classnames( [
