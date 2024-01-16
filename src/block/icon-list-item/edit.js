@@ -46,6 +46,8 @@ import { compose, useMergeRefs } from '@wordpress/compose'
 import { dispatch } from '@wordpress/data'
 import { useEffect, useRef } from '@wordpress/element'
 
+const TABS = [ 'style', 'advanced' ]
+
 const Edit = props => {
 	const {
 		attributes,
@@ -122,7 +124,7 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs hasLayoutPanel={ false } />
+					<InspectorTabs tabs={ TABS } hasLayoutPanel={ false } />
 
 					<Typography.InspectorControls
 						{ ...props }
@@ -130,7 +132,6 @@ const Edit = props => {
 						initialOpen={ true }
 						hasTextShadow={ true }
 					/>
-					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 

@@ -2,7 +2,6 @@
  * External dependencies
  */
 import {
-	BlockDiv,
 	Advanced,
 	Typography,
 	Alignment,
@@ -26,7 +25,6 @@ export const TextStyles = memo( props => {
 	return (
 		<>
 			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
 			<Typography.Style { ...props } { ...typographyOptions } />
@@ -47,7 +45,6 @@ TextStyles.Content = props => {
 	return (
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Typography.Style.Content { ...props } { ...typographyOptions } />
