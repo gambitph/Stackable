@@ -430,9 +430,12 @@ class StackableCarousel {
 	init = () => {
 		const els = document.querySelectorAll( '.stk-block-carousel' )
 		els.forEach( el => {
-			const carousel = new _StackableCarousel( el )
-			el.carousel = carousel
-			carousel.init()
+			if ( ! el._StackableHasInitCarousel ) {
+				const carousel = new _StackableCarousel( el )
+				el.carousel = carousel
+				carousel.init()
+				el._StackableHasInitCarousel = true
+			}
 		} )
 	}
 }
