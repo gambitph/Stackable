@@ -53,9 +53,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
-			// Adds a special class to the body tag, to indicate we can now run animations.
-			add_action( 'wp_footer', array( $this, 'init_animation' ) );
-
 			// Add the fallback values for the default block width and wide block width.
 			// These are used for the inside "Content width" option of Columns.
 			add_action( 'stackable_inline_styles', array( $this, 'add_block_widths' ) );
@@ -442,18 +439,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 */
 		public function load_plugin_textdomain() {
 			load_plugin_textdomain( 'stackable-ultimate-gutenberg-blocks' );
-		}
-
-		/**
-		 * Adds a special class to the body tag, to indicate we can now run
-		 * hover transitions and other effects.
-		 *
-		 * @see src/styles/block-transitions.scss
-		 *
-		 * @return void
-		 */
-		public function init_animation() {
-			echo '<script>requestAnimationFrame(() => document.body.classList.add( "stk--anim-init" ))</script>';
 		}
 	}
 
