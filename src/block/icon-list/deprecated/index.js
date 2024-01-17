@@ -98,6 +98,10 @@ const deprecated = [
 				innerBlocks = blocks
 			}
 
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+
 			return [ newAttributes, innerBlocks ]
 		},
 	},
