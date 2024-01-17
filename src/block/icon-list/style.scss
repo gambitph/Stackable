@@ -4,6 +4,9 @@
 		width: fit-content;
 		text-align: start;
 	}
+	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
+		flex: none;
+	}
 	ol {
 		list-style-image: none;
 	}
