@@ -48,7 +48,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="ul li"
+				selector="ul li .stk-block-icon-list-item__content"
 				styleRule="gap"
 				attrName="iconGap"
 				key="ulIconGap"
@@ -133,6 +133,15 @@ const Styles = props => {
 				key="iconSize"
 				responsive="all"
 				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector="ul li .stk-block-icon-list-item__content .stk--svg-wrapper"
+				styleRule="marginRight"
+				attrName="iconSize"
+				key="iconMarginRight"
+				responsive="all"
+				valueCallback={ value => value === 0 ? '0px' : undefined }
 			/>
 			<BlockCss
 				{ ...propsToPass }
