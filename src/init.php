@@ -454,7 +454,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		public function init_stackable_vars() {
 			$args = apply_filters( 'stackable_localize_frontend_script', array() );
 			if ( ! empty( $args ) ) {
-				echo '<script> stackable = ' . json_encode( $args ) . ' </script> ';
+				echo '<script>stackable = ' . json_encode( $args ) . '</script>';
 			}
 		}
 	}
