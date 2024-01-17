@@ -53,6 +53,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
+			// Adds a special class to the body tag, to indicate we can now run animations.
+			add_action( 'wp_footer', array( $this, 'init_animation' ) );
+			add_action( 'wp_footer', array( $this, 'init_stackable_vars' ) );
+
 			// Add the fallback values for the default block width and wide block width.
 			// These are used for the inside "Content width" option of Columns.
 			add_action( 'stackable_inline_styles', array( $this, 'add_block_widths' ) );
@@ -97,12 +101,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			if ( ! is_admin() ) {
 				wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
 			}
-
-			$args = apply_filters( 'stackable_localize_frontend_script', array(
-				'restUrl' => get_rest_url(),
-				'i18n' => array(), // Translatable labels used in the frontend should go here.
-			) );
-			wp_localize_script( 'ugb-block-frontend-js', 'stackable', $args );
 
 			// Register inline frontend styles, these are always loaded.
 			// Register via a dummy style.
@@ -439,6 +437,30 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 */
 		public function load_plugin_textdomain() {
 			load_plugin_textdomain( 'stackable-ultimate-gutenberg-blocks' );
+		}
+
+		/**
+		 * Adds a special class to the body tag, to indicate we can now run
+		 * hover transitions and other effects.
+		 *
+		 * @see src/styles/block-transitions.scss
+		 *
+		 * @return void
+		 */
+		public function init_animation() {
+			echo '<script>requestAnimationFrame(() => document.body.classList.add( "stk--anim-init" ))</script>';
+		}
+
+		/**
+		 * Adds the stackable object with frontend constants if needed.
+		 *
+		 * @return void
+		 */
+		public function init_stackable_vars() {
+			$args = apply_filters( 'stackable_localize_frontend_script', array() );
+			if ( ! empty( $args ) ) {
+				echo '<script>stackable = ' . json_encode( $args ) . '</script>';
+			}
 		}
 	}
 
