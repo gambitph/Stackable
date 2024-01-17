@@ -25,25 +25,37 @@ const getUniqueIcon = ( icons, index ) => {
 	return icons[ key ]
 }
 
+const getUnit = value => {
+	return value.match( /[a-z]+/ )[ 0 ]
+}
+
 // Get base font size
 const getBaseFontSize = () => {
 	let baseFontSize
 	try {
 		// get font size defined in :root
 		const root = window.getComputedStyle( document.documentElement )
-			.getPropertyValue( '--wp--preset--font-size--normal' )
+			.getPropertyValue( 'font-size' )
 
 		// create dummy element with editor-styles-wrapper class
 		const dummyElement = document.createElement( 'div' )
 		dummyElement.className = 'editor-styles-wrapper'
+		dummyElement.classList.add( 'stk-dummy-element' )
 		document.body.appendChild( dummyElement )
 
 		// Get font-size of editor-styles-wrapper class
-		// which is defined as var(--wp--preset--font-size--medium)
-		const fontsize = window.getComputedStyle( dummyElement ).getPropertyValue( '--wp--preset--font-size--medium' )
+		const fontsize = window.getComputedStyle( dummyElement ).getPropertyValue( 'font-size' )
 
-		// note that root is in px while fontsize is in rem
-		baseFontSize = parseFloat( root ) * parseFloat( fontsize )
+		// If .editor-styles-wrapper font-size is in em or rem,
+		// get the base font size in px from :root
+		// else, use font-size of .editor-styles-wrapper
+		if ( getUnit( fontsize ) !== 'em' || getUnit !== 'rem' ) {
+			baseFontSize = parseFloat( fontsize )
+		} else {
+			baseFontSize = parseFloat( root ) * parseFloat( fontsize )
+		}
+
+		dummyElement.remove()
 	} catch ( e ) {
 		baseFontSize = 16.8
 	}
@@ -56,9 +68,9 @@ const getEquivalentFontSize = iconSize => {
 	return getBaseFontSize() * parseFloat( iconSize )
 }
 
-// Rounds off the value to the nearest x.5 or x.0
+// Rounds off the value to the nearest x.25, x.5, x.75 or x.0
 const getRoundedValue = value => {
-	return Math.round( value * 2 ) / 2
+	return Math.round( value * 4 ) / 4
 }
 
 // Convert actual icon size in unordered list
