@@ -39,7 +39,7 @@ export const Edit = props => {
 				checked={ props.hasToggle ? hasLink : undefined }
 				onChange={ props.hasToggle ? onChange : undefined }
 			>
-				<LinkControls attrNameTemplate="link%s" hasLightbox />
+				<LinkControls attrNameTemplate="link%s" hasLightbox hasAnchorId={ props.hasAnchorId } />
 			</PanelAdvancedSettings>
 		</Tab>
 	)
@@ -48,4 +48,5 @@ export const Edit = props => {
 Edit.defaultProps = {
 	hasToggle: false,
 	isAdvancedTab: false,
+	hasAnchorId: false,
 }
