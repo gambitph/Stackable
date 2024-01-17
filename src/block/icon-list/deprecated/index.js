@@ -25,18 +25,10 @@ const getUniqueIcon = ( icons, index ) => {
 	return icons[ key ]
 }
 
-const getUnit = value => {
-	return value.match( /[a-z]+/ )[ 0 ]
-}
-
 // Get base font size
 const getBaseFontSize = () => {
 	let baseFontSize
 	try {
-		// get font size defined in :root
-		const root = window.getComputedStyle( document.documentElement )
-			.getPropertyValue( 'font-size' )
-
 		// create dummy element with editor-styles-wrapper class
 		const dummyElement = document.createElement( 'div' )
 		dummyElement.className = 'editor-styles-wrapper'
@@ -45,19 +37,10 @@ const getBaseFontSize = () => {
 
 		// Get font-size of editor-styles-wrapper class
 		const fontsize = window.getComputedStyle( dummyElement ).getPropertyValue( 'font-size' )
-
-		// If .editor-styles-wrapper font-size is in em or rem,
-		// get the base font size in px from :root
-		// else, use font-size of .editor-styles-wrapper
-		if ( getUnit( fontsize ) !== 'em' || getUnit !== 'rem' ) {
-			baseFontSize = parseFloat( fontsize )
-		} else {
-			baseFontSize = parseFloat( root ) * parseFloat( fontsize )
-		}
-
+		baseFontSize = parseFloat( fontsize )
 		dummyElement.remove()
 	} catch ( e ) {
-		baseFontSize = 16.8
+		baseFontSize = 16
 	}
 
 	return baseFontSize
