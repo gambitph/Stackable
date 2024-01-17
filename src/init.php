@@ -451,6 +451,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			echo '<script>requestAnimationFrame(() => document.body.classList.add( "stk--anim-init" ))</script>';
 		}
 
+		/**
+		 * Adds the stackable object with frontend constants if needed.
+		 *
+		 * @return void
+		 */
 		public function init_stackable_vars() {
 			$args = apply_filters( 'stackable_localize_frontend_script', array() );
 			if ( ! empty( $args ) ) {

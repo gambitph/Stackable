@@ -220,6 +220,12 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 					continue;
 				}
 
+				// Compatibility: Do not do this for Thrive themes or else their
+				// builder will produce an error.
+				if ( stripos( $post_type, 'tcb_' ) === 0 ) {
+					continue;
+				}
+
 				// Feature image urls.
 				register_rest_field( $post_type, 'featured_image_urls',
 					array(
