@@ -2,6 +2,13 @@
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
+
+// Function to check if the user is on an iOS device
+function isiOS() {
+	const userAgent = navigator?.userAgent
+	return userAgent && ( userAgent.indexOf( 'iPhone' ) === -1 || userAgent.indexOf( 'iPad' ) )
+}
+
 class _StackableCarousel {
 	constructor( el ) {
 		this.el = el
@@ -15,6 +22,11 @@ class _StackableCarousel {
 		this.sliderEl = this.el.querySelector( '.stk-block-carousel__slider' )
 		this.slideEls = Array.from( this.sliderEl.children )
 		this.isRTL = document.documentElement?.getAttribute( 'dir' ) === 'rtl' || document.body?.getAttribute( 'dir' ) === 'rtl'
+
+		// for iOS devices:
+		// fix double clicks on links after triggering touch events of carousel
+		this.isiOS = isiOS()
+		this.hasTouched = false
 
 		const tempDotsEls = this.el.querySelectorAll( '.stk-block-carousel__dots' )
 		const tempPrevEls = this.el.querySelectorAll( '.stk-block-carousel__button__prev' )
@@ -137,6 +149,10 @@ class _StackableCarousel {
 		}
 		if ( this.nextEl ) {
 			this.nextEl.addEventListener( 'click', this.nextSlide )
+		}
+
+		if ( this.isiOS ) {
+			document.body.addEventListener( 'touchend', this.onTouchEndIOS )
 		}
 	}
 
@@ -378,6 +394,10 @@ class _StackableCarousel {
 	}
 
 	dragTouchStart = e => {
+		if ( this.isiOS ) {
+			this.hasTouched = true
+		}
+
 		this.sliderEl.addEventListener( 'touchend', this.dragTouchEnd )
 		this.sliderEl.addEventListener( 'touchmove', this.dragTouchMove )
 
@@ -389,7 +409,7 @@ class _StackableCarousel {
 	dragTouchEnd = () => {
 		this.sliderEl.removeEventListener( 'touchend', this.dragTouchEnd )
 		this.sliderEl.removeEventListener( 'touchmove', this.dragTouchMove )
-		this.pauseAutoplay()
+		this.unpauseAutoplay()
 	}
 
 	dragTouchMove = e => {
@@ -423,6 +443,28 @@ class _StackableCarousel {
 			this.currentSlide = slide
 			this.setDotActive( slide )
 		}
+	}
+
+	// Reference: https://github.com/wp-media/wp-rocket/issues/3142#issuecomment-1870722927
+	onTouchEndIOS = e => {
+		if ( ! this.hasTouched ) {
+			return
+		}
+		const target = e.target
+
+		// Manually trigger click event on links and buttons
+		if ( ! target.closest( '.stk-block-carousel__slider' ) &&
+			( target.tagName === 'A' ||
+			target.tagName === 'BUTTON' ||
+			target.closest( 'a' ) ||
+			target.closest( 'button' )
+			 ) ) {
+			const clickEvent = new MouseEvent( 'click', { bubbles: true, cancelable: true } )
+			target.dispatchEvent( clickEvent )
+			e.preventDefault()
+		}
+
+		this.hasTouched = false
 	}
 }
 

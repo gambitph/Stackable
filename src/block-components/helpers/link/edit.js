@@ -18,6 +18,7 @@ export const LinkControls = props => {
 		hasTitle,
 		hasLightbox,
 		lightboxHelp,
+		hasAnchorId = false,
 	} = props
 
 	const {
@@ -82,6 +83,10 @@ export const LinkControls = props => {
 					help={ __( 'Also used for lightbox caption', i18n ) }
 				/>
 			) }
+			{ hasAnchorId && <AdvancedTextControl
+				label={ __( 'Anchor ID', i18n ) }
+				attribute="anchorId"
+			/> }
 		</>
 	)
 }
