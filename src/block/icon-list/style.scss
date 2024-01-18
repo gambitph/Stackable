@@ -30,7 +30,8 @@
 	}
 
 	// For previous icon list blocks.
-	&.stk-block :is(ul:not(.stk-block-icon-list__ul)) {
+	&.stk-block :is(ul:not(.stk-block-icon-list__ul)),
+	&.stk-block :is(ol:not(.stk-block-icon-list__ol)) {
 		padding-inline-start: 1em;
 	}
 	// For previous icon list blocks.
