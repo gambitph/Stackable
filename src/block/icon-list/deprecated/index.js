@@ -69,6 +69,13 @@ const deprecated = [
 	{
 		attributes: attributes( '3.12.8' ),
 		save: withVersion( '3.12.8' )( Save ),
+		supports: {
+			anchor: true,
+			spacing: true,
+			__unstablePasteTextInline: true,
+			__experimentalSelector: 'ol,ul',
+			__experimentalOnMerge: true,
+		},
 		migrate: ( attributes, innerBlocks ) => {
 			let newAttributes = { ...attributes }
 			const {
