@@ -83,28 +83,6 @@ const transforms = {
 			} ),
 			transform: createListBlockFromDOMElement,
 		},
-		...[ '*', '-' ].map( prefix => ( {
-			type: 'prefix',
-			prefix,
-			transform( content ) {
-				return createBlock( 'stackable/icon-list', {}, [
-					createBlock( 'stackable/icon-list-item', { text: content } ),
-				] )
-			},
-		} ) ),
-		...[ '1.', '1)' ].map( prefix => ( {
-			type: 'prefix',
-			prefix,
-			transform( content ) {
-				return createBlock(
-					'stackable/icon-list',
-					{
-						ordered: true,
-					},
-					[ createBlock( 'stackable/icon-list-item', { text: content } ) ]
-				)
-			},
-		} ) ),
 	],
 	to: [
 		...[ 'core/paragraph', 'core/heading' ].map( block => ( {
