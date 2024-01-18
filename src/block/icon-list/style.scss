@@ -20,6 +20,10 @@
 		padding-inline-start: 0px;
 	}
 
+	ol.stk-block-icon-list__ol {
+		list-style-position: inside;
+	}
+
 	// @from https://css-tricks.com/almanac/properties/b/break-inside/
 	li {
 		page-break-inside: avoid; /* Firefox */

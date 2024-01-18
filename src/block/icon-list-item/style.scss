@@ -31,8 +31,14 @@
 	cursor: copy;
 }
 
-.stk-block-icon-list .stk-block-icon-list__ol .stk-block-icon-list-item {
+.stk-block-icon-list .stk-block-icon-list__ol li.stk-block-icon-list-item {
 	display: list-item;
+	width: fit-content;
+	margin-inline: 0 auto;
+
+	.stk-block-icon-list-item__content {
+		display: inline;
+	}
 
 	&::marker {
 		font-size: var(--stk-icon-height, 16px);
