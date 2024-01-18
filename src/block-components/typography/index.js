@@ -44,7 +44,7 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 		defaultValue,
 		withoutInteractiveFormatting = false,
 		allowedFormats = null,
-		realtimeOnChange = null, // Since we are debouncing changes, this can be used for an immediate onChange.
+		enableDebounce = true, // If false, onChange will be called immediately.
 		...propsToPass
 	} = props
 
@@ -76,14 +76,13 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 	// If value was changed externally.
 	useEffect( () => {
 		if ( value !== debouncedText ) {
-			realtimeOnChange && realtimeOnChange( value )
 			setDebouncedText( value )
 		}
 	}, [ value ] )
 
 	useEffect( () => {
 		let timeout
-		if ( value !== debouncedText ) {
+		if ( value !== debouncedText && enableDebounce ) {
 			timeout = setTimeout( () => {
 				onChange( debouncedText || defaultValue )
 			}, 300 )
@@ -105,8 +104,11 @@ export const Typography = memo( forwardRef( ( props, ref ) => {
 			tagName={ TagName }
 			value={ dynamicContentText }
 			onChange={ value => {
-				realtimeOnChange && realtimeOnChange( value )
-				setDebouncedText( value )
+				if ( enableDebounce ) {
+					setDebouncedText( value )
+				} else {
+					onChange( value )
+				}
 			 } }
 			ref={ ref }
 			withoutInteractiveFormatting={ withoutInteractiveFormatting }

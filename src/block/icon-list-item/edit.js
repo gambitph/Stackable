@@ -172,7 +172,6 @@ const Edit = props => {
 						/> }
 					<Typography
 						ref={ useMergeRefs( [ ref, useEnterRef ] ) }
-						realtimeOnChange={ text => textRef.current = text }
 						tagName="span"
 						className={ textClassNames }
 						onSplit={ onSplit }
@@ -185,6 +184,11 @@ const Edit = props => {
 								)
 							  }
 							: undefined }
+						onChange={ text => {
+							textRef.current = text
+							setAttributes( { text } )
+						} }
+						enableDebounce={ false }
 					/>
 				</div>
 			</BlockDiv>
