@@ -11,13 +11,12 @@
 		list-style-image: none;
 	}
 
-	&.stk-block :is(ol) {
-		padding-inline-start: 1em;
-	}
-
 	ul.stk-block-icon-list__ul {
 		list-style-type: none;
-		padding-inline-start: 0px;
+	}
+	ul.stk-block-icon-list__ul,
+	ol.stk-block-icon-list__ol {
+		padding-inline-start: 0;
 	}
 
 	ol.stk-block-icon-list__ol {
