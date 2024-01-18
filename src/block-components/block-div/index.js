@@ -23,7 +23,6 @@ export const BlockDiv = props => {
 	const {
 		className,
 		applyCustomAttributes,
-		applyAdvancedAttributes,
 		renderHtmlTag,
 		enableVariationPicker,
 		withUniqueClass,
@@ -81,7 +80,7 @@ export const BlockDiv = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		className={ classNames }
-		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
+		id={ attributes.anchor || undefined }
 		data-block-id={ attributes.uniqueId || tempUniqueId }
 		blockTag={ renderHtmlTag ? htmlTag : blockTag }
 		hasBackground={ attributes.hasBackground }
@@ -99,7 +98,6 @@ export const BlockDiv = props => {
 BlockDiv.defaultProps = {
 	className: '',
 	applyCustomAttributes: true,
-	applyAdvancedAttributes: true,
 	renderHtmlTag: true, // If true, this renders the HTML Tag based from the block attributes.
 	enableVariationPicker: false,
 	withUniqueClass: true,
@@ -112,7 +110,6 @@ BlockDiv.Content = props => {
 		className,
 		attributes,
 		applyCustomAttributes,
-		applyAdvancedAttributes,
 		blockTag,
 		version: _version,
 		...propsToPass
@@ -147,7 +144,7 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		{ ...customAttributes }
 		{ ...useBlockProps.save( { className: classNames } ) }
-		id={ ( applyAdvancedAttributes && ( attributes.anchor || undefined ) ) || undefined }
+		id={ attributes.anchor || undefined }
 		data-block-id={ attributes.uniqueId || undefined }
 		blockTag={ blockTag || htmlTag }
 		hasBackground={ attributes.hasBackground }
@@ -164,7 +161,6 @@ BlockDiv.Content.defaultProps = {
 	className: '',
 	attributes: {},
 	applyCustomAttributes: true,
-	applyAdvancedAttributes: true,
 	blockTag: '',
 }
 
