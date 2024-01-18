@@ -3,7 +3,7 @@
  * WordPress dependencies
  */
 import { useRefEffect } from '@wordpress/compose'
-import { useCallback } from '@wordpress/element'
+import { useCallback, useRef } from '@wordpress/element'
 import { useSelect, useDispatch } from '@wordpress/data'
 import {
 	cloneBlock,
@@ -105,13 +105,16 @@ export const useCopy = clientId => {
 	}, [] )
 }
 
-export const useEnter = ( textRef, clientId ) => {
+export const useEnter = ( text, clientId ) => {
 	const {
 		removeBlocks, selectionChange, insertBlocks,
 	} = useDispatch( blockEditorStore )
 	const {
 		getBlock, getBlockRootClientId, getBlockIndex,
 	} = useSelect( blockEditorStore )
+
+	const textRef = useRef( text )
+	textRef.current = text
 
 	return useRefEffect(
 		element => {

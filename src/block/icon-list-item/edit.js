@@ -44,7 +44,7 @@ import { useBlockProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { compose, useMergeRefs } from '@wordpress/compose'
 import { dispatch } from '@wordpress/data'
-import { useEffect, useRef } from '@wordpress/element'
+import { useEffect } from '@wordpress/element'
 
 const TABS = [ 'style', 'advanced' ]
 
@@ -63,7 +63,6 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const { icon, text } = attributes
-	const textRef = useRef( text )
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { parentBlock } = useBlockContext()
@@ -95,7 +94,7 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	const useEnterRef = useEnter( textRef, clientId )
+	const useEnterRef = useEnter( text, clientId )
 	const onSplit = useOnSplit( clientId, attributes )
 
 	const { ref, ...blockProps } = useBlockProps( {
@@ -184,10 +183,6 @@ const Edit = props => {
 								)
 							  }
 							: undefined }
-						onChange={ text => {
-							textRef.current = text
-							setAttributes( { text } )
-						} }
 						enableDebounce={ false }
 					/>
 				</div>
