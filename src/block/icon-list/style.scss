@@ -1,7 +1,5 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list {
-	display: flex;
-
 	:is(ul, ol) {
 		width: fit-content;
 		text-align: start;
@@ -54,7 +52,7 @@
 }
 
 // Prevents theme's css from affecting the icon list.
-.stk-block-icon-list :is(ul, ol) {
+.stk-block-icon-list.stk-block :is(ul, ol) {
 	margin-top: 0;
 	margin-bottom: 0;
 
