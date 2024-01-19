@@ -46,7 +46,7 @@
 }
 
 // Alignments when the icon list is aligned.
-.stk-block-icon-list :is(ul, ol) {
+.stk-block-icon-list.stk-block :is(ul, ol) {
 	margin-left: var(--stk-alignment-margin-left);
 	margin-right: var(--stk-alignment-margin-right);
 }
