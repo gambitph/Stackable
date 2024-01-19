@@ -71,6 +71,7 @@ export const Save = props => {
 						) }
 						hasLinearGradient={ false }
 					/> }
+				{ attributes.ordered && <span className="stk-block-icon-list-item__filler"></span> }
 				<Typography.Content
 					attributes={ attributes }
 					tagName="span"

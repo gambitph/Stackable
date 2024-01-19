@@ -169,6 +169,7 @@ const Edit = props => {
 							openEvenIfUnselected={ true }
 							hasLinearGradient={ false }
 						/> }
+					{ ordered && <span className="stk-block-icon-list-item__filler"></span> }
 					<Typography
 						ref={ useMergeRefs( [ ref, useEnterRef ] ) }
 						tagName="span"

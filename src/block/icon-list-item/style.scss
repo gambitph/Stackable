@@ -37,14 +37,26 @@
 	margin-inline: 0 auto;
 
 	.stk-block-icon-list-item__content {
-		display: inline;
-	}
+		display: inline-flex;
+		width: fit-content;
+		align-items: center;
 
+		// These allow the text to align center when the marker has bigger font-size.
+		.stk-block-icon-list-item__filler {
+			height: var(--stk-icon-height, 16px);
+		}
+		.stk-block-icon-list-item__text {
+			padding-top: calc(var(--stk-icon-height, 16px) / 10);
+		}
+	}
 	&::marker {
 		font-size: var(--stk-icon-height, 16px);
 		line-height: 1;
 		color: var(--stk-icon-list-marker-color);
+		display: inline-flex;
+		height: var(--stk-icon-height, 16px);
 	}
+
 }
 
 li.wp-block-stackable-icon-list-item.stk-block-icon-list-item {
