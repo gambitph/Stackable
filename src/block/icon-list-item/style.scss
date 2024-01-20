@@ -1,5 +1,4 @@
-.stk-block-icon-list .stk-block-icon-list__ul .stk-block-icon-list-item,
-.stk-block-icon-list .stk-block-icon-list__ul [data-type^="stackable/"].stk-block-icon-list-item {
+.stk-block-icon-list .stk-block-icon-list__ul .stk-block-icon-list-item {
 	flex-direction: column;
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
@@ -27,18 +26,21 @@
 	}
 }
 
-.stk-block-icon-list [data-type^="stackable/"].stk-block-icon-list-item .stk--svg-wrapper svg {
+.stk-block-icon-list [data-type^="stackable/"] .stk-block-icon-list-item .stk--svg-wrapper svg {
 	cursor: copy;
 }
 
+.stk-block-icon-list.stk-block [data-block][data-type="stackable/icon-list-item"]:not(:focus):hover::after {
+	outline: none;
+}
+
 .stk-block-icon-list .stk-block-icon-list__ol li.stk-block-icon-list-item {
-	display: block;
 	width: fit-content;
 	margin-inline: 0 auto;
 	counter-increment: stk-icon-list-counter;
 
 	.stk-block-icon-list-item__content {
-		display: inline-flex;
+		display: flex;
 		width: fit-content;
 		align-items: center;
 

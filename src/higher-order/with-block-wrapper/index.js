@@ -25,11 +25,16 @@ const withBlockWrapper = createHigherOrderComponent(
 		const isDisplayed = useDevicePreviewOptimization( props )
 		const [ blockState, blockHoverClass ] = useBlockHoverState()
 
+		const withNegativeTabIndex = [ 'stackable/icon-list-item' ]
+
+		const tabIndex = withNegativeTabIndex.includes( props.name ) ? -1 : 0
+
 		return (
 			<BlockWrapper
 				align={ props.attributes.align }
 				className={ props.attributes.className }
 				blockHoverClass={ blockHoverClass }
+				tabIndex={ tabIndex }
 			>
 				{ isDisplayed && (
 					<WrappedComponent

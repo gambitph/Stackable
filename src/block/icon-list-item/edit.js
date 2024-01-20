@@ -6,7 +6,6 @@ import { getUseSvgDef } from '../icon-list/util'
 import {
 	convertToListItems,
 	useOnSplit,
-	useCopy,
 	useEnter,
 } from './util'
 
@@ -34,15 +33,15 @@ import { InspectorTabs } from '~stackable/components'
 import {
 	withBlockAttributeContext,
 	withQueryLoopContext,
+	withBlockWrapper,
 } from '~stackable/higher-order'
 import { useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-import { compose, useMergeRefs } from '@wordpress/compose'
+import { compose } from '@wordpress/compose'
 import { dispatch } from '@wordpress/data'
 import { useEffect } from '@wordpress/element'
 
@@ -97,17 +96,6 @@ const Edit = props => {
 	const useEnterRef = useEnter( text, clientId )
 	const onSplit = useOnSplit( clientId, attributes )
 
-	const { ref, ...blockProps } = useBlockProps( {
-		ref: useCopy( clientId ),
-		blockHoverClass: props.blockHoverClass,
-		clientId: props.clientId,
-		attributes: props.attributes,
-		className: blockClassNames,
-		blockTag: 'li',
-		renderHtmlTag: false,
-		tabIndex: '-1', // We need this since navigating up/down selects the wrapper.
-	} )
-
 	const onMerge = forward => {
 		mergeBlocks( forward )
 
@@ -148,7 +136,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				blockTag="li"
 				renderHtmlTag={ false }
-				{ ...blockProps }
+				tabIndex={ -1 } // We need this since navigating up/down selects the wrapper.
 			>
 				<TextStyles
 					version={ VERSION }
@@ -175,7 +163,7 @@ const Edit = props => {
 						<span className="stk-block-icon-list-item__marker"></span>
 					 }
 					<Typography
-						ref={ useMergeRefs( [ ref, useEnterRef ] ) }
+						ref={ useEnterRef }
 						tagName="span"
 						className={ textClassNames }
 						onSplit={ onSplit }
@@ -197,6 +185,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withBlockWrapper,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
