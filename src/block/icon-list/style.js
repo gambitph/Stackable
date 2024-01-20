@@ -58,7 +58,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector="ol"
-				styleRule="listStyleType"
+				styleRule="--stk-list-style-type"
 				attrName="listType"
 				key="listType"
 			/>

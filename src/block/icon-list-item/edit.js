@@ -169,7 +169,11 @@ const Edit = props => {
 							openEvenIfUnselected={ true }
 							hasLinearGradient={ false }
 						/> }
-					{ ordered && <span className="stk-block-icon-list-item__filler"></span> }
+					{ ordered &&
+						// This will contain the numbers in ::before pseudo-element for ordered lists.
+						// Placing the numbers here instead on li allows us to center the text vertically.
+						<span className="stk-block-icon-list-item__marker"></span>
+					 }
 					<Typography
 						ref={ useMergeRefs( [ ref, useEnterRef ] ) }
 						tagName="span"

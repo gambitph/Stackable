@@ -20,6 +20,7 @@
 	}
 
 	ol.stk-block-icon-list__ol {
+		counter-reset: stk-icon-list-counter;
 		list-style-position: inside;
 	}
 

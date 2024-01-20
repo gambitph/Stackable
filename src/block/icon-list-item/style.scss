@@ -32,29 +32,25 @@
 }
 
 .stk-block-icon-list .stk-block-icon-list__ol li.stk-block-icon-list-item {
-	display: list-item;
+	display: block;
 	width: fit-content;
 	margin-inline: 0 auto;
+	counter-increment: stk-icon-list-counter;
 
 	.stk-block-icon-list-item__content {
 		display: inline-flex;
 		width: fit-content;
 		align-items: center;
 
-		// These allow the text to align center when the marker has bigger font-size.
-		.stk-block-icon-list-item__filler {
-			height: var(--stk-icon-height, 16px);
+		.stk-block-icon-list-item__marker::before {
+			content: counter(stk-icon-list-counter, var(--stk-list-style-type, decimal)) ". ";
+			display: inline-block;
+			font-size: var(--stk-icon-height, 16px);
+			line-height: 1;
+			color: var(--stk-icon-list-marker-color);
+			vertical-align: middle;
+			margin-right: 4px;
 		}
-		.stk-block-icon-list-item__text {
-			padding-top: calc(var(--stk-icon-height, 16px) / 10);
-		}
-	}
-	&::marker {
-		font-size: var(--stk-icon-height, 16px);
-		line-height: 1;
-		color: var(--stk-icon-list-marker-color);
-		display: inline-flex;
-		height: var(--stk-icon-height, 16px);
 	}
 
 }
