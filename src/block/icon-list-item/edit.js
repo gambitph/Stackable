@@ -41,7 +41,7 @@ import { useBlockContext } from '~stackable/hooks'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { compose } from '@wordpress/compose'
+import { compose, createHigherOrderComponent } from '@wordpress/compose'
 import { dispatch } from '@wordpress/data'
 import { useEffect } from '@wordpress/element'
 
@@ -189,3 +189,27 @@ export default compose(
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
+
+/**
+ * Add tabindex=-1 to the wrapper of the icon list item so that navigating
+ * up/down will not select the wrapper.
+ */
+const withNegativeTabIndex = createHigherOrderComponent( BlockEdit => {
+	return props => {
+		if ( props.name !== 'stackable/icon-list-item' ) {
+			return <BlockEdit { ...props } />
+		}
+
+		const wrapperProps = {
+			...props.wrapperProps,
+			tabIndex: -1,
+		}
+		return <BlockEdit { ...props } wrapperProps={ wrapperProps } />
+	}
+}, 'withNegativeTabIndex' )
+
+wp.hooks.addFilter(
+	'editor.BlockEdit',
+	'stackable/with-icon-list-negative-tab-index',
+	withNegativeTabIndex
+)
