@@ -33,7 +33,7 @@ import { InspectorTabs } from '~stackable/components'
 import {
 	withBlockAttributeContext,
 	withQueryLoopContext,
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 } from '~stackable/higher-order'
 import { useBlockContext } from '~stackable/hooks'
 
@@ -185,7 +185,7 @@ const Edit = props => {
 }
 
 export default compose(
-	withBlockWrapper,
+	withBlockWrapperIsHovered,
 	withQueryLoopContext,
 	withBlockAttributeContext,
 )( Edit )
