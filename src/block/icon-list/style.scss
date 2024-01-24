@@ -1,6 +1,10 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list {
 	:is(ul, ol) {
+		display: grid;
+		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);
+		row-gap: var(--stk-icon-list-row-gap, 0);
+		column-gap: var(--stk-icon-list-column-gap, 0);
 		width: fit-content;
 		text-align: start;
 	}
@@ -38,7 +42,7 @@
 	// For previous icon list blocks.
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
-	:not(ul.stk-block-icon-list__li, ol.stk-block-icon-list__ol) li {
+	:not(ul.stk-block-icon-list__li, ol.stk-block-icon-list__ol) li:not(.stk-block-icon-list-item) {
 		width: fit-content;
 		&::marker {
 			line-height: 0;

@@ -86,6 +86,20 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+
+	// List item borders.
+	listItemBorderStyle: {
+		type: 'string',
+		default: '',
+	},
+	listItemBorderWidth: {
+		type: 'number',
+		default: '',
+	},
+	listItemBorderColor: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const attributes = ( version = VERSION ) => {

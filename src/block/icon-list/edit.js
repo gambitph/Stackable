@@ -15,7 +15,7 @@ import {
 	AdvancedRangeControl,
 	IconControl,
 	ColorPaletteControl,
-	// IconSearchPopover,
+	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
 } from '~stackable/components'
@@ -94,6 +94,25 @@ const listStyleTypeOptions = [
 	},
 ]
 
+const BORDER_CONTROLS = [
+	{
+		value: '',
+		title: __( 'None', i18n ),
+	},
+	{
+		value: 'solid',
+		title: __( 'Solid', i18n ),
+	},
+	{
+		value: 'dashed',
+		title: __( 'Dashed', i18n ),
+	},
+	{
+		value: 'dotted',
+		title: __( 'Dotted', i18n ),
+	},
+]
+
 const Edit = props => {
 	const {
 		clientId,
@@ -105,7 +124,9 @@ const Edit = props => {
 
 	useGeneratedCss( props.attributes )
 
-	const { ordered, icon } = attributes
+	const {
+		ordered, icon, listItemBorderStyle,
+	} = attributes
 	const TagName = ordered ? 'ol' : 'ul'
 	const tagNameClass = ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul'
 
@@ -265,6 +286,42 @@ const Edit = props => {
 								allowReset={ true }
 								placeholder="0"
 							/>
+						</PanelAdvancedSettings>
+
+						<PanelAdvancedSettings
+							title={ __( 'Icon List Item Borders', i18n ) }
+							initialOpen={ false }
+							id="icon-list-item-borders"
+						>
+							<AdvancedToolbarControl
+								label={ __( 'Borders', i18n ) }
+								controls={ BORDER_CONTROLS }
+								className="ugb-border-controls__border-type-toolbar"
+								attribute="listItemBorderStyle"
+								fullwidth={ true }
+								isSmall={ true }
+							/>
+
+							{ listItemBorderStyle &&
+								<AdvancedRangeControl
+									label={ __( 'Border Width', i18n ) }
+									attribute="listItemBorderWidth"
+									responsive="all"
+									min={ 0 }
+									max={ 99 }
+									step={ 1 }
+									sliderMax={ 5 }
+									defaultLocked={ true }
+								/>
+							}
+
+							{ listItemBorderStyle &&
+								<ColorPaletteControl
+									label={ __( 'Border Color', i18n ) }
+									attribute="listItemBorderColor"
+								/>
+							}
+
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 

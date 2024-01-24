@@ -35,23 +35,17 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
+
+	const columns = props.columns ? props.columns : 1
+
 	return (
 		<>
 			<BlockCss
 				{ ...propsToPass }
-				selector="ol li"
-				styleRule="paddingInlineStart"
-				attrName="iconGap"
-				key="olIconGap"
-				responsive="all"
-				format="%spx"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector="ul li .stk-block-icon-list-item__content"
+				selector={ [ 'ul li .stk-block-icon-list-item__content', 'ol li .stk-block-icon-list-item__content' ] }
 				styleRule="gap"
 				attrName="iconGap"
-				key="ulIconGap"
+				key="iconGap"
 				responsive="all"
 				format="%spx"
 			/>
@@ -65,7 +59,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector=""
-				styleRule="columnCount"
+				styleRule="--stk-icon-list-column-count"
 				attrName="columns"
 				key="columns"
 				responsive="all"
@@ -73,7 +67,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector=""
-				styleRule="columnGap"
+				styleRule="--stk-icon-list-column-gap"
 				attrName="columnGap"
 				key="columnGap"
 				responsive="all"
@@ -81,8 +75,8 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="li"
-				styleRule="marginBottom"
+				selector=""
+				styleRule="--stk-icon-list-row-gap"
 				attrName="rowGap"
 				key="rowGap"
 				responsive="all"
@@ -145,19 +139,43 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ 'li' ] }
-				styleRule="marginInline"
+				selector={ [ 'li .stk-block-icon-list-item__content' ] }
+				styleRule="justifyContent"
 				attrName="listAlignment"
 				key="listAlignment"
 				responsive="all"
-				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
+				valueCallback={ value => value === 'center' ? 'center' : value === 'right' ? 'flex-end' : value === 'left' ? 'flex-start' : '' }
+			/>
+
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				styleRule="borderBottomStyle"
+				attrName="listItemBorderStyle"
+				key="listItemBorderStyle"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				styleRule="borderWidth"
+				attrName="listItemBorderWidth"
+				key="listItemBorderWidth"
+				responsive="all"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				styleRule="borderColor"
+				attrName="listItemBorderColor"
+				key="listItemBorderColor"
 			/>
 		</>
 	)
 }
 
 export const IconListStyles = memo( props => {
-	const icons = useBlockAttributesContext( attributes => attributes.icons )
+	const columns = useBlockAttributesContext( attributes => attributes.columns )
 
 	return (
 		<>
@@ -168,7 +186,7 @@ export const IconListStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
-			<Styles { ...props } icons={ icons } />
+			<Styles { ...props } columns={ columns } />
 		</>
 	)
 } )
@@ -181,7 +199,7 @@ IconListStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
-
+	const columns = props.attributes.columns
 	return (
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
@@ -191,7 +209,7 @@ IconListStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Styles { ...props } />
+			<Styles { ...props } columns={ columns } />
 		</BlockCssCompiler>
 	)
 }

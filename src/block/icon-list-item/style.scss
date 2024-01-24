@@ -1,8 +1,24 @@
+
+.stk-block-icon-list.stk-block {
+	[data-type="stackable/icon-list-item"].wp-block.wp-block-stackable-icon-list-item::after,
+	.stk-block.stk-block-icon-list-item .stk-block-icon-list-item__content::after {
+		content: "";
+		display: block;
+		width: 100%;
+		position: absolute;
+		border-top: 0;
+		border-left: 0;
+		border-right: 0;
+		bottom: calc(var(--stk-icon-list-row-gap, 0) / -2);
+		left: 0;
+	}
+}
+
 .stk-block-icon-list .stk-block-icon-list__ul .stk-block-icon-list-item {
 	flex-direction: column;
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
-	width: fit-content;
+	width: 100%;
 	margin-inline: 0 auto;
 
 	.stk-block-icon-list-item__content {
@@ -35,13 +51,12 @@
 }
 
 .stk-block-icon-list .stk-block-icon-list__ol li.stk-block-icon-list-item {
-	width: fit-content;
+	width: 100%;
 	margin-inline: 0 auto;
 	counter-increment: stk-icon-list-counter;
 
 	.stk-block-icon-list-item__content {
 		display: flex;
-		width: fit-content;
 		align-items: center;
 
 		.stk-block-icon-list-item__marker::before {
