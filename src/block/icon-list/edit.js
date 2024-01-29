@@ -13,6 +13,7 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	AdvancedRangeControl,
+	AdvancedToggleControl,
 	IconControl,
 	ColorPaletteControl,
 	AdvancedToolbarControl,
@@ -193,6 +194,7 @@ const Edit = props => {
 								min="0"
 								sliderMax="50"
 								responsive="all"
+								placeholder="16"
 							/>
 
 							<AdvancedRangeControl
@@ -286,6 +288,26 @@ const Edit = props => {
 								allowReset={ true }
 								placeholder="0"
 							/>
+
+							<AdvancedToolbarControl
+								label={ __( 'Icon Vertical Alignment', i18n ) }
+								controls="vertical"
+								attribute="iconVerticalAlignment"
+								fullwidth={ true }
+								isSmall={ true }
+								help={ __( 'Visible if you have long text in your list.', i18n ) }
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Icon Vertical Offset', i18n ) }
+								attribute="iconVerticalOffset"
+								min={ -50 }
+								max={ 50 }
+								step={ 1 }
+								allowReset={ true }
+								responsive="all"
+								placeholder="0"
+							/>
 						</PanelAdvancedSettings>
 
 						<PanelAdvancedSettings
@@ -312,6 +334,7 @@ const Edit = props => {
 									step={ 1 }
 									sliderMax={ 5 }
 									defaultLocked={ true }
+									placeholder="1"
 								/>
 							}
 
@@ -319,8 +342,16 @@ const Edit = props => {
 								<ColorPaletteControl
 									label={ __( 'Border Color', i18n ) }
 									attribute="listItemBorderColor"
+									default="#00000066"
 								/>
 							}
+
+							{ listItemBorderStyle &&
+								<AdvancedToggleControl
+									label={ __( 'Full Width Borders', i18n ) }
+									attribute="listItemBorderFullWidth"
+									defaultValue={ false }
+								/> }
 
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>

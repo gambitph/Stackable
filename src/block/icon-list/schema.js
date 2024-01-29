@@ -70,6 +70,14 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+	iconVerticalAlignment: {
+		type: 'string',
+		default: '',
+	},
+	iconVerticalOffset: {
+		type: 'number',
+		default: '',
+	},
 
 	// Numbers.
 	listType: {
@@ -98,7 +106,11 @@ export const iconListAttributes = {
 	},
 	listItemBorderColor: {
 		type: 'string',
-		default: '',
+		default: '#00000066',
+	},
+	listItemBorderFullWidth: {
+		type: 'boolean',
+		default: false,
 	},
 }
 

@@ -11,6 +11,8 @@
 		border-right: 0;
 		bottom: calc(var(--stk-icon-list-row-gap, 0px) / -2);
 		left: 0;
+		border-style: none;
+		border-width: 1px;
 	}
 }
 
@@ -24,6 +26,8 @@
 	.stk-block-icon-list-item__content {
 		display: flex;
 		align-items: center;
+		width: fit-content;
+		position: relative;
 		.stk--svg-wrapper {
 			margin-right: 4px;
 			.stk--inner-svg svg {
@@ -58,6 +62,8 @@
 	.stk-block-icon-list-item__content {
 		display: flex;
 		align-items: center;
+		width: fit-content;
+		position: relative;
 
 		.stk-block-icon-list-item__marker::before {
 			content: counter(stk-icon-list-counter, var(--stk-list-style-type, decimal)) ". ";

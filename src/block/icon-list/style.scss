@@ -4,7 +4,7 @@
 		display: grid;
 		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);
 		row-gap: var(--stk-icon-list-row-gap, 0);
-		column-gap: var(--stk-icon-list-column-gap, 0);
+		column-gap: var(--stk-icon-list-column-gap, 16px);
 		width: fit-content;
 		text-align: start;
 	}

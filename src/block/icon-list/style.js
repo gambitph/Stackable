@@ -139,12 +139,54 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
+				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--svg-wrapper', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
+				styleRule="alignSelf"
+				attrName="iconVerticalAlignment"
+				key="iconVerticalAlignment"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--svg-wrapper', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
+				styleRule="marginTop"
+				attrName="iconVerticalOffset"
+				key="iconVerticalOffset"
+				responsive="all"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'li .stk-block-icon-list-item__content' ] }
+				styleRule="marginInline"
+				attrName="listAlignment"
+				key="listAlignment-marginInline"
+				responsive="all"
+				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
+			/>
+			<BlockCss
+				{ ...propsToPass }
 				selector={ [ 'li .stk-block-icon-list-item__content' ] }
 				styleRule="justifyContent"
 				attrName="listAlignment"
-				key="listAlignment"
+				key="listAlignment-justifyContent"
 				responsive="all"
 				valueCallback={ value => value === 'center' ? 'center' : value === 'right' ? 'flex-end' : value === 'left' ? 'flex-start' : '' }
+			/>
+
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul', 'ol' ] }
+				responsive="all"
+				styleRule="width"
+				attrName="columns"
+				key="listWidth-columns"
+				valueCallback={ ( value, getAttribute, device ) => {
+					if ( getAttribute( 'contentAlign', device ) === undefined || getAttribute( 'contentAlign', device ) === '' ) {
+						return value === 1 ? 'fit-content' : 'auto'
+					}
+
+					return 'fit-content'
+				} }
+				dependencies={ [ 'contentAlign' ] }
 			/>
 
 			<BlockCss
@@ -169,6 +211,30 @@ const Styles = props => {
 				styleRule="borderColor"
 				attrName="listItemBorderColor"
 				key="listItemBorderColor"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul li .stk-block-icon-list-item__content', 'ol li .stk-block-icon-list-item__content' ] }
+				styleRule="width"
+				attrName="listItemBorderFullWidth"
+				key="listItemBorderFullWidth"
+				valueCallback={ value => value ? '100%' : undefined }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul', 'ol' ] }
+				responsive="all"
+				styleRule="width"
+				attrName="listItemBorderFullWidth"
+				key="listWidth-listItemBorder"
+				valueCallback={ ( value, getAttribute, device ) => {
+					if ( getAttribute( 'columns', device ) === undefined || getAttribute( 'columns', device ) === '' || getAttribute( 'columns', device ) === 1 ) {
+						return value ? '100%' : undefined
+					}
+
+					return undefined
+				} }
+				dependencies={ [ 'columns' ] }
 			/>
 		</>
 	)
