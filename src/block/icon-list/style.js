@@ -143,10 +143,11 @@ const Styles = props => {
 				styleRule="alignSelf"
 				attrName="iconVerticalAlignment"
 				key="iconVerticalAlignment"
+				responsive="all"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--svg-wrapper', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
+				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--inner-svg svg', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
 				styleRule="marginTop"
 				attrName="iconVerticalOffset"
 				key="iconVerticalOffset"

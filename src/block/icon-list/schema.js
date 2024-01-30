@@ -71,10 +71,12 @@ export const iconListAttributes = {
 		default: '',
 	},
 	iconVerticalAlignment: {
+		stkResponsive: true,
 		type: 'string',
 		default: '',
 	},
 	iconVerticalOffset: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
