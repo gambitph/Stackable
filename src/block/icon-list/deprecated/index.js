@@ -1,5 +1,5 @@
 import { Save } from './save'
-import { attributes } from '../schema'
+import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
 import {
