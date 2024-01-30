@@ -294,7 +294,6 @@ const Edit = props => {
 								controls="vertical"
 								attribute="iconVerticalAlignment"
 								fullwidth={ true }
-								isSmall={ true }
 								help={ __( 'Visible if you have long text in your list.', i18n ) }
 							/>
 
