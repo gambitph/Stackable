@@ -101,6 +101,7 @@ export const iconListAttributes = {
 		default: '',
 	},
 	listItemBorderWidth: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},

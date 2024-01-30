@@ -181,7 +181,7 @@ const Styles = props => {
 				key="listWidth-columns"
 				valueCallback={ ( value, getAttribute, device ) => {
 					if ( getAttribute( 'contentAlign', device ) === undefined || getAttribute( 'contentAlign', device ) === '' ) {
-						return value === 1 ? 'fit-content' : 'auto'
+						return value === 1 ? 'fit-content' : '100%'
 					}
 
 					return 'fit-content'
