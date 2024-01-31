@@ -304,6 +304,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Anchors are not anymore copied with our copy and paste style feature
 * Fixed: Error when using a category that's shown as a link
 * Fixed: Compatibility with Thrive themes global header
+* Fixed: Compatibility with Core Framework: inspector panels now open properly
 
 = 3.12.8 =
 * New: (Hotfix update) Added new option "Lazy Load Images within Carousels" that fixes carousel spacing issues with some image lazy loading solutions
