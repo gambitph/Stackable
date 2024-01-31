@@ -32,7 +32,14 @@ const getVideoProviderFromURL = url => {
 	}
 
 	// Check for Vimeo.
-	id = ( url.match( /vimeo\.com\/(\d+)/i ) || [] )[ 1 ] // https://vimeo.com/VIDEO_ID or https://vimeo.com/VIDEO_ID/IDENTIFIER
+	const _id = ( url.match( /vimeo\.com\/(\d+)\/(\w+)/i ) || [] ) // https://vimeo.com/VIDEO_ID/PRIVACY_HASH
+	id = _id[ 1 ]
+	if ( _id[ 1 ] && _id[ 2 ] ) {
+		return {
+			type: 'vimeo-unlisted',
+			id: { video: _id[ 1 ], hash: _id[ 2 ] },
+		}
+	}
 
 	if ( ! id ) {
 		id = ( url.match( /vimeo\.com\/(\w*\/)*(\d+)/i ) || [] )[ 2 ] // https://vimeo.com/CATEGORY/IDENTIFIER/VIDEO_ID
@@ -73,6 +80,10 @@ class StackableVideoPopup {
 						args.ytNoCookie = true // Use youtube-nocookie.
 					} else if ( type === 'vimeo' ) {
 						args.vimeoSrc = id
+					} else if ( type === 'vimeo-unlisted' ) {
+						// Create custom iframe src for unlisted vimeo videos.
+						// https://developer.vimeo.com/api/oembed/videos#table-2
+						args.iframeSrc = `https://player.vimeo.com/video/${ id.video }?h=${ id.hash }&autoplay=1`
 					} else {
 						args.vidSrc = id
 						args.animationStart = () => {
