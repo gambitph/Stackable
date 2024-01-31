@@ -159,7 +159,7 @@ if ( ! function_exists( 'generate_post_query_from_stackable_posts_block' ) ) {
 				'post_type' => $context['type'],
 				'post_status' => 'publish',
 				'order' => $context['order'],
-				'orderby' => 'rand',
+				'orderby' => $context['orderBy'],
 				'numberposts' => $context['numberOfItems'],
 				'suppress_filters' => false,
 		);
