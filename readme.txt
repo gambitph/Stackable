@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.4.2
 Requires PHP: 7.3
-Stable tag: 3.12.8
+Stable tag: 3.12.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.9 =
+* New: Revamp of Icon List Block
+* New: New Icon List Block option for adding border between items
+* New: Cleaner output: inlined script for animations is no longer added if there are no animations
+* New: Dynamic Content: you can now search for a post ID in the post search field
+* Fixed: Block error when adding an anchor on a Button block
+* Fixed: Clicking once on links inside the Carousel block now works in iOS
+* Fixed: Anchors are not anymore copied with our copy and paste style feature
+* Fixed: Error when using a category that's shown as a link
+* Fixed: Compatibility with Thrive themes global header
 
 = 3.12.8 =
 * New: (Hotfix update) Added new option "Lazy Load Images within Carousels" that fixes carousel spacing issues with some image lazy loading solutions
