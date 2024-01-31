@@ -14,7 +14,7 @@ import {
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
-import { DEFAULT_SVG } from './util'
+import { DEFAULT_SVG } from '../util'
 
 export const iconListAttributes = {
 	// Columns.
@@ -70,16 +70,6 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
-	iconVerticalAlignment: {
-		stkResponsive: true,
-		type: 'string',
-		default: '',
-	},
-	iconVerticalOffset: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
 
 	// Numbers.
 	listType: {
@@ -95,25 +85,6 @@ export const iconListAttributes = {
 		stkResponsive: true,
 		type: 'number',
 		default: '',
-	},
-
-	// List item borders.
-	listItemBorderStyle: {
-		type: 'string',
-		default: '',
-	},
-	listItemBorderWidth: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	listItemBorderColor: {
-		type: 'string',
-		default: '',
-	},
-	listItemBorderFullWidth: {
-		type: 'boolean',
-		default: false,
 	},
 }
 
@@ -132,6 +103,8 @@ export const attributes = ( version = VERSION ) => {
 	ConditionalDisplay.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, 'ul,ol', {
 		hasTextTag: false,
+		multiline: 'li',
+		multilineWrapperTags: [ 'ol', 'ul' ],
 	} )
 	MarginBottom.addAttributes( attrObject )
 

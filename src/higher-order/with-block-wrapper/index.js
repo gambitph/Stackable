@@ -20,8 +20,11 @@ import { useBlockContext, useBlockHoverState } from '~stackable/hooks'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { useEffect, useState } from '@wordpress/element'
 
+const EMPTY_OBJ = {}
+
 const withBlockWrapper = createHigherOrderComponent(
 	WrappedComponent => props => {
+		const { wrapperProps = EMPTY_OBJ } = props
 		const isDisplayed = useDevicePreviewOptimization( props )
 		const [ blockState, blockHoverClass ] = useBlockHoverState()
 
@@ -30,6 +33,7 @@ const withBlockWrapper = createHigherOrderComponent(
 				align={ props.attributes.align }
 				className={ props.attributes.className }
 				blockHoverClass={ blockHoverClass }
+				{ ...wrapperProps }
 			>
 				{ isDisplayed && (
 					<WrappedComponent

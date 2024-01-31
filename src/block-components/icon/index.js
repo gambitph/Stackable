@@ -63,6 +63,7 @@ export const Icon = props => {
 		hasLinearGradient = true,
 		value = '',
 		onChange = NOOP,
+		openEvenIfUnselected = false,
 	} = props
 
 	const { isSelected } = useBlockEditContext()
@@ -71,7 +72,7 @@ export const Icon = props => {
 
 	// When the block is unselected, make sure that the popover is closed.
 	useEffect( () => {
-		if ( ! isSelected && isOpen ) {
+		if ( ! isSelected && isOpen && ! openEvenIfUnselected ) {
 			setIsOpen( false )
 		}
 	}, [ isSelected, isOpen ] )
@@ -145,7 +146,7 @@ export const Icon = props => {
 		<span // eslint-disable-line
 			className={ classNames }
 			onClick={ event => {
-				if ( debouncedIsSelected ) {
+				if ( debouncedIsSelected || openEvenIfUnselected ) {
 					// Only register a click to .stk--inner-svg.
 					if ( event.target.closest( '.stk--inner-svg' ) && ! isOpen ) {
 						setIsOpen( ! isOpen )

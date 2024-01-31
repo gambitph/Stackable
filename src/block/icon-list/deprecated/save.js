@@ -1,15 +1,14 @@
 /**
  * Internal dependencies
  */
-import { IconListStyles } from './style'
-import { IconSvgDef } from './util'
+import { IconListStyles } from '../style'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
 import {
-	getResponsiveClasses, BlockDiv, CustomCSS, getTypographyClasses, getAlignmentClasses,
+	getResponsiveClasses, BlockDiv, CustomCSS, Typography, getTypographyClasses, getAlignmentClasses,
 } from '~stackable/block-components'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
@@ -18,7 +17,6 @@ import { version as VERSION } from 'stackable'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { InnerBlocks } from '@wordpress/block-editor'
 
 export const Save = props => {
 	const {
@@ -30,8 +28,7 @@ export const Save = props => {
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
-	const TagName = attributes.ordered ? 'ol' : 'ul'
-	const tagNameClass = attributes.ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul'
+	const tagName = attributes.ordered ? 'ol' : 'ul'
 
 	const blockClassNames = classnames( [
 		className,
@@ -49,10 +46,11 @@ export const Save = props => {
 		>
 			<IconListStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ ! attributes.ordered && <IconSvgDef icon={ attributes.icon } uniqueId={ attributes.uniqueId } /> }
-			<TagName className={ tagNameClass }>
-				<InnerBlocks.Content />
-			</TagName>
+			<Typography.Content
+				tagName={ tagName }
+				attributes={ attributes }
+				multiline="li"
+			/>
 		</BlockDiv.Content>
 	)
 }

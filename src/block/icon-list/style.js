@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { convertSVGStringToBase64 } from './util'
+// import { convertSVGStringToBase64 } from './util'
 
 /**
  * External dependencies
@@ -35,69 +35,15 @@ const Styles = props => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	}
-	const {
-		icons,
-	} = props
+
+	const columns = props.columns ? props.columns : 1
 
 	return (
 		<>
-			{ Object.keys( icons ).reduce( ( acc, key ) => {
-				acc.push(
-					<BlockCss
-						{ ...propsToPass }
-						renderIn="edit"
-						selector={ key }
-						hover="all"
-						hoverSelector={ '.%s:hover ' + key }
-						styleRule="listStyleImage"
-						attrName="markerColor"
-						key="markerColor"
-						valuePreCallback={ ( value, getAttribute, device, state ) => {
-							const iconRotation = getAttribute( 'iconRotation' )
-							const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
-							if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
-								return undefined
-							}
-
-							const transform = `rotate(${ iconRotation + 'deg' })`
-							const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000', { transform, opacity: iconOpacity } )
-							return `url('data:image/svg+xml;base64,${ iconWithColor }')`
-						} }
-						dependencies={ [ 'icons', 'iconRotation', 'iconOpacity' ] }
-					/>
-				)
-				acc.push(
-					<BlockCss
-						{ ...propsToPass }
-						renderIn="save"
-						selector={ key }
-						hover="all"
-						hoverSelector={ '.%s:hover ' + key }
-						styleRule="listStyleImage"
-						attrName="markerColor"
-						key="markerColor-save"
-						valuePreCallback={ ( value, getAttribute, device, state ) => {
-							const iconRotation = getAttribute( 'iconRotation' )
-							const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
-							if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
-								return undefined
-							}
-
-							const transform = `rotate(${ iconRotation + 'deg' })`
-
-							const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000', { transform, opacity: iconOpacity } )
-							return `url('data:image/svg+xml;base64,${ iconWithColor }')`
-						} }
-						dependencies={ [ 'icons', 'iconRotation', 'iconOpacity' ] }
-					/>
-				)
-				return acc
-			}, [] ) }
-
 			<BlockCss
 				{ ...propsToPass }
-				selector="li"
-				styleRule="paddingInlineStart"
+				selector={ [ 'ul li .stk-block-icon-list-item__content', 'ol li .stk-block-icon-list-item__content' ] }
+				styleRule="gap"
 				attrName="iconGap"
 				key="iconGap"
 				responsive="all"
@@ -106,14 +52,14 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector="ol"
-				styleRule="listStyleType"
+				styleRule="--stk-list-style-type"
 				attrName="listType"
 				key="listType"
 			/>
 			<BlockCss
 				{ ...propsToPass }
 				selector=""
-				styleRule="columnCount"
+				styleRule="--stk-icon-list-column-count"
 				attrName="columns"
 				key="columns"
 				responsive="all"
@@ -121,7 +67,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				selector=""
-				styleRule="columnGap"
+				styleRule="--stk-icon-list-column-gap"
 				attrName="columnGap"
 				key="columnGap"
 				responsive="all"
@@ -129,8 +75,8 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="li"
-				styleRule="marginBottom"
+				selector=""
+				styleRule="--stk-icon-list-row-gap"
 				attrName="rowGap"
 				key="rowGap"
 				responsive="all"
@@ -147,76 +93,156 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="ul li"
+				selector=""
 				hover="all"
-				hoverSelector=".%s:hover li"
-				styleRule="listStyleImage"
+				hoverSelector=".%s:hover"
+				styleRule="--stk-icon-list-marker-color"
 				attrName="markerColor"
 				key="markerColor"
-				valuePreCallback={ ( value, getAttribute, device, state ) => {
-					const iconSVG = getAttribute( 'icon' )
-					const iconRotation = getAttribute( 'iconRotation' )
-					const iconOpacity = getAttribute( 'iconOpacity', 'desktop', state )
-					if ( state !== 'normal' && ! value && ! iconRotation && ! iconOpacity ) {
-						return undefined
-					}
-
-					if ( ! iconSVG ) {
-						return undefined
-					}
-
-					const transform = `rotate(${ iconRotation + 'deg' })`
-
-					const iconWithColor = convertSVGStringToBase64( iconSVG, value || '#000', { transform, opacity: iconOpacity } )
-					return `url('data:image/svg+xml;base64,${ iconWithColor }')`
-				} }
-				dependencies={ [ 'icon', 'iconRotation', 'iconOpacity' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="li::marker"
+				selector=""
 				hover="all"
-				hoverSelector=".%s:hover li::marker"
-				styleRule="color"
-				attrName="markerColor"
-				key="markerColor-hover"
+				hoverSelector=".%s:hover"
+				styleRule="--stk-icon-list-icon-opacity"
+				attrName="iconOpacity"
+				key="iconOpacity"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="li::marker"
-				styleRule="fontSize"
-				attrName="iconSize"
-				key="iconSize"
-				responsive="all"
-				format="%sem"
+				selector=""
+				hover="all"
+				hoverSelector=".%s:hover"
+				styleRule="--stk-icon-list-icon-rotation"
+				attrName="iconRotation"
+				key="iconRotation"
+				valueCallback={ value => value + 'deg' }
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				// For calculating the approximate clickable area for
-				// icon picker.
-				renderIn="edit"
 				selector=""
 				styleRule="--stk-icon-height"
 				attrName="iconSize"
-				key="iconSize-picker"
+				key="iconSize"
 				responsive="all"
-				format="%sem"
+				format="%spx"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ 'li' ] }
+				selector="ul li .stk-block-icon-list-item__content .stk--svg-wrapper"
+				styleRule="marginRight"
+				attrName="iconSize"
+				key="iconMarginRight"
+				responsive="all"
+				valueCallback={ value => value === 0 ? '0px' : undefined }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--svg-wrapper', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
+				styleRule="alignSelf"
+				attrName="iconVerticalAlignment"
+				key="iconVerticalAlignment"
+				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--inner-svg svg', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
+				styleRule="marginTop"
+				attrName="iconVerticalOffset"
+				key="iconVerticalOffset"
+				responsive="all"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'li .stk-block-icon-list-item__content' ] }
 				styleRule="marginInline"
 				attrName="listAlignment"
-				key="listAlignment"
+				key="listAlignment-marginInline"
 				responsive="all"
 				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'li .stk-block-icon-list-item__content' ] }
+				styleRule="justifyContent"
+				attrName="listAlignment"
+				key="listAlignment-justifyContent"
+				responsive="all"
+				valueCallback={ value => value === 'center' ? 'center' : value === 'right' ? 'flex-end' : value === 'left' ? 'flex-start' : '' }
+			/>
+
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul', 'ol' ] }
+				responsive="all"
+				styleRule="width"
+				attrName="columns"
+				key="listWidth-columns"
+				valueCallback={ ( value, getAttribute, device ) => {
+					if ( getAttribute( 'contentAlign', device ) === undefined || getAttribute( 'contentAlign', device ) === '' ) {
+						return value === 1 ? 'fit-content' : '100%'
+					}
+
+					return 'fit-content'
+				} }
+				dependencies={ [ 'contentAlign' ] }
+			/>
+
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				styleRule="borderBottomStyle"
+				attrName="listItemBorderStyle"
+				key="listItemBorderStyle"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				styleRule="borderWidth"
+				attrName="listItemBorderWidth"
+				key="listItemBorderWidth"
+				responsive="all"
+				format="%spx"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				styleRule="borderColor"
+				attrName="listItemBorderColor"
+				key="listItemBorderColor"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul li .stk-block-icon-list-item__content', 'ol li .stk-block-icon-list-item__content' ] }
+				styleRule="width"
+				attrName="listItemBorderFullWidth"
+				key="listItemBorderFullWidth"
+				valueCallback={ value => value ? '100%' : undefined }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector={ [ 'ul', 'ol' ] }
+				responsive="all"
+				styleRule="width"
+				attrName="listItemBorderFullWidth"
+				key="listWidth-listItemBorder"
+				valueCallback={ ( value, getAttribute, device ) => {
+					if ( getAttribute( 'columns', device ) === undefined || getAttribute( 'columns', device ) === '' || getAttribute( 'columns', device ) === 1 ) {
+						return value ? '100%' : undefined
+					}
+
+					return undefined
+				} }
+				dependencies={ [ 'columns' ] }
 			/>
 		</>
 	)
 }
 
 export const IconListStyles = memo( props => {
-	const icons = useBlockAttributesContext( attributes => attributes.icons )
+	const columns = useBlockAttributesContext( attributes => attributes.columns )
 
 	return (
 		<>
@@ -227,7 +253,7 @@ export const IconListStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
-			<Styles { ...props } icons={ icons } />
+			<Styles { ...props } columns={ columns } />
 		</>
 	)
 } )
@@ -240,7 +266,7 @@ IconListStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
-
+	const columns = props.attributes.columns
 	return (
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
@@ -250,7 +276,7 @@ IconListStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Styles { ...props } icons={ props.attributes.icons } />
+			<Styles { ...props } columns={ columns } />
 		</BlockCssCompiler>
 	)
 }
