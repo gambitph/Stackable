@@ -301,8 +301,9 @@ const Edit = props => {
 							<AdvancedRangeControl
 								label={ __( 'Icon Vertical Offset', i18n ) }
 								attribute="iconVerticalOffset"
-								min={ -50 }
-								max={ 50 }
+								min={ -1000 }
+								sliderMin={ -50 }
+								sliderMax={ 50 }
 								step={ 1 }
 								allowReset={ true }
 								responsive="all"
