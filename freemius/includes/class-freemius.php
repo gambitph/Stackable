@@ -1357,8 +1357,7 @@
         }
 
         function _run_garbage_collector() {
-            // @todo - Remove this check once the garbage collector is ready to be out of beta.
-            if ( true !== fs_get_optional_constant( 'WP_FS__ENABLE_GARBAGE_COLLECTOR', false ) ) {
+            if ( true !== fs_get_optional_constant( 'WP_FS__ENABLE_GARBAGE_COLLECTOR', true ) ) {
                 return;
             }
 
@@ -13652,7 +13651,7 @@
                             'license_whitelabeled'
                         ),
                         "<strong>{$this->get_plugin_title()}</strong>",
-                        sprintf( '<a href="https://wpstackable.com/account/" target="_blank">%s</a>', $this->get_text_inline( 'User Dashboard', 'user-dashboard' ) ),
+                        sprintf( '<a href="https://users.freemius.com" target="_blank">%s</a>', $this->get_text_inline( 'User Dashboard', 'user-dashboard' ) ),
                         sprintf( '<a href="#" class="fs-toggle-whitelabel-mode">%s</a>', $this->get_text_inline( 'revert it now', 'revert-it-now' ) )
                     ),
                     'license_whitelabeled'
