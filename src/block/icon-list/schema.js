@@ -109,7 +109,7 @@ export const iconListAttributes = {
 	},
 	listItemBorderColor: {
 		type: 'string',
-		default: '#00000066',
+		default: '',
 	},
 	listItemBorderFullWidth: {
 		type: 'boolean',

@@ -126,7 +126,10 @@ const Edit = props => {
 	useGeneratedCss( props.attributes )
 
 	const {
-		ordered, icon, listItemBorderStyle,
+		ordered,
+		icon,
+		listItemBorderStyle,
+		listItemBorderColor,
 	} = attributes
 	const TagName = ordered ? 'ol' : 'ul'
 	const tagNameClass = ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul'
@@ -343,6 +346,7 @@ const Edit = props => {
 								<ColorPaletteControl
 									label={ __( 'Border Color', i18n ) }
 									attribute="listItemBorderColor"
+									value={ listItemBorderColor ? listItemBorderColor : '#00000066' }
 									default="#00000066"
 								/>
 							}
