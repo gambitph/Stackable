@@ -53,8 +53,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
-			// Adds a special class to the body tag, to indicate we can now run animations.
-			add_action( 'wp_footer', array( $this, 'init_animation' ) );
 			add_action( 'wp_footer', array( $this, 'init_stackable_vars' ) );
 
 			// Add the fallback values for the default block width and wide block width.
