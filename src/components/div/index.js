@@ -12,6 +12,9 @@ const Div = props => {
 		backgroundUrl,
 		backgroundUrlTablet,
 		backgroundUrlMobile,
+		backgroundThumbnailUrl,
+		backgroundThumbnailUrlTablet,
+		backgroundThumbnailUrlMobile,
 		backgroundColorType,
 		...propsToPass
 	} = props
@@ -29,6 +32,9 @@ const Div = props => {
 				videoUrl={ backgroundUrl }
 				videoUrlTablet={ backgroundUrlTablet }
 				videoUrlMobile={ backgroundUrlMobile }
+				videoThumbnailUrl={ backgroundThumbnailUrl }
+				videoThumbnailUrlTablet={ backgroundThumbnailUrlTablet }
+				videoThumbnailUrlMobile={ backgroundThumbnailUrlMobile }
 			/>
 		</BlockTag>
 	)
@@ -52,6 +58,9 @@ Div.Content = props => {
 		backgroundUrl,
 		backgroundUrlTablet,
 		backgroundUrlMobile,
+		backgroundThumbnailUrl,
+		backgroundThumbnailUrlTablet,
+		backgroundThumbnailUrlMobile,
 		backgroundColorType,
 		...propsToPass
 	} = props
@@ -69,6 +78,9 @@ Div.Content = props => {
 				videoUrl={ backgroundUrl }
 				videoUrlTablet={ backgroundUrlTablet }
 				videoUrlMobile={ backgroundUrlMobile }
+				videoThumbnailUrl={ backgroundThumbnailUrl }
+				videoThumbnailUrlTablet={ backgroundThumbnailUrlTablet }
+				videoThumbnailUrlMobile={ backgroundThumbnailUrlMobile }
 			/>
 		</BlockTag>
 	)

@@ -12,12 +12,20 @@ import { Fragment } from '@wordpress/element'
 
 const VideoBackground = props => {
 	let backgroundSrc = props.videoUrl
+	let backgroundThumbnailSrc = props.videoThumbnailUrl
 	const deviceType = useDeviceType()
 	if ( deviceType !== 'Desktop' && props.videoUrlTablet ) {
 		backgroundSrc = props.videoUrlTablet
 	}
 	if ( deviceType === 'Mobile' && props.videoUrlMobile ) {
 		backgroundSrc = props.videoUrlMobile
+	}
+
+	if ( deviceType !== 'Desktop' && props.videoThumbnailUrlTablet ) {
+		backgroundThumbnailSrc = props.videoThumbnailUrlTablet
+	}
+	if ( deviceType === 'Mobile' && props.videoThumbnailUrlMobile ) {
+		backgroundThumbnailSrc = props.videoThumbnailUrlMobile
 	}
 
 	if ( ! urlIsVideo( backgroundSrc ) ) {
@@ -32,6 +40,7 @@ const VideoBackground = props => {
 			loop
 			playsinline
 			src={ backgroundSrc }
+			poster={ backgroundThumbnailSrc }
 		/>
 	)
 }
@@ -40,6 +49,9 @@ VideoBackground.defaultProps = {
 	videoUrl: '',
 	videoUrlTablet: '',
 	videoUrlMobile: '',
+	videoThumbnailUrl: '',
+	videoThumbnailUrlTablet: '',
+	videoThumbnailUrlMobile: '',
 }
 
 VideoBackground.Content = props => {
@@ -72,6 +84,7 @@ VideoBackground.Content = props => {
 					loop
 					playsinline
 					src={ props.videoUrl }
+					poster={ props.videoThumbnailUrl }
 				/>
 			}
 			{ urlIsVideo( props.videoUrlTablet ) &&
@@ -82,6 +95,7 @@ VideoBackground.Content = props => {
 					loop
 					playsinline
 					src={ props.videoUrlTablet }
+					poster={ props.videoThumbnailUrlTablet }
 				/>
 			}
 			{ urlIsVideo( props.videoUrlMobile ) &&
@@ -92,6 +106,7 @@ VideoBackground.Content = props => {
 					loop
 					playsinline
 					src={ props.videoUrlMobile }
+					poster={ props.videoThumbnailUrlMobile }
 				/>
 			}
 		</Fragment>
@@ -102,6 +117,9 @@ VideoBackground.Content.defaultProps = {
 	videoUrl: '',
 	videoUrlTablet: '',
 	videoUrlMobile: '',
+	videoThumbnailUrl: '',
+	videoThumbnailUrlTablet: '',
+	videoThumbnailUrlMobile: '',
 }
 
 export default VideoBackground
