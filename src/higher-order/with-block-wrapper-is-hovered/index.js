@@ -21,8 +21,11 @@ import { useRef } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { BlockWrapper } from '~stackable/components'
 
+const EMPTY_OBJ = {}
+
 const withBlockWrapperIsHovered = createHigherOrderComponent(
 	WrappedComponent => props => {
+		const { wrapperProps = EMPTY_OBJ } = props
 		const ref = useRef()
 		const { showMovers, gestures } = useShowMoversGestures( { ref } )
 		const [ blockState, blockHoverClass ] = useBlockHoverState()
@@ -36,6 +39,7 @@ const withBlockWrapperIsHovered = createHigherOrderComponent(
 				// These are needed by isHovered
 				hoverRef={ ref }
 				{ ...( isDisplayed ? gestures : {} ) }
+				{ ...wrapperProps }
 			>
 				{ isDisplayed && (
 					<WrappedComponent { ...props }
