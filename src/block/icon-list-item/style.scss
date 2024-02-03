@@ -37,9 +37,11 @@
 				transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
 				opacity: var(--stk-icon-list-icon-opacity, 1);
 				fill: var(--stk-icon-list-marker-color);
+				color: var(--stk-icon-list-marker-color);
 
 				:is(use,g,path,rect,polygon,ellipse) {
 					fill: var(--stk-icon-list-marker-color);
+					color: var(--stk-icon-list-marker-color);
 				}
 			}
 		}
