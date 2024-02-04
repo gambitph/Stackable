@@ -79,13 +79,15 @@ const deprecated = [
 		migrate: ( attributes, innerBlocks ) => {
 			let newAttributes = { ...attributes }
 			const {
-				text, icons, iconSize, ordered,
+				text, icons, iconSize, ordered, iconGap,
 			} = attributes
 
 			const _iconSize = iconSize ? iconSize : 1
+			const _iconGap = iconGap ? iconGap : 0
 
 			newAttributes = {
 				...newAttributes,
+				iconGap: _iconGap + 4, // Our gap is smaller now.
 				iconSize: ordered
 					? getEquivalentFontSize( _iconSize )
 					: getEquivalentIconSize( _iconSize ),

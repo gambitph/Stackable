@@ -17,6 +17,10 @@
 	}
 }
 
+.stk-block-icon-list-item__content {
+	gap: 6px;
+}
+
 .stk-block-icon-list .stk-block-icon-list__ul .stk-block-icon-list-item {
 	flex-direction: column;
 	// Need to make this fit the content so that we can align left/center/right
