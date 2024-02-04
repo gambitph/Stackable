@@ -127,7 +127,7 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_activated' ) ) {
 			if ( ! $ignore ) {
 				printf(
 					'<div class="notice notice-error is-dismissible stackable_notice_gutenberg_plugin"><p>%s</p>%s</div>',
-					sprintf( __( '%sStackable Notice%s: We noticed that the Gutenberg plugin is active! Please be aware the Gutenberg plugin is experimental and might cause issues with other plugins, %sincluding ours%s. Click the close button on the side to dismiss this notice.', STACKABLE_I18N ), '<strong>', '</strong>', '<strong>', '</strong>' ),
+					sprintf( __( '%sStackable Notice%s: We noticed that the Gutenberg plugin is active! Please be aware the Gutenberg plugin is used to try out the new Block Editor features, and Stackable might not be compatible with it. Click the close button on the side to dismiss this notice.', STACKABLE_I18N ), '<strong>', '</strong>' ),
 					'<script>( function() {
 						document.body.addEventListener( "click", function( event ) {
 							if( event.target.matches( ".notice.stackable_notice_gutenberg_plugin button.notice-dismiss" ) ) {
