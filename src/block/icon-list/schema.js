@@ -41,6 +41,10 @@ export const iconListAttributes = {
 		type: 'string',
 		default: '',
 	},
+	listDisplayStyle: {
+		type: 'string',
+		default: '',
+	},
 
 	// Icon.
 	icon: {
@@ -96,6 +100,10 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+	hasPeriod: {
+		type: 'boolean',
+		default: true,
+	},
 
 	// List item borders.
 	listItemBorderStyle: {
@@ -113,7 +121,7 @@ export const iconListAttributes = {
 	},
 	listItemBorderFullWidth: {
 		type: 'boolean',
-		default: false,
+		default: true,
 	},
 }
 

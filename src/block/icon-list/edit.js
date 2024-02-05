@@ -19,6 +19,7 @@ import {
 	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
+	InspectorLayoutControls,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -65,6 +66,17 @@ const listTypeOptions = [
 	{
 		label: __( 'Ordered List', i18n ),
 		value: 'ordered',
+	},
+]
+
+const listDisplayOptions = [
+	{
+		label: __( 'List', i18n ), // uses  display: block & column-count
+		value: '',
+	},
+	{
+		label: __( 'Grid', i18n ), // uses display: grid & grid template columns
+		value: 'grid',
 	},
 ]
 
@@ -132,9 +144,9 @@ const Edit = props => {
 		icon,
 		listItemBorderStyle,
 		listItemBorderColor,
+		listDisplayStyle,
 	} = attributes
 	const TagName = ordered ? 'ol' : 'ul'
-	const tagNameClass = ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul'
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -147,6 +159,11 @@ const Edit = props => {
 		textClasses,
 	] )
 
+	const tagNameClassNames = classnames( [
+		ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul',
+		listDisplayStyle && listDisplayStyle === 'grid' ? 'stk-block-icon-list--grid' : 'stk-block-icon-list--column',
+	] )
+
 	const resetCustomIcons = () => {
 		innerBlocks.forEach( block => {
 			dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, { icon: '' } )
@@ -154,7 +171,7 @@ const Edit = props => {
 	}
 
 	const innerBlocksProps = useInnerBlocksProps( {
-		className: tagNameClass,
+		className: tagNameClassNames,
 	}, {
 		allowedBlocks: ALLOWED_INNER_BLOCKS,
 		template: TEMPLATE,
@@ -169,38 +186,47 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
+					<InspectorLayoutControls>
+						<AlignButtonsControl
+							label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
+							attribute="listAlignment"
+							responsive="all"
+						/>
+					</InspectorLayoutControls>
+
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'General', i18n ) }
 							initialOpen={ true }
 							id="general"
 						>
+
 							<AdvancedSelectControl
-								label={ __( 'List Type', i18n ) }
-								options={ listTypeOptions }
-								value={ ordered ? 'ordered' : 'unordered' }
-								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
-								default="unordered"
+								label={ __( 'List Display Style', i18n ) }
+								options={ listDisplayOptions }
+								attribute="listDisplayStyle"
 							/>
 
 							<AdvancedRangeControl
 								label={ __( 'Columns', i18n ) }
 								attribute="columns"
 								min="1"
-								sliderMax="3"
+								sliderMax="4"
 								step="1"
 								placeholder="1"
 								responsive="all"
 							/>
 
-							<AdvancedRangeControl
-								label={ __( 'Column Gap', i18n ) }
-								attribute="columnGap"
-								min="0"
-								sliderMax="50"
-								responsive="all"
-								placeholder="16"
-							/>
+							{ attributes.columns > 1 && (
+								<AdvancedRangeControl
+									label={ __( 'Column Gap', i18n ) }
+									attribute="columnGap"
+									min="0"
+									sliderMax="50"
+									responsive="all"
+									placeholder="16"
+								/>
+							) }
 
 							<AdvancedRangeControl
 								label={ __( 'Row Gap', i18n ) }
@@ -227,11 +253,7 @@ const Edit = props => {
 								responsive="all"
 								placeholder=""
 							/>
-							<AlignButtonsControl
-								label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
-								attribute="listAlignment"
-								responsive="all"
-							/>
+
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
@@ -241,22 +263,42 @@ const Edit = props => {
 							initialOpen={ false }
 							id="icon-and-markers"
 						>
-							<IconControl
-								label={ __( 'Icon', i18n ) }
-								value={ attributes.icon }
-								onChange={ icon => {
-									setAttributes( { icon } )
-									// Reset custom individual icons.
-									resetCustomIcons()
-								} }
-								defaultValue={ DEFAULT_SVG }
-							/>
-
 							<AdvancedSelectControl
 								label={ __( 'List Type', i18n ) }
-								attribute="listType"
-								options={ listStyleTypeOptions }
+								options={ listTypeOptions }
+								value={ ordered ? 'ordered' : 'unordered' }
+								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
+								default="unordered"
 							/>
+
+							{ ! attributes.ordered && (
+								<IconControl
+									label={ __( 'Icon', i18n ) }
+									value={ attributes.icon }
+									onChange={ icon => {
+										setAttributes( { icon } )
+										// Reset custom individual icons.
+										resetCustomIcons()
+									} }
+									defaultValue={ DEFAULT_SVG }
+								/>
+							) }
+
+							{ attributes.ordered && (
+								<AdvancedSelectControl
+									label={ __( 'List Type', i18n ) }
+									attribute="listType"
+									options={ listStyleTypeOptions }
+								/>
+							) }
+
+							{ attributes.ordered && (
+								<AdvancedToggleControl
+									label={ __( 'With Period', i18n ) }
+									attribute="hasPeriod"
+									defaultValue={ true }
+								/>
+							) }
 
 							<ColorPaletteControl
 								label={ __( 'Color', i18n ) }
@@ -265,7 +307,7 @@ const Edit = props => {
 							/>
 
 							<AdvancedRangeControl
-								label={ __( 'Icon / Number Size', i18n ) }
+								label={ sprintf( __( '%s Size', i18n ), ! attributes.ordered ? __( 'Icon', i18n ) : __( 'Number', i18n ) ) }
 								attribute="iconSize"
 								min={ 0 }
 								max={ 50 }
@@ -302,7 +344,8 @@ const Edit = props => {
 								attribute="iconVerticalAlignment"
 								fullwidth={ true }
 								responsive="all"
-								help={ __( 'Visible if you have long text in your list.', i18n ) }
+								help={ __( 'This is more visible if you have long text in your list.', i18n ) }
+								placeholder="center"
 							/>
 
 							<AdvancedRangeControl
@@ -333,6 +376,13 @@ const Edit = props => {
 							/>
 
 							{ listItemBorderStyle &&
+								<AdvancedToggleControl
+									label={ __( 'Full Width Borders', i18n ) }
+									attribute="listItemBorderFullWidth"
+									defaultValue={ true }
+								/> }
+
+							{ listItemBorderStyle &&
 								<AdvancedRangeControl
 									label={ __( 'Border Width', i18n ) }
 									attribute="listItemBorderWidth"
@@ -355,13 +405,6 @@ const Edit = props => {
 								/>
 							}
 
-							{ listItemBorderStyle &&
-								<AdvancedToggleControl
-									label={ __( 'Full Width Borders', i18n ) }
-									attribute="listItemBorderFullWidth"
-									defaultValue={ false }
-								/> }
-
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 
@@ -373,7 +416,9 @@ const Edit = props => {
 						hasTextContent={ false }
 					/>
 
-					<Alignment.InspectorControls />
+					<Alignment.InspectorControls
+						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+					/>
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />

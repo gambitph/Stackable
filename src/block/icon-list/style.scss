@@ -1,12 +1,25 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list {
-	:is(ul, ol) {
+	.stk-block-icon-list--grid:is(ul, ol) {
 		display: grid;
 		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);
 		row-gap: var(--stk-icon-list-row-gap, 0);
 		column-gap: var(--stk-icon-list-column-gap, 16px);
 		width: fit-content;
 		text-align: start;
+	}
+	.stk-block-icon-list--column:is(ul, ol) {
+		display: block;
+		column-count: var(--stk-icon-list-column-count, 1);
+		column-gap: var(--stk-icon-list-column-gap, 16px);
+		width: fit-content;
+		text-align: start;
+		.wp-block-stackable-icon-list-item {
+			margin-bottom: var(--stk-icon-list-row-gap, 0);
+		}
+		.wp-block-stackable-icon-list-item:last-child {
+			margin-bottom: 0;
+		}
 	}
 	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
 		flex: none;

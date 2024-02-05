@@ -31,7 +31,6 @@ export const Save = props => {
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
 	const TagName = attributes.ordered ? 'ol' : 'ul'
-	const tagNameClass = attributes.ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul'
 
 	const blockClassNames = classnames( [
 		className,
@@ -39,6 +38,10 @@ export const Save = props => {
 		blockAlignmentClass,
 		responsiveClass,
 		textClasses,
+	] )
+	const tagNameClassNames = classnames( [
+		attributes.ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul',
+		attributes.listDisplayStyle && attributes.listDisplayStyle === 'grid' ? 'stk-block-icon-list--grid' : 'stk-block-icon-list--column',
 	] )
 
 	return (
@@ -50,7 +53,7 @@ export const Save = props => {
 			<IconListStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			{ ! attributes.ordered && <IconSvgDef icon={ attributes.icon } uniqueId={ attributes.uniqueId } /> }
-			<TagName className={ tagNameClass }>
+			<TagName className={ tagNameClassNames }>
 				<InnerBlocks.Content />
 			</TagName>
 		</BlockDiv.Content>
