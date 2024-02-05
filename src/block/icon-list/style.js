@@ -37,6 +37,7 @@ const Styles = props => {
 	}
 
 	const columns = props.columns ? props.columns : 1
+	const unborderedItems = props.listDisplayStyle === 'list' ? 1 : columns
 
 	return (
 		<>
@@ -192,14 +193,14 @@ const Styles = props => {
 
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems })) .stk-block-icon-list-item__content::after` ] }
 				styleRule="borderBottomStyle"
 				attrName="listItemBorderStyle"
 				key="listItemBorderStyle"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems })) .stk-block-icon-list-item__content::after` ] }
 				styleRule="borderWidth"
 				attrName="listItemBorderWidth"
 				key="listItemBorderWidth"
@@ -208,7 +209,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ columns })) .stk-block-icon-list-item__content::after` ] }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems })) .stk-block-icon-list-item__content::after` ] }
 				styleRule="borderColor"
 				attrName="listItemBorderColor"
 				key="listItemBorderColor"
@@ -242,7 +243,10 @@ const Styles = props => {
 }
 
 export const IconListStyles = memo( props => {
-	const columns = useBlockAttributesContext( attributes => attributes.columns )
+	const { columns, listDisplayStyle } = useBlockAttributesContext( attributes => ( {
+		columns: attributes.columns,
+		listDisplayStyle: attributes.listDisplayStyle,
+	} ) )
 
 	return (
 		<>
@@ -253,7 +257,7 @@ export const IconListStyles = memo( props => {
 			<EffectsAnimations.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
-			<Styles { ...props } columns={ columns } />
+			<Styles { ...props } columns={ columns } listDisplayStyle={ listDisplayStyle } />
 		</>
 	)
 } )
@@ -267,6 +271,7 @@ IconListStyles.Content = props => {
 		return <style>{ props.attributes.generatedCss }</style>
 	}
 	const columns = props.attributes.columns
+	const listDisplayStyle = props.attributes.listDisplayStyle
 	return (
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
@@ -276,7 +281,7 @@ IconListStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
-			<Styles { ...props } columns={ columns } />
+			<Styles { ...props } columns={ columns } listDisplayStyle={ listDisplayStyle } />
 		</BlockCssCompiler>
 	)
 }
