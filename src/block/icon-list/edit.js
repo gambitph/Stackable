@@ -70,12 +70,12 @@ const listTypeOptions = [
 
 const listDisplayOptions = [
 	{
-		label: __( 'Grid', i18n ), // uses display: grid & grid template columns
-		value: 'grid',
-	},
-	{
 		label: __( 'List', i18n ), // uses  display: block & column-count
 		value: 'list',
+	},
+	{
+		label: __( 'Grid', i18n ), // uses display: grid & grid template columns
+		value: 'grid',
 	},
 ]
 
@@ -160,7 +160,7 @@ const Edit = props => {
 
 	const tagNameClassNames = classnames( [
 		ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul',
-		listDisplayStyle && listDisplayStyle === 'list' ? 'stk-block-icon-list--column' : 'stk-block-icon-list--grid',
+		listDisplayStyle && listDisplayStyle === 'grid' ? 'stk-block-icon-list--grid' : 'stk-block-icon-list--column',
 	] )
 
 	const resetCustomIcons = () => {
@@ -203,8 +203,8 @@ const Edit = props => {
 								label={ __( 'List Display Style', i18n ) }
 								options={ listDisplayOptions }
 								attribute="listDisplayStyle"
-								value={ listDisplayStyle ? listDisplayStyle : 'grid' }
-								default="grid"
+								value={ listDisplayStyle ? listDisplayStyle : 'list' }
+								default="list"
 							/>
 
 							<AdvancedRangeControl

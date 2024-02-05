@@ -41,7 +41,7 @@ export const Save = props => {
 	] )
 	const tagNameClassNames = classnames( [
 		attributes.ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul',
-		attributes.listDisplayStyle && attributes.listDisplayStyle === 'list' ? 'stk-block-icon-list--column' : 'stk-block-icon-list--grid',
+		attributes.listDisplayStyle && attributes.listDisplayStyle === 'grid' ? 'stk-block-icon-list--grid' : 'stk-block-icon-list--column',
 	] )
 
 	return (

@@ -37,7 +37,7 @@ const Styles = props => {
 	}
 
 	const columns = props.columns ? props.columns : 1
-	const unborderedItems = props.listDisplayStyle === 'list' ? 1 : columns
+	const unborderedItems = props.listDisplayStyle === 'grid' ? columns : 1
 
 	return (
 		<>
