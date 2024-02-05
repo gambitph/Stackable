@@ -148,12 +148,12 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--inner-svg svg', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
-				styleRule="marginTop"
+				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--inner-svg', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
+				styleRule="transform"
 				attrName="iconVerticalOffset"
 				key="iconVerticalOffset"
 				responsive="all"
-				format="%spx"
+				format="translateY(%spx)"
 			/>
 			<BlockCss
 				{ ...propsToPass }

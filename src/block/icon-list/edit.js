@@ -327,7 +327,8 @@ const Edit = props => {
 								attribute="iconVerticalAlignment"
 								fullwidth={ true }
 								responsive="all"
-								help={ __( 'Visible if you have long text in your list.', i18n ) }
+								help={ __( 'This is more visible if you have long text in your list.', i18n ) }
+								placeholder="baseline"
 							/>
 
 							<AdvancedRangeControl
