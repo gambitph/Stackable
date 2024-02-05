@@ -211,20 +211,22 @@ const Edit = props => {
 								label={ __( 'Columns', i18n ) }
 								attribute="columns"
 								min="1"
-								sliderMax="3"
+								sliderMax="4"
 								step="1"
 								placeholder="1"
 								responsive="all"
 							/>
 
-							<AdvancedRangeControl
-								label={ __( 'Column Gap', i18n ) }
-								attribute="columnGap"
-								min="0"
-								sliderMax="50"
-								responsive="all"
-								placeholder="16"
-							/>
+							{ attributes.columns > 1 && (
+								<AdvancedRangeControl
+									label={ __( 'Column Gap', i18n ) }
+									attribute="columnGap"
+									min="0"
+									sliderMax="50"
+									responsive="all"
+									placeholder="16"
+								/>
+							) }
 
 							<AdvancedRangeControl
 								label={ __( 'Row Gap', i18n ) }
