@@ -100,6 +100,10 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+	hasPeriod: {
+		type: 'boolean',
+		default: true,
+	},
 
 	// List item borders.
 	listItemBorderStyle: {

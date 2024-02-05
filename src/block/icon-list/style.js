@@ -157,6 +157,16 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
+				selector="ol .stk-block-icon-list-item__marker::before"
+				styleRule="content"
+				attrName="hasPeriod"
+				key="hasPeriod"
+				valueCallback={ value => ! value ? `counter(stk-icon-list-counter, var(--stk-list-style-type, decimal))` : undefined }
+				enabledCallback={ getAttribute => getAttribute( 'ordered' ) }
+				dependencies={ [ 'ordered' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
 				selector={ [ 'li .stk-block-icon-list-item__content' ] }
 				styleRule="marginInline"
 				attrName="listAlignment"

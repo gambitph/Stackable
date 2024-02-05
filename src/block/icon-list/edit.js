@@ -292,6 +292,14 @@ const Edit = props => {
 								/>
 							) }
 
+							{ attributes.ordered && (
+								<AdvancedToggleControl
+									label={ __( 'With Period', i18n ) }
+									attribute="hasPeriod"
+									defaultValue={ true }
+								/>
+							) }
+
 							<ColorPaletteControl
 								label={ __( 'Color', i18n ) }
 								attribute="markerColor"
