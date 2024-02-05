@@ -193,14 +193,14 @@ const Styles = props => {
 
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems })) .stk-block-icon-list-item__content::after` ] }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems }))::after` ] }
 				styleRule="borderBottomStyle"
 				attrName="listItemBorderStyle"
 				key="listItemBorderStyle"
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems })) .stk-block-icon-list-item__content::after` ] }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems }))::after` ] }
 				styleRule="borderWidth"
 				attrName="listItemBorderWidth"
 				key="listItemBorderWidth"
@@ -209,7 +209,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems })) .stk-block-icon-list-item__content::after` ] }
+				selector={ [ `.wp-block-stackable-icon-list-item:not(:nth-last-child(-n + ${ unborderedItems }))::after` ] }
 				styleRule="borderColor"
 				attrName="listItemBorderColor"
 				key="listItemBorderColor"
