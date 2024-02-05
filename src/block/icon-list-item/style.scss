@@ -1,7 +1,7 @@
 
 .stk-block-icon-list.stk-block {
-	[data-type="stackable/icon-list-item"].wp-block.wp-block-stackable-icon-list-item::after,
-	.stk-block.stk-block-icon-list-item .stk-block-icon-list-item__content::after {
+	[data-type="stackable/icon-list-item"].wp-block.wp-block-stackable-icon-list-item:not(:last-child)::after,
+	.stk-block.stk-block-icon-list-item .stk-block-icon-list-item__content:not(:last-child)::after {
 		content: "";
 		display: block;
 		width: 100%;

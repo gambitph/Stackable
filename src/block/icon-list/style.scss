@@ -14,8 +14,11 @@
 		column-gap: var(--stk-icon-list-column-gap, 16px);
 		width: auto;
 		text-align: start;
-		li.stk-block.stk-block-icon-list-item {
+		.wp-block-stackable-icon-list-item {
 			margin-bottom: var(--stk-icon-list-row-gap, 0);
+		}
+		.wp-block-stackable-icon-list-item:last-child {
+			margin-bottom: 0;
 		}
 	}
 	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
