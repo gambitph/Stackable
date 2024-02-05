@@ -17,7 +17,7 @@
 }
 
 .stk-block-icon-list-item__content {
-	gap: 6px;
+	gap: 8px;
 }
 
 .stk-block-icon-list .stk-block-icon-list__ul .stk-block-icon-list-item {
@@ -33,7 +33,6 @@
 		width: fit-content;
 		position: relative;
 		.stk--svg-wrapper {
-			margin-right: 4px;
 			.stk--inner-svg svg {
 				height: var(--stk-icon-height, 16px);
 				width: var(--stk-icon-height, 16px);
@@ -41,7 +40,6 @@
 				opacity: var(--stk-icon-list-icon-opacity, 1);
 				fill: var(--stk-icon-list-marker-color);
 				color: var(--stk-icon-list-marker-color);
-				top: 2px;
 				position: relative;
 
 				:is(use,g,path,rect,polygon,ellipse) {
@@ -75,14 +73,12 @@
 
 		.stk-block-icon-list-item__marker::before {
 			content: counter(stk-icon-list-counter, var(--stk-list-style-type, decimal)) ". ";
-			display: inline-block;
+			display: block;
 			font-size: var(--stk-icon-height, 16px);
-			line-height: 1;
 			color: var(--stk-icon-list-marker-color);
 			transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
 			opacity: var(--stk-icon-list-icon-opacity, 1);
 			vertical-align: middle;
-			margin-right: 4px;
 		}
 	}
 

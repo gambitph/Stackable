@@ -242,7 +242,7 @@ const Edit = props => {
 								min="0"
 								sliderMax="20"
 								responsive="all"
-								placeholder="6"
+								placeholder="8"
 							/>
 
 							<AdvancedRangeControl
