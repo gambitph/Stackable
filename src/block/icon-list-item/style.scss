@@ -29,7 +29,7 @@
 
 	.stk-block-icon-list-item__content {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 		width: fit-content;
 		position: relative;
 		.stk--svg-wrapper {
@@ -41,6 +41,8 @@
 				opacity: var(--stk-icon-list-icon-opacity, 1);
 				fill: var(--stk-icon-list-marker-color);
 				color: var(--stk-icon-list-marker-color);
+				top: 2px;
+				position: relative;
 
 				:is(use,g,path,rect,polygon,ellipse) {
 					fill: var(--stk-icon-list-marker-color);
@@ -67,7 +69,7 @@
 
 	.stk-block-icon-list-item__content {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 		width: fit-content;
 		position: relative;
 

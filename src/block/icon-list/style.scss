@@ -12,7 +12,7 @@
 		display: block;
 		column-count: var(--stk-icon-list-column-count, 1);
 		column-gap: var(--stk-icon-list-column-gap, 16px);
-		width: auto;
+		width: fit-content;
 		text-align: start;
 		.wp-block-stackable-icon-list-item {
 			margin-bottom: var(--stk-icon-list-row-gap, 0);

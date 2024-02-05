@@ -19,6 +19,7 @@ import {
 	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
+	InspectorLayoutControls,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -185,19 +186,20 @@ const Edit = props => {
 				<>
 					<InspectorTabs />
 
+					<InspectorLayoutControls>
+						<AlignButtonsControl
+							label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
+							attribute="listAlignment"
+							responsive="all"
+						/>
+					</InspectorLayoutControls>
+
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'General', i18n ) }
 							initialOpen={ true }
 							id="general"
 						>
-							<AdvancedSelectControl
-								label={ __( 'List Type', i18n ) }
-								options={ listTypeOptions }
-								value={ ordered ? 'ordered' : 'unordered' }
-								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
-								default="unordered"
-							/>
 
 							<AdvancedSelectControl
 								label={ __( 'List Display Style', i18n ) }
@@ -251,11 +253,6 @@ const Edit = props => {
 								responsive="all"
 								placeholder=""
 							/>
-							<AlignButtonsControl
-								label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
-								attribute="listAlignment"
-								responsive="all"
-							/>
 
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
@@ -266,22 +263,34 @@ const Edit = props => {
 							initialOpen={ false }
 							id="icon-and-markers"
 						>
-							<IconControl
-								label={ __( 'Icon', i18n ) }
-								value={ attributes.icon }
-								onChange={ icon => {
-									setAttributes( { icon } )
-									// Reset custom individual icons.
-									resetCustomIcons()
-								} }
-								defaultValue={ DEFAULT_SVG }
-							/>
-
 							<AdvancedSelectControl
 								label={ __( 'List Type', i18n ) }
-								attribute="listType"
-								options={ listStyleTypeOptions }
+								options={ listTypeOptions }
+								value={ ordered ? 'ordered' : 'unordered' }
+								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
+								default="unordered"
 							/>
+
+							{ ! attributes.ordered && (
+								<IconControl
+									label={ __( 'Icon', i18n ) }
+									value={ attributes.icon }
+									onChange={ icon => {
+										setAttributes( { icon } )
+										// Reset custom individual icons.
+										resetCustomIcons()
+									} }
+									defaultValue={ DEFAULT_SVG }
+								/>
+							) }
+
+							{ attributes.ordered && (
+								<AdvancedSelectControl
+									label={ __( 'List Type', i18n ) }
+									attribute="listType"
+									options={ listStyleTypeOptions }
+								/>
+							) }
 
 							<ColorPaletteControl
 								label={ __( 'Color', i18n ) }
@@ -290,7 +299,7 @@ const Edit = props => {
 							/>
 
 							<AdvancedRangeControl
-								label={ __( 'Icon / Number Size', i18n ) }
+								label={ sprintf( __( '%s Size', i18n ), ! attributes.ordered ? __( 'Icon', i18n ) : __( 'Number', i18n ) ) }
 								attribute="iconSize"
 								min={ 0 }
 								max={ 50 }
@@ -328,7 +337,7 @@ const Edit = props => {
 								fullwidth={ true }
 								responsive="all"
 								help={ __( 'This is more visible if you have long text in your list.', i18n ) }
-								placeholder="baseline"
+								placeholder="center"
 							/>
 
 							<AdvancedRangeControl
@@ -399,7 +408,9 @@ const Edit = props => {
 						hasTextContent={ false }
 					/>
 
-					<Alignment.InspectorControls />
+					<Alignment.InspectorControls
+						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+					/>
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
