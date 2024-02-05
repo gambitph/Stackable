@@ -79,6 +79,8 @@
 			font-size: var(--stk-icon-height, 16px);
 			line-height: 1;
 			color: var(--stk-icon-list-marker-color);
+			transform: rotate(var(--stk-icon-list-icon-rotation, 0deg));
+			opacity: var(--stk-icon-list-icon-opacity, 1);
 			vertical-align: middle;
 			margin-right: 4px;
 		}
