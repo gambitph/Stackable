@@ -71,7 +71,7 @@ const listTypeOptions = [
 const listDisplayOptions = [
 	{
 		label: __( 'List', i18n ), // uses  display: block & column-count
-		value: 'list',
+		value: '',
 	},
 	{
 		label: __( 'Grid', i18n ), // uses display: grid & grid template columns
@@ -203,8 +203,6 @@ const Edit = props => {
 								label={ __( 'List Display Style', i18n ) }
 								options={ listDisplayOptions }
 								attribute="listDisplayStyle"
-								value={ listDisplayStyle ? listDisplayStyle : 'list' }
-								default="list"
 							/>
 
 							<AdvancedRangeControl
