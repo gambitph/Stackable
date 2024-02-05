@@ -204,6 +204,7 @@ const AdvancedToolbarControl = props => {
 		fullwidth,
 		multiline,
 		isToggleOnly,
+		omit: _valuesToOmit,
 	} = _propsToPass
 
 	const _CONTROLS = applyFilters( 'stackable.toolbar-control.controls', CONTROLS )
@@ -231,6 +232,10 @@ const AdvancedToolbarControl = props => {
 			<ButtonGroup
 				children={
 					controls.map( ( option, i ) => {
+						if ( _valuesToOmit.includes( option.value ) ) {
+							return null
+						}
+
 						const defaultValue = props.default || ''
 						const isSelected = value ? value === option.value : props.placeholder === option.value
 						const tabindex = isSelected ? '0' : '-1'
@@ -285,8 +290,10 @@ const AdvancedToolbarControl = props => {
 	)
 }
 
+const EMPTY_ARR = []
+
 AdvancedToolbarControl.defaultProps = {
-	controls: [],
+	controls: EMPTY_ARR,
 	multiline: false,
 	fullwidth: true,
 	isSmall: false,
@@ -302,7 +309,8 @@ AdvancedToolbarControl.defaultProps = {
 	value: undefined,
 	onChange: undefined,
 	placeholder: '',
-	disabled: [],
+	disabled: EMPTY_ARR,
+	omit: EMPTY_ARR,
 }
 
 export default memo( AdvancedToolbarControl, isEqual )

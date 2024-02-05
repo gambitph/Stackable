@@ -125,6 +125,8 @@ const BORDER_CONTROLS = [
 	},
 ]
 
+const ICON_VERTICAL_ALIGN_OMIT = [ 'stretch' ]
+
 const Edit = props => {
 	const {
 		clientId,
@@ -320,7 +322,8 @@ const Edit = props => {
 
 							<AdvancedToolbarControl
 								label={ __( 'Icon Vertical Alignment', i18n ) }
-								controls="vertical"
+								controls="flex-vertical"
+								omit={ ICON_VERTICAL_ALIGN_OMIT }
 								attribute="iconVerticalAlignment"
 								fullwidth={ true }
 								responsive="all"
