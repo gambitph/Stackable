@@ -8,7 +8,7 @@
 		border-top: 0;
 		border-left: 0;
 		border-right: 0;
-		bottom: calc(var(--stk-icon-list-row-gap, 0px) / -2);
+		bottom: calc(var(--stk-icon-list-row-gap, 0px) / -2) !important;
 		left: 0;
 		border-style: none;
 		border-width: 1px;
