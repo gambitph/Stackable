@@ -1,12 +1,22 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list {
-	:is(ul, ol) {
+	.stk-block-icon-list--grid:is(ul, ol) {
 		display: grid;
 		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);
 		row-gap: var(--stk-icon-list-row-gap, 0);
 		column-gap: var(--stk-icon-list-column-gap, 16px);
 		width: fit-content;
 		text-align: start;
+	}
+	.stk-block-icon-list--column:is(ul, ol) {
+		display: block;
+		column-count: var(--stk-icon-list-column-count, 1);
+		column-gap: var(--stk-icon-list-column-gap, 16px);
+		width: auto;
+		text-align: start;
+		li.stk-block.stk-block-icon-list-item {
+			margin-bottom: var(--stk-icon-list-row-gap, 0);
+		}
 	}
 	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
 		flex: none;

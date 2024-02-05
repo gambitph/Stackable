@@ -68,6 +68,17 @@ const listTypeOptions = [
 	},
 ]
 
+const listDisplayOptions = [
+	{
+		label: __( 'Grid', i18n ), // uses display: grid & grid template columns
+		value: 'grid',
+	},
+	{
+		label: __( 'List', i18n ), // uses  display: block & column-count
+		value: 'list',
+	},
+]
+
 const listStyleTypeOptions = [
 	{
 		label: __( 'Number', i18n ),
@@ -130,9 +141,9 @@ const Edit = props => {
 		icon,
 		listItemBorderStyle,
 		listItemBorderColor,
+		listDisplayStyle,
 	} = attributes
 	const TagName = ordered ? 'ol' : 'ul'
-	const tagNameClass = ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul'
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -145,6 +156,11 @@ const Edit = props => {
 		textClasses,
 	] )
 
+	const tagNameClassNames = classnames( [
+		ordered ? 'stk-block-icon-list__ol' : 'stk-block-icon-list__ul',
+		listDisplayStyle && listDisplayStyle === 'list' ? 'stk-block-icon-list--column' : 'stk-block-icon-list--grid',
+	] )
+
 	const resetCustomIcons = () => {
 		innerBlocks.forEach( block => {
 			dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, { icon: '' } )
@@ -152,7 +168,7 @@ const Edit = props => {
 	}
 
 	const innerBlocksProps = useInnerBlocksProps( {
-		className: tagNameClass,
+		className: tagNameClassNames,
 	}, {
 		allowedBlocks: ALLOWED_INNER_BLOCKS,
 		template: TEMPLATE,
@@ -179,6 +195,14 @@ const Edit = props => {
 								value={ ordered ? 'ordered' : 'unordered' }
 								onChange={ v => setAttributes( { ordered: v === 'ordered' } ) }
 								default="unordered"
+							/>
+
+							<AdvancedSelectControl
+								label={ __( 'List Display Style', i18n ) }
+								options={ listDisplayOptions }
+								attribute="listDisplayStyle"
+								value={ listDisplayStyle ? listDisplayStyle : 'grid' }
+								default="grid"
 							/>
 
 							<AdvancedRangeControl
@@ -230,6 +254,7 @@ const Edit = props => {
 								attribute="listAlignment"
 								responsive="all"
 							/>
+
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
 

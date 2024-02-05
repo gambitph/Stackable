@@ -41,6 +41,10 @@ export const iconListAttributes = {
 		type: 'string',
 		default: '',
 	},
+	listDisplayStyle: {
+		type: 'string',
+		default: '',
+	},
 
 	// Icon.
 	icon: {

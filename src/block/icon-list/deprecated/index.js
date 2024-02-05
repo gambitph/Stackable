@@ -87,6 +87,7 @@ const deprecated = [
 
 			newAttributes = {
 				...newAttributes,
+				listDisplayStyle: 'list',
 				iconGap: _iconGap + 4, // Our gap is smaller now.
 				iconSize: ordered
 					? getEquivalentFontSize( _iconSize )
