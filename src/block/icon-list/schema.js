@@ -117,7 +117,7 @@ export const iconListAttributes = {
 	},
 	listItemBorderFullWidth: {
 		type: 'boolean',
-		default: false,
+		default: true,
 	},
 }
 

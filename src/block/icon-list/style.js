@@ -221,6 +221,8 @@ const Styles = props => {
 				attrName="listItemBorderFullWidth"
 				key="listItemBorderFullWidth"
 				valueCallback={ value => value ? '100%' : undefined }
+				enabledCallback={ getAttribute => !! getAttribute( 'listItemBorderStyle' ) }
+				dependencies={ [ 'listItemBorderStyle' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -236,7 +238,8 @@ const Styles = props => {
 
 					return undefined
 				} }
-				dependencies={ [ 'columns' ] }
+				enabledCallback={ getAttribute => !! getAttribute( 'listItemBorderStyle' ) }
+				dependencies={ [ 'listItemBorderStyle', 'columns' ] }
 			/>
 		</>
 	)

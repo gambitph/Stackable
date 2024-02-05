@@ -361,6 +361,13 @@ const Edit = props => {
 							/>
 
 							{ listItemBorderStyle &&
+								<AdvancedToggleControl
+									label={ __( 'Full Width Borders', i18n ) }
+									attribute="listItemBorderFullWidth"
+									defaultValue={ true }
+								/> }
+
+							{ listItemBorderStyle &&
 								<AdvancedRangeControl
 									label={ __( 'Border Width', i18n ) }
 									attribute="listItemBorderWidth"
@@ -382,13 +389,6 @@ const Edit = props => {
 									default="#00000066"
 								/>
 							}
-
-							{ listItemBorderStyle &&
-								<AdvancedToggleControl
-									label={ __( 'Full Width Borders', i18n ) }
-									attribute="listItemBorderFullWidth"
-									defaultValue={ false }
-								/> }
 
 						</PanelAdvancedSettings>
 					</InspectorStyleControls>
