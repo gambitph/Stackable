@@ -75,6 +75,22 @@ const transforms = {
 			},
 		},
 		{
+			type: 'block',
+			blocks: [ 'core/list' ],
+			transform: ( blockAttributes, _childBlocks ) => {
+				const childBlocks = _childBlocks.map( ( { attributes } ) => {
+					return createBlock( 'stackable/icon-list-item', { text: attributes.content } )
+				} )
+				return createBlock(
+					'stackable/icon-list',
+					{
+						anchor: blockAttributes.anchor,
+					},
+					childBlocks
+				)
+			},
+		},
+		{
 			type: 'raw',
 			selector: 'ol,ul',
 			schema: args => ( {
@@ -107,6 +123,22 @@ const transforms = {
 				)
 			},
 		} ) ),
+		{
+			type: 'block',
+			blocks: [ 'core/list' ],
+			transform: ( blockAttributes, _childBlocks ) => {
+				const childBlocks = _childBlocks.map( ( { attributes } ) => {
+					return createBlock( 'core/list-item', { content: attributes.text } )
+				} )
+				return createBlock(
+					'core/list',
+					{
+						anchor: blockAttributes.anchor,
+					},
+					childBlocks
+				)
+			},
+		},
 	],
 }
 
