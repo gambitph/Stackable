@@ -18,9 +18,6 @@
 		.wp-block-stackable-icon-list-item {
 			margin-bottom: var(--stk-icon-list-row-gap, 0);
 		}
-		.stk-block-icon-list__group {
-			width: fit-content;
-		}
 	}
 	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol),
 	&.stk-block :is(.stk-block-icon-list__ul, .stk-block-icon-list__ol) :is(ul, ol).stk-block-icon-list__group {

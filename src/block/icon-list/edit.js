@@ -153,7 +153,12 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const { innerBlocks } = useBlockContext()
 
-	const ParentTagName = !! listSpaced && listDisplayStyle !== 'grid' ? 'div' : ( ordered ? 'ol' : 'ul' )
+	// Wrap list only if it is spaced and not full width.
+	// Applicable to list display style of list only.
+	const wrapList = !! listSpaced && listDisplayStyle !== 'grid' && ! listFullWidth
+
+	// If list display style is grid, use ol or ul as parent tag.
+	const ParentTagName = wrapList ? 'div' : ( ordered ? 'ol' : 'ul' )
 	const TagName = ordered ? 'ol' : 'ul'
 
 	const blockClassNames = classnames( [
@@ -456,11 +461,11 @@ const Edit = props => {
 			>
 				{ ! ordered && <IconSvgDef icon={ icon } uniqueId={ attributes.uniqueId } /> }
 				<ParentTagName { ...innerBlocksProps }>
-					{ !! listSpaced && listDisplayStyle !== 'grid' &&
+					{ wrapList &&
 						<TagName className="stk-block-icon-list__group">
 							{ innerBlocksProps.children }
 						</TagName> }
-					{ ( ! listSpaced || listDisplayStyle === 'grid' ) && innerBlocksProps.children }
+					{ ! wrapList && innerBlocksProps.children }
 				</ParentTagName>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
