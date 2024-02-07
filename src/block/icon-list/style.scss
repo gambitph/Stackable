@@ -18,7 +18,8 @@
 			margin-bottom: var(--stk-icon-list-row-gap, 0);
 		}
 	}
-	:is(.stk-block-icon-list__ul, .stk-block-icon-list__ol) {
+	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol),
+	&.stk-block :is(.stk-block-icon-list__ul, .stk-block-icon-list__ol) :is(ul, ol).stk-block-icon-list__group {
 		flex: none;
 		padding-inline-start: 0;
 	}

@@ -199,6 +199,7 @@ const Edit = props => {
 							label={ __( 'Full Width List', i18n ) }
 							attribute="listFullWidth"
 							defaultValue={ true }
+							help={ __( 'This is visible if you have 2 or more columns.', i18n ) }
 						/>
 					</InspectorLayoutControls>
 
