@@ -6,14 +6,14 @@
 		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);
 		row-gap: var(--stk-icon-list-row-gap, 0);
 		column-gap: var(--stk-icon-list-column-gap, 16px);
-		width: fit-content;
+		width: 100%;
 		text-align: start;
 	}
 	.stk-block-icon-list--column:is(.stk-block-icon-list__ul, .stk-block-icon-list__ol) {
 		display: block;
 		column-count: var(--stk-icon-list-column-count, 1);
 		column-gap: var(--stk-icon-list-column-gap, 16px);
-		width: fit-content;
+		width: 100%;
 		text-align: start;
 		.wp-block-stackable-icon-list-item {
 			margin-bottom: var(--stk-icon-list-row-gap, 0);
