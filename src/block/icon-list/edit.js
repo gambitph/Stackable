@@ -146,6 +146,7 @@ const Edit = props => {
 		listItemBorderColor,
 		listDisplayStyle,
 		listSpaced,
+		listFullWidth,
 	} = attributes
 
 	const textClasses = getTypographyClasses( attributes )
@@ -200,7 +201,7 @@ const Edit = props => {
 							attribute="listFullWidth"
 							defaultValue={ true }
 						/>
-						{ listDisplayStyle !== 'grid' &&
+						{ listDisplayStyle !== 'grid' && ! listFullWidth &&
 						// Display only if list display style is list.
 							<AdvancedToggleControl
 								label={ __( 'Spaced List', i18n ) }
@@ -427,7 +428,7 @@ const Edit = props => {
 
 					<Alignment.InspectorControls
 						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
-						helpContentAlign={ sprintf( __( 'Note: %s', i18n ), __( 'This will only work when Full Width List option is set to false.', i18n ) ) }
+						enableContentAlign={ ! listFullWidth }
 					/>
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
