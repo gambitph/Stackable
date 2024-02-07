@@ -145,14 +145,14 @@ const Edit = props => {
 		listItemBorderStyle,
 		listItemBorderColor,
 		listDisplayStyle,
-		listFullWidth,
+		listSpaced,
 	} = attributes
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const { innerBlocks } = useBlockContext()
 
-	const ParentTagName = !! listFullWidth && listDisplayStyle !== 'grid' ? 'div' : ( ordered ? 'ol' : 'ul' )
+	const ParentTagName = !! listSpaced && listDisplayStyle !== 'grid' ? 'div' : ( ordered ? 'ol' : 'ul' )
 	const TagName = ordered ? 'ol' : 'ul'
 
 	const blockClassNames = classnames( [
@@ -195,11 +195,16 @@ const Edit = props => {
 							attribute="listAlignment"
 							responsive="all"
 						/>
+						<AdvancedToggleControl
+							label={ __( 'Full Width List', i18n ) }
+							attribute="listFullWidth"
+							defaultValue={ true }
+						/>
 						{ listDisplayStyle !== 'grid' &&
 						// Display only if list display style is list.
 							<AdvancedToggleControl
-								label={ __( 'Full Width List', i18n ) }
-								attribute="listFullWidth"
+								label={ __( 'Spaced List', i18n ) }
+								attribute="listSpaced"
 								defaultValue={ true }
 								help={ __( 'This is visible if you have 2 or more columns.', i18n ) }
 							/>
@@ -387,15 +392,6 @@ const Edit = props => {
 								isSmall={ true }
 							/>
 							{ listItemBorderStyle &&
-							// Display only if list display style is list.
-								<AdvancedToggleControl
-									label={ __( 'Full Width Borders', i18n ) }
-									attribute="listItemBorderFullWidth"
-									defaultValue={ false }
-									help={ __( 'Note: Enabling this will cause List Alignment not to work.', i18n ) }
-								/>
-							}
-							{ listItemBorderStyle &&
 								<AdvancedRangeControl
 									label={ __( 'Border Width', i18n ) }
 									attribute="listItemBorderWidth"
@@ -431,7 +427,7 @@ const Edit = props => {
 
 					<Alignment.InspectorControls
 						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
-						helpContentAlign={ sprintf( __( 'Note: %s', i18n ), __( 'This will only work when Full Width Borders option is set to false.', i18n ) ) }
+						helpContentAlign={ sprintf( __( 'Note: %s', i18n ), __( 'This will only work when Full Width List option is set to false.', i18n ) ) }
 					/>
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
@@ -459,11 +455,11 @@ const Edit = props => {
 			>
 				{ ! ordered && <IconSvgDef icon={ icon } uniqueId={ attributes.uniqueId } /> }
 				<ParentTagName { ...innerBlocksProps }>
-					{ !! listFullWidth && listDisplayStyle !== 'grid' &&
+					{ !! listSpaced && listDisplayStyle !== 'grid' &&
 						<TagName className="stk-block-icon-list__group">
 							{ innerBlocksProps.children }
 						</TagName> }
-					{ ( ! listFullWidth || listDisplayStyle === 'grid' ) && innerBlocksProps.children }
+					{ ( ! listSpaced || listDisplayStyle === 'grid' ) && innerBlocksProps.children }
 				</ParentTagName>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }

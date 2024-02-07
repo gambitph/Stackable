@@ -30,7 +30,7 @@ export const Save = props => {
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
-	const ParentTagName = !! attributes.listFullWidth && attributes.listDisplayStyle !== 'grid' ? 'div' : ( attributes.ordered ? 'ol' : 'ul' )
+	const ParentTagName = !! attributes.listSpaced && attributes.listDisplayStyle !== 'grid' ? 'div' : ( attributes.ordered ? 'ol' : 'ul' )
 	const TagName = attributes.ordered ? 'ol' : 'ul'
 
 	const blockClassNames = classnames( [
@@ -55,11 +55,11 @@ export const Save = props => {
 			<CustomCSS.Content attributes={ attributes } />
 			{ ! attributes.ordered && <IconSvgDef icon={ attributes.icon } uniqueId={ attributes.uniqueId } /> }
 			<ParentTagName className={ tagNameClassNames }>
-				{ !! attributes.listFullWidth && attributes.listDisplayStyle !== 'grid' &&
+				{ !! attributes.listSpaced && attributes.listDisplayStyle !== 'grid' &&
 					<TagName className="stk-block-icon-list__group">
 						<InnerBlocks.Content />
 					</TagName> }
-				{ ( ! attributes.listFullWidth || attributes.listDisplayStyle === 'grid' ) && <InnerBlocks.Content /> }
+				{ ( ! attributes.listSpaced || attributes.listDisplayStyle === 'grid' ) && <InnerBlocks.Content /> }
 			</ParentTagName>
 		</BlockDiv.Content>
 	)

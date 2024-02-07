@@ -47,6 +47,10 @@ export const iconListAttributes = {
 	},
 	listFullWidth: {
 		type: 'boolean',
+		default: false,
+	},
+	listSpaced: {
+		type: 'boolean',
 		default: true,
 	},
 
@@ -122,10 +126,6 @@ export const iconListAttributes = {
 	listItemBorderColor: {
 		type: 'string',
 		default: '',
-	},
-	listItemBorderFullWidth: {
-		type: 'boolean',
-		default: false,
 	},
 }
 
