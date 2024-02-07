@@ -209,12 +209,25 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
+				selector={ [ 'ul', 'ol' ] }
+				responsive="all"
+				styleRule="width"
+				attrName="listItemBorderFullWidth"
+				key="listItemBorderFullWidth"
+				valueCallback={ value => value ? '100%' : '' }
+				enabledCallback={ getAttribute => !! getAttribute( 'listItemBorderStyle' ) }
+				dependencies={ [ 'listItemBorderStyle' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
 				selector={ [ '.stk-block-icon-list__ul', '.stk-block-icon-list__ol' ] }
 				responsive="all"
 				styleRule="width"
 				attrName="listFullWidth"
 				key="listFullWidth"
-				valueCallback={ value => ! value ? 'fit-content' : '100%' }
+				valueCallback={ value => value ? '100%' : '' }
+				enabledCallback={ getAttribute => getAttribute( 'listDisplayStyle' ) !== 'grid' }
+				dependencies={ [ 'listDisplayStyle' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -224,8 +237,8 @@ const Styles = props => {
 				attrName="contentAlign"
 				key="contentAlign-group"
 				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
-				enabledCallback={ getAttribute => !! getAttribute( 'listFullWidth' ) }
-				dependencies={ [ 'listFullWidth' ] }
+				enabledCallback={ getAttribute => !! getAttribute( 'listFullWidth' ) && getAttribute( 'listDisplayStyle' ) !== 'grid' }
+				dependencies={ [ 'listFullWidth', 'listDisplayStyle' ] }
 			/>
 		</>
 	)

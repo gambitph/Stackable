@@ -84,6 +84,7 @@ export const Edit = props => {
 
 	const {
 		labelContentAlign = sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ),
+		helpContentAlign = '',
 	} = props
 
 	const containerSize = props.hasContainerSize && <>
@@ -157,6 +158,7 @@ export const Edit = props => {
 						video: 'alignment-all',
 						description: __( 'Adjusts the placement of all content in the block to align left, center or right', i18n ),
 					} }
+					help={ helpContentAlign }
 				/>
 				{ props.hasColumnJustify &&
 					<AdvancedToolbarControl

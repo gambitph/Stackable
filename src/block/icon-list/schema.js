@@ -49,10 +49,6 @@ export const iconListAttributes = {
 		type: 'boolean',
 		default: true,
 	},
-	// listSpaceAround: {
-	// 	type: 'boolean',
-	// 	default: true,
-	// },
 
 	// Icon.
 	icon: {
@@ -126,6 +122,10 @@ export const iconListAttributes = {
 	listItemBorderColor: {
 		type: 'string',
 		default: '',
+	},
+	listItemBorderFullWidth: {
+		type: 'boolean',
+		default: false,
 	},
 }
 

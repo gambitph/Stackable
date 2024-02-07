@@ -1,6 +1,7 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list {
-	.stk-block-icon-list--grid:is(.stk-block-icon-list__ul, .stk-block-icon-list__ol) {
+	.stk-block-icon-list--grid:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol),
+	.stk-block-icon-list--grid :is(ul, ol) {
 		display: grid;
 		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);
 		row-gap: var(--stk-icon-list-row-gap, 0);
@@ -16,6 +17,9 @@
 		text-align: start;
 		.wp-block-stackable-icon-list-item {
 			margin-bottom: var(--stk-icon-list-row-gap, 0);
+		}
+		.stk-block-icon-list__group {
+			width: fit-content;
 		}
 	}
 	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol),
@@ -37,10 +41,6 @@
 		ol {
 			list-style-type: none;
 		}
-	}
-
-	.stk-block-icon-list__group {
-		width: fit-content;
 	}
 
 	// For previous icon list blocks.
