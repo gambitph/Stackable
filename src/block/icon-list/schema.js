@@ -47,7 +47,7 @@ export const iconListAttributes = {
 	},
 	listFullWidth: {
 		type: 'boolean',
-		default: false,
+		default: true,
 	},
 	listSpaced: {
 		type: 'boolean',

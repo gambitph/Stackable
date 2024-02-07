@@ -88,6 +88,7 @@ const deprecated = [
 			newAttributes = {
 				...newAttributes,
 				listSpaced: true,
+				listFullWidth: false,
 				iconVerticalAlignment: 'baseline',
 				iconGap: _iconGap + 4, // Our gap is smaller now.
 				iconSize: ordered
