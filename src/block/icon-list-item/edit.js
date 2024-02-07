@@ -134,8 +134,8 @@ const Edit = props => {
 				clientId={ props.clientId }
 				attributes={ props.attributes }
 				className={ blockClassNames }
+				blockTag="li"
 				renderHtmlTag={ false }
-				role="listitem"
 				tabIndex={ -1 } // We need this since navigating up/down selects the wrapper.
 			>
 				<TextStyles

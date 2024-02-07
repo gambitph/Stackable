@@ -152,6 +152,9 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const { innerBlocks } = useBlockContext()
 
+	const ParentTagName = !! listFullWidth ? 'div' : ( ordered ? 'ol' : 'ul' )
+	const TagName = ordered ? 'ol' : 'ul'
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-list',
@@ -442,13 +445,13 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ ! ordered && <IconSvgDef icon={ icon } uniqueId={ attributes.uniqueId } /> }
-				<div { ...innerBlocksProps } role="list" >
+				<ParentTagName { ...innerBlocksProps }>
 					{ !! listFullWidth &&
-						<div className="stk-block-icon-list__group" role="group">
+						<TagName className="stk-block-icon-list__group">
 							{ innerBlocksProps.children }
-						</div> }
+						</TagName> }
 					{ ! listFullWidth && innerBlocksProps.children }
-				</div>
+				</ParentTagName>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

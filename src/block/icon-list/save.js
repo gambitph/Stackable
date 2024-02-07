@@ -30,6 +30,9 @@ export const Save = props => {
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
+	const ParentTagName = !! attributes.listFullWidth ? 'div' : ( attributes.ordered ? 'ol' : 'ul' )
+	const TagName = attributes.ordered ? 'ol' : 'ul'
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-icon-list',
@@ -51,13 +54,13 @@ export const Save = props => {
 			<IconListStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			{ ! attributes.ordered && <IconSvgDef icon={ attributes.icon } uniqueId={ attributes.uniqueId } /> }
-			<div className={ tagNameClassNames } role="list">
+			<ParentTagName className={ tagNameClassNames }>
 				{ !! attributes.listFullWidth &&
-					<div className="stk-block-icon-list__group" role="group">
+					<TagName className="stk-block-icon-list__group">
 						<InnerBlocks.Content />
-					</div> }
+					</TagName> }
 				{ ! attributes.listFullWidth && <InnerBlocks.Content /> }
-			</div>
+			</ParentTagName>
 		</BlockDiv.Content>
 	)
 }

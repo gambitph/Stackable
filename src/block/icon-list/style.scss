@@ -25,11 +25,17 @@
 
 	.stk-block-icon-list__ul {
 		list-style-type: none;
+		ul {
+			list-style-type: none;
+		}
 	}
 
 	.stk-block-icon-list__ol {
 		counter-reset: stk-icon-list-counter;
 		list-style-type: none;
+		ol {
+			list-style-type: none;
+		}
 	}
 
 	.stk-block-icon-list__group {
