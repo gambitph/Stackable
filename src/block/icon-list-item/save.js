@@ -50,8 +50,8 @@ export const Save = props => {
 			clientId={ props.clientId }
 			attributes={ props.attributes }
 			className={ blockClassNames }
-			blockTag="li"
 			renderHtmlTag={ false }
+			role="listitem"
 		>
 			<TextStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />

@@ -145,8 +145,8 @@ const Edit = props => {
 		listItemBorderStyle,
 		listItemBorderColor,
 		listDisplayStyle,
+		listFullWidth,
 	} = attributes
-	const TagName = ordered ? 'ol' : 'ul'
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -191,6 +191,11 @@ const Edit = props => {
 							label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
 							attribute="listAlignment"
 							responsive="all"
+						/>
+						<AdvancedToggleControl
+							label={ __( 'Full Width List', i18n ) }
+							attribute="listFullWidth"
+							defaultValue={ true }
 						/>
 					</InspectorLayoutControls>
 
@@ -376,13 +381,6 @@ const Edit = props => {
 							/>
 
 							{ listItemBorderStyle &&
-								<AdvancedToggleControl
-									label={ __( 'Full Width Borders', i18n ) }
-									attribute="listItemBorderFullWidth"
-									defaultValue={ true }
-								/> }
-
-							{ listItemBorderStyle &&
 								<AdvancedRangeControl
 									label={ __( 'Border Width', i18n ) }
 									attribute="listItemBorderWidth"
@@ -444,7 +442,13 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ ! ordered && <IconSvgDef icon={ icon } uniqueId={ attributes.uniqueId } /> }
-				<TagName { ...innerBlocksProps } />
+				<div { ...innerBlocksProps } role="list" >
+					{ !! listFullWidth &&
+						<div className="stk-block-icon-list__group" role="group">
+							{ innerBlocksProps.children }
+						</div> }
+					{ ! listFullWidth && innerBlocksProps.children }
+				</div>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>
