@@ -167,21 +167,12 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".stk-block-icon-list__ul .stk-block-icon-list-item__content"
+				selector=".stk-block-icon-list-item__content"
 				styleRule="marginInline"
 				attrName="listAlignment"
 				key="listAlignment-marginInline"
 				responsive="all"
 				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector=".stk-block-icon-list-item__content"
-				styleRule="justifyContent"
-				attrName="listAlignment"
-				key="listAlignment-justifyContent"
-				responsive="all"
-				valueCallback={ value => value === 'center' ? 'center' : value === 'right' ? 'flex-end' : value === 'left' ? 'flex-start' : '' }
 			/>
 
 			<BlockCss
