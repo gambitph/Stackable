@@ -215,8 +215,8 @@ const Styles = props => {
 				attrName="listSpaced"
 				key="listSpaced"
 				valueCallback={ value => ! value ? 'fit-content' : undefined }
-				enabledCallback={ getAttribute => getAttribute( 'listDisplayStyle' ) !== 'grid' }
-				dependencies={ [ 'listDisplayStyle' ] }
+				enabledCallback={ getAttribute => ! getAttribute( 'listFullWidth' ) && getAttribute( 'listDisplayStyle' ) !== 'grid' }
+				dependencies={ [ 'listDisplayStyle', 'listFullWidth' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
