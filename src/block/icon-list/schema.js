@@ -49,10 +49,6 @@ export const iconListAttributes = {
 		type: 'boolean',
 		default: true,
 	},
-	// listSpaceAround: {
-	// 	type: 'boolean',
-	// 	default: true,
-	// },
 
 	// Icon.
 	icon: {
