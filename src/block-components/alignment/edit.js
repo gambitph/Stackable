@@ -84,6 +84,7 @@ export const Edit = props => {
 
 	const {
 		labelContentAlign = sprintf( __( '%s Alignment', i18n ), __( 'Content', i18n ) ),
+		enableContentAlign = true,
 	} = props
 
 	const containerSize = props.hasContainerSize && <>
@@ -148,7 +149,7 @@ export const Edit = props => {
 			</BlockControls>
 			<InspectorLayoutControls>
 				{ props.containerSizePriority < 5 && containerSize }
-				<AlignButtonsControl
+				{ enableContentAlign && <AlignButtonsControl
 					label={ labelContentAlign }
 					attribute="contentAlign"
 					responsive="all"
@@ -157,7 +158,7 @@ export const Edit = props => {
 						video: 'alignment-all',
 						description: __( 'Adjusts the placement of all content in the block to align left, center or right', i18n ),
 					} }
-				/>
+				/> }
 				{ props.hasColumnJustify &&
 					<AdvancedToolbarControl
 						label={ sprintf( __( '%s Justify', i18n ), __( 'Column', i18n ) ) }

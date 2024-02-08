@@ -19,7 +19,7 @@ import {
 	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
-	InspectorLayoutControls,
+	// InspectorLayoutControls,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -189,34 +189,38 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-
-					<InspectorLayoutControls>
-						<AlignButtonsControl
-							label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
-							attribute="listAlignment"
-							responsive="all"
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Full Width List', i18n ) }
-							attribute="listFullWidth"
-							defaultValue={ true }
-						/>
-						{ ! listFullWidth && listDisplayStyle !== 'grid' &&
-							<AdvancedToggleControl
-								label={ __( 'Spaced List', i18n ) }
-								attribute="listSpaced"
-								defaultValue={ true }
-							/>
-						}
-					</InspectorLayoutControls>
-
+					<InspectorTabs hasLayoutPanel={ false } />
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'General', i18n ) }
 							initialOpen={ true }
 							id="general"
 						>
+							<AlignButtonsControl
+								label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
+								attribute="listAlignment"
+								responsive="all"
+							/>
+							<AdvancedToggleControl
+								label={ __( 'Full Width', i18n ) }
+								attribute="listFullWidth"
+								defaultValue={ true }
+							/>
+							{ /* { ! listFullWidth && listDisplayStyle !== 'grid' &&
+								<AdvancedToggleControl
+									label={ __( 'Spaced List', i18n ) }
+									attribute="listSpaced"
+									defaultValue={ true }
+								/>
+							} */ }
+							{ ! listFullWidth && (
+								<AlignButtonsControl
+									label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+									attribute="contentAlign"
+									responsive="all"
+									justified={ false }
+								/>
+							) }
 
 							<AdvancedSelectControl
 								label={ __( 'List Display Style', i18n ) }
@@ -427,7 +431,7 @@ const Edit = props => {
 					/>
 
 					<Alignment.InspectorControls
-						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+						enableContentAlign={ false }
 					/>
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
