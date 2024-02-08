@@ -19,7 +19,6 @@ import {
 	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
-	InspectorLayoutControls,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -145,8 +144,12 @@ const Edit = props => {
 		listItemBorderStyle,
 		listItemBorderColor,
 		listDisplayStyle,
+		listFullWidth,
 	} = attributes
+
+	const wrapList = ! listFullWidth && listDisplayStyle !== 'grid'
 	const TagName = ordered ? 'ol' : 'ul'
+	const ParentTagName = wrapList ? 'div' : TagName
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -184,28 +187,31 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
-
-					<InspectorLayoutControls>
-						<AlignButtonsControl
-							label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
-							attribute="listAlignment"
-							responsive="all"
-						/>
-					</InspectorLayoutControls>
-
+					<InspectorTabs hasLayoutPanel={ false } />
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
 							title={ __( 'General', i18n ) }
 							initialOpen={ true }
 							id="general"
 						>
-
-							<AdvancedSelectControl
-								label={ __( 'List Display Style', i18n ) }
-								options={ listDisplayOptions }
-								attribute="listDisplayStyle"
+							<AlignButtonsControl
+								label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
+								attribute="listAlignment"
+								responsive="all"
 							/>
+							<AdvancedToggleControl
+								label={ __( 'Full Width', i18n ) }
+								attribute="listFullWidth"
+								defaultValue={ true }
+							/>
+							{ ! listFullWidth && (
+								<AlignButtonsControl
+									label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+									attribute="contentAlign"
+									responsive="all"
+									justified={ false }
+								/>
+							) }
 
 							<AdvancedRangeControl
 								label={ __( 'Columns', i18n ) }
@@ -216,6 +222,14 @@ const Edit = props => {
 								placeholder="1"
 								responsive="all"
 							/>
+
+							{ attributes.columns > 1 && (
+								<AdvancedSelectControl
+									label={ __( 'List Display Style', i18n ) }
+									options={ listDisplayOptions }
+									attribute="listDisplayStyle"
+								/>
+							) }
 
 							{ attributes.columns > 1 && (
 								<AdvancedRangeControl
@@ -376,13 +390,6 @@ const Edit = props => {
 							/>
 
 							{ listItemBorderStyle &&
-								<AdvancedToggleControl
-									label={ __( 'Full Width Borders', i18n ) }
-									attribute="listItemBorderFullWidth"
-									defaultValue={ true }
-								/> }
-
-							{ listItemBorderStyle &&
 								<AdvancedRangeControl
 									label={ __( 'Border Width', i18n ) }
 									attribute="listItemBorderWidth"
@@ -417,7 +424,7 @@ const Edit = props => {
 					/>
 
 					<Alignment.InspectorControls
-						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+						enableContentAlign={ false }
 					/>
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
@@ -444,7 +451,14 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ ! ordered && <IconSvgDef icon={ icon } uniqueId={ attributes.uniqueId } /> }
-				<TagName { ...innerBlocksProps } />
+				<ParentTagName { ...innerBlocksProps } >
+					{ wrapList &&
+						<TagName className="stk-block-icon-list__group">
+							{ innerBlocksProps.children }
+						</TagName>
+					}
+					{ ! wrapList && innerBlocksProps.children }
+				</ParentTagName>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>

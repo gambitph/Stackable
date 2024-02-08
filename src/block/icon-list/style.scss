@@ -5,21 +5,27 @@
 		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);
 		row-gap: var(--stk-icon-list-row-gap, 0);
 		column-gap: var(--stk-icon-list-column-gap, 16px);
-		width: fit-content;
+		width: 100%;
 		text-align: start;
 	}
-	.stk-block-icon-list--column:is(ul, ol) {
+	.stk-block-icon-list--column:is(.stk-block-icon-list__ul, .stk-block-icon-list__ol) {
 		display: block;
 		column-count: var(--stk-icon-list-column-count, 1);
 		column-gap: var(--stk-icon-list-column-gap, 16px);
-		width: fit-content;
+		width: 100%;
 		text-align: start;
+		.stk-block-icon-list__group {
+			width: fit-content;
+			padding-inline-start: 0;
+			list-style-type: none;
+		}
 		.wp-block-stackable-icon-list-item {
 			margin-bottom: var(--stk-icon-list-row-gap, 0);
 		}
 		.wp-block-stackable-icon-list-item:last-child {
 			margin-bottom: 0;
 		}
+
 	}
 	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
 		flex: none;
@@ -36,7 +42,7 @@
 		padding-inline-start: 0;
 	}
 
-	ol.stk-block-icon-list__ol {
+	.stk-block-icon-list__ol {
 		counter-reset: stk-icon-list-counter;
 		list-style-type: none;
 	}
@@ -55,7 +61,10 @@
 	// For previous icon list blocks.
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
-	:not(ul.stk-block-icon-list__li, ol.stk-block-icon-list__ol) li:not(.stk-block-icon-list-item) {
+	:not(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
+		width: fit-content;
+	}
+	:not(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) li:not(.stk-block-icon-list-item) {
 		width: fit-content;
 		&::marker {
 			line-height: 0;

@@ -43,7 +43,7 @@ const Styles = props => {
 		<>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ 'ul li .stk-block-icon-list-item__content', 'ol li .stk-block-icon-list-item__content' ] }
+				selector=".stk-block-icon-list-item__content"
 				styleRule="gap"
 				attrName="iconGap"
 				key="iconGap"
@@ -131,7 +131,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="ul li .stk-block-icon-list-item__content .stk--svg-wrapper"
+				selector="ul .stk-block-icon-list-item__content .stk--svg-wrapper"
 				styleRule="marginRight"
 				attrName="iconSize"
 				key="iconMarginRight"
@@ -148,7 +148,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ 'ul li .stk-block-icon-list-item__content .stk--inner-svg', 'ol li .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
+				selector={ [ 'ul .stk-block-icon-list-item__content .stk--inner-svg', 'ol .stk-block-icon-list-item__content .stk-block-icon-list-item__marker' ] }
 				styleRule="transform"
 				attrName="iconVerticalOffset"
 				key="iconVerticalOffset"
@@ -157,7 +157,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector="ol .stk-block-icon-list-item__marker::before"
+				selector=".stk-block-icon-list-item__marker::before"
 				styleRule="content"
 				attrName="hasPeriod"
 				key="hasPeriod"
@@ -167,7 +167,7 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ 'li .stk-block-icon-list-item__content' ] }
+				selector=".stk-block-icon-list-item__content"
 				styleRule="marginInline"
 				attrName="listAlignment"
 				key="listAlignment-marginInline"
@@ -176,29 +176,25 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector={ [ 'li .stk-block-icon-list-item__content' ] }
-				styleRule="justifyContent"
-				attrName="listAlignment"
-				key="listAlignment-justifyContent"
-				responsive="all"
-				valueCallback={ value => value === 'center' ? 'center' : value === 'right' ? 'flex-end' : value === 'left' ? 'flex-start' : '' }
-			/>
-
-			<BlockCss
-				{ ...propsToPass }
 				selector={ [ 'ul', 'ol' ] }
 				responsive="all"
 				styleRule="width"
-				attrName="columns"
-				key="listWidth-columns"
-				valueCallback={ ( value, getAttribute, device ) => {
-					if ( getAttribute( 'contentAlign', device ) === undefined || getAttribute( 'contentAlign', device ) === '' ) {
-						return value === 1 ? 'fit-content' : '100%'
-					}
-
-					return 'fit-content'
-				} }
-				dependencies={ [ 'contentAlign' ] }
+				attrName="listFullWidth"
+				key="listFullWidth"
+				valueCallback={ value => ! value ? 'fit-content' : undefined }
+				enabledCallback={ getAttribute => getAttribute( 'listDisplayStyle' ) === 'grid' }
+				dependencies={ [ 'listDisplayStyle' ] }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-block-icon-list__group"
+				responsive="all"
+				styleRule="marginInline"
+				attrName="contentAlign"
+				key="contentAlign-group"
+				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
+				enabledCallback={ getAttribute => getAttribute( 'listDisplayStyle' ) !== 'grid' }
+				dependencies={ [ 'listDisplayStyle' ] }
 			/>
 
 			<BlockCss
@@ -223,33 +219,6 @@ const Styles = props => {
 				styleRule="borderColor"
 				attrName="listItemBorderColor"
 				key="listItemBorderColor"
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ [ 'ul li .stk-block-icon-list-item__content', 'ol li .stk-block-icon-list-item__content' ] }
-				styleRule="width"
-				attrName="listItemBorderFullWidth"
-				key="listItemBorderFullWidth"
-				valueCallback={ value => value ? '100%' : undefined }
-				enabledCallback={ getAttribute => !! getAttribute( 'listItemBorderStyle' ) }
-				dependencies={ [ 'listItemBorderStyle' ] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
-				selector={ [ 'ul', 'ol' ] }
-				responsive="all"
-				styleRule="width"
-				attrName="listItemBorderFullWidth"
-				key="listWidth-listItemBorder"
-				valueCallback={ ( value, getAttribute, device ) => {
-					if ( getAttribute( 'columns', device ) === undefined || getAttribute( 'columns', device ) === '' || getAttribute( 'columns', device ) === 1 ) {
-						return value ? '100%' : undefined
-					}
-
-					return undefined
-				} }
-				enabledCallback={ getAttribute => !! getAttribute( 'listItemBorderStyle' ) }
-				dependencies={ [ 'listItemBorderStyle', 'columns' ] }
 			/>
 		</>
 	)
