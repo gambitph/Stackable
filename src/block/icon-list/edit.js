@@ -19,7 +19,7 @@ import {
 	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
-	InspectorLayoutControls,
+	// InspectorLayoutControls,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
@@ -193,19 +193,9 @@ const Edit = props => {
 		<>
 			{ isSelected && (
 				<>
-					<InspectorTabs />
+					<InspectorTabs hasLayoutPanel={ false } />
 
-					<InspectorLayoutControls>
-						<AlignButtonsControl
-							label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
-							attribute="listAlignment"
-							responsive="all"
-						/>
-						<AdvancedToggleControl
-							label={ __( 'Full Width List', i18n ) }
-							attribute="listFullWidth"
-							defaultValue={ true }
-						/>
+					{ /* <InspectorLayoutControls>
 						{ listDisplayStyle !== 'grid' && ! listFullWidth &&
 						// Display only if list display style is list.
 							<AdvancedToggleControl
@@ -215,7 +205,7 @@ const Edit = props => {
 								help={ __( 'This is visible if you have 2 or more columns.', i18n ) }
 							/>
 						}
-					</InspectorLayoutControls>
+					</InspectorLayoutControls> */ }
 
 					<InspectorStyleControls>
 						<PanelAdvancedSettings
@@ -223,12 +213,29 @@ const Edit = props => {
 							initialOpen={ true }
 							id="general"
 						>
-
-							<AdvancedSelectControl
-								label={ __( 'List Display Style', i18n ) }
-								options={ listDisplayOptions }
-								attribute="listDisplayStyle"
+							<AlignButtonsControl
+								label={ sprintf( __( '%s Alignment', i18n ), __( 'List Item', i18n ) ) }
+								attribute="listAlignment"
+								responsive="all"
 							/>
+							<AdvancedToggleControl
+								label={ __( 'Full Width', i18n ) }
+								attribute="listFullWidth"
+								defaultValue={ true }
+							/>
+
+							{ ! listFullWidth && (
+								<AlignButtonsControl
+									label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+									attribute="contentAlign"
+									responsive="all"
+									justified={ false }
+								// helpTooltip={ {
+								// 	video: 'alignment-all',
+								// 	description: __( 'Adjusts the placement of all content in the block to align left, center or right', i18n ),
+								// } }
+								/>
+							) }
 
 							<AdvancedRangeControl
 								label={ __( 'Columns', i18n ) }
@@ -239,6 +246,14 @@ const Edit = props => {
 								placeholder="1"
 								responsive="all"
 							/>
+
+							{ attributes.columns > 1 && (
+								<AdvancedSelectControl
+									label={ __( 'List Display Style', i18n ) }
+									options={ listDisplayOptions }
+									attribute="listDisplayStyle"
+								/>
+							) }
 
 							{ attributes.columns > 1 && (
 								<AdvancedRangeControl
@@ -432,8 +447,9 @@ const Edit = props => {
 					/>
 
 					<Alignment.InspectorControls
-						labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
-						enableContentAlign={ ! listFullWidth }
+						// labelContentAlign={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }
+						// enableContentAlign={ ! listFullWidth }
+						enableContentAlign={ false }
 					/>
 					<BlockDiv.InspectorControls />
 					<Advanced.InspectorControls />
