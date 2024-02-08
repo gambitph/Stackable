@@ -30,7 +30,7 @@ export const Save = props => {
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 
-	const wrapList = !! attributes.listSpaced && ! attributes.listFullWidth && attributes.listDisplayStyle !== 'grid'
+	const wrapList = ! attributes.listFullWidth && attributes.listDisplayStyle !== 'grid'
 	const TagName = attributes.ordered ? 'ol' : 'ul'
 	const ParentTagName = wrapList ? 'div' : TagName
 

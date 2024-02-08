@@ -146,10 +146,9 @@ const Edit = props => {
 		listItemBorderColor,
 		listDisplayStyle,
 		listFullWidth,
-		listSpaced,
 	} = attributes
 
-	const wrapList = !! listSpaced && ! listFullWidth && listDisplayStyle !== 'grid'
+	const wrapList = ! listFullWidth && listDisplayStyle !== 'grid'
 	const TagName = ordered ? 'ol' : 'ul'
 	const ParentTagName = wrapList ? 'div' : TagName
 
@@ -206,13 +205,6 @@ const Edit = props => {
 								attribute="listFullWidth"
 								defaultValue={ true }
 							/>
-							{ /* { ! listFullWidth && listDisplayStyle !== 'grid' &&
-								<AdvancedToggleControl
-									label={ __( 'Spaced List', i18n ) }
-									attribute="listSpaced"
-									defaultValue={ true }
-								/>
-							} */ }
 							{ ! listFullWidth && (
 								<AlignButtonsControl
 									label={ sprintf( __( '%s Alignment', i18n ), __( 'List', i18n ) ) }

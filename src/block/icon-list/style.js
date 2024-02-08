@@ -182,8 +182,8 @@ const Styles = props => {
 				attrName="listFullWidth"
 				key="listFullWidth"
 				valueCallback={ value => ! value ? 'fit-content' : undefined }
-				enabledCallback={ getAttribute => ! getAttribute( 'listSpaced' ) || getAttribute( 'listDisplayStyle' ) === 'grid' }
-				dependencies={ [ 'listSpaced', 'listDisplayStyle' ] }
+				enabledCallback={ getAttribute => getAttribute( 'listDisplayStyle' ) === 'grid' }
+				dependencies={ [ 'listDisplayStyle' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -193,8 +193,8 @@ const Styles = props => {
 				attrName="contentAlign"
 				key="contentAlign-group"
 				valueCallback={ value => value === 'center' ? 'auto' : value === 'right' ? 'auto 0' : value === 'left' ? '0 auto' : '' }
-				enabledCallback={ getAttribute => !! getAttribute( 'listSpaced' ) && getAttribute( 'listDisplayStyle' ) !== 'grid' }
-				dependencies={ [ 'listSpaced', 'listDisplayStyle' ] }
+				enabledCallback={ getAttribute => getAttribute( 'listDisplayStyle' ) !== 'grid' }
+				dependencies={ [ 'listDisplayStyle' ] }
 			/>
 
 			<BlockCss

@@ -49,10 +49,6 @@ export const iconListAttributes = {
 		type: 'boolean',
 		default: true,
 	},
-	listSpaced: {
-		type: 'boolean',
-		default: true,
-	},
 
 	// Icon.
 	icon: {
