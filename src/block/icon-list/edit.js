@@ -19,7 +19,6 @@ import {
 	AdvancedToolbarControl,
 	AdvancedSelectControl,
 	AlignButtonsControl,
-	// InspectorLayoutControls,
 } from '~stackable/components'
 import {
 	withBlockAttributeContext, withBlockWrapperIsHovered, withQueryLoopContext,
