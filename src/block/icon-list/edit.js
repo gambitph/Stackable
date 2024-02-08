@@ -149,7 +149,7 @@ const Edit = props => {
 		listSpaced,
 	} = attributes
 
-	const wrapList = !! listSpaced && ! listFullWidth && listDisplayStyle !== 'grid'
+	const wrapList = !! listSpaced && ! listFullWidth && listDisplayStyle !== 'grid' && attributes.columns > 1
 	const TagName = ordered ? 'ol' : 'ul'
 	const ParentTagName = wrapList ? 'div' : TagName
 
@@ -222,12 +222,6 @@ const Edit = props => {
 								/>
 							) }
 
-							<AdvancedSelectControl
-								label={ __( 'List Display Style', i18n ) }
-								options={ listDisplayOptions }
-								attribute="listDisplayStyle"
-							/>
-
 							<AdvancedRangeControl
 								label={ __( 'Columns', i18n ) }
 								attribute="columns"
@@ -237,6 +231,14 @@ const Edit = props => {
 								placeholder="1"
 								responsive="all"
 							/>
+
+							{ attributes.columns > 1 && (
+								<AdvancedSelectControl
+									label={ __( 'List Display Style', i18n ) }
+									options={ listDisplayOptions }
+									attribute="listDisplayStyle"
+								/>
+							) }
 
 							{ attributes.columns > 1 && (
 								<AdvancedRangeControl
