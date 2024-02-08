@@ -145,8 +145,13 @@ const Edit = props => {
 		listItemBorderStyle,
 		listItemBorderColor,
 		listDisplayStyle,
+		listFullWidth,
+		listSpaced,
 	} = attributes
+
+	const wrapList = !! listSpaced && ! listFullWidth && listDisplayStyle !== 'grid'
 	const TagName = ordered ? 'ol' : 'ul'
+	const ParentTagName = wrapList ? 'div' : TagName
 
 	const textClasses = getTypographyClasses( attributes )
 	const blockAlignmentClass = getAlignmentClasses( attributes )
@@ -192,6 +197,18 @@ const Edit = props => {
 							attribute="listAlignment"
 							responsive="all"
 						/>
+						<AdvancedToggleControl
+							label={ __( 'Full Width List', i18n ) }
+							attribute="listFullWidth"
+							defaultValue={ true }
+						/>
+						{ ! listFullWidth && listDisplayStyle !== 'grid' &&
+							<AdvancedToggleControl
+								label={ __( 'Spaced List', i18n ) }
+								attribute="listSpaced"
+								defaultValue={ true }
+							/>
+						}
 					</InspectorLayoutControls>
 
 					<InspectorStyleControls>
@@ -376,13 +393,6 @@ const Edit = props => {
 							/>
 
 							{ listItemBorderStyle &&
-								<AdvancedToggleControl
-									label={ __( 'Full Width Borders', i18n ) }
-									attribute="listItemBorderFullWidth"
-									defaultValue={ true }
-								/> }
-
-							{ listItemBorderStyle &&
 								<AdvancedRangeControl
 									label={ __( 'Border Width', i18n ) }
 									attribute="listItemBorderWidth"
@@ -444,7 +454,14 @@ const Edit = props => {
 				className={ blockClassNames }
 			>
 				{ ! ordered && <IconSvgDef icon={ icon } uniqueId={ attributes.uniqueId } /> }
-				<TagName { ...innerBlocksProps } />
+				<ParentTagName { ...innerBlocksProps } >
+					{ wrapList &&
+						<TagName className="stk-block-icon-list__group">
+							{ innerBlocksProps.children }
+						</TagName>
+					}
+					{ ! wrapList && innerBlocksProps.children }
+				</ParentTagName>
 			</BlockDiv>
 			{ props.isHovered && <MarginBottom /> }
 		</>
