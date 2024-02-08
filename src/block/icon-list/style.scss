@@ -61,6 +61,9 @@
 	// For previous icon list blocks.
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
+	:not(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
+		width: fit-content;
+	}
 	:not(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) li:not(.stk-block-icon-list-item) {
 		width: fit-content;
 		&::marker {
