@@ -149,7 +149,7 @@ const Edit = props => {
 		listSpaced,
 	} = attributes
 
-	const wrapList = !! listSpaced && ! listFullWidth && listDisplayStyle !== 'grid' && attributes.columns > 1
+	const wrapList = !! listSpaced && ! listFullWidth && listDisplayStyle !== 'grid'
 	const TagName = ordered ? 'ol' : 'ul'
 	const ParentTagName = wrapList ? 'div' : TagName
 
