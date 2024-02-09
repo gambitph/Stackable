@@ -203,6 +203,7 @@ const Edit = props => {
 								label={ __( 'Full Width', i18n ) }
 								attribute="listFullWidth"
 								defaultValue={ true }
+								help={ __( 'More noticeable when using wide layouts or list item borders', i18n ) }
 							/>
 							{ ! listFullWidth && (
 								<AlignButtonsControl

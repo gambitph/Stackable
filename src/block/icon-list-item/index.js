@@ -18,7 +18,6 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		anchor: true,
-		align: true,
 		__experimentalSelector: 'li',
 	},
 	example,
