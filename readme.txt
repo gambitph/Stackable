@@ -295,8 +295,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 3.12.9 =
-* New: Revamp of Icon List Block
-* New: New Icon List Block option for adding border between items
+* New: Revamp of Icon List Block (please expect some slight changes in the block's appearance after the block migrates)
+* New: New Icon List Block options: item borders, vertical icon alignment, and more
 * New: Cleaner output: inlined script for animations is no longer added if there are no animations
 * New: Dynamic Content: you can now search for a post ID in the post search field
 * Fixed: Block error when adding an anchor on a Button block
