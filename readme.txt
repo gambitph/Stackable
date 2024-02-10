@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.4.3
 Requires PHP: 7.3
-Stable tag: 3.12.9
+Stable tag: 3.12.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.10 =
+* Fixed: (Hotfix update) Some themes can add bullets or numbers on the Icon List block
 
 = 3.12.9 =
 * New: Revamp of Icon List Block (please expect some slight changes in the block's appearance after the block migrates)
