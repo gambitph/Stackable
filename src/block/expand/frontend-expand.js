@@ -52,10 +52,10 @@ class StackableExpand {
 		} )
 
 		blocks.forEach( block => {
-			if ( ! block._StackableHasInitExpand ) {
+			if ( ! block._StackableHasInitExpandFix ) {
 				fixAriaAttributes( block )
 				addAriaAttributes( block )
-				block._StackableHasInitExpand = true
+				block._StackableHasInitExpandFix = true
 			}
 		} )
 	}
