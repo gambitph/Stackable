@@ -17,7 +17,7 @@
 		.stk-block-icon-list__group {
 			width: fit-content;
 			padding-inline-start: 0;
-			list-style-type: none;
+			list-style-type: none !important;
 		}
 		.wp-block-stackable-icon-list-item {
 			margin-bottom: var(--stk-icon-list-row-gap, 0);
@@ -35,7 +35,7 @@
 	}
 
 	ul.stk-block-icon-list__ul {
-		list-style-type: none;
+		list-style-type: none !important;
 	}
 	ul.stk-block-icon-list__ul,
 	ol.stk-block-icon-list__ol {
@@ -44,7 +44,7 @@
 
 	.stk-block-icon-list__ol {
 		counter-reset: stk-icon-list-counter;
-		list-style-type: none;
+		list-style-type: none !important;
 	}
 
 	// @from https://css-tricks.com/almanac/properties/b/break-inside/
