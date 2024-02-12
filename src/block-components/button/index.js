@@ -3,6 +3,7 @@
  */
 import classnames from 'classnames'
 import { useBlockAttributesContext } from '~stackable/hooks'
+import { settings } from 'stackable'
 
 /**
  * Internal dependencies
@@ -33,7 +34,7 @@ export const Button = props => {
 
 	return (
 		<Link
-			className={ classnames( [ className, getButtonClasses( attributes ) ] ) }
+			className={ classnames( [ className, getButtonClasses( attributes ), settings.stackable_inherit_styles_from_theme && 'wp-element-button' ] ) }
 			linkProps={ buttonProps }
 			linkTrigger={ linkTrigger }
 		>
