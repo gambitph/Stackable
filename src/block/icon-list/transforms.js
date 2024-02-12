@@ -9,28 +9,29 @@ import {
 /**
  * Internal dependencies
  */
-import { createListBlockFromDOMElement } from './util'
 
-function getListContentSchema( { phrasingContentSchema } ) {
-	const listContentSchema = {
-		...phrasingContentSchema,
-		ul: {},
-		ol: { attributes: [ 'type', 'start', 'reversed' ] },
-	};
+// import { createListBlockFromDOMElement } from './util'
 
-	// Recursion is needed.
-	// Possible: ul > li > ul.
-	// Impossible: ul > ul.
-	[ 'ul', 'ol' ].forEach( tag => {
-		listContentSchema[ tag ].children = {
-			li: {
-				children: listContentSchema,
-			},
-		}
-	} )
+// function getListContentSchema( { phrasingContentSchema } ) {
+// 	const listContentSchema = {
+// 		...phrasingContentSchema,
+// 		ul: {},
+// 		ol: { attributes: [ 'type', 'start', 'reversed' ] },
+// 	};
 
-	return listContentSchema
-}
+// 	// Recursion is needed.
+// 	// Possible: ul > li > ul.
+// 	// Impossible: ul > ul.
+// 	[ 'ul', 'ol' ].forEach( tag => {
+// 		listContentSchema[ tag ].children = {
+// 			li: {
+// 				children: listContentSchema,
+// 			},
+// 		}
+// 	} )
+
+// 	return listContentSchema
+// }
 
 function getListContentFlat( blocks ) {
 	return blocks.flatMap( ( {
@@ -90,15 +91,16 @@ const transforms = {
 				)
 			},
 		},
-		{
-			type: 'raw',
-			selector: 'ol,ul',
-			schema: args => ( {
-				ol: getListContentSchema( args ).ol,
-				ul: getListContentSchema( args ).ul,
-			} ),
-			transform: createListBlockFromDOMElement,
-		},
+		// Commented out for now to prevent bullet lists from a word doc to be converted to icon lists.
+		// {
+		// 	type: 'raw',
+		// 	selector: 'ol,ul',
+		// 	schema: args => ( {
+		// 		ol: getListContentSchema( args ).ol,
+		// 		ul: getListContentSchema( args ).ul,
+		// 	} ),
+		// 	transform: createListBlockFromDOMElement,
+		// },
 	],
 	to: [
 		...[ 'core/paragraph', 'core/heading' ].map( block => ( {
