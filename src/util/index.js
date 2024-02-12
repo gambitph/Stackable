@@ -79,6 +79,9 @@ export const getVideoProviderFromURL = url => {
 	if ( ! id ) {
 		id = ( url.match( /youtu\.be\/([^\&\?\/]+)/i ) || [] )[ 1 ]
 	}
+	if ( ! id ) {
+		id = ( url.match( /youtube\.com\/shorts\/([^\&\?\/]+)/i ) || [] )[ 1 ]
+	}
 
 	if ( id ) {
 		return {
