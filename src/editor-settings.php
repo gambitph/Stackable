@@ -172,7 +172,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 				'stackable_inherit_styles_from_theme',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Inherits the button styles created by the theme.', STACKABLE_I18N ),
+					'description' => __( 'Inherits the styles created by the theme.', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
