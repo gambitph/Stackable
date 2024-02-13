@@ -547,7 +547,10 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -556,7 +559,10 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -1531,7 +1537,11 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "cyrillic-ext",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -7288,7 +7298,10 @@
     ],
     "subsets": [
       "hebrew",
-      "latin"
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -7452,6 +7465,19 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Honk",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
     ]
   },
   {
@@ -9180,7 +9206,8 @@
     "subsets": [
       "latin",
       "latin-ext",
-      "math"
+      "math",
+      "symbols"
     ]
   },
   {
@@ -10002,6 +10029,8 @@
       "cyrillic-ext",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -12397,7 +12426,9 @@
     "subsets": [
       "chorasmian",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12598,7 +12629,9 @@
       "cyrillic-ext",
       "glagolitic",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -15215,6 +15248,8 @@
       "hebrew",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -16415,6 +16450,58 @@
     ]
   },
   {
+    "family": "Protest Guerrilla",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Protest Revolution",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Protest Riot",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Protest Strike",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Proza Libre",
     "variants": [
       "regular",
@@ -17526,6 +17613,21 @@
     ]
   },
   {
+    "family": "Rubik Broken Fax",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Rubik Bubbles",
     "variants": [
       "regular"
@@ -17578,6 +17680,36 @@
     ]
   },
   {
+    "family": "Rubik Doodle Shadow",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Rubik Doodle Triangles",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Rubik Gemstones",
     "variants": [
       "regular"
@@ -17604,6 +17736,21 @@
     ]
   },
   {
+    "family": "Rubik Glitch Pop",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Rubik Iso",
     "variants": [
       "regular"
@@ -17614,6 +17761,36 @@
       "hebrew",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Lines",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Rubik Maps",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -17703,6 +17880,21 @@
       "hebrew",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Rubik Scribble",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "hebrew",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -17824,7 +18016,9 @@
     "subsets": [
       "cyrillic",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -18660,6 +18854,18 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Sixtyfour",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -21001,6 +21207,17 @@
     ]
   },
   {
+    "family": "Workbench",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Xanh Mono",
     "variants": [
       "regular",
@@ -21040,8 +21257,11 @@
     ],
     "subsets": [
       "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -21184,6 +21404,8 @@
       "greek",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -21215,6 +21437,8 @@
       "greek",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -21246,6 +21470,8 @@
       "greek",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -21268,6 +21494,8 @@
       "greek",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },

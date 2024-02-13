@@ -29,6 +29,7 @@ export const BlockDiv = props => {
 		blockHoverClass,
 		clientId,
 		attributes,
+		blockTag,
 		version: _version,
 		...propsToPass
 	} = props
@@ -81,7 +82,7 @@ export const BlockDiv = props => {
 		className={ classNames }
 		id={ attributes.anchor || undefined }
 		data-block-id={ attributes.uniqueId || tempUniqueId }
-		blockTag={ renderHtmlTag ? htmlTag : 'div' }
+		blockTag={ renderHtmlTag ? htmlTag : blockTag }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.blockBackgroundMediaExternalUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.blockBackgroundMediaExternalUrlTablet }
@@ -101,6 +102,7 @@ BlockDiv.defaultProps = {
 	enableVariationPicker: false,
 	withUniqueClass: true,
 	blockHoverClass: '',
+	blockTag: 'div',
 }
 
 BlockDiv.Content = props => {
@@ -108,6 +110,7 @@ BlockDiv.Content = props => {
 		className,
 		attributes,
 		applyCustomAttributes,
+		blockTag,
 		version: _version,
 		...propsToPass
 	} = props
@@ -143,7 +146,7 @@ BlockDiv.Content = props => {
 		{ ...useBlockProps.save( { className: classNames } ) }
 		id={ attributes.anchor || undefined }
 		data-block-id={ attributes.uniqueId || undefined }
-		blockTag={ htmlTag }
+		blockTag={ blockTag || htmlTag }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.blockBackgroundMediaExternalUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.blockBackgroundMediaExternalUrlTablet }
@@ -158,6 +161,7 @@ BlockDiv.Content.defaultProps = {
 	className: '',
 	attributes: {},
 	applyCustomAttributes: true,
+	blockTag: '',
 }
 
 BlockDiv.InspectorControls = Edit

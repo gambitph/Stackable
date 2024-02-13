@@ -1,20 +1,50 @@
 // Important, we can't use flex since it causes issues with columns.
 .stk-block-icon-list {
-	:is(ul, ol) {
-		width: fit-content;
+	.stk-block-icon-list--grid:is(ul, ol) {
+		display: grid;
+		grid-template-columns: repeat(var(--stk-icon-list-column-count, 1), 1fr);
+		row-gap: var(--stk-icon-list-row-gap, 0);
+		column-gap: var(--stk-icon-list-column-gap, 16px);
+		width: 100%;
 		text-align: start;
+	}
+	.stk-block-icon-list--column:is(.stk-block-icon-list__ul, .stk-block-icon-list__ol) {
+		display: block;
+		column-count: var(--stk-icon-list-column-count, 1);
+		column-gap: var(--stk-icon-list-column-gap, 16px);
+		width: 100%;
+		text-align: start;
+		.stk-block-icon-list__group {
+			width: fit-content;
+			padding-inline-start: 0;
+			list-style-type: none !important;
+		}
+		.wp-block-stackable-icon-list-item {
+			margin-bottom: var(--stk-icon-list-row-gap, 0);
+		}
+		.wp-block-stackable-icon-list-item:last-child {
+			margin-bottom: 0;
+		}
+
+	}
+	:is(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
+		flex: none;
 	}
 	ol {
 		list-style-image: none;
 	}
 
-	&.stk-block :is(ul, ol) {
-		padding-inline-start: 1em;
+	ul.stk-block-icon-list__ul {
+		list-style-type: none !important;
+	}
+	ul.stk-block-icon-list__ul,
+	ol.stk-block-icon-list__ol {
+		padding-inline-start: 0;
 	}
 
-	// Line height creates unnecessary row gaps.
-	::marker {
-		line-height: 0;
+	.stk-block-icon-list__ol {
+		counter-reset: stk-icon-list-counter;
+		list-style-type: none !important;
 	}
 
 	// @from https://css-tricks.com/almanac/properties/b/break-inside/
@@ -23,21 +53,33 @@
 		break-inside: avoid;
 	}
 
+	// For previous icon list blocks.
+	&.stk-block :is(ul:not(.stk-block-icon-list__ul)),
+	&.stk-block :is(ol:not(.stk-block-icon-list__ol)) {
+		padding-inline-start: 1em;
+	}
+	// For previous icon list blocks.
 	// Need to make this fit the content so that we can align left/center/right
 	// the list alignment.
-	li {
+	:not(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) {
 		width: fit-content;
+	}
+	:not(ul.stk-block-icon-list__ul, ol.stk-block-icon-list__ol) li:not(.stk-block-icon-list-item) {
+		width: fit-content;
+		&::marker {
+			line-height: 0;
+		}
 	}
 }
 
 // Alignments when the icon list is aligned.
-.stk-block-icon-list :is(ul, ol) {
+.stk-block-icon-list.stk-block :is(ul, ol) {
 	margin-left: var(--stk-alignment-margin-left);
 	margin-right: var(--stk-alignment-margin-right);
 }
 
 // Prevents theme's css from affecting the icon list.
-.stk-block-icon-list :is(ul, ol) {
+.stk-block-icon-list.stk-block :is(ul, ol) {
 	margin-top: 0;
 	margin-bottom: 0;
 
