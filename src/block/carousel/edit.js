@@ -88,6 +88,7 @@ const Edit = props => {
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const carouselType = attributes.carouselType === '' ? 'slide' : attributes.carouselType
+	const infiniteScroll = attributes.infiniteScroll
 
 	const blockClassNames = classnames( [
 		className,
@@ -162,7 +163,14 @@ const Edit = props => {
 		let newSlide = activeSlide + 1
 		if ( newSlide > maxSlides ) {
 			newSlide = slideOffset + 1
+
+			if ( infiniteScroll ) {
+				const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
+				const lastOffset = slider.children[ maxSlides - 1 ].offsetLeft + slider.children[ maxSlides - 1 ].offsetWidth
+				slider.children[ newSlide - 1 ].style.left = `${ lastOffset }px`
+			}
 		}
+
 		goToSlide( newSlide )
 	}
 
@@ -184,6 +192,12 @@ const Edit = props => {
 			const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
 			if ( slider ) {
 				sliderRef.current.scrollLeft = slider.children[ slide - 1 ].offsetLeft
+
+				if ( infiniteScroll && slide === ( slideOffset + 1 ) ) {
+					setTimeout( () => {
+						slider.children[ slide - 1 ].style.left = ``
+					}, 500 )
+				}
 			}
 		}
 
@@ -326,6 +340,12 @@ const Edit = props => {
 								placeholder="4000"
 							/>
 						) }
+						<AdvancedToggleControl
+							label={ __( 'Infinite Scrolling', i18n ) }
+							checked={ attributes.infiniteScroll }
+							onChange={ infiniteScroll => setAttributes( { infiniteScroll } ) }
+							defaultValue={ false }
+						/>
 						<ControlSeparator />
 					</InspectorLayoutControls>
 

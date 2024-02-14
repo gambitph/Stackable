@@ -66,6 +66,10 @@ export const attributes = ( version = VERSION ) => {
 				default: '',
 				stkResponsive: true,
 			},
+			infiniteScroll: {
+				type: 'boolean',
+				default: false,
+			},
 
 			/**
 			 * Arrows.
