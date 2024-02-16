@@ -88,7 +88,7 @@ const Edit = props => {
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const carouselType = attributes.carouselType === '' ? 'slide' : attributes.carouselType
-	const infiniteScroll = attributes.infiniteScroll
+	const infiniteScroll = carouselType === 'slide' && attributes.infiniteScroll
 
 	const blockClassNames = classnames( [
 		className,
@@ -99,6 +99,7 @@ const Edit = props => {
 		{
 			'stk--is-slide': carouselType === 'slide',
 			'stk--is-fade': carouselType === 'fade',
+			'stk--infinite-scroll': infiniteScroll,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 
@@ -164,11 +165,11 @@ const Edit = props => {
 		if ( newSlide > maxSlides ) {
 			newSlide = slideOffset + 1
 
-			if ( infiniteScroll ) {
-				const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
-				const lastOffset = slider.children[ maxSlides - 1 ].offsetLeft + slider.children[ maxSlides - 1 ].offsetWidth
-				slider.children[ newSlide - 1 ].style.left = `${ lastOffset }px`
-			}
+			// if ( infiniteScroll ) {
+			// 	const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
+			// 	const lastOffset = slider.children[ maxSlides - 1 ].offsetLeft + slider.children[ maxSlides - 1 ].offsetWidth
+			// 	slider.children[ newSlide - 1 ].style.left = `${ lastOffset }px`
+			// }
 		}
 
 		goToSlide( newSlide )
@@ -193,11 +194,11 @@ const Edit = props => {
 			if ( slider ) {
 				sliderRef.current.scrollLeft = slider.children[ slide - 1 ].offsetLeft
 
-				if ( infiniteScroll && slide === ( slideOffset + 1 ) ) {
-					setTimeout( () => {
-						slider.children[ slide - 1 ].style.left = ``
-					}, 500 )
-				}
+				// if ( infiniteScroll && slide === ( slideOffset + 1 ) ) {
+				// 	setTimeout( () => {
+				// 		slider.children[ slide - 1 ].style.left = ``
+				// 	}, 500 )
+				// }
 			}
 		}
 
