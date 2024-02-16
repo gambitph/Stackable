@@ -198,12 +198,11 @@ class _StackableCarousel {
 			return
 		}
 		if ( this.infiniteScroll && slide > this.slideEls.length ) {
-			const index = this.cloneSlideIndex( slide )
 			// console.log( 'clone index', index )
-			this.sliderEl.scrollLeft = this.nextClones[ index ].offsetLeft
+			this.sliderEl.scrollLeft = this.nextClones[ 0 ].offsetLeft
 			setTimeout( () => {
 				this.sliderEl.style.scrollBehavior = 'unset'
-				this.sliderEl.scrollLeft = this.slideEls[ index ].offsetLeft
+				this.sliderEl.scrollLeft = this.slideEls[ 0 ].offsetLeft
 				this.sliderEl.style.scrollBehavior = ''
 			}, 500 )
 			slide = 1
