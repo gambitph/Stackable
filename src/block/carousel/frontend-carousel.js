@@ -456,7 +456,7 @@ class _StackableCarousel {
 			}, { slide: 1, offsetDiff: 1000 } )
 
 			this.currentSlide = slide
-			// this.setDotActive( slide )
+			this.setDotActive( slide )
 		}
 
 		clearTimeout( this.dragTimeout )
@@ -515,7 +515,7 @@ class _StackableCarousel {
 			}, { slide: 1, offsetDiff: 1000 } )
 
 			this.currentSlide = slide
-			// this.setDotActive( slide )
+			this.setDotActive( slide )
 		}
 	}
 
