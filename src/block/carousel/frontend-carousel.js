@@ -23,7 +23,6 @@ class _StackableCarousel {
 		this.slideEls = Array.from( this.sliderEl.children )
 		this.isRTL = document.documentElement?.getAttribute( 'dir' ) === 'rtl' || document.body?.getAttribute( 'dir' ) === 'rtl'
 		this.infiniteScroll = this.el.classList.contains( 'stk--infinite-scroll' )
-		this.cloneCount = 0
 
 		// for iOS devices:
 		// fix double clicks on links after triggering touch events of carousel
@@ -45,13 +44,13 @@ class _StackableCarousel {
 		this.liveregion.setAttribute( 'class', 'liveregion stk--hidden' )
 		this.wrapper.appendChild( this.liveregion )
 
-		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
-
 		this.initProperties()
 		this.addEventListeners()
 		this.fixChildrenAccessibility()
 		this.fixAccessibility( this.currentSlide )
 		this.setDotActive( this.currentSlide )
+
+		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
 
 		this.unpauseAutoplay()
 	}
@@ -74,15 +73,24 @@ class _StackableCarousel {
 		}
 
 		if ( this.infiniteScroll ) {
-			this.cloneCount = this.slidesToShow * 2
 			this.infiniteFirstSlide = this.slidesToShow + 1
+			this.slideElsInit = this.slideEls
+
+			// clone slides based on the number of slides to show
 			this.prevClones = this.slideEls.slice( -this.slidesToShow ).map( node => this.sliderEl.insertBefore( node.cloneNode( true ), this.slideEls[ 0 ] ) )
-			this.nextClones = this.slideEls.slice( 0, this.slidesToShow ).map( node => this.sliderEl.appendChild( node.cloneNode( true ) ) )
-			this.slideEls.map( ( slideEl, i ) => {
-				return slideEl.setAttribute( 'data-slide-index', i + 1 )
-			} )
+			const nextClones = this.slideEls.slice( 0, this.slidesToShow ).map( node => this.sliderEl.appendChild( node.cloneNode( true ) ) )
+
+			// update this.slideEls to include the clones
+			this.slideEls = [ ...this.prevClones, ...this.slideEls, nextClones[ 0 ] ]
+
+			// Scroll without animation to the first slide
+			this.sliderEl.style.scrollBehavior = 'unset'
+			this.sliderEl.scrollLeft = this.slideElsInit[ 0 ].offsetLeft
+			this.sliderEl.style.scrollBehavior = ''
+
 			this.currentSlide = this.infiniteFirstSlide
 		}
+
 		this.updateDots()
 	}
 
@@ -95,15 +103,29 @@ class _StackableCarousel {
 
 		const dotLabel = this.dotsEl.dataset.label
 		this.slideEls.forEach( ( slideEl, i ) => {
-			if ( ! this.isRTL && i >= this.slideEls.length - this.slidesToShow + 1 ) {
+			let label = i + 1
+			if ( ! this.infiniteScroll &&
+				! this.isRTL &&
+				i >= this.slideEls.length - this.slidesToShow + 1 ) {
 				return
+			}
+
+			if ( this.infiniteScroll &&
+				( i < this.prevClones.length || i >= this.slideEls.length - 1 ) ) {
+				// hide dots for the clones
+				return
+			}
+
+			if ( this.infiniteScroll ) {
+				// Add correct label for dots in infinite scroll
+				label = label - this.prevClones.length
 			}
 
 			const listEl = document.createElement( 'div' )
 			const dotEl = document.createElement( 'button' )
 			listEl.setAttribute( 'role', 'listitem' )
 			dotEl.classList.add( 'stk-block-carousel__dot' )
-			dotEl.setAttribute( 'aria-label', dotLabel.replace( /%+d/, ( i + 1 ) ) )
+			dotEl.setAttribute( 'aria-label', dotLabel.replace( /%+d/, label ) )
 			if ( this.currentSlide === i + 1 ) {
 				dotEl.classList.add( 'stk-block-carousel__dot--active' )
 			}
@@ -179,7 +201,13 @@ class _StackableCarousel {
 
 	nextSlide = () => {
 		let newSlide = this.currentSlide + 1
-		if ( newSlide > this.maxSlides() + this.cloneCount ) {
+
+		if ( this.infiniteScroll && newSlide >= this.slideEls.length ) {
+			this.goToCloneSlide( 'N' )
+			return
+		}
+
+		if ( ! this.infiniteScroll && newSlide > this.maxSlides() ) {
 			newSlide = this.slideOffset
 		}
 		this.goToSlide( newSlide )
@@ -187,26 +215,45 @@ class _StackableCarousel {
 
 	prevSlide = () => {
 		let newSlide = this.currentSlide - 1
+
+		if ( this.infiniteScroll && newSlide <= this.slideOffset ) {
+			this.goToCloneSlide( 'P', newSlide )
+			return
+		}
+
 		if ( newSlide < this.slideOffset ) {
 			newSlide = this.maxSlides()
 		}
 		this.goToSlide( newSlide )
 	}
 
-	goToSlide = ( slide, force = false, scroll = true ) => {
-		if ( slide === this.currentSlide && ! force ) {
-			return
-		}
-		if ( this.infiniteScroll && slide > this.slideEls.length ) {
-			// console.log( 'clone index', index )
-			this.sliderEl.scrollLeft = this.nextClones[ 0 ].offsetLeft
+	goToCloneSlide = ( dir, slide = 1 ) => {
+		// Scrolls to the cloned slide then scrolls back to the original without scrolling animation
+		if ( dir === 'N' ) {
+			// Last element of this.slideEls is the cloned first slide
+			this.sliderEl.scrollLeft = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
 			setTimeout( () => {
 				this.sliderEl.style.scrollBehavior = 'unset'
-				this.sliderEl.scrollLeft = this.slideEls[ 0 ].offsetLeft
+				this.sliderEl.scrollLeft = this.slideEls[ this.infiniteFirstSlide - 1 ].offsetLeft
 				this.sliderEl.style.scrollBehavior = ''
 			}, 500 )
-			slide = 1
-			scroll = false
+			this.goToSlide( this.infiniteFirstSlide, false )
+		} else {
+			this.sliderEl.scrollLeft = this.slideEls[ slide - 1 ].offsetLeft
+			const initIndex = this.slideElsInit.length - this.prevClones.length
+			const newSlide = this.prevClones.length + initIndex + 1
+			setTimeout( () => {
+				this.sliderEl.style.scrollBehavior = 'unset'
+				this.sliderEl.scrollLeft = this.slideEls[ newSlide - 1 ].offsetLeft
+				this.sliderEl.style.scrollBehavior = ''
+			}, 500 )
+			this.goToSlide( newSlide, false )
+		}
+	}
+
+	goToSlide = ( slide, scroll = true, force = false ) => {
+		if ( slide === this.currentSlide && ! force ) {
+			return
 		}
 
 		this.slideEls[ this.currentSlide - 1 ].classList.remove( 'stk-block-carousel__slide--active' )
@@ -272,9 +319,12 @@ class _StackableCarousel {
 		} )
 	}
 
-	setDotActive = slide => {
+	setDotActive = _slide => {
+		const slide = this.infiniteScroll ? _slide - this.prevClones.length : _slide
 		this.dotEls?.forEach( ( dotEl, i ) => {
-			if ( slide === i + 1 ) {
+			if ( slide === i + 1 ||
+				( this.infiniteScroll && slide === 0 && i === this.dotEls.length - 1 ) ) {
+				// sets active dot to the last dot if slider goes to the previous slide from the first slide
 				dotEl.classList.add( 'stk-block-carousel__dot--active' )
 			} else {
 				dotEl.classList.remove( 'stk-block-carousel__dot--active' )
@@ -406,7 +456,7 @@ class _StackableCarousel {
 			}, { slide: 1, offsetDiff: 1000 } )
 
 			this.currentSlide = slide
-			this.setDotActive( slide )
+			// this.setDotActive( slide )
 		}
 
 		clearTimeout( this.dragTimeout )
@@ -465,7 +515,7 @@ class _StackableCarousel {
 			}, { slide: 1, offsetDiff: 1000 } )
 
 			this.currentSlide = slide
-			this.setDotActive( slide )
+			// this.setDotActive( slide )
 		}
 	}
 
