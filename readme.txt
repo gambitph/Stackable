@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.4.3
 Requires PHP: 7.3
-Stable tag: 3.12.10
+Stable tag: 3.12.11
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.11 =
+* New: You can now use YouTube shorts and unlisted Vimeo videos in the Video Popup block
+* Fixed: Ordered Icon List block numerals no longer wrap to the next line
+* Fixed: Native list block behaviors no longer create Stackable Icon List Item blocks
+* Fixed: Clicking WooCommerce add to cart button no longer changes the Tabs block to the first tab
+* Fixed: No longer need to have v2 compatibility enabled for the random order option to work in the Posts block
+* Fixed: Carousel block default icon color can now be changed correctly
+* Fixed: Pasting a bullet list no longer converts it to a Stackable Icon List block
+* Fixed: Frontend scripts now will not initialize more than once
+* Fixed: Updated .pot file to allow manual JS strings translations
 
 = 3.12.10 =
 * Fixed: (Hotfix update) Some themes can add bullets or numbers on the Icon List block
