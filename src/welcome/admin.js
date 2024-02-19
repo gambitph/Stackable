@@ -238,7 +238,8 @@ const EditorSettings = () => {
 					'stackable_auto_collapse_panels',
 					'stackable_enable_block_linking',
 					'stackable_enable_carousel_lazy_loading',
-					'stackable_inherit_styles_from_theme',
+					'stackable_inherit_button_styles_from_theme',
+					'stackable_inherit_caption_styles_from_theme',
 				] ) )
 			} )
 		} )
@@ -403,18 +404,32 @@ const EditorSettings = () => {
 			help={ __( 'Disable this if you encounter layout or spacing issues when using images inside carousel-type blocks because of image lazy loading.', i18n ) }
 		/>
 		<AdminToggleSetting
-			label={ __( 'Inherit Theme Styles', i18n ) }
-			value={ settings.stackable_inherit_styles_from_theme }
+			label={ __( 'Inherit Button Theme Styles', i18n ) }
+			value={ settings.stackable_inherit_button_styles_from_theme }
 			onChange={ value => {
 				setIsBusy( true )
-				const model = new models.Settings( { stackable_inherit_styles_from_theme: value } ) // eslint-disable-line camelcase
+				const model = new models.Settings( { stackable_inherit_button_styles_from_theme: value } ) // eslint-disable-line camelcase
 				model.save().then( () => setIsBusy( false ) )
 				setSettings( {
 					...settings,
-					stackable_inherit_styles_from_theme: value, // eslint-disable-line camelcase
+					stackable_inherit_button_styles_from_theme: value, // eslint-disable-line camelcase
 				} )
 			} }
-			help={ __( 'Enable this if you want certain elements in your site to be styled by the theme.', i18n ) }
+			help={ __( 'Enable this if you want buttons in your site to be styled by the theme.', i18n ) }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Inherit Caption Theme Styles', i18n ) }
+			value={ settings.stackable_inherit_caption_styles_from_theme }
+			onChange={ value => {
+				setIsBusy( true )
+				const model = new models.Settings( { stackable_inherit_caption_styles_from_theme: value } ) // eslint-disable-line camelcase
+				model.save().then( () => setIsBusy( false ) )
+				setSettings( {
+					...settings,
+					stackable_inherit_caption_styles_from_theme: value, // eslint-disable-line camelcase
+				} )
+			} }
+			help={ __( 'Enable this if you want captions in your site to be styled by the theme.', i18n ) }
 		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">

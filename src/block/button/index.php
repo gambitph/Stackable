@@ -5,9 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-var_dump(get_option( 'stackable_inherit_styles_from_theme' ));
-
-if ( get_option( 'stackable_inherit_styles_from_theme' ) === '1' ) {
+if ( get_option( 'stackable_inherit_button_styles_from_theme' ) === '1' ) {
 
 	if ( ! function_exists( 'stackable_add_inherit_button_theme_class' ) ) {
 		function stackable_add_inherit_button_theme_class( $block_content, $block ) {

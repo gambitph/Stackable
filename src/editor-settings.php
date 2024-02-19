@@ -169,7 +169,19 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 			register_setting(
 				'stackable_editor_settings',
-				'stackable_inherit_styles_from_theme',
+				'stackable_inherit_button_styles_from_theme',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Inherits the styles created by the theme.', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => true,
+				)
+			);
+
+			register_setting(
+				'stackable_editor_settings',
+				'stackable_inherit_caption_styles_from_theme',
 				array(
 					'type' => 'boolean',
 					'description' => __( 'Inherits the styles created by the theme.', STACKABLE_I18N ),
@@ -199,7 +211,8 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
 			$settings['stackable_enable_carousel_lazy_loading'] = get_option( 'stackable_enable_carousel_lazy_loading' );
-			$settings['stackable_inherit_styles_from_theme'] = get_option( 'stackable_inherit_styles_from_theme' );
+			$settings['stackable_inherit_caption_styles_from_theme'] = get_option( 'stackable_inherit_caption_styles_from_theme' );
+			$settings['stackable_inherit_button_styles_from_theme'] = get_option( 'stackable_inherit_button_styles_from_theme' );
 			return $settings;
 		}
 

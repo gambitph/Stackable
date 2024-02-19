@@ -34,7 +34,7 @@ export const Button = props => {
 
 	return (
 		<Link
-			className={ classnames( [ className, getButtonClasses( attributes ), settings.stackable_inherit_styles_from_theme && 'wp-element-button' ] ) }
+			className={ classnames( [ className, getButtonClasses( attributes ), settings.stackable_inherit_button_styles_from_theme && 'wp-element-button' ] ) }
 			linkProps={ buttonProps }
 			linkTrigger={ linkTrigger }
 		>

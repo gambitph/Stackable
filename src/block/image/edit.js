@@ -58,7 +58,7 @@ const Edit = props => {
 	const figcaptionClassnames = classnames(
 		getTypographyClasses( props.attributes, 'figcaption%s' ),
 		'stk-img-figcaption',
-		settings.stackable_inherit_styles_from_theme && 'wp-element-caption',
+		settings.stackable_inherit_caption_styles_from_theme && 'wp-element-caption',
 	)
 
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
