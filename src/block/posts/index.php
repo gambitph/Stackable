@@ -609,3 +609,47 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 	new Stackable_Posts_Block();
 }
 
+if ( ! function_exists( 'stackable_add_custom_orderby_params' ) ) {
+	/**
+	 * The callback to add `rand` as an option for orderby param in REST API.
+	 * Hook to `rest_{$this->post_type}_collection_params` filter.
+	 *
+	 * @param array $query_params Accepted parameters.
+	 * @return array
+	 *
+	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
+	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
+	 */
+	function stackable_add_custom_orderby_params( $query_params ) {
+		if ( ! in_array( 'rand', $query_params['orderby']['enum'] ) ) {
+			$query_params['orderby']['enum'][] = 'rand';
+		}
+		if ( ! in_array( 'menu_order', $query_params['orderby']['enum'] ) ) {
+			$query_params['orderby']['enum'][] = 'menu_order';
+		}
+		return $query_params;
+	}
+}
+
+if ( ! function_exists( 'stackable_add_custom_orderby' ) ) {
+	/**
+	 * Add `rand` as an option for orderby param in REST API.
+	 * Hook to `rest_{$this->post_type}_collection_params` filter.
+	 *
+	 * @param array $query_params Accepted parameters.
+	 * @return array
+	 *
+	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
+	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
+	 */
+	function stackable_add_custom_orderby() {
+		$post_types = get_post_types( array( 'public' => true ) );
+		foreach ( $post_types as $post_type ) {
+			add_filter( 'rest_' . $post_type . '_collection_params', 'stackable_add_custom_orderby_params' );
+		}
+	}
+
+	add_action( 'rest_api_init', 'stackable_add_custom_orderby' );
+}
+
+

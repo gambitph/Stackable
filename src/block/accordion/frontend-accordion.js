@@ -121,14 +121,17 @@ class StackableAccordion {
 
 		const els = document.querySelectorAll( '.stk-block-accordion' )
 		els.forEach( el => {
-			el.contentEl = el.querySelector( '.stk-block-accordion__content' )
-			if ( ! isAnimationDisabled ) {
-				RO.observe( el )
+			if ( ! el._StackableHasInitAccordion ) {
+				el.contentEl = el.querySelector( '.stk-block-accordion__content' )
+				if ( ! isAnimationDisabled ) {
+					RO.observe( el )
+				}
+				MO.observe( el, {
+					attributeFilter: [ 'open' ],
+					attributeOldValue: true,
+				} )
+				el._StackableHasInitAccordion = true
 			}
-			MO.observe( el, {
-				attributeFilter: [ 'open' ],
-				attributeOldValue: true,
-			} )
 		} )
 
 		const addWrapperHack = el => {

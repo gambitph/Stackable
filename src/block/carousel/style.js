@@ -102,7 +102,7 @@ const Styles = props => {
 				{ ...propsToPass }
 				selector=".stk-block-carousel__button"
 				hoverSelector=".stk-block-carousel__button:hover"
-				styleRule="color"
+				styleRule="fill"
 				attrName="arrowIconColor"
 				key="arrowIconColor"
 				hover="all"

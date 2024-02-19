@@ -112,7 +112,10 @@ class StackableTabs {
 	init = () => {
 		document.querySelectorAll( '.stk-block-tabs' )
 			.forEach( el => {
-				new _StackableTabs( el )
+				if ( ! el._StackableHasInitTabs ) {
+					new _StackableTabs( el )
+					el._StackableHasInitTabs = true
+				}
 			} )
 	}
 }

@@ -1087,6 +1087,20 @@
     ]
   },
   {
+    "family": "Annapurna SIL",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Annie Use Your Telescope",
     "variants": [
       "regular"
@@ -1108,6 +1122,18 @@
       "greek",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Anta",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -8181,6 +8207,18 @@
     ]
   },
   {
+    "family": "Jacquarda Bastarda 9",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Jacques Francois",
     "variants": [
       "regular"
@@ -8979,6 +9017,19 @@
       "latin-ext",
       "thai",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Kode Mono",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -10982,6 +11033,18 @@
     ]
   },
   {
+    "family": "Micro 5",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Milonga",
     "variants": [
       "regular"
@@ -11697,6 +11760,21 @@
       "latin-ext",
       "math",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Namdhinggo",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "limbu"
     ]
   },
   {
@@ -13291,9 +13369,12 @@
       "regular"
     ],
     "subsets": [
+      "chinese-simplified",
       "latin",
       "latin-ext",
-      "mongolian"
+      "math",
+      "mongolian",
+      "symbols"
     ]
   },
   {

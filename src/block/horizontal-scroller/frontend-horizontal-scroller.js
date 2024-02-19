@@ -11,6 +11,9 @@ class StackableHorizontalScroller {
 		let initialClientX = 0
 
 		els.forEach( el => {
+			if ( el._StackableHasInitHorizontalScroller ) {
+				return
+			}
 			// get all links, because we will need to disable them during drag
 			const children = el.querySelectorAll( '.stk-block-link, a' )
 
@@ -83,6 +86,8 @@ class StackableHorizontalScroller {
 			}
 
 			el.addEventListener( 'mousedown', mouseDownHandler )
+
+			el._StackableHasInitHorizontalScroller = true
 		} )
 	}
 }
