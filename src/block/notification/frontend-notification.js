@@ -7,6 +7,9 @@ class StackableNotification {
 	init = () => {
 		const els = document.querySelectorAll( '.stk-block-notification.stk--is-dismissible' )
 		els.forEach( el => {
+			if ( el._StackableHasInitAccordion ) {
+				return
+			}
 			// Dismiss handler.
 			const uid = el.getAttribute( 'data-block-id' )
 			const itemName = `stckbl-notif-${ uid }`
@@ -21,6 +24,7 @@ class StackableNotification {
 				localStorage.setItem( itemName, 1 )
 				el.style.display = 'none'
 			} )
+			el._StackableHasInitAccordion = true
 		} )
 	}
 }
