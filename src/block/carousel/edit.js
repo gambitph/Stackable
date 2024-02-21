@@ -118,11 +118,12 @@ const Edit = props => {
 	], getContentAlignmentClasses( props.attributes ) )
 
 	const deviceType = useDeviceType()
-	const { numInnerBlocks } = useBlockContext()
+	const { numInnerBlocks, innerBlocks } = useBlockContext()
 	const [ activeSlide, setActiveSlide ] = useState( 1 )
 	const [ dotActiveSlide, setDotActiveSlide ] = useState( 1 )
 	const [ slideOffset, setSlideOffset ] = useState( 0 )
 	const [ defaultIcon, setDefaultIcon ] = useState( { next: defaultIconNext, prev: defaultIconPrev } )
+	const [ slideCount, setSlideCount ] = useState( 1 )
 	const sliderRef = useRef()
 	const dotActiveJustChanged = useRef()
 
@@ -158,18 +159,59 @@ const Edit = props => {
 		}
 	}, [ slidesToShow, carouselType ] )
 
+	useEffect( () => {
+		const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
+		let slides
+		if ( slider ) {
+			slides = Array.from( slider.children )
+		}
+
+		const removeClones = () => {
+			const clones = slider?.querySelectorAll( '.stk--carousel-slide-clone' )
+
+			clones?.forEach( clone => {
+			    clone.remove()
+			} )
+		}
+
+		const addClones = () => {
+			slides?.slice( -slidesToShow ).map( node => {
+				const clone = node.cloneNode( true )
+				clone.classList.add( 'stk--carousel-slide-clone' )
+				return slider.insertBefore( clone, slides[ 0 ] )
+			} )
+			slides?.slice( 0, slidesToShow ).map( node => {
+				const clone = node.cloneNode( true )
+				clone.classList.add( 'stk--carousel-slide-clone' )
+				return slider.appendChild( clone )
+			 } )
+
+			setSlideCount( slider.children.length - slidesToShow + 1 ) // include only clones added before the first slide
+			setActiveSlide( slidesToShow + 1 )
+			sliderRef.current.style.scrollBehavior = 'unset'
+			sliderRef.current.scrollLeft = slider.children[ slidesToShow ].offsetLeft
+			sliderRef.current.style.scrollBehavior = ''
+		}
+
+		if ( slider && infiniteScroll ) {
+			removeClones()
+			addClones()
+		} else if ( slider && ! infiniteScroll ) {
+			removeClones()
+		}
+	}, [ infiniteScroll, innerBlocks ] )
+
 	const nextSlide = ev => {
 		ev?.preventDefault()
 
 		let newSlide = activeSlide + 1
-		if ( newSlide > maxSlides ) {
-			newSlide = slideOffset + 1
 
-			// if ( infiniteScroll ) {
-			// 	const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
-			// 	const lastOffset = slider.children[ maxSlides - 1 ].offsetLeft + slider.children[ maxSlides - 1 ].offsetWidth
-			// 	slider.children[ newSlide - 1 ].style.left = `${ lastOffset }px`
-			// }
+		if ( infiniteScroll && newSlide >= slideCount ) {
+			goToCloneSlide( 'N' )
+			return
+		}
+		if ( ! infiniteScroll && newSlide > maxSlides ) {
+			newSlide = slideOffset + 1
 		}
 
 		goToSlide( newSlide )
@@ -179,26 +221,50 @@ const Edit = props => {
 		ev.preventDefault()
 
 		let newSlide = activeSlide - 1
+
+		if ( infiniteScroll && newSlide <= slideOffset + 1 ) {
+			goToCloneSlide( 'P', newSlide )
+			return
+		}
+
 		if ( newSlide <= slideOffset ) {
 			newSlide = maxSlides
 		}
 		goToSlide( newSlide )
 	}
 
-	const goToSlide = slide => {
+	const goToCloneSlide = ( dir, slide = 1 ) => {
+		const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
+		// Scrolls to the cloned slide then scrolls back to the original without scrolling animation
+		if ( dir === 'N' ) {
+			// Last element of this.slideEls is the cloned first slide
+			sliderRef.current.scrollLeft = slider.children[ slideCount ].offsetLeft
+			setTimeout( () => {
+				sliderRef.current.style.scrollBehavior = 'unset'
+				sliderRef.current.scrollLeft = slider.children[ slidesToShow ].offsetLeft
+				sliderRef.current.style.scrollBehavior = ''
+			}, 500 )
+			goToSlide( slidesToShow + 1, false ) // the first non-clone slide number is slidesToShow + 1
+		} else {
+			sliderRef.current.scrollLeft = slider.children[ slide - 1 ].offsetLeft
+			const newSlide = numInnerBlocks + 1
+			setTimeout( () => {
+				sliderRef.current.style.scrollBehavior = 'unset'
+				sliderRef.current.scrollLeft = slider.children[ newSlide - 1 ].offsetLeft
+				sliderRef.current.style.scrollBehavior = ''
+			}, 500 )
+			goToSlide( newSlide, false )
+		}
+	}
+
+	const goToSlide = ( slide, scroll = true ) => {
 		setActiveSlide( slide )
 		setDotActiveSlide( slide )
 
 		if ( carouselType === 'slide' ) {
 			const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
-			if ( slider ) {
+			if ( slider && scroll ) {
 				sliderRef.current.scrollLeft = slider.children[ slide - 1 ].offsetLeft
-
-				// if ( infiniteScroll && slide === ( slideOffset + 1 ) ) {
-				// 	setTimeout( () => {
-				// 		slider.children[ slide - 1 ].style.left = ``
-				// 	}, 500 )
-				// }
 			}
 		}
 
@@ -209,13 +275,6 @@ const Edit = props => {
 			dotActiveJustChanged.current = null
 		}, 500 )
 	}
-
-	// Reset the slider location when the carousel type changes.
-	useEffect( () => {
-		sliderRef.current.scrollLeft = 0
-		setActiveSlide( 1 )
-		setDotActiveSlide( 1 )
-	}, [ carouselType ] )
 
 	useEffect( () => {
 		const timeout = setInterval( () => {
@@ -262,7 +321,7 @@ const Edit = props => {
 	}, [ carouselType, activeSlide ] )
 
 	useEffect( () => {
-		if ( activeSlide > maxSlides ) {
+		if ( ! infiniteScroll && activeSlide > maxSlides ) {
 			setActiveSlide( maxSlides )
 		}
 	}, [ maxSlides, activeSlide ] )
