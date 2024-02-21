@@ -73,7 +73,7 @@ const ColumnStyles = props => {
 				styleRule="flex"
 				attrName="columnWidth"
 				key="columnWidth-save-flex"
-				responsive={ [ 'desktopTablet', 'tabletOnly', 'mobile' ] }
+				responsive={ [ 'desktopOnly', 'tabletOnly', 'mobile' ] }
 				format="1 1 %s%"
 				dependencies={ [
 					'columnAdjacentCount',
