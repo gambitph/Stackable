@@ -57,6 +57,24 @@ const Styles = props => {
 				format="%spx"
 				responsive="all"
 			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".%s-column"
+				styleRule="flexWrap"
+				attrName="columnWrapDesktop"
+				key="columnWrapDesktop-save"
+				valueCallback={ value => value ? 'wrap' : undefined }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
+				styleRule="flexWrap"
+				attrName="columnWrapDesktop"
+				key="columnWrapDesktop"
+				valueCallback={ value => value ? 'wrap' : undefined }
+			/>
 			{ hasRowGap && <>
 				<BlockCss
 					{ ...propsToPass }
