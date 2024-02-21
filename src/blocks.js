@@ -45,10 +45,6 @@ const importAllAndRegister = r => {
 			settings.keywords = settings.keywords.map( keyword => __( keyword, i18n ) ) // eslint-disable-line @wordpress/i18n-no-variables
 		}
 
-		// Allow renaming of all blocks.
-		settings.supports = settings.supports || {}
-		settings.supports.renaming = true
-
 		// Register the block.
 		if ( ! getBlockType( name ) ) {
 			registerBlockType( name, settings )
