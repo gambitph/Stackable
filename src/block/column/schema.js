@@ -58,6 +58,11 @@ export const attributes = ( version = VERSION ) => {
 				type: 'boolean',
 				default: '',
 			},
+			// Check if metadata is still needed for inner column rename
+			// metadata: {
+			// 	type: 'object',
+			// 	default: {},
+			// },
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
