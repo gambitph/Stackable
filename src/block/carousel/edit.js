@@ -161,10 +161,6 @@ const Edit = props => {
 
 	useEffect( () => {
 		const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
-		let slides
-		if ( slider ) {
-			slides = Array.from( slider.children )
-		}
 
 		const removeClones = () => {
 			const clones = slider?.querySelectorAll( '.stk--carousel-slide-clone' )
@@ -175,6 +171,7 @@ const Edit = props => {
 		}
 
 		const addClones = () => {
+			const slides = Array.from( slider.children )
 			slides?.slice( -slidesToShow ).map( node => {
 				const clone = node.cloneNode( true )
 				clone.classList.add( 'stk--carousel-slide-clone' )
@@ -199,7 +196,7 @@ const Edit = props => {
 		} else if ( slider && ! infiniteScroll ) {
 			removeClones()
 		}
-	}, [ infiniteScroll, innerBlocks ] )
+	}, [ infiniteScroll, innerBlocks, slidesToShow ] )
 
 	const nextSlide = ev => {
 		ev?.preventDefault()
@@ -222,7 +219,7 @@ const Edit = props => {
 
 		let newSlide = activeSlide - 1
 
-		if ( infiniteScroll && newSlide <= slideOffset + 1 ) {
+		if ( infiniteScroll && newSlide <= slideOffset + slidesToShow ) {
 			goToCloneSlide( 'P', newSlide )
 			return
 		}
@@ -247,7 +244,7 @@ const Edit = props => {
 			goToSlide( slidesToShow + 1, false ) // the first non-clone slide number is slidesToShow + 1
 		} else {
 			sliderRef.current.scrollLeft = slider.children[ slide - 1 ].offsetLeft
-			const newSlide = numInnerBlocks + 1
+			const newSlide = numInnerBlocks + slide
 			setTimeout( () => {
 				sliderRef.current.style.scrollBehavior = 'unset'
 				sliderRef.current.scrollLeft = slider.children[ newSlide - 1 ].offsetLeft
@@ -259,10 +256,11 @@ const Edit = props => {
 
 	const goToSlide = ( slide, scroll = true ) => {
 		setActiveSlide( slide )
-		if ( infiniteScroll && slide - slidesToShow === slideOffset ) {
-			setDotActiveSlide( numInnerBlocks )
+		const rslide = slide - slidesToShow
+		if ( infiniteScroll && rslide <= slideOffset ) {
+			setDotActiveSlide( numInnerBlocks - rslide )
 		} else if ( infiniteScroll ) {
-			setDotActiveSlide( slide - slidesToShow )
+			setDotActiveSlide( rslide )
 		} else {
 			setDotActiveSlide( slide )
 		}
@@ -304,10 +302,11 @@ const Edit = props => {
 				// the active dot to flicker.
 				if ( ! dotActiveJustChanged.current ) {
 					setActiveSlide( slide )
-					if ( infiniteScroll && slide - slidesToShow === slideOffset ) {
-						setDotActiveSlide( numInnerBlocks )
+					const rslide = slide - slidesToShow
+					if ( infiniteScroll && rslide <= slideOffset ) {
+						setDotActiveSlide( numInnerBlocks - rslide )
 					} else if ( infiniteScroll ) {
-						setDotActiveSlide( slide - slidesToShow )
+						setDotActiveSlide( rslide )
 					} else {
 						setDotActiveSlide( slide )
 					}
@@ -812,7 +811,7 @@ const Edit = props => {
 									}
 									const slideIndex = infiniteScroll ? slidesToShow + i - 1 : i + 1
 									const className = classnames( 'stk-block-carousel__dot', {
-										'stk-block-carousel__dot--active': slideIndex === dotActiveSlide,
+										'stk-block-carousel__dot--active': i + 1 === dotActiveSlide,
 									} )
 									return (
 										<div key={ i } role="listitem">
