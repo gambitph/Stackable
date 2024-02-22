@@ -138,7 +138,7 @@ const Edit = props => {
 		if ( deviceType === 'Mobile' && attributes.slidesToShowMobile ) {
 			slidesToShow = attributes.slidesToShowMobile
 		}
-		if ( ! isRTL ) {
+		if ( ! isRTL && ! infiniteScroll ) {
 			maxSlides -= ( slidesToShow - 1 )
 		}
 	}
@@ -259,7 +259,13 @@ const Edit = props => {
 
 	const goToSlide = ( slide, scroll = true ) => {
 		setActiveSlide( slide )
-		setDotActiveSlide( slide )
+		if ( infiniteScroll && slide - slidesToShow === slideOffset ) {
+			setDotActiveSlide( numInnerBlocks )
+		} else if ( infiniteScroll ) {
+			setDotActiveSlide( slide - slidesToShow )
+		} else {
+			setDotActiveSlide( slide )
+		}
 
 		if ( carouselType === 'slide' ) {
 			const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
@@ -298,7 +304,13 @@ const Edit = props => {
 				// the active dot to flicker.
 				if ( ! dotActiveJustChanged.current ) {
 					setActiveSlide( slide )
-					setDotActiveSlide( slide )
+					if ( infiniteScroll && slide - slidesToShow === slideOffset ) {
+						setDotActiveSlide( numInnerBlocks )
+					} else if ( infiniteScroll ) {
+						setDotActiveSlide( slide - slidesToShow )
+					} else {
+						setDotActiveSlide( slide )
+					}
 				}
 
 			// Bring the current slide into view if the selected column changes
@@ -798,8 +810,9 @@ const Edit = props => {
 									if ( isRTL && i < slideOffset ) {
 										return null
 									}
+									const slideIndex = infiniteScroll ? slidesToShow + i - 1 : i + 1
 									const className = classnames( 'stk-block-carousel__dot', {
-										'stk-block-carousel__dot--active': i + 1 === dotActiveSlide,
+										'stk-block-carousel__dot--active': slideIndex === dotActiveSlide,
 									} )
 									return (
 										<div key={ i } role="listitem">
@@ -807,7 +820,7 @@ const Edit = props => {
 												className={ className }
 												onClick={ ev => {
 													ev.preventDefault()
-													goToSlide( i + 1 )
+													goToSlide( slideIndex )
 												} }
 											/>
 										</div>
