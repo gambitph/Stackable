@@ -4,6 +4,7 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecationImageOverlayOpacity,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
 } from '~stackable/block-components'
 
 import { RichText } from '@wordpress/block-editor'
@@ -58,6 +59,27 @@ addFilter( 'stackable.image.save.wrapper', 'stackable/image-caption-wrapper', ( 
 } )
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+			const hasImageShadow = deprecateShadowColor.isEligible( 'image%s' )( attributes )
+
+			return hasBlockShadow || hasContainerShadow || hasImageShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		attributes: attributes( '3.12.6' ),
 		save: withVersion( '3.12.6' )( Save ),

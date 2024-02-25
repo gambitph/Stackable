@@ -10,7 +10,9 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
-	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecationImageOverlayOpacity, getAlignmentClasses,
+	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
+	deprecationImageOverlayOpacity, getAlignmentClasses,
+	deprecateBlockShadowColor, deprecateContainerShadowColor,
 } from '~stackable/block-components'
 
 /**
@@ -84,6 +86,25 @@ addFilter( 'stackable.card.save.innerClassNames', 'stackable/3.0.2', ( output, p
 } )
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+
+			return hasBlockShadow || hasContainerShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// We have to repeat this because the older deprecations are not called when this triggers.
 		attributes: attributes( '3.11.9' ),

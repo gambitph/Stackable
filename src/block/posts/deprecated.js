@@ -10,7 +10,9 @@ import { Save } from './save'
 import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
-	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor, deprecationImageOverlayOpacity,
+	Image, deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
+	deprecateTypographyGradientColor, deprecationImageOverlayOpacity,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
 } from '~stackable/block-components'
 
 /**
@@ -39,6 +41,27 @@ addFilter( 'stackable.posts.title.readmore-content', 'stackable/3_0_2', addUndef
 addFilter( 'stackable.posts.feature-image', 'stackable/3_6_3', determineFeatureImage )
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+			const hasImageShadow = deprecateShadowColor.isEligible( 'image%s' )( attributes )
+
+			return hasBlockShadow || hasContainerShadow || hasImageShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new combined opacity and color.
 		// We have to repeat this because the older deprecations are not called when this triggers.

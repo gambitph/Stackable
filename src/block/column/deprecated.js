@@ -15,7 +15,10 @@ import classnames from 'classnames/dedupe'
  */
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
-import { deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity } from '~stackable/block-components'
+import {
+	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
+	deprecateBlockShadowColor, deprecateContainerShadowColor,
+} from '~stackable/block-components'
 
 // Version 3.8 added horizontal flex, we changed the stk--block-orientation-* to stk--block-horizontal-flex.
 addFilter( 'stackable.column.save.innerClassNames', 'stackable/3.8.0', ( output, props ) => {
@@ -72,6 +75,25 @@ addFilter( 'stackable.column.save.blockClassNames', 'stackable/3.8.0', ( output,
 } )
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+
+			return hasBlockShadow || hasContainerShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+
+			return newAttributes
+		},
+	},
 	{
 		// Support the new combined opacity and color.
 		attributes: attributes( '3.11.9' ),

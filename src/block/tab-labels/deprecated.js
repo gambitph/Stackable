@@ -1,5 +1,6 @@
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateButtonGradientColor, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor, deprecateTypographyShadowColor,
 } from '~stackable/block-components'
 import { Save } from './save'
 import { attributes } from './schema'
@@ -7,6 +8,31 @@ import { attributes } from './schema'
 import { withVersion } from '~stackable/higher-order'
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+			const hasTabButtonShadow = deprecateShadowColor.isEligible( 'tab%s' )( attributes )
+			const hasActiveTabButtonShadow = deprecateShadowColor.isEligible( 'activeTab%s' )( attributes )
+			const hasTextShadow = deprecateTypographyShadowColor.isEligible( 'tab%s' )( attributes )
+
+			return hasBlockShadow || hasContainerShadow || hasTextShadow || hasTabButtonShadow || hasActiveTabButtonShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyShadowColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'activeTab%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	// Support the new combined opacity and color.
 	{
 		attributes: attributes( '3.11.9' ),
