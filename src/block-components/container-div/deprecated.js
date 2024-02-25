@@ -1,4 +1,4 @@
-import { deprecationBackgrounColorOpacity } from '../helpers'
+import { deprecationBackgrounColorOpacity, deprecateShadowColor } from '../helpers'
 
 export const deprecateContainerBackgroundColorOpacity = {
 	isEligible: attributes => {
@@ -6,5 +6,14 @@ export const deprecateContainerBackgroundColorOpacity = {
 	},
 	migrate: attributes => {
 		return deprecationBackgrounColorOpacity.migrate( 'container%s' )( attributes )
+	},
+}
+
+export const deprecateContainerShadowColor = {
+	isEligible: attributes => {
+		return deprecateShadowColor.isEligible( 'container%s' )( attributes )
+	},
+	migrate: attributes => {
+		return deprecateShadowColor.migrate( 'container%s' )( attributes )
 	},
 }

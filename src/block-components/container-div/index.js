@@ -8,7 +8,7 @@ import { getUniqueBlockClass, useQueryLoopInstanceId } from '~stackable/util'
 import { useBlockAttributesContext } from '~stackable/hooks'
 import { applyFilters } from '@wordpress/hooks'
 
-export { deprecateContainerBackgroundColorOpacity } from './deprecated'
+export { deprecateContainerBackgroundColorOpacity, deprecateContainerShadowColor } from './deprecated'
 
 export const ContainerDiv = props => {
 	const attributes = useBlockAttributesContext( attributes => {

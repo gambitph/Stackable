@@ -11,6 +11,7 @@ import { withVersion } from '~stackable/higher-order'
 import compareVersions from 'compare-versions'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity, deprecateTypographyGradientColor, getResponsiveClasses,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateTypographyShadowColor,
 } from '~stackable/block-components'
 
 /**
@@ -33,6 +34,27 @@ addFilter( 'stackable.heading.save.blockClassNames', 'stackable/3.6.1', ( output
 } )
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+			const hasTextShadow = deprecateTypographyShadowColor.isEligible( '%s' )( attributes )
+
+			return hasBlockShadow || hasContainerShadow || hasTextShadow
+		},
+		migrate: attributes => {
+			let newAttributes = { ...attributes }
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyShadowColor.migrate( '%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	// Support the new combined opacity and color.
 	{
 		attributes: attributes( '3.11.9' ),

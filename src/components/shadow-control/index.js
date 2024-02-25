@@ -113,10 +113,6 @@ const filterToValue = ( props, filters ) => {
 			return filters[ key ] ? 'inset' : ''
 		}
 
-		if ( key === 'opacity' ) {
-			return undefined
-		}
-
 		if ( filterItem.show && ! filterItem.show( props ) ) {
 			return undefined
 		}
