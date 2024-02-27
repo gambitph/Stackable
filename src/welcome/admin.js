@@ -415,7 +415,7 @@ const EditorSettings = () => {
 					stackable_inherit_button_styles_from_theme: value, // eslint-disable-line camelcase
 				} )
 			} }
-			help={ __( 'Enable this if you want buttons in your site to be styled by the theme.', i18n ) }
+			help={ __( 'If enabled, the button styles from your theme will be inherited by the button block.', i18n ) }
 		/>
 		<AdminToggleSetting
 			label={ __( 'Inherit Caption Theme Styles', i18n ) }
@@ -429,7 +429,7 @@ const EditorSettings = () => {
 					stackable_inherit_caption_styles_from_theme: value, // eslint-disable-line camelcase
 				} )
 			} }
-			help={ __( 'Enable this if you want captions in your site to be styled by the theme.', i18n ) }
+			help={ __( 'If enabled, the caption styles from your theme will be inherited by the image block\'s caption.', i18n ) }
 		/>
 		{ isBusy &&
 			<div className="s-absolute-spinner">
