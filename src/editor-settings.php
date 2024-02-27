@@ -160,7 +160,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 				'stackable_enable_carousel_lazy_loading',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Disables image lazy loading when using images inside carousel-type blocks to prevent space or layout issues.', STACKABLE_I18N ),
+					'description' => __( 'Disables image lazy loading when using images inside carousel-type blocks to prevent space or layout issues .', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -172,7 +172,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 				'stackable_inherit_button_styles_from_theme',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Inherits the styles created by the theme.', STACKABLE_I18N ),
+					'description' => __( 'If enabled, the button styles from your theme will be inherited by the button block.', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
@@ -184,7 +184,7 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 				'stackable_inherit_caption_styles_from_theme',
 				array(
 					'type' => 'boolean',
-					'description' => __( 'Inherits the styles created by the theme.', STACKABLE_I18N ),
+					'description' => __( 'If enabled, the caption styles from your theme will be inherited by the image block\'s caption.', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => true,
