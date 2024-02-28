@@ -77,13 +77,53 @@ const deprecated = [
 
 			return hasBlockShadow || hasContainerShadow
 		},
-		migrate: attributes => {
+		supports: {
+			anchor: true,
+			spacing: true,
+			__unstablePasteTextInline: true,
+			__experimentalSelector: 'ol,ul',
+			__experimentalOnMerge: true,
+		},
+		migrate: ( attributes, innerBlocks ) => {
 			let newAttributes = { ...attributes }
+			const {
+				text, icons, iconSize, ordered, iconGap,
+			} = attributes
 
+			const _iconSize = iconSize ? iconSize : 1
+			const _iconGap = iconGap ? iconGap : 0
+
+			newAttributes = {
+				...newAttributes,
+				listFullWidth: false,
+				iconVerticalAlignment: 'baseline',
+				iconGap: _iconGap + 4, // Our gap is smaller now.
+				iconSize: ordered
+					? getEquivalentFontSize( _iconSize )
+					: getEquivalentIconSize( _iconSize ),
+			}
+
+			if ( ! text ) {
+				const block = createBlock( 'stackable/icon-list-item' )
+				innerBlocks = [ block ]
+			} else {
+				const contents = textToArray( text )
+				const blocks = contents.map( ( content, index ) => {
+					return createBlock( 'stackable/icon-list-item', {
+						text: content,
+						icon: getUniqueIcon( icons, index ),
+					} )
+				} )
+				innerBlocks = blocks
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
 			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
-			return newAttributes
+			return [ newAttributes, innerBlocks ]
 		},
 	},
 	{
@@ -132,6 +172,8 @@ const deprecated = [
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return [ newAttributes, innerBlocks ]
 		},
@@ -153,6 +195,8 @@ const deprecated = [
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return newAttributes
 		},
@@ -164,6 +208,8 @@ const deprecated = [
 		migrate: attributes => {
 			let newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 		},

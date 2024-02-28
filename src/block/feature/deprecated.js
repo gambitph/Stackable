@@ -71,12 +71,29 @@ const deprecated = [
 			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
 			const hasTopSeparatorShadow = deprecateShadowColor.isEligible( 'topSeparator%s' )( attributes )
 			const hasBottomSeparatorShadow = deprecateShadowColor.isEligible( 'bottomSeparator%s' )( attributes )
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
 
-			return hasBlockShadow || hasContainerShadow || hasTopSeparatorShadow || hasBottomSeparatorShadow
+			return hasBlockShadow || hasContainerShadow || hasTopSeparatorShadow || hasBottomSeparatorShadow || isNotV4
 		},
 		migrate: attributes => {
-			let newAttributes = { ...attributes }
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
 
+			// Update the old column fit into flexbox
+			const hasOldColumnFit = !! attributes.columnFit
+			if ( hasOldColumnFit ) {
+				newAttributes = {
+					...newAttributes,
+					columnFit: '',
+					columnFitAlign: '',
+					columnJustify: attributes.columnFitAlign,
+				}
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
@@ -115,6 +132,10 @@ const deprecated = [
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'bottomSeparator%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -167,6 +188,10 @@ const deprecated = [
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'bottomSeparator%s' )( newAttributes )
 
 			return newAttributes
 		},

@@ -20,8 +20,9 @@ const deprecated = [
 			return hasBlockShadow || hasContainerShadow || hasShapeShadow
 		},
 		migrate: attributes => {
-			let newAttributes = { ...attributes }
-
+			let newAttributes = deprecateBlockBackgroundColorOpacity.migrate( attributes )
+			newAttributes = deprecationBackgrounColorOpacity.migrate( 'shape%s' )( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
 			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 			newAttributes = deprecateShadowColor.migrate( 'shape%s' )( newAttributes )
@@ -42,6 +43,9 @@ const deprecated = [
 			let newAttributes = deprecateBlockBackgroundColorOpacity.migrate( attributes )
 			newAttributes = deprecationBackgrounColorOpacity.migrate( 'shape%s' )( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'shape%s' )( newAttributes )
 			return newAttributes
 		},
 	},
@@ -54,6 +58,9 @@ const deprecated = [
 			let newAttributes = deprecateBlockBackgroundColorOpacity.migrate( attributes )
 			newAttributes = deprecationBackgrounColorOpacity.migrate( 'shape%s' )( newAttributes )
 			newAttributes = deprecateTypographyGradientColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'shape%s' )( newAttributes )
 			return newAttributes
 		},
 	},

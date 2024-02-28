@@ -24,6 +24,11 @@ const deprecated = [
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateTypographyGradientColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'activeTab%s' )( newAttributes )
 			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 			newAttributes = deprecateTypographyShadowColor.migrate( '%s' )( newAttributes )
@@ -54,6 +59,11 @@ const deprecated = [
 			newAttributes = deprecateTypographyGradientColor.migrate( 'tab%s' )( newAttributes )
 			newAttributes = deprecateButtonGradientColor.migrate( 'tab%s' )( newAttributes )
 			newAttributes = deprecateButtonGradientColor.migrate( 'activeTab%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateTypographyShadowColor.migrate( '%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'tab%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'activeTab%s' )( newAttributes )
 
 			return newAttributes
 		},

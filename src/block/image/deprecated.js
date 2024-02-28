@@ -73,6 +73,9 @@ const deprecated = [
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 
+			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
@@ -104,6 +107,9 @@ const deprecated = [
 			newAttributes = deprecationImageOverlayOpacity.migrate( newAttributes )
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -115,6 +121,9 @@ const deprecated = [
 		migrate: attributes => {
 			let newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
 			newAttributes = deprecationImageOverlayOpacity.migrate( attributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'image%s' )( newAttributes )
 			return deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 		},
 	},

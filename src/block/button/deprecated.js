@@ -25,7 +25,10 @@ const deprecated = [
 
 			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
-			newAttributes = deprecateShadowColor.migrate( 'button%s' )( attributes )
+			newAttributes = deprecateShadowColor.migrate( 'button%s' )( newAttributes )
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateButtonGradientColor.migrate( 'button%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -47,6 +50,9 @@ const deprecated = [
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateButtonGradientColor.migrate( 'button%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'button%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -58,6 +64,9 @@ const deprecated = [
 		migrate: attributes => {
 			let newAttributes = deprecateContainerBackgroundColorOpacity.migrate( attributes )
 			newAttributes = deprecateButtonGradientColor.migrate( 'button%s' )( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'button%s' )( newAttributes )
 			return deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 		},
 	},

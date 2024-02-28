@@ -21,10 +21,23 @@ const deprecated = [
 		migrate: attributes => {
 			let newAttributes = { ...attributes }
 
+			const hasContainerOpacity = deprecateContainerBackgroundColorOpacity.isEligible( attributes )
+			if ( hasContainerOpacity ) {
+				newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			}
+
+			const hasBlockOpacity = deprecateBlockBackgroundColorOpacity.isEligible( attributes )
+			if ( hasBlockOpacity ) {
+				newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			}
+
 			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
 			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
-			return newAttributes
+			return {
+				...newAttributes,
+				equalTabHeight: true,
+			}
 		},
 	},
 	{
@@ -42,6 +55,9 @@ const deprecated = [
 			if ( hasBlockOpacity ) {
 				newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
 			}
+
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return {
 				...newAttributes,
@@ -65,6 +81,8 @@ const deprecated = [
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
 
 			return newAttributes
 		},
