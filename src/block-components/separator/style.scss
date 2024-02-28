@@ -4,11 +4,20 @@
 	&:is(.stk-has-top-separator, .stk-has-bottom-separator) {
 		> *:not(.stk-video-background, .stk-separator) { // Don't change the order of any video backgrounds, they stay at the back.
 			z-index: 2;
+		}
+
+		:is(.stk-block-hero__content, .stk-block-call-to-action__content) {
 			position: relative;
 		}
 
 		.stk-separator ~ *:not(.stk-separator, .stk-video-background) {
 			z-index: 5;
+			position: relative;
+		}
+	}
+
+	&.stk-block-feature:is(.stk-has-bottom-separator) {
+		:is(.stk-container) {
 			position: relative;
 		}
 	}
