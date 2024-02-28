@@ -34,7 +34,11 @@ export const Button = props => {
 
 	return (
 		<Link
-			className={ classnames( [ className, getButtonClasses( attributes ), settings.stackable_inherit_button_styles_from_theme && 'wp-element-button' ] ) }
+			className={ classnames( [
+				className,
+				getButtonClasses( attributes ),
+				{ 'wp-block-button__link': settings.stackable_inherit_button_styles_from_theme }, //Check if body contains stk--is-kadence-theme
+			] ) }
 			linkProps={ buttonProps }
 			linkTrigger={ linkTrigger }
 		>

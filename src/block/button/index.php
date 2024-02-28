@@ -19,7 +19,7 @@ if ( get_option( 'stackable_inherit_button_styles_from_theme' ) === '1' ) {
 				$img_classname = $html_tag->get_attribute( 'class' );
 
 				if ( strpos( $img_classname, 'stk-button' ) !== false ) {
-					$html_tag->add_class( 'wp-element-button' );
+					$html_tag->add_class( 'wp-block-button__link wp-element-button' );
 				}
 			}
 
