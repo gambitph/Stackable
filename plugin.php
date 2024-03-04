@@ -42,11 +42,11 @@ if ( ! function_exists( 'stackable_php_requirement_activation_check' ) ) {
 	 * @since 1.9
 	 */
 	function stackable_php_requirement_activation_check() {
-		if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
+		if ( version_compare( PHP_VERSION, '7.3.0', '<' ) ) {
 			deactivate_plugins( basename( __FILE__ ) );
 			wp_die(
 				sprintf(
-					__( '%s"Stackable" can not be activated. %s It requires PHP version 5.3.0 or higher, but PHP version %s is used on the site. Please upgrade your PHP version first ✌️ %s Back %s', STACKABLE_I18N ),
+					__( '%s"Stackable" can not be activated. %s It requires PHP version 7.3.0 or higher, but PHP version %s is used on the site. Please upgrade your PHP version first ✌️ %s Back %s', STACKABLE_I18N ),
 					'<strong>',
 					'</strong><br><br>',
 					PHP_VERSION,
@@ -65,12 +65,12 @@ if ( ! function_exists( 'stackable_php_requirement_activation_check' ) ) {
  *
  * @since 1.9
  */
-if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
+if ( version_compare( PHP_VERSION, '7.3.0', '<' ) ) {
 	if ( ! function_exists( 'stackable_php_requirement_notice' ) ) {
 		function stackable_php_requirement_notice() {
 	        printf(
 	            '<div class="notice notice-error"><p>%s</p></div>',
-	            sprintf( __( '"Stackable" requires PHP version 5.3.0 or higher, but PHP version %s is used on the site.', STACKABLE_I18N ), PHP_VERSION )
+	            sprintf( __( '"Stackable" requires PHP version 7.3.0 or higher, but PHP version %s is used on the site.', STACKABLE_I18N ), PHP_VERSION )
 	        );
 		}
 	}
