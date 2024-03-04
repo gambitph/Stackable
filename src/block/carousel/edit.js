@@ -88,7 +88,6 @@ const Edit = props => {
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
 
 	const carouselType = attributes.carouselType === '' ? 'slide' : attributes.carouselType
-	const infiniteScroll = carouselType === 'slide' && attributes.infiniteScroll
 
 	const blockClassNames = classnames( [
 		className,
@@ -99,7 +98,6 @@ const Edit = props => {
 		{
 			'stk--is-slide': carouselType === 'slide',
 			'stk--is-fade': carouselType === 'fade',
-			'stk--infinite-scroll': infiniteScroll,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 
@@ -118,12 +116,11 @@ const Edit = props => {
 	], getContentAlignmentClasses( props.attributes ) )
 
 	const deviceType = useDeviceType()
-	const { numInnerBlocks, innerBlocks } = useBlockContext()
+	const { numInnerBlocks } = useBlockContext()
 	const [ activeSlide, setActiveSlide ] = useState( 1 )
 	const [ dotActiveSlide, setDotActiveSlide ] = useState( 1 )
 	const [ slideOffset, setSlideOffset ] = useState( 0 )
 	const [ defaultIcon, setDefaultIcon ] = useState( { next: defaultIconNext, prev: defaultIconPrev } )
-	const [ slideCount, setSlideCount ] = useState( 1 )
 	const sliderRef = useRef()
 	const dotActiveJustChanged = useRef()
 
@@ -138,7 +135,7 @@ const Edit = props => {
 		if ( deviceType === 'Mobile' && attributes.slidesToShowMobile ) {
 			slidesToShow = attributes.slidesToShowMobile
 		}
-		if ( ! isRTL && ! infiniteScroll ) {
+		if ( ! isRTL ) {
 			maxSlides -= ( slidesToShow - 1 )
 		}
 	}
@@ -159,58 +156,13 @@ const Edit = props => {
 		}
 	}, [ slidesToShow, carouselType ] )
 
-	useEffect( () => {
-		const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
-
-		const removeClones = () => {
-			const clones = slider?.querySelectorAll( '.stk--carousel-slide-clone' )
-
-			clones?.forEach( clone => {
-			    clone.remove()
-			} )
-		}
-
-		const addClones = () => {
-			const slides = Array.from( slider.children )
-			slides?.slice( -slidesToShow ).map( node => {
-				const clone = node.cloneNode( true )
-				clone.classList.add( 'stk--carousel-slide-clone' )
-				return slider.insertBefore( clone, slides[ 0 ] )
-			} )
-			slides?.slice( 0, slidesToShow ).map( node => {
-				const clone = node.cloneNode( true )
-				clone.classList.add( 'stk--carousel-slide-clone' )
-				return slider.appendChild( clone )
-			 } )
-
-			setSlideCount( slider.children.length - slidesToShow + 1 ) // include only clones added before the first slide
-			setActiveSlide( slidesToShow + 1 )
-			sliderRef.current.style.scrollBehavior = 'unset'
-			sliderRef.current.scrollLeft = slider.children[ slidesToShow ].offsetLeft
-			sliderRef.current.style.scrollBehavior = ''
-		}
-
-		if ( slider && infiniteScroll ) {
-			removeClones()
-			addClones()
-		} else if ( slider && ! infiniteScroll ) {
-			removeClones()
-		}
-	}, [ infiniteScroll, innerBlocks, slidesToShow ] )
-
 	const nextSlide = ev => {
 		ev?.preventDefault()
 
 		let newSlide = activeSlide + 1
-
-		if ( infiniteScroll && newSlide >= slideCount ) {
-			goToCloneSlide( 'N' )
-			return
-		}
-		if ( ! infiniteScroll && newSlide > maxSlides ) {
+		if ( newSlide > maxSlides ) {
 			newSlide = slideOffset + 1
 		}
-
 		goToSlide( newSlide )
 	}
 
@@ -218,56 +170,19 @@ const Edit = props => {
 		ev.preventDefault()
 
 		let newSlide = activeSlide - 1
-
-		if ( infiniteScroll && newSlide <= slideOffset + slidesToShow ) {
-			goToCloneSlide( 'P', newSlide )
-			return
-		}
-
 		if ( newSlide <= slideOffset ) {
 			newSlide = maxSlides
 		}
 		goToSlide( newSlide )
 	}
 
-	const goToCloneSlide = ( dir, slide = 1 ) => {
-		const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
-		// Scrolls to the cloned slide then scrolls back to the original without scrolling animation
-		if ( dir === 'N' ) {
-			// Last element of this.slideEls is the cloned first slide
-			sliderRef.current.scrollLeft = slider.children[ slideCount ].offsetLeft
-			setTimeout( () => {
-				sliderRef.current.style.scrollBehavior = 'unset'
-				sliderRef.current.scrollLeft = slider.children[ slidesToShow ].offsetLeft
-				sliderRef.current.style.scrollBehavior = ''
-			}, 500 )
-			goToSlide( slidesToShow + 1, false ) // the first non-clone slide number is slidesToShow + 1
-		} else {
-			sliderRef.current.scrollLeft = slider.children[ slide - 1 ].offsetLeft
-			const newSlide = numInnerBlocks + slide
-			setTimeout( () => {
-				sliderRef.current.style.scrollBehavior = 'unset'
-				sliderRef.current.scrollLeft = slider.children[ newSlide - 1 ].offsetLeft
-				sliderRef.current.style.scrollBehavior = ''
-			}, 500 )
-			goToSlide( newSlide, false )
-		}
-	}
-
-	const goToSlide = ( slide, scroll = true ) => {
+	const goToSlide = slide => {
 		setActiveSlide( slide )
-		const rslide = slide - slidesToShow
-		if ( infiniteScroll && rslide <= slideOffset ) {
-			setDotActiveSlide( numInnerBlocks - rslide )
-		} else if ( infiniteScroll ) {
-			setDotActiveSlide( rslide )
-		} else {
-			setDotActiveSlide( slide )
-		}
+		setDotActiveSlide( slide )
 
 		if ( carouselType === 'slide' ) {
 			const slider = sliderRef.current.querySelector( '.block-editor-block-list__layout' )
-			if ( slider && scroll ) {
+			if ( slider ) {
 				sliderRef.current.scrollLeft = slider.children[ slide - 1 ].offsetLeft
 			}
 		}
@@ -279,6 +194,13 @@ const Edit = props => {
 			dotActiveJustChanged.current = null
 		}, 500 )
 	}
+
+	// Reset the slider location when the carousel type changes.
+	useEffect( () => {
+		sliderRef.current.scrollLeft = 0
+		setActiveSlide( 1 )
+		setDotActiveSlide( 1 )
+	}, [ carouselType ] )
 
 	useEffect( () => {
 		const timeout = setInterval( () => {
@@ -302,14 +224,7 @@ const Edit = props => {
 				// the active dot to flicker.
 				if ( ! dotActiveJustChanged.current ) {
 					setActiveSlide( slide )
-					const rslide = slide - slidesToShow
-					if ( infiniteScroll && rslide <= slideOffset ) {
-						setDotActiveSlide( numInnerBlocks - rslide )
-					} else if ( infiniteScroll ) {
-						setDotActiveSlide( rslide )
-					} else {
-						setDotActiveSlide( slide )
-					}
+					setDotActiveSlide( slide )
 				}
 
 			// Bring the current slide into view if the selected column changes
@@ -332,7 +247,7 @@ const Edit = props => {
 	}, [ carouselType, activeSlide ] )
 
 	useEffect( () => {
-		if ( ! infiniteScroll && activeSlide > maxSlides ) {
+		if ( activeSlide > maxSlides ) {
 			setActiveSlide( maxSlides )
 		}
 	}, [ maxSlides, activeSlide ] )
@@ -411,12 +326,13 @@ const Edit = props => {
 								placeholder="4000"
 							/>
 						) }
-						<AdvancedToggleControl
-							label={ __( 'Infinite Scrolling', i18n ) }
-							checked={ attributes.infiniteScroll }
-							onChange={ infiniteScroll => setAttributes( { infiniteScroll } ) }
-							defaultValue={ false }
-						/>
+						{ carouselType === 'slide' && (
+							<AdvancedToggleControl
+								label={ __( 'Infinite Scrolling', i18n ) }
+								checked={ attributes.infiniteScroll }
+								onChange={ infiniteScroll => setAttributes( { infiniteScroll } ) }
+								defaultValue={ false }
+							/> ) }
 						<ControlSeparator />
 					</InspectorLayoutControls>
 
@@ -809,7 +725,6 @@ const Edit = props => {
 									if ( isRTL && i < slideOffset ) {
 										return null
 									}
-									const slideIndex = infiniteScroll ? slidesToShow + i - 1 : i + 1
 									const className = classnames( 'stk-block-carousel__dot', {
 										'stk-block-carousel__dot--active': i + 1 === dotActiveSlide,
 									} )
@@ -819,7 +734,7 @@ const Edit = props => {
 												className={ className }
 												onClick={ ev => {
 													ev.preventDefault()
-													goToSlide( slideIndex )
+													goToSlide( i + 1 )
 												} }
 											/>
 										</div>
