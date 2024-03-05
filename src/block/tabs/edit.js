@@ -37,8 +37,7 @@ import {
 	getContentAlignmentClasses,
 	ColumnsControl,
 } from '~stackable/block-components'
-import { InnerBlocks } from '@wordpress/block-editor'
-import { useBlockContext } from '~stackable/hooks'
+import { InnerBlocks, store as blockEditorStore } from '@wordpress/block-editor'
 import {
 	withBlockAttributeContext,
 	withBlockWrapperIsHovered,
@@ -49,8 +48,11 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 import { __, sprintf } from '@wordpress/i18n'
+import { useMemo } from '@wordpress/element'
 
 const TEMPLATE = [
 	[ 'stackable/tab-labels', {
@@ -92,7 +94,15 @@ const Edit = props => {
 
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { innerBlocks, hasInnerBlocks } = useBlockContext()
+	// const { hasInnerBlocks } = useBlockContext()
+
+	const {
+		getBlock,
+	} =
+		useSelect( blockEditorStore )
+
+	const innerBlocks = useMemo( () => ( getBlock( clientId ).innerBlocks ) )
+	const hasInnerBlocks = useMemo( () => ( getBlock( clientId ).innerBlocks.length > 0 ) )
 
 	let tabContentBlock = null,
 		tabLabelsBlock = null

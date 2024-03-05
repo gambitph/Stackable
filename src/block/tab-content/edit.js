@@ -45,6 +45,13 @@ import {
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { useSetActiveTabContext } from '../tabs/with-active-tab'
+import { store as blockEditorStore } from '@wordpress/block-editor'
+import {
+	useSelect,
+} from '@wordpress/data'
+import {
+	useMemo,
+} from '@wordpress/element'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/column' ]
 
@@ -75,8 +82,14 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { innerBlocks, hasInnerBlocks } = useBlockContext()
 	const [ columnProviderValue, columnTooltipClass ] = ColumnInnerBlocks.useContext()
+	const {
+		getBlock,
+	} =
+		useSelect( blockEditorStore )
+
+	const innerBlocks = useMemo( () => ( getBlock( clientId ).innerBlocks ) )
+	const hasInnerBlocks = useMemo( () => ( getBlock( clientId ).innerBlocks.length > 0 ) )
 
 	const blockClassNames = classnames( [
 		className,

@@ -50,7 +50,7 @@ import {
 	withBlockWrapper,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
-import { getBlockStyle, useBlockContext } from '~stackable/hooks'
+import { getBlockStyle } from '~stackable/hooks'
 import { cloneDeep } from 'lodash'
 
 /**
@@ -58,11 +58,11 @@ import { cloneDeep } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	useRef, useCallback, createRef,
+	useMemo, useRef, useCallback, createRef,
 } from '@wordpress/element'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
-import { BlockControls } from '@wordpress/block-editor'
+import { BlockControls, store as blockEditorStore } from '@wordpress/block-editor'
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 
@@ -107,7 +107,15 @@ const Edit = props => {
 	const [ activeTab, setActiveTab, , setTemplateLock ] = useSetActiveTabContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { parentBlock } = useBlockContext()
+
+	const {
+		getBlockRootClientId, getBlock,
+	} =
+		useSelect( blockEditorStore )
+
+	const test = useMemo( () => ( getBlockRootClientId( clientId ) ) )
+
+	const parentBlock = useMemo( () => ( getBlock( test ).innerBlocks ) )
 
 	const getRef = useGetRef()
 
