@@ -58,11 +58,11 @@ import { cloneDeep } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	useMemo, useRef, useCallback, createRef,
+	useRef, useCallback, createRef,
 } from '@wordpress/element'
 import { dispatch, useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
-import { BlockControls, store as blockEditorStore } from '@wordpress/block-editor'
+import { BlockControls } from '@wordpress/block-editor'
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 
@@ -108,14 +108,16 @@ const Edit = props => {
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
-	const {
-		getBlockRootClientId, getBlock,
-	} =
-		useSelect( blockEditorStore )
-
-	const test = useMemo( () => ( getBlockRootClientId( clientId ) ) )
-
-	const parentBlock = useMemo( () => ( getBlock( test ).innerBlocks ) )
+	const { parentBlock } = useSelect(
+		select => {
+			const parentClientId = select( 'core/block-editor' ).getBlockRootClientId( clientId )
+			const parentBlock = select( 'core/block-editor' ).getBlock( parentClientId )
+			return {
+				parentBlock,
+			}
+		},
+		[ clientId ]
+	)
 
 	const getRef = useGetRef()
 
