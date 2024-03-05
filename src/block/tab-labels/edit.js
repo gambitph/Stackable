@@ -107,7 +107,6 @@ const Edit = props => {
 	const [ activeTab, setActiveTab, , setTemplateLock ] = useSetActiveTabContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-
 	const { parentBlock } = useSelect(
 		select => {
 			const parentClientId = select( 'core/block-editor' ).getBlockRootClientId( clientId )

@@ -93,7 +93,6 @@ const Edit = props => {
 
 	const separatorClass = getSeparatorClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	// const { hasInnerBlocks } = useBlockContext()
 
 	const { innerBlocks, hasInnerBlocks } = useSelect(
 		select => {
