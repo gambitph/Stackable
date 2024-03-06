@@ -32,7 +32,6 @@ import {
 	Transform,
 	getContentAlignmentClasses,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 import {
 	withBlockAttributeContext,
 	withBlockWrapper,
