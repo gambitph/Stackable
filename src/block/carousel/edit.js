@@ -278,6 +278,15 @@ const Edit = props => {
 							] }
 							attribute="carouselType"
 						/>
+						{ carouselType === 'slide' &&
+							<AdvancedToggleControl
+								label={ __( 'Infinite Scrolling', i18n ) }
+								checked={ attributes.infiniteScroll }
+								onChange={ infiniteScroll => setAttributes( { infiniteScroll } ) }
+								defaultValue={ false }
+								help={ __( 'Only visible in the frontend.', i18n ) }
+							/>
+						}
 						{ carouselType === 'slide' && (
 							<>
 								<AdvancedRangeControl
@@ -327,13 +336,6 @@ const Edit = props => {
 								placeholder="4000"
 							/>
 						) }
-						{ carouselType === 'slide' && (
-							<AdvancedToggleControl
-								label={ __( 'Infinite Scrolling', i18n ) }
-								checked={ attributes.infiniteScroll }
-								onChange={ infiniteScroll => setAttributes( { infiniteScroll } ) }
-								defaultValue={ false }
-							/> ) }
 						<ControlSeparator />
 					</InspectorLayoutControls>
 
