@@ -98,7 +98,7 @@ const Edit = props => {
 		{
 			'stk--is-slide': carouselType === 'slide',
 			'stk--is-fade': carouselType === 'fade',
-			'stk--infinite-scroll': attributes.carouselType === '' && attributes.infiniteScroll,
+			'stk--infinite-scroll': carouselType === 'slide' && attributes.infiniteScroll,
 			'stk--hide-mobile-arrows': attributes.showArrowsOnMobile === false,
 			'stk--hide-mobile-dots': attributes.showDotsOnMobile === false,
 
