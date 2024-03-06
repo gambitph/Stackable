@@ -6,6 +6,7 @@
 			z-index: 2;
 		}
 
+		// This is for the CTA and Hero block
 		:is(.stk-block-hero__content, .stk-block-call-to-action__content) {
 			position: relative;
 		}
