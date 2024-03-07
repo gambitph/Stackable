@@ -211,7 +211,7 @@ class _StackableCarousel {
 			return
 		}
 
-		if ( newSlide < this.slideOffset ) {
+		if ( ! this.infiniteScroll && newSlide < this.slideOffset ) {
 			newSlide = this.maxSlides()
 		}
 		this.goToSlide( newSlide )
