@@ -89,7 +89,7 @@ const ColumnStyles = props => {
 					// 30% columns in tablet/mobile, they will expand to 50% 50%)
 					//
 					// No need to do this in the editor since it already does this.
-					const value = device === 'desktop' ? _value : _value.replace( /^1 1/, '0 1' )
+					const value = device === 'desktop' && ! getAttribute( 'columnWrapDesktop' ) ? _value : _value.replace( /^1 1/, '0 1' )
 
 					const adjacentCount = getAttribute( 'columnAdjacentCount', device )
 					if ( adjacentCount ) {
