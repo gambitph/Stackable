@@ -238,7 +238,13 @@ class _StackableCarousel {
 		this.slideEls = [ ...this.clones ]
 		this.clones = tempSlideEls
 
-		this.goToSlide( slide )
+		this.sliderEl.style.scrollBehavior = 'unset'
+		this.sliderEl.scrollLeft = this.clones[ this.currentSlide - 1 ].offsetLeft
+		this.sliderEl.style.scrollBehavior = ''
+
+		setTimeout( () => {
+			this.goToSlide( slide )
+		}, 1 )
 	}
 
 	goToSlide = ( slide, force = false ) => {
