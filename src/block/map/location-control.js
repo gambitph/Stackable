@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { DynamicContentControl, useDynamicContentControlProps } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -19,6 +20,14 @@ import {
  */
 const LocationControl = props => {
 	const [ waitForGoogle, setWaitForGoogle ] = useState( 0 )
+
+	const dynamicContentProps = useDynamicContentControlProps( {
+		value: props.value,
+		onChange: value => {
+			props.onTextChange( value )
+		},
+		isFormatType: false,
+	} )
 
 	useEffect( () => {
 		if ( ! window?.google?.maps ) {
@@ -54,21 +63,30 @@ const LocationControl = props => {
 	}, [ ref.current, waitForGoogle ] )
 
 	return (
-		<TextControl
-			label={ __( 'Location', i18n ) }
-			ref={ ref }
-			value={ props.value }
-			help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n ) }
-			onChange={ value => {
-				props.onTextChange( value )
-			} }
-		/>
+		<div className="stk-control__location-control">
+			<DynamicContentControl
+				enable={ true }
+				hasPanelModifiedIndicator={ true }
+				{ ...dynamicContentProps }
+			>
+				<TextControl
+					label={ __( 'Location', i18n ) }
+					ref={ ref }
+					value={ props.value }
+					help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n ) }
+					onChange={ value => {
+						props.onTextChange( value )
+					} }
+				/>
+			</DynamicContentControl>
+		</div>
 	)
 }
 
 LocationControl.defaultProps = {
 	onChange: null,
 	value: '',
+	hasPanelModifiedIndicator: true,
 }
 
 export default LocationControl

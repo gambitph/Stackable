@@ -37,6 +37,22 @@
 	}
 }
 
+.stk-control__location-control {
+	display: flex;
+
+	> :not(.stk--has-dynamic-content) {
+		.stk-dynamic-content-control__button {
+			margin-top: 23px;
+		}
+	}
+
+	.stk-control__reset-button {
+		position: static;
+		margin-left: 2px;
+		margin-right: 2px;
+	}
+}
+
 .stk-block-map__api-key-notice {
 	margin: 0 0 16px;
 }
