@@ -96,8 +96,9 @@ const ResizableColumn = props => {
 	}, [ adjacentBlocks ] )
 
 	useEffect( () => {
-		if ( ! columnWrapDesktop ) {
-			props.onResetDesktop()
+		// const total = newWidthsPercent.reduce( ( a, b ) => a + b, 0 )
+		if ( isDesktop && ! columnWrapDesktop ) {
+			fixWidthOnDisableWrap()
 		}
 	}, [ columnWrapDesktop ] )
 
@@ -414,6 +415,29 @@ const ResizableColumn = props => {
 			columnWidths[ blockIndex ] = finalWidth
 
 			props.onChangeMobile( finalWidth, columnWidths, blockIndex )
+		}
+	}
+
+	const fixWidthOnDisableWrap = () => {
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
+
+		let totalPercentages = 0
+		const columnPercentages = adjacentBlocks.map( ( { attributes } ) => {
+			totalPercentages += attributes.columnWidth
+			return attributes.columnWidth
+		} )
+
+		// Update the last column width to make it 100%
+		// if the columnWidth of adjacent blocks is set and the total percentage is less than 100
+		if ( totalPercentages < 100 && totalPercentages > 0 ) {
+			columnPercentages[ columnPercentages.length - 1 ] += ( 100 - totalPercentages )
+
+			if ( isEqual( columnPercentages.map( n => n | 0 ), [ 33, 33, 33 ] ) ) { // eslint-disable-line no-bitwise
+				props.onChangeDesktop( [ 33.33, 33.33, 33.33 ] )
+			} else {
+				props.onChangeDesktop( columnPercentages )
+			}
 		}
 	}
 
