@@ -318,6 +318,36 @@ const Styles = props => {
 				enabledCallback={ () => blockStyle === 'list' }
 				dependencies={ [ 'imageWidthUnit', 'className' ] }
 			/>
+			<BlockCss
+				{ ...propsToPass }
+				selector=".stk-img-wrapper:not(.stk--is-resizing)"
+				renderIn="edit"
+				styleRule="width"
+				attrName="imageWidth"
+				key="imageWidthHorizontalEdit"
+				hasUnits="%"
+				responsive="all"
+				enabledCallback={ ( getAttribute, attributes ) => {
+					return ( attributes?.imageWidthUnit === '%' ||
+					attributes?.imageWidthUnitTablet === '%' ) &&
+					[ 'horizontal', 'horizontal-2' ].includes( blockStyle )
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-block-posts__image-link"
+				styleRule="width"
+				attrName="imageWidth"
+				key="imageWidthHorizontalSave"
+				responsive="all"
+				hasUnits="%"
+				enabledCallback={ ( getAttribute, attributes ) => {
+					return ( attributes?.imageWidthUnit === '%' ||
+					attributes?.imageWidthUnitTablet === '%' ) &&
+					[ 'horizontal', 'horizontal-2' ].includes( blockStyle )
+				} }
+			/>
 		</>
 	)
 }
@@ -338,6 +368,7 @@ export const PostsStyles = memo( props => {
 				{ ...props }
 				{ ..._imageOptions }
 				enableHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
+				enableWidth={ ! [ 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
 			/>
 			<Typography.Style { ...props } { ...titleTypographyOptionsEditor } />
 			<Typography.Style { ...props } { ...categoryTypographyOptions } />
@@ -366,6 +397,7 @@ PostsStyles.Content = props => {
 	const imageOptions = {
 		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
+		enableWidth: ! [ 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ),
 		...( [ 'list' ].includes( blockStyle?.name ) && props.attributes.imageHasLink ? { selector: `${ itemSelector } .stk-block-posts__image-link`, widthStyleRule: 'flexBasis' } : {} ),
 	}
 
