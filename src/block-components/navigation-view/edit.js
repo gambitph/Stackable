@@ -16,7 +16,6 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import {
 	__experimentalListView as ListView, // eslint-disable-line @wordpress/no-unsafe-wp-apis
-	store as blockEditorStore,
 	InspectorControls,
 } from '@wordpress/block-editor'
 import { ResizableBox } from '@wordpress/components'
@@ -37,7 +36,7 @@ export const Edit = props => {
 		isOnlyBlock,
 	} = useSelect( select => {
 		const { rootBlockClientId, hasInnerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
-		const childBlocks = select( blockEditorStore ).__unstableGetClientIdsTree( rootBlockClientId )
+		const childBlocks = select( 'stackable/block-editor' ).getClientTree( rootBlockClientId )
 
 		return {
 			height: select( 'stackable/navigation-view' ).getHeight(),

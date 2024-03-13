@@ -18,7 +18,8 @@ const STORE_ACTIONS = {
 }
 
 const STORE_SELECTORS = {
-	getClientTree: state => state.clientTree || {},
+	getClientTree: ( state, clientId ) =>
+		clientId ? state.clientTree.find( block => block.clientId === clientId ).innerBlocks : ( state.clientTree || {} ),
 }
 
 /**
