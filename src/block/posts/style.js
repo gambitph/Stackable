@@ -327,11 +327,15 @@ const Styles = props => {
 				key="imageWidthHorizontalEdit"
 				hasUnits="%"
 				responsive="all"
-				enabledCallback={ ( getAttribute, attributes ) => {
-					return ( attributes?.imageWidthUnit === '%' ||
-					attributes?.imageWidthUnitTablet === '%' ) &&
+				enabledCallback={ getAttribute => {
+					return ( getAttribute( 'imageWidthUnit' ) === '%' ||
+					getAttribute( 'imageWidthUnitTablet' ) === '%' ) &&
 					[ 'horizontal', 'horizontal-2' ].includes( blockStyle )
 				} }
+				dependencies={ [
+					'imageWidthUnitTablet',
+					'imageWidthUnit',
+				] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -342,11 +346,17 @@ const Styles = props => {
 				key="imageWidthHorizontalSave"
 				responsive="all"
 				hasUnits="%"
-				enabledCallback={ ( getAttribute, attributes ) => {
-					return ( attributes?.imageWidthUnit === '%' ||
-					attributes?.imageWidthUnitTablet === '%' ) &&
-					[ 'horizontal', 'horizontal-2' ].includes( blockStyle )
+				enabledCallback={ getAttribute => {
+					return ( getAttribute( 'imageWidthUnit' ) === '%' ||
+					getAttribute( 'imageWidthUnitTablet' ) === '%' ) &&
+					[ 'horizontal', 'horizontal-2' ].includes( blockStyle ) &&
+					getAttribute( 'imageHasLink' )
 				} }
+				dependencies={ [
+					'imageWidthUnitTablet',
+					'imageWidthUnit',
+					'imageHasLink',
+				] }
 			/>
 		</>
 	)
@@ -394,10 +404,20 @@ PostsStyles.Content = props => {
 
 	const blockStyle = getBlockStyle( variations, props.attributes.className )
 
+	const enableWidth = () => {
+		if ( [ 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ) ) {
+			if ( props.attributes.imageHasLink ) {
+				return false
+			}
+			return true
+		}
+		return true
+	}
+
 	const imageOptions = {
 		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
-		enableWidth: ! [ 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ),
+		enableWidth: enableWidth(),
 		...( [ 'list' ].includes( blockStyle?.name ) && props.attributes.imageHasLink ? { selector: `${ itemSelector } .stk-block-posts__image-link`, widthStyleRule: 'flexBasis' } : {} ),
 	}
 
