@@ -320,25 +320,6 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
-				selector=".stk-img-wrapper:not(.stk--is-resizing)"
-				renderIn="edit"
-				styleRule="width"
-				attrName="imageWidth"
-				key="imageWidthHorizontalEdit"
-				hasUnits="%"
-				responsive="all"
-				enabledCallback={ getAttribute => {
-					return ( getAttribute( 'imageWidthUnit' ) === '%' ||
-					getAttribute( 'imageWidthUnitTablet' ) === '%' ) &&
-					[ 'horizontal', 'horizontal-2' ].includes( blockStyle )
-				} }
-				dependencies={ [
-					'imageWidthUnitTablet',
-					'imageWidthUnit',
-				] }
-			/>
-			<BlockCss
-				{ ...propsToPass }
 				renderIn="save"
 				selector=".stk-block-posts__image-link"
 				styleRule="width"
@@ -378,7 +359,6 @@ export const PostsStyles = memo( props => {
 				{ ...props }
 				{ ..._imageOptions }
 				enableHeight={ ! [ 'portfolio' ].includes( blockStyle ) }
-				enableWidth={ ! [ 'horizontal', 'horizontal-2' ].includes( blockStyle ) }
 			/>
 			<Typography.Style { ...props } { ...titleTypographyOptionsEditor } />
 			<Typography.Style { ...props } { ...categoryTypographyOptions } />
