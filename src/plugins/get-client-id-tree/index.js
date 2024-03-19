@@ -15,6 +15,7 @@ export const ClientTree = () => {
 	} )
 	useEffect( () => {
 		dispatch( 'stackable/block-editor' ).updateClientTree()
+		dispatch( 'stackable/block-editor' ).updateClientIds( allClientIds )
 	}, [ allClientIds ] )
 
 	// Don't render anything.
