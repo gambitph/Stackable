@@ -32,15 +32,22 @@ export const Edit = props => {
 	const {
 		height,
 		isOpen,
+		blocks,
 		isOnlyBlock,
 		rootClientId,
 	} = useSelect( select => {
 		const { rootBlockClientId, hasInnerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
+		const childBlocks = select( 'stackable/block-editor' )?.getClientTree( rootBlockClientId )
+
 		return {
 			height: select( 'stackable/navigation-view' ).getHeight(),
 			isOpen: select( 'stackable/navigation-view' ).getIsOpen(),
 			isOnlyBlock: ! hasInnerBlocks && rootBlockClientId === clientId,
 			rootClientId: rootBlockClientId,
+			blocks: [ {
+				clientId: rootBlockClientId,
+				innerBlocks: childBlocks,
+			} ],
 		}
 	} )
 
@@ -98,7 +105,7 @@ export const Edit = props => {
 				>
 					<div className="stk-panel--navigation-view__wrapper">
 						{ isOpen && <ListView
-							rootClientId={ rootClientId }
+							blocks={ blocks }
 							showOnlyCurrentHierarchy
 							showAppender
 							showBlockMovers
