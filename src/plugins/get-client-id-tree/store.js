@@ -4,7 +4,7 @@
 
 import {
 	register, createReduxStore,
-	select,
+	select, dispatch,
 } from '@wordpress/data'
 
 // Include all the stored state.
@@ -49,10 +49,26 @@ const getUnmemoizedClientTree = rootClientId => {
 	return result
 }
 
+// Use to correct the blocks returned from getBlocks.
+// Applies only core/block (reusable blocks) - Adds missing innerBlocks
+const fixReusableInnerBlocks = blocks => {
+	return ( blocks || [] ).map( block => {
+		return {
+			...block,
+			innerBlocks: fixReusableInnerBlocks( block.innerBlocks ),
+			name: select( 'core/block-editor' ).getBlockName( block.clientId ),
+		}
+	} )
+}
+
 const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 	switch ( action.type ) {
 		case 'UPDATE_CLIENT_TREE': {
 			const tree = getUnmemoizedClientTree()
+			if ( tree ) {
+				const blocks = fixReusableInnerBlocks( tree )
+				dispatch( 'stackable/block-context' ).setBlockTree( blocks )
+			}
 
 			return {
 				...state,
