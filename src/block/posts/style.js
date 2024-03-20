@@ -321,7 +321,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"
-				selector=".stk-block-posts__image-link"
+				selector=".stk-block-posts__image-link:not(:empty)"
 				styleRule="width"
 				attrName="imageWidth"
 				key="imageWidthHorizontalSave"
