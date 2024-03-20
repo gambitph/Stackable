@@ -40,15 +40,10 @@
 .stk-control__location-control {
 	display: flex;
 
-	> :not(.stk--has-dynamic-content) {
-		.stk-dynamic-content-control__button {
-			margin-top: 23px;
-		}
-	}
-
 	.stk-control__reset-button {
 		position: static;
-		margin-left: 2px;
+		margin-top: 2px;
+		margin-left: 60px;
 		margin-right: 2px;
 	}
 }

@@ -7,7 +7,7 @@ import { DynamicContentControl, useDynamicContentControlProps } from '~stackable
 /**
  * WordPress dependencies
  */
-import { TextControl } from '@wordpress/components'
+import { TextControl, BaseControl as GutBaseControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
 	useState, useEffect, useRef,
@@ -63,30 +63,32 @@ const LocationControl = props => {
 	}, [ ref.current, waitForGoogle ] )
 
 	return (
-		<div className="stk-control__location-control">
-			<DynamicContentControl
-				enable={ true }
-				hasPanelModifiedIndicator={ true }
-				{ ...dynamicContentProps }
-			>
-				<TextControl
-					label={ __( 'Location', i18n ) }
-					ref={ ref }
-					value={ props.value }
-					help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n ) }
-					onChange={ value => {
-						props.onTextChange( value )
-					} }
-				/>
-			</DynamicContentControl>
-		</div>
+		<GutBaseControl
+			label={ __( 'Location', i18n ) }
+			help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n ) }
+		>
+			<div className="stk-control__location-control">
+				<DynamicContentControl
+					enable={ true }
+					hasPanelModifiedIndicator={ true }
+					{ ...dynamicContentProps }
+				>
+					<TextControl
+						ref={ ref }
+						value={ props.value }
+						onChange={ value => {
+							props.onTextChange( value )
+						} }
+					/>
+				</DynamicContentControl>
+			</div>
+		</GutBaseControl>
 	)
 }
 
 LocationControl.defaultProps = {
 	onChange: null,
 	value: '',
-	hasPanelModifiedIndicator: true,
 }
 
 export default LocationControl
