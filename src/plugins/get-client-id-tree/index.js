@@ -10,11 +10,6 @@
  */
 
 /**
- * Internal dependencies
- */
-import './store'
-
-/**
  * WordPress dependencies
  */
 import { useEffect } from '@wordpress/element'
@@ -25,7 +20,7 @@ export const ClientTree = () => {
 		return select( 'core/block-editor' ).getClientIdsWithDescendants()
 	} )
 	useEffect( () => {
-		dispatch( 'stackable/block-editor' ).updateClientTree()
+		dispatch( 'stackable/block-context' ).updateClientTree()
 	}, [ allClientIds ] )
 
 	// Don't render anything.

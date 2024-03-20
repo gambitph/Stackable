@@ -37,7 +37,7 @@ export const Edit = props => {
 		rootClientId,
 	} = useSelect( select => {
 		const { rootBlockClientId, hasInnerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
-		const childBlocks = select( 'stackable/block-editor' )?.getClientTree( rootBlockClientId )
+		const childBlocks = select( 'stackable/block-context' ).getClientTree( rootBlockClientId )
 
 		return {
 			height: select( 'stackable/navigation-view' ).getHeight(),
