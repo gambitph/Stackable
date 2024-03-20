@@ -147,8 +147,8 @@ let prevClientIds = null
 // Subscribe to all editor changes, so we can listen in to block structure
 // changes.
 subscribe( () => {
-	const tree = select( 'core/block-editor' ).__unstableGetClientIdsTree()
-	if ( ! prevClientIds ) {
+	const tree = select( 'stackable/block-editor' )?.getClientTree()
+	if ( tree && ! prevClientIds ) {
 		prevClientIds = tree
 		const blocks = fixReusableInnerBlocks( tree )
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )
@@ -158,7 +158,7 @@ subscribe( () => {
 	// We can do a direct comparison here since the object being returned
 	// isn't changed unless the client id tree is changed, so this holds up
 	// even when blocks are edited.
-	if ( tree !== prevClientIds ) {
+	if ( tree && tree !== prevClientIds ) {
 		prevClientIds = tree
 		const blocks = fixReusableInnerBlocks( tree )
 		dispatch( 'stackable/block-context' ).setBlockTree( blocks )

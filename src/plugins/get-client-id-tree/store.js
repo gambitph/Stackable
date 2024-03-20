@@ -1,7 +1,11 @@
 /**
  * WordPress dependencies
  */
-import { registerStore, select } from '@wordpress/data'
+
+import {
+	register, createReduxStore,
+	select,
+} from '@wordpress/data'
 
 // Include all the stored state.
 const DEFAULT_STATE = {
@@ -19,7 +23,7 @@ const STORE_ACTIONS = {
 
 const STORE_SELECTORS = {
 	getClientTree: ( state, clientId ) =>
-		clientId ? state.clientTree.find( block => block.clientId === clientId ).innerBlocks : ( state.clientTree || {} ),
+		clientId ? state.clientTree.find( block => block.clientId === clientId )?.innerBlocks : state.clientTree,
 }
 
 /**
@@ -59,8 +63,8 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 	return state
 }
 
-registerStore( 'stackable/block-editor', {
+register( createReduxStore( 'stackable/block-editor', {
 	reducer: STORE_REDUCER,
 	actions: STORE_ACTIONS,
 	selectors: STORE_SELECTORS,
-} )
+} ) )
