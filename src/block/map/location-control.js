@@ -64,25 +64,23 @@ const LocationControl = props => {
 
 	return (
 		<GutBaseControl
-			className="stk-control"
+			className="stk-control stk-control__location-control"
 			label={ __( 'Location', i18n ) }
 			help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n ) }
 		>
-			<div className="stk-control__location-control">
-				<DynamicContentControl
-					enable={ true }
-					hasPanelModifiedIndicator={ true }
-					{ ...dynamicContentProps }
-				>
-					<TextControl
-						ref={ ref }
-						value={ props.value }
-						onChange={ value => {
-							props.onTextChange( value )
-						} }
-					/>
-				</DynamicContentControl>
-			</div>
+			<DynamicContentControl
+				enable={ true }
+				hasPanelModifiedIndicator={ true }
+				{ ...dynamicContentProps }
+			>
+				<TextControl
+					ref={ ref }
+					value={ props.value }
+					onChange={ value => {
+						props.onTextChange( value )
+					} }
+				/>
+			</DynamicContentControl>
 		</GutBaseControl>
 	)
 }
