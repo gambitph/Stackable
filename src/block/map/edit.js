@@ -296,6 +296,7 @@ const Edit = props => {
 										label={ __( 'Location', i18n ) }
 										attribute="address"
 										placeholder={ __( 'Enter an address or location', i18n ) }
+										help={ __( 'Type in a pair of latitude longitude coordinates.', i18n ) }
 										isDynamic={ true }
 									/>
 								</>
