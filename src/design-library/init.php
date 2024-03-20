@@ -118,14 +118,33 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 			// Fetch designs.
 			if ( empty( $designs ) ) {
+				$designs = array();
+				$content = null;
+
 				$response = wp_remote_get( self::get_cdn_url() . 'library-v3/library.json' );
-				$content = wp_remote_retrieve_body( $response );
-				$content = apply_filters( 'stackable_design_library_retreive_body', $content );
+
+				if ( is_wp_error( $response ) ) {
+					// Add our error message so we can see it in the network tab.
+					$designs['wp_remote_get_error'] = array(
+						'code' => $response->get_error_code(),
+						'message' => $response->get_error_message(),
+					);
+				} else {
+					$content_body = wp_remote_retrieve_body( $response );
+					$content = apply_filters( 'stackable_design_library_retreive_body', $content_body );
+					$content = json_decode( $content, true );
+
+					// Add our error message so we can see it in the network tab.
+					if ( empty( $content ) ) {
+						$designs['content_error'] = array(
+							'message' => $content_body,
+						);
+					}
+
+				}
 
 				// We add the latest designs in the `v3` area.
-				$designs = array(
-					self::API_VERSION => json_decode( $content, true ),
-				);
+				$designs[ self::API_VERSION ] = $content;
 
 				// Allow deprecated code to fetch other designs
 				$designs = apply_filters( 'stackable_fetch_design_library', $designs );
