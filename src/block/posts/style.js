@@ -337,6 +337,7 @@ const Styles = props => {
 					'imageWidthUnitTablet',
 					'imageWidthUnit',
 					'imageHasLink',
+					'className',
 				] }
 			/>
 		</>
@@ -377,6 +378,8 @@ PostsStyles.defaultProps = {
 	version: '',
 }
 
+// Note: Styles do not get rerendered on editor refresh. Rerender only happens when margin bottom is clicked on.
+// Ideally should rerender on editor refresh.
 PostsStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
