@@ -64,6 +64,7 @@ const LocationControl = props => {
 
 	return (
 		<GutBaseControl
+			className="stk-control"
 			label={ __( 'Location', i18n ) }
 			help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n ) }
 		>

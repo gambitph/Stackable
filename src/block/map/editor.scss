@@ -38,18 +38,15 @@
 }
 
 .stk-control__location-control {
-	display: flex;
+
+	.components-base-control {
+		width: 100%;
+	}
 
 	.stk-control__reset-button {
-		position: static;
-		margin-top: 2px;
-		margin-left: 4px;
-		margin-right: 2px;
+		top: 28px;
 	}
 
-	.components-text-control__input {
-		width: 224px;
-	}
 }
 
 .stk-block-map__api-key-notice {
