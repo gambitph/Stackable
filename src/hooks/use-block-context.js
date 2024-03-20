@@ -143,6 +143,7 @@ register( createReduxStore( 'stackable/block-context', {
 // This holds the current tree of client ids, we check against this if the
 // block/content structure has changed.
 let prevClientIds = null
+// let oldAllClientIds = null
 
 // Subscribe to all editor changes, so we can listen in to block structure
 // changes.
