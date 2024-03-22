@@ -2,13 +2,10 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import {
-	compact, isNumber, isEqual,
-} from 'lodash'
+import { compact, isEqual } from 'lodash'
 import {
 	AdvancedRangeControl, AdvancedToggleControl, ColorPaletteControl, Popover,
 } from '~stackable/components'
-import { hexToRgba, extractColor } from '~stackable/util'
 import AdvancedControl, { extractControlProps } from '~stackable/components/base-control2'
 import { useControlHandlers } from '~stackable/components/base-control2/hooks'
 
@@ -103,34 +100,8 @@ const FILTERS = [
 		key: 'shadowColor',
 		props: {
 			label: __( 'Shadow Color', i18n ),
-			disableAlpha: false,
 		},
-		default: 'rgba(0,0,0,1)',
-		changeCallback: color => {
-			if ( color?.startsWith( 'rgba(' ) ) {
-				return color
-			}
-
-			if ( color?.startsWith( 'rgb(' ) ) {
-				return color?.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) || ''
-			}
-
-			color = extractColor( color )
-
-			const rgba = hexToRgba( color )
-
-			return rgba.startsWith( 'rgb(' ) ? rgba.replace( 'rgb', 'rgba' ).replace( /\)$/g, ', 1)' ) : rgba
-		},
-	},
-	{
-		component: AdvancedRangeControl,
-		key: 'opacity',
-		props: {
-			label: __( 'Shadow Opacity', i18n ),
-			min: 0,
-			max: 1,
-			step: 0.1,
-		},
+		default: '#000000',
 	},
 ]
 
@@ -140,17 +111,6 @@ const filterToValue = ( props, filters ) => {
 
 		if ( key === 'inset' ) {
 			return filters[ key ] ? 'inset' : ''
-		}
-
-		if ( key === 'opacity' ) {
-			return undefined
-		}
-
-		if ( key === 'shadowColor' ) {
-			const opacity = filters.opacity
-			if ( isNumber( opacity ) || opacity === '' || opacity === undefined ) {
-				return ( filters[ key ] || filterItem.default || '' ).replace( /,[\d| ||\.]*\)$/g, () => `, ${ ! isNumber( opacity ) ? 1 : opacity })` )
-			}
 		}
 
 		if ( filterItem.show && ! filterItem.show( props ) ) {
@@ -176,12 +136,9 @@ const ShadowFilterControl = props => {
 	useEffect( () => {
 		if ( value ) {
 			let _value = value
-			let rgbaValue = ''
-			let opacity = 1
-			_value = _value.replace( /rgba\(.*\)$/g, value => {
-				rgbaValue = value
-				opacity = value.match( /[\d| ||\.]*\)$/g )[ 0 ]
-				opacity = parseFloat( opacity )
+			let hexValue = ''
+			_value = _value.replace( /#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})([0-9a-fA-F]{2})?$/g, value => {
+				hexValue = value
 				return ''
 			} ).trim()
 
@@ -197,8 +154,7 @@ const ShadowFilterControl = props => {
 			filters.verticalOffset = parseInt( verticalOffset )
 			filters.blur = parseInt( blur )
 			filters.shadowSpread = isNaN( parseInt( spread ) ) ? '' : parseInt( spread )
-			filters.shadowColor = rgbaValue
-			filters.opacity = opacity
+			filters.shadowColor = hexValue
 			setFilters( { ...filters } )
 		}
 	}, [ value ] )
