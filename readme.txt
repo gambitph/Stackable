@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.1
 Tested up to: 6.4.3
 Requires PHP: 7.3
-Stable tag: 3.12.11
+Stable tag: 3.12.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,23 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.12 =
+* New: WordPress 6.5 compatibility #3115 #3116 #333
+* New: Improved editor and saving performance #3104 #3114
+* New: Added support for Metabox settings #330
+* New: Columns Block - you can now wrap columns in desktop view #3072
+* New: Carousel Block - new infinite scroll option #3060
+* New: Added thumbnail option for video backgrounds #3040
+* New: Border color picker now has the new opacity slider #3074
+* New: Design Library - added error logger in the network tab for easy checking of errors #3112
+* New: WooCommerce - dynamic content product description now has option to not strip HTML tags #331
+* Fixed: Prevent bottom separator from overlapping content #3081
+* Fixed: Card block - fixed possible block error when reseting layouts #3080
+* Fixed: Posts block - better display for horizontal layouts with large featured image #3108
+* Fixed: Tabs block - changing styles now updates the border radius correctly #3106
+* Fixed: Lightbox - prevent possible PHP error #3083
+* Fixed: Security improvements
 
 = 3.12.11 =
 * New: You can now use YouTube shorts and unlisted Vimeo videos in the Video Popup block

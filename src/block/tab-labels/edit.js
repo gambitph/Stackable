@@ -50,7 +50,7 @@ import {
 	withBlockWrapper,
 	withQueryLoopContext,
 } from '~stackable/higher-order'
-import { getBlockStyle, useBlockContext } from '~stackable/hooks'
+import { getBlockStyle } from '~stackable/hooks'
 import { cloneDeep } from 'lodash'
 
 /**
@@ -60,7 +60,7 @@ import { __ } from '@wordpress/i18n'
 import {
 	useRef, useCallback, createRef,
 } from '@wordpress/element'
-import { dispatch } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { BlockControls } from '@wordpress/block-editor'
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
@@ -107,7 +107,16 @@ const Edit = props => {
 	const [ activeTab, setActiveTab, , setTemplateLock ] = useSetActiveTabContext()
 	const textClasses = getTypographyClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const { parentBlock } = useBlockContext()
+	const { parentBlock } = useSelect(
+		select => {
+			const parentClientId = select( 'core/block-editor' ).getBlockRootClientId( clientId )
+			const parentBlock = select( 'core/block-editor' ).getBlock( parentClientId )
+			return {
+				parentBlock,
+			}
+		},
+		[ clientId ]
+	)
 
 	const getRef = useGetRef()
 

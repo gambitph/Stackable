@@ -156,7 +156,7 @@ const Edit = props => {
 				className={ blockClassNames }
 				enableVariationPicker={ true }
 			>
-				<ContainerDiv className={ contentClassNames }>
+				{ props.attributes.uniqueId && <ContainerDiv className={ contentClassNames }>
 					<Image
 						showTooltips={ props.isHovered }
 						className="stk-block-card__image"
@@ -179,7 +179,7 @@ const Edit = props => {
 							renderAppender={ renderAppender }
 						/>
 					</div>
-				</ContainerDiv>
+				</ContainerDiv> }
 			</BlockDiv>
 			{ props.isHovered && hasInnerBlocks && <MarginBottom /> }
 		</>

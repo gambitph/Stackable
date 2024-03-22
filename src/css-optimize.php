@@ -128,14 +128,26 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			$styles_only = array();
 			foreach ( $styles as $block_styles ) {
 				foreach ( $block_styles as $block_style ) {
-					$styles_only[] = $block_style[1];
+					$styles_only[] = $block_style;
 				}
 			}
+
+			// Get the hashed CSS from post meta.
+			$hashed_css = get_post_meta( $post_id, 'stackable_css_hash', true );
+			$new_hashed_css = hash( 'sha256', json_encode( $styles_only ) );
+
+			// if the hash is the same, don't update
+			if ( hash_equals( $hashed_css, $new_hashed_css ) ) {
+				return;
+			}
+
 			$optimized_css = count( $styles_only ) ? self::generate_css( $styles_only ) : '';
 
 			// Save the optimized CSS to the post if it changed.
 			update_post_meta( $post_id, 'stackable_optimized_css', $optimized_css );
 			update_post_meta( $post_id, 'stackable_optimized_css_raw', $styles );
+			// Update the hash of the styles.
+			update_post_meta( $post_id, 'stackable_css_hash', $new_hashed_css );
 		}
 
 		/**
@@ -187,10 +199,8 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 						}
 
 						// Add the styles to our list of styles to optimize.
-						$all_block_styles[] = array(
-							$styles[0][ $i ],
-							$styles[1][ $i ],
-						);
+						// Add only the css inside the style tag to minimize memory usage.
+						$all_block_styles[] = $styles[1][ $i ];
 					}
 
 					$unique_id = $block['attrs']['uniqueId'];
@@ -474,7 +484,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 * @return boolean
 		 */
 		public function protect_optimized_css_meta( $protected, $meta_key ) {
-			if ( $meta_key === 'stackable_optimized_css' || $meta_key === 'stackable_optimized_css_raw' ) {
+			if ( $meta_key === 'stackable_optimized_css' ||
+			     $meta_key === 'stackable_optimized_css_raw' ||
+			     $meta_key === 'stackable_css_hash' ) {
 				return true;
 			}
 			return $protected;

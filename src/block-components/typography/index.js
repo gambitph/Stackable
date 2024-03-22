@@ -28,7 +28,7 @@ import {
 	memo,
 } from '@wordpress/element'
 
-export { deprecateTypographyGradientColor } from './deprecated'
+export { deprecateTypographyGradientColor, deprecateTypographyShadowColor } from './deprecated'
 
 export const Typography = memo( forwardRef( ( props, ref ) => {
 	const {

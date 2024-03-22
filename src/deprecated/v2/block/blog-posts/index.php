@@ -241,6 +241,10 @@ if ( ! function_exists( 'stackable_render_blog_posts_block_v2' ) ) {
 				}
 			}
 
+			if ( ! in_array( $attributes['titleTag'], [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p' ] ) ) {
+				$attachment['titleTag'] = 'h3';
+			}
+
 			// Title.
 			$title = get_the_title( $post_id );
 			if ( ! $title ) {
@@ -372,7 +376,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block_v2' ) ) {
 
 		do_action( 'stackable/blog-posts/v2/render', $attributes, $content );
 
-        return apply_filters( 'stackable/blog-posts/v2/edit.output.markup', $posts_markup, $attributes, $content );
+        return wp_kses_post( apply_filters( 'stackable/blog-posts/v2/edit.output.markup', $posts_markup, $attributes, $content ) );
     }
 }
 

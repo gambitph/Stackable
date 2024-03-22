@@ -20,6 +20,16 @@ export const backgroundAttributes = {
 		type: 'string',
 		default: '',
 	},
+	backgroundMediaThumbnailId: {
+		stkResponsive: true,
+		type: 'string',
+		default: '',
+	},
+	backgroundMediaThumbnailUrl: {
+		stkResponsive: true,
+		type: 'string',
+		default: '',
+	},
 	backgroundGradientBlendMode: {
 		type: 'string',
 		default: '',
