@@ -10380,6 +10380,18 @@
     ]
   },
   {
+    "family": "Madimi One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Magra",
     "variants": [
       "regular",
@@ -12110,7 +12122,11 @@
       "900"
     ],
     "subsets": [
-      "arabic"
+      "arabic",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12381,7 +12397,9 @@
     "subsets": [
       "brahmi",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12693,9 +12711,13 @@
       "900"
     ],
     "subsets": [
+      "cyrillic-ext",
       "georgian",
+      "greek-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -15213,6 +15235,25 @@
       "latin",
       "latin-ext",
       "tamil",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Ojuju",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
