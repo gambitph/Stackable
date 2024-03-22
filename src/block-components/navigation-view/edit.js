@@ -16,7 +16,6 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import {
 	__experimentalListView as ListView, // eslint-disable-line @wordpress/no-unsafe-wp-apis
-	store as blockEditorStore,
 	InspectorControls,
 } from '@wordpress/block-editor'
 import { ResizableBox } from '@wordpress/components'
@@ -35,14 +34,16 @@ export const Edit = props => {
 		isOpen,
 		blocks,
 		isOnlyBlock,
+		rootClientId,
 	} = useSelect( select => {
 		const { rootBlockClientId, hasInnerBlocks } = select( 'stackable/block-context' ).getBlockContext( clientId )
-		const childBlocks = select( blockEditorStore ).__unstableGetClientIdsTree( rootBlockClientId )
+		const childBlocks = select( 'stackable/block-context' ).getClientTree( rootBlockClientId )
 
 		return {
 			height: select( 'stackable/navigation-view' ).getHeight(),
 			isOpen: select( 'stackable/navigation-view' ).getIsOpen(),
 			isOnlyBlock: ! hasInnerBlocks && rootBlockClientId === clientId,
+			rootClientId: rootBlockClientId,
 			blocks: [ {
 				clientId: rootBlockClientId,
 				innerBlocks: childBlocks,
@@ -57,6 +58,10 @@ export const Edit = props => {
 
 	// Don't show if this is the only block.
 	if ( ! isSelected || isOnlyBlock ) {
+		return null
+	}
+
+	if ( ! rootClientId ) {
 		return null
 	}
 
