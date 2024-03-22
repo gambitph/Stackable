@@ -87,6 +87,9 @@ export const BlockDiv = props => {
 		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.blockBackgroundMediaExternalUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.blockBackgroundMediaExternalUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile || attributes.blockBackgroundMediaExternalUrlMobile }
+		backgroundThumbnailUrl={ attributes.blockBackgroundMediaThumbnailUrl }
+		backgroundThumbnailUrlTablet={ attributes.blockBackgroundMediaThumbnailUrlTablet }
+		backgroundThumbnailUrlMobile={ attributes.blockBackgroundMediaThumbnailUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
 		{ ...applyFilters( 'stackable.block-components.block-div.attributes', {}, attributes ) }
 	>
@@ -151,6 +154,9 @@ BlockDiv.Content = props => {
 		backgroundUrl={ attributes.blockBackgroundMediaUrl || attributes.blockBackgroundMediaExternalUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet || attributes.blockBackgroundMediaExternalUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile || attributes.blockBackgroundMediaExternalUrlMobile }
+		backgroundThumbnailUrl={ attributes.blockBackgroundMediaThumbnailUrl }
+		backgroundThumbnailUrlTablet={ attributes.blockBackgroundMediaThumbnailUrlTablet }
+		backgroundThumbnailUrlMobile={ attributes.blockBackgroundMediaThumbnailUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
 		{ ...applyFilters( 'stackable.block-components.block-div.attributes.content', {}, attributes ) }
 	/>
