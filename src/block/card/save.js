@@ -74,7 +74,7 @@ export const Save = props => {
 		>
 			<CardStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<ContainerDiv.Content
+			{ attributes.uniqueId && <ContainerDiv.Content
 				className={ contentClassNames }
 				attributes={ attributes }
 			>
@@ -92,7 +92,7 @@ export const Save = props => {
 					</div>
 				), props, innerClassNames ) }
 				<BlockLink.Content attributes={ attributes } />
-			</ContainerDiv.Content>
+			</ContainerDiv.Content> }
 		</BlockDiv.Content>
 	)
 }
