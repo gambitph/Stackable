@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'stackable_load_lightbox_frontend_script' ) ) {
 	function stackable_load_lightbox_frontend_script( $block_content, $block ) {
-		if ( array_key_exists( 'attrs', $block ) ) {
+		if ( array_key_exists( 'attrs', $block ) && is_array( $block['attrs'] ) ) {
 			// If the block has one of these 3 attributes, then we'll need
 			// to load the lightbox script and styles.
 			if ( ( array_key_exists( 'imageHasLightbox', $block['attrs'] ) && $block['attrs']['imageHasLightbox'] ) ||
