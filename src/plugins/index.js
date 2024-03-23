@@ -6,7 +6,6 @@ import './theme-block-size'
 import './design-library-button'
 import './layout-picker-reset'
 // import './v2-migration-popup' // Probably 1.5yrs of checking for backward compatibility is enough.
-import './navigation-view'
 import './save-block'
 import './editor-device-preview-class'
 import { BlockLinking } from './block-linking'

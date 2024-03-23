@@ -176,6 +176,8 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
 		delete_option( 'stackable_dynamic_content_meta_keys_frontend' );
 		// Delete old v2 go premium notice status.
 		delete_option( 'stackable_inspector_premium_notice_status' );
+		// Delete old Navigation Panel setting.
+		delete_option( 'stackable_enable_navigation_panel' );
 	}
 	register_deactivation_hook( __FILE__, 'stackable_deactivation_cleanup' );
 }
