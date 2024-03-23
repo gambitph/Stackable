@@ -47,7 +47,7 @@ const getUnmemoizedClientTree = rootClientId => {
 
 	for ( const clientId of blockOrder ) {
 		const innerBlocks = getUnmemoizedClientTree( clientId )
-		const blockEditingMode = select( 'core/block-editor' ).getBlockEditingMode( clientId )
+		const blockEditingMode = select( 'core/block-editor' ).getBlockEditingMode?.( clientId )
 		if ( blockEditingMode !== 'disabled' ) {
 			result.push( { clientId, innerBlocks } )
 		} else {
