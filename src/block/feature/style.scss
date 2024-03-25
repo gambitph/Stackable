@@ -3,6 +3,10 @@
 .stk-block-feature {
 	--stk-column-gap: 0px; // For nested columns, this takes precedence.
 	--stk-row-gap: 0px;
+
+	&.stk--column-wrap .stk-row {
+		flex-wrap: wrap;
+	}
 }
 .stk-block-feature > * > .stk-block-content {
 	column-gap: var(--stk-column-gap);

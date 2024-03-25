@@ -44,7 +44,9 @@ export const Save = props => {
 		'stk-block-feature',
 		responsiveClass,
 		separatorClass,
-	] )
+	], {
+		'stk--column-wrap': props.attributes.columnWrapDesktop,
+	} )
 
 	const contentClassNames = classnames(
 		applyFilters( 'stackable.feature.save.contentClassNames', {
