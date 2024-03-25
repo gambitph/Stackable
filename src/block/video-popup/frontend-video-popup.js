@@ -107,7 +107,7 @@ class StackableVideoPopup {
 			}
 		}
 		els.forEach( el => {
-			el.querySelector( 'button' ).addEventListener( 'click', ev => {
+			el.querySelector( 'div[role="button"]' ).addEventListener( 'click', ev => {
 				ev.preventDefault()
 				openVideo( el )
 			} )
