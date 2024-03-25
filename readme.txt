@@ -296,7 +296,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 3.12.12 =
 * New: WordPress 6.5 compatibility #3115 #3116 #333
-* New: Improved editor and saving performance #3104 #3114
+* New: Improved editor and saving performance #3119 #3114
 * New: Added support for Metabox settings #330
 * New: Columns Block - you can now wrap columns in desktop view #3072
 * New: Carousel Block - new infinite scroll option #3060
@@ -304,6 +304,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Border color picker now has the new opacity slider #3074
 * New: Design Library - added error logger in the network tab for easy checking of errors #3112
 * New: WooCommerce - dynamic content product description now has option to not strip HTML tags #331
+* Change: Removed Navigation Panel feature - it was already disabled by default back in 3.10.2 #3119
 * Fixed: Prevent bottom separator from overlapping content #3081
 * Fixed: Card block - fixed possible block error when reseting layouts #3080
 * Fixed: Posts block - better display for horizontal layouts with large featured image #3108
