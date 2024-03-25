@@ -100,7 +100,7 @@ BlockStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
-			<Columns.Style.Content { ...props } hasRowGap={ false } />
+			<Columns.Style.Content { ...props } hasRowGap={ false } columnWrapDesktopSelector=".%s-column > .stk-row" />
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 			<Styles { ...props } />
 		</BlockCssCompiler>

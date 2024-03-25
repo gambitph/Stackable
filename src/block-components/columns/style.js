@@ -23,6 +23,7 @@ const Styles = props => {
 	}
 	const {
 		hasRowGap = true,
+		columnWrapDesktopSelector = '',
 		numColumns,
 	} = props
 
@@ -60,7 +61,7 @@ const Styles = props => {
 			<BlockCss
 				{ ...propsToPass }
 				renderIn="save"
-				selector=".%s-column"
+				selector={ columnWrapDesktopSelector || '.%s-column' }
 				styleRule="flexWrap"
 				attrName="columnWrapDesktop"
 				key="columnWrapDesktop-save"

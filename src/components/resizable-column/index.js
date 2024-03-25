@@ -96,7 +96,6 @@ const ResizableColumn = props => {
 	}, [ adjacentBlocks ] )
 
 	useEffect( () => {
-		// const total = newWidthsPercent.reduce( ( a, b ) => a + b, 0 )
 		if ( parentBlock && isDesktop && ! columnWrapDesktop ) {
 			fixWidthOnDisableWrap()
 		}
