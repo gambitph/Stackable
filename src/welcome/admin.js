@@ -232,7 +232,6 @@ const EditorSettings = () => {
 					'stackable_google_maps_api_key',
 					'stackable_enable_design_library',
 					'stackable_optimize_inline_css',
-					'stackable_enable_navigation_panel',
 					'stackable_block_default_width',
 					'stackable_block_wide_width',
 					'stackable_auto_collapse_panels',
@@ -271,20 +270,6 @@ const EditorSettings = () => {
 				} )
 			} }
 			help={ __( 'Optimize inlined CSS styles. If this is enabled, similar selectors will be combined together, helpful if you changed Block Defaults.', i18n ) }
-		/>
-		<AdminToggleSetting
-			label={ __( 'Navigation Panel', i18n ) }
-			value={ settings.stackable_enable_navigation_panel }
-			onChange={ value => {
-				setIsBusy( true )
-				const model = new models.Settings( { stackable_enable_navigation_panel: value } ) // eslint-disable-line camelcase
-				model.save().then( () => setIsBusy( false ) )
-				setSettings( {
-					...settings,
-					stackable_enable_navigation_panel: value, // eslint-disable-line camelcase
-				} )
-			} }
-			help={ __( 'A block Navigation panel that floats at the bottom of the inspector that helps with adjusting the different blocks in your column layout.', i18n ) }
 		/>
 		<AdminToggleSetting
 			label={ __( 'Auto-Collapse Panels', i18n ) }
