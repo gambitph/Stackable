@@ -2905,7 +2905,9 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -4681,6 +4683,8 @@
       "hebrew",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -16402,7 +16406,6 @@
       "900italic"
     ],
     "subsets": [
-      "devanagari",
       "latin",
       "latin-ext"
     ]
@@ -17211,6 +17214,24 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Reddit Mono",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -19974,6 +19995,19 @@
     ]
   },
   {
+    "family": "Tac One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Tai Heritage Pro",
     "variants": [
       "regular",
@@ -21401,6 +21435,50 @@
       "devanagari",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Yarndings 12",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 12 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 20",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 20 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
     ]
   },
   {
