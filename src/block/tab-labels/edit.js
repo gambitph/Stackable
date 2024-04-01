@@ -34,6 +34,8 @@ import classnames from 'classnames'
 import {
 	InspectorTabs,
 	InspectorLayoutControls,
+	InspectorAdvancedControls,
+	AdvancedTextControl,
 	AdvancedToggleControl,
 	AdvancedRangeControl,
 	InspectorStyleControls,
@@ -51,14 +53,14 @@ import {
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 import { getBlockStyle } from '~stackable/hooks'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, kebabCase } from 'lodash'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import {
-	useRef, useCallback, createRef,
+	useRef, useCallback, createRef, useEffect, useState,
 } from '@wordpress/element'
 import { dispatch, useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
@@ -270,6 +272,29 @@ const Edit = props => {
 		// Change the active tab
 		setActiveTab( newIndex + 1 )
 	}
+
+	const [ tabLabels, setTabLabels ] = useState( props.attributes.tabLabels )
+
+	useEffect( () => {
+		let timeout
+		if ( tabLabels !== props.attributes.tabLabels ) {
+			timeout = setTimeout( () => {
+				const updatedLabels = cloneDeep( tabLabels )
+				for ( let i = 0; i < updatedLabels.length; i++ ) {
+					updatedLabels[ i ].anchor = kebabCase( updatedLabels[ i ].anchor )
+				}
+				setAttributes( { tabLabels: updatedLabels } )
+			}, 300 )
+		}
+
+		return () => clearTimeout( timeout )
+	}, [ tabLabels ] )
+
+	useEffect( () => {
+		if ( tabLabels !== props.attributes.tabLabels ) {
+			setTabLabels( props.attributes.tabLabels )
+		}
+	}, [ props.attributes.tabLabels ] )
 
 	// Filter the available styles depending on the context.
 	const blockStyles = _blockStyles.map( style => {
@@ -592,6 +617,34 @@ const Edit = props => {
 					</InspectorStyleControls>
 
 					<BlockDiv.InspectorControls />
+
+					<InspectorAdvancedControls>
+						<PanelAdvancedSettings
+							title={ __( 'Tab Anchors', i18n ) }
+							id="tabAnchors"
+						>
+							{ props.attributes.tabLabels.map( ( tab, index ) => (
+								<AdvancedTextControl
+									label={ sprintf(
+									// Translators: %s is the tab label.
+										__( '%s Anchor', i18n ),
+										// eslint-disable-next-line @wordpress/i18n-no-variables
+										__( tab.label, i18n )
+									) }
+									value={ tabLabels[ index ].anchor }
+									placeholder="Tab Anchor"
+									key={ `tab-anchors-${ index }` }
+									onChange={ value => {
+										const updatedLabels = cloneDeep( props.attributes.tabLabels )
+										updatedLabels[ index ].anchor = value
+										setTabLabels( updatedLabels )
+									} }
+								/>
+							) ) }
+
+						</PanelAdvancedSettings>
+					</InspectorAdvancedControls>
+
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 

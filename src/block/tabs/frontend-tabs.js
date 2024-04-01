@@ -20,9 +20,21 @@ class _StackableTabs {
 	}
 
 	initTabs = () => {
+		const tabsAnchor = []
 		// Set Aria attributes
-		Array.from( this.tabs ).forEach( ( tab, index ) => {
-			tab.setAttribute( 'id', `stk-block-tab-label-${ this.uniqueId }-${ index + 1 }` )
+		Array.from( this.tabs ).forEach( ( tab, index, tabs ) => {
+			let isCustomAnchor = true
+			if ( ! tab.getAttribute( 'id' ) ) {
+				tab.setAttribute( 'id', `stk-block-tab-label-${ this.uniqueId }-${ index + 1 }` )
+				isCustomAnchor = false
+			}
+			tabsAnchor.push( tab.getAttribute( 'id' ) )
+
+			if ( window.location.hash === `#${ tab.getAttribute( 'id' ) }` ) {
+				tabs[ this.activeTab - 1 ].classList.remove( 'stk-block-tabs__tab--active' )
+				this.activeTab = index + 1
+			}
+
 			tab.setAttribute( 'aria-controls', `stk-block-tab-content-${ this.uniqueId }-${ index + 1 }` )
 			tab.setAttribute( 'aria-selected', this.activeTab === ( index + 1 ) ? 'true' : 'false' )
 			tab.setAttribute( 'tabindex', this.activeTab === ( index + 1 ) ? '0' : '-1' )
@@ -34,13 +46,16 @@ class _StackableTabs {
 			// Add the click event.
 			tab.addEventListener( 'click', () => {
 				this.changeTab( index + 1 )
+				if ( isCustomAnchor ) {
+					window.location.hash = tab.getAttribute( 'id' )
+				}
 			} )
 		} )
 
 		// Set Aria attributes
 		Array.from( this.contents ).forEach( ( content, index ) => {
 			content.setAttribute( 'id', `stk-block-tab-content-${ this.uniqueId }-${ index + 1 }` )
-			content.setAttribute( 'aria-labelledby', `stk-block-tab-label-${ this.uniqueId }-${ index + 1 }` )
+			content.setAttribute( 'aria-labelledby', tabsAnchor[ index ] )
 			content.setAttribute( 'tabindex', '0' )
 			if ( this.activeTab !== ( index + 1 ) ) {
 				content.setAttribute( 'hidden', 'true' )
