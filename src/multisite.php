@@ -64,6 +64,7 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 		$tags['style'] = array(
 			'id' => true,
 			'class' => true,
+			'type' => true,
 		);
 
 		// Used by Separators & Icons.
@@ -82,17 +83,41 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'style' => true,
 		);
 		$tags['path'] = array(
-			'class' => true,
-			'fill' => true,
 			'd' => true,
-			'style' => true,
 		);
-		$tags['filter'] = array(
-			'id' => true,
+		$tags['circle'] = array(
+			'cx' => true,
+			'cy' => true,
+			'r' => true,
 		);
-		$tags['g'] = array(
-			'id' => true,
-			'style' => true,
+		$tags['polygon'] = array(
+			'points' => true,
+		);
+		$tags['polyline'] = array(
+			'points' => true,
+		);
+		$tags['rect'] = array(
+			'x' => true,
+			'y' => true,
+			'width' => true,
+			'height' => true,
+			'rx' => true,
+			'ry' => true,
+		);
+		$tags['line'] = array(
+			'x1' => true,
+			'x2' => true,
+			'y1' => true,
+			'y2' => true,
+		);
+		$tags['clippath'] = array();
+		$tags['filter'] = array();
+		$tags['g'] = array();
+		$tags['text'] = array(
+			'font-size' => true,
+			'font-family' => true,
+			'font-weight' => true,
+			'font-*' => true,
 		);
 		$tags['fegaussianblur'] = array(
 			'in' => true,
@@ -121,12 +146,25 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'x2' => true,
 			'y1' => true,
 			'y2' => true,
+			'gradientunits' => true,
+			'gradienttransform' => true,
 		);
 
 		// Used by posts block.
 		$tags['time'] = array(
 			'datetime' => true,
 		);
+
+		_stackable_svg_attributes( $tags, 'path' );
+		_stackable_svg_attributes( $tags, 'circle' );
+		_stackable_svg_attributes( $tags, 'polygon' );
+		_stackable_svg_attributes( $tags, 'polyline' );
+		_stackable_svg_attributes( $tags, 'line' );
+		_stackable_svg_attributes( $tags, 'rect' );
+		_stackable_svg_attributes( $tags, 'g' );
+		_stackable_svg_attributes( $tags, 'clippath' );
+		_stackable_svg_attributes( $tags, 'filter' );
+		_stackable_svg_attributes( $tags, 'text' );
 
 		_stackable_common_attributes( $tags, 'div' );
 		_stackable_common_attributes( $tags, 'h1' );
@@ -138,6 +176,24 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 		_stackable_common_attributes( $tags, 'svg' );
 
 		return $tags;
+	}
+
+	function _stackable_svg_attributes( &$tags, $tag ) {
+		$tags[ $tag ]['id'] = true;
+		$tags[ $tag ]['class'] = true;
+		$tags[ $tag ]['style'] = true;
+		$tags[ $tag ]['fill'] = true;
+		$tags[ $tag ]['fill-rule'] = true;
+		$tags[ $tag ]['fill-opacity'] = true;
+		$tags[ $tag ]['fill-*'] = true;
+		$tags[ $tag ]['clip-path'] = true;
+		$tags[ $tag ]['transform'] = true;
+		$tags[ $tag ]['stroke'] = true;
+		$tags[ $tag ]['stroke-width'] = true;
+		$tags[ $tag ]['stroke-linejoin'] = true;
+		$tags[ $tag ]['stroke-miterlimit'] = true;
+		$tags[ $tag ]['stroke-*'] = true;
+		$tags[ $tag ]['opacity'] = true;
 	}
 
 	function _stackable_common_attributes( &$tags, $tag ) {
