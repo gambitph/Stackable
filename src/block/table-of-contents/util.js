@@ -39,7 +39,9 @@ const convertBlockToHeadingObject = block => {
 
 	// Fix things.
 	heading.tag = heading.level
-	heading.content = striptags( heading.content )
+	// In WP 6.5, the content is now an object and not just a string.
+	const textContent = typeof heading.content === 'string' ? heading.content : heading.content?.text
+	heading.content = striptags( textContent || '' )
 
 	return heading
 }
@@ -155,6 +157,14 @@ export const getHeadingsFromEditorDom = editorDom => {
 	const headingBlocks = editorDom.querySelectorAll( query )
 
 	return [ ...headingBlocks ].reduce( ( headings, heading ) => {
+		// Do not include blocks which are part of the Site Editor heading and footer.
+		const template = heading.closest( '[data-type="core/template-part"]' )
+		if ( template ) {
+			if ( template.tagName === 'HEADER' || template.tagName === 'FOOTER' ) {
+				return headings
+			}
+		}
+
 		const clientId = heading.getAttribute( 'data-block' )
 		const block = select( 'core/block-editor' ).getBlock( clientId )
 		if ( block ) {

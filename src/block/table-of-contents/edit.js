@@ -4,11 +4,7 @@
 import { TableOfContentsStyles } from './style'
 import { generateAnchor } from './autogenerate-anchors'
 import TableOfContentsList from './table-of-contents-list'
-import {
-	getAllBlocks,
-	getUpdatedHeadings,
-	linearToNestedHeadingList,
-} from './util'
+import { getUpdatedHeadings, linearToNestedHeadingList } from './util'
 
 /***
  * External dependencies
@@ -155,7 +151,7 @@ const Edit = props => {
 	const { getEditorDom } = useSelect( 'stackable/editor-dom' )
 	const [ headings, setHeadings ] = useState( attributes.headings )
 	const { getEditedPostContent } = useSelect( 'core/editor' )
-	const { getBlocks } = useSelect( 'core/block-editor' )
+	const { getBlock } = useSelect( 'core/block-editor' )
 	// This is used by the generate anchors button to force the update of heading data.
 	const [ forceUpdateHeadings, setForceUpdateHeadings ] = useState( 0 )
 
@@ -318,23 +314,67 @@ const Edit = props => {
 			'ugb/heading': 'title',
 		} )
 
-		const supportedBlocks = Object.keys( BLOCK_ANCHOR_CONTENT )
-		const blocks = getAllBlocks( getBlocks ).filter( block => supportedBlocks.includes( block.name ) )
-
-		blocks.map( block => {
-			const content = block.attributes[ BLOCK_ANCHOR_CONTENT[ block.name ] ]
-			const { anchor } = block.attributes
-			if ( ! anchor && content ) {
-				const anchor = generateAnchor( content, blocks )
-				// This side-effect should not create an undo level.
-				block.attributes.anchor = anchor !== null ? anchor : uniqueId( 'stk-' )
+		const blocks = headings.map( heading => {
+			const block = getBlock( heading.clientId )
+			if ( block ) {
+				return block
 			}
-			return block
+
+			// If we cannot find the clientId, it means it changed (or the
+			// editor was refreshed and clientIds changed), try looking for it
+			// in other ways.
+			const editorDom = getEditorDom()
+			const blockTypes = Object.keys( BLOCK_ANCHOR_CONTENT )
+			// Look for the element with the same text
+			const blockTypeSelector = blockTypes.map( type => {
+				return `[data-type="${ type }"]`
+			} ).join( ',' )
+
+			let clientId = null
+
+			// Try looking using the anchor.
+			if ( heading.anchor ) {
+				let blockEl = editorDom.querySelector( `[id="${ heading.anchor }"]` )
+				if ( blockEl ) {
+					blockEl = blockEl.closest( blockTypeSelector )
+					clientId = blockEl?.getAttribute( 'data-block' )
+				}
+			}
+			// Look for the element with the same text
+			if ( ! clientId && heading.content ) {
+				Array.from( editorDom.querySelectorAll( blockTypeSelector ) || [] ).some( blockEl => {
+					if ( heading.content === blockEl.textContent ) {
+						clientId = blockEl.getAttribute( 'data-block' )
+						return true
+					}
+					return false
+				} )
+			}
+			if ( clientId ) {
+				return getBlock( clientId )
+			}
+			return null
+		} )
+
+		blocks.forEach( block => {
+			if ( block ) {
+				const content = block.attributes[ BLOCK_ANCHOR_CONTENT[ block.name ] ]
+				const { anchor } = block.attributes
+				if ( ! anchor && content ) {
+					const anchor = generateAnchor( content, blocks )
+
+					// This side-effect should not create an undo level.
+					dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+					dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, {
+						anchor: anchor !== null ? anchor : uniqueId( 'stk-' ),
+					} )
+				}
+			}
 		} )
 
 		// Sometimes this doesn't trigger the headings to be updated.
 		setForceUpdateHeadings( forceUpdateHeadings + 1 )
-	}, [] )
+	}, [ headings ] )
 
 	// When generating an example block preview, just show a list of headings.
 	// @see example.js
