@@ -61,7 +61,11 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 	 * @return array Modified HTML tags & attributes.
 	 */
 	function stackable_allow_wp_kses_allowed_html( $tags, $context ) {
-		$tags['style'] = array();
+		$tags['style'] = array(
+			'id' => true,
+			'class' => true,
+			'type' => true,
+		);
 
 		// Used by Separators & Icons.
 		$tags['svg'] = array(
@@ -79,12 +83,41 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'style' => true,
 		);
 		$tags['path'] = array(
-			'class' => true,
-			'fill' => true,
 			'd' => true,
 		);
-		$tags['filter'] = array(
-			'id' => true,
+		$tags['circle'] = array(
+			'cx' => true,
+			'cy' => true,
+			'r' => true,
+		);
+		$tags['polygon'] = array(
+			'points' => true,
+		);
+		$tags['polyline'] = array(
+			'points' => true,
+		);
+		$tags['rect'] = array(
+			'x' => true,
+			'y' => true,
+			'width' => true,
+			'height' => true,
+			'rx' => true,
+			'ry' => true,
+		);
+		$tags['line'] = array(
+			'x1' => true,
+			'x2' => true,
+			'y1' => true,
+			'y2' => true,
+		);
+		$tags['clippath'] = array();
+		$tags['filter'] = array();
+		$tags['g'] = array();
+		$tags['text'] = array(
+			'font-size' => true,
+			'font-family' => true,
+			'font-weight' => true,
+			'font-*' => true,
 		);
 		$tags['fegaussianblur'] = array(
 			'in' => true,
@@ -113,7 +146,25 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'x2' => true,
 			'y1' => true,
 			'y2' => true,
+			'gradientunits' => true,
+			'gradienttransform' => true,
 		);
+
+		// Used by posts block.
+		$tags['time'] = array(
+			'datetime' => true,
+		);
+
+		_stackable_svg_attributes( $tags, 'path' );
+		_stackable_svg_attributes( $tags, 'circle' );
+		_stackable_svg_attributes( $tags, 'polygon' );
+		_stackable_svg_attributes( $tags, 'polyline' );
+		_stackable_svg_attributes( $tags, 'line' );
+		_stackable_svg_attributes( $tags, 'rect' );
+		_stackable_svg_attributes( $tags, 'g' );
+		_stackable_svg_attributes( $tags, 'clippath' );
+		_stackable_svg_attributes( $tags, 'filter' );
+		_stackable_svg_attributes( $tags, 'text' );
 
 		_stackable_common_attributes( $tags, 'div' );
 		_stackable_common_attributes( $tags, 'h1' );
@@ -125,6 +176,24 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 		_stackable_common_attributes( $tags, 'svg' );
 
 		return $tags;
+	}
+
+	function _stackable_svg_attributes( &$tags, $tag ) {
+		$tags[ $tag ]['id'] = true;
+		$tags[ $tag ]['class'] = true;
+		$tags[ $tag ]['style'] = true;
+		$tags[ $tag ]['fill'] = true;
+		$tags[ $tag ]['fill-rule'] = true;
+		$tags[ $tag ]['fill-opacity'] = true;
+		$tags[ $tag ]['fill-*'] = true;
+		$tags[ $tag ]['clip-path'] = true;
+		$tags[ $tag ]['transform'] = true;
+		$tags[ $tag ]['stroke'] = true;
+		$tags[ $tag ]['stroke-width'] = true;
+		$tags[ $tag ]['stroke-linejoin'] = true;
+		$tags[ $tag ]['stroke-miterlimit'] = true;
+		$tags[ $tag ]['stroke-*'] = true;
+		$tags[ $tag ]['opacity'] = true;
 	}
 
 	function _stackable_common_attributes( &$tags, $tag ) {
@@ -152,6 +221,8 @@ if ( ! function_exists( 'stackable_fix_gt_style_errors' ) ) {
 	 * We do the replacement upon post saving and not on `render_block` so that
 	 * we don't need to do any processing for the frontend.
 	 *
+	 * Only affects multisite.
+	 *
 	 * @see Issue: https://core.trac.wordpress.org/ticket/48873#ticket
 	 * @see https://github.com/gambitph/Stackable/issues/510
 	 *
@@ -160,19 +231,26 @@ if ( ! function_exists( 'stackable_fix_gt_style_errors' ) ) {
 	 * @return array Post data to save
 	 */
 	function stackable_fix_gt_style_errors( $data ) {
+		if ( ! is_multisite() ) {
+			return $data;
+		}
 		if ( empty( $data['post_content'] ) ) {
 			return $data;
 		}
 
 		// Check whether there are any "&gt;" symbols inside <style> tags of
 		// Stackable blocks.
-		if ( ! preg_match( '%wp:ugb/\w+(.*)?<style>(.*)?&gt;%s', $data['post_content'] ) ) {
+		if ( ! stripos( $data['post_content'], '&gt; .stk-' ) &&
+		     ! stripos( $data['post_content'], '&gt; .ugb-' ) && // Support for v2 blocks that start with ugb/
+			 ! stripos( $data['post_content'], 'wp:stackable' ) &&
+			 ! stripos( $data['post_content'], 'wp:ugb' ) && // Support for v2 blocks that start with ugb/
+			 ! stripos( $data['post_content'], '<style' ) ) {
 			return $data;
 		}
 
 		// Go through each block's "&gt;" and replace them with ">", only do
-		// this for Stackable blocks.
-		$data['post_content'] = preg_replace_callback( '%wp:ugb/\w+(.*)?/wp:ugb/\w+%s', function( $matches ) {
+		// this for Stackable blocks. Also support v2 blocks with ugb/ prefix.
+		$data['post_content'] = preg_replace_callback( '%wp:(stackable|ugb)/\w+(.*)?/wp:(stackable|ugb)/\w+%s', function( $matches ) {
 			return preg_replace_callback( '%<style>(.*)?</style>%s', function( $matches ) {
 				return '<style>' . preg_replace( '%&gt;%', '>', $matches[1] ) . '</style>';
 			}, $matches[0] );
