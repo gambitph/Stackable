@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.2
-Tested up to: 6.4.3
+Tested up to: 6.5
 Requires PHP: 7.3
-Stable tag: 3.12.13
+Stable tag: 3.12.14
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.14 =
+* Fixed: Table of Contents Block - WordPress 6.5 compatibility in the Site Editor #3133
+* Fixed: Table of Contents Block - Auto-generate anchors now work after the editor refreshes #3133
+* Fixed: (Hotfix) Rolled back separator fix since it was producing errors #3131
+* Fixed: Some blocks may produce errors when editing in multisite when editing as a non-super user #3130
+* Fixed: In multisite, prevent parts of custom icons from being stripped #3130
+* Fixed: Buttons block - full width now occupies the entire full width correctly #2991
 
 = 3.12.13 =
 * Fixed: (Hotfix update) Rolled back some optimizations that caused styling issues in the frontend after saving.
