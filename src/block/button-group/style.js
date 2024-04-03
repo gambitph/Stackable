@@ -196,17 +196,6 @@ const Styles = props => {
 					return value ? '1' : undefined
 				} }
 			/>
-			<BlockCss
-				{ ...propsToPass }
-				// This is to make icon buttons stretch.
-				selector=".%s, .stk-block-icon-button .stk-button"
-				styleRule="width"
-				attrName="buttonFullWidth"
-				key="buttonFullWidth-icon-button"
-				valueCallback={ value => {
-					return value ? '100%' : undefined
-				} }
-			/>
 		</>
 	)
 }
