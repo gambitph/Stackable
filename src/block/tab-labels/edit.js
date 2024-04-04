@@ -603,7 +603,7 @@ const Edit = props => {
 							title={ __( 'Tab Anchors', i18n ) }
 							id="tabAnchors"
 						>
-							<GutBaseControl help={ __( "Note: Assign unique anchor names to each tab so you'll be able to link directly and open each one.", i18n ) } />
+							<GutBaseControl help={ __( "Assign unique anchor names to each tab so you'll be able to link directly and open each one.", i18n ) } />
 							{ props.attributes.tabLabels.map( ( tab, index ) => (
 								<AdvancedTextControl
 									label={ sprintf(
