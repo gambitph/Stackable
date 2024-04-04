@@ -5,19 +5,22 @@ import { i18n } from 'stackable'
 import {
 	AdvancedRangeControl,
 	AdvancedSelectControl,
+	AdvancedTextControl,
 	FourRangeControl,
 	InspectorAdvancedControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockAttributesContext } from '~stackable/hooks'
+import { useBlockAttributesContext, useBlockSetAttributesContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
+import { dispatch } from '@wordpress/data'
 import { Fragment } from '@wordpress/element'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
+import { kebabCase } from 'lodash'
 
 const HTML_TAG_OPTIONS = [
 	{ value: '', label: __( 'Default', i18n ) },
@@ -36,9 +39,12 @@ const HTML_TAG_OPTIONS = [
 	{ value: 'summary', label: _x( 'Summary', 'HTML Tag', i18n ) },
 ]
 
-export const Edit = () => {
+export const Edit = props => {
+	const { allowCustomAnchor = false } = props
+	const setAttributes = useBlockSetAttributesContext()
 	const attributes = useBlockAttributesContext( attributes => {
 		return {
+			anchor: attributes.anchor,
 			position: attributes.position,
 			positionTablet: attributes.positionTablet,
 			positionMobile: attributes.positionMobile,
@@ -52,6 +58,19 @@ export const Edit = () => {
 					title={ __( 'General', i18n ) }
 					id="general"
 				>
+					{ allowCustomAnchor && (
+						<AdvancedTextControl
+							attribute="anchor"
+							label={ __( 'Anchor', i18n ) }
+							placeholder={ __( 'Anchor', i18n ) }
+							help={ __( 'Note: Assign unique anchor names to each block so you\'ll be able to link directly and open each one.', i18n ) }
+							onBlur={ () => {
+								const cleanAnchor = kebabCase( attributes.anchor )
+								dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+								setAttributes( { anchor: cleanAnchor } )
+							} }
+						/>
+					) }
 					<AdvancedSelectControl
 						label={ sprintf( _x( '%s HTML Tag', 'component', i18n ), __( 'Block', i18n ) ) }
 						attribute="htmlTag"

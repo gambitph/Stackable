@@ -16,6 +16,7 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	InspectorAdvancedControls,
+	AdvancedTextControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -52,7 +53,7 @@ import { compose } from '@wordpress/compose'
 import { useSelect } from '@wordpress/data'
 import { useState, useEffect } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { findLast } from 'lodash'
+import { findLast, kebabCase } from 'lodash'
 
 // Use the default template from the block variations.
 const TEMPLATE = variations[ 0 ].innerBlocks
@@ -62,6 +63,7 @@ const Edit = props => {
 		clientId,
 		className,
 		isSelected,
+		setAttributes,
 	} = props
 
 	useGeneratedCss( props.attributes )
@@ -157,7 +159,7 @@ const Edit = props => {
 
 					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls />
+					<Advanced.InspectorControls allowCustomAnchor={ true } />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />

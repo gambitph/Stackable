@@ -116,10 +116,16 @@ class StackableAccordion {
 						} )
 					}
 				}
+
+				// If the accordion has an anchor ID, update the URL hash.
+				if ( el.open && el.getAttribute( 'id' ) ) {
+					window.location.hash = el.getAttribute( 'id' )
+				}
 			} )
 		} )
 
 		const els = document.querySelectorAll( '.stk-block-accordion' )
+		const elsAnchors = {}
 		els.forEach( el => {
 			if ( ! el._StackableHasInitAccordion ) {
 				el.contentEl = el.querySelector( '.stk-block-accordion__content' )
@@ -130,9 +136,24 @@ class StackableAccordion {
 					attributeFilter: [ 'open' ],
 					attributeOldValue: true,
 				} )
+
+				if ( el.getAttribute( 'id' ) ) {
+					elsAnchors[ el.getAttribute( 'id' ) ] = el
+				}
 				el._StackableHasInitAccordion = true
 			}
 		} )
+
+		// Add window event listener only when there are accordion anchors
+		if ( Object.keys( elsAnchors ).length ) {
+			// eslint-disable-next-line @wordpress/no-global-event-listener
+			window.addEventListener( 'hashchange', () => {
+				const hash = window.location.hash.slice( 1 )
+				if ( hash in elsAnchors ) {
+					elsAnchors[ hash ].setAttribute( 'open', '' )
+				}
+			} )
+		}
 
 		const addWrapperHack = el => {
 			// wrap el with div if it is inside a columns block
