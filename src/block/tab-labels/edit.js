@@ -60,12 +60,15 @@ import { cloneDeep, kebabCase } from 'lodash'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	useRef, useCallback, createRef, useEffect, useState,
+	useRef, useCallback, createRef,
 } from '@wordpress/element'
 import { dispatch, useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { BlockControls } from '@wordpress/block-editor'
-import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
+import {
+	ToolbarGroup, ToolbarButton,
+	BaseControl as GutBaseControl,
+} from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 
 // These are the style names (in block-styles.js) that are only available if the
@@ -272,29 +275,6 @@ const Edit = props => {
 		// Change the active tab
 		setActiveTab( newIndex + 1 )
 	}
-
-	const [ tabLabels, setTabLabels ] = useState( props.attributes.tabLabels )
-
-	useEffect( () => {
-		let timeout
-		if ( tabLabels !== props.attributes.tabLabels ) {
-			timeout = setTimeout( () => {
-				const updatedLabels = cloneDeep( tabLabels )
-				for ( let i = 0; i < updatedLabels.length; i++ ) {
-					updatedLabels[ i ].anchor = kebabCase( updatedLabels[ i ].anchor )
-				}
-				setAttributes( { tabLabels: updatedLabels } )
-			}, 300 )
-		}
-
-		return () => clearTimeout( timeout )
-	}, [ tabLabels ] )
-
-	useEffect( () => {
-		if ( tabLabels !== props.attributes.tabLabels ) {
-			setTabLabels( props.attributes.tabLabels )
-		}
-	}, [ props.attributes.tabLabels ] )
 
 	// Filter the available styles depending on the context.
 	const blockStyles = _blockStyles.map( style => {
@@ -623,6 +603,7 @@ const Edit = props => {
 							title={ __( 'Tab Anchors', i18n ) }
 							id="tabAnchors"
 						>
+							<GutBaseControl help={ __( "Note: Assign unique anchor names to each tab so you'll be able to link directly and open each one.", i18n ) } />
 							{ props.attributes.tabLabels.map( ( tab, index ) => (
 								<AdvancedTextControl
 									label={ sprintf(
@@ -631,13 +612,19 @@ const Edit = props => {
 										// eslint-disable-next-line @wordpress/i18n-no-variables
 										__( tab.label, i18n )
 									) }
-									value={ tabLabels[ index ].anchor }
-									placeholder="Tab Anchor"
+									value={ props.attributes.tabLabels[ index ].anchor }
+									placeholder={ __( 'Tab Anchor', i18n ) }
 									key={ `tab-anchors-${ index }` }
 									onChange={ value => {
 										const updatedLabels = cloneDeep( props.attributes.tabLabels )
 										updatedLabels[ index ].anchor = value
-										setTabLabels( updatedLabels )
+										setAttributes( { tabLabels: updatedLabels } )
+									} }
+									onBlur={ () => {
+										const updatedLabels = cloneDeep( props.attributes.tabLabels )
+										updatedLabels[ index ].anchor = kebabCase( updatedLabels[ index ].anchor )
+										dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
+										setAttributes( { tabLabels: updatedLabels } )
 									} }
 								/>
 							) ) }
