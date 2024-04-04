@@ -16,8 +16,8 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { addFilter } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 
-addFilter( 'stackable.video-popup.save.div.content', 'stackable/3.12.12', ( output, props, contentClassNames ) => {
-	if ( semverCompare( props.version, '<', '3.12.12' ) ) {
+addFilter( 'stackable.video-popup.save.div.content', 'stackable/3.12.14', ( output, props, contentClassNames ) => {
+	if ( semverCompare( props.version, '<', '3.12.14' ) ) {
 		return (
 			<button className={ contentClassNames } aria-label={ props.attributes.ariaLabel || __( 'Play Video', i18n ) }>
 				<InnerBlocks.Content />
