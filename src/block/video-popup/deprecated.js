@@ -29,8 +29,8 @@ addFilter( 'stackable.video-popup.save.div.content', 'stackable/3.12.12', ( outp
 
 const deprecated = [
 	{
-		attributes: attributes( '3.12.12' ),
-		save: withVersion( '3.12.12' )( Save ),
+		attributes: attributes( '3.12.14' ),
+		save: withVersion( '3.12.14' )( Save ),
 	},
 	{
 		// Support the new shadow color.
