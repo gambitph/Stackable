@@ -85,6 +85,17 @@ class _StackableCarousel {
 				return this.sliderEl.appendChild( node )
 			} )
 
+			this.clones.forEach( ( node, i ) => {
+				node.addEventListener( 'click', e => {
+					const blockId = e.target.closest( '[data-block-id]' ).getAttribute( 'data-block-id' )
+					const classList = Array.from( e.target.classList ).map( c => `.${ c }` ).join( '' )
+
+					// this.clones are the original slides if the clones are currently in view.
+					// Manually trigger the click event on the original slides.
+					this.clones[ i ].querySelector( `[data-block-id="${ blockId }"] ${ classList }` ).click()
+				} )
+			} )
+
 			// Scroll without animation to the first slide
 			this.sliderEl.style.scrollBehavior = 'unset'
 			this.sliderEl.scrollLeft = this.slideEls[ 0 ].offsetLeft
