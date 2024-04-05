@@ -16,7 +16,6 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	InspectorAdvancedControls,
-	AdvancedTextControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
