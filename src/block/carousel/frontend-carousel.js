@@ -85,6 +85,8 @@ class _StackableCarousel {
 				return this.sliderEl.appendChild( node )
 			} )
 
+			// event listeners are not included when DOM elements are cloned,
+			// so we need manually trigger the click event on the original slides
 			this.clones.forEach( ( node, i ) => {
 				node.addEventListener( 'click', e => {
 					const blockId = e.target.closest( '[data-block-id]' ).getAttribute( 'data-block-id' )
