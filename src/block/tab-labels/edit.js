@@ -625,11 +625,17 @@ const Edit = props => {
 										const updatedLabels = cloneDeep( tabLabels )
 										updatedLabels[ index ].anchor = value
 										setTabLabels( updatedLabels )
+
+										if ( ! value ) {
+											setAttributes( { tabLabels: updatedLabels } )
+										}
 									} }
 									onBlur={ () => {
 										const updatedLabels = tabLabels
-										updatedLabels[ index ].anchor = kebabCase( updatedLabels[ index ].anchor )
-										setAttributes( { tabLabels: updatedLabels } )
+										if ( updatedLabels[ index ].anchor ) {
+											updatedLabels[ index ].anchor = kebabCase( updatedLabels[ index ].anchor )
+											setAttributes( { tabLabels: updatedLabels } )
+										}
 									} }
 								/>
 							) ) }
