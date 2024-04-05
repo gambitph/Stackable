@@ -60,7 +60,7 @@ import { cloneDeep, kebabCase } from 'lodash'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	useRef, useCallback, createRef,
+	useRef, useCallback, createRef, useState, useEffect,
 } from '@wordpress/element'
 import { dispatch, useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
@@ -289,6 +289,12 @@ const Edit = props => {
 			disabled,
 		}
 	} )
+
+	const [ tabLabels, setTabLabels ] = useState( props.attributes.tabLabels )
+
+	useEffect( () => {
+		setTabLabels( props.attributes.tabLabels )
+	}, [ props.attributes.tabLabels ] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -604,7 +610,7 @@ const Edit = props => {
 							id="tabAnchors"
 						>
 							<GutBaseControl help={ __( "Assign unique anchor names to each tab so you'll be able to link directly and open each one.", i18n ) } />
-							{ props.attributes.tabLabels.map( ( tab, index ) => (
+							{ tabLabels.map( ( tab, index ) => (
 								<AdvancedTextControl
 									label={ sprintf(
 									// Translators: %s is the tab label.
@@ -612,18 +618,17 @@ const Edit = props => {
 										// eslint-disable-next-line @wordpress/i18n-no-variables
 										__( tab.label, i18n )
 									) }
-									value={ props.attributes.tabLabels[ index ].anchor }
+									value={ tabLabels[ index ].anchor }
 									placeholder={ __( 'Tab Anchor', i18n ) }
 									key={ `tab-anchors-${ index }` }
 									onChange={ value => {
-										const updatedLabels = cloneDeep( props.attributes.tabLabels )
+										const updatedLabels = cloneDeep( tabLabels )
 										updatedLabels[ index ].anchor = value
-										setAttributes( { tabLabels: updatedLabels } )
+										setTabLabels( updatedLabels )
 									} }
 									onBlur={ () => {
-										const updatedLabels = cloneDeep( props.attributes.tabLabels )
+										const updatedLabels = tabLabels
 										updatedLabels[ index ].anchor = kebabCase( updatedLabels[ index ].anchor )
-										dispatch( 'core/block-editor' ).__unstableMarkNextChangeAsNotPersistent()
 										setAttributes( { tabLabels: updatedLabels } )
 									} }
 								/>
