@@ -159,7 +159,7 @@ const Edit = props => {
 
 					<Alignment.InspectorControls />
 					<BlockDiv.InspectorControls />
-					<Advanced.InspectorControls allowCustomAnchor={ true } />
+					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
 					<CustomAttributes.InspectorControls />

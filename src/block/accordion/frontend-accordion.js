@@ -118,8 +118,16 @@ class StackableAccordion {
 				}
 
 				// If the accordion has an anchor ID, update the URL hash.
-				if ( el.open && el.getAttribute( 'id' ) ) {
-					window.location.hash = el.getAttribute( 'id' )
+				if ( el.open && el.getAttribute( 'id' ) && window.location.hash !== el.getAttribute( 'id' ) ) {
+					// use history API to update the URL hash without scrolling the page
+					history.pushState( {}, '', `#${ el.getAttribute( 'id' ) }` )
+				}
+
+				// If accordion is closed, remove the URL hash because if accordion is closed and the URL hash matches the ID,
+				// the accordion won't open if an anchor linked to the accordion was clicked.
+				if ( ! el.hasAttribute( 'open' ) && el.getAttribute( 'id' ) &&
+					window.location.hash === `#${ el.getAttribute( 'id' ) }` ) {
+					history.pushState( {}, '', window.location.href.replace( `#${ el.getAttribute( 'id' ) }`, '' ) )
 				}
 			} )
 		} )
@@ -153,6 +161,12 @@ class StackableAccordion {
 					elsAnchors[ hash ].setAttribute( 'open', '' )
 				}
 			} )
+
+			// Opens the accordion on first load when there is a hash in the URL.
+			const hash = window.location.hash.slice( 1 )
+			if ( hash in elsAnchors ) {
+				elsAnchors[ hash ].setAttribute( 'open', '' )
+			}
 		}
 
 		const addWrapperHack = el => {
