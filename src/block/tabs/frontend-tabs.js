@@ -1,3 +1,4 @@
+/* eslint-disable @wordpress/no-global-event-listener */
 /**
  * WordPress dependencies
  */
@@ -9,6 +10,7 @@ class _StackableTabs {
 		this.parentEl = el
 		this.getDefaultState()
 		this.initTabs()
+		this.initWindowEventListeners()
 	}
 
 	getDefaultState = () => {
@@ -27,7 +29,7 @@ class _StackableTabs {
 		Array.from( this.tabs ).forEach( ( tab, index, tabs ) => {
 			let isCustomAnchor = true
 			if ( tab.getAttribute( 'id' ) ) {
-				this.customTabAnchors[ tab.getAttribute( 'id' ) ] = index + 1
+				this.customTabAnchors[ tab.getAttribute( 'id' ) ] = { index: index + 1, tab }
 			} else {
 				tab.setAttribute( 'id', `stk-block-tab-label-${ this.uniqueId }-${ index + 1 }` )
 				isCustomAnchor = false
@@ -50,8 +52,9 @@ class _StackableTabs {
 			// Add the click event.
 			tab.addEventListener( 'click', () => {
 				this.changeTab( index + 1 )
-				if ( isCustomAnchor ) {
-					window.location.hash = tab.getAttribute( 'id' )
+				if ( isCustomAnchor && window.location.hash !== `#${ tab.getAttribute( 'id' ) }` ) {
+					// Update URL hash without scrolling
+					history.pushState( {}, '', `#${ tab.getAttribute( 'id' ) }` )
 				}
 			} )
 		} )
@@ -97,12 +100,6 @@ class _StackableTabs {
 				e.preventDefault()
 			}
 		} )
-
-		// Add window event listener only when there are custom tab anchors
-		if ( Object.keys( this.customTabAnchors ).length ) {
-			// eslint-disable-next-line @wordpress/no-global-event-listener
-			window.addEventListener( 'hashchange', this.onHashChange )
-		}
 	}
 
 	changeTab = tabIndex => {
@@ -132,13 +129,25 @@ class _StackableTabs {
 		this.activeTab = tabIndex
 	}
 
-	onHashChange = () => {
-		// Get hash without the # symbol
-		const hash = window.location.hash.slice( 1 )
+	initWindowEventListeners = () => {
+		// Add window event listener only when there are custom tab anchors
+		if ( Object.keys( this.customTabAnchors ).length ) {
+			// Change the active tab on hash change
+			window.addEventListener( 'hashchange', () => {
+			// Get hash without the # symbol
+				const hash = window.location.hash.slice( 1 )
+				if ( hash in this.customTabAnchors ) {
+					this.changeTab( this.customTabAnchors[ hash ].index )
+				}
+			} )
 
-		// Change the active tab
-		if ( hash in this.customTabAnchors ) {
-			this.changeTab( this.customTabAnchors[ hash ] )
+			// Allows scrolling to tab on page load
+			window.addEventListener( 'beforeunload', () => {
+				const hash = window.location.hash.slice( 1 )
+				if ( hash in this.customTabAnchors ) {
+					this.customTabAnchors[ hash ].tab.scrollIntoView()
+				}
+			} )
 		}
 	}
 }
