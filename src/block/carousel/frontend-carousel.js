@@ -85,25 +85,13 @@ class _StackableCarousel {
 				return this.sliderEl.appendChild( node )
 			} )
 
-			// event listeners are not included when DOM elements are cloned,
-			// so we need manually trigger the click event on the original slides
-			this.clones.forEach( ( node, i ) => {
-				node.addEventListener( 'click', e => {
-					const blockId = e.target.closest( '[data-block-id]' ).getAttribute( 'data-block-id' )
-					const classList = Array.from( e.target.classList ).map( c => `.${ c }` ).join( '' )
-
-					// this.clones are the original slides if the clones are currently in view.
-					// Manually trigger the click event on the original slides.
-					this.clones[ i ].querySelector( `[data-block-id="${ blockId }"] ${ classList }` ).click()
-				} )
-			} )
-
 			// Scroll without animation to the first slide
 			this.sliderEl.style.scrollBehavior = 'unset'
 			this.sliderEl.scrollLeft = this.slideEls[ 0 ].offsetLeft
 			this.sliderEl.style.scrollBehavior = ''
 
 			this.currentSlide = 1
+			this.swappedSlides = 0
 		}
 
 		this.updateDots()
@@ -202,11 +190,15 @@ class _StackableCarousel {
 		return maxSlides
 	}
 
+	needToSwapCount = slide => {
+		return this.slidesToShow - ( this.slideEls.length - slide + 1 )
+	}
+
 	nextSlide = () => {
 		let newSlide = this.currentSlide + 1
 
-		if ( this.infiniteScroll && newSlide > this.slideEls.length ) {
-			this.swapSlides( 'N' )
+		if ( this.infiniteScroll && newSlide > this.maxSlides() ) {
+			this.swapSlides( newSlide, 'N' )
 			return
 		}
 
@@ -219,8 +211,9 @@ class _StackableCarousel {
 	prevSlide = () => {
 		let newSlide = this.currentSlide - 1
 
-		if ( this.infiniteScroll && newSlide < this.slideOffset ) {
-			this.swapSlides( 'P' )
+		if ( this.infiniteScroll &&
+			( newSlide < this.slideOffset || this.needToSwapCount( newSlide ) >= 0 ) ) {
+			this.swapSlides( newSlide, 'P' )
 			return
 		}
 
@@ -230,30 +223,48 @@ class _StackableCarousel {
 		this.goToSlide( newSlide )
 	}
 
-	swapSlides = dir => {
-		let slide
-		if ( dir === 'N' ) {
-			// Move slides to the end of the slider
-			const slidesToMove = [ this.clones[ this.clones.length - 1 ], ...this.slideEls.slice( 0, -1 ) ]
-			slidesToMove.map( node => this.sliderEl.appendChild( node ) )
-			slide = 1
-		} else {
-			// Move slides to the start of the slider
-			const slidesToMove = [ this.slideEls[ this.slideEls.length - 1 ], ...this.clones.slice( 0, -1 ) ].reverse()
-			slidesToMove.map( node => this.sliderEl.insertBefore( node, this.sliderEl.firstChild ) )
+	swapSlides = ( slide, dir ) => {
+		let setScrollToClone = false
+		if ( dir === 'N' && slide > this.slideEls.length ) {
+			slide = this.slideOffset
+			setScrollToClone = true
+		} else if ( dir === 'P' && slide < this.slideOffset ) {
 			slide = this.slideEls.length
+			setScrollToClone = true
 		}
 
-		// Removes the class from the previous active slide before switching slideEls and clones
-		this.slideEls[ this.currentSlide - 1 ].classList.remove( 'stk-block-carousel__slide--active' )
-		const tempSlideEls = [ ...this.slideEls ]
+		const needToSwap = this.needToSwapCount( slide )
+		if ( needToSwap > 0 && this.swappedSlides < needToSwap ) {
+			// swap original and clone slides
+			const original = [ ...this.slideEls.slice( this.swappedSlides, needToSwap ) ]
+			const clones = [ ...this.clones.slice( this.swappedSlides, needToSwap ) ]
 
-		this.slideEls = [ ...this.clones ]
-		this.clones = tempSlideEls
+			original.map( node => this.sliderEl.insertBefore( node, this.clones[ needToSwap ] ) )
+			clones.map( node => this.sliderEl.insertBefore( node, this.slideEls[ needToSwap ] ) )
+			this.swappedSlides = needToSwap
+		} else if ( needToSwap > 0 && this.swappedSlides > needToSwap ) {
+			// unswap original and clone slides that are not needed
+			const original = [ ...this.slideEls.slice( needToSwap, this.swappedSlides ) ]
+			const clones = [ ...this.clones.slice( needToSwap, this.swappedSlides ) ]
+			original.map( node => this.sliderEl.insertBefore( node, this.slideEls[ this.swappedSlides ] ) )
+			clones.map( node => this.sliderEl.insertBefore( node, this.clones[ this.swappedSlides ] ) )
+			this.swappedSlides = needToSwap
+		} else if ( needToSwap <= 0 ) {
+			// unswap original and clone slides
+			const original = [ ...this.slideEls.slice( 0, this.swappedSlides ) ]
+			const clones = [ ...this.clones.slice( 0, this.swappedSlides ) ]
+			original.map( node => this.sliderEl.insertBefore( node, this.slideEls[ this.swappedSlides ] ) )
+			clones.map( node => this.sliderEl.insertBefore( node, this.clones[ this.swappedSlides ] ) )
+			this.swappedSlides = 0
+		}
 
-		this.sliderEl.style.scrollBehavior = 'unset'
-		this.sliderEl.scrollLeft = this.clones[ this.currentSlide - 1 ].offsetLeft
-		this.sliderEl.style.scrollBehavior = ''
+		if ( setScrollToClone ) {
+			this.sliderEl.style.scrollBehavior = 'unset'
+			this.sliderEl.scrollLeft = dir === 'N'
+				? this.clones[ this.currentSlide - 1 ].offsetLeft
+				: this.slideEls[ this.currentSlide - 1 ].offsetLeft
+			this.sliderEl.style.scrollBehavior = ''
+		}
 
 		setTimeout( () => {
 			this.goToSlide( slide )
