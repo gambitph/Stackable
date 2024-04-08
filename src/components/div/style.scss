@@ -1,5 +1,6 @@
 // Background overlay. Any block / item that has a background/gradient/overlay should have this class.
-.stk--has-background-overlay {
+.stk--has-background-overlay,
+.stk-block.stk--has-background-overlay {
 	position: relative;
 	z-index: 1;
 	background-size: cover;
