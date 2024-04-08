@@ -242,20 +242,14 @@ class _StackableCarousel {
 			original.map( node => this.sliderEl.insertBefore( node, this.clones[ needToSwap ] ) )
 			clones.map( node => this.sliderEl.insertBefore( node, this.slideEls[ needToSwap ] ) )
 			this.swappedSlides = needToSwap
-		} else if ( needToSwap > 0 && this.swappedSlides > needToSwap ) {
+		} else if ( this.swappedSlides > needToSwap ) {
 			// unswap original and clone slides that are not needed
-			const original = [ ...this.slideEls.slice( needToSwap, this.swappedSlides ) ]
-			const clones = [ ...this.clones.slice( needToSwap, this.swappedSlides ) ]
+			const _needToSwap = needToSwap > 0 ? needToSwap : 0
+			const original = [ ...this.slideEls.slice( _needToSwap, this.swappedSlides ) ]
+			const clones = [ ...this.clones.slice( _needToSwap, this.swappedSlides ) ]
 			original.map( node => this.sliderEl.insertBefore( node, this.slideEls[ this.swappedSlides ] ) )
 			clones.map( node => this.sliderEl.insertBefore( node, this.clones[ this.swappedSlides ] ) )
-			this.swappedSlides = needToSwap
-		} else if ( needToSwap <= 0 ) {
-			// unswap original and clone slides
-			const original = [ ...this.slideEls.slice( 0, this.swappedSlides ) ]
-			const clones = [ ...this.clones.slice( 0, this.swappedSlides ) ]
-			original.map( node => this.sliderEl.insertBefore( node, this.slideEls[ this.swappedSlides ] ) )
-			clones.map( node => this.sliderEl.insertBefore( node, this.clones[ this.swappedSlides ] ) )
-			this.swappedSlides = 0
+			this.swappedSlides = _needToSwap
 		}
 
 		if ( setScrollToClone ) {
