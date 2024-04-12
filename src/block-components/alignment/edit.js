@@ -21,12 +21,11 @@ import {
 import {
 	AlignmentToolbar,
 	BlockControls,
-	useBlockEditContext,
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
-import { select } from '@wordpress/data'
+import { select, useSelect } from '@wordpress/data'
 
 const ALIGN_OPTIONS = [
 	{
@@ -356,10 +355,11 @@ export const Edit = props => {
 // Add additional classes when browser is Firefox to fix alignment
 const userAgent = navigator?.userAgent
 if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
-	addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', classes => {
-		// use WP's block edit context since our useBlockContext might still be updating when a block is removed
-		const blockProps = useBlockEditContext()
-		const { innerBlocks } = select( 'core/block-editor' ).getBlock( blockProps.clientId )
+	addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', ( classes, props ) => {
+		// Use WP's block edit context since our useBlockContext might still be updating when a block is removed
+		const innerBlocks = useSelect( select => {
+			return select( 'core/block-editor' ).getBlock( props.clientId )?.innerBlocks || []
+		}, [ props.clientId ] )
 
 		if ( innerBlocks.length > 0 ) {
 			for ( let i = 0; i < innerBlocks.length; i++ ) {
