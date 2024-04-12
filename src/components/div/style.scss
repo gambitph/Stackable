@@ -14,7 +14,7 @@
 		bottom: 0;
 		z-index: 2;
 	}
-	> * {
+	> *:not(.stk-video-background) {
 		position: relative;
 		z-index: 3;
 	}
