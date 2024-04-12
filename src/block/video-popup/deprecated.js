@@ -2,12 +2,36 @@ import { Save } from './save'
 import { attributes } from './schema'
 
 import { withVersion } from '~stackable/higher-order'
+import { semverCompare } from '~stackable/util'
+import { i18n } from 'stackable'
 import {
 	deprecateBlockBackgroundColorOpacity, deprecateContainerBackgroundColorOpacity,
 	deprecateBlockShadowColor, deprecateContainerShadowColor,
 } from '~stackable/block-components'
 
+/**
+ * WordPress dependencies
+ */
+import { InnerBlocks } from '@wordpress/block-editor'
+import { addFilter } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
+
+addFilter( 'stackable.video-popup.save.div.content', 'stackable/3.12.14', ( output, props, contentClassNames ) => {
+	if ( semverCompare( props.version, '<', '3.12.14' ) ) {
+		return (
+			<button className={ contentClassNames } aria-label={ props.attributes.ariaLabel || __( 'Play Video', i18n ) }>
+				<InnerBlocks.Content />
+			</button>
+		)
+	}
+	return output
+} )
+
 const deprecated = [
+	{
+		attributes: attributes( '3.12.14' ),
+		save: withVersion( '3.12.14' )( Save ),
+	},
 	{
 		// Support the new shadow color.
 		attributes: attributes( '3.12.11' ),
