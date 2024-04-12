@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.2
 Tested up to: 6.5
 Requires PHP: 7.3
-Stable tag: 3.12.14
+Stable tag: 3.12.15
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.15 =
+* New: Tabs Block - added new option to set anchor links per tab that you can use to open each tab #3124
+* New: Accordion Block - added support for anchor links that you can use to open each accordion block #3136
+* Fixed: Accordion Block - now shows gradient colors with the correct z-index #3138
+* Fixed: Accordion Block - removed video background option since it's not supported by browsers #3138
+* Fixed: Metabox Settings - now shows properly other options registered in settings pages #335
+* Fixed: Video Popup Block - prevent theme from adding button styles to the video popup #3121
+* Fixed: Carousel Block - no longer clones slides when the screen is resized #3132
+* Fixed: Carousel Block - DOM events now work correctly in slides when infinite scrolling is enabled #3137
+* Fixed: Columns Block - block error when deleting a block in Firefox #3148
 
 = 3.12.14 =
 * Fixed: Table of Contents Block - WordPress 6.5 compatibility in the Site Editor #3133
