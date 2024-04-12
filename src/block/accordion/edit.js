@@ -156,7 +156,7 @@ const Edit = props => {
 					</InspectorStyleControls>
 
 					<Alignment.InspectorControls />
-					<BlockDiv.InspectorControls />
+					<BlockDiv.InspectorControls backgroundMediaAllowVideo={ false } />
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 					<EffectsAnimations.InspectorControls />
