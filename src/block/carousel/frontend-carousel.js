@@ -72,7 +72,7 @@ class _StackableCarousel {
 			}
 		}
 
-		if ( this.infiniteScroll ) {
+		if ( this.infiniteScroll && ! this.el._StackableHasInitCarousel ) {
 			// clone slides
 			this.clones = this.slideEls.map( node => node.cloneNode( true ) )
 
