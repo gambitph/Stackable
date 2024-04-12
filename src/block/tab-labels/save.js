@@ -65,6 +65,7 @@ export const Save = props => {
 							className="stk-block-tabs__tab"
 							role="tab"
 							key={ index }
+							id={ props.attributes.tabLabels[ index ].anchor ?? undefined }
 						>
 							{ props.attributes.showIcon && (
 								<Icon.Content

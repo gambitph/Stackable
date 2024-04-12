@@ -34,6 +34,8 @@ import classnames from 'classnames'
 import {
 	InspectorTabs,
 	InspectorLayoutControls,
+	InspectorAdvancedControls,
+	AdvancedTextControl,
 	AdvancedToggleControl,
 	AdvancedRangeControl,
 	InspectorStyleControls,
@@ -51,19 +53,22 @@ import {
 	withQueryLoopContext,
 } from '~stackable/higher-order'
 import { getBlockStyle } from '~stackable/hooks'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, kebabCase } from 'lodash'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import {
-	useRef, useCallback, createRef,
+	useRef, useCallback, createRef, useState, useEffect,
 } from '@wordpress/element'
 import { dispatch, useSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 import { BlockControls } from '@wordpress/block-editor'
-import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
+import {
+	ToolbarGroup, ToolbarButton,
+	BaseControl as GutBaseControl,
+} from '@wordpress/components'
 import { getBlockFromExample } from '@wordpress/blocks'
 
 // These are the style names (in block-styles.js) that are only available if the
@@ -284,6 +289,12 @@ const Edit = props => {
 			disabled,
 		}
 	} )
+
+	const [ tabLabels, setTabLabels ] = useState( props.attributes.tabLabels )
+
+	useEffect( () => {
+		setTabLabels( props.attributes.tabLabels )
+	}, [ props.attributes.tabLabels ] )
 
 	const blockClassNames = classnames( [
 		className,
@@ -592,6 +603,46 @@ const Edit = props => {
 					</InspectorStyleControls>
 
 					<BlockDiv.InspectorControls />
+
+					<InspectorAdvancedControls>
+						<PanelAdvancedSettings
+							title={ __( 'Tab Anchors', i18n ) }
+							id="tabAnchors"
+						>
+							<GutBaseControl help={ __( "Assign unique anchor names to each tab so you'll be able to link directly and open each one.", i18n ) } />
+							{ tabLabels.map( ( tab, index ) => (
+								<AdvancedTextControl
+									label={ sprintf(
+									// Translators: %s is the tab label.
+										__( '%s Anchor', i18n ),
+										// eslint-disable-next-line @wordpress/i18n-no-variables
+										__( tab.label, i18n )
+									) }
+									value={ tabLabels[ index ].anchor }
+									placeholder={ __( 'Tab Anchor', i18n ) }
+									key={ `tab-anchors-${ index }` }
+									onChange={ value => {
+										const updatedLabels = cloneDeep( tabLabels )
+										updatedLabels[ index ].anchor = value
+										setTabLabels( updatedLabels )
+
+										if ( ! value ) {
+											setAttributes( { tabLabels: updatedLabels } )
+										}
+									} }
+									onBlur={ () => {
+										const updatedLabels = tabLabels
+										if ( updatedLabels[ index ].anchor ) {
+											updatedLabels[ index ].anchor = kebabCase( updatedLabels[ index ].anchor )
+											setAttributes( { tabLabels: updatedLabels } )
+										}
+									} }
+								/>
+							) ) }
+
+						</PanelAdvancedSettings>
+					</InspectorAdvancedControls>
+
 					<Advanced.InspectorControls />
 					<Transform.InspectorControls />
 
