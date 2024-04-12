@@ -13,7 +13,6 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 	useDeviceType,
-	useBlockContext,
 } from '~stackable/hooks'
 
 /**
@@ -22,6 +21,7 @@ import {
 import {
 	AlignmentToolbar,
 	BlockControls,
+	useBlockEditContext,
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
@@ -357,12 +357,12 @@ export const Edit = props => {
 const userAgent = navigator?.userAgent
 if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
 	addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', classes => {
-		const {
-			hasInnerBlocks, numInnerBlocks, innerBlocks,
-		} = useBlockContext()
+		// use WP's block edit context since our useBlockContext might still be updating when a block is removed
+		const blockProps = useBlockEditContext()
+		const { innerBlocks } = select( 'core/block-editor' ).getBlock( blockProps.clientId )
 
-		if ( hasInnerBlocks ) {
-			for ( let i = 0; i < numInnerBlocks; i++ ) {
+		if ( innerBlocks.length > 0 ) {
+			for ( let i = 0; i < innerBlocks.length; i++ ) {
 				const innerBlockClientId = innerBlocks[ i ].clientId
 				const { blockMargin } = select( 'core/block-editor' ).getBlockAttributes( innerBlockClientId )
 				if ( blockMargin && ( blockMargin.top === 'auto' || blockMargin.bottom === 'auto' ) ) {
