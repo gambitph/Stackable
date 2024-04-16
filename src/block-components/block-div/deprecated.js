@@ -1,4 +1,4 @@
-import { deprecationBackgrounColorOpacity } from '../helpers'
+import { deprecationBackgrounColorOpacity, deprecateShadowColor } from '../helpers'
 
 import { addFilter } from '@wordpress/hooks'
 import { semverCompare } from '~stackable/util'
@@ -27,5 +27,14 @@ export const deprecateBlockBackgroundColorOpacity = {
 	},
 	migrate: attributes => {
 		return deprecationBackgrounColorOpacity.migrate( 'block%s' )( attributes )
+	},
+}
+
+export const deprecateBlockShadowColor = {
+	isEligible: attributes => {
+		return deprecateShadowColor.isEligible( 'block%s' )( attributes )
+	},
+	migrate: attributes => {
+		return deprecateShadowColor.migrate( 'block%s' )( attributes )
 	},
 }

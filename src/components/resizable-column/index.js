@@ -54,6 +54,7 @@ const ResizableColumn = props => {
 
 	// Block context is provided from the parent Columns block.
 	const allowResize = ! props.context[ 'stackable/innerBlockOrientation' ]
+	const columnWrapDesktop = !! props.context[ 'stackable/columnWrapDesktop' ]
 
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
@@ -94,6 +95,12 @@ const ResizableColumn = props => {
 		}
 	}, [ adjacentBlocks ] )
 
+	useEffect( () => {
+		if ( parentBlock && isDesktop && ! columnWrapDesktop ) {
+			fixWidthOnDisableWrap()
+		}
+	}, [ columnWrapDesktop ] )
+
 	// We have a timeout below, this ensures that our timeout only runs while
 	// this Component is mounted.
 	const [ isMounted, setIsMounted ] = useState( false )
@@ -116,9 +123,9 @@ const ResizableColumn = props => {
 
 	const enable = {
 		top: false,
-		right: deviceType === 'Desktop' ? ! isOnlyBlock && ! isLastBlock : ! isOnlyBlock,
+		right: deviceType === 'Desktop' ? ! isOnlyBlock && ( ! isLastBlock || columnWrapDesktop ) : ! isOnlyBlock,
 		bottom: false,
-		left: deviceType === 'Desktop' ? ! isOnlyBlock && ! isFirstBlock : false,
+		left: deviceType === 'Desktop' ? ! isOnlyBlock && ! isFirstBlock && ! columnWrapDesktop : false,
 		topRight: false,
 		bottomRight: false,
 		bottomLeft: false,
@@ -147,7 +154,7 @@ const ResizableColumn = props => {
 		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
 
 		// In desktop, get all the column widths.
-		if ( isDesktop ) {
+		if ( isDesktop && ! columnWrapDesktop ) {
 			// In desktop, the column gaps will affect the width of the parent column, take it into account.
 			const totalColumnGap = parentColumnGaps.desktop * ( adjacentBlocks.length - 1 )
 
@@ -203,7 +210,7 @@ const ResizableColumn = props => {
 		const adjacentBlocks = _adjacentBlocks.current
 
 		// In desktop, when one column is resized, the next column is adjusted also.
-		if ( isDesktop ) {
+		if ( isDesktop && ! columnWrapDesktop ) {
 			// Compute for the new widths.
 			const columnWidths = [ ...currentWidths ]
 			const totalWidth = currentWidths.reduce( ( a, b ) => a + b, 0 )
@@ -292,7 +299,7 @@ const ResizableColumn = props => {
 
 		// Update the block widths.
 		if ( delta.width ) {
-			if ( isDesktop ) {
+			if ( isDesktop && ! columnWrapDesktop ) {
 				// For even 3-columns, floats have a tendency of being
 				// unequal, e.g. 33.35 or 33.43, assume to be equal.
 				if ( isEqual( newWidthsPercent.map( n => n | 0 ), [ 33, 33, 33 ] ) ) { // eslint-disable-line no-bitwise
@@ -300,6 +307,13 @@ const ResizableColumn = props => {
 				} else {
 					props.onChangeDesktop( newWidthsPercent )
 				}
+			} else if ( isDesktop ) {
+				const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
+					return attributes.columnWidth || 100 / adjacentBlocks.length
+				} )
+				columnWidths[ blockIndex ] = newWidthsPercent
+
+				props.onChangeDesktopWrap( newWidthsPercent, columnWidths, blockIndex )
 			} else if ( isTablet ) {
 				// Get the current column widths for tablet.
 				const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
@@ -342,7 +356,7 @@ const ResizableColumn = props => {
 		const adjacentBlocks = parentBlock.innerBlocks
 
 		// For desktop, column adjustments also affect the adjacent column.
-		if ( isDesktop ) {
+		if ( isDesktop && ! columnWrapDesktop ) {
 			// Get the current column widths.
 			const isFirstResize = adjacentBlocks.every( ( { attributes } ) => ! attributes.columnWidth )
 			const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
@@ -365,6 +379,17 @@ const ResizableColumn = props => {
 			columnWidths[ blockIndex ] = finalWidth
 
 			props.onChangeDesktop( columnWidths )
+		} else if ( isDesktop ) {
+			// Get the current column widths.
+			const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
+				return attributes.columnWidth || 100 / adjacentBlocks.length
+			} )
+
+			const finalWidth = width ? clamp( width, MIN_COLUMN_WIDTH_PERCENTAGE[ deviceType ], 100 ) : ''
+
+			columnWidths[ blockIndex ] = finalWidth
+
+			props.onChangeDesktopWrap( finalWidth, columnWidths, blockIndex )
 		} else if ( isTablet ) {
 			// Get the current column widths.
 			const columnWidths = adjacentBlocks.map( ( { attributes } ) => {
@@ -389,6 +414,29 @@ const ResizableColumn = props => {
 			columnWidths[ blockIndex ] = finalWidth
 
 			props.onChangeMobile( finalWidth, columnWidths, blockIndex )
+		}
+	}
+
+	const fixWidthOnDisableWrap = () => {
+		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
+
+		let totalPercentages = 0
+		const columnPercentages = adjacentBlocks.map( ( { attributes } ) => {
+			totalPercentages += attributes.columnWidth
+			return attributes.columnWidth
+		} )
+
+		// Update the last column width to make it 100%
+		// if the columnWidth of adjacent blocks is set and the total percentage is less than 100
+		if ( totalPercentages < 100 && totalPercentages > 0 ) {
+			columnPercentages[ columnPercentages.length - 1 ] += ( 100 - totalPercentages )
+
+			if ( isEqual( columnPercentages.map( n => n | 0 ), [ 33, 33, 33 ] ) ) { // eslint-disable-line no-bitwise
+				props.onChangeDesktop( [ 33.33, 33.33, 33.33 ] )
+			} else {
+				props.onChangeDesktop( columnPercentages )
+			}
 		}
 	}
 

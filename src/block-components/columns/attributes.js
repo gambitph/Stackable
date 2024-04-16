@@ -17,6 +17,10 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
+			columnWrapDesktop: { // Only applies to desktops
+				type: 'boolean',
+				default: false,
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

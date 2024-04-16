@@ -7,3 +7,13 @@
 		display: none;
 	}
 }
+
+.ugb-panel--countdown .components-datetime__date {
+	:last-child {
+		row-gap: 8px;
+		column-gap: 4px;
+		div:nth-of-type(7) {
+			justify-self: auto;
+		}
+	}
+}

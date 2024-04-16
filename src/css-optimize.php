@@ -131,6 +131,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 					$styles_only[] = $block_style[1];
 				}
 			}
+
 			$optimized_css = count( $styles_only ) ? self::generate_css( $styles_only ) : '';
 
 			// Save the optimized CSS to the post if it changed.
@@ -187,6 +188,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 						}
 
 						// Add the styles to our list of styles to optimize.
+						// Add only the css inside the style tag to minimize memory usage.
 						$all_block_styles[] = array(
 							$styles[0][ $i ],
 							$styles[1][ $i ],
@@ -293,8 +295,14 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 							$css_to_strip = $this->css_raw[ $unique_id ];
 							foreach ( $css_to_strip as $style ) {
 								// $style[0] - contains the whole style tag.
-								if ( stripos( $block_content, $style[0] ) !== false ) {
-									$block_content = str_replace( $style[0], '', $block_content );
+								if ( is_array( $style ) ) {
+									if ( stripos( $block_content, $style[0] ) !== false ) {
+										$block_content = str_replace( $style[0], '', $block_content );
+									}
+								} else if ( is_string( $style ) ) {
+									if ( stripos( $block_content, '<style>' . $style . '</style>' ) !== false ) {
+										$block_content = str_replace( '<style>' . $style . '</style>', '', $block_content );
+									}
 								}
 							}
 						}
@@ -474,7 +482,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 * @return boolean
 		 */
 		public function protect_optimized_css_meta( $protected, $meta_key ) {
-			if ( $meta_key === 'stackable_optimized_css' || $meta_key === 'stackable_optimized_css_raw' ) {
+			if ( $meta_key === 'stackable_optimized_css' ||
+			     $meta_key === 'stackable_optimized_css_raw' ||
+			     $meta_key === 'stackable_css_hash' ) {
 				return true;
 			}
 			return $protected;

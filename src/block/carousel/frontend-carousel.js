@@ -22,6 +22,7 @@ class _StackableCarousel {
 		this.sliderEl = this.el.querySelector( '.stk-block-carousel__slider' )
 		this.slideEls = Array.from( this.sliderEl.children )
 		this.isRTL = document.documentElement?.getAttribute( 'dir' ) === 'rtl' || document.body?.getAttribute( 'dir' ) === 'rtl'
+		this.infiniteScroll = this.el.classList.contains( 'stk--infinite-scroll' )
 
 		// for iOS devices:
 		// fix double clicks on links after triggering touch events of carousel
@@ -43,13 +44,13 @@ class _StackableCarousel {
 		this.liveregion.setAttribute( 'class', 'liveregion stk--hidden' )
 		this.wrapper.appendChild( this.liveregion )
 
-		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
-
 		this.initProperties()
 		this.addEventListeners()
 		this.fixChildrenAccessibility()
 		this.fixAccessibility( this.currentSlide )
 		this.setDotActive( this.currentSlide )
+
+		this.slideEls[ this.currentSlide - 1 ].classList.add( 'stk-block-carousel__slide--active' )
 
 		this.unpauseAutoplay()
 	}
@@ -70,6 +71,29 @@ class _StackableCarousel {
 				this.setDotActive( this.currentSlide )
 			}
 		}
+
+		if ( this.infiniteScroll && ! this.el._StackableHasInitCarousel ) {
+			// clone slides
+			this.clones = this.slideEls.map( node => node.cloneNode( true ) )
+
+			this.clones.map( ( node, i ) => {
+				node.classList.add( `stk-slide-clone-${ i + 1 }` )
+				if ( i === this.clones.length - 1 ) {
+					return this.sliderEl.insertBefore( node, this.slideEls[ 0 ] )
+				}
+
+				return this.sliderEl.appendChild( node )
+			} )
+
+			// Scroll without animation to the first slide
+			this.sliderEl.style.scrollBehavior = 'unset'
+			this.sliderEl.scrollLeft = this.slideEls[ 0 ].offsetLeft
+			this.sliderEl.style.scrollBehavior = ''
+
+			this.currentSlide = 1
+			this.swappedSlides = 0
+		}
+
 		this.updateDots()
 	}
 
@@ -82,7 +106,9 @@ class _StackableCarousel {
 
 		const dotLabel = this.dotsEl.dataset.label
 		this.slideEls.forEach( ( slideEl, i ) => {
-			if ( ! this.isRTL && i >= this.slideEls.length - this.slidesToShow + 1 ) {
+			if ( ! this.infiniteScroll &&
+				! this.isRTL &&
+				i >= this.slideEls.length - this.slidesToShow + 1 ) {
 				return
 			}
 
@@ -90,7 +116,7 @@ class _StackableCarousel {
 			const dotEl = document.createElement( 'button' )
 			listEl.setAttribute( 'role', 'listitem' )
 			dotEl.classList.add( 'stk-block-carousel__dot' )
-			dotEl.setAttribute( 'aria-label', dotLabel.replace( /%+d/, ( i + 1 ) ) )
+			dotEl.setAttribute( 'aria-label', dotLabel.replace( /%+d/, i + 1 ) )
 			if ( this.currentSlide === i + 1 ) {
 				dotEl.classList.add( 'stk-block-carousel__dot--active' )
 			}
@@ -164,9 +190,19 @@ class _StackableCarousel {
 		return maxSlides
 	}
 
+	needToSwapCount = slide => {
+		return this.slidesToShow - ( this.slideEls.length - slide + 1 )
+	}
+
 	nextSlide = () => {
 		let newSlide = this.currentSlide + 1
-		if ( newSlide > this.maxSlides() ) {
+
+		if ( this.infiniteScroll && newSlide > this.maxSlides() ) {
+			this.swapSlides( newSlide, 'N' )
+			return
+		}
+
+		if ( ! this.infiniteScroll && newSlide > this.maxSlides() ) {
 			newSlide = this.slideOffset
 		}
 		this.goToSlide( newSlide )
@@ -174,10 +210,59 @@ class _StackableCarousel {
 
 	prevSlide = () => {
 		let newSlide = this.currentSlide - 1
-		if ( newSlide < this.slideOffset ) {
+
+		if ( this.infiniteScroll &&
+			( newSlide < this.slideOffset || this.needToSwapCount( newSlide ) >= 0 ) ) {
+			this.swapSlides( newSlide, 'P' )
+			return
+		}
+
+		if ( ! this.infiniteScroll && newSlide < this.slideOffset ) {
 			newSlide = this.maxSlides()
 		}
 		this.goToSlide( newSlide )
+	}
+
+	swapSlides = ( slide, dir ) => {
+		let setScrollToClone = false
+		if ( dir === 'N' && slide > this.slideEls.length ) {
+			slide = this.slideOffset
+			setScrollToClone = true
+		} else if ( dir === 'P' && slide < this.slideOffset ) {
+			slide = this.slideEls.length
+			setScrollToClone = true
+		}
+
+		const needToSwap = this.needToSwapCount( slide )
+		if ( needToSwap > 0 && this.swappedSlides < needToSwap ) {
+			// swap original and clone slides
+			const original = [ ...this.slideEls.slice( this.swappedSlides, needToSwap ) ]
+			const clones = [ ...this.clones.slice( this.swappedSlides, needToSwap ) ]
+
+			original.map( node => this.sliderEl.insertBefore( node, this.clones[ needToSwap ] ) )
+			clones.map( node => this.sliderEl.insertBefore( node, this.slideEls[ needToSwap ] ) )
+			this.swappedSlides = needToSwap
+		} else if ( this.swappedSlides > needToSwap ) {
+			// unswap original and clone slides that are not needed
+			const _needToSwap = needToSwap > 0 ? needToSwap : 0
+			const original = [ ...this.slideEls.slice( _needToSwap, this.swappedSlides ) ]
+			const clones = [ ...this.clones.slice( _needToSwap, this.swappedSlides ) ]
+			original.map( node => this.sliderEl.insertBefore( node, this.slideEls[ this.swappedSlides ] ) )
+			clones.map( node => this.sliderEl.insertBefore( node, this.clones[ this.swappedSlides ] ) )
+			this.swappedSlides = _needToSwap
+		}
+
+		if ( setScrollToClone ) {
+			this.sliderEl.style.scrollBehavior = 'unset'
+			this.sliderEl.scrollLeft = dir === 'N'
+				? this.clones[ this.currentSlide - 1 ].offsetLeft
+				: this.slideEls[ this.currentSlide - 1 ].offsetLeft
+			this.sliderEl.style.scrollBehavior = ''
+		}
+
+		setTimeout( () => {
+			this.goToSlide( slide )
+		}, 1 )
 	}
 
 	goToSlide = ( slide, force = false ) => {
@@ -190,7 +275,7 @@ class _StackableCarousel {
 
 		if ( this.type === 'slide' ) {
 			this.sliderEl.scrollLeft = this.slideEls[ slide - 1 ].offsetLeft
-		} else { // fade
+		} else if ( this.type === 'fade' ) { // fade
 			const slidePrevEl = this.slideEls[ this.currentSlide - 1 ]
 			slidePrevEl.style.opacity = 0
 
@@ -250,7 +335,9 @@ class _StackableCarousel {
 
 	setDotActive = slide => {
 		this.dotEls?.forEach( ( dotEl, i ) => {
-			if ( slide === i + 1 ) {
+			if ( slide === i + 1 ||
+				( this.infiniteScroll && slide === 0 && i === this.dotEls.length - 1 ) ) {
+				// sets active dot to the last dot if slider goes to the previous slide from the first slide
 				dotEl.classList.add( 'stk-block-carousel__dot--active' )
 			} else {
 				dotEl.classList.remove( 'stk-block-carousel__dot--active' )
@@ -308,6 +395,21 @@ class _StackableCarousel {
 					this.wheelTimeout = null
 				}, 500 )
 			}
+		// For infinite scrolling, set the scroll position to the actual slide ( not to the clone of the slide )
+		} else if ( this.infiniteScroll && e.deltaX <= -1 && this.sliderEl.scrollLeft === 0 ) {
+			this.sliderEl.style.scrollBehavior = 'unset'
+			this.sliderEl.scrollLeft = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
+			this.sliderEl.style.scrollBehavior = ''
+		} else if ( this.infiniteScroll && e.deltaX >= 1 && this.sliderEl.scrollLeft >= this.clones[ 0 ].offsetLeft ) {
+			this.clones.every( ( clone, i ) => {
+				if ( this.sliderEl.scrollLeft === clone.offsetLeft ) {
+					this.sliderEl.style.scrollBehavior = 'unset'
+					this.sliderEl.scrollLeft = this.slideEls[ i ].offsetLeft
+					this.sliderEl.style.scrollBehavior = ''
+					return false
+				}
+				return true
+			} )
 		}
 	}
 
@@ -330,9 +432,19 @@ class _StackableCarousel {
 
 	dragMouseMove = e => {
 		// How far the mouse has been moved
-		const dx = e.clientX - this.initialClientX
+		let dx = e.clientX - this.initialClientX
 
 		if ( this.type === 'slide' ) {
+			if ( this.infiniteScroll && this.sliderEl.scrollLeft === 0 && dx > 0 ) {
+				this.initialScrollLeft = this.slideEls[ this.slideEls.length - 1 ].offsetLeft
+				this.initialClientX = e.clientX
+				dx = 0
+			} else if ( this.infiniteScroll && this.sliderEl.scrollLeft >= this.clones[ 0 ].offsetLeft && dx < 0 ) {
+				this.initialScrollLeft = this.slideEls[ 0 ].offsetLeft
+				this.initialClientX = e.clientX
+				dx = 0
+			}
+
 			// Scroll the element
 			this.sliderEl.scrollTo( {
 				left: this.initialScrollLeft - dx,
@@ -431,7 +543,8 @@ class _StackableCarousel {
 				return
 			}
 			const scrollLeft = this.sliderEl.scrollLeft
-			const { slide } = this.slideEls.reduce( ( result, slideEl, i ) => {
+			const slideEls = this.infiniteScroll ? [ ...this.slideEls, ...this.clones ] : this.slideEls
+			let { slide } = slideEls.reduce( ( result, slideEl, i ) => {
 				const slide = i + 1
 				const offsetDiff = Math.abs( slideEl.offsetLeft - scrollLeft )
 				if ( offsetDiff <= result.offsetDiff ) {
@@ -439,6 +552,10 @@ class _StackableCarousel {
 				}
 				return result
 			}, { slide: 1, offsetDiff: 1000 } )
+
+			if ( this.infiniteScroll && slide > this.slideEls.length ) {
+				slide -= this.slideEls.length
+			}
 
 			this.currentSlide = slide
 			this.setDotActive( slide )

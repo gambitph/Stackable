@@ -86,18 +86,6 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 
 			register_setting(
 				'stackable_editor_settings',
-				'stackable_enable_navigation_panel',
-				array(
-					'type' => 'boolean',
-					'description' => __( 'Adds a persistent Navigation panel across all Stackable blocks', STACKABLE_I18N ),
-					'sanitize_callback' => 'sanitize_text_field',
-					'show_in_rest' => true,
-					'default' => '',
-				)
-			);
-
-			register_setting(
-				'stackable_editor_settings',
 				'stackable_block_default_width',
 				array(
 					'type' => 'string',
@@ -183,7 +171,6 @@ if ( ! class_exists( 'Stackable_Editor_Settings' ) ) {
 			$settings['stackable_disabled_blocks'] = get_option( 'stackable_disabled_blocks' );
 			$settings['stackable_enable_design_library'] = get_option( 'stackable_enable_design_library' );
 			$settings['stackable_optimize_inline_css'] = get_option( 'stackable_optimize_inline_css' );
-			$settings['stackable_enable_navigation_panel'] = get_option( 'stackable_enable_navigation_panel' );
 			$settings['stackable_auto_collapse_panels'] = get_option( 'stackable_auto_collapse_panels' );
 			$settings['stackable_enable_block_linking'] = get_option( 'stackable_enable_block_linking' );
 			$settings['stackable_enable_carousel_lazy_loading'] = get_option( 'stackable_enable_carousel_lazy_loading' );

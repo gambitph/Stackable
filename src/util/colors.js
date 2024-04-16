@@ -99,3 +99,32 @@ export const colorOpacityToHexAplha = ( color, opacity ) => {
 	}
 	return color
 }
+
+export const extractRgba = value => {
+	let options = value
+	let color = ''
+	options = options.replace( /rgba\(.*\)$/g, val => {
+		color = val
+		return ''
+	} ).trim()
+
+	return {
+		options,
+		color,
+	}
+}
+
+export const rgbaToHexAlpha = color => {
+	const rgba = color.substring( 5, color.length - 1 ).split( ',' )
+
+	const hexAlpha = rgba.map( ( val, i ) => {
+		if ( i === 3 ) {
+			const opacity = parseFloat( val )
+			return Math.ceil( ( opacity * 255 ) ).toString( 16 ).padStart( 2, '0' )
+		}
+		const hex = parseInt( val ).toString( 16 )
+		return hex.length === 1 ? '0' + hex : hex
+	} )
+
+	return '#' + hexAlpha.join( '' )
+}

@@ -12,6 +12,10 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
+			columnWrapDesktop: {
+				type: 'boolean',
+				default: false,
+			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

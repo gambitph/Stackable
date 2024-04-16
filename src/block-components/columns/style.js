@@ -23,6 +23,7 @@ const Styles = props => {
 	}
 	const {
 		hasRowGap = true,
+		columnWrapDesktopSaveStyleRule = '',
 		numColumns,
 	} = props
 
@@ -56,6 +57,39 @@ const Styles = props => {
 				key="columnGap"
 				format="%spx"
 				responsive="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".%s-column"
+				styleRule={ columnWrapDesktopSaveStyleRule || 'flexWrap' }
+				attrName="columnWrapDesktop"
+				key="columnWrapDesktop-save"
+				valueCallback={ value => value ? 'wrap' : undefined }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="edit"
+				selector=".%s-column > .block-editor-inner-blocks > .block-editor-block-list__layout"
+				styleRule="flexWrap"
+				attrName="columnWrapDesktop"
+				key="columnWrapDesktop"
+				valueCallback={ value => value ? 'wrap' : undefined }
+			/>
+			{ /*
+			   * Desktop columns stretch to the whole width because of flex-grow,
+			   * we need to force it to not grow or else we cannot specify a
+			   * column that's 50% (and alone without any column beside it)
+			   * because it will always stretch to 100%. */
+			}
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".%s-column"
+				styleRule="--stk-flex-grow"
+				attrName="columnWrapDesktop"
+				key="columnWrapDesktop-FlexGrow-save"
+				valueCallback={ value => value ? '0' : undefined }
 			/>
 			{ hasRowGap && <>
 				<BlockCss

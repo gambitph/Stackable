@@ -74,7 +74,7 @@ const ColumnStyles = props => {
 				attrName="columnWidth"
 				key="columnWidth-save-flex"
 				responsive={ [ 'desktopTablet', 'tabletOnly', 'mobile' ] }
-				format="1 1 %s%"
+				format="var(--stk-flex-grow, 1) 1 %s%"
 				dependencies={ [
 					'columnAdjacentCount',
 					...dependencies,
@@ -89,7 +89,7 @@ const ColumnStyles = props => {
 					// 30% columns in tablet/mobile, they will expand to 50% 50%)
 					//
 					// No need to do this in the editor since it already does this.
-					const value = device === 'desktop' ? _value : _value.replace( /^1 1/, '0 1' )
+					const value = device === 'desktop' && ! getAttribute( 'columnWrapDesktop' ) ? _value : _value.replace( /^var(--stk-flex-grow, 1) 1/, '0 1' )
 
 					const adjacentCount = getAttribute( 'columnAdjacentCount', device )
 					if ( adjacentCount ) {
