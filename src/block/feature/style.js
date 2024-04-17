@@ -100,7 +100,13 @@ BlockStyles.Content = props => {
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
 			<Separator.Style.Content { ...props } />
-			<Columns.Style.Content { ...props } hasRowGap={ false } />
+			<Columns.Style.Content
+				{ ...props }
+				hasRowGap={ false }
+				// Override the column desktop wrap rule because the feature has
+				// an extra element that we cannot target
+				columnWrapDesktopSaveStyleRule="--stk-feature-flex-wrap"
+			/>
 			{ ColumnOrderStyle && <ColumnOrderStyle { ...props } numColumns={ numColumns } /> }
 			<Styles { ...props } />
 		</BlockCssCompiler>

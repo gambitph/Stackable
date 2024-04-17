@@ -318,6 +318,28 @@ const Styles = props => {
 				enabledCallback={ () => blockStyle === 'list' }
 				dependencies={ [ 'imageWidthUnit', 'className' ] }
 			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-block-posts__image-link:not(:empty)"
+				styleRule="width"
+				attrName="imageWidth"
+				key="imageWidthHorizontalSave"
+				responsive="all"
+				hasUnits="%"
+				enabledCallback={ getAttribute => {
+					return ( getAttribute( 'imageWidthUnit' ) === '%' ||
+					getAttribute( 'imageWidthUnitTablet' ) === '%' ) &&
+					[ 'horizontal', 'horizontal-2' ].includes( blockStyle ) &&
+					getAttribute( 'imageHasLink' )
+				} }
+				dependencies={ [
+					'imageWidthUnitTablet',
+					'imageWidthUnit',
+					'imageHasLink',
+					'className',
+				] }
+			/>
 		</>
 	)
 }
@@ -356,6 +378,8 @@ PostsStyles.defaultProps = {
 	version: '',
 }
 
+// Note: Styles do not get rerendered on editor refresh. Rerender only happens when margin bottom is clicked on.
+// Ideally should rerender on editor refresh.
 PostsStyles.Content = props => {
 	if ( props.attributes.generatedCss ) {
 		return <style>{ props.attributes.generatedCss }</style>
@@ -363,9 +387,20 @@ PostsStyles.Content = props => {
 
 	const blockStyle = getBlockStyle( variations, props.attributes.className )
 
+	const enableWidth = () => {
+		if ( [ 'horizontal', 'horizontal-2' ].includes( blockStyle?.name ) ) {
+			if ( props.attributes.imageHasLink ) {
+				return false
+			}
+			return true
+		}
+		return true
+	}
+
 	const imageOptions = {
 		..._imageOptions,
 		enableHeight: ! [ 'portfolio' ].includes( blockStyle?.name ),
+		enableWidth: enableWidth(),
 		...( [ 'list' ].includes( blockStyle?.name ) && props.attributes.imageHasLink ? { selector: `${ itemSelector } .stk-block-posts__image-link`, widthStyleRule: 'flexBasis' } : {} ),
 	}
 

@@ -13,6 +13,7 @@ import {
 	deprecateBlockBackgroundColorOpacity,
 	deprecateContainerBackgroundColorOpacity,
 	getAlignmentClasses, getContentAlignmentClasses, getRowClasses,
+	deprecateBlockShadowColor, deprecateContainerShadowColor, deprecateShadowColor,
 } from '~stackable/block-components'
 
 /**
@@ -61,6 +62,46 @@ addFilter( 'stackable.feature.save.innerClassNames', 'stackable/3.8.0', ( output
 } )
 
 const deprecated = [
+	{
+		// Support the new shadow color.
+		attributes: attributes( '3.12.11' ),
+		save: withVersion( '3.12.11' )( Save ),
+		isEligible: attributes => {
+			const hasBlockShadow = deprecateBlockShadowColor.isEligible( attributes )
+			const hasContainerShadow = deprecateContainerShadowColor.isEligible( attributes )
+			const hasTopSeparatorShadow = deprecateShadowColor.isEligible( 'topSeparator%s' )( attributes )
+			const hasBottomSeparatorShadow = deprecateShadowColor.isEligible( 'bottomSeparator%s' )( attributes )
+			const isNotV4 = attributes.version < 2 || typeof attributes.version === 'undefined'
+
+			return hasBlockShadow || hasContainerShadow || hasTopSeparatorShadow || hasBottomSeparatorShadow || isNotV4
+		},
+		migrate: attributes => {
+			let newAttributes = {
+				...attributes,
+				version: 2,
+			}
+
+			// Update the old column fit into flexbox
+			const hasOldColumnFit = !! attributes.columnFit
+			if ( hasOldColumnFit ) {
+				newAttributes = {
+					...newAttributes,
+					columnFit: '',
+					columnFitAlign: '',
+					columnJustify: attributes.columnFitAlign,
+				}
+			}
+
+			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'bottomSeparator%s' )( newAttributes )
+
+			return newAttributes
+		},
+	},
 	// Support the new combined opacity and color.
 	{
 		attributes: attributes( '3.11.9' ),
@@ -91,6 +132,10 @@ const deprecated = [
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'bottomSeparator%s' )( newAttributes )
 
 			return newAttributes
 		},
@@ -143,6 +188,10 @@ const deprecated = [
 
 			newAttributes = deprecateContainerBackgroundColorOpacity.migrate( newAttributes )
 			newAttributes = deprecateBlockBackgroundColorOpacity.migrate( newAttributes )
+			newAttributes = deprecateBlockShadowColor.migrate( newAttributes )
+			newAttributes = deprecateContainerShadowColor.migrate( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'topSeparator%s' )( newAttributes )
+			newAttributes = deprecateShadowColor.migrate( 'bottomSeparator%s' )( newAttributes )
 
 			return newAttributes
 		},

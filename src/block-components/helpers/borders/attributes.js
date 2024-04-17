@@ -1,3 +1,5 @@
+import { deprecatedAddAttributes } from './deprecated'
+
 export const borderAttributes = {
 	borderType: {
 		type: 'string',
@@ -32,6 +34,8 @@ export const borderAttributes = {
 }
 
 export const addBorderAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
+	deprecatedAddAttributes( attrObject, attrNameTemplate )
+
 	attrObject.add( {
 		attributes: borderAttributes,
 		attrNameTemplate,

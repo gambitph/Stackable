@@ -2905,7 +2905,9 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -4681,6 +4683,8 @@
       "hebrew",
       "latin",
       "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -6402,12 +6406,12 @@
     "family": "Gelasio",
     "variants": [
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -8207,7 +8211,41 @@
     ]
   },
   {
+    "family": "Jacquard 12 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Jacquard 24",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Jacquarda Bastarda 9",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Jacquarda Bastarda 9 Charted",
     "variants": [
       "regular"
     ],
@@ -8244,6 +8282,76 @@
     ],
     "subsets": [
       "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 10",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 10 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 15",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 15 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 20",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 20 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 25",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
@@ -10380,6 +10488,18 @@
     ]
   },
   {
+    "family": "Madimi One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
     "family": "Magra",
     "variants": [
       "regular",
@@ -11034,6 +11154,18 @@
   },
   {
     "family": "Micro 5",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Micro 5 Charted",
     "variants": [
       "regular"
     ],
@@ -12110,7 +12242,11 @@
       "900"
     ],
     "subsets": [
-      "arabic"
+      "arabic",
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12135,7 +12271,9 @@
     "subsets": [
       "arabic",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12381,7 +12519,9 @@
     "subsets": [
       "brahmi",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -12693,9 +12833,13 @@
       "900"
     ],
     "subsets": [
+      "cyrillic-ext",
       "georgian",
+      "greek-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -15024,6 +15168,19 @@
     ]
   },
   {
+    "family": "Noto Znamenny Musical Notation",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "znamenny"
+    ]
+  },
+  {
     "family": "Nova Cut",
     "variants": [
       "regular"
@@ -15213,6 +15370,25 @@
       "latin",
       "latin-ext",
       "tamil",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Ojuju",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
       "vietnamese"
     ]
   },
@@ -16104,6 +16280,28 @@
     ]
   },
   {
+    "family": "Platypi",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Play",
     "variants": [
       "regular",
@@ -16361,7 +16559,6 @@
       "900italic"
     ],
     "subsets": [
-      "devanagari",
       "latin",
       "latin-ext"
     ]
@@ -17170,6 +17367,24 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Reddit Mono",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -18560,6 +18775,17 @@
     ]
   },
   {
+    "family": "Sedan",
+    "variants": [
+      "regular",
+      "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Sedgwick Ave",
     "variants": [
       "regular"
@@ -19930,6 +20156,19 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Tac One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols",
+      "vietnamese"
     ]
   },
   {
@@ -21360,6 +21599,50 @@
       "devanagari",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Yarndings 12",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 12 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 20",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
+    ]
+  },
+  {
+    "family": "Yarndings 20 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "math",
+      "symbols"
     ]
   },
   {

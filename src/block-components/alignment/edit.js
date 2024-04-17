@@ -13,7 +13,6 @@ import {
 	useBlockAttributesContext,
 	useBlockSetAttributesContext,
 	useDeviceType,
-	useBlockContext,
 } from '~stackable/hooks'
 
 /**
@@ -26,7 +25,7 @@ import {
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
-import { select } from '@wordpress/data'
+import { select, useSelect } from '@wordpress/data'
 
 const ALIGN_OPTIONS = [
 	{
@@ -356,13 +355,14 @@ export const Edit = props => {
 // Add additional classes when browser is Firefox to fix alignment
 const userAgent = navigator?.userAgent
 if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
-	addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', classes => {
-		const {
-			hasInnerBlocks, numInnerBlocks, innerBlocks,
-		} = useBlockContext()
+	addFilter( 'stackable.block-components.block-div.classnames', 'alignment-editor-has-polyfill', ( classes, props ) => {
+		// Use WP's block edit context since our useBlockContext might still be updating when a block is removed
+		const innerBlocks = useSelect( select => {
+			return select( 'core/block-editor' ).getBlock( props.clientId )?.innerBlocks || []
+		}, [ props.clientId ] )
 
-		if ( hasInnerBlocks ) {
-			for ( let i = 0; i < numInnerBlocks; i++ ) {
+		if ( innerBlocks.length > 0 ) {
+			for ( let i = 0; i < innerBlocks.length; i++ ) {
 				const innerBlockClientId = innerBlocks[ i ].clientId
 				const { blockMargin } = select( 'core/block-editor' ).getBlockAttributes( innerBlockClientId )
 				if ( blockMargin && ( blockMargin.top === 'auto' || blockMargin.bottom === 'auto' ) ) {
