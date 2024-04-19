@@ -72,6 +72,7 @@ class StackableMap {
 			// 	}
 			// }
 
+			// Inside a setTimeout since geolocation speed may vary
 			setTimeout( () => {
 				// eslint-disable-next-line no-undef
 				const map = new google.maps.Map( mapCanvas, mapOptions )
