@@ -212,6 +212,7 @@ const Edit = props => {
 	useEffect( () => {
 		if ( mapRef.current ) {
 			mapRef.current.setOptions( {
+				address,
 				center: location || DEFAULT_LOCATION,
 				zoom: zoom || DEFAULT_ZOOM,
 				fullscreenControl: showFullScreenButton,
@@ -264,6 +265,12 @@ const Edit = props => {
 		}
 	}, 400 ), [ geocoderRef.current, setAttributes, useGeocoding ] )
 
+	useEffect( () => {
+		setTimeout( () => {
+			geocodeAddress( mapAddress )
+		}, 8000 )
+	}, [ mapAddress ] )
+
 	return (
 		<>
 			{ isSelected && (
@@ -298,6 +305,7 @@ const Edit = props => {
 										placeholder={ __( 'Enter an address or location', i18n ) }
 										help={ __( 'Type in a pair of latitude longitude coordinates.', i18n ) }
 										isDynamic={ true }
+										isFormatType={ false }
 									/>
 								</>
 							) : (

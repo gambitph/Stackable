@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 import { DynamicContentControl, useDynamicContentControlProps } from '~stackable/components'
 
 /**
@@ -66,7 +66,10 @@ const LocationControl = props => {
 		<GutBaseControl
 			className="stk-control stk-control__location-control"
 			label={ __( 'Location', i18n ) }
-			help={ __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n ) }
+			help={ ! isPro
+				? __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled.', i18n )
+				: __( 'Type in a pair of latitude longitude coordinates. You can also type in the name of the location if your API Key has Geocoding API and Places API enabled. Dynamic Content only allows latitude longtitude coordinates', i18n )
+			}
 		>
 			<DynamicContentControl
 				enable={ true }
