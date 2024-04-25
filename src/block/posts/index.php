@@ -413,19 +413,20 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 		 * Render the post items
 		 */
 		public function render_post_items( $to_replace, $template, $content, $attributes, $query_string ) {
-			$posts = '';
 			$post_query = generate_post_query_from_stackable_posts_block( $attributes, $query_string );
 			$recent_posts = wp_get_recent_posts( $post_query );
+
 			// Manually slice the array based on the number of posts per page.
 			if ( is_array( $recent_posts ) && count( $recent_posts ) > (int) $post_query['numberposts'] ) {
 				$recent_posts = array_slice( $recent_posts, 0, (int) $post_query['numberposts'] );
 			}
 
+			$posts = array();
 			foreach ( $recent_posts as $post ) {
-				$posts .= generate_render_item_from_stackable_posts_block( $post, $attributes, $template );
+				$posts[] = generate_render_item_from_stackable_posts_block( $post, $attributes, $template );
 			}
 
-			$new_content = str_replace( $to_replace, $posts, $content );
+			$new_content = str_replace( $to_replace, implode( '', $posts ), $content );
 			return $new_content;
 		}
 
