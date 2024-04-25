@@ -336,20 +336,12 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 				'excludeCurrentPost' => false,
 			);
 
-			$out = array();
-			foreach ( $attributes as $name => $value ) {
-				$out[ $name ] = $value;
+			// Make sure we have the default values.
+			foreach ( $default_attributes as $name => $default_value ) {
+				$attributes[ $name ] = isset( $attributes[ $name ] ) && $attributes[ $name ] !== '' ? $attributes[ $name ] : $default_value;
 			}
-			foreach ( $default_attributes as $name => $default ) {
-				if ( array_key_exists( $name, $out ) ) {
-					if ( $out[ $name ] === '' ) {
-						$out[ $name ] = $default;
-					}
-				} else {
-					$out[ $name ] = $default;
-				}
-			}
-			return $out;
+
+			return $attributes;
 		}
 
 		/**
