@@ -54,8 +54,7 @@ if ( function_exists( 'jetpack_photon_url' ) ) {
 			}
 
 			// Only for Stackable blocks.
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-			if ( strpos( $block_name, 'ugb/', 0 ) === false ) {
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'ugb/' ) === false ) {
 				return $block_content;
 			}
 
