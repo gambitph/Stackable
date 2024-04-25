@@ -149,8 +149,7 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 		 */
 		public static function parse_blocks( $blocks, &$style_arr ) {
 			foreach ( $blocks as $block ) {
-				$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-				if ( stripos( $block_name, 'stackable/' ) !== false ) {
+				if ( isset( $block['blockName'] ) && strpos( $block['blockName'], 'stackable/' ) !== false ) {
 					self::parse_block_style( $block, $style_arr );
 				}
 
@@ -278,32 +277,33 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 			if ( ! is_singular() || is_preview() ) {
 				return $block_content;
 			}
+
 			if ( empty( $this->css_raw ) || empty( $this->optimized_css ) ) {
 				return $block_content;
 			}
 
 			// Only do this to our blocks.
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-			if ( ! empty( $block ) && is_array( $block ) && stripos( $block_name, 'stackable/' ) === 0 ) {
-				if ( stripos( $block_content, '<style' ) !== false ) {
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
+				return $block_content;
+			}
 
-					// We need the unique id for tracking.
-					if ( is_array( $block['attrs'] ) && array_key_exists( 'uniqueId', $block['attrs'] ) ) {
-						$unique_id = $block['attrs']['uniqueId'];
+			if ( strpos( $block_content, '<style' ) === false ) {
+				return $block_content;
+			}
+			// We need the unique id for tracking.
+			if ( isset( $block['attrs']['uniqueId'] ) ) {
+				$unique_id = $block['attrs']['uniqueId'];
 
-						if ( array_key_exists( $unique_id, $this->css_raw ) ) {
-							$css_to_strip = $this->css_raw[ $unique_id ];
-							foreach ( $css_to_strip as $style ) {
-								// $style[0] - contains the whole style tag.
-								if ( is_array( $style ) ) {
-									if ( stripos( $block_content, $style[0] ) !== false ) {
-										$block_content = str_replace( $style[0], '', $block_content );
-									}
-								} else if ( is_string( $style ) ) {
-									if ( stripos( $block_content, '<style>' . $style . '</style>' ) !== false ) {
-										$block_content = str_replace( '<style>' . $style . '</style>', '', $block_content );
-									}
-								}
+				if ( isset( $this->css_raw[ $unique_id ] ) ) {
+					foreach ( $this->css_raw[ $unique_id ] as $style ) {
+						// $style[0] - contains the whole style tag.
+						if ( is_array( $style ) ) {
+							if ( stripos( $block_content, $style[0] ) !== false ) {
+								$block_content = str_replace( $style[0], '', $block_content );
+							}
+						} else if ( is_string( $style ) ) {
+							if ( stripos( $block_content, '<style>' . $style . '</style>' ) !== false ) {
+								$block_content = str_replace( '<style>' . $style . '</style>', '', $block_content );
 							}
 						}
 					}
