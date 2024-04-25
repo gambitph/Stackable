@@ -125,8 +125,8 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 			stackable_get_stk_wrapper_block_folders_metadata()
 		);
 
+		$registry = WP_Block_Type_Registry::get_instance();
 		foreach ( $blocks_metadata as $metadata ) {
-			$registry = WP_Block_Type_Registry::get_instance();
 			if ( $registry->is_registered( $metadata['name'] ) ) {
 				$registry->unregister( $metadata['name'] );
 			}
