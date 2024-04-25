@@ -55,23 +55,11 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 				return $block_content;
 			}
 
-			$tag = new WP_HTML_Tag_Processor( $block_content );
-			$tag->next_tag();
-
-			// check for .stk-container:has(> .stk--column-flex)
-			if ( $tag->next_tag( array( 'class_name' => 'stk-container' ) ) ) {
-				$content = $tag->set_bookmark( 'block_content' );
-
-				// If we hae an stk--column-flex, we need to add the polyfill.
-				if ( $tag->next_tag( array( 'class_name' => 'stk--column-flex' ) ) ) {
-					$tag->seek( 'block_content' );
-					$tag->add_class( 'stk-container--has-child-column-flex-polyfill' );
-					$tag->release_bookmark( 'block_content' );
-					return $tag->get_updated_html();
-				}
+			if ( strpos( $block_content, 'stk-container--has-child-column-flex-polyfill' ) !== false ) {
+				return $block_content;
 			}
 
-			return $block_content;
+			return preg_replace( '/stk-container\s(.*?<.*?stk--column-flex)/i', 'stk-container stk-container--has-child-column-flex-polyfill $1', $block_content );
 		}
 
 		add_filter( 'render_block', 'stackable_render_block_alignment_flex_frontend_polyfill', 10, 2 );
