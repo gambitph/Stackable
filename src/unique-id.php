@@ -10,19 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_generate_unique_id' ) ) {
-	function stackable_generate_unique_id() {
-		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-		$unique_id = '';
-
-		for ( $i = 0; $i < 7; $i++ ) {
-			$unique_id .= $characters[ wp_rand( 0, strlen( $characters ) - 1 ) ];
-		}
-
-		return $unique_id;
-	}
-}
-
 global $stackable_unique_ids;
 $stackable_unique_ids = array();
 
@@ -44,7 +31,8 @@ if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
 		global $stackable_unique_ids;
 
 		if ( isset( $stackable_unique_ids[ $unique_id ] ) ) {
-			$random_unique_id = stackable_generate_unique_id();
+			// A pseudo-random unique ID is generated to replace the duplicate unique ID.
+			$random_unique_id = substr( str_shuffle( '0123456789abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz' ), 0, 7 );
 			$stackable_unique_ids[ $random_unique_id ] = true;
 			$block_content = str_replace( $unique_id, $random_unique_id, $block_content );
 		} else {
