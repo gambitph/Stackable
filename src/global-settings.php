@@ -687,42 +687,40 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return string Rendered block
 		 */
 		public function typography_detect_native_blocks( $block_content, $block ) {
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-
-			if ( $block_content === null ) {
-				return $block_content;
-			}
-
 			// Only do this if we have some global typography settings to apply.
 			if ( empty( $this->generated_typography_css ) ) {
 				return $block_content;
 			}
 
 			// Only do this for native blocks.
-			if ( stripos( $block_name, 'core/' ) !== 0 ) {
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'core/' ) !== 0 ) {
+				return $block_content;
+			}
+
+			if ( $block_content === null ) {
 				return $block_content;
 			}
 
 			// Only do the native paragraph blocks only if body text is used.
-			if ( $block_name === 'core/paragraph' && ! $this->generated_body_typography_css ) {
+			if ( $block['blockName'] === 'core/paragraph' && ! $this->generated_body_typography_css ) {
 				return $block_content;
 			}
 
 			// Only do the native hedaing blocks only if headings is used.
-			if ( $block_name === 'core/heading' && ! $this->generated_heading_typography_css ) {
+			if ( $block['blockName'] === 'core/heading' && ! $this->generated_heading_typography_css ) {
 				return $block_content;
 			}
 
 			// Don't do this for custom HTML blocks.
-			if ( in_array( $block_name, array( 'core/html', 'core/embed' ) ) ) {
+			if ( in_array( $block['blockName'], array( 'core/html', 'core/embed' ) ) ) {
 				return $block_content;
 			}
 
 			// If a native block, let's add a new data- attribute to it so we can target it in css.
-			if ( stripos( $block_content, '>' ) !== false ) {
+			if ( strpos( $block_content, '>' ) !== false ) {
 				$new_block_content = $this->str_replace_first( '>', ' data-block-type="core">', $block_content );
 				// If we encounter a comment that got converted, we can detect that.
-				if ( stripos( $new_block_content, '-- data-block-type="core">' ) === false ) {
+				if ( strpos( $new_block_content, '-- data-block-type="core">' ) === false ) {
 					return $new_block_content;
 				}
 			}
