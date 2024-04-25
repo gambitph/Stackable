@@ -41,10 +41,8 @@ if ( stripos( $user_agent, 'Version/' ) !== false && stripos( $user_agent, 'Safa
 if ( ! empty( $user_agent ) && $load_polyfill ) {
 	if ( ! function_exists( 'stackable_render_block_alignment_frontend_polyfill' ) ) {
 
-		function stackable_render_block_alignment_frontend_polyfill ( $block_content, $block ) {
-			$block_name = ! empty( $block[ 'blockName' ] ) ? $block[ 'blockName' ] : '';
-
-			if ( stripos( $block_name, 'stackable/' ) === false ) {
+		function stackable_render_block_alignment_flex_frontend_polyfill ( $block_content, $block ) {
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
 				return $block_content;
 			}
 
@@ -52,48 +50,106 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 				return $block_content;
 			}
 
+			// The polyfill is only for containers that use column flex.
+			if ( ! strpos( $block_content, 'stk-container' ) && ! strpos( $block_content, 'stk--column-flex' ) ) {
+				return $block_content;
+			}
+
 			$tag = new WP_HTML_Tag_Processor( $block_content );
 			$tag->next_tag();
-			$has_bookmark = $tag->set_bookmark( 'block_content' );
 
 			// check for .stk-container:has(> .stk--column-flex)
 			if ( $tag->next_tag( array( 'class_name' => 'stk-container' ) ) ) {
+				$content = $tag->set_bookmark( 'block_content' );
+
+				// If we hae an stk--column-flex, we need to add the polyfill.
 				if ( $tag->next_tag( array( 'class_name' => 'stk--column-flex' ) ) ) {
-					$block_content = preg_replace( '/stk-container/', 'stk-container stk-container--has-child-column-flex-polyfill', $block_content, 1 );
+					$tag->seek( 'block_content' );
+					$tag->add_class( 'stk-container--has-child-column-flex-polyfill' );
+					$tag->release_bookmark( 'block_content' );
+					return $tag->get_updated_html();
 				}
 			}
 
-			if ( $has_bookmark ) {
-				$tag->seek( 'block_content' );
-				while ( $tag->next_tag() ) {
-					$classes = $tag->get_attribute( 'class' );
+			return $block_content;
+		}
 
-					// check for :is(.stk-block-content, .stk-inner-blocks):not(.stk--column-flex):has(> :is(.stk--block-margin-top-auto, .stk--block-margin-bottom-auto))
-					if ( $classes && ( stripos( $classes, 'stk-block-content' ) !== false || stripos( $classes, 'stk-inner-blocks' ) !== false ) &&  stripos( $classes, 'stk--column-flex' ) === false ) {
-						$tag->set_bookmark( 'not_stk--column-flex' );
+		add_filter( 'render_block', 'stackable_render_block_alignment_flex_frontend_polyfill', 10, 2 );
 
-						$add_polyfill_class = false;
-						if ( $tag->next_tag( array( 'class_name' => 'stk--block-margin-top-auto' ) ) ) {
-							$add_polyfill_class = true;
-						}
+		function stackable_render_block_alignment_frontend_polyfill ( $block_content, $block ) {
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
+				return $block_content;
+			}
 
-						$tag->seek( 'not_stk--column-flex' );
-						if ( $tag->next_tag( array( 'class_name' => 'stk--block-margin-bottom-auto' ) ) ) {
-							$add_polyfill_class = true;
-						}
+			if ( ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
+				return $block_content;
+			}
 
-						if ( $add_polyfill_class ) {
-							$tag->seek( 'not_stk--column-flex' );
-							$tag->add_class( 'stk--height-100-polyfill' );
-							$tag->release_bookmark( 'not_stk--column-flex' );
-							$tag->release_bookmark( 'block_content' );
-							return $tag->get_updated_html();
-						}
+			// The polyfill is only for containers that use column flex.
+			if ( ! strpos( $block_content, 'stk--block-margin-top-auto' ) && ! strpos( $block_content, 'stk--block-margin-bottom-auto' ) ) {
+				return $block_content;
+			}
+
+			$added_polyfill = false;
+
+			$tag = new WP_HTML_Tag_Processor( $block_content );
+			$tag->next_tag();
+			$content = $tag->set_bookmark( 'block_content' );
+
+			if ( $tag->next_tag( array( 'class_name' => 'stk-block-content' ) ) ) {
+				$classes = $tag->get_attribute( 'class' );
+				if ( strpos( $classes, 'stk--column-flex' ) === false ) {
+					$tag->set_bookmark( 'not_stk--column-flex' );
+
+					$add_polyfill_class = false;
+					if ( $tag->next_tag( array( 'class_name' => 'stk--block-margin-top-auto' ) ) ) {
+						$add_polyfill_class = true;
 					}
+
+					$tag->seek( 'not_stk--column-flex' );
+					if ( $tag->next_tag( array( 'class_name' => 'stk--block-margin-bottom-auto' ) ) ) {
+						$add_polyfill_class = true;
+					}
+
+					if ( $add_polyfill_class ) {
+						$added_polyfill = true;
+						$tag->seek( 'not_stk--column-flex' );
+						$tag->add_class( 'stk--height-100-polyfill' );
+					}
+					$tag->release_bookmark( 'not_stk--column-flex' );
+				}
+			}
+
+			$tag->seek( 'block_content' );
+			if ( $tag->next_tag( array( 'class_name' => 'stk-inner-blocks' ) ) ) {
+				$classes = $tag->get_attribute( 'class' );
+				if ( strpos( $classes, 'stk--column-flex' ) === false ) {
+					$tag->set_bookmark( 'not_stk--column-flex' );
+
+					$add_polyfill_class = false;
+					if ( $tag->next_tag( array( 'class_name' => 'stk--block-margin-top-auto' ) ) ) {
+						$add_polyfill_class = true;
+					}
+
+					$tag->seek( 'not_stk--column-flex' );
+					if ( $tag->next_tag( array( 'class_name' => 'stk--block-margin-bottom-auto' ) ) ) {
+						$add_polyfill_class = true;
+					}
+
+					if ( $add_polyfill_class ) {
+						$added_polyfill = true;
+						$tag->seek( 'not_stk--column-flex' );
+						$tag->add_class( 'stk--height-100-polyfill' );
+					}
+					$tag->release_bookmark( 'not_stk--column-flex' );
 				}
 			}
 
 			$tag->release_bookmark( 'block_content' );
+			if ( $added_polyfill ) {
+				return $tag->get_updated_html();
+			}
+
 			return $block_content;
 		}
 
