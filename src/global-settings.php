@@ -451,14 +451,16 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			// Include Stackable blocks.
 			$selectors[] = '.stk-block ' . $tag;
 
+			$apply_to = $this->get_apply_typography_to();
+
 			// Include native blocks.
-			if ( $this->get_apply_typography_to() !== 'blocks-stackable' ) {
+			if ( $apply_to !== 'blocks-stackable' ) {
 				$selectors[] = '[data-block-type="core"] ' . $tag;
 				$selectors[] = $tag . '[data-block-type="core"]';
 			}
 
 			// Include all other blocks.
-			if ( $this->get_apply_typography_to() === 'blocks-all' ) {
+			if ( $apply_to === 'blocks-all' ) {
 				$selectors[] = '[class*="wp-block-"] ' . $tag;
 				$selectors[] = $tag . '[class*="wp-block-"]';
 			}
