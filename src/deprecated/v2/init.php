@@ -415,19 +415,20 @@ if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
 	 * Check for v2 blocks in the frontend and enable frontend compatibility if
 	 * any are detected. Do this check a few times only.
 	 */
-	if ( ! is_admin() ) {
-		$detector_counter = get_option( 'stackable_v2_frontend_detector_counter' );
-		$detector_counter = empty( $detector_counter ) ? 0 : (int) $detector_counter;
+	// DEV NOTE: Commented out for now as of v3.13, we need to check if this is still needed.
+	// if ( ! is_admin() ) {
+	// 	$detector_counter = get_option( 'stackable_v2_frontend_detector_counter' );
+	// 	$detector_counter = empty( $detector_counter ) ? 0 : (int) $detector_counter;
 
-		if ( $detector_counter < STACKABLE_FRONTEND_V2_DETECTOR_LIMIT && ! has_stackable_v2_frontend_compatibility() ) {
-			// Try and check if we need to perform v2 frontend migration.
-			add_filter( 'render_block', 'stackable_frontend_v2_try_migration', 9, 2 );
-			// Need to also do this in the_content, since catching a v2 blog
-			// posts block here allows it to be loaded correctly.
-			add_filter( 'the_content', 'stackable_frontend_v2_try_migration_content', 1 );
+	// 	if ( $detector_counter < STACKABLE_FRONTEND_V2_DETECTOR_LIMIT && ! has_stackable_v2_frontend_compatibility() ) {
+	// 		// Try and check if we need to perform v2 frontend migration.
+	// 		add_filter( 'render_block', 'stackable_frontend_v2_try_migration', 9, 2 );
+	// 		// Need to also do this in the_content, since catching a v2 blog
+	// 		// posts block here allows it to be loaded correctly.
+	// 		add_filter( 'the_content', 'stackable_frontend_v2_try_migration_content', 1 );
 
-			// Increment our detector counter.
-			update_option( 'stackable_v2_frontend_detector_counter', $detector_counter + 1 );
-		}
-	}
+	// 		// Increment our detector counter.
+	// 		update_option( 'stackable_v2_frontend_detector_counter', $detector_counter + 1 );
+	// 	}
+	// }
 }
