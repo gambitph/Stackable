@@ -179,7 +179,9 @@ if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks_v2' ) ) {
 		return array_merge( $allowed_stackable_wrapper_blocks, $allowed_wrapper_blocks );
 	}
 
-	add_filter( 'excerpt_allowed_wrapper_blocks', 'stackable_add_excerpt_wrapper_blocks_v2' );
+	if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
+		add_filter( 'excerpt_allowed_wrapper_blocks', 'stackable_add_excerpt_wrapper_blocks_v2' );
+	}
 }
 
 if ( ! function_exists( 'stackable_add_excerpt_blocks_v2' ) ) {
@@ -214,5 +216,7 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks_v2' ) ) {
 		return array_merge( $allowed_stackable_blocks, $allowed_blocks );
 	}
 
-	add_filter( 'excerpt_allowed_blocks', 'stackable_add_excerpt_blocks_v2' );
+	if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
+		add_filter( 'excerpt_allowed_blocks', 'stackable_add_excerpt_blocks_v2' );
+	}
 }
