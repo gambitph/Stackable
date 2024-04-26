@@ -307,10 +307,9 @@ if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 			return $block_content;
 		}
 
-		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
-			stripos( $block_name, 'ugb/' ) === 0 ||
-			stripos( $block_content, '<!-- wp:ugb/' ) !==  false
+			( isset( $block['blockName'] ) && strpos( $block['blockName'], 'ugb/' ) === 0 ) ||
+			strpos( $block_content, '<!-- wp:ugb/' ) !==  false
 		) {
 			stackable_block_enqueue_frontend_assets_v2();
 			stackable_add_required_block_styles_v2();
