@@ -299,13 +299,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 					foreach ( $this->css_raw[ $unique_id ] as $style ) {
 						// $style[0] - contains the whole style tag.
 						if ( is_array( $style ) ) {
-							if ( stripos( $block_content, $style[0] ) !== false ) {
-								$block_content = str_replace( $style[0], '', $block_content );
-							}
+							$block_content = str_replace( $style[0], '', $block_content );
 						} else if ( is_string( $style ) ) {
-							if ( stripos( $block_content, '<style>' . $style . '</style>' ) !== false ) {
-								$block_content = str_replace( '<style>' . $style . '</style>', '', $block_content );
-							}
+							$block_content = str_replace( '<style>' . $style . '</style>', '', $block_content );
 						}
 					}
 				}
