@@ -274,10 +274,6 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				return $block_content;
 			}
 
-			if ( ! is_singular() || is_preview() ) {
-				return $block_content;
-			}
-
 			if ( empty( $this->css_raw ) || empty( $this->optimized_css ) ) {
 				return $block_content;
 			}
@@ -287,9 +283,14 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				return $block_content;
 			}
 
+			if ( ! is_singular() || is_preview() ) {
+				return $block_content;
+			}
+
 			if ( strpos( $block_content, '<style' ) === false ) {
 				return $block_content;
 			}
+
 			// We need the unique id for tracking.
 			if ( isset( $block['attrs']['uniqueId'] ) ) {
 				$unique_id = $block['attrs']['uniqueId'];
