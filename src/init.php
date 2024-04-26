@@ -208,10 +208,10 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Enqueue the block script once.
-			$stackable_block = substr( $block['blockName'], 10 );
-			if ( ! isset( $this->scripts_loaded[ $stackable_block ] ) ) {
+			if ( ! isset( $this->scripts_loaded[ $block['blockName'] ] ) ) {
+				$stackable_block = substr( $block['blockName'], 10 );
 				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
-				$this->scripts_loaded[ $stackable_block ] = true;
+				$this->scripts_loaded[ $block['blockName'] ] = true;
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
