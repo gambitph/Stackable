@@ -28,7 +28,9 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		public static $google_fonts = [];
 
 		function __construct() {
-			add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
+			if ( ! is_admin() ) {
+				add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
+			}
 		}
 
 		public function gather_google_fonts( $block_content, $block ) {
