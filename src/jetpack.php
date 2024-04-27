@@ -67,6 +67,8 @@ if ( function_exists( 'jetpack_photon_url' ) ) {
 			return preg_replace_callback( '/<style(.*?)<\/style/', 'stackable_jetpack_photon_render_block_replace_style', $block_content );
 		}
 
-		add_filter( 'render_block', 'stackable_jetpack_photon_render_block', 10, 2 );
+		if ( is_frontend() ) {
+			add_filter( 'render_block', 'stackable_jetpack_photon_render_block', 10, 2 );
+		}
 	}
 }

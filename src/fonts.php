@@ -28,7 +28,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		public static $google_fonts = [];
 
 		function __construct() {
-			if ( ! is_admin() ) {
+			if ( is_frontend() ) {
 				add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
 			}
 		}

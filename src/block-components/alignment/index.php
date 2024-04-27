@@ -62,7 +62,9 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 			return preg_replace( '/stk-container\s(.*?<.*?stk--column-flex)/i', 'stk-container stk-container--has-child-column-flex-polyfill $1', $block_content );
 		}
 
-		add_filter( 'render_block', 'stackable_render_block_alignment_flex_frontend_polyfill', 10, 2 );
+		if ( is_frontend() ) {
+			add_filter( 'render_block', 'stackable_render_block_alignment_flex_frontend_polyfill', 10, 2 );
+		}
 
 		function stackable_render_block_alignment_frontend_polyfill ( $block_content, $block ) {
 			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
@@ -141,6 +143,8 @@ if ( ! empty( $user_agent ) && $load_polyfill ) {
 			return $block_content;
 		}
 
-		add_filter( 'render_block', 'stackable_render_block_alignment_frontend_polyfill', 10, 2 );
+		if ( is_frontend() ) {
+			add_filter( 'render_block', 'stackable_render_block_alignment_frontend_polyfill', 10, 2 );
+		}
 	}
 }

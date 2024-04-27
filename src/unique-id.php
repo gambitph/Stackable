@@ -42,7 +42,8 @@ if ( ! function_exists( 'stackable_prevent_duplicate_unique_ids' ) ) {
 		return $block_content;
 	}
 
-	if ( ! is_admin() ) {
+	// Only do this in the frontend.
+	if ( is_frontend() ) {
 		add_filter( 'render_block', 'stackable_prevent_duplicate_unique_ids', 9, 2 );
 	}
 }

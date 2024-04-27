@@ -34,7 +34,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings_V2' ) ) {
 				add_action( 'init', array( $this, 'disable_frontend_scripts' ), 9 );
 
 				// Load the scripts only when Stackable blocks are detected.
-				if ( ! is_admin() ) {
+				if ( is_frontend() ) {
 					add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
 				}
 

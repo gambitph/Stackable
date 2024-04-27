@@ -27,7 +27,10 @@ if ( ! function_exists( 'stackable_deprecated_global_colors_for_native_blocks_ch
 
 		return $block_content;
 	}
-	add_filter( 'render_block', 'stackable_deprecated_global_colors_for_native_blocks_checker', 10, 2 );
+
+	if ( is_frontend() ) {
+		add_filter( 'render_block', 'stackable_deprecated_global_colors_for_native_blocks_checker', 10, 2 );
+	}
 }
 
 if ( ! function_exists( 'register_deprecated_global_colors_for_native_blocks_settings' ) ) {

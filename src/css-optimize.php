@@ -85,7 +85,9 @@ if ( ! class_exists( 'Stackable_CSS_Optimize' ) ) {
 				add_action( 'wp', array( $this, 'load_cached_css_for_post' ) );
 
 				// If the optimized CSS was loaded, then strip out the styles which were in the CSS.
-				add_filter( 'render_block', array( $this, 'strip_optimized_block_styles' ), 10, 2 );
+				if ( is_frontend() ) {
+					add_filter( 'render_block', array( $this, 'strip_optimized_block_styles' ), 10, 2 );
+				}
 			}
 
 			// Hide the CSS optimization custom fields because this will clutter the Block Editor.

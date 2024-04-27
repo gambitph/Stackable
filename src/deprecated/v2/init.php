@@ -322,7 +322,7 @@ if ( ! function_exists( 'load_frontend_scripts_conditionally_v2') ) {
 	}
 
 	if ( has_stackable_v2_frontend_compatibility() && ! has_stackable_v2_editor_compatibility() ) {
-		if ( ! is_admin() ) {
+		if ( is_frontend() ) {
 			add_filter( 'render_block', 'load_frontend_scripts_conditionally_v2', 10, 2 );
 		}
 	}

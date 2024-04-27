@@ -51,7 +51,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			add_action( 'admin_init', array( $this, 'register_global_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_global_settings' ) );
 
-			if ( ! is_admin() ) {
+			if ( is_frontend() ) {
 
 				/**
 				 * Color hooks
