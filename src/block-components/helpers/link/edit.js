@@ -86,6 +86,7 @@ export const LinkControls = props => {
 			{ hasAnchorId && <AdvancedTextControl
 				label={ __( 'Anchor ID', i18n ) }
 				attribute="anchorId"
+				help={ __( 'Add an id attribute to the anchor tag.', i18n ) }
 			/> }
 		</>
 	)
