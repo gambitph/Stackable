@@ -362,9 +362,8 @@ if ( ! function_exists( 'stackable_frontend_v2_try_migration' ) ) {
 			return $block_content;
 		}
 
-		$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 		if (
-			stripos( $block_name, 'ugb/' ) === 0 ||
+			( isset( $block['blockName'] ) && stripos( $block['blockName'], 'ugb/' ) === 0 ) ||
 			stripos( $block_content, '<!-- wp:ugb/' ) !==  false
 		) {
 			stackable_frontend_v2_try_migration_detected();
