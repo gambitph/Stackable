@@ -88,13 +88,13 @@ if ( ! function_exists( 'stackable_version_upgrade_check' ) ) {
 		// This is triggered only when V1 was previously activated, and this is the first time V2 is activated.
 		// Will not trigger after successive V2 activations.
 		if ( get_option( 'stackable_activation_date' ) && ! get_option( 'stackable_current_version_installed' ) ) {
-			update_option( 'stackable_current_version_installed', '1' );
+			update_option( 'stackable_current_version_installed', '1', 'no' );
 		}
 
 		// Always check the current version installed. Trigger if it changes.
 		if ( get_option( 'stackable_current_version_installed' ) !== STACKABLE_VERSION ) {
 			do_action( 'stackable_version_upgraded', get_option( 'stackable_current_version_installed' ), STACKABLE_VERSION );
-			update_option( 'stackable_current_version_installed', STACKABLE_VERSION );
+			update_option( 'stackable_current_version_installed', STACKABLE_VERSION, 'no' );
 		}
 	}
 	add_action( 'admin_menu', 'stackable_version_upgrade_check', 1 );
