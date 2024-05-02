@@ -55,7 +55,7 @@ if ( ! function_exists( 'stackable_add_in_notification_dismissed' ) ) {
         if ( ! in_array( $id, $dismissed ) ) {
             $dismissed[] = $id;
         }
-		update_option( 'stackable_notifications_dismissed', $dismissed );
+		update_option( 'stackable_notifications_dismissed', $dismissed, 'no' );
 	}
 }
 

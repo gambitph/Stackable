@@ -19,7 +19,7 @@ if ( ! function_exists( 'stackable_deprecated_navigation_panel_pre_enabled' ) ) 
 		if ( ! empty( $old_version ) && version_compare( $old_version, "3.10.2", "<" ) ) {
 			// If the option was left as default (enabled), enable it because we changed the default to disabled.
 			if ( get_option( 'stackable_enable_navigation_panel' ) === false ) {
-				update_option( 'stackable_enable_navigation_panel', '1' ); // Enable the navigation panel
+				update_option( 'stackable_enable_navigation_panel', '1', 'no' ); // Enable the navigation panel
 			}
 		}
 	}

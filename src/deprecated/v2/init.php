@@ -29,8 +29,8 @@ if ( ! function_exists( 'stackable_auto_compatibility_v2' ) ) {
 			if ( get_option( 'stackable_v2_editor_compatibility' ) === false &&
 				get_option( 'stackable_v2_editor_compatibility_usage' ) === false
 			) {
-				update_option( 'stackable_v2_editor_compatibility_usage', '1' ); // Load version 2 blocks in the editor
-				update_option( 'stackable_v2_disabled_blocks', get_option( 'stackable_disabled_blocks' ) ); // Migrate the disabled blocks.
+				update_option( 'stackable_v2_editor_compatibility_usage', '1', 'no' ); // Load version 2 blocks in the editor
+				update_option( 'stackable_v2_disabled_blocks', get_option( 'stackable_disabled_blocks' ), 'no' ); // Migrate the disabled blocks.
 			}
 
 			// Always enable frontend compatibility when updating so that the frontend will always look okay.

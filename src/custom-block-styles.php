@@ -220,7 +220,7 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 				$block_styles[ $block_index ]->styles[] = $style;
 			}
 
-			update_option( 'stackable_block_styles', $block_styles );
+			update_option( 'stackable_block_styles', $block_styles, 'no' );
 
 			return rest_ensure_response( true );
 		}
@@ -253,7 +253,7 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 					if ( $style->slug === $slug ) {
 						// Remove the style.
 						array_splice( $block_styles[ $block_index ]->styles, $k, 1 );
-						update_option( 'stackable_block_styles', $block_styles );
+						update_option( 'stackable_block_styles', $block_styles, 'no' );
 						break;
 					}
 				}
@@ -265,7 +265,7 @@ if ( ! class_exists( 'Stackable_Custom_Block_Styles' ) ) {
 				$style_post_id = $style_post_ids[ $block . '-' . $slug ];
 				wp_delete_post( $style_post_id, true );
 				unset( $style_post_ids[ $block . '-' . $slug ] );
-				update_option( 'stackable_block_edit_posts', $style_post_ids );
+				update_option( 'stackable_block_edit_posts', $style_post_ids, 'no' );
 			}
 
 			return rest_ensure_response( true );

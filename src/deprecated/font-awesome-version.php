@@ -19,7 +19,7 @@ if ( ! function_exists( 'stackable_font_awesome_icons_version_set_default' ) ) {
 		if ( ! empty( $old_version ) && version_compare( $old_version, "3.12.7", "<" ) ) {
 			// Use FontAwesome icons v5.15.4 for users upgrading from v3.12.6 and below.
 			if ( ! get_option( 'stackable_icons_fa_free_version' ) || get_option( 'stackable_icons_fa_free_version' ) === '5.15.4' ) {
-				update_option( 'stackable_icons_fa_free_version', '5.15.4' );
+				update_option( 'stackable_icons_fa_free_version', '5.15.4', 'no' );
 			}
 		}
 	}

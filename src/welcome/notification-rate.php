@@ -31,7 +31,7 @@ if ( ! class_exists( 'Stackable_Welcome_Notification_Rate' ) ) {
          */
         public function check_activation_date() {
             if ( get_option( 'stackable_activation_date' ) === false ) {
-                update_option( 'stackable_activation_date', time() );
+                update_option( 'stackable_activation_date', time(), 'no' );
             }
 
             $activation_time = get_option( 'stackable_activation_date' );

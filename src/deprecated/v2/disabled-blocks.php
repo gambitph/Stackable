@@ -63,7 +63,7 @@ if ( ! class_exists( 'Stackable_Disabled_Blocks_V2' ) ) {
 			}
 
 			$disabled_blocks = isset( $_POST['disabledBlocks'] ) ? $_POST['disabledBlocks'] : array();
-			update_option( 'stackable_v2_disabled_blocks', $disabled_blocks );
+			update_option( 'stackable_v2_disabled_blocks', $disabled_blocks, 'no' );
 			wp_send_json_success();
 		}
 
