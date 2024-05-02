@@ -419,6 +419,10 @@ const ResizableColumn = props => {
 
 	const fixWidthOnDisableWrap = () => {
 		const parentBlock = select( 'core/block-editor' ).getBlock( parentBlockClientId )
+		// parentBlockClientId might be outdated and cause parentBlock to be null.
+		if ( ! parentBlock ) {
+			return
+		}
 		const adjacentBlocks = _adjacentBlocks.current = parentBlock.innerBlocks
 
 		let totalPercentages = 0
