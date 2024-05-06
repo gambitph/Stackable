@@ -109,6 +109,15 @@ const Styles = props => {
 			/>
 			<BlockCss
 				{ ...propsToPass }
+				selector=".stk-block-carousel__button svg.ugb-custom-icon path"
+				hoverSelector=".stk-block-carousel__button svg.ugb-custom-icon path:hover"
+				styleRule="fill"
+				attrName="arrowIconColor"
+				key="arrowIconColor"
+				hover="all"
+			/>
+			<BlockCss
+				{ ...propsToPass }
 				styleRule="--button-width"
 				attrName="arrowWidth"
 				key="arrowWidth"
