@@ -2,14 +2,17 @@
  * External dependencies
  */
 import {
-	pickBy, isEmpty, isUndefined, uniqBy,
+	pickBy, isEmpty, isUndefined,
 } from 'lodash'
 /**
  * WordPress dependencies
  */
-import { useSelect } from '@wordpress/data'
+import { addQueryArgs } from '@wordpress/url'
+import apiFetch from '@wordpress/api-fetch'
 import { applyFilters } from '@wordpress/hooks'
-import { useMemo } from '@wordpress/element'
+import {
+	useMemo, useState, useEffect,
+} from '@wordpress/element'
 
 /**
  * Custom hook for getting posts
@@ -30,14 +33,20 @@ export const usePostsQuery = attributes => {
 		postInclude,
 		numberOfItems = 6,
 		excludeCurrentPost,
+		excerptLength,
 	} = attributes
 
+	const [ isRequesting, setIsRequesting ] = useState( true )
+	const [ posts, setPosts ] = useState( null )
+
 	const postQuery = useMemo( () => {
+		setIsRequesting( true )
 		const postQuery = pickBy( {
 			...applyFilters( 'stackable.posts.postQuery', {
 				order,
 				orderby: orderBy,
-				per_page: numberOfItems, // eslint-disable-line camelcase
+				posts_per_page: numberOfItems, // eslint-disable-line camelcase
+				excerpt_length: excerptLength, // eslint-disable-line camelcase
 			}, attributes ),
 		}, value => {
 			// Exludes and includes can be empty.
@@ -76,23 +85,18 @@ export const usePostsQuery = attributes => {
 		excludeCurrentPost,
 	] )
 
-	// Only subscribe to resolution changes. This will avoid unneccessary rerenders.
-	const isRequesting = useSelect( select => {
-		return ! select( 'core' ).hasFinishedResolution( 'getEntityRecords', [
-			'postType',
-			type,
-			postQuery,
-		] )
-	}, [ postQuery ] )
-
-	const getEntityRecords = useSelect( select => select( 'core' ).getEntityRecords )
-	const posts = useMemo( () => {
-		const posts = getEntityRecords( 'postType', type, postQuery )
-		return ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' )
+	useEffect( () => {
+		apiFetch( {
+			// eslint-disable-next-line camelcase
+			path: addQueryArgs( `/stackable/v3/get_posts`, { post_type: type, ...postQuery } ),
+			method: 'GET',
+		} ).then( _posts => {
+			setPosts( _posts )
+			// console.log( 'posts', _posts )
+			setIsRequesting( false )
+		} )
 	},
 	[
-		getEntityRecords,
-		isRequesting,
 		postQuery,
 	] )
 

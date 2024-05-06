@@ -609,47 +609,63 @@ if ( ! class_exists( 'Stackable_Posts_Block' ) ) {
 	new Stackable_Posts_Block();
 }
 
-if ( ! function_exists( 'stackable_add_custom_orderby_params' ) ) {
-	/**
-	 * The callback to add `rand` as an option for orderby param in REST API.
-	 * Hook to `rest_{$this->post_type}_collection_params` filter.
-	 *
-	 * @param array $query_params Accepted parameters.
-	 * @return array
-	 *
-	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
-	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
-	 */
-	function stackable_add_custom_orderby_params( $query_params ) {
-		if ( ! in_array( 'rand', $query_params['orderby']['enum'] ) ) {
-			$query_params['orderby']['enum'][] = 'rand';
-		}
-		if ( ! in_array( 'menu_order', $query_params['orderby']['enum'] ) ) {
-			$query_params['orderby']['enum'][] = 'menu_order';
-		}
-		return $query_params;
-	}
-}
+if ( ! class_exists( 'Stackable_Get_Posts_API' ) ) {
+	class Stackable_Get_Posts_API {
 
-if ( ! function_exists( 'stackable_add_custom_orderby' ) ) {
-	/**
-	 * Add `rand` as an option for orderby param in REST API.
-	 * Hook to `rest_{$this->post_type}_collection_params` filter.
-	 *
-	 * @param array $query_params Accepted parameters.
-	 * @return array
-	 *
-	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
-	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
-	 */
-	function stackable_add_custom_orderby() {
-		$post_types = get_post_types( array( 'public' => true ) );
-		foreach ( $post_types as $post_type ) {
-			add_filter( 'rest_' . $post_type . '_collection_params', 'stackable_add_custom_orderby_params' );
+		function __construct() {
+			// Register the rest route to get the succeeding pages.
+			add_action( 'rest_api_init', array( $this, 'register_rest_route' ) );
+		}
+
+		/**
+		 * Register our get posts API endpoint
+		 */
+		public function register_rest_route() {
+			register_rest_route( 'stackable/v3', '/get_posts', array(
+				'methods' => 'GET',
+				'callback' => array( $this, 'get_posts' ),
+				'permission_callback' => '__return_true',
+			) );
+		}
+
+		/**
+		 * Checks whether the argument value is a valid string.
+		 *
+		 * @param * value
+		 * @param WP_Request $request
+		 * @param string $param
+		 *
+		 * @return boolean, if true, the value is valid. Otherwise, false
+		 */
+		public static function validate_string( $value, $request, $param ) {
+			if ( ! is_string( $value ) ) {
+				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a string.', STACKABLE_I18N ), $param ) );
+			}
+
+			return true;
+		}
+
+		/**
+		 * Response handler for getting the queried posts
+		 *
+		 * @param WP_Request $request
+		 * @return string the API response
+		 */
+		public function get_posts( $request ) {
+			$args = $request->get_query_params();
+
+			$query = new WP_Query( $args );
+
+			error_log('args: ' . print_r($args, true));
+			foreach ( $query->posts as $key=>$post ) {
+				$query->posts[$key]->post_excerpt_stackable = Stackable_Posts_Block::get_excerpt_by_post_id( $post->ID );
+			}
+
+			return new WP_REST_Response( $query->posts, 200 );
 		}
 	}
 
-	add_action( 'rest_api_init', 'stackable_add_custom_orderby' );
+	new Stackable_Get_Posts_API();
 }
 
 
