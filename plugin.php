@@ -108,8 +108,12 @@ if ( ! function_exists( 'stackable_version_upgrade_check' ) ) {
 if ( ! function_exists( 'stackable_early_version_upgrade_check' ) ) {
 	function stackable_early_version_upgrade_check() {
 		// Always check the current version installed. Trigger if it changes.
-		if ( is_admin() && get_option( 'stackable_current_version_installed' ) !== STACKABLE_VERSION ) {
-			do_action( 'stackable_early_version_upgraded', get_option( 'stackable_current_version_installed' ), STACKABLE_VERSION );
+		if ( get_option( 'stackable_current_version_installed' ) !== STACKABLE_VERSION ) {
+			if ( is_admin() ) {
+				do_action( 'stackable_early_version_upgraded', get_option( 'stackable_current_version_installed' ), STACKABLE_VERSION );
+			} else {
+				do_action( 'stackable_early_version_upgraded_frontend', get_option( 'stackable_current_version_installed' ), STACKABLE_VERSION );
+			}
 		}
 	}
 	add_action( 'init', 'stackable_early_version_upgrade_check', 1 );
@@ -180,6 +184,7 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
 		delete_option( 'stackable_enable_navigation_panel' );
 		// Delete stored signatures for display conditions
 		delete_option( 'stackable_custom_php_sigs' );
+		delete_option( 'stackable_disp_cond_custom_php_sigs' );
 	}
 	register_deactivation_hook( __FILE__, 'stackable_deactivation_cleanup' );
 }
