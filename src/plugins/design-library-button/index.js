@@ -18,6 +18,8 @@ import { subscribe } from '@wordpress/data'
 const mountDesignLibrary = () => {
 	// Content only editing mode shouldn't have a button.
 	if ( isContentOnlyMode ) {
+		// eslint-disable-next-line no-console
+		console.warn( 'Stackable: Content only editing is enforced on the current user, you can only see text blocks in the inserter.' )
 		return
 	}
 
