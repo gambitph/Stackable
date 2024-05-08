@@ -181,9 +181,16 @@ const Styles = props => {
 				styleRule="flex"
 				attrName="buttonFullWidth"
 				key="buttonFullWidth-save"
-				valueCallback={ value => {
-					return value ? '1' : undefined
+				valueCallback={ ( value, getAttribute ) => {
+					let basis = '0%' // This is the default value of flex-basis
+					// If we're wrapping, we need to set flex-basis to auto so
+					// that it will wrap and go full-width.
+					if ( getAttribute( 'flexWrap' ) ) {
+						basis = 'auto'
+					}
+					return value ? ( '1 0 ' + basis ) : undefined
 				} }
+				dependencies={ [ 'flexWrap' ] }
 			/>
 			<BlockCss
 				{ ...propsToPass }
@@ -192,9 +199,16 @@ const Styles = props => {
 				styleRule="flex"
 				attrName="buttonFullWidth"
 				key="buttonFullWidth"
-				valueCallback={ value => {
-					return value ? '1' : undefined
+				valueCallback={ ( value, getAttribute ) => {
+					let basis = '0%' // This is the default value of flex-basis
+					// If we're wrapping, we need to set flex-basis to auto so
+					// that it will wrap and go full-width.
+					if ( getAttribute( 'flexWrap' ) ) {
+						basis = 'auto'
+					}
+					return value ? ( '1 0 ' + basis ) : undefined
 				} }
+				dependencies={ [ 'flexWrap' ] }
 			/>
 		</>
 	)
