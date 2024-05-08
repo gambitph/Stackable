@@ -19,8 +19,8 @@
 
 	// Apply the color to the SVG path on the defintion
 	svg.ugb-custom-icon path {
-		fill: var(--stk-icon-list-marker-color);
-		color: var(--stk-icon-list-marker-color);
+		fill: var(--stk-icon-list-marker-color) !important;
+		color: var(--stk-icon-list-marker-color) !important;
 	}
 }
 
