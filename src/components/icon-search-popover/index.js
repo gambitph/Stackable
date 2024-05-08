@@ -71,6 +71,10 @@ export const cleanSvgString = svgString => {
 		newSvg = newSvg.replace( /\s*<g\s*>([\s\S]*?)<\/g>\s*/gm, '$1' )
 	}
 
+	// Remove width and height attribute so that we can control the size (default to 100%)
+	newSvg = newSvg.replace( /width="[^"]*"/, '' )
+		.replace( /height="[^"]*"/, '' )
+
 	return newSvg
 }
 
