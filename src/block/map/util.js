@@ -57,18 +57,21 @@ export const getIconOptions = attributes => {
 		return null
 	 }
 
-	svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
+	// Remove this since sets the fill to the default color black, even when no color is selected.
+	// svgEl.firstElementChild.setAttribute( 'fill', 'currentColor' )
 	const svgIconSize = iconSize ? parseInt( iconSize, 10 ) : DEFAULT_ICON_SIZE
 	svgEl.setAttribute( 'height', svgIconSize )
 	svgEl.setAttribute( 'width', svgIconSize )
 	svgEl.setAttribute( 'style', `color: ${ iconColor1 || DEFAULT_ICON_COLOR }; opacity: ${ iconOpacity || iconOpacity === 0 ? parseFloat( iconOpacity, 10 ) : DEFAULT_ICON_OPACITY }` )
 	svgEl.setAttribute( 'transform', `rotate(${ iconRotation || iconRotation === 0 ? parseInt( iconRotation, 10 ) : DEFAULT_ICON_ROTATION })` )
 
-	// Apply the fill directly to the SVG shapes
-	const svgShapes = svgEl.querySelectorAll( 'g,path,rect,polygon,ellipse' )
-	svgShapes.forEach( svgShape => {
-		svgShape.setAttribute( 'style', `fill: ${ iconColor1 }` )
-	} )
+	if ( iconColor1 ) {
+		// Apply the fill directly to the SVG shapes
+		const svgShapes = svgEl.querySelectorAll( 'g,path,rect,polygon,ellipse' )
+		svgShapes.forEach( svgShape => {
+			svgShape.setAttribute( 'style', `fill: ${ iconColor1 }` )
+		} )
+	}
 
 	const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
 	const iconUrl = `data:image/svg+xml;base64,${ window.btoa( serializedString ) }`
