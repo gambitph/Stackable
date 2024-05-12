@@ -27,6 +27,7 @@
 		}
 	}
 
+	// Remove outline on focus, but keep it for keyboard navigation.
 	summary.stk-block-column:focus:not(:focus-visible) {
 		outline: none;
 	}
