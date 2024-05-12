@@ -72,8 +72,8 @@ export const cleanSvgString = svgString => {
 	}
 
 	// Remove width and height attribute so that we can control the size (default to 100%)
-	newSvg = newSvg.replace( /width="[^"]*"/, '' )
-		.replace( /height="[^"]*"/, '' )
+	newSvg = newSvg.replace( /<svg([^>]*)width=(["'])[^"']*["']([^>]*)/g, '<svg$1$3' )
+		.replace( /<svg([^>]*)height=(["'])[^"']*["']([^>]*)/g, '<svg$1$3' )
 
 	return newSvg
 }
