@@ -26,6 +26,11 @@
 			justify-content: flex-end;
 		}
 	}
+
+	summary.stk-block-column:focus:not(:focus-visible) {
+		outline: none;
+	}
+
 	// Gap between icon and the title.
 	.stk-block-accordion__heading {
 		.stk-block-icon-label .stk-block-heading {
