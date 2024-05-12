@@ -64,10 +64,10 @@ export const getIconOptions = attributes => {
 	svgEl.setAttribute( 'style', `color: ${ iconColor1 || DEFAULT_ICON_COLOR }; opacity: ${ iconOpacity || iconOpacity === 0 ? parseFloat( iconOpacity, 10 ) : DEFAULT_ICON_OPACITY }` )
 	svgEl.setAttribute( 'transform', `rotate(${ iconRotation || iconRotation === 0 ? parseInt( iconRotation, 10 ) : DEFAULT_ICON_ROTATION })` )
 
-	// Apply the fill directly to the path elements
-	const pathElements = svgEl.querySelectorAll( 'path' )
-	pathElements.forEach( pathElement => {
-		pathElement.setAttribute( 'style', `fill: ${ iconColor1 || DEFAULT_ICON_COLOR }; color: ${ iconColor1 || DEFAULT_ICON_COLOR }; opacity: ${ iconOpacity || iconOpacity === 0 ? parseFloat( iconOpacity, 10 ) : DEFAULT_ICON_OPACITY }` )
+	// Apply the fill directly to the SVG shapes
+	const svgShapes = svgEl.querySelectorAll( 'g,path,rect,polygon,ellipse' )
+	svgShapes.forEach( svgShape => {
+		svgShape.setAttribute( 'style', `fill: ${ iconColor1 }` )
 	} )
 
 	const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
