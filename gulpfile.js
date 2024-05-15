@@ -90,6 +90,72 @@ gulp.task( 'generate-indexphp', function() {
 	return g
 } )
 
+gulp.task( 'generate-stk-block-typesphp', function( cb ) {
+	// generate stk-block-types.php
+
+	const fs = require( 'fs' )
+
+	const toWpBlockType = jsonStr => {
+		const jsonData = JSON.parse( jsonStr )
+		const argsArray = JSON.stringify( jsonData, null, '\t\t\t\t' )
+			.replace( /{/g, '[' ).replace( /}(\s)*/g, '\t\t\t]' ).replace( /"/g, '\'' ).replace( /:/g, ' =>' )
+		const phpScript = `'${ jsonData.name }' => ${ argsArray }`
+
+		return phpScript
+	}
+
+	const getBlockNames = path => {
+		return fs.readdirSync( path, { withFileTypes: true } )
+			.filter( dirent => dirent.isDirectory() )
+			.map( dirent => dirent.name )
+	}
+
+	const blocks = getBlockNames( path.resolve( __dirname, 'src/block' ) )
+	const data = []
+
+	blocks.forEach( block => {
+		const jsonPath = path.resolve( __dirname, `src/block/${ block }/block.json` )
+		if ( fs.existsSync( jsonPath ) ) {
+			const fileContent = fs.readFileSync( jsonPath, 'utf-8' )
+			const wpBlockType = toWpBlockType( fileContent )
+			data.push( wpBlockType )
+		}
+	} )
+
+	// Generate PHP variable string
+	const script = `<?php
+	// This is a generated file by gulp generate-stk-block-typesphp
+
+	// Exit if accessed directly.
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
+	}
+
+	if ( ! function_exists( 'stackable_get_blocks_array') ) {
+		function stackable_get_blocks_array( $disabled_blocks = array() ) {
+			$stk_blocks = array(
+				${ data.join( ',\n\t\t\t' ) }
+			);
+
+			if ( is_array( $disabled_blocks ) && count( $disabled_blocks ) > 0 ) {
+				foreach ( $disabled_blocks as $block_name ) {
+					unset( $stk_blocks[ $block_name ] );
+				}
+			}
+			return $stk_blocks;
+		}
+
+		add_filter( 'stackable.blocks', 'stackable_get_blocks_array', 1, 1 );
+	}
+	?>
+	`
+
+	// Write PHP variable to file
+	fs.writeFileSync( path.resolve( __dirname, 'src/stk-block-types.php' ), script )
+
+	cb()
+} )
+
 gulp.task( 'generate-translations-js', gulp.series(
 	// The collect function has an issue where it will not continue if the
 	// folder will it writes to doesn't exist, create it to prevent an error.
@@ -382,7 +448,7 @@ gulp.task( 'style-deprecated', gulp.parallel(
  * END deprecated build styles, we still build these
  ********************************************************************/
 
-gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated', 'generate-translations-js' ) )
+gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated', 'generate-translations-js', 'generate-stk-block-typesphp' ) )
 
 gulp.task( 'build', gulp.series( 'build-process' ) )
 
@@ -407,6 +473,11 @@ const watchFuncs = ( basePath = '.' ) => {
 	gulp.watch(
 		[ `${ basePath }/src/welcome/**/*.scss` ],
 		gulp.parallel( [ 'welcome-styles' ] )
+	)
+
+	gulp.watch(
+		[ `${ basePath }/src/block/**/block.json` ],
+		gulp.parallel( [ 'generate-stk-block-typesphp' ] )
 	)
 }
 
