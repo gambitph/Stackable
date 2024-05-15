@@ -120,7 +120,7 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 			post_title: _title,
 			category_list: categoryList,
 			author_info: authorInfo,
-			date_gmt: dateGmt,
+			post_date_gmt: dateGmt,
 			comments_num: commentsNum,
 			post_excerpt_stackable: postExcerptStackable,
 		} = post

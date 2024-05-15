@@ -46,7 +46,7 @@ export const usePostsQuery = attributes => {
 				order,
 				orderby: orderBy,
 				posts_per_page: numberOfItems, // eslint-disable-line camelcase
-				excerpt_length: excerptLength, // eslint-disable-line camelcase
+				max_excerpt: excerptLength, // eslint-disable-line camelcase
 			}, attributes ),
 		}, value => {
 			// Exludes and includes can be empty.
