@@ -3049,6 +3049,27 @@
     ]
   },
   {
+    "family": "Briem Hand",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "greek-ext",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Bruno Ace",
     "variants": [
       "regular"
@@ -6169,6 +6190,17 @@
     ]
   },
   {
+    "family": "Freeman",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Fresca",
     "variants": [
       "regular"
@@ -6931,6 +6963,9 @@
       "regular"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek-ext",
       "latin",
       "latin-ext",
       "vietnamese"
@@ -8233,6 +8268,16 @@
     ]
   },
   {
+    "family": "Jacquard 24 Charted",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Jacquarda Bastarda 9",
     "variants": [
       "regular"
@@ -8275,6 +8320,28 @@
     ]
   },
   {
+    "family": "Jaini",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jaini Purva",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "devanagari",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Jaldi",
     "variants": [
       "regular",
@@ -8284,6 +8351,17 @@
       "devanagari",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Jaro",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -8348,6 +8426,16 @@
   },
   {
     "family": "Jersey 25",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Jersey 25 Charted",
     "variants": [
       "regular"
     ],
@@ -10210,7 +10298,8 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -12562,7 +12651,9 @@
     "subsets": [
       "canadian-aboriginal",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -13513,7 +13604,6 @@
       "regular"
     ],
     "subsets": [
-      "chinese-simplified",
       "latin",
       "latin-ext",
       "math",
@@ -16456,6 +16546,16 @@
     ]
   },
   {
+    "family": "Poetsen One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Poiret One",
     "variants": [
       "regular"
@@ -17034,6 +17134,23 @@
     ]
   },
   {
+    "family": "Radio Canada Big",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Radley",
     "variants": [
       "regular",
@@ -17371,6 +17488,50 @@
   },
   {
     "family": "Reddit Mono",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Reddit Sans",
+    "variants": [
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Reddit Sans Condensed",
     "variants": [
       "200",
       "300",
@@ -17736,7 +17897,6 @@
       "regular"
     ],
     "subsets": [
-      "cyrillic",
       "japanese",
       "latin",
       "latin-ext"
@@ -18779,6 +18939,16 @@
     "variants": [
       "regular",
       "italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Sedan SC",
+    "variants": [
+      "regular"
     ],
     "subsets": [
       "latin",
@@ -20271,6 +20441,26 @@
     ]
   },
   {
+    "family": "Teachers",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "greek-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Teko",
     "variants": [
       "300",
@@ -20887,6 +21077,56 @@
       "regular",
       "italic",
       "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Ubuntu Sans",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Ubuntu Sans Mono",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [

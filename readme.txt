@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.2
 Tested up to: 6.5.2
 Requires PHP: 7.3
-Stable tag: 3.12.15
+Stable tag: 3.12.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.12.16 =
+* Fixed: Improved database performance of dynamic content when dealing with auto-detected meta fields #337
+* Fixed: Transforming blocks to columns can produce block errors #3151
+* Fixed: Dynamic content - possible Metabox error when using some fields #3156
+* Fixed: Dynamic content - warning when using a featured image that has already been deleted #3168
+* Fixed: Security improvements
 
 = 3.12.15 =
 * New: Tabs Block - added new option to set anchor links per tab that you can use to open each tab #3124

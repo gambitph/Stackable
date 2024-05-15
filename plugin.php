@@ -6,7 +6,7 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.12.15
+ * Version: 3.12.16
  *
  * @package Stackable
  */
@@ -24,7 +24,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
 defined( 'STACKABLE_BUILD' ) || define( 'STACKABLE_BUILD', 'free' );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.12.15' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.12.16' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_DESIGN_LIBRARY_URL' ) || define( 'STACKABLE_DESIGN_LIBRARY_URL', 'https://storage.googleapis.com/stackable-plugin-assets' ); // Design Library CDN URL
@@ -178,6 +178,8 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
 		delete_option( 'stackable_inspector_premium_notice_status' );
 		// Delete old Navigation Panel setting.
 		delete_option( 'stackable_enable_navigation_panel' );
+		// Delete stored signatures for display conditions
+		delete_option( 'stackable_custom_php_sigs' );
 	}
 	register_deactivation_hook( __FILE__, 'stackable_deactivation_cleanup' );
 }
@@ -185,6 +187,10 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
 /********************************************************************************************
  * END Deactivation & cleanup
  ********************************************************************************************/
+
+function is_frontend() {
+	return ! is_admin() && ! wp_is_json_request();
+}
 
 /**
  * Freemius.

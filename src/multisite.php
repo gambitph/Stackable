@@ -43,7 +43,7 @@ if ( ! function_exists( 'stackable_allow_safe_style_css' ) ) {
 	add_filter( 'safe_style_css', 'stackable_allow_safe_style_css' );
 }
 
-if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
+if ( is_multisite() && ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 
 	/**
 	 * Fix block saving for Non-Super-Admins (no unfiltered_html capability).
@@ -203,10 +203,11 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 		$tags[ $tag ]['role'] = true; // Used by Accordion block.
 		$tags[ $tag ]['tabindex'] = true; // Used by Accordion block.
 	}
+
 	add_filter( 'wp_kses_allowed_html', 'stackable_allow_wp_kses_allowed_html', 10, 2 );
 }
 
-if ( ! function_exists( 'stackable_fix_gt_style_errors' ) ) {
+if ( is_multisite() && ! function_exists( 'stackable_fix_gt_style_errors' ) ) {
 
 	/**
 	 * Fix block saving for Non-Super-Admins (no unfiltered_html capability).
@@ -231,9 +232,6 @@ if ( ! function_exists( 'stackable_fix_gt_style_errors' ) ) {
 	 * @return array Post data to save
 	 */
 	function stackable_fix_gt_style_errors( $data ) {
-		if ( ! is_multisite() ) {
-			return $data;
-		}
 		if ( empty( $data['post_content'] ) ) {
 			return $data;
 		}

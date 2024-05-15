@@ -40,7 +40,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			}
 
 			// Checks if a Stackable block is rendered in the frontend, then loads our scripts.
-			if ( ! is_admin() ) {
+			if ( is_frontend() ) {
 				add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
 				add_action( 'template_redirect', array( $this, 'load_frontend_scripts_conditionally_head' ) );
 			}
@@ -185,41 +185,38 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$block_content = "";
 			}
 
-			// Load our main frontend scripts if there's a Stackable block loaded in the
-			// frontend.
+			// Load our main frontend scripts if there's a Stackable block
+			// loaded in the frontend.
 			if ( ! $this->is_main_script_loaded && ! is_admin() ) {
-				$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-				if (
-					stripos( $block_name, 'stackable/' ) === 0 ||
-					stripos( $block_content, '<!-- wp:stackable/' ) !==  false ||
-					stripos( $block_content, 'stk-highlight' ) !==  false
+				if ( strpos( $block_content, '<!-- wp:stackable/' ) !== false ||
+					 strpos( $block_content, 'stk-highlight' ) !== false
 				) {
 					$this->block_enqueue_frontend_assets();
 					$this->is_main_script_loaded = true;
 				}
 			}
 
-			// Load our individual block script if they're used in the page.
-			$stackable_block = '';
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
-				$stackable_block = substr( $block_name, 10 );
-			} else if ( stripos( $block_content, '<!-- wp:stackable/' ) !==  false ) {
-				if ( preg_match( '#stackable/([\w\d-]+)#', $block_content, $matches ) ) {
-					$stackable_block = $matches[1];
-				}
+			// Only do this for Stackable blocks.
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
+				return $block_content;
 			}
+
+			// Load our main frontend scripts if not yet loaded.
+			if ( ! $this->is_main_script_loaded && ! is_admin() ) {
+				$this->block_enqueue_frontend_assets();
+				$this->is_main_script_loaded = true;
+			}
+
 			// Enqueue the block script once.
-			if ( ! empty( $stackable_block ) && ! array_key_exists( $stackable_block, $this->scripts_loaded ) ) {
+			if ( ! isset( $this->scripts_loaded[ $block['blockName'] ] ) ) {
+				$stackable_block = substr( $block['blockName'], 10 );
 				do_action( 'stackable/' . $stackable_block . '/enqueue_scripts' );
-				$this->scripts_loaded[] = $stackable_block;
+				$this->scripts_loaded[ $block['blockName'] ] = true;
 			}
 
 			// Check whether the current block needs to enqueue some scripts.
 			// This gets called across all the blocks.
-			if ( stripos( $block_name, 'stackable/' ) === 0 ) {
-				do_action( 'stackable/enqueue_scripts', $block_content, $block );
-			}
+			do_action( 'stackable/enqueue_scripts', $block_content, $block );
 
 			return $block_content;
 		}
