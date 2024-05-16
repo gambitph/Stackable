@@ -30,6 +30,10 @@ class StackableAccordion {
 					el.doAnimate = false
 					const preHeight = el.dataset.preHeight
 
+					// Prevent text selection while animating
+					const content = el.querySelector( '.stk-block-accordion__content' )
+					content.style.userSelect = 'none'
+
 					// When inside columns, flex prevents the accordion closing animation, this hack fixes it.
 					const doWrapHack = !! el.closest( '.stk-block-columns' )
 					let wrapper = null
@@ -49,6 +53,22 @@ class StackableAccordion {
 						el.contentEl.anim = el.contentEl.animate( {
 							maxHeight: [ `0px`, `${ height - preHeight }px` ],
 						}, ANIM_OPTS )
+					}
+
+					// When the animation is done, remove text selection from double click
+					// and allow text selection again
+					el.anim.onfinish = el.anim.oncancel = () => {
+						if ( window.getSelection ) {
+							// eslint-disable-next-line @wordpress/no-global-get-selection
+							const selection = window.getSelection()
+							if ( selection.removeAllRanges ) {
+								selection.removeAllRanges()
+							}
+						} else if ( document.selection ) {
+							// For older IE browsers
+							document.selection.empty()
+						}
+						content.style.userSelect = 'auto'
 					}
 
 					if ( doWrapHack ) {
