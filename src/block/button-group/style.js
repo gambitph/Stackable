@@ -210,6 +210,30 @@ const Styles = props => {
 				} }
 				dependencies={ [ 'flexWrap' ] }
 			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-button-group"
+				styleRule="--stk-button-group-flex-wrap"
+				attrName="flexWrap"
+				key="flexWrap-save-button-group"
+				responsive="all"
+				valueCallback={ value => {
+					return value ? 'auto' : undefined
+				} }
+			/>
+			<BlockCss
+				{ ...propsToPass }
+				renderIn="save"
+				selector=".stk-button-group .stk-block-button"
+				styleRule="width"
+				attrName="flexWrap"
+				key="flexWrap-save-button-group-unset-width"
+				responsive="all"
+				valueCallback={ value => {
+					return value ? 'unset' : undefined
+				} }
+			/>
 		</>
 	)
 }
