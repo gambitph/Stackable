@@ -242,7 +242,7 @@ export const ButtonGroupStyles = memo( props => {
 	return (
 		<>
 			<Alignment.Style { ...props } />
-			<BlockDiv.Style { ...props } />
+			<BlockDiv.Style { ...props } verticalAlignSelector=".stk-button-group > .block-editor-inner-blocks > .block-editor-block-list__layout" />
 			<MarginBottom.Style { ...props } />
 			<Advanced.Style { ...props } />
 			<Transform.Style { ...props } />
@@ -265,7 +265,7 @@ ButtonGroupStyles.Content = props => {
 	return (
 		<BlockCssCompiler>
 			<Alignment.Style.Content { ...props } />
-			<BlockDiv.Style.Content { ...props } />
+			<BlockDiv.Style.Content { ...props } verticalAlignSelector=".stk-button-group" />
 			<MarginBottom.Style.Content { ...props } />
 			<Advanced.Style.Content { ...props } />
 			<Transform.Style.Content { ...props } />
