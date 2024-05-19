@@ -56,6 +56,10 @@
 		&::before {
 			mask-size: 100% 100%;
 		}
+		// Firefox doesn't automatically inherit the mask-size from the parent. Fixes #3042.
+		img {
+			mask-size: inherit !important;
+		}
 	}
 }
 
