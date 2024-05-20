@@ -124,31 +124,25 @@ gulp.task( 'generate-stk-block-typesphp', function( cb ) {
 
 	// Generate PHP variable string
 	const script = `<?php
-	// This is a generated file by gulp generate-stk-block-typesphp
+// This is a generated file by gulp generate-stk-block-typesphp
 
-	// Exit if accessed directly.
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( ! function_exists( 'stackable_get_blocks_array') ) {
+	function stackable_get_blocks_array( $blocks = array() ) {
+		$stk_blocks = array(
+			${ data.join( ',\n\t\t\t' ) }
+		);
+
+		return array_merge( $blocks, $stk_blocks );
 	}
 
-	if ( ! function_exists( 'stackable_get_blocks_array') ) {
-		function stackable_get_blocks_array( $disabled_blocks = array() ) {
-			$stk_blocks = array(
-				${ data.join( ',\n\t\t\t' ) }
-			);
-
-			if ( is_array( $disabled_blocks ) && count( $disabled_blocks ) > 0 ) {
-				foreach ( $disabled_blocks as $block_name ) {
-					unset( $stk_blocks[ $block_name ] );
-				}
-			}
-			return $stk_blocks;
-		}
-
-		add_filter( 'stackable.blocks', 'stackable_get_blocks_array', 1, 1 );
-	}
-	?>
-	`
+	add_filter( 'stackable.blocks', 'stackable_get_blocks_array' );
+}
+?>`
 
 	// Write PHP variable to file
 	fs.writeFileSync( path.resolve( __dirname, 'src/stk-block-types.php' ), script )

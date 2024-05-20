@@ -1,15 +1,15 @@
 <?php
-	// This is a generated file by gulp generate-stk-block-typesphp
+// This is a generated file by gulp generate-stk-block-typesphp
 
-	// Exit if accessed directly.
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	if ( ! function_exists( 'stackable_get_blocks_array') ) {
-		function stackable_get_blocks_array( $disabled_blocks = array() ) {
-			$stk_blocks = array(
-				'stackable/accordion' => [
+if ( ! function_exists( 'stackable_get_blocks_array') ) {
+	function stackable_get_blocks_array( $blocks = array() ) {
+		$stk_blocks = array(
+			'stackable/accordion' => [
 				'apiVersion' => 3,
 				'name' => 'stackable/accordion',
 				'title' => 'Accordion',
@@ -990,17 +990,11 @@
 				'stk-type' => 'special',
 				'stk-demo' => 'https =>//wpstackable.com/video-popup-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			]
-			);
+		);
 
-			if ( is_array( $disabled_blocks ) && count( $disabled_blocks ) > 0 ) {
-				foreach ( $disabled_blocks as $block_name ) {
-					unset( $stk_blocks[ $block_name ] );
-				}
-			}
-			return $stk_blocks;
-		}
-
-		add_filter( 'stackable.blocks', 'stackable_get_blocks_array', 1, 1 );
+		return array_merge( $blocks, $stk_blocks );
 	}
-	?>
-	
+
+	add_filter( 'stackable.blocks', 'stackable_get_blocks_array' );
+}
+?>

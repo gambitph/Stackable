@@ -44,7 +44,7 @@ export const usePostsQuery = attributes => {
 		const postQuery = pickBy( {
 			...applyFilters( 'stackable.posts.postQuery', {
 				order,
-				orderby: orderBy,
+				orderby: [ orderBy, 'ID' ].join( ' ' ),
 				posts_per_page: numberOfItems, // eslint-disable-line camelcase
 				max_excerpt: excerptLength, // eslint-disable-line camelcase
 			}, attributes ),
@@ -56,17 +56,21 @@ export const usePostsQuery = attributes => {
 			// Don't include empty values.
 			return ! isUndefined( value ) && value !== ''
 		} )
-
 		if ( taxonomy && taxonomyType ) {
+			const _taxonomy = taxonomy.split( ',' ).map( s => parseInt( s, 10 ) ).filter( i => ! isNaN( i ) )
 			// Categories.
 			if ( taxonomyType === 'category' ) {
-				postQuery[ taxonomyFilterType === '__in' ? 'categories' : 'categories_exclude' ] = taxonomy
+				postQuery[ taxonomyFilterType === '__in' ? 'category__in' : 'category__not_in' ] = _taxonomy
 				// Tags.
 			} else if ( taxonomyType === 'post_tag' ) {
-				postQuery[ taxonomyFilterType === '__in' ? 'tags' : 'tags_exclude' ] = taxonomy
+				postQuery[ taxonomyFilterType === '__in' ? 'tag__in' : 'tag__not_in' ] = _taxonomy
 				// Custom taxonomies.
 			} else {
-				postQuery[ taxonomyFilterType === '__in' ? taxonomyType : `${ taxonomyType }_exclude` ] = taxonomy
+				postQuery.tax_query = [ { // eslint-disable-line camelcase
+					taxonomy: taxonomyType,
+					terms: _taxonomy,
+					operator: taxonomyFilterType === '__in' ? 'IN' : 'NOT IN',
+				} ]
 			}
 		}
 
@@ -92,13 +96,9 @@ export const usePostsQuery = attributes => {
 			method: 'GET',
 		} ).then( _posts => {
 			setPosts( _posts )
-			// console.log( 'posts', _posts )
 			setIsRequesting( false )
 		} )
-	},
-	[
-		postQuery,
-	] )
+	}, [ postQuery ] )
 
 	return {
 		posts,

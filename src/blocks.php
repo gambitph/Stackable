@@ -36,8 +36,7 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 			);
 
 			$block_args = array_merge( $metadata, $register_options );
-			$block_type = new WP_Block_Type( $metadata['name'], $block_args );
-			register_block_type( $block_type );
+			register_block_type( $metadata['name'], $block_args );
 		}
 	}
 	add_action( 'init', 'stackable_register_blocks' );
