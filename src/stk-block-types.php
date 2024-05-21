@@ -10,985 +10,992 @@ if ( ! function_exists( 'stackable_get_blocks_array') ) {
 	function stackable_get_blocks_array( $blocks = array() ) {
 		$stk_blocks = array(
 			'stackable/accordion' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/accordion',
-				'title' => 'Accordion',
-				'description' => 'A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.',
+				'title' => __( 'Accordion', STACKABLE_I18N ),
+				'description' => __( 'A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Toggle',
-								'Faq'
+					__( 'Toggle', STACKABLE_I18N ),
+					__( 'Faq', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/accordion-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/accordion-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/blockquote' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/blockquote',
-				'title' => 'Blockquote',
-				'description' => 'Display a quote in style',
+				'title' => __( 'Blockquote', STACKABLE_I18N ),
+				'description' => __( 'Display a quote in style', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/blockquote-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/blockquote-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/button' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/button',
-				'title' => 'Button',
-				'description' => 'Add a customizable button.',
+				'title' => __( 'Button', STACKABLE_I18N ),
+				'description' => __( 'Add a customizable button.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'parent' => [
-								'stackable/button-group'
+					'stackable/button-group'
 				],
 				'keywords' => [
-								'Link'
+					__( 'Link', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden',
-				'stk-demo' => 'https =>//wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/button-group' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/button-group',
-				'title' => 'Button Group',
-				'description' => 'Add a customizable button.',
+				'title' => __( 'Button Group', STACKABLE_I18N ),
+				'description' => __( 'Add a customizable button.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Link'
+					__( 'Link', STACKABLE_I18N )
 				],
 				'stk-variants' => [
-								[
-												'name' => 'icon-button',
-												'title' => 'Icon Button',
-												'description' => 'Add a customizable button.',
-												'category' => 'stackable',
-												'stk-type' => 'essential',
-												'stk-demo' => 'https =>//wpstackable.com/icon-button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
-											],
-								[
-												'name' => 'button',
-												'title' => 'Button',
-												'description' => 'Add a customizable button.',
-												'category' => 'stackable',
-												'stk-type' => 'essential',
-												'stk-demo' => 'https =>//wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
-											],
-								[
-												'name' => 'social-buttons',
-												'title' => 'Social Buttons',
-												'description' => 'Add social buttons.',
-												'category' => 'stackable',
-												'stk-type' => 'special',
-												'stk-demo' => 'https =>//wpstackable.com/social-buttons-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
-											]],
+					[
+						'name' => 'icon-button',
+						'title' => __( 'Icon Button', STACKABLE_I18N ),
+						'description' => __( 'Add a customizable button.', STACKABLE_I18N ),
+						'category' => 'stackable',
+						'stk-type' => 'essential',
+						'stk-demo' => 'https://wpstackable.com/icon-button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+					],
+					[
+						'name' => 'button',
+						'title' => __( 'Button', STACKABLE_I18N ),
+						'description' => __( 'Add a customizable button.', STACKABLE_I18N ),
+						'category' => 'stackable',
+						'stk-type' => 'essential',
+						'stk-demo' => 'https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+					],
+					[
+						'name' => 'social-buttons',
+						'title' => __( 'Social Buttons', STACKABLE_I18N ),
+						'description' => __( 'Add social buttons.', STACKABLE_I18N ),
+						'category' => 'stackable',
+						'stk-type' => 'special',
+						'stk-demo' => 'https://wpstackable.com/social-buttons-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+					]
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden'
 			],
 			'stackable/call-to-action' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/call-to-action',
-				'title' => 'Call to Action',
-				'description' => 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.',
+				'title' => __( 'Call to Action', STACKABLE_I18N ),
+				'description' => __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'innerBlockOrientation'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
+				],
 				'keywords' => [
-								'CTA'
+					__( 'CTA', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/call-to-action-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/call-to-action-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/card' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/card',
-				'title' => 'Card',
-				'description' => 'Describe a single subject in a small card. You can use this to describe your product, service or a person.',
+				'title' => __( 'Card', STACKABLE_I18N ),
+				'description' => __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'innerBlockOrientation'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/card-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/card-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/carousel' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/carousel',
-				'title' => 'Carousel',
-				'description' => 'A carousel slider.',
+				'title' => __( 'Carousel', STACKABLE_I18N ),
+				'description' => __( 'A carousel slider.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Slider'
+					__( 'Slider', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/carousel-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/carousel-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/column' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/column',
-				'title' => 'Inner Column',
-				'description' => 'A single column with advanced layout options.',
+				'title' => __( 'Inner Column', STACKABLE_I18N ),
+				'description' => __( 'A single column with advanced layout options.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation',
-								'stackable/columnWrapDesktop'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation',
+					'stackable/columnWrapDesktop'
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'innerBlockOrientation'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
+				],
 				'keywords' => [
-								'Section rows'
+					__( 'Section rows', STACKABLE_I18N )
 				],
 				'parent' => [
-								'stackable/columns',
-								'stackable/feature',
-								'stackable/feature-grid',
-								'stackable/horizontal-scroller',
-								'stackable/tab-content'
+					'stackable/columns',
+					'stackable/feature',
+					'stackable/feature-grid',
+					'stackable/horizontal-scroller',
+					'stackable/tab-content'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden'
 			],
 			'stackable/columns' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/columns',
-				'title' => 'Columns',
-				'description' => 'Multiple columns with advanced layout options.',
+				'title' => __( 'Columns', STACKABLE_I18N ),
+				'description' => __( 'Multiple columns with advanced layout options.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId'
 				],
 				'keywords' => [
-								'Section rows',
-								'Container'
+					__( 'Section rows', STACKABLE_I18N ),
+					__( 'Container', STACKABLE_I18N )
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'columnJustify',
-								'stackable/columnWrapDesktop' => 'columnWrapDesktop'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'columnJustify',
+					'stackable/columnWrapDesktop' => 'columnWrapDesktop'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
-				'stk-demo' => 'https =>//wpstackable.com/columns-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/columns-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/count-up' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/count-up',
-				'title' => 'Count Up',
-				'description' => 'Showcase your stats. Display how many customers you have or the number of downloads of your app.',
+				'title' => __( 'Count Up', STACKABLE_I18N ),
+				'description' => __( 'Showcase your stats. Display how many customers you have or the number of downloads of your app.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Number'
+					__( 'Number', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/count-up-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/count-up-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/countdown' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/countdown',
-				'title' => 'Countdown',
-				'description' => 'Display a countdown timer on your website.',
+				'title' => __( 'Countdown', STACKABLE_I18N ),
+				'description' => __( 'Display a countdown timer on your website.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Timer'
+					__( 'Timer', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/countdown-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/countdown-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/design-library' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/design-library',
-				'title' => 'Design Library',
-				'description' => 'Choose a layout or block from the Stackable Design Library.',
+				'title' => __( 'Design Library', STACKABLE_I18N ),
+				'description' => __( 'Choose a layout or block from the Stackable Design Library.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Template'
+					__( 'Template', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/designs/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/designs/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/divider' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/divider',
-				'title' => 'Divider',
-				'description' => 'Add a pause between your content.',
+				'title' => __( 'Divider', STACKABLE_I18N ),
+				'description' => __( 'Add a pause between your content.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Horizontal Rule',
-								'HR'
+					__( 'Horizontal Rule', STACKABLE_I18N ),
+					__( 'HR', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special'
 			],
 			'stackable/expand' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/expand',
-				'title' => 'Expand / Show More',
-				'description' => 'Display a small snippet of text. Your readers can toggle it to show more information.',
+				'title' => __( 'Expand / Show More', STACKABLE_I18N ),
+				'description' => __( 'Display a small snippet of text. Your readers can toggle it to show more information.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Hide',
-								'Less'
+					__( 'Hide', STACKABLE_I18N ),
+					__( 'Less', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/expand-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/expand-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/feature' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/feature',
-				'title' => 'Feature',
-				'description' => 'Display a product feature or a service in a large area.',
+				'title' => __( 'Feature', STACKABLE_I18N ),
+				'description' => __( 'Display a product feature or a service in a large area.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/columnWrapDesktop' => 'columnWrapDesktop'
-							],
+				'provides_context' => [
+					'stackable/columnWrapDesktop' => 'columnWrapDesktop'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/feature-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/feature-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/feature-grid' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/feature-grid',
-				'title' => 'Feature Grid',
-				'description' => 'Display multiple product features or services. You can use Feature Grids one after another.',
+				'title' => __( 'Feature Grid', STACKABLE_I18N ),
+				'description' => __( 'Display multiple product features or services. You can use Feature Grids one after another.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/columnWrapDesktop' => 'columnWrapDesktop'
-							],
+				'provides_context' => [
+					'stackable/columnWrapDesktop' => 'columnWrapDesktop'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/feature-grid-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/feature-grid-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/heading' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/heading',
-				'title' => 'Heading',
-				'description' => 'Introduce new sections of your content in style.',
+				'title' => __( 'Heading', STACKABLE_I18N ),
+				'description' => __( 'Introduce new sections of your content in style.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Title'
+					__( 'Title', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
-				'stk-demo' => 'https =>//wpstackable.com/advanced-heading-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/advanced-heading-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/hero' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/hero',
-				'title' => 'Hero',
-				'description' => 'A large hero area. Typically used at the very top of a page.',
+				'title' => __( 'Hero', STACKABLE_I18N ),
+				'description' => __( 'A large hero area. Typically used at the very top of a page.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'innerBlockOrientation'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
+				],
 				'keywords' => [
-								'Header'
+					__( 'Header', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/hero-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/hero-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/horizontal-scroller' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/horizontal-scroller',
-				'title' => 'Horizontal Scroller',
-				'description' => 'A slider that scrolls horizontally.',
+				'title' => __( 'Horizontal Scroller', STACKABLE_I18N ),
+				'description' => __( 'A slider that scrolls horizontally.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Slider',
-								'Carousel'
+					__( 'Slider', STACKABLE_I18N ),
+					__( 'Carousel', STACKABLE_I18N )
 				],
-				'providesContext' => [
-								'stackable/columnFit' => 'columnFit'
-							],
+				'provides_context' => [
+					'stackable/columnFit' => 'columnFit'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/horizontal-scroller-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/horizontal-scroller-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/icon' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/icon',
-				'title' => 'Icon',
-				'description' => 'Pick an icon or upload your own SVG icon to decorate your content.',
+				'title' => __( 'Icon', STACKABLE_I18N ),
+				'description' => __( 'Pick an icon or upload your own SVG icon to decorate your content.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'SVG'
+					__( 'SVG', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
-				'stk-demo' => 'https =>//wpstackable.com/icon-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/icon-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/icon-box' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/icon-box',
-				'title' => 'Icon Box',
-				'description' => 'A small text area with an icon that can be used to summarize features or services',
+				'title' => __( 'Icon Box', STACKABLE_I18N ),
+				'description' => __( 'A small text area with an icon that can be used to summarize features or services', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/icon-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/icon-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/icon-button' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/icon-button',
-				'title' => 'Icon Button',
-				'description' => 'Add a customizable button.',
+				'title' => __( 'Icon Button', STACKABLE_I18N ),
+				'description' => __( 'Add a customizable button.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'parent' => [
-								'stackable/button-group'
+					'stackable/button-group'
 				],
 				'keywords' => [
-								'Link'
+					__( 'Link', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden',
-				'stk-demo' => 'https =>//wpstackable.com/icon-button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/icon-button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/icon-label' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/icon-label',
-				'title' => 'Icon Label',
-				'description' => 'An Icon and Heading paired together.',
+				'title' => __( 'Icon Label', STACKABLE_I18N ),
+				'description' => __( 'An Icon and Heading paired together.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'SVG'
+					__( 'SVG', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/icon-label-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/icon-label-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/icon-list' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/icon-list',
-				'title' => 'Icon List',
-				'description' => 'An unordered list with icons. You can use this as a list of features or benefits.',
+				'title' => __( 'Icon List', STACKABLE_I18N ),
+				'description' => __( 'An unordered list with icons. You can use this as a list of features or benefits.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Checklist',
-								'Bullets',
-								'Number list'
+					__( 'Checklist', STACKABLE_I18N ),
+					__( 'Bullets', STACKABLE_I18N ),
+					__( 'Number list', STACKABLE_I18N )
 				],
-				'providesContext' => [
-								'stackable/ordered' => 'ordered',
-								'stackable/uniqueId' => 'uniqueId'
-							],
+				'provides_context' => [
+					'stackable/ordered' => 'ordered',
+					'stackable/uniqueId' => 'uniqueId'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
-				'stk-demo' => 'https =>//wpstackable.com/icon-list-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/icon-list-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/icon-list-item' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/icon-list-item',
-				'title' => 'Icon List Item',
-				'description' => 'A single list entry in the Icon List block',
+				'title' => __( 'Icon List Item', STACKABLE_I18N ),
+				'description' => __( 'A single list entry in the Icon List block', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation',
-								'stackable/ordered',
-								'stackable/uniqueId'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation',
+					'stackable/ordered',
+					'stackable/uniqueId'
 				],
-				'keywords' => [],
+				'keywords' => [
+
+				],
 				'parent' => [
-								'stackable/icon-list'
+					'stackable/icon-list'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden',
-				'stk-demo' => 'https =>//wpstackable.com/separator-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/separator-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/image' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/image',
-				'title' => 'Image',
-				'description' => 'An image with advanced controls to make a visual statement.',
+				'title' => __( 'Image', STACKABLE_I18N ),
+				'description' => __( 'An image with advanced controls to make a visual statement.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
-				'stk-demo' => 'https =>//wpstackable.com/advanced-image-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/advanced-image-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/image-box' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/image-box',
-				'title' => 'Image Box',
-				'description' => 'Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.',
+				'title' => __( 'Image Box', STACKABLE_I18N ),
+				'description' => __( 'Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/image-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/image-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/map' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/map',
-				'title' => 'Map',
-				'description' => 'Embedded Google Map with advanced controls.',
+				'title' => __( 'Map', STACKABLE_I18N ),
+				'description' => __( 'Embedded Google Map with advanced controls.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'keywords' => [
-								'location',
-								'address'
+					__( 'location', STACKABLE_I18N ),
+					__( 'address', STACKABLE_I18N )
 				],
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/map-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/map-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/notification' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/notification',
-				'title' => 'Notification',
-				'description' => 'Show a notice to your readers. People can dismiss the notice to permanently hide it.',
+				'title' => __( 'Notification', STACKABLE_I18N ),
+				'description' => __( 'Show a notice to your readers. People can dismiss the notice to permanently hide it.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'innerBlockOrientation'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
+				],
 				'keywords' => [
-								'Notice',
-								'Alert'
+					__( 'Notice', STACKABLE_I18N ),
+					__( 'Alert', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/notification-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/notification-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/number-box' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/number-box',
-				'title' => 'Number Box',
-				'description' => 'Display steps or methods that your users will do in your service.',
+				'title' => __( 'Number Box', STACKABLE_I18N ),
+				'description' => __( 'Display steps or methods that your users will do in your service.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Steps'
+					__( 'Steps', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/number-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/number-box-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/posts' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/posts',
-				'title' => 'Posts',
-				'description' => 'Your latest blog posts. Use this to showcase a few of your posts in your landing pages.',
+				'title' => __( 'Posts', STACKABLE_I18N ),
+				'description' => __( 'Your latest blog posts. Use this to showcase a few of your posts in your landing pages.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Blog Posts',
-								'Lastest Posts',
-								'Query Loop'
+					__( 'Blog Posts', STACKABLE_I18N ),
+					__( 'Lastest Posts', STACKABLE_I18N ),
+					__( 'Query Loop', STACKABLE_I18N )
 				],
-				'providesContext' => [
-								'type' => 'type',
-								'orderBy' => 'orderBy',
-								'order' => 'order',
-								'taxonomyType' => 'taxonomyType',
-								'taxonomy' => 'taxonomy',
-								'taxonomyFilterType' => 'taxonomyFilterType',
-								'postOffset' => 'postOffset',
-								'postExclude' => 'postExclude',
-								'postInclude' => 'postInclude',
-								'numberOfItems' => 'numberOfItems',
-								'stkQueryId' => 'stkQueryId'
-							],
+				'provides_context' => [
+					'type' => 'type',
+					'orderBy' => 'orderBy',
+					'order' => 'order',
+					'taxonomyType' => 'taxonomyType',
+					'taxonomy' => 'taxonomy',
+					'taxonomyFilterType' => 'taxonomyFilterType',
+					'postOffset' => 'postOffset',
+					'postExclude' => 'postExclude',
+					'postInclude' => 'postInclude',
+					'numberOfItems' => 'numberOfItems',
+					'stkQueryId' => 'stkQueryId'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/blog-posts-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/blog-posts-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/price' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/price',
-				'title' => 'Price',
-				'description' => 'Show a price of a product or service with currency and a suffix styled with different weights',
+				'title' => __( 'Price', STACKABLE_I18N ),
+				'description' => __( 'Show a price of a product or service with currency and a suffix styled with different weights', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Currency',
-								'Pricing',
-								'Number'
+					__( 'Currency', STACKABLE_I18N ),
+					__( 'Pricing', STACKABLE_I18N ),
+					__( 'Number', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/price-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/price-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/pricing-box' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/pricing-box',
-				'title' => 'Pricing Box',
-				'description' => 'Display the different pricing tiers of your business.',
+				'title' => __( 'Pricing Box', STACKABLE_I18N ),
+				'description' => __( 'Display the different pricing tiers of your business.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'innerBlockOrientation'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
+				],
 				'keywords' => [
-								'Currency',
-								'Price',
-								'Pricing Table'
+					__( 'Currency', STACKABLE_I18N ),
+					__( 'Price', STACKABLE_I18N ),
+					__( 'Pricing Table', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/pricing-table-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/pricing-table-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/progress-bar' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/progress-bar',
-				'title' => 'Progress Bar',
-				'description' => 'Visualize a progress value or percentage in a bar.',
+				'title' => __( 'Progress Bar', STACKABLE_I18N ),
+				'description' => __( 'Visualize a progress value or percentage in a bar.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'percentage status'
+					__( 'percentage status', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/progress-bar-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/progress-bar-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/progress-circle' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/progress-circle',
-				'title' => 'Progress Circle',
-				'description' => 'Visualize a progress value or percentage in a circle.',
+				'title' => __( 'Progress Circle', STACKABLE_I18N ),
+				'description' => __( 'Visualize a progress value or percentage in a circle.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'percentage status'
+					__( 'percentage status', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/progress-circle-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/progress-circle-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/separator' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/separator',
-				'title' => 'Separator',
-				'description' => 'A fancy separator to be placed between content.',
+				'title' => __( 'Separator', STACKABLE_I18N ),
+				'description' => __( 'A fancy separator to be placed between content.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Svg Divider'
+					__( 'Svg Divider', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/separator-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/separator-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/spacer' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/spacer',
-				'title' => 'Spacer',
-				'description' => 'Sometimes you just need some space.',
+				'title' => __( 'Spacer', STACKABLE_I18N ),
+				'description' => __( 'Sometimes you just need some space.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special'
 			],
 			'stackable/subtitle' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/subtitle',
-				'title' => 'Subtitle',
-				'description' => 'Subtitle text that you can add custom styling to from the global settings.',
+				'title' => __( 'Subtitle', STACKABLE_I18N ),
+				'description' => __( 'Subtitle text that you can add custom styling to from the global settings.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/subtitle-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/subtitle-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/tab-content' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/tab-content',
-				'title' => 'Tab Content',
-				'description' => 'A wrapper for tab panels.',
+				'title' => __( 'Tab Content', STACKABLE_I18N ),
+				'description' => __( 'A wrapper for tab panels.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation',
-								'stackable/tabPanelEffect',
-								'stackable/equalTabHeight'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation',
+					'stackable/tabPanelEffect',
+					'stackable/equalTabHeight'
 				],
-				'keywords' => [],
+				'keywords' => [
+
+				],
 				'parent' => [
-								'stackable/tabs'
+					'stackable/tabs'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden'
 			],
 			'stackable/tab-labels' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/tab-labels',
-				'title' => 'Tab Labels',
-				'description' => 'Create interactive navigation within tabs.',
+				'title' => __( 'Tab Labels', STACKABLE_I18N ),
+				'description' => __( 'Create interactive navigation within tabs.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation',
-								'stackable/initialTabOpen',
-								'stackable/tabOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation',
+					'stackable/initialTabOpen',
+					'stackable/tabOrientation'
 				],
-				'keywords' => [],
+				'keywords' => [
+
+				],
 				'parent' => [
-								'stackable/tabs'
+					'stackable/tabs'
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'hidden'
 			],
 			'stackable/table-of-contents' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/table-of-contents',
-				'title' => 'Table of Contents',
-				'description' => 'Automatically generated table of contents based on Heading blocks.',
+				'title' => __( 'Table of Contents', STACKABLE_I18N ),
+				'description' => __( 'Automatically generated table of contents based on Heading blocks.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'ToC',
-								'Index',
-								'Outline'
+					__( 'ToC', STACKABLE_I18N ),
+					__( 'Index', STACKABLE_I18N ),
+					__( 'Outline', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/table-of-contents-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/table-of-contents-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/tabs' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/tabs',
-				'title' => 'Tabs',
-				'description' => 'Organize and display content in multiple tabs.',
+				'title' => __( 'Tabs', STACKABLE_I18N ),
+				'description' => __( 'Organize and display content in multiple tabs.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'toggle'
+					__( 'toggle', STACKABLE_I18N )
 				],
-				'providesContext' => [
-								'stackable/initialTabOpen' => 'initialTabOpen',
-								'stackable/tabOrientation' => 'tabOrientation',
-								'stackable/tabPanelEffect' => 'tabPanelEffect',
-								'stackable/equalTabHeight' => 'equalTabHeight'
-							],
+				'provides_context' => [
+					'stackable/initialTabOpen' => 'initialTabOpen',
+					'stackable/tabOrientation' => 'tabOrientation',
+					'stackable/tabPanelEffect' => 'tabPanelEffect',
+					'stackable/equalTabHeight' => 'equalTabHeight'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/tabs-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/tabs-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/team-member' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/team-member',
-				'title' => 'Team Member',
-				'description' => 'Display members of your team or your office. Use multiple Team Member blocks if you have a large team.',
+				'title' => __( 'Team Member', STACKABLE_I18N ),
+				'description' => __( 'Display members of your team or your office. Use multiple Team Member blocks if you have a large team.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'innerBlockOrientation'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/team-member-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/team-member-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/testimonial' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/testimonial',
-				'title' => 'Testimonial',
-				'description' => 'Showcase what your users say about your product or service.',
+				'title' => __( 'Testimonial', STACKABLE_I18N ),
+				'description' => __( 'Showcase what your users say about your product or service.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
-				'providesContext' => [
-								'stackable/innerBlockOrientation' => 'innerBlockOrientation'
-							],
+				'provides_context' => [
+					'stackable/innerBlockOrientation' => 'innerBlockOrientation'
+				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'section',
-				'stk-demo' => 'https =>//wpstackable.com/testimonial-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/testimonial-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/text' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/text',
-				'title' => 'Text',
-				'description' => 'Start with the building block of all page layouts.',
+				'title' => __( 'Text', STACKABLE_I18N ),
+				'description' => __( 'Start with the building block of all page layouts.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'Paragraph'
+					__( 'Paragraph', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'essential',
-				'stk-demo' => 'https =>//wpstackable.com/advanced-text-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/advanced-text-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/timeline' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/timeline',
-				'title' => 'Timeline',
-				'description' => 'Show events in chronological order',
+				'title' => __( 'Timeline', STACKABLE_I18N ),
+				'description' => __( 'Show events in chronological order', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'history',
-								'milestone'
+					__( 'history', STACKABLE_I18N ),
+					__( 'milestone', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/timeline-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/timeline-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			],
 			'stackable/video-popup' => [
-				'apiVersion' => 3,
+				'api_version' => '3',
 				'name' => 'stackable/video-popup',
-				'title' => 'Video Popup',
-				'description' => 'Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.',
+				'title' => __( 'Video Popup', STACKABLE_I18N ),
+				'description' => __( 'Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.', STACKABLE_I18N ),
 				'category' => 'stackable',
-				'usesContext' => [
-								'postId',
-								'postType',
-								'queryId',
-								'stackable/innerBlockOrientation'
+				'uses_context' => [
+					'postId',
+					'postType',
+					'queryId',
+					'stackable/innerBlockOrientation'
 				],
 				'keywords' => [
-								'YouTube',
-								'Vimeo',
-								'Embed Mp4'
+					__( 'YouTube', STACKABLE_I18N ),
+					__( 'Vimeo', STACKABLE_I18N ),
+					__( 'Embed Mp4', STACKABLE_I18N )
 				],
 				'textdomain' => 'stackable-ultimate-gutenberg-blocks',
 				'stk-type' => 'special',
-				'stk-demo' => 'https =>//wpstackable.com/video-popup-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
+				'stk-demo' => 'https://wpstackable.com/video-popup-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink'
 			]
 		);
 

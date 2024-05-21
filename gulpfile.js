@@ -95,13 +95,58 @@ gulp.task( 'generate-stk-block-typesphp', function( cb ) {
 
 	const fs = require( 'fs' )
 
-	const toWpBlockType = jsonStr => {
-		const jsonData = JSON.parse( jsonStr )
-		const argsArray = JSON.stringify( jsonData, null, '\t\t\t\t' )
-			.replace( /{/g, '[' ).replace( /}(\s)*/g, '\t\t\t]' ).replace( /"/g, '\'' ).replace( /:/g, ' =>' )
-		const phpScript = `'${ jsonData.name }' => ${ argsArray }`
+	const toSnakeCase = str => {
+		// Don't convert strings that are starting with 'stackable/
+		return str.startsWith( 'stackable/' ) ? str : str.replace( /([a-z])([A-Z])/g, '$1_$2' ).toLowerCase()
+	}
 
-		return phpScript
+	const parseBlockJson = ( obj, callback, indent, parentKey = null ) => {
+		let blockArgs = '[\n'
+		const tab = '\t'.repeat( indent )
+		const changeToSnakeCase = parentKey !== 'providesContext'
+		if ( Array.isArray( obj ) ) {
+			const els = []
+			obj.forEach( item => {
+				if ( Array.isArray( item ) || typeof item === 'object' ) {
+					// if array contains another array or object as its element, parse it first
+					els.push( `${ tab }${ parseBlockJson( item, callback, indent + 1, parentKey ) }` )
+				} else {
+					// array contains a string
+					els.push( `${ tab }${ callback( parentKey, item, true, changeToSnakeCase ) }` )
+				}
+			} )
+			blockArgs += els.join( ',\n' ) + '\n'
+		} else if ( typeof obj === 'object' && obj !== null ) {
+			const entries = Object.entries( obj )
+			entries.forEach( ( [ key, value ], index ) => {
+				if ( Array.isArray( value ) || typeof value === 'object' ) {
+					// obj[key] contains another array or object
+					blockArgs += `${ tab }'${ toSnakeCase( key ) }' => `
+					blockArgs += parseBlockJson( value, callback, indent + 1, key )
+				} else {
+					// obj[key] contains a string
+					blockArgs += `${ tab }${ callback( key, value, false, changeToSnakeCase ) }`
+				}
+
+				blockArgs += index === entries.length - 1 ? '\n' : ',\n'
+			} )
+		}
+
+		blockArgs += '\t'.repeat( indent - 1 ) + ']'
+		return blockArgs
+	}
+
+	const blockJsonToAssocArray = ( key, value, isArrayElement, changeToSnakeCase ) => {
+		const needTranslate = [ 'title', 'description', 'keywords' ]
+		const _value = needTranslate.includes( key ) ? `__( '${ value }', STACKABLE_I18N )` : `'${ value }'`
+
+		// for array elements
+		if ( isArrayElement ) {
+			return _value
+		}
+
+		// for key-value pairs
+		return `'${ changeToSnakeCase ? toSnakeCase( key ) : key }' => ${ _value }`
 	}
 
 	const getBlockNames = path => {
@@ -117,8 +162,10 @@ gulp.task( 'generate-stk-block-typesphp', function( cb ) {
 		const jsonPath = path.resolve( __dirname, `src/block/${ block }/block.json` )
 		if ( fs.existsSync( jsonPath ) ) {
 			const fileContent = fs.readFileSync( jsonPath, 'utf-8' )
-			const wpBlockType = toWpBlockType( fileContent )
-			data.push( wpBlockType )
+			const blockJson = JSON.parse( fileContent )
+			const blockArgs = parseBlockJson( blockJson, blockJsonToAssocArray, 4 )
+			const blockEntry = `'${ blockJson.name }' => ${ blockArgs }`
+			data.push( blockEntry )
 		}
 	} )
 
