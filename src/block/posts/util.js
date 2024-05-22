@@ -201,7 +201,20 @@ export const generateRenderPostItem = ( attributes, { isHovered } ) => {
 
 		// Trim the excerpt.
 		let excerptString = postExcerptStackable.split( ' ' )
-		if ( excerptString.length > ( excerptLength || 55 ) ) {
+
+		//Checks if there are CJK characters present.
+		const regexCJK = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/
+
+		if ( postExcerptStackable.match( regexCJK ) ) {
+			// Remove the <p> tags.
+			const tempExcerptString = postExcerptStackable.substring( 3, postExcerptStackable.length - 5 )
+
+			if ( tempExcerptString.length > ( excerptLength || 55 ) ) {
+				excerptString = tempExcerptString.substring( 0, excerptLength === '' ? 55 : excerptLength ) + '...'
+			} else {
+				excerptString = tempExcerptString
+			}
+		} else if ( excerptString.length > ( excerptLength || 55 ) ) {
 			excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'
 		} else {
 			excerptString = post.post_excerpt_stackable
