@@ -253,10 +253,15 @@ class _StackableCarousel {
 		}
 
 		if ( setScrollToClone ) {
+			// Move from the last slide to the first slide (N - next) or
+			// Move from the first slide to the last slide (P - prev)
 			this.sliderEl.style.scrollBehavior = 'unset'
 			this.sliderEl.scrollLeft = dir === 'N'
-				? this.clones[ this.currentSlide - 1 ].offsetLeft
-				: this.slideEls[ this.currentSlide - 1 ].offsetLeft
+				? this.clones[ this.currentSlide - 1 ].offsetLeft // Go to the last clone slide
+				: ( this.slidesToShow === 1
+					? this.clones[ this.currentSlide - 1 ].offsetLeft // If slidesToShow is 1, go to the first clone slide
+					: this.slideEls[ this.currentSlide - 1 ].offsetLeft // Go to the original first slide which is swapped with the clone
+				)
 			this.sliderEl.style.scrollBehavior = ''
 		}
 
