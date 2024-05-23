@@ -284,9 +284,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 */
 		public function fix_deprecated_options() {
 			if ( ! empty( get_option( 'stackable_global_colors_palette_only' ) ) ) {
-				update_option( 'stackable_global_hide_theme_colors', '1' );
-				update_option( 'stackable_global_hide_default_colors', '1' );
-				update_option( 'stackable_global_hide_site_editor_colors', '1' );
+				update_option( 'stackable_global_hide_theme_colors', '1', 'no' );
+				update_option( 'stackable_global_hide_default_colors', '1', 'no' );
+				update_option( 'stackable_global_hide_site_editor_colors', '1', 'no' );
 				delete_option( 'stackable_global_colors_palette_only' );
 			}
 		}

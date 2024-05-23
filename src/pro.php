@@ -98,7 +98,7 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
          */
         public function check_pro_notice_date() {
             if ( get_option( 'stackable_pro_notice_start_date' ) === false ) {
-                update_option( 'stackable_pro_notice_start_date', time() );
+                update_option( 'stackable_pro_notice_start_date', time(), 'no' );
             }
 
             $activation_time = get_option( 'stackable_pro_notice_start_date' );

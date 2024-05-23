@@ -236,7 +236,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 */
 		public function set_dev_mode( $request ) {
 			$dev_mode = $request->get_param( 'devmode' );
-			update_option( 'stackable_library_dev_mode', $dev_mode );
+			update_option( 'stackable_library_dev_mode', $dev_mode, 'no' );
 
 			return rest_ensure_response( true );
 		}
