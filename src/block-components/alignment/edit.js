@@ -25,7 +25,7 @@ import {
 import { Fragment } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
-import { select, useSelect } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 
 const ALIGN_OPTIONS = [
 	{
@@ -363,8 +363,7 @@ if ( userAgent && userAgent.indexOf( 'Firefox' ) !== -1 ) {
 
 		if ( innerBlocks.length > 0 ) {
 			for ( let i = 0; i < innerBlocks.length; i++ ) {
-				const innerBlockClientId = innerBlocks[ i ].clientId
-				const { blockMargin } = select( 'core/block-editor' ).getBlockAttributes( innerBlockClientId )
+				const { blockMargin } = innerBlocks[ i ].attributes
 				if ( blockMargin && ( blockMargin.top === 'auto' || blockMargin.bottom === 'auto' ) ) {
 					classes.push( 'stk--alignment-polyfill' )
 				}
