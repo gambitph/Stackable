@@ -3049,27 +3049,6 @@
     ]
   },
   {
-    "family": "Briem Hand",
-    "variants": [
-      "100",
-      "200",
-      "300",
-      "regular",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900"
-    ],
-    "subsets": [
-      "cyrillic-ext",
-      "greek-ext",
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Bruno Ace",
     "variants": [
       "regular"
@@ -4648,6 +4627,17 @@
       "500",
       "600",
       "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Danfo",
+    "variants": [
+      "regular"
     ],
     "subsets": [
       "latin",
@@ -8243,6 +8233,18 @@
       "latin-ext",
       "thai",
       "vietnamese"
+    ]
+  },
+  {
+    "family": "Jacquard 12",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "math",
+      "symbols"
     ]
   },
   {
@@ -14852,11 +14854,15 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
+      "cyrillic",
       "japanese",
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -14868,11 +14874,15 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
+      "cyrillic",
       "korean",
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -15062,11 +15072,15 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
       "chinese-simplified",
-      "latin"
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -15097,11 +15111,15 @@
       "500",
       "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
       "chinese-traditional",
-      "latin"
+      "cyrillic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {

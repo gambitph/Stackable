@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 6.2
 Tested up to: 6.5.2
 Requires PHP: 7.3
-Stable tag: 3.12.17
+Stable tag: 3.13.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -293,6 +293,19 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 3.13.0 =
+* New: x2-x3 plugin performance - improved plugin execution times, reduced memory usage, and faster loading times #340 #3169 #347 #3178
+* New: Performance improvements - options are now autoloaded correctly for better database performance #343 #3175
+* New: Role Manager - when in content editing mode, a console warning will appear #2911
+* Fixed: Dynamic Content - detected custom fields now show up in the Site Editor ##344
+* Fixed: Carousel block - infinite scrolling also works for the previous button #3143
+* Fixed: Full width buttons and flex wrapping now work correctly #3181
+* Fixed: Button text now doesn't wrap - they look more like what you get in the editor #3181
+* Fixed: Button group vertical alignment now works correctly on multiple buttons #3181
+* Fixed: Copy and paste styles now work correctly if native blocks are used #341
+* Fixed: ACF Dynamic Content line breaks in wysiwyg fields now do not get added #3110
+* Fixed: Block preview error when using Stackable blocks in block patterns #3191
 
 = 3.12.17 =
 * Fixed: (Hotfix update): Display Conditions not working in some cases
