@@ -208,6 +208,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
  */
 require_once( plugin_dir_path( __FILE__ ) . 'src/editor-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/stk-block-types.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
