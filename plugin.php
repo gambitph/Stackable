@@ -193,8 +193,17 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
  * END Deactivation & cleanup
  ********************************************************************************************/
 
-function is_frontend() {
-	return ! is_admin() && ! wp_is_json_request();
+if ( ! function_exists( 'is_frontend' ) ) {
+	/**
+	 * Check if we are in the frontend.
+	 *
+	 * @since 3.13.0
+	 *
+	 * @return bool
+	 */
+	function is_frontend() {
+		return ! is_admin() && ! wp_is_json_request();
+	}
 }
 
 /**
