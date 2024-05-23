@@ -31,7 +31,7 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 			add_action( 'rest_api_init', array( $this, 'register_settings' ) );
 
-			if ( $this->has_custom_breakpoints() ) {
+			if ( is_frontend() && $this->has_custom_breakpoints() ) {
 				// Add our filter that adjusts all CSS that we print out.
 				add_filter( 'stackable_frontend_css', array( $this, 'adjust_breakpoints' ) );
 
@@ -195,14 +195,11 @@ if ( ! class_exists( 'Stackable_Dynamic_Breakpoints' ) ) {
 				return $block_content;
 			}
 
-			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
-			if (
-				stripos( $block_name, 'stackable/' ) === 0 ||
-				stripos( $block_content, '<!-- wp:stackable/' ) !==  false
-			) {
-				$block_content = apply_filters( 'stackable_frontend_css', $block_content );
+			if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'stackable/' ) === false ) {
+				return $block_content;
 			}
-			return $block_content;
+
+			return apply_filters( 'stackable_frontend_css', $block_content );
 		}
 	}
 

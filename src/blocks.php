@@ -25,18 +25,13 @@ if ( ! function_exists( 'stackable_get_metadata_by_folders' ) ) {
 	function stackable_get_metadata_by_folders( $block_folders, $handle = 'metadata' ) {
 		$blocks = array();
 		$blocks_dir = dirname( __FILE__ ) . '/block';
-		if ( ! file_exists( $blocks_dir ) ) {
-			return $blocks;
-		}
 
 		foreach ( $block_folders as $folder_name ) {
 			$block_json_file = $blocks_dir . '/' . $folder_name . '/block.json';
-			if ( ! file_exists( $block_json_file ) ) {
-				continue;
+			if ( file_exists( $block_json_file ) ) {
+				$metadata = json_decode( file_get_contents( $block_json_file ), true );
+				$blocks[] = array_merge( $metadata, array( 'block_json_file' => $block_json_file ) );
 			}
-
-			$metadata = json_decode( file_get_contents( $block_json_file ), true );
-			array_push( $blocks, array_merge( $metadata, array( 'block_json_file' => $block_json_file ) ) );
 		}
 
 		return $blocks;
@@ -125,8 +120,8 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 			stackable_get_stk_wrapper_block_folders_metadata()
 		);
 
+		$registry = WP_Block_Type_Registry::get_instance();
 		foreach ( $blocks_metadata as $metadata ) {
-			$registry = WP_Block_Type_Registry::get_instance();
 			if ( $registry->is_registered( $metadata['name'] ) ) {
 				$registry->unregister( $metadata['name'] );
 			}

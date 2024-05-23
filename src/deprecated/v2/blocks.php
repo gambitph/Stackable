@@ -69,10 +69,10 @@ if ( ! function_exists( 'stackable_register_blocks_v2' ) ) {
 	function stackable_register_blocks_v2() {
 		$block_json_files = stackable_get_all_v2_blocks_json_paths();
 
+		$registry = WP_Block_Type_Registry::get_instance();
 		foreach ( $block_json_files as $block_json_file ) {
 			$metadata = json_decode( file_get_contents( $block_json_file ), true );
 
-			$registry = WP_Block_Type_Registry::get_instance();
 			if ( $registry->is_registered( $metadata['name'] ) ) {
 				$registry->unregister( $metadata['name'] );
 			}
@@ -179,7 +179,9 @@ if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks_v2' ) ) {
 		return array_merge( $allowed_stackable_wrapper_blocks, $allowed_wrapper_blocks );
 	}
 
-	add_filter( 'excerpt_allowed_wrapper_blocks', 'stackable_add_excerpt_wrapper_blocks_v2' );
+	if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
+		add_filter( 'excerpt_allowed_wrapper_blocks', 'stackable_add_excerpt_wrapper_blocks_v2' );
+	}
 }
 
 if ( ! function_exists( 'stackable_add_excerpt_blocks_v2' ) ) {
@@ -214,5 +216,7 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks_v2' ) ) {
 		return array_merge( $allowed_stackable_blocks, $allowed_blocks );
 	}
 
-	add_filter( 'excerpt_allowed_blocks', 'stackable_add_excerpt_blocks_v2' );
+	if ( has_stackable_v2_frontend_compatibility() || has_stackable_v2_editor_compatibility() ) {
+		add_filter( 'excerpt_allowed_blocks', 'stackable_add_excerpt_blocks_v2' );
+	}
 }
